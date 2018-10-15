@@ -164,7 +164,7 @@ function run_all_table_admin_examples {
   local -r INSTANCE="in-$(date +%s)"
 
   # Use the same table in all the tests.
-  local -r TABLE="sample-table-for-admin"
+  local -r TABLE="sample-table-for-admin-${RANDOM}"
 
   run_example ./bigtable_samples run "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets create-table "${project_id}" "${INSTANCE}" "${TABLE}"
@@ -215,11 +215,11 @@ run_all_data_examples() {
 
   # Use a different table for the full example test, if we use the same table
   # as the other tests this can fail with timeouts.
-  local -r FULL_TABLE="data-examples-full-${RANDOM}"
+  local -r FULL_TABLE="data-ex-full-$(date +%s)-${RANDOM}"
   run_example ./bigtable_samples run-full-example "${project_id}" "${instance_id}" "${FULL_TABLE}"
 
   # Use the same table in all the tests.
-  local -r TABLE="data-examples-tbl-${RANDOM}"
+  local -r TABLE="data-ex-tbl-$(date +%s)-${RANDOM}"
   run_example ./table_admin_snippets create-table "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_admin_snippets apply "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_admin_snippets bulk-apply "${project_id}" "${instance_id}" "${TABLE}"
@@ -240,6 +240,7 @@ run_all_data_examples() {
   run_example ./data_admin_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_admin_snippets read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_admin_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./table_admin_snippets delete-table "${project_id}" "${instance_id}" "${TABLE}"
 }
 
 ################################################
