@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/error.h"
+#include "google/cloud/terminate_handler.h"
 #include <iostream>
 #include <mutex>
 

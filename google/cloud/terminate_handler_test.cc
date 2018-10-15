@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/error.h"
+#include "google/cloud/terminate_handler.h"
 #include <gtest/gtest.h>
 #include <iostream>
 
@@ -29,30 +29,30 @@ void CustomHandler(const char* msg) {
 void CustomHandlerOld(const char* msg) { abort(); }
 }  // namespace
 
-TEST(Error, UnsetTerminates) {
+TEST(TerminateHandler, UnsetTerminates) {
   GetTerminateHandler();
   EXPECT_DEATH_IF_SUPPORTED(Terminate("Test"),
                             "Aborting because exceptions are disabled: Test");
 }
 
-TEST(Error, SettingGettingWorks) {
+TEST(TerminateHandler, SettingGettingWorks) {
   SetTerminateHandler(&CustomHandler);
   TerminateHandler set_handler = GetTerminateHandler();
   ASSERT_EQ(CustomHandler, *set_handler.target<void (*)(const char*)>());
 }
 
-TEST(Error, OldHandlerIsReturned) {
+TEST(TerminateHandler, OldHandlerIsReturned) {
   SetTerminateHandler(&CustomHandlerOld);
   TerminateHandler old_handler = SetTerminateHandler(CustomHandler);
   ASSERT_EQ(CustomHandlerOld, *old_handler.target<void (*)(const char*)>());
 }
 
-TEST(Error, TerminateTerminates) {
+TEST(TerminateHandler, TerminateTerminates) {
   SetTerminateHandler(&CustomHandler);
   EXPECT_DEATH_IF_SUPPORTED(Terminate("details"), handler_msg + "details");
 }
 
-TEST(Error, NoAbortAborts) {
+TEST(TerminateHandler, NoAbortAborts) {
   SetTerminateHandler([](const char*) {});
   const std::string expected =
       "Aborting because the installed terminate "

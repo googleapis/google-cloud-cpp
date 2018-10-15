@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/error.h"
 #include "google/cloud/internal/port_platform.h"
+#include "google/cloud/terminate_handler.h"
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
