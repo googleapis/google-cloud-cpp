@@ -23,24 +23,22 @@ namespace {
 
 class TerminateFunction {
  public:
-  TerminateFunction(TerminateHandler&& f) {
-    std::lock_guard<std::mutex> l(m_);
-    f_ = std::move(f);
-  }
+  TerminateFunction(TerminateHandler f) : f_(std::move(f)) {}
 
   TerminateHandler Get() {
     std::lock_guard<std::mutex> l(m_);
     return f_;
   }
 
-  void Set(TerminateHandler&& f) {
+  TerminateHandler Set(TerminateHandler f) {
     std::lock_guard<std::mutex> l(m_);
-    f_ = std::move(f);
+    f.swap(f_);
+    return f;
   }
 
  private:
-  TerminateHandler f_;
   std::mutex m_;
+  TerminateHandler f_;
 };
 
 TerminateFunction& GetTerminateHolder() {
@@ -54,8 +52,8 @@ TerminateFunction& GetTerminateHolder() {
 
 }  // anonymous namespace
 
-void SetTerminateHandler(TerminateHandler&& f) {
-  GetTerminateHolder().Set(std::move(f));
+TerminateHandler SetTerminateHandler(TerminateHandler f) {
+  return GetTerminateHolder().Set(std::move(f));
 }
 
 TerminateHandler GetTerminateHandler() { return GetTerminateHolder().Get(); }

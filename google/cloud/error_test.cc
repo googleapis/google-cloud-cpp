@@ -25,6 +25,8 @@ void CustomHandler(const char* msg) {
   std::cerr << handler_msg << msg << std::endl;
   abort();
 }
+
+void CustomHandlerOld(const char* msg) { abort(); }
 }  // namespace
 
 TEST(Error, UnsetTerminates) {
@@ -37,6 +39,12 @@ TEST(Error, SettingGettingWorks) {
   SetTerminateHandler(&CustomHandler);
   TerminateHandler set_handler = GetTerminateHandler();
   ASSERT_EQ(CustomHandler, *set_handler.target<void (*)(const char*)>());
+}
+
+TEST(Error, OldHandlerIsReturned) {
+  SetTerminateHandler(&CustomHandlerOld);
+  TerminateHandler old_handler = SetTerminateHandler(CustomHandler);
+  ASSERT_EQ(CustomHandlerOld, *old_handler.target<void (*)(const char*)>());
 }
 
 TEST(Error, TerminateTerminates) {

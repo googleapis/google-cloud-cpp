@@ -40,11 +40,14 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 using TerminateHandler = std::function<void(const char* msg)>;
 
 /**
- * Install terminate handler.
+ * Install terminate handler and get the old one atomically.
  *
- * @f The handler. It should never return, behaviour is undefined if it does.
+ * @param f the handler. It should never return, behaviour is undefined
+ *        otherwise.
+ *
+ * @return Previously set handler.
  */
-void SetTerminateHandler(TerminateHandler&& f);
+TerminateHandler SetTerminateHandler(TerminateHandler f);
 
 /**
  * Get the currently installed handler.
