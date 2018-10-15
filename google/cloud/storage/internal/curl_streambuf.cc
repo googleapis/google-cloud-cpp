@@ -88,7 +88,7 @@ CurlStreambuf::CurlStreambuf(CurlUploadRequest&& upload,
 bool CurlStreambuf::IsOpen() const { return upload_.IsOpen(); }
 
 void CurlStreambuf::ValidateHash(ObjectMetadata const& meta) {
-  hash_validator_->Received(meta);
+  hash_validator_->ProcessMetadata(meta);
   hash_validator_result_ = std::move(*hash_validator_).Finish(__func__);
 }
 
@@ -130,9 +130,6 @@ HttpResponse CurlStreambuf::DoClose() {
   auto response = upload_.Close();
   for (auto const& kv : response.headers) {
     hash_validator_->ProcessHeader(kv.first, kv.second);
-  }
-  if (response.status_code >= 300) {
-    return response;
   }
   return response;
 }

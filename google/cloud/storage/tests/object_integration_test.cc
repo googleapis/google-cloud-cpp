@@ -1487,7 +1487,7 @@ TEST_F(ObjectIntegrationTest, DisableMD5StreamingReadJSON) {
   client.DeleteObject(bucket_name, object_name);
 }
 
-/// @test Verify that MD5 hashes are computed by default on downloads.
+/// @test Verify that MD5 hashes are computed by default on uploads.
 TEST_F(ObjectIntegrationTest, DefaultMD5StreamingWriteXML) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
@@ -1522,7 +1522,7 @@ TEST_F(ObjectIntegrationTest, DefaultMD5StreamingWriteXML) {
   client.DeleteObject(bucket_name, object_name);
 }
 
-/// @test Verify that MD5 hashes are computed by default on downloads.
+/// @test Verify that MD5 hashes are computed by default on uploads.
 TEST_F(ObjectIntegrationTest, DefaultMD5StreamingWriteJSON) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
@@ -1556,7 +1556,7 @@ TEST_F(ObjectIntegrationTest, DefaultMD5StreamingWriteJSON) {
   client.DeleteObject(bucket_name, object_name);
 }
 
-/// @test Verify that MD5 hashes can be disabled on downloads.
+/// @test Verify that MD5 hashes can be disabled on uploads.
 TEST_F(ObjectIntegrationTest, DisableMD5StreamingWriteXML) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
@@ -1591,7 +1591,7 @@ TEST_F(ObjectIntegrationTest, DisableMD5StreamingWriteXML) {
   client.DeleteObject(bucket_name, object_name);
 }
 
-/// @test Verify that MD5 hashes can be disabled on downloads.
+/// @test Verify that MD5 hashes can be disabled on uploads.
 TEST_F(ObjectIntegrationTest, DisableMD5StreamingWriteJSON) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
