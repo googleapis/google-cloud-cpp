@@ -53,6 +53,5 @@ var searchData=
   ['createtable',['CreateTable',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a987296dd3350a02e74c4e7f7f1a0060b',1,'google::cloud::bigtable::v0::AdminClient::CreateTable()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#aa4437cea54fbcb2a9b4b83f2301a8c6e',1,'google::cloud::bigtable::v0::TableAdmin::CreateTable()']]],
   ['createtablefromsnapshot',['CreateTableFromSnapshot',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a0c4a16aaa0aba4abc71ed6d6cefbe201',1,'google::cloud::bigtable::v0::AdminClient::CreateTableFromSnapshot()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#ad2dcf28d547643156730e8fb38f35977',1,'google::cloud::bigtable::v0::TableAdmin::CreateTableFromSnapshot()']]],
   ['creating',['CREATING',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceUpdateConfig.html#a65fac7a533ba1f8d5bdeea58e8d7f730',1,'google::cloud::bigtable::v0::InstanceUpdateConfig']]],
-  ['credentials',['credentials',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#aec5e9af53b551e2118ebbb170ba51f9f',1,'google::cloud::bigtable::v0::ClientOptions']]],
-  ['cloud_20bigtable_20c_2b_2b_20client_20library',['Cloud Bigtable C++ Client Library',['../index.html',1,'']]]
+  ['credentials',['credentials',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#aec5e9af53b551e2118ebbb170ba51f9f',1,'google::cloud::bigtable::v0::ClientOptions']]]
 ];

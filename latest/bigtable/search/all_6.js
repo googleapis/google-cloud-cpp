@@ -17,6 +17,7 @@ var searchData=
   ['grpc_5ferror_2ecc',['grpc_error.cc',['../grpc__error_8cc.html',1,'']]],
   ['grpc_5ferror_2eh',['grpc_error.h',['../grpc__error_8h.html',1,'']]],
   ['grpcerror',['GRpcError',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1GRpcError.html',1,'google::cloud::bigtable::v0::GRpcError'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1GRpcError.html#a23e467aa290f643f5355f62007c1721a',1,'google::cloud::bigtable::v0::GRpcError::GRpcError()']]],
+  ['google_20cloud_20platform_20bigtable_20c_2b_2b_20client_20library',['Google Cloud Platform Bigtable C++ Client Library',['../index.html',1,'']]],
   ['internal',['internal',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0_1_1internal.html',1,'google::cloud::bigtable::v0']]],
   ['noex',['noex',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0_1_1noex.html',1,'google::cloud::bigtable::v0']]],
   ['v0',['v0',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html',1,'google::cloud::bigtable']]]
