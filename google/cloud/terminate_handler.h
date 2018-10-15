@@ -59,7 +59,7 @@ TerminateHandler GetTerminateHandler();
 /**
  * Invoke the currently installed handler.
  *
- * @msg Details about the error.
+ * @param msg Details about the error.
  *
  * This function should never return.
  *
