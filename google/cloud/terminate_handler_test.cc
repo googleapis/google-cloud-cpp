@@ -38,13 +38,15 @@ TEST(TerminateHandler, UnsetTerminates) {
 TEST(TerminateHandler, SettingGettingWorks) {
   SetTerminateHandler(&CustomHandler);
   TerminateHandler set_handler = GetTerminateHandler();
-  ASSERT_EQ(CustomHandler, *set_handler.target<void (*)(const char*)>());
+  ASSERT_TRUE(CustomHandler == *set_handler.target<void (*)(const char*)>())
+      << "The handler objects should be equal.";
 }
 
 TEST(TerminateHandler, OldHandlerIsReturned) {
   SetTerminateHandler(&CustomHandlerOld);
   TerminateHandler old_handler = SetTerminateHandler(CustomHandler);
-  ASSERT_EQ(CustomHandlerOld, *old_handler.target<void (*)(const char*)>());
+  ASSERT_TRUE(CustomHandlerOld == *old_handler.target<void (*)(const char*)>())
+      << "The handler objects should be equal.";
 }
 
 TEST(TerminateHandler, TerminateTerminates) {
