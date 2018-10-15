@@ -26,7 +26,7 @@ find_package(Threads REQUIRED)
 # In this file we try to normalize the situation to the packages defined in the
 # source.  Not perfect, but better than the mess we have otherwise.
 
-set(GOOGLE_CLOUD_CPP_GMOCK_PROVIDER "external"
+set(GOOGLE_CLOUD_CPP_GMOCK_PROVIDER ${GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER}
     CACHE STRING "How to find the googlemock library")
 set_property(CACHE GOOGLE_CLOUD_CPP_GMOCK_PROVIDER
              PROPERTY STRINGS

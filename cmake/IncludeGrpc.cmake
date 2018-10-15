@@ -19,7 +19,7 @@ find_package(Threads REQUIRED)
 
 # Configure the gRPC dependency, this can be found as a submodule, package, or
 # installed with pkg-config support.
-set(GOOGLE_CLOUD_CPP_GRPC_PROVIDER "external"
+set(GOOGLE_CLOUD_CPP_GRPC_PROVIDER ${GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER}
     CACHE STRING "How to find the gRPC library")
 set_property(CACHE GOOGLE_CLOUD_CPP_GRPC_PROVIDER
              PROPERTY STRINGS

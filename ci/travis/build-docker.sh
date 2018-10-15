@@ -148,12 +148,11 @@ echo "travis_fold:start:configure-cmake"
 # Tweak configuration for TEST_INSTALL=yes and SCAN_BUILD=yes builds.
 cmake_install_flags=""
 if [ "${TEST_INSTALL:-}" = "yes" ]; then
-  cmake_install_flags=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
-  cmake_install_flags="${cmake_install_flags} -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=package"
+  cmake_install_flags=-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package
 fi
 
 if [ "${SCAN_BUILD:-}" = "yes" ]; then
-  cmake_install_flags=-DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=package
+  cmake_install_flags=-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package
   cmake_install_flags="${cmake_install_flags} -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF"
 fi
 

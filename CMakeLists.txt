@@ -92,6 +92,49 @@ if ("${GOOGLE_CLOUD_CPP_ENABLE_CCACHE}")
     endif ()
 endif ()
 
+# The default source for dependencies.
+set(GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER "external" CACHE STRING "[===[
+How to find the dependencies for google-cloud-cpp.
+
+The Google Cloud C++ client libraries have several external dependencies,
+notably gRPC, libcurl, OpenSSL, and a few others.
+
+This configuration option controls how are these dependencies are found. It can
+be set to:
+
+* external: use CMake's `ExternalProject` to download and compile the
+  dependencies. This is the recommended configuration for development, as it
+  isolates your build from the system configuration.
+
+* package: use CMake's `find_package()` to find the dependencies. This is the
+  recommended configuration for compiling and installing google-cloud-cpp.
+
+* vcpkg: use github.com/Microsoft/vcpkg to find the dependencies. vcpkg
+  largely behaves as `package`, but we have a few bugs in our CMake
+  configuration that need to be cleaned up. This option will be changed to
+  behave exactly as `package` once we fix these problems.
+
+* pkg-config: use pkg-config(1) to find the dependencies. Sometimes the
+  dependencies are installed in the system, but the CMake configuration files
+  to support them are not. WARNING: this option may be removed in the future,
+  we think that modern CMake features like `ExternalProject` and `find_package`
+  are better options for dependency management.
+
+To experiment with different configurations developers can override the setting
+for one or more dependencies. For example, you could set
+`GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER` to `package` and
+`GOOGLE_CLOUD_CPP_GMOCK_PROVIDER` to `external`. These overrides are intended
+for development and testing of new dependencies and are not recommended for
+production use.
+]===]")
+
+set_property(CACHE GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
+             PROPERTY STRINGS
+                      "external"
+                      "package"
+                      "vcpkg"
+                      "pkg-config")
+
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
