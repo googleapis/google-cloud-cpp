@@ -77,12 +77,20 @@ CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
 }
 
 CurlStreambuf::CurlStreambuf(CurlUploadRequest&& upload,
-                             std::size_t max_buffer_size)
-    : upload_(std::move(upload)), max_buffer_size_(max_buffer_size) {
+                             std::size_t max_buffer_size,
+                             std::unique_ptr<HashValidator> hash_validator)
+    : upload_(std::move(upload)),
+      max_buffer_size_(max_buffer_size),
+      hash_validator_(std::move(hash_validator)) {
   current_ios_buffer_.reserve(max_buffer_size);
 }
 
 bool CurlStreambuf::IsOpen() const { return upload_.IsOpen(); }
+
+void CurlStreambuf::ValidateHash(ObjectMetadata const& meta) {
+  hash_validator_->ProcessMetadata(meta);
+  hash_validator_result_ = std::move(*hash_validator_).Finish(__func__);
+}
 
 CurlStreambuf::int_type CurlStreambuf::overflow(int_type ch) {
   Validate(__func__);
@@ -119,7 +127,11 @@ HttpResponse CurlStreambuf::DoClose() {
   GCP_LOG(INFO) << __func__ << "()";
   Validate(__func__);
   SwapBuffers();
-  return upload_.Close();
+  auto response = upload_.Close();
+  for (auto const& kv : response.headers) {
+    hash_validator_->ProcessHeader(kv.first, kv.second);
+  }
+  return response;
 }
 
 void CurlStreambuf::Validate(char const* where) const {
@@ -135,6 +147,7 @@ void CurlStreambuf::SwapBuffers() {
   // Shorten the buffer to the actual used size.
   current_ios_buffer_.resize(pptr() - pbase());
   // Push the buffer to the libcurl wrapper to be written as needed
+  hash_validator_->Update(current_ios_buffer_);
   upload_.NextBuffer(current_ios_buffer_);
   // Make the buffer big enough to receive more data before needing a flush.
   current_ios_buffer_.clear();

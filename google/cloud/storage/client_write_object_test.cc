@@ -60,6 +60,9 @@ class MockStreambuf : public internal::ObjectWriteStreambuf {
  public:
   MOCK_CONST_METHOD0(IsOpen, bool());
   MOCK_METHOD0(DoClose, internal::HttpResponse());
+  MOCK_METHOD1(ValidateHash, void(ObjectMetadata const&));
+  MOCK_CONST_METHOD0(received_hash, std::string const&());
+  MOCK_CONST_METHOD0(computed_hash, std::string const&());
 };
 
 TEST_F(WriteObjectTest, WriteObject) {

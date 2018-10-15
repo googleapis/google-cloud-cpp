@@ -120,6 +120,9 @@ class ObjectWriteStream : public std::basic_ostream<char> {
   /// Close the stream and return the (unparsed) result, useful for testing.
   internal::HttpResponse CloseRaw();
 
+  std::string const& received_hash() const { return buf_->received_hash(); }
+  std::string const& computed_hash() const { return buf_->computed_hash(); }
+
  private:
   std::unique_ptr<internal::ObjectWriteStreambuf> buf_;
 };

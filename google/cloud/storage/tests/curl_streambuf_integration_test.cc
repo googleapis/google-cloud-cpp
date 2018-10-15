@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/curl_streambuf.h"
@@ -38,8 +39,9 @@ TEST(CurlStreambufIntegrationTest, WriteManyBytes) {
                                        internal::GetDefaultCurlHandleFactory());
   builder.AddHeader("Content-Type: application/octet-stream");
   builder.SetMethod("POST");
-  std::unique_ptr<internal::CurlStreambuf> buf(
-      new internal::CurlStreambuf(builder.BuildUpload(), 128 * 1024));
+  std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
+      builder.BuildUpload(), 128 * 1024,
+      google::cloud::internal::make_unique<internal::NullHashValidator>()));
   ObjectWriteStream writer(std::move(buf));
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();

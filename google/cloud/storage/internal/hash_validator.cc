@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/status.h"
 #include <openssl/md5.h>
 
@@ -27,6 +28,16 @@ MD5HashValidator::MD5HashValidator() : context_{} { MD5_Init(&context_); }
 
 void MD5HashValidator::Update(std::string const& payload) {
   MD5_Update(&context_, payload.c_str(), payload.size());
+}
+
+void MD5HashValidator::ProcessMetadata(ObjectMetadata const &meta) {
+  if (meta.md5_hash().empty()) {
+    // When using the XML API the metadata is empty, but the headers are not. In
+    // that case we do not want to replace the received hash with an empty
+    // value.
+    return;
+  }
+  received_hash_ = meta.md5_hash();
 }
 
 void MD5HashValidator::ProcessHeader(std::string const& key,
