@@ -131,6 +131,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a8cdfe9c4ed1b18bf96b7e37e82169faf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade5023f94bdcd5e12e0ca914aff3f9b3"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ade5023f94bdcd5e12e0ca914aff3f9b3">TestIamPermissions</a> (grpc::ClientContext *context, google::iam::v1::TestIamPermissionsRequest const &amp;request, google::iam::v1::TestIamPermissionsResponse *response)=0</td></tr>
 <tr class="separator:ade5023f94bdcd5e12e0ca914aff3f9b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a292d8c8d42eb639cf8e039703f36536a"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::Instance &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a292d8c8d42eb639cf8e039703f36536a">AsyncGetInstance</a> (grpc::ClientContext *context, google::bigtable::admin::v2::GetInstanceRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
+<tr class="separator:a292d8c8d42eb639cf8e039703f36536a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">The `google.longrunning.Operations` wrappers.</div></td></tr>
 <tr class="memitem:ae0827d5d6f3443d5d286a2b212c1bd16"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ae0827d5d6f3443d5d286a2b212c1bd16">GetOperation</a> (grpc::ClientContext *context, google::longrunning::GetOperationRequest const &amp;request, google::longrunning::Operation *response)=0</td></tr>
 <tr class="separator:ae0827d5d6f3443d5d286a2b212c1bd16"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -176,6 +178,48 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a292d8c8d42eb639cf8e039703f36536a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a292d8c8d42eb639cf8e039703f36536a">&#9670;&nbsp;</a></span>AsyncGetInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::Instance&gt; &gt; google::cloud::bigtable::v0::InstanceAdminClient::AsyncGetInstance </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::bigtable::admin::v2::GetInstanceRequest const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">grpc::CompletionQueue *&#160;</td>
+          <td class="paramname"><em>cq</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a5c581b9fa50be247b2cef39865b600d8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5c581b9fa50be247b2cef39865b600d8">&#9670;&nbsp;</a></span>Channel()</h2>
 
