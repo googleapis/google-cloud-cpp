@@ -1,15 +1,141 @@
 /*!
-@mainpage Cloud Bigtable C++ Client Library
+@mainpage Google Cloud Platform Bigtable C++ Client Library
 
-This page contains the reference guide to the Cloud Bigtable C++ Client Library.
+# Overview
+The Google Cloud Platform Bigtable C++ Client library offers types and functions
+access of GCP Bigtable from C++11 applications([Read more about GCP Bigtable][read-more-about-gcp-bigtable]). 
+It offers access to the GCP Bigtable API, including operations to list, read, write, and delete
+[Instances and Clusters][read-instances-clusters], [Tables][read-tables] and [Application Profiles][read-appprofiles].
 
-## Examples
+## Quick Start
 
-* @ref bigtable-quickstart "Quickstart Example"
+### Before you begin
 
-* @ref bigtable-hello-world "Hello World Example"
+1. Select or create a Google Cloud Platform (GCP) project.
 
-* @ref bigtable-samples-instance-admin "Instance Admin Example"
+    [GO TO THE MANAGE RESOURCES PAGE][resource-link]
 
-* @ref bigtable-samples "Table Admin Example"
+    Make a note of the project id, you will need to use it later.
+
+2. Make sure that billing is enabled for your project
+
+    [LEARN HOW TO ENABLE BILLING][billing-link]
+
+3. Enable the Cloud Bigtable and Cloud Bigtable Admin APIs.
+
+    [LEARN HOW TO ENABLE THE APIS][enable-api-link]
+
+4. Learn about [key terms and concepts][read-more-about-gcp-bigtable] for GCP Bigtable.
+
+5. Setup the authentication for the examples.
+
+    [LEARN HOW TO CONFIGURE A SERVICE ACCOUNT][authentication-quickstart]
+
+    [LEARN HOW TO LOGIN WITH YOUR PERSONAL ACCOUNT][user-account]
+
+
+### Download and Compile C++ Client Library
+
+The source code for the Cloud Bigtable C++ Client Library can be found on
+[GitHub][github-link]. Download or clone this repository as usual. The
+top-level README file in this repository includes detailed instructions on
+how to compile the library. The examples used in this guide should be
+automatically compiled when you follow said instructions.
+
+### Run the Quick Start Example
+
+   @ref bigtable-quickstart "Quickstart Example"
+
+## Use the library in your own project
+
+Our continuous integration builds compile and test the code using both
+[Bazel](https://bazel.build/), and [CMake](https://cmake.org/). Integrating the
+GCP Bigtable C++ Client library should be easy if you use either.
+
+### Integrating with Bazel
+
+In your [WORKSPACE][workspace-definition-link] file add a dependency to download
+and install the library, for example:
+
+@code {.py}
+# Change the version and SHA256 hash as needed.
+http_archive(
+    name = "com_github_googlecloudplatform_google_cloud_cpp",
+    url = "http://github.com/googlecloudplatform/google-cloud-cpp/archive/v0.2.0.tar.gz",
+    sha256 = "5fa6577828e5f949178b13ed0411dd634527c9d2d8f00e433edbd6ef9e42a281"
+)
+@endcode
+
+Then load the dependencies of the library:
+
+```{.py}
+load("@com_github_googlecloudplatform_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+google_cloud_cpp_deps()
+# Have to manually call the corresponding function for gRPC:
+#   https://github.com/bazelbuild/bazel/issues/1550
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+grpc_deps()
+```
+
+You can now use the library as a dependency in your BUILD files, for example:
+
+```{.py}
+cc_binary(
+    name = "my_program",
+    srcs = [
+        "my_program.cc",
+    ],
+    deps = [
+        "@com_github_googlecloudplatform_google_cloud_cpp//google/cloud/bigtable:bigtable_client",
+    ],
+)
+```
+
+#### Integrating with CMake
+
+@note This assumes that you have downloaded and installed the dependencies of
+  the library. Please check the top-level README on [GitHub][github-link] for
+  details.
+
+Compile and install the library using the normal cycle:
+
+```
+cd google-cloud-cpp
+cmake -H. -Bbuild-output
+cmake --build build-output/google/cloud/bigtable -- -j $(nproc)
+cmake --build build-output/google/cloud/bigtable --target install
+```
+
+Now that the library is installed, you can use it in your CMake list files:
+
+```
+find_package(bigtable_client 0.2.0 REQUIRED)
+
+add_executable(my_program my_program.cc)
+target_link_libraries(my_program bigtable_client)
+```
+
+## Next Steps
+
+ * @ref bigtable-hello-world "Hello World Example"
+ 
+ * @ref bigtable-samples-instance-admin "Instance Admin Example"
+ 
+ * @ref bigtable-samples "Table Admin Example"
+
+[read-more-about-gcp-bigtable]: https://cloud.google.com/bigtable/docs/ 'Read more about GCP Bigtable'
+[read-instances-clusters]: https://cloud.google.com/bigtable/docs/instances-clusters-nodes 'Instances and Clusters'
+[read-tables]: https://cloud.google.com/bigtable/docs/overview 'Tables'
+[read-appprofiles]: https://cloud.google.com/bigtable/docs/app-profiles 'Application Profiles'
+
+[resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
+[billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
+[enable-api-link]: https://cloud.google.com/apis/docs/enable-disable-apis 'How to: Enable APIs'
+[concepts-link]: https://cloud.google.com/storage/docs/concepts 'GCS Concepts'
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
+[user-account]: https://cloud.google.com/docs/authentication/
+
+[github-link]: https://github.com/GoogleCloudPlatform/google-cloud-cpp 'Top-level README'
+[workspace-definition-link]: https://docs.bazel.build/versions/master/build-ref.html#packages_targets
+
 */
