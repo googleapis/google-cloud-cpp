@@ -94,15 +94,6 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
     return impl_.Stub()->GetInstance(context, request, response);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::bigtable::admin::v2::Instance>>
-  AsyncGetInstance(
-      grpc::ClientContext* context,
-      google::bigtable::admin::v2::GetInstanceRequest const& request,
-      grpc::CompletionQueue* cq) override {
-    return impl_.Stub()->AsyncGetInstance(context, request, cq);
-  }
-
   grpc::Status DeleteInstance(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteInstanceRequest const& request,
@@ -197,6 +188,15 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
       google::iam::v1::TestIamPermissionsRequest const& request,
       google::iam::v1::TestIamPermissionsResponse* response) override {
     return impl_.Stub()->TestIamPermissions(context, request, response);
+  }
+
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Instance>>
+  AsyncGetInstance(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GetInstanceRequest const& request,
+      grpc::CompletionQueue* cq) override {
+    return impl_.Stub()->AsyncGetInstance(context, request, cq);
   }
 
   DefaultInstanceAdminClient(DefaultInstanceAdminClient const&) = delete;

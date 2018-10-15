@@ -118,10 +118,10 @@ class InstanceAdmin {
       std::string const& instance_id, grpc::Status& status);
 
   /**
-   * Make an asynchronous request to get the instance.
+   * Makes an asynchronous request to get the attributes of an instance.
    *
-   * @param instance_id the id of the instance in the project that needs to be
-   *     Retrieve.
+   * @param instance_id the id of the instance in the project that to be
+   *     retrieved.
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
@@ -132,9 +132,6 @@ class InstanceAdmin {
    *         grpc::Status const&>);
    *
    * @tparam Functor the type of the callback.
-   *
-   * @return A handle to the asynchronous operation, applications can request
-   *   the operation to be canceled.
    */
   template <typename Functor,
             typename std::enable_if<google::cloud::internal::is_invocable<
