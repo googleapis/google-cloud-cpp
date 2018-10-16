@@ -101,7 +101,7 @@ struct OpenSslUtils {
 
     auto pem_buffer = std::unique_ptr<BIO, decltype(&BIO_free)>(
         BIO_new_mem_buf(const_cast<char*>(pem_contents.c_str()),
-                        pem_contents.length()),
+                        static_cast<int>(pem_contents.length())),
         &BIO_free);
     if (not pem_buffer) handle_openssl_failure("Could not create PEM buffer.");
 
