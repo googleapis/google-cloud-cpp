@@ -18,6 +18,13 @@ include(external/c-ares)
 include(external/protobuf)
 
 if (NOT TARGET gprc_project)
+    # Give application developers a hook to configure the version and hash
+    # downloaded from GitHub.
+    set(GOOGLE_CLOUD_CPP_GRPC_URL
+        "https://github.com/grpc/grpc/archive/v1.14.1.tar.gz")
+    set(GOOGLE_CLOUD_CPP_GRPC_SHA256
+        "16f22430210abf92e06626a5a116e114591075e5854ac78f1be8564171658b70")
+
     if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
         OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
         include(ProcessorCount)
@@ -34,9 +41,8 @@ if (NOT TARGET gprc_project)
         EXCLUDE_FROM_ALL ON
         PREFIX "external/grpc"
         INSTALL_DIR "external"
-        URL https://github.com/grpc/grpc/archive/v1.14.1.tar.gz
-        URL_HASH
-            SHA256=16f22430210abf92e06626a5a116e114591075e5854ac78f1be8564171658b70
+        URL ${GOOGLE_CLOUD_CPP_GRPC_URL}
+        URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GRPC_SHA256}
         CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                    -DCMAKE_BUILD_TYPE=Release
                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}

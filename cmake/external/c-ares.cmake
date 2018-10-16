@@ -15,6 +15,13 @@
 # ~~~
 
 if (NOT TARGET c_ares_project)
+    # Give application developers a hook to configure the version and hash
+    # downloaded from GitHub.
+    set(GOOGLE_CLOUD_CPP_C_ARES_URL
+        "https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz")
+    set(GOOGLE_CLOUD_CPP_C_ARES_SHA256
+        "62dd12f0557918f89ad6f5b759f0bf4727174ae9979499f5452c02be38d9d3e8")
+
     if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
         OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
         include(ProcessorCount)
@@ -30,9 +37,8 @@ if (NOT TARGET c_ares_project)
         EXCLUDE_FROM_ALL ON
         PREFIX "${CMAKE_BINARY_DIR}/external/c-ares"
         INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
-        URL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
-        URL_HASH
-            SHA256=62dd12f0557918f89ad6f5b759f0bf4727174ae9979499f5452c02be38d9d3e8
+        URL ${GOOGLE_CLOUD_CPP_C_ARES_URL}
+        URL_HASH SHA256=${GOOGLE_CLOUD_CPP_C_ARES_SHA256}
         CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                    -DCMAKE_BUILD_TYPE=Release
                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
