@@ -25,7 +25,7 @@ std::unique_ptr<BackoffPolicy> ExponentialBackoffPolicy::clone() const {
 
 std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {
   using namespace std::chrono;
-  std::uniform_int_distribution<long> rng_distribution(
+  std::uniform_int_distribution<microseconds::rep> rng_distribution(
       current_delay_range_.count() / 2, current_delay_range_.count());
   // Randomized sleep period because it is possible that after some time all
   // client have same sleep period if we use only exponential backoff policy.

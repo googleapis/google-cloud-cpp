@@ -699,7 +699,7 @@ TEST_F(ObjectIntegrationTest, InsertWithQuotaUser) {
     return std::regex(regex, std::regex_constants::egrep);
   }();
 
-  long count = std::count_if(
+  auto count = std::count_if(
       backend->log_lines.begin(), backend->log_lines.end(),
       [&re](std::string const& line) { return std::regex_match(line, re); });
   EXPECT_LT(0, count);
@@ -1291,7 +1291,7 @@ TEST_F(ObjectIntegrationTest, DefaultMD5HashXML) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0), Fields(""));
   LogSink::Instance().RemoveBackend(id);
 
-  long count =
+  auto count =
       std::count_if(backend->log_lines.begin(), backend->log_lines.end(),
                     [](std::string const& line) {
                       return line.rfind("x-goog-hash: md5=", 0) == 0;
@@ -1315,7 +1315,7 @@ TEST_F(ObjectIntegrationTest, DefaultMD5HashJSON) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   LogSink::Instance().RemoveBackend(id);
 
-  long count = std::count_if(
+  auto count = std::count_if(
       backend->log_lines.begin(), backend->log_lines.end(),
       [](std::string const& line) {
         // This is a big indirect, we detect if the upload changed to
@@ -1353,12 +1353,12 @@ TEST_F(ObjectIntegrationTest, DisableMD5HashXML) {
       DisableMD5Hash(true), Fields(""));
   LogSink::Instance().RemoveBackend(id);
 
-  long count =
+  auto count =
       std::count_if(backend->log_lines.begin(), backend->log_lines.end(),
                     [](std::string const& line) {
                       return line.rfind("x-goog-hash: md5=", 0) == 0;
                     });
-  EXPECT_EQ(0, count);
+  EXPECT_EQ(0U, count);
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -1378,7 +1378,7 @@ TEST_F(ObjectIntegrationTest, DisableMD5HashJSON) {
                           IfGenerationMatch(0), DisableMD5Hash(true));
   LogSink::Instance().RemoveBackend(id);
 
-  long count = std::count_if(
+  auto count = std::count_if(
       backend->log_lines.begin(), backend->log_lines.end(),
       [](std::string const& line) {
         // This is a big indirect, we detect if the upload changed to

@@ -45,7 +45,10 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
 
   HttpResponse response;
   std::string buffer;
-  int count = 0;
+  // The type for std::count() is hard to guess, most likely it is
+  // std::ptrdiff_t, but could be something else, just use the aliases defined
+  // for that purpose.
+  std::iterator_traits<std::string::iterator>::difference_type count = 0;
   do {
     response = download.GetMore(buffer);
     count += std::count(buffer.begin(), buffer.end(), '\n');
