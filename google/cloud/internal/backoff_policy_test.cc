@@ -93,7 +93,7 @@ TEST(ExponentialBackoffPolicy, Randomness) {
   ExponentialBackoffPolicy test_object1(ms(10), ms(1500), 2.0);
   ExponentialBackoffPolicy test_object2(ms(10), ms(1500), 2.0);
   // The type used to represent a duration varies by platform, better to use
-  // the alias guaranteed by the standard that trying to guess the type or
+  // the alias guaranteed by the standard than trying to guess the type or
   // use a lot of casts.
   std::vector<std::chrono::milliseconds::rep> output1, output2;
 
