@@ -1671,9 +1671,16 @@ def objects_get(bucket_name, object_name):
         return testbench_utils.filtered_response(flask.request, revision.metadata)
     if media != 'media':
         raise error_response.ErrorResponse('Invalid alt=%s parameter' % media)
+    quota_user = flask.request.args.get('quotaUser')
     revision.validate_encryption_for_read(flask.request)
-    response = flask.make_response(revision.media)
-    length = len(revision.media)
+    if quota_user == 'return-mismatched-data':
+        # Return something that is not the original data, this should be
+        # detected by the client.
+        response_payload = revision.media + 'extra stuff'
+    else:
+        response_payload = revision.media
+    response = flask.make_response(response_payload)
+    length = len(response_payload)
     response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1, length)
     response.headers['x-goog-hash'] = 'md5=%s' % revision.metadata.get('md5Hash', '')
     return response
@@ -1898,8 +1905,15 @@ def xmlapi_get_object(bucket_name, object_name):
     gcs_object.check_preconditions_by_value(generation_match, None,
                                             metageneration_match, None)
     revision = gcs_object.get_revision(flask.request)
-    response = flask.make_response(revision.media)
-    length = len(revision.media)
+    quota_user = flask.request.args.get('quotaUser')
+    if quota_user == 'return-mismatched-data':
+        # Return something that is not the original data, this should be
+        # detected by the client.
+        response_payload = revision.media + 'extra stuff'
+    else:
+        response_payload = revision.media
+    response = flask.make_response(response_payload)
+    length = len(response_payload)
     response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1, length)
     response.headers['x-goog-hash'] = 'md5=%s' % revision.metadata.get('md5Hash', '')
     return response
