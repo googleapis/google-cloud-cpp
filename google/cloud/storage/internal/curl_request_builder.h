@@ -102,6 +102,14 @@ class CurlRequestBuilder {
     return *this;
   }
 
+  /// Adds a custom header to the request.
+  CurlRequestBuilder& AddOption(CustomHeader const& p) {
+    if (p.has_value()) {
+      AddHeader(p.custom_header_name() + ": " + p.value());
+    }
+    return *this;
+  }
+
   /// Adds one of the well-known encryption header groups to the request.
   CurlRequestBuilder& AddOption(EncryptionKey const& p) {
     if (p.has_value()) {

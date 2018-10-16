@@ -36,6 +36,13 @@ std::string Sha256AsBase64(std::string const& key) {
 }
 }  // namespace
 
+std::ostream& operator<<(std::ostream& os, CustomHeader const& rhs) {
+  if (not rhs.has_value()) {
+    return os;
+  }
+  return os << rhs.custom_header_name() << ": " << rhs.value();
+}
+
 EncryptionKeyData EncryptionDataFromBinaryKey(std::string const& key) {
   return EncryptionKeyData{"AES256", internal::OpenSslUtils::Base64Encode(key),
                            Sha256AsBase64(key)};

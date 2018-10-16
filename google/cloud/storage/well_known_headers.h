@@ -71,6 +71,28 @@ struct ContentType
 };
 
 /**
+ * An option to inject custom headers into the request.
+ *
+ * In some cases it is necessary to inject a custom header into the request. For
+ * example, because the protocol has added new headers and the library has not
+ * been updated to support them, or because
+ */
+class CustomHeader
+ : public internal::WellKnownHeader<CustomHeader, std::string> {
+ public:
+  CustomHeader() = default;
+  explicit CustomHeader(std::string name, std::string value)
+  : WellKnownHeader(std::move(value)), name_(std::move(name)) {}
+
+  std::string const& custom_header_name() const { return name_; }
+
+ private:
+  std::string name_;
+};
+
+std::ostream& operator<<(std::ostream& os, CustomHeader const& rhs);
+
+/**
  * A pre-condition: apply this operation only if the HTTP Entity Tag matches.
  *
  * [HTTP Entity Tags](https://en.wikipedia.org/wiki/HTTP_ETag) allow
