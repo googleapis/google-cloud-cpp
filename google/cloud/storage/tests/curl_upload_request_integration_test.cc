@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
@@ -30,11 +31,8 @@ namespace internal {
 
 namespace {
 std::string HttpBinEndpoint() {
-  auto env = std::getenv("HTTPBIN_ENDPOINT");
-  if (env != nullptr) {
-    return env;
-  }
-  return "https://nghttp2.org/httpbin";
+  return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT")
+      .value_or("https://nghttp2.org/httpbin");
 }
 
 TEST(CurlUploadRequestTest, UploadPartial) {

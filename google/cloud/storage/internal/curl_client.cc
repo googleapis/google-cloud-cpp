@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_client.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/curl_streambuf.h"
@@ -117,7 +118,9 @@ CurlClient::CurlClient(ClientOptions options)
   upload_endpoint_ =
       options_.endpoint() + "/upload/storage/" + options_.version();
 
-  if (std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT") != nullptr) {
+  auto endpoint =
+      google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
+  if (endpoint.has_value()) {
     xml_upload_endpoint_ = options_.endpoint() + "/xmlapi";
     xml_download_endpoint_ = options_.endpoint() + "/xmlapi";
   } else {

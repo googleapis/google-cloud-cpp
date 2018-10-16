@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
+#include "google/cloud/internal/getenv.h"
 #include <cstdlib>
 
 namespace {
@@ -37,14 +38,14 @@ inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
 std::string GoogleAdcFilePathOrEmpty() {
-  auto override_value = std::getenv(GoogleAdcEnvVar());
-  if (override_value != nullptr) {
-    return std::string(override_value);
+  auto override_value = google::cloud::internal::GetEnv(GoogleAdcEnvVar());
+  if (override_value.has_value()) {
+    return *override_value;
   }
   // Search well known gcloud ADC path.
-  auto adc_path_root = std::getenv(GoogleAdcHomeEnvVar());
-  if (adc_path_root != nullptr) {
-    return std::string(adc_path_root) + GoogleWellKnownAdcFilePathSuffix();
+  auto adc_path_root = google::cloud::internal::GetEnv(GoogleAdcHomeEnvVar());
+  if (adc_path_root.has_value()) {
+    return *adc_path_root + GoogleWellKnownAdcFilePathSuffix();
   }
   return "";
 }

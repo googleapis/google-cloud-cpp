@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/testing/table_integration_test.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 
@@ -621,6 +622,6 @@ void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
 }
 
 bool UsingCloudBigtableEmulator() {
-  return std::getenv("BIGTABLE_EMULATOR_HOST") != nullptr;
+  return google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST").has_value();
 }
 }  // namespace

@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_ENVIRONMENT_VARIABLE_RESTORE_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_ENVIRONMENT_VARIABLE_RESTORE_H_
 
-#include "google/cloud/version.h"
+#include "google/cloud/optional.h"
 #include <cstdlib>
 
 namespace google {
@@ -43,8 +43,7 @@ class EnvironmentVariableRestore {
 
  private:
   std::string variable_name_;
-  bool was_null_;
-  std::string previous_;
+  optional<std::string> previous_;
 };
 
 }  // namespace testing_util
