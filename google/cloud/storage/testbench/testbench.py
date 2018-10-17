@@ -19,12 +19,11 @@ import base64
 import error_response
 import flask
 import gcs_bucket
-import hashlib
+import gcs_object
 import httpbin
 import json
 import os
 import testbench_utils
-import time
 from werkzeug import serving
 from werkzeug import wsgi
 
@@ -42,288 +41,6 @@ root.debug = True
 def index():
     """Default handler for the test bench."""
     return 'OK'
-
-
-class GcsObjectVersion(object):
-    """Represent a single revision of a GCS Object."""
-
-    def __init__(self, gcs_url, bucket_name, name, generation, request, media):
-        """Initialize a new object revision.
-
-        :param gcs_url:str the base URL for the GCS service.
-        :param bucket_name:str the name of the bucket that contains the object.
-        :param name:str the name of the object.
-        :param generation:int the generation number for this object.
-        :param request:flask.Request the contents of the HTTP request.
-        :param media:str the contents of the object.
-        """
-        self.gcs_url = gcs_url
-        self.bucket_name = bucket_name
-        self.name = name
-        self.generation = generation
-        self.object_id = bucket_name + '/o/' + name + '/' + str(generation)
-        now = time.gmtime(time.time())
-        timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
-        self.media = media
-
-        self.metadata = {
-            'timeCreated': timestamp,
-            'updated': timestamp,
-            'metageneration': 0,
-            'generation': generation,
-            'location': 'US',
-            'storageClass': 'STANDARD',
-            'size': len(self.media),
-            'etag': 'XYZ=',
-            'owner': {
-                'entity': 'project-owners-123456789',
-                'entityId': '',
-            },
-            'md5Hash': base64.b64encode(hashlib.md5(self.media).digest()),
-        }
-        if request.headers.get('content-type') is not None:
-            self.metadata['contentType'] = request.headers.get('content-type')
-        # Update the derived metadata attributes (e.g.: id, kind, selfLink)
-        self.update_from_metadata({})
-        # Capture any encryption key headers.
-        self._capture_customer_encryption(request)
-        self._update_predefined_acl(request.args.get('predefinedAcl'))
-        acl2json_mapping = {
-            'authenticated-read': 'authenticatedRead',
-            'bucket-owner-full-control': 'bucketOwnerFullControl',
-            'bucket-owner-read': 'bucketOwnerRead',
-            'private': 'private',
-            'project-private': 'projectPrivate',
-            'public-read': 'publicRead',
-        }
-        if request.headers.get('x-goog-acl') is not None:
-            acl = request.headers.get('x-goog-acl')
-            predefined = acl2json_mapping.get(acl)
-            if predefined is not None:
-                self._update_predefined_acl(predefined)
-            else:
-                raise error_response.ErrorResponse(
-                    'Invalid predefinedAcl value %s' % acl, status_code=400)
-
-    def update_from_metadata(self, metadata):
-        """Update from a metadata dictionary.
-
-        :param metadata:dict a dictionary with new metadata values.
-        :rtype:NoneType
-        """
-        tmp = self.metadata.copy()
-        tmp.update(metadata)
-        tmp['bucket'] = tmp.get('bucket', self.name)
-        tmp['name'] = tmp.get('name', self.name)
-        now = time.gmtime(time.time())
-        timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
-        # Some values cannot be changed via updates, so we always reset them.
-        tmp.update({
-            'kind': 'storage#object',
-            'bucket': self.bucket_name,
-            'name': self.name,
-            'id': self.object_id,
-            'selfLink': self.gcs_url + self.name,
-            'projectNumber': '123456789',
-            'updated': timestamp,
-        })
-        tmp['metageneration'] = tmp.get('metageneration', 0) + 1
-        self.metadata = tmp
-        self._validate_hashes()
-
-    def _validate_hashes(self):
-        """Validate the md5Hash field against the stored media."""
-        actual = self.metadata.get('md5Hash', '')
-        expected = base64.b64encode(hashlib.md5(self.media).digest())
-        if actual != expected:
-            raise error_response.ErrorResponse(
-                'Mismatched MD5 hash expected=%s, actual=%s' % (expected,
-                                                                actual))
-
-    def validate_encryption_for_read(self, request,
-                                     prefix='x-goog-encryption'):
-        """Verify that the request includes the correct encryption keys.
-
-        :param request:flask.Request the http request.
-        :param prefix: str the prefix shared by the encryption headers,
-            typically 'x-goog-encryption', but for rewrite requests it can be
-            'x-good-copy-source-encryption'.
-        :rtype:NoneType
-        """
-        key_header = prefix + '-key'
-        hash_header = prefix + '-key-sha256'
-        algo_header = prefix + '-algorithm'
-        encryption = self.metadata.get('customerEncryption')
-        if encryption is None:
-            # The object is not encrypted, no key is needed.
-            if request.headers.get(key_header) is None:
-                return
-            else:
-                # The data is not encrypted, sending an encryption key is an
-                # error.
-                testbench_utils.raise_csek_error()
-        # The data is encrypted, the key must be present, match, and match its
-        # hash.
-        key_header_value = request.headers.get(key_header)
-        hash_header_value = request.headers.get(hash_header)
-        algo_header_value = request.headers.get(algo_header)
-        testbench_utils.validate_customer_encryption_headers(
-            key_header_value, hash_header_value, algo_header_value)
-        if encryption.get('keySha256') != hash_header_value:
-            testbench_utils.raise_csek_error()
-
-    def _capture_customer_encryption(self, request):
-        """Capture the customer-supplied encryption key, if any.
-
-        :param request:flask.Request the http request.
-        :rtype:NoneType
-        """
-        if request.headers.get('x-goog-encryption-key') is None:
-            return
-        prefix = 'x-goog-encryption'
-        key_header = prefix + '-key'
-        hash_header = prefix + '-key-sha256'
-        algo_header = prefix + '-algorithm'
-        key_header_value = request.headers.get(key_header)
-        hash_header_value = request.headers.get(hash_header)
-        algo_header_value = request.headers.get(algo_header)
-        testbench_utils.validate_customer_encryption_headers(
-            key_header_value, hash_header_value, algo_header_value)
-        self.metadata['customerEncryption'] = {
-            "encryptionAlgorithm": algo_header_value,
-            "keySha256": hash_header_value,
-        }
-
-    def _update_predefined_acl(self, predefined_acl):
-        """Update the ACL based on the given request parameter value."""
-        if predefined_acl is None:
-            predefined_acl = 'projectPrivate'
-        self.insert_acl(
-            testbench_utils.canonical_entity_name('project-owners-123456789'), 'OWNER')
-        bucket = testbench_utils.lookup_bucket(self.bucket_name)
-        owner = bucket.metadata.get('owner')
-        if owner is None:
-            owner_entity = 'project-owners-123456789'
-        else:
-            owner_entity = owner.get('entity')
-        if predefined_acl == 'authenticatedRead':
-            self.insert_acl('allAuthenticatedUsers', 'READER')
-        elif predefined_acl == 'bucketOwnerFullControl':
-            self.insert_acl(owner_entity, 'OWNER')
-        elif predefined_acl == 'bucketOwnerRead':
-            self.insert_acl(owner_entity, 'READER')
-        elif predefined_acl == 'private':
-            self.insert_acl('project-owners', 'OWNER')
-        elif predefined_acl == 'projectPrivate':
-            self.insert_acl(
-                testbench_utils.canonical_entity_name('project-editors-123456789'), 'OWNER')
-            self.insert_acl(
-                testbench_utils.canonical_entity_name('project-viewers-123456789'), 'READER')
-        elif predefined_acl == 'publicRead':
-            self.insert_acl(
-                testbench_utils.canonical_entity_name('allUsers'), 'READER')
-        else:
-            raise error_response.ErrorResponse(
-                'Invalid predefinedAcl value', status_code=400)
-
-    def reset_predefined_acl(self, predefined_acl):
-        """Reset the ACL based on the given request parameter value."""
-        self.metadata['acl'] = []
-        self._update_predefined_acl(predefined_acl)
-
-    def insert_acl(self, entity, role):
-        """Insert (or update) a new AccessControl entry for this object.
-
-        :param entity:str the name of the entity to insert.
-        :param role:str the new role
-        :return: the dictionary representing the new AccessControl metadata.
-        :rtype:dict
-        """
-        entity = testbench_utils.canonical_entity_name(entity)
-        email = ''
-        if entity.startswith('user-'):
-            email = entity
-        # Replace or insert the entry.
-        indexed = testbench_utils.index_acl(self.metadata.get('acl', []))
-        indexed[entity] = {
-            'bucket': self.bucket_name,
-            'email': email,
-            'entity': entity,
-            'entity_id': '',
-            'etag': self.metadata.get('etag', 'XYZ='),
-            'generation': self.generation,
-            'id': self.metadata.get('id', '') + '/' + entity,
-            'kind': 'storage#objectAccessControl',
-            'object': self.name,
-            'role': role,
-            'selfLink': self.metadata.get('selfLink') + '/acl/' + entity
-        }
-        self.metadata['acl'] = indexed.values()
-        return indexed[entity]
-
-    def delete_acl(self, entity):
-        """Delete a single AccessControl entry from the Object revision.
-
-        :param entity:str the name of the entity.
-        :rtype:NoneType
-        """
-        entity = testbench_utils.canonical_entity_name(entity)
-        indexed = testbench_utils.index_acl(self.metadata.get('acl', []))
-        indexed.pop(entity)
-        self.metadata['acl'] = indexed.values()
-
-    def get_acl(self, entity):
-        """Get a single AccessControl entry from the Object revision.
-
-        :param entity:str the name of the entity.
-        :return: with the contents of the ObjectAccessControl.
-        :rtype:dict
-        """
-        entity = testbench_utils.canonical_entity_name(entity)
-        for acl in self.metadata.get('acl', []):
-            if acl.get('entity', '') == entity:
-                return acl
-        raise error_response.ErrorResponse(
-            'Entity %s not found in object %s' % (entity, self.name))
-
-    def update_acl(self, entity, role):
-        """Update a single AccessControl entry in this Object revision.
-
-        :param entity:str the name of the entity.
-        :param role:str the new role for the entity.
-        :return: with the contents of the ObjectAccessControl.
-        :rtype: dict
-        """
-        return self.insert_acl(entity, role)
-
-    def patch_acl(self, entity, request):
-        """Patch a single AccessControl entry in this Object revision.
-
-        :param entity:str the name of the entity.
-        :param request:flask.Request the parameters for this request.
-        :return: with the contents of the ObjectAccessControl.
-        :rtype: dict
-        """
-        acl = self.get_acl(entity)
-        payload = json.loads(request.data)
-        request_entity = payload.get('entity')
-        if request_entity is not None and request_entity != entity:
-            raise error_response.ErrorResponse(
-                'Entity mismatch in ObjectAccessControls: patch, expected=%s, got=%s'
-                % (entity, request_entity))
-        etag_match = request.headers.get('if-match')
-        if etag_match is not None and etag_match != acl.get('etag'):
-            raise error_response.ErrorResponse(
-                'Precondition Failed', status_code=412)
-        etag_none_match = request.headers.get('if-none-match')
-        if (etag_none_match is not None
-                and etag_none_match != acl.get('etag')):
-            raise error_response.ErrorResponse(
-                'Precondition Failed', status_code=412)
-        role = payload.get('role')
-        if role is None:
-            raise error_response.ErrorResponse('Missing role value')
-        return self.insert_acl(entity, role)
 
 
 class GcsObject(object):
@@ -351,7 +68,7 @@ class GcsObject(object):
         :param version_field_name:str the name of the generation
             parameter, typically 'generation', but sometimes 'sourceGeneration'.
         :return: the object revision.
-        :rtype: GcsObjectVersion
+        :rtype: gcs_object.GcsObjectVersion
         :raises:ErrorResponse if the request contains an invalid generation
             number.
         """
@@ -387,7 +104,7 @@ class GcsObject(object):
 
         :param request:flask.Request
         :return: the object revision updated revision.
-        :rtype:GcsObjectVersion
+        :rtype: gcs_object.GcsObjectVersion
         :raises:ErrorResponse if the request contains an invalid generation
             number.
         """
@@ -520,7 +237,7 @@ class GcsObject(object):
     def _insert_revision(self, revision):
         """Insert a new revision that has been initialized and checked.
 
-        :param revision:GcsObjectVersion the new revision to insert.
+        :param revision: gcs_object.GcsObjectVersion the new revision to insert.
         :rtype:NoneType
         """
         update = {self.generation: revision}
@@ -536,12 +253,13 @@ class GcsObject(object):
         :param gcs_url:str the root URL for the fake GCS service.
         :param request:flask.Request the contents of the HTTP request.
         :return: the newly created object version.
-        :rtype: GcsObjectVersion
+        :rtype: gcs_object.GcsObjectVersion
         """
         media = testbench_utils.extract_media(request)
         self.generation += 1
-        revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
-                                    self.generation, request, media)
+        revision = gcs_object.GcsObjectVersion(
+            gcs_url, self.bucket_name, self.name, self.generation, request,
+            media)
         meta = revision.metadata.setdefault('metadata', {})
         meta['x_testbench_upload'] = 'simple'
         self._insert_revision(revision)
@@ -573,7 +291,7 @@ class GcsObject(object):
         :param gcs_url:str the root URL for the fake GCS service.
         :param request:flask.Request the contents of the HTTP request.
         :return: the newly created object version.
-        :rtype: GcsObjectVersion
+        :rtype: gcs_object.GcsObjectVersion
         """
         content_type = request.headers.get('content-type')
         if content_type is None or not content_type.startswith(
@@ -600,8 +318,9 @@ class GcsObject(object):
                 'Missing end marker (--%s--) in media body' % boundary)
         media_body = media_body[:end]
         self.generation += 1
-        revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
-                                    self.generation, request, media_body)
+        revision = gcs_object.GcsObjectVersion(
+            gcs_url, self.bucket_name, self.name, self.generation, request,
+            media_body)
         resource = json.loads(resource_body)
         meta = revision.metadata.setdefault('metadata', {})
         meta['x_testbench_upload'] = 'multipart'
@@ -623,7 +342,7 @@ class GcsObject(object):
         :param gcs_url:str the root URL for the fake GCS service.
         :param request:flask.Request the contents of the HTTP request.
         :return: the newly created object version.
-        :rtype: GcsObjectVersion
+        :rtype: gcs_object.GcsObjectVersion
         """
         media = testbench_utils.extract_media(request)
         self.generation += 1
@@ -633,8 +352,9 @@ class GcsObject(object):
             for hash in goog_hash.split(','):
                 if hash.startswith('md5='):
                     md5hash = hash[4:]
-        revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
-                                    self.generation, request, media)
+        revision = gcs_object.GcsObjectVersion(
+            gcs_url, self.bucket_name, self.name, self.generation, request,
+            media)
         meta = revision.metadata.setdefault('metadata', {})
         meta['x_testbench_upload'] = 'xml'
         if md5hash is not None:
@@ -653,13 +373,13 @@ class GcsObject(object):
         :param source_revision:GcsObjectVersion the source object version to
             copy from.
         :return: the newly created object version.
-        :rtype: GcsObjectVersion
+        :rtype: gcs_object.GcsObjectVersion
         """
         self.generation += 1
         source_revision.validate_encryption_for_read(request)
-        revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
-                                    self.generation, request,
-                                    source_revision.media)
+        revision = gcs_object.GcsObjectVersion(
+            gcs_url, self.bucket_name, self.name, self.generation, request,
+            source_revision.media)
         revision.reset_predefined_acl(
             request.args.get('destinationPredefinedAcl'))
         metadata = json.loads(request.data)
@@ -674,11 +394,12 @@ class GcsObject(object):
         :param request:flask.Request the contents of the HTTP request.
         :param composed_media:str contents of the composed object
         :return: the newly created object version.
-        :rtype: GcsObjectVersion
+        :rtype: gcs_object.GcsObjectVersion
         """
         self.generation += 1
-        revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
-                                    self.generation, request, composed_media)
+        revision = gcs_object.GcsObjectVersion(
+            gcs_url, self.bucket_name, self.name, self.generation, request,
+            composed_media)
         revision.reset_predefined_acl(
             request.args.get('destinationPredefinedAcl'))
         payload = json.loads(request.data)
@@ -761,13 +482,14 @@ class GcsObject(object):
         :param body:dict the HTTP payload, parsed via json.loads()
         :param source:GcsObjectVersion the source object version.
         :return: the newly created object version.
-        :rtype:GcsObjectVersion
+        :rtype: gcs_object.GcsObjectVersion
         """
         media = source.media
         self.check_preconditions(request)
         self.generation += 1
-        revision = GcsObjectVersion(gcs_url, self.bucket_name, self.name,
-                                    self.generation, request, media)
+        revision = gcs_object.GcsObjectVersion(
+            gcs_url, self.bucket_name, self.name, self.generation, request,
+            media)
         revision.update_from_metadata(body)
         self._insert_revision(revision)
         return revision
@@ -1193,15 +915,15 @@ def objects_list(bucket_name):
 def objects_copy(source_bucket, source_object, destination_bucket,
                  destination_object):
     """Implement the 'Objects: copy' API, copy an object."""
-    object_path, gcs_object = testbench_utils.lookup_object(source_bucket, source_object)
-    gcs_object.check_preconditions(
+    object_path, blob = testbench_utils.lookup_object(source_bucket, source_object)
+    blob.check_preconditions(
         flask.request,
         if_generation_match='ifSourceGenerationMatch',
         if_generation_not_match='ifSourceGenerationNotMatch',
         if_metageneration_match='ifSourceMetagenerationMatch',
         if_metageneration_not_match='ifSourceMetagenerationNotMatch')
-    source_revision = gcs_object.get_revision(flask.request,
-                                              'sourceGeneration')
+    source_revision = blob.get_revision(flask.request,
+                                        'sourceGeneration')
     if source_revision is None:
         raise error_response.ErrorResponse(
             'Revision not found %s' % object_path, status_code=404)
@@ -1224,24 +946,24 @@ def objects_rewrite(source_bucket, source_object, destination_bucket,
     """Implement the 'Objects: rewrite' API."""
     base_url = flask.url_for('gcs_index', _external=True)
     insert_magic_bucket(base_url)
-    object_path, gcs_object = testbench_utils.lookup_object(source_bucket, source_object)
-    gcs_object.check_preconditions(
+    object_path, blob = testbench_utils.lookup_object(source_bucket, source_object)
+    blob.check_preconditions(
         flask.request,
         if_generation_match='ifSourceGenerationMatch',
         if_generation_not_match='ifSourceGenerationNotMatch',
         if_metageneration_match='ifSourceMetagenerationMatch',
         if_metageneration_not_match='ifSourceMetagenerationNotMatch')
-    response = gcs_object.rewrite_step(base_url, flask.request,
-                                       destination_bucket, destination_object)
+    response = blob.rewrite_step(base_url, flask.request,
+                                 destination_bucket, destination_object)
     return testbench_utils.filtered_response(flask.request, response)
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>')
 def objects_get(bucket_name, object_name):
     """Implement the 'Objects: get' API.  Read objects or their metadata."""
-    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
-    gcs_object.check_preconditions(flask.request)
-    revision = gcs_object.get_revision(flask.request)
+    _, blob = testbench_utils.lookup_object(bucket_name, object_name)
+    blob.check_preconditions(flask.request)
+    revision = blob.get_revision(flask.request)
 
     media = flask.request.args.get('alt', None)
     if media is None or media == 'json':
@@ -1259,9 +981,9 @@ def objects_get(bucket_name, object_name):
 @gcs.route('/b/<bucket_name>/o/<object_name>', methods=['DELETE'])
 def objects_delete(bucket_name, object_name):
     """Implement the 'Objects: delete' API.  Delete objects."""
-    object_path, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
-    gcs_object.check_preconditions(flask.request)
-    remove = gcs_object.del_revision(flask.request)
+    object_path, blob = testbench_utils.lookup_object(bucket_name, object_name)
+    blob.check_preconditions(flask.request)
+    remove = blob.del_revision(flask.request)
     if remove:
         testbench_utils.delete_object(object_path)
     return testbench_utils.filtered_response(flask.request, {})
@@ -1270,9 +992,9 @@ def objects_delete(bucket_name, object_name):
 @gcs.route('/b/<bucket_name>/o/<object_name>', methods=['PUT'])
 def objects_update(bucket_name, object_name):
     """Implement the 'Objects: update' API: update an existing Object."""
-    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
-    gcs_object.check_preconditions(flask.request)
-    revision = gcs_object.update_revision(flask.request)
+    _, blob = testbench_utils.lookup_object(bucket_name, object_name)
+    blob.check_preconditions(flask.request)
+    revision = blob.update_revision(flask.request)
     return json.dumps(revision.metadata)
 
 
@@ -1294,12 +1016,12 @@ def objects_compose(bucket_name, object_name):
         source_object_name = source_object.get('name')
         if source_object_name is None:
             raise error_response.ErrorResponse('Required.', status_code=400)
-        source_object_path, source_gcs_object = testbench_utils.lookup_object(
+        source_object_path, source_blob = testbench_utils.lookup_object(
             bucket_name, source_object_name)
-        source_revision = source_gcs_object.get_latest()
+        source_revision = source_blob.get_latest()
         generation = source_object.get('generation')
         if generation is not None:
-            source_revision = source_gcs_object.get_revision_by_generation(
+            source_revision = source_blob.get_revision_by_generation(
                 generation)
             if source_revision is None:
                 raise error_response.ErrorResponse(
@@ -1307,7 +1029,7 @@ def objects_compose(bucket_name, object_name):
         object_preconditions = source_object.get('objectPreconditions')
         if object_preconditions is not None:
             if_generation_match = object_preconditions.get('ifGenerationMatch')
-            source_gcs_object.check_preconditions_by_value(
+            source_blob.check_preconditions_by_value(
                 if_generation_match, None, None, None)
         composed_media += source_revision.media
     composed_object_path, composed_object = testbench_utils.get_object(
@@ -1323,18 +1045,18 @@ def objects_compose(bucket_name, object_name):
 @gcs.route('/b/<bucket_name>/o/<object_name>', methods=['PATCH'])
 def objects_patch(bucket_name, object_name):
     """Implement the 'Objects: patch' API: update an existing Object."""
-    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
-    gcs_object.check_preconditions(flask.request)
-    revision = gcs_object.patch_revision(flask.request)
+    _, blob = testbench_utils.lookup_object(bucket_name, object_name)
+    blob.check_preconditions(flask.request)
+    revision = blob.patch_revision(flask.request)
     return json.dumps(revision.metadata)
 
 
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl')
 def objects_acl_list(bucket_name, object_name):
     """Implement the 'ObjectAccessControls: list' API."""
-    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
-    gcs_object.check_preconditions(flask.request)
-    revision = gcs_object.get_revision(flask.request)
+    _, blob = testbench_utils.lookup_object(bucket_name, object_name)
+    blob.check_preconditions(flask.request)
+    revision = blob.get_revision(flask.request)
     result = {
         'items': revision.metadata.get('acl', []),
     }
@@ -1344,9 +1066,9 @@ def objects_acl_list(bucket_name, object_name):
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl', methods=['POST'])
 def objects_acl_create(bucket_name, object_name):
     """Implement the 'ObjectAccessControls: create' API."""
-    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
-    gcs_object.check_preconditions(flask.request)
-    revision = gcs_object.get_revision(flask.request)
+    _, blob = testbench_utils.lookup_object(bucket_name, object_name)
+    blob.check_preconditions(flask.request)
+    revision = blob.get_revision(flask.request)
     payload = json.loads(flask.request.data)
     return testbench_utils.filtered_response(
         flask.request,
@@ -1357,9 +1079,9 @@ def objects_acl_create(bucket_name, object_name):
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['DELETE'])
 def objects_acl_delete(bucket_name, object_name, entity):
     """Implement the 'ObjectAccessControls: delete' API."""
-    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
-    gcs_object.check_preconditions(flask.request)
-    revision = gcs_object.get_revision(flask.request)
+    _, blob = testbench_utils.lookup_object(bucket_name, object_name)
+    blob.check_preconditions(flask.request)
+    revision = blob.get_revision(flask.request)
     revision.delete_acl(entity)
     return testbench_utils.filtered_response(flask.request, {})
 
@@ -1367,9 +1089,9 @@ def objects_acl_delete(bucket_name, object_name, entity):
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>')
 def objects_acl_get(bucket_name, object_name, entity):
     """Implement the 'ObjectAccessControls: get' API."""
-    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
-    gcs_object.check_preconditions(flask.request)
-    revision = gcs_object.get_revision(flask.request)
+    _, blob = testbench_utils.lookup_object(bucket_name, object_name)
+    blob.check_preconditions(flask.request)
+    revision = blob.get_revision(flask.request)
     acl = revision.get_acl(entity)
     return testbench_utils.filtered_response(flask.request, acl)
 
@@ -1377,9 +1099,9 @@ def objects_acl_get(bucket_name, object_name, entity):
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['PUT'])
 def objects_acl_update(bucket_name, object_name, entity):
     """Implement the 'ObjectAccessControls: update' API."""
-    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
-    gcs_object.check_preconditions(flask.request)
-    revision = gcs_object.get_revision(flask.request)
+    _, blob = testbench_utils.lookup_object(bucket_name, object_name)
+    blob.check_preconditions(flask.request)
+    revision = blob.get_revision(flask.request)
     payload = json.loads(flask.request.data)
     acl = revision.update_acl(entity, payload.get('role', ''))
     return testbench_utils.filtered_response(flask.request, acl)
@@ -1388,9 +1110,9 @@ def objects_acl_update(bucket_name, object_name, entity):
 @gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['PATCH'])
 def objects_acl_patch(bucket_name, object_name, entity):
     """Implement the 'ObjectAccessControls: patch' API."""
-    _, gcs_object = testbench_utils.lookup_object(bucket_name, object_name)
-    gcs_object.check_preconditions(flask.request)
-    revision = gcs_object.get_revision(flask.request)
+    _, blob = testbench_utils.lookup_object(bucket_name, object_name)
+    blob.check_preconditions(flask.request)
+    revision = blob.get_revision(flask.request)
     acl = revision.patch_acl(entity, flask.request)
     return testbench_utils.filtered_response(flask.request, acl)
 
@@ -1437,14 +1159,14 @@ def objects_insert(bucket_name):
         raise error_response.ErrorResponse(
             'testbench does not support %s uploadType' % upload_type,
             status_code=400)
-    object_path, gcs_object = testbench_utils.get_object(
+    object_path, blob = testbench_utils.get_object(
         bucket_name, object_name, GcsObject(bucket_name, object_name))
-    gcs_object.check_preconditions(flask.request)
+    blob.check_preconditions(flask.request)
     if upload_type == 'media':
-        current_version = gcs_object.insert(gcs_url, flask.request)
+        current_version = blob.insert(gcs_url, flask.request)
     else:
-        current_version = gcs_object.insert_multipart(gcs_url, flask.request)
-    testbench_utils.insert_object(object_path, gcs_object)
+        current_version = blob.insert_multipart(gcs_url, flask.request)
+    testbench_utils.insert_object(object_path, blob)
     return testbench_utils.filtered_response(flask.request, current_version.metadata)
 
 
@@ -1462,8 +1184,7 @@ def xmlapi_error(error):
 @xmlapi.route('/<bucket_name>/<object_name>')
 def xmlapi_get_object(bucket_name, object_name):
     """Implement the 'Objects: insert' API.  Insert a new GCS Object."""
-    object_path, gcs_object = testbench_utils.lookup_object(
-        bucket_name, object_name)
+    object_path, blob = testbench_utils.lookup_object(bucket_name, object_name)
     if flask.request.args.get('acl') is not None:
         raise error_response.ErrorResponse(
             'ACL query not supported in XML API', status_code=500)
@@ -1472,9 +1193,9 @@ def xmlapi_get_object(bucket_name, object_name):
             'Encryption query not supported in XML API', status_code=500)
     generation_match = flask.request.headers.get('if-generation-match')
     metageneration_match = flask.request.headers.get('if-metageneration-match')
-    gcs_object.check_preconditions_by_value(generation_match, None,
-                                            metageneration_match, None)
-    revision = gcs_object.get_revision(flask.request)
+    blob.check_preconditions_by_value(generation_match, None,
+                                      metageneration_match, None)
+    revision = blob.get_revision(flask.request)
     response = flask.make_response(revision.media)
     length = len(revision.media)
     response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1, length)
@@ -1494,14 +1215,14 @@ def xmlapi_put_object(bucket_name, object_name):
         object_name=object_name,
         _external=True).replace('/xmlapi/', '/')
     insert_magic_bucket(gcs_url)
-    object_path, gcs_object = testbench_utils.get_object(
+    object_path, blob = testbench_utils.get_object(
         bucket_name, object_name, GcsObject(bucket_name, object_name))
     generation_match = flask.request.headers.get('x-goog-if-generation-match')
     metageneration_match = flask.request.headers.get('x-goog-if-metageneration-match')
-    gcs_object.check_preconditions_by_value(generation_match, None,
-                                            metageneration_match, None)
-    revision = gcs_object.insert_xml(gcs_url, flask.request)
-    testbench_utils.insert_object(object_path, gcs_object)
+    blob.check_preconditions_by_value(generation_match, None,
+                                      metageneration_match, None)
+    revision = blob.insert_xml(gcs_url, flask.request)
+    testbench_utils.insert_object(object_path, blob)
     response = flask.make_response('')
     response.headers['x-goog-hash'] = 'md5=%s' % revision.metadata.get('md5Hash', '')
     return response
