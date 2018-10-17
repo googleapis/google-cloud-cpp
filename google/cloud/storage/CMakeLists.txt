@@ -225,6 +225,19 @@ target_include_directories(storage_client
                                   $<INSTALL_INTERFACE:include>)
 target_compile_options(storage_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+if (MSVC)
+    # MSVC warns about using sscanf(), this is a valuable warning, so we do not
+    # want to disable for everything. But for these files the usage is "safe".
+    # This is a relatively obscure feature to add compile flags to just one
+    # source:
+    set_property(SOURCE internal/parse_rfc3339.cc
+                 APPEND_STRING
+                 PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
+    set_property(SOURCE internal/object_requests.cc
+                 APPEND_STRING
+                 PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
+endif ()
+
 set_target_properties(
     storage_client
     PROPERTIES
