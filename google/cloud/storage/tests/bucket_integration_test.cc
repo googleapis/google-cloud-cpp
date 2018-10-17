@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/list_objects_reader.h"
+#include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 
@@ -49,34 +50,12 @@ std::string BucketTestEnvironment::project_id_;
 std::string BucketTestEnvironment::bucket_name_;
 std::string BucketTestEnvironment::topic_;
 
-class BucketIntegrationTest : public ::testing::Test {
+class BucketIntegrationTest : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   std::string MakeEntityName() {
     // We always use the viewers for the project because it is known to exist.
     return "project-viewers-" + BucketTestEnvironment::project_id();
   }
-
-  std::string MakeRandomBucketName() {
-    // The total length of this bucket name must be <= 63 characters,
-    static std::string const prefix = "gcs-cpp-test-bucket-";
-    static std::size_t const kMaxBucketNameLength = 63;
-    std::size_t const max_random_characters =
-        kMaxBucketNameLength - prefix.size();
-    return prefix + google::cloud::internal::Sample(
-                        generator_, static_cast<int>(max_random_characters),
-                        "abcdefghijklmnopqrstuvwxyz012456789");
-  }
-
-  std::string MakeRandomObjectName() {
-    static std::string const prefix = "bucket-integration-test-";
-    return prefix + google::cloud::internal::Sample(generator_, 64,
-                                                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                    "abcdefghijklmnopqrstuvwxyz"
-                                                    "012456789");
-  }
-
-  google::cloud::internal::DefaultPRNG generator_ =
-      google::cloud::internal::MakeDefaultPRNG();
 };
 
 TEST_F(BucketIntegrationTest, BasicCRUD) {

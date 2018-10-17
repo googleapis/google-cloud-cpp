@@ -15,6 +15,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #include <future>
@@ -44,46 +45,14 @@ class ThreadTestEnvironment : public ::testing::Environment {
 std::string ThreadTestEnvironment::project_id_;
 std::string ThreadTestEnvironment::location_;
 
-class ThreadIntegrationTest : public ::testing::Test {
+class ThreadIntegrationTest
+    : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
-  std::string MakeRandomBucketName() {
-    // The total length of this bucket name must be <= 63 characters,
-    static std::string const prefix = "gcs-cpp-test-bucket-";
-    static std::size_t const kMaxBucketNameLength = 63;
-    std::size_t const max_random_characters =
-        kMaxBucketNameLength - prefix.size();
-    return prefix + google::cloud::internal::Sample(
-                        generator_, static_cast<int>(max_random_characters),
-                        "abcdefghijklmnopqrstuvwxyz012456789");
-  }
-
-  std::string MakeRandomObjectName() {
-    return google::cloud::internal::Sample(generator_, 24,
-                                           "abcdefghijklmnopqrstuvwxyz"
-                                           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                           "012456789") +
-           ".txt";
-  }
-
   std::string MakeEntityName() {
     // We always use the viewers for the project because it is known to exist.
     return "project-viewers-" + ThreadTestEnvironment::project_id();
   }
-
- protected:
-  google::cloud::internal::DefaultPRNG generator_ =
-      google::cloud::internal::MakeDefaultPRNG();
 };
-
-std::string LoremIpsum() {
-  return R"""(Lorem ipsum dolor sit amet, consectetur adipiscing
-elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-})""";
-}
 
 using ObjectNameList = std::vector<std::string>;
 
@@ -117,11 +86,12 @@ std::vector<ObjectNameList> DivideIntoEqualSizedGroups(
   return groups;
 }
 
-void CreateObjects(std::string const& bucket_name, ObjectNameList group) {
+void CreateObjects(std::string const& bucket_name, ObjectNameList group,
+                   std::string contents) {
   // Create our own client so no state is shared with the other threads.
   Client client;
   for (auto const& object_name : group) {
-    (void)client.InsertObject(bucket_name, object_name, LoremIpsum(),
+    (void)client.InsertObject(bucket_name, object_name, contents,
                               IfGenerationMatch(0));
   }
 }
@@ -164,8 +134,8 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   auto groups = DivideIntoEqualSizedGroups(objects, thread_count);
   std::vector<std::future<void>> tasks;
   for (auto const& g : groups) {
-    tasks.emplace_back(
-        std::async(std::launch::async, &CreateObjects, bucket_name, g));
+    tasks.emplace_back(std::async(std::launch::async, &CreateObjects,
+                                  bucket_name, g, LoremIpsum()));
   }
   for (auto& t : tasks) {
     t.get();

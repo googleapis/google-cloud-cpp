@@ -252,7 +252,9 @@ add_library(storage_client_testing
             testing/mock_client.h
             testing/mock_http_request.h
             testing/mock_http_request.cc
-            testing/retry_tests.h)
+            testing/retry_tests.h
+            testing/storage_integration_test.h
+            testing/storage_integration_test.cc)
 target_link_libraries(storage_client_testing
                       PUBLIC storage_client
                              nlohmann_json

@@ -38,6 +38,7 @@ foreach (fname ${storage_client_integration_tests})
     add_executable(${target} ${fname})
     target_link_libraries(${target}
                           PRIVATE storage_client
+                                  storage_client_testing
                                   google_cloud_cpp_testing
                                   google_cloud_cpp_common
                                   GTest::gmock_main
