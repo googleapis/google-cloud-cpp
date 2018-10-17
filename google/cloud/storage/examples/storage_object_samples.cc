@@ -74,16 +74,16 @@ void InsertObject(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
   auto contents = ConsumeArg(argc, argv);
-  //! [insert object] [START storage_upload_file]
+  //! [insert object]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string contents) {
     gcs::ObjectMetadata meta =
         client.InsertObject(bucket_name, object_name, std::move(contents));
-    std::cout << "The file was uploaded. The new object metadata is " << meta
+    std::cout << "The object was created. The new object metadata is " << meta
               << std::endl;
   }
-  //! [insert object] [END storage_upload_file]
+  //! [insert object]
   (std::move(client), bucket_name, object_name, contents);
 }
 
@@ -279,26 +279,16 @@ void UploadFile(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
 
-  //! [upload file]
+  //! [upload file] [START storage_upload_file]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string file_name, std::string bucket_name,
      std::string object_name) {
-    std::ifstream is(file_name);
-    if (not is.is_open()) {
-      std::cerr << "Cannot open file: " << file_name << std::endl;
-      return;
-    }
-    gcs::ObjectWriteStream stream = client.WriteObject(
-        bucket_name, object_name, gcs::IfGenerationMatch(0), gcs::Fields(""));
-    while (not is.eof()) {
-      char buffer[4096];
-      is.read(buffer, sizeof(buffer));
-      stream.write(buffer, is.gcount());
-    }
-    gcs::ObjectMetadata meta = stream.Close();
+    gcs::ObjectMetadata meta =
+        client.UploadFile(file_name, bucket_name, object_name,
+                          gcs::IfGenerationMatch(0), gcs::Fields(""));
     std::cout << "Uploaded " << file_name << " to " << object_name << std::endl;
   }
-  //! [upload file]
+  //! [upload file] [END storage_upload_file]
   (std::move(client), file_name, bucket_name, object_name);
 }
 
@@ -823,7 +813,7 @@ int main(int argc, char* argv[]) try {
   google::cloud::storage::Client client;
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char* [])>;
+      std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
       {"list-objects", &ListObjects},
       {"insert-object", &InsertObject},

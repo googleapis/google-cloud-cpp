@@ -657,6 +657,30 @@ class Client {
   }
 
   /**
+   * Uploads a file to an object.
+   *
+   * @param file_name the name of the file to be uploaded.
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be read.
+   * @param options a list of optional query parameters and/or request headers.
+   *   Valid types for this operation include `IfGenerationMatch`,
+   *   `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *   `IfMetagenerationNotMatch`, `Generation`, and `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc upload file
+   */
+  template <typename... Options>
+  ObjectMetadata UploadFile(std::string const& file_name,
+                            std::string const& bucket_name,
+                            std::string const& object_name,
+                            Options&&... options) {
+    internal::InsertObjectStreamingRequest request(bucket_name, object_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return UploadFileImpl(file_name, std::move(request));
+  }
+
+  /**
    * Deletes an object.
    *
    * @param bucket_name the name of the bucket that contains the object.
@@ -1842,6 +1866,9 @@ class Client {
         std::move(logging), std::forward<Policies>(policies)...);
     return retry;
   }
+
+  ObjectMetadata UploadFileImpl(std::string const& file_name,
+                                internal::InsertObjectStreamingRequest request);
 
   std::shared_ptr<internal::RawClient> raw_client_;
 };

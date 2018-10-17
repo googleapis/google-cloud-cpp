@@ -118,7 +118,7 @@ class InsertObjectStreamingRequest
           InsertObjectStreamingRequest, ContentEncoding, ContentType,
           DisableMD5Hash, EncryptionKey, IfGenerationMatch,
           IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
-          KmsKeyName, PredefinedAcl, Projection, UserProject> {
+          KmsKeyName, MD5HashValue, PredefinedAcl, Projection, UserProject> {
  public:
   using GenericObjectRequest::GenericObjectRequest;
 };
