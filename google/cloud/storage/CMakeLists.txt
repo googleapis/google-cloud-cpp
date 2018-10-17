@@ -38,6 +38,7 @@ set(DOXYGEN_EXCLUDE_PATTERNS
 
 include(GoogleCloudCppCommon)
 include(IncludeNlohmannJson)
+include(IncludeCrc32c)
 
 # Generate the version information from the CMake values.
 configure_file(version_info.h.in version_info.h)
