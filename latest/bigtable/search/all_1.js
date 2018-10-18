@@ -4,6 +4,7 @@ var searchData=
   ['bigtable_2dhello_2dworld_2edox',['bigtable-hello-world.dox',['../bigtable-hello-world_8dox.html',1,'']]],
   ['bigtable_2dmain_2edox',['bigtable-main.dox',['../bigtable-main_8dox.html',1,'']]],
   ['bigtable_2dquickstart_2edox',['bigtable-quickstart.dox',['../bigtable-quickstart_8dox.html',1,'']]],
+  ['bigtable_2dsamples_2ddata_2dclient_2edox',['bigtable-samples-data-client.dox',['../bigtable-samples-data-client_8dox.html',1,'']]],
   ['bigtable_2dsamples_2dinstance_2dadmin_2edox',['bigtable-samples-instance-admin.dox',['../bigtable-samples-instance-admin_8dox.html',1,'']]],
   ['bigtable_2dsamples_2edox',['bigtable-samples.dox',['../bigtable-samples_8dox.html',1,'']]],
   ['bigtable_5fclient_5fdefault_5fchannels_5fper_5fcpu',['BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU',['../client__options_8cc.html#a05d0f2567bc347a3f69e433ccaed24c0',1,'client_options.cc']]],
