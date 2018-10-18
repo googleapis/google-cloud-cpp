@@ -96,6 +96,26 @@ class MD5HashValidator : public HashValidator {
   std::string received_hash_;
 };
 
+/**
+ * A validator based on CRC32C checksums.
+ */
+class Crc32cHashValidator : public HashValidator {
+ public:
+  Crc32cHashValidator();
+
+  Crc32cHashValidator(Crc32cHashValidator const&) = delete;
+  Crc32cHashValidator& operator=(Crc32cHashValidator const&) = delete;
+
+  void Update(std::string const& payload) override;
+  void ProcessMetadata(ObjectMetadata const& meta) override;
+  void ProcessHeader(std::string const& key, std::string const& value) override;
+  Result Finish(std::string const& msg) && override;
+
+ private:
+  std::uint32_t current_;
+  std::string received_hash_;
+};
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
