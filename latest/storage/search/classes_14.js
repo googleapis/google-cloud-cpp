@@ -2,6 +2,7 @@ var searchData=
 [
   ['wellknownheader',['WellKnownHeader',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1WellKnownHeader.html',1,'google::cloud::storage::v0::internal']]],
   ['wellknownheader_3c_20contenttype_2c_20std_3a_3astring_20_3e',['WellKnownHeader&lt; ContentType, std::string &gt;',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1WellKnownHeader.html',1,'google::cloud::storage::v0::internal']]],
+  ['wellknownheader_3c_20customheader_2c_20std_3a_3astring_20_3e',['WellKnownHeader&lt; CustomHeader, std::string &gt;',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1WellKnownHeader.html',1,'google::cloud::storage::v0::internal']]],
   ['wellknownheader_3c_20encryptionkey_2c_20encryptionkeydata_20_3e',['WellKnownHeader&lt; EncryptionKey, EncryptionKeyData &gt;',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1WellKnownHeader.html',1,'google::cloud::storage::v0::internal']]],
   ['wellknownheader_3c_20ifmatchetag_2c_20std_3a_3astring_20_3e',['WellKnownHeader&lt; IfMatchEtag, std::string &gt;',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1WellKnownHeader.html',1,'google::cloud::storage::v0::internal']]],
   ['wellknownheader_3c_20ifnonematchetag_2c_20std_3a_3astring_20_3e',['WellKnownHeader&lt; IfNoneMatchEtag, std::string &gt;',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1WellKnownHeader.html',1,'google::cloud::storage::v0::internal']]],
