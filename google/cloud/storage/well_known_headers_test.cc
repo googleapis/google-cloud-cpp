@@ -22,6 +22,15 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 using ::testing::HasSubstr;
 
+/// @test Verify that CustomHeader works as expected.
+TEST(WellKnownHeader, CustomHeader) {
+  CustomHeader header("x-goog-testbench-instructions", "do-stuff");
+  std::ostringstream os;
+  os << header;
+  EXPECT_THAT(os.str(), HasSubstr("do-stuff"));
+  EXPECT_THAT(os.str(), HasSubstr("x-goog-testbench-instructions"));
+}
+
 /// @test Verify that EncryptionKey streaming works as expected.
 TEST(WellKnownHeader, EncryptionKey) {
   EncryptionKey header(

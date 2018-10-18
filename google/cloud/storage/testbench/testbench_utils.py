@@ -18,6 +18,7 @@ import base64
 import error_response
 import hashlib
 import json
+import random
 import re
 
 
@@ -219,6 +220,21 @@ def extract_media(request):
     if request.environ.get('HTTP_TRANSFER_ENCODING', '') == 'chunked':
         return request.environ.get('wsgi.input').read()
     return request.data
+
+
+def corrupt_media(media):
+    """Return a randomly modified version of a string.
+
+    :param media:str a string (typically some object media) to be modified.
+    :return: a string that is slightly different than media.
+    :rtype: str
+    """
+    # Deal with the boundary condition.
+    if not media:
+        return str(random.sample("abcdefghijklmnopqrstuvwxyz", 1))
+    if media[0] == 'A':
+        return 'B' + media[1:]
+    return 'A' + media[1:]
 
 
 # Define the collection of Buckets indexed by <bucket_name>

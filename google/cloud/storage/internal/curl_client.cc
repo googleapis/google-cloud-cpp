@@ -978,6 +978,7 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaXml(
   // to the XML format for them.
   //
   // Fields cannot be set, checked by the caller.
+  builder.AddOption(request.GetOption<CustomHeader>());
   builder.AddOption(request.GetOption<IfMatchEtag>());
   builder.AddOption(request.GetOption<IfNoneMatchEtag>());
   // QuotaUser cannot be set, checked by the caller.
@@ -1007,7 +1008,7 @@ CurlClient::ReadObjectXml(ReadObjectRangeRequest const& request) {
   builder.AddHeader("Host: storage.googleapis.com");
 
   //
-  // Apply the options from InsertObjectMediaRequest that are set, translating
+  // Apply the options from ReadObjectMediaRequest that are set, translating
   // to the XML format for them.
   //
   builder.AddOption(request.GetOption<EncryptionKey>());
@@ -1030,6 +1031,7 @@ CurlClient::ReadObjectXml(ReadObjectRangeRequest const& request) {
   // Apply the options from GenericRequestBase<> that are set, translating
   // to the XML format for them.
   //
+  builder.AddOption(request.GetOption<CustomHeader>());
   builder.AddOption(request.GetOption<IfMatchEtag>());
   builder.AddOption(request.GetOption<IfNoneMatchEtag>());
   // QuotaUser cannot be set, checked by the caller.
@@ -1091,6 +1093,7 @@ CurlClient::WriteObjectXml(InsertObjectStreamingRequest const& request) {
   // to the XML format for them.
   //
   // Fields cannot be set, checked by the caller.
+  builder.AddOption(request.GetOption<CustomHeader>());
   builder.AddOption(request.GetOption<IfMatchEtag>());
   builder.AddOption(request.GetOption<IfNoneMatchEtag>());
   // QuotaUser cannot be set, checked by the caller.

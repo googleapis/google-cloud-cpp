@@ -176,10 +176,10 @@ class GenericRequestBase : public GenericRequestBase<Derived, Options...> {
  */
 template <typename Derived, typename... Options>
 class GenericRequest
-    : public GenericRequestBase<Derived, Fields, IfMatchEtag, IfNoneMatchEtag,
-                                QuotaUser, Options...> {
+    : public GenericRequestBase<Derived, CustomHeader, Fields, IfMatchEtag,
+                                IfNoneMatchEtag, QuotaUser, Options...> {
  public:
-  using Super = GenericRequestBase<Derived, Fields, IfMatchEtag,
+  using Super = GenericRequestBase<Derived, CustomHeader, Fields, IfMatchEtag,
                                    IfNoneMatchEtag, QuotaUser, Options...>;
 
   template <typename H, typename... T>

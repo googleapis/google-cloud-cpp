@@ -33,6 +33,10 @@ echo "Running GCS Object APIs integration tests."
 ./object_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
 
 echo
+echo "Running GCS Object media integration tests."
+./object_media_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
+
+echo
 echo "Running GCS Projects.serviceAccount integration tests."
 ./thread_integration_test "${PROJECT_ID}" "${STORAGE_REGION_ID}"
 
