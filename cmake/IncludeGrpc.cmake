@@ -51,70 +51,7 @@ set(GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS
     /wd4996)
 
 if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "external")
-    include(external/protobuf)
     include(external/grpc)
-
-    include(ExternalProjectHelper)
-    add_library(protobuf::libprotobuf INTERFACE IMPORTED)
-    add_dependencies(protobuf::libprotobuf protobuf_project)
-    set_library_properties_for_external_project(protobuf::libprotobuf protobuf)
-    find_package(ZLIB REQUIRED)
-    set_property(TARGET protobuf::libprotobuf
-                 APPEND
-                 PROPERTY INTERFACE_LINK_LIBRARIES
-                          protobuf::libprotobuf
-                          ZLIB::ZLIB
-                          Threads::Threads)
-
-    add_library(c-ares::cares INTERFACE IMPORTED)
-    set_library_properties_for_external_project(c-ares::cares cares
-                                                ALWAYS_SHARED)
-    add_dependencies(c-ares::cares c_ares_project)
-
-    find_package(OpenSSL REQUIRED)
-
-    add_library(gRPC::address_sorting INTERFACE IMPORTED)
-    set_library_properties_for_external_project(gRPC::address_sorting
-                                                address_sorting)
-    add_dependencies(gRPC::address_sorting grpc_project)
-
-    add_library(gRPC::gpr INTERFACE IMPORTED)
-    set_library_properties_for_external_project(gRPC::gpr gpr)
-    add_dependencies(gRPC::gpr grpc_project)
-    set_property(TARGET gRPC::gpr
-                 APPEND
-                 PROPERTY INTERFACE_LINK_LIBRARIES c-ares::cares)
-
-    add_library(gRPC::grpc INTERFACE IMPORTED)
-    set_library_properties_for_external_project(gRPC::grpc grpc)
-    add_dependencies(gRPC::grpc grpc_project)
-    set_property(TARGET gRPC::grpc
-                 APPEND
-                 PROPERTY INTERFACE_LINK_LIBRARIES
-                          gRPC::address_sorting
-                          gRPC::gpr
-                          OpenSSL::SSL
-                          OpenSSL::Crypto
-                          protobuf::libprotobuf)
-
-    add_library(gRPC::grpc++ INTERFACE IMPORTED)
-    set_library_properties_for_external_project(gRPC::grpc++ grpc++)
-    add_dependencies(gRPC::grpc++ grpc_project)
-    set_property(TARGET gRPC::grpc++
-                 APPEND
-                 PROPERTY INTERFACE_LINK_LIBRARIES gRPC::grpc c-ares::cares)
-
-    # Discover the protobuf compiler and the gRPC plugin.
-    add_executable(protoc IMPORTED)
-    add_dependencies(protoc protobuf_project)
-    set_executable_name_for_external_project(protoc protoc)
-
-    add_executable(grpc_cpp_plugin IMPORTED)
-    add_dependencies(grpc_cpp_plugin grpc_project)
-    set_executable_name_for_external_project(grpc_cpp_plugin grpc_cpp_plugin)
-
-    list(APPEND PROTOBUF_IMPORT_DIRS "${PROJECT_BINARY_DIR}/external/include")
-
 elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" MATCHES "^(package|vcpkg)$")
     find_package(protobuf REQUIRED protobuf>=3.5.2)
     find_package(gRPC REQUIRED gRPC>=1.9)

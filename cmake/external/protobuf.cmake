@@ -14,6 +14,9 @@
 # limitations under the License.
 # ~~~
 
+include(ExternalProjectHelper)
+find_package(Threads REQUIRED)
+
 if (NOT TARGET protobuf_project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
@@ -62,4 +65,15 @@ if (NOT TARGET protobuf_project)
         LOG_CONFIGURE ON
         LOG_BUILD ON
         LOG_INSTALL ON)
+
+    add_library(protobuf::libprotobuf INTERFACE IMPORTED)
+    add_dependencies(protobuf::libprotobuf protobuf_project)
+    set_library_properties_for_external_project(protobuf::libprotobuf protobuf)
+    find_package(ZLIB REQUIRED)
+    set_property(TARGET protobuf::libprotobuf
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          protobuf::libprotobuf
+                          ZLIB::ZLIB
+                          Threads::Threads)
 endif ()
