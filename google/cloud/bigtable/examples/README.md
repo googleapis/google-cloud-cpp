@@ -12,6 +12,7 @@ referenced from the Doxygen landing page as "Hello World".
   - [Hello World](#hello-world)
   - [Administer Instances](#administer-instances)
   - [Administer Tables](#administer-tables)
+  - [Reading and Writing Operations](#reading-and-writing-operations)
 
 ## Before you begin
 
@@ -151,6 +152,50 @@ $ export TABLE_ID=... # Cloud Bigtable table ID
 $ ./bigtable_samples run ${PROJECT_ID} ${INSTANCE_ID} ${TABLE_ID}
 ```
 
+### Reading and Writing Operations
+
+This sample showcases reading and writing operations:
+
+- Use Apply to write a single row
+- Use BulkApply to write several rows in an operation
+- Use ReadRow to read a single row
+- Use ReadRows to read several rows in a range
+- Use ReadRows to read 'N' rows in a range
+- Use CheckAndMutate to modify value
+- Use ReadModifyWrite to increament a value and append a string to a value
+- Use SampleRows to fetch some sample rows
+
+
+#### Usage
+
+```console
+$ ./data_snippets
+
+Usage: data_snippets <command> <project_id> <instance_id> <table_id> [arguments]
+
+Examples:
+  data_snippets apply my-project my-instance my-table
+  data_snippets bulk-apply my-project my-instance my-table
+  data_snippets read-row my-project my-instance
+  data_snippets read-rows my-project my-instance my-table
+  data_snippets read-rows-with-limit my-project my-instance my-table
+  data_snippets check-and-mutate my-project my-instance my-table
+  data_snippets read-modify-write my-project my-instance my-table
+  data_snippets sample-rows my-project my-instance my-table
+  data_snippets sample-rows-collections my-project my-instance my-table
+```
+
+#### Run reading and writing samples
+After configuring gRPC, you can run the examples using:
+
+```console
+$ export PROJECT_ID=... # Your Google Cloud Platform project ID
+$ export INSTANCE_ID=... # Cloud Bigtable instance ID
+$ export TABLE_ID=... # Cloud Bigtable table ID
+$ ./data_snippets apply ${PROJECT_ID} ${INSTANCE_ID} ${TABLE_ID}
+```
+
 [hello_world_code]: bigtable_hello_world.cc
 [instance_admin_code]: bigtable_samples_instance_admin.cc
 [table_admin_code]: table_admin_snippets.cc
+[data_snippets]: data_snippets.cc
