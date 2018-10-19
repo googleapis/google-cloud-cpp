@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/big_endian.h"
 #include <gmock/gmock.h>
+#include <cstring>
 
 namespace google {
 namespace cloud {
