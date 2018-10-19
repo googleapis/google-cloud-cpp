@@ -659,6 +659,12 @@ class Client {
   /**
    * Uploads a file to an object.
    *
+   * @note
+   * Only regular files are supported. If you need to upload the results of
+   * reading a device, Named Pipe, FIFO, or other type of file system object
+   * that is **not** a regular file then `WriteObject()` is probably a better
+   * alternative.
+   *
    * @param file_name the name of the file to be uploaded.
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.

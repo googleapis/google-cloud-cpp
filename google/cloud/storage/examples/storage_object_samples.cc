@@ -283,9 +283,11 @@ void UploadFile(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string file_name, std::string bucket_name,
      std::string object_name) {
+    // Note that the client library automatically computes a hash on the
+    // client-side to verify data integrity during transmission.
     gcs::ObjectMetadata meta =
         client.UploadFile(file_name, bucket_name, object_name,
-                          gcs::IfGenerationMatch(0), gcs::Fields(""));
+                          gcs::IfGenerationMatch(0));
     std::cout << "Uploaded " << file_name << " to " << object_name << std::endl;
   }
   //! [upload file] [END storage_upload_file]
