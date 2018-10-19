@@ -125,7 +125,7 @@ class TableAdmin {
    * @param callback a functor to be called when the operation completes. It
    *     must satisfy (using C++17 types):
    *     static_assert(std::is_invocable_v<
-   *         Functor, google::bigtable::v2::MutateRowResponse&,
+   *         Functor, google::bigtable::admin::v2::Table&,
    *         grpc::Status const&>);
    *
    * @tparam Functor the type of the callback.

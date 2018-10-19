@@ -86,15 +86,15 @@ TEST_F(AdminAsyncIntegrationTest, CreateListGetDeleteTableTest) {
 
   auto table = promise_create_table.get_future().get();
 
-  std::promise<btadmin::Table> promist_get_Table;
+  std::promise<btadmin::Table> promise_get_table;
   noex_table_admin_->AsyncGetTable(
       table_id, btadmin::Table::FULL, cq,
-      [&promist_get_Table](CompletionQueue& cq, btadmin::Table& table,
+      [&promise_get_table](CompletionQueue& cq, btadmin::Table& table,
                            grpc::Status const& status) {
-        promist_get_Table.set_value(std::move(table));
+        promise_get_table.set_value(std::move(table));
       });
 
-  auto table_result = promist_get_Table.get_future().get();
+  auto table_result = promise_get_table.get_future().get();
 
   EXPECT_EQ(table.name(), table_result.name())
       << "Mismatched names for GetTable(" << table_id << "): " << table.name()
