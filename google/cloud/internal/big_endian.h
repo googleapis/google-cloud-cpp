@@ -49,7 +49,7 @@ template <>
 struct EndianTransform<false> {
   static constexpr std::int16_t byte_swap(std::int16_t value) {
 #ifdef _MSC_VER
-    return _byteswap_int16(value);
+    return _byteswap_ushort(value);
 #elif defined(__APPLE__)
     return OSSwapInt16(value);
 #elif defined(__GNUC__) || defined(__clang__)
@@ -64,7 +64,7 @@ struct EndianTransform<false> {
 
   static constexpr std::int32_t byte_swap(std::int32_t value) {
 #ifdef _MSC_VER
-    return _byteswap_int32(value);
+    return _byteswap_ulong(value);
 #elif defined(__APPLE__)
     return OSSwapInt32(value);
 #elif defined(__GNUC__) || defined(__clang__)
@@ -81,7 +81,7 @@ struct EndianTransform<false> {
 
   static constexpr std::int64_t byte_swap(std::int64_t value) {
 #ifdef _MSC_VER
-    return _byteswap_int64(value);
+    return _byteswap_uint64(value);
 #elif defined(__APPLE__)
     return OSSwapInt64(value);
 #elif defined(__GNUC__) || defined(__clang__)
@@ -102,7 +102,7 @@ struct EndianTransform<false> {
 
   static constexpr std::uint16_t byte_swap(std::uint16_t value) {
 #ifdef _MSC_VER
-    return _byteswap_int16(value);
+    return _byteswap_ushort(value);
 #elif defined(__APPLE__)
     return OSSwapInt16(value);
 #elif defined(__GNUC__) || defined(__clang__)
@@ -117,7 +117,7 @@ struct EndianTransform<false> {
 
   static constexpr std::uint32_t byte_swap(std::uint32_t value) {
 #ifdef _MSC_VER
-    return _byteswap_int32(value);
+    return _byteswap_ulong(value);
 #elif defined(__APPLE__)
     return OSSwapInt32(value);
 #elif defined(__GNUC__) || defined(__clang__)
@@ -134,7 +134,7 @@ struct EndianTransform<false> {
 
   static constexpr std::uint64_t byte_swap(std::uint64_t value) {
 #ifdef _MSC_VER
-    return _byteswap_int64(value);
+    return _byteswap_uint64(value);
 #elif defined(__APPLE__)
     return OSSwapInt64(value);
 #elif defined(__GNUC__) || defined(__clang__)
