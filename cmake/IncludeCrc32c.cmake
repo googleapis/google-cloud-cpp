@@ -19,9 +19,9 @@ find_package(Threads REQUIRED)
 
 # Configure the gRPC dependency, this can be found as a submodule, package, or
 # installed with pkg-config support.
-set(GOOGLE_CLOUD_CPP_GRPC_PROVIDER ${GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER}
-    CACHE STRING "How to find the gRPC library")
-set_property(CACHE GOOGLE_CLOUD_CPP_GRPC_PROVIDER
+set(GOOGLE_CLOUD_CPP_CRC32C_PROVIDER ${GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER}
+    CACHE STRING "How to find the Crc32c library")
+set_property(CACHE GOOGLE_CLOUD_CPP_CRC32C_PROVIDER
              PROPERTY STRINGS
                       "external"
                       "package"
@@ -30,8 +30,8 @@ set_property(CACHE GOOGLE_CLOUD_CPP_GRPC_PROVIDER
 
 if (TARGET Crc32c::crc32c)
     # Crc32c::crc32c is already defined, do not define it again.
-elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "external")
+elseif("${GOOGLE_CLOUD_CPP_CRC32C_PROVIDER}" STREQUAL "external")
     include(external/crc32c)
-elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" MATCHES "^(package|vcpkg)$")
+elseif("${GOOGLE_CLOUD_CPP_CRC32C_PROVIDER}" MATCHES "^(package|vcpkg)$")
     find_package(Crc32c CONFIG REQUIRED)
 endif ()
