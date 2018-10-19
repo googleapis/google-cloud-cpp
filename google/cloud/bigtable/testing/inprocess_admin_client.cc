@@ -27,6 +27,13 @@ grpc::Status InProcessAdminClient::CreateTable(
   return Stub()->CreateTable(context, request, response);
 }
 
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>
+InProcessAdminClient::AsyncCreateTable(
+    grpc::ClientContext* context, btadmin::CreateTableRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncCreateTable(context, request, cq);
+}
+
 grpc::Status InProcessAdminClient::CreateTableFromSnapshot(
     grpc::ClientContext* context,
     btadmin::CreateTableFromSnapshotRequest const& request,

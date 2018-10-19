@@ -30,12 +30,15 @@ class AdminAsyncIntegrationTest
  protected:
   std::shared_ptr<AdminClient> admin_client_;
   std::unique_ptr<TableAdmin> table_admin_;
+  std::unique_ptr<noex::TableAdmin> noex_table_admin_;
 
   void SetUp() {
     TableIntegrationTest::SetUp();
     admin_client_ = CreateDefaultAdminClient(
         testing::TableTestEnvironment::project_id(), ClientOptions());
     table_admin_ = google::cloud::internal::make_unique<TableAdmin>(
+        admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
+    noex_table_admin_ = google::cloud::internal::make_unique<noex::TableAdmin>(
         admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
   }
 
@@ -69,30 +72,33 @@ TEST_F(AdminAsyncIntegrationTest, CreateListGetDeleteTableTest) {
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
 
-  // CreateTable()
+  // AsyncCreateTable()
   TableConfig table_config({{"fam", GcRule::MaxNumVersions(5)},
                             {"foo", GcRule::MaxAge(std::chrono::hours(24))}},
                            {"a1000", "a2000", "b3000", "m5000"});
-  auto table = CreateTable(table_id, table_config);
-
-  // AsyncGetTable
-  // As this function gets bigger, we should move this variable to a member
-  // function.
-  noex::TableAdmin admin(
-      admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
-  std::promise<btadmin::Table> done;
-  admin.AsyncGetTable(
-      table_id, btadmin::Table::FULL, cq,
-      [&done](CompletionQueue& cq, btadmin::Table& table,
-              grpc::Status const& status) {
-        done.set_value(std::move(table));
+  std::promise<btadmin::Table> promise_create_table;
+  noex_table_admin_->AsyncCreateTable(
+      table_id, table_config, cq,
+      [&promise_create_table](CompletionQueue& cq, btadmin::Table& table,
+                              grpc::Status const& status) {
+        promise_create_table.set_value(std::move(table));
       });
 
-  auto table_result = done.get_future().get();
+  auto table = promise_create_table.get_future().get();
 
-  EXPECT_EQ(table->table_name(), table_result.name())
-      << "Mismatched names for GetTable(" << table_id
-      << "): " << table->table_name() << " != " << table_result.name();
+  std::promise<btadmin::Table> promise_get_table;
+  noex_table_admin_->AsyncGetTable(
+      table_id, btadmin::Table::FULL, cq,
+      [&promise_get_table](CompletionQueue& cq, btadmin::Table& table,
+                           grpc::Status const& status) {
+        promise_get_table.set_value(std::move(table));
+      });
+
+  auto table_result = promise_get_table.get_future().get();
+
+  EXPECT_EQ(table.name(), table_result.name())
+      << "Mismatched names for GetTable(" << table_id << "): " << table.name()
+      << " != " << table_result.name();
 
   auto count_matching_families = [](btadmin::Table const& table,
                                     std::string const& name) {

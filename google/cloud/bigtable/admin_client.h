@@ -160,6 +160,16 @@ class AdminClient {
       google::longrunning::GetOperationRequest const& request,
       google::longrunning::Operation* response) = 0;
   //@}
+
+  //@{
+  /// @name The `google.bigtable.admin.v2.TableAdmin` Async operations.
+  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Table>>
+  AsyncCreateTable(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateTableRequest const& request,
+      grpc::CompletionQueue* cq) = 0;
+  //@}
 };
 
 /// Create a new admin client configured via @p options.

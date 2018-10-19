@@ -110,6 +110,58 @@ class TableAdmin {
                                                  TableConfig config,
                                                  grpc::Status& status);
 
+  /**
+   * Make an asynchronous request to create the table.
+   *
+   * @param table_id the name of the table relative to the instance managed by
+   *     this object.  The full table name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of this object.
+   * @param config the initial schema for the table.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, google::bigtable::admin::v2::Table&,
+   *         grpc::Status const&>);
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<
+                    Functor, CompletionQueue&,
+                    google::bigtable::admin::v2::Table&, grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  void AsyncCreateTable(std::string const& table_id, TableConfig config,
+                        CompletionQueue& cq, Functor&& callback) {
+    auto request = config.as_proto_move();
+    request.set_parent(instance_name());
+    request.set_table_id(std::move(table_id));
+
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &AdminClient::AsyncCreateTable)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &AdminClient::AsyncCreateTable)>::MemberFunction;
+
+    using Retry =
+        internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
+                                     internal::ConstantIdempotencyPolicy,
+                                     Functor>;
+
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        internal::ConstantIdempotencyPolicy(false), metadata_update_policy_,
+        client_, &AdminClient::AsyncCreateTable, std::move(request),
+        std::forward<Functor>(callback));
+    retry->Start(cq);
+  }
+
   std::vector<google::bigtable::admin::v2::Table> ListTables(
       google::bigtable::admin::v2::Table::View view, grpc::Status& status);
 
