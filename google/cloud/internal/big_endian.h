@@ -55,10 +55,10 @@ struct EndianTransform<false> {
 #elif defined(__GNUC__) || defined(__clang__)
     return __builtin_bswap16(value);
 #else
-  std::int16_t return_value = ((((num_value)&0xff00u) >> 8) |
-                               (((num_value)&0x00ffu) << 8));
+    std::int16_t return_value =
+        ((((num_value)&0xff00u) >> 8) | (((num_value)&0x00ffu) << 8));
 
-  return return_value;
+    return return_value;
 #endif
   }
 
@@ -70,12 +70,12 @@ struct EndianTransform<false> {
 #elif defined(__GNUC__) || defined(__clang__)
     return __builtin_bswap32(value);
 #else
-  std::int32_t return_value = ((((num_value)&0xff000000ul) >> 24) |
-                               (((num_value)&0x00ff0000ul) >> 8) |
-                               (((num_value)&0x0000ff00ul) << 8) |
-                               (((num_value)&0x000000fful) << 24));
+    std::int32_t return_value =
+        ((((num_value)&0xff000000ul) >> 24) |
+         (((num_value)&0x00ff0000ul) >> 8) | (((num_value)&0x0000ff00ul) << 8) |
+         (((num_value)&0x000000fful) << 24));
 
-  return return_value;
+    return return_value;
 #endif
   }
 
@@ -87,16 +87,16 @@ struct EndianTransform<false> {
 #elif defined(__GNUC__) || defined(__clang__)
     return __builtin_bswap64(value);
 #else
-  std::int64_t return_value = ((((num_value)&0xff00000000000000ull) >> 56) |
-                               (((num_value)&0x00ff000000000000ull) >> 40) |
-                               (((num_value)&0x0000ff0000000000ull) >> 24) |
-                               (((num_value)&0x000000ff00000000ull) >> 8) |
-                               (((num_value)&0x00000000ff000000ull) << 8) |
-                               (((num_value)&0x0000000000ff0000ull) << 24) |
-                               (((num_value)&0x000000000000ff00ull) << 40) |
-                               (((num_value)&0x00000000000000ffull) << 56));
+    std::int64_t return_value = ((((num_value)&0xff00000000000000ull) >> 56) |
+                                 (((num_value)&0x00ff000000000000ull) >> 40) |
+                                 (((num_value)&0x0000ff0000000000ull) >> 24) |
+                                 (((num_value)&0x000000ff00000000ull) >> 8) |
+                                 (((num_value)&0x00000000ff000000ull) << 8) |
+                                 (((num_value)&0x0000000000ff0000ull) << 24) |
+                                 (((num_value)&0x000000000000ff00ull) << 40) |
+                                 (((num_value)&0x00000000000000ffull) << 56));
 
-  return return_value;
+    return return_value;
 #endif
   }
 
@@ -108,10 +108,10 @@ struct EndianTransform<false> {
 #elif defined(__GNUC__) || defined(__clang__)
     return __builtin_bswap16(value);
 #else
-  std::uint16_t return_value = ((((num_value)&0xff00u) >> 8) |
-                                (((num_value)&0x00ffu) << 8));
+    std::uint16_t return_value =
+        ((((num_value)&0xff00u) >> 8) | (((num_value)&0x00ffu) << 8));
 
-  return return_value;
+    return return_value;
 #endif
   }
 
@@ -123,12 +123,12 @@ struct EndianTransform<false> {
 #elif defined(__GNUC__) || defined(__clang__)
     return __builtin_bswap32(value);
 #else
-  std::uint32_t return_value = ((((num_value)&0xff000000ul) >> 24) |
-                                (((num_value)&0x00ff0000ul) >> 8) |
-                                (((num_value)&0x0000ff00ul) << 8) |
-                                (((num_value)&0x000000fful) << 24));
+    std::uint32_t return_value =
+        ((((num_value)&0xff000000ul) >> 24) |
+         (((num_value)&0x00ff0000ul) >> 8) | (((num_value)&0x0000ff00ul) << 8) |
+         (((num_value)&0x000000fful) << 24));
 
-  return return_value;
+    return return_value;
 #endif
   }
 
@@ -140,16 +140,16 @@ struct EndianTransform<false> {
 #elif defined(__GNUC__) || defined(__clang__)
     return __builtin_bswap64(value);
 #else
-  std::uint64_t return_value = ((((num_value)&0xff00000000000000ull) >> 56) |
-                                (((num_value)&0x00ff000000000000ull) >> 40) |
-                                (((num_value)&0x0000ff0000000000ull) >> 24) |
-                                (((num_value)&0x000000ff00000000ull) >> 8) |
-                                (((num_value)&0x00000000ff000000ull) << 8) |
-                                (((num_value)&0x0000000000ff0000ull) << 24) |
-                                (((num_value)&0x000000000000ff00ull) << 40) |
-                                (((num_value)&0x00000000000000ffull) << 56));
+    std::uint64_t return_value = ((((num_value)&0xff00000000000000ull) >> 56) |
+                                  (((num_value)&0x00ff000000000000ull) >> 40) |
+                                  (((num_value)&0x0000ff0000000000ull) >> 24) |
+                                  (((num_value)&0x000000ff00000000ull) >> 8) |
+                                  (((num_value)&0x00000000ff000000ull) << 8) |
+                                  (((num_value)&0x0000000000ff0000ull) << 24) |
+                                  (((num_value)&0x000000000000ff00ull) << 40) |
+                                  (((num_value)&0x00000000000000ffull) << 56));
 
-  return return_value;
+    return return_value;
 #endif
   }
 
