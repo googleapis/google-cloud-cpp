@@ -178,6 +178,57 @@ class InstanceAdmin {
       bigtable::InstanceId const& instance_id,
       bigtable::ClusterId const& cluster_id, grpc::Status& status);
 
+  /**
+   * Makes an asynchronous request to get the attributes of a cluster.
+   *
+   * @param instance_id the id of the instance in the project, from that cluster
+   *     to be retrieved
+   * @param cluster_id the id of the cluster in the project that to be
+   *     retrieved.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, google::bigtable::v2::MutateRowResponse&,
+   *         grpc::Status const&>);
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<google::cloud::internal::is_invocable<
+                                        Functor, CompletionQueue&,
+                                        google::bigtable::admin::v2::Cluster&,
+                                        grpc::Status&>::value,
+                                    int>::type valid_callback_type = 0>
+  void AsyncGetCluster(bigtable::InstanceId const& instance_id,
+                       bigtable::ClusterId const& cluster_id,
+                       CompletionQueue& cq, Functor&& callback) {
+    google::bigtable::admin::v2::GetClusterRequest request;
+    // Setting cluster name.
+    request.set_name(ClusterName(instance_id, cluster_id));
+
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &InstanceAdminClient::AsyncGetCluster)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &InstanceAdminClient::AsyncGetCluster)>::MemberFunction;
+
+    using Retry =
+        internal::AsyncRetryUnaryRpc<InstanceAdminClient, MemberFunction,
+                                     internal::ConstantIdempotencyPolicy,
+                                     Functor>;
+
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
+        client_, &InstanceAdminClient::AsyncGetCluster, std::move(request),
+        std::forward<Functor>(callback));
+    retry->Start(cq);
+  }
+
   google::longrunning::Operation UpdateAppProfile(
       bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
       AppProfileUpdateConfig config, grpc::Status& status);

@@ -61,6 +61,15 @@ bool IsInstancePresent(std::vector<btadmin::Instance> const& instances,
                       });
 }
 
+bool IsClusterPresent(std::vector<btadmin::Cluster> const& clusters,
+                      std::string const& cluster_name) {
+  return clusters.end() !=
+         std::find_if(clusters.begin(), clusters.end(),
+                      [&cluster_name](btadmin::Cluster const& i) {
+                        return i.name() == cluster_name;
+                      });
+}
+
 bigtable::InstanceConfig IntegrationTestConfig(
     std::string const& id, std::string const& zone = "us-central1-f",
     bigtable::InstanceConfig::InstanceType instance_type =
@@ -119,6 +128,67 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteInstanceTest) {
   auto instances_after_delete = instance_admin_->ListInstances();
   EXPECT_TRUE(IsInstancePresent(instances_current, instance.name()));
   EXPECT_FALSE(IsInstancePresent(instances_after_delete, instance.name()));
+
+  cq.Shutdown();
+  pool.join();
+}
+
+/// @test Verify that cluster async CRUD operations work as expected.
+TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
+  std::string id =
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  std::string cluster_id_str = id + "-cl2";
+
+  // create instance prerequisites for cluster operations
+  bigtable::InstanceId instance_id(id);
+  auto instance_config = IntegrationTestConfig(
+      id, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance_details =
+      instance_admin_->CreateInstance(instance_config).get();
+
+  google::cloud::bigtable::CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  // create cluster
+  auto clusters_before = instance_admin_->ListClusters(id);
+  ASSERT_FALSE(IsClusterPresent(clusters_before, cluster_id_str))
+      << "Cluster (" << cluster_id_str << ") already exists."
+      << " This is unexpected, as the cluster ids are"
+      << " generated at random.";
+  bigtable::ClusterId cluster_id(cluster_id_str);
+  auto cluster_config =
+      bigtable::ClusterConfig("us-central1-b", 3, bigtable::ClusterConfig::HDD);
+  auto cluster =
+      instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
+          .get();
+  auto clusters_after = instance_admin_->ListClusters(id);
+  EXPECT_FALSE(IsClusterPresent(clusters_before, cluster.name()));
+  EXPECT_TRUE(IsClusterPresent(clusters_after, cluster.name()));
+
+  // Get cluster
+  bigtable::noex::InstanceAdmin admin(instance_admin_client_);
+  std::promise<btadmin::Cluster> done;
+  admin.AsyncGetCluster(
+      instance_id, cluster_id, cq,
+      [&done](google::cloud::bigtable::CompletionQueue& cq,
+              btadmin::Cluster& cluster, grpc::Status const& status) {
+        done.set_value(std::move(cluster));
+      });
+  auto cluster_result = done.get_future().get();
+  std::string cluster_name_prefix =
+      instance_admin_->project_name() + "/instances/" + id + "/clusters/";
+  EXPECT_EQ(cluster_name_prefix + cluster_id.get(), cluster_result.name());
+
+  // Delete cluster
+  instance_admin_->DeleteCluster(std::move(instance_id), std::move(cluster_id));
+  auto clusters_after_delete = instance_admin_->ListClusters(id);
+  instance_admin_->DeleteInstance(id);
+  EXPECT_TRUE(IsClusterPresent(
+      clusters_after, instance_details.name() + "/clusters/" + id + "-cl2"));
+  EXPECT_FALSE(
+      IsClusterPresent(clusters_after_delete,
+                       instance_details.name() + "/clusters/" + id + "-cl2"));
 
   cq.Shutdown();
   pool.join();
