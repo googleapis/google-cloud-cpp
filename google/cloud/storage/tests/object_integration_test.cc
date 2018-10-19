@@ -93,7 +93,7 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         "abcdefghijklmnopqrstuvwxyz012456789");
   }
 
-  void GenerateRandomLines(std::ostream& upload, std::ostream& local) {
+  void WriteRandomLines(std::ostream& upload, std::ostream& local) {
     auto generate_random_line = [this] {
       std::string const characters =
           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -470,7 +470,7 @@ TEST_F(ObjectIntegrationTest, StreamingWrite) {
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
-  GenerateRandomLines(os, expected);
+  WriteRandomLines(os, expected);
 
   ObjectMetadata meta = os.Close();
   EXPECT_EQ(object_name, meta.name());
@@ -522,7 +522,7 @@ TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
 
-  GenerateRandomLines(os, expected);
+  WriteRandomLines(os, expected);
 
   ObjectMetadata meta = os.Close();
   // When asking for an empty list of fields we should not expect any values:
@@ -1490,7 +1490,7 @@ TEST_F(ObjectIntegrationTest, DefaultMD5StreamingWriteXML) {
                                Fields(""));
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
-  GenerateRandomLines(os, expected);
+  WriteRandomLines(os, expected);
 
   auto expected_md5hash = ComputeMD5Hash(expected.str());
 
@@ -1511,7 +1511,7 @@ TEST_F(ObjectIntegrationTest, DefaultMD5StreamingWriteJSON) {
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
-  GenerateRandomLines(os, expected);
+  WriteRandomLines(os, expected);
 
   auto expected_md5hash = ComputeMD5Hash(expected.str());
 
@@ -1533,7 +1533,7 @@ TEST_F(ObjectIntegrationTest, DisableMD5StreamingWriteXML) {
                                Fields(""), DisableMD5Hash(true));
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
-  GenerateRandomLines(os, expected);
+  WriteRandomLines(os, expected);
 
   auto expected_md5hash = ComputeMD5Hash(expected.str());
 
@@ -1555,7 +1555,7 @@ TEST_F(ObjectIntegrationTest, DisableMD5StreamingWriteJSON) {
                                DisableMD5Hash(true));
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
-  GenerateRandomLines(os, expected);
+  WriteRandomLines(os, expected);
 
   auto expected_md5hash = ComputeMD5Hash(expected.str());
 
