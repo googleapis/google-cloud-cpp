@@ -15,14 +15,8 @@
 #include "google/cloud/bigtable/internal/endian.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/throw_delegate.h"
-
-#ifdef _MSC_VER
-#include <stdlib.h>
-#elif defined(__APPLE__)
-#include <libkern/OSByteOrder.h>
-#elif defined(__GNUC__) || defined(__clang__)
-#include <byteswap.h>
-#endif
+#include <cstring>
+#include <limits>
 
 namespace google {
 namespace cloud {
