@@ -14,6 +14,8 @@
 # limitations under the License.
 # ~~~
 
+include(ExternalProjectHelper)
+
 if (NOT TARGET googletest_project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
@@ -56,4 +58,49 @@ if (NOT TARGET googletest_project)
         LOG_CONFIGURE ON
         LOG_BUILD ON
         LOG_INSTALL ON)
+
+    # On Windows GTest uses library postfixes for debug versions, that is
+    # gtest.lib becomes gtestd.lib when compiled with for debugging.  This ugly
+    # expression computes that value. Note that it must be a generator
+    # expression because with MSBuild the config type can change after the
+    # configuration phase.
+    if (WIN32)
+        set(_lib_postfix $<$<CONFIG:DEBUG>:d>)
+    endif ()
+
+    add_library(GTest::gtest INTERFACE IMPORTED)
+    add_dependencies(GTest::gtest googletest_project)
+    set_library_properties_for_external_project(GTest::gtest
+                                                gtest${_lib_postfix})
+    set_property(TARGET GTest::gtest
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES "Threads::Threads")
+
+    add_library(GTest::gtest_main INTERFACE IMPORTED)
+    add_dependencies(GTest::gtest_main googletest_project)
+    set_library_properties_for_external_project(GTest::gtest_main
+                                                gtest_main${_lib_postfix})
+    set_property(TARGET GTest::gtest_main
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          "GTest::gtest;Threads::Threads")
+
+    add_library(GTest::gmock INTERFACE IMPORTED)
+    add_dependencies(GTest::gmock googletest_project)
+    set_library_properties_for_external_project(GTest::gmock
+                                                gmock${_lib_postfix})
+    set_property(TARGET GTest::gmock
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          "GTest::gtest;Threads::Threads")
+
+    add_library(GTest::gmock_main INTERFACE IMPORTED)
+    add_dependencies(GTest::gmock_main googletest_project)
+    set_library_properties_for_external_project(GTest::gmock_main
+                                                gmock_main${_lib_postfix})
+    set_property(TARGET GTest::gmock_main
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          "GTest::gmock;GTest::gtest;Threads::Threads")
+
 endif ()

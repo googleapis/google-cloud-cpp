@@ -14,6 +14,7 @@
 # limitations under the License.
 # ~~~
 
+include(ExternalProjectHelper)
 include(external/c-ares)
 include(external/protobuf)
 
@@ -71,4 +72,48 @@ if (NOT TARGET gprc_project)
         LOG_CONFIGURE ON
         LOG_BUILD ON
         LOG_INSTALL ON)
+
+    find_package(OpenSSL REQUIRED)
+
+    add_library(gRPC::address_sorting INTERFACE IMPORTED)
+    set_library_properties_for_external_project(gRPC::address_sorting
+                                                address_sorting)
+    add_dependencies(gRPC::address_sorting grpc_project)
+
+    add_library(gRPC::gpr INTERFACE IMPORTED)
+    set_library_properties_for_external_project(gRPC::gpr gpr)
+    add_dependencies(gRPC::gpr grpc_project)
+    set_property(TARGET gRPC::gpr
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES c-ares::cares)
+
+    add_library(gRPC::grpc INTERFACE IMPORTED)
+    set_library_properties_for_external_project(gRPC::grpc grpc)
+    add_dependencies(gRPC::grpc grpc_project)
+    set_property(TARGET gRPC::grpc
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          gRPC::address_sorting
+                          gRPC::gpr
+                          OpenSSL::SSL
+                          OpenSSL::Crypto
+                          protobuf::libprotobuf)
+
+    add_library(gRPC::grpc++ INTERFACE IMPORTED)
+    set_library_properties_for_external_project(gRPC::grpc++ grpc++)
+    add_dependencies(gRPC::grpc++ grpc_project)
+    set_property(TARGET gRPC::grpc++
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES gRPC::grpc c-ares::cares)
+
+    # Discover the protobuf compiler and the gRPC plugin.
+    add_executable(protoc IMPORTED)
+    add_dependencies(protoc protobuf_project)
+    set_executable_name_for_external_project(protoc protoc)
+
+    add_executable(grpc_cpp_plugin IMPORTED)
+    add_dependencies(grpc_cpp_plugin grpc_project)
+    set_executable_name_for_external_project(grpc_cpp_plugin grpc_cpp_plugin)
+
+    list(APPEND PROTOBUF_IMPORT_DIRS "${PROJECT_BINARY_DIR}/external/include")
 endif ()

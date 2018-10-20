@@ -14,6 +14,8 @@
 # limitations under the License.
 # ~~~
 
+include(ExternalProjectHelper)
+
 if (NOT TARGET c_ares_project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
@@ -54,4 +56,9 @@ if (NOT TARGET c_ares_project)
         LOG_CONFIGURE ON
         LOG_BUILD ON
         LOG_INSTALL ON)
+
+    add_library(c-ares::cares INTERFACE IMPORTED)
+    set_library_properties_for_external_project(c-ares::cares cares
+                                                ALWAYS_SHARED)
+    add_dependencies(c-ares::cares c_ares_project)
 endif ()
