@@ -78,6 +78,18 @@ def google_cloud_cpp_deps():
             sha256 = "fbdfec4b4cf63b3b565d09f87e6c3c183bdd45c5be1864d3fcb338f6f02c1733",
         )
 
+    # Load google/crc32c, a library to efficiently compute CRC32C checksums.
+    if "com_github_google_crc32c" not in native.existing_rules():
+        native.new_http_archive(
+            name = "com_github_google_crc32c",
+            strip_prefix = "crc32c-1.0.5",
+            urls = [
+                "https://github.com/google/crc32c/archive/1.0.5.tar.gz",
+            ],
+            sha256 = "c2c0dcc8d155a6a56cc8d56bc1413e076aa32c35784f4d457831e8ccebd9260b",
+            build_file = "@com_github_googlecloudplatform_google_cloud_cpp//bazel:crc32c.BUILD",
+        )
+
     # We use the cc_proto_library() rule from @com_google_protobuf, which
     # assumes that grpc_cpp_plugin and grpc_lib are in the //external: module
     native.bind(

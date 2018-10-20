@@ -37,6 +37,23 @@ fi
 
 ccache_command="$(which ccache)"
 
+function install_crc32c {
+  # Install googletest.
+  echo "${COLOR_YELLOW}Installing Crc32c $(date)${COLOR_RESET}"
+  wget -q https://github.com/google/crc32c/archive/1.0.5.tar.gz
+  tar -xf 1.0.5.tar.gz
+  cd crc32c-1.0.5
+  env CXX="${cached_cxx}" CC="${cached_cc}"  cmake \
+      -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
+      -DCRC32C_BUILD_TESTS=OFF \
+      -DCRC32C_BUILD_BENCHMARKS=OFF \
+      -DCRC32C_USE_GLOG=OFF \
+      ${CMAKE_FLAGS} \
+      -H. -B.build/crc32c
+  cmake --build .build/crc32c --target install -- -j ${NCPU}
+  ldconfig
+}
+
 function install_protobuf {
   # Install protobuf using CMake.  Some distributions include protobuf, gRPC
   # requires 3.4.x or newer, and many of those distribution use older versions.
@@ -129,6 +146,7 @@ if [ "${TEST_INSTALL:-}" = "yes" -o "${SCAN_BUILD:-}" = "yes" ]; then
     cached_cxx="${ccache_command} ${CXX}"
     cached_cc="${ccache_command} ${CC}"
   fi
+  (cd /var/tmp/build-dependencies; install_crc32c)
   (cd /var/tmp/build-dependencies; install_protobuf)
   (cd /var/tmp/build-dependencies; install_c_ares)
   (cd /var/tmp/build-dependencies; install_grpc)
