@@ -34,7 +34,7 @@ echo "Running bigtable::InstanceAdmin integration test."
 
 echo
 echo "Running bigtable::InstanceAdmin integration test."
-./instance_admin_async_integration_test "${PROJECT_ID}";
+./instance_admin_async_integration_test "${PROJECT_ID}" "us-central1-f" "us-central1-b";
 
 echo
 echo "Running bigtable::TableAdmin integration test."

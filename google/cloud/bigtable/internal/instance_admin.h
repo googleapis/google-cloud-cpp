@@ -128,7 +128,7 @@ class InstanceAdmin {
    * @param callback a functor to be called when the operation completes. It
    *     must satisfy (using C++17 types):
    *     static_assert(std::is_invocable_v<
-   *         Functor, google::bigtable::v2::MutateRowResponse&,
+   *         Functor, google::bigtable::admin::v2::Instance&,
    *         grpc::Status const&>);
    *
    * @tparam Functor the type of the callback.
@@ -181,17 +181,17 @@ class InstanceAdmin {
   /**
    * Makes an asynchronous request to get the attributes of a cluster.
    *
-   * @param instance_id the id of the instance in the project, from that cluster
-   *     to be retrieved
-   * @param cluster_id the id of the cluster in the project that to be
-   *     retrieved.
+   * @param instance_id the Cloud Bigtable instance that contains the cluster.
+   * @param cluster_id fetch the attributes for this cluster id. The full name
+   * of the cluster is
+   * `projects/<PROJECT_ID>/instances/<instance_id>/clusters/<cluster_id>`
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
    * @param callback a functor to be called when the operation completes. It
    *     must satisfy (using C++17 types):
    *     static_assert(std::is_invocable_v<
-   *         Functor, google::bigtable::v2::MutateRowResponse&,
+   *         Functor, google::bigtable::admin::v2::Cluster&,
    *         grpc::Status const&>);
    *
    * @tparam Functor the type of the callback.

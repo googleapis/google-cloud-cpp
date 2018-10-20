@@ -23,17 +23,26 @@ namespace bigtable = google::cloud::bigtable;
 namespace {
 class InstanceTestEnvironment : public ::testing::Environment {
  public:
-  explicit InstanceTestEnvironment(std::string project) {
+  explicit InstanceTestEnvironment(std::string project, std::string zone,
+                                   std::string replication_zone) {
     project_id_ = std::move(project);
+    zone_ = std::move(zone);
+    replication_zone_ = std::move(replication_zone);
   }
 
   static std::string const& project_id() { return project_id_; }
+  static std::string const& zone() { return zone_; }
+  static std::string const& replication_zone() { return replication_zone_; }
 
  private:
   static std::string project_id_;
+  static std::string zone_;
+  static std::string replication_zone_;
 };
 
 std::string InstanceTestEnvironment::project_id_;
+std::string InstanceTestEnvironment::zone_;
+std::string InstanceTestEnvironment::replication_zone_;
 
 class InstanceAdminAsyncIntegrationTest : public ::testing::Test {
  protected:
@@ -71,7 +80,8 @@ bool IsClusterPresent(std::vector<btadmin::Cluster> const& clusters,
 }
 
 bigtable::InstanceConfig IntegrationTestConfig(
-    std::string const& id, std::string const& zone = "us-central1-f",
+    std::string const& id,
+    std::string const& zone = InstanceTestEnvironment::zone(),
     bigtable::InstanceConfig::InstanceType instance_type =
         bigtable::InstanceConfig::DEVELOPMENT,
     int32_t serve_node = 0) {
@@ -142,8 +152,9 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
 
   // create instance prerequisites for cluster operations
   bigtable::InstanceId instance_id(id);
-  auto instance_config = IntegrationTestConfig(
-      id, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance_config =
+      IntegrationTestConfig(id, InstanceTestEnvironment::zone(),
+                            bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =
       instance_admin_->CreateInstance(instance_config).get();
 
@@ -158,7 +169,8 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
       << " generated at random.";
   bigtable::ClusterId cluster_id(cluster_id_str);
   auto cluster_config =
-      bigtable::ClusterConfig("us-central1-b", 3, bigtable::ClusterConfig::HDD);
+      bigtable::ClusterConfig(InstanceTestEnvironment::replication_zone(), 3,
+                              bigtable::ClusterConfig::HDD);
   auto cluster =
       instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
           .get();
@@ -197,18 +209,21 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
 int main(int argc, char* argv[]) {
   google::cloud::testing_util::InitGoogleMock(argc, argv);
 
-  if (argc != 2) {
+  if (argc != 4) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(cmd).find_last_of('/');
     // Show usage if number of arguments is invalid.
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1) << " <project_id>"
+    std::cerr << "Usage: " << cmd.substr(last_slash + 1)
+              << "<project_id> <instance_id> <zone> <replication_zone>"
               << std::endl;
     return 1;
   }
 
   std::string const project_id = argv[1];
+  std::string const zone = argv[2];
+  std::string const replication_zone = argv[3];
   (void)::testing::AddGlobalTestEnvironment(
-      new InstanceTestEnvironment(project_id));
+      new InstanceTestEnvironment(project_id, zone, replication_zone));
 
   return RUN_ALL_TESTS();
 }
