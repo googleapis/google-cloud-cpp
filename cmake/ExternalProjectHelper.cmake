@@ -49,12 +49,7 @@ function (set_library_properties_for_external_project _target _lib)
     # The alternative is to manually create "IMPORTED" libraries with the right
     # paths. Generally this is possible because we control how the external
     # projects are compiled and installed.
-    if (WIN32)
-        set(
-            _libfullname
-            "${CMAKE_STATIC_LIBRARY_PREFIX}${_lib}${CMAKE_LIB}${CMAKE_STATIC_LIBRARY_SUFFIX}"
-            )
-    elseif("${BUILD_SHARED_LIBS}" OR "${F_OPT_ALWAYS_SHARED}")
+    if ("${BUILD_SHARED_LIBS}" OR "${F_OPT_ALWAYS_SHARED}")
         set(
             _libfullname
             "${CMAKE_SHARED_LIBRARY_PREFIX}${_lib}${CMAKE_SHARED_LIBRARY_SUFFIX}"
@@ -110,4 +105,31 @@ function (set_executable_name_for_external_project _target _exe)
             IMPORTED_LOCATION
             "${PROJECT_BINARY_DIR}/external/bin/${_exe}${CMAKE_EXECUTABLE_SUFFIX}"
         )
+endfunction ()
+
+function (create_external_project_library_byproduct_list var_name)
+    cmake_parse_arguments(_BYPRODUCT_OPT "ALWAYS_SHARED" "" "" ${ARGN})
+    if ("${BUILD_SHARED_LIBS}" OR "${_BYPRODUCT_OPT_ALWAYS_SHARED}")
+        set(_byproduct_prefix "${CMAKE_SHARED_LIBRARY_PREFIX}")
+        set(_byproduct_suffix "${CMAKE_SHARED_LIBRARY_SUFFIX}")
+    else()
+        set(_byproduct_prefix "${CMAKE_STATIC_LIBRARY_PREFIX}")
+        set(_byproduct_suffix "${CMAKE_STATIC_LIBRARY_SUFFIX}")
+    endif ()
+
+    set(_decorated_byproduct_names)
+    foreach (lib ${_BYPRODUCT_OPT_UNPARSED_ARGUMENTS})
+        list(
+            APPEND
+                _decorated_byproduct_names
+                "<INSTALL_DIR>/lib/${_byproduct_prefix}${lib}${_byproduct_suffix}"
+            )
+        list(
+            APPEND
+                _decorated_byproduct_names
+                "<INSTALL_DIR>/lib/${_byproduct_prefix}${lib}d${_byproduct_suffix}"
+            )
+    endforeach ()
+
+    set(${var_name} ${_decorated_byproduct_names} PARENT_SCOPE)
 endfunction ()

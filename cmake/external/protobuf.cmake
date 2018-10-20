@@ -34,6 +34,9 @@ if (NOT TARGET protobuf_project)
         set(PARALLEL "")
     endif ()
 
+    create_external_project_library_byproduct_list(protobuf_byproducts
+                                                   "protobuf")
+
     include(ExternalProject)
     externalproject_add(
         protobuf_project
@@ -57,10 +60,8 @@ if (NOT TARGET protobuf_project)
                       --build
                       <BINARY_DIR>
                       ${PARALLEL}
-        BUILD_BYPRODUCTS
-            <INSTALL_DIR>/${CMAKE_INSTALL_LIBDIR}/libprotobuf${CMAKE_STATIC_LIBRARY_SUFFIX}
-            <INSTALL_DIR>/${CMAKE_INSTALL_LIBDIR}/libprotobuf${CMAKE_SHARED_LIBRARY_SUFFIX}
-            <INSTALL_DIR>/bin/protoc${CMAKE_EXECUTABLE_SUFFIX}
+        BUILD_BYPRODUCTS ${protobuf_byproducts}
+                         <INSTALL_DIR>/bin/protoc${CMAKE_EXECUTABLE_SUFFIX}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
         LOG_BUILD ON

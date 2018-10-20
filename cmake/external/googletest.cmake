@@ -33,31 +33,32 @@ if (NOT TARGET googletest_project)
         set(PARALLEL "")
     endif ()
 
+    create_external_project_library_byproduct_list(googletest_byproducts
+                                                   "gtest"
+                                                   "gtest_main"
+                                                   "gmock"
+                                                   "gmock_main")
+
     include(ExternalProject)
-    externalproject_add(
-        googletest_project
-        EXCLUDE_FROM_ALL ON
-        PREFIX "${CMAKE_BINARY_DIR}/external/googletest"
-        INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
-        URL ${GOOGLE_CLOUD_CPP_GOOGLETEST_URL}
-        URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLETEST_SHA256}
-        CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
-                   -DCMAKE_BUILD_TYPE=Release
-                   -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
-                   -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-        BUILD_COMMAND ${CMAKE_COMMAND}
-                      --build
-                      <BINARY_DIR>
-                      ${PARALLEL}
-        BUILD_BYPRODUCTS
-            <INSTALL_DIR>/lib/libgtest${CMAKE_SHARED_LIBRARY_SUFFIX}
-            <INSTALL_DIR>/lib/libgmock${CMAKE_STATIC_LIBRARY_SUFFIX}
-            <INSTALL_DIR>/lib/libgtest_main${CMAKE_SHARED_LIBRARY_SUFFIX}
-            <INSTALL_DIR>/lib/libgmock_main${CMAKE_STATIC_LIBRARY_SUFFIX}
-        LOG_DOWNLOAD ON
-        LOG_CONFIGURE ON
-        LOG_BUILD ON
-        LOG_INSTALL ON)
+    externalproject_add(googletest_project
+                        EXCLUDE_FROM_ALL ON
+                        PREFIX "${CMAKE_BINARY_DIR}/external/googletest"
+                        INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
+                        URL ${GOOGLE_CLOUD_CPP_GOOGLETEST_URL}
+                        URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLETEST_SHA256}
+                        CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
+                                   -DCMAKE_BUILD_TYPE=Release
+                                   -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+                                   -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+                        BUILD_COMMAND ${CMAKE_COMMAND}
+                                      --build
+                                      <BINARY_DIR>
+                                      ${PARALLEL}
+                        BUILD_BYPRODUCTS ${googletest_byproducts}
+                        LOG_DOWNLOAD ON
+                        LOG_CONFIGURE ON
+                        LOG_BUILD ON
+                        LOG_INSTALL ON)
 
     # On Windows GTest uses library postfixes for debug versions, that is
     # gtest.lib becomes gtestd.lib when compiled with for debugging.  This ugly

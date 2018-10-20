@@ -35,6 +35,12 @@ if (NOT TARGET gprc_project)
         set(PARALLEL "")
     endif ()
 
+    create_external_project_library_byproduct_list(grpc_byproducts
+                                                   "grpc"
+                                                   "grpc++"
+                                                   "gpr"
+                                                   "address_sorting")
+
     include(ExternalProject)
     externalproject_add(
         grpc_project
@@ -59,14 +65,7 @@ if (NOT TARGET gprc_project)
                       <BINARY_DIR>
                       ${PARALLEL}
         BUILD_BYPRODUCTS
-            <INSTALL_DIR>/lib/libgrpc${CMAKE_STATIC_LIBRARY_SUFFIX}
-            <INSTALL_DIR>/lib/libgrpc${CMAKE_SHARED_LIBRARY_SUFFIX}
-            <INSTALL_DIR>/lib/libgrpc++${CMAKE_STATIC_LIBRARY_SUFFIX}
-            <INSTALL_DIR>/lib/libgrpc++${CMAKE_SHARED_LIBRARY_SUFFIX}
-            <INSTALL_DIR>/lib/libgpr${CMAKE_STATIC_LIBRARY_SUFFIX}
-            <INSTALL_DIR>/lib/libgpr${CMAKE_SHARED_LIBRARY_SUFFIX}
-            <INSTALL_DIR>/lib/libaddress_sorting${CMAKE_STATIC_LIBRARY_SUFFIX}
-            <INSTALL_DIR>/lib/libaddress_sorting${CMAKE_SHARED_LIBRARY_SUFFIX}
+            ${grpc_byproducts}
             <INSTALL_DIR>/bin/grpc_cpp_plugin${CMAKE_EXECUTABLE_SUFFIX}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
