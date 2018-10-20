@@ -260,7 +260,7 @@ class TableAdmin {
   }
 
   /**
-   * Make an asynchronous request to modify column family of the table.
+   * Make an asynchronous request to modify the column families of a table.
    *
    * @param table_id the name of the table relative to the instance managed by
    *     this object.  The full table name is
