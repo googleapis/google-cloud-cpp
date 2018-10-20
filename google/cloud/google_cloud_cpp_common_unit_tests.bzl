@@ -2,6 +2,7 @@
 google_cloud_cpp_common_unit_tests = [
     "iam_bindings_test.cc",
     "internal/backoff_policy_test.cc",
+    "internal/big_endian_test.cc",
     "internal/random_test.cc",
     "internal/invoke_result_test.cc",
     "internal/retry_policy_test.cc",

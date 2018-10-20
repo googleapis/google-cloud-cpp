@@ -72,6 +72,7 @@ add_library(google_cloud_cpp_common
             iam_policy.cc
             internal/backoff_policy.h
             internal/backoff_policy.cc
+            internal/big_endian.h
             internal/build_info.h
             ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
             internal/getenv.h
@@ -130,6 +131,7 @@ create_bazel_config(google_cloud_cpp_testing)
 set(google_cloud_cpp_common_unit_tests
     iam_bindings_test.cc
     internal/backoff_policy_test.cc
+    internal/big_endian_test.cc
     internal/random_test.cc
     internal/invoke_result_test.cc
     internal/retry_policy_test.cc
