@@ -123,8 +123,17 @@ TEST_F(AdminAsyncIntegrationTest, CreateListGetDeleteTableTest) {
                                                  GcRule::MaxNumVersions(2)),
       bigtable::ColumnFamilyModification::Drop("foo")};
 
-  auto table_modified =
-      table_admin_->ModifyColumnFamilies(table_id, column_modification_list);
+  std::promise<btadmin::Table> promise_column_family;
+
+  noex_table_admin_->AsyncModifyColumnFamilies(
+      table_id, column_modification_list, cq,
+      [&promise_column_family](CompletionQueue& cq, btadmin::Table& table,
+                               grpc::Status const& status) {
+        promise_column_family.set_value(std::move(table));
+      });
+
+  auto table_modified = promise_column_family.get_future().get();
+
   EXPECT_EQ(1, count_matching_families(table_modified, "fam"));
   EXPECT_EQ(0, count_matching_families(table_modified, "foo"));
   EXPECT_EQ(1, count_matching_families(table_modified, "newfam"));

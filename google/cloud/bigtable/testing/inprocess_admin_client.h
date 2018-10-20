@@ -120,6 +120,12 @@ class InProcessAdminClient : public bigtable::AdminClient {
       grpc::ClientContext* context,
       google::longrunning::GetOperationRequest const& request,
       google::longrunning::Operation* response) override;
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Table>>
+  AsyncModifyColumnFamilies(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request,
+      grpc::CompletionQueue* cq) override;
   //@}
 
  private:

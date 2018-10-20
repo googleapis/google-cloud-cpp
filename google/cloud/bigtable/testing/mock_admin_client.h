@@ -124,6 +124,14 @@ class MockAdminClient : public bigtable::AdminClient {
       grpc::Status(grpc::ClientContext* context,
                    google::longrunning::GetOperationRequest const& request,
                    google::longrunning::Operation* response));
+  MOCK_METHOD3(
+      AsyncModifyColumnFamilies,
+      std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+          google::bigtable::admin::v2::Table>>(
+          grpc::ClientContext* context,
+          google::bigtable::admin::v2::ModifyColumnFamiliesRequest const&
+              request,
+          grpc::CompletionQueue* cq));
 };
 
 }  // namespace testing
