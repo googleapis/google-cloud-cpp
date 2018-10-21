@@ -258,6 +258,64 @@ class TableAdmin {
         status);
     return result;
   }
+
+  /**
+   * Make an asynchronous request to modify the column families of a table.
+   *
+   * @param table_id the name of the table relative to the instance managed by
+   *     this object.  The full table name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of this object.
+   * @param modifications the list of modifications to the schema.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, google::bigtable::v2::Table&,
+   *         grpc::Status const&>);
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<
+                    Functor, CompletionQueue&,
+                    google::bigtable::admin::v2::Table&, grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  void AsyncModifyColumnFamilies(
+      std::string const& table_id,
+      std::vector<ColumnFamilyModification> modifications, CompletionQueue& cq,
+      Functor&& callback) {
+    google::bigtable::admin::v2::ModifyColumnFamiliesRequest request;
+    request.set_name(TableName(table_id));
+    for (auto& m : modifications) {
+      *request.add_modifications() = m.as_proto_move();
+    }
+    MetadataUpdatePolicy metadata_update_policy(
+        instance_name(), MetadataParamTypes::NAME, table_id);
+
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &AdminClient::AsyncModifyColumnFamilies)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &AdminClient::AsyncModifyColumnFamilies)>::MemberFunction;
+
+    using Retry =
+        internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
+                                     internal::ConstantIdempotencyPolicy,
+                                     Functor>;
+
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        internal::ConstantIdempotencyPolicy(false), metadata_update_policy,
+        client_, &AdminClient::AsyncModifyColumnFamilies, std::move(request),
+        std::forward<Functor>(callback));
+    retry->Start(cq);
+  }
   //@}
 
  private:

@@ -166,6 +166,15 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
     return impl_.Stub()->AsyncCreateTable(context, request, cq);
   }
 
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Table>>
+  AsyncModifyColumnFamilies(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request,
+      grpc::CompletionQueue* cq) override {
+    return impl_.Stub()->AsyncModifyColumnFamilies(context, request, cq);
+  }
+
  private:
   std::string project_;
   Impl impl_;

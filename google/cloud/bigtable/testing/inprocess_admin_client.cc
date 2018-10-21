@@ -125,6 +125,14 @@ grpc::Status InProcessAdminClient::GetOperation(
   return stub->GetOperation(context, request, response);
 }
 
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>
+InProcessAdminClient::AsyncModifyColumnFamilies(
+    grpc::ClientContext* context,
+    btadmin::ModifyColumnFamiliesRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncModifyColumnFamilies(context, request, cq);
+}
+
 }  // namespace testing
 }  // namespace bigtable
 }  // namespace cloud
