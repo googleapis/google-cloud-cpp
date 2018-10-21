@@ -316,6 +316,111 @@ class TableAdmin {
         std::forward<Functor>(callback));
     retry->Start(cq);
   }
+
+  /**
+   * Make an asynchronous request to delete all the rows that start with a given
+   * prefix.
+   *
+   * @param table_id the id of the table within the instance associated with
+   *     this object. The full name of the table is
+   *     `this->instance_name() + "/tables/" + table_id`
+   * @param row_key_prefix drop any rows that start with this prefix.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, google::protobuf::Empty&,
+   *         grpc::Status const&>);
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      google::protobuf::Empty&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  void AsyncDropRowsByPrefix(std::string const& table_id,
+                             std::string row_key_prefix, CompletionQueue& cq,
+                             Functor&& callback) {
+    google::bigtable::admin::v2::DropRowRangeRequest request;
+    request.set_name(TableName(table_id));
+    request.set_row_key_prefix(std::move(row_key_prefix));
+    MetadataUpdatePolicy metadata_update_policy(
+        instance_name(), MetadataParamTypes::NAME, table_id);
+
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &AdminClient::AsyncDropRowRange)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &AdminClient::AsyncDropRowRange)>::MemberFunction;
+
+    using Retry =
+        internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
+                                     internal::ConstantIdempotencyPolicy,
+                                     Functor>;
+
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        internal::ConstantIdempotencyPolicy(false), metadata_update_policy,
+        client_, &AdminClient::AsyncDropRowRange, std::move(request),
+        std::forward<Functor>(callback));
+    retry->Start(cq);
+  }
+
+  /**
+   * Make an asynchronous request to delete all the rows of a table.
+   *
+   * @param table_id the id of the table within the instance associated with
+   *     this object. The full name of the table is
+   *     `this->instance_name() + "/tables/" + table_id`
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, google::protobuf::Empty&,
+   *         grpc::Status const&>);
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      google::protobuf::Empty&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  void AsyncDropAllRows(std::string const& table_id, CompletionQueue& cq,
+                        Functor&& callback) {
+    google::bigtable::admin::v2::DropRowRangeRequest request;
+    request.set_name(TableName(table_id));
+    request.set_delete_all_data_from_table(true);
+    MetadataUpdatePolicy metadata_update_policy(
+        instance_name(), MetadataParamTypes::NAME, table_id);
+
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &AdminClient::AsyncDropRowRange)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &AdminClient::AsyncDropRowRange)>::MemberFunction;
+
+    using Retry =
+        internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
+                                     internal::ConstantIdempotencyPolicy,
+                                     Functor>;
+
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        internal::ConstantIdempotencyPolicy(false), metadata_update_policy,
+        client_, &AdminClient::AsyncDropRowRange, std::move(request),
+        std::forward<Functor>(callback));
+    retry->Start(cq);
+  }
   //@}
 
  private:

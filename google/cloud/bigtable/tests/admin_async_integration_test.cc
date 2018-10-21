@@ -152,6 +152,135 @@ TEST_F(AdminAsyncIntegrationTest, CreateListGetDeleteTableTest) {
   pool.join();
 }
 
+/// @test Verify that `noex::TableAdmin` AsyncDropRowsByPrefix works
+TEST_F(AdminAsyncIntegrationTest, AsyncDropRowsByPrefixTest) {
+  std::string const table_id = RandomTableId();
+  std::string const column_family1 = "family1";
+  std::string const column_family2 = "family2";
+  std::string const column_family3 = "family3";
+
+  bigtable::TableConfig table_config = bigtable::TableConfig(
+      {{column_family1, bigtable::GcRule::MaxNumVersions(10)},
+       {column_family2, bigtable::GcRule::MaxNumVersions(10)},
+       {column_family3, bigtable::GcRule::MaxNumVersions(10)}},
+      {});
+
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  std::promise<btadmin::Table> promise_create_table;
+  noex_table_admin_->AsyncCreateTable(
+      table_id, table_config, cq,
+      [&promise_create_table](CompletionQueue& cq, btadmin::Table& table,
+                              grpc::Status const& status) {
+        promise_create_table.set_value(std::move(table));
+      });
+
+  auto table_created = promise_create_table.get_future().get();
+
+  bigtable::Table table(data_client_, table_id);
+
+  // Create a vector of cell which will be inserted into bigtable
+  std::string const row_key1_prefix = "DropRowPrefix1";
+  std::string const row_key2_prefix = "DropRowPrefix2";
+  std::string const row_key1 = row_key1_prefix + "-Key1";
+  std::string const row_key1_1 = row_key1_prefix + "_1-Key1";
+  std::string const row_key2 = row_key2_prefix + "-Key2";
+  std::vector<bigtable::Cell> created_cells{
+      {row_key1, column_family1, "column_id1", 0, "v-c-0-0", {}},
+      {row_key1, column_family1, "column_id1", 1000, "v-c-0-1", {}},
+      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2", {}},
+      {row_key1_1, column_family2, "column_id3", 2000, "v-c-0-2", {}},
+      {row_key1_1, column_family2, "column_id3", 3000, "v-c-0-2", {}},
+      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
+      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2", {}},
+  };
+  std::vector<bigtable::Cell> expected_cells{
+      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
+      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2", {}}};
+
+  // Create records
+  CreateCells(table, created_cells);
+
+  // Delete all the records for a row
+  std::promise<google::protobuf::Empty> promise_drop_row;
+  noex_table_admin_->AsyncDropRowsByPrefix(
+      table_id, row_key1_prefix, cq,
+      [&promise_drop_row](CompletionQueue& cq,
+                          google::protobuf::Empty& response,
+                          grpc::Status const& status) {
+        promise_drop_row.set_value(std::move(response));
+      });
+
+  auto response = promise_drop_row.get_future().get();
+  auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
+  DeleteTable(table_id);
+
+  CheckEqualUnordered(expected_cells, actual_cells);
+
+  cq.Shutdown();
+  pool.join();
+}
+
+TEST_F(AdminAsyncIntegrationTest, AsyncDropAllRowsTest) {
+  std::string const table_id = RandomTableId();
+  std::string const column_family1 = "family1";
+  std::string const column_family2 = "family2";
+  std::string const column_family3 = "family3";
+  bigtable::TableConfig table_config = bigtable::TableConfig(
+      {{column_family1, bigtable::GcRule::MaxNumVersions(10)},
+       {column_family2, bigtable::GcRule::MaxNumVersions(10)},
+       {column_family3, bigtable::GcRule::MaxNumVersions(10)}},
+      {});
+
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  std::promise<btadmin::Table> promise_create_table;
+  noex_table_admin_->AsyncCreateTable(
+      table_id, table_config, cq,
+      [&promise_create_table](CompletionQueue& cq, btadmin::Table& table,
+                              grpc::Status const& status) {
+        promise_create_table.set_value(std::move(table));
+      });
+
+  auto table_created = promise_create_table.get_future().get();
+
+  bigtable::Table table(data_client_, table_id);
+
+  // Create a vector of cell which will be inserted into bigtable
+  std::string const row_key1 = "DropRowKey1";
+  std::string const row_key2 = "DropRowKey2";
+  std::vector<bigtable::Cell> created_cells{
+      {row_key1, column_family1, "column_id1", 0, "v-c-0-0", {}},
+      {row_key1, column_family1, "column_id1", 1000, "v-c-0-1", {}},
+      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2", {}},
+      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
+      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2", {}},
+  };
+
+  // Create records
+  CreateCells(table, created_cells);
+
+  // Delete all the records from a table
+  std::promise<google::protobuf::Empty> promise_drop_row;
+  noex_table_admin_->AsyncDropAllRows(
+      table_id, cq,
+      [&promise_drop_row](CompletionQueue& cq,
+                          google::protobuf::Empty& response,
+                          grpc::Status const& status) {
+        promise_drop_row.set_value(std::move(response));
+      });
+  auto response = promise_drop_row.get_future().get();
+
+  auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
+  DeleteTable(table_id);
+
+  ASSERT_TRUE(actual_cells.empty());
+  cq.Shutdown();
+  pool.join();
+}
+
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

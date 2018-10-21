@@ -133,6 +133,14 @@ InProcessAdminClient::AsyncModifyColumnFamilies(
   return Stub()->AsyncModifyColumnFamilies(context, request, cq);
 }
 
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+InProcessAdminClient::AsyncDropRowRange(
+    grpc::ClientContext* context, btadmin::DropRowRangeRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncDropRowRange(context, request, cq);
+}
+
 }  // namespace testing
 }  // namespace bigtable
 }  // namespace cloud
