@@ -13,14 +13,17 @@
 // limitations under the License.
 
 #include "google/cloud/internal/throw_delegate.h"
-#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
-using namespace google::cloud::internal;
-
+namespace google {
+namespace cloud {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace internal {
 namespace {
+
 std::string const cmsg("testing with std::string const&");
 char const* msg = "testing with char const*";
-}  // namespace
+using ::testing::HasSubstr;
 
 TEST(ThrowDelegateTest, InvalidArgument) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -52,6 +55,30 @@ TEST(ThrowDelegateTest, RuntimeError) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
+TEST(ThrowDelegateTest, SystemError) {
+  auto ec = std::make_error_code(std::errc::bad_message);
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try { RaiseSystemError(ec, msg); } catch (std::system_error const& ex) {
+        EXPECT_EQ(ec, ex.code());
+        EXPECT_THAT(ex.what(), HasSubstr(msg));
+        throw;
+      },
+      std::system_error);
+
+  EXPECT_THROW(
+      try { RaiseSystemError(ec, cmsg); } catch (std::system_error const& ex) {
+        EXPECT_EQ(ec, ex.code());
+        EXPECT_THAT(ex.what(), HasSubstr(cmsg));
+        throw;
+      },
+      std::system_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(RaiseSystemError(ec, msg), msg);
+  EXPECT_DEATH_IF_SUPPORTED(RaiseSystemError(ec, cmsg), cmsg);
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
 TEST(ThrowDelegateTest, LogicError) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(RaiseLogicError(msg), std::logic_error);
@@ -61,3 +88,9 @@ TEST(ThrowDelegateTest, LogicError) {
   EXPECT_DEATH_IF_SUPPORTED(RaiseLogicError(cmsg), cmsg);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+
+}  // namespace
+}  // namespace internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google

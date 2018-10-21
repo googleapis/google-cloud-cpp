@@ -28,6 +28,18 @@ template <typename Exception>
   google::cloud::Terminate(msg);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+
+template <typename Exception>
+[[noreturn]] void RaiseException(std::error_code ec, char const* msg) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  throw Exception(ec, msg);
+#else
+  std::string full_msg = ec.message();
+  full_msg += ": ";
+  full_msg += msg;
+  google::cloud::Terminate(full_msg.c_str());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
 }  // namespace
 
 namespace google {
@@ -55,6 +67,14 @@ void RaiseRuntimeError(char const* msg) {
 
 void RaiseRuntimeError(std::string const& msg) {
   RaiseException<std::runtime_error>(msg.c_str());
+}
+
+void RaiseSystemError(std::error_code ec, char const* msg) {
+  RaiseException<std::system_error>(ec, msg);
+}
+
+void RaiseSystemError(std::error_code ec, std::string const& msg) {
+  RaiseException<std::system_error>(ec, msg.c_str());
 }
 
 void RaiseLogicError(char const* msg) { RaiseException<std::logic_error>(msg); }

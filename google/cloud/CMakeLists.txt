@@ -75,6 +75,8 @@ add_library(google_cloud_cpp_common
             internal/big_endian.h
             internal/build_info.h
             ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
+            internal/filesystem.h
+            internal/filesystem.cc
             internal/getenv.h
             internal/getenv.cc
             internal/make_unique.h
@@ -132,8 +134,9 @@ set(google_cloud_cpp_common_unit_tests
     iam_bindings_test.cc
     internal/backoff_policy_test.cc
     internal/big_endian_test.cc
-    internal/random_test.cc
+    internal/filesystem_test.cc
     internal/invoke_result_test.cc
+    internal/random_test.cc
     internal/retry_policy_test.cc
     internal/throw_delegate_test.cc
     log_test.cc
