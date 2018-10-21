@@ -13,7 +13,7 @@ One can view stats captured using OpenCensus at Google Cloud Console as explaine
 One can view traces captured using OpenCensus at Google Cloud Console as explained [here](https://github.com/census-instrumentation/opencensus-cpp/tree/master/examples/grpc#tracing)
 
 ## OpenCensus example
-### Build examp[le
+### Build example
 The `bigtable_opencensus` example demonstrates how to integrate the OpenCensus library with the Cloud Bigtable C++ client. OpenCensus for C++ only supports [Bazel](https://bazel.build/) builds, so you must build the Cloud Bigtable C++ client using Bazel too.  Follow the instructions on the [Bazel site](https://docs.bazel.build/versions/master/install.html) to install Bazel for your platform, then run this command-line from the top-level directory for `google-cloud-cpp`:
 
 ```

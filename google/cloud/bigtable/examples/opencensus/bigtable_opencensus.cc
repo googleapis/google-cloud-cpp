@@ -44,13 +44,32 @@ int main(int argc, char* argv[]) try {
   // Register the OpenCensus gRPC plugin to enable stats and tracing in gRPC.
   grpc::RegisterOpenCensusPlugin();
 
-  // Trace all outgoing RPCs.
+  // The `ProbabilitySampler` used in this example samples out request and
+  // does not trace all the requests. So, if production system requires tracing
+  // of each request then different samplers must be used
+  //
+  // For more details, see the documentation
+  //
+  //   https://opencensus.io/core-concepts/tracing/#sampling
+  //   https://github.com/census-instrumentation/opencensus-specs/blob/master/trace/Sampling.md#sampling
+  //
+
   opencensus::trace::TraceConfig::SetCurrentTraceParams(
       {128, 128, 128, 128, opencensus::trace::ProbabilitySampler(1.0)});
 
   // For debugging, register exporters that just write to stdout.
   opencensus::exporters::stats::StdoutExporter::Register();
   opencensus::exporters::trace::StdoutExporter::Register();
+
+  // Registration of Stackdriver requires couple of parameters,
+  // project_id The Stackdriver Project ID to use
+  // opencensus_task The opencensus_task is used to uniquely identify the task
+  //   in Stackdriver. The recommended format is "{LANGUAGE}-{PID}@{HOSTNAME}".
+  //   If PID is not available, a random number may be used.
+  //
+  // For more details, see the documentation
+  //   https://github.com/census-instrumentation/opencensus-cpp/tree/master/opencensus/exporters/stats/stackdriver#opencensus-stackdriver-stats-exporter
+
   opencensus::exporters::stats::StackdriverExporter::Register(
       project_id, "bigtable-opencensus-0@unspecified-host");
   opencensus::exporters::trace::StackdriverExporter::Register(project_id);
