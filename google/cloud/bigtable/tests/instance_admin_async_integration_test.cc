@@ -193,7 +193,15 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
   EXPECT_EQ(cluster_name_prefix + cluster_id.get(), cluster_result.name());
 
   // Delete cluster
-  instance_admin_->DeleteCluster(std::move(instance_id), std::move(cluster_id));
+  std::promise<google::protobuf::Empty> promise_delete_cluster;
+  admin.AsyncDeleteCluster(
+      instance_id, cluster_id, cq,
+      [&promise_delete_cluster](google::cloud::bigtable::CompletionQueue& cq,
+                                google::protobuf::Empty& response,
+                                grpc::Status const& status) {
+        promise_delete_cluster.set_value(std::move(response));
+      });
+  auto response = promise_delete_cluster.get_future().get();
   auto clusters_after_delete = instance_admin_->ListClusters(id);
   instance_admin_->DeleteInstance(id);
   EXPECT_TRUE(IsClusterPresent(

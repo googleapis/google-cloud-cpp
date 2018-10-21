@@ -192,6 +192,13 @@ class InstanceAdminClient {
   AsyncGetCluster(grpc::ClientContext* context,
                   google::bigtable::admin::v2::GetClusterRequest const& request,
                   grpc::CompletionQueue* cq) = 0;
+
+  virtual std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+  AsyncDeleteCluster(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteClusterRequest const& request,
+      grpc::CompletionQueue* cq) = 0;
   //@}
 
   //@{
