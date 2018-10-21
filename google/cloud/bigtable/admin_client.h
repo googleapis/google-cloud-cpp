@@ -175,6 +175,12 @@ class AdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request,
       grpc::CompletionQueue* cq) = 0;
+  virtual std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+  AsyncDropRowRange(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DropRowRangeRequest const& request,
+      grpc::CompletionQueue* cq) = 0;
   //@}
 };
 

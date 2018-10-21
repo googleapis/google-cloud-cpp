@@ -132,6 +132,13 @@ class MockAdminClient : public bigtable::AdminClient {
           google::bigtable::admin::v2::ModifyColumnFamiliesRequest const&
               request,
           grpc::CompletionQueue* cq));
+  MOCK_METHOD3(
+      AsyncDropRowRange,
+      std::unique_ptr<
+          grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>(
+          grpc::ClientContext* context,
+          google::bigtable::admin::v2::DropRowRangeRequest const& request,
+          grpc::CompletionQueue* cq));
 };
 
 }  // namespace testing
