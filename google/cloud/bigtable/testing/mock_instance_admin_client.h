@@ -98,6 +98,14 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
                    google::protobuf::Empty*));
 
   MOCK_METHOD3(
+      AsyncDeleteCluster,
+      std::unique_ptr<
+          grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>(
+          grpc::ClientContext* context,
+          google::bigtable::admin::v2::DeleteClusterRequest const& request,
+          grpc::CompletionQueue* cq));
+
+  MOCK_METHOD3(
       CreateCluster,
       grpc::Status(grpc::ClientContext*,
                    google::bigtable::admin::v2::CreateClusterRequest const&,
