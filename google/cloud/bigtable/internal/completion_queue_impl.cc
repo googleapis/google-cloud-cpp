@@ -86,9 +86,9 @@ std::shared_ptr<AsyncOperation> CompletionQueueImpl::FindOperation(void* tag) {
 
 void CompletionQueueImpl::ForgetOperation(void* tag) {
   std::lock_guard<std::mutex> lk(mu_);
-  const int num_erased =
+  auto const num_erased =
       pending_ops_.erase(reinterpret_cast<std::intptr_t>(tag));
-  if (1 != num_erased) {
+  if (1U != num_erased) {
     google::cloud::internal::RaiseRuntimeError(
         "assertion failure: searching for async op tag when trying to "
         "unregister");

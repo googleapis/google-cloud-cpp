@@ -155,6 +155,21 @@ class AsyncUnaryRpcFunctor : public AsyncOperation {
   AsyncUnaryRpcResult<Response> result_;
 };
 
+/**
+ * Unary RPC with streaming response AsyncOperation wrapper.
+ *
+ * This is AsyncUnaryRpcFunctor's counterpart for RPCs with streaming responses.
+ * It encapsulates the stream's state machine and allows specifying
+ * callbacks for data portions and end-of-stream.
+ *
+ * Note that this class lives in the `internal` namespace and thus is
+ * not intended for general use.
+ *
+ * @tparam Request the type of the RPC request.
+ * @tparam Response the type of the RPC response piece.
+ * @tparam DataFunctor the callback type for notifying about data protions.
+ * @tparam FinishedFunctor the callback type for notifying about end of stream.
+ */
 template <typename Request, typename Response, typename DataFunctor,
           typename FinishedFunctor,
           typename std::enable_if<
@@ -186,8 +201,8 @@ class AsyncUnaryStreamRpcFunctor : public AsyncOperation {
  private:
   enum State { CREATING = 4525, PROCESSING = 21345, FINISHING = 82553 };
   bool Notify(CompletionQueue& cq, Disposition d) override {
-    // Due to issue #1308, argument d doesn't mean what the state names suggest.
-    // If d == AsynOperation::CANCELLED, it might as well be a broken stream.
+    // TODO(#1308) - the disposition types do not quite work for streaming
+    // requests, that will be fixed in a future PR.
 
     std::unique_lock<std::mutex> lk(mu_);
 
@@ -202,18 +217,16 @@ class AsyncUnaryStreamRpcFunctor : public AsyncOperation {
         }
         return false;
       case PROCESSING:
-        // Optimization is possible here. We could kick off
-        // response_reader_->Read() before calling data_functor_. If we did,
-        // we'd potentially utilize more threads executing the completion queue.
-        // However, we'd have to either add extra code to make sure that the
-        // callbacks are run in the same order as they arrived or introduce a
-        // mode in which they can be reordered.
         if (d == AsyncOperation::COMPLETED) {
           Response received;
           response_.Swap(&received);
           lk.unlock();
+          // The simple way to assure that we don't reorder callbacks is not
+          // submitting the next Read() until the user callback finishes.
           data_functor_(cq, *context_, received);
           lk.lock();
+          // The Read() is async, so calling it with the lock held should be
+          // safe.
           response_reader_->Read(&response_, tag_);
         } else {
           response_reader_->Finish(&status_, tag_);
@@ -221,13 +234,27 @@ class AsyncUnaryStreamRpcFunctor : public AsyncOperation {
         }
         return false;
       case FINISHING:
+        lk.unlock();
         finished_functor_(cq, *context_, status_);
         return true;
     }
     google::cloud::internal::RaiseRuntimeError(
-        "unexpected state in AsyncUnaryRpcFunctor: " + std::to_string(state_));
+        "unexpected state in AsyncUnaryStreamRpcFunctor: " +
+        std::to_string(state_));
   }
 
+  // It is not obvious why the mutex is used. There are 2 reasons:
+  //
+  // Read()s should not be run concurrently on response_reader_. There is no
+  // guarantee that a thread is going to get Notify()ed only after Read() is
+  // fully finished.
+  //
+  // The mutex also acts as a barrier here to make sure that whatever is written
+  // to this object's fields is visible in threads which get subsequently
+  // Notify()ed.
+  //
+  // The likelihood of any of these reasons materializing is low, but it's
+  // better to be on the safe side.
   std::mutex mu_;
   void* tag_;
   State state_;
@@ -325,6 +352,7 @@ class CompletionQueueImpl {
  protected:
   /// Return the asynchronous operation associated with @p tag.
   std::shared_ptr<AsyncOperation> FindOperation(void* tag);
+
   /// Unregister @p tag from pending operations.
   void ForgetOperation(void* tag);
 
