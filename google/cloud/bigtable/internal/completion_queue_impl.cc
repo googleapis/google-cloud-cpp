@@ -42,8 +42,11 @@ void CompletionQueueImpl::Run(CompletionQueue& cq) {
       google::cloud::internal::RaiseRuntimeError(
           "unexpected status from AsyncNext()");
     }
-    auto op = CompletedOperation(tag);
-    op->Notify(cq, ok ? AsyncOperation::COMPLETED : AsyncOperation::CANCELLED);
+    auto op = FindOperation(tag);
+    if (op->Notify(
+            cq, ok ? AsyncOperation::COMPLETED : AsyncOperation::CANCELLED)) {
+      ForgetOperation(tag);
+    }
   }
 }
 
@@ -71,17 +74,25 @@ void* CompletionQueueImpl::RegisterOperation(
       "assertion failure: insertion should succeed");
 }
 
-std::shared_ptr<AsyncOperation> CompletionQueueImpl::CompletedOperation(
-    void* tag) {
+std::shared_ptr<AsyncOperation> CompletionQueueImpl::FindOperation(void* tag) {
   std::lock_guard<std::mutex> lk(mu_);
   auto loc = pending_ops_.find(reinterpret_cast<std::intptr_t>(tag));
   if (pending_ops_.end() == loc) {
     google::cloud::internal::RaiseRuntimeError(
         "assertion failure: searching for async op tag");
   }
-  auto op = std::move(loc->second);
-  pending_ops_.erase(loc);
-  return op;
+  return loc->second;
+}
+
+void CompletionQueueImpl::ForgetOperation(void* tag) {
+  std::lock_guard<std::mutex> lk(mu_);
+  const int num_erased =
+      pending_ops_.erase(reinterpret_cast<std::intptr_t>(tag));
+  if (1 != num_erased) {
+    google::cloud::internal::RaiseRuntimeError(
+        "assertion failure: searching for async op tag when trying to "
+        "unregister");
+  }
 }
 
 // This function is used in unit tests to simulate the completion of an
@@ -92,9 +103,11 @@ std::shared_ptr<AsyncOperation> CompletionQueueImpl::CompletedOperation(
 void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq,
                                              AsyncOperation* op,
                                              AsyncOperation::Disposition d) {
-  auto internal_op = CompletedOperation(op);
+  auto internal_op = FindOperation(op);
   internal_op->Cancel();
-  internal_op->Notify(cq, d);
+  if (internal_op->Notify(cq, d)) {
+    ForgetOperation(op);
+  }
 }
 
 void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq,
@@ -109,9 +122,11 @@ void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq,
     }
   }
   for (void* tag : tags) {
-    auto internal_op = CompletedOperation(tag);
+    auto internal_op = FindOperation(tag);
     internal_op->Cancel();
-    internal_op->Notify(cq, d);
+    if (internal_op->Notify(cq, d)) {
+      ForgetOperation(tag);
+    }
   }
 
   // Discard any pending events.

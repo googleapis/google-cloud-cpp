@@ -94,8 +94,10 @@ class AsyncOperation {
    *   case the callback needs to retry the operation.
    * @param disposition `COMPLETED` if the operation completed, `CANCELED` if
    *   the operation were canceled. Note that errors are a "normal" completion.
+   * @return Whether the operation is completed (e.g. in case of streaming
+   *   response, it would return true only after the stream is finished).
    */
-  virtual void Notify(CompletionQueue& cq, Disposition disposition) = 0;
+  virtual bool Notify(CompletionQueue& cq, Disposition disposition) = 0;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS
