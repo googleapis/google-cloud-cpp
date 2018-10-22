@@ -110,6 +110,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteInstanceTest) {
       << " This is unexpected, as the instance ids are"
       << " generated at random.";
 
+  bigtable::noex::InstanceAdmin admin(instance_admin_client_);
   google::cloud::bigtable::CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
 
@@ -120,7 +121,6 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteInstanceTest) {
   EXPECT_TRUE(IsInstancePresent(instances_current, instance.name()));
 
   // Get instance
-  bigtable::noex::InstanceAdmin admin(instance_admin_client_);
   std::promise<btadmin::Instance> done;
   admin.AsyncGetInstance(
       instance_id, cq,
