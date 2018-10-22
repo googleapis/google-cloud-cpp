@@ -113,6 +113,11 @@ class DataClient {
       grpc::ClientReaderInterface<google::bigtable::v2::MutateRowsResponse>>
   MutateRows(grpc::ClientContext* context,
              google::bigtable::v2::MutateRowsRequest const& request) = 0;
+  virtual std::unique_ptr<::grpc::ClientAsyncReaderInterface<
+      ::google::bigtable::v2::MutateRowsResponse>>
+  AsyncMutateRows(::grpc::ClientContext* context,
+                  const ::google::bigtable::v2::MutateRowsRequest& request,
+                  ::grpc::CompletionQueue* cq, void* tag) = 0;
   //@}
 };
 

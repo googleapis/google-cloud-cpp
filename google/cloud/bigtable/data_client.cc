@@ -101,6 +101,13 @@ class DefaultDataClient : public DataClient {
              btproto::MutateRowsRequest const& request) override {
     return impl_.Stub()->MutateRows(context, request);
   }
+  std::unique_ptr<::grpc::ClientAsyncReaderInterface<
+      ::google::bigtable::v2::MutateRowsResponse>>
+  AsyncMutateRows(::grpc::ClientContext* context,
+                  const ::google::bigtable::v2::MutateRowsRequest& request,
+                  ::grpc::CompletionQueue* cq, void* tag) {
+    return impl_.Stub()->AsyncMutateRows(context, request, cq, tag);
+  }
 
  private:
   std::string project_;
