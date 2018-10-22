@@ -199,7 +199,7 @@ class AsyncUnaryStreamRpcFunctor : public AsyncOperation {
   void Cancel() override { context_->TryCancel(); }
 
  private:
-  enum State { CREATING = 4525, PROCESSING = 21345, FINISHING = 82553 };
+  enum State { CREATING, PROCESSING, FINISHING };
   bool Notify(CompletionQueue& cq, Disposition d) override {
     // TODO(#1308) - the disposition types do not quite work for streaming
     // requests, that will be fixed in a future PR.
