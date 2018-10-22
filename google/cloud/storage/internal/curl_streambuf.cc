@@ -43,11 +43,9 @@ CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
     current_ios_buffer_.push_back('\0');
     char* data = &current_ios_buffer_[0];
     setg(data, data + 1, data + 1);
-    hash_validator_result_ =
-        std::move(*hash_validator_)
-            .Finish(
-                __func__ +
-                std::string(" mismatched hashes reading from closed stream"));
+    hash_validator_result_ = HashValidator::FinishAndCheck(
+        __func__ + std::string(" mismatched hashes reading from closed stream"),
+        std::move(*hash_validator_));
     return traits_type::eof();
   }
 
@@ -69,10 +67,9 @@ CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
   current_ios_buffer_.push_back('\0');
   char* data = &current_ios_buffer_[0];
   setg(data, data + 1, data + 1);
-  hash_validator_result_ =
-      std::move(*hash_validator_)
-          .Finish(__func__ +
-                  std::string(" mismatched hashes at end of download"));
+  hash_validator_result_ = HashValidator::FinishAndCheck(
+      __func__ + std::string(" mismatched hashes at end of download"),
+      std::move(*hash_validator_));
   return traits_type::eof();
 }
 
@@ -89,7 +86,8 @@ bool CurlStreambuf::IsOpen() const { return upload_.IsOpen(); }
 
 void CurlStreambuf::ValidateHash(ObjectMetadata const& meta) {
   hash_validator_->ProcessMetadata(meta);
-  hash_validator_result_ = std::move(*hash_validator_).Finish(__func__);
+  hash_validator_result_ =
+      HashValidator::FinishAndCheck(__func__, std::move(*hash_validator_));
 }
 
 CurlStreambuf::int_type CurlStreambuf::overflow(int_type ch) {

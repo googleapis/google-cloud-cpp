@@ -25,13 +25,61 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
+void HashValidator::CheckResult(std::string const& msg,
+                                HashValidator::Result const& result) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // Sometimes the server simply does not have a MD5 hash to send us, the most
+  // common case is a composed object, particularly one formed from encrypted
+  // components, where computing the MD5 would require decrypting and re-reading
+  // all the components. In that case we just do not raise an exception even if
+  // there is a mismatch.
+  if (not result.received.empty() and result.received != result.computed) {
+    throw HashMismatchError(msg, result.received, result.computed);
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+HashValidator::Result HashValidator::FinishAndCheck(std::string const& msg,
+                                                    HashValidator&& validator) {
+  auto result = std::move(validator).Finish();
+  CheckResult(msg, result);
+  return result;
+}
+
+void CompositeValidator::Update(std::string const& payload) {
+  left_->Update(payload);
+  right_->Update(payload);
+}
+
+void CompositeValidator::ProcessMetadata(ObjectMetadata const& meta) {
+  left_->ProcessMetadata(meta);
+  right_->ProcessMetadata(meta);
+}
+
+void CompositeValidator::ProcessHeader(std::string const& key,
+                                       std::string const& value) {
+  left_->ProcessHeader(key, value);
+  right_->ProcessHeader(key, value);
+}
+
+HashValidator::Result CompositeValidator::Finish() && {
+  auto left_result = std::move(*left_).Finish();
+  auto right_result = std::move(*right_).Finish();
+
+  auto received = left_->Name() + "=" + left_result.received;
+  received += "," + right_->Name() + "=" + right_result.received;
+  auto computed = left_->Name() + "=" + left_result.computed;
+  computed += "," + right_->Name() + "=" + right_result.computed;
+  return Result{std::move(received), std::move(computed)};
+}
+
 MD5HashValidator::MD5HashValidator() : context_{} { MD5_Init(&context_); }
 
 void MD5HashValidator::Update(std::string const& payload) {
   MD5_Update(&context_, payload.c_str(), payload.size());
 }
 
-void MD5HashValidator::ProcessMetadata(ObjectMetadata const &meta) {
+void MD5HashValidator::ProcessMetadata(ObjectMetadata const& meta) {
   if (meta.md5_hash().empty()) {
     // When using the XML API the metadata is empty, but the headers are not. In
     // that case we do not want to replace the received hash with an empty
@@ -58,28 +106,19 @@ void MD5HashValidator::ProcessHeader(std::string const& key,
   received_hash_ = value.substr(pos + 4, end - pos - 4);
 }
 
-HashValidator::Result MD5HashValidator::Finish(std::string const& msg) && {
+HashValidator::Result MD5HashValidator::Finish() && {
   std::string hash(MD5_DIGEST_LENGTH, ' ');
   MD5_Final(reinterpret_cast<unsigned char*>(&hash[0]), &context_);
   auto computed = OpenSslUtils::Base64Encode(hash);
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  // Sometimes the server simply does not have a MD5 hash to send us, the most
-  // common case is a composed object, particularly one formed from encrypted
-  // components, where computing the MD5 would require decrypting and re-reading
-  // all the components. In that case we just do not raise an exception even if
-  // there is a mismatch.
-  if (not received_hash_.empty() and received_hash_ != computed) {
-    throw HashMismatchError(msg, std::move(received_hash_),
-                            std::move(computed));
-  }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   return Result{std::move(received_hash_), std::move(computed)};
 }
 
 Crc32cHashValidator::Crc32cHashValidator() : current_(0) {}
 
 void Crc32cHashValidator::Update(std::string const& payload) {
-  current_ = crc32c::Extend(current_, reinterpret_cast<std::uint8_t const*>(payload.data()), payload.size());
+  current_ = crc32c::Extend(
+      current_, reinterpret_cast<std::uint8_t const*>(payload.data()),
+      payload.size());
 }
 
 void Crc32cHashValidator::ProcessMetadata(ObjectMetadata const& meta) {
@@ -90,10 +129,10 @@ void Crc32cHashValidator::ProcessMetadata(ObjectMetadata const& meta) {
     return;
   }
   received_hash_ = meta.crc32c();
-
 }
 
-void Crc32cHashValidator::ProcessHeader(std::string const& key, std::string const& value) {
+void Crc32cHashValidator::ProcessHeader(std::string const& key,
+                                        std::string const& value) {
   if (key != "x-goog-hash") {
     return;
   }
@@ -109,23 +148,12 @@ void Crc32cHashValidator::ProcessHeader(std::string const& key, std::string cons
   received_hash_ = value.substr(pos + 7, end - pos - 7);
 }
 
-HashValidator::Result Crc32cHashValidator::Finish(std::string const& msg) && {
+HashValidator::Result Crc32cHashValidator::Finish() && {
   std::uint32_t big_endian = google::cloud::internal::ToBigEndian(current_);
   std::string hash;
   hash.resize(sizeof(big_endian));
   std::memcpy(&hash[0], &big_endian, sizeof(big_endian));
   auto computed = OpenSslUtils::Base64Encode(hash);
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  // Sometimes the server simply does not have a MD5 hash to send us, the most
-  // common case is a composed object, particularly one formed from encrypted
-  // components, where computing the MD5 would require decrypting and re-reading
-  // all the components. In that case we just do not raise an exception even if
-  // there is a mismatch.
-  if (not received_hash_.empty() and received_hash_ != computed) {
-    throw HashMismatchError(msg, std::move(received_hash_),
-                            std::move(computed));
-  }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   return Result{std::move(received_hash_), std::move(computed)};
 }
 

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/hash_validator.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/status.h"
 #include <gmock/gmock.h>
 
@@ -22,6 +23,82 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+using ::testing::HasSubstr;
+
+TEST(HashValidator, CheckResultMismatch) {
+  HashValidator::Result result{"received-hash", "computed-hash"};
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(try { HashValidator::CheckResult("test-msg", result); } catch (
+                   google::cloud::storage::HashMismatchError const& ex) {
+    EXPECT_EQ("received-hash", ex.received_hash());
+    EXPECT_EQ("computed-hash", ex.computed_hash());
+    EXPECT_THAT(ex.what(), HasSubstr("test-msg"));
+    throw;
+  },
+               std::ios::failure);
+#else
+  // The program should not be terminated in this case.
+  HashValidator::CheckResult("test-msg", result);
+  SUCCEED();
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST(HashValidator, CheckResultMatch) {
+  HashValidator::Result result{"test-hash", "test-hash"};
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_NO_THROW(HashValidator::CheckResult("test-msg", result));
+#else
+  // The program should not be terminated in this case.
+  HashValidator::CheckResult("test-msg", result);
+  SUCCEED();
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST(HashValidator, CheckResultEmptyReceived) {
+  // Sometimes the service does not send the hashes back, we do not treat that
+  // as a hash mismatch.
+  HashValidator::Result result{"", "test-hash"};
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_NO_THROW(HashValidator::CheckResult("test-msg", result));
+#else
+  // The program should not be terminated in this case.
+  HashValidator::CheckResult("test-msg", result);
+  SUCCEED();
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST(HashValidator, FinishAndCheck) {
+  NullHashValidator validator;
+  validator.Update("");
+  validator.ProcessHeader("x-goog-hash", "md5=1B2M2Y8AsgTpgAmY7PhCfg==");
+  auto result = HashValidator::FinishAndCheck("test-msg", std::move(validator));
+  EXPECT_TRUE(result.received.empty());
+  EXPECT_TRUE(result.computed.empty());
+}
+
+TEST(HashValidator, FinishAndCheckMismatch) {
+  MD5HashValidator validator;
+  validator.Update("The quick brown fox jumps over the lazy dog");
+  // This is the hash for an empty message, computed using:
+  // /bin/echo -n "" | openssl md5 -binary | openssl base64
+  validator.ProcessHeader("x-goog-hash", "md5=1B2M2Y8AsgTpgAmY7PhCfg==");
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        HashValidator::FinishAndCheck("test-msg", std::move(validator));
+      } catch (google::cloud::storage::HashMismatchError const& ex) {
+        EXPECT_EQ("1B2M2Y8AsgTpgAmY7PhCfg==", ex.received_hash());
+        EXPECT_EQ("nhB9nTcrtoJr2B01QqQZ1g==", ex.computed_hash());
+        EXPECT_THAT(ex.what(), HasSubstr("test-msg"));
+        throw;
+      },
+      std::ios::failure);
+#else
+  auto result = HashValidator::FinishAndCheck("test-msg", std::move(validator));
+  EXPECT_EQ("1B2M2Y8AsgTpgAmY7PhCfg==", result.received);
+  EXPECT_EQ("nhB9nTcrtoJr2B01QqQZ1g==", result.computed);
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
 
 TEST(NullHashValidatorTest, Simple) {
   NullHashValidator validator;
@@ -29,7 +106,7 @@ TEST(NullHashValidatorTest, Simple) {
   validator.Update("The quick");
   validator.Update(" brown");
   validator.Update(" fox jumps over the lazy dog");
-  auto result = std::move(validator).Finish("test msg");
+  auto result = std::move(validator).Finish();
   EXPECT_TRUE(result.computed.empty());
   EXPECT_TRUE(result.received.empty());
 }
@@ -38,9 +115,8 @@ TEST(MD5HashValidator, Empty) {
   MD5HashValidator validator;
   // Use this command to get the expected value:
   // /bin/echo -n "" | openssl md5 -binary | openssl base64
-  validator.ProcessHeader(
-      "x-goog-hash", "md5=1B2M2Y8AsgTpgAmY7PhCfg==");
-  auto result = std::move(validator).Finish("test msg");
+  validator.ProcessHeader("x-goog-hash", "md5=1B2M2Y8AsgTpgAmY7PhCfg==");
+  auto result = std::move(validator).Finish();
   EXPECT_EQ(result.computed, result.received);
   EXPECT_EQ("1B2M2Y8AsgTpgAmY7PhCfg==", result.computed);
 }
@@ -50,24 +126,13 @@ TEST(MD5HashValidator, Simple) {
   validator.Update("The quick");
   validator.Update(" brown");
   validator.Update(" fox jumps over the lazy dog");
-  validator.ProcessHeader(
-      "x-goog-hash", "md5=<invalid-value-for-test>");
+  validator.ProcessHeader("x-goog-hash", "md5=<invalid-value-for-test>");
   // I used this command to get the expected value:
   // /bin/echo -n "The quick brown fox jumps over the lazy dog" |
   //     openssl md5 -binary | openssl base64
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try {
-    std::move(validator).Finish("test msg");
-  } catch(google::cloud::storage::HashMismatchError const& ex) {
-    EXPECT_EQ("<invalid-value-for-test>", ex.received_hash());
-    EXPECT_EQ("nhB9nTcrtoJr2B01QqQZ1g==", ex.computed_hash());
-    throw;
-  }, std::ios::failure);
-#else
-  auto result = std::move(validator).Finish("test msg");
+  auto result = std::move(validator).Finish();
   EXPECT_EQ("<invalid-value-for-test>", result.received);
   EXPECT_EQ("nhB9nTcrtoJr2B01QqQZ1g==", result.computed);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST(MD5HashValidator, MultipleHashesMd5AtEnd) {
@@ -80,19 +145,9 @@ TEST(MD5HashValidator, MultipleHashesMd5AtEnd) {
   // I used this command to get the expected value:
   // /bin/echo -n "The quick brown fox jumps over the lazy dog" |
   //     openssl md5 -binary | openssl base64
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try {
-    std::move(validator).Finish("test msg");
-  } catch(google::cloud::storage::HashMismatchError const& ex) {
-    EXPECT_EQ("<invalid-value-for-test>", ex.received_hash());
-    EXPECT_EQ("nhB9nTcrtoJr2B01QqQZ1g==", ex.computed_hash());
-    throw;
-  }, std::ios::failure);
-#else
-  auto result = std::move(validator).Finish("test msg");
+  auto result = std::move(validator).Finish();
   EXPECT_EQ("<invalid-value-for-test>", result.received);
   EXPECT_EQ("nhB9nTcrtoJr2B01QqQZ1g==", result.computed);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST(MD5HashValidator, MultipleHashes) {
@@ -105,30 +160,18 @@ TEST(MD5HashValidator, MultipleHashes) {
   // I used this command to get the expected value:
   // /bin/echo -n "The quick brown fox jumps over the lazy dog" |
   //     openssl md5 -binary | openssl base64
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try {
-    std::move(validator).Finish("test msg");
-  } catch(google::cloud::storage::HashMismatchError const& ex) {
-    EXPECT_EQ("<invalid-value-for-test>", ex.received_hash());
-    EXPECT_EQ("nhB9nTcrtoJr2B01QqQZ1g==", ex.computed_hash());
-    throw;
-  }, std::ios::failure);
-#else
-  auto result = std::move(validator).Finish("test msg");
+  auto result = std::move(validator).Finish();
   EXPECT_EQ("<invalid-value-for-test>", result.received);
   EXPECT_EQ("nhB9nTcrtoJr2B01QqQZ1g==", result.computed);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST(Crc32cHashValidator, Empty) {
   Crc32cHashValidator validator;
   // Use this command to get the expected value:
   // echo -n '' > foo.txt && gsutil hash foo.txt
-  validator.ProcessHeader(
-      "x-goog-hash", "crc32c=AAAAAA==");
-  validator.ProcessHeader(
-      "x-goog-hash", "md5=AAAAAA==");
-  auto result = std::move(validator).Finish("test msg");
+  validator.ProcessHeader("x-goog-hash", "crc32c=AAAAAA==");
+  validator.ProcessHeader("x-goog-hash", "md5=AAAAAA==");
+  auto result = std::move(validator).Finish();
   EXPECT_EQ(result.computed, result.received);
   EXPECT_EQ("AAAAAA==", result.computed);
 }
@@ -138,24 +181,13 @@ TEST(Crc32cHashValidator, Simple) {
   validator.Update("The quick");
   validator.Update(" brown");
   validator.Update(" fox jumps over the lazy dog");
-  validator.ProcessHeader(
-      "x-goog-hash", "crc32c=<invalid-value-for-test>");
+  validator.ProcessHeader("x-goog-hash", "crc32c=<invalid-value-for-test>");
   // I used this command to get the expected value:
   // /bin/echo -n "The quick brown fox jumps over the lazy dog" > foo.txt
   // gsutil hash foo.txt
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try {
-    std::move(validator).Finish("test msg");
-  } catch(google::cloud::storage::HashMismatchError const& ex) {
-    EXPECT_EQ("<invalid-value-for-test>", ex.received_hash());
-    EXPECT_EQ("ImIEBA==", ex.computed_hash());
-    throw;
-  }, std::ios::failure);
-#else
-  auto result = std::move(validator).Finish("test msg");
+  auto result = std::move(validator).Finish();
   EXPECT_EQ("<invalid-value-for-test>", result.received);
   EXPECT_EQ("ImIEBA==", result.computed);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST(Crc32cHashValidator, MultipleHashesCrc32cAtEnd) {
@@ -163,24 +195,14 @@ TEST(Crc32cHashValidator, MultipleHashesCrc32cAtEnd) {
   validator.Update("The quick");
   validator.Update(" brown");
   validator.Update(" fox jumps over the lazy dog");
-  validator.ProcessHeader(
-      "x-goog-hash", "md5=<ignored>,crc32c=<invalid-value-for-test>");
+  validator.ProcessHeader("x-goog-hash",
+                          "md5=<ignored>,crc32c=<invalid-value-for-test>");
   // I used this command to get the expected value:
   // /bin/echo -n "The quick brown fox jumps over the lazy dog" > foo.txt
   // gsutil hash foo.txt
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try {
-    std::move(validator).Finish("test msg");
-  } catch(google::cloud::storage::HashMismatchError const& ex) {
-    EXPECT_EQ("<invalid-value-for-test>", ex.received_hash());
-    EXPECT_EQ("ImIEBA==", ex.computed_hash());
-    throw;
-  }, std::ios::failure);
-#else
-  auto result = std::move(validator).Finish("test msg");
+  auto result = std::move(validator).Finish();
   EXPECT_EQ("<invalid-value-for-test>", result.received);
   EXPECT_EQ("ImIEBA==", result.computed);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST(Crc32cHashValidator, MultipleHashes) {
@@ -188,24 +210,44 @@ TEST(Crc32cHashValidator, MultipleHashes) {
   validator.Update("The quick");
   validator.Update(" brown");
   validator.Update(" fox jumps over the lazy dog");
-  validator.ProcessHeader(
-      "x-goog-hash", "crc32c=<invalid-value-for-test>,md5=<ignored>");
+  validator.ProcessHeader("x-goog-hash",
+                          "crc32c=<invalid-value-for-test>,md5=<ignored>");
   // I used this command to get the expected value:
   // /bin/echo -n "The quick brown fox jumps over the lazy dog" > foo.txt
   // gsutil hash foo.txt
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try {
-    std::move(validator).Finish("test msg");
-  } catch(google::cloud::storage::HashMismatchError const& ex) {
-    EXPECT_EQ("<invalid-value-for-test>", ex.received_hash());
-    EXPECT_EQ("ImIEBA==", ex.computed_hash());
-    throw;
-  }, std::ios::failure);
-#else
-  auto result = std::move(validator).Finish("test msg");
+  auto result = std::move(validator).Finish();
   EXPECT_EQ("<invalid-value-for-test>", result.received);
   EXPECT_EQ("ImIEBA==", result.computed);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST(CompositeHashValidator, Empty) {
+  CompositeValidator validator(
+      google::cloud::internal::make_unique<Crc32cHashValidator>(),
+      google::cloud::internal::make_unique<MD5HashValidator>());
+  // Look at the tests for each validator to find out where the magic numbers
+  // come from.
+  validator.ProcessHeader("x-goog-hash", "crc32c=AAAAAA==");
+  validator.ProcessHeader("x-goog-hash", "md5=1B2M2Y8AsgTpgAmY7PhCfg==");
+  auto result = std::move(validator).Finish();
+  EXPECT_EQ(result.computed, result.received);
+  EXPECT_EQ("crc32c=AAAAAA==,md5=1B2M2Y8AsgTpgAmY7PhCfg==", result.computed);
+}
+
+TEST(CompositeHashValidator, Simple) {
+  CompositeValidator validator(
+      google::cloud::internal::make_unique<Crc32cHashValidator>(),
+      google::cloud::internal::make_unique<MD5HashValidator>());
+  validator.Update("The quick");
+  validator.Update(" brown");
+  validator.Update(" fox jumps over the lazy dog");
+  validator.ProcessHeader("x-goog-hash", "crc32c=<invalid-crc32c-for-test>");
+  validator.ProcessHeader("x-goog-hash", "md5=<invalid-md5-for-test>");
+  // Look at the tests for each validator to find out where the magic numbers
+  // come from.
+  auto result = std::move(validator).Finish();
+  EXPECT_EQ("crc32c=<invalid-crc32c-for-test>,md5=<invalid-md5-for-test>",
+            result.received);
+  EXPECT_EQ("crc32c=ImIEBA==,md5=nhB9nTcrtoJr2B01QqQZ1g==", result.computed);
 }
 
 }  // namespace
