@@ -167,6 +167,53 @@ class InstanceAdmin {
 
   void DeleteInstance(std::string const& instance_id, grpc::Status& status);
 
+  /**
+   * Makes an asynchronous request to delete the instance.
+   *
+   * @param instance_id the id of the instance in the project to be deleted.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, google::protobuf::Empty&,
+   *         grpc::Status const&>);
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      google::protobuf::Empty&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  void AsyncDeleteInstance(std::string const& instance_id, CompletionQueue& cq,
+                           Functor&& callback) {
+    google::bigtable::admin::v2::DeleteInstanceRequest request;
+    // Setting instance name.
+    request.set_name(InstanceName(instance_id));
+
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &InstanceAdminClient::AsyncDeleteInstance)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &InstanceAdminClient::AsyncDeleteInstance)>::MemberFunction;
+
+    using Retry =
+        internal::AsyncRetryUnaryRpc<InstanceAdminClient, MemberFunction,
+                                     internal::ConstantIdempotencyPolicy,
+                                     Functor>;
+
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
+        client_, &InstanceAdminClient::AsyncDeleteInstance, std::move(request),
+        std::forward<Functor>(callback));
+    retry->Start(cq);
+  }
+
   std::vector<google::bigtable::admin::v2::Cluster> ListClusters(
       std::string const& instance_id, grpc::Status& status);
 

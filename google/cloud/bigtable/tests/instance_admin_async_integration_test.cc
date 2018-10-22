@@ -134,7 +134,15 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteInstanceTest) {
   EXPECT_NE(npos, instance_result.name().find(instance_id));
 
   // Delete instance
-  instance_admin_->DeleteInstance(instance_id);
+  std::promise<google::protobuf::Empty> promise_delete_instance;
+  admin.AsyncDeleteInstance(
+      instance_id, cq,
+      [&promise_delete_instance](google::cloud::bigtable::CompletionQueue& cq,
+                                 google::protobuf::Empty& response,
+                                 grpc::Status const& status) {
+        promise_delete_instance.set_value(std::move(response));
+      });
+  auto response = promise_delete_instance.get_future().get();
   auto instances_after_delete = instance_admin_->ListInstances();
   EXPECT_TRUE(IsInstancePresent(instances_current, instance.name()));
   EXPECT_FALSE(IsInstancePresent(instances_after_delete, instance.name()));
