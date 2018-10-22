@@ -57,6 +57,42 @@ struct DisableMD5Hash : public internal::ComplexOption<DisableMD5Hash, bool> {
   static char const* name() { return "disable-md5-hash"; }
 };
 
+/**
+ * Provide a pre-computed MD5 hash value to an upload or download request.
+ *
+ * The application may know what the MD5 hash value of a particular object is,
+ * for example, because it was downloaded from GCS or some other cloud storage
+ * service. In these cases, the client can include the hash value in the
+ * request for better end-to-end validation.
+ */
+struct Crc32cChecksumValue
+    : public internal::ComplexOption<Crc32cChecksumValue, std::string> {
+  using ComplexOption<Crc32cChecksumValue, std::string>::ComplexOption;
+  static char const* name() { return "crc32c-checksum"; }
+};
+
+/**
+ * Compute the MD5 Hash of a string in the format preferred by GCS.
+ */
+std::string ComputeCrc32cChecksum(std::string const& payload);
+
+/**
+ * Disable MD5 Hashing computations.
+ *
+ * By default the GCS client library computes MD5 hashes in all
+ * `Client::InsertObject` calls. The application can disable the hash
+ * computation by passing this parameter.
+ *
+ * @warning Disabling MD5 hashing exposes your application to data corruption.
+ *   We recommend that all uploads to GCS are protected by the supported
+ *   checksums and/or hashes.
+ */
+struct DisableCrc32cChecksum
+    : public internal::ComplexOption<DisableCrc32cChecksum, bool> {
+  using ComplexOption<DisableCrc32cChecksum, bool>::ComplexOption;
+  static char const* name() { return "disable-crc32c-checksum"; }
+};
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

@@ -482,7 +482,8 @@ class Client {
    * @param contents the contents (media) for the new object.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `ContentEncoding`,
-   *     `ContentType`, `DisableMD5Hash`, `EncryptionKey`, `IfGenerationMatch`,
+   *     `ContentType`, `Crc32cChecksumValue`, `DisableCrc32cChecksum`,
+   *     `DisableMD5Hash`, `EncryptionKey`, `IfGenerationMatch`,
    *     `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `KmsKeyName`, `MD5HashValue`,
    *     `PredefinedAcl`, `Projection`, and `UserProject`.

@@ -14,7 +14,10 @@
 
 #include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/internal/big_endian.h"
 #include <openssl/md5.h>
+#include <crc32c/crc32c.h>
+#include <cstring>
 
 namespace google {
 namespace cloud {
@@ -28,6 +31,17 @@ std::string ComputeMD5Hash(std::string const& payload) {
 
   std::string hash(MD5_DIGEST_LENGTH, ' ');
   MD5_Final(reinterpret_cast<unsigned char*>(&hash[0]), &md5);
+  return internal::OpenSslUtils::Base64Encode(hash);
+}
+
+std::string ComputeCrc32cChecksum(std::string const& payload) {
+  auto checksum = crc32c::Extend(
+      0, reinterpret_cast<std::uint8_t const*>(payload.data()),
+      payload.size());
+  std::uint32_t big_endian = google::cloud::internal::ToBigEndian(checksum);
+  std::string hash;
+  hash.resize(sizeof(big_endian));
+  std::memcpy(&hash[0], &big_endian, sizeof(big_endian));
   return internal::OpenSslUtils::Base64Encode(hash);
 }
 

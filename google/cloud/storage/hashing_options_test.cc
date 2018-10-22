@@ -37,6 +37,22 @@ TEST(ComputeMD5HashTest, Simple) {
   EXPECT_EQ("nhB9nTcrtoJr2B01QqQZ1g==", actual);
 }
 
+TEST(ComputeCrc32cChecksumTest, Empty) {
+  std::string actual = ComputeCrc32cChecksum("");
+  // Use this command to get the expected value:
+  // echo -n '' > foo.txt && gsutil hash foo.txt
+  EXPECT_EQ("AAAAAA==", actual);
+}
+
+TEST(ComputeCrc32cChecksumTest, Simple) {
+  std::string actual = ComputeCrc32cChecksum(
+      "The quick brown fox jumps over the lazy dog");
+  // I used this command to get the expected value:
+  // /bin/echo -n "The quick brown fox jumps over the lazy dog" > foo.txt &&
+  // gsutil hash foo.txt
+  EXPECT_EQ("ImIEBA==", actual);
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -169,6 +169,19 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingWriteXML) {
   client.DeleteObject(bucket_name, object_name);
 }
 
+template <typename Callable>
+void TestPermanentFailure(Callable&& callable) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(try { callable(); } catch (std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+    throw;
+  },
+               std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(callable(), "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
 TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingWriteJSON) {
   if (not UsingTestbench()) {
@@ -203,6 +216,102 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingWriteJSON) {
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
   EXPECT_EQ(stream.computed_hash(), md5_hash);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectMediaIntegrationTest, InsertWithCrc32c) {
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0),
+      Crc32cChecksumValue("6Y46Mg=="));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectMediaIntegrationTest, XmlInsertWithCrc32c) {
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0), Fields(""),
+      Crc32cChecksumValue("6Y46Mg=="));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectMediaIntegrationTest, InsertWithCrc32cFailure) {
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // This should fail because the CRC32C value is incorrect.
+  TestPermanentFailure([&] {
+    client.InsertObject(
+        bucket_name, object_name, expected, IfGenerationMatch(0),
+        Crc32cChecksumValue("4UedKg=="));
+  });
+}
+
+TEST_F(ObjectMediaIntegrationTest, XmlInsertWithCrc32cFailure) {
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // This should fail because the CRC32C value is incorrect.
+  TestPermanentFailure([&] {
+    client.InsertObject(
+        bucket_name, object_name, expected, IfGenerationMatch(0), Fields(""),
+        Crc32cChecksumValue("4UedKg=="));
+  });
+}
+
+TEST_F(ObjectMediaIntegrationTest, InsertWithComputedCrc32c) {
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0),
+      Crc32cChecksumValue(ComputeCrc32cChecksum(expected)));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
 
   client.DeleteObject(bucket_name, object_name);
 }
