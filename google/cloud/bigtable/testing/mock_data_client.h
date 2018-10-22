@@ -69,6 +69,12 @@ class MockDataClient : public bigtable::DataClient {
                    google::bigtable::v2::MutateRowsResponse>>(
                    grpc::ClientContext* context,
                    google::bigtable::v2::MutateRowsRequest const& request));
+  MOCK_METHOD4(AsyncMutateRows,
+               std::unique_ptr<grpc::ClientAsyncReaderInterface<
+                   google::bigtable::v2::MutateRowsResponse>>(
+                   grpc::ClientContext*,
+                   const google::bigtable::v2::MutateRowsRequest&,
+                   grpc::CompletionQueue*, void*));
 };
 
 }  // namespace testing
