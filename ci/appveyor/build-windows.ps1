@@ -42,8 +42,6 @@ if ($env:PROVIDER -eq "vcpkg") {
     }
 
     $cmake_flags += "-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=$env:PROVIDER"
-    # As of 2018-10-19 the vcpkg port of google/crc32c does not work, workaround that for now.
-    $cmake_flags += "-DGOOGLE_CLOUD_CPP_CRC32C_PROVIDER=external"
     $cmake_flags += "-DCMAKE_TOOLCHAIN_FILE=`"$dir\vcpkg\scripts\buildsystems\vcpkg.cmake`""
     $cmake_flags += "-DVCPKG_TARGET_TRIPLET=x64-windows-static"
     $cmake_flags += "-DCMAKE_C_COMPILER=cl.exe"
