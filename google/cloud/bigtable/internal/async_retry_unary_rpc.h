@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_RETRY_UNARY_RPC_H_
 
 #include "google/cloud/bigtable/completion_queue.h"
+#include "google/cloud/bigtable/internal/async_retry_op.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
@@ -26,25 +27,21 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
+
 /**
- * Perform an asynchronous unary RPC request, with retries.
+ * A wrapper for an unary RPC bound with client and argument.
+ *
+ * It binds together the client its method and its argument, so that you can
+ * call it only providing the externalities. By repeatedly calling Start()
+ * you'll be sending the same request over and over.
  *
  * @tparam Client the class implementing the asynchronous operation, examples
  *     include `DataClient`, `AdminClient`, and `InstanceAdminClient`.
  *
  * @tparam MemberFunctionType the type of the member function to call on the
  *     `Client` object. This type must meet the requirements of
- *     `internal::CheckAsyncUnaryRpcSignature`, the `AsyncRetryUnaryRpc`
+ *     `internal::CheckAsyncUnaryRpcSignature`, the `AsyncRetryOp`
  *     template is disabled otherwise.
- *
- * @tparam IdempotencyPolicy the policy used to determine if an operation is
- *     idempotent. In most cases this is just `ConstantIdempotentPolicy`
- *     because the decision around idempotency can be made before the retry loop
- *     starts. Some calls may dynamically determine if a retry (or a partial
- *     retry for BulkApply) are idempotent.
- *
- * @tparam Functor the type of the function-like object that will receive the
- *     results.
  *
  * @tparam Sig A formal parameter to discover if `MemberFunctionType` matches
  *     the required signature for an asynchronous gRPC call, and if so, what are
@@ -53,11 +50,67 @@ namespace internal {
  * @tparam valid_member_function_type a formal parameter, uses
  *     `std::enable_if<>` to disable this template if the member function type
  *     does not match the desired signature.
- *
- * @tparam valid_callback_type a format parameter, uses `std::enable_if<>` to
- *     disable this template if the functor does not match the expected
- *     signature.
  */
+template <
+    typename Client, typename MemberFunctionType,
+    typename Sig = internal::CheckAsyncUnaryRpcSignature<MemberFunctionType>,
+    typename std::enable_if<Sig::value, int>::type valid_member_function_type =
+        0>
+class AsyncUnaryRpc {
+ public:
+  //@{
+  /// @name Convenience aliases for the RPC request response and callback types.
+  using Request = typename Sig::RequestType;
+  using Response = typename Sig::ResponseType;
+  //@}
+  AsyncUnaryRpc(std::shared_ptr<Client> client,
+                MemberFunctionType Client::*call, Request&& request)
+      : client_(std::move(client)),
+        call_(std::move(call)),
+        request_(std::move(request)) {}
+  /**
+   * Start the bound aynchronous request.
+   *
+   * @tparam Functor the type of the function-like object that will receive the
+   *     results.
+   *
+   * @tparam valid_callback_type a format parameter, uses `std::enable_if<>` to
+   *     disable this template if the functor does not match the expected
+   *     signature.
+   *
+   * @param cq the completion queue to run the asynchronous operations.
+   *
+   * @param context the gRPC context used for this request
+   *
+   * @param callback the functor which will be fired in an unspecified thread
+   *     once the request completes; it should accept the completion queue
+   *     (passed in the `cq` param), a AsyncUnaryRpc::AsyncResult, and
+   *     AsyncOperation::Disposition.
+   */
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  void Start(CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext>&& context,
+             Functor&& callback) {
+    cq.MakeUnaryRpc(*client_, call_, request_, std::move(context),
+                    [this, callback](CompletionQueue& cq, Response& response,
+                                     grpc::Status& status) {
+                      response_ = std::move(response);
+                      callback(cq, status);
+                    });
+  }
+
+  Response AccumulatedResult() { return response_; }
+
+  std::shared_ptr<Client> client_;
+  MemberFunctionType Client::*call_;
+  Request request_;
+  Response response_;
+};
+
 template <
     typename Client, typename MemberFunctionType, typename IdempotencyPolicy,
     typename Functor,
@@ -70,15 +123,11 @@ template <
                                               grpc::Status&>::value,
         int>::type valid_callback_type = 0>
 class AsyncRetryUnaryRpc
-    : public std::enable_shared_from_this<AsyncRetryUnaryRpc<
-          Client, MemberFunctionType, IdempotencyPolicy, Functor>> {
+    : public AsyncRetryOp<IdempotencyPolicy, Functor,
+                          AsyncUnaryRpc<Client, MemberFunctionType>> {
  public:
-  //@{
-  /// @name Convenience aliases for the RPC request and response types.
   using Request = typename Sig::RequestType;
   using Response = typename Sig::ResponseType;
-  //@}
-
   explicit AsyncRetryUnaryRpc(
       char const* error_message,
       std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
@@ -87,135 +136,13 @@ class AsyncRetryUnaryRpc
       MetadataUpdatePolicy metadata_update_policy,
       std::shared_ptr<Client> client, MemberFunctionType Client::*call,
       Request&& request, Functor&& callback)
-      : error_message_(error_message),
-        rpc_retry_policy_(std::move(rpc_retry_policy)),
-        rpc_backoff_policy_(std::move(rpc_backoff_policy)),
-        idempotent_policy_(std::move(idempotent_policy)),
-        metadata_update_policy_(std::move(metadata_update_policy)),
-        client_(std::move(client)),
-        call_(std::move(call)),
-        request_(std::move(request)),
-        callback_(std::forward<Functor>(callback)) {}
-
-  /**
-   * Kick off the asynchronous request.
-   *
-   * @param cq the completion queue to run the asynchronous operations.
-   */
-  void Start(CompletionQueue& cq) {
-    auto self = this->shared_from_this();
-    auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
-    rpc_retry_policy_->Setup(*context);
-    rpc_backoff_policy_->Setup(*context);
-    metadata_update_policy_.Setup(*context);
-
-    cq.MakeUnaryRpc(
-        *client_, call_, request_, std::move(context),
-        [self](CompletionQueue& cq, Response& r, grpc::Status& status) {
-          self->OnCompletion(cq, r, status);
-        });
-  }
-
- private:
-  std::string FullErrorMessage(char const* where) {
-    std::string full_message = error_message_;
-    full_message += "(" + metadata_update_policy_.value() + ") ";
-    full_message += where;
-    return full_message;
-  }
-
-  std::string FullErrorMessage(char const* where, grpc::Status const& status) {
-    std::string full_message = FullErrorMessage(where);
-    full_message += ", last error=";
-    full_message += status.error_message();
-    return full_message;
-  }
-
-  /// The callback to handle one asynchronous request completing.
-  void OnCompletion(CompletionQueue& cq, Response& response,
-                    grpc::Status& status) {
-    if (status.error_code() == grpc::StatusCode::CANCELLED) {
-      // Cancelled, no retry necessary.
-      grpc::Status res_status(
-          grpc::StatusCode::CANCELLED,
-          FullErrorMessage("pending operation cancelled", status),
-          status.error_details());
-      callback_(cq, response, res_status);
-      return;
-    }
-    if (status.ok()) {
-      // Success, just report the result.
-      callback_(cq, response, status);
-      return;
-    }
-    if (not idempotent_policy_.is_idempotent()) {
-      grpc::Status res_status(
-          status.error_code(),
-          FullErrorMessage("non-idempotent operation failed", status),
-          status.error_details());
-      callback_(cq, response, res_status);
-      return;
-    }
-    if (not rpc_retry_policy_->OnFailure(status)) {
-      std::string full_message =
-          FullErrorMessage(RPCRetryPolicy::IsPermanentFailure(status)
-                               ? "permanent error"
-                               : "too many transient errors",
-                           status);
-      grpc::Status res_status(status.error_code(), full_message,
-                              status.error_details());
-      callback_(cq, response, res_status);
-      return;
-    }
-
-    auto delay = rpc_backoff_policy_->OnCompletion(status);
-    auto self = this->shared_from_this();
-    cq.MakeRelativeTimer(delay,
-                         [self](CompletionQueue& cq, AsyncTimerResult timer) {
-                           self->OnTimer(cq, timer);
-                         });
-  }
-
-  void OnTimer(CompletionQueue& cq, AsyncTimerResult& timer) {
-    if (timer.cancelled) {
-      // Cancelled, no more action to take.
-      Response placeholder{};
-      callback_(cq, placeholder,
-                grpc::Status(grpc::StatusCode::CANCELLED,
-                             FullErrorMessage("pending timer cancelled")));
-      return;
-    }
-    Start(cq);
-  }
-
-  char const* error_message_;
-  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
-  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
-  IdempotencyPolicy idempotent_policy_;
-  MetadataUpdatePolicy metadata_update_policy_;
-  std::shared_ptr<Client> client_;
-  MemberFunctionType Client::*call_;
-  Request request_;
-
-  Functor callback_;
-};
-
-/**
- * An idempotent policy for `AsyncRetryUnaryRpc` based on a pre-computed value.
- *
- * In most APIs the idempotency of the API is either known at compile-time or
- * the value is unchanged during the retry loop. This class can be used in those
- * cases as the `IdempotentPolicy` template parameter for `AsyncRetryUnaryRpc`.
- */
-class ConstantIdempotencyPolicy {
- public:
-  explicit ConstantIdempotencyPolicy(bool is_idempotent)
-      : is_idempotent_(is_idempotent) {}
-
-  bool is_idempotent() const { return is_idempotent_; }
-
- private:
-  bool is_idempotent_;
+      : AsyncRetryOp<IdempotencyPolicy, Functor,
+                     AsyncUnaryRpc<Client, MemberFunctionType>>(
+            error_message, std::move(rpc_retry_policy),
+            std::move(rpc_backoff_policy), std::move(idempotent_policy),
+            std::move(metadata_update_policy), std::forward<Functor>(callback),
+            AsyncUnaryRpc<Client, MemberFunctionType>(
+                std::move(client), std::move(call), std::move(request))) {}
 };
 
 }  // namespace internal
