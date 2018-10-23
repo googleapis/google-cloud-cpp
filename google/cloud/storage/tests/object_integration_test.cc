@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #include <regex>
@@ -44,75 +44,12 @@ class ObjectTestEnvironment : public ::testing::Environment {
 std::string ObjectTestEnvironment::project_id_;
 std::string ObjectTestEnvironment::bucket_name_;
 
-class ObjectIntegrationTest : public ::testing::Test {
+class ObjectIntegrationTest : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
-  std::string MakeRandomObjectName() {
-    return "ob-" +
-           google::cloud::internal::Sample(generator_, 16,
-                                           "abcdefghijklmnopqrstuvwxyz"
-                                           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                           "012456789") +
-           ".txt";
-  }
-
   std::string MakeEntityName() {
     // We always use the viewers for the project because it is known to exist.
     return "project-viewers-" + ObjectTestEnvironment::project_id();
   }
-
-  std::string LoremIpsum() const {
-    return R"""(Lorem ipsum dolor sit amet, consectetur adipiscing
-elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-)""";
-  }
-
-  EncryptionKeyData MakeEncryptionKeyData() {
-    // WARNING: generator_ PRNG has not gone through a security audit,
-    // it is possible that the random numbers are sufficiently predictable to
-    // make them unusable for security purposes.  Application developers should
-    // consult with their security team before relying on this (or any other)
-    // source for encryption keys.
-    // Applications should save the key in a secure location after creating
-    // them, Google Cloud Storage does not save customer-supplied keys, and if
-    // lost the encrypted data cannot be decrypted.
-    return CreateKeyFromGenerator(generator_);
-  }
-
-  std::string MakeRandomBucketName() {
-    // The total length of this bucket name must be <= 63 characters,
-    static std::string const prefix = "gcs-cpp-test-bucket-";
-    static std::size_t const kMaxBucketNameLength = 63;
-    std::size_t const max_random_characters =
-        kMaxBucketNameLength - prefix.size();
-    return prefix + google::cloud::internal::Sample(
-                        generator_, static_cast<int>(max_random_characters),
-                        "abcdefghijklmnopqrstuvwxyz012456789");
-  }
-
-  void WriteRandomLines(std::ostream& upload, std::ostream& local) {
-    auto generate_random_line = [this] {
-      std::string const characters =
-          "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-          "abcdefghijklmnopqrstuvwxyz"
-          "0123456789"
-          ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
-      return google::cloud::internal::Sample(generator_, 200, characters);
-    };
-
-    for (int line = 0; line != 1000; ++line) {
-      std::string random = generate_random_line() + "\n";
-      upload << line << ": " << random;
-      local << line << ": " << random;
-    }
-  }
-
- protected:
-  google::cloud::internal::DefaultPRNG generator_ =
-      google::cloud::internal::MakeDefaultPRNG();
 };
 
 /// @test Verify the Object CRUD (Create, Get, Update, Delete, List) operations.

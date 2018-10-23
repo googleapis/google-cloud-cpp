@@ -1,0 +1,85 @@
+// Copyright 2018 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "google/cloud/storage/testing/storage_integration_test.h"
+
+namespace google {
+namespace cloud {
+namespace storage {
+namespace testing {
+
+std::string StorageIntegrationTest::MakeRandomObjectName() {
+  return "ob-" +
+         google::cloud::internal::Sample(generator_, 16,
+                                         "abcdefghijklmnopqrstuvwxyz"
+                                         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                         "012456789") +
+         ".txt";
+}
+
+std::string StorageIntegrationTest::LoremIpsum() const {
+  return R"""(Lorem ipsum dolor sit amet, consectetur adipiscing
+elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+)""";
+}
+
+EncryptionKeyData StorageIntegrationTest::MakeEncryptionKeyData() {
+  // WARNING: generator_ PRNG has not gone through a security audit.
+  // It is possible that the random numbers are sufficiently predictable to
+  // make them unusable for security purposes.  Application developers should
+  // consult with their security team before relying on this (or any other)
+  // source for encryption keys.
+  // Applications should save the key in a secure location after creating
+  // them. Google Cloud Storage does not save customer-supplied keys, and if
+  // lost the encrypted data cannot be decrypted.
+  return CreateKeyFromGenerator(generator_);
+}
+
+std::string StorageIntegrationTest::MakeRandomBucketName() {
+  // The total length of this bucket name must be <= 63 characters,
+  static std::string const prefix = "gcs-cpp-test-bucket-";
+  static std::size_t const kMaxBucketNameLength = 63;
+  std::size_t const max_random_characters =
+      kMaxBucketNameLength - prefix.size();
+  return prefix + google::cloud::internal::Sample(
+                      generator_, static_cast<int>(max_random_characters),
+                      "abcdefghijklmnopqrstuvwxyz012456789");
+}
+
+void StorageIntegrationTest::WriteRandomLines(std::ostream& upload,
+                                              std::ostream& local) {
+  auto generate_random_line = [this] {
+    std::string const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz"
+        "0123456789"
+        ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
+    return google::cloud::internal::Sample(generator_, 200, characters);
+  };
+
+  for (int line = 0; line != 1000; ++line) {
+    std::string random = generate_random_line() + "\n";
+    upload << line << ": " << random;
+    local << line << ": " << random;
+  }
+}
+
+}  // namespace testing
+}  // namespace storage
+}  // namespace cloud
+}  // namespace google

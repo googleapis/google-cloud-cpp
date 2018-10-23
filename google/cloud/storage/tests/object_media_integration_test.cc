@@ -15,6 +15,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #include <regex>
@@ -44,31 +45,8 @@ class ObjectMediaTestEnvironment : public ::testing::Environment {
 std::string ObjectMediaTestEnvironment::project_id_;
 std::string ObjectMediaTestEnvironment::bucket_name_;
 
-class ObjectMediaIntegrationTest : public ::testing::Test {
- protected:
-  std::string MakeRandomObjectName() {
-    return "ob-read-" +
-           google::cloud::internal::Sample(generator_, 32,
-                                           "abcdefghijklmnopqrstuvwxyz"
-                                           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                           "012456789") +
-           ".txt";
-  }
-
-  std::string LoremIpsum() const {
-    return R"""(Lorem ipsum dolor sit amet, consectetur adipiscing
-elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-)""";
-  }
-
- protected:
-  google::cloud::internal::DefaultPRNG generator_ =
-      google::cloud::internal::MakeDefaultPRNG();
-};
+class ObjectMediaIntegrationTest
+    : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 bool UsingTestbench() {
   return std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT") != nullptr;
