@@ -70,6 +70,12 @@ if ($LastExitCode) {
     throw "vcpkg integrate failed with exit code $LastExitCode"
 }
 
+# Remove old versions of the packages.
+& .\vcpkg.exe remove --outdated --recurse
+if ($LastExitCode) {
+    throw "vcpkg remove --outdated failed with exit code $LastExitCode"
+}
+
 # AppVeyor limits builds to 60 minutes. Building all the dependencies takes
 # longer than that. Cache the dependencies to work around the build time
 # restrictions. Explicitly install each dependency because if we run out of

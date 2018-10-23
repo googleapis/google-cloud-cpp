@@ -32,7 +32,7 @@ environment:
       APPVEYOR_SAVE_CACHE_ON_ERROR: true
 
 cache:
-  - c:\projects\vcpkg\installed -> ci\appveyor\install-windows.ps1
+  - c:\projects\vcpkg\installed
 
 install:
   - choco install -y ninja
