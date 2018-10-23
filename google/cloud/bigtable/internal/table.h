@@ -227,7 +227,7 @@ class Table {
                       Functor&& callback) {
     auto op =
         std::make_shared<bigtable::internal::AsyncRetryBulkApply<Functor>>(
-            rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+            __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
             *idempotent_mutation_policy_, metadata_update_policy_, client_,
             app_profile_id_, table_name_, std::move(mut),
             std::forward<Functor>(callback));

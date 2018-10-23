@@ -97,6 +97,8 @@ class BulkMutator {
 /**
  * Async-friendly version BulkMutator.
  *
+ * It satisfies the requirements to be used in AsyncRetryOp.
+ *
  * It extends the normal BulkMutator with logic to do its job asynchronously.
  * Conceptually it reimplements MakeOneRequest in an async way.
  */
@@ -132,8 +134,9 @@ class AsyncBulkMutator : private BulkMutator {
         FinishedCallback<Functor>(*this, std::forward<Functor>(callback)));
   }
 
-  using BulkMutator::ExtractFinalFailures;
-  using BulkMutator::HasPendingMutations;
+  std::vector<FailedMutation> AccumulatedResult() {
+    return ExtractFinalFailures();
+  }
 
  private:
   template <typename Functor,
@@ -148,6 +151,11 @@ class AsyncBulkMutator : private BulkMutator {
     void operator()(CompletionQueue& cq, grpc::ClientContext& context,
                     grpc::Status& status) {
       parent_.FinishRequest();
+
+      if (parent_.HasPendingMutations() && status.ok()) {
+        status = grpc::Status(grpc::StatusCode::UNAVAILABLE,
+                              "Some mutations were not confirmed");
+      }
       callback_(cq, status);
     }
 
