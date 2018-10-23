@@ -46,7 +46,7 @@ RUN dnf makecache && dnf install -y \
     zlib-devel
 
 RUN pip install --upgrade pip
-RUN pip install httpbin flask gevent gunicorn
+RUN pip install httpbin flask gevent gunicorn crc32c
 
 # Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
 # client.  They are used in the integration tests.

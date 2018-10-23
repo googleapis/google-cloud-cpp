@@ -16,9 +16,11 @@
 
 
 import base64
+import crc32c
 import error_response
 import hashlib
 import json
+import struct
 import testbench_utils
 import time
 
@@ -62,6 +64,7 @@ class GcsObjectVersion(object):
                 'entityId': '',
             },
             'md5Hash': base64.b64encode(hashlib.md5(self.media).digest()),
+            'crc32c': base64.b64encode(struct.pack('>I', crc32c.crc32(self.media)))
         }
         if request.headers.get('content-type') is not None:
             self.metadata['contentType'] = request.headers.get('content-type')
@@ -114,6 +117,11 @@ class GcsObjectVersion(object):
         self._validate_hashes()
 
     def _validate_hashes(self):
+        """Validate the md5Hash and crc32c fields against the stored media."""
+        self._validate_md5_hash()
+        self._validate_crc32c()
+
+    def _validate_md5_hash(self):
         """Validate the md5Hash field against the stored media."""
         actual = self.metadata.get('md5Hash', '')
         expected = base64.b64encode(hashlib.md5(self.media).digest())
@@ -121,6 +129,15 @@ class GcsObjectVersion(object):
             raise error_response.ErrorResponse(
                 'Mismatched MD5 hash expected=%s, actual=%s' % (expected,
                                                                 actual))
+
+    def _validate_crc32c(self):
+        """Validate the crc32c field against the stored media."""
+        actual = self.metadata.get('crc32c', '')
+        expected = base64.b64encode(struct.pack('>I', crc32c.crc32(self.media)))
+        if actual != expected:
+            raise error_response.ErrorResponse(
+                'Mismatched CRC32C checksum expected=%s, actual=%s' % (expected,
+                                                                       actual))
 
     def validate_encryption_for_read(self, request,
                                      prefix='x-goog-encryption'):
@@ -590,6 +607,7 @@ class GcsObject(object):
         meta = revision.metadata.setdefault('metadata', {})
         meta['x_testbench_upload'] = 'multipart'
         meta['x_testbench_md5'] = resource.get('md5Hash', '')
+        meta['x_testbench_crc32c'] = resource.get('crc32c', '')
         # Apply any overrides from the resource object part.
         revision.update_from_metadata(resource)
         # The content-type needs to be patched up, yuck.
@@ -613,10 +631,13 @@ class GcsObject(object):
         self.generation += 1
         goog_hash = request.headers.get('x-goog-hash')
         md5hash = None
+        crc32c = None
         if goog_hash is not None:
             for hash in goog_hash.split(','):
                 if hash.startswith('md5='):
                     md5hash = hash[4:]
+                if hash.startswith('crc32c='):
+                    crc32c = hash[7:]
         revision = GcsObjectVersion(
             gcs_url, self.bucket_name, self.name, self.generation, request,
             media)
@@ -626,6 +647,11 @@ class GcsObject(object):
             meta['x_testbench_md5'] = md5hash
             revision.update_from_metadata({
                 'md5Hash': md5hash,
+            })
+        if crc32c is not None:
+            meta['x_testbench_crc32c'] = crc32c
+            revision.update_from_metadata({
+                'crc32c': crc32c,
             })
         self._insert_revision(revision)
         return revision

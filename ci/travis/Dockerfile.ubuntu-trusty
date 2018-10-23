@@ -51,7 +51,7 @@ RUN apt update && apt install -y software-properties-common && \
 # Install Python packages used in the integration tests.
 RUN apt update && apt install -y python-dev python-pip
 RUN pip install --upgrade pip
-RUN pip install flask httpbin gevent gunicorn
+RUN pip install flask httpbin gevent gunicorn crc32c
 
 # Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
 # client.  They are used in the integration tests.

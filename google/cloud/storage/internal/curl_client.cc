@@ -296,7 +296,8 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
 
   // If the application has set an explicit hash value we need to use multipart
   // uploads.
-  if (not request.HasOption<DisableMD5Hash>()) {
+  if (not request.HasOption<DisableMD5Hash>() and
+      not request.HasOption<DisableCrc32cChecksum>()) {
     return InsertObjectMediaMultipart(request);
   }
 
@@ -966,6 +967,13 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaXml(
   } else if (not request.HasOption<DisableMD5Hash>()) {
     builder.AddHeader("x-goog-hash: md5=" + ComputeMD5Hash(request.contents()));
   }
+  if (request.HasOption<Crc32cChecksumValue>()) {
+    builder.AddHeader("x-goog-hash: crc32c=" +
+                      request.GetOption<Crc32cChecksumValue>().value());
+  } else if (not request.HasOption<DisableCrc32cChecksum>()) {
+    builder.AddHeader("x-goog-hash: crc32c=" +
+                      ComputeCrc32cChecksum(request.contents()));
+  }
   if (request.HasOption<PredefinedAcl>()) {
     builder.AddHeader(
         "x-goog-acl: " +
@@ -1134,6 +1142,12 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
     metadata["md5Hash"] = request.GetOption<MD5HashValue>().value();
   } else {
     metadata["md5Hash"] = ComputeMD5Hash(request.contents());
+  }
+
+  if (request.HasOption<Crc32cChecksumValue>()) {
+    metadata["crc32c"] = request.GetOption<Crc32cChecksumValue>().value();
+  } else {
+    metadata["crc32c"] = ComputeCrc32cChecksum(request.contents());
   }
 
   std::string crlf = "\r\n";

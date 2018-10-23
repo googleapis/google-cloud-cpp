@@ -53,6 +53,7 @@ cc_library(
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
+        "@com_github_google_crc32c//:crc32c",
     ],
 )
 

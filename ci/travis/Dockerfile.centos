@@ -44,7 +44,7 @@ RUN yum makecache && yum install -y \
     zlib-devel
 
 RUN pip install --upgrade pip
-RUN pip install httpbin flask gevent gunicorn
+RUN pip install httpbin flask gevent gunicorn crc32c
 
 # Install cmake3 + ctest3 as cmake + ctest.
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && \

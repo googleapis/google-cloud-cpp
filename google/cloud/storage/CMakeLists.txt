@@ -211,6 +211,7 @@ add_library(storage_client
 target_link_libraries(storage_client
                       PUBLIC google_cloud_cpp_common
                              nlohmann_json
+                             Crc32c::crc32c
                              CURL::CURL
                              Threads::Threads
                              OpenSSL::SSL
