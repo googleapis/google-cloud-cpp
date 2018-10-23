@@ -73,6 +73,13 @@ $ find google/cloud -o -name '*.h' -o -name '*.cc' -print0 \
     | xargs -0 clang-format -i
 ```
 
+You might find it convenient to reformat only the files which you actually
+touched:
+```console
+$ git status -s | awk 'NF>1{print $NF}' | grep -E '.*\.(cc|h)$' \
+    | xargs clang-format -i
+```
+
 If you need to reformat one of the files to match the Google style.  Please be
 advised that `clang-format` has been known to generate slightly different
 formatting in different versions, we use version 4.0, use the same version if
