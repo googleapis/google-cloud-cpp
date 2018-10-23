@@ -17,9 +17,12 @@
 
 #include "google/cloud/bigtable/async_operation.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include <grpcpp/alarm.h>
+#include <grpcpp/support/async_stream.h>
 #include <grpcpp/support/async_unary_call.h>
 #include <atomic>
+#include <string>
 #include <unordered_map>
 
 namespace google {
@@ -74,9 +77,10 @@ class AsyncTimerFunctor : public AsyncOperation {
   }
 
  private:
-  void Notify(CompletionQueue& cq, Disposition d) override {
+  bool Notify(CompletionQueue& cq, Disposition d) override {
     alarm_.reset();
     functor_(cq, timer_, d);
+    return true;
   }
 
   Functor functor_;
@@ -91,6 +95,22 @@ using CheckUnaryRpcCallback =
                                           AsyncUnaryRpcResult<Response>&,
                                           AsyncOperation::Disposition>;
 
+/**
+ * Verify that @p Functor meets the requirements for an AsyncUnaryStreamRpc
+ * data callback.
+ */
+template <typename Functor, typename Response>
+using CheckUnaryStreamRpcDataCallback = google::cloud::internal::is_invocable<
+    Functor, CompletionQueue&, const grpc::ClientContext&, Response&>;
+
+/**
+ * Verify that @p Functor meets the requirements for an AsyncUnaryStreamRpc
+ * finishing callback.
+ */
+template <typename Functor, typename Response>
+using CheckUnaryStreamRpcFinishedCallback =
+    google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                          grpc::ClientContext&, grpc::Status&>;
 /**
  * Wrap a unary RPC callback into a `AsyncOperation`.
  *
@@ -126,13 +146,130 @@ class AsyncUnaryRpcFunctor : public AsyncOperation {
   void Cancel() override { result_.context->TryCancel(); }
 
  private:
-  void Notify(CompletionQueue& cq, Disposition d) override {
+  bool Notify(CompletionQueue& cq, Disposition d) override {
     functor_(cq, result_, d);
+    return true;
   }
 
   Functor functor_;
   AsyncUnaryRpcResult<Response> result_;
-};  // namespace internal
+};
+
+/**
+ * Unary RPC with streaming response AsyncOperation wrapper.
+ *
+ * This is AsyncUnaryRpcFunctor's counterpart for RPCs with streaming responses.
+ * It encapsulates the stream's state machine and allows specifying
+ * callbacks for data portions and end-of-stream.
+ *
+ * Note that this class lives in the `internal` namespace and thus is
+ * not intended for general use.
+ *
+ * @tparam Request the type of the RPC request.
+ * @tparam Response the type of the RPC response piece.
+ * @tparam DataFunctor the callback type for notifying about data protions.
+ * @tparam FinishedFunctor the callback type for notifying about end of stream.
+ */
+template <typename Request, typename Response, typename DataFunctor,
+          typename FinishedFunctor,
+          typename std::enable_if<
+              CheckUnaryStreamRpcDataCallback<DataFunctor, Response>::value,
+              int>::type = 0,
+          typename std::enable_if<CheckUnaryStreamRpcFinishedCallback<
+                                      FinishedFunctor, Response>::value,
+                                  int>::type = 0>
+class AsyncUnaryStreamRpcFunctor : public AsyncOperation {
+ public:
+  explicit AsyncUnaryStreamRpcFunctor(DataFunctor&& data_functor,
+                                      FinishedFunctor&& finished_functor)
+      : state_(CREATING),
+        data_functor_(std::forward<DataFunctor>(data_functor)),
+        finished_functor_(std::forward<FinishedFunctor>(finished_functor)) {}
+
+  /// Make the RPC request and prepare the response callback.
+  template <typename Client, typename MemberFunction>
+  void Set(Client& client, MemberFunction Client::*call,
+           std::unique_ptr<grpc::ClientContext> context, Request const& request,
+           grpc::CompletionQueue* cq, void* tag) {
+    tag_ = tag;
+    context_ = std::move(context);
+    response_reader_ = (client.*call)(context_.get(), request, cq, tag);
+  }
+
+  void Cancel() override { context_->TryCancel(); }
+
+ private:
+  enum State { CREATING, PROCESSING, FINISHING };
+  bool Notify(CompletionQueue& cq, Disposition d) override {
+    // TODO(#1308) - the disposition types do not quite work for streaming
+    // requests, that will be fixed in a future PR.
+
+    std::unique_lock<std::mutex> lk(mu_);
+
+    switch (state_) {
+      case CREATING:
+        if (d == AsyncOperation::COMPLETED) {
+          response_reader_->Read(&response_, tag_);
+          state_ = PROCESSING;
+        } else {
+          response_reader_->Finish(&status_, tag_);
+          state_ = FINISHING;
+        }
+        return false;
+      case PROCESSING:
+        if (d == AsyncOperation::COMPLETED) {
+          Response received;
+          response_.Swap(&received);
+          lk.unlock();
+          // The simple way to assure that we don't reorder callbacks is not
+          // submitting the next Read() until the user callback finishes.
+          data_functor_(cq, *context_, received);
+          lk.lock();
+          // We must hold the lock while calling Read(): this operation may
+          // trigger a callback in other threads running the completion event
+          // queue, and those should be blocked until this function returns.  On
+          // the other hand, Read() should not block for a long time: gRPC says
+          // that this is an asynchronous operation, blocking for a long time
+          // would make it impossible to write asynchronous applications
+          // efficiently.
+          response_reader_->Read(&response_, tag_);
+        } else {
+          response_reader_->Finish(&status_, tag_);
+          state_ = FINISHING;
+        }
+        return false;
+      case FINISHING:
+        lk.unlock();
+        finished_functor_(cq, *context_, status_);
+        return true;
+    }
+    google::cloud::internal::RaiseRuntimeError(
+        "unexpected state in AsyncUnaryStreamRpcFunctor: " +
+        std::to_string(state_));
+  }
+
+  // It is not obvious why the mutex is used. There are 2 reasons:
+  //
+  // Read()s should not be run concurrently on response_reader_. There is no
+  // guarantee that a thread is going to get Notify()ed only after Read() is
+  // fully finished.
+  //
+  // The mutex also acts as a barrier here to make sure that whatever is written
+  // to this object's fields is visible in threads which get subsequently
+  // Notify()ed.
+  //
+  // The likelihood of any of these reasons materializing is low, but it's
+  // better to be on the safe side.
+  std::mutex mu_;
+  void* tag_;
+  State state_;
+  grpc::Status status_;
+  DataFunctor data_functor_;
+  FinishedFunctor finished_functor_;
+  Response response_;
+  std::unique_ptr<grpc::ClientContext> context_;
+  std::unique_ptr<grpc::ClientAsyncReaderInterface<Response>> response_reader_;
+};
 
 template <typename T>
 struct ExtractMemberFunctionType : public std::false_type {
@@ -161,6 +298,25 @@ template <typename Request, typename Response>
 struct CheckAsyncUnaryRpcSignature<
     std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<Response>>(
         grpc::ClientContext*, Request const&, grpc::CompletionQueue*)>
+    : public std::true_type {
+  using RequestType = Request;
+  using ResponseType = Response;
+};
+
+/// Determine the Request and Response parameter for an RPC based on the Stub
+/// signature - mismatch case.
+template <typename MemberFunction>
+struct CheckAsyncUnaryStreamRpcSignature : public std::false_type {
+  using RequestType = int;
+  using ResponseType = int;
+};
+
+/// Determine the Request and Response parameter for an RPC based on the Stub
+/// signature - match case.
+template <typename Request, typename Response>
+struct CheckAsyncUnaryStreamRpcSignature<
+    std::unique_ptr<grpc::ClientAsyncReaderInterface<Response>>(
+        grpc::ClientContext*, const Request&, grpc::CompletionQueue*, void*)>
     : public std::true_type {
   using RequestType = Request;
   using ResponseType = Response;
@@ -200,7 +356,10 @@ class CompletionQueueImpl {
 
  protected:
   /// Return the asynchronous operation associated with @p tag.
-  std::shared_ptr<AsyncOperation> CompletedOperation(void* tag);
+  std::shared_ptr<AsyncOperation> FindOperation(void* tag);
+
+  /// Unregister @p tag from pending operations.
+  void ForgetOperation(void* tag);
 
   /// Simulate a completed operation, provided only to support unit tests.
   void SimulateCompletion(CompletionQueue& cq, AsyncOperation* op,
