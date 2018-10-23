@@ -225,8 +225,13 @@ class AsyncUnaryStreamRpcFunctor : public AsyncOperation {
           // submitting the next Read() until the user callback finishes.
           data_functor_(cq, *context_, received);
           lk.lock();
-          // The Read() is async, so calling it with the lock held should be
-          // safe.
+          // We must hold the lock while calling Read(): this operation may
+          // trigger a callback in other threads running the completion event
+          // queue, and those should be blocked until this function returns.  On
+          // the other hand, Read() should not block for a long time: gRPC says
+          // that this is an asynchronous operation, blocking for a long time
+          // would make it impossible to write asynchronous applications
+          // efficiently.
           response_reader_->Read(&response_, tag_);
         } else {
           response_reader_->Finish(&status_, tag_);
