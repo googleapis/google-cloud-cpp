@@ -16,11 +16,13 @@
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #include <cstdio>
 #include <fstream>
 #include <regex>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -157,6 +159,47 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileUploadFailure) {
 
   client.DeleteObject(bucket_name, object_name);
   std::remove(file_name.c_str());
+}
+
+TEST_F(ObjectMediaIntegrationTest, UploadFileNonRegularWarning) {
+  // We need to create a non-regular file that is also readable, this is easy to
+  // do on Linux, and hard to do on the other platforms we support, so just run
+  // the test there.
+#if GTEST_OS_LINUX
+  Client client;
+  auto file_name = MakeRandomObjectName();
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  mkfifo(file_name.c_str(), 0777);
+
+  std::string expected = LoremIpsum();
+  std::thread t([file_name, expected] {
+    std::ofstream os(file_name);
+    os << expected;
+    os.close();
+  });
+  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
+  auto id = LogSink::Instance().AddBackend(backend);
+
+  ObjectMetadata meta =
+      client.UploadFile(file_name, bucket_name, object_name,
+                        IfGenerationMatch(0), DisableMD5Hash(true));
+
+  LogSink::Instance().RemoveBackend(id);
+
+  auto count =
+      std::count_if(backend->log_lines.begin(), backend->log_lines.end(),
+                    [file_name](std::string const& line) {
+                      return line.find(file_name) != std::string::npos and
+                             line.find("not a regular file");
+                    });
+  EXPECT_NE(0U, count);
+
+  t.join();
+  client.DeleteObject(bucket_name, object_name);
+  std::remove(file_name.c_str());
+#endif  // GTEST_OS_LINUX
 }
 
 TEST_F(ObjectMediaIntegrationTest, XmlUploadFile) {

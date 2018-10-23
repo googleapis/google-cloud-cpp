@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/internal/filesystem.h"
+#include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include <openssl/md5.h>
@@ -35,6 +37,22 @@ Client::Client(ClientOptions options)
 ObjectMetadata Client::UploadFileImpl(
     std::string const& file_name,
     internal::InsertObjectStreamingRequest request) {
+  auto status = google::cloud::internal::status(file_name);
+  if (not is_regular(status)) {
+    GCP_LOG(WARNING) << "Trying to upload " << file_name
+                    << R"""( which is not a regular file.
+This is often a problem because:
+  - Some non-regular files are infinite sources of data, and the load will
+    never complete.
+  - Some non-regular files can only be read once, and UploadFile() may need to
+    read the file more than once to compute the checksum and hashes needed to
+    preserve data integrity.
+
+Consider using Client::WriteObject() instead. You may also need to disable data
+integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
+)""";
+  }
+
   std::ifstream is(file_name);
   if (not is.is_open()) {
     std::string msg = __func__;
