@@ -168,7 +168,7 @@ class InstanceAdmin {
   void DeleteInstance(std::string const& instance_id, grpc::Status& status);
 
   /**
-   * Makes an asynchronous request to delete the instance.
+   * Makes an asynchronous request to delete an instance.
    *
    * @param instance_id the id of the instance in the project to be deleted.
    * @param cq the completion queue that will execute the asynchronous calls,
@@ -181,6 +181,8 @@ class InstanceAdmin {
    *         grpc::Status const&>);
    *
    * @tparam Functor the type of the callback.
+   *
+   * TODO(#1325) - eliminate usage of google::protobuf::Empty from Asysnc APIs.
    */
   template <typename Functor,
             typename std::enable_if<
@@ -236,6 +238,8 @@ class InstanceAdmin {
    *         grpc::Status const&>);
    *
    * @tparam Functor the type of the callback.
+   *
+   * TODO(#1325) - eliminate usage of google::protobuf::Empty from Asysnc APIs.
    */
   template <typename Functor,
             typename std::enable_if<
