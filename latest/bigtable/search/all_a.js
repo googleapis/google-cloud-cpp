@@ -4,6 +4,7 @@ var searchData=
   ['makedeadlinetimer',['MakeDeadlineTimer',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#a915ca9c70cf38e939b1c04f9f42b5095',1,'google::cloud::bigtable::v0::CompletionQueue']]],
   ['makerelativetimer',['MakeRelativeTimer',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#a2ed4d2e184b0a56f0de1f345f5a3ec9c',1,'google::cloud::bigtable::v0::CompletionQueue']]],
   ['makeunaryrpc',['MakeUnaryRpc',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#af6eeef14a79b2413928f1200730d9d7e',1,'google::cloud::bigtable::v0::CompletionQueue']]],
+  ['makeunarystreamrpc',['MakeUnaryStreamRpc',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#af099d92f80eb4a239a2fe55b55fa802e',1,'google::cloud::bigtable::v0::CompletionQueue']]],
   ['maxage',['MaxAge',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1GcRule.html#a5115d55f92e64a20e051f998d1083bcd',1,'google::cloud::bigtable::v0::GcRule']]],
   ['maxnumversions',['MaxNumVersions',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1GcRule.html#ac8c1f17114b5e0308e6fb0d985c5f00c',1,'google::cloud::bigtable::v0::GcRule']]],
   ['metadata_5fupdate_5fpolicy_2ecc',['metadata_update_policy.cc',['../metadata__update__policy_8cc.html',1,'']]],
