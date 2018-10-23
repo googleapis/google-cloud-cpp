@@ -76,7 +76,7 @@ $ find google/cloud -o -name '*.h' -o -name '*.cc' -print0 \
 You might find it convenient to reformat only the files which you actually
 touched:
 ```console
-$ git st -s | awk 'NF>1{print $NF}' | grep -E '.*\.(cc|h)$' \
+$ git status -s | awk 'NF>1{print $NF}' | grep -E '.*\.(cc|h)$' \
     | xargs clang-format -i
 ```
 
