@@ -104,6 +104,16 @@ class MockAsyncResponseReader
   MOCK_METHOD3_T(Finish, void(Response*, grpc::Status*, void*));
 };
 
+template <typename Response>
+class MockClientAsyncReaderInterface
+    : public grpc::ClientAsyncReaderInterface<Response> {
+ public:
+  MOCK_METHOD1(StartCall, void(void*));
+  MOCK_METHOD1(ReadInitialMetadata, void(void*));
+  MOCK_METHOD2(Finish, void(grpc::Status*, void*));
+  MOCK_METHOD2_T(Read, void(Response*, void*));
+};
+
 }  // namespace testing
 }  // namespace bigtable
 }  // namespace cloud

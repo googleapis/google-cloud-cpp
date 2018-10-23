@@ -13,8 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
+#include "google/cloud/bigtable/async_operation.h"
+#include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_data_client.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
+#include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 
@@ -413,4 +416,139 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
   EXPECT_EQ(2, failures[1].original_index());
   EXPECT_EQ("baz", failures[1].mutation().row_key());
   EXPECT_EQ(grpc::StatusCode::OK, failures[1].status().error_code());
+}
+
+TEST(MultipleRowsMutatorTest, SimpleAsync) {
+  // In this test we create a Mutation for two rows, which succeeds in the
+  // first RPC request.  First create the mutation.
+  bt::BulkMutation mut(
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")}));
+
+  auto client = std::make_shared<bigtable::testing::MockDataClient>();
+
+  // Normally, reader is created by the client and returned as unique_ptr, but I
+  // want to mock it, so I create it here. Eventually, I'll return it as a
+  // unique_ptr from the client, but before that, I hold it in reader_deleter in
+  // case something goes wrong.
+  using bigtable::testing::MockClientAsyncReaderInterface;
+  MockClientAsyncReaderInterface<btproto::MutateRowsResponse>* reader =
+      new MockClientAsyncReaderInterface<btproto::MutateRowsResponse>;
+  std::unique_ptr<MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>
+      reader_deleter(reader);
+
+  EXPECT_CALL(*reader, Read(_, _))
+      .WillOnce(Invoke([](btproto::MutateRowsResponse* r, void*) {
+        {
+          auto& e = *r->add_entries();
+          e.set_index(0);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
+        }
+        {
+          auto& e = *r->add_entries();
+          e.set_index(1);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
+        }
+      }))
+      .WillOnce(Invoke([](btproto::MutateRowsResponse* r, void*) {}));
+
+  EXPECT_CALL(*reader, Finish(_, _))
+      .WillOnce(Invoke([](grpc::Status* status, void*) {
+        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+      }));
+
+  EXPECT_CALL(*client, AsyncMutateRows(_, _, _, _))
+      .WillOnce(Invoke([&reader_deleter](grpc::ClientContext*,
+                                         btproto::MutateRowsRequest const&,
+                                         grpc::CompletionQueue*, void*) {
+        return std::move(reader_deleter);
+      }));
+
+  auto policy = bt::DefaultIdempotentMutationPolicy();
+  bt::internal::AsyncBulkMutator mutator(client, bigtable::AppProfileId(""),
+                                         bigtable::TableId("foo/bar/baz/table"),
+                                         *policy, std::move(mut));
+
+  auto impl = std::make_shared<bigtable::testing::MockCompletionQueue>();
+  using bigtable::CompletionQueue;
+  bigtable::CompletionQueue cq(impl);
+  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  bool mutator_finished = false;
+  using bigtable::AsyncOperation;
+  using bigtable::AsyncUnaryRpcResult;
+  mutator.Start(cq, std::move(context),
+                [&](CompletionQueue&, AsyncUnaryRpcResult<int>& res,
+                    AsyncOperation::Disposition d) {
+                  EXPECT_EQ(d, AsyncOperation::COMPLETED);
+                  EXPECT_EQ(0, res.response);
+                  EXPECT_TRUE(res.status.ok());
+                  EXPECT_EQ("mocked-status", res.status.error_message());
+                  mutator_finished = true;
+                });
+  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  // state == PROCESSING
+  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  // state == PROCESSING, 1 rea
+  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  // state == FINISHING
+  EXPECT_FALSE(mutator_finished);
+  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  // callback fired
+  EXPECT_TRUE(mutator_finished);
+}
+
+TEST(MultipleRowsMutatorTest, SimpleAsyncFailure) {
+  // We'll fail the stream immediately, so no mutations.
+  bt::BulkMutation mut;
+
+  auto client = std::make_shared<bigtable::testing::MockDataClient>();
+  // Normally, reader is created by the client and returned as unique_ptr, but I
+  // want to mock it, so I create it here. Eventually, I'll return it as a
+  // unique_ptr from the client, but before that, I hold it in reader_deleter in
+  // case something goes wrong.
+  using bigtable::testing::MockClientAsyncReaderInterface;
+  MockClientAsyncReaderInterface<btproto::MutateRowsResponse>* reader =
+      new MockClientAsyncReaderInterface<btproto::MutateRowsResponse>;
+  std::unique_ptr<MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>
+      reader_deleter(reader);
+
+  EXPECT_CALL(*reader, Finish(_, _))
+      .WillOnce(Invoke([](grpc::Status* status, void*) {
+        *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "mocked-status");
+      }));
+
+  EXPECT_CALL(*client, AsyncMutateRows(_, _, _, _))
+      .WillOnce(Invoke([&reader_deleter](grpc::ClientContext*,
+                                         btproto::MutateRowsRequest const&,
+                                         grpc::CompletionQueue*, void*) {
+        return std::move(reader_deleter);
+      }));
+
+  auto policy = bt::DefaultIdempotentMutationPolicy();
+  bt::internal::AsyncBulkMutator mutator(client, bigtable::AppProfileId(""),
+                                         bigtable::TableId("foo/bar/baz/table"),
+                                         *policy, std::move(mut));
+
+  auto impl = std::make_shared<bigtable::testing::MockCompletionQueue>();
+  using bigtable::CompletionQueue;
+  bigtable::CompletionQueue cq(impl);
+  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  bool mutator_finished = false;
+  using bigtable::AsyncOperation;
+  using bigtable::AsyncUnaryRpcResult;
+  mutator.Start(cq, std::move(context),
+                [&](CompletionQueue&, AsyncUnaryRpcResult<int>& res,
+                    AsyncOperation::Disposition d) {
+                  EXPECT_EQ(d, AsyncOperation::COMPLETED);
+                  EXPECT_EQ(0, res.response);
+                  EXPECT_FALSE(res.status.ok());
+                  EXPECT_EQ("mocked-status", res.status.error_message());
+                  mutator_finished = true;
+                });
+  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  // state == FINISHING
+  EXPECT_FALSE(mutator_finished);
+  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  // callback fired
+  EXPECT_TRUE(mutator_finished);
 }
