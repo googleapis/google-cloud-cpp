@@ -15,6 +15,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #include <regex>
@@ -51,6 +52,19 @@ class ObjectIntegrationTest : public google::cloud::storage::testing::StorageInt
     return "project-viewers-" + ObjectTestEnvironment::project_id();
   }
 };
+
+template <typename Callable>
+void TestPermanentFailure(Callable&& callable) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(try { callable(); } catch (std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+    throw;
+  },
+               std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(callable(), "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
 
 /// @test Verify the Object CRUD (Create, Get, Update, Delete, List) operations.
 TEST_F(ObjectIntegrationTest, BasicCRUD) {
@@ -580,23 +594,6 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
   client.DeleteObject(bucket_name, object_name);
 }
 
-class CaptureSendHeaderBackend : public LogBackend {
- public:
-  std::vector<std::string> log_lines;
-
-  void Process(LogRecord const& lr) override {
-    // Break the records in lines, because we will analyze the output per line.
-    std::istringstream is(lr.message);
-    while (not is.eof()) {
-      std::string line;
-      std::getline(is, line);
-      log_lines.emplace_back(std::move(line));
-    }
-  }
-
-  void ProcessWithOwnership(LogRecord lr) override { Process(lr); }
-};
-
 /**
  * @test Verify that `QuotaUser` inserts the correct query parameter.
  *
@@ -613,7 +610,7 @@ TEST_F(ObjectIntegrationTest, InsertWithQuotaUser) {
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
-  auto backend = std::make_shared<CaptureSendHeaderBackend>();
+  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
   ObjectMetadata insert_meta =
       client.InsertObject(bucket_name, object_name, LoremIpsum(),
@@ -1214,7 +1211,7 @@ TEST_F(ObjectIntegrationTest, DefaultMD5HashXML) {
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
-  auto backend = std::make_shared<CaptureSendHeaderBackend>();
+  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
   ObjectMetadata insert_meta = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0), Fields(""));
@@ -1238,7 +1235,7 @@ TEST_F(ObjectIntegrationTest, DefaultMD5HashJSON) {
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
-  auto backend = std::make_shared<CaptureSendHeaderBackend>();
+  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
   ObjectMetadata insert_meta = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
@@ -1275,7 +1272,7 @@ TEST_F(ObjectIntegrationTest, DisableMD5HashXML) {
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
-  auto backend = std::make_shared<CaptureSendHeaderBackend>();
+  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
   ObjectMetadata insert_meta = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
@@ -1300,7 +1297,7 @@ TEST_F(ObjectIntegrationTest, DisableMD5HashJSON) {
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
-  auto backend = std::make_shared<CaptureSendHeaderBackend>();
+  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
   ObjectMetadata insert_meta =
       client.InsertObject(bucket_name, object_name, LoremIpsum(),
@@ -1501,19 +1498,6 @@ TEST_F(ObjectIntegrationTest, DisableMD5StreamingWriteJSON) {
   EXPECT_TRUE(os.computed_hash().empty());
 
   client.DeleteObject(bucket_name, object_name);
-}
-
-template <typename Callable>
-void TestPermanentFailure(Callable&& callable) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { callable(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
-    throw;
-  },
-               std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(callable(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST_F(ObjectIntegrationTest, InsertFailure) {
