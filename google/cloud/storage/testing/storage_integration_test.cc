@@ -39,13 +39,13 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 }
 
 EncryptionKeyData StorageIntegrationTest::MakeEncryptionKeyData() {
-  // WARNING: generator_ PRNG has not gone through a security audit,
-  // it is possible that the random numbers are sufficiently predictable to
+  // WARNING: generator_ PRNG has not gone through a security audit.
+  // It is possible that the random numbers are sufficiently predictable to
   // make them unusable for security purposes.  Application developers should
   // consult with their security team before relying on this (or any other)
   // source for encryption keys.
   // Applications should save the key in a secure location after creating
-  // them, Google Cloud Storage does not save customer-supplied keys, and if
+  // them. Google Cloud Storage does not save customer-supplied keys, and if
   // lost the encrypted data cannot be decrypted.
   return CreateKeyFromGenerator(generator_);
 }
