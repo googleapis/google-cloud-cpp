@@ -44,7 +44,8 @@ bigtable_install_test: bigtable_install_test.cc
 GCS_DEPS := storage_client google_cloud_cpp_common libcurl openssl
 GCS_CXXFLAGS   := $(shell pkg-config $(GCS_DEPS) --cflags)
 GCS_CXXLDFLAGS := $(shell pkg-config $(GCS_DEPS) --libs-only-L)
-GCS_LIBS := $(shell pkg-config $(GCS_DEPS) --libs-only-l)
+# CRC32C does not have pkg-config(1) files, so link it explicitly.
+GCS_LIBS := $(shell pkg-config $(GCS_DEPS) --libs-only-l) -lcrc32c
 
 storage_install_test: storage_install_test.cc
 	$(CXXLD) $(GCS_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(GCS_LIBS)
