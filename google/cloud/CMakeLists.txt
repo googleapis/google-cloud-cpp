@@ -118,6 +118,8 @@ create_bazel_config(google_cloud_cpp_common)
 google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 
 add_library(google_cloud_cpp_testing
+    testing_util/capture_log_lines_backend.h
+    testing_util/capture_log_lines_backend.cc
             testing_util/check_predicate_becomes_false.h
             testing_util/chrono_literals.h
             testing_util/environment_variable_restore.h
