@@ -613,9 +613,10 @@ class Client {
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
    * @param options a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include
+   *     Valid types for this operation include `DisableCrc32cChecksum`,
+   *     `DisableMD5Hash`, `IfGenerationMatch`, `EncryptionKey`, `Generation`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, `Generation`, and `UserProject`.
+   *     `IfMetagenerationNotMatch`, and `UserProject`.
    *
    * @par Examples
    *
@@ -638,9 +639,11 @@ class Client {
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
    * @param options a list of optional query parameters and/or request headers.
-   *   Valid types for this operation include `IfGenerationMatch`,
-   *   `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *   `IfMetagenerationNotMatch`, `Generation`, and `UserProject`.
+   *   Valid types for this operation include `ContentEncoding`, `ContentType`,
+   *   `Crc32cChecksumValue`, `DisableCrc32cChecksum`, `DisableMD5Hash`,
+   *   `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
+   *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
+   *   `MD5HashValue`, `PredefinedAcl`, `Projection`, and `UserProject`.
    *
    * @par Examples
    *
@@ -670,9 +673,11 @@ class Client {
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
    * @param options a list of optional query parameters and/or request headers.
-   *   Valid types for this operation include `IfGenerationMatch`,
-   *   `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *   `IfMetagenerationNotMatch`, `Generation`, and `UserProject`.
+   *   Valid types for this operation include `ContentEncoding`, `ContentType`,
+   *   `Crc32cChecksumValue`, `DisableCrc32cChecksum`, `DisableMD5Hash`,
+   *   `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
+   *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
+   *   `MD5HashValue`, `PredefinedAcl`, `Projection`, and `UserProject`.
    *
    * @par Example
    * @snippet storage_object_samples.cc upload file
