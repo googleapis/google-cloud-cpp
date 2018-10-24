@@ -33,29 +33,28 @@ if (NOT TARGET c_ares_project)
         set(PARALLEL "")
     endif ()
 
+    create_external_project_library_byproduct_list(c_ares_byproducts
+                                                   ALWAYS_SHARED "cares")
+
     include(ExternalProject)
-    externalproject_add(
-        c_ares_project
-        EXCLUDE_FROM_ALL ON
-        PREFIX "${CMAKE_BINARY_DIR}/external/c-ares"
-        INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
-        URL ${GOOGLE_CLOUD_CPP_C_ARES_URL}
-        URL_HASH SHA256=${GOOGLE_CLOUD_CPP_C_ARES_SHA256}
-        CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
-                   -DCMAKE_BUILD_TYPE=Release
-                   -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
-                   -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-        BUILD_COMMAND ${CMAKE_COMMAND}
-                      --build
-                      <BINARY_DIR>
-                      ${PARALLEL}
-        BUILD_BYPRODUCTS
-            <INSTALL_DIR>/lib/libcares${CMAKE_SHARED_LIBRARY_SUFFIX}
-            <INSTALL_DIR>/lib/libcares${CMAKE_STATIC_LIBRARY_SUFFIX}
-        LOG_DOWNLOAD ON
-        LOG_CONFIGURE ON
-        LOG_BUILD ON
-        LOG_INSTALL ON)
+    externalproject_add(c_ares_project
+                        EXCLUDE_FROM_ALL ON
+                        PREFIX "${CMAKE_BINARY_DIR}/external/c-ares"
+                        INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
+                        URL ${GOOGLE_CLOUD_CPP_C_ARES_URL}
+                        URL_HASH SHA256=${GOOGLE_CLOUD_CPP_C_ARES_SHA256}
+                        CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
+                                   -DCMAKE_BUILD_TYPE=Release
+                                   -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+                        BUILD_COMMAND ${CMAKE_COMMAND}
+                                      --build
+                                      <BINARY_DIR>
+                                      ${PARALLEL}
+                        BUILD_BYPRODUCTS ${c_ares_byproducts}
+                        LOG_DOWNLOAD ON
+                        LOG_CONFIGURE ON
+                        LOG_BUILD ON
+                        LOG_INSTALL ON)
 
     add_library(c-ares::cares INTERFACE IMPORTED)
     set_library_properties_for_external_project(c-ares::cares cares
