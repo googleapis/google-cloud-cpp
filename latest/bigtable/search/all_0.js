@@ -22,6 +22,7 @@ var searchData=
   ['async_5foperation_2eh',['async_operation.h',['../async__operation_8h.html',1,'']]],
   ['asynccreatetable',['AsyncCreateTable',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#aabe70dc2b9855c2faf82a4235e4d910f',1,'google::cloud::bigtable::v0::AdminClient']]],
   ['asyncdeletecluster',['AsyncDeleteCluster',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#abadc27ffe28fb29f3a49982bc578c50f',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
+  ['asyncdeleteinstance',['AsyncDeleteInstance',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a68625b16fcf7b5f8a43c0c8bf77c3430',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
   ['asyncdroprowrange',['AsyncDropRowRange',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#abcd1591d57becb5880ac95ecfc360ad4',1,'google::cloud::bigtable::v0::AdminClient']]],
   ['asyncgetcluster',['AsyncGetCluster',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ae9e878f90c0aacede206e156792f211f',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
   ['asyncgetinstance',['AsyncGetInstance',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a292d8c8d42eb639cf8e039703f36536a',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
