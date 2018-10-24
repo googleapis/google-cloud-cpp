@@ -113,6 +113,7 @@ add_library(storage_client
             internal/bucket_requests.cc
             internal/complex_option.h
             internal/common_metadata.h
+            internal/compute_engine_util.h
             internal/curl_handle.h
             internal/curl_handle.cc
             internal/curl_handle_factory.h
