@@ -114,6 +114,54 @@ class InstanceAdmin {
   std::vector<google::bigtable::admin::v2::Instance> ListInstances(
       grpc::Status& status);
 
+  /**
+   * Makes an asynchronous request to get the list of instances.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, google::bigtable::admin::v2::ListInstancesResponse&,
+   *         grpc::Status const&>);
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<
+                    Functor, CompletionQueue&,
+                    google::bigtable::admin::v2::ListInstancesResponse&,
+                    grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  void AsyncListInstances(CompletionQueue& cq, Functor&& callback) {
+    google::bigtable::admin::v2::ListInstancesRequest request;
+    // Setting project name.
+    std::string page_token;
+    request.set_page_token(std::move(page_token));
+    request.set_parent(project_name_);
+
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &InstanceAdminClient::AsyncListInstances)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &InstanceAdminClient::AsyncListInstances)>::MemberFunction;
+
+    using Retry =
+        internal::AsyncRetryUnaryRpc<InstanceAdminClient, MemberFunction,
+                                     internal::ConstantIdempotencyPolicy,
+                                     Functor>;
+
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
+        client_, &InstanceAdminClient::AsyncListInstances, std::move(request),
+        std::forward<Functor>(callback));
+    retry->Start(cq);
+  }
+
   google::bigtable::admin::v2::Instance GetInstance(
       std::string const& instance_id, grpc::Status& status);
 

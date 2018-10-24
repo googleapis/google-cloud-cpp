@@ -79,6 +79,33 @@ bool IsClusterPresent(std::vector<btadmin::Cluster> const& clusters,
                       });
 }
 
+std::vector<btadmin::Instance> ListInstances(
+    std::shared_ptr<bigtable::InstanceAdminClient> instance_admin_client) {
+  google::cloud::bigtable::CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+  bigtable::noex::InstanceAdmin admin(instance_admin_client);
+  std::promise<btadmin::ListInstancesResponse> promise_list_instance;
+  admin.AsyncListInstances(
+      cq, [&promise_list_instance](google::cloud::bigtable::CompletionQueue& cq,
+                                   btadmin::ListInstancesResponse& response,
+                                   grpc::Status const& status) {
+        promise_list_instance.set_value(std::move(response));
+      });
+  auto instance_list_response = promise_list_instance.get_future().get();
+  std::string page_token;
+  std::vector<btadmin::Instance> result;
+  do {
+    for (auto& x : *instance_list_response.mutable_instances()) {
+      result.emplace_back(std::move(x));
+    }
+    page_token = std::move(*instance_list_response.mutable_next_page_token());
+  } while (not page_token.empty());
+
+  cq.Shutdown();
+  pool.join();
+  return result;
+}
+
 bigtable::InstanceConfig IntegrationTestConfig(
     std::string const& id,
     std::string const& zone = InstanceTestEnvironment::zone(),
@@ -104,7 +131,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteInstanceTest) {
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
   // verify new instance id in list of instances
-  auto instances_before = instance_admin_->ListInstances();
+  auto instances_before = ListInstances(instance_admin_client_);
   ASSERT_FALSE(IsInstancePresent(instances_before, instance_id))
       << "Instance (" << instance_id << ") already exists."
       << " This is unexpected, as the instance ids are"
@@ -117,7 +144,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteInstanceTest) {
   // create instance
   auto config = IntegrationTestConfig(instance_id);
   auto instance = instance_admin_->CreateInstance(config).get();
-  auto instances_current = instance_admin_->ListInstances();
+  auto instances_current = ListInstances(instance_admin_client_);
   EXPECT_TRUE(IsInstancePresent(instances_current, instance.name()));
 
   // Get instance
@@ -143,7 +170,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteInstanceTest) {
         promise_delete_instance.set_value(std::move(response));
       });
   auto response = promise_delete_instance.get_future().get();
-  auto instances_after_delete = instance_admin_->ListInstances();
+  auto instances_after_delete = ListInstances(instance_admin_client_);
   EXPECT_TRUE(IsInstancePresent(instances_current, instance.name()));
   EXPECT_FALSE(IsInstancePresent(instances_after_delete, instance.name()));
 
