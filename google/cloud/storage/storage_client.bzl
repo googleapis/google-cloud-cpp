@@ -11,6 +11,7 @@ storage_client_HDRS = [
     "internal/bucket_requests.h",
     "internal/complex_option.h",
     "internal/common_metadata.h",
+    "internal/compute_engine_util.h",
     "internal/curl_handle.h",
     "internal/curl_handle_factory.h",
     "internal/curl_download_request.h",
