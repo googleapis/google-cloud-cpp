@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_COMPUTE_ENGINE_UTIL_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_COMPUTE_ENGINE_UTIL_H_
 
+#include "google/cloud/log.h"
 #include "google/cloud/storage/version.h"
 #include <string>
 #if _WIN32
@@ -87,6 +88,8 @@ bool RunningOnComputeEngineVm() {
   std::string const PRODUCT_NAME_FILE = "/sys/class/dmi/id/product_name";
   std::ifstream is(PRODUCT_NAME_FILE);
   if (not is.is_open()) {
+    GCP_LOG(WARNING) << "Could not find file '" << PRODUCT_NAME_FILE
+                      << "' when checking if running on GCE, returning false";
     return false;
   }
   std::string first_line;
