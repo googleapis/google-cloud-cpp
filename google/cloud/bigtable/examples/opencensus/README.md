@@ -4,7 +4,7 @@
 [OpenCensus](https://opencensus.io) is a vendor-agnostic single distribution of libraries to provide metrics collection and tracing for your services. In this example we show how one can integrate OpenCensus with the Cloud Bigtable C++ client library.
 
 ### Setup Stackdriver
-The OpenCensus example will publish metrics and traces to [Stackdriver](https://cloud.google.com/stackdriver/), if you have not previously configured Stackdriver, follow the instructions in [...](https://github.com/census-instrumentation/opencensus-cpp/tree/master/examples/grpc#stackdriver) to enable Stackdriver for your Google Cloud project.
+The OpenCensus example will publish metrics and traces to [Stackdriver](https://cloud.google.com/stackdriver/), if you have not previously configured Stackdriver, follow [these instructions](https://github.com/census-instrumentation/opencensus-cpp/tree/master/examples/grpc#stackdriver) to enable Stackdriver for your Google Cloud project.
 
 ### Stats
 One can view stats captured using OpenCensus at Google Cloud Console as explained [here](https://github.com/census-instrumentation/opencensus-cpp/tree/master/examples/grpc#stats)
