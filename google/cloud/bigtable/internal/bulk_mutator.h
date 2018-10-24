@@ -20,7 +20,6 @@
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
-#include "google/cloud/bigtable/internal/async_retry_op.h"
 #include "google/cloud/bigtable/table_strong_types.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/make_unique.h"
@@ -122,14 +121,14 @@ class AsyncBulkMutator : protected BulkMutator {
   // object and forge a dummy int result to AsyncRetryOp. Eventually, after all
   // retries are done, the user will call ExtractFinalFailures to get to know
   // the actual response.
-  using Response = int;
+  using Response = std::vector<FailedMutation>;
   using AsyncResult = AsyncUnaryRpcResult<int>;
 
   template <typename Functor,
-            typename std::enable_if<google::cloud::internal::is_invocable<
-                                        Functor, CompletionQueue&, AsyncResult&,
-                                        AsyncOperation::Disposition>::value,
-                                    int>::type valid_callback_type = 0>
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
   void Start(CompletionQueue& cq,
              std::unique_ptr<grpc::ClientContext>&& context,
              Functor&& callback) {
@@ -143,14 +142,17 @@ class AsyncBulkMutator : protected BulkMutator {
         },
         FinishedCallback<Functor>(*this, std::forward<Functor>(callback)));
   }
-  using BulkMutator::ExtractFinalFailures;
+
+  std::vector<FailedMutation> AccumulatedResult() {
+    return ExtractFinalFailures();
+  }
 
  private:
   template <typename Functor,
-            typename std::enable_if<google::cloud::internal::is_invocable<
-                                        Functor, CompletionQueue&, AsyncResult&,
-                                        AsyncOperation::Disposition>::value,
-                                    int>::type valid_callback_type = 0>
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
   struct FinishedCallback {
     FinishedCallback(AsyncBulkMutator& parent, Functor&& callback)
         : parent_(parent), callback_(callback) {}
@@ -164,12 +166,7 @@ class AsyncBulkMutator : protected BulkMutator {
         status = grpc::Status(grpc::StatusCode::UNAVAILABLE,
                               "Some mutations were not confirmed");
       }
-      // TODO(#1308) - the context is wrong here, but deferring the fix until
-      // the API is changed as a part of Disposition removal.
-      AsyncResult res{
-          0, std::move(status),
-          google::cloud::internal::make_unique<grpc::ClientContext>()};
-      callback_(cq, res, AsyncOperation::COMPLETED);
+      callback_(cq, status);
     }
     AsyncBulkMutator& parent_;
     Functor callback_;

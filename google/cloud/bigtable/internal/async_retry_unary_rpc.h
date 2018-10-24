@@ -62,7 +62,6 @@ class AsyncUnaryRpc {
   /// @name Convenience aliases for the RPC request response and callback types.
   using Request = typename Sig::RequestType;
   using Response = typename Sig::ResponseType;
-  using AsyncResult = AsyncUnaryRpcResult<typename Sig::ResponseType>;
   //@}
   AsyncUnaryRpc(std::shared_ptr<Client> client,
                 MemberFunctionType Client::*call, Request&& request)
@@ -89,20 +88,29 @@ class AsyncUnaryRpc {
    *     AsyncOperation::Disposition.
    */
   template <typename Functor,
-            typename std::enable_if<google::cloud::internal::is_invocable<
-                                        Functor, CompletionQueue&, AsyncResult&,
-                                        AsyncOperation::Disposition>::value,
-                                    int>::type valid_callback_type = 0>
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
   void Start(CompletionQueue& cq,
              std::unique_ptr<grpc::ClientContext>&& context,
              Functor&& callback) {
     cq.MakeUnaryRpc(*client_, call_, request_, std::move(context),
-                    std::forward<Functor>(callback));
+                    // TODO fix the callback copy
+                    [this, callback](CompletionQueue& cq,
+                                     AsyncUnaryRpcResult<Response>& res,
+                                     AsyncOperation::Disposition d) {
+                      response_ = std::move(res.response);
+                      callback(cq, res.status);
+                    });
   }
+
+  Response AccumulatedResult() { return response_; }
 
   std::shared_ptr<Client> client_;
   MemberFunctionType Client::*call_;
   Request request_;
+  Response response_;
 };
 
 template <
@@ -122,7 +130,6 @@ class AsyncRetryUnaryRpc
  public:
   using Request = typename Sig::RequestType;
   using Response = typename Sig::ResponseType;
-  using AsyncResult = AsyncUnaryRpcResult<typename Sig::ResponseType>;
   explicit AsyncRetryUnaryRpc(
       char const* error_message,
       std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
