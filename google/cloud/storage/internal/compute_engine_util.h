@@ -53,7 +53,7 @@ bool RunningOnComputeEngineVm() {
       nullptr,        // We know the type will be REG_SZ.
       nullptr,        // We're only fetching the size; no buffer given yet.
       &buffer_size);  // Fetch the size in bytes of the value, if it exists.
-  if (rc != 0) {  // 0 means success.
+  if (rc != 0) {
     return false;
   }
 
