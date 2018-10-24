@@ -477,18 +477,15 @@ TEST(MultipleRowsMutatorTest, SimpleAsync) {
   using bigtable::AsyncOperation;
   using bigtable::AsyncUnaryRpcResult;
   mutator.Start(cq, std::move(context),
-                [&](CompletionQueue&, AsyncUnaryRpcResult<int>& res,
-                    AsyncOperation::Disposition d) {
-                  EXPECT_EQ(d, AsyncOperation::COMPLETED);
-                  EXPECT_EQ(0, res.response);
-                  EXPECT_TRUE(res.status.ok());
-                  EXPECT_EQ("mocked-status", res.status.error_message());
+                [&](CompletionQueue&, grpc::Status &status) {
+                  EXPECT_TRUE(status.ok());
+                  EXPECT_EQ("mocked-status", status.error_message());
                   mutator_finished = true;
                 });
   impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
   // state == PROCESSING
   impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
-  // state == PROCESSING, 1 rea
+  // state == PROCESSING, 1 read
   impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
   // state == FINISHING
   EXPECT_FALSE(mutator_finished);
@@ -537,12 +534,9 @@ TEST(MultipleRowsMutatorTest, SimpleAsyncFailure) {
   using bigtable::AsyncOperation;
   using bigtable::AsyncUnaryRpcResult;
   mutator.Start(cq, std::move(context),
-                [&](CompletionQueue&, AsyncUnaryRpcResult<int>& res,
-                    AsyncOperation::Disposition d) {
-                  EXPECT_EQ(d, AsyncOperation::COMPLETED);
-                  EXPECT_EQ(0, res.response);
-                  EXPECT_FALSE(res.status.ok());
-                  EXPECT_EQ("mocked-status", res.status.error_message());
+                [&](CompletionQueue&, grpc::Status &status) {
+                  EXPECT_FALSE(status.ok());
+                  EXPECT_EQ("mocked-status", status.error_message());
                   mutator_finished = true;
                 });
   impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
