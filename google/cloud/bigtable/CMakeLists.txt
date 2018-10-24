@@ -145,7 +145,6 @@ add_library(bigtable_client
             instance_config.cc
             instance_update_config.h
             instance_update_config.cc
-            internal/async_retry_op.h
             internal/async_retry_unary_rpc.h
             internal/bulk_mutator.h
             internal/bulk_mutator.cc
