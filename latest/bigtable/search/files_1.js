@@ -8,6 +8,7 @@ var searchData=
   ['bigtable_2dsamples_2edox',['bigtable-samples.dox',['../bigtable-samples_8dox.html',1,'']]],
   ['bigtable_5fhello_5fapp_5fprofile_2ecc',['bigtable_hello_app_profile.cc',['../bigtable__hello__app__profile_8cc.html',1,'']]],
   ['bigtable_5fhello_5fworld_2ecc',['bigtable_hello_world.cc',['../bigtable__hello__world_8cc.html',1,'']]],
+  ['bigtable_5fopencensus_2ecc',['bigtable_opencensus.cc',['../bigtable__opencensus_8cc.html',1,'']]],
   ['bigtable_5fquickstart_2ecc',['bigtable_quickstart.cc',['../bigtable__quickstart_8cc.html',1,'']]],
   ['bigtable_5fsamples_2ecc',['bigtable_samples.cc',['../bigtable__samples_8cc.html',1,'']]],
   ['bigtable_5fsamples_5finstance_5fadmin_2ecc',['bigtable_samples_instance_admin.cc',['../bigtable__samples__instance__admin_8cc.html',1,'']]],
