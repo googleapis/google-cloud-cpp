@@ -64,3 +64,7 @@ echo "Running TableAdmin async integration test."
 echo
 echo "Running Table::Async* integration test."
 ./data_async_integration_test "${PROJECT_ID}" "data-noex-async"
+
+#echo
+#echo "Running TableAdmin async snapshot integration test."
+#./snapshot_async_integration_test "${PROJECT_ID}" "admin-test" "admin-test-cl1"
