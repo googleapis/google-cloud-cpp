@@ -176,7 +176,6 @@ class AsyncBulkMutator : protected BulkMutator {
 
  private:
   std::shared_ptr<bigtable::DataClient> client_;
-  std::shared_ptr<AsyncOperation> rpc_;
 };
 
 }  // namespace internal
