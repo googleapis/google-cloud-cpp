@@ -134,9 +134,8 @@ class AsyncBulkMutator : protected BulkMutator {
              std::unique_ptr<grpc::ClientContext>&& context,
              Functor&& callback) {
     PrepareForRequest();
-    rpc_ = cq.MakeUnaryStreamRpc(
-        *client_, &DataClient::AsyncMutateRows, pending_mutations_,
-        std::move(context),
+    cq.MakeUnaryStreamRpc(
+        *client_, &DataClient::AsyncMutateRows, mutations_, std::move(context),
         [this](CompletionQueue&, const grpc::ClientContext&,
                google::bigtable::v2::MutateRowsResponse& response) {
           ProcessResponse(response);
