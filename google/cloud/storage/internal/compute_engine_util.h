@@ -89,7 +89,7 @@ bool RunningOnComputeEngineVm() {
   std::ifstream is(PRODUCT_NAME_FILE);
   if (not is.is_open()) {
     GCP_LOG(WARNING) << "Could not find file '" << PRODUCT_NAME_FILE
-                      << "' when checking if running on GCE, returning false";
+                     << "' when checking if running on GCE, returning false";
     return false;
   }
   std::string first_line;
