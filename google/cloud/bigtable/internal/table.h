@@ -20,7 +20,9 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
+#include "google/cloud/bigtable/internal/async_bulk_apply.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
+#include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/read_modify_write_rule.h"
@@ -197,6 +199,29 @@ class Table {
         internal::ConstantIdempotencyPolicy(is_idempotent),
         metadata_update_policy_, client_, &DataClient::AsyncMutateRow,
         std::move(request), std::forward<Functor>(callback));
+    retry->Start(cq);
+  }
+
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<
+                    Functor, CompletionQueue&, std::vector<FailedMutation>&,
+                    grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  void AsyncBulkApply(BulkMutation&& mut, CompletionQueue& cq,
+                      Functor&& callback) {
+    google::bigtable::v2::MutateRowsRequest request;
+    internal::SetCommonTableOperationRequest<
+        google::bigtable::v2::MutateRowsRequest>(request, app_profile_id_.get(),
+                                                 table_name_.get());
+    using Retry = bigtable::internal::AsyncRetryBulkApply<Functor>;
+
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        *idempotent_mutation_policy_, metadata_update_policy_, client_,
+        app_profile_id_, table_name_, std::move(mut),
+        std::forward<Functor>(callback));
+
     retry->Start(cq);
   }
 

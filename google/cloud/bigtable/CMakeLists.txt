@@ -145,6 +145,7 @@ add_library(bigtable_client
             instance_config.cc
             instance_update_config.h
             instance_update_config.cc
+            internal/async_bulk_apply.h
             internal/async_retry_op.h
             internal/async_retry_unary_rpc.h
             internal/bulk_mutator.h
@@ -289,6 +290,7 @@ set(bigtable_client_unit_tests
     internal/prefix_range_end_test.cc
     internal/table_admin_test.cc
     internal/table_async_apply_test.cc
+    internal/table_async_bulk_apply_test.cc
     internal/table_test.cc
     mutations_test.cc
     table_admin_test.cc
