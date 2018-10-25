@@ -15,10 +15,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BULK_MUTATOR_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BULK_MUTATOR_H_
 
+#include "google/cloud/bigtable/async_operation.h"
 #include "google/cloud/bigtable/bigtable_strong_types.h"
+#include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/table_strong_types.h"
+#include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/make_unique.h"
 
 namespace google {
 namespace cloud {
@@ -37,14 +41,14 @@ class BulkMutator {
     return pending_mutations_.entries_size() != 0;
   }
 
-  /// Send one batch request to the given stub.
+  /// Synchronously send one batch request to the given stub.
   grpc::Status MakeOneRequest(bigtable::DataClient& client,
                               grpc::ClientContext& client_context);
 
   /// Give up on any pending mutations, move them to the failures array.
   std::vector<FailedMutation> ExtractFinalFailures();
 
- private:
+ protected:
   /// Get ready for a new request.
   void PrepareForRequest();
 
@@ -54,7 +58,6 @@ class BulkMutator {
   /// A request has finished and we have processed all the responses.
   void FinishRequest();
 
- private:
   /// Accumulate any permanent failures and the list of mutations we gave up on.
   std::vector<FailedMutation> failures_;
 
@@ -90,6 +93,75 @@ class BulkMutator {
   /// Accumulate annotations for the next request.
   std::vector<Annotations> pending_annotations_;
 };
+
+/**
+ * Async-friendly version BulkMutator.
+ *
+ * It extends the normal BulkMutator with logic to do its job asynchronously.
+ * Conceptually it reimplements MakeOneRequest in an async way.
+ */
+class AsyncBulkMutator : private BulkMutator {
+ public:
+  AsyncBulkMutator(std::shared_ptr<bigtable::DataClient> client,
+                   bigtable::AppProfileId const& app_profile_id,
+                   bigtable::TableId const& table_name,
+                   IdempotentMutationPolicy& idempotent_policy,
+                   BulkMutation&& mut)
+      : BulkMutator(app_profile_id, table_name, idempotent_policy,
+                    std::move(mut)),
+        client_(std::move(client)) {}
+
+  using Request = google::bigtable::v2::MutateRowsRequest;
+  using Response = std::vector<FailedMutation>;
+
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  void Start(CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext>&& context,
+             Functor&& callback) {
+    PrepareForRequest();
+    cq.MakeUnaryStreamRpc(
+        *client_, &DataClient::AsyncMutateRows, mutations_, std::move(context),
+        [this](CompletionQueue&, const grpc::ClientContext&,
+               google::bigtable::v2::MutateRowsResponse& response) {
+          ProcessResponse(response);
+        },
+        FinishedCallback<Functor>(*this, std::forward<Functor>(callback)));
+  }
+
+  using BulkMutator::ExtractFinalFailures;
+  using BulkMutator::HasPendingMutations;
+
+ private:
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  struct FinishedCallback {
+    FinishedCallback(AsyncBulkMutator& parent, Functor&& callback)
+        : parent_(parent), callback_(callback) {}
+
+    void operator()(CompletionQueue& cq, grpc::ClientContext& context,
+                    grpc::Status& status) {
+      parent_.FinishRequest();
+      callback_(cq, status);
+    }
+
+    // The user of AsyncBulkMutator has to make sure that it is not destructed
+    // before all callbacks return, so we have a guarantee that this reference
+    // is valid for as long as we don't call callback_.
+    AsyncBulkMutator& parent_;
+    Functor callback_;
+  };
+
+ private:
+  std::shared_ptr<bigtable::DataClient> client_;
+};
+
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
