@@ -151,9 +151,7 @@ if [ "${TEST_INSTALL:-}" = "yes" -o "${SCAN_BUILD:-}" = "yes" ]; then
   (cd /var/tmp/build-dependencies; install_c_ares)
   (cd /var/tmp/build-dependencies; install_grpc)
   (cd /var/tmp/build-dependencies; install_googletest)
-  # DEBUG REMOVE BEFORE MERGE
   ${ccache_command} --show-stats
-  # END DEBUG REMOVE BEFORE MERGE
   echo
   echo "${COLOR_YELLOW}Finished dependency install at: $(date)${COLOR_RESET}"
   echo
@@ -211,7 +209,7 @@ if [ -n "${ccache_command}" ]; then
   echo
   echo "${COLOR_YELLOW}Print and clearing ccache stats: $(date)${COLOR_RESET}"
   ${ccache_command} --show-stats
-  ${ccache_command} --zero-stats
+  ${ccache_command} --zero-stats --cleanup --max-size=1Gi
 fi
 
 # Run the tests and output any failures.
