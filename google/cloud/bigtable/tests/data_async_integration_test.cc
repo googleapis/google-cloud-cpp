@@ -80,6 +80,71 @@ TEST_F(DataAsyncIntegrationTest, TableApply) {
   CheckEqualUnordered(expected, actual);
 }
 
+TEST_F(DataAsyncIntegrationTest, TableBulkApply) {
+  std::string const table_id = RandomTableId();
+  auto sync_table = CreateTable(table_id, table_config);
+
+  std::string const row_key1 = "row-key-1";
+  std::string const row_key2 = "row-key-2";
+  std::map<std::string, std::vector<bigtable::Cell>> created{
+      {row_key1,
+       {{row_key1, family, "c0", 1000, "v1000", {}},
+        {row_key1, family, "c1", 2000, "v2000", {}}}},
+      {row_key2,
+       {{row_key2, family, "c0", 3000, "v1000", {}},
+        {row_key2, family, "c0", 4000, "v1000", {}}}}};
+
+  BulkMutation mut;
+  for (auto const& row_cells : created) {
+    auto const& row_key = row_cells.first;
+    auto const& cells = row_cells.second;
+    SingleRowMutation row_mut(row_key);
+    for (auto const& c : cells) {
+      row_mut.emplace_back(SetCell(
+          c.family_name(), c.column_qualifier(),
+          std::chrono::duration_cast<std::chrono::milliseconds>(c.timestamp()),
+          c.value()));
+    }
+    mut.push_back(row_mut);
+  }
+
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  noex::Table table(data_client_, table_id);
+  std::promise<void> done;
+  table.AsyncBulkApply(
+      std::move(mut), cq,
+      [&done](CompletionQueue& cq, std::vector<FailedMutation>& failed,
+              grpc::Status const& status) {
+        done.set_value();
+        EXPECT_EQ(0, failed.size());
+        EXPECT_TRUE(status.ok());
+      });
+
+  // Block until the asynchronous operation completes. This is not what one
+  // would do in a real application (the synchronous API is better in that
+  // case), but we need to wait before checking the results.
+  done.get_future().get();
+
+  // Validate that the newly created cells are actually in the server.
+  std::vector<bigtable::Cell> expected;
+  for (auto const& row_cells : created) {
+    auto const& cells = row_cells.second;
+    for (auto const& c : cells) {
+      expected.push_back(c);
+    }
+  }
+
+  auto actual = ReadRows(*sync_table, bigtable::Filter::PassAllFilter());
+
+  // Cleanup the thread running the completion queue event loop.
+  cq.Shutdown();
+  pool.join();
+  DeleteTable(table_id);
+  CheckEqualUnordered(expected, actual);
+}
+
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
