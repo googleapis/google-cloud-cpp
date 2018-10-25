@@ -30,7 +30,8 @@ namespace {
 namespace btadmin = google::bigtable::admin::v2;
 using namespace google::cloud::testing_util::chrono_literals;
 
-class SnapshotIntegrationTest : public bigtable::testing::TableIntegrationTest {
+class SnapshotAsyncIntegrationTest
+    : public bigtable::testing::TableIntegrationTest {
  protected:
   std::unique_ptr<TableAdmin> table_admin_;
 
@@ -58,7 +59,7 @@ class SnapshotIntegrationTest : public bigtable::testing::TableIntegrationTest {
 };
 /// @test Verify that `noex::TableAdmin` Async Snapshot CRUD operations work as
 /// expected.
-TEST_F(SnapshotIntegrationTest, CreateListGetDeleteSnapshot) {
+TEST_F(SnapshotAsyncIntegrationTest, CreateListGetDeleteSnapshot) {
   google::cloud::bigtable::TableId table_id(RandomTableId());
   google::cloud::bigtable::ClusterId cluster_id(
       bigtable::testing::TableTestEnvironment::cluster_id());
