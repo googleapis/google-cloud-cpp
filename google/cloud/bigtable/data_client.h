@@ -28,6 +28,7 @@ namespace noex {
 class Table;
 }  // namespace noex
 namespace internal {
+class AsyncBulkMutator;
 class BulkMutator;
 }  // namespace internal
 
@@ -80,6 +81,7 @@ class DataClient {
  protected:
   friend class Table;
   friend class noex::Table;
+  friend class internal::AsyncBulkMutator;
   friend class internal::BulkMutator;
   friend class RowReader;
   //@{
