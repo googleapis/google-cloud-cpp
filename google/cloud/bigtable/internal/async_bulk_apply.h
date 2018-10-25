@@ -123,12 +123,15 @@ class AsyncRetryBulkApply
       callback_(cq, res, res_status);
       return;
     }
-    if (status.ok() && !impl_.HasPendingMutations()) {
+    if (status.ok() and not impl_.HasPendingMutations()) {
       // Success, just report the result.
       auto res = impl_.ExtractFinalFailures();
       callback_(cq, res, status);
       return;
     }
+    // It might happen that status.ok() is true here, but there are pending
+    // mutations. Due to that, RPCRetryPolicy shouldn't consider status.ok() as
+    // permanent errors.
     if (not rpc_retry_policy_->OnFailure(status)) {
       std::string full_message =
           FullErrorMessage(RPCRetryPolicy::IsPermanentFailure(status)

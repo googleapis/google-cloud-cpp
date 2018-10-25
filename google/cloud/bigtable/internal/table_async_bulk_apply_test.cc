@@ -155,8 +155,8 @@ TEST_F(NoexTableAsyncBulkApplyTest, IdempotencyAndRetries) {
 
 /// @test Verify that noex::Table::AsyncBulkApply() works when cancelled
 TEST_F(NoexTableAsyncBulkApplyTest, Cancelled) {
-  // This test creates 3 mutations. First one will succeed straight away, second
-  // on retry and third never, because it's not idempotent.
+  // This test attempts to write one mutation but fails straight away because
+  // the user cancels the request.
   bt::BulkMutation mut(
       bt::SingleRowMutation("baz", {bt::SetCell("fam", "col", "qux")}));
 
@@ -207,8 +207,8 @@ TEST_F(NoexTableAsyncBulkApplyTest, Cancelled) {
 /// @test Verify that noex::Table::AsyncBulkApply() works when permanent error
 //  occurs
 TEST_F(NoexTableAsyncBulkApplyTest, PermanentError) {
-  // This test creates 3 mutations. First one will succeed straight away, second
-  // on retry and third never, because it's not idempotent.
+  // This test attempts to write a single mutation, which fails with
+  // PERMISSION_DENIED, which is a permanent error, hence is not retried.
   bt::BulkMutation mut(
       bt::SingleRowMutation("baz", {bt::SetCell("fam", "col", "qux")}));
 
@@ -260,8 +260,10 @@ TEST_F(NoexTableAsyncBulkApplyTest, PermanentError) {
 /// @test Verify that cancellation of noex::Table::AsyncBulkApply() works when
 //  when the request is waiting for retry.
 TEST_F(NoexTableAsyncBulkApplyTest, CancelledInTimer) {
-  // This test creates 3 mutations. First one will succeed straight away, second
-  // on retry and third never, because it's not idempotent.
+  // This test attempts to write two mutations. The first mutation succeeds on
+  // the first run, but the second fails in a transient way (UNAVAILABLE).
+  // When BulkMutator waits for the right moment to retry, the operation gets
+  // cancelled.
   bt::BulkMutation mut(
       bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
       bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")}));
