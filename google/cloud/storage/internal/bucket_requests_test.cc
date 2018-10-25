@@ -256,6 +256,20 @@ TEST(PatchBucketRequestTest, DiffResetCors) {
   EXPECT_EQ(expected, patch);
 }
 
+TEST(PatchBucketRequestTest, DiffSetDefaultEventBasedHold) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_default_event_based_hold(false);
+  BucketMetadata updated = original;
+  updated.set_default_event_based_hold(true);
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({
+      "defaultEventBasedHold": true
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
 TEST(PatchBucketRequestTest, DiffSetDefaultAcl) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.set_default_acl({});
@@ -430,6 +444,34 @@ TEST(PatchBucketRequestTest, DiffResetName) {
 
   nl::json patch = nl::json::parse(request.payload());
   nl::json expected = nl::json::parse(R"""({"name": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffSetRetentionPolicy) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.reset_logging();
+  BucketMetadata updated = original;
+  updated.set_retention_policy(std::chrono::seconds(60));
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({
+      "retentionPolicy": {
+          "retentionPeriod": 60
+      }
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetRetentionPolicy) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_retention_policy(std::chrono::seconds(60));
+  BucketMetadata updated = original;
+  updated.reset_retention_policy();
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"retentionPolicy": null})""");
   EXPECT_EQ(expected, patch);
 }
 

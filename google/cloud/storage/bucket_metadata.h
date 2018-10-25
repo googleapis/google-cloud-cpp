@@ -642,6 +642,18 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     retention_policy_ = std::move(v);
     return *this;
   }
+
+  /**
+   * Sets the retention period.
+   *
+   * The retention period is the only writable attribute in a retention policy.
+   * This function makes it easier to set the retention policy when the
+   * `BucketMetadata` object is used to update or patch the bucket.
+   */
+  BucketMetadata& set_retention_policy(std::chrono::seconds retention_period) {
+    return set_retention_policy(BucketRetentionPolicy{retention_period});
+  }
+
   BucketMetadata& reset_retention_policy() {
     retention_policy_.reset();
     return *this;
