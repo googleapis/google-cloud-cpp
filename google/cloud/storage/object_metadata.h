@@ -161,6 +161,12 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
 
   using CommonMetadata::etag;
 
+  bool event_based_hold() const { return event_based_hold_; }
+  ObjectMetadata& set_event_based_hold(bool v) {
+    event_based_hold_ = v;
+    return *this;
+  }
+
   std::int64_t generation() const { return generation_; }
 
   using CommonMetadata::id;
@@ -210,11 +216,23 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   using CommonMetadata::metageneration;
   using CommonMetadata::name;
   using CommonMetadata::owner;
+
+  std::chrono::system_clock::time_point retention_expiration_time() const {
+    return retention_expiration_time_;
+  }
+
   using CommonMetadata::self_link;
 
   std::uint64_t size() const { return size_; }
 
   using CommonMetadata::storage_class;
+
+  bool temporary_hold() const { return temporary_hold_; }
+  ObjectMetadata& set_temporary_hold(bool v) {
+    temporary_hold_ = v;
+    return *this;
+  }
+
   using CommonMetadata::time_created;
 
   std::chrono::system_clock::time_point time_deleted() const {
@@ -244,12 +262,15 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   std::string content_type_;
   std::string crc32c_;
   google::cloud::optional<CustomerEncryption> customer_encryption_;
+  bool event_based_hold_ = false;
   std::int64_t generation_;
   std::string kms_key_name_;
   std::string md5_hash_;
   std::string media_link_;
   std::map<std::string, std::string> metadata_;
+  std::chrono::system_clock::time_point retention_expiration_time_;
   std::uint64_t size_;
+  bool temporary_hold_;
   std::chrono::system_clock::time_point time_deleted_;
   std::chrono::system_clock::time_point time_storage_class_updated_;
 };
@@ -293,6 +314,8 @@ class ObjectMetadataPatchBuilder {
   ObjectMetadataPatchBuilder& ResetContentLanguage();
   ObjectMetadataPatchBuilder& SetContentType(std::string const& v);
   ObjectMetadataPatchBuilder& ResetContentType();
+  ObjectMetadataPatchBuilder& SetEventBasedHold(bool v);
+  ObjectMetadataPatchBuilder& ResetEventBasedHold();
 
   ObjectMetadataPatchBuilder& SetMetadata(std::string const& key,
                                           std::string const& value);

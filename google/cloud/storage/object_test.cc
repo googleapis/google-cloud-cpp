@@ -281,11 +281,11 @@ TEST_F(ObjectTest, UpdateObject) {
             {"contentEncoding", "new-encoding"},
             {"contentLanguage", "new-language"},
             {"contentType", "new-type"},
+            {"eventBasedHold", false},
             {"metadata",
              internal::nl::json{
                  {"test-label", "test-value"},
              }},
-
         };
         EXPECT_EQ(expected_payload, actual_payload);
         return std::make_pair(Status(), expected);
