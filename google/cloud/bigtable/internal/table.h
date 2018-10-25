@@ -202,6 +202,21 @@ class Table {
     retry->Start(cq);
   }
 
+  /**
+   * Make an asynchronous request to mutate a multiple rows.
+   *
+   * @param mut the bulk mutation to apply.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, CompletionQueue&, std::vector<FailedMutation>&,
+   *             grpc::Status&>);
+   *
+   * @tparam Functor the type of the callback.
+   */
   template <typename Functor,
             typename std::enable_if<
                 google::cloud::internal::is_invocable<

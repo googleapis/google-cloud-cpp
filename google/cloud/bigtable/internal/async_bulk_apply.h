@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc.
+// Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,6 +33,28 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
+
+/**
+ * Perform an AsyncBulkApply operation request with retries.
+ *
+ * @tparam Client the class implementing the asynchronous operation, examples
+ *     include `DataClient`, `AdminClient`, and `InstanceAdminClient`.
+ *
+ * @tparam MemberFunctionType the type of the member function to call on the
+ *     `Client` object. This type must meet the requirements of
+ *     `internal::CheckAsyncUnaryRpcSignature`, the `AsyncRetryUnaryRpc`
+ *     template is disabled otherwise.
+ *
+ * @tparam Functor the type of the function-like object that will receive the
+ *     results. It must satisfy (using C++17 types):
+ *     static_assert(std::is_invocable_v<
+ *         Functor, CompletionQueue&, std::vector<FailedMutation>&,
+ *             grpc::Status&>);
+ *
+ * @tparam valid_callback_type a format parameter, uses `std::enable_if<>` to
+ *     disable this template if the functor does not match the expected
+ *     signature.
+ */
 template <typename Functor,
           typename std::enable_if<
               google::cloud::internal::is_invocable<
