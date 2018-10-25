@@ -33,7 +33,6 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-
 /**
  * Perform an AsyncBulkApply operation request with retries.
  *
@@ -78,6 +77,7 @@ class AsyncRetryBulkApply
         rpc_backoff_policy_(std::move(rpc_backoff_policy)),
         metadata_update_policy_(std::move(metadata_update_policy)),
         callback_(std::forward<Functor>(callback)) {}
+
   /**
    * Kick off the asynchronous request.
    *
@@ -123,7 +123,7 @@ class AsyncRetryBulkApply
       callback_(cq, res, res_status);
       return;
     }
-    if (status.ok()) {
+    if (status.ok() && !impl_.HasPendingMutations()) {
       // Success, just report the result.
       auto res = impl_.ExtractFinalFailures();
       callback_(cq, res, status);

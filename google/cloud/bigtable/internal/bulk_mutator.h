@@ -131,7 +131,9 @@ class AsyncBulkMutator : private BulkMutator {
         },
         FinishedCallback<Functor>(*this, std::forward<Functor>(callback)));
   }
+
   using BulkMutator::ExtractFinalFailures;
+  using BulkMutator::HasPendingMutations;
 
  private:
   template <typename Functor,
@@ -146,13 +148,12 @@ class AsyncBulkMutator : private BulkMutator {
     void operator()(CompletionQueue& cq, grpc::ClientContext& context,
                     grpc::Status& status) {
       parent_.FinishRequest();
-
-      if (parent_.HasPendingMutations() && status.ok()) {
-        status = grpc::Status(grpc::StatusCode::UNAVAILABLE,
-                              "Some mutations were not confirmed");
-      }
       callback_(cq, status);
     }
+
+    // The user of AsyncBulkMutator has to make sure that it is not destructed
+    // before all callbacks return, so we have a guarantee that this reference
+    // is valid for as long as we don't call callback_.
     AsyncBulkMutator& parent_;
     Functor callback_;
   };
