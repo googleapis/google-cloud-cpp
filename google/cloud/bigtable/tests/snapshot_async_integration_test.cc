@@ -57,6 +57,7 @@ class SnapshotAsyncIntegrationTest
                         });
   }
 };
+
 /// @test Verify that `noex::TableAdmin` Async Snapshot CRUD operations work as
 /// expected.
 TEST_F(SnapshotAsyncIntegrationTest, CreateListGetDeleteSnapshot) {
