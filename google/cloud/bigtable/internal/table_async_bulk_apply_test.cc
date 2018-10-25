@@ -257,6 +257,80 @@ TEST_F(NoexTableAsyncBulkApplyTest, PermanentError) {
   EXPECT_TRUE(mutator_finished);
 }
 
+/// @test Verify that cancellation of noex::Table::AsyncBulkApply() works when
+//  when the request is waiting for retry.
+TEST_F(NoexTableAsyncBulkApplyTest, CancelledInTimer) {
+  // This test creates 3 mutations. First one will succeed straight away, second
+  // on retry and third never, because it's not idempotent.
+  bt::BulkMutation mut(
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")}));
+
+  using bigtable::testing::MockClientAsyncReaderInterface;
+
+  // reader1 will confirm only the first mutation and return UNAVAILABLE to
+  // the other.
+  MockClientAsyncReaderInterface<btproto::MutateRowsResponse>* reader1 =
+      new MockClientAsyncReaderInterface<btproto::MutateRowsResponse>;
+  std::unique_ptr<MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>
+      reader_deleter1(reader1);
+  EXPECT_CALL(*reader1, Read(_, _))
+      .WillOnce(Invoke([](btproto::MutateRowsResponse* r, void*) {
+        {
+          auto& e = *r->add_entries();
+          e.set_index(0);
+          e.mutable_status()->set_code(grpc::StatusCode::OK);
+        }
+        {
+          auto& e = *r->add_entries();
+          e.set_index(1);
+          e.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
+        }
+      }))
+      .WillOnce(Invoke([](btproto::MutateRowsResponse* r, void*) {}));
+
+  EXPECT_CALL(*reader1, Finish(_, _))
+      .WillOnce(Invoke([](grpc::Status* status, void*) {
+        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+      }));
+
+  EXPECT_CALL(*client_, AsyncMutateRows(_, _, _, _))
+      .WillOnce(Invoke([&reader_deleter1](grpc::ClientContext*,
+                                          btproto::MutateRowsRequest const& r,
+                                          grpc::CompletionQueue*, void*) {
+        EXPECT_EQ(2, r.entries_size());
+        return std::move(reader_deleter1);
+      }));
+
+  auto policy = bt::DefaultIdempotentMutationPolicy();
+  auto impl = std::make_shared<bigtable::testing::MockCompletionQueue>();
+  using bigtable::CompletionQueue;
+  bigtable::CompletionQueue cq(impl);
+
+  bool mutator_finished = false;
+  table_.AsyncBulkApply(std::move(mut), cq,
+                        [&mutator_finished](CompletionQueue& cq,
+                                            std::vector<FailedMutation>& failed,
+                                            grpc::Status& status) {
+                          EXPECT_EQ(grpc::StatusCode::CANCELLED,
+                                    status.error_code());
+                          mutator_finished = true;
+                        });
+
+  using bigtable::AsyncOperation;
+  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  // state == PROCESSING
+  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  // state == PROCESSING, 1 read
+  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  // state == FINISHING
+  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  EXPECT_FALSE(mutator_finished);
+  // FinishTimer
+  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  EXPECT_TRUE(mutator_finished);
+}
+
 }  // namespace
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
