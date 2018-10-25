@@ -270,7 +270,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   std::map<std::string, std::string> metadata_;
   std::chrono::system_clock::time_point retention_expiration_time_;
   std::uint64_t size_;
-  bool temporary_hold_;
+  bool temporary_hold_ = false;
   std::chrono::system_clock::time_point time_deleted_;
   std::chrono::system_clock::time_point time_storage_class_updated_;
 };
@@ -321,6 +321,9 @@ class ObjectMetadataPatchBuilder {
                                           std::string const& value);
   ObjectMetadataPatchBuilder& ResetMetadata(std::string const& key);
   ObjectMetadataPatchBuilder& ResetMetadata();
+
+  ObjectMetadataPatchBuilder& SetTemporaryHold(bool v);
+  ObjectMetadataPatchBuilder& ResetTemporaryHold();
 
  private:
   internal::PatchBuilder impl_;

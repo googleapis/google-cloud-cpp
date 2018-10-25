@@ -596,6 +596,19 @@ TEST(PatchObjectRequestTest, DiffResetContentType) {
   EXPECT_EQ(expected, patch);
 }
 
+TEST(PatchObjectRequestTest, DiffSetEventBasedHold) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  original.set_event_based_hold(false);
+  ObjectMetadata updated = original;
+  updated.set_event_based_hold(true);
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected =
+      nl::json::parse(R"""({"eventBasedHold": true})""");
+  EXPECT_EQ(expected, patch);
+}
+
 TEST(PatchObjectRequestTest, DiffSetLabels) {
   ObjectMetadata original = CreateObjectMetadataForTest();
   original.mutable_metadata() = {
@@ -626,6 +639,19 @@ TEST(PatchObjectRequestTest, DiffResetLabels) {
 
   nl::json patch = nl::json::parse(request.payload());
   nl::json expected = nl::json::parse(R"""({"metadata": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, DiffSetTemporaryHold) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  original.set_temporary_hold(false);
+  ObjectMetadata updated = original;
+  updated.set_temporary_hold(true);
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected =
+      nl::json::parse(R"""({"temporaryHold": true})""");
   EXPECT_EQ(expected, patch);
 }
 

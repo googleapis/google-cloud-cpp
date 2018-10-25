@@ -387,6 +387,16 @@ ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetMetadata() {
   return *this;
 }
 
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetTemporaryHold(bool v) {
+  impl_.SetBoolField("temporaryHold", v);
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetTemporaryHold() {
+  impl_.RemoveField("temporaryHold");
+  return *this;
+}
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

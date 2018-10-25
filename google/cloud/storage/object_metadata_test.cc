@@ -500,6 +500,26 @@ TEST(ObjectMetadataPatchBuilder, Resetmetadata) {
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
+TEST(ObjectMetadataPatchBuilder, SetTemporaryHold) {
+  ObjectMetadataPatchBuilder builder;
+  builder.SetTemporaryHold(true);
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"temporaryHold", true}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, ResetTemporaryHold) {
+  ObjectMetadataPatchBuilder builder;
+  builder.ResetTemporaryHold();
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"temporaryHold", nullptr}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
