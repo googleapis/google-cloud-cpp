@@ -799,6 +799,12 @@ class BucketMetadataPatchBuilder {
 
   BucketMetadataPatchBuilder& SetRetentionPolicy(
       BucketRetentionPolicy const& v);
+  BucketMetadataPatchBuilder& SetRetentionPolicy(
+      std::chrono::seconds retention_period) {
+    // This is the only parameter that the application can set, so make it easy
+    // for them to set it.
+    return SetRetentionPolicy(BucketRetentionPolicy{retention_period});
+  }
   BucketMetadataPatchBuilder& ResetRetentionPolicy();
 
   BucketMetadataPatchBuilder& SetStorageClass(std::string const& v);

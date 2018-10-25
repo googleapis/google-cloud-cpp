@@ -19,6 +19,7 @@ import base64
 import error_response
 import json
 import testbench_utils
+import time
 
 
 class GcsBucket(object):
@@ -123,6 +124,13 @@ class GcsBucket(object):
         :param patch:dict a dictionary with metadata changes.
         """
         patch = GcsBucket._remove_non_writable_keys(patch)
+        retention_policy = patch.get('retentionPolicy')
+        if retention_policy is not None:
+            retention_policy.pop('isLocked', None)
+            now = time.gmtime(time.time())
+            timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
+            retention_policy['effectiveTime'] = timestamp
+            patch['retentionPolicy'] = retention_policy
         patched = testbench_utils.json_api_patch(self.metadata, patch, recurse_on={'labels'})
         self.metadata = patched
         self.increase_metageneration()
