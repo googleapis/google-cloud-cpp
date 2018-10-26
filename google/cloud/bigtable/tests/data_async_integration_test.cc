@@ -145,6 +145,72 @@ TEST_F(DataAsyncIntegrationTest, TableBulkApply) {
   CheckEqualUnordered(expected, actual);
 }
 
+TEST_F(DataAsyncIntegrationTest, SampleRowKeys) {
+  std::string const table_id = RandomTableId();
+  auto sync_table = CreateTable(table_id, table_config);
+
+  // Create BATCH_SIZE * BATCH_COUNT rows.
+  constexpr int BATCH_COUNT = 10;
+  constexpr int BATCH_SIZE = 5000;
+  constexpr int COLUMN_COUNT = 10;
+  int rowid = 0;
+  for (int batch = 0; batch != BATCH_COUNT; ++batch) {
+    bigtable::BulkMutation bulk;
+    for (int row = 0; row != BATCH_SIZE; ++row) {
+      std::ostringstream os;
+      os << "row:" << std::setw(9) << std::setfill('0') << rowid;
+
+      // Build a mutation that creates 10 columns.
+      bigtable::SingleRowMutation mutation(os.str());
+      for (int col = 0; col != COLUMN_COUNT; ++col) {
+        std::string colid = "c" + std::to_string(col);
+        std::string value = colid + "#" + os.str();
+        mutation.emplace_back(
+            bigtable::SetCell(family, std::move(colid), std::move(value)));
+      }
+      bulk.emplace_back(std::move(mutation));
+      ++rowid;
+    }
+    sync_table->BulkApply(std::move(bulk));
+  }
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  noex::Table table(data_client_, table_id);
+  std::promise<std::vector<RowKeySample>> done;
+  table.AsyncSampleRowKeys(
+      cq, [&done](CompletionQueue& cq, std::vector<RowKeySample>& samples,
+                  grpc::Status const& status) {
+        EXPECT_TRUE(status.ok());
+        done.set_value(std::move(samples));
+      });
+
+  // Block until the asynchronous operation completes. This is not what one
+  // would do in a real application (the synchronous API is better in that
+  // case), but we need to wait before checking the results.
+  auto samples = done.get_future().get();
+
+  cq.Shutdown();
+  pool.join();
+  DeleteTable(table_id);
+
+  // It is somewhat hard to verify that the values returned here are correct.
+  // We cannot check the specific values, not even the format, of the row keys
+  // because Cloud Bigtable might return an empty row key (for "end of table"),
+  // and it might return row keys that have never been written to.
+  // All we can check is that this is not empty, and that the offsets are in
+  // ascending order.
+  EXPECT_FALSE(samples.empty());
+  std::int64_t previous = 0;
+  for (auto const& s : samples) {
+    EXPECT_LE(previous, s.offset_bytes);
+    previous = s.offset_bytes;
+  }
+  // At least one of the samples should have non-zero offset:
+  auto last = samples.back();
+  EXPECT_LT(0, last.offset_bytes);
+}
+
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
