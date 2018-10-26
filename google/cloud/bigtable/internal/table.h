@@ -22,6 +22,7 @@
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
+#include "google/cloud/bigtable/internal/async_sample_row_keys.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/row_key_sample.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
@@ -281,6 +282,35 @@ class Table {
     return result;
   }
 
+  /**
+   * Make an asynchronous request to get sample row keys.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, CompletionQueue&, std::vector<RowKeySample>&,
+   *             grpc::Status&>);
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<
+                    Functor, CompletionQueue&, std::vector<RowKeySample>&,
+                    grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  void AsyncSampleRowKeys(CompletionQueue& cq, Functor&& callback) {
+    auto op =
+        std::make_shared<bigtable::internal::AsyncRetrySampleRowKeys<Functor>>(
+            __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+            metadata_update_policy_, client_, app_profile_id_, table_name_,
+            std::forward<Functor>(callback));
+
+    op->Start(cq);
+  }
   //@}
 
  private:
