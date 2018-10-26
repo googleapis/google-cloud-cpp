@@ -103,7 +103,7 @@ TEST(HashValidator, FinishAndCheckMismatch) {
       std::ios::failure);
 #else
   auto result = HashValidator::FinishAndCheck("test-msg", std::move(validator));
-  EXPECT_EQ(EMPTY_STING_MD5_HASH, result.received);
+  EXPECT_EQ(EMPTY_STRING_MD5_HASH, result.received);
   EXPECT_EQ(QUICK_FOX_MD5_HASH, result.computed);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
