@@ -64,3 +64,5 @@ echo "Running TableAdmin async integration test."
 echo
 echo "Running Table::Async* integration test."
 ./data_async_integration_test "${PROJECT_ID}" "data-noex-async"
+
+# TODO(#1338) - run snapshot_async_integration_test against emulator.

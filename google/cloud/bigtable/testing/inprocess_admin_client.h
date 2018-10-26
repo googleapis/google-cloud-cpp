@@ -132,6 +132,12 @@ class InProcessAdminClient : public bigtable::AdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DropRowRangeRequest const& request,
       grpc::CompletionQueue* cq) override;
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Snapshot>>
+  AsyncGetSnapshot(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GetSnapshotRequest const& request,
+      grpc::CompletionQueue* cq) override;
   //@}
 
  private:

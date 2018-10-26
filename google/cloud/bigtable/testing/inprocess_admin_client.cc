@@ -141,6 +141,15 @@ InProcessAdminClient::AsyncDropRowRange(
   return Stub()->AsyncDropRowRange(context, request, cq);
 }
 
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    google::bigtable::admin::v2::Snapshot>>
+InProcessAdminClient::AsyncGetSnapshot(
+    grpc::ClientContext* context,
+    google::bigtable::admin::v2::GetSnapshotRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncGetSnapshot(context, request, cq);
+}
+
 }  // namespace testing
 }  // namespace bigtable
 }  // namespace cloud

@@ -184,6 +184,15 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
     return impl_.Stub()->AsyncDropRowRange(context, request, cq);
   };
 
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Snapshot>>
+  AsyncGetSnapshot(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GetSnapshotRequest const& request,
+      grpc::CompletionQueue* cq) override {
+    return impl_.Stub()->AsyncGetSnapshot(context, request, cq);
+  };
+
  private:
   std::string project_;
   Impl impl_;
