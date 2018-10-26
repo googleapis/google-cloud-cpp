@@ -79,9 +79,6 @@ class AsyncRetryUnaryRpc
   using Response = typename Sig::ResponseType;
   //@}
 
-  /// The type used by `CompletionQueue` to return the RPC results.
-  using AsyncResult = AsyncUnaryRpcResult<Response>;
-
   explicit AsyncRetryUnaryRpc(
       char const* error_message,
       std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
@@ -112,11 +109,11 @@ class AsyncRetryUnaryRpc
     rpc_backoff_policy_->Setup(*context);
     metadata_update_policy_.Setup(*context);
 
-    cq.MakeUnaryRpc(*client_, call_, request_, std::move(context),
-                    [self](CompletionQueue& cq, AsyncResult& op,
-                           AsyncOperation::Disposition d) {
-                      self->OnCompletion(cq, op, d);
-                    });
+    cq.MakeUnaryRpc(
+        *client_, call_, request_, std::move(context),
+        [self](CompletionQueue& cq, Response& r, grpc::Status& status) {
+          self->OnCompletion(cq, r, status);
+        });
   }
 
  private:
@@ -135,53 +132,52 @@ class AsyncRetryUnaryRpc
   }
 
   /// The callback to handle one asynchronous request completing.
-  void OnCompletion(CompletionQueue& cq, AsyncResult& op,
-                    AsyncOperation::Disposition d) {
-    if (d == AsyncOperation::CANCELLED) {
+  void OnCompletion(CompletionQueue& cq, Response& response,
+                    grpc::Status& status) {
+    if (status.error_code() == grpc::StatusCode::CANCELLED) {
       // Cancelled, no retry necessary.
-      callback_(cq, op.response,
-                grpc::Status(
-                    grpc::StatusCode::CANCELLED,
-                    FullErrorMessage("pending operation cancelled", op.status),
-                    op.status.error_details()));
+      grpc::Status res_status(
+          grpc::StatusCode::CANCELLED,
+          FullErrorMessage("pending operation cancelled", status),
+          status.error_details());
+      callback_(cq, response, res_status);
       return;
     }
-    if (op.status.ok()) {
+    if (status.ok()) {
       // Success, just report the result.
-      callback_(cq, op.response, op.status);
+      callback_(cq, response, status);
       return;
     }
     if (not idempotent_policy_.is_idempotent()) {
-      callback_(cq, op.response,
-                grpc::Status(op.status.error_code(),
-                             FullErrorMessage("non-idempotent operation failed",
-                                              op.status),
-                             op.status.error_details()));
+      grpc::Status res_status(
+          status.error_code(),
+          FullErrorMessage("non-idempotent operation failed", status),
+          status.error_details());
+      callback_(cq, response, res_status);
       return;
     }
-    if (not rpc_retry_policy_->OnFailure(op.status)) {
+    if (not rpc_retry_policy_->OnFailure(status)) {
       std::string full_message =
-          FullErrorMessage(RPCRetryPolicy::IsPermanentFailure(op.status)
+          FullErrorMessage(RPCRetryPolicy::IsPermanentFailure(status)
                                ? "permanent error"
                                : "too many transient errors",
-                           op.status);
-      callback_(cq, op.response,
-                grpc::Status(op.status.error_code(), full_message,
-                             op.status.error_details()));
+                           status);
+      grpc::Status res_status(status.error_code(), full_message,
+                              status.error_details());
+      callback_(cq, response, res_status);
       return;
     }
 
-    auto delay = rpc_backoff_policy_->OnCompletion(op.status);
+    auto delay = rpc_backoff_policy_->OnCompletion(status);
     auto self = this->shared_from_this();
-    cq.MakeRelativeTimer(
-        delay,
-        [self](CompletionQueue& cq, AsyncTimerResult timer,
-               AsyncOperation::Disposition d) { self->OnTimer(cq, timer, d); });
+    cq.MakeRelativeTimer(delay,
+                         [self](CompletionQueue& cq, AsyncTimerResult timer) {
+                           self->OnTimer(cq, timer);
+                         });
   }
 
-  void OnTimer(CompletionQueue& cq, AsyncTimerResult& timer,
-               AsyncOperation::Disposition d) {
-    if (d == AsyncOperation::CANCELLED) {
+  void OnTimer(CompletionQueue& cq, AsyncTimerResult& timer) {
+    if (timer.cancelled) {
       // Cancelled, no more action to take.
       Response placeholder{};
       callback_(cq, placeholder,

@@ -475,21 +475,20 @@ TEST(MultipleRowsMutatorTest, SimpleAsync) {
   auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
   bool mutator_finished = false;
   using bigtable::AsyncOperation;
-  using bigtable::AsyncUnaryRpcResult;
   mutator.Start(cq, std::move(context),
-                [&](CompletionQueue&, grpc::Status &status) {
+                [&](CompletionQueue&, grpc::Status& status) {
                   EXPECT_TRUE(status.ok());
                   EXPECT_EQ("mocked-status", status.error_message());
                   mutator_finished = true;
                 });
-  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, true);
   // state == PROCESSING
-  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, true);
   // state == PROCESSING, 1 read
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
   // state == FINISHING
   EXPECT_FALSE(mutator_finished);
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
   // callback fired
   EXPECT_TRUE(mutator_finished);
 }
@@ -532,17 +531,16 @@ TEST(MultipleRowsMutatorTest, SimpleAsyncFailure) {
   auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
   bool mutator_finished = false;
   using bigtable::AsyncOperation;
-  using bigtable::AsyncUnaryRpcResult;
   mutator.Start(cq, std::move(context),
-                [&](CompletionQueue&, grpc::Status &status) {
+                [&](CompletionQueue&, grpc::Status& status) {
                   EXPECT_FALSE(status.ok());
                   EXPECT_EQ("mocked-status", status.error_message());
                   mutator_finished = true;
                 });
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
   // state == FINISHING
   EXPECT_FALSE(mutator_finished);
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
   // callback fired
   EXPECT_TRUE(mutator_finished);
 }

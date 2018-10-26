@@ -149,15 +149,14 @@ class AsyncRetryBulkApply
 
     auto delay = rpc_backoff_policy_->OnCompletion(status);
     auto self = this->shared_from_this();
-    cq.MakeRelativeTimer(
-        delay,
-        [self](CompletionQueue& cq, AsyncTimerResult timer,
-               AsyncOperation::Disposition d) { self->OnTimer(cq, timer, d); });
+    cq.MakeRelativeTimer(delay,
+                         [self](CompletionQueue& cq, AsyncTimerResult result) {
+                           self->OnTimer(cq, result);
+                         });
   }
 
-  void OnTimer(CompletionQueue& cq, AsyncTimerResult& timer,
-               AsyncOperation::Disposition d) {
-    if (d == AsyncOperation::CANCELLED) {
+  void OnTimer(CompletionQueue& cq, AsyncTimerResult& timer) {
+    if (timer.cancelled) {
       // Cancelled, no more action to take.
       auto res = impl_.ExtractFinalFailures();
       grpc::Status res_status(grpc::StatusCode::CANCELLED,

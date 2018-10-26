@@ -100,21 +100,21 @@ TEST_F(NoexTableAsyncApplyTest, SuccessAfterOneRetry) {
   EXPECT_FALSE(r2_called);
   EXPECT_FALSE(op_called);
   EXPECT_EQ(1U, impl->size());
-  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, true);
 
   // That should have created a timer, but not fired r2, verify that and
   // simulate the timer completion.
   EXPECT_FALSE(r2_called);
   EXPECT_FALSE(op_called);
   EXPECT_EQ(1U, impl->size());
-  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, true);
 
   // Once the timer completes, r2 should be fired, but op, verify this and
   // simulate r2 completing.
   EXPECT_TRUE(r2_called);
   EXPECT_FALSE(op_called);
   EXPECT_EQ(1U, impl->size());
-  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, true);
 
   // At this point all requests and the final callback should be completed.
   EXPECT_TRUE(op_called);
@@ -168,7 +168,7 @@ TEST_F(NoexTableAsyncApplyTest, PermanentFailure) {
   EXPECT_TRUE(r1_called);
   EXPECT_FALSE(op_called);
   EXPECT_EQ(1U, impl->size());
-  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, true);
 
   // At this point the final callback should be completed.
   EXPECT_TRUE(op_called);
@@ -199,6 +199,28 @@ void SetupMockForMultipleTransients(
                   *status =
                       grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
                 }));
+        // This is safe, see comments in MockAsyncResponseReader.
+        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+            btproto::MutateRowResponse>>(r.get());
+      }));
+}
+
+void SetupMockForMultipleCancellations(
+    std::shared_ptr<testing::MockDataClient> client,
+    std::vector<std::shared_ptr<MockAsyncApplyReader>>& readers) {
+  // We prepare the client to return multiple readers, all of them returning
+  // transient failures.
+  EXPECT_CALL(*client, AsyncMutateRow(_, _, _))
+      .WillRepeatedly(Invoke([&readers](grpc::ClientContext*,
+                                        btproto::MutateRowRequest const&,
+                                        grpc::CompletionQueue*) {
+        auto r = std::make_shared<MockAsyncApplyReader>();
+        readers.push_back(r);
+        EXPECT_CALL(*r, Finish(_, _, _))
+            .WillOnce(Invoke([](btproto::MutateRowResponse*,
+                                grpc::Status* status, void*) {
+              *status = grpc::Status(grpc::StatusCode::CANCELLED, "cancelled");
+            }));
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             btproto::MutateRowResponse>>(r.get());
@@ -240,13 +262,13 @@ TEST_F(NoexTableAsyncApplyTest, TooManyTransientFailures) {
   for (int i = 0; i != 2 * kMaxTransients; ++i) {
     EXPECT_FALSE(op_called);
     EXPECT_EQ(1U, impl->size());
-    impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+    impl->SimulateCompletion(cq, true);
   }
 
   // Okay, simulate one more iteration, that should exhaust the policy:
   EXPECT_FALSE(op_called);
   EXPECT_EQ(1U, impl->size());
-  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, true);
   EXPECT_TRUE(impl->empty());
 
   EXPECT_FALSE(capture_status.ok());
@@ -305,7 +327,7 @@ TEST_F(NoexTableAsyncApplyTest, TransientFailureNonIdempotent) {
   EXPECT_TRUE(r1_called);
   EXPECT_FALSE(op_called);
   EXPECT_EQ(1U, impl->size());
-  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, true);
 
   // At this point the final callback should be completed.
   EXPECT_TRUE(op_called);
@@ -322,6 +344,53 @@ TEST_F(NoexTableAsyncApplyTest, TransientFailureNonIdempotent) {
 /// @test Verify that noex::Table::AsyncApply() stops retrying if one attempt
 /// is canceled.
 TEST_F(NoexTableAsyncApplyTest, StopRetryOnOperationCancel) {
+  auto impl = std::make_shared<testing::MockCompletionQueue>();
+  bigtable::CompletionQueue cq(impl);
+
+  std::vector<std::shared_ptr<MockAsyncApplyReader>> readers;
+  SetupMockForMultipleCancellations(client_, readers);
+
+  // Create a table that accepts at most 3 failures.
+  constexpr int kMaxTransients = 3;
+  bigtable::noex::Table tested(
+      client_, "test-table",
+      bigtable::LimitedErrorCountRetryPolicy(kMaxTransients),
+      bigtable::ExponentialBackoffPolicy(10_ms, 100_ms));
+
+  // Make the asynchronous request.
+  bool op_called = false;
+  grpc::Status capture_status;
+  tested.AsyncApply(
+      bigtable::SingleRowMutation(
+          "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}),
+      cq,
+      [&op_called, &capture_status](CompletionQueue& cq,
+                                    google::bigtable::v2::MutateRowResponse& r,
+                                    grpc::Status const& status) {
+        op_called = true;
+        capture_status = status;
+      });
+
+  // Cancel the pending operation, this should immediately fail.
+  EXPECT_FALSE(op_called);
+  EXPECT_EQ(1U, impl->size());
+  impl->SimulateCompletion(cq, true);
+
+  // At this point the operation should immediately fail.
+  EXPECT_TRUE(op_called);
+  EXPECT_TRUE(impl->empty());
+
+  EXPECT_FALSE(capture_status.ok());
+  EXPECT_EQ(grpc::StatusCode::CANCELLED, capture_status.error_code());
+  EXPECT_THAT(capture_status.error_message(), HasSubstr("AsyncApply"));
+  EXPECT_THAT(capture_status.error_message(), HasSubstr(tested.table_name()));
+  EXPECT_THAT(capture_status.error_message(),
+              HasSubstr("pending operation cancelled"));
+}
+
+/// @test Verify that noex::Table::AsyncApply() doesn't retry if Finish()
+/// returns false (even though it would have been a bug in gRPC).
+TEST_F(NoexTableAsyncApplyTest, BuggyGrpcReturningFalseOnFinish) {
   auto impl = std::make_shared<testing::MockCompletionQueue>();
   bigtable::CompletionQueue cq(impl);
 
@@ -349,21 +418,19 @@ TEST_F(NoexTableAsyncApplyTest, StopRetryOnOperationCancel) {
         capture_status = status;
       });
 
-  // Cancel the pending operation, this should immediately fail.
   EXPECT_FALSE(op_called);
   EXPECT_EQ(1U, impl->size());
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  // let finish return false
+  impl->SimulateCompletion(cq, false);
 
-  // At this point the operation should immediately fail.
+  // At this point the operation should immediately fail (UNKNOWN is not a
+  // transient failure).
   EXPECT_TRUE(op_called);
   EXPECT_TRUE(impl->empty());
 
   EXPECT_FALSE(capture_status.ok());
-  EXPECT_EQ(grpc::StatusCode::CANCELLED, capture_status.error_code());
-  EXPECT_THAT(capture_status.error_message(), HasSubstr("AsyncApply"));
-  EXPECT_THAT(capture_status.error_message(), HasSubstr(tested.table_name()));
-  EXPECT_THAT(capture_status.error_message(),
-              HasSubstr("pending operation cancelled"));
+  EXPECT_EQ(grpc::StatusCode::UNKNOWN, capture_status.error_code());
+  EXPECT_THAT(capture_status.error_message(), HasSubstr("Finish()"));
 }
 
 /// @test Verify that noex::Table::AsyncApply() stops retrying if a timer
@@ -399,12 +466,12 @@ TEST_F(NoexTableAsyncApplyTest, StopRetryOnTimerCancel) {
   // Simulate a failure in the pending operation, that should create a timer.
   EXPECT_FALSE(op_called);
   EXPECT_EQ(1U, impl->size());
-  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, true);
 
   // Cancel the pending timer.
   EXPECT_FALSE(op_called);
   EXPECT_EQ(1U, impl->size());
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
 
   // At this point the operation should immediately fail.
   EXPECT_TRUE(op_called);
