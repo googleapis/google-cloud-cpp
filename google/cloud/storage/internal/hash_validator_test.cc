@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/internal/make_unique.h"
+#include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/status.h"
 #include <gmock/gmock.h>
 
@@ -236,6 +237,27 @@ TEST(CompositeHashValidator, Simple) {
   EXPECT_EQ(
       "crc32c=" + QUICK_FOX_CRC32C_CHECKSUM + ",md5=" + QUICK_FOX_MD5_HASH,
       result.computed);
+}
+
+TEST(CompositeHashValidator, ProcessMetadata) {
+  CompositeValidator validator(
+      google::cloud::internal::make_unique<Crc32cHashValidator>(),
+      google::cloud::internal::make_unique<MD5HashValidator>());
+  validator.Update("The quick");
+  validator.Update(" brown");
+  validator.Update(" fox jumps over the lazy dog");
+  auto object_metadata = ObjectMetadata::ParseFromJson(internal::nl::json{
+      {"crc32c", QUICK_FOX_CRC32C_CHECKSUM},
+      {"md5Hash", QUICK_FOX_MD5_HASH},
+  });
+  validator.ProcessMetadata(object_metadata);
+  auto result = std::move(validator).Finish();
+  EXPECT_EQ(
+      "crc32c=" + QUICK_FOX_CRC32C_CHECKSUM + ",md5=" + QUICK_FOX_MD5_HASH,
+      result.computed);
+  EXPECT_EQ(
+      "crc32c=" + QUICK_FOX_CRC32C_CHECKSUM + ",md5=" + QUICK_FOX_MD5_HASH,
+      result.received);
 }
 
 }  // namespace
