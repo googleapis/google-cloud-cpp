@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/version.h"
 #include <openssl/md5.h>
+#include <memory>
 #include <string>
 #include <utility>
 
@@ -32,6 +33,9 @@ namespace internal {
 class HashValidator {
  public:
   virtual ~HashValidator() = default;
+
+  /// A short string that names the validator when composing results.
+  virtual std::string Name() const = 0;
 
   /// Update the computed hash value with some portion of the data.
   virtual void Update(std::string const& payload) = 0;
@@ -56,10 +60,21 @@ class HashValidator {
    * @returns The two hashes, expected is the locally computed value, actual is
    *   the value reported by the service. Note that this can be empty for
    *   validators that disable validation.
+   */
+  virtual Result Finish() && = 0;
+
+  /**
+   * Raise an exception if the hashes do not match.
    *
    * @throws google::cloud::storage::HashValidation
    */
-  virtual Result Finish(std::string const& msg) && = 0;
+  static void CheckResult(std::string const& msg, Result const& result);
+
+  /**
+   * Call Finish() on the validator and check the result.
+   */
+  static Result FinishAndCheck(std::string const& msg,
+                               HashValidator&& validator);
 };
 
 /**
@@ -69,11 +84,32 @@ class NullHashValidator : public HashValidator {
  public:
   NullHashValidator() = default;
 
+  std::string Name() const override { return "null"; }
   void Update(std::string const& payload) override {}
   void ProcessMetadata(ObjectMetadata const& meta) override {}
   void ProcessHeader(std::string const& key,
                      std::string const& value) override {}
-  Result Finish(std::string const& msg) && override { return Result{}; }
+  Result Finish() && override { return Result{}; }
+};
+
+/**
+ * A composite validator.
+ */
+class CompositeValidator : public HashValidator {
+ public:
+  CompositeValidator(std::unique_ptr<HashValidator> left,
+                     std::unique_ptr<HashValidator> right)
+      : left_(std::move(left)), right_(std::move(right)) {}
+
+  std::string Name() const override { return "composite"; }
+  void Update(std::string const& payload) override;
+  void ProcessMetadata(ObjectMetadata const& meta) override;
+  void ProcessHeader(std::string const& key, std::string const& value) override;
+  Result Finish() && override;
+
+ private:
+  std::unique_ptr<HashValidator> left_;
+  std::unique_ptr<HashValidator> right_;
 };
 
 /**
@@ -86,10 +122,11 @@ class MD5HashValidator : public HashValidator {
   MD5HashValidator(MD5HashValidator const&) = delete;
   MD5HashValidator& operator=(MD5HashValidator const&) = delete;
 
+  std::string Name() const override { return "md5"; }
   void Update(std::string const& payload) override;
   void ProcessMetadata(ObjectMetadata const& meta) override;
   void ProcessHeader(std::string const& key, std::string const& value) override;
-  Result Finish(std::string const& msg) && override;
+  Result Finish() && override;
 
  private:
   MD5_CTX context_;
@@ -106,10 +143,11 @@ class Crc32cHashValidator : public HashValidator {
   Crc32cHashValidator(Crc32cHashValidator const&) = delete;
   Crc32cHashValidator& operator=(Crc32cHashValidator const&) = delete;
 
+  std::string Name() const override { return "crc32c"; }
   void Update(std::string const& payload) override;
   void ProcessMetadata(ObjectMetadata const& meta) override;
   void ProcessHeader(std::string const& key, std::string const& value) override;
-  Result Finish(std::string const& msg) && override;
+  Result Finish() && override;
 
  private:
   std::uint32_t current_;
