@@ -40,9 +40,9 @@ TEST(CompletionQueueTest, LifeCycle) {
 
   std::promise<bool> promise;
   auto alarm = cq.MakeRelativeTimer(
-      2_ms,
-      [&promise](CompletionQueue& cq, AsyncTimerResult&,
-                 AsyncOperation::Disposition d) { promise.set_value(true); });
+      2_ms, [&promise](CompletionQueue& cq, AsyncTimerResult&) {
+        promise.set_value(true);
+      });
 
   auto f = promise.get_future();
   auto status = f.wait_for(50_ms);
@@ -58,18 +58,18 @@ TEST(CompletionQueueTest, CancelAlarm) {
 
   std::thread t([&cq]() { cq.Run(); });
 
-  std::promise<AsyncOperation::Disposition> promise;
+  std::promise<AsyncTimerResult> promise;
   auto alarm = cq.MakeRelativeTimer(
-      50_ms,
-      [&promise](CompletionQueue& cq, AsyncTimerResult&,
-                 AsyncOperation::Disposition d) { promise.set_value(d); });
+      50_ms, [&promise](CompletionQueue& cq, AsyncTimerResult& result) {
+        promise.set_value(result);
+      });
 
   alarm->Cancel();
 
   auto f = promise.get_future();
   auto status = f.wait_for(100_ms);
   EXPECT_EQ(std::future_status::ready, status);
-  EXPECT_EQ(AsyncOperation::CANCELLED, f.get());
+  EXPECT_TRUE(f.get().cancelled);
 
   cq.Shutdown();
   t.join();
@@ -127,21 +127,20 @@ TEST(CompletionQueueTest, AyncRpcSimple) {
 
   // In this unit test we do not need to initialize the request parameter.
   btproto::MutateRowRequest request;
-  using AsyncResult = AsyncUnaryRpcResult<btproto::MutateRowResponse>;
   auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
 
   bool completion_called = false;
   auto op = cq.MakeUnaryRpc(
       client, &MockClient::AsyncMutateRow, request, std::move(context),
-      [&completion_called](CompletionQueue& cq, AsyncResult& result,
-                           AsyncOperation::Disposition d) {
-        EXPECT_EQ(d, AsyncOperation::COMPLETED);
-        EXPECT_TRUE(result.status.ok());
-        EXPECT_EQ("mocked-status", result.status.error_message());
+      [&completion_called](CompletionQueue& cq,
+                           btproto::MutateRowResponse& response,
+                           grpc::Status& status) {
+        EXPECT_TRUE(status.ok());
+        EXPECT_EQ("mocked-status", status.error_message());
         completion_called = true;
       });
   EXPECT_EQ(1U, impl->size());
-  impl->SimulateCompletion(cq, op.get(), AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, op.get(), true);
   EXPECT_TRUE(completion_called);
 
   EXPECT_TRUE(impl->empty());
@@ -209,23 +208,23 @@ TEST(CompletionQueueTest, AsyncRpcSimpleStream) {
       });
   // Initially stream is in CREATING state
   EXPECT_EQ(1U, impl->size());
-  impl->SimulateCompletion(cq, op.get(), AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, op.get(), true);
   // Now the stream should now be in PROCESSING state
   EXPECT_EQ(0, cur_idx);
   EXPECT_EQ(1U, impl->size());
-  impl->SimulateCompletion(cq, op.get(), AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, op.get(), true);
   EXPECT_EQ(1, cur_idx);
   EXPECT_EQ(1U, impl->size());
-  impl->SimulateCompletion(cq, op.get(), AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, op.get(), true);
   EXPECT_EQ(2, cur_idx);
   EXPECT_EQ(1U, impl->size());
-  impl->SimulateCompletion(cq, op.get(), AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, op.get(), false);
   // Stream should now be in FINISHING state, the next completion should be
   // translated into calling the "finished" callback.
   EXPECT_EQ(2, cur_idx);
   EXPECT_EQ(1U, impl->size());
   EXPECT_FALSE(completion_called);
-  impl->SimulateCompletion(cq, op.get(), AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, op.get(), false);
   EXPECT_EQ(2, cur_idx);
   EXPECT_TRUE(impl->empty());
   EXPECT_TRUE(completion_called);
@@ -270,9 +269,7 @@ TEST(CompletionQueueTest, AsyncRpcStreamNotCreated) {
   auto op = cq.MakeUnaryStreamRpc(
       client, &MockClient::AsyncMutateRows, request, std::move(context),
       [](CompletionQueue&, const grpc::ClientContext&,
-                 btproto::MutateRowsResponse& resp) {
-        EXPECT_TRUE(false);
-      },
+         btproto::MutateRowsResponse& resp) { EXPECT_TRUE(false); },
       [&completion_called](CompletionQueue&, grpc::ClientContext&,
                            grpc::Status& result) {
         EXPECT_FALSE(result.ok());
@@ -281,16 +278,14 @@ TEST(CompletionQueueTest, AsyncRpcStreamNotCreated) {
       });
   // Initially stream is in CREATING state
   EXPECT_EQ(1U, impl->size());
-  impl->SimulateCompletion(cq, op.get(), AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, op.get(), false);
   // Now the stream should now be in FINISHING state
   EXPECT_EQ(1U, impl->size());
   EXPECT_FALSE(completion_called);
-  impl->SimulateCompletion(cq, op.get(), AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, op.get(), false);
   EXPECT_TRUE(impl->empty());
   EXPECT_TRUE(completion_called);
 }
-
-
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

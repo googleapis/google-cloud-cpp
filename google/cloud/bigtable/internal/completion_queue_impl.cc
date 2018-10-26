@@ -43,8 +43,7 @@ void CompletionQueueImpl::Run(CompletionQueue& cq) {
           "unexpected status from AsyncNext()");
     }
     auto op = FindOperation(tag);
-    if (op->Notify(
-            cq, ok ? AsyncOperation::COMPLETED : AsyncOperation::CANCELLED)) {
+    if (op->Notify(cq, ok)) {
       ForgetOperation(tag);
     }
   }
@@ -101,17 +100,15 @@ void CompletionQueueImpl::ForgetOperation(void* tag) {
 // to simulate the operation lifecycle. Note that the unit test must simulate
 // the operation results separately.
 void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq,
-                                             AsyncOperation* op,
-                                             AsyncOperation::Disposition d) {
+                                             AsyncOperation* op, bool ok) {
   auto internal_op = FindOperation(op);
   internal_op->Cancel();
-  if (internal_op->Notify(cq, d)) {
+  if (internal_op->Notify(cq, ok)) {
     ForgetOperation(op);
   }
 }
 
-void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq,
-                                             AsyncOperation::Disposition d) {
+void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq, bool ok) {
   // Make a copy to avoid race conditions or iterator invalidation.
   std::vector<void*> tags;
   {
@@ -124,7 +121,7 @@ void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq,
   for (void* tag : tags) {
     auto internal_op = FindOperation(tag);
     internal_op->Cancel();
-    if (internal_op->Notify(cq, d)) {
+    if (internal_op->Notify(cq, ok)) {
       ForgetOperation(tag);
     }
   }

@@ -132,24 +132,24 @@ TEST_F(NoexTableAsyncBulkApplyTest, IdempotencyAndRetries) {
                         });
 
   using bigtable::AsyncOperation;
-  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, true);
   // state == PROCESSING
-  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, true);
   // state == PROCESSING, 1 read
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
   // state == FINISHING
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
   // FinishTimer
-  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, true);
   // Second attempt
-  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, true);
   // state == PROCESSING
-  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, true);
   // state == PROCESSING, 1 read
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
   // state == FINISHING
   EXPECT_FALSE(mutator_finished);
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
   EXPECT_TRUE(mutator_finished);
 }
 
@@ -195,12 +195,12 @@ TEST_F(NoexTableAsyncBulkApplyTest, Cancelled) {
                         });
 
   using bigtable::AsyncOperation;
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
   // state == FINISHING
   EXPECT_FALSE(mutator_finished);
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
   // callback fired
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
   EXPECT_TRUE(mutator_finished);
 }
 
@@ -248,12 +248,12 @@ TEST_F(NoexTableAsyncBulkApplyTest, PermanentError) {
                         });
 
   using bigtable::AsyncOperation;
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
   // state == FINISHING
   EXPECT_FALSE(mutator_finished);
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
   // callback fired
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
   EXPECT_TRUE(mutator_finished);
 }
 
@@ -320,16 +320,16 @@ TEST_F(NoexTableAsyncBulkApplyTest, CancelledInTimer) {
                         });
 
   using bigtable::AsyncOperation;
-  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, true);
   // state == PROCESSING
-  impl->SimulateCompletion(cq, AsyncOperation::COMPLETED);
+  impl->SimulateCompletion(cq, true);
   // state == PROCESSING, 1 read
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
   // state == FINISHING
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
   EXPECT_FALSE(mutator_finished);
   // FinishTimer
-  impl->SimulateCompletion(cq, AsyncOperation::CANCELLED);
+  impl->SimulateCompletion(cq, false);
   EXPECT_TRUE(mutator_finished);
 }
 

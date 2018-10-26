@@ -37,22 +37,7 @@ class CompletionQueue;
  */
 struct AsyncTimerResult {
   std::chrono::system_clock::time_point deadline;
-};
-
-/**
- * The result of a unary asynchronous RPC operation.
- *
- * Applications provide a callback to be invoked when an asynchronous RPC
- * completes. The callback receives this parameter as the result of the
- * operation.
- *
- * @tparam Response
- */
-template <typename Response>
-struct AsyncUnaryRpcResult {
-  Response response;
-  grpc::Status status;
-  std::unique_ptr<grpc::ClientContext> context;
+  bool cancelled;
 };
 
 /**
@@ -77,11 +62,6 @@ class AsyncOperation {
    */
   virtual void Cancel() = 0;
 
-  enum Disposition {
-    CANCELLED,
-    COMPLETED,
-  };
-
  private:
   friend class internal::CompletionQueueImpl;
   /**
@@ -92,12 +72,12 @@ class AsyncOperation {
    *
    * @param cq the completion queue sending the notification, this is useful in
    *   case the callback needs to retry the operation.
-   * @param disposition `COMPLETED` if the operation completed, `CANCELED` if
-   *   the operation were canceled. Note that errors are a "normal" completion.
+   * @param ok opaque parameter returned by grpc::CompletionQueue; different
+   *   operations interpret it differently
    * @return Whether the operation is completed (e.g. in case of streaming
    *   response, it would return true only after the stream is finished).
    */
-  virtual bool Notify(CompletionQueue& cq, Disposition disposition) = 0;
+  virtual bool Notify(CompletionQueue& cq, bool ok) = 0;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

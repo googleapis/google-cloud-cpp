@@ -38,8 +38,9 @@ namespace internal {
  * @tparam Functor a type the application wants to use as a timer callback.
  */
 template <typename Functor>
-using CheckTimerCallback = google::cloud::internal::is_invocable<
-    Functor, CompletionQueue&, AsyncTimerResult&, AsyncOperation::Disposition>;
+using CheckTimerCallback =
+    google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                          AsyncTimerResult&>;
 
 /**
  * Wrap a timer callback into an `AsyncOperation`.
@@ -77,9 +78,10 @@ class AsyncTimerFunctor : public AsyncOperation {
   }
 
  private:
-  bool Notify(CompletionQueue& cq, Disposition d) override {
+  bool Notify(CompletionQueue& cq, bool ok) override {
     alarm_.reset();
-    functor_(cq, timer_, d);
+    timer_.cancelled = not ok;
+    functor_(cq, timer_);
     return true;
   }
 
@@ -91,9 +93,8 @@ class AsyncTimerFunctor : public AsyncOperation {
 /// Verify that @p Functor meets the requirements for an AsyncUnaryRpc callback.
 template <typename Functor, typename Response>
 using CheckUnaryRpcCallback =
-    google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                          AsyncUnaryRpcResult<Response>&,
-                                          AsyncOperation::Disposition>;
+    google::cloud::internal::is_invocable<Functor, CompletionQueue&, Response&,
+                                          grpc::Status&>;
 
 /**
  * Verify that @p Functor meets the requirements for an AsyncUnaryStreamRpc
@@ -138,21 +139,29 @@ class AsyncUnaryRpcFunctor : public AsyncOperation {
   void Set(Client& client, MemberFunction Client::*call,
            std::unique_ptr<grpc::ClientContext> context, Request const& request,
            grpc::CompletionQueue* cq, void* tag) {
-    result_.context = std::move(context);
-    auto rpc = (client.*call)(result_.context.get(), request, cq);
-    rpc->Finish(&result_.response, &result_.status, tag);
+    context_ = std::move(context);
+    auto rpc = (client.*call)(context_.get(), request, cq);
+    rpc->Finish(&response_, &status_, tag);
   }
 
-  void Cancel() override { result_.context->TryCancel(); }
+  void Cancel() override { context_->TryCancel(); }
 
  private:
-  bool Notify(CompletionQueue& cq, Disposition d) override {
-    functor_(cq, result_, d);
+  bool Notify(CompletionQueue& cq, bool ok) override {
+    if (not ok) {
+      // This would mean a bug in grpc. Documentation states that Finish()
+      // always returns true.
+      status_ =
+          grpc::Status(grpc::StatusCode::UNKNOWN, "Finish() returned false");
+    }
+    functor_(cq, response_, status_);
     return true;
   }
 
+  std::unique_ptr<grpc::ClientContext> context_;
   Functor functor_;
-  AsyncUnaryRpcResult<Response> result_;
+  grpc::Status status_;
+  Response response_;
 };
 
 /**
@@ -200,7 +209,7 @@ class AsyncUnaryStreamRpcFunctor : public AsyncOperation {
 
  private:
   enum State { CREATING, PROCESSING, FINISHING };
-  bool Notify(CompletionQueue& cq, Disposition d) override {
+  bool Notify(CompletionQueue& cq, bool ok) override {
     // TODO(#1308) - the disposition types do not quite work for streaming
     // requests, that will be fixed in a future PR.
 
@@ -208,7 +217,7 @@ class AsyncUnaryStreamRpcFunctor : public AsyncOperation {
 
     switch (state_) {
       case CREATING:
-        if (d == AsyncOperation::COMPLETED) {
+        if (ok) {
           response_reader_->Read(&response_, tag_);
           state_ = PROCESSING;
         } else {
@@ -217,7 +226,7 @@ class AsyncUnaryStreamRpcFunctor : public AsyncOperation {
         }
         return false;
       case PROCESSING:
-        if (d == AsyncOperation::COMPLETED) {
+        if (ok) {
           Response received;
           response_.Swap(&received);
           lk.unlock();
@@ -362,12 +371,11 @@ class CompletionQueueImpl {
   void ForgetOperation(void* tag);
 
   /// Simulate a completed operation, provided only to support unit tests.
-  void SimulateCompletion(CompletionQueue& cq, AsyncOperation* op,
-                          AsyncOperation::Disposition d);
+  void SimulateCompletion(CompletionQueue& cq, AsyncOperation* op, bool ok);
 
   /// Simulate completion of all pending operations, provided only to support
   /// unit tests.
-  void SimulateCompletion(CompletionQueue& cq, AsyncOperation::Disposition d);
+  void SimulateCompletion(CompletionQueue& cq, bool ok);
 
   bool empty() const {
     std::unique_lock<std::mutex> lk(mu_);
