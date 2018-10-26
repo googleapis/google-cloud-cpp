@@ -424,13 +424,14 @@ class GcsObject(object):
         patch = json.loads(request.data)
         writeable_keys = {
             'acl', 'cacheControl', 'contentDisposition', 'contentEncoding',
-            'contentLanguage', 'contentType', 'metadata'
+            'contentLanguage', 'contentType', 'eventBasedHold', 'metadata',
+            'temporaryHold'
         }
         for key, value in patch.iteritems():
             if key not in writeable_keys:
                 raise error_response.ErrorResponse(
                     'Invalid metadata change. %s is not writeable' % key,
-                    status_code=503)
+                    status_code=412)
         patched = testbench_utils.json_api_patch(
             version.metadata, patch, recurse_on={'metadata'})
         patched['metageneration'] = patched.get('metageneration', 0) + 1

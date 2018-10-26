@@ -285,9 +285,8 @@ void UploadFile(google::cloud::storage::Client client, int& argc,
      std::string object_name) {
     // Note that the client library automatically computes a hash on the
     // client-side to verify data integrity during transmission.
-    gcs::ObjectMetadata meta =
-        client.UploadFile(file_name, bucket_name, object_name,
-                          gcs::IfGenerationMatch(0));
+    gcs::ObjectMetadata meta = client.UploadFile(
+        file_name, bucket_name, object_name, gcs::IfGenerationMatch(0));
     std::cout << "Uploaded " << file_name << " to " << object_name << std::endl;
   }
   //! [upload file] [END storage_upload_file]
@@ -808,6 +807,106 @@ void RenameObject(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, old_object_name, new_object_name);
 }
 
+void SetObjectEventBasedHold(google::cloud::storage::Client client, int& argc,
+                             char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"set-object-event-based-hold <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  //! [set event based hold] [START storage_set_event_based_hold]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+    gcs::ObjectMetadata original =
+        client.GetObjectMetadata(bucket_name, object_name);
+    gcs::ObjectMetadata metadata = client.PatchObject(
+        bucket_name, object_name,
+        gcs::ObjectMetadataPatchBuilder().SetEventBasedHold(true),
+        gcs::IfMetagenerationMatch(original.metageneration()));
+    std::cout << "The event hold for object " << metadata.name()
+              << " in bucket " << metadata.bucket() << " is "
+              << (metadata.event_based_hold() ? "enabled" : "disabled")
+              << std::endl;
+  }
+  //! [set event based hold] [END storage_set_event_based_hold]
+  (std::move(client), bucket_name, object_name);
+}
+
+void ReleaseObjectEventBasedHold(google::cloud::storage::Client client,
+                                 int& argc, char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"release-object-event-based-hold <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  //! [release event based hold] [START storage_release_event_based_hold]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+    gcs::ObjectMetadata original =
+        client.GetObjectMetadata(bucket_name, object_name);
+    gcs::ObjectMetadata metadata = client.PatchObject(
+        bucket_name, object_name,
+        gcs::ObjectMetadataPatchBuilder().SetEventBasedHold(false),
+        gcs::IfMetagenerationMatch(original.metageneration()));
+    std::cout << "The event hold for object " << metadata.name()
+              << " in bucket " << metadata.bucket() << " is "
+              << (metadata.event_based_hold() ? "enabled" : "disabled")
+              << std::endl;
+  }
+  //! [release event based hold] [END storage_release_event_based_hold]
+  (std::move(client), bucket_name, object_name);
+}
+
+void SetObjectTemporaryHold(google::cloud::storage::Client client, int& argc,
+                             char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"set-object-temporary-hold <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  //! [set temporary hold] [START storage_set_temporary_hold]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+    gcs::ObjectMetadata original =
+        client.GetObjectMetadata(bucket_name, object_name);
+    gcs::ObjectMetadata metadata = client.PatchObject(
+        bucket_name, object_name,
+        gcs::ObjectMetadataPatchBuilder().SetTemporaryHold(true),
+        gcs::IfMetagenerationMatch(original.metageneration()));
+    std::cout << "The event hold for object " << metadata.name()
+              << " in bucket " << metadata.bucket() << " is "
+              << (metadata.temporary_hold() ? "enabled" : "disabled")
+              << std::endl;
+  }
+      //! [set temporary hold] [END storage_set_temporary_hold]
+      (std::move(client), bucket_name, object_name);
+}
+
+void ReleaseObjectTemporaryHold(google::cloud::storage::Client client,
+                                 int& argc, char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"release-object-temporary-hold <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  //! [release temporary hold] [START storage_release_temporary_hold]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+    gcs::ObjectMetadata original =
+        client.GetObjectMetadata(bucket_name, object_name);
+    gcs::ObjectMetadata metadata = client.PatchObject(
+        bucket_name, object_name,
+        gcs::ObjectMetadataPatchBuilder().SetTemporaryHold(false),
+        gcs::IfMetagenerationMatch(original.metageneration()));
+    std::cout << "The event hold for object " << metadata.name()
+              << " in bucket " << metadata.bucket() << " is "
+              << (metadata.temporary_hold() ? "enabled" : "disabled")
+              << std::endl;
+  }
+      //! [release temporary hold] [END storage_release_temporary_hold]
+      (std::move(client), bucket_name, object_name);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -815,7 +914,7 @@ int main(int argc, char* argv[]) try {
   google::cloud::storage::Client client;
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char*[])>;
+      std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"list-objects", &ListObjects},
       {"insert-object", &InsertObject},
@@ -846,6 +945,10 @@ int main(int argc, char* argv[]) try {
       {"rewrite-object-resume", &RewriteObjectResume},
       {"rotate-encryption-key", &RotateEncryptionKey},
       {"rename-object", &RenameObject},
+      {"set-event-based-hold", &SetObjectEventBasedHold},
+      {"release-event-based-hold", &ReleaseObjectEventBasedHold},
+      {"set-temporary-hold", &SetObjectTemporaryHold},
+      {"release-temporary-hold", &ReleaseObjectTemporaryHold},
   };
   for (auto&& kv : commands) {
     try {
