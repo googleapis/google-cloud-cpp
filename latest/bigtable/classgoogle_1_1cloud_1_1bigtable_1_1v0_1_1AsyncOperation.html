@@ -65,7 +65,6 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation-members.html">List of all members</a>  </div>
@@ -79,13 +78,6 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="async__operation_8h_source.html">google/cloud/bigtable/async_operation.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:a449308a2477dfe88979126b1a389c5d5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html#a449308a2477dfe88979126b1a389c5d5">Disposition</a> { <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html#a449308a2477dfe88979126b1a389c5d5aa4ee0fff6fd934b6717a16693ae7c233">CANCELLED</a>, 
-<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html#a449308a2477dfe88979126b1a389c5d5abe17fbb77dce37a3abee86dc5afba5fd">COMPLETED</a>
- }</td></tr>
-<tr class="separator:a449308a2477dfe88979126b1a389c5d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a61c6eb353e259a232493b3a959da6aca"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html#a61c6eb353e259a232493b3a959da6aca">~AsyncOperation</a> ()=default</td></tr>
@@ -102,26 +94,7 @@ Friends</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a pending asynchronous operation. </p>
 <p>When applications create an asynchronous operations with a <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html" title="Call the functor associated with asynchronous operations when they complete. ">CompletionQueue</a></code> they provide a callback to be invoked when the operation completes (successfully or not). The completion queue type-erases the callback and hides it in a class derived from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html" title="Represents a pending asynchronous operation. ">AsyncOperation</a></code>. A shared pointer to the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html" title="Represents a pending asynchronous operation. ">AsyncOperation</a></code> is returned by the completion queue so library developers can cancel the operation if needed. </p>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
-<a id="a449308a2477dfe88979126b1a389c5d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a449308a2477dfe88979126b1a389c5d5">&#9670;&nbsp;</a></span>Disposition</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html#a449308a2477dfe88979126b1a389c5d5">google::cloud::bigtable::v0::AsyncOperation::Disposition</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a449308a2477dfe88979126b1a389c5d5aa4ee0fff6fd934b6717a16693ae7c233"></a>CANCELLED&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a449308a2477dfe88979126b1a389c5d5abe17fbb77dce37a3abee86dc5afba5fd"></a>COMPLETED&#160;</td><td class="fielddoc"></td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a61c6eb353e259a232493b3a959da6aca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a61c6eb353e259a232493b3a959da6aca">&#9670;&nbsp;</a></span>~AsyncOperation()</h2>
 
