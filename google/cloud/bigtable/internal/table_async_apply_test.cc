@@ -205,6 +205,28 @@ void SetupMockForMultipleTransients(
       }));
 }
 
+void SetupMockForMultipleCancelled(
+    std::shared_ptr<testing::MockDataClient> client,
+    std::vector<std::shared_ptr<MockAsyncApplyReader>>& readers) {
+  // We prepare the client to return multiple readers, all of them returning
+  // transient failures.
+  EXPECT_CALL(*client, AsyncMutateRow(_, _, _))
+      .WillRepeatedly(Invoke([&readers](grpc::ClientContext*,
+                                        btproto::MutateRowRequest const&,
+                                        grpc::CompletionQueue*) {
+        auto r = std::make_shared<MockAsyncApplyReader>();
+        readers.push_back(r);
+        EXPECT_CALL(*r, Finish(_, _, _))
+            .WillOnce(Invoke([](btproto::MutateRowResponse*,
+                                grpc::Status* status, void*) {
+              *status = grpc::Status(grpc::StatusCode::CANCELLED, "cancelled");
+            }));
+        // This is safe, see comments in MockAsyncResponseReader.
+        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+            btproto::MutateRowResponse>>(r.get());
+      }));
+}
+
 /// @test Verify that noex::Table::AsyncApply() stops retrying on too many
 /// transient failures.
 TEST_F(NoexTableAsyncApplyTest, TooManyTransientFailures) {
@@ -326,7 +348,7 @@ TEST_F(NoexTableAsyncApplyTest, StopRetryOnOperationCancel) {
   bigtable::CompletionQueue cq(impl);
 
   std::vector<std::shared_ptr<MockAsyncApplyReader>> readers;
-  SetupMockForMultipleTransients(client_, readers);
+  SetupMockForMultipleCancelled(client_, readers);
 
   // Create a table that accepts at most 3 failures.
   constexpr int kMaxTransients = 3;
