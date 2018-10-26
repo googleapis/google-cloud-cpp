@@ -111,6 +111,12 @@ class DataClient {
       grpc::ClientReaderInterface<google::bigtable::v2::SampleRowKeysResponse>>
   SampleRowKeys(grpc::ClientContext* context,
                 google::bigtable::v2::SampleRowKeysRequest const& request) = 0;
+  virtual std::unique_ptr<::grpc::ClientAsyncReaderInterface<
+      ::google::bigtable::v2::SampleRowKeysResponse>>
+  AsyncSampleRowKeys(
+      ::grpc::ClientContext* context,
+      const ::google::bigtable::v2::SampleRowKeysRequest& request,
+      ::grpc::CompletionQueue* cq, void* tag) = 0;
   virtual std::unique_ptr<
       grpc::ClientReaderInterface<google::bigtable::v2::MutateRowsResponse>>
   MutateRows(grpc::ClientContext* context,
