@@ -30,6 +30,7 @@ bigtable_client_HDRS = [
     "internal/poll_longrunning_operation.h",
     "internal/prefix_range_end.h",
     "internal/readrowsparser.h",
+    "internal/row_key_sample.h",
     "internal/rpc_policy_parameters.inc",
     "internal/rpc_policy_parameters.h",
     "internal/rowreaderiterator.h",

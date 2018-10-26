@@ -167,6 +167,7 @@ add_library(bigtable_client
             internal/prefix_range_end.cc
             internal/readrowsparser.h
             internal/readrowsparser.cc
+            internal/row_key_sample.h
             internal/rpc_policy_parameters.inc
             internal/rpc_policy_parameters.h
             internal/rowreaderiterator.h
