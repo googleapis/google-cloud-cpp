@@ -15,7 +15,6 @@
 #include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/testing_util/init_google_mock.h"
-
 #include <gmock/gmock.h>
 
 namespace btadmin = google::bigtable::admin::v2;
