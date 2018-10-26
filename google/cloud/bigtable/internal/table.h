@@ -23,6 +23,7 @@
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
+#include "google/cloud/bigtable/internal/row_key_sample.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/read_modify_write_rule.h"
@@ -61,12 +62,6 @@ void SetCommonTableOperationRequest(Request& request,
 }
 
 }  // namespace internal
-
-/// A simple wrapper to represent the response from `Table::SampleRowKeys()`.
-struct RowKeySample {
-  std::string row_key;
-  std::int64_t offset_bytes;
-};
 
 /**
  * This namespace contains implementations of the API that do not raise
