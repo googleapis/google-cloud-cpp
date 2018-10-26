@@ -254,6 +254,28 @@ struct TestBucketIamPermissionsResponse {
 std::ostream& operator<<(std::ostream& os,
                          TestBucketIamPermissionsResponse const& r);
 
+/**
+ * Represents a request to the `Buckets: lockRetentionPolicy` API.
+ */
+class LockBucketRetentionPolicyRequest
+    : public GenericRequest<LockBucketRetentionPolicyRequest, UserProject> {
+ public:
+  LockBucketRetentionPolicyRequest() = default;
+  explicit LockBucketRetentionPolicyRequest(std::string bucket_name,
+                                            std::uint64_t metageneration)
+      : bucket_name_(std::move(bucket_name)), metageneration_(metageneration) {}
+
+  std::string const& bucket_name() const { return bucket_name_; }
+  std::uint64_t metageneration() const { return metageneration_; }
+
+ private:
+  std::string bucket_name_;
+  std::uint64_t metageneration_;
+};
+
+std::ostream& operator<<(std::ostream& os,
+                         LockBucketRetentionPolicyRequest const& r);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

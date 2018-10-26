@@ -818,6 +818,20 @@ TEST(BucketRequestsTest, TestIamPermissionsResponseEmpty) {
       HttpResponse{200, text, {}});
   EXPECT_TRUE(actual.permissions.empty());
 }
+
+TEST(BucketRequestsTest, LockBucketRetentionPolicyRequest) {
+  LockBucketRetentionPolicyRequest request("test-bucket", 12345U);
+  request.set_multiple_options(UserProject("project-for-billing"));
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ(12345U, request.metageneration());
+
+  std::ostringstream os;
+  os << request;
+  auto actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("test-bucket"));
+  EXPECT_THAT(actual, HasSubstr("project-for-billing"));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
