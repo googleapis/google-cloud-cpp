@@ -133,6 +133,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:aacf19e480e27c830d2983b390d636e67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abcd1591d57becb5880ac95ecfc360ad4"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::protobuf::Empty &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#abcd1591d57becb5880ac95ecfc360ad4">AsyncDropRowRange</a> (grpc::ClientContext *context, google::bigtable::admin::v2::DropRowRangeRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
 <tr class="separator:abcd1591d57becb5880ac95ecfc360ad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8db283ef4776ea5f809d6db9eda0ac9a"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::Snapshot &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a8db283ef4776ea5f809d6db9eda0ac9a">AsyncGetSnapshot</a> (grpc::ClientContext *context, google::bigtable::admin::v2::GetSnapshotRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
+<tr class="separator:a8db283ef4776ea5f809d6db9eda0ac9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -236,6 +238,48 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">google::bigtable::admin::v2::DropRowRangeRequest const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">grpc::CompletionQueue *&#160;</td>
+          <td class="paramname"><em>cq</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8db283ef4776ea5f809d6db9eda0ac9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8db283ef4776ea5f809d6db9eda0ac9a">&#9670;&nbsp;</a></span>AsyncGetSnapshot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::Snapshot&gt; &gt; google::cloud::bigtable::v0::AdminClient::AsyncGetSnapshot </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::bigtable::admin::v2::GetSnapshotRequest const &amp;&#160;</td>
           <td class="paramname"><em>request</em>, </td>
         </tr>
         <tr>
