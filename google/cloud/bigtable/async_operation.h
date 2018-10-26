@@ -72,8 +72,9 @@ class AsyncOperation {
    *
    * @param cq the completion queue sending the notification, this is useful in
    *   case the callback needs to retry the operation.
-   * @param ok opaque parameter returned by grpc::CompletionQueue; different
-   *   operations interpret it differently
+   * @param ok opaque parameter returned by grpc::CompletionQueue.  The
+   *   semantics defined by gRPC depend on the type of operation, therefore the
+   *   operation needs to interpret this parameter based on those semantics.
    * @return Whether the operation is completed (e.g. in case of streaming
    *   response, it would return true only after the stream is finished).
    */
