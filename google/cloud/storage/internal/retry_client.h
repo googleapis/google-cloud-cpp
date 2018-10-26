@@ -62,6 +62,8 @@ class RetryClient : public RawClient {
       SetBucketIamPolicyRequest const& request) override;
   std::pair<Status, TestBucketIamPermissionsResponse> TestBucketIamPermissions(
       TestBucketIamPermissionsRequest const& request) override;
+  std::pair<Status, EmptyResponse> LockBucketRetentionPolicy(
+      LockBucketRetentionPolicyRequest const& request) override;
 
   std::pair<Status, ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const& request) override;

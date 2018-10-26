@@ -54,6 +54,9 @@ class MockClient : public google::cloud::storage::internal::RawClient {
   MOCK_METHOD1(TestBucketIamPermissions,
                ResponseWrapper<internal::TestBucketIamPermissionsResponse>(
                    internal::TestBucketIamPermissionsRequest const&));
+  MOCK_METHOD1(LockBucketRetentionPolicy,
+               ResponseWrapper<internal::EmptyResponse>(
+                   internal::LockBucketRetentionPolicyRequest const&));
 
   MOCK_METHOD1(InsertObjectMedia,
                ResponseWrapper<storage::ObjectMetadata>(

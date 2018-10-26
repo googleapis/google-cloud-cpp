@@ -72,6 +72,8 @@ class IdempotencyPolicy {
       internal::SetBucketIamPolicyRequest const& request) const = 0;
   virtual bool IsIdempotent(
       internal::TestBucketIamPermissionsRequest const& request) const = 0;
+  virtual bool IsIdempotent(
+      internal::LockBucketRetentionPolicyRequest const& request) const = 0;
   //@}
 
   //@{
@@ -192,6 +194,8 @@ class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
       internal::SetBucketIamPolicyRequest const& request) const override;
   bool IsIdempotent(
       internal::TestBucketIamPermissionsRequest const& request) const override;
+  bool IsIdempotent(
+      internal::LockBucketRetentionPolicyRequest const& request) const override;
   //@}
 
   //@{
@@ -309,6 +313,8 @@ class StrictIdempotencyPolicy : public IdempotencyPolicy {
       internal::SetBucketIamPolicyRequest const& request) const override;
   bool IsIdempotent(
       internal::TestBucketIamPermissionsRequest const& request) const override;
+  bool IsIdempotent(
+      internal::LockBucketRetentionPolicyRequest const& request) const override;
   //@}
 
   //@{

@@ -50,13 +50,27 @@ std::string BucketTestEnvironment::project_id_;
 std::string BucketTestEnvironment::bucket_name_;
 std::string BucketTestEnvironment::topic_;
 
-class BucketIntegrationTest : public google::cloud::storage::testing::StorageIntegrationTest {
+class BucketIntegrationTest
+    : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   std::string MakeEntityName() {
     // We always use the viewers for the project because it is known to exist.
     return "project-viewers-" + BucketTestEnvironment::project_id();
   }
 };
+
+template <typename Callable>
+void TestPermanentFailure(Callable&& callable) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(try { callable(); } catch (std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
+    throw;
+  },
+               std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(callable(), "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
 
 TEST_F(BucketIntegrationTest, BasicCRUD) {
   auto project_id = BucketTestEnvironment::project_id();
@@ -538,18 +552,34 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
   client.DeleteBucket(bucket_name);
 }
 
-template <typename Callable>
-void TestPermanentFailure(Callable&& callable) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { callable(); } catch (
-      std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
-    throw;
-  },
-               std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(callable(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+TEST_F(BucketIntegrationTest, BucketLock) {
+  auto project_id = BucketTestEnvironment::project_id();
+  std::string bucket_name = MakeRandomBucketName();
+  Client client;
+
+  // Create a new bucket to run the test.
+  auto meta =
+      client.CreateBucketForProject(bucket_name, project_id, BucketMetadata());
+
+  auto after_setting_retention_policy = client.PatchBucket(
+      bucket_name,
+      BucketMetadataPatchBuilder().SetRetentionPolicy(std::chrono::seconds(30)),
+      IfMetagenerationMatch(meta.metageneration()));
+
+  client.LockBucketRetentionPolicy(
+      bucket_name, after_setting_retention_policy.metageneration());
+
+  client.DeleteBucket(bucket_name);
+}
+
+TEST_F(BucketIntegrationTest, BucketLockFailure) {
+  auto project_id = BucketTestEnvironment::project_id();
+  std::string bucket_name = MakeRandomBucketName();
+  Client client;
+
+  // This should fail because the bucket does not exist.
+  TestPermanentFailure(
+      [&] { client.LockBucketRetentionPolicy(bucket_name, 42U); });
 }
 
 TEST_F(BucketIntegrationTest, ListFailure) {
@@ -571,8 +601,8 @@ TEST_F(BucketIntegrationTest, CreateFailure) {
   // we should report that error correctly. For good measure, make the project
   // id invalid too.
   TestPermanentFailure([&client] {
-    client.CreateBucketForProject("Invalid_Bucket_Name",
-                                  "Invalid-project-id-", BucketMetadata());
+    client.CreateBucketForProject("Invalid_Bucket_Name", "Invalid-project-id-",
+                                  BucketMetadata());
   });
 }
 
@@ -582,9 +612,8 @@ TEST_F(BucketIntegrationTest, GetFailure) {
 
   // Try to get information about a bucket that does not exist, or at least
   // it is very unlikely to exist, the name is random.
-  TestPermanentFailure([&client, bucket_name] {
-    client.GetBucketMetadata(bucket_name);
-  });
+  TestPermanentFailure(
+      [&client, bucket_name] { client.GetBucketMetadata(bucket_name); });
 }
 
 TEST_F(BucketIntegrationTest, DeleteFailure) {
@@ -593,9 +622,8 @@ TEST_F(BucketIntegrationTest, DeleteFailure) {
 
   // Try to delete a bucket that does not exist, or at least it is very unlikely
   // to exist, the name is random.
-  TestPermanentFailure([&client, bucket_name] {
-    client.DeleteBucket(bucket_name);
-  });
+  TestPermanentFailure(
+      [&client, bucket_name] { client.DeleteBucket(bucket_name); });
 }
 
 TEST_F(BucketIntegrationTest, UpdateFailure) {
@@ -626,9 +654,8 @@ TEST_F(BucketIntegrationTest, GetBucketIamPolicyFailure) {
 
   // Try to get information about a bucket that does not exist, or at least it
   // is very unlikely to exist, the name is random.
-  TestPermanentFailure([&client, bucket_name] {
-    client.GetBucketIamPolicy(bucket_name);
-  });
+  TestPermanentFailure(
+      [&client, bucket_name] { client.GetBucketIamPolicy(bucket_name); });
 }
 
 TEST_F(BucketIntegrationTest, SetBucketIamPolicyFailure) {
@@ -658,9 +685,8 @@ TEST_F(BucketIntegrationTest, ListAccessControlFailure) {
   std::string bucket_name = MakeRandomBucketName();
 
   // This operation should fail because the target bucket does not exist.
-  TestPermanentFailure([&client, bucket_name] {
-    client.ListBucketAcl(bucket_name);
-  });
+  TestPermanentFailure(
+      [&client, bucket_name] { client.ListBucketAcl(bucket_name); });
 }
 
 TEST_F(BucketIntegrationTest, CreateAccessControlFailure) {
@@ -727,9 +753,8 @@ TEST_F(BucketIntegrationTest, ListDefaultAccessControlFailure) {
   std::string bucket_name = MakeRandomBucketName();
 
   // This operation should fail because the target bucket does not exist.
-  TestPermanentFailure([&client, bucket_name] {
-    client.ListDefaultObjectAcl(bucket_name);
-  });
+  TestPermanentFailure(
+      [&client, bucket_name] { client.ListDefaultObjectAcl(bucket_name); });
 }
 
 TEST_F(BucketIntegrationTest, CreateDefaultAccessControlFailure) {

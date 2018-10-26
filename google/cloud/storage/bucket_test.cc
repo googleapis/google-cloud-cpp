@@ -402,6 +402,40 @@ TEST_F(BucketTest, TestBucketIamPermissionsPermanentFailure) {
       "TestBucketIamPermissions");
 }
 
+TEST_F(BucketTest, LockBucketRetentionPolicy) {
+  EXPECT_CALL(*mock, LockBucketRetentionPolicy(_))
+      .WillOnce(
+          Return(std::make_pair(TransientError(), internal::EmptyResponse{})))
+      .WillOnce(Invoke([](internal::LockBucketRetentionPolicyRequest const& r) {
+        EXPECT_EQ("test-bucket-name", r.bucket_name());
+        EXPECT_EQ(42U, r.metageneration());
+        return std::make_pair(Status(), internal::EmptyResponse{});
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  client.LockBucketRetentionPolicy("test-bucket-name", 42U);
+  SUCCEED();
+}
+
+TEST_F(BucketTest, LockBucketRetentionPolicyTooManyFailures) {
+  testing::TooManyFailuresTest<internal::EmptyResponse>(
+      mock, EXPECT_CALL(*mock, LockBucketRetentionPolicy(_)),
+      [](Client& client) {
+        client.LockBucketRetentionPolicy("test-bucket-name", 1U);
+      },
+      "LockBucketRetentionPolicy");
+}
+
+TEST_F(BucketTest, LockBucketRetentionPolicyPermanentFailure) {
+  testing::PermanentFailureTest<internal::EmptyResponse>(
+      *client, EXPECT_CALL(*mock, LockBucketRetentionPolicy(_)),
+      [](Client& client) {
+        client.LockBucketRetentionPolicy("test-bucket-name", 1U);
+      },
+      "LockBucketRetentionPolicy");
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

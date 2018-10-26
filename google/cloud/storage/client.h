@@ -459,6 +459,57 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->TestBucketIamPermissions(request).second.permissions;
   }
+
+  /**
+   * Locks the retention policy for a bucket.
+   *
+   * @warning Locking a retention policy is an irreversible action. Once locked,
+   *     you must delete the entire bucket in order to "remove" the bucket's
+   *     retention policy. However, before you can delete the bucket, you must
+   *     be able to delete all the objects in the bucket, which itself is only
+   *     possible if the all objects have reached the retention period set by
+   *     the retention policy.
+   *
+   * The [Bucket Lock
+   * feature](https://cloud.google.com/storage/docs/bucket-lock) allows you to
+   * configure a data retention policy for a Cloud Storage bucket that governs
+   * how long objects in the bucket must be retained. The feature also allows
+   * you to lock the data retention policy, permanently preventing the policy
+   * from from being reduced or removed.
+   *
+   * @see https://cloud.google.com/storage/docs/bucket-lock for a description of
+   *     the Bucket Lock feature.
+   *
+   * @see https://cloud.google.com/storage/docs/using-bucket-lock for examples
+   *     of how to use the Bucket Lock and retention policy features.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param metageneration the expected value of the metageneration on the
+   *     bucket. The request will fail if the metageneration does not match the
+   *     current value.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @throw std::runtime_error if the operation fails.
+   *
+   * @par Examples
+   *
+   * @snippet storage_bucket_samples.cc lock retention policy
+   *
+   * @snippet storage_bucket_samples.cc set retention policy
+   *
+   * @snippet storage_bucket_samples.cc remove retention policy
+   */
+  template <typename... Options>
+  void LockBucketRetentionPolicy(std::string const& bucket_name,
+                                 std::uint64_t metageneration,
+                                 Options&&... options) {
+    internal::LockBucketRetentionPolicyRequest request(bucket_name,
+                                                       metageneration);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    raw_client_->LockBucketRetentionPolicy(request);
+  }
+
   //@}
 
   //@{

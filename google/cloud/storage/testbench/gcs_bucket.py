@@ -90,8 +90,8 @@ class GcsBucket(object):
          """
         writeable_keys = {
             'acl', 'billing', 'cors', 'defaultObjectAcl', 'encryption',
-            'labels', 'lifecycle', 'location', 'logging', 'storageClass',
-            'versioning', 'website'
+            'labels', 'lifecycle', 'location', 'logging', 'retentionPolicy',
+            'storageClass', 'versioning', 'website'
         }
         for key in metadata.keys():
             if key not in writeable_keys:
@@ -475,3 +475,27 @@ class GcsBucket(object):
             if p.startswith('storage.'):
                 result['permissions'].append(p)
         return result
+
+    def lock_retention_policy(self, request):
+        """Set the IamPolicy associated with this Bucket.
+
+        :param request: flask.Request the current http request.
+        :return: None
+        """
+        metageneration = request.args.get('ifMetagenerationMatch')
+        if metageneration is None:
+            raise error_response.ErrorResponse(
+                'Missing ifMetagenerationMatch parameter',
+                status_code=400)
+        if int(metageneration) != self.metadata.get('metageneration'):
+            raise error_response.ErrorResponse(
+                'Precondition Failed (metageneration = %s)' % metageneration,
+                status_code=412)
+        retention_policy = self.metadata.get('retentionPolicy')
+        if retention_policy is None:
+            raise error_response.ErrorResponse(
+                'Precondition Failed, bucket does not have a retention policy to lock',
+                status_code=412)
+        retention_policy['isLocked'] = True
+        self.metadata['retentionPolicy'] = retention_policy
+        self.increase_metageneration()
