@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ROW_KEY_SAMPLE_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ROW_KEY_SAMPLE_H_
 
+#include "google/cloud/bigtable/version.h"
 #include <cstdint>
 #include <string>
 
