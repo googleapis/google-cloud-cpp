@@ -73,6 +73,22 @@ TEST(FutureImplBaseTest, WaitUntilReady) {
   EXPECT_TRUE(shared_state.is_ready());
 }
 
+TEST(FutureImplTestVoid, SetException) {
+  future_shared_state<void> shared_state;
+  EXPECT_FALSE(shared_state.is_ready());
+
+  shared_state.set_exception(
+      std::make_exception_ptr(std::runtime_error("test message")));
+  EXPECT_TRUE(shared_state.is_ready());
+
+  EXPECT_THROW(
+      try { shared_state.get(); } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test message"));
+        throw;
+      },
+      std::runtime_error);
+}
+
 TEST(FutureImplBaseTest, SetExceptionCanBeCalledOnlyOnce) {
   future_shared_state_base shared_state;
   EXPECT_FALSE(shared_state.is_ready());
@@ -117,6 +133,22 @@ TEST(FutureImplVoid, SetValue) {
   EXPECT_NO_THROW(shared_state.get());
 }
 
+TEST(FutureImplTestVoid, SetValueCanBeCalledOnlyOnce) {
+  future_shared_state<void> shared_state;
+  EXPECT_FALSE(shared_state.is_ready());
+
+  shared_state.set_value();
+
+  EXPECT_THROW(
+      try { shared_state.set_value(); } catch (std::future_error const& ex) {
+        EXPECT_EQ(std::future_errc::promise_already_satisfied, ex.code());
+        throw;
+      },
+      std::future_error);
+
+  EXPECT_NO_THROW(shared_state.get());
+}
+
 TEST(FutureImplVoid, GetException) {
   future_shared_state<void> shared_state;
   EXPECT_FALSE(shared_state.is_ready());
@@ -140,6 +172,62 @@ TEST(FutureImplVoid, Abandon) {
   },
                std::future_error);
 }
+
+thread_local int execute_counter;
+
+class TestContinuation : public continuation_base {
+ public:
+  TestContinuation() = default;
+  void execute() override { ++execute_counter; }
+};
+
+TEST(FutureImplTestVoid, SetContinuation) {
+  future_shared_state<void> shared_state;
+  EXPECT_FALSE(shared_state.is_ready());
+
+  execute_counter = 0;
+  shared_state.set_continuation(
+      google::cloud::internal::make_unique<TestContinuation>());
+  EXPECT_EQ(0, execute_counter);
+  EXPECT_FALSE(shared_state.is_ready());
+  shared_state.set_value();
+  EXPECT_EQ(1, execute_counter);
+
+  EXPECT_NO_THROW(shared_state.get());
+}
+
+TEST(FutureImplTestVoid, SetContinuationAlreadySet) {
+  future_shared_state<void> shared_state;
+  EXPECT_FALSE(shared_state.is_ready());
+
+  shared_state.set_continuation(
+      google::cloud::internal::make_unique<TestContinuation>());
+
+  EXPECT_THROW(
+      try {
+        shared_state.set_continuation(
+            google::cloud::internal::make_unique<TestContinuation>());
+      } catch (std::future_error const& ex) {
+        EXPECT_EQ(std::future_errc::future_already_retrieved, ex.code());
+        throw;
+      },
+      std::future_error);
+}
+
+TEST(FutureImplTestVoid, SetContinuationAlreadySatisfied) {
+  future_shared_state<void> shared_state;
+  EXPECT_FALSE(shared_state.is_ready());
+
+  execute_counter = 0;
+  shared_state.set_value();
+  EXPECT_EQ(0, execute_counter);
+  shared_state.set_continuation(
+      google::cloud::internal::make_unique<TestContinuation>());
+  EXPECT_EQ(1, execute_counter);
+
+  EXPECT_NO_THROW(shared_state.get());
+}
+
 
 }  // namespace
 }  // namespace internal
