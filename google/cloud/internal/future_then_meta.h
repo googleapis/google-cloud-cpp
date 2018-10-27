@@ -97,6 +97,47 @@ struct continuation_helper {
   using state_t = future_shared_state<result_t>;
 };
 
+/**
+ * A metafunction to implement `future<T>::%then(Functor&&)`.
+ *
+ * This metafunction implements a number of useful results given a functor type
+ * @p Functor, and the value type @p T of a `future<T>`.
+ *
+ * * First it determines if `Functor` meets the requirements, i.e., that it can
+ *   be invoked with an object of type `future<T>` as its only argument.
+ * * Then in computes the type of the expression `functor(fut)`, where `functor`
+ *   is of type `Functor` and `fut` is of type `future<T>`.
+ * * It determines if the resulting type requires implicit unwrapping because it
+ *   is a `future<U>`.
+ * * It computes the type of future returned from `future<T>::%then(Functor&&)`.
+ *
+ * @tparam Functor the functor to call. It must accept a `future<T>` as its
+ *     single input parameter.
+ * @tparam T the type contained in the input future.
+ */
+template <typename Functor, typename T,
+          typename std::enable_if<is_invocable<Functor, future<T>>::value,
+                                  int>::type = 0>
+struct then_helper {
+  /// The type returned by the functor
+  using functor_result_t = invoke_result_t<Functor, future<T>>;
+
+  /// The unwrapped type returned by the functor, i.e., with any `future<>`
+  /// stripped.
+  using result_t = typename unwrap_then<functor_result_t>::type;
+
+  /// `std::true_type` if `functor_result_t` is a `future<R>`, `std::false_type`
+  /// otherwise.
+  using requires_unwrap_t =
+      typename unwrap_then<functor_result_t>::requires_unwrap_t;
+
+  /// The future type returned by `.then()`.
+  using future_t = future<result_t>;
+
+  /// The type of the shared state created by `.then()`.
+  using state_t = future_shared_state<result_t>;
+};
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
