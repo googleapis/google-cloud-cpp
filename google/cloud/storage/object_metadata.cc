@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/storage/internal/format_rfc3339.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
 
@@ -73,6 +74,7 @@ ObjectMetadata ObjectMetadata::ParseFromJson(internal::nl::json const& json) {
     e.key_sha256 = field.value("keySha256", "");
     result.customer_encryption_ = std::move(e);
   }
+  result.event_based_hold_ = internal::ParseBoolField(json, "eventBasedHold");
   result.generation_ = internal::ParseLongField(json, "generation");
   result.kms_key_name_ = json.value("kmsKeyName", "");
   result.md5_hash_ = json.value("md5Hash", "");
@@ -82,7 +84,10 @@ ObjectMetadata ObjectMetadata::ParseFromJson(internal::nl::json const& json) {
       result.metadata_.emplace(kv.key(), kv.value().get<std::string>());
     }
   }
+  result.retention_expiration_time_ =
+      internal::ParseTimestampField(json, "retentionExpirationTime");
   result.size_ = internal::ParseUnsignedLongField(json, "size");
+  result.temporary_hold_ = internal::ParseBoolField(json, "temporaryHold");
   result.time_deleted_ = internal::ParseTimestampField(json, "timeDeleted");
   result.time_storage_class_updated_ =
       internal::ParseTimestampField(json, "timeStorageClassUpdated");
@@ -126,6 +131,8 @@ internal::nl::json ObjectMetadata::JsonForUpdate() const {
   SetIfNotEmpty(metadata_as_json, "contentEncoding", content_encoding());
   SetIfNotEmpty(metadata_as_json, "contentLanguage", content_language());
   SetIfNotEmpty(metadata_as_json, "contentType", content_type());
+
+  metadata_as_json["eventBasedHold"] = event_based_hold();
 
   if (not metadata().empty()) {
     json meta_as_json;
@@ -182,16 +189,18 @@ bool ObjectMetadata::operator==(ObjectMetadata const& rhs) const {
          content_language_ == rhs.content_language_ and
          content_type_ == rhs.content_type_ and crc32c_ == rhs.crc32c_ and
          customer_encryption_ == customer_encryption_ and
+         event_based_hold_ == rhs.event_based_hold_ and
          generation_ == rhs.generation_ and
          kms_key_name_ == rhs.kms_key_name_ and md5_hash_ == rhs.md5_hash_ and
          media_link_ == rhs.media_link_ and metadata_ == rhs.metadata_ and
+         retention_expiration_time_ == rhs.retention_expiration_time_ and
+         temporary_hold_ == rhs.temporary_hold_ and
          time_deleted_ == rhs.time_deleted_ and
          time_storage_class_updated_ == rhs.time_storage_class_updated_ and
          size_ == rhs.size_;
 }
 
 std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
-  // TODO(#536) - convert back to JSON for a nicer format.
   os << "ObjectMetadata={name=" << rhs.name() << ", acl=[";
   char const* sep = "";
   for (auto const& acl : rhs.acl()) {
@@ -213,9 +222,10 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
        << rhs.customer_encryption().key_sha256;
   }
 
-  os << ", etag=" << rhs.etag() << ", generation=" << rhs.generation()
-     << ", id=" << rhs.id() << ", kind=" << rhs.kind()
-     << ", kms_key_name=" << rhs.kms_key_name()
+  os << ", etag=" << rhs.etag()
+     << ", event_based_hold=" << std::boolalpha << rhs.event_based_hold()
+     << ", generation=" << rhs.generation() << ", id=" << rhs.id()
+     << ", kind=" << rhs.kind() << ", kms_key_name=" << rhs.kms_key_name()
      << ", md5_hash=" << rhs.md5_hash() << ", media_link=" << rhs.media_link();
   sep = "metadata.";
   for (auto const& kv : rhs.metadata_) {
@@ -229,8 +239,11 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
        << ", owner.entity_id=" << rhs.owner().entity_id;
   }
 
-  os << ", self_link=" << rhs.self_link() << ", size=" << rhs.size()
+  os << ", retention_expiration_time="
+     << internal::FormatRfc3339(rhs.retention_expiration_time())
+     << ", self_link=" << rhs.self_link() << ", size=" << rhs.size()
      << ", storage_class=" << rhs.storage_class()
+     << ", temporary_hold=" << std::boolalpha << rhs.temporary_hold()
      << ", time_created=" << rhs.time_created().time_since_epoch().count()
      << ", time_deleted=" << rhs.time_deleted().time_since_epoch().count()
      << ", time_storage_class_updated="
@@ -344,6 +357,16 @@ ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetContentType() {
   return *this;
 }
 
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetEventBasedHold(bool v) {
+  impl_.SetBoolField("eventBasedHold", v);
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetEventBasedHold() {
+  impl_.RemoveField("eventBasedHold");
+  return *this;
+}
+
 ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetMetadata(
     std::string const& key, std::string const& value) {
   metadata_subpatch_.SetStringField(key.c_str(), value);
@@ -361,6 +384,16 @@ ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetMetadata(
 ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetMetadata() {
   metadata_subpatch_.clear();
   metadata_subpatch_dirty_ = true;
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetTemporaryHold(bool v) {
+  impl_.SetBoolField("temporaryHold", v);
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetTemporaryHold() {
+  impl_.RemoveField("temporaryHold");
   return *this;
 }
 

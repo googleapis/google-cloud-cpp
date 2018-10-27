@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/storage/internal/parse_rfc3339.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -74,6 +75,7 @@ ObjectMetadata CreateObjectMetadataForTest() {
         "keySha256": "abc123"
       },
       "etag": "XYZ=",
+      "eventBasedHold": true,
       "generation": "12345",
       "id": "foo-bar/baz/12345",
       "kind": "storage#object",
@@ -90,9 +92,11 @@ ObjectMetadata CreateObjectMetadataForTest() {
         "entity": "user-qux",
         "entityId": "user-qux-id-123"
       },
+      "retentionExpirationTime": "2019-01-01T00:00:00Z",
       "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar/o/baz",
       "size": 102400,
       "storageClass": "STANDARD",
+      "temporaryHold": true,
       "timeCreated": "2018-05-19T19:31:14Z",
       "timeDeleted": "2018-05-19T19:32:24Z",
       "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
@@ -115,6 +119,7 @@ TEST(ObjectMetadataTest, Parse) {
   EXPECT_EQ("application/octet-stream", actual.content_type());
   EXPECT_EQ("deadbeef", actual.crc32c());
   EXPECT_EQ("XYZ=", actual.etag());
+  EXPECT_TRUE(actual.event_based_hold());
   EXPECT_EQ(12345, actual.generation());
   EXPECT_EQ("foo-bar/baz/12345", actual.id());
   EXPECT_EQ("storage#object", actual.kind());
@@ -131,6 +136,8 @@ TEST(ObjectMetadataTest, Parse) {
   EXPECT_EQ("baz", actual.name());
   EXPECT_EQ("user-qux", actual.owner().entity);
   EXPECT_EQ("user-qux-id-123", actual.owner().entity_id);
+  EXPECT_EQ(internal::ParseRfc3339("2019-01-01T00:00:00Z"),
+            actual.retention_expiration_time());
   EXPECT_EQ("https://www.googleapis.com/storage/v1/b/foo-bar/o/baz",
             actual.self_link());
   EXPECT_EQ(102400U, actual.size());
@@ -167,7 +174,11 @@ TEST(ObjectMetadataTest, IOStream) {
   EXPECT_THAT(actual, HasSubstr("acl-id-0"));
   EXPECT_THAT(actual, HasSubstr("name=baz"));
   EXPECT_THAT(actual, HasSubstr("metadata.foo=bar"));
+  EXPECT_THAT(actual, HasSubstr("event_based_hold=true"));
+  EXPECT_THAT(actual,
+              HasSubstr("retention_expiration_time=2019-01-01T00:00:00Z"));
   EXPECT_THAT(actual, HasSubstr("size=102400"));
+  EXPECT_THAT(actual, HasSubstr("temporary_hold=true"));
 }
 
 /// @test Verify we can convert a ObjectMetadata object to a JSON string.
@@ -191,6 +202,7 @@ TEST(ObjectMetadataTest, UpdatePayload) {
       {"contentEncoding", "an-encoding"},
       {"contentLanguage", "a-language"},
       {"contentType", "application/octet-stream"},
+      {"eventBasedHold", true},
       {"metadata",
        internal::nl::json{
            {"foo", "bar"},
@@ -266,6 +278,17 @@ TEST(ObjectMetadataTest, SetContentType) {
   auto copy = expected;
   copy.set_content_type("some-other-type");
   EXPECT_EQ("some-other-type", copy.content_type());
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can change the eventBasedHold field.
+TEST(ObjectMetadataTest, SetEventBasedHold) {
+  // This has a event based hold and it is true.
+  auto expected = CreateObjectMetadataForTest();
+  ASSERT_TRUE(expected.event_based_hold());
+  auto copy = expected;
+  copy.set_event_based_hold(false);
+  EXPECT_FALSE(copy.event_based_hold());
   EXPECT_NE(expected, copy);
 }
 
@@ -428,6 +451,26 @@ TEST(ObjectMetadataPatchBuilder, ResetContentType) {
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 
+TEST(ObjectMetadataPatchBuilder, SetEventBasedHold) {
+  ObjectMetadataPatchBuilder builder;
+  builder.SetEventBasedHold(true);
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"eventBasedHold", true}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, ResetEventBasedHold) {
+  ObjectMetadataPatchBuilder builder;
+  builder.ResetEventBasedHold();
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"eventBasedHold", nullptr}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
 TEST(ObjectMetadataPatchBuilder, SetMetadata) {
   ObjectMetadataPatchBuilder builder;
   builder.SetMetadata("test-label1", "v1");
@@ -454,6 +497,26 @@ TEST(ObjectMetadataPatchBuilder, Resetmetadata) {
   internal::nl::json expected{
       {"metadata", nullptr},
   };
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, SetTemporaryHold) {
+  ObjectMetadataPatchBuilder builder;
+  builder.SetTemporaryHold(true);
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"temporaryHold", true}};
+  EXPECT_EQ(expected, actual_as_json) << actual;
+}
+
+TEST(ObjectMetadataPatchBuilder, ResetTemporaryHold) {
+  ObjectMetadataPatchBuilder builder;
+  builder.ResetTemporaryHold();
+
+  auto actual = builder.BuildPatch();
+  auto actual_as_json = internal::nl::json::parse(actual);
+  internal::nl::json expected{{"temporaryHold", nullptr}};
   EXPECT_EQ(expected, actual_as_json) << actual;
 }
 

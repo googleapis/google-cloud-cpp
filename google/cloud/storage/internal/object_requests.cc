@@ -237,6 +237,9 @@ PatchObjectRequest::PatchObjectRequest(std::string bucket_name,
   if (original.content_type() != updated.content_type()) {
     builder.SetContentType(updated.content_type());
   }
+  if (original.event_based_hold() != updated.event_based_hold()) {
+    builder.SetEventBasedHold(updated.event_based_hold());
+  }
 
   if (original.metadata() != updated.metadata()) {
     if (updated.metadata().empty()) {
@@ -268,6 +271,10 @@ PatchObjectRequest::PatchObjectRequest(std::string bucket_name,
         builder.SetMetadata(d.first, d.second);
       }
     }
+  }
+
+  if (original.temporary_hold() != updated.temporary_hold()) {
+    builder.SetTemporaryHold(updated.temporary_hold());
   }
 
   payload_ = builder.BuildPatch();
