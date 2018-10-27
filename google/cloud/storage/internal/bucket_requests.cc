@@ -97,6 +97,11 @@ PatchBucketRequest::PatchBucketRequest(std::string bucket,
     builder.SetCors(updated.cors());
   }
 
+  if (original.default_event_based_hold() !=
+      updated.default_event_based_hold()) {
+    builder.SetDefaultEventBasedHold(updated.default_event_based_hold());
+  }
+
   if (original.default_acl() != updated.default_acl()) {
     builder.SetDefaultAcl(updated.default_acl());
   }
@@ -155,6 +160,15 @@ PatchBucketRequest::PatchBucketRequest(std::string bucket,
 
   if (original.name() != updated.name()) {
     builder.SetName(updated.name());
+  }
+
+  if (original.retention_policy_as_optional() !=
+      updated.retention_policy_as_optional()) {
+    if (updated.has_retention_policy()) {
+      builder.SetRetentionPolicy(updated.retention_policy());
+    } else {
+      builder.ResetRetentionPolicy();
+    }
   }
 
   if (original.storage_class() != updated.storage_class()) {
@@ -274,7 +288,9 @@ std::ostream& operator<<(std::ostream& os,
   return os << "}";
 }
 
-TestBucketIamPermissionsResponse TestBucketIamPermissionsResponse::FromHttpResponse(HttpResponse const& response) {
+TestBucketIamPermissionsResponse
+TestBucketIamPermissionsResponse::FromHttpResponse(
+    HttpResponse const& response) {
   TestBucketIamPermissionsResponse result;
   auto json = nl::json::parse(response.payload);
   for (auto const& kv : json["permissions"].items()) {

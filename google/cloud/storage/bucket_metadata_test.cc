@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/bucket_metadata.h"
+#include "google/cloud/storage/internal/format_rfc3339.h"
 #include "google/cloud/storage/storage_class.h"
 #include <gmock/gmock.h>
 
@@ -74,6 +75,7 @@ BucketMetadata CreateBucketMetadataForTest() {
         "origin": ["another-example.com"],
         "responseHeader": ["Content-Type"]
       }],
+      "defaultEventBasedHold": true,
       "defaultObjectAcl": [{
         "kind": "storage#objectAccessControl",
         "id": "default-acl-id-0",
@@ -130,6 +132,11 @@ BucketMetadata CreateBucketMetadataForTest() {
         "entityId": "test-owner-id-123"
       },
       "projectNumber": "123456789",
+      "retentionPolicy": {
+          "effectiveTime": "2018-10-01T12:34:56Z",
+          "isLocked": false,
+          "retentionPeriod": 86400
+      },
       "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket",
       "storageClass": "STANDARD",
       "timeCreated": "2018-05-19T19:31:14Z",
@@ -164,6 +171,7 @@ TEST(BucketMetadataTest, Parse) {
                                    {"another-example.com"},
                                    {"Content-Type"}};
   EXPECT_EQ(expected_cors_1, actual.cors().at(1));
+  EXPECT_TRUE(actual.default_event_based_hold());
   EXPECT_EQ(1U, actual.default_acl().size());
   EXPECT_EQ("user-test-user-3", actual.default_acl().at(0).entity());
   EXPECT_EQ(
@@ -206,13 +214,27 @@ TEST(BucketMetadataTest, Parse) {
 
   EXPECT_EQ("US", actual.location());
 
+  // logging
   EXPECT_EQ("test-log-bucket", actual.logging().log_bucket);
   EXPECT_EQ("test-log-prefix", actual.logging().log_object_prefix);
+
   EXPECT_EQ(4, actual.metageneration());
   EXPECT_EQ("test-bucket", actual.name());
+
+  // owner
   EXPECT_EQ("project-owners-123456789", actual.owner().entity);
   EXPECT_EQ("test-owner-id-123", actual.owner().entity_id);
+
   EXPECT_EQ(123456789, actual.project_number());
+
+  // retentionPolicy
+  ASSERT_TRUE(actual.has_retention_policy());
+  EXPECT_EQ("2018-10-01T12:34:56Z",
+            internal::FormatRfc3339(actual.retention_policy().effective_time));
+  EXPECT_EQ(std::chrono::seconds(86400),
+            actual.retention_policy().retention_period);
+  EXPECT_FALSE(actual.retention_policy().is_locked);
+
   EXPECT_EQ("https://www.googleapis.com/storage/v1/b/test-bucket",
             actual.self_link());
   EXPECT_EQ(storage_class::Standard(), actual.storage_class());
@@ -226,6 +248,8 @@ TEST(BucketMetadataTest, Parse) {
                                       actual.updated().time_since_epoch())
                                       .count());
 
+  // website
+  ASSERT_TRUE(actual.has_website());
   EXPECT_EQ("index.html", actual.website().main_page_suffix);
   EXPECT_EQ("404.html", actual.website().not_found_page);
 }
@@ -252,6 +276,9 @@ TEST(BucketMetadataTest, IOStream) {
   EXPECT_THAT(actual, HasSubstr("labels.label-key-1=label-value-1"));
   EXPECT_THAT(actual, HasSubstr("labels.label-key-2=label-value-2"));
 
+  // default_event_based_hold()
+  EXPECT_THAT(actual, HasSubstr("default_event_based_hold=true"));
+
   // default_acl()
   EXPECT_THAT(actual, HasSubstr("user-test-user-3"));
 
@@ -273,6 +300,11 @@ TEST(BucketMetadataTest, IOStream) {
   // project_team()
   EXPECT_THAT(actual, HasSubstr("project-owners-123456789"));
   EXPECT_THAT(actual, HasSubstr("test-owner-id-123"));
+
+  // retention_policy()
+  EXPECT_THAT(actual, HasSubstr("retention_policy.retention_period=86400"));
+  EXPECT_THAT(actual, HasSubstr("retention_policy.effective_time=2018-10-01T12:34:56Z"));
+  EXPECT_THAT(actual, HasSubstr("retention_policy.is_locked=false"));
 
   // versioning()
   EXPECT_THAT(actual, HasSubstr("versioning.enabled=true"));
@@ -305,6 +337,10 @@ TEST(BucketMetadataTest, ToJsonString) {
   EXPECT_TRUE(actual["cors"].is_array()) << actual;
   EXPECT_EQ(2U, actual["cors"].size()) << actual;
   EXPECT_EQ(3600, actual["cors"][0].value("maxAgeSeconds", 0));
+
+  // default_event_based_hold()
+  ASSERT_EQ(1U, actual.count("defaultEventBasedHold"));
+  ASSERT_EQ(true, actual.value("defaultEventBasedHold", false));
 
   // default_acl()
   ASSERT_EQ(1U, actual.count("defaultObjectAcl")) << actual;
@@ -361,6 +397,13 @@ TEST(BucketMetadataTest, ToJsonString) {
 
   // name()
   EXPECT_EQ("test-bucket", actual.value("name", ""));
+
+  // retention_policy()
+  ASSERT_EQ(1U, actual.count("retentionPolicy"));
+  auto expected_retention_policy = internal::nl::json{
+      {"retentionPeriod", 86400},
+  };
+  EXPECT_EQ(expected_retention_policy, actual["retentionPolicy"]);
 
   // storage_class()
   ASSERT_EQ("STANDARD", actual.value("storageClass", ""));
@@ -479,6 +522,18 @@ TEST(BucketMetadataTest, SetCors) {
   EXPECT_EQ("Content-Encoding", copy.cors().at(0).response_header.back());
 }
 
+/// @test Verify we can change the default event based hold in BucketMetadata.
+TEST(BucketMetadataTest, SetDefaultEventBasedHold) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  EXPECT_TRUE(copy.default_event_based_hold());
+  copy.set_default_event_based_hold(not copy.default_event_based_hold());
+  EXPECT_NE(expected, copy);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), HasSubstr("default_event_based_hold"));
+}
+
 /// @test Verify we can make changes to one DefaultObjectAcl in BucketMetadata.
 TEST(BucketMetadataTest, MutableDefaultObjectAcl) {
   auto expected = CreateBucketMetadataForTest();
@@ -577,6 +632,35 @@ TEST(BucketMetadataTest, ResetLogging) {
   std::ostringstream os;
   os << copy;
   EXPECT_THAT(os.str(), Not(HasSubstr("logging.")));
+}
+
+/// @test Verify we can change the retention policy in BucketMetadata.
+TEST(BucketMetadataTest, SetRetentionPolicy) {
+  auto expected = CreateBucketMetadataForTest();
+  BucketRetentionPolicy new_retention_policy{
+      std::chrono::seconds(3600),
+      internal::ParseRfc3339("2019-11-01T00:00:00Z"),
+      true,
+  };
+  auto copy = expected;
+  copy.set_retention_policy(new_retention_policy);
+  ASSERT_TRUE(copy.has_retention_policy());
+  EXPECT_EQ(new_retention_policy, copy.retention_policy());
+  EXPECT_TRUE(copy.retention_policy_as_optional().has_value());
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can change the retention policy in BucketMetadata.
+TEST(BucketMetadataTest, ResetRetentionPolicy) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.has_retention_policy());
+  auto copy = expected;
+  copy.reset_retention_policy();
+  EXPECT_FALSE(copy.has_retention_policy());
+  EXPECT_NE(expected, copy);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), Not(HasSubstr("retention_policy.")));
 }
 
 /// @test Verify we can clear the versioning field in BucketMetadata.
@@ -701,11 +785,8 @@ TEST(BucketMetadataPatchBuilder, SetCors) {
   BucketMetadataPatchBuilder builder;
   std::vector<CorsEntry> v;
   v.emplace_back(CorsEntry{{}, {"method1", "method2"}, {}, {"header1"}});
-  v.emplace_back(
-      CorsEntry{google::cloud::optional<std::int64_t>(86400),
-                {},
-                {"origin1"},
-                {}});
+  v.emplace_back(CorsEntry{
+      google::cloud::optional<std::int64_t>(86400), {}, {"origin1"}, {}});
   builder.SetCors(v);
 
   auto actual = builder.BuildPatch();
@@ -732,6 +813,27 @@ TEST(BucketMetadataPatchBuilder, ResetCors) {
   auto json = internal::nl::json::parse(actual);
   ASSERT_EQ(1U, json.count("cors")) << json;
   ASSERT_TRUE(json["cors"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetDefaultEventBasedHold) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetDefaultEventBasedHold(true);
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("defaultEventBasedHold")) << json;
+  ASSERT_TRUE(json["defaultEventBasedHold"].is_boolean()) << json;
+  EXPECT_TRUE(json.value("defaultEventBasedHold", false)) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, ResetDefaultEventBasedHold) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetDefaultEventBasedHold();
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("defaultEventBasedHold")) << json;
+  ASSERT_TRUE(json["defaultEventBasedHold"].is_null()) << json;
 }
 
 TEST(BucketMetadataPatchBuilder, SetDefaultAcl) {
@@ -891,6 +993,29 @@ TEST(BucketMetadataPatchBuilder, ResetName) {
   auto json = internal::nl::json::parse(actual);
   ASSERT_EQ(1U, json.count("name")) << json;
   ASSERT_TRUE(json["name"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetRetentionPolicy) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetRetentionPolicy(BucketRetentionPolicy{
+      std::chrono::seconds(60), internal::ParseRfc3339("2018-01-01T00:00:00Z"),
+      false});
+
+  auto actual_patch = builder.BuildPatch();
+  auto actual_json = internal::nl::json::parse(actual_patch);
+  auto expected_json = internal::nl::json{
+      {"retentionPolicy", internal::nl::json{{"retentionPeriod", 60}}}};
+  EXPECT_EQ(expected_json, actual_json);
+}
+
+TEST(BucketMetadataPatchBuilder, ResetRetentionPolicy) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetRetentionPolicy();
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("retentionPolicy")) << json;
+  ASSERT_TRUE(json["retentionPolicy"].is_null()) << json;
 }
 
 TEST(BucketMetadataPatchBuilder, SetStorageClass) {

@@ -41,7 +41,7 @@ CorsEntry ParseCors(internal::nl::json const& json) {
   result.origin = parse_string_list(json, "origin");
   result.response_header = parse_string_list(json, "responseHeader");
   return result;
-};
+}
 
 void SetIfNotEmpty(internal::nl::json& json, char const* key,
                    std::string const& value) {
@@ -81,6 +81,13 @@ std::ostream& operator<<(std::ostream& os, BucketLogging const& rhs) {
             << ", log_object_prefix=" << rhs.log_object_prefix << "}";
 }
 
+std::ostream& operator<<(std::ostream& os, BucketRetentionPolicy const& rhs) {
+  return os << "BucketRetentionPolicy={retention_period="
+            << rhs.retention_period.count() << "s, effective_time="
+            << internal::FormatRfc3339(rhs.effective_time)
+            << ", locked=" << rhs.is_locked << "}";
+}
+
 BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
   BucketMetadata result{};
   static_cast<CommonMetadata<BucketMetadata>&>(result) =
@@ -101,6 +108,10 @@ BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
     for (auto const& kv : json["cors"].items()) {
       result.cors_.emplace_back(ParseCors(kv.value()));
     }
+  }
+  if (json.count("defaultEventBasedHold") != 0) {
+    result.default_event_based_hold_ =
+        json.value("defaultEventBasedHold", false);
   }
   if (json.count("defaultObjectAcl") != 0) {
     for (auto const& kv : json["defaultObjectAcl"].items()) {
@@ -139,6 +150,17 @@ BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
     for (auto const& kv : json["labels"].items()) {
       result.labels_.emplace(kv.key(), kv.value().get<std::string>());
     }
+  }
+
+  if (json.count("retentionPolicy") != 0) {
+    auto retention_policy = json["retentionPolicy"];
+    BucketRetentionPolicy r;
+    r.retention_period = std::chrono::seconds(
+        internal::ParseLongField(retention_policy, "retentionPeriod"));
+    r.effective_time =
+        internal::ParseTimestampField(retention_policy, "effectiveTime");
+    r.is_locked = internal::ParseBoolField(retention_policy, "isLocked");
+    result.retention_policy_ = r;
   }
 
   if (json.count("versioning") != 0) {
@@ -201,6 +223,8 @@ std::string BucketMetadata::ToJsonString() const {
     };
     metadata_as_json["billing"] = std::move(b);
   }
+
+  metadata_as_json["defaultEventBasedHold"] = default_event_based_hold();
 
   if (not default_acl().empty()) {
     for (ObjectAccessControl const& a : default_acl()) {
@@ -265,6 +289,12 @@ std::string BucketMetadata::ToJsonString() const {
   }
 
   SetIfNotEmpty(metadata_as_json, "name", name());
+
+  if (has_retention_policy()) {
+    json r{{"retentionPeriod", retention_policy().retention_period.count()}};
+    metadata_as_json["retentionPolicy"] = std::move(r);
+  }
+
   SetIfNotEmpty(metadata_as_json, "storageClass", storage_class());
 
   if (versioning().has_value()) {
@@ -285,16 +315,17 @@ bool BucketMetadata::operator==(BucketMetadata const& rhs) const {
   return static_cast<internal::CommonMetadata<BucketMetadata> const&>(*this) ==
              rhs and
          acl_ == rhs.acl_ and billing_ == rhs.billing_ and
-         cors_ == rhs.cors_ and default_acl_ == rhs.default_acl_ and
-         encryption_ == rhs.encryption_ and
+         cors_ == rhs.cors_ and
+         default_event_based_hold_ == rhs.default_event_based_hold_ and
+         default_acl_ == rhs.default_acl_ and encryption_ == rhs.encryption_ and
          project_number_ == rhs.project_number_ and
          lifecycle_ == rhs.lifecycle_ and location_ == rhs.location_ and
          logging_ == rhs.logging_ and labels_ == rhs.labels_ and
+         retention_policy_ == rhs.retention_policy_ and
          versioning_ == rhs.versioning_ and website_ == rhs.website_;
 }
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
-  // TODO(#536) - convert back to JSON for a nicer format.
   os << "BucketMetadata={name=" << rhs.name();
 
   os << ", acl=[";
@@ -319,6 +350,9 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
     sep = ", ";
   }
   os << "]";
+
+  os << ", default_event_based_hold=" << std::boolalpha
+     << rhs.default_event_based_hold();
 
   os << ", default_acl=[";
   sep = "";
@@ -368,6 +402,15 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
      << ", storage_class=" << rhs.storage_class()
      << ", time_created=" << rhs.time_created().time_since_epoch().count()
      << ", updated=" << rhs.updated().time_since_epoch().count();
+
+  if (rhs.has_retention_policy()) {
+    os << ", retention_policy.retention_period="
+       << rhs.retention_policy().retention_period.count()
+       << ", retention_policy.effective_time="
+       << internal::FormatRfc3339(rhs.retention_policy().effective_time)
+       << ", retention_policy.is_locked=" << std::boolalpha
+       << rhs.retention_policy().is_locked;
+  }
 
   if (rhs.versioning().has_value()) {
     auto previous_flags = os.flags();
@@ -459,6 +502,18 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetCors(
 
 BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetCors() {
   impl_.RemoveField("cors");
+  return *this;
+}
+
+BucketMetadataPatchBuilder&
+BucketMetadataPatchBuilder::SetDefaultEventBasedHold(bool v) {
+  impl_.SetBoolField("defaultEventBasedHold", v);
+  return *this;
+}
+
+BucketMetadataPatchBuilder&
+BucketMetadataPatchBuilder::ResetDefaultEventBasedHold() {
+  impl_.RemoveField("defaultEventBasedHold");
   return *this;
 }
 
@@ -590,6 +645,21 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetName(
 
 BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetName() {
   impl_.RemoveField("name");
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetRetentionPolicy(
+    BucketRetentionPolicy const& v) {
+  // Only the retentionPeriod field is writeable, so do not modify the other
+  // fields.
+  impl_.AddSubPatch("retentionPolicy",
+                    internal::PatchBuilder().SetIntField(
+                        "retentionPeriod", v.retention_period.count()));
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetRetentionPolicy() {
+  impl_.RemoveField("retentionPolicy");
   return *this;
 }
 

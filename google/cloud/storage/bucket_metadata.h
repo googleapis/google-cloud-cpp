@@ -249,6 +249,58 @@ inline bool operator>=(BucketEncryption const& lhs,
 }
 
 /**
+ * The retention policy for a bucket.
+ *
+ * The Bucket Lock feature of Google Cloud Storage allows you to configure a
+ * data retention policy for a Cloud Storage bucket. This policy governs how
+ * long objects in the bucket must be retained. The feature also allows you to
+ * lock the data retention policy, permanently preventing the policy from from
+ * being reduced or removed.
+ *
+ * @see https://cloud.google.com/storage/docs/bucket-lock for a general
+ *     overview
+ */
+struct BucketRetentionPolicy {
+  std::chrono::seconds retention_period;
+  std::chrono::system_clock::time_point effective_time;
+  bool is_locked;
+};
+
+inline bool operator==(BucketRetentionPolicy const& lhs,
+                       BucketRetentionPolicy const& rhs) {
+  return std::tie(lhs.retention_period, lhs.effective_time, lhs.is_locked) ==
+         std::tie(rhs.retention_period, rhs.effective_time, rhs.is_locked);
+}
+
+inline bool operator<(BucketRetentionPolicy const& lhs,
+                      BucketRetentionPolicy const& rhs) {
+  return std::tie(lhs.retention_period, lhs.effective_time, lhs.is_locked) <
+         std::tie(rhs.retention_period, rhs.effective_time, rhs.is_locked);
+}
+
+inline bool operator!=(BucketRetentionPolicy const& lhs,
+                       BucketRetentionPolicy const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(BucketRetentionPolicy const& lhs,
+                      BucketRetentionPolicy const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(BucketRetentionPolicy const& lhs,
+                       BucketRetentionPolicy const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(BucketRetentionPolicy const& lhs,
+                       BucketRetentionPolicy const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+
+std::ostream& operator<<(std::ostream& os, BucketRetentionPolicy const& rhs);
+
+/**
  * The versioning configuration for a Bucket.
  *
  * @see https://cloud.google.com/storage/docs/requester-pays for general
@@ -379,6 +431,31 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   }
   BucketMetadata& reset_billing() {
     billing_.reset();
+    return *this;
+  }
+  //@}
+
+  //@{
+  /**
+   * @name Get and set the default event based hold for the Bucket.
+   *
+   * Objects may have an event-based hold associated with them. If a Bucket
+   * has the `default_event_based_hold()` parameter set, and you create a new
+   * object in the bucket without specifying its event-event based hold then the
+   * object gets the value set in the bucket.
+   *
+   * @see https://cloud.google.com/storage/docs/bucket-lock for generation
+   *     information on retention policies.  The section on
+   *     [Object
+   * holds](https://cloud.google.com/storage/docs/bucket-lock#object-holds) is
+   * particularly relevant.
+   *
+   * @see https://cloud.google.com/storage/docs/holding-objects for examples
+   *    of using default event-based hold policy.
+   */
+  bool default_event_based_hold() const { return default_event_based_hold_; }
+  BucketMetadata& set_default_event_based_hold(bool v) {
+    default_event_based_hold_ = v;
     return *this;
   }
   //@}
@@ -551,6 +628,38 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
 
   using CommonMetadata::self_link;
 
+  //@{
+  /// @name Accessors and modifiers for retention policy configuration.
+  bool has_retention_policy() const { return retention_policy_.has_value(); }
+  BucketRetentionPolicy const& retention_policy() const {
+    return *retention_policy_;
+  }
+  google::cloud::optional<BucketRetentionPolicy> const&
+  retention_policy_as_optional() const {
+    return retention_policy_;
+  }
+  BucketMetadata& set_retention_policy(BucketRetentionPolicy v) {
+    retention_policy_ = std::move(v);
+    return *this;
+  }
+
+  /**
+   * Sets the retention period.
+   *
+   * The retention period is the only writable attribute in a retention policy.
+   * This function makes it easier to set the retention policy when the
+   * `BucketMetadata` object is used to update or patch the bucket.
+   */
+  BucketMetadata& set_retention_policy(std::chrono::seconds retention_period) {
+    return set_retention_policy(BucketRetentionPolicy{retention_period});
+  }
+
+  BucketMetadata& reset_retention_policy() {
+    retention_policy_.reset();
+    return *this;
+  }
+  //@}
+
   using CommonMetadata::storage_class;
   BucketMetadata& set_storage_class(std::string v) {
     CommonMetadata::set_storage_class(std::move(v));
@@ -610,6 +719,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   std::vector<BucketAccessControl> acl_;
   google::cloud::optional<BucketBilling> billing_;
   std::vector<CorsEntry> cors_;
+  bool default_event_based_hold_ = false;
   std::vector<ObjectAccessControl> default_acl_;
   google::cloud::optional<BucketEncryption> encryption_;
   std::map<std::string, std::string> labels_;
@@ -617,6 +727,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   std::string location_;
   google::cloud::optional<BucketLogging> logging_;
   std::int64_t project_number_;
+  google::cloud::optional<BucketRetentionPolicy> retention_policy_;
   google::cloud::optional<BucketVersioning> versioning_;
   google::cloud::optional<BucketWebsite> website_;
 };
@@ -656,6 +767,9 @@ class BucketMetadataPatchBuilder {
   BucketMetadataPatchBuilder& SetCors(std::vector<CorsEntry> const& v);
   BucketMetadataPatchBuilder& ResetCors();
 
+  BucketMetadataPatchBuilder& SetDefaultEventBasedHold(bool v);
+  BucketMetadataPatchBuilder& ResetDefaultEventBasedHold();
+
   BucketMetadataPatchBuilder& SetDefaultAcl(
       std::vector<ObjectAccessControl> const& v);
 
@@ -682,6 +796,10 @@ class BucketMetadataPatchBuilder {
 
   BucketMetadataPatchBuilder& SetName(std::string const& v);
   BucketMetadataPatchBuilder& ResetName();
+
+  BucketMetadataPatchBuilder& SetRetentionPolicy(
+      BucketRetentionPolicy const& v);
+  BucketMetadataPatchBuilder& ResetRetentionPolicy();
 
   BucketMetadataPatchBuilder& SetStorageClass(std::string const& v);
   BucketMetadataPatchBuilder& ResetStorageClass();
