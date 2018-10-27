@@ -20,6 +20,7 @@ var searchData=
   ['resetcors',['ResetCors',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a3b2fd99e8bad0de80d64c4aa3b40e3d2',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['resetdefaultacl',['ResetDefaultAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a0c8ed081e1768e4d4bdb9f429f1c2c2b',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['resetencryption',['ResetEncryption',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a70c053cd02d88c962a1d908bc685b5ba',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
+  ['reseteventbasedhold',['ResetEventBasedHold',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadataPatchBuilder.html#ac3764078e00af39b536a35ea617d8d2a',1,'google::cloud::storage::v0::ObjectMetadataPatchBuilder']]],
   ['resetlabel',['ResetLabel',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a247530ede690b5da775a26817ac054ef',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['resetlabels',['ResetLabels',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#af9cff8245929f87a67e521ccbdb7f891',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['resetlifecycle',['ResetLifecycle',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a57eb61636e258043b3da140dd4a69571',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
@@ -27,11 +28,13 @@ var searchData=
   ['resetmetadata',['ResetMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadataPatchBuilder.html#a13a4b9078d09bc39ab8eeccfb8b62a6c',1,'google::cloud::storage::v0::ObjectMetadataPatchBuilder::ResetMetadata(std::string const &amp;key)'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadataPatchBuilder.html#a9dcc3a63563dabefd6715addcb966318',1,'google::cloud::storage::v0::ObjectMetadataPatchBuilder::ResetMetadata()']]],
   ['resetname',['ResetName',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a79a076f9f3f7e02266d1ca6e97d2e7c5',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['resetstorageclass',['ResetStorageClass',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a5a7c83c43755a48c20001f154d3b8a6f',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
+  ['resettemporaryhold',['ResetTemporaryHold',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadataPatchBuilder.html#ab33ba8413376cf42ca3cacbfb804dff3',1,'google::cloud::storage::v0::ObjectMetadataPatchBuilder']]],
   ['resetversioning',['ResetVersioning',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a2133291b34f854e66c1828877aeea8ac',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['resetwebsite',['ResetWebsite',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a99d364a0ca372cc5bcca3e9c146a079d',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['result',['Result',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html#a70135d91f3936fa1fb6c76467f0d3844',1,'google::cloud::storage::v0::ObjectRewriter']]],
   ['resultwithprogresscallback',['ResultWithProgressCallback',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html#ab14a1ad23c742f13611c2277fdac64ae',1,'google::cloud::storage::v0::ObjectRewriter']]],
   ['resumerewriteobject',['ResumeRewriteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#adedb2d43fb995db0b8b6037f195ad316',1,'google::cloud::storage::v0::Client']]],
+  ['retention_5fexpiration_5ftime',['retention_expiration_time',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a371cea70f882b5e46c0f84da32a84f0a',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['rewriteobject',['RewriteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a6f79ed0314f8655e71c4292895636f1c',1,'google::cloud::storage::v0::Client']]],
   ['rewriteobjectblocking',['RewriteObjectBlocking',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a025a3894a62fe0f4f8fd96beabce8c5f',1,'google::cloud::storage::v0::Client']]]
 ];
