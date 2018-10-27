@@ -7,6 +7,7 @@ google_cloud_cpp_common_HDRS = [
     "internal/big_endian.h",
     "internal/build_info.h",
     "internal/filesystem.h",
+    "internal/future_impl.h",
     "internal/getenv.h",
     "internal/make_unique.h",
     "internal/port_platform.h",
