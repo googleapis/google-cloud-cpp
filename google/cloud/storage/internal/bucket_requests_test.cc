@@ -449,7 +449,7 @@ TEST(PatchBucketRequestTest, DiffResetName) {
 
 TEST(PatchBucketRequestTest, DiffSetRetentionPolicy) {
   BucketMetadata original = CreateBucketMetadataForTest();
-  original.reset_logging();
+  original.reset_retention_policy();
   BucketMetadata updated = original;
   updated.set_retention_policy(std::chrono::seconds(60));
   PatchBucketRequest request("test-bucket", original, updated);
