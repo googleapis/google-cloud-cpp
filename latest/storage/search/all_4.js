@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['effective_5ftime',['effective_time',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketRetentionPolicy.html#a82086cd8abe54def9c7ee35d7b6dce18',1,'google::cloud::storage::v0::BucketRetentionPolicy']]],
   ['email_5faddress',['email_address',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html#acead61b0be479c4dd0a2609a5649d372',1,'google::cloud::storage::v0::ServiceAccount']]],
   ['enable_5fhttp_5ftracing',['enable_http_tracing',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#aa1a26e0476ca5585823cc1f90032cfb4',1,'google::cloud::storage::v0::ClientOptions']]],
   ['enable_5fraw_5fclient_5ftracing',['enable_raw_client_tracing',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a056cbe14d839d03e78104c778a514889',1,'google::cloud::storage::v0::ClientOptions']]],

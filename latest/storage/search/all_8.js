@@ -14,6 +14,7 @@ var searchData=
   ['ifsourcemetagenerationnotmatch',['IfSourceMetagenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfSourceMetagenerationNotMatch.html',1,'google::cloud::storage::v0']]],
   ['insertobject',['InsertObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a7610b83f4010d0477942d21c9e4294e3',1,'google::cloud::storage::v0::Client']]],
   ['is_5flive',['is_live',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html#a93b81967293b52a98d77b4c39d3fd9b1',1,'google::cloud::storage::v0::LifecycleRuleCondition']]],
+  ['is_5flocked',['is_locked',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketRetentionPolicy.html#ac466025073ccfb0acb7d83715fdbdc9e',1,'google::cloud::storage::v0::BucketRetentionPolicy']]],
   ['islive',['IsLive',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#ab35f7e79a289ab9959fae5733c144e2e',1,'google::cloud::storage::v0::LifecycleRule']]],
   ['isopen',['IsOpen',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectReadStream.html#acd290c5d85766311f8fecef517518d7c',1,'google::cloud::storage::v0::ObjectReadStream::IsOpen()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectWriteStream.html#a6824145923a10e5ac814bf3ad3678662',1,'google::cloud::storage::v0::ObjectWriteStream::IsOpen()']]],
   ['ispermanentfailure',['IsPermanentFailure',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1StatusTraits.html#aac62be0c681aa0ca1d349dde05fca984',1,'google::cloud::storage::v0::internal::StatusTraits']]],

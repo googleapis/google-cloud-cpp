@@ -1,6 +1,7 @@
 var searchData=
 [
   ['default_5facl',['default_acl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a243c7eeb31e604009d243b3625ce7727',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['default_5fevent_5fbased_5fhold',['default_event_based_hold',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a33932a5c1779ce505ebd39217b10bc61',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['default_5fkms_5fkey_5fname',['default_kms_key_name',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketEncryption.html#ae48570bebe92509bdb5184f620a8c847',1,'google::cloud::storage::v0::BucketEncryption']]],
   ['delete',['Delete',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a4158d50ef84091b3a8a74671628f2472',1,'google::cloud::storage::v0::LifecycleRule']]],
   ['delete_5fcustom_5fattribute',['delete_custom_attribute',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a8e2886d44110d09af1ffd62e82a56b19',1,'google::cloud::storage::v0::NotificationMetadata']]],
