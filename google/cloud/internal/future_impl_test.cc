@@ -41,16 +41,28 @@ TEST(FutureImplBaseTest, WaitFor) {
   EXPECT_FALSE(shared_state.is_ready());
 }
 
+TEST(FutureImplBaseTest, WaitForReady) {
+  future_shared_state_base shared_state;
+  shared_state.set_exception(
+      std::make_exception_ptr(std::runtime_error("test_message")));
+  auto s = shared_state.wait_for(100_us);
+  EXPECT_EQ(std::future_status::ready, s);
+  EXPECT_TRUE(shared_state.is_ready());
+}
+
 TEST(FutureImplBaseTest, WaitUntil) {
   future_shared_state_base shared_state;
   EXPECT_FALSE(shared_state.is_ready());
   auto s = shared_state.wait_until(std::chrono::system_clock::now() + 100_us);
   EXPECT_EQ(static_cast<int>(s), static_cast<int>(std::future_status::timeout));
   EXPECT_FALSE(shared_state.is_ready());
+}
 
+TEST(FutureImplBaseTest, WaitUntilReady) {
+  future_shared_state_base shared_state;
   shared_state.set_exception(
       std::make_exception_ptr(std::runtime_error("test message")));
-  s = shared_state.wait_until(std::chrono::system_clock::now() + 100_us);
+  auto s = shared_state.wait_until(std::chrono::system_clock::now() + 100_us);
   EXPECT_EQ(static_cast<int>(s), static_cast<int>(std::future_status::ready));
   EXPECT_TRUE(shared_state.is_ready());
 }
@@ -80,6 +92,15 @@ TEST(FutureImplBaseTest, Abandon) {
   // TODO(#1345) - use future_shared_state<void> and call .get();
   future_shared_state_base shared_state;
   shared_state.abandon();
+  EXPECT_TRUE(shared_state.is_ready());
+}
+
+TEST(FutureImplBaseTest, AbandonReady) {
+  // TODO(#1345) - use future_shared_state<void> and call .get();
+  future_shared_state_base shared_state;
+  shared_state.set_exception(
+      std::make_exception_ptr(std::runtime_error("test message")));
+  EXPECT_NO_THROW(shared_state.abandon());
   EXPECT_TRUE(shared_state.is_ready());
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

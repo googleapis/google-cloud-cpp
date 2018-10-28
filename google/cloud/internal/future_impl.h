@@ -136,7 +136,14 @@ class future_shared_state_base {
     notify_now(lk);
   }
 
-  /// Abandon the shared state
+  /**
+   * Abandon the shared state.
+   *
+   * The destructor of `promise<T>` abandons the state. If it is satisfied this
+   * has no effect, but otherwise the state is satisfied with an
+   * `std::future_error` exception. The error code is
+   * `std::future_errc::broken_promise`.
+   */
   void abandon() {
     std::unique_lock<std::mutex> lk(mu_);
     if (is_ready_unlocked()) {
@@ -160,7 +167,10 @@ class future_shared_state_base {
     current_state_ = state::has_exception;
   }
 
+  /// Immediately notify all waiting threads.
   void notify_now(std::unique_lock<std::mutex>& lk) {
+    // In the future we may implement notify_at_thread_exit() to notify waiters
+    // only when the current thread exits.
     cv_.notify_all();
     // Release the lock after the notification because otherwise the threads
     // may lose the state change.
