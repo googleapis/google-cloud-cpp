@@ -499,6 +499,8 @@ class TableAdmin {
    *         grpc::Status const&>);
    *
    * @tparam Functor the type of the callback.
+   *
+   * TODO(#1325) - eliminate usage of google::protobuf::Empty in the callback
    */
   template <typename Functor,
             typename std::enable_if<
