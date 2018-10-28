@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/storage/oauth2/authorized_user_credentials.h"
+#include "google/cloud/storage/oauth2/compute_engine_credentials.h"
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include <fstream>
@@ -102,7 +103,9 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials() {
 
   // TODO(#579): Check if running on App Engine flexible environment.
 
-  // TODO(#579): Check if running on Compute Engine.
+  if (storage::internal::RunningOnComputeEngineVm()) {
+    return std::make_shared<ComputeEngineCredentials<>>();
+  }
 
   // We've exhausted all search points, thus credentials cannot be constructed.
   std::string adc_link =
