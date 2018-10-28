@@ -164,6 +164,8 @@ class future_shared_state_base {
     current_state_ = state::has_exception;
   }
 
+  std::atomic_flag retrieved_ = ATOMIC_FLAG_INIT;
+
   mutable std::mutex mu_;
   std::condition_variable cv_;
   enum class state {
@@ -220,6 +222,25 @@ class future_shared_state<void> final : private future_shared_state_base {
     cv_.notify_all();
   }
 
+  /**
+   * The implementation details for `promise<void>::get_future()`.
+   *
+   * `promise<void>::get_future()` can be called exactly once. It must set some
+   * flag in the shared future so no future calls will succeed. We keep that
+   * flag in the shared state itself, and atomically set and test its value
+   * so concurrent calls to `promise<void>::get_future()` succeed only once.
+   */
+  static std::shared_ptr<future_shared_state> retrieve(
+      std::shared_ptr<future_shared_state> sh) {
+    if (not sh) {
+      throw std::future_error(std::future_errc::no_state);
+    }
+    if (sh->retrieved_.test_and_set()) {
+      throw std::future_error(std::future_errc::future_already_retrieved);
+    }
+    return sh;
+  }
+
  private:
   void set_value(std::unique_lock<std::mutex>& lk) {
     if (is_ready_unlocked()) {
@@ -235,5 +256,4 @@ class future_shared_state<void> final : private future_shared_state_base {
 }  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FUTURE_IMPL_H_
