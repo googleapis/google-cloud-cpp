@@ -132,8 +132,17 @@ TEST_F(SnapshotAsyncIntegrationTest, CreateListGetDeleteSnapshot) {
   auto const npos = std::string::npos;
   EXPECT_NE(npos, snapshot_check.name().find(snapshot_id_str));
 
-  // Delete snapshot
-  table_admin_->DeleteSnapshot(cluster_id, snapshot_id);
+  std::promise<google::protobuf::Empty> promise_delete_snapshot;
+  noex_table_admin_->AsyncDeleteSnapshot(
+      cluster_id, snapshot_id, cq,
+      [&promise_delete_snapshot](CompletionQueue& cq,
+                                 google::protobuf::Empty& response,
+                                 grpc::Status const& status) {
+        promise_delete_snapshot.set_value(std::move(response));
+      });
+
+  auto response = promise_delete_snapshot.get_future().get();
+
   auto snapshots_after_delete = table_admin_->ListSnapshots(cluster_id);
   EXPECT_FALSE(IsSnapshotPresent(snapshots_after_delete, snapshot.name()));
 

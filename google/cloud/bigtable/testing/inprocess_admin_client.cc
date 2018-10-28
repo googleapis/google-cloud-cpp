@@ -150,6 +150,15 @@ InProcessAdminClient::AsyncGetSnapshot(
   return Stub()->AsyncGetSnapshot(context, request, cq);
 }
 
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+InProcessAdminClient::AsyncDeleteSnapshot(
+    grpc::ClientContext* context,
+    google::bigtable::admin::v2::DeleteSnapshotRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncDeleteSnapshot(context, request, cq);
+}
+
 }  // namespace testing
 }  // namespace bigtable
 }  // namespace cloud

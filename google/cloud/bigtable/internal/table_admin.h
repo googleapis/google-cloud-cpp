@@ -477,6 +477,64 @@ class TableAdmin {
         std::forward<Functor>(callback));
     retry->Start(cq);
   }
+
+  /**
+   * Make an asynchronous request to delete a snapshot.
+   *
+   * @warning This is a private alpha release of Cloud Bigtable snapshots. This
+   * feature is not currently available to most Cloud Bigtable customers. This
+   * feature might be changed in backward-incompatible ways and is not
+   * recommended for production use. It is not subject to any SLA or deprecation
+   * policy.
+   *
+   * @param cluster_id the cluster id to which snapshot is associated.
+   * @param snapshot_id the id of the snapshot.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, google::protobuf::Empty&,
+   *         grpc::Status const&>);
+   *
+   * @tparam Functor the type of the callback.
+   *
+   * TODO(#1325) - eliminate usage of google::protobuf::Empty in the callback
+   */
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      google::protobuf::Empty&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  void AsyncDeleteSnapshot(bigtable::ClusterId const& cluster_id,
+                           bigtable::SnapshotId const& snapshot_id,
+                           CompletionQueue& cq, Functor&& callback) {
+    google::bigtable::admin::v2::DeleteSnapshotRequest request;
+    request.set_name(SnapshotName(cluster_id, snapshot_id));
+    MetadataUpdatePolicy metadata_update_policy(
+        instance_name(), MetadataParamTypes::NAME, cluster_id, snapshot_id);
+
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &AdminClient::AsyncDeleteSnapshot)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &AdminClient::AsyncDeleteSnapshot)>::MemberFunction;
+
+    using Retry =
+        internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
+                                     internal::ConstantIdempotencyPolicy,
+                                     Functor>;
+
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        internal::ConstantIdempotencyPolicy(false), metadata_update_policy,
+        client_, &AdminClient::AsyncDeleteSnapshot, std::move(request),
+        std::forward<Functor>(callback));
+    retry->Start(cq);
+  }
   //@}
 
  private:
