@@ -696,6 +696,10 @@ class GcsObject(object):
         payload = json.loads(request.data)
         if payload.get('destination') is not None:
             revision.update_from_metadata(payload.get('destination'))
+        # The server often discards the MD5 Hash when composing objects, we can
+        # easily maintain them in the testbench, but dropping them helps us
+        # detect bugs sooner.
+        revision.metadata.pop('md5Hash')
         self._insert_revision(revision)
         return revision
 

@@ -52,6 +52,9 @@ class HashValidator {
     std::string received;
     /// The value computed locally, based on the calls to Update().
     std::string computed;
+    /// A flag indicating of this is considered a mismatch based on the rules
+    /// for the validator.
+    bool is_mismatch;
   };
 
   /**
