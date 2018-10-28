@@ -50,7 +50,7 @@ class DefaultServiceAccountFileTest : public ::testing::Test {
 /// @test Verify that the application can override the default credentials.
 TEST_F(DefaultServiceAccountFileTest, EnvironmentVariableSet) {
   SetEnv(GoogleAdcEnvVar(), "/foo/bar/baz");
-  auto actual = GoogleAdcFilePathOrEmpty();
+  auto actual = GoogleAdcFilePathFromEnvVarOrEmpty();
   EXPECT_EQ("/foo/bar/baz", actual);
 }
 
@@ -59,7 +59,7 @@ TEST_F(DefaultServiceAccountFileTest, HomeSet) {
   UnsetEnv(GoogleAdcEnvVar());
   char const* home = GoogleAdcHomeEnvVar();
   SetEnv(home, "/foo/bar/baz");
-  auto actual = GoogleAdcFilePathOrEmpty();
+  auto actual = GoogleAdcFilePathFromWellKnownPathOrEmpty();
   using testing::HasSubstr;
   EXPECT_THAT(actual, HasSubstr("/foo/bar/baz"));
   EXPECT_THAT(actual, HasSubstr(".json"));
@@ -70,7 +70,7 @@ TEST_F(DefaultServiceAccountFileTest, HomeNotSet) {
   UnsetEnv(GoogleAdcEnvVar());
   char const* home = GoogleAdcHomeEnvVar();
   UnsetEnv(home);
-  EXPECT_EQ(GoogleAdcFilePathOrEmpty(), "");
+  EXPECT_EQ(GoogleAdcFilePathFromWellKnownPathOrEmpty(), "");
 }
 
 }  // namespace

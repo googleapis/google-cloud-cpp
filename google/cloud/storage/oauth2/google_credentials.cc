@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/anonymous_credentials.h"
@@ -29,7 +30,34 @@ inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
 std::shared_ptr<Credentials> GoogleDefaultCredentials() {
-  auto path = GoogleAdcFilePathOrEmpty();
+  // Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable is set,
+  // and if so, make sure the file exists.
+  auto path = GoogleAdcFilePathFromEnvVarOrEmpty();
+  if (not path.empty()) {
+    std::error_code ec;
+    auto adc_file_status = google::cloud::internal::status(path, ec);
+    if (not google::cloud::internal::exists(adc_file_status)) {
+      GCP_LOG(WARNING) << "The GOOGLE_APPLICATION_CREDENTIALS environment"
+                       << " variable was set to " << path << " but that file"
+                       << " does not exist.";
+      path = "";
+    }
+  }
+
+  // If no path was specified via environment variable, check if the gcloud
+  // ADC file exists.
+  if (path.empty()) {
+    path = GoogleAdcFilePathFromWellKnownPathOrEmpty();
+    if (not path.empty()) {
+      std::error_code ec;
+      auto adc_file_status = google::cloud::internal::status(path, ec);
+      if (not google::cloud::internal::exists(adc_file_status)) {
+        path = "";
+      }
+    }
+  }
+
+  // If a file at either of the paths above was present, try to load it.
   if (not path.empty()) {
     std::ifstream is(path);
     if (not is.is_open()) {
@@ -56,9 +84,13 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials() {
         ".");
   }
 
-  // TODO(#579): Check for implicit environment-based credentials if no ADC file
-  // was specified.
+  // Check for implicit environment-based credentials.
 
+  // TODO(#579): Check if running on App Engine flexible environment.
+
+  // TODO(#579): Check if running on Compute Engine.
+
+  // We've exhausted all search points, thus credentials cannot be constructed.
   google::cloud::internal::RaiseRuntimeError(
       "No eligible credential types were found to use as default credentials.");
 }

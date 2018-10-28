@@ -42,7 +42,16 @@ inline char const* GoogleAdcEnvVar() {
  * the path specified by its value for a file containing ADCs. Returns an
  * empty string if no such path exists or the environment variable is not set.
  */
-std::string GoogleAdcFilePathOrEmpty();
+std::string GoogleAdcFilePathFromEnvVarOrEmpty();
+
+/**
+ * Returns the path to the Application Default Credentials file, if set.
+ *
+ * If the gcloud utility has configured an Application Default Credentials file,
+ * the path to that file is returned. Returns an empty string if no such file
+ * exists at the well known path.
+ */
+std::string GoogleAdcFilePathFromWellKnownPathOrEmpty();
 
 /**
  * Returns the environment variable used to construct the well known ADC path.

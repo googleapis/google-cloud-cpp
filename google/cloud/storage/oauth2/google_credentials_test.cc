@@ -59,7 +59,7 @@ class GoogleCredentialsTest : public ::testing::Test {
 /// @test Verify that the application can override the default credentials.
 TEST_F(GoogleCredentialsTest, EnvironmentVariableSet) {
   SetEnv(GoogleAdcEnvVar(), "/foo/bar/baz");
-  std::string actual = GoogleAdcFilePathOrEmpty();
+  std::string actual = GoogleAdcFilePathFromEnvVarOrEmpty();
   EXPECT_EQ("/foo/bar/baz", actual);
 }
 
@@ -68,7 +68,7 @@ TEST_F(GoogleCredentialsTest, HomeSet) {
   UnsetEnv(GoogleAdcEnvVar());
   char const* home = GoogleAdcHomeEnvVar();
   SetEnv(home, "/foo/bar/baz");
-  std::string actual = GoogleAdcFilePathOrEmpty();
+  std::string actual = GoogleAdcFilePathFromWellKnownPathOrEmpty();
   using testing::HasSubstr;
   EXPECT_THAT(actual, HasSubstr("/foo/bar/baz"));
   EXPECT_THAT(actual, HasSubstr(".json"));
@@ -79,7 +79,8 @@ TEST_F(GoogleCredentialsTest, HomeNotSet) {
   UnsetEnv(GoogleAdcEnvVar());
   char const* home = GoogleAdcHomeEnvVar();
   UnsetEnv(home);
-  EXPECT_EQ(GoogleAdcFilePathOrEmpty(), "");
+  EXPECT_EQ(GoogleAdcFilePathFromEnvVarOrEmpty(), "");
+  EXPECT_EQ(GoogleAdcFilePathFromWellKnownPathOrEmpty(), "");
 }
 
 /**
