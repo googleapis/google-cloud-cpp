@@ -73,22 +73,6 @@ TEST(FutureImplBaseTest, WaitUntilReady) {
   EXPECT_TRUE(shared_state.is_ready());
 }
 
-TEST(FutureImplTestVoid, SetException) {
-  future_shared_state<void> shared_state;
-  EXPECT_FALSE(shared_state.is_ready());
-
-  shared_state.set_exception(
-      std::make_exception_ptr(std::runtime_error("test message")));
-  EXPECT_TRUE(shared_state.is_ready());
-
-  EXPECT_THROW(
-      try { shared_state.get(); } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("test message"));
-        throw;
-      },
-      std::runtime_error);
-}
-
 TEST(FutureImplBaseTest, SetExceptionCanBeCalledOnlyOnce) {
   future_shared_state_base shared_state;
   EXPECT_FALSE(shared_state.is_ready());
@@ -181,6 +165,14 @@ TEST(ContinuationVoidTest, SetValueCallsContinuation) {
   EXPECT_NO_THROW(output->get());
 }
 
+thread_local int execute_counter;
+
+class TestContinuation : public continuation_base {
+ public:
+  TestContinuation() = default;
+  void execute() override { ++execute_counter; }
+};
+
 TEST(FutureImplVoid, SetValue) {
   future_shared_state<void> shared_state;
   EXPECT_FALSE(shared_state.is_ready());
@@ -189,7 +181,7 @@ TEST(FutureImplVoid, SetValue) {
   EXPECT_NO_THROW(shared_state.get());
 }
 
-TEST(FutureImplTestVoid, SetValueCanBeCalledOnlyOnce) {
+TEST(FutureImplVoid, SetValueCanBeCalledOnlyOnce) {
   future_shared_state<void> shared_state;
   EXPECT_FALSE(shared_state.is_ready());
 
@@ -230,15 +222,7 @@ TEST(FutureImplVoid, Abandon) {
                std::future_error);
 }
 
-thread_local int execute_counter;
-
-class TestContinuation : public continuation_base {
- public:
-  TestContinuation() = default;
-  void execute() override { ++execute_counter; }
-};
-
-TEST(FutureImplTestVoid, SetContinuation) {
+TEST(FutureImplVoid, SetContinuation) {
   future_shared_state<void> shared_state;
   EXPECT_FALSE(shared_state.is_ready());
 
@@ -253,7 +237,7 @@ TEST(FutureImplTestVoid, SetContinuation) {
   EXPECT_NO_THROW(shared_state.get());
 }
 
-TEST(FutureImplTestVoid, SetContinuationAlreadySet) {
+TEST(FutureImplVoid, SetContinuationAlreadySet) {
   future_shared_state<void> shared_state;
   EXPECT_FALSE(shared_state.is_ready());
 
@@ -271,7 +255,7 @@ TEST(FutureImplTestVoid, SetContinuationAlreadySet) {
       std::future_error);
 }
 
-TEST(FutureImplTestVoid, SetContinuationAlreadySatisfied) {
+TEST(FutureImplVoid, SetContinuationAlreadySatisfied) {
   future_shared_state<void> shared_state;
   EXPECT_FALSE(shared_state.is_ready());
 
