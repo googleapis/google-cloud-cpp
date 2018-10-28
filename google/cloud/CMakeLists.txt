@@ -154,7 +154,9 @@ add_library(google_cloud_cpp_testing
             testing_util/environment_variable_restore.cc
             testing_util/custom_google_mock_main.cc
             testing_util/init_google_mock.h
-            testing_util/init_google_mock.cc)
+            testing_util/init_google_mock.cc
+            testing_util/testing_types.h
+            testing_util/testing_types.cc)
 target_link_libraries(google_cloud_cpp_testing
                       PUBLIC google_cloud_cpp_common GTest::gmock)
 

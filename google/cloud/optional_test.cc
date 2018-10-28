@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/optional.h"
+#include "google/cloud/testing_util/testing_types.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -20,82 +21,8 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 /// Helper types to test google::cloud::optional<T>
 namespace {
-class Observable {
- public:
-  static int default_constructor;
-  static int value_constructor;
-  static int copy_constructor;
-  static int move_constructor;
-  static int copy_assignment;
-  static int move_assignment;
-  static int destructor;
 
-  static void reset_counters() {
-    default_constructor = 0;
-    value_constructor = 0;
-    copy_constructor = 0;
-    move_constructor = 0;
-    copy_assignment = 0;
-    move_assignment = 0;
-    destructor = 0;
-  }
-
-  Observable() { ++default_constructor; }
-  explicit Observable(std::string s) : str_(std::move(s)) {
-    ++value_constructor;
-  }
-  Observable(Observable const& rhs) : str_(rhs.str_) { ++copy_constructor; }
-  Observable(Observable&& rhs) noexcept : str_(std::move(rhs.str_)) {
-    rhs.str_ = "moved-out";
-    ++move_constructor;
-  }
-
-  Observable& operator=(Observable const& rhs) {
-    str_ = rhs.str_;
-    ++copy_assignment;
-    return *this;
-  }
-  Observable& operator=(Observable&& rhs) noexcept {
-    str_ = std::move(rhs.str_);
-    rhs.str_ = "moved-out";
-    ++move_assignment;
-    return *this;
-  }
-  ~Observable() { ++destructor; }
-
-  std::string const& str() const { return str_; }
-
- private:
-  std::string str_;
-};
-
-int Observable::default_constructor = 0;
-int Observable::value_constructor = 0;
-int Observable::copy_constructor = 0;
-int Observable::move_constructor = 0;
-int Observable::copy_assignment = 0;
-int Observable::move_assignment = 0;
-int Observable::destructor = 0;
-
-// A class without a default constructor to verify optional<> can handle that.
-class NoDefaultConstructor {
- public:
-  NoDefaultConstructor() = delete;
-  explicit NoDefaultConstructor(std::string x) : str_(std::move(x)) {}
-
-  bool operator==(NoDefaultConstructor const& rhs) const {
-    return str_ == rhs.str_;
-  }
-  bool operator!=(NoDefaultConstructor const& rhs) const {
-    return !(*this == rhs);
-  }
-
-  std::string str() const { return str_; }
-
- private:
-  std::string str_;
-};
-
+using testing_util::Observable;
 using OptionalObservable = optional<Observable>;
 
 TEST(OptionalTest, Simple) {
@@ -393,11 +320,11 @@ TEST(OptionalTest, MoveValueOr) {
 }
 
 TEST(OptionalTest, WithNoDefaultConstructor) {
-  using TestedOptional = optional<NoDefaultConstructor>;
+  using TestedOptional = optional<testing_util::NoDefaultConstructor>;
   TestedOptional empty;
   EXPECT_FALSE(empty.has_value());
 
-  TestedOptional actual(NoDefaultConstructor(std::string("foo")));
+  TestedOptional actual(testing_util::NoDefaultConstructor(std::string("foo")));
   EXPECT_TRUE(actual.has_value());
   EXPECT_EQ(actual->str(), "foo");
 }
