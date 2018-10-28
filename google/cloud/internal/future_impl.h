@@ -266,6 +266,132 @@ template <typename T>
 class future_shared_state;
 
 /**
+ * The shared state for `future<T>` and `promise<T>`.
+ *
+ * The shared state contains either (1) the value stored by the promise, or (2)
+ * the exception stored by the promise, or (3) a continuation to be called when
+ * the shared state is satisfied.
+ *
+ * The shared state value can be retrieved only once, this is enforced by
+ * `future<T>::get()`, by invalidating the future after `get()` is called. It is
+ * impossible to retrieve the continuation stored in a future, calling
+ * `future<T>::then()` also invalidates the future, and all operations, such as
+ * `.get()` and `.then()` cannot be called again.
+ *
+ * We rely on these guarantees to simplify the implementation of this class.
+ */
+template <typename T>
+class future_shared_state final : private future_shared_state_base {
+ public:
+  future_shared_state() : future_shared_state_base(), buffer_() {}
+  ~future_shared_state() {
+    if (current_state_ == state::has_value) {
+      // Recall that state::has_value is a terminal state, once a value is
+      // stored in this class nothing else (no exceptions nor continuations)
+      // can be stored.  And if a value was stored then we need to call the
+      // destructor. Even if the value was moved out, the destructor still
+      // may need to do some cleanup:
+      reinterpret_cast<T*>(&buffer_)->~T();
+    }
+  }
+
+  using future_shared_state_base::abandon;
+  using future_shared_state_base::is_ready;
+  using future_shared_state_base::set_continuation;
+  using future_shared_state_base::set_exception;
+  using future_shared_state_base::wait;
+  using future_shared_state_base::wait_for;
+  using future_shared_state_base::wait_until;
+
+  /// The implementation details for `future<T>::get()`
+  T get() {
+    std::unique_lock<std::mutex> lk(mu_);
+    cv_.wait(lk, [this] { return is_ready_unlocked(); });
+    if (current_state_ == state::has_exception) {
+      std::rethrow_exception(exception_);
+    }
+    // Note that the value is moved out. It is impossible to retrieve the value
+    // a second time. The `.get()` operation on a `future<T>` invalidates the
+    // future, so new calls will fail.
+    return std::move(*reinterpret_cast<T*>(&buffer_));
+  }
+
+  /**
+   * The implementation details for `promise<T>::set_value()`.
+   *
+   * If the shared state is not already satisfied this function atomically
+   * stores the value and the state becomes satisfied.
+   *
+   * @param value the value to store in the shared state.
+   * @throws `std::future_error` if the shared state was already satisfied. The
+   *     error code is `std::future_errc::promise_already_satisfied`.
+   */
+  void set_value(T&& value) {
+    std::unique_lock<std::mutex> lk(mu_);
+    if (is_ready_unlocked()) {
+      throw std::future_error(std::future_errc::promise_already_satisfied);
+    }
+    // We can only reach this point once, all other states are terminal.
+    // Therefore we know that `buffer_` has not been initialized and calling
+    // placement new via the move constructor is the best way to initialize the
+    // buffer.
+
+    // TODO(#1345) - this is calling application code while holding a lock.
+    // That could result in a deadlock (or at least unbounded priority
+    // inversions) if the move constructor for `T` takes a long time to execute.
+    new (reinterpret_cast<T*>(&buffer_)) T(std::move(value));
+    current_state_ = state::has_value;
+    notify_now(std::move(lk));
+  }
+
+  /**
+   * Create a continuation object wrapping the given functor.
+   *
+   * @tparam F the functor type.
+   * @param self the object that will hold the continuation.
+   * @param functor the continuation type.
+   * @return A shared pointer to the shared state that will store the results
+   *     of the continuation.
+   */
+  template <typename F>
+  static std::shared_ptr<
+      typename internal::continuation_helper<F, void>::state_t>
+  make_continuation(std::shared_ptr<future_shared_state> self, F&& functor);
+
+  /**
+   * The implementation details for `promise<T>::get_future()`.
+   *
+   * `promise<T>::get_future()` can be called exactly once, this function
+   * must raise `std::future_error` if (quoting the C++ spec):
+   *
+   * `get_future` has already been called on a `promise` with the same shared
+   * state as `*this`
+   *
+   * While it is not clear how one could create multiple promises pointing to
+   * the same shared state, it is easier to keep all the locking and atomic
+   * checks in one class.
+   *
+   * @throws std::future_error if the operation fails.
+   */
+  static void mark_retrieved(std::shared_ptr<future_shared_state> const& sh) {
+    if (not sh) {
+      throw std::future_error(std::future_errc::no_state);
+    }
+    if (sh->retrieved_.test_and_set()) {
+      throw std::future_error(std::future_errc::future_already_retrieved);
+    }
+    return sh;
+  }
+
+ private:
+  // We use std::aligned_storage<T> because T may not have a default
+  // constructor, if we used 'T' here we could not default initialize this class
+  // either.
+  using aligned_storage_t = std::aligned_storage<sizeof(T), alignof(T)>;
+  typename aligned_storage_t::type buffer_;
+};
+
+/**
  * Specialize the shared state for `void`.
  *
  * The shared state for `void` does not have any value to hold, `get()` does
@@ -482,6 +608,21 @@ struct continuation : public continuation_base {
   /// The shared state that will hold the results of calling `functor`.
   std::shared_ptr<output_shared_state_t> output;
 };
+
+// Implement the helper function to create a shared state for continuations.
+template <typename T>
+template <typename F>
+std::shared_ptr<typename internal::continuation_helper<F, void>::state_t>
+future_shared_state<T>::make_continuation(
+    std::shared_ptr<future_shared_state<T>> self, F&& functor) {
+  using continuation_type = internal::continuation<F, void>;
+  auto continuation = google::cloud::internal::make_unique<continuation_type>(
+      std::forward<F>(functor), self);
+  auto result = continuation->output;
+  self->set_continuation(
+      std::unique_ptr<continuation_base>(std::move(continuation)));
+  return result;
+}
 
 // Implement the helper function to create a shared state for continuations.
 template <typename F>
