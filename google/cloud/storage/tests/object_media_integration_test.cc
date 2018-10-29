@@ -174,13 +174,12 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotWriteToFile) {
   // successfully opened for writing. Such errors are hard to get, typically
   // they indicate that the filesystem is full (or maybe some rare condition
   // with remote filesystem such as NFS).
-  // On Linux we are fortunate that some files are writable, but writing the
-  // "wrong" contents to them fails. For this test we use
-  // `/proc/self/timerslack_ns`:
-  //     http://man7.org/linux/man-pages/man2/prctl.2.html
-  // This file is writable, but one must write an integer to it, or the write
-  // operation fails. That gives us a ready made file for testing write errors:
-  auto file_name = "/proc/self/timerslack_ns";
+  // On Linux we are fortunate that `/dev/full` meets those requirements
+  // exactly:
+  //   http://man7.org/linux/man-pages/man4/full.4.html
+  // I (coryan@) did not know about it, so I thought a longer comment may be in
+  // order.
+  auto file_name = "/dev/full";
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
