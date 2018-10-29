@@ -307,17 +307,7 @@ void DownloadFile(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string file_name) {
-    gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
-    std::ofstream os(file_name);
-    if (not os.is_open()) {
-      std::cerr << "Cannot open file: " << file_name << std::endl;
-      return;
-    }
-    while (not stream.eof()) {
-      char buffer[4096];
-      stream.read(buffer, sizeof(buffer));
-      os.write(buffer, stream.gcount());
-    }
+    client.DownloadToFile(bucket_name, object_name, file_name);
     std::cout << "Downloaded " << object_name << " to " << file_name
               << std::endl;
   }
