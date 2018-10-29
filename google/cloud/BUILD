@@ -21,11 +21,13 @@ genrule(
     srcs = ["internal/build_info.cc.in"],
     outs = ["internal/build_info.cc"],
     cmd = """
+V=`git rev-parse --short HEAD 2>/dev/null || echo "unknown"`;
 sed -e "s;@CMAKE_CXX_COMPILER_ID@;$(C_COMPILER);" \
     -e "s;@CMAKE_CXX_COMPILER_VERSION@;unknown-bazel;" \
     -e "s;@CMAKE_CXX_FLAGS@;$(CC_FLAGS);" \
     -e "s;\\$${CMAKE_CXX_FLAGS_.*};$(COMPILATION_MODE);" \
-    -e "s;@GIT_HEAD@;unknown;" < $< > $@
+    -e "s;@GOOGLE_CLOUD_CPP_IS_RELEASE@;no;" \
+    -e "s;@GOOGLE_CLOUD_CPP_GIT_HEAD@;$${V};" < $< > $@
   """,
 )
 

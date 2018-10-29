@@ -21,14 +21,17 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
-/// The compiler version
+/// The compiler version.
 std::string compiler();
 
-/// The compiler flags
+/// The compiler flags.
 std::string compiler_flags();
 
-/// The git revision at compile time
+/// The git revision when the code was compiled.
 std::string gitrev();
+
+/// True if this is a release, false for the development branches.
+bool is_release();
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
