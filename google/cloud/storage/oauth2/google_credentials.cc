@@ -30,23 +30,14 @@ inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
 std::shared_ptr<Credentials> GoogleDefaultCredentials() {
-  // Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable is set,
-  // and if so, make sure the file exists.
+  // Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable is set.
   auto path = GoogleAdcFilePathFromEnvVarOrEmpty();
-  if (not path.empty()) {
-    std::error_code ec;
-    auto adc_file_status = google::cloud::internal::status(path, ec);
-    if (not google::cloud::internal::exists(adc_file_status)) {
-      GCP_LOG(WARNING) << "The GOOGLE_APPLICATION_CREDENTIALS environment"
-                       << " variable was set to " << path << " but that file"
-                       << " does not exist.";
-      path = "";
-    }
-  }
 
   // If no path was specified via environment variable, check if the gcloud
   // ADC file exists.
   if (path.empty()) {
+    // Just because we had the necessary information to build the path doesn't
+    // mean that a file exists there.
     path = GoogleAdcFilePathFromWellKnownPathOrEmpty();
     if (not path.empty()) {
       std::error_code ec;
