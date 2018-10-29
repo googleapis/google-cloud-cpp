@@ -28,59 +28,30 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 namespace {
-using google::cloud::internal::SetEnv;
-using google::cloud::internal::UnsetEnv;
-using google::cloud::testing_util::EnvironmentVariableRestore;
+using ::google::cloud::internal::SetEnv;
+using ::google::cloud::internal::UnsetEnv;
+using ::google::cloud::testing_util::EnvironmentVariableRestore;
 using ::testing::HasSubstr;
-
-char const VAR_NAME[] = "GOOGLE_APPLICATION_CREDENTIALS";
 
 class GoogleCredentialsTest : public ::testing::Test {
  public:
   GoogleCredentialsTest()
-      : home_(GoogleAdcHomeEnvVar()),
-        override_variable_("GOOGLE_APPLICATION_CREDENTIALS") {}
+      : home_env_var_(GoogleAdcHomeEnvVar()), adc_env_var_(GoogleAdcEnvVar()) {}
 
  protected:
   void SetUp() override {
-    home_.SetUp();
-    override_variable_.SetUp();
+    home_env_var_.SetUp();
+    adc_env_var_.SetUp();
   }
   void TearDown() override {
-    override_variable_.TearDown();
-    home_.TearDown();
+    adc_env_var_.TearDown();
+    home_env_var_.TearDown();
   }
 
  protected:
-  EnvironmentVariableRestore home_;
-  EnvironmentVariableRestore override_variable_;
+  EnvironmentVariableRestore home_env_var_;
+  EnvironmentVariableRestore adc_env_var_;
 };
-
-/// @test Verify that the application can override the default credentials.
-TEST_F(GoogleCredentialsTest, EnvironmentVariableSet) {
-  SetEnv(GoogleAdcEnvVar(), "/foo/bar/baz");
-  std::string actual = GoogleAdcFilePathOrEmpty();
-  EXPECT_EQ("/foo/bar/baz", actual);
-}
-
-/// @test Verify that the file path works as expected when using HOME.
-TEST_F(GoogleCredentialsTest, HomeSet) {
-  UnsetEnv(GoogleAdcEnvVar());
-  char const* home = GoogleAdcHomeEnvVar();
-  SetEnv(home, "/foo/bar/baz");
-  std::string actual = GoogleAdcFilePathOrEmpty();
-  using testing::HasSubstr;
-  EXPECT_THAT(actual, HasSubstr("/foo/bar/baz"));
-  EXPECT_THAT(actual, HasSubstr(".json"));
-}
-
-/// @test Verify that the ADC file path returns empty when HOME is not set.
-TEST_F(GoogleCredentialsTest, HomeNotSet) {
-  UnsetEnv(GoogleAdcEnvVar());
-  char const* home = GoogleAdcHomeEnvVar();
-  UnsetEnv(home);
-  EXPECT_EQ(GoogleAdcFilePathOrEmpty(), "");
-}
 
 /**
  * @test Verify `GoogleDefaultCredentials()` loads authorized user credentials.
@@ -103,7 +74,7 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentials) {
 })""";
   os << contents_str;
   os.close();
-  SetEnv(VAR_NAME, filename);
+  SetEnv(GoogleAdcEnvVar(), filename);
 
   // Test that the service account credentials are loaded as the default when
   // specified via the well known environment variable.
@@ -152,7 +123,7 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentials) {
 })""";
   os << contents_str;
   os.close();
-  SetEnv(VAR_NAME, filename);
+  SetEnv(GoogleAdcEnvVar(), filename);
 
   // Test that the service account credentials are loaded as the default when
   // specified via the well known environment variable.
@@ -190,19 +161,19 @@ TEST_F(GoogleCredentialsTest, LoadUnknownTypeCredentials) {
 })""";
   os << contents_str;
   os.close();
-  SetEnv(VAR_NAME, filename);
+  SetEnv(GoogleAdcEnvVar(), filename);
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try {
-    auto credentials = GoogleDefaultCredentials();
-  } catch(std::runtime_error const& ex) {
+  EXPECT_THROW(try { auto credentials = GoogleDefaultCredentials(); } catch (
+                   std::runtime_error const& ex) {
     EXPECT_THAT(ex.what(), HasSubstr("Unsupported credential type"));
     EXPECT_THAT(ex.what(), HasSubstr(filename));
     throw;
-  }, std::runtime_error);
+  },
+               std::runtime_error);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(
-      GoogleDefaultCredentials(), "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(GoogleDefaultCredentials(),
+                            "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -212,37 +183,37 @@ TEST_F(GoogleCredentialsTest, LoadInvalidCredentials) {
   std::string contents_str = R"""( not-a-json-object-string )""";
   os << contents_str;
   os.close();
-  SetEnv(VAR_NAME, filename);
+  SetEnv(GoogleAdcEnvVar(), filename);
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try {
-    auto credentials = GoogleDefaultCredentials();
-  } catch(std::exception const& ex) {
+  EXPECT_THROW(try { auto credentials = GoogleDefaultCredentials(); } catch (
+                   std::exception const& ex) {
     EXPECT_THAT(ex.what(), HasSubstr("Invalid contents in credentials file"));
     EXPECT_THAT(ex.what(), HasSubstr(filename));
     throw;
-  }, std::runtime_error);
+  },
+               std::runtime_error);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(
-      GoogleDefaultCredentials(), "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(GoogleDefaultCredentials(),
+                            "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST_F(GoogleCredentialsTest, MissingCredentials) {
   char const filename[] = "missing-credentials.json";
-  SetEnv(VAR_NAME, filename);
+  SetEnv(GoogleAdcEnvVar(), filename);
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try {
-    auto credentials = GoogleDefaultCredentials();
-  } catch(std::runtime_error const& ex) {
+  EXPECT_THROW(try { auto credentials = GoogleDefaultCredentials(); } catch (
+                   std::runtime_error const& ex) {
     EXPECT_THAT(ex.what(), HasSubstr("Cannot open credentials file"));
     EXPECT_THAT(ex.what(), HasSubstr(filename));
     throw;
-  }, std::runtime_error);
+  },
+               std::runtime_error);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(
-      GoogleDefaultCredentials(), "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(GoogleDefaultCredentials(),
+                            "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 

@@ -26,51 +26,56 @@ namespace {
 using ::google::cloud::internal::SetEnv;
 using ::google::cloud::internal::UnsetEnv;
 using ::google::cloud::testing_util::EnvironmentVariableRestore;
+using ::testing::HasSubstr;
 
 class DefaultServiceAccountFileTest : public ::testing::Test {
  public:
   DefaultServiceAccountFileTest()
-      : home_(GoogleAdcHomeEnvVar()), override_variable_(GoogleAdcEnvVar()) {}
+      : home_env_var_(GoogleAdcHomeEnvVar()), adc_env_var_(GoogleAdcEnvVar()) {}
 
  protected:
   void SetUp() override {
-    home_.SetUp();
-    override_variable_.SetUp();
+    home_env_var_.SetUp();
+    adc_env_var_.SetUp();
   }
   void TearDown() override {
-    override_variable_.TearDown();
-    home_.TearDown();
+    adc_env_var_.TearDown();
+    home_env_var_.TearDown();
   }
 
  protected:
-  EnvironmentVariableRestore home_;
-  EnvironmentVariableRestore override_variable_;
+  EnvironmentVariableRestore home_env_var_;
+  EnvironmentVariableRestore adc_env_var_;
 };
 
-/// @test Verify that the application can override the default credentials.
-TEST_F(DefaultServiceAccountFileTest, EnvironmentVariableSet) {
+/// @test Verify that the specified path is given when the ADC env var is set.
+TEST_F(DefaultServiceAccountFileTest, AdcEnvironmentVariableSet) {
   SetEnv(GoogleAdcEnvVar(), "/foo/bar/baz");
-  auto actual = GoogleAdcFilePathOrEmpty();
-  EXPECT_EQ("/foo/bar/baz", actual);
+  EXPECT_EQ("/foo/bar/baz", GoogleAdcFilePathFromEnvVarOrEmpty());
 }
 
-/// @test Verify that the file path works as expected when using HOME.
-TEST_F(DefaultServiceAccountFileTest, HomeSet) {
+/// @test Verify that an empty string is given when the ADC env var is unset.
+TEST_F(DefaultServiceAccountFileTest, AdcEnvironmentVariableNotSet) {
   UnsetEnv(GoogleAdcEnvVar());
-  char const* home = GoogleAdcHomeEnvVar();
-  SetEnv(home, "/foo/bar/baz");
-  auto actual = GoogleAdcFilePathOrEmpty();
-  using testing::HasSubstr;
+  EXPECT_EQ(GoogleAdcFilePathFromEnvVarOrEmpty(), "");
+}
+
+/// @test Verify that the gcloud ADC file path is given when HOME is set.
+TEST_F(DefaultServiceAccountFileTest, HomeSet) {
+  SetEnv(GoogleAdcHomeEnvVar(), "/foo/bar/baz");
+
+  auto actual = GoogleAdcFilePathFromWellKnownPathOrEmpty();
+
   EXPECT_THAT(actual, HasSubstr("/foo/bar/baz"));
+  // The rest of the path differs depending on the OS; just make sure that we
+  // appended the path to some JSON file to the path prefix set above.
   EXPECT_THAT(actual, HasSubstr(".json"));
 }
 
-/// @test Verify that the service account file path fails when HOME is not set.
+/// @test Verify that the gcloud ADC file path is not given when HOME is unset.
 TEST_F(DefaultServiceAccountFileTest, HomeNotSet) {
-  UnsetEnv(GoogleAdcEnvVar());
-  char const* home = GoogleAdcHomeEnvVar();
-  UnsetEnv(home);
-  EXPECT_EQ(GoogleAdcFilePathOrEmpty(), "");
+  UnsetEnv(GoogleAdcHomeEnvVar());
+  EXPECT_EQ(GoogleAdcFilePathFromWellKnownPathOrEmpty(), "");
 }
 
 }  // namespace

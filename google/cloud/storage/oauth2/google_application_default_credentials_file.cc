@@ -37,11 +37,15 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
-std::string GoogleAdcFilePathOrEmpty() {
+std::string GoogleAdcFilePathFromEnvVarOrEmpty() {
   auto override_value = google::cloud::internal::GetEnv(GoogleAdcEnvVar());
   if (override_value.has_value()) {
     return *override_value;
   }
+  return "";
+}
+
+std::string GoogleAdcFilePathFromWellKnownPathOrEmpty() {
   // Search well known gcloud ADC path.
   auto adc_path_root = google::cloud::internal::GetEnv(GoogleAdcHomeEnvVar());
   if (adc_path_root.has_value()) {
