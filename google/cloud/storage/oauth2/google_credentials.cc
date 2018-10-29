@@ -82,35 +82,40 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials() {
   // TODO(#579): Check if running on Compute Engine.
 
   // We've exhausted all search points, thus credentials cannot be constructed.
+  std::string adc_link =
+      "https://developers.google.com/identity/protocols"
+      "/application-default-credentials";
   google::cloud::internal::RaiseRuntimeError(
-      "No eligible credential types were found to use as default credentials.");
+      "Could not automatically determine credentials. For more information,"
+      " please see " +
+      adc_link);
 }
 
 std::shared_ptr<Credentials> CreateAnonymousCredentials() {
   return std::make_shared<AnonymousCredentials>();
 }
 
-std::shared_ptr<Credentials>
-CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path) {
+std::shared_ptr<Credentials> CreateAuthorizedUserCredentialsFromJsonFilePath(
+    std::string const& path) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   return std::make_shared<AuthorizedUserCredentials<>>(contents, path);
 }
 
-std::shared_ptr<Credentials>
-CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents) {
+std::shared_ptr<Credentials> CreateAuthorizedUserCredentialsFromJsonContents(
+    std::string const& contents) {
   return std::make_shared<AuthorizedUserCredentials<>>(contents, "memory");
 }
 
-std::shared_ptr<Credentials>
-CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path) {
+std::shared_ptr<Credentials> CreateServiceAccountCredentialsFromJsonFilePath(
+    std::string const& path) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   return std::make_shared<ServiceAccountCredentials<>>(contents, path);
 }
 
-std::shared_ptr<Credentials>
-CreateServiceAccountCredentialsFromJsonContents(std::string const& contents) {
+std::shared_ptr<Credentials> CreateServiceAccountCredentialsFromJsonContents(
+    std::string const& contents) {
   return std::make_shared<ServiceAccountCredentials<>>(contents, "memory");
 }
 
