@@ -19,6 +19,7 @@
 
 namespace btadmin = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
+using testing::HasSubstr;
 
 namespace {
 class InstanceTestEnvironment : public ::testing::Environment {
@@ -217,6 +218,119 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
   EXPECT_FALSE(
       IsClusterPresent(clusters_after_delete,
                        instance_details.name() + "/clusters/" + id + "-cl2"));
+
+  cq.Shutdown();
+  pool.join();
+}
+
+/// @test Verify that AppProfile async CRUD operations work as expected.
+TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
+  std::string instance_id =
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+
+  auto instance_config = IntegrationTestConfig(
+      instance_id, "us-central1-c", bigtable::InstanceConfig::PRODUCTION, 3);
+  auto future = instance_admin_->CreateInstance(instance_config);
+  // Wait for instance creation
+  ASSERT_THAT(future.get().name(), HasSubstr(instance_id));
+
+  std::string id1 =
+      "profile-" + google::cloud::internal::Sample(
+                       generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  std::string id2 =
+      "profile-" + google::cloud::internal::Sample(
+                       generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+
+  auto initial_profiles = instance_admin_->ListAppProfiles(instance_id);
+
+  // Simplify writing the rest of the test.
+  auto count_matching_profiles =
+      [](std::string const& id, std::vector<btadmin::AppProfile> const& list) {
+        std::string suffix = "/appProfiles/" + id;
+        return std::count_if(
+            list.begin(), list.end(), [&suffix](btadmin::AppProfile const& x) {
+              return std::string::npos != x.name().find(suffix);
+            });
+      };
+
+  EXPECT_EQ(0U, count_matching_profiles(id1, initial_profiles));
+  EXPECT_EQ(0U, count_matching_profiles(id2, initial_profiles));
+
+  bigtable::noex::InstanceAdmin admin(instance_admin_client_);
+  google::cloud::bigtable::CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  auto profile_1 = instance_admin_->CreateAppProfile(
+      bigtable::InstanceId(instance_id),
+      bigtable::AppProfileConfig::MultiClusterUseAny(
+          bigtable::AppProfileId(id1)));
+  auto profile_2 = instance_admin_->CreateAppProfile(
+      bigtable::InstanceId(instance_id),
+      bigtable::AppProfileConfig::MultiClusterUseAny(
+          bigtable::AppProfileId(id2)));
+
+  auto current_profiles = instance_admin_->ListAppProfiles(instance_id);
+  EXPECT_EQ(1U, count_matching_profiles(id1, current_profiles));
+  EXPECT_EQ(1U, count_matching_profiles(id2, current_profiles));
+
+  std::promise<btadmin::AppProfile> promise_get_profile_1;
+  admin.AsyncGetAppProfile(
+      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id1), cq,
+      [&promise_get_profile_1](google::cloud::bigtable::CompletionQueue& cq,
+                               btadmin::AppProfile& app_profiles,
+                               grpc::Status const& status) {
+        promise_get_profile_1.set_value(std::move(app_profiles));
+      });
+  auto detail_1 = promise_get_profile_1.get_future().get();
+  EXPECT_EQ(detail_1.name(), profile_1.name());
+  EXPECT_THAT(detail_1.name(), HasSubstr(instance_id));
+  EXPECT_THAT(detail_1.name(), HasSubstr(id1));
+
+  std::promise<btadmin::AppProfile> promise_get_profile_2;
+  admin.AsyncGetAppProfile(
+      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2), cq,
+      [&promise_get_profile_2](google::cloud::bigtable::CompletionQueue& cq,
+                               btadmin::AppProfile& app_profiles,
+                               grpc::Status const& status) {
+        promise_get_profile_2.set_value(std::move(app_profiles));
+      });
+  auto detail_2 = promise_get_profile_2.get_future().get();
+  EXPECT_EQ(detail_2.name(), profile_2.name());
+  EXPECT_THAT(detail_2.name(), HasSubstr(instance_id));
+  EXPECT_THAT(detail_2.name(), HasSubstr(id2));
+
+  auto profile_updated_future = instance_admin_->UpdateAppProfile(
+      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2),
+      bigtable::AppProfileUpdateConfig().set_description("new description"));
+
+  auto update_2 = profile_updated_future.get();
+  std::promise<btadmin::AppProfile> promise_get_profile_after_update;
+  admin.AsyncGetAppProfile(
+      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2), cq,
+      [&promise_get_profile_after_update](
+          google::cloud::bigtable::CompletionQueue& cq,
+          btadmin::AppProfile& app_profiles, grpc::Status const& status) {
+        promise_get_profile_after_update.set_value(std::move(app_profiles));
+      });
+  auto detail_2_after_update =
+      promise_get_profile_after_update.get_future().get();
+  EXPECT_EQ("new description", update_2.description());
+  EXPECT_EQ("new description", detail_2_after_update.description());
+
+  instance_admin_->DeleteAppProfile(bigtable::InstanceId(instance_id),
+                                    bigtable::AppProfileId(id1), true);
+  current_profiles = instance_admin_->ListAppProfiles(instance_id);
+  EXPECT_EQ(0U, count_matching_profiles(id1, current_profiles));
+  EXPECT_EQ(1U, count_matching_profiles(id2, current_profiles));
+
+  instance_admin_->DeleteAppProfile(bigtable::InstanceId(instance_id),
+                                    bigtable::AppProfileId(id2), false);
+  current_profiles = instance_admin_->ListAppProfiles(instance_id);
+  EXPECT_EQ(0U, count_matching_profiles(id1, current_profiles));
+  EXPECT_EQ(0U, count_matching_profiles(id2, current_profiles));
+
+  instance_admin_->DeleteInstance(instance_id);
 
   cq.Shutdown();
   pool.join();
