@@ -106,6 +106,25 @@ TEST(StrictIdempotencyPolicyTest, PatchBucketIfMetagenerationMatch) {
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
+TEST(StrictIdempotencyPolicyTest, GetIamPolicy) {
+  StrictIdempotencyPolicy policy;
+  internal::GetBucketIamPolicyRequest request("test-bucket-name");
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, SetBucketIamPolicy) {
+  StrictIdempotencyPolicy policy;
+  internal::SetBucketIamPolicyRequest request("test-bucket-name", IamPolicy{});
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, SetBucketIamPolicyIfEtag) {
+  StrictIdempotencyPolicy policy;
+  internal::SetBucketIamPolicyRequest request("test-bucket-name", IamPolicy{});
+  request.set_option(IfMatchEtag("ABC123="));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
