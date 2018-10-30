@@ -36,14 +36,19 @@ using ::testing::HasSubstr;
 class GoogleCredentialsTest : public ::testing::Test {
  public:
   GoogleCredentialsTest()
-      : home_env_var_(GoogleAdcHomeEnvVar()), adc_env_var_(GoogleAdcEnvVar()) {}
+      : home_env_var_(GoogleAdcHomeEnvVar()),
+        adc_env_var_(GoogleAdcEnvVar()),
+        gcloud_path_override_env_var_(GoogleGcloudAdcFileEnvVar()) {}
 
  protected:
   void SetUp() override {
     home_env_var_.SetUp();
     adc_env_var_.SetUp();
+    gcloud_path_override_env_var_.SetUp();
   }
+
   void TearDown() override {
+    gcloud_path_override_env_var_.TearDown();
     adc_env_var_.TearDown();
     home_env_var_.TearDown();
   }
@@ -51,6 +56,7 @@ class GoogleCredentialsTest : public ::testing::Test {
  protected:
   EnvironmentVariableRestore home_env_var_;
   EnvironmentVariableRestore adc_env_var_;
+  EnvironmentVariableRestore gcloud_path_override_env_var_;
 };
 
 /**
@@ -74,15 +80,25 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentials) {
 })""";
   os << contents_str;
   os.close();
-  SetEnv(GoogleAdcEnvVar(), filename);
 
-  // Test that the service account credentials are loaded as the default when
+  // Test that the authorized user credentials are loaded as the default when
   // specified via the well known environment variable.
+  SetEnv(GoogleAdcEnvVar(), filename);
   auto credentials = GoogleDefaultCredentials();
   // Need to create a temporary for the pointer because clang-tidy warns about
   // using expressions with (potential) side-effects inside typeid().
   auto ptr = credentials.get();
   EXPECT_EQ(typeid(*ptr), typeid(AuthorizedUserCredentials<>));
+
+  // Test that the authorized user credentials are loaded as the default when
+  // stored in the the well known gcloud ADC file path.
+  UnsetEnv(GoogleAdcEnvVar());
+  SetEnv(GoogleGcloudAdcFileEnvVar(), filename);
+  credentials = GoogleDefaultCredentials();
+  ptr = credentials.get();
+  EXPECT_EQ(typeid(*ptr), typeid(AuthorizedUserCredentials<>));
+
+  UnsetEnv(GoogleGcloudAdcFileEnvVar());
 
   // Test that the authorized user credentials are loaded from a file.
   credentials = CreateAuthorizedUserCredentialsFromJsonFilePath(filename);
@@ -123,15 +139,25 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentials) {
 })""";
   os << contents_str;
   os.close();
-  SetEnv(GoogleAdcEnvVar(), filename);
 
   // Test that the service account credentials are loaded as the default when
   // specified via the well known environment variable.
+  SetEnv(GoogleAdcEnvVar(), filename);
   auto credentials = GoogleDefaultCredentials();
   // Need to create a temporary for the pointer because clang-tidy warns about
   // using expressions with (potential) side-effects inside typeid().
   auto ptr = credentials.get();
   EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
+
+  // Test that the service account credentials are loaded as the default when
+  // stored in the the well known gcloud ADC file path.
+  UnsetEnv(GoogleAdcEnvVar());
+  SetEnv(GoogleGcloudAdcFileEnvVar(), filename);
+  credentials = GoogleDefaultCredentials();
+  ptr = credentials.get();
+  EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
+
+  UnsetEnv(GoogleGcloudAdcFileEnvVar());
 
   // Test that the service account credentials are loaded from a file.
   credentials = CreateServiceAccountCredentialsFromJsonFilePath(filename);

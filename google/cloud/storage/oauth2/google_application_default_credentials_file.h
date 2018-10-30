@@ -54,6 +54,17 @@ std::string GoogleAdcFilePathFromEnvVarOrEmpty();
 std::string GoogleAdcFilePathFromWellKnownPathOrEmpty();
 
 /**
+ * Returns the environment variable to override the gcloud ADC path.
+ *
+ * This environment variable is used for testing to override the path that
+ * should be searched for the gcloud Application Default Credentials file.
+ */
+inline char const* GoogleGcloudAdcFileEnvVar() {
+  static constexpr char kEnvVarName[] = "GOOGLE_GCLOUD_ADC_PATH_OVERRIDE";
+  return kEnvVarName;
+}
+
+/**
  * Returns the environment variable used to construct the well known ADC path.
  *
  * The directory containing a user's application configuration data, indicated

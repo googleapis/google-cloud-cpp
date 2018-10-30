@@ -46,6 +46,13 @@ std::string GoogleAdcFilePathFromEnvVarOrEmpty() {
 }
 
 std::string GoogleAdcFilePathFromWellKnownPathOrEmpty() {
+  // Allow mocking out this value for testing.
+  auto override_path =
+      google::cloud::internal::GetEnv(GoogleGcloudAdcFileEnvVar());
+  if (override_path.has_value()) {
+    return *override_path;
+  }
+
   // Search well known gcloud ADC path.
   auto adc_path_root = google::cloud::internal::GetEnv(GoogleAdcHomeEnvVar());
   if (adc_path_root.has_value()) {

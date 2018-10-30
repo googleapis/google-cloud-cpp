@@ -31,14 +31,19 @@ using ::testing::HasSubstr;
 class DefaultServiceAccountFileTest : public ::testing::Test {
  public:
   DefaultServiceAccountFileTest()
-      : home_env_var_(GoogleAdcHomeEnvVar()), adc_env_var_(GoogleAdcEnvVar()) {}
+      : home_env_var_(GoogleAdcHomeEnvVar()),
+        adc_env_var_(GoogleAdcEnvVar()),
+        gcloud_path_override_env_var_(GoogleGcloudAdcFileEnvVar()) {}
 
  protected:
   void SetUp() override {
     home_env_var_.SetUp();
     adc_env_var_.SetUp();
+    gcloud_path_override_env_var_.SetUp();
   }
+
   void TearDown() override {
+    gcloud_path_override_env_var_.TearDown();
     adc_env_var_.TearDown();
     home_env_var_.TearDown();
   }
@@ -46,6 +51,7 @@ class DefaultServiceAccountFileTest : public ::testing::Test {
  protected:
   EnvironmentVariableRestore home_env_var_;
   EnvironmentVariableRestore adc_env_var_;
+  EnvironmentVariableRestore gcloud_path_override_env_var_;
 };
 
 /// @test Verify that the specified path is given when the ADC env var is set.
@@ -60,6 +66,12 @@ TEST_F(DefaultServiceAccountFileTest, AdcEnvironmentVariableNotSet) {
   EXPECT_EQ(GoogleAdcFilePathFromEnvVarOrEmpty(), "");
 }
 
+/// @test Verify that the gcloud ADC file path can be overridden for testing.
+TEST_F(DefaultServiceAccountFileTest, GcloudAdcPathOverrideViaEnvVar) {
+  SetEnv(GoogleGcloudAdcFileEnvVar(), "/foo/bar/baz");
+  EXPECT_EQ(GoogleAdcFilePathFromWellKnownPathOrEmpty(), "/foo/bar/baz");
+}
+
 /// @test Verify that the gcloud ADC file path is given when HOME is set.
 TEST_F(DefaultServiceAccountFileTest, HomeSet) {
   SetEnv(GoogleAdcHomeEnvVar(), "/foo/bar/baz");
@@ -68,8 +80,8 @@ TEST_F(DefaultServiceAccountFileTest, HomeSet) {
 
   EXPECT_THAT(actual, HasSubstr("/foo/bar/baz"));
   // The rest of the path differs depending on the OS; just make sure that we
-  // appended the path to some JSON file to the path prefix set above.
-  EXPECT_THAT(actual, HasSubstr(".json"));
+  // appended this suffix of the path to the path prefix set above.
+  EXPECT_THAT(actual, HasSubstr("gcloud/application_default_credentials.json"));
 }
 
 /// @test Verify that the gcloud ADC file path is not given when HOME is unset.
