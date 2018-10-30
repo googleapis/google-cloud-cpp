@@ -324,6 +324,12 @@ class GcsObjectVersion(object):
             raise error_response.ErrorResponse('Missing role value')
         return self.insert_acl(entity, role)
 
+    def x_goog_hash_header(self):
+        """Return the value for the x-goog-hash header."""
+        hashes = {'md5': self.metadata.get('md5Hash', ''),
+                  'crc32c': self.metadata.get('crc32c', '')}
+        hashes = ['%s=%s' % (key, val) for key, val in hashes.iteritems() if val]
+        return ','.join(hashes)
 
 class GcsObject(object):
     """Represent a GCS Object, including all its revisions."""

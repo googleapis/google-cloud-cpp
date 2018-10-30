@@ -444,7 +444,7 @@ def objects_get(bucket_name, object_name):
     response = flask.make_response(response_payload)
     length = len(response_payload)
     response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1, length)
-    response.headers['x-goog-hash'] = 'md5=%s,crc32c=%s' % (revision.metadata.get('md5Hash', ''), revision.metadata.get('crc32c', ''))
+    response.headers['x-goog-hash'] = revision.x_goog_hash_header()
     return response
 
 
@@ -674,7 +674,7 @@ def xmlapi_get_object(bucket_name, object_name):
     response = flask.make_response(response_payload)
     length = len(response_payload)
     response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1, length)
-    response.headers['x-goog-hash'] = 'md5=%s,crc32c=%s' % (revision.metadata.get('md5Hash', ''), revision.metadata.get('crc32c', ''))
+    response.headers['x-goog-hash'] = revision.x_goog_hash_header()
     return response
 
 
@@ -699,7 +699,7 @@ def xmlapi_put_object(bucket_name, object_name):
     revision = blob.insert_xml(gcs_url, flask.request)
     testbench_utils.insert_object(object_path, blob)
     response = flask.make_response('')
-    response.headers['x-goog-hash'] = 'md5=%s,crc32c=%s' % (revision.metadata.get('md5Hash', ''), revision.metadata.get('crc32c', ''))
+    response.headers['x-goog-hash'] = revision.x_goog_hash_header()
     return response
 
 
