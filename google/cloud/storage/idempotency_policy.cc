@@ -262,64 +262,71 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::InsertObjectMediaRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  return request.HasOption<IfGenerationMatch>();
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::CopyObjectRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  // Only the pre-conditions on the destination matter. If they are not set, it
+  // is possible for the request to succeed more than once, even if the source
+  // pre-conditions are set. If they are set, the operation can only succeed
+  // once, but the results may be different.
+  return request.HasOption<IfGenerationMatch>();
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::GetObjectMetadataRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
   return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::ReadObjectRangeRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
   return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::InsertObjectStreamingRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  return request.HasOption<IfGenerationMatch>();
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::ListObjectsRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
   return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::DeleteObjectRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  return request.HasOption<IfGenerationMatch>();
 }
+
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::UpdateObjectRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  return (request.HasOption<IfMatchEtag>() or
+      request.HasOption<IfMetagenerationMatch>());
 }
+
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::PatchObjectRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  return (request.HasOption<IfMatchEtag>() or
+      request.HasOption<IfMetagenerationMatch>());
 }
+
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::ComposeObjectRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  // Only the pre-conditions on the destination matter. If they are not set, it
+  // is possible for the request to succeed more than once, even if the source
+  // pre-conditions are set. If they are set, the operation can only succeed
+  // once, but the results may be different.
+  return request.HasOption<IfGenerationMatch>();
 }
+
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::RewriteObjectRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  // Only the pre-conditions on the destination matter. If they are not set, it
+  // is possible for the request to succeed more than once, even if the source
+  // pre-conditions are set. If they are set, the operation can only succeed
+  // once, but the results may be different.
+  return request.HasOption<IfGenerationMatch>();
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
