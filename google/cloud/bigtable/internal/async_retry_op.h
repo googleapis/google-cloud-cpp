@@ -28,33 +28,122 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
 /**
+ * A dummy function object only to ease specification of retriable operations.
+ *
+ * It is an example type which could be passed to `Start()` member function of
+ * the operation to be retried.
+ */
+struct ExampleStartCallback {
+  void operator()(CompletionQueue&, grpc::Status&) const {}
+};
+
+/**
+ * SFINAE detector whether class `C` has a `Start` member function.
+ *
+ * Catch-all, negative branch.
+ */
+template <typename C, typename M = void>
+struct HasStart : public std::false_type {};
+
+/**
+ * SFINAE detector whether class `C` has a `Start` member function.
+ *
+ * Positive branch.
+ */
+template <typename C>
+struct HasStart<C, google::cloud::internal::void_t<decltype(
+                       &C::template Start<ExampleStartCallback>)>>
+    : public std::true_type {};
+
+/**
+ * SFINAE detector whether class `C` has a `AccumulatedResult` member function.
+ *
+ * Catch-all, negative branch.
+ */
+template <typename C, typename M = void>
+struct HasAccumulatedResult : public std::false_type {};
+
+/**
+ * SFINAE detector whether class `C` has a `AccumulatedResult` member function.
+ *
+ * Positive branch.
+ */
+template <typename C>
+struct HasAccumulatedResult<
+    C, google::cloud::internal::void_t<decltype(&C::AccumulatedResult)>>
+    : public std::true_type {};
+
+/**
  * Perform an asynchronous operation, with retries.
  *
  * @tparam IdempotencyPolicy the policy used to determine if an operation is
  *     idempotent. In most cases this is just `ConstantIdempotentPolicy`
  *     because the decision around idempotency can be made before the retry loop
  *     starts. Some calls may dynamically determine if a retry (or a partial
- *     retry for BulkApply) are idempotent.
+ *     retry for `BulkApply`) are idempotent.
  *
  * @tparam Functor the type of the function-like object that will receive the
  *     results.
  *
- * @tparam Operation a class responsible for submitting requests. Its Start()
- *     method will be used for sending the retries and the original request. In
- *     case of simple operations, it will just keep sending the same request,
- *     but in case of more sophisticated ones (e.g. BulkApply), the content
- *     might change with every retry. For reference, consult AsyncUnaryRpc.
+ * @tparam Operation a class responsible for submitting requests. Its `Start()`
+ *     member function will be used for sending the retries and the original
+ *     request. In case of simple operations, it will just keep sending the same
+ *     request, but in case of more sophisticated ones (e.g. `BulkApply`), the
+ *     content might change with every retry. For reference, consult
+ *     `AsyncUnaryRpc`.
  *
  * @tparam valid_callback_type a format parameter, uses `std::enable_if<>` to
  *     disable this template if the functor does not match the expected
  *     signature.
+ *
+ * @tparam operation_has_start_memfn a format parameter, uses `std::enable_if<>`
+ *     to disable this template if the `Operation` does not have a `Start`
+ *     member function.
+ *
+ * @tparam operation_has_accumulated_result_memfn a format parameter, uses
+ *     `std::enable_if<>` to disable this template if the `Operation` does not
+ *     have a `AccumulatedResult` member function.
+ *
+ * @tparam valid_operation_start_sig type a format parameter, uses
+ *     `std::enable_if<>` to disable this template if `Operation::Start` does
+ *     not match the expected signature.
+ *
+ * @tparam valid_accumulated_result_sig a format parameter, uses
+ *     `std::enable_if<>` to disable this template if
+ *     `Operation::AccumulatedResult` does not match the expected signature.
+ *
+ * @tparam valid_accumulated_result_res a format parameter, uses
+ *     `std::enable_if<>` to disable this template if
+ *     `Operation::AccumulatedResult` does not match
+ *     the expected return type.
  */
-template <typename IdempotencyPolicy, typename Functor, typename Operation,
-          typename std::enable_if<
-              google::cloud::internal::is_invocable<
-                  Functor, CompletionQueue&, typename Operation::Response&,
-                  grpc::Status&>::value,
-              int>::type valid_callback_type = 0>
+template <
+    typename IdempotencyPolicy, typename Functor, typename Operation,
+    typename std::enable_if<
+        google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                              typename Operation::Response&,
+                                              grpc::Status&>::value,
+        int>::type valid_callback_type = 0,
+    typename std::enable_if<HasStart<Operation>::value, int>::type
+        operation_has_start_memfn = 0,
+    typename std::enable_if<HasAccumulatedResult<Operation>::value, int>::type
+        operation_has_accumulated_result_memfn = 0,
+    typename std::enable_if<
+        google::cloud::internal::is_invocable<
+            decltype(&Operation::template Start<ExampleStartCallback>),
+            Operation&, CompletionQueue&,
+            std::unique_ptr<grpc::ClientContext>&&,
+            ExampleStartCallback&&>::value,
+        int>::type valid_operation_start_sig = 0,
+    typename std::enable_if<
+        google::cloud::internal::is_invocable<
+            decltype(&Operation::AccumulatedResult), Operation&>::value,
+        int>::type valid_accumulated_result_sig = 0,
+    typename std::enable_if<
+        std::is_same<google::cloud::internal::invoke_result_t<
+                         decltype(&Operation::AccumulatedResult), Operation&>,
+                     typename Operation::Response>::value,
+        int>::type valid_accumulated_result_res = 0>
 class AsyncRetryOp : public std::enable_shared_from_this<
                          AsyncRetryOp<IdempotencyPolicy, Functor, Operation>> {
  public:
@@ -63,14 +152,14 @@ class AsyncRetryOp : public std::enable_shared_from_this<
                         std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
                         IdempotencyPolicy idempotent_policy,
                         MetadataUpdatePolicy metadata_update_policy,
-                        Functor&& callback, Operation&& impl)
+                        Functor&& callback, Operation&& operation)
       : error_message_(error_message),
         rpc_retry_policy_(std::move(rpc_retry_policy)),
         rpc_backoff_policy_(std::move(rpc_backoff_policy)),
         idempotent_policy_(std::move(idempotent_policy)),
         metadata_update_policy_(std::move(metadata_update_policy)),
         callback_(std::forward<Functor>(callback)),
-        impl_(std::move(impl)) {}
+        operation_(std::move(operation)) {}
 
   /**
    * Kick off the asynchronous request.
@@ -84,10 +173,10 @@ class AsyncRetryOp : public std::enable_shared_from_this<
     rpc_backoff_policy_->Setup(*context);
     metadata_update_policy_.Setup(*context);
 
-    impl_.Start(cq, std::move(context),
-                [self](CompletionQueue& cq, grpc::Status& status) {
-                  self->OnCompletion(cq, status);
-                });
+    operation_.Start(cq, std::move(context),
+                     [self](CompletionQueue& cq, grpc::Status& status) {
+                       self->OnCompletion(cq, status);
+                     });
   }
 
  private:
@@ -109,7 +198,7 @@ class AsyncRetryOp : public std::enable_shared_from_this<
   void OnCompletion(CompletionQueue& cq, grpc::Status& status) {
     if (status.error_code() == grpc::StatusCode::CANCELLED) {
       // Cancelled, no retry necessary.
-      auto res = impl_.AccumulatedResult();
+      auto res = operation_.AccumulatedResult();
       grpc::Status res_status(
           grpc::StatusCode::CANCELLED,
           FullErrorMessage("pending operation cancelled", status),
@@ -119,12 +208,12 @@ class AsyncRetryOp : public std::enable_shared_from_this<
     }
     if (status.ok()) {
       // Success, just report the result.
-      auto res = impl_.AccumulatedResult();
+      auto res = operation_.AccumulatedResult();
       callback_(cq, res, status);
       return;
     }
     if (not idempotent_policy_.is_idempotent()) {
-      auto res = impl_.AccumulatedResult();
+      auto res = operation_.AccumulatedResult();
       grpc::Status res_status(
           status.error_code(),
           FullErrorMessage("non-idempotent operation failed", status),
@@ -138,7 +227,7 @@ class AsyncRetryOp : public std::enable_shared_from_this<
                                ? "permanent error"
                                : "too many transient errors",
                            status);
-      auto res = impl_.AccumulatedResult();
+      auto res = operation_.AccumulatedResult();
       grpc::Status res_status(status.error_code(), full_message,
                               status.error_details());
       callback_(cq, res, res_status);
@@ -156,7 +245,7 @@ class AsyncRetryOp : public std::enable_shared_from_this<
   void OnTimer(CompletionQueue& cq, AsyncTimerResult& timer) {
     if (timer.cancelled) {
       // Cancelled, no more action to take.
-      auto res = impl_.AccumulatedResult();
+      auto res = operation_.AccumulatedResult();
       grpc::Status res_status(grpc::StatusCode::CANCELLED,
                               FullErrorMessage("pending timer cancelled"));
       callback_(cq, res, res_status);
@@ -173,7 +262,7 @@ class AsyncRetryOp : public std::enable_shared_from_this<
   Functor callback_;
 
  protected:
-  Operation impl_;
+  Operation operation_;
 };
 
 /**

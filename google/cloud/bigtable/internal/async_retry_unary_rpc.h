@@ -31,9 +31,9 @@ namespace internal {
 /**
  * A wrapper for an unary RPC bound with client and argument.
  *
- * It binds together the client its method and its argument, so that you can
- * call it only providing the externalities. By repeatedly calling Start()
- * you'll be sending the same request over and over.
+ * It binds together the client its member function and its argument, so that
+ * you can call it only providing the externalities. By repeatedly calling
+ * `Start()` you'll be sending the same request over and over.
  *
  * @tparam Client the class implementing the asynchronous operation, examples
  *     include `DataClient`, `AdminClient`, and `InstanceAdminClient`.
@@ -68,6 +68,7 @@ class AsyncUnaryRpc {
       : client_(std::move(client)),
         call_(std::move(call)),
         request_(std::move(request)) {}
+
   /**
    * Start the bound aynchronous request.
    *
@@ -84,8 +85,7 @@ class AsyncUnaryRpc {
    *
    * @param callback the functor which will be fired in an unspecified thread
    *     once the request completes; it should accept the completion queue
-   *     (passed in the `cq` param), a AsyncUnaryRpc::AsyncResult, and
-   *     AsyncOperation::Disposition.
+   *     (passed in the `cq` param), and a `grpc::Status`.
    */
   template <typename Functor,
             typename std::enable_if<

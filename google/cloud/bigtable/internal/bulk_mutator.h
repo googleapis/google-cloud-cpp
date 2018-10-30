@@ -97,7 +97,7 @@ class BulkMutator {
 /**
  * Async-friendly version BulkMutator.
  *
- * It satisfies the requirements to be used in AsyncRetryOp.
+ * It satisfies the requirements to be used in `AsyncRetryOp`.
  *
  * It extends the normal BulkMutator with logic to do its job asynchronously.
  * Conceptually it reimplements MakeOneRequest in an async way.
