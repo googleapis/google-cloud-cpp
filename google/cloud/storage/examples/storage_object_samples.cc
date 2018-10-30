@@ -844,13 +844,13 @@ void ReleaseObjectEventBasedHold(google::cloud::storage::Client client,
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
     gcs::ObjectMetadata original =
         client.GetObjectMetadata(bucket_name, object_name);
-    gcs::ObjectMetadata metadata = client.PatchObject(
+    gcs::ObjectMetadata updated_metadata = client.PatchObject(
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetEventBasedHold(false),
         gcs::IfMetagenerationMatch(original.metageneration()));
-    std::cout << "The event hold for object " << metadata.name()
-              << " in bucket " << metadata.bucket() << " is "
-              << (metadata.event_based_hold() ? "enabled" : "disabled")
+    std::cout << "The event hold for object " << updated_metadata.name()
+              << " in bucket " << updated_metadata.bucket() << " is "
+              << (updated_metadata.event_based_hold() ? "enabled" : "disabled")
               << std::endl;
   }
   //! [release event based hold] [END storage_release_event_based_hold]
@@ -858,7 +858,7 @@ void ReleaseObjectEventBasedHold(google::cloud::storage::Client client,
 }
 
 void SetObjectTemporaryHold(google::cloud::storage::Client client, int& argc,
-                             char* argv[]) {
+                            char* argv[]) {
   if (argc != 3) {
     throw Usage{"set-object-temporary-hold <bucket-name> <object-name>"};
   }
@@ -873,17 +873,17 @@ void SetObjectTemporaryHold(google::cloud::storage::Client client, int& argc,
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetTemporaryHold(true),
         gcs::IfMetagenerationMatch(original.metageneration()));
-    std::cout << "The event hold for object " << metadata.name()
+    std::cout << "The temporary hold for object " << metadata.name()
               << " in bucket " << metadata.bucket() << " is "
               << (metadata.temporary_hold() ? "enabled" : "disabled")
               << std::endl;
   }
-      //! [set temporary hold] [END storage_set_temporary_hold]
-      (std::move(client), bucket_name, object_name);
+  //! [set temporary hold] [END storage_set_temporary_hold]
+  (std::move(client), bucket_name, object_name);
 }
 
 void ReleaseObjectTemporaryHold(google::cloud::storage::Client client,
-                                 int& argc, char* argv[]) {
+                                int& argc, char* argv[]) {
   if (argc != 3) {
     throw Usage{"release-object-temporary-hold <bucket-name> <object-name>"};
   }
@@ -898,13 +898,13 @@ void ReleaseObjectTemporaryHold(google::cloud::storage::Client client,
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetTemporaryHold(false),
         gcs::IfMetagenerationMatch(original.metageneration()));
-    std::cout << "The event hold for object " << metadata.name()
+    std::cout << "The temporary hold for object " << metadata.name()
               << " in bucket " << metadata.bucket() << " is "
               << (metadata.temporary_hold() ? "enabled" : "disabled")
               << std::endl;
   }
-      //! [release temporary hold] [END storage_release_temporary_hold]
-      (std::move(client), bucket_name, object_name);
+  //! [release temporary hold] [END storage_release_temporary_hold]
+  (std::move(client), bucket_name, object_name);
 }
 
 }  // anonymous namespace
