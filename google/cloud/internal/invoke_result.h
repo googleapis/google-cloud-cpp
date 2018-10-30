@@ -80,6 +80,24 @@ struct invoke_impl {
       -> decltype(std::forward<F>(f)(std::forward<ArgTypes>(a)...)) {
     return std::forward<F>(f)(std::forward<ArgTypes>(a)...);
   }
+
+  /**
+   * Determine the result type of calling `(c.*f)(ArgTypes...)`
+   *
+   * @param f the pointer to member function.
+   * @param c the object to call the member function on.
+   * @param a the parameters to call @p f with.
+   * @tparam F the type of the function-like object, note that in some cases the
+   *     function-like object may have multiple overloaded `operator()`, with
+   *     different return types for each.
+   * @tparam ArgTypes the types of the parameters.
+   * @return the result of `f(a...)`;
+   */
+  template <typename F, typename C, typename... ArgTypes>
+  static auto call(F f, C&& c, ArgTypes&&... a)
+      -> decltype((std::forward<C>(c).*f)(std::forward<ArgTypes>(a)...)) {
+    return (std::forward<C>(c).*f)(std::forward<ArgTypes>(a)...);
+  }
 };
 
 /**
