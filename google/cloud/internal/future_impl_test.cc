@@ -36,8 +36,11 @@ TEST(FutureImplBaseTest, Basic) {
 
 TEST(FutureImplBaseTest, WaitFor) {
   future_shared_state_base shared_state;
+  auto start = std::chrono::steady_clock::now();
   auto s = shared_state.wait_for(100_us);
+  auto elapsed = std::chrono::steady_clock::now() - start;
   EXPECT_EQ(static_cast<int>(s), static_cast<int>(std::future_status::timeout));
+  EXPECT_LE(100_us, elapsed);
   EXPECT_FALSE(shared_state.is_ready());
 }
 
@@ -53,8 +56,11 @@ TEST(FutureImplBaseTest, WaitForReady) {
 TEST(FutureImplBaseTest, WaitUntil) {
   future_shared_state_base shared_state;
   EXPECT_FALSE(shared_state.is_ready());
+  auto start = std::chrono::steady_clock::now();
   auto s = shared_state.wait_until(std::chrono::system_clock::now() + 100_us);
+  auto elapsed = std::chrono::steady_clock::now() - start;
   EXPECT_EQ(static_cast<int>(s), static_cast<int>(std::future_status::timeout));
+  EXPECT_LE(100_us, elapsed);
   EXPECT_FALSE(shared_state.is_ready());
 }
 

@@ -88,9 +88,6 @@ class future_shared_state_base {
   template <typename Rep, typename Period>
   std::future_status wait_for(std::chrono::duration<Rep, Period> duration) {
     std::unique_lock<std::mutex> lk(mu_);
-    if (not lk.owns_lock()) {
-      return std::future_status::timeout;
-    }
     bool result =
         cv_.wait_for(lk, duration, [this] { return is_ready_unlocked(); });
     if (result) {
@@ -133,7 +130,7 @@ class future_shared_state_base {
   void set_exception(std::exception_ptr ex) {
     std::unique_lock<std::mutex> lk(mu_);
     set_exception(std::move(ex), lk);
-    notify_now(lk);
+    cv_.notify_all();
   }
 
   /**
@@ -152,7 +149,7 @@ class future_shared_state_base {
     set_exception(std::make_exception_ptr(
                       std::future_error(std::future_errc::broken_promise)),
                   lk);
-    notify_now(lk);
+    cv_.notify_all();
   }
 
  protected:
@@ -165,16 +162,6 @@ class future_shared_state_base {
     }
     exception_ = std::move(ex);
     current_state_ = state::has_exception;
-  }
-
-  /// Immediately notify all waiting threads.
-  void notify_now(std::unique_lock<std::mutex>& lk) {
-    // In the future we may implement notify_at_thread_exit() to notify waiters
-    // only when the current thread exits.
-    cv_.notify_all();
-    // Release the lock after the notification because otherwise the threads
-    // may lose the state change.
-    lk.unlock();
   }
 
   mutable std::mutex mu_;
