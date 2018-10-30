@@ -37,7 +37,7 @@ const std::string QUICK_FOX_CRC32C_CHECKSUM = "ImIEBA==";
 const std::string QUICK_FOX_MD5_HASH = "nhB9nTcrtoJr2B01QqQZ1g==";
 
 TEST(HashValidator, CheckResultMismatch) {
-  HashValidator::Result result{"received-hash", "computed-hash"};
+  HashValidator::Result result{"received-hash", "computed-hash", true};
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(try { HashValidator::CheckResult("test-msg", result); } catch (
                    google::cloud::storage::HashMismatchError const& ex) {
@@ -55,7 +55,7 @@ TEST(HashValidator, CheckResultMismatch) {
 }
 
 TEST(HashValidator, CheckResultMatch) {
-  HashValidator::Result result{"test-hash", "test-hash"};
+  HashValidator::Result result{"received-hash", "computed-hash", false};
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_NO_THROW(HashValidator::CheckResult("test-msg", result));
 #else
@@ -126,6 +126,7 @@ TEST(MD5HashValidator, Empty) {
   auto result = std::move(validator).Finish();
   EXPECT_EQ(result.computed, result.received);
   EXPECT_EQ(EMPTY_STRING_MD5_HASH, result.computed);
+  EXPECT_FALSE(result.is_mismatch);
 }
 
 TEST(MD5HashValidator, Simple) {
@@ -137,6 +138,7 @@ TEST(MD5HashValidator, Simple) {
   auto result = std::move(validator).Finish();
   EXPECT_EQ("<invalid-value-for-test>", result.received);
   EXPECT_EQ(QUICK_FOX_MD5_HASH, result.computed);
+  EXPECT_TRUE(result.is_mismatch);
 }
 
 TEST(MD5HashValidator, MultipleHashesMd5AtEnd) {
@@ -149,6 +151,7 @@ TEST(MD5HashValidator, MultipleHashesMd5AtEnd) {
   auto result = std::move(validator).Finish();
   EXPECT_EQ("<invalid-value-for-test>", result.received);
   EXPECT_EQ(QUICK_FOX_MD5_HASH, result.computed);
+  EXPECT_TRUE(result.is_mismatch);
 }
 
 TEST(MD5HashValidator, MultipleHashes) {
@@ -161,6 +164,7 @@ TEST(MD5HashValidator, MultipleHashes) {
   auto result = std::move(validator).Finish();
   EXPECT_EQ("<invalid-value-for-test>", result.received);
   EXPECT_EQ(QUICK_FOX_MD5_HASH, result.computed);
+  EXPECT_TRUE(result.is_mismatch);
 }
 
 TEST(Crc32cHashValidator, Empty) {
@@ -171,6 +175,7 @@ TEST(Crc32cHashValidator, Empty) {
   auto result = std::move(validator).Finish();
   EXPECT_EQ(result.computed, result.received);
   EXPECT_EQ(EMPTY_STRING_CRC32C_CHECKSUM, result.computed);
+  EXPECT_FALSE(result.is_mismatch);
 }
 
 TEST(Crc32cHashValidator, Simple) {
@@ -182,6 +187,7 @@ TEST(Crc32cHashValidator, Simple) {
   auto result = std::move(validator).Finish();
   EXPECT_EQ("<invalid-value-for-test>", result.received);
   EXPECT_EQ(QUICK_FOX_CRC32C_CHECKSUM, result.computed);
+  EXPECT_TRUE(result.is_mismatch);
 }
 
 TEST(Crc32cHashValidator, MultipleHashesCrc32cAtEnd) {
@@ -194,6 +200,7 @@ TEST(Crc32cHashValidator, MultipleHashesCrc32cAtEnd) {
   auto result = std::move(validator).Finish();
   EXPECT_EQ("<invalid-value-for-test>", result.received);
   EXPECT_EQ(QUICK_FOX_CRC32C_CHECKSUM, result.computed);
+  EXPECT_TRUE(result.is_mismatch);
 }
 
 TEST(Crc32cHashValidator, MultipleHashes) {
@@ -206,6 +213,7 @@ TEST(Crc32cHashValidator, MultipleHashes) {
   auto result = std::move(validator).Finish();
   EXPECT_EQ("<invalid-value-for-test>", result.received);
   EXPECT_EQ(QUICK_FOX_CRC32C_CHECKSUM, result.computed);
+  EXPECT_TRUE(result.is_mismatch);
 }
 
 TEST(CompositeHashValidator, Empty) {
@@ -220,6 +228,7 @@ TEST(CompositeHashValidator, Empty) {
   EXPECT_EQ("crc32c=" + EMPTY_STRING_CRC32C_CHECKSUM +
                 ",md5=" + EMPTY_STRING_MD5_HASH,
             result.computed);
+  EXPECT_FALSE(result.is_mismatch);
 }
 
 TEST(CompositeHashValidator, Simple) {
@@ -237,6 +246,7 @@ TEST(CompositeHashValidator, Simple) {
   EXPECT_EQ(
       "crc32c=" + QUICK_FOX_CRC32C_CHECKSUM + ",md5=" + QUICK_FOX_MD5_HASH,
       result.computed);
+  EXPECT_TRUE(result.is_mismatch);
 }
 
 TEST(CompositeHashValidator, ProcessMetadata) {
@@ -258,6 +268,24 @@ TEST(CompositeHashValidator, ProcessMetadata) {
   EXPECT_EQ(
       "crc32c=" + QUICK_FOX_CRC32C_CHECKSUM + ",md5=" + QUICK_FOX_MD5_HASH,
       result.received);
+  EXPECT_FALSE(result.is_mismatch);
+}
+
+TEST(CompositeHashValidator, Missing) {
+  CompositeValidator validator(
+      google::cloud::internal::make_unique<Crc32cHashValidator>(),
+      google::cloud::internal::make_unique<MD5HashValidator>());
+  validator.Update("The quick");
+  validator.Update(" brown");
+  validator.Update(" fox jumps over the lazy dog");
+  validator.ProcessHeader("x-goog-hash", "crc32c=" + QUICK_FOX_CRC32C_CHECKSUM);
+  auto result = std::move(validator).Finish();
+  EXPECT_EQ("crc32c=" + QUICK_FOX_CRC32C_CHECKSUM + ",md5=",
+            result.received);
+  EXPECT_EQ(
+      "crc32c=" + QUICK_FOX_CRC32C_CHECKSUM + ",md5=" + QUICK_FOX_MD5_HASH,
+      result.computed);
+  EXPECT_FALSE(result.is_mismatch);
 }
 
 }  // namespace

@@ -45,7 +45,8 @@ class ObjectTestEnvironment : public ::testing::Environment {
 std::string ObjectTestEnvironment::project_id_;
 std::string ObjectTestEnvironment::bucket_name_;
 
-class ObjectIntegrationTest : public google::cloud::storage::testing::StorageIntegrationTest {
+class ObjectIntegrationTest
+    : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   std::string MakeEntityName() {
     // We always use the viewers for the project because it is known to exist.
@@ -1341,7 +1342,7 @@ TEST_F(ObjectIntegrationTest, DefaultMD5StreamingReadXML) {
   ASSERT_FALSE(actual.empty());
 
   EXPECT_EQ(stream.received_hash(), stream.computed_hash());
-  EXPECT_EQ(stream.received_hash(), meta.md5_hash());
+  EXPECT_THAT(stream.received_hash(), HasSubstr(meta.md5_hash()));
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -1363,35 +1364,13 @@ TEST_F(ObjectIntegrationTest, DefaultMD5StreamingReadJSON) {
   ASSERT_FALSE(actual.empty());
 
   EXPECT_EQ(stream.received_hash(), stream.computed_hash());
-  EXPECT_EQ(stream.received_hash(), meta.md5_hash());
+  EXPECT_THAT(stream.received_hash(), HasSubstr(meta.md5_hash()));
 
   client.DeleteObject(bucket_name, object_name);
 }
 
-/// @test Verify that MD5 hashes can be disabled on downloads.
-TEST_F(ObjectIntegrationTest, DisableMD5StreamingReadXML) {
-  Client client;
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
-  auto object_name = MakeRandomObjectName();
-
-  // Create an object and a stream to read it back.
-  ObjectMetadata meta =
-      client.InsertObject(bucket_name, object_name, LoremIpsum(),
-                          IfGenerationMatch(0), Projection::Full());
-  auto stream =
-      client.ReadObject(bucket_name, object_name, DisableMD5Hash(true));
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  ASSERT_FALSE(stream.IsOpen());
-  ASSERT_FALSE(actual.empty());
-
-  EXPECT_TRUE(stream.computed_hash().empty());
-  EXPECT_TRUE(stream.received_hash().empty());
-
-  client.DeleteObject(bucket_name, object_name);
-}
-
-/// @test Verify that MD5 hashes can be disabled on downloads.
-TEST_F(ObjectIntegrationTest, DisableMD5StreamingReadJSON) {
+/// @test Verify that hashes and checksums can be disabled on downloads.
+TEST_F(ObjectIntegrationTest, DisableHashesStreamingReadXML) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -1402,7 +1381,30 @@ TEST_F(ObjectIntegrationTest, DisableMD5StreamingReadJSON) {
                           IfGenerationMatch(0), Projection::Full());
   auto stream =
       client.ReadObject(bucket_name, object_name, DisableMD5Hash(true),
-                        IfMetagenerationNotMatch(0));
+                        DisableCrc32cChecksum(true));
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_FALSE(stream.IsOpen());
+  ASSERT_FALSE(actual.empty());
+
+  EXPECT_TRUE(stream.computed_hash().empty());
+  EXPECT_TRUE(stream.received_hash().empty());
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that hashes and checksums can be disabled on downloads.
+TEST_F(ObjectIntegrationTest, DisableHashesStreamingReadJSON) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create an object and a stream to read it back.
+  ObjectMetadata meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), Projection::Full());
+  auto stream = client.ReadObject(
+      bucket_name, object_name, DisableMD5Hash(true),
+      DisableCrc32cChecksum(true), IfMetagenerationNotMatch(0));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(stream.IsOpen());
   ASSERT_FALSE(actual.empty());
@@ -1430,7 +1432,7 @@ TEST_F(ObjectIntegrationTest, DefaultMD5StreamingWriteXML) {
 
   ObjectMetadata meta = os.Close();
   EXPECT_EQ(os.received_hash(), os.computed_hash());
-  EXPECT_EQ(os.received_hash(), expected_md5hash);
+  EXPECT_THAT(os.received_hash(), HasSubstr(expected_md5hash));
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -1451,25 +1453,24 @@ TEST_F(ObjectIntegrationTest, DefaultMD5StreamingWriteJSON) {
 
   ObjectMetadata meta = os.Close();
   EXPECT_EQ(os.received_hash(), os.computed_hash());
-  EXPECT_EQ(os.received_hash(), expected_md5hash);
+  EXPECT_THAT(os.received_hash(), HasSubstr(expected_md5hash));
 
   client.DeleteObject(bucket_name, object_name);
 }
 
-/// @test Verify that MD5 hashes can be disabled on uploads.
-TEST_F(ObjectIntegrationTest, DisableMD5StreamingWriteXML) {
+/// @test Verify that hashes and checksums can be disabled in uploads.
+TEST_F(ObjectIntegrationTest, DisableHashesStreamingWriteXML) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
-                               Fields(""), DisableMD5Hash(true));
+                               Fields(""), DisableMD5Hash(true),
+                               DisableCrc32cChecksum(true));
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   WriteRandomLines(os, expected);
-
-  auto expected_md5hash = ComputeMD5Hash(expected.str());
 
   ObjectMetadata meta = os.Close();
   EXPECT_TRUE(os.received_hash().empty());
@@ -1478,20 +1479,19 @@ TEST_F(ObjectIntegrationTest, DisableMD5StreamingWriteXML) {
   client.DeleteObject(bucket_name, object_name);
 }
 
-/// @test Verify that MD5 hashes can be disabled on uploads.
-TEST_F(ObjectIntegrationTest, DisableMD5StreamingWriteJSON) {
+/// @test Verify that hashes and checksums can be disabled in uploads.
+TEST_F(ObjectIntegrationTest, DisableHashesStreamingWriteJSON) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
-  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
-                               DisableMD5Hash(true));
+  auto os =
+      client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                         DisableMD5Hash(true), DisableCrc32cChecksum(true));
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   WriteRandomLines(os, expected);
-
-  auto expected_md5hash = ComputeMD5Hash(expected.str());
 
   ObjectMetadata meta = os.Close();
   EXPECT_TRUE(os.received_hash().empty());

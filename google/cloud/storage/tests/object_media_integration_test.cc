@@ -260,7 +260,7 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingReadXML) {
       client.InsertObject(bucket_name, object_name, LoremIpsum(),
                           IfGenerationMatch(0), Projection::Full());
   auto stream = client.ReadObject(
-      bucket_name, object_name,
+      bucket_name, object_name, DisableCrc32cChecksum(true),
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -299,7 +299,8 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingReadJSON) {
       client.InsertObject(bucket_name, object_name, LoremIpsum(),
                           IfGenerationMatch(0), Projection::Full());
   auto stream = client.ReadObject(
-      bucket_name, object_name, IfMetagenerationNotMatch(0),
+      bucket_name, object_name, DisableCrc32cChecksum(true),
+      IfMetagenerationNotMatch(0),
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -335,10 +336,50 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingWriteXML) {
   auto object_name = MakeRandomObjectName();
 
   // Create a stream to upload an object.
-  ObjectWriteStream stream = client.WriteObject(
-      bucket_name, object_name, IfGenerationMatch(0), Fields(""),
-      CustomHeader("x-goog-testbench-instructions",
-                   "inject-upload-data-error"));
+  ObjectWriteStream stream =
+      client.WriteObject(bucket_name, object_name, DisableCrc32cChecksum(true),
+                         IfGenerationMatch(0), Fields(""),
+                         CustomHeader("x-goog-testbench-instructions",
+                                      "inject-upload-data-error"));
+  stream << LoremIpsum() << "\n";
+  stream << LoremIpsum();
+  std::string md5_hash = ComputeMD5Hash(LoremIpsum() + "\n" + LoremIpsum());
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
+    EXPECT_NE(ex.received_hash(), ex.computed_hash());
+    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
+    throw;
+  },
+               HashMismatchError);
+#else
+  stream.Close();
+  EXPECT_FALSE(stream.received_hash().empty());
+  EXPECT_FALSE(stream.computed_hash().empty());
+  EXPECT_NE(stream.received_hash(), stream.computed_hash());
+  EXPECT_EQ(stream.computed_hash(), md5_hash);
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that MD5 hash mismatches are reported by default on downloads.
+TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingWriteJSON) {
+  if (not UsingTestbench()) {
+    // This test is disabled when not using the testbench as it relies on the
+    // testbench to inject faults.
+    return;
+  }
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create a stream to upload an object.
+  ObjectWriteStream stream =
+      client.WriteObject(bucket_name, object_name, DisableCrc32cChecksum(true),
+                         IfGenerationMatch(0),
+                         CustomHeader("x-goog-testbench-instructions",
+                                      "inject-upload-data-error"));
   stream << LoremIpsum() << "\n";
   stream << LoremIpsum();
   std::string md5_hash = ComputeMD5Hash(LoremIpsum() + "\n" + LoremIpsum());
@@ -374,44 +415,6 @@ void TestPermanentFailure(Callable&& callable) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-/// @test Verify that MD5 hash mismatches are reported by default on downloads.
-TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingWriteJSON) {
-  if (not UsingTestbench()) {
-    // This test is disabled when not using the testbench as it relies on the
-    // testbench to inject faults.
-    return;
-  }
-  Client client;
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
-  auto object_name = MakeRandomObjectName();
-
-  // Create a stream to upload an object.
-  ObjectWriteStream stream =
-      client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
-                         CustomHeader("x-goog-testbench-instructions",
-                                      "inject-upload-data-error"));
-  stream << LoremIpsum() << "\n";
-  stream << LoremIpsum();
-  std::string md5_hash = ComputeMD5Hash(LoremIpsum() + "\n" + LoremIpsum());
-
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
-    EXPECT_NE(ex.received_hash(), ex.computed_hash());
-    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
-    throw;
-  },
-               HashMismatchError);
-#else
-  stream.Close();
-  EXPECT_FALSE(stream.received_hash().empty());
-  EXPECT_FALSE(stream.computed_hash().empty());
-  EXPECT_NE(stream.received_hash(), stream.computed_hash());
-  EXPECT_EQ(stream.computed_hash(), md5_hash);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-
-  client.DeleteObject(bucket_name, object_name);
-}
-
 TEST_F(ObjectMediaIntegrationTest, InsertWithCrc32c) {
   Client client;
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
@@ -420,9 +423,9 @@ TEST_F(ObjectMediaIntegrationTest, InsertWithCrc32c) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  ObjectMetadata meta = client.InsertObject(
-      bucket_name, object_name, expected, IfGenerationMatch(0),
-      Crc32cChecksumValue("6Y46Mg=="));
+  ObjectMetadata meta = client.InsertObject(bucket_name, object_name, expected,
+                                            IfGenerationMatch(0),
+                                            Crc32cChecksumValue("6Y46Mg=="));
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
 
@@ -442,9 +445,9 @@ TEST_F(ObjectMediaIntegrationTest, XmlInsertWithCrc32c) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  ObjectMetadata meta = client.InsertObject(
-      bucket_name, object_name, expected, IfGenerationMatch(0), Fields(""),
-      Crc32cChecksumValue("6Y46Mg=="));
+  ObjectMetadata meta = client.InsertObject(bucket_name, object_name, expected,
+                                            IfGenerationMatch(0), Fields(""),
+                                            Crc32cChecksumValue("6Y46Mg=="));
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
 
@@ -465,9 +468,8 @@ TEST_F(ObjectMediaIntegrationTest, InsertWithCrc32cFailure) {
 
   // This should fail because the CRC32C value is incorrect.
   TestPermanentFailure([&] {
-    client.InsertObject(
-        bucket_name, object_name, expected, IfGenerationMatch(0),
-        Crc32cChecksumValue("4UedKg=="));
+    client.InsertObject(bucket_name, object_name, expected,
+                        IfGenerationMatch(0), Crc32cChecksumValue("4UedKg=="));
   });
 }
 
@@ -480,9 +482,9 @@ TEST_F(ObjectMediaIntegrationTest, XmlInsertWithCrc32cFailure) {
 
   // This should fail because the CRC32C value is incorrect.
   TestPermanentFailure([&] {
-    client.InsertObject(
-        bucket_name, object_name, expected, IfGenerationMatch(0), Fields(""),
-        Crc32cChecksumValue("4UedKg=="));
+    client.InsertObject(bucket_name, object_name, expected,
+                        IfGenerationMatch(0), Fields(""),
+                        Crc32cChecksumValue("4UedKg=="));
   });
 }
 
@@ -504,6 +506,317 @@ TEST_F(ObjectMediaIntegrationTest, InsertWithComputedCrc32c) {
   auto stream = client.ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that CRC32C checksums are computed by default.
+TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cInsertXML) {
+  Client client(ClientOptions()
+                    .set_enable_raw_client_tracing(true)
+                    .set_enable_http_tracing(true));
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
+  auto id = LogSink::Instance().AddBackend(backend);
+  ObjectMetadata insert_meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0), Fields(""));
+  LogSink::Instance().RemoveBackend(id);
+
+  auto count =
+      std::count_if(backend->log_lines.begin(), backend->log_lines.end(),
+                    [](std::string const& line) {
+                      return line.rfind("x-goog-hash: crc32c=", 0) == 0;
+                    });
+  EXPECT_EQ(1, count);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that CRC32C checksums are computed by default.
+TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cInsertJSON) {
+  Client client(ClientOptions()
+                    .set_enable_raw_client_tracing(true)
+                    .set_enable_http_tracing(true));
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
+  auto id = LogSink::Instance().AddBackend(backend);
+  ObjectMetadata insert_meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
+  LogSink::Instance().RemoveBackend(id);
+
+  auto count = std::count_if(
+      backend->log_lines.begin(), backend->log_lines.end(),
+      [](std::string const& line) {
+        // This is a big indirect, we detect if the upload changed to
+        // multipart/related, and if so, we assume the hash value is being used.
+        // Unfortunately I (@coryan) cannot think of a way to examine the upload
+        // contents.
+        return line.rfind("content-type: multipart/related; boundary=", 0) == 0;
+      });
+  EXPECT_EQ(1, count);
+
+  if (insert_meta.has_metadata("x_testbench_upload")) {
+    // When running against the testbench, we have some more information to
+    // verify the right upload type and contents were sent.
+    EXPECT_EQ("multipart", insert_meta.metadata("x_testbench_upload"));
+    ASSERT_TRUE(insert_meta.has_metadata("x_testbench_crc32c"));
+    auto expected_crc32c = ComputeCrc32cChecksum(LoremIpsum());
+    EXPECT_EQ(expected_crc32c, insert_meta.metadata("x_testbench_crc32c"));
+  }
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that CRC32C checksums are computed by default on downloads.
+TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cStreamingReadXML) {
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create an object and a stream to read it back.
+  ObjectMetadata meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), Projection::Full());
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_FALSE(stream.IsOpen());
+  ASSERT_FALSE(actual.empty());
+
+  EXPECT_EQ(stream.received_hash(), stream.computed_hash());
+  EXPECT_THAT(stream.received_hash(), HasSubstr(meta.crc32c()));
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that CRC32C checksums are computed by default on downloads.
+TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cStreamingReadJSON) {
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create an object and a stream to read it back.
+  ObjectMetadata meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), Projection::Full());
+  auto stream =
+      client.ReadObject(bucket_name, object_name, IfMetagenerationNotMatch(0));
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_FALSE(stream.IsOpen());
+  ASSERT_FALSE(actual.empty());
+
+  EXPECT_EQ(stream.received_hash(), stream.computed_hash());
+  EXPECT_THAT(stream.received_hash(), HasSubstr(meta.crc32c()));
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that CRC32C checksums are computed by default on uploads.
+TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cStreamingWriteXML) {
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create the object, but only if it does not exist already.
+  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                               Fields(""));
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+  WriteRandomLines(os, expected);
+
+  auto expected_crc32c = ComputeCrc32cChecksum(expected.str());
+
+  ObjectMetadata meta = os.Close();
+  EXPECT_EQ(os.received_hash(), os.computed_hash());
+  EXPECT_THAT(os.received_hash(), HasSubstr(expected_crc32c));
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that CRC32C checksums are computed by default on uploads.
+TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cStreamingWriteJSON) {
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create the object, but only if it does not exist already.
+  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+  WriteRandomLines(os, expected);
+
+  auto expected_crc32c = ComputeCrc32cChecksum(expected.str());
+
+  ObjectMetadata meta = os.Close();
+  EXPECT_EQ(os.received_hash(), os.computed_hash());
+  EXPECT_THAT(os.received_hash(), HasSubstr(expected_crc32c));
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that CRC32C checksum mismatches are reported by default on
+/// downloads.
+TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingReadXML) {
+  if (not UsingTestbench()) {
+    // This test is disabled when not using the testbench as it relies on the
+    // testbench to inject faults.
+    return;
+  }
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create an object and a stream to read it back.
+  ObjectMetadata meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), Projection::Full());
+  auto stream = client.ReadObject(
+      bucket_name, object_name,
+      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        std::string actual(std::istreambuf_iterator<char>{stream},
+                           std::istreambuf_iterator<char>{});
+      } catch (HashMismatchError const& ex) {
+        EXPECT_NE(ex.received_hash(), ex.computed_hash());
+        EXPECT_THAT(ex.received_hash(), HasSubstr(meta.crc32c()));
+        EXPECT_THAT(ex.what(), HasSubstr("mismatched hashes"));
+        throw;
+      },
+      HashMismatchError);
+#else
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_NE(stream.received_hash(), stream.computed_hash());
+  EXPECT_THAT(stream.received_hash(), HasSubstr(meta.crc32c()));
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that CRC32C checksum mismatches are reported by default on
+/// downloads.
+TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
+  if (not UsingTestbench()) {
+    // This test is disabled when not using the testbench as it relies on the
+    // testbench to inject faults.
+    return;
+  }
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create an object and a stream to read it back.
+  ObjectMetadata meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), Projection::Full());
+  auto stream = client.ReadObject(
+      bucket_name, object_name, DisableMD5Hash(true),
+      IfMetagenerationNotMatch(0),
+      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        std::string actual(std::istreambuf_iterator<char>{stream},
+                           std::istreambuf_iterator<char>{});
+      } catch (HashMismatchError const& ex) {
+        EXPECT_NE(ex.received_hash(), ex.computed_hash());
+        EXPECT_THAT(ex.what(), HasSubstr("mismatched hashes"));
+        throw;
+      },
+      HashMismatchError);
+#else
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_FALSE(stream.received_hash().empty());
+  EXPECT_FALSE(stream.computed_hash().empty());
+  EXPECT_NE(stream.received_hash(), stream.computed_hash());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that CRC32C checksum mismatches are reported by default on
+/// downloads.
+TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingWriteXML) {
+  if (not UsingTestbench()) {
+    // This test is disabled when not using the testbench as it relies on the
+    // testbench to inject faults.
+    return;
+  }
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create a stream to upload an object.
+  ObjectWriteStream stream =
+      client.WriteObject(bucket_name, object_name, DisableMD5Hash(true),
+                         IfGenerationMatch(0), Fields(""),
+                         CustomHeader("x-goog-testbench-instructions",
+                                      "inject-upload-data-error"));
+  stream << LoremIpsum() << "\n";
+  stream << LoremIpsum();
+  std::string crc32c =
+      ComputeCrc32cChecksum(LoremIpsum() + "\n" + LoremIpsum());
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
+    EXPECT_NE(ex.received_hash(), ex.computed_hash());
+    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
+    throw;
+  },
+               HashMismatchError);
+#else
+  stream.Close();
+  EXPECT_FALSE(stream.received_hash().empty());
+  EXPECT_FALSE(stream.computed_hash().empty());
+  EXPECT_NE(stream.received_hash(), stream.computed_hash());
+  EXPECT_EQ(stream.computed_hash(), crc32c);
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Verify that CRC32C checksum mismatches are reported by default on
+/// downloads.
+TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
+  if (not UsingTestbench()) {
+    // This test is disabled when not using the testbench as it relies on the
+    // testbench to inject faults.
+    return;
+  }
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create a stream to upload an object.
+  ObjectWriteStream stream = client.WriteObject(
+      bucket_name, object_name, DisableMD5Hash(true), IfGenerationMatch(0),
+      CustomHeader("x-goog-testbench-instructions",
+                   "inject-upload-data-error"));
+  stream << LoremIpsum() << "\n";
+  stream << LoremIpsum();
+  std::string crc32c =
+      ComputeCrc32cChecksum(LoremIpsum() + "\n" + LoremIpsum());
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
+    EXPECT_NE(ex.received_hash(), ex.computed_hash());
+    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
+    throw;
+  },
+               HashMismatchError);
+#else
+  stream.Close();
+  EXPECT_FALSE(stream.received_hash().empty());
+  EXPECT_FALSE(stream.computed_hash().empty());
+  EXPECT_NE(stream.received_hash(), stream.computed_hash());
+  EXPECT_EQ(stream.computed_hash(), crc32c);
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
   client.DeleteObject(bucket_name, object_name);
 }

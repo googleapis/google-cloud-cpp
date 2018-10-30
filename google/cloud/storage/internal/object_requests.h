@@ -117,9 +117,10 @@ std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r);
 class InsertObjectStreamingRequest
     : public GenericObjectRequest<
           InsertObjectStreamingRequest, ContentEncoding, ContentType,
-          DisableMD5Hash, EncryptionKey, IfGenerationMatch,
-          IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
-          KmsKeyName, MD5HashValue, PredefinedAcl, Projection, UserProject> {
+          Crc32cChecksumValue, DisableCrc32cChecksum, DisableMD5Hash,
+          EncryptionKey, IfGenerationMatch, IfGenerationNotMatch,
+          IfMetagenerationMatch, IfMetagenerationNotMatch, KmsKeyName,
+          MD5HashValue, PredefinedAcl, Projection, UserProject> {
  public:
   using GenericObjectRequest::GenericObjectRequest;
 };
@@ -170,10 +171,10 @@ std::ostream& operator<<(std::ostream& os, CopyObjectRequest const& r);
  * Represents a request to the `Objects: get` API with `alt=media`.
  */
 class ReadObjectRangeRequest
-    : public GenericObjectRequest<ReadObjectRangeRequest, DisableMD5Hash,
-                                  EncryptionKey, Generation, IfGenerationMatch,
-                                  IfGenerationNotMatch, IfMetagenerationMatch,
-                                  IfMetagenerationNotMatch, UserProject> {
+    : public GenericObjectRequest<
+          ReadObjectRangeRequest, DisableCrc32cChecksum, DisableMD5Hash,
+          EncryptionKey, Generation, IfGenerationMatch, IfGenerationNotMatch,
+          IfMetagenerationMatch, IfMetagenerationNotMatch, UserProject> {
  public:
   ReadObjectRangeRequest() : GenericObjectRequest(), begin_(0), end_(0) {}
 

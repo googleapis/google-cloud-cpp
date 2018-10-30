@@ -48,22 +48,34 @@ std::shared_ptr<CurlHandleFactory> CreateHandleFactory(
       options.connection_pool_size());
 }
 
+std::unique_ptr<HashValidator> CreateHashValidator(bool disable_md5,
+                                                   bool disable_crc32c) {
+  if (disable_md5 and disable_crc32c) {
+    return google::cloud::internal::make_unique<NullHashValidator>();
+  }
+  if (disable_md5) {
+    return google::cloud::internal::make_unique<Crc32cHashValidator>();
+  }
+  if (disable_crc32c) {
+    return google::cloud::internal::make_unique<MD5HashValidator>();
+  }
+  return google::cloud::internal::make_unique<CompositeValidator>(
+      google::cloud::internal::make_unique<Crc32cHashValidator>(),
+      google::cloud::internal::make_unique<MD5HashValidator>());
+}
+
 /// Create a HashValidator for a download request.
 std::unique_ptr<HashValidator> CreateHashValidator(
     ReadObjectRangeRequest const& request) {
-  if (request.HasOption<DisableMD5Hash>()) {
-    return google::cloud::internal::make_unique<NullHashValidator>();
-  }
-  return google::cloud::internal::make_unique<MD5HashValidator>();
+  return CreateHashValidator(request.HasOption<DisableMD5Hash>(),
+                             request.HasOption<DisableCrc32cChecksum>());
 }
 
 /// Create a HashValidator for an upload request.
 std::unique_ptr<HashValidator> CreateHashValidator(
     InsertObjectStreamingRequest const& request) {
-  if (request.HasOption<DisableMD5Hash>()) {
-    return google::cloud::internal::make_unique<NullHashValidator>();
-  }
-  return google::cloud::internal::make_unique<MD5HashValidator>();
+  return CreateHashValidator(request.HasOption<DisableMD5Hash>(),
+                             request.HasOption<DisableCrc32cChecksum>());
 }
 
 /// Create a HashValidator for an insert request.

@@ -324,6 +324,12 @@ class GcsObjectVersion(object):
             raise error_response.ErrorResponse('Missing role value')
         return self.insert_acl(entity, role)
 
+    def x_goog_hash_header(self):
+        """Return the value for the x-goog-hash header."""
+        hashes = {'md5': self.metadata.get('md5Hash', ''),
+                  'crc32c': self.metadata.get('crc32c', '')}
+        hashes = ['%s=%s' % (key, val) for key, val in hashes.iteritems() if val]
+        return ','.join(hashes)
 
 class GcsObject(object):
     """Represent a GCS Object, including all its revisions."""
@@ -696,6 +702,10 @@ class GcsObject(object):
         payload = json.loads(request.data)
         if payload.get('destination') is not None:
             revision.update_from_metadata(payload.get('destination'))
+        # The server often discards the MD5 Hash when composing objects, we can
+        # easily maintain them in the testbench, but dropping them helps us
+        # detect bugs sooner.
+        revision.metadata.pop('md5Hash')
         self._insert_revision(revision)
         return revision
 
