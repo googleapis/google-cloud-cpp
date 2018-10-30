@@ -83,6 +83,35 @@ struct invoke_impl {
 };
 
 /**
+ * A specialization of invoke_impl for pointers to member functions.
+ *
+ * TODO(#1360): extend the implementation to support `shared_ptr<>`,
+ * `reference_wrapper`, etc.
+ *
+ * @tparam B the decayed (via `std::decay`) type of a base class to which the
+ *     member function belongs. Currently there is no need for it, but there
+ *     might in the future if we want to implement support for smart pointers.
+ * @tparam MT the type of the member function, as obtained by `decltype`
+ */
+template <class B, class MT>
+struct invoke_impl<MT B::*> {
+  /**
+   * Determine the result type of calling `(t.*f)(ArgTypes...)`
+   *
+   * @param f the member function to call.
+   * @param t the object on which to call the member function.
+   * @param a the parameters to call @p f with.
+   * @tparam T the type of the object on which the member function is run.
+   * @tparam ArgTypes the types of the parameters.
+   * @return the result of `(t.*f)(a...)`.
+   */
+  template <class T, class... Args,
+            class = typename std::enable_if<std::is_function<MT>::value>::type>
+  static auto call(MT B::*f, T&& t, Args&&... a)
+      -> decltype((std::forward<T>(t).*f)(std::forward<Args>(a)...));
+};
+
+/**
  * Discover the result type of `INVOKE(f, a...)`.
  *
  * Recall that C++11 defines *invoking* a function-like object with given

@@ -81,6 +81,37 @@ TEST(ResultOfTest, Function) {
   // though in this test we are mostly interested in its type.
   EXPECT_EQ("42", test_function(7, "7"));
 }
+
+struct TestStruct {
+  void DoSomething(std::string const&, int) {}
+  template <typename F>
+  void DoSomethingTemplated(std::string const&, F&&) {}
+};
+
+TEST(ResultOfTest, TestMemberFn) {
+  using DoSomethingType = decltype(&TestStruct::DoSomething);
+  static_assert(is_invocable<DoSomethingType, TestStruct&, std::string const&,
+                             int>::value,
+                "expected `is_invocable<DoSomethingType, TestStruct&, "
+                "std::string const&, int>` to be true");
+  using DoSomethingTemplatedType =
+      decltype(&TestStruct::DoSomethingTemplated<std::string>);
+  static_assert(is_invocable<DoSomethingTemplatedType, TestStruct&,
+                             std::string const&, std::string&&>::value,
+                "expected `is_invocable<DoSomethingTemplatedType, TestStruct&, "
+                "std::string const&, int>` to be true");
+  using DoSomethingType = decltype(&TestStruct::DoSomething);
+  static_assert(not is_invocable<DoSomethingType, TestStruct&, int, int>::value,
+                "expected `is_invocable<DoSomethingType, TestStruct&, "
+                "std::string const&, int>` to be true");
+  using DoSomethingTemplatedType =
+      decltype(&TestStruct::DoSomethingTemplated<std::string>);
+  static_assert(not is_invocable<DoSomethingTemplatedType, TestStruct&, int,
+                                 std::string&&>::value,
+                "expected `is_invocable<DoSomethingTemplatedType, TestStruct&, "
+                "std::string const&, int>` to be true");
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
