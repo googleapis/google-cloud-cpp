@@ -100,6 +100,16 @@ TEST(ResultOfTest, TestMemberFn) {
                              std::string const&, std::string&&>::value,
                 "expected `is_invocable<DoSomethingTemplatedType, TestStruct&, "
                 "std::string const&, int>` to be true");
+  using DoSomethingType = decltype(&TestStruct::DoSomething);
+  static_assert(not is_invocable<DoSomethingType, TestStruct&, int, int>::value,
+                "expected `is_invocable<DoSomethingType, TestStruct&, "
+                "std::string const&, int>` to be true");
+  using DoSomethingTemplatedType =
+      decltype(&TestStruct::DoSomethingTemplated<std::string>);
+  static_assert(not is_invocable<DoSomethingTemplatedType, TestStruct&, int,
+                                 std::string&&>::value,
+                "expected `is_invocable<DoSomethingTemplatedType, TestStruct&, "
+                "std::string const&, int>` to be true");
 }
 
 }  // namespace
