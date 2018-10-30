@@ -581,13 +581,14 @@ void EnableDefaultEventBasedHold(google::cloud::storage::Client client,
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
     gcs::BucketMetadata original = client.GetBucketMetadata(bucket_name);
-    gcs::BucketMetadata metadata = client.PatchBucket(
+    gcs::BucketMetadata updated_metadata = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetDefaultEventBasedHold(true),
         gcs::IfMetagenerationMatch(original.metageneration()));
     std::cout << "The default event-based hold for objects in bucket "
               << bucket_name << " is "
-              << (metadata.default_event_based_hold() ? "enabled" : "disabled")
+              << (updated_metadata.default_event_based_hold() ? "enabled"
+                                                              : "disabled")
               << std::endl;
   }
   // [END storage_enable_default_event_based_hold]
@@ -605,12 +606,15 @@ void DisableDefaultEventBasedHold(google::cloud::storage::Client client,
   // [START storage_disable_default_event_based_hold]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
-    gcs::BucketMetadata metadata = client.PatchBucket(
+    gcs::BucketMetadata original = client.GetBucketMetadata(bucket_name);
+    gcs::BucketMetadata updated_metadata = client.PatchBucket(
         bucket_name,
-        gcs::BucketMetadataPatchBuilder().SetDefaultEventBasedHold(true));
+        gcs::BucketMetadataPatchBuilder().SetDefaultEventBasedHold(false),
+        gcs::IfMetagenerationMatch(original.metageneration()));
     std::cout << "The default event-based hold for objects in bucket "
               << bucket_name << " is "
-              << (metadata.default_event_based_hold() ? "enabed" : "disabled")
+              << (updated_metadata.default_event_based_hold() ? "enabled"
+                                                              : "disabled")
               << std::endl;
   }
   // [END storage_disable_default_event_based_hold]
@@ -654,17 +658,17 @@ void SetRetentionPolicy(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::chrono::seconds period) {
     gcs::BucketMetadata original = client.GetBucketMetadata(bucket_name);
-    gcs::BucketMetadata metadata = client.PatchBucket(
+    gcs::BucketMetadata updated_metadata = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetRetentionPolicy(period),
         gcs::IfMetagenerationMatch(original.metageneration()));
-    if (not metadata.has_retention_policy()) {
+    if (not updated_metadata.has_retention_policy()) {
       std::cout << "The bucket " << bucket_name
                 << " does not have a retention policy set." << std::endl;
       return;
     }
     std::cout << "The bucket " << bucket_name << " retention policy is set to "
-              << metadata.retention_policy() << std::endl;
+              << updated_metadata.retention_policy() << std::endl;
   }
   // [END storage_set_retention_policy]
   //! [set retention policy]
@@ -672,7 +676,7 @@ void SetRetentionPolicy(google::cloud::storage::Client client, int& argc,
 }
 
 void RemoveRetentionPolicy(google::cloud::storage::Client client, int& argc,
-                        char* argv[]) {
+                           char* argv[]) {
   if (argc != 2) {
     throw Usage{"remove-retention-policy <bucket-name>"};
   }
@@ -682,16 +686,16 @@ void RemoveRetentionPolicy(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
     gcs::BucketMetadata original = client.GetBucketMetadata(bucket_name);
-    gcs::BucketMetadata metadata = client.PatchBucket(
-        bucket_name,
-        gcs::BucketMetadataPatchBuilder().ResetRetentionPolicy());
-    if (not metadata.has_retention_policy()) {
+    gcs::BucketMetadata updated_metadata = client.PatchBucket(
+        bucket_name, gcs::BucketMetadataPatchBuilder().ResetRetentionPolicy(),
+        gcs::IfMetagenerationMatch(original.metageneration()));
+    if (not updated_metadata.has_retention_policy()) {
       std::cout << "The bucket " << bucket_name
                 << " does not have a retention policy set." << std::endl;
       return;
     }
     std::cout << "The bucket " << bucket_name << " retention policy is set to "
-              << metadata.retention_policy() << std::endl;
+              << updated_metadata.retention_policy() << std::endl;
   }
   // [END storage_remove_retention_policy]
   //! [remove retention policy]
@@ -707,7 +711,7 @@ int main(int argc, char* argv[]) try {
   //! [create client]
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char*[])>;
+      std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"list-buckets", &ListBuckets},
       {"list-buckets-for-project", &ListBucketsForProject},
