@@ -282,6 +282,123 @@ class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
   //@}
 };
 
+/**
+ * A IdempotencyPolicy that only retries strictly idempotent requests.
+ */
+class StrictIdempotencyPolicy : public IdempotencyPolicy {
+ public:
+  StrictIdempotencyPolicy() = default;
+
+  std::unique_ptr<IdempotencyPolicy> clone() const override;
+
+  //@{
+  /// @name Bucket resource operations
+  bool IsIdempotent(internal::ListBucketsRequest const& request) const override;
+  bool IsIdempotent(
+      internal::CreateBucketRequest const& request) const override;
+  bool IsIdempotent(
+      internal::GetBucketMetadataRequest const& request) const override;
+  bool IsIdempotent(
+      internal::DeleteBucketRequest const& request) const override;
+  bool IsIdempotent(
+      internal::UpdateBucketRequest const& request) const override;
+  bool IsIdempotent(internal::PatchBucketRequest const& request) const override;
+  bool IsIdempotent(
+      internal::GetBucketIamPolicyRequest const& request) const override;
+  bool IsIdempotent(
+      internal::SetBucketIamPolicyRequest const& request) const override;
+  bool IsIdempotent(
+      internal::TestBucketIamPermissionsRequest const& request) const override;
+  //@}
+
+  //@{
+  /// @name Object resource operations
+  bool IsIdempotent(
+      internal::InsertObjectMediaRequest const& request) const override;
+  bool IsIdempotent(internal::CopyObjectRequest const& request) const override;
+  bool IsIdempotent(
+      internal::GetObjectMetadataRequest const& request) const override;
+  bool IsIdempotent(
+      internal::ReadObjectRangeRequest const& request) const override;
+  bool IsIdempotent(
+      internal::InsertObjectStreamingRequest const& request) const override;
+  bool IsIdempotent(internal::ListObjectsRequest const& request) const override;
+  bool IsIdempotent(
+      internal::DeleteObjectRequest const& request) const override;
+  bool IsIdempotent(
+      internal::UpdateObjectRequest const& request) const override;
+  bool IsIdempotent(internal::PatchObjectRequest const& request) const override;
+  bool IsIdempotent(
+      internal::ComposeObjectRequest const& request) const override;
+  bool IsIdempotent(
+      internal::RewriteObjectRequest const& request) const override;
+  //@}
+
+  //@{
+  /// @name BucketAccessControls resource operations
+  bool IsIdempotent(
+      internal::ListBucketAclRequest const& request) const override;
+  bool IsIdempotent(
+      internal::CreateBucketAclRequest const& request) const override;
+  bool IsIdempotent(
+      internal::DeleteBucketAclRequest const& request) const override;
+  bool IsIdempotent(
+      internal::GetBucketAclRequest const& request) const override;
+  bool IsIdempotent(
+      internal::UpdateBucketAclRequest const& request) const override;
+  bool IsIdempotent(
+      internal::PatchBucketAclRequest const& request) const override;
+  //@}
+
+  //@{
+  /// @name ObjectAccessControls operations
+  bool IsIdempotent(
+      internal::ListObjectAclRequest const& request) const override;
+  bool IsIdempotent(
+      internal::CreateObjectAclRequest const& request) const override;
+  bool IsIdempotent(
+      internal::DeleteObjectAclRequest const& request) const override;
+  bool IsIdempotent(
+      internal::GetObjectAclRequest const& request) const override;
+  bool IsIdempotent(
+      internal::UpdateObjectAclRequest const& request) const override;
+  bool IsIdempotent(
+      internal::PatchObjectAclRequest const& request) const override;
+  //@}
+
+  //@{
+  /// @name DefaultObjectAccessControls operations.
+  bool IsIdempotent(
+      internal::ListDefaultObjectAclRequest const& request) const override;
+  bool IsIdempotent(
+      internal::CreateDefaultObjectAclRequest const& request) const override;
+  bool IsIdempotent(
+      internal::DeleteDefaultObjectAclRequest const& request) const override;
+  bool IsIdempotent(
+      internal::GetDefaultObjectAclRequest const& request) const override;
+  bool IsIdempotent(
+      internal::UpdateDefaultObjectAclRequest const& request) const override;
+  bool IsIdempotent(
+      internal::PatchDefaultObjectAclRequest const& request) const override;
+  //@}
+
+  //@{
+  bool IsIdempotent(
+      internal::GetProjectServiceAccountRequest const& request) const override;
+  //@}
+
+  //@{
+  bool IsIdempotent(
+      internal::ListNotificationsRequest const& request) const override;
+  bool IsIdempotent(
+      internal::CreateNotificationRequest const& request) const override;
+  bool IsIdempotent(
+      internal::GetNotificationRequest const& request) const override;
+  bool IsIdempotent(
+      internal::DeleteNotificationRequest const& request) const override;
+  //@}
+};
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
