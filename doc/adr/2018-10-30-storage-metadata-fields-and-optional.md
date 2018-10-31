@@ -49,11 +49,21 @@ easier to operate on these fields. For a field called `foo` these are:
 * `set_foo()` sets the field (for writable fields).
 
 **Consequences**: The advantage of this approach is that most fields are easy
-to use most of the time. The disadvantage of this approach is the ambiguity
-when the application filters the returned fields. It also requires more thought
-when a field has different semantics for "not there" vs. "the default value".
+to use most of the time. The disadvantage of this approach include:
+
+* The ambiguity when the application filters the returned fields, the value
+  may be the default value because the client did not get the field.
+* As applications change over time and they start filtering different fields
+  the code may assume that the value of a field is valid, but it has a default
+  value. With optionals the application should crash during testing, or may
+  be programmed defensively since the start. 
+* It also requires more thought designing the classes a field has different
+  semantics for "not there" vs. "the default value".
 
 **Reference**
 
 This was originally discussed in
 [#934](https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues/934).
+
+The original [PR](https://github.com/GoogleCloudPlatform/google-cloud-cpp/pull/1358)
+also has some interesting discussions.
