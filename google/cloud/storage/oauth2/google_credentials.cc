@@ -32,7 +32,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
 std::unique_ptr<Credentials> LoadCredsFromPath(std::string const& path) {
-  using google::cloud::internal::make_unique;
   using google::cloud::internal::RaiseRuntimeError;
   namespace nl = google::cloud::storage::internal::nl;
 
@@ -47,10 +46,12 @@ std::unique_ptr<Credentials> LoadCredsFromPath(std::string const& path) {
   }
   std::string cred_type = cred_json.value("type", "no type given");
   if (cred_type == "authorized_user") {
-    return make_unique<AuthorizedUserCredentials<>>(contents, path);
+    return google::cloud::internal::make_unique<AuthorizedUserCredentials<>>(
+        contents, path);
   }
   if (cred_type == "service_account") {
-    return make_unique<ServiceAccountCredentials<>>(contents, path);
+    return google::cloud::internal::make_unique<ServiceAccountCredentials<>>(
+        contents, path);
   }
   RaiseRuntimeError(
       "Unsupported credential type (" + cred_type +
