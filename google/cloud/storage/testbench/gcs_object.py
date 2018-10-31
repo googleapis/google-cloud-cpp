@@ -381,6 +381,30 @@ class GcsObject(object):
             self.generation = sorted(self.revisions.keys())[-1]
         return False
 
+    @classmethod
+    def _remove_non_writable_keys(cls, metadata):
+        """Remove the keys from metadata (an update or patch) that are not
+         writable.
+
+         Both `Objects: patch` and `Objects: update` either ignore non-writable
+         keys or return 400 if the key does not match the current value. In
+         the testbench we simply always ignore them, to make life easier.
+
+         :param metadata:dict a dictionary representing a patch or
+             update to the metadata.
+         :return metadata but with only any non-writable keys removed.
+         :rtype: dict
+         """
+        writeable_keys = {
+            'acl', 'cacheControl', 'contentDisposition', 'contentEncoding',
+            'contentLanguage', 'contentType', 'eventBasedHold', 'metadata',
+            'temporaryHold'
+        }
+        for key in metadata.keys():
+            if key not in writeable_keys:
+                metadata.pop(key, None)
+        return metadata
+
     def update_revision(self, request):
         """Update the metadata of particular object revision or raise.
 
@@ -399,7 +423,7 @@ class GcsObject(object):
                 raise error_response.ErrorResponse(
                     'Precondition Failed: generation %s not found' %
                     generation)
-        metadata = json.loads(request.data)
+        metadata = GcsObject._remove_non_writable_keys(json.loads(request.data))
         version.update_from_metadata(metadata)
         return version
 
@@ -421,17 +445,7 @@ class GcsObject(object):
                 raise error_response.ErrorResponse(
                     'Precondition Failed: generation %s not found' %
                     generation)
-        patch = json.loads(request.data)
-        writeable_keys = {
-            'acl', 'cacheControl', 'contentDisposition', 'contentEncoding',
-            'contentLanguage', 'contentType', 'eventBasedHold', 'metadata',
-            'temporaryHold'
-        }
-        for key, value in patch.iteritems():
-            if key not in writeable_keys:
-                raise error_response.ErrorResponse(
-                    'Invalid metadata change. %s is not writeable' % key,
-                    status_code=412)
+        patch = GcsObject._remove_non_writable_keys(json.loads(request.data))
         patched = testbench_utils.json_api_patch(
             version.metadata, patch, recurse_on={'metadata'})
         patched['metageneration'] = patched.get('metageneration', 0) + 1
