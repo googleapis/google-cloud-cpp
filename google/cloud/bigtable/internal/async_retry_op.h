@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_RETRY_OP_H_
 
 #include "google/cloud/bigtable/completion_queue.h"
+#include "google/cloud/bigtable/internal/conjunction.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
@@ -33,7 +34,7 @@ namespace internal {
  * It is an example type which could be passed to `Start()` member function of
  * the operation to be retried.
  */
-struct ExampleStartCallback {
+struct PrototypeStartCallback {
   void operator()(CompletionQueue&, grpc::Status&) const {}
 };
 
@@ -52,7 +53,7 @@ struct HasStart : public std::false_type {};
  */
 template <typename C>
 struct HasStart<C, google::cloud::internal::void_t<decltype(
-                       &C::template Start<ExampleStartCallback>)>>
+                       &C::template Start<PrototypeStartCallback>)>>
     : public std::true_type {};
 
 /**
@@ -74,6 +75,36 @@ struct HasAccumulatedResult<
     : public std::true_type {};
 
 /**
+ * A check if the template parameter meets criteria for `AsyncRetryOp`.
+ *
+ * This struct inherits from `std::true_type` of `std::false_type` depending on
+ * whether it meets the criteria for an `Operation` parameter to `AsyncRetryOp`.
+ *
+ * These criteria are:
+ *  - has a `Start` member function,
+ *  - has a `AccumulatedResult` member function,
+ *  - the `Start` function is invokable with `CompletionQueue&`,
+ *    `std::unique_ptr<grpc::ClientContext>&&` and `Functor&&`, where `Functor`
+ *    is invokable with `CompletionQueue&` and `grpc::Status&`,
+ *  - the `AccumulatedResult` is invocable with no arguments,
+ *  - the `AccumulatedResult` function has the same return type as
+ *    `Operation::Response`.
+ */
+template <typename Operation>
+struct MeetsAsyncOperationRequirements
+    : public conjunction<
+          HasStart<Operation>, HasAccumulatedResult<Operation>,
+          google::cloud::internal::is_invocable<
+              decltype(&Operation::template Start<PrototypeStartCallback>),
+              Operation&, CompletionQueue&,
+              std::unique_ptr<grpc::ClientContext>&&, PrototypeStartCallback&&>,
+          google::cloud::internal::is_invocable<
+              decltype(&Operation::AccumulatedResult), Operation&>,
+          std::is_same<google::cloud::internal::invoke_result_t<
+                           decltype(&Operation::AccumulatedResult), Operation&>,
+                       typename Operation::Response>> {};
+
+/**
  * Perform an asynchronous operation, with retries.
  *
  * @tparam IdempotencyPolicy the policy used to determine if an operation is
@@ -90,32 +121,11 @@ struct HasAccumulatedResult<
  *     request. In case of simple operations, it will just keep sending the same
  *     request, but in case of more sophisticated ones (e.g. `BulkApply`), the
  *     content might change with every retry. For reference, consult
- *     `AsyncUnaryRpc`.
+ *     `AsyncUnaryRpc` and `MeetsAsyncOperationRequirements`.
  *
  * @tparam valid_callback_type a format parameter, uses `std::enable_if<>` to
  *     disable this template if the functor does not match the expected
  *     signature.
- *
- * @tparam operation_has_start_memfn a format parameter, uses `std::enable_if<>`
- *     to disable this template if the `Operation` does not have a `Start`
- *     member function.
- *
- * @tparam operation_has_accumulated_result_memfn a format parameter, uses
- *     `std::enable_if<>` to disable this template if the `Operation` does not
- *     have a `AccumulatedResult` member function.
- *
- * @tparam valid_operation_start_sig type a format parameter, uses
- *     `std::enable_if<>` to disable this template if `Operation::Start` does
- *     not match the expected signature.
- *
- * @tparam valid_accumulated_result_sig a format parameter, uses
- *     `std::enable_if<>` to disable this template if
- *     `Operation::AccumulatedResult` does not match the expected signature.
- *
- * @tparam valid_accumulated_result_res a format parameter, uses
- *     `std::enable_if<>` to disable this template if
- *     `Operation::AccumulatedResult` does not match
- *     the expected return type.
  */
 template <
     typename IdempotencyPolicy, typename Functor, typename Operation,
@@ -124,26 +134,8 @@ template <
                                               typename Operation::Response&,
                                               grpc::Status&>::value,
         int>::type valid_callback_type = 0,
-    typename std::enable_if<HasStart<Operation>::value, int>::type
-        operation_has_start_memfn = 0,
-    typename std::enable_if<HasAccumulatedResult<Operation>::value, int>::type
-        operation_has_accumulated_result_memfn = 0,
-    typename std::enable_if<
-        google::cloud::internal::is_invocable<
-            decltype(&Operation::template Start<ExampleStartCallback>),
-            Operation&, CompletionQueue&,
-            std::unique_ptr<grpc::ClientContext>&&,
-            ExampleStartCallback&&>::value,
-        int>::type valid_operation_start_sig = 0,
-    typename std::enable_if<
-        google::cloud::internal::is_invocable<
-            decltype(&Operation::AccumulatedResult), Operation&>::value,
-        int>::type valid_accumulated_result_sig = 0,
-    typename std::enable_if<
-        std::is_same<google::cloud::internal::invoke_result_t<
-                         decltype(&Operation::AccumulatedResult), Operation&>,
-                     typename Operation::Response>::value,
-        int>::type valid_accumulated_result_res = 0>
+    typename std::enable_if<MeetsAsyncOperationRequirements<Operation>::value,
+                            int>::type operation_meets_requirements = 0>
 class AsyncRetryOp : public std::enable_shared_from_this<
                          AsyncRetryOp<IdempotencyPolicy, Functor, Operation>> {
  public:
