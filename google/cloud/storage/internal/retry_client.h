@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_CLIENT_H_
 
+#include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/retry_policy.h"
 
@@ -143,6 +144,10 @@ class RetryClient : public RawClient {
 
   void Apply(BackoffPolicy& policy) { backoff_policy_ = policy.clone(); }
 
+  void Apply(IdempotencyPolicy& policy) {
+    idempotency_policy_ = policy.clone();
+  }
+
   void ApplyPolicies() {}
 
   template <typename P, typename... Policies>
@@ -154,6 +159,7 @@ class RetryClient : public RawClient {
   std::shared_ptr<RawClient> client_;
   std::shared_ptr<RetryPolicy> retry_policy_;
   std::shared_ptr<BackoffPolicy> backoff_policy_;
+  std::shared_ptr<IdempotencyPolicy> idempotency_policy_;
 };
 
 }  // namespace internal

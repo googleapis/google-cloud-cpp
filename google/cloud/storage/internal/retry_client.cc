@@ -65,7 +65,7 @@ static typename std::enable_if<
     CheckSignature<MemberFunction>::value,
     typename CheckSignature<MemberFunction>::ReturnType>::type
 MakeCall(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
-         RawClient& client, MemberFunction function,
+         bool is_idempotent, RawClient& client, MemberFunction function,
          typename CheckSignature<MemberFunction>::RequestType const& request,
          char const* error_message) {
   google::cloud::storage::Status last_status;
@@ -75,6 +75,12 @@ MakeCall(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
       return result;
     }
     last_status = std::move(result.first);
+    if (not is_idempotent) {
+      std::ostringstream os;
+      os << "Error in non-idempotent operation " << error_message
+         << ": " << last_status;
+      google::cloud::internal::RaiseRuntimeError(os.str());
+    }
     if (not retry_policy.OnFailure(last_status)) {
       std::ostringstream os;
       if (retry_policy.IsExhausted()) {
@@ -105,6 +111,7 @@ RetryClient::RetryClient(std::shared_ptr<RawClient> client,
                                STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY,
                                STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING)
           .clone();
+  idempotency_policy_ = AlwaysRetryIdempotencyPolicy().clone();
 }
 
 ClientOptions const& RetryClient::client_options() const {
@@ -115,7 +122,8 @@ std::pair<Status, ListBucketsResponse> RetryClient::ListBuckets(
     ListBucketsRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::ListBuckets, request, __func__);
 }
 
@@ -123,7 +131,8 @@ std::pair<Status, BucketMetadata> RetryClient::CreateBucket(
     CreateBucketRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent,  *client_,
                   &RawClient::CreateBucket, request, __func__);
 }
 
@@ -131,7 +140,8 @@ std::pair<Status, BucketMetadata> RetryClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::GetBucketMetadata, request, __func__);
 }
 
@@ -139,7 +149,8 @@ std::pair<Status, EmptyResponse> RetryClient::DeleteBucket(
     DeleteBucketRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::DeleteBucket, request, __func__);
 }
 
@@ -147,7 +158,8 @@ std::pair<Status, BucketMetadata> RetryClient::UpdateBucket(
     UpdateBucketRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::UpdateBucket, request, __func__);
 }
 
@@ -155,7 +167,8 @@ std::pair<Status, BucketMetadata> RetryClient::PatchBucket(
     PatchBucketRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::PatchBucket, request, __func__);
 }
 
@@ -163,7 +176,8 @@ std::pair<Status, IamPolicy> RetryClient::GetBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::GetBucketIamPolicy, request, __func__);
 }
 
@@ -171,7 +185,8 @@ std::pair<Status, IamPolicy> RetryClient::SetBucketIamPolicy(
     SetBucketIamPolicyRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::SetBucketIamPolicy, request, __func__);
 }
 
@@ -180,7 +195,8 @@ RetryClient::TestBucketIamPermissions(
     TestBucketIamPermissionsRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::TestBucketIamPermissions, request, __func__);
 }
 
@@ -188,7 +204,8 @@ std::pair<Status, ObjectMetadata> RetryClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::InsertObjectMedia, request, __func__);
 }
 
@@ -196,7 +213,8 @@ std::pair<Status, ObjectMetadata> RetryClient::CopyObject(
     CopyObjectRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::CopyObject, request, __func__);
 }
 
@@ -204,7 +222,8 @@ std::pair<Status, ObjectMetadata> RetryClient::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::GetObjectMetadata, request, __func__);
 }
 
@@ -212,7 +231,8 @@ std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> RetryClient::ReadObject(
     ReadObjectRangeRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::ReadObject, request, __func__);
 }
 
@@ -221,7 +241,8 @@ RetryClient::WriteObject(
     internal::InsertObjectStreamingRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::WriteObject, request, __func__);
 }
 
@@ -229,7 +250,8 @@ std::pair<Status, ListObjectsResponse> RetryClient::ListObjects(
     ListObjectsRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::ListObjects, request, __func__);
 }
 
@@ -237,7 +259,8 @@ std::pair<Status, EmptyResponse> RetryClient::DeleteObject(
     DeleteObjectRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::DeleteObject, request, __func__);
 }
 
@@ -245,7 +268,8 @@ std::pair<Status, ObjectMetadata> RetryClient::UpdateObject(
     UpdateObjectRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::UpdateObject, request, __func__);
 }
 
@@ -253,7 +277,8 @@ std::pair<Status, ObjectMetadata> RetryClient::PatchObject(
     PatchObjectRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::PatchObject, request, __func__);
 }
 
@@ -261,7 +286,8 @@ std::pair<Status, ObjectMetadata> RetryClient::ComposeObject(
     ComposeObjectRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::ComposeObject, request, __func__);
 }
 
@@ -269,7 +295,8 @@ std::pair<Status, RewriteObjectResponse> RetryClient::RewriteObject(
     RewriteObjectRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::RewriteObject, request, __func__);
 }
 
@@ -277,7 +304,8 @@ std::pair<Status, ListBucketAclResponse> RetryClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::ListBucketAcl, request, __func__);
 }
 
@@ -285,7 +313,8 @@ std::pair<Status, BucketAccessControl> RetryClient::GetBucketAcl(
     GetBucketAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::GetBucketAcl, request, __func__);
 }
 
@@ -293,7 +322,8 @@ std::pair<Status, BucketAccessControl> RetryClient::CreateBucketAcl(
     CreateBucketAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::CreateBucketAcl, request, __func__);
 }
 
@@ -301,7 +331,8 @@ std::pair<Status, EmptyResponse> RetryClient::DeleteBucketAcl(
     DeleteBucketAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::DeleteBucketAcl, request, __func__);
 }
 
@@ -309,7 +340,8 @@ std::pair<Status, ListObjectAclResponse> RetryClient::ListObjectAcl(
     ListObjectAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::ListObjectAcl, request, __func__);
 }
 
@@ -317,7 +349,8 @@ std::pair<Status, BucketAccessControl> RetryClient::UpdateBucketAcl(
     UpdateBucketAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::UpdateBucketAcl, request, __func__);
 }
 
@@ -325,7 +358,8 @@ std::pair<Status, BucketAccessControl> RetryClient::PatchBucketAcl(
     PatchBucketAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::PatchBucketAcl, request, __func__);
 }
 
@@ -333,7 +367,8 @@ std::pair<Status, ObjectAccessControl> RetryClient::CreateObjectAcl(
     CreateObjectAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::CreateObjectAcl, request, __func__);
 }
 
@@ -341,7 +376,8 @@ std::pair<Status, EmptyResponse> RetryClient::DeleteObjectAcl(
     DeleteObjectAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::DeleteObjectAcl, request, __func__);
 }
 
@@ -349,7 +385,8 @@ std::pair<Status, ObjectAccessControl> RetryClient::GetObjectAcl(
     GetObjectAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::GetObjectAcl, request, __func__);
 }
 
@@ -357,7 +394,8 @@ std::pair<Status, ObjectAccessControl> RetryClient::UpdateObjectAcl(
     UpdateObjectAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::UpdateObjectAcl, request, __func__);
 }
 
@@ -365,7 +403,8 @@ std::pair<Status, ObjectAccessControl> RetryClient::PatchObjectAcl(
     PatchObjectAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::PatchObjectAcl, request, __func__);
 }
 
@@ -373,7 +412,8 @@ std::pair<Status, ListDefaultObjectAclResponse>
 RetryClient::ListDefaultObjectAcl(ListDefaultObjectAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::ListDefaultObjectAcl, request, __func__);
 }
 
@@ -381,7 +421,8 @@ std::pair<Status, ObjectAccessControl> RetryClient::CreateDefaultObjectAcl(
     CreateDefaultObjectAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::CreateDefaultObjectAcl, request, __func__);
 }
 
@@ -389,7 +430,8 @@ std::pair<Status, EmptyResponse> RetryClient::DeleteDefaultObjectAcl(
     DeleteDefaultObjectAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::DeleteDefaultObjectAcl, request, __func__);
 }
 
@@ -397,7 +439,8 @@ std::pair<Status, ObjectAccessControl> RetryClient::GetDefaultObjectAcl(
     GetDefaultObjectAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::GetDefaultObjectAcl, request, __func__);
 }
 
@@ -405,7 +448,8 @@ std::pair<Status, ObjectAccessControl> RetryClient::UpdateDefaultObjectAcl(
     UpdateDefaultObjectAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::UpdateDefaultObjectAcl, request, __func__);
 }
 
@@ -413,7 +457,8 @@ std::pair<Status, ObjectAccessControl> RetryClient::PatchDefaultObjectAcl(
     PatchDefaultObjectAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::PatchDefaultObjectAcl, request, __func__);
 }
 
@@ -421,7 +466,8 @@ std::pair<Status, ServiceAccount> RetryClient::GetServiceAccount(
     GetProjectServiceAccountRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::GetServiceAccount, request, __func__);
 }
 
@@ -429,7 +475,8 @@ std::pair<Status, ListNotificationsResponse> RetryClient::ListNotifications(
     ListNotificationsRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::ListNotifications, request, __func__);
 }
 
@@ -437,7 +484,8 @@ std::pair<Status, NotificationMetadata> RetryClient::CreateNotification(
     CreateNotificationRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::CreateNotification, request, __func__);
 }
 
@@ -445,7 +493,8 @@ std::pair<Status, NotificationMetadata> RetryClient::GetNotification(
     GetNotificationRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::GetNotification, request, __func__);
 }
 
@@ -453,7 +502,8 @@ std::pair<Status, EmptyResponse> RetryClient::DeleteNotification(
     DeleteNotificationRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, *client_,
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::DeleteNotification, request, __func__);
 }
 

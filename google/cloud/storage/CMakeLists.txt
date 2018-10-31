@@ -103,6 +103,8 @@ add_library(storage_client
             client_options.cc
             hashing_options.h
             hashing_options.cc
+            idempotency_policy.h
+            idempotency_policy.cc
             internal/access_control_common.h
             internal/access_control_common.cc
             internal/binary_data_as_debug_string.h
