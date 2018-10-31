@@ -50,7 +50,7 @@ TEST(StorageVersionTest, NoBuildInfoInRelease) {
               Not(HasSubstr("+" + google::cloud::internal::gitrev())));
 }
 
-/// @test Verify the version has the build infor for development builds.
+/// @test Verify the version has the build info for development builds.
 TEST(StorageVersionTest, HasBuildInfoInDevelopment) {
   if (google::cloud::internal::is_release()) {
     return;
