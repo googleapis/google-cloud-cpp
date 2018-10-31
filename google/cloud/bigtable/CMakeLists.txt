@@ -115,6 +115,13 @@ add_dependencies(skip-scanbuild-targets bigtable_protos)
 # Generate the version information from the CMake values.
 configure_file(version_info.h.in version_info.h)
 
+# Export the version information for Bazel.
+include(CreateBazelConfig)
+export_variables_to_bazel("bigtable_client_version.bzl"
+                          BIGTABLE_CLIENT_VERSION_MAJOR
+                          BIGTABLE_CLIENT_VERSION_MINOR
+                          BIGTABLE_CLIENT_VERSION_PATCH)
+
 # the client library
 add_library(bigtable_client
             admin_client.h

@@ -43,6 +43,13 @@ include(IncludeCrc32c)
 # Generate the version information from the CMake values.
 configure_file(version_info.h.in version_info.h)
 
+# Export the version information for Bazel.
+include(CreateBazelConfig)
+export_variables_to_bazel("storage_client_version.bzl"
+                          STORAGE_CLIENT_VERSION_MAJOR
+                          STORAGE_CLIENT_VERSION_MINOR
+                          STORAGE_CLIENT_VERSION_PATCH)
+
 # Define an interface library, i.e., a library that really has no sources, and
 # add public target options to it.  The targets then use the library via
 # target_link_libraries(target PRIVATE storage_common_options), which implicitly
@@ -273,7 +280,6 @@ target_include_directories(storage_client_testing
 target_compile_options(storage_client_testing
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-include(CreateBazelConfig)
 create_bazel_config(storage_client)
 google_cloud_cpp_add_clang_tidy(storage_client)
 create_bazel_config(storage_client_testing)
