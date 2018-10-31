@@ -23,5 +23,6 @@ var searchData=
   ['disablemd5hash',['DisableMD5Hash',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1DisableMD5Hash.html',1,'google::cloud::storage::v0']]],
   ['done',['done',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1RewriteProgress.html#adeed7261b94ff34bcbeb04e080883cfa',1,'google::cloud::storage::v0::RewriteProgress']]],
   ['download_5fbuffer_5fsize',['download_buffer_size',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a296af603db8b89499f06568c210790f2',1,'google::cloud::storage::v0::ClientOptions']]],
+  ['downloadtofile',['DownloadToFile',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a9912e594f369136c1a75e76894757aad',1,'google::cloud::storage::v0::Client']]],
   ['durablereducedavailability',['DurableReducedAvailability',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1storage__class.html#a93c7f9d3633f88611eb5fe97477bcedf',1,'google::cloud::storage::v0::storage_class']]]
 ];
