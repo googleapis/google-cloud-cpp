@@ -103,6 +103,14 @@ class GcsBucket(object):
 
         :param metadata:dict a dictionary with new metadata values.
         """
+        retention_policy = metadata.get('retentionPolicy')
+        if retention_policy:
+            # Ignore any values set for 'isLocked' or 'effectiveTime'.
+            retention_policy.pop('isLocked', None)
+            now = time.gmtime(time.time())
+            timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
+            retention_policy['effectiveTime'] = timestamp
+            metadata['retentionPolicy'] = retention_policy
         tmp = self.metadata.copy()
         metadata = GcsBucket._remove_non_writable_keys(metadata)
         tmp.update(metadata)
@@ -125,7 +133,8 @@ class GcsBucket(object):
         """
         patch = GcsBucket._remove_non_writable_keys(patch)
         retention_policy = patch.get('retentionPolicy')
-        if retention_policy is not None:
+        if retention_policy:
+            # Ignore any values set for 'isLocked' or 'effectiveTime'.
             retention_policy.pop('isLocked', None)
             now = time.gmtime(time.time())
             timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
