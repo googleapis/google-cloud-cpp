@@ -162,6 +162,14 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
                    google::bigtable::admin::v2::DeleteAppProfileRequest const&,
                    google::protobuf::Empty*));
 
+  MOCK_METHOD3(
+      AsyncDeleteAppProfile,
+      std::unique_ptr<
+          grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>(
+          grpc::ClientContext* context,
+          google::bigtable::admin::v2::DeleteAppProfileRequest const& request,
+          grpc::CompletionQueue* cq));
+
   MOCK_METHOD3(GetIamPolicy,
                grpc::Status(grpc::ClientContext*,
                             google::iam::v1::GetIamPolicyRequest const&,
