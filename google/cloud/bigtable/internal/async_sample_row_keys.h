@@ -42,7 +42,8 @@ namespace internal {
  * It encapsulates calling this RPC and accumulates the result. In case of an
  * error, all partially accumulated data is dropped.
  */
-struct AsyncSampleRowKeys {
+class AsyncSampleRowKeys {
+ public:
   using Request = google::bigtable::v2::SampleRowKeysRequest;
   using Response = std::vector<RowKeySample>;
 
