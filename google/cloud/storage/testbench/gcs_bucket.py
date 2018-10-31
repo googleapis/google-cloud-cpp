@@ -73,12 +73,37 @@ class GcsBucket(object):
             return False
         return v.get('enabled', False)
 
+    @classmethod
+    def _remove_non_writable_keys(cls, metadata):
+        """Remove the keys from metadata (an update or patch) that are not
+         writable.
+
+         Both `Buckets: patch` and `Buckets: update` either ignore non-writable
+         keys or return 400 if the key does not match the current value. In
+         the testbench we simply always ignore them, to make life easier.
+
+         :param metadata:dict a dictionary representing a patch or
+             update to the metadata.
+         :return metadata but with only any non-writable keys removed.
+         :rtype: dict
+         """
+        writeable_keys = {
+            'acl', 'billing', 'cors', 'defaultObjectAcl', 'encryption',
+            'labels', 'lifecycle', 'location', 'logging', 'storageClass',
+            'versioning', 'website'
+        }
+        for key in metadata.keys():
+            if key not in writeable_keys:
+                metadata.pop(key, None)
+        return metadata
+
     def update_from_metadata(self, metadata):
         """Update from a metadata dictionary.
 
         :param metadata:dict a dictionary with new metadata values.
         """
         tmp = self.metadata.copy()
+        metadata = GcsBucket._remove_non_writable_keys(metadata)
         tmp.update(metadata)
         tmp['name'] = tmp.get('name', self.name)
         tmp.update({
@@ -97,16 +122,7 @@ class GcsBucket(object):
 
         :param patch:dict a dictionary with metadata changes.
         """
-        writeable_keys = {
-            'acl', 'billing', 'cors', 'defaultObjectAcl', 'encryption',
-            'labels', 'lifecycle', 'location', 'logging', 'storageClass',
-            'versioning', 'website'
-        }
-        for key, value in patch.iteritems():
-            if key not in writeable_keys:
-                raise error_response.ErrorResponse(
-                    'Invalid metadata change. %s is not writeable' % key,
-                    status_code=503)
+        patch = GcsBucket._remove_non_writable_keys(patch)
         patched = testbench_utils.json_api_patch(self.metadata, patch, recurse_on={'labels'})
         self.metadata = patched
         self.increase_metageneration()
