@@ -118,9 +118,18 @@ Functions</h2></td></tr>
 <tr class="memitem:ac901bdd15f2d5defad50b169b95203d9"><td class="memItemLeft" align="right" valign="top">char const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#ac901bdd15f2d5defad50b169b95203d9">GoogleAdcEnvVar</a> ()</td></tr>
 <tr class="memdesc:ac901bdd15f2d5defad50b169b95203d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the Application Default <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1Credentials.html" title="Represents a credential to access Google Cloud Storage. ">Credentials</a> environment variable name.  <a href="#ac901bdd15f2d5defad50b169b95203d9">More...</a><br /></td></tr>
 <tr class="separator:ac901bdd15f2d5defad50b169b95203d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88a1df1a28a4a7e6d71f7ff1606e7ceb"><td class="memItemLeft" align="right" valign="top">char const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#a88a1df1a28a4a7e6d71f7ff1606e7ceb">GoogleGcloudAdcFileEnvVar</a> ()</td></tr>
+<tr class="memdesc:a88a1df1a28a4a7e6d71f7ff1606e7ceb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the environment variable to override the gcloud ADC path.  <a href="#a88a1df1a28a4a7e6d71f7ff1606e7ceb">More...</a><br /></td></tr>
+<tr class="separator:a88a1df1a28a4a7e6d71f7ff1606e7ceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aabc28954b52440ac59b61393fdccff4c"><td class="memItemLeft" align="right" valign="top">char const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#aabc28954b52440ac59b61393fdccff4c">GoogleAdcHomeEnvVar</a> ()</td></tr>
 <tr class="memdesc:aabc28954b52440ac59b61393fdccff4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the environment variable used to construct the well known ADC path.  <a href="#aabc28954b52440ac59b61393fdccff4c">More...</a><br /></td></tr>
 <tr class="separator:aabc28954b52440ac59b61393fdccff4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39e6e9aba070c00501b6cb10db5e8a22"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1Credentials.html">Credentials</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#a39e6e9aba070c00501b6cb10db5e8a22">LoadCredsFromPath</a> (std::string const &amp;path)</td></tr>
+<tr class="separator:a39e6e9aba070c00501b6cb10db5e8a22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad78fc46c0e7d24d5d9fa4e04610e410e"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1Credentials.html">Credentials</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#ad78fc46c0e7d24d5d9fa4e04610e410e">MaybeLoadCredsFromAdcEnvVar</a> ()</td></tr>
+<tr class="separator:ad78fc46c0e7d24d5d9fa4e04610e410e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a9f16eaaf691fb13a02c60b164af81a"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1Credentials.html">Credentials</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#a7a9f16eaaf691fb13a02c60b164af81a">MaybeLoadCredsFromGcloudAdcFile</a> ()</td></tr>
+<tr class="separator:a7a9f16eaaf691fb13a02c60b164af81a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6614708805e3c4d7f342a7aea2267035"><td class="memItemLeft" align="right" valign="top">constexpr std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#a6614708805e3c4d7f342a7aea2267035">GoogleOAuthAccessTokenLifetime</a> ()</td></tr>
 <tr class="memdesc:a6614708805e3c4d7f342a7aea2267035"><td class="mdescLeft">&#160;</td><td class="mdescRight">The max lifetime in seconds of an access token.  <a href="#a6614708805e3c4d7f342a7aea2267035">More...</a><br /></td></tr>
 <tr class="separator:a6614708805e3c4d7f342a7aea2267035"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -400,6 +409,34 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a88a1df1a28a4a7e6d71f7ff1606e7ceb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88a1df1a28a4a7e6d71f7ff1606e7ceb">&#9670;&nbsp;</a></span>GoogleGcloudAdcFileEnvVar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char const* google::cloud::storage::v0::oauth2::GoogleGcloudAdcFileEnvVar </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the environment variable to override the gcloud ADC path. </p>
+<p>This environment variable is used for testing to override the path that should be searched for the gcloud Application Default <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1Credentials.html" title="Represents a credential to access Google Cloud Storage. ">Credentials</a> file. </p>
+
+</div>
+</div>
 <a id="ac6c5ac79f68696476115e9f1b738e070"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac6c5ac79f68696476115e9f1b738e070">&#9670;&nbsp;</a></span>GoogleOAuthAccessTokenExpirationSlack()</h2>
 
@@ -490,6 +527,58 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>String representing the "cloud-platform" OAuth scope. </p>
+
+</div>
+</div>
+<a id="a39e6e9aba070c00501b6cb10db5e8a22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39e6e9aba070c00501b6cb10db5e8a22">&#9670;&nbsp;</a></span>LoadCredsFromPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1Credentials.html">Credentials</a>&gt; google::cloud::storage::v0::oauth2::LoadCredsFromPath </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad78fc46c0e7d24d5d9fa4e04610e410e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad78fc46c0e7d24d5d9fa4e04610e410e">&#9670;&nbsp;</a></span>MaybeLoadCredsFromAdcEnvVar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1Credentials.html">Credentials</a>&gt; google::cloud::storage::v0::oauth2::MaybeLoadCredsFromAdcEnvVar </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7a9f16eaaf691fb13a02c60b164af81a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a9f16eaaf691fb13a02c60b164af81a">&#9670;&nbsp;</a></span>MaybeLoadCredsFromGcloudAdcFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1Credentials.html">Credentials</a>&gt; google::cloud::storage::v0::oauth2::MaybeLoadCredsFromGcloudAdcFile </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
