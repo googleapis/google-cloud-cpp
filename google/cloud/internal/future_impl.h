@@ -225,20 +225,25 @@ class future_shared_state<void> final : private future_shared_state_base {
   /**
    * The implementation details for `promise<void>::get_future()`.
    *
-   * `promise<void>::get_future()` can be called exactly once. It must set some
-   * flag in the shared future so no future calls will succeed. We keep that
-   * flag in the shared state itself, and atomically set and test its value
-   * so concurrent calls to `promise<void>::get_future()` succeed only once.
+   * `promise<void>::get_future()` can be called exactly once, this function
+   * must raise `std::future_error` if (quoting the C++ spec):
+   *
+   * `get_future` has already been called on a `promise` with the same shared
+   * state as `*this`
+   *
+   * While it is not clear how one could create multiple promises pointing to
+   * the same shared state, it is easier to keep all the locking and atomic
+   * checks in one class.
+   *
+   * @throws std::future_error if the operation fails.
    */
-  static std::shared_ptr<future_shared_state> retrieve(
-      std::shared_ptr<future_shared_state> sh) {
+  static void mark_retrieved(std::shared_ptr<future_shared_state> const& sh) {
     if (not sh) {
       throw std::future_error(std::future_errc::no_state);
     }
     if (sh->retrieved_.test_and_set()) {
       throw std::future_error(std::future_errc::future_already_retrieved);
     }
-    return sh;
   }
 
  private:

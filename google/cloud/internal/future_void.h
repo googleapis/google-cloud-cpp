@@ -131,7 +131,8 @@ class promise<void> {
   }
 
   future<void> get_future() {
-    return future<void>(shared_state::retrieve(shared_state_));
+    shared_state::mark_retrieved(shared_state_);
+    return future<void>(shared_state_);
   }
 
   void set_value() {

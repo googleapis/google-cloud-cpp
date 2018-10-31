@@ -25,6 +25,13 @@ namespace {
 using ::testing::HasSubstr;
 using namespace testing_util::chrono_literals;
 
+// Verify we are testing the types we think we should be testing.
+static_assert(std::is_same<future<void>, ::google::cloud::future<void>>::value,
+              "std::future in global namespace");
+static_assert(
+    std::is_same<promise<void>, ::google::cloud::promise<void>>::value,
+    "std::promise in global namespace");
+
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
 TEST(FutureTestVoid, conform_30_6_5_3) {
   // TODO(#1364) - allocators are not supported for now.
@@ -633,7 +640,8 @@ TEST(FutureTestVoid, conform_30_6_6_25_2) {
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
 TEST(FutureTestVoid, conform_30_6_6_25_3) {
-  // wait_until() returns std::future_status::timeout if the future is not ready.
+  // wait_until() returns std::future_status::timeout if the future is not
+  // ready.
   promise<void> p0;
   auto f0 = p0.get_future();
 
