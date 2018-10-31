@@ -243,6 +243,15 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
     return impl_.Stub()->AsyncDeleteAppProfile(context, request, cq);
   }
 
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::AppProfile>>
+  AsyncCreateAppProfile(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateAppProfileRequest const& request,
+      grpc::CompletionQueue* cq) override {
+    return impl_.Stub()->AsyncCreateAppProfile(context, request, cq);
+  }
+
   DefaultInstanceAdminClient(DefaultInstanceAdminClient const&) = delete;
   DefaultInstanceAdminClient& operator=(DefaultInstanceAdminClient const&) =
       delete;
