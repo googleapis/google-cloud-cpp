@@ -95,7 +95,6 @@ TEST(FutureImplBaseTest, SetExceptionCanBeCalledOnlyOnce) {
 }
 
 TEST(FutureImplBaseTest, Abandon) {
-  // TODO(#1345) - use future_shared_state<void> and call .get();
   future_shared_state_base shared_state;
   shared_state.abandon();
   EXPECT_TRUE(shared_state.is_ready());
@@ -108,6 +107,38 @@ TEST(FutureImplBaseTest, AbandonReady) {
       std::make_exception_ptr(std::runtime_error("test message")));
   EXPECT_NO_THROW(shared_state.abandon());
   EXPECT_TRUE(shared_state.is_ready());
+}
+
+TEST(FutureImplVoid, SetValue) {
+  future_shared_state<void> shared_state;
+  EXPECT_FALSE(shared_state.is_ready());
+  shared_state.set_value();
+  EXPECT_TRUE(shared_state.is_ready());
+  EXPECT_NO_THROW(shared_state.get());
+}
+
+TEST(FutureImplVoid, GetException) {
+  future_shared_state<void> shared_state;
+  EXPECT_FALSE(shared_state.is_ready());
+  shared_state.set_exception(
+      std::make_exception_ptr(std::runtime_error("test message")));
+  EXPECT_TRUE(shared_state.is_ready());
+  EXPECT_THROW(try { shared_state.get(); } catch (std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("test message"));
+    throw;
+  },
+               std::runtime_error);
+}
+
+TEST(FutureImplVoid, Abandon) {
+  future_shared_state<void> shared_state;
+  shared_state.abandon();
+  EXPECT_TRUE(shared_state.is_ready());
+  EXPECT_THROW(try { shared_state.get(); } catch (std::future_error const& ex) {
+    EXPECT_EQ(std::future_errc::broken_promise, ex.code());
+    throw;
+  },
+               std::future_error);
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 

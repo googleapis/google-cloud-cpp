@@ -175,6 +175,60 @@ class future_shared_state_base {
   std::exception_ptr exception_;
 };
 
+/**
+ * Forward declare the generic version of future_share_state.
+ *
+ * TODO(#1345) - implement the generic version
+ */
+template <typename T>
+class future_shared_state;
+
+/**
+ * Specialize the shared state for `void`.
+ *
+ * The shared state for `void` does not have any value to hold, `get()` does
+ * not return any value, and `set_value()` does not take any arguments. We must
+ * use an specialization because the default implementation would define
+ * `set_value()` as `set_value(void&&)` which is not legal, nor is the signature
+ * we want for that matter.
+ */
+template <>
+class future_shared_state<void> final : private future_shared_state_base {
+ public:
+  future_shared_state() : future_shared_state_base() {}
+
+  using future_shared_state_base::abandon;
+  using future_shared_state_base::is_ready;
+  using future_shared_state_base::set_exception;
+  using future_shared_state_base::wait;
+  using future_shared_state_base::wait_for;
+  using future_shared_state_base::wait_until;
+
+  /// The implementation details for `future<void>::get()`
+  void get() {
+    std::unique_lock<std::mutex> lk(mu_);
+    cv_.wait(lk, [this] { return is_ready_unlocked(); });
+    if (current_state_ == state::has_exception) {
+      std::rethrow_exception(exception_);
+    }
+  }
+
+  /// The implementation details for `promise<void>::set_value()`
+  void set_value() {
+    std::unique_lock<std::mutex> lk(mu_);
+    set_value(lk);
+    cv_.notify_all();
+  }
+
+ private:
+  void set_value(std::unique_lock<std::mutex>& lk) {
+    if (is_ready_unlocked()) {
+      throw std::future_error(std::future_errc::promise_already_satisfied);
+    }
+    current_state_ = state::has_value;
+  }
+};
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
