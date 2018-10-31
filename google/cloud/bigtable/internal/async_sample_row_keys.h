@@ -36,7 +36,8 @@ namespace internal {
 /**
  * A SampleRowKeys call bound with client, table and app_profile_id.
  *
- * It satisfies the requirements to be used in AsyncRetryOp.
+ * It satisfies the requirements to be used as the `Operation` parameter in
+ * `AsyncRetryOp`.
  *
  * It encapsulates calling this RPC and accumulates the result. In case of an
  * error, all partially accumulated data is dropped.
@@ -82,6 +83,7 @@ struct AsyncSampleRowKeys {
         },
         FinishedCallback<Functor>(*this, std::forward<Functor>(callback)));
   }
+
   Response AccumulatedResult() { return response_; }
 
  private:
@@ -96,7 +98,10 @@ struct AsyncSampleRowKeys {
 
     void operator()(CompletionQueue& cq, grpc::ClientContext& context,
                     grpc::Status& status) {
-      if (!status.ok()) {
+      if (not status.ok()) {
+        // The sample must be a consistent sample of the rows in the table. On
+        // failure we must forget the previous responses and accumulate only
+        // new values.
         parent_.response_ = Response();
       }
       callback_(cq, status);
@@ -116,7 +121,7 @@ struct AsyncSampleRowKeys {
 };
 
 /**
- * Perform an AsyncSampleRowKeys operation request with retries.
+ * Perform an `AsyncSampleRowKeys` operation request with retries.
  *
  * @tparam Functor the type of the function-like object that will receive the
  *     results. It must satisfy (using C++17 types):
