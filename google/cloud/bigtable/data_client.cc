@@ -100,7 +100,7 @@ class DefaultDataClient : public DataClient {
   AsyncSampleRowKeys(
       ::grpc::ClientContext* context,
       const ::google::bigtable::v2::SampleRowKeysRequest& request,
-      ::grpc::CompletionQueue* cq, void* tag) {
+      ::grpc::CompletionQueue* cq, void* tag) override {
     return impl_.Stub()->AsyncSampleRowKeys(context, request, cq, tag);
   }
 
