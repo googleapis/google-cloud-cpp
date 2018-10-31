@@ -14,6 +14,11 @@
 # limitations under the License.
 # ~~~
 
+# Set this variable to a true value for branches that are releases. That will
+# remove the "+dev" suffix (technically "build metadata" according to
+# semver.org). We only want that suffix on development branches.
+set(GOOGLE_CLOUD_CPP_IS_RELEASE "")
+
 # This should be included from the top level CMakeLists file
 set(GOOGLE_CLOUD_CPP_VERSION_MAJOR 0)
 set(GOOGLE_CLOUD_CPP_VERSION_MINOR 1)
@@ -49,18 +54,30 @@ google_cloud_cpp_add_common_options(google_cloud_cpp_common_options)
 
 # Capture the compiler version and the git revision into variables, then
 # generate a config file with the values.
-if (IS_DIRECTORY ${PROJECT_SOURCE_DIR}/.git)
-    execute_process(COMMAND git rev-parse --short HEAD
-                    OUTPUT_VARIABLE GIT_HEAD_LOG
-                    ERROR_VARIABLE GIT_HEAD_LOG)
+if ("${GOOGLE_CLOUD_CPP_IS_RELEASE}")
+    set(GOOGLE_CLOUD_CPP_GIT_HEAD "")
 else()
-    set(GIT_HEAD_LOG "(unknown-git-commit)")
+    if (NOT IS_DIRECTORY ${PROJECT_SOURCE_DIR}/.git)
+        set(GOOGLE_CLOUD_CPP_GIT_HEAD "unknown-commit")
+    else()
+        find_program(GIT_PROGRAM NAMES git)
+        if ("${GIT_PROGRAM}" STREQUAL "GIT_PROGRAM-NOTFOUND")
+            set(GOOGLE_CLOUD_CPP_GIT_HEAD "unknown-commit")
+        else()
+            execute_process(COMMAND "${GIT_PROGRAM}" rev-parse --short HEAD
+                            OUTPUT_VARIABLE GIT_HEAD_LOG
+                            ERROR_VARIABLE GIT_HEAD_LOG)
+            string(REPLACE "\n"
+                           ""
+                           GOOGLE_CLOUD_CPP_GIT_HEAD
+                           "${GIT_HEAD_LOG}")
+        endif ()
+    endif ()
 endif ()
-string(REPLACE "\n"
-               ""
-               GIT_HEAD
-               ${GIT_HEAD_LOG})
-string(TOUPPER "${CMAKE_BUILD_TYPE}" BUILD_TYPE_UPPER)
+
+# Create the file that captures build information. Having access to the compiler
+# and build flags at runtime allows us to print better benchmark results.
+string(TOUPPER "${CMAKE_BUILD_TYPE}" GOOGLE_CLOUD_CPP_BUILD_TYPE_UPPER)
 configure_file(internal/build_info.cc.in internal/build_info.cc)
 
 # the client library

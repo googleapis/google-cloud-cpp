@@ -25,7 +25,10 @@ std::string version_string() {
   static std::string const version = [] {
     std::ostringstream os;
     os << "v" << version_major() << "." << version_minor() << "."
-       << version_patch() << "+" << google::cloud::internal::gitrev();
+       << version_patch();
+    if (not google::cloud::internal::is_release()) {
+      os << "+" << google::cloud::internal::gitrev();
+    }
     return os.str();
   }();
   return version;

@@ -326,7 +326,7 @@ set(storage_client_unit_tests
     service_account_test.cc
     storage_class_test.cc
     storage_client_options_test.cc
-    link_test.cc
+    storage_version_test.cc
     well_known_headers_test.cc)
 
 foreach (fname ${storage_client_unit_tests})

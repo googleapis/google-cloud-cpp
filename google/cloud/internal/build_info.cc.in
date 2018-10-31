@@ -13,22 +13,49 @@
 // limitations under the License.
 
 #include "google/cloud/internal/build_info.h"
-
-namespace {
-char const COMPILER[] = R"""(@CMAKE_CXX_COMPILER_ID@ @CMAKE_CXX_COMPILER_VERSION@)""";
-
-char const COMPILER_FLAGS[] = R"""(@CMAKE_CXX_FLAGS@ ${CMAKE_CXX_FLAGS_${BUILD_TYPE_UPPER}})""";
-
-char const GITREV[] = R"""(@GIT_HEAD@)""";
-}  // namespace
+#include <algorithm>
+#include <cctype>
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
-std::string compiler() { return COMPILER; }  // NOLINT
-std::string compiler_flags() { return COMPILER_FLAGS; } // NOLINT
-std::string gitrev() { return GITREV; } // NOLINT
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+std::string compiler() {
+  // NOLINTNEXTLINE(readability-redundant-string-init)
+  static std::string const compiler_name = R"""(@CMAKE_CXX_COMPILER_ID@ @CMAKE_CXX_COMPILER_VERSION@)""";
+  return compiler_name;
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+std::string compiler_flags() {
+  // NOLINTNEXTLINE(readability-redundant-string-init)
+  static std::string const compiler_flags = R"""(@CMAKE_CXX_FLAGS@ ${CMAKE_CXX_FLAGS_${GOOGLE_CLOUD_CPP_BUILD_TYPE_UPPER}})""";
+  return compiler_flags;
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+std::string gitrev() {
+  // NOLINTNEXTLINE(readability-redundant-string-init)
+  static std::string const git_head = R"""(@GOOGLE_CLOUD_CPP_GIT_HEAD@)""";
+  return git_head;
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+bool is_release() {
+  static bool const is_release = []() -> bool {
+    // NOLINTNEXTLINE(readability-redundant-string-init)
+    std::string value = R"""(@GOOGLE_CLOUD_CPP_IS_RELEASE@)""";
+    std::transform(
+        value.begin(), value.end(), value.begin(),
+        [](char c) -> char { return static_cast<char>(std::tolower(c)); });
+    return value == "yes" or value == "1" or value == "true";
+  }();
+
+ return is_release;
+}
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
