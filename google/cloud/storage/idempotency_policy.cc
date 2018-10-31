@@ -431,30 +431,29 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::GetProjectServiceAccountRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
   return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::ListNotificationsRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
   return true;
 }
+
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::CreateNotificationRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  return request.HasOption<IfMatchEtag>();
 }
+
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::GetNotificationRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
   return true;
 }
+
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::DeleteNotificationRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  return request.HasOption<IfMatchEtag>();
 }
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
