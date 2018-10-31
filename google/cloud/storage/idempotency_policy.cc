@@ -331,95 +331,92 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::ListBucketAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
   return true;
 }
+
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::CreateBucketAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  return request.HasOption<IfMatchEtag>();
 }
+
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::DeleteBucketAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  return request.HasOption<IfMatchEtag>();
 }
+
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::GetBucketAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
   return true;
 }
+
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::UpdateBucketAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  return request.HasOption<IfMatchEtag>();
 }
+
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::PatchBucketAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  return request.HasOption<IfMatchEtag>();
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::ListObjectAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
-}
-bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::CreateObjectAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
-}
-bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::DeleteObjectAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
-}
-bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::GetObjectAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
-}
-bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::UpdateObjectAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
-}
-bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::PatchObjectAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
   return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::ListDefaultObjectAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
+    internal::CreateObjectAclRequest const& request) const {
+  return request.HasOption<IfMatchEtag>();
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::DeleteObjectAclRequest const& request) const {
+  return request.HasOption<IfMatchEtag>();
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::GetObjectAclRequest const& request) const {
   return true;
 }
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::UpdateObjectAclRequest const& request) const {
+  return request.HasOption<IfMatchEtag>();
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::PatchObjectAclRequest const& request) const {
+  return request.HasOption<IfMatchEtag>();
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::ListDefaultObjectAclRequest const& request) const {
+  return true;
+}
+
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::CreateDefaultObjectAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  return request.HasOption<IfMatchEtag>();
 }
+
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::DeleteDefaultObjectAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  return request.HasOption<IfMatchEtag>();
 }
+
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::GetDefaultObjectAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
   return true;
 }
+
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::UpdateDefaultObjectAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  return request.HasOption<IfMatchEtag>();
 }
+
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::PatchDefaultObjectAclRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  return request.HasOption<IfMatchEtag>();
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
