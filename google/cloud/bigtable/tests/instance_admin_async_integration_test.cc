@@ -261,14 +261,35 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
   google::cloud::bigtable::CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
 
-  auto profile_1 = instance_admin_->CreateAppProfile(
+  // Create First profile
+  std::promise<btadmin::AppProfile> promise_create_first_profile;
+  admin.AsyncCreateAppProfile(
       bigtable::InstanceId(instance_id),
       bigtable::AppProfileConfig::MultiClusterUseAny(
-          bigtable::AppProfileId(id1)));
-  auto profile_2 = instance_admin_->CreateAppProfile(
+          bigtable::AppProfileId(id1)),
+      cq,
+      [&promise_create_first_profile](
+          google::cloud::bigtable::CompletionQueue& cq,
+          btadmin::AppProfile& app_profiles, grpc::Status const& status) {
+        promise_create_first_profile.set_value(std::move(app_profiles));
+      });
+  auto response_create_first_profile =
+      promise_create_first_profile.get_future().get();
+
+  // Create second profile
+  std::promise<btadmin::AppProfile> promise_create_second_profile;
+  admin.AsyncCreateAppProfile(
       bigtable::InstanceId(instance_id),
       bigtable::AppProfileConfig::MultiClusterUseAny(
-          bigtable::AppProfileId(id2)));
+          bigtable::AppProfileId(id2)),
+      cq,
+      [&promise_create_second_profile](
+          google::cloud::bigtable::CompletionQueue& cq,
+          btadmin::AppProfile& app_profiles, grpc::Status const& status) {
+        promise_create_second_profile.set_value(std::move(app_profiles));
+      });
+  auto response_create_second_profile =
+      promise_create_second_profile.get_future().get();
 
   auto current_profiles = instance_admin_->ListAppProfiles(instance_id);
   EXPECT_EQ(1U, count_matching_profiles(id1, current_profiles));
@@ -283,7 +304,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
         promise_get_profile_1.set_value(std::move(app_profiles));
       });
   auto detail_1 = promise_get_profile_1.get_future().get();
-  EXPECT_EQ(detail_1.name(), profile_1.name());
+  EXPECT_EQ(detail_1.name(), response_create_first_profile.name());
   EXPECT_THAT(detail_1.name(), HasSubstr(instance_id));
   EXPECT_THAT(detail_1.name(), HasSubstr(id1));
 
@@ -296,7 +317,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
         promise_get_profile_2.set_value(std::move(app_profiles));
       });
   auto detail_2 = promise_get_profile_2.get_future().get();
-  EXPECT_EQ(detail_2.name(), profile_2.name());
+  EXPECT_EQ(detail_2.name(), response_create_second_profile.name());
   EXPECT_THAT(detail_2.name(), HasSubstr(instance_id));
   EXPECT_THAT(detail_2.name(), HasSubstr(id2));
 

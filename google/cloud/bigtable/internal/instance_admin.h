@@ -337,6 +337,55 @@ class InstanceAdmin {
       bigtable::InstanceId const& instance_id, AppProfileConfig config,
       grpc::Status& status);
 
+  /**
+   * Make an asynchronous request to create the profile.
+   *
+   * @param instance_id the Cloud Bigtable instance that contains the profile.
+   * @param config the initial configuration for the profile.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, google::bigtable::admin::v2::AppProfile&,
+   *         grpc::Status const&>);
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <
+      typename Functor,
+      typename std::enable_if<
+          google::cloud::internal::is_invocable<
+              Functor, CompletionQueue&,
+              google::bigtable::admin::v2::AppProfile&, grpc::Status&>::value,
+          int>::type valid_callback_type = 0>
+  void AsyncCreateAppProfile(bigtable::InstanceId const& instance_id,
+                             AppProfileConfig config, CompletionQueue& cq,
+                             Functor&& callback) {
+    auto request = config.as_proto_move();
+    request.set_parent(InstanceName(instance_id.get()));
+
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &InstanceAdminClient::AsyncCreateAppProfile)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &InstanceAdminClient::AsyncCreateAppProfile)>::MemberFunction;
+
+    using Retry =
+        internal::AsyncRetryUnaryRpc<InstanceAdminClient, MemberFunction,
+                                     internal::ConstantIdempotencyPolicy,
+                                     Functor>;
+
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
+        client_, &InstanceAdminClient::AsyncCreateAppProfile,
+        std::move(request), std::forward<Functor>(callback));
+    retry->Start(cq);
+  }
+
   google::bigtable::admin::v2::AppProfile GetAppProfile(
       bigtable::InstanceId const& instance_id,
       bigtable::AppProfileId const& profile_id, grpc::Status& status);

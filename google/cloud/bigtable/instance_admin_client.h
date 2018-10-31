@@ -220,6 +220,13 @@ class InstanceAdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteAppProfileRequest const& request,
       grpc::CompletionQueue* cq) = 0;
+
+  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::AppProfile>>
+  AsyncCreateAppProfile(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateAppProfileRequest const& request,
+      grpc::CompletionQueue* cq) = 0;
   //@}
 
   //@{
