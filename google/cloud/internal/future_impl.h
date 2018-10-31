@@ -164,6 +164,17 @@ class future_shared_state_base {
     current_state_ = state::has_exception;
   }
 
+  // My (@coryan) reading of the spec is that calling get_future() on a promise
+  // should succeed exactly once, even when used from multiple threads. This
+  // requires some kind of flag and synchronization primitive. The obvious
+  // question is whether this flag should be in `promise<T>` or part of the
+  // shared state. If it is a member of the shared state then it can be a
+  // `std::atomic_flag`, which is guaranteed to be lock free and, well, atomic.
+  // But an object of type `std::atomic_flag` (or `std::atomic<bool>`) cannot
+  // be a member of `promise<T>` because such objects are not MoveConstructible,
+  // and `promise<T>` must be. Once could implement this with an `std::mutex` +
+  // a bool, but that is more overhead than just a flag here.
+  /// Keep track of whether `get_future()` has been called.
   std::atomic_flag retrieved_ = ATOMIC_FLAG_INIT;
 
   mutable std::mutex mu_;
