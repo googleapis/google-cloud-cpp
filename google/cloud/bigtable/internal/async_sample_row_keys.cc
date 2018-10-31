@@ -28,7 +28,7 @@ AsyncSampleRowKeys::AsyncSampleRowKeys(
     std::shared_ptr<DataClient> client,
     bigtable::AppProfileId const& app_profile_id,
     bigtable::TableId const& table_name)
-    : client_(client) {
+    : client_(std::move(client)) {
   bigtable::internal::SetCommonTableOperationRequest<
       google::bigtable::v2::SampleRowKeysRequest>(
       request_, app_profile_id.get(), table_name.get());
