@@ -32,13 +32,9 @@ class ComputeEngineUtilTest : public ::testing::Test {
       : gce_check_override_env_var_(GceCheckOverrideEnvVar()) {}
 
  protected:
-  void SetUp() override {
-    gce_check_override_env_var_.SetUp();
-  }
+  void SetUp() override { gce_check_override_env_var_.SetUp(); }
 
-  void TearDown() override {
-    gce_check_override_env_var_.TearDown();
-  }
+  void TearDown() override { gce_check_override_env_var_.TearDown(); }
 
  protected:
   EnvironmentVariableRestore gce_check_override_env_var_;
