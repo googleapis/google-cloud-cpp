@@ -693,6 +693,30 @@ class Client {
   }
 
   /**
+   * Downloads a Cloud Storage object to a file.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be downloaded.
+   * @param file_name the name of the destination file that will have the object
+   *   media.
+   * @param options a list of optional query parameters and/or request headers.
+   *   Valid types for this operation include `IfGenerationMatch`,
+   *   `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *   `IfMetagenerationNotMatch`, `Generation`, and `UserProject`.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc download file
+   */
+  template <typename... Options>
+  void DownloadToFile(std::string const& bucket_name,
+                      std::string const& object_name,
+                      std::string const& file_name, Options&&... options) {
+    internal::ReadObjectRangeRequest request(bucket_name, object_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    DownloadFileImpl(std::move(request), file_name);
+  }
+
+  /**
    * Deletes an object.
    *
    * @param bucket_name the name of the bucket that contains the object.
@@ -1881,6 +1905,9 @@ class Client {
 
   ObjectMetadata UploadFileImpl(std::string const& file_name,
                                 internal::InsertObjectStreamingRequest request);
+
+  void DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
+                        std::string const& file_name);
 
   std::shared_ptr<internal::RawClient> raw_client_;
 };

@@ -56,6 +56,149 @@ bool UsingTestbench() {
   return std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT") != nullptr;
 }
 
+TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  auto file_name = MakeRandomObjectName();
+
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+  // Create an object with the contents to download.
+  auto upload =
+      client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  WriteRandomLines(upload, expected);
+  ObjectMetadata meta = upload.Close();
+
+  client.DownloadToFile(bucket_name, object_name, file_name);
+  // Create a iostream to read the object back.
+  std::ifstream stream(file_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_FALSE(actual.empty());
+  auto expected_str = expected.str();
+  ASSERT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
+  EXPECT_EQ(expected_str, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+  std::remove(file_name.c_str());
+}
+
+TEST_F(ObjectMediaIntegrationTest, JsonDownloadFile) {
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  auto file_name = MakeRandomObjectName();
+
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+  // Create an object with the contents to download.
+  auto upload =
+      client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  WriteRandomLines(upload, expected);
+  ObjectMetadata meta = upload.Close();
+
+  client.DownloadToFile(bucket_name, object_name, file_name,
+                        IfMetagenerationNotMatch(0));
+  // Create a iostream to read the object back.
+  std::ifstream stream(file_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_FALSE(actual.empty());
+  auto expected_str = expected.str();
+  ASSERT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
+  EXPECT_EQ(expected_str, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+  std::remove(file_name.c_str());
+}
+
+TEST_F(ObjectMediaIntegrationTest, DownloadFileFailure) {
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  auto file_name = MakeRandomObjectName();
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        client.DownloadToFile(bucket_name, object_name, file_name);
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr(object_name));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      client.DownloadToFile(bucket_name, object_name, file_name),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotOpenFile) {
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  ObjectMetadata meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), Projection::Full());
+
+  // Create an invalid path for the destination object.
+  auto file_name = MakeRandomObjectName() + "/" + MakeRandomObjectName();
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        client.DownloadToFile(bucket_name, object_name, file_name);
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr(file_name));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      client.DownloadToFile(bucket_name, object_name, file_name),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotWriteToFile) {
+#if GTEST_OS_LINUX
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  ObjectMetadata meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), Projection::Full());
+
+  // We want to test that the code handles write errors *after* the file is
+  // successfully opened for writing. Such errors are hard to get, typically
+  // they indicate that the filesystem is full (or maybe some rare condition
+  // with remote filesystem such as NFS).
+  // On Linux we are fortunate that `/dev/full` meets those requirements
+  // exactly:
+  //   http://man7.org/linux/man-pages/man4/full.4.html
+  // I (coryan@) did not know about it, so I thought a longer comment may be in
+  // order.
+  auto file_name = "/dev/full";
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        client.DownloadToFile(bucket_name, object_name, file_name);
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr(file_name));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      client.DownloadToFile(bucket_name, object_name, file_name),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  client.DeleteObject(bucket_name, object_name);
+#endif  // GTEST_OS_LINUX
+}
+
 TEST_F(ObjectMediaIntegrationTest, UploadFile) {
   Client client;
   auto file_name = MakeRandomObjectName();

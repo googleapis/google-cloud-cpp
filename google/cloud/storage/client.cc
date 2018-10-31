@@ -40,7 +40,7 @@ ObjectMetadata Client::UploadFileImpl(
   auto status = google::cloud::internal::status(file_name);
   if (not is_regular(status)) {
     GCP_LOG(WARNING) << "Trying to upload " << file_name
-                    << R"""( which is not a regular file.
+                     << R"""( which is not a regular file.
 This is often a problem because:
   - Some non-regular files are infinite sources of data, and the load will
     never complete.
@@ -75,7 +75,7 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
     }
 
     std::string hash(MD5_DIGEST_LENGTH, ' ');
-    MD5_Final(reinterpret_cast<unsigned char *>(&hash[0]), &md5);
+    MD5_Final(reinterpret_cast<unsigned char*>(&hash[0]), &md5);
     request.set_option(
         MD5HashValue(internal::OpenSslUtils::Base64Encode(hash)));
   }
@@ -103,6 +103,44 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
   auto metadata = ObjectMetadata::ParseFromString(response.payload);
   streambuf->ValidateHash(metadata);
   return metadata;
+}
+
+void Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
+                              std::string const& file_name) {
+  std::unique_ptr<internal::ObjectReadStreambuf> streambuf =
+      raw_client_->ReadObject(request).second;
+  ObjectReadStream stream(std::move(streambuf));
+  if (stream.eof() and not stream.IsOpen()) {
+    std::string msg = __func__;
+    msg += ": cannot open source object ";
+    msg += request.object_name();
+    msg += " in bucket ";
+    msg += request.bucket_name();
+    google::cloud::internal::RaiseRuntimeError(msg);
+  }
+  std::ofstream os(file_name);
+  if (not os.is_open()) {
+    std::string msg = __func__;
+    msg += ": cannot open destination file ";
+    msg += file_name;
+    google::cloud::internal::RaiseRuntimeError(msg);
+  }
+  std::string buffer;
+  buffer.resize(raw_client_->client_options().download_buffer_size(), '\0');
+  do {
+    stream.read(&buffer[0], buffer.size());
+    os.write(buffer.data(), stream.gcount());
+    if (not stream.good()) {
+      break;
+    }
+  } while (os.good());
+  os.close();
+  if (not os.good()) {
+    std::string msg = __func__;
+    msg += ": failure closing destination file ";
+    msg += file_name;
+    google::cloud::internal::RaiseRuntimeError(msg);
+  }
 }
 
 }  // namespace STORAGE_CLIENT_NS
