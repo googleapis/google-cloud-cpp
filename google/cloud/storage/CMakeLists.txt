@@ -301,6 +301,7 @@ set(storage_client_unit_tests
     internal/binary_data_as_debug_string_test.cc
     internal/bucket_acl_requests_test.cc
     internal/bucket_requests_test.cc
+    internal/compute_engine_util_test.cc
     internal/default_object_acl_requests_test.cc
     internal/format_rfc3339_test.cc
     internal/generate_message_boundary_test.cc

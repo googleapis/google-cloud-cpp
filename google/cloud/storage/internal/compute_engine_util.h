@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_COMPUTE_ENGINE_UTIL_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_COMPUTE_ENGINE_UTIL_H_
 
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/version.h"
 #include <string>
@@ -31,6 +32,23 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 /**
+ * Returns the env var used to override the check for if we're running on GCE.
+ *
+ * This environment variable is used for testing to override the return value
+ * for the function that checks whether we're running on a GCE VM. Some CI
+ * testing services sometimes run on GCE VMs, and we don't want to accidentally
+ * try to use their service account credentials during our tests.
+ *
+ * If set to "1", this will force `RunningOnComputeEngineVm` to return true. If
+ * set to anything else, it will return false. If unset, the function will
+ * actually check whether we're running on a GCE VM.
+ */
+inline char const* GceCheckOverrideEnvVar() {
+  static constexpr char kEnvVarName[] = "GOOGLE_RUNNING_ON_GCE_CHECK_OVERRIDE";
+  return kEnvVarName;
+}
+
+/**
  * Returns true if the program is running on a Compute Engine VM.
  *
  * This method checks the system BIOS information to determine if the program
@@ -39,6 +57,12 @@ namespace internal {
  * the VM may be experiencing network issues, etc.).
  */
 bool RunningOnComputeEngineVm() {
+  // Allow overriding this value for integration tests.
+  auto override_val = google::cloud::internal::GetEnv(GceCheckOverrideEnvVar());
+  if (override_val.has_value()) {
+    return std::string("1") == *override_val;
+  }
+
 #if _WIN32
   // These values came from a GCE VM running Windows Server 2012 R2.
   std::wstring const REG_KEY_PATH = L"SYSTEM\\HardwareConfig\\Current\\";
