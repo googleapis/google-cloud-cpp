@@ -164,6 +164,19 @@ class future_shared_state_base {
     current_state_ = state::has_exception;
   }
 
+  // My (@coryan) reading of the spec is that calling get_future() on a promise
+  // should succeed exactly once, even when used from multiple threads. This
+  // requires some kind of flag and synchronization primitive. The obvious
+  // question is whether this flag should be in `promise<T>` or part of the
+  // shared state. If it is a member of the shared state then it can be a
+  // `std::atomic_flag`, which is guaranteed to be lock free and, well, atomic.
+  // But an object of type `std::atomic_flag` (or `std::atomic<bool>`) cannot
+  // be a member of `promise<T>` because such objects are not MoveConstructible,
+  // and `promise<T>` must be. Once could implement this with an `std::mutex` +
+  // a bool, but that is more overhead than just a flag here.
+  /// Keep track of whether `get_future()` has been called.
+  std::atomic_flag retrieved_ = ATOMIC_FLAG_INIT;
+
   mutable std::mutex mu_;
   std::condition_variable cv_;
   enum class state {
@@ -220,6 +233,30 @@ class future_shared_state<void> final : private future_shared_state_base {
     cv_.notify_all();
   }
 
+  /**
+   * The implementation details for `promise<void>::get_future()`.
+   *
+   * `promise<void>::get_future()` can be called exactly once, this function
+   * must raise `std::future_error` if (quoting the C++ spec):
+   *
+   * `get_future` has already been called on a `promise` with the same shared
+   * state as `*this`
+   *
+   * While it is not clear how one could create multiple promises pointing to
+   * the same shared state, it is easier to keep all the locking and atomic
+   * checks in one class.
+   *
+   * @throws std::future_error if the operation fails.
+   */
+  static void mark_retrieved(std::shared_ptr<future_shared_state> const& sh) {
+    if (not sh) {
+      throw std::future_error(std::future_errc::no_state);
+    }
+    if (sh->retrieved_.test_and_set()) {
+      throw std::future_error(std::future_errc::future_already_retrieved);
+    }
+  }
+
  private:
   void set_value(std::unique_lock<std::mutex>& lk) {
     if (is_ready_unlocked()) {
@@ -235,5 +272,4 @@ class future_shared_state<void> final : private future_shared_state_base {
 }  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FUTURE_IMPL_H_

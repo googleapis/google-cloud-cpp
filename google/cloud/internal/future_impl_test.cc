@@ -17,6 +17,8 @@
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <gmock/gmock.h>
 
+// C++ futures only make sense when exceptions are enabled.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
@@ -27,8 +29,6 @@ using ::testing::HasSubstr;
 
 using namespace google::cloud::testing_util::chrono_literals;
 
-// C++ futures only make sense when exceptions are enabled.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 TEST(FutureImplBaseTest, Basic) {
   future_shared_state_base shared_state;
   EXPECT_FALSE(shared_state.is_ready());
@@ -140,10 +140,10 @@ TEST(FutureImplVoid, Abandon) {
   },
                std::future_error);
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 }  // namespace
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
