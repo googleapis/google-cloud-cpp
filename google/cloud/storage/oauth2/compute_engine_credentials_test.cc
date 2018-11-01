@@ -113,7 +113,7 @@ TEST_F(ComputeEngineCredentialsTest,
             credentials.AuthorizationHeader());
   // Make sure we obtain the scopes and email from the metadata server.
   EXPECT_EQ(email, credentials.service_account_email());
-  EXPECT_THAT(UnorderedElementsAre("scope1", "scope2"));
+  EXPECT_THAT(credentials.scopes(), UnorderedElementsAre("scope1", "scope2"));
 
 }
 

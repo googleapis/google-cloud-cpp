@@ -103,9 +103,7 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials() {
 
   // TODO(#579): Check if running on App Engine flexible environment.
 
-  if (storage::internal::RunningOnComputeEngineVm()) {
-    return std::make_shared<ComputeEngineCredentials<>>();
-  }
+  // TODO(#579): Check if running on App Engine flexible environment.
 
   // We've exhausted all search points, thus credentials cannot be constructed.
   std::string adc_link =
