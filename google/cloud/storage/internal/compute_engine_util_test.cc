@@ -24,20 +24,29 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 using ::google::cloud::internal::SetEnv;
+using ::google::cloud::internal::UnsetEnv;
 using ::google::cloud::testing_util::EnvironmentVariableRestore;
 
 class ComputeEngineUtilTest : public ::testing::Test {
  public:
   ComputeEngineUtilTest()
-      : gce_check_override_env_var_(GceCheckOverrideEnvVar()) {}
+      : gce_check_override_env_var_(GceCheckOverrideEnvVar()),
+        gce_metadata_hostname_env_var_(GceMetadataHostnameEnvVar()) {}
 
  protected:
-  void SetUp() override { gce_check_override_env_var_.SetUp(); }
+  void SetUp() override {
+    gce_check_override_env_var_.SetUp();
+    gce_metadata_hostname_env_var_.SetUp();
+  }
 
-  void TearDown() override { gce_check_override_env_var_.TearDown(); }
+  void TearDown() override {
+    gce_check_override_env_var_.TearDown();
+    gce_metadata_hostname_env_var_.TearDown();
+  }
 
  protected:
   EnvironmentVariableRestore gce_check_override_env_var_;
+  EnvironmentVariableRestore gce_metadata_hostname_env_var_;
 };
 
 /// @test Ensure we can override the return value for checking if we're on GCE.
@@ -48,6 +57,17 @@ TEST_F(ComputeEngineUtilTest, CanOverrideRunningOnGceCheckViaEnvVar) {
   SetEnv(GceCheckOverrideEnvVar(), "0");
   EXPECT_FALSE(RunningOnComputeEngineVm());
 }
+
+/// @test Ensure we can override the value for the GCE metadata hostname.
+TEST_F(ComputeEngineUtilTest, CanOverrideGceMetadataHostname) {
+  SetEnv(GceMetadataHostnameEnvVar(), "foo.bar");
+  EXPECT_EQ(std::string("foo.bar"), GceMetadataHostname());
+
+  // If not overridden for testing, we should get the actual hostname.
+  UnsetEnv(GceMetadataHostnameEnvVar());
+  EXPECT_EQ(std::string("metadata.google.internal"), GceMetadataHostname());
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

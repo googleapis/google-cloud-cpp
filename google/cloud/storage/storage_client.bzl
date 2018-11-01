@@ -81,6 +81,7 @@ storage_client_SRCS = [
     "internal/binary_data_as_debug_string.cc",
     "internal/bucket_acl_requests.cc",
     "internal/bucket_requests.cc",
+    "internal/compute_engine_util.cc",
     "internal/curl_handle.cc",
     "internal/curl_handle_factory.cc",
     "internal/curl_download_request.cc",
