@@ -22,7 +22,9 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
-### 2018-11
+### v0.2.x - TBD
+
+### v0.1.x - 2018-11
 
 * `google::cloud::optional<T>` an intentionally incomplete implementation of
   `std::optional<T>` to support C++11 and C++14 users.

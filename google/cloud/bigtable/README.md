@@ -21,6 +21,8 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
+### v0.4.x - TBD
+
 ### v0.3.0 - 2018-11
 
 * Include an example that illustrates how to use OpenCensus and the Cloud

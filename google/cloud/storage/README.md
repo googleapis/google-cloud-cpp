@@ -20,7 +20,9 @@ the reference guide includes a quick start guide.
 
 ## Release Notes
 
-### 2018-11
+### v0.2.x - TBD
+
+### v0.1.x - 2018-11
 
 * Automatically compute MD5 hashes and CRC32C checksums when objects are
   uploaded and downloaded. Any hash or checksum mismatched results in an
