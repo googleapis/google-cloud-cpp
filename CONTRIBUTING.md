@@ -73,16 +73,19 @@ $ find google/cloud -o -name '*.h' -o -name '*.cc' -print0 \
     | xargs -0 clang-format -i
 ```
 
-You might find it convenient to reformat only the files which you actually
-touched:
+You might find it convenient to reformat only the files that you added or
+modified:
 ```console
-$ git status -s | awk 'NF>1{print $NF}' | grep -E '.*\.(cc|h)$' \
+$ git status -s \
+    | awk 'NF>1{print $NF}' \
+    | grep -E '.*\.(cc|h)$' \
+    | while read fpath; do if [ -f "$fpath" ]; then echo "$fpath"; fi; done \
     | xargs clang-format -i
 ```
 
 If you need to reformat one of the files to match the Google style.  Please be
 advised that `clang-format` has been known to generate slightly different
-formatting in different versions, we use version 4.0, use the same version if
+formatting in different versions. We use version 6.0; use the same version if
 you run into problems.
 
 If you have prepared a Docker image for `ubuntu:18.04` (see below), you can
