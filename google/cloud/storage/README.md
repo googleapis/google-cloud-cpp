@@ -20,6 +20,20 @@ the reference guide includes a quick start guide.
 
 ## Release Notes
 
+### 2018-11
+
+* Automatically compute MD5 hashes and CRC32C checksums when objects are
+  uploaded and downloaded. Any hash or checksum mismatched results in an
+  exception. Applications can MD5 hashes, CRC32C checksums or both on any
+  request.
+* Parse Bucket lock and retention policy attributes in object and bucket
+  metadata.
+* Add APIs to upload and download files with a single function call.
+* Improved the error messages generated when the credentials file is missing
+  or has invalid contents.
+* Jason Zaman contributed improvements and fixes to support soversion numbers
+  with CMake.
+
 ### 2018-09
 
 * The library implements all the APIs in the service, including:
