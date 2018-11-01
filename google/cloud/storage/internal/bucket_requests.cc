@@ -310,6 +310,14 @@ std::ostream& operator<<(std::ostream& os,
   return os << "]}";
 }
 
+std::ostream& operator<<(std::ostream& os,
+                         LockBucketRetentionPolicyRequest const& r) {
+  os << "LockBucketRetentionPolicyRequest={bucket_name=" << r.bucket_name()
+     << ", metageneration=" << r.metageneration();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+};
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
