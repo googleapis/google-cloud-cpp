@@ -9,6 +9,7 @@ google_cloud_cpp_common_HDRS = [
     "internal/filesystem.h",
     "internal/future_fwd.h",
     "internal/future_impl.h",
+    "internal/future_then_meta.h",
     "internal/future_void.h",
     "internal/getenv.h",
     "internal/make_unique.h",

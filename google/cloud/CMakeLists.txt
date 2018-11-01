@@ -105,6 +105,7 @@ add_library(google_cloud_cpp_common
             internal/filesystem.cc
             internal/future_fwd.h
             internal/future_impl.h
+            internal/future_then_meta.h
             internal/future_void.h
             internal/getenv.h
             internal/getenv.cc
