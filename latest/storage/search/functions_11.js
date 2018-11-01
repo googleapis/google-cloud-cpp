@@ -70,5 +70,6 @@ var searchData=
   ['size',['size',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#aa3bc2d054c4f030bcbe4a781f4271925',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['standard',['Standard',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1storage__class.html#a1081cb6e857d3069bf270600a592998d',1,'google::cloud::storage::v0::storage_class']]],
   ['status',['Status',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html#aea06085f90a913947b63f79ccb3a0dc9',1,'google::cloud::storage::v0::Status::Status()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html#ae56f51130ba11338dd74df2fd4d017b4',1,'google::cloud::storage::v0::Status::Status(long status_code, std::string error_message)'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html#a8147d56f93efa5a4034ce67bbcb00998',1,'google::cloud::storage::v0::Status::Status(long status_code, std::string error_message, std::string error_details)']]],
-  ['status_5fcode',['status_code',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html#a2b439f870d69b2ff46da2ddb79c250c8',1,'google::cloud::storage::v0::Status']]]
+  ['status_5fcode',['status_code',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html#a2b439f870d69b2ff46da2ddb79c250c8',1,'google::cloud::storage::v0::Status']]],
+  ['strictidempotencypolicy',['StrictIdempotencyPolicy',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1StrictIdempotencyPolicy.html#a708a6a8b4828256418b7d54a1b973f27',1,'google::cloud::storage::v0::StrictIdempotencyPolicy']]]
 ];
