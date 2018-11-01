@@ -86,25 +86,23 @@ TEST_F(ComputeEngineCredentialsTest,
       }));
 
   // Both requests add this header.
-  EXPECT_CALL(*mock_req_builder,
-      AddHeader(StrEq("metadata-flavor: Google"))).Times(2);
+  EXPECT_CALL(*mock_req_builder, AddHeader(StrEq("metadata-flavor: Google")))
+      .Times(2);
   EXPECT_CALL(
       *mock_req_builder,
-      Constructor(
-          StrEq(std::string("http://") + hostname +
-                "/computeMetadata/v1/instance/service-accounts/" + email +
-                "/token")))
+      Constructor(StrEq(std::string("http://") + hostname +
+                        "/computeMetadata/v1/instance/service-accounts/" +
+                        email + "/token")))
       .Times(1);
   // Only the call to retrieve service account info sends this query param.
+  EXPECT_CALL(*mock_req_builder,
+              AddQueryParameter(StrEq("recursive"), StrEq("true")))
+      .Times(1);
   EXPECT_CALL(
       *mock_req_builder,
-      AddQueryParameter(StrEq("recursive"), StrEq("true"))).Times(1);
-  EXPECT_CALL(
-      *mock_req_builder,
-      Constructor(
-          StrEq(std::string("http://") + hostname +
-                "/computeMetadata/v1/instance/service-accounts/" + alias +
-                "/")))
+      Constructor(StrEq(std::string("http://") + hostname +
+                        "/computeMetadata/v1/instance/service-accounts/" +
+                        alias + "/")))
       .Times(1);
 
   ComputeEngineCredentials<MockHttpRequestBuilder> credentials(alias);
@@ -114,7 +112,6 @@ TEST_F(ComputeEngineCredentialsTest,
   // Make sure we obtain the scopes and email from the metadata server.
   EXPECT_EQ(email, credentials.service_account_email());
   EXPECT_THAT(credentials.scopes(), UnorderedElementsAre("scope1", "scope2"));
-
 }
 
 }  // namespace
