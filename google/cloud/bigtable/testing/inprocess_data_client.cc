@@ -80,6 +80,15 @@ InProcessDataClient::AsyncMutateRows(
   return Stub()->AsyncMutateRows(context, request, cq, tag);
 }
 
+std::unique_ptr<::grpc::ClientAsyncReaderInterface<
+    ::google::bigtable::v2::SampleRowKeysResponse>>
+InProcessDataClient::AsyncSampleRowKeys(
+    ::grpc::ClientContext* context,
+    const ::google::bigtable::v2::SampleRowKeysRequest& request,
+    ::grpc::CompletionQueue* cq, void* tag) {
+  return Stub()->AsyncSampleRowKeys(context, request, cq, tag);
+}
+
 }  // namespace testing
 }  // namespace bigtable
 }  // namespace cloud
