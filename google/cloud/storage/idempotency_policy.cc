@@ -204,6 +204,246 @@ bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
   return true;
 }
 
+std::unique_ptr<IdempotencyPolicy> StrictIdempotencyPolicy::clone() const {
+  return google::cloud::internal::make_unique<StrictIdempotencyPolicy>(*this);
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::ListBucketsRequest const& request) const {
+  // Read operations are always idempotent.
+  return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::CreateBucketRequest const& request) const {
+  // Creating a bucket is idempotent because you cannot create a new version
+  // of a bucket, it succeeds only once.
+  return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::GetBucketMetadataRequest const& request) const {
+  // Read operations are always idempotent.
+  return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::DeleteBucketRequest const& request) const {
+  return (request.HasOption<IfMatchEtag>() or
+          request.HasOption<IfMetagenerationMatch>());
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::UpdateBucketRequest const& request) const {
+  return (request.HasOption<IfMatchEtag>() or
+          request.HasOption<IfMetagenerationMatch>());
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::PatchBucketRequest const& request) const {
+  return (request.HasOption<IfMatchEtag>() or
+      request.HasOption<IfMetagenerationMatch>());
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::GetBucketIamPolicyRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::SetBucketIamPolicyRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::TestBucketIamPermissionsRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::InsertObjectMediaRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::CopyObjectRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::GetObjectMetadataRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::ReadObjectRangeRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::InsertObjectStreamingRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::ListObjectsRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::DeleteObjectRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::UpdateObjectRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::PatchObjectRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::ComposeObjectRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::RewriteObjectRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::ListBucketAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::CreateBucketAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::DeleteBucketAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::GetBucketAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::UpdateBucketAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::PatchBucketAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::ListObjectAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::CreateObjectAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::DeleteObjectAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::GetObjectAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::UpdateObjectAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::PatchObjectAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::ListDefaultObjectAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::CreateDefaultObjectAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::DeleteDefaultObjectAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::GetDefaultObjectAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::UpdateDefaultObjectAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::PatchDefaultObjectAclRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::GetProjectServiceAccountRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::ListNotificationsRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::CreateNotificationRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::GetNotificationRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::DeleteNotificationRequest const& request) const {
+  // TODO(#714) - determine if the request is idempotent and return accordingly.
+  return true;
+}
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
