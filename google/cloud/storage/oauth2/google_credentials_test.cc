@@ -202,6 +202,20 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromContents) {
   EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
 }
 
+TEST_F(GoogleCredentialsTest, LoadComputeEngineCredentialsFromADCFlow) {
+  // Make sure other higher-precedence credentials (ADC env var, gcloud ADC from
+  // well-known path) aren't loaded.
+  UnsetEnv(GoogleAdcEnvVar());
+  UnsetEnv(GoogleGcloudAdcFileEnvVar());
+  // If the ADC flow thinks we're on a GCE instance, it should return
+  // ComputeEngineCredentials.
+  SetEnv(GceCheckOverrideEnvVar(), "1");
+
+  auto credentials = GoogleDefaultCredentials();
+  auto ptr = credentials.get();
+  EXPECT_EQ(typeid(*ptr), typeid(ComputeEngineCredentials<>));
+}
+
 TEST_F(GoogleCredentialsTest, CreateComputeEngineCredentialsWithDefaultEmail) {
   auto credentials = CreateComputeEngineCredentials();
   auto ptr = credentials.get();
