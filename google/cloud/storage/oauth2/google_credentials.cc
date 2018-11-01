@@ -143,6 +143,15 @@ std::shared_ptr<Credentials> CreateServiceAccountCredentialsFromJsonContents(
   return std::make_shared<ServiceAccountCredentials<>>(contents, "memory");
 }
 
+std::shared_ptr<Credentials> CreateComputeEngineCredentials() {
+  return std::make_shared<ComputeEngineCredentials<>>();
+}
+
+std::shared_ptr<Credentials> CreateComputeEngineCredentials(
+    std::string const& service_account_email) {
+  return std::make_shared<ComputeEngineCredentials<>>(service_account_email);
+}
+
 }  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
