@@ -88,14 +88,8 @@ class ComputeEngineCredentials : public Credentials {
  private:
   storage::internal::HttpResponse DoMetadataServerGetRequest(std::string path,
                                                              bool recursive) {
-    std::string metadata_server_hostname;
-    auto maybe_hostname =
-        ::google::cloud::internal::GetEnv("GCE_METADATA_ROOT");
-    if (maybe_hostname.has_value()) {
-      metadata_server_hostname = *maybe_hostname;
-    } else {
-      metadata_server_hostname = "metadata.google.internal";
-    }
+    std::string metadata_server_hostname =
+        google::cloud::storage::internal::GceMetadataHostname();
 
     HttpRequestBuilderType request_builder(
         std::move("http://" + metadata_server_hostname + path),
@@ -108,7 +102,7 @@ class ComputeEngineCredentials : public Credentials {
   }
 
   storage::Status RetrieveServiceAccountInfo() {
-    namespace nl = storage::internal::nl;
+    namespace nl = google::cloud::storage::internal::nl;
     auto response = DoMetadataServerGetRequest(
         "/computeMetadata/v1/instance/service-accounts/" +
             service_account_email_ + "/",
@@ -122,6 +116,7 @@ class ComputeEngineCredentials : public Credentials {
     // JSON array. At minimum, for the request to succeed, the instance must
     // have been granted the scope that allows it to retrieve info from the
     // metadata server.
+    std::cout << "Resp: " << response_body << std::endl;
     if (response_body.is_discarded() or response_body.count("email") == 0U or
         response_body.count("scopes") == 0U) {
       return storage::Status(
