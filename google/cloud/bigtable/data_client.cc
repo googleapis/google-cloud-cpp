@@ -77,6 +77,15 @@ class DefaultDataClient : public DataClient {
     return impl_.Stub()->CheckAndMutateRow(context, request, response);
   }
 
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::v2::CheckAndMutateRowResponse>>
+  AsyncCheckAndMutateRow(
+      grpc::ClientContext* context,
+      const google::bigtable::v2::CheckAndMutateRowRequest& request,
+      grpc::CompletionQueue* cq) override {
+    return impl_.Stub()->AsyncCheckAndMutateRow(context, request, cq);
+  }
+
   grpc::Status ReadModifyWriteRow(
       grpc::ClientContext* context,
       btproto::ReadModifyWriteRowRequest const& request,

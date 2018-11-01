@@ -67,6 +67,12 @@ class InProcessDataClient : public bigtable::DataClient {
       grpc::ClientContext* context,
       google::bigtable::v2::CheckAndMutateRowRequest const& request,
       google::bigtable::v2::CheckAndMutateRowResponse* response) override;
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::v2::CheckAndMutateRowResponse>>
+  AsyncCheckAndMutateRow(
+      grpc::ClientContext* context,
+      const google::bigtable::v2::CheckAndMutateRowRequest& request,
+      grpc::CompletionQueue* cq) override;
   grpc::Status ReadModifyWriteRow(
       grpc::ClientContext* context,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request,
