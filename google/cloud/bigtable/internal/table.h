@@ -248,6 +248,38 @@ class Table {
                          std::vector<Mutation> false_mutations,
                          grpc::Status& status);
 
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<
+                    Functor, CompletionQueue&, bool, grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  void AsyncCheckAndMutateRow(std::string row_key, Filter filter,
+                              std::vector<Mutation> true_mutations,
+                              std::vector<Mutation> false_mutations,
+                              CompletionQueue& cq, Functor&& callback) {
+    google::bigtable::v2::CheckAndMutateRowRequest request;
+    request.set_row_key(std::move(row_key));
+    bigtable::internal::SetCommonTableOperationRequest<
+        google::bigtable::v2::CheckAndMutateRowRequest>(
+        request, app_profile_id_.get(), table_name_.get());
+    *request.mutable_predicate_filter() = filter.as_proto_move();
+    for (auto& m : true_mutations) {
+      *request.add_true_mutations() = std::move(m.op);
+    }
+    for (auto& m : false_mutations) {
+      *request.add_false_mutations() = std::move(m.op);
+    }
+
+    auto operation = cq.MakeUnaryRpc(
+        *client_, &DataClient::AsyncCheckAndMutateRow, request,
+        google::cloud::internal::make_unique<grpc::ClientContext>(),
+        [callback](CompletionQueue& cq,
+                   google::bigtable::v2::CheckAndMutateRowResponse& response,
+                   grpc::Status& status) {
+          callback(cq, response.predicate_matched(), status);
+        });
+  }
+
   template <typename... Args>
   Row ReadModifyWriteRow(std::string row_key, grpc::Status& status,
                          bigtable::ReadModifyWriteRule rule, Args&&... rules) {
