@@ -156,7 +156,7 @@ class future_shared_state_base {
   void set_exception(std::exception_ptr ex) {
     std::unique_lock<std::mutex> lk(mu_);
     set_exception(std::move(ex), lk);
-    notify_now(lk);
+    notify_now(std::move(lk));
   }
 
   /**
@@ -207,7 +207,7 @@ class future_shared_state_base {
   }
 
   /// If needed, notify any waiting threads that the shared state is satisfied.
-  void notify_now(std::unique_lock<std::mutex>& lk) {
+  void notify_now(std::unique_lock<std::mutex>&& lk) {
     if (continuation_) {
       // Release the lock before calling the continuation because the
       // continuation will likely call get() to fetch the state of the future.
@@ -218,10 +218,10 @@ class future_shared_state_base {
       // without notifying any other threads.
       return;
     }
-    cv_.notify_all();
-    // Release the lock after the notification because otherwise the threads
-    // may lose the state change.
+    // Unlock first to avoid waking up a thread which becomes immediately
+    // blocked on the mutex.
     lk.unlock();
+    cv_.notify_all();
   }
 
   // My (@coryan) reading of the spec is that calling get_future() on a promise
@@ -300,7 +300,7 @@ class future_shared_state<void> final : private future_shared_state_base {
   void set_value() {
     std::unique_lock<std::mutex> lk(mu_);
     set_value(lk);
-    notify_now(lk);
+    notify_now(std::move(lk));
   }
 
   /**
@@ -491,6 +491,8 @@ future_shared_state<void>::make_continuation(
   using continuation_type = internal::continuation<F, void>;
   auto continuation = google::cloud::internal::make_unique<continuation_type>(
       std::forward<F>(functor), self);
+  // Save the value of `continuation->output`, because the move will make it
+  // inaccessible.
   auto result = continuation->output;
   self->set_continuation(
       std::unique_ptr<continuation_base>(std::move(continuation)));

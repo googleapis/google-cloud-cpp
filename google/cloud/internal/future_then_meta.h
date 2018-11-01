@@ -52,6 +52,14 @@ struct unwrap_then<future<U>> {
  * This metafunction implements a number of useful results given a functor type
  * @p Functor, and the value type @p T of a `future_shared_state<T>`.
  *
+ * @note The `Functor` in this metafunction is *not* the template parameter
+ * passed to `.then()`.  It is a functor, created by `.then()`, that wraps the
+ * original argument but operates directly on `future_shared_state<T>`. Without
+ * this wrapper the implementation of the continuation classes would need to
+ * know about the full definition of `future<T>`, and we could too easily create
+ * a cycle where the definition of `future_shared_state<T>` needs the definition
+ * of `future<T>` which needs the definition of `future_shared_state<T>.
+ *
  * * First it determines if `Functor` meets the requirements, i.e., that it can
  *   be invoked with an object of type `future_shared_state<T>` as its only
  *   argument.

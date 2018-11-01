@@ -125,6 +125,62 @@ TEST(FutureImplBaseTest, AbandonReady) {
   EXPECT_TRUE(shared_state.is_ready());
 }
 
+// @test Verify that we can create continuations.
+TEST(ContinuationVoidTest, Constructor) {
+  auto functor = [](std::shared_ptr<future_shared_state<void>> state) {};
+
+  using tested_type = continuation<decltype(functor), void>;
+
+  auto input = std::make_shared<future_shared_state<void>>();
+  auto cont = std::make_shared<tested_type>(std::move(functor), input);
+
+  auto current = cont->input.lock();
+  EXPECT_EQ(input.get(), current.get());
+}
+
+/// @test Verify that satisfying the shared state with an exception calls the
+/// continuation.
+TEST(ContinuationVoidTest, SetExceptionCallsContinuation) {
+  bool called = false;
+  auto functor = [&called](std::shared_ptr<future_shared_state<void>> state) {
+    called = true;
+    state->get();
+  };
+
+  auto input = std::make_shared<future_shared_state<void>>();
+  std::shared_ptr<future_shared_state<void>> output =
+      input->make_continuation(input, std::move(functor));
+
+  input->set_exception(
+      std::make_exception_ptr(std::runtime_error("test message")));
+  EXPECT_TRUE(called);
+  EXPECT_TRUE(output->is_ready());
+  EXPECT_THROW(try { output->get(); } catch (std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("test message"));
+    throw;
+  },
+               std::runtime_error);
+}
+
+/// @test Verify that satisfying the shared state with a value calls the
+/// continuation.
+TEST(ContinuationVoidTest, SetValueCallsContinuation) {
+  bool called = false;
+  auto functor = [&called](std::shared_ptr<future_shared_state<void>> state) {
+    called = true;
+    state->get();
+  };
+
+  auto input = std::make_shared<future_shared_state<void>>();
+  std::shared_ptr<future_shared_state<void>> output =
+      input->make_continuation(input, std::move(functor));
+
+  input->set_value();
+  EXPECT_TRUE(called);
+  EXPECT_TRUE(output->is_ready());
+  EXPECT_NO_THROW(output->get());
+}
+
 TEST(FutureImplVoid, SetValue) {
   future_shared_state<void> shared_state;
   EXPECT_FALSE(shared_state.is_ready());
@@ -155,11 +211,12 @@ TEST(FutureImplVoid, GetException) {
   shared_state.set_exception(
       std::make_exception_ptr(std::runtime_error("test message")));
   EXPECT_TRUE(shared_state.is_ready());
-  EXPECT_THROW(try { shared_state.get(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("test message"));
-    throw;
-  },
-               std::runtime_error);
+  EXPECT_THROW(
+      try { shared_state.get(); } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test message"));
+        throw;
+      },
+      std::runtime_error);
 }
 
 TEST(FutureImplVoid, Abandon) {
@@ -227,7 +284,6 @@ TEST(FutureImplTestVoid, SetContinuationAlreadySatisfied) {
 
   EXPECT_NO_THROW(shared_state.get());
 }
-
 
 }  // namespace
 }  // namespace internal
