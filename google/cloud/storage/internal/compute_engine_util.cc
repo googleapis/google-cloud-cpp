@@ -46,15 +46,15 @@ bool RunningOnComputeEngineVm() {
 
 #if _WIN32
   // These values came from a GCE VM running Windows Server 2012 R2.
-  std::wstring const REG_KEY_PATH = L"SYSTEM\\HardwareConfig\\Current\\";
-  std::wstring const REG_KEY_NAME = L"SystemProductName";
-  std::wstring const GCE_PRODUCT_NAME = L"Google Compute Engine";
+  std::wstring const reg_key_path = L"SYSTEM\\HardwareConfig\\Current\\";
+  std::wstring const reg_key_name = L"SystemProductName";
+  std::wstring const gce_product_name = L"Google Compute Engine";
 
   // Get the size of the string first to allocate our buffer. This includes
   // enough space for the trailing NUL character that will be included.
   DWORD buffer_size{};
   auto rc = ::RegGetValueW(
-      HKEY_LOCAL_MACHINE, REG_KEY_PATH.c_str(), REG_KEY_NAME.c_str(),
+      HKEY_LOCAL_MACHINE, reg_key_path.c_str(), reg_key_name.c_str(),
       RRF_RT_REG_SZ,
       nullptr,        // We know the type will be REG_SZ.
       nullptr,        // We're only fetching the size; no buffer given yet.
@@ -67,7 +67,7 @@ bool RunningOnComputeEngineVm() {
   std::wstring buffer;
   buffer.resize(static_cast<std::size_t>(buffer_size) / sizeof(wchar_t));
   rc = ::RegGetValueW(
-      HKEY_LOCAL_MACHINE, REG_KEY_PATH.c_str(), REG_KEY_NAME.c_str(),
+      HKEY_LOCAL_MACHINE, reg_key_path.c_str(), reg_key_name.c_str(),
       RRF_RT_REG_SZ,
       nullptr,                         // We know the type will be REG_SZ.
       static_cast<void*>(&buffer[0]),  // Fetch the string value this time.
@@ -85,21 +85,21 @@ bool RunningOnComputeEngineVm() {
   buffer_size--;
   buffer.resize(static_cast<std::size_t>(buffer_size));
 
-  return buffer == GCE_PRODUCT_NAME;
+  return buffer == gce_product_name;
 #else   // Running on Linux
   // On Linux GCE VMs, we expect to see "Google Compute Engine" as the contents
   // of the file at /sys/class/dmi/id/product_name.
-  std::string const GCE_PRODUCT_NAME = "Google Compute Engine";
-  std::string const PRODUCT_NAME_FILE = "/sys/class/dmi/id/product_name";
-  std::ifstream is(PRODUCT_NAME_FILE);
+  std::string const gce_product_name = "Google Compute Engine";
+  std::string const product_name_file = "/sys/class/dmi/id/product_name";
+  std::ifstream is(product_name_file);
   if (not is.is_open()) {
-    GCP_LOG(WARNING) << "Could not find file '" << PRODUCT_NAME_FILE
+    GCP_LOG(WARNING) << "Could not find file '" << product_name_file
                      << "' when checking if running on GCE, returning false";
     return false;
   }
   std::string first_line;
   std::getline(is, first_line);
-  return first_line == GCE_PRODUCT_NAME;
+  return first_line == gce_product_name;
 #endif  // _WIN32
 }
 
