@@ -136,14 +136,15 @@ class AsyncRetryUnaryRpc
       IdempotencyPolicy idempotent_policy,
       MetadataUpdatePolicy metadata_update_policy,
       std::shared_ptr<Client> client, MemberFunctionType Client::*call,
-      Request&& request, Functor&& callback)
+      Request&& request, Functor&& callback, CompletionQueue& cq)
       : AsyncRetryOp<IdempotencyPolicy, Functor,
                      AsyncUnaryRpc<Client, MemberFunctionType>>(
             error_message, std::move(rpc_retry_policy),
             std::move(rpc_backoff_policy), std::move(idempotent_policy),
             std::move(metadata_update_policy), std::forward<Functor>(callback),
             AsyncUnaryRpc<Client, MemberFunctionType>(
-                std::move(client), std::move(call), std::move(request))) {}
+                std::move(client), std::move(call), std::move(request)),
+            cq) {}
 };
 
 }  // namespace internal

@@ -152,15 +152,19 @@ class AsyncRetryOp : public std::enable_shared_from_this<
                         std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
                         IdempotencyPolicy idempotent_policy,
                         MetadataUpdatePolicy metadata_update_policy,
-                        Functor&& callback, Operation&& operation)
+                        Functor&& callback, Operation&& operation,
+                        CompletionQueue& cq)
       : error_message_(error_message),
         rpc_retry_policy_(std::move(rpc_retry_policy)),
         rpc_backoff_policy_(std::move(rpc_backoff_policy)),
         idempotent_policy_(std::move(idempotent_policy)),
         metadata_update_policy_(std::move(metadata_update_policy)),
         callback_(std::forward<Functor>(callback)),
-        operation_(std::move(operation)) {}
+        operation_(std::move(operation)) {
+    Start(cq);
+  }
 
+ private:
   /**
    * Kick off the asynchronous request.
    *
@@ -179,7 +183,6 @@ class AsyncRetryOp : public std::enable_shared_from_this<
                      });
   }
 
- private:
   std::string FullErrorMessage(char const* where) {
     std::string full_message = error_message_;
     full_message += "(" + metadata_update_policy_.value() + ") ";

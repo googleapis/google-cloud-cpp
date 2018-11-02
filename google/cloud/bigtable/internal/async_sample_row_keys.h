@@ -151,7 +151,7 @@ class AsyncRetrySampleRowKeys
                           std::shared_ptr<bigtable::DataClient> client,
                           bigtable::AppProfileId const& app_profile_id,
                           bigtable::TableId const& table_name,
-                          Functor&& callback)
+                          Functor&& callback, CompletionQueue& cq)
       : AsyncRetryOp<ConstantIdempotencyPolicy, Functor, AsyncSampleRowKeys>(
             error_message, std::move(rpc_retry_policy),
             // BulkMutator is idempotent because it keeps track of idempotency
@@ -159,7 +159,8 @@ class AsyncRetrySampleRowKeys
             std::move(rpc_backoff_policy), ConstantIdempotencyPolicy(true),
             std::move(metadata_update_policy), std::forward<Functor>(callback),
             AsyncSampleRowKeys(client, std::move(app_profile_id),
-                               std::move(table_name))) {}
+                               std::move(table_name)),
+            cq) {}
 };
 
 }  // namespace internal

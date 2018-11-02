@@ -194,8 +194,7 @@ class Table {
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(is_idempotent),
         metadata_update_policy_, client_, &DataClient::AsyncMutateRow,
-        std::move(request), std::forward<Functor>(callback));
-    retry->Start(cq);
+        std::move(request), std::forward<Functor>(callback), cq);
   }
 
   /**
@@ -221,14 +220,11 @@ class Table {
                 int>::type valid_callback_type = 0>
   void AsyncBulkApply(BulkMutation&& mut, CompletionQueue& cq,
                       Functor&& callback) {
-    auto op =
-        std::make_shared<bigtable::internal::AsyncRetryBulkApply<Functor>>(
-            rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
-            *idempotent_mutation_policy_, metadata_update_policy_, client_,
-            app_profile_id_, table_name_, std::move(mut),
-            std::forward<Functor>(callback));
-
-    op->Start(cq);
+    std::make_shared<bigtable::internal::AsyncRetryBulkApply<Functor>>(
+        rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        *idempotent_mutation_policy_, metadata_update_policy_, client_,
+        app_profile_id_, table_name_, std::move(mut),
+        std::forward<Functor>(callback), cq);
   }
 
   std::vector<FailedMutation> BulkApply(BulkMutation&& mut,
@@ -303,13 +299,10 @@ class Table {
                     grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   void AsyncSampleRowKeys(CompletionQueue& cq, Functor&& callback) {
-    auto op =
-        std::make_shared<bigtable::internal::AsyncRetrySampleRowKeys<Functor>>(
-            __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
-            metadata_update_policy_, client_, app_profile_id_, table_name_,
-            std::forward<Functor>(callback));
-
-    op->Start(cq);
+    std::make_shared<bigtable::internal::AsyncRetrySampleRowKeys<Functor>>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        metadata_update_policy_, client_, app_profile_id_, table_name_,
+        std::forward<Functor>(callback), cq);
   }
   //@}
 

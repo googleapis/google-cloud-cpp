@@ -69,7 +69,7 @@ class AsyncRetryBulkApply : public AsyncRetryOp<ConstantIdempotencyPolicy,
                       std::shared_ptr<bigtable::DataClient> client,
                       bigtable::AppProfileId const& app_profile_id,
                       bigtable::TableId const& table_name, BulkMutation&& mut,
-                      Functor&& callback)
+                      Functor&& callback, CompletionQueue& cq)
       : AsyncRetryOp<ConstantIdempotencyPolicy, Functor, AsyncBulkMutator>(
             __func__, std::move(rpc_retry_policy),
             // BulkMutator is idempotent because it keeps track of idempotency
@@ -78,7 +78,8 @@ class AsyncRetryBulkApply : public AsyncRetryOp<ConstantIdempotencyPolicy,
             std::move(metadata_update_policy), std::forward<Functor>(callback),
             AsyncBulkMutator(client, std::move(app_profile_id),
                              std::move(table_name), idempotent_policy,
-                             std::forward<BulkMutation>(mut))) {}
+                             std::forward<BulkMutation>(mut)),
+            cq) {}
 };
 
 }  // namespace internal

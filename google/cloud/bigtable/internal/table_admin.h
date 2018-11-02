@@ -154,12 +154,11 @@ class TableAdmin {
                                      internal::ConstantIdempotencyPolicy,
                                      Functor>;
 
-    auto retry = std::make_shared<Retry>(
+    std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(false), metadata_update_policy_,
         client_, &AdminClient::AsyncCreateTable, std::move(request),
-        std::forward<Functor>(callback));
-    retry->Start(cq);
+        std::forward<Functor>(callback), cq);
   }
 
   std::vector<google::bigtable::admin::v2::Table> ListTables(
@@ -210,12 +209,11 @@ class TableAdmin {
                                      internal::ConstantIdempotencyPolicy,
                                      Functor>;
 
-    auto retry = std::make_shared<Retry>(
+    std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &AdminClient::AsyncGetTable, std::move(request),
-        std::forward<Functor>(callback));
-    retry->Start(cq);
+        std::forward<Functor>(callback), cq);
   }
 
   void DeleteTable(std::string const& table_id, grpc::Status& status);
@@ -309,12 +307,11 @@ class TableAdmin {
                                      internal::ConstantIdempotencyPolicy,
                                      Functor>;
 
-    auto retry = std::make_shared<Retry>(
+    std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(false), metadata_update_policy,
         client_, &AdminClient::AsyncModifyColumnFamilies, std::move(request),
-        std::forward<Functor>(callback));
-    retry->Start(cq);
+        std::forward<Functor>(callback), cq);
   }
 
   /**
@@ -363,12 +360,11 @@ class TableAdmin {
                                      internal::ConstantIdempotencyPolicy,
                                      Functor>;
 
-    auto retry = std::make_shared<Retry>(
+    std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(false), metadata_update_policy,
         client_, &AdminClient::AsyncDropRowRange, std::move(request),
-        std::forward<Functor>(callback));
-    retry->Start(cq);
+        std::forward<Functor>(callback), cq);
   }
 
   /**
@@ -414,12 +410,11 @@ class TableAdmin {
                                      internal::ConstantIdempotencyPolicy,
                                      Functor>;
 
-    auto retry = std::make_shared<Retry>(
+    std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(false), metadata_update_policy,
         client_, &AdminClient::AsyncDropRowRange, std::move(request),
-        std::forward<Functor>(callback));
-    retry->Start(cq);
+        std::forward<Functor>(callback), cq);
   }
 
   /**
@@ -470,12 +465,11 @@ class TableAdmin {
                                      internal::ConstantIdempotencyPolicy,
                                      Functor>;
 
-    auto retry = std::make_shared<Retry>(
+    std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(false), metadata_update_policy,
         client_, &AdminClient::AsyncGetSnapshot, std::move(request),
-        std::forward<Functor>(callback));
-    retry->Start(cq);
+        std::forward<Functor>(callback), cq);
   }
 
   /**
@@ -528,12 +522,11 @@ class TableAdmin {
                                      internal::ConstantIdempotencyPolicy,
                                      Functor>;
 
-    auto retry = std::make_shared<Retry>(
+    std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(false), metadata_update_policy,
         client_, &AdminClient::AsyncDeleteSnapshot, std::move(request),
-        std::forward<Functor>(callback));
-    retry->Start(cq);
+        std::forward<Functor>(callback), cq);
   }
   //@}
 

@@ -157,12 +157,11 @@ class InstanceAdmin {
                                      internal::ConstantIdempotencyPolicy,
                                      Functor>;
 
-    auto retry = std::make_shared<Retry>(
+    std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncGetInstance, std::move(request),
-        std::forward<Functor>(callback));
-    retry->Start(cq);
+        std::forward<Functor>(callback), cq);
   }
 
   void DeleteInstance(std::string const& instance_id, grpc::Status& status);
@@ -208,12 +207,11 @@ class InstanceAdmin {
                                      internal::ConstantIdempotencyPolicy,
                                      Functor>;
 
-    auto retry = std::make_shared<Retry>(
+    std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncDeleteInstance, std::move(request),
-        std::forward<Functor>(callback));
-    retry->Start(cq);
+        std::forward<Functor>(callback), cq);
   }
 
   std::vector<google::bigtable::admin::v2::Cluster> ListClusters(
@@ -266,12 +264,11 @@ class InstanceAdmin {
                                      internal::ConstantIdempotencyPolicy,
                                      Functor>;
 
-    auto retry = std::make_shared<Retry>(
+    std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncDeleteCluster, std::move(request),
-        std::forward<Functor>(callback));
-    retry->Start(cq);
+        std::forward<Functor>(callback), cq);
   }
 
   google::bigtable::admin::v2::Cluster GetCluster(
@@ -321,12 +318,11 @@ class InstanceAdmin {
                                      internal::ConstantIdempotencyPolicy,
                                      Functor>;
 
-    auto retry = std::make_shared<Retry>(
+    std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncGetCluster, std::move(request),
-        std::forward<Functor>(callback));
-    retry->Start(cq);
+        std::forward<Functor>(callback), cq);
   }
 
   google::longrunning::Operation UpdateAppProfile(
@@ -378,12 +374,11 @@ class InstanceAdmin {
                                      internal::ConstantIdempotencyPolicy,
                                      Functor>;
 
-    auto retry = std::make_shared<Retry>(
+    std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncCreateAppProfile,
-        std::move(request), std::forward<Functor>(callback));
-    retry->Start(cq);
+        std::move(request), std::forward<Functor>(callback), cq);
   }
 
   google::bigtable::admin::v2::AppProfile GetAppProfile(
@@ -435,12 +430,11 @@ class InstanceAdmin {
                                      internal::ConstantIdempotencyPolicy,
                                      Functor>;
 
-    auto retry = std::make_shared<Retry>(
+    std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncGetAppProfile, std::move(request),
-        std::forward<Functor>(callback));
-    retry->Start(cq);
+        std::forward<Functor>(callback), cq);
   }
 
   std::vector<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
@@ -494,12 +488,11 @@ class InstanceAdmin {
                                      internal::ConstantIdempotencyPolicy,
                                      Functor>;
 
-    auto retry = std::make_shared<Retry>(
+    std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncDeleteAppProfile,
-        std::move(request), std::forward<Functor>(callback));
-    retry->Start(cq);
+        std::move(request), std::forward<Functor>(callback), cq);
   }
 
   google::cloud::IamPolicy GetIamPolicy(std::string const& instance_id,
