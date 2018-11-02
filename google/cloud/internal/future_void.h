@@ -24,6 +24,7 @@
 
 // C++ futures only make sense when exceptions are enabled.
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+#include "google/cloud/internal/future_base.h"
 #include "google/cloud/internal/future_fwd.h"
 #include "google/cloud/internal/future_impl.h"
 
@@ -34,24 +35,22 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  * Implement ISO/IEC TS 19571:2016 future for void.
  */
 template <>
-class future<void> {
+class future<void> final : private internal::future_base<void> {
  public:
-  future() noexcept : shared_state_() {}
-  future(future<void>&& f) noexcept
-      : shared_state_(std::move(f.shared_state_)) {}
+  future() noexcept = default;
 
   // TODO(#1345) - implement the unwrapping constructor.
   // future(future<future<void>>&& f) noexcept;
   // future& operator=(future<future<void>>&& f) noexcept;
-  future(future<void> const&) = delete;
 
-  future& operator=(future<void>&& f) noexcept {
-    future tmp(std::move(f));
-    std::swap(tmp.shared_state_, shared_state_);
-    return *this;
-  }
-  future& operator=(future const&) = delete;
-
+  /**
+   * Waits until the shared state becomes ready, then retrieves the value stored
+   * in the shared state.
+   *
+   * @throws any exceptions stored in the shared state.
+   * @throws std::future_error with std::no_state if the future does not have
+   *   a shared state.
+   */
   void get() {
     check_valid();
     std::shared_ptr<shared_state_type> tmp;
@@ -59,82 +58,70 @@ class future<void> {
     return tmp->get();
   }
 
-  bool valid() const noexcept { return static_cast<bool>(shared_state_); }
-  void wait() const {
-    check_valid();
-    shared_state_->wait();
-  }
-
-  template <typename Rep, typename Period>
-  std::future_status wait_for(
-      std::chrono::duration<Rep, Period> const& rel_time) const {
-    check_valid();
-    return shared_state_->wait_for(rel_time);
-  }
-
-  template <typename Rep, typename Period>
-  std::future_status wait_until(
-      std::chrono::time_point<Rep, Period> const& abs_time) const {
-    check_valid();
-    return shared_state_->wait_until(abs_time);
-  }
+  using future_base::valid;
+  using future_base::wait;
+  using future_base::wait_for;
+  using future_base::wait_until;
 
  private:
-  /// Shorthand to refer to the shared state type.
-  using shared_state_type = internal::future_shared_state<void>;
-
   friend class promise<void>;
   explicit future(std::shared_ptr<shared_state_type> state)
-      : shared_state_(std::move(state)) {}
-
-  void check_valid() const {
-    if (not shared_state_) {
-      throw std::future_error(std::future_errc::no_state);
-    }
-  }
-
-  std::shared_ptr<shared_state_type> shared_state_;
+      : future_base<void>(std::move(state)) {}
 };
 
 /**
  * Specialize promise as defined in ISO/IEC TS 19571:2016 for void.
  */
 template <>
-class promise<void> {
+class promise<void> final : private internal::promise_base<void> {
  public:
-  /// Create a promise
-  promise() : shared_state_(new shared_state) {}
+  /// Creates a promise with an unsatisfied shared state.
+  promise() = default;
 
-  promise(promise&& rhs) noexcept
-      : shared_state_(std::move(rhs.shared_state_)) {
-    rhs.shared_state_.reset();
-  }
+  /// Constructs a new promise and transfer any shared state from @p rhs.
+  promise(promise&& rhs) noexcept = default;
 
-  promise(promise const&) = delete;
-
-  ~promise() {
-    if (shared_state_) {
-      shared_state_->abandon();
-    }
-  }
-
+  /// Abandons the shared state in `*this`, if any, and transfers the shared
+  /// state from @p rhs.
   promise& operator=(promise&& rhs) noexcept {
     promise tmp(std::move(rhs));
-    this->swap(tmp);
+    tmp.swap(*this);
     return *this;
   }
 
+  /**
+   * Abandons any shared state.
+   *
+   * If the shared state was not already satisfied it becomes satisfied with
+   * a `std::future_error` exception. The error code in this exception is
+   * `std::future_errc::broken_promise`.
+   */
+  ~promise() = default;
+
+  promise(promise const&) = delete;
   promise& operator=(promise const&) = delete;
 
+  /// Swaps the shared state in `*this` with @p rhs.
   void swap(promise& other) noexcept {
     std::swap(shared_state_, other.shared_state_);
   }
 
+  /**
+   * Creates the `future<void>` using the same shared state as `*this`.
+   */
   future<void> get_future() {
-    shared_state::mark_retrieved(shared_state_);
+    shared_state_type::mark_retrieved(shared_state_);
     return future<void>(shared_state_);
   }
 
+  /**
+   * Satisfies the shared state.
+   *
+   * @throws std::future_error with std::future_errc::promise_already_satisfied
+   *   if the shared state is already satisfied.
+   * @throws std::future_error with std::no_state if the promise does not have
+   *   a shared state.
+   */
   void set_value() {
     if (not shared_state_) {
       throw std::future_error(std::future_errc::no_state);
@@ -142,17 +129,7 @@ class promise<void> {
     shared_state_->set_value();
   }
 
-  void set_exception(std::exception_ptr p) {
-    if (not shared_state_) {
-      throw std::future_error(std::future_errc::no_state);
-    }
-    shared_state_->set_exception(std::move(p));
-  }
-
- private:
-  /// Shorthand to refer to the shared state type.
-  using shared_state = internal::future_shared_state<void>;
-  std::shared_ptr<shared_state> shared_state_;
+  using promise_base<void>::set_exception;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_NS

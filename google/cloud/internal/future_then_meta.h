@@ -17,7 +17,7 @@
 /**
  * @file
  *
- * Define metafunctions used in the implementation for `future<T>::then()`.
+ * Define metafunctions used in the implementation for `future<T>::%then()`.
  */
 
 #include "google/cloud/internal/future_fwd.h"
@@ -47,7 +47,7 @@ struct unwrap_then<future<U>> {
 };
 
 /**
- * A metafunction to implement `continuation<Functor, T>::execute()`.
+ * A metafunction to implement `internal::continuation<Functor,T>`.
  *
  * This metafunction implements a number of useful results given a functor type
  * @p Functor, and the value type @p T of a `future_shared_state<T>`.
@@ -68,7 +68,7 @@ struct unwrap_then<future<U>> {
  * * It determines if the resulting type requires implicit unwrapping because it
  *   is a `future<U>`.
  * * It computes the type of the shared state needed to implement
- *   `future<T>::then()`.
+ *   `future<T>::%then()`.
  *
  * @tparam Functor the functor to call. Note that this is a functor wrapped by
  *   `future<T>`. It must accept a `std::shared_ptr<future_shared_state<T>>` as

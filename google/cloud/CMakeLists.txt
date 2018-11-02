@@ -104,6 +104,7 @@ add_library(google_cloud_cpp_common
             ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
             internal/filesystem.h
             internal/filesystem.cc
+            internal/future_base.h
             internal/future_fwd.h
             internal/future_impl.h
             internal/future_then_meta.h
