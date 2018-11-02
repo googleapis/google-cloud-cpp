@@ -121,11 +121,11 @@ class AsyncBulkMutator : private BulkMutator {
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
-  void Start(CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext>&& context,
-             Functor&& callback) {
+  std::shared_ptr<AsyncOperation> Start(
+      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext>&& context,
+      Functor&& callback) {
     PrepareForRequest();
-    cq.MakeUnaryStreamRpc(
+    return cq.MakeUnaryStreamRpc(
         *client_, &DataClient::AsyncMutateRows, mutations_, std::move(context),
         [this](CompletionQueue&, const grpc::ClientContext&,
                google::bigtable::v2::MutateRowsResponse& response) {

@@ -87,6 +87,7 @@ struct HasAccumulatedResult<
  *    `std::unique_ptr<grpc::ClientContext>&&` and `Functor&&`, where `Functor`
  *    is invokable with `CompletionQueue&` and `grpc::Status&`,
  *  - the `AccumulatedResult` is invocable with no arguments,
+ *  - the `Start` function returns a std::shared_ptr<AsyncOperation>
  *  - the `AccumulatedResult` function has the same return type as
  *    `Operation::Response`.
  */
@@ -102,7 +103,14 @@ struct MeetsAsyncOperationRequirements
               decltype(&Operation::AccumulatedResult), Operation&>,
           std::is_same<google::cloud::internal::invoke_result_t<
                            decltype(&Operation::AccumulatedResult), Operation&>,
-                       typename Operation::Response>> {};
+                       typename Operation::Response>,
+          std::is_same<
+              google::cloud::internal::invoke_result_t<
+                  decltype(&Operation::template Start<PrototypeStartCallback>),
+                  Operation&, CompletionQueue&,
+                  std::unique_ptr<grpc::ClientContext>&&,
+                  PrototypeStartCallback&&>,
+              std::shared_ptr<AsyncOperation>>> {};
 
 /**
  * Perform an asynchronous operation, with retries.

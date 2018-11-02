@@ -92,15 +92,16 @@ class AsyncUnaryRpc {
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
-  void Start(CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext>&& context,
-             Functor&& callback) {
-    cq.MakeUnaryRpc(*client_, call_, request_, std::move(context),
-                    [this, callback](CompletionQueue& cq, Response& response,
-                                     grpc::Status& status) {
-                      response_ = std::move(response);
-                      callback(cq, status);
-                    });
+  std::shared_ptr<AsyncOperation> Start(
+      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext>&& context,
+      Functor&& callback) {
+    return cq.MakeUnaryRpc(
+        *client_, call_, request_, std::move(context),
+        [this, callback](CompletionQueue& cq, Response& response,
+                         grpc::Status& status) {
+          response_ = std::move(response);
+          callback(cq, status);
+        });
   }
 
   Response AccumulatedResult() { return response_; }
