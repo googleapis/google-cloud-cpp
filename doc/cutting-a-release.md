@@ -26,7 +26,7 @@ git log upstream/master -- google/cloud/bigtable
 
 ```bash
 # Summarize the output of this into google/cloud/storage/README.md
-git log upstream/master -- google/cloud/bigtable
+git log upstream/master -- google/cloud/storage
 ```
 
 Do not forget to update `google/cloud/README.md` too.
@@ -41,7 +41,8 @@ to create the release at an specific point in the revision history.
 Through this document we will use this variable to represent the release name:
 
 ```bash
-export REL="v0.N"
+# Use the actual release prefix (e.g. v0.5) not just `N`.
+export RELEASE="v0.N"
 ```
 
 If you decide to cut&paste the commands below, make sure that variable has the
@@ -52,7 +53,7 @@ Clone the main repository to create the branch:
 ```sh
 git clone git@github.com:GoogleCloudPlatform/google-cloud-cpp.git releases
 cd releases
-git checkout -b "${REL}.x"
+git checkout -b "${RELEASE}.x"
 ```
 
 Modify the CMake script to indicate this is a release:
@@ -72,8 +73,8 @@ You should expect that only `google/cloud/CMakeLists.txt` and
 and then commit the changes and push the new branch:
 
 ```bash
-git commit -m"Create v0.N.x release branch" .
-git push --set-upstream v0.N.x
+git commit -m"Create ${RELEASE}.x release branch" .
+git push --set-upstream ${RELEASE}.x
 ```
 
 ## Bump the version numbers in `master`
