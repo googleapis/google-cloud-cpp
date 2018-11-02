@@ -211,6 +211,68 @@ TEST_F(DataAsyncIntegrationTest, SampleRowKeys) {
   EXPECT_LT(0, last.offset_bytes);
 }
 
+TEST_F(DataAsyncIntegrationTest, TableCheckAndMutateRowPass) {
+  std::string const table_id = RandomTableId();
+  auto sync_table = CreateTable(table_id, table_config);
+  noex::Table table(data_client_, table_id);
+  std::string const key = "row-key";
+
+  std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000", {}}};
+  CreateCells(*sync_table, created);
+  bool op_called = false;
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+  table.AsyncCheckAndMutateRow(key, bigtable::Filter::ValueRegex("v1000"),
+                               {bigtable::SetCell(family, "c2", 0_ms, "v2000")},
+                               {bigtable::SetCell(family, "c3", 0_ms, "v3000")},
+                               cq,
+                               [&op_called](CompletionQueue& cq, bool response,
+                                            grpc::Status const& status) {
+                                 op_called = true;
+                                 EXPECT_TRUE(status.ok());
+                                 EXPECT_TRUE(response);
+                               });
+  cq.Shutdown();
+  pool.join();
+  EXPECT_TRUE(op_called);
+  std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000", {}},
+                                       {key, family, "c2", 0, "v2000", {}}};
+  auto actual = ReadRows(*sync_table, bigtable::Filter::PassAllFilter());
+  DeleteTable(table_id);
+  CheckEqualUnordered(expected, actual);
+}
+
+TEST_F(DataAsyncIntegrationTest, TableCheckAndMutateRowFail) {
+  std::string const table_id = RandomTableId();
+  auto sync_table = CreateTable(table_id, table_config);
+  noex::Table table(data_client_, table_id);
+  std::string const key = "row-key";
+
+  std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000", {}}};
+  CreateCells(*sync_table, created);
+  bool op_called = false;
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+  table.AsyncCheckAndMutateRow(key, bigtable::Filter::ValueRegex("not-there"),
+                               {bigtable::SetCell(family, "c2", 0_ms, "v2000")},
+                               {bigtable::SetCell(family, "c3", 0_ms, "v3000")},
+                               cq,
+                               [&op_called](CompletionQueue& cq, bool response,
+                                            grpc::Status const& status) {
+                                 op_called = true;
+                                 EXPECT_TRUE(status.ok());
+                                 EXPECT_FALSE(response);
+                               });
+  cq.Shutdown();
+  pool.join();
+  EXPECT_TRUE(op_called);
+  std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000", {}},
+                                       {key, family, "c3", 0, "v3000", {}}};
+  auto actual = ReadRows(*sync_table, bigtable::Filter::PassAllFilter());
+  DeleteTable(table_id);
+  CheckEqualUnordered(expected, actual);
+}
+
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
