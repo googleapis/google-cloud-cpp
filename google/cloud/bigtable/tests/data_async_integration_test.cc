@@ -219,7 +219,7 @@ TEST_F(DataAsyncIntegrationTest, TableCheckAndMutateRowPass) {
 
   std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000", {}}};
   CreateCells(*sync_table, created);
-  bool op_called = false;
+  std::atomic_flag op_called = ATOMIC_FLAG_INIT;
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
   table.AsyncCheckAndMutateRow(key, bigtable::Filter::ValueRegex("v1000"),
@@ -228,13 +228,13 @@ TEST_F(DataAsyncIntegrationTest, TableCheckAndMutateRowPass) {
                                cq,
                                [&op_called](CompletionQueue& cq, bool response,
                                             grpc::Status const& status) {
-                                 op_called = true;
+                                 op_called.test_and_set();
                                  EXPECT_TRUE(status.ok());
                                  EXPECT_TRUE(response);
                                });
   cq.Shutdown();
   pool.join();
-  EXPECT_TRUE(op_called);
+  EXPECT_TRUE(op_called.test_and_set());
   std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000", {}},
                                        {key, family, "c2", 0, "v2000", {}}};
   auto actual = ReadRows(*sync_table, bigtable::Filter::PassAllFilter());
@@ -250,7 +250,7 @@ TEST_F(DataAsyncIntegrationTest, TableCheckAndMutateRowFail) {
 
   std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000", {}}};
   CreateCells(*sync_table, created);
-  bool op_called = false;
+  std::atomic_flag op_called = ATOMIC_FLAG_INIT;
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
   table.AsyncCheckAndMutateRow(key, bigtable::Filter::ValueRegex("not-there"),
@@ -259,13 +259,13 @@ TEST_F(DataAsyncIntegrationTest, TableCheckAndMutateRowFail) {
                                cq,
                                [&op_called](CompletionQueue& cq, bool response,
                                             grpc::Status const& status) {
-                                 op_called = true;
+                                 op_called.test_and_set();
                                  EXPECT_TRUE(status.ok());
                                  EXPECT_FALSE(response);
                                });
   cq.Shutdown();
   pool.join();
-  EXPECT_TRUE(op_called);
+  EXPECT_TRUE(op_called.test_and_set());
   std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000", {}},
                                        {key, family, "c3", 0, "v3000", {}}};
   auto actual = ReadRows(*sync_table, bigtable::Filter::PassAllFilter());
