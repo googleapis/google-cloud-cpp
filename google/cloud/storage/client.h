@@ -467,7 +467,7 @@ class Client {
    *     you must delete the entire bucket in order to "remove" the bucket's
    *     retention policy. However, before you can delete the bucket, you must
    *     be able to delete all the objects in the bucket, which itself is only
-   *     possible if the all objects have reached the retention period set by
+   *     possible if all the objects have reached the retention period set by
    *     the retention policy.
    *
    * The [Bucket Lock
@@ -475,7 +475,7 @@ class Client {
    * configure a data retention policy for a Cloud Storage bucket that governs
    * how long objects in the bucket must be retained. The feature also allows
    * you to lock the data retention policy, permanently preventing the policy
-   * from from being reduced or removed.
+   * from being reduced or removed.
    *
    * @see https://cloud.google.com/storage/docs/bucket-lock for a description of
    *     the Bucket Lock feature.
@@ -495,6 +495,8 @@ class Client {
    * @par Examples
    *
    * @snippet storage_bucket_samples.cc lock retention policy
+   *
+   * @snippet storage_bucket_samples.cc get retention policy
    *
    * @snippet storage_bucket_samples.cc set retention policy
    *
