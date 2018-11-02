@@ -1,10 +1,12 @@
 var searchData=
 [
+  ['scopes',['scopes',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1ComputeEngineCredentials.html#a250080a7a503749fc666af1358473f31',1,'google::cloud::storage::v0::oauth2::ComputeEngineCredentials']]],
   ['self_5flink',['self_link',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#aebb942e0698bf2f516a98f1f9c4901af',1,'google::cloud::storage::v0::NotificationMetadata']]],
   ['service_5faccount_2ecc',['service_account.cc',['../service__account_8cc.html',1,'']]],
   ['service_5faccount_2eh',['service_account.h',['../service__account_8h.html',1,'']]],
   ['service_5faccount_5fcredentials_2ecc',['service_account_credentials.cc',['../service__account__credentials_8cc.html',1,'']]],
   ['service_5faccount_5fcredentials_2eh',['service_account_credentials.h',['../service__account__credentials_8h.html',1,'']]],
+  ['service_5faccount_5femail',['service_account_email',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1ComputeEngineCredentials.html#aac8b63997425aeae32e133c0878d0bf4',1,'google::cloud::storage::v0::oauth2::ComputeEngineCredentials']]],
   ['serviceaccount',['ServiceAccount',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html',1,'google::cloud::storage::v0::ServiceAccount'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html#a897c415ddfd4dfff0c7ca9d0c4929155',1,'google::cloud::storage::v0::ServiceAccount::ServiceAccount()']]],
   ['serviceaccountcredentials',['ServiceAccountCredentials',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1ServiceAccountCredentials.html',1,'google::cloud::storage::v0::oauth2::ServiceAccountCredentials&lt; HttpRequestBuilderType, ClockType &gt;'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1ServiceAccountCredentials.html#affe606e4c6a777f2a7f2dc9fe24fb4ab',1,'google::cloud::storage::v0::oauth2::ServiceAccountCredentials::ServiceAccountCredentials(std::string const &amp;content, std::string const &amp;source)'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1ServiceAccountCredentials.html#a87fab9f3eae7a554769ed897fccc8291',1,'google::cloud::storage::v0::oauth2::ServiceAccountCredentials::ServiceAccountCredentials(std::string const &amp;content, std::string const &amp;source, std::string const &amp;default_token_uri)']]],
   ['serviceaccountcredentialsinfo',['ServiceAccountCredentialsInfo',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1ServiceAccountCredentialsInfo.html',1,'google::cloud::storage::v0::oauth2']]],
