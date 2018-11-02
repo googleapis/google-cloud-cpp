@@ -219,22 +219,21 @@ TEST_F(DataAsyncIntegrationTest, TableCheckAndMutateRowPass) {
 
   std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000", {}}};
   CreateCells(*sync_table, created);
-  std::atomic_flag op_called = ATOMIC_FLAG_INIT;
+  std::promise<void> done;
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
-  table.AsyncCheckAndMutateRow(key, bigtable::Filter::ValueRegex("v1000"),
-                               {bigtable::SetCell(family, "c2", 0_ms, "v2000")},
-                               {bigtable::SetCell(family, "c3", 0_ms, "v3000")},
-                               cq,
-                               [&op_called](CompletionQueue& cq, bool response,
-                                            grpc::Status const& status) {
-                                 op_called.test_and_set();
-                                 EXPECT_TRUE(status.ok());
-                                 EXPECT_TRUE(response);
-                               });
+  table.AsyncCheckAndMutateRow(
+      key, bigtable::Filter::ValueRegex("v1000"),
+      {bigtable::SetCell(family, "c2", 0_ms, "v2000")},
+      {bigtable::SetCell(family, "c3", 0_ms, "v3000")}, cq,
+      [&done](CompletionQueue& cq, bool response, grpc::Status const& status) {
+        done.set_value();
+        EXPECT_TRUE(status.ok());
+        EXPECT_TRUE(response);
+      });
+  done.get_future().get();
   cq.Shutdown();
   pool.join();
-  EXPECT_TRUE(op_called.test_and_set());
   std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000", {}},
                                        {key, family, "c2", 0, "v2000", {}}};
   auto actual = ReadRows(*sync_table, bigtable::Filter::PassAllFilter());
@@ -250,22 +249,21 @@ TEST_F(DataAsyncIntegrationTest, TableCheckAndMutateRowFail) {
 
   std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000", {}}};
   CreateCells(*sync_table, created);
-  std::atomic_flag op_called = ATOMIC_FLAG_INIT;
   CompletionQueue cq;
+  std::promise<void> done;
   std::thread pool([&cq] { cq.Run(); });
-  table.AsyncCheckAndMutateRow(key, bigtable::Filter::ValueRegex("not-there"),
-                               {bigtable::SetCell(family, "c2", 0_ms, "v2000")},
-                               {bigtable::SetCell(family, "c3", 0_ms, "v3000")},
-                               cq,
-                               [&op_called](CompletionQueue& cq, bool response,
-                                            grpc::Status const& status) {
-                                 op_called.test_and_set();
-                                 EXPECT_TRUE(status.ok());
-                                 EXPECT_FALSE(response);
-                               });
+  table.AsyncCheckAndMutateRow(
+      key, bigtable::Filter::ValueRegex("not-there"),
+      {bigtable::SetCell(family, "c2", 0_ms, "v2000")},
+      {bigtable::SetCell(family, "c3", 0_ms, "v3000")}, cq,
+      [&done](CompletionQueue& cq, bool response, grpc::Status const& status) {
+        done.set_value();
+        EXPECT_TRUE(status.ok());
+        EXPECT_FALSE(response);
+      });
+  done.get_future().get();
   cq.Shutdown();
   pool.join();
-  EXPECT_TRUE(op_called.test_and_set());
   std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000", {}},
                                        {key, family, "c3", 0, "v3000", {}}};
   auto actual = ReadRows(*sync_table, bigtable::Filter::PassAllFilter());
