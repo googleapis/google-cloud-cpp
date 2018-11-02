@@ -21,6 +21,20 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
+### v0.4.x - TBD
+
+### v0.3.0 - 2018-11
+
+* Include an example that illustrates how to use OpenCensus and the Cloud
+  Bigtable C++ client library.
+* Experimental asynchronous APIs.
+* Several cleanups around dependency management with CMake.
+* Jason Zaman contributed improvements and fixes to support soversion numbers
+  with CMake.
+* Lots of improvements to the code coverage in the examples and tests.
+* Fixed multiple documentation issues, including a much better landing page
+  in the Doxygen documentation.
+
 ### v0.2.0 - 2018-08
 
 * First Beta release.
