@@ -43,6 +43,7 @@ set(
     )
 set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
 set(DOXYGEN_EXCLUDE_PATTERNS
+    "*/google/cloud/README.md"
     "*/google/cloud/internal/*"
     "*/google/cloud/bigtable/*"
     "*/google/cloud/firestore/*"
