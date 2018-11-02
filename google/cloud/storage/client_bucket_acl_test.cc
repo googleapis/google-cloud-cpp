@@ -131,6 +131,10 @@ TEST_F(BucketAccessControlsTest, CreateBucketAclTooManyFailures) {
         client.CreateBucketAcl("test-bucket-name", "user-test-user-1",
                                "READER");
       },
+      [](Client& client) {
+        client.CreateBucketAcl("test-bucket-name", "user-test-user-1", "READER",
+                               IfMatchEtag("ABC="));
+      },
       "CreateBucketAcl");
 }
 
@@ -163,6 +167,10 @@ TEST_F(BucketAccessControlsTest, DeleteBucketAclTooManyFailures) {
       mock, EXPECT_CALL(*mock, DeleteBucketAcl(_)),
       [](Client& client) {
         client.DeleteBucketAcl("test-bucket-name", "user-test-user-1");
+      },
+      [](Client& client) {
+        client.DeleteBucketAcl("test-bucket-name", "user-test-user-1",
+                               IfMatchEtag("ABC="));
       },
       "DeleteBucketAcl");
 }
@@ -249,6 +257,13 @@ TEST_F(BucketAccessControlsTest, UpdateBucketAclTooManyFailures) {
                                    .set_entity("user-test-user-1")
                                    .set_role("OWNER"));
       },
+      [](Client& client) {
+        client.UpdateBucketAcl("test-bucket",
+                               BucketAccessControl()
+                                   .set_entity("user-test-user-1")
+                                   .set_role("OWNER"),
+                               IfMatchEtag("ABC="));
+      },
       "UpdateBucketAcl");
 }
 
@@ -296,6 +311,11 @@ TEST_F(BucketAccessControlsTest, PatchBucketAclTooManyFailures) {
       [](Client& client) {
         client.PatchBucketAcl("test-bucket", "user-test-user-1",
                               BucketAccessControlPatchBuilder());
+      },
+      [](Client& client) {
+        client.PatchBucketAcl("test-bucket", "user-test-user-1",
+                              BucketAccessControlPatchBuilder(),
+                              IfMatchEtag("ABC="));
       },
       "PatchBucketAcl");
 }
