@@ -69,6 +69,12 @@ std::shared_ptr<Credentials> CreateServiceAccountCredentialsFromJsonFilePath(
 std::shared_ptr<Credentials> CreateServiceAccountCredentialsFromJsonContents(
     std::string const&);
 
+/// Creates a Google Compute Engine credential for the default service account.
+std::shared_ptr<Credentials> CreateComputeEngineCredentials();
+
+/// Creates a Google Compute Engine credential for the given service account.
+std::shared_ptr<Credentials> CreateComputeEngineCredentials(std::string const&);
+
 // TODO(#1193): Should we support loading service account credentials from a P12
 // file too? Other libraries do, but the JSON format is strongly preferred.
 

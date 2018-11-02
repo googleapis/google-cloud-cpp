@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/compute_engine_util.h"
 #include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/storage/oauth2/authorized_user_credentials.h"
+#include "google/cloud/storage/oauth2/compute_engine_credentials.h"
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
@@ -199,6 +200,38 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromContents) {
       SERVICE_ACCOUNT_CRED_CONTENTS);
   auto ptr = credentials.get();
   EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
+}
+
+TEST_F(GoogleCredentialsTest, LoadComputeEngineCredentialsFromADCFlow) {
+  // Make sure other higher-precedence credentials (ADC env var, gcloud ADC from
+  // well-known path) aren't loaded.
+  UnsetEnv(GoogleAdcEnvVar());
+  UnsetEnv(GoogleGcloudAdcFileEnvVar());
+  // If the ADC flow thinks we're on a GCE instance, it should return
+  // ComputeEngineCredentials.
+  SetEnv(GceCheckOverrideEnvVar(), "1");
+
+  auto credentials = GoogleDefaultCredentials();
+  auto ptr = credentials.get();
+  EXPECT_EQ(typeid(*ptr), typeid(ComputeEngineCredentials<>));
+}
+
+TEST_F(GoogleCredentialsTest, CreateComputeEngineCredentialsWithDefaultEmail) {
+  auto credentials = CreateComputeEngineCredentials();
+  auto ptr = credentials.get();
+  EXPECT_EQ(typeid(*ptr), typeid(ComputeEngineCredentials<>));
+  EXPECT_EQ(
+      std::string("default"),
+      dynamic_cast<ComputeEngineCredentials<>*>(ptr)->service_account_email());
+}
+
+TEST_F(GoogleCredentialsTest, CreateComputeEngineCredentialsWithExplicitEmail) {
+  auto credentials = CreateComputeEngineCredentials("foo@bar.baz");
+  auto ptr = credentials.get();
+  EXPECT_EQ(typeid(*ptr), typeid(ComputeEngineCredentials<>));
+  EXPECT_EQ(
+      std::string("foo@bar.baz"),
+      dynamic_cast<ComputeEngineCredentials<>*>(ptr)->service_account_email());
 }
 
 TEST_F(GoogleCredentialsTest, LoadUnknownTypeCredentials) {

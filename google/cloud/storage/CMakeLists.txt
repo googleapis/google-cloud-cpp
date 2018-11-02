@@ -193,6 +193,7 @@ add_library(storage_client
             oauth2/anonymous_credentials.cc
             oauth2/authorized_user_credentials.h
             oauth2/authorized_user_credentials.cc
+            oauth2/compute_engine_credentials.h
             oauth2/credential_constants.h
             oauth2/credentials.h
             oauth2/google_application_default_credentials_file.h
@@ -324,6 +325,7 @@ set(storage_client_unit_tests
     list_objects_reader_test.cc
     oauth2/anonymous_credentials_test.cc
     oauth2/authorized_user_credentials_test.cc
+    oauth2/compute_engine_credentials_test.cc
     oauth2/google_application_default_credentials_file_test.cc
     oauth2/google_credentials_test.cc
     oauth2/service_account_credentials_test.cc
