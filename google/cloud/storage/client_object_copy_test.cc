@@ -91,6 +91,11 @@ TEST_F(ObjectCopyTest, CopyObjectTooManyFailures) {
                           "test-bucket-name", "test-object-name",
                           ObjectMetadata());
       },
+      [](Client& client) {
+        client.CopyObject("source-bucket-name", "source-object-name",
+                          "test-bucket-name", "test-object-name",
+                          ObjectMetadata(), IfGenerationMatch(0));
+      },
       "CopyObject");
 }
 
@@ -159,6 +164,11 @@ TEST_F(ObjectCopyTest, ComposeObjectTooManyFailures) {
       [](Client& client) {
         client.ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
                              "test-object-name", ObjectMetadata());
+      },
+      [](Client& client) {
+        client.ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
+                             "test-object-name", ObjectMetadata(),
+                             IfGenerationMatch(7));
       },
       "ComposeObject");
 }
@@ -276,6 +286,12 @@ TEST_F(ObjectCopyTest, RewriteObjectTooManyFailures) {
             "test-source-bucket-name", "test-source-object",
             "test-dest-bucket-name", "test-dest-object", ObjectMetadata());
         rewrite.Result();
+      },
+      [](Client& client) {
+        client.RewriteObjectBlocking(
+            "test-source-bucket-name", "test-source-object",
+            "test-dest-bucket-name", "test-dest-object", ObjectMetadata(),
+            IfGenerationMatch(7));
       },
       "RewriteObject");
 }

@@ -86,6 +86,10 @@ TEST_F(ObjectTest, InsertObjectMediaTooManyFailures) {
         client.InsertObject("test-bucket-name", "test-object-name",
                             "test object contents");
       },
+      [](Client& client) {
+        client.InsertObject("test-bucket-name", "test-object-name",
+                            "test object contents", IfGenerationMatch(0));
+      },
       "InsertObjectMedia");
 }
 
@@ -181,6 +185,10 @@ TEST_F(ObjectTest, DeleteObjectTooManyFailures) {
       [](Client& client) {
         client.DeleteObject("test-bucket-name", "test-object-name");
       },
+      [](Client& client) {
+        client.DeleteObject("test-bucket-name", "test-object-name",
+            IfGenerationMatch(7));
+      },
       "DeleteObject");
 }
 
@@ -269,6 +277,12 @@ TEST_F(ObjectTest, UpdateObjectTooManyFailures) {
             "test-bucket-name", "test-object-name",
             ObjectMetadata().set_content_language("new-language"));
       },
+      [](Client& client) {
+        client.UpdateObject(
+            "test-bucket-name", "test-object-name",
+            ObjectMetadata().set_content_language("new-language"),
+            IfMetagenerationMatch(42));
+      },
       "UpdateObject");
 }
 
@@ -335,6 +349,12 @@ TEST_F(ObjectTest, PatchObjectTooManyFailures) {
             "test-bucket-name", "test-object-name",
             ObjectMetadataPatchBuilder().SetContentLanguage("x-pig-latin"));
       },
+      [](Client& client) {
+        client.PatchObject(
+            "test-bucket-name", "test-object-name",
+            ObjectMetadataPatchBuilder().SetContentLanguage("x-pig-latin"),
+            IfMetagenerationMatch(42));
+      },
       "PatchObject");
 }
 
@@ -348,7 +368,6 @@ TEST_F(ObjectTest, PatchObjectPermanentFailure) {
       },
       "PatchObject");
 }
-
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
