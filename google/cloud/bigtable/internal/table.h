@@ -248,6 +248,28 @@ class Table {
                          std::vector<Mutation> false_mutations,
                          grpc::Status& status);
 
+  /**
+   * Make an asynchronous request to conditionally mutate a row.
+   *
+   * @param row_key the row key on which the conditional mutation will be
+   *     performed
+   * @param filter the condition, depending on which the mutation will be
+   *     performed
+   * @param true_mutations the mutations which will be performed if @p filter is
+   *     true
+   * @param false_mutations the mutations which will be performed if @p filter
+   *     is false
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v< Functor, CompletionQueue&, bool,
+   *         grpc::Status&>); the second argument to this callback indicates
+   *         whether true_mutations or false_mutations were executed.
+   *
+   * @tparam Functor the type of the callback.
+   */
   template <typename Functor,
             typename std::enable_if<
                 google::cloud::internal::is_invocable<
