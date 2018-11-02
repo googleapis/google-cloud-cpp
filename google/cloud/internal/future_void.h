@@ -108,7 +108,10 @@ class future<void> final : private internal::future_base<void> {
   template <typename F>
   typename internal::then_helper<F, void>::future_t then_impl(F&& functor,
                                                               std::false_type) {
-    auto wrapped_functor = [functor](std::shared_ptr<shared_state_type> state) {
+    // g++-4.9 gets confused about the use of a protected type alias here, so
+    // create a non-protected one:
+    using local_state_type = shared_state_type;
+    auto wrapped_functor = [functor](std::shared_ptr<local_state_type> state) {
       return functor(future<void>(std::move(state)));
     };
     using output_future = typename internal::then_helper<F, void>::future_t;
