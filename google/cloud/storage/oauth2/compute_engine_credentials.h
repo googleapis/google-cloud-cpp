@@ -26,7 +26,6 @@
 #include <chrono>
 #include <condition_variable>
 #include <ctime>
-#include <iostream>
 #include <mutex>
 #include <set>
 #include <string>
@@ -116,7 +115,6 @@ class ComputeEngineCredentials : public Credentials {
     // JSON array. At minimum, for the request to succeed, the instance must
     // have been granted the scope that allows it to retrieve info from the
     // metadata server.
-    std::cout << "Resp: " << response_body << std::endl;
     if (response_body.is_discarded() or response_body.count("email") == 0U or
         response_body.count("scopes") == 0U) {
       return storage::Status(
