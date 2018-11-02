@@ -72,7 +72,7 @@ class AsyncSampleRowKeys {
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
-  std::shared_ptr<::google::cloud::bigtable::AsyncOperation> Start(
+  std::shared_ptr<AsyncOperation> Start(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext>&& context,
       Functor&& callback) {
     return cq.MakeUnaryStreamRpc(
