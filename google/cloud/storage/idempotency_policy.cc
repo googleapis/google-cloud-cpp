@@ -242,24 +242,21 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::PatchBucketRequest const& request) const {
   return (request.HasOption<IfMatchEtag>() or
-      request.HasOption<IfMetagenerationMatch>());
+          request.HasOption<IfMetagenerationMatch>());
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::GetBucketIamPolicyRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
   return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::SetBucketIamPolicyRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
-  return true;
+  return request.HasOption<IfMatchEtag>();
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::TestBucketIamPermissionsRequest const& request) const {
-  // TODO(#714) - determine if the request is idempotent and return accordingly.
   return true;
 }
 
