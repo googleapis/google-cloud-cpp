@@ -101,6 +101,12 @@ class DataClient {
       grpc::ClientContext* context,
       google::bigtable::v2::CheckAndMutateRowRequest const& request,
       google::bigtable::v2::CheckAndMutateRowResponse* response) = 0;
+  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::v2::CheckAndMutateRowResponse>>
+  AsyncCheckAndMutateRow(
+      grpc::ClientContext* context,
+      const google::bigtable::v2::CheckAndMutateRowRequest& request,
+      grpc::CompletionQueue* cq) = 0;
   virtual grpc::Status ReadModifyWriteRow(
       grpc::ClientContext* context,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request,
