@@ -117,6 +117,16 @@ class future_base {
     return shared_state_->wait_until(abs_time);
   }
 
+  /**
+   * Return true if the future is satisfied.
+   *
+   * @throws std::future_error if the future is invalid.
+   */
+  bool is_ready() const {
+    check_valid();
+    return shared_state_->is_ready();
+  }
+
  protected:
   /// Shorthand to refer to the shared state type.
   using shared_state_type = internal::future_shared_state<T>;

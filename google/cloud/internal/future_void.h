@@ -59,6 +59,7 @@ class future<void> final : private internal::future_base<void> {
     return tmp->get();
   }
 
+  using future_base::is_ready;
   using future_base::valid;
   using future_base::wait;
   using future_base::wait_for;
@@ -86,16 +87,6 @@ class future<void> final : private internal::future_base<void> {
     using requires_unwrap_t =
         typename internal::then_helper<F, void>::requires_unwrap_t;
     return then_impl(std::forward<F>(func), requires_unwrap_t{});
-  }
-
-  /**
-   * Return true if the future is satisfied.
-   *
-   * @throws std::future_error if the future is invalid.
-   */
-  bool is_ready() const {
-    check_valid();
-    return shared_state_->is_ready();
   }
 
  private:
