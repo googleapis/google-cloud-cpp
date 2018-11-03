@@ -117,7 +117,7 @@ class future<void> final : private internal::future_base<void> {
 
     // The `shared_state_type` (aka `future_shared_state<void>`) is be written
     // without any reference to the `future<void>` class, otherwise there would
-    // be cycling dependencies between the two classes. We must adapt the
+    // be cyclic dependencies between the two classes. We must adapt the
     // provided functor, which takes a `future<void>` parameter to take a
     // `shared_ptr<shared_state_type` parameter so it can be consumed by the
     // underlying class. Because we need to support C++11, we use a local class
