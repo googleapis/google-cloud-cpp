@@ -125,6 +125,166 @@ TEST(StrictIdempotencyPolicyTest, SetBucketIamPolicyIfEtag) {
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
+TEST(StrictIdempotencyPolicyTest, InsertObjectMedia) {
+  StrictIdempotencyPolicy policy;
+  internal::InsertObjectMediaRequest request("test-bucket-name",
+                                             "test-object-name", "test-data");
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, InsertObjectMediaIfGenerationMatch) {
+  StrictIdempotencyPolicy policy;
+  internal::InsertObjectMediaRequest request("test-bucket-name",
+                                             "test-object-name", "test-data");
+  request.set_option(IfGenerationMatch(0));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, CopyObject) {
+  StrictIdempotencyPolicy policy;
+  internal::CopyObjectRequest request("test-source-bucket",
+                                      "test-source-object", "test-bucket-name",
+                                      "test-object-name", ObjectMetadata());
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, CopyObjectIfGenerationMatch) {
+  StrictIdempotencyPolicy policy;
+  internal::CopyObjectRequest request("test-source-bucket",
+                                      "test-source-object", "test-bucket-name",
+                                      "test-object-name", ObjectMetadata());
+  request.set_option(IfGenerationMatch(0));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, GetObjectMetadata) {
+  StrictIdempotencyPolicy policy;
+  internal::GetObjectMetadataRequest request("test-bucket-name",
+                                             "test-object-name");
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, ReadObject) {
+  StrictIdempotencyPolicy policy;
+  internal::ReadObjectRangeRequest request("test-bucket-name",
+                                           "test-object-name");
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, WriteObject) {
+  StrictIdempotencyPolicy policy;
+  internal::InsertObjectStreamingRequest request("test-bucket-name",
+                                                 "test-object-name");
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, WriteObjectIfGenerationMatch) {
+  StrictIdempotencyPolicy policy;
+  internal::InsertObjectStreamingRequest request("test-bucket-name",
+                                                 "test-object-name");
+  request.set_option(IfGenerationMatch(0));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, ListObjects) {
+  StrictIdempotencyPolicy policy;
+  internal::ListObjectsRequest request("test-bucket-name");
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, DeleteObject) {
+  StrictIdempotencyPolicy policy;
+  internal::DeleteObjectRequest request("test-bucket-name", "test-object-name");
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, DeleteObjectIfGenerationMatch) {
+  StrictIdempotencyPolicy policy;
+  internal::DeleteObjectRequest request("test-bucket-name", "test-object-name");
+  request.set_option(IfGenerationMatch(0));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, UpdateObject) {
+  StrictIdempotencyPolicy policy;
+  internal::UpdateObjectRequest request("test-bucket-name", "test-object-name",
+                                        ObjectMetadata());
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, UpdateObjectIfEtag) {
+  StrictIdempotencyPolicy policy;
+  internal::UpdateObjectRequest request("test-bucket-name", "test-object-name",
+                                        ObjectMetadata());
+  request.set_option(IfMatchEtag("ABC123="));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, UpdateObjectIfMetagenerationMatch) {
+  StrictIdempotencyPolicy policy;
+  internal::UpdateObjectRequest request("test-bucket-name", "test-object-name",
+                                        ObjectMetadata());
+  request.set_option(IfMetagenerationMatch(7));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, PatchObject) {
+  StrictIdempotencyPolicy policy;
+  internal::PatchObjectRequest request("test-bucket-name", "test-object-name",
+                                       ObjectMetadataPatchBuilder());
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, PatchObjectIfEtag) {
+  StrictIdempotencyPolicy policy;
+  internal::PatchObjectRequest request("test-bucket-name", "test-object-name",
+                                       ObjectMetadataPatchBuilder());
+  request.set_option(IfMatchEtag("ABC123="));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, PatchObjectIfMetagenerationMatch) {
+  StrictIdempotencyPolicy policy;
+  internal::PatchObjectRequest request("test-bucket-name", "test-object-name",
+                                       ObjectMetadataPatchBuilder());
+  request.set_option(IfMetagenerationMatch(7));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, ComposeObject) {
+  StrictIdempotencyPolicy policy;
+  internal::ComposeObjectRequest request("test-bucket-name",
+                                         {ComposeSourceObject{"source-1"}},
+                                         "test-object-name", ObjectMetadata());
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, ComposeObjectIfGenerationMatch) {
+  StrictIdempotencyPolicy policy;
+  internal::CopyObjectRequest request("test-source-bucket",
+                                      "test-source-object", "test-bucket-name",
+                                      "test-object-name", ObjectMetadata());
+  request.set_option(IfGenerationMatch(0));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, RewriteObject) {
+  StrictIdempotencyPolicy policy;
+  internal::RewriteObjectRequest request(
+      "test-source-bucket", "test-source-object", "test-bucket-name",
+      "test-object-name", std::string{}, ObjectMetadata());
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, RewriteObjectIfGenerationMatch) {
+  StrictIdempotencyPolicy policy;
+  internal::RewriteObjectRequest request(
+      "test-source-bucket", "test-source-object", "test-bucket-name",
+      "test-object-name", std::string{}, ObjectMetadata());
+  request.set_option(IfGenerationMatch(0));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
