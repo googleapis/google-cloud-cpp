@@ -63,7 +63,7 @@ struct unwrap_then<future<U>> {
  * * First it determines if `Functor` meets the requirements, i.e., that it can
  *   be invoked with an object of type `future_shared_state<T>` as its only
  *   argument.
- * * Then in computes the type of the expression `functor(fut)`, where `functor`
+ * * Then it computes the type of the expression `functor(fut)`, where `functor`
  *   is of type `Functor` and `fut` is of type `future<T>`.
  * * It determines if the resulting type requires implicit unwrapping because it
  *   is a `future<U>`.
@@ -105,7 +105,7 @@ struct continuation_helper {
  *
  * * First it determines if `Functor` meets the requirements, i.e., that it can
  *   be invoked with an object of type `future<T>` as its only argument.
- * * Then in computes the type of the expression `functor(fut)`, where `functor`
+ * * Then it computes the type of the expression `functor(fut)`, where `functor`
  *   is of type `Functor` and `fut` is of type `future<T>`.
  * * It determines if the resulting type requires implicit unwrapping because it
  *   is a `future<U>`.
