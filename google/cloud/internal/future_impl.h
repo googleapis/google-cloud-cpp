@@ -508,8 +508,7 @@ template <typename Functor, typename R, typename T>
 void continuation_execute_delegate(
     Functor& functor, std::shared_ptr<future_shared_state<T>> input,
     future_shared_state<R>& output, std::false_type) try {
-  T value = functor(std::move(input));
-  output.set_value(std::move(value));
+  output.set_value(functor(std::move(input)));
 } catch (std::future_error const&) {
   // failing to set the output with a future_error is non-recoverable, raise
   // immediately.
