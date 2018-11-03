@@ -380,6 +380,23 @@ class future_shared_state final : private future_shared_state_base {
   make_continuation(std::shared_ptr<future_shared_state> self, F&& functor);
 
   /**
+   * Create a continuation object wrapping the given functor.
+   *
+   * @tparam F the functor type.
+   * @param self the object that will hold the continuation.
+   * @param functor the continuation type.
+   * @param requires_unwrapping the functor returns a `future<U>`, and must be
+   *   implicitly unwrapped to return the `U`.
+   * @return A shared pointer to the shared state that will store the results
+   *     of the continuation.
+   */
+  template <typename F>
+  static std::shared_ptr<
+      typename internal::unwrapping_continuation_helper<F, T>::state_t>
+  make_continuation(std::shared_ptr<future_shared_state> self, F&& functor,
+                    std::true_type requires_unwrapping);
+
+  /**
    * The implementation details for `promise<T>::get_future()`.
    *
    * `promise<T>::get_future()` can be called exactly once, this function
@@ -464,6 +481,28 @@ class future_shared_state<void> final : private future_shared_state_base {
   static std::shared_ptr<
       typename internal::continuation_helper<F, void>::state_t>
   make_continuation(std::shared_ptr<future_shared_state> self, F&& functor);
+
+  /**
+   * Create a continuation object wrapping the given functor.
+   *
+   * Unlike most member functions in template classes this is defined out of
+   * line. We need to do so because:
+   *
+   * * This function creates a `continuation<void>`.
+   * * `continuation<void>` needs to see the full definition of `future<T>`.
+   * * Therefore `continuation<T>` cannot be defined before this point.
+   *
+   * @tparam F the functor type.
+   * @param self the object that will hold the continuation.
+   * @param functor the continuation type.
+   * @return A shared pointer to the shared state that will store the results
+   *     of the continuation.
+   */
+  template <typename F>
+  static std::shared_ptr<
+      typename internal::unwrapping_continuation_helper<F, void>::state_t>
+  make_continuation(std::shared_ptr<future_shared_state> self, F&& functor,
+                    std::true_type);
 
   /**
    * The implementation details for `promise<void>::get_future()`.
@@ -576,6 +615,10 @@ struct continuation : public continuation_base {
         input(s),
         output(std::make_shared<future_shared_state<result_t>>()) {}
 
+  continuation(Functor&& f, std::shared_ptr<input_shared_state_t> s,
+               std::shared_ptr<output_shared_state_t> o)
+      : functor(std::move(f)), input(s), output(o) {}
+
   void execute() override {
     auto tmp = input.lock();
     if (not tmp) {
@@ -600,6 +643,82 @@ struct continuation : public continuation_base {
   std::shared_ptr<output_shared_state_t> output;
 };
 
+/**
+ * Implement continuations for `future<R>::then()`.
+ *
+ * Calling `future<R>::then()` creates a new shared state. When the `future<R>`
+ * is satisfied the functor parameter pass to `.then()` is called and the newly
+ * created shared state is satisfied with the result of calling the functor.
+ *
+ * This class holds both the functor to call, and the shared state to store the
+ * results of calling said functor.
+ *
+ * @tparam R the value type for the input future.
+ * @tparam Functor the type of the functor parameter, it must meet the
+ *   `is_invocable<Functor, future_shared_state<R>>` requirement.
+ */
+template <typename Functor, typename T>
+struct unwrapping_continuation : public continuation_base {
+  using R = typename unwrapping_continuation_helper<Functor, T>::result_t;
+  using input_shared_state_t = future_shared_state<T>;
+  using output_shared_state_t = future_shared_state<R>;
+  using intermediate_shared_state_t = future_shared_state<R>;
+
+  unwrapping_continuation(Functor&& f, std::shared_ptr<input_shared_state_t> s)
+      : functor(std::move(f)),
+        input(s),
+        intermediate(),
+        output(std::make_shared<output_shared_state_t>()) {}
+
+  void execute() override {
+    auto tmp = input.lock();
+    if (not tmp) {
+      output->set_exception(std::make_exception_ptr(
+          std::future_error(std::future_errc::no_state)));
+      return;
+    }
+    // The transfer of the state depends on the types involved, delegate to
+    // some helper functions.
+    try {
+      intermediate = functor(std::move(tmp));
+    } catch (...) {
+      output->set_exception(std::current_exception());
+      return;
+    }
+
+    if (not intermediate) {
+      output->set_exception(std::make_exception_ptr(
+          std::future_error(std::future_errc::broken_promise)));
+      return;
+    }
+
+    auto unwrapper = [](std::shared_ptr<intermediate_shared_state_t> r) {
+      return r->get();
+    };
+    using continuation_type = internal::continuation<decltype(unwrapper), R>;
+    auto continuation = google::cloud::internal::make_unique<continuation_type>(
+        std::move(unwrapper), intermediate);
+    continuation->output = output;
+    // assert(intermediate->continuation_ == nullptr)
+    // If intermediate has a continuation then the associated future would have
+    // been invalid, and we never get here.
+    intermediate->set_continuation(
+        std::unique_ptr<continuation_base>(std::move(continuation)));
+  }
+
+  /// The functor called when `input` is satisfied.
+  Functor functor;
+
+  /// The shared state that must be satisfied before calling `functor`.
+  std::weak_ptr<input_shared_state_t> input;
+
+  /// The shared state that will hold the results of calling `functor`.
+  std::shared_ptr<output_shared_state_t> intermediate;
+
+  /// The shared state that will hold the unwrapped of calling `functor`.
+  std::shared_ptr<output_shared_state_t> output;
+};
+
 // Implement the helper function to create a shared state for continuations.
 template <typename T>
 template <typename F>
@@ -616,6 +735,30 @@ future_shared_state<T>::make_continuation(
 }
 
 // Implement the helper function to create a shared state for continuations.
+template <typename T>
+template <typename F>
+std::shared_ptr<
+    typename internal::unwrapping_continuation_helper<F, T>::state_t>
+future_shared_state<T>::make_continuation(
+    std::shared_ptr<future_shared_state<T>> self, F&& functor, std::true_type) {
+  // This is the unwrapped result type.
+  using R = typename internal::unwrapping_continuation_helper<F, T>::result_t;
+  // The type continuation that executes `F` on `self`:
+  using continuation_type = internal::unwrapping_continuation<F, T>;
+
+  // First create a continuation that calls the functor, and stores the result
+  // in a `future_shared_state<future_shared_state<R>>`
+  auto continuation = google::cloud::internal::make_unique<continuation_type>(
+      std::forward<F>(functor), self);
+  // Save the value of `continuation->output`, because the move will make it
+  // inaccessible.
+  std::shared_ptr<future_shared_state<R>> result = continuation->output;
+  self->set_continuation(
+      std::unique_ptr<continuation_base>(std::move(continuation)));
+  return result;
+}
+
+// Implement the helper function to create a shared state for continuations.
 template <typename F>
 std::shared_ptr<typename internal::continuation_helper<F, void>::state_t>
 future_shared_state<void>::make_continuation(
@@ -626,6 +769,32 @@ future_shared_state<void>::make_continuation(
   // Save the value of `continuation->output`, because the move will make it
   // inaccessible.
   auto result = continuation->output;
+  self->set_continuation(
+      std::unique_ptr<continuation_base>(std::move(continuation)));
+  return result;
+}
+
+// Implement the helper function to create a shared state for continuations that
+// need upwrapping.
+template <typename F>
+std::shared_ptr<
+    typename internal::unwrapping_continuation_helper<F, void>::state_t>
+future_shared_state<void>::make_continuation(
+    std::shared_ptr<future_shared_state<void>> self, F&& functor,
+    std::true_type) {
+  // This is the unwrapped result type.
+  using R =
+      typename internal::unwrapping_continuation_helper<F, void>::result_t;
+  // The type continuation that executes `F` on `self`:
+  using continuation_type = internal::unwrapping_continuation<F, void>;
+
+  // First create a continuation that calls the functor, and stores the result
+  // in a `future_shared_state<future_shared_state<R>>`
+  auto continuation = google::cloud::internal::make_unique<continuation_type>(
+      std::forward<F>(functor), self);
+  // Save the value of `continuation->output`, because the move will make it
+  // inaccessible.
+  std::shared_ptr<future_shared_state<R>> result = continuation->output;
   self->set_continuation(
       std::unique_ptr<continuation_base>(std::move(continuation)));
   return result;

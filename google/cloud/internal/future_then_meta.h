@@ -46,6 +46,19 @@ struct unwrap_then<future<U>> {
   using requires_unwrap_t = std::true_type;
 };
 
+/// Specialize the unwrap_then<> for functors that return future<U>
+template <typename U>
+struct unwrap_internal {
+  using type = U;
+  using requires_unwrap_t = std::false_type;
+};
+
+template <typename U>
+struct unwrap_internal<std::shared_ptr<internal::future_shared_state<U>>> {
+  using type = U;
+  using requires_unwrap_t = std::true_type;
+};
+
 /**
  * A metafunction to implement `internal::continuation<Functor,T>`.
  *
@@ -92,6 +105,57 @@ struct continuation_helper {
   /// otherwise.
   using requires_unwrap_t =
       typename unwrap_then<functor_result_t>::requires_unwrap_t;
+
+  /// The type of the shared state created by `.then()`.
+  using state_t = future_shared_state<result_t>;
+};
+
+/**
+ * A metafunction to implement `internal::continuation<Functor,T>`.
+ *
+ * This metafunction implements a number of useful results given a functor type
+ * @p Functor, and the value type @p T of a `future_shared_state<T>`.
+ *
+ * @note The `Functor` in this metafunction is *not* the template parameter
+ * passed to `.then()`.  It is a functor, created by `.then()`, that wraps the
+ * original argument but operates directly on `future_shared_state<T>`. Without
+ * this wrapper the implementation of the continuation classes would need to
+ * know about the full definition of `future<T>`, and we could too easily create
+ * a cycle where the definition of `future_shared_state<T>` needs the definition
+ * of `future<T>` which needs the definition of `future_shared_state<T>.
+ *
+ * * First it determines if `Functor` meets the requirements, i.e., that it can
+ *   be invoked with an object of type `future_shared_state<T>` as its only
+ *   argument.
+ * * Then in computes the type of the expression `functor(fut)`, where `functor`
+ *   is of type `Functor` and `fut` is of type `future<T>`.
+ * * It determines if the resulting type requires implicit unwrapping because it
+ *   is a `future<U>`.
+ * * It computes the type of the shared state needed to implement
+ *   `future<T>::%then()`.
+ *
+ * @tparam Functor the functor to call. Note that this is a functor wrapped by
+ *   `future<T>`. It must accept a `std::shared_ptr<future_shared_state<T>>` as
+ *   its single input parameter.
+ * @tparam T the type contained in the input future.
+ */
+template <
+    typename Functor, typename T,
+    typename std::enable_if<
+        is_invocable<Functor, std::shared_ptr<future_shared_state<T>>>::value,
+        int>::type = 0>
+struct unwrapping_continuation_helper {
+  /// The type returned by calling the functor with the given future type.
+  using functor_result_t =
+      invoke_result_t<Functor, std::shared_ptr<future_shared_state<T>>>;
+
+  /// The type returned by `.then()`, which is a `future<U>`.
+  using result_t = typename unwrap_internal<functor_result_t>::type;
+
+  /// `std::true_type` if `functor_result_t` is a `future<R>`, `std::false_type`
+  /// otherwise.
+  using requires_unwrap_t =
+      typename unwrap_internal<functor_result_t>::requires_unwrap_t;
 
   /// The type of the shared state created by `.then()`.
   using state_t = future_shared_state<result_t>;
