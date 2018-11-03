@@ -156,6 +156,10 @@ run_retention_policy_examples() {
       "${bucket_name}" 30
   run_example ./storage_bucket_samples remove-retention-policy \
       "${bucket_name}"
+  run_example ./storage_bucket_samples set-retention-policy \
+      "${bucket_name}" 30
+  run_example ./storage_bucket_samples lock-retention-policy \
+      "${bucket_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
 }
 

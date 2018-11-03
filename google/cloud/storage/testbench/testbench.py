@@ -349,6 +349,15 @@ def bucket_test_iam_permissions(bucket_name):
         flask.request, bucket.test_iam_permissions(flask.request))
 
 
+@gcs.route('/b/<bucket_name>/lockRetentionPolicy',
+           methods=['POST'])
+def bucket_lock_retention_policy(bucket_name):
+    """Implement the 'Buckets: lockRetentionPolicy' API."""
+    bucket = testbench_utils.lookup_bucket(bucket_name)
+    bucket.lock_retention_policy(flask.request)
+    return testbench_utils.filtered_response(flask.request, {})
+
+
 @gcs.route('/b/<bucket_name>/o')
 def objects_list(bucket_name):
     """Implement the 'Objects: list' API: return the objects in a bucket."""

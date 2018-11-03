@@ -296,6 +296,24 @@ CurlClient::TestBucketIamPermissions(
       Status(), TestBucketIamPermissionsResponse::FromHttpResponse(payload));
 }
 
+std::pair<Status, EmptyResponse> CurlClient::LockBucketRetentionPolicy(
+    LockBucketRetentionPolicyRequest const& request) {
+  CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
+                                 "/lockRetentionPolicy",
+                             storage_factory_);
+  SetupBuilder(builder, request, "POST");
+  builder.AddHeader("content-type: application/json");
+  builder.AddHeader("content-length: 0");
+  builder.AddOption(IfMetagenerationMatch(request.metageneration()));
+  auto payload = builder.BuildRequest().MakeRequest(std::string{});
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        EmptyResponse{});
+  }
+  return std::make_pair(Status(), EmptyResponse{});
+}
+
 std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   if (not request.HasOption<IfMetagenerationNotMatch>() and

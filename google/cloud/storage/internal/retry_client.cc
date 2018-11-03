@@ -200,6 +200,15 @@ RetryClient::TestBucketIamPermissions(
                   &RawClient::TestBucketIamPermissions, request, __func__);
 }
 
+std::pair<Status, EmptyResponse> RetryClient::LockBucketRetentionPolicy(
+    LockBucketRetentionPolicyRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
+                  &RawClient::LockBucketRetentionPolicy, request, __func__);
+}
+
 std::pair<Status, ObjectMetadata> RetryClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   auto retry_policy = retry_policy_->clone();

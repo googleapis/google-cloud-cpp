@@ -702,6 +702,25 @@ void RemoveRetentionPolicy(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name);
 }
 
+void LockRetentionPolicy(google::cloud::storage::Client client, int& argc,
+                           char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"lock-retention-policy <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [lock retention policy]
+  // [START storage_lock_retention_policy]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name) {
+    gcs::BucketMetadata original = client.GetBucketMetadata(bucket_name);
+    client.LockBucketRetentionPolicy(
+        bucket_name, original.metageneration());
+    std::cout << "Retention policy successfully locked for bucket " << bucket_name << std::endl;
+  }
+  // [END storage_lock_retention_policy]
+  //! [lock retention policy]
+  (std::move(client), bucket_name);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -742,6 +761,7 @@ int main(int argc, char* argv[]) try {
       {"get-retention-policy", &GetRetentionPolicy},
       {"set-retention-policy", &SetRetentionPolicy},
       {"remove-retention-policy", &RemoveRetentionPolicy},
+      {"lock-retention-policy", &LockRetentionPolicy},
   };
   for (auto&& kv : commands) {
     try {

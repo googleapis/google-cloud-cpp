@@ -65,6 +65,8 @@ class RawClient {
       SetBucketIamPolicyRequest const& request) = 0;
   virtual std::pair<Status, TestBucketIamPermissionsResponse>
   TestBucketIamPermissions(TestBucketIamPermissionsRequest const& request) = 0;
+  virtual std::pair<Status, EmptyResponse> LockBucketRetentionPolicy(
+      LockBucketRetentionPolicyRequest const& request) = 0;
   //@}
 
   //@{

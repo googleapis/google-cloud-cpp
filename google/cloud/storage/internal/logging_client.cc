@@ -130,6 +130,12 @@ LoggingClient::TestBucketIamPermissions(
                   __func__);
 }
 
+std::pair<Status, EmptyResponse> LoggingClient::LockBucketRetentionPolicy(
+    LockBucketRetentionPolicyRequest const& request) {
+  return MakeCall(*client_, &RawClient::LockBucketRetentionPolicy, request,
+                  __func__);
+}
+
 std::pair<Status, ObjectMetadata> LoggingClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   return MakeCall(*client_, &RawClient::InsertObjectMedia, request, __func__);

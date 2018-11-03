@@ -125,6 +125,12 @@ TEST(StrictIdempotencyPolicyTest, SetBucketIamPolicyIfEtag) {
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
+TEST(StrictIdempotencyPolicyTest, LockBucketRetentionPolicy) {
+  StrictIdempotencyPolicy policy;
+  internal::LockBucketRetentionPolicyRequest request("test-bucket-name", 7);
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
 TEST(StrictIdempotencyPolicyTest, InsertObjectMedia) {
   StrictIdempotencyPolicy policy;
   internal::InsertObjectMediaRequest request("test-bucket-name",
