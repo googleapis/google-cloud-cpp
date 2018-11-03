@@ -156,6 +156,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8559215b6e6e9e8e1a0fb40c53a47142"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a8559215b6e6e9e8e1a0fb40c53a47142">TestBucketIamPermissions</a> (std::string bucket_name, std::vector&lt; std::string &gt; permissions, Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:a8559215b6e6e9e8e1a0fb40c53a47142"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests the IAM permissions of the caller against a Bucket.  <a href="#a8559215b6e6e9e8e1a0fb40c53a47142">More...</a><br /></td></tr>
 <tr class="separator:a8559215b6e6e9e8e1a0fb40c53a47142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace3c3e0df3c211a6e4807b6444d8c811"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:ace3c3e0df3c211a6e4807b6444d8c811"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ace3c3e0df3c211a6e4807b6444d8c811">LockBucketRetentionPolicy</a> (std::string const &amp;bucket_name, std::uint64_t metageneration, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:ace3c3e0df3c211a6e4807b6444d8c811"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks the retention policy for a bucket.  <a href="#ace3c3e0df3c211a6e4807b6444d8c811">More...</a><br /></td></tr>
+<tr class="separator:ace3c3e0df3c211a6e4807b6444d8c811"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Object operations</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>Objects are the individual pieces of data that you store in GCS.</p>
 <p>Objects have two components: <em>object data</em> and <em>object metadata</em>. Object data (sometimes referred to as <em>media</em>) is typically a file that you want to store in GCS. Object metadata is information that describe various object qualities.</p>
@@ -2426,6 +2430,72 @@ template&lt;typename... Options&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name) {</div><div class="line">    <span class="keywordflow">for</span> (gcs::ObjectMetadata <span class="keyword">const</span>&amp; meta : client.ListObjects(bucket_name)) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;bucket_name=&quot;</span> &lt;&lt; meta.bucket()</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, object_name=&quot;</span> &lt;&lt; meta.name() &lt;&lt; std::endl;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
+</div>
+</div>
+<a id="ace3c3e0df3c211a6e4807b6444d8c811"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace3c3e0df3c211a6e4807b6444d8c811">&#9670;&nbsp;</a></span>LockBucketRetentionPolicy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Options&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void google::cloud::storage::v0::Client::LockBucketRetentionPolicy </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::uint64_t&#160;</td>
+          <td class="paramname"><em>metageneration</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Options &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Locks the retention policy for a bucket. </p>
+<dl class="section warning"><dt>Warning</dt><dd>Locking a retention policy is an irreversible action. Once locked, you must delete the entire bucket in order to "remove" the bucket's retention policy. However, before you can delete the bucket, you must be able to delete all the objects in the bucket, which itself is only possible if all the objects have reached the retention period set by the retention policy.</dd></dl>
+<p>The <a href="https://cloud.google.com/storage/docs/bucket-lock">Bucket Lock feature</a> allows you to configure a data retention policy for a Cloud Storage bucket that governs how long objects in the bucket must be retained. The feature also allows you to lock the data retention policy, permanently preventing the policy from being reduced or removed.</p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/bucket-lock">https://cloud.google.com/storage/docs/bucket-lock</a> for a description of the Bucket Lock feature.</dd>
+<dd>
+<a href="https://cloud.google.com/storage/docs/using-bucket-lock">https://cloud.google.com/storage/docs/using-bucket-lock</a> for examples of how to use the Bucket Lock and retention policy features.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bucket_name</td><td>the name of the bucket. </td></tr>
+    <tr><td class="paramname">metageneration</td><td>the expected value of the metageneration on the bucket. The request will fail if the metageneration does not match the current value. </td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. Valid types for this operation include <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html" title="Set the project used for billing in &quot;requester pays&quot; Buckets. ">UserProject</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the operation fails.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Examples</dt><dd></dd></dl>
+<div class="fragment"><div class="line">  <span class="comment">// [START storage_lock_retention_policy]</span></div><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name) {</div><div class="line">    gcs::BucketMetadata original = client.GetBucketMetadata(bucket_name);</div><div class="line">    client.LockBucketRetentionPolicy(</div><div class="line">        bucket_name, original.metageneration());</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Retention policy successfully locked for bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">  <span class="comment">// [END storage_lock_retention_policy]</span></div></div><!-- fragment --> <div class="fragment"><div class="line">  <span class="comment">// [START storage_get_retention_policy]</span></div><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name) {</div><div class="line">    gcs::BucketMetadata metadata = client.GetBucketMetadata(bucket_name);</div><div class="line">    <span class="keywordflow">if</span> (not metadata.has_retention_policy()) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;The bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; does not have a retention policy set.&quot;</span> &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot; retention policy is set to &quot;</span></div><div class="line">              &lt;&lt; metadata.retention_policy() &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">  <span class="comment">// [END storage_get_retention_policy]</span></div></div><!-- fragment --> <div class="fragment"><div class="line">  <span class="comment">// [START storage_set_retention_policy]</span></div><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::chrono::seconds period) {</div><div class="line">    gcs::BucketMetadata original = client.GetBucketMetadata(bucket_name);</div><div class="line">    gcs::BucketMetadata updated_metadata = client.PatchBucket(</div><div class="line">        bucket_name,</div><div class="line">        gcs::BucketMetadataPatchBuilder().SetRetentionPolicy(period),</div><div class="line">        gcs::IfMetagenerationMatch(original.metageneration()));</div><div class="line">    <span class="keywordflow">if</span> (not updated_metadata.has_retention_policy()) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;The bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; does not have a retention policy set.&quot;</span> &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot; retention policy is set to &quot;</span></div><div class="line">              &lt;&lt; updated_metadata.retention_policy() &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">  <span class="comment">// [END storage_set_retention_policy]</span></div></div><!-- fragment --> <div class="fragment"><div class="line">  <span class="comment">// [START storage_remove_retention_policy]</span></div><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name) {</div><div class="line">    gcs::BucketMetadata original = client.GetBucketMetadata(bucket_name);</div><div class="line">    gcs::BucketMetadata updated_metadata = client.PatchBucket(</div><div class="line">        bucket_name, gcs::BucketMetadataPatchBuilder().ResetRetentionPolicy(),</div><div class="line">        gcs::IfMetagenerationMatch(original.metageneration()));</div><div class="line">    <span class="keywordflow">if</span> (not updated_metadata.has_retention_policy()) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;The bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; does not have a retention policy set.&quot;</span> &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot; retention policy is set to &quot;</span></div><div class="line">              &lt;&lt; updated_metadata.retention_policy() &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">  <span class="comment">// [END storage_remove_retention_policy]</span></div></div><!-- fragment -->
 </div>
 </div>
 <a id="ad85f3eed041c8b096a762f2b3ad0a8e6"></a>
