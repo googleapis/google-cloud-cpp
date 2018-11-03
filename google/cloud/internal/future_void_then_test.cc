@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/future_void.h"
+#include "google/cloud/future.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <gmock/gmock.h>
 #include <functional>
