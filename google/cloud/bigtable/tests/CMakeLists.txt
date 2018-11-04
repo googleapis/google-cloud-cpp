@@ -19,6 +19,7 @@
 set(bigtable_client_integration_tests
     admin_integration_test.cc
     admin_async_integration_test.cc
+    admin_async_future_integration_test.cc
     data_async_integration_test.cc
     data_integration_test.cc
     filters_integration_test.cc

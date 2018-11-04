@@ -62,6 +62,10 @@ echo "Running TableAdmin async integration test."
 ./admin_async_integration_test "${PROJECT_ID}" "admin-noex-async"
 
 echo
+echo "Running TableAdmin async with futures integration test."
+./admin_async_future_integration_test "${PROJECT_ID}" "admin-async-future"
+
+echo
 echo "Running Table::Async* integration test."
 ./data_async_integration_test "${PROJECT_ID}" "data-noex-async"
 
