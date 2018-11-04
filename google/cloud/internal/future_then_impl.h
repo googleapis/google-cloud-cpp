@@ -26,18 +26,26 @@
  * functions inline.
  */
 
+#include "google/cloud/internal/port_platform.h"
+
+// C++ futures only make sense when exceptions are enabled.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 #include "google/cloud/internal/future_generic.h"
 #include "google/cloud/internal/future_void.h"
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-// This function cannot be defined inline, as most template functions are,
+// These functions cannot be defined inline, as most template functions are,
 // because the full definition of `future<T>`, `future<R&>` and `future<void>`,
 // must be visible at the point of definition. There is no order of definition
 // for the `future<T>` specializations that would permit us to define the
 // functions inline.
+
+template <typename T>
+inline future<T>::future(future<future<T>>&& rhs)
+    : future<T>(rhs.then([](future<future<T>> f) { return f.get(); })) {}
+
 template <typename T>
 template <typename F>
 typename internal::then_helper<F, T>::future_t future<T>::then_impl(
@@ -78,11 +86,6 @@ typename internal::then_helper<F, T>::future_t future<T>::then_impl(
   return future_t(std::move(output_shared_state));
 }
 
-// This function cannot be defined inline, as most template functions are,
-// because the full definition of `future<T>`, `future<R&>` and `future<void>`,
-// must be visible at the point of definition. There is no order of definition
-// for the `future<T>` specializations that would permit us to define the
-// functions inline.
 template <typename T>
 template <typename F>
 typename internal::then_helper<F, T>::future_t future<T>::then_impl(
@@ -124,11 +127,9 @@ typename internal::then_helper<F, T>::future_t future<T>::then_impl(
   return future_t(std::move(output_shared_state));
 }
 
-// This function cannot be defined inline, as most template functions are,
-// because the full definition of `future<T>`, `future<R&>` and `future<void>`,
-// must be visible at the point of definition. There is no order of definition
-// for the `future<T>` specializations that would permit us to define the
-// functions inline.
+inline future<void>::future(future<future<void>>&& rhs)
+    : future<void>(rhs.then([](future<future<void>> f) { return f.get(); })) {}
+
 template <typename F>
 typename internal::then_helper<F, void>::future_t future<void>::then_impl(
     F&& functor, std::false_type) {
@@ -168,11 +169,6 @@ typename internal::then_helper<F, void>::future_t future<void>::then_impl(
   return future_t(std::move(output_shared_state));
 }
 
-// This function cannot be defined inline, as most template functions are,
-// because the full definition of `future<T>`, `future<R&>` and `future<void>`,
-// must be visible at the point of definition. There is no order of definition
-// for the `future<T>` specializations that would permit us to define the
-// functions inline.
 template <typename F>
 typename internal::then_helper<F, void>::future_t future<void>::then_impl(
     F&& functor, std::true_type) {

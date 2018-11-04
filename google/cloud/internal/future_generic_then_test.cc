@@ -111,8 +111,103 @@ TEST(FutureTestInt, ThenUnwrap) {
 // The test names match the section and paragraph from the TS.
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
-TEST(FutureTestInt, conform_2_3_2) {
-  // TODO(#1345) - implement unwrapping constructor from future<future<int>>.
+TEST(FutureTestInt, conform_2_3_2_a) {
+  // future<T> should have an unwrapping constructor.
+  promise<future<int>> p;
+  future<future<int>> f = p.get_future();
+
+  future<int> unwrapped(std::move(f));
+  EXPECT_FALSE(noexcept(future<int>(p.get_future())));
+}
+
+/// @test Verify conformance with section 2.3 of the Concurrency TS.
+TEST(FutureTestInt, conform_2_3_3_a) {
+  // A future<T> created via the unwrapping constructor becomes satisfied
+  // when both become satisfied.
+  promise<future<int>> p;
+
+  future<int> unwrapped(p.get_future());
+  EXPECT_TRUE(unwrapped.valid());
+  EXPECT_FALSE(unwrapped.is_ready());
+
+  promise<int> p2;
+  p.set_value(p2.get_future());
+  EXPECT_FALSE(unwrapped.is_ready());
+
+  p2.set_value(42);
+  EXPECT_TRUE(unwrapped.is_ready());
+  EXPECT_EQ(42, unwrapped.get());
+}
+
+/// @test Verify conformance with section 2.3 of the Concurrency TS.
+TEST(FutureTestInt, conform_2_3_3_b) {
+  // A future<T> created via the unwrapping constructor becomes satisfied
+  // when the wrapped future is satisfied by an exception.
+  promise<future<int>> p;
+
+  future<int> unwrapped(p.get_future());
+  EXPECT_TRUE(unwrapped.valid());
+  EXPECT_FALSE(unwrapped.is_ready());
+
+  p.set_exception(std::make_exception_ptr(std::runtime_error("test message")));
+  EXPECT_TRUE(unwrapped.is_ready());
+  EXPECT_THROW( try { unwrapped.get(); } catch(std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("test message"));
+    throw;
+  }, std::runtime_error);
+}
+
+/// @test Verify conformance with section 2.3 of the Concurrency TS.
+TEST(FutureTestInt, conform_2_3_3_c) {
+  // A future<T> created via the unwrapping constructor becomes satisfied
+  // when the inner future is satisfied by an exception.
+  promise<future<int>> p;
+
+  future<int> unwrapped(p.get_future());
+  EXPECT_TRUE(unwrapped.valid());
+  EXPECT_FALSE(unwrapped.is_ready());
+
+  promise<int> p2;
+  p.set_value(p2.get_future());
+  EXPECT_FALSE(unwrapped.is_ready());
+
+  p2.set_exception(std::make_exception_ptr(std::runtime_error("test message")));
+  EXPECT_TRUE(unwrapped.is_ready());
+  EXPECT_THROW( try { unwrapped.get(); } catch(std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("test message"));
+    throw;
+  }, std::runtime_error);
+}
+
+/// @test Verify conformance with section 2.3 of the Concurrency TS.
+TEST(FutureTestInt, conform_2_3_3_d) {
+  // A future<T> created via the unwrapping constructor becomes satisfied
+  // when the inner future is invalid.
+  promise<future<int>> p;
+
+  future<int> unwrapped(p.get_future());
+  EXPECT_TRUE(unwrapped.valid());
+  EXPECT_FALSE(unwrapped.is_ready());
+
+  promise<int> p2;
+  p.set_value(future<int>{});
+  EXPECT_TRUE(unwrapped.is_ready());
+
+  EXPECT_THROW( try { unwrapped.get(); } catch(std::future_error const& ex) {
+    EXPECT_EQ(std::future_errc::broken_promise, ex.code());
+    throw;
+  }, std::future_error);
+}
+
+/// @test Verify conformance with section 2.3 of the Concurrency TS.
+TEST(FutureTestInt, conform_2_3_4) {
+  // future<T> should leaves the source invalid.
+  promise<future<int>> p;
+  future<future<int>> f = p.get_future();
+
+  future<int> unwrapped(std::move(f));
+  EXPECT_TRUE(unwrapped.valid());
+  EXPECT_FALSE(f.valid());
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
