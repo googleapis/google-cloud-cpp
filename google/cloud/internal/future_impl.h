@@ -493,13 +493,6 @@ class future_shared_state<void> final : private future_shared_state_base {
   }
 };
 
-// TODO(#1345) - implement the generic version when future_shared_state<T> is
-// implemented.
-template <typename Functor, typename R, typename T>
-void continuation_execute_delegate(
-    Functor& functor, std::shared_ptr<future_shared_state<T>> input,
-    future_shared_state<R>& output, std::true_type requires_unwrap);
-
 /**
  * Calls a functor passing `future<T>` as an argument and stores the results in
  * a `future_shared_state<R>`.
@@ -556,36 +549,6 @@ void continuation_execute_delegate(
   // Other errors can be reported via the promise.
   output.set_exception(std::current_exception());
 }
-
-/**
- * Calls a functor passing `future<T>` as an argument and stores the results in
- * a `future_shared_state<void>`.
- *
- * This is an specialization of `continuation_execute_delegate` for
- * functors that return a `future<void>`. In this case we need to unwrap the
- * result and store its "value" in the output shared state. The generic version
- * does not work in that case.
- *
- * @tparam Functor the type of the functor.
- * @param functor the callable to invoke.
- * @param input the input shared state, it must be satisfied when this function
- *     is called.
- * @param output the output shared state, it will become satisfied by passing
- *     the results of calling `functor`
- *
- * @tparam Functor the type of the functor.
- * @param functor the callable to invoke.
- * @param input the input shared state, it must be satisfied when this function
- *     is called.
- * @param output the output shared state, it will become satisfied by passing
- *     the results of calling `functor`
- *
- * TODO(#1345) - implement this in a future PR.
- */
-template <typename Functor, typename T>
-void continuation_execute_delegate(
-    Functor& functor, std::shared_ptr<future_shared_state<T>> input,
-    future_shared_state<void>& output, std::true_type);
 
 /**
  * Implement continuations for `future<R>::then()`.
