@@ -206,7 +206,7 @@ TEST_F(GoogleCredentialsTest, LoadComputeEngineCredentialsFromADCFlow) {
   // Make sure other higher-precedence credentials (ADC env var, gcloud ADC from
   // well-known path) aren't loaded.
   UnsetEnv(GoogleAdcEnvVar());
-  UnsetEnv(GoogleGcloudAdcFileEnvVar());
+  SetEnv(GoogleGcloudAdcFileEnvVar(), "");
   // If the ADC flow thinks we're on a GCE instance, it should return
   // ComputeEngineCredentials.
   SetEnv(GceCheckOverrideEnvVar(), "1");
