@@ -21,6 +21,7 @@
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/internal/make_unique.h"
+#include "google/cloud/internal/throw_delegate.h"
 
 namespace google {
 namespace cloud {
@@ -145,7 +146,8 @@ template <
     typename std::enable_if<MeetsAsyncOperationRequirements<Operation>::value,
                             int>::type operation_meets_requirements = 0>
 class AsyncRetryOp : public std::enable_shared_from_this<
-                         AsyncRetryOp<IdempotencyPolicy, Functor, Operation>> {
+                         AsyncRetryOp<IdempotencyPolicy, Functor, Operation>>,
+                     public AsyncOperation {
  public:
   explicit AsyncRetryOp(char const* error_message,
                         std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
@@ -153,7 +155,8 @@ class AsyncRetryOp : public std::enable_shared_from_this<
                         IdempotencyPolicy idempotent_policy,
                         MetadataUpdatePolicy metadata_update_policy,
                         Functor&& callback, Operation&& operation)
-      : error_message_(error_message),
+      : cancelled_(),
+        error_message_(error_message),
         rpc_retry_policy_(std::move(rpc_retry_policy)),
         rpc_backoff_policy_(std::move(rpc_backoff_policy)),
         idempotent_policy_(std::move(idempotent_policy)),
@@ -161,34 +164,76 @@ class AsyncRetryOp : public std::enable_shared_from_this<
         callback_(std::forward<Functor>(callback)),
         operation_(std::move(operation)) {}
 
+  void Cancel() override {
+    std::lock_guard<std::mutex> lk(mu_);
+    cancelled_ = true;
+    if (current_op_) {
+      current_op_->Cancel();
+      current_op_.reset();
+    }
+  }
+
+  bool Notify(CompletionQueue& cq, bool ok) override {
+    // TODO(#1389) Notify should be moved from AsyncOperation to some more
+    // specific derived class.
+    google::cloud::internal::RaiseLogicError(
+        "This member function doesn't make sense in "
+        "AsyncRetryOp");
+  }
+
+  std::shared_ptr<AsyncOperation> Start(CompletionQueue& cq) {
+    auto res =
+        std::static_pointer_cast<AsyncOperation>(this->shared_from_this());
+    std::unique_lock<std::mutex> lk(mu_);
+    if (cancelled_) {
+      lk.unlock();
+      // We could fire the callback right here, but we'd be risking a deadlock
+      // if the user held a lock while submitting this request. Instead, let's
+      // schedule the callback to fire on the thread running the completion
+      // queue by submitting an expired timer.
+      // There is no reason to store this timer in current_op_.
+      auto self = this->shared_from_this();
+      cq.MakeRelativeTimer(
+          std::chrono::seconds(0),
+          [self](CompletionQueue& cq, AsyncTimerResult result) {
+            self->OnTimer(cq, result);
+          });
+      return res;
+    }
+    StartUnlocked(cq);
+    return res;
+  }
+
+ private:
   /**
    * Kick off the asynchronous request.
    *
    * @param cq the completion queue to run the asynchronous operations.
    */
-  void Start(CompletionQueue& cq) {
+  void StartUnlocked(CompletionQueue& cq) {
     auto self = this->shared_from_this();
     auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
     rpc_retry_policy_->Setup(*context);
     rpc_backoff_policy_->Setup(*context);
     metadata_update_policy_.Setup(*context);
 
-    operation_.Start(cq, std::move(context),
-                     [self](CompletionQueue& cq, grpc::Status& status) {
-                       self->OnCompletion(cq, status);
-                     });
+    current_op_ =
+        operation_.Start(cq, std::move(context),
+                         [self](CompletionQueue& cq, grpc::Status& status) {
+                           self->OnCompletion(cq, status);
+                         });
   }
 
- private:
-  std::string FullErrorMessage(char const* where) {
+  std::string FullErrorMessageUnlocked(char const* where) {
     std::string full_message = error_message_;
     full_message += "(" + metadata_update_policy_.value() + ") ";
     full_message += where;
     return full_message;
   }
 
-  std::string FullErrorMessage(char const* where, grpc::Status const& status) {
-    std::string full_message = FullErrorMessage(where);
+  std::string FullErrorMessageUnlocked(char const* where,
+                                       grpc::Status const& status) {
+    std::string full_message = FullErrorMessageUnlocked(where);
     full_message += ", last error=";
     full_message += status.error_message();
     return full_message;
@@ -196,19 +241,29 @@ class AsyncRetryOp : public std::enable_shared_from_this<
 
   /// The callback to handle one asynchronous request completing.
   void OnCompletion(CompletionQueue& cq, grpc::Status& status) {
+    std::unique_lock<std::mutex> lk(mu_);
+    // If we don't schedule a timer, we don't want this object to
+    // hold the operation.
+    current_op_.reset();
+    // If the underlying operation didn't notice a cancel request and reported
+    // a different error or success, we should report the error or success
+    // unless we would continue trying. This is because it is our best knowledge
+    // about the status of the retried request.
     if (status.error_code() == grpc::StatusCode::CANCELLED) {
       // Cancelled, no retry necessary.
       auto res = operation_.AccumulatedResult();
       grpc::Status res_status(
           grpc::StatusCode::CANCELLED,
-          FullErrorMessage("pending operation cancelled", status),
+          FullErrorMessageUnlocked("pending operation cancelled", status),
           status.error_details());
+      lk.unlock();
       callback_(cq, res, res_status);
       return;
     }
     if (status.ok()) {
       // Success, just report the result.
       auto res = operation_.AccumulatedResult();
+      lk.unlock();
       callback_(cq, res, status);
       return;
     }
@@ -216,50 +271,77 @@ class AsyncRetryOp : public std::enable_shared_from_this<
       auto res = operation_.AccumulatedResult();
       grpc::Status res_status(
           status.error_code(),
-          FullErrorMessage("non-idempotent operation failed", status),
+          FullErrorMessageUnlocked("non-idempotent operation failed", status),
           status.error_details());
+      lk.unlock();
       callback_(cq, res, res_status);
       return;
     }
     if (not rpc_retry_policy_->OnFailure(status)) {
       std::string full_message =
-          FullErrorMessage(RPCRetryPolicy::IsPermanentFailure(status)
-                               ? "permanent error"
-                               : "too many transient errors",
-                           status);
+          FullErrorMessageUnlocked(RPCRetryPolicy::IsPermanentFailure(status)
+                                       ? "permanent error"
+                                       : "too many transient errors",
+                                   status);
       auto res = operation_.AccumulatedResult();
       grpc::Status res_status(status.error_code(), full_message,
                               status.error_details());
+      lk.unlock();
+      callback_(cq, res, res_status);
+      return;
+    }
+    if (cancelled_) {
+      // At this point we know that the user intended to Cancel and we'd retry,
+      // so let's report the cancellation status to them.
+      auto res = operation_.AccumulatedResult();
+      grpc::Status res_status(
+          grpc::StatusCode::CANCELLED,
+          FullErrorMessageUnlocked("pending operation cancelled", status),
+          status.error_details());
+      lk.unlock();
       callback_(cq, res, res_status);
       return;
     }
 
     auto delay = rpc_backoff_policy_->OnCompletion(status);
     auto self = this->shared_from_this();
-    cq.MakeRelativeTimer(delay,
-                         [self](CompletionQueue& cq, AsyncTimerResult result) {
-                           self->OnTimer(cq, result);
-                         });
+    current_op_ = cq.MakeRelativeTimer(
+        delay, [self](CompletionQueue& cq, AsyncTimerResult result) {
+          self->OnTimer(cq, result);
+        });
   }
 
   void OnTimer(CompletionQueue& cq, AsyncTimerResult& timer) {
-    if (timer.cancelled) {
+    std::unique_lock<std::mutex> lk(mu_);
+    if (timer.cancelled or cancelled_) {
       // Cancelled, no more action to take.
+      current_op_.reset();
       auto res = operation_.AccumulatedResult();
-      grpc::Status res_status(grpc::StatusCode::CANCELLED,
-                              FullErrorMessage("pending timer cancelled"));
+      grpc::Status res_status(
+          grpc::StatusCode::CANCELLED,
+          FullErrorMessageUnlocked("pending timer cancelled"));
+      lk.unlock();
       callback_(cq, res, res_status);
       return;
     }
-    Start(cq);
+    StartUnlocked(cq);
   }
 
+  std::mutex mu_;
+  // Because of the racy nature of cancellation, a cancelled timer or operation
+  // might occasionally return a non-cancelled status (e.g. when cancellation
+  // occurs right before firing the callback). In order to not schedule a next
+  // retry in such a scenario, we indicate cancellation by using this flag.
+  bool cancelled_;
   char const* error_message_;
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
   IdempotencyPolicy idempotent_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
   Functor callback_;
+  // A handle to a currently ongoing async operation - either a timer or one
+  // created through `Operation::Start`.
+  std::shared_ptr<AsyncOperation> current_op_;
 
  protected:
   Operation operation_;
@@ -269,8 +351,9 @@ class AsyncRetryOp : public std::enable_shared_from_this<
  * An idempotent policy for `AsyncRetryOp` based on a pre-computed value.
  *
  * In most APIs the idempotency of the API is either known at compile-time or
- * the value is unchanged during the retry loop. This class can be used in those
- * cases as the `IdempotentPolicy` template parameter for `AsyncRetryOp`.
+ * the value is unchanged during the retry loop. This class can be used in
+ * those cases as the `IdempotentPolicy` template parameter for
+ * `AsyncRetryOp`.
  */
 class ConstantIdempotencyPolicy {
  public:
