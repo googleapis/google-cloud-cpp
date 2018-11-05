@@ -224,6 +224,30 @@ class future_shared_state_base {
     cv_.notify_all();
   }
 
+  /**
+   * The implementation details for `promise<T>::get_future()`.
+   *
+   * `promise<T>::get_future()` can be called exactly once, this function
+   * must raise `std::future_error` if (quoting the C++ spec):
+   *
+   * `get_future` has already been called on a `promise` with the same shared
+   * state as `*this`
+   *
+   * While it is not clear how one could create multiple promises pointing to
+   * the same shared state, it is easier to keep all the locking and atomic
+   * checks in one class.
+   *
+   * @throws std::future_error if the operation fails.
+   */
+  static void mark_retrieved(future_shared_state_base* sh) {
+    if (not sh) {
+      throw std::future_error(std::future_errc::no_state);
+    }
+    if (sh->retrieved_.test_and_set()) {
+      throw std::future_error(std::future_errc::future_already_retrieved);
+    }
+  }
+
   // My (@coryan) reading of the spec is that calling get_future() on a promise
   // should succeed exactly once, even when used from multiple threads. This
   // requires some kind of flag and synchronization primitive. The obvious
@@ -259,8 +283,6 @@ class future_shared_state_base {
 
 /**
  * Forward declare the generic version of future_share_state.
- *
- * TODO(#1345) - implement the generic version
  */
 template <typename T>
 class future_shared_state;
@@ -336,7 +358,7 @@ class future_shared_state final : private future_shared_state_base {
     // placement new via the move constructor is the best way to initialize the
     // buffer.
 
-    // TODO(#1345) - this is calling application code while holding a lock.
+    // TODO(#1405) - this is calling application code while holding a lock.
     // That could result in a deadlock (or at least unbounded priority
     // inversions) if the move constructor for `T` takes a long time to execute.
     new (reinterpret_cast<T*>(&buffer_)) T(std::move(value));
@@ -373,12 +395,7 @@ class future_shared_state final : private future_shared_state_base {
    * @throws std::future_error if the operation fails.
    */
   static void mark_retrieved(std::shared_ptr<future_shared_state> const& sh) {
-    if (not sh) {
-      throw std::future_error(std::future_errc::no_state);
-    }
-    if (sh->retrieved_.test_and_set()) {
-      throw std::future_error(std::future_errc::future_already_retrieved);
-    }
+    future_shared_state_base::mark_retrieved(sh.get());
   }
 
  private:
@@ -464,12 +481,7 @@ class future_shared_state<void> final : private future_shared_state_base {
    * @throws std::future_error if the operation fails.
    */
   static void mark_retrieved(std::shared_ptr<future_shared_state> const& sh) {
-    if (not sh) {
-      throw std::future_error(std::future_errc::no_state);
-    }
-    if (sh->retrieved_.test_and_set()) {
-      throw std::future_error(std::future_errc::future_already_retrieved);
-    }
+    future_shared_state_base::mark_retrieved(sh.get());
   }
 
  private:
