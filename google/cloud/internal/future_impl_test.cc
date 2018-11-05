@@ -142,11 +142,12 @@ TEST(ContinuationVoidTest, SetExceptionCallsContinuation) {
       std::make_exception_ptr(std::runtime_error("test message")));
   EXPECT_TRUE(called);
   EXPECT_TRUE(output->is_ready());
-  EXPECT_THROW(try { output->get(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("test message"));
-    throw;
-  },
-               std::runtime_error);
+  EXPECT_THROW(
+      try { output->get(); } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test message"));
+        throw;
+      },
+      std::runtime_error);
 }
 
 /// @test Verify that satisfying the shared state with a value calls the
@@ -218,11 +219,12 @@ TEST(FutureImplVoid, Abandon) {
   future_shared_state<void> shared_state;
   shared_state.abandon();
   EXPECT_TRUE(shared_state.is_ready());
-  EXPECT_THROW(try { shared_state.get(); } catch (std::future_error const& ex) {
-    EXPECT_EQ(std::future_errc::broken_promise, ex.code());
-    throw;
-  },
-               std::future_error);
+  EXPECT_THROW(
+      try { shared_state.get(); } catch (std::future_error const& ex) {
+        EXPECT_EQ(std::future_errc::broken_promise, ex.code());
+        throw;
+      },
+      std::future_error);
 }
 
 TEST(FutureImplVoid, SetContinuation) {
@@ -272,6 +274,36 @@ TEST(FutureImplVoid, SetContinuationAlreadySatisfied) {
   EXPECT_NO_THROW(shared_state.get());
 }
 
+TEST(FutureImplVoid, MarkRetrieved) {
+  auto sh = std::make_shared<future_shared_state<void>>();
+  EXPECT_NO_THROW(future_shared_state<void>::mark_retrieved(sh));
+}
+
+TEST(FutureImplVoid, MarkRetrievedCanBeCalledOnlyOnce) {
+  auto sh = std::make_shared<future_shared_state<void>>();
+  EXPECT_NO_THROW(future_shared_state<void>::mark_retrieved(sh));
+  EXPECT_THROW(
+      try {
+        future_shared_state<void>::mark_retrieved(sh);
+      } catch (std::future_error const& ex) {
+        EXPECT_EQ(std::future_errc::future_already_retrieved, ex.code());
+        throw;
+      },
+      std::future_error);
+}
+
+TEST(FutureImplVoid, MarkRetrievedFailure) {
+  std::shared_ptr<future_shared_state<void>> sh;
+  EXPECT_THROW(
+      try {
+        future_shared_state<void>::mark_retrieved(sh);
+      } catch (std::future_error const& ex) {
+        EXPECT_EQ(std::future_errc::no_state, ex.code());
+        throw;
+      },
+      std::future_error);
+}
+
 TEST(FutureImplInt, SetException) {
   future_shared_state<int> shared_state;
   EXPECT_FALSE(shared_state.is_ready());
@@ -318,22 +350,54 @@ TEST(FutureImplInt, GetException) {
   shared_state.set_exception(
       std::make_exception_ptr(std::runtime_error("test message")));
   EXPECT_TRUE(shared_state.is_ready());
-  EXPECT_THROW(try { shared_state.get(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("test message"));
-    throw;
-  },
-               std::runtime_error);
+  EXPECT_THROW(
+      try { shared_state.get(); } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test message"));
+        throw;
+      },
+      std::runtime_error);
 }
 
 TEST(FutureImplInt, Abandon) {
   future_shared_state<int> shared_state;
   shared_state.abandon();
   EXPECT_TRUE(shared_state.is_ready());
-  EXPECT_THROW(try { shared_state.get(); } catch (std::future_error const& ex) {
-    EXPECT_EQ(std::future_errc::broken_promise, ex.code());
-    throw;
-  },
-               std::future_error);
+  EXPECT_THROW(
+      try { shared_state.get(); } catch (std::future_error const& ex) {
+        EXPECT_EQ(std::future_errc::broken_promise, ex.code());
+        throw;
+      },
+      std::future_error);
+}
+
+TEST(FutureImplInt, MarkRetrieved) {
+  auto sh = std::make_shared<future_shared_state<int>>();
+  EXPECT_NO_THROW(future_shared_state<int>::mark_retrieved(sh));
+}
+
+TEST(FutureImplInt, MarkRetrievedCanBeCalledOnlyOnce) {
+  auto sh = std::make_shared<future_shared_state<int>>();
+  EXPECT_NO_THROW(future_shared_state<int>::mark_retrieved(sh));
+  EXPECT_THROW(
+      try {
+        future_shared_state<int>::mark_retrieved(sh);
+      } catch (std::future_error const& ex) {
+        EXPECT_EQ(std::future_errc::future_already_retrieved, ex.code());
+        throw;
+      },
+      std::future_error);
+}
+
+TEST(FutureImplInt, MarkRetrievedFailure) {
+  std::shared_ptr<future_shared_state<int>> sh;
+  EXPECT_THROW(
+      try {
+        future_shared_state<int>::mark_retrieved(sh);
+      } catch (std::future_error const& ex) {
+        EXPECT_EQ(std::future_errc::no_state, ex.code());
+        throw;
+      },
+      std::future_error);
 }
 
 TEST(FutureImplInt, SetContinuation) {
@@ -381,6 +445,63 @@ TEST(FutureImplInt, SetContinuationAlreadySatisfied) {
   EXPECT_EQ(1, execute_counter);
 
   EXPECT_EQ(42, shared_state.get());
+}
+
+// @test Verify that we can create continuations.
+TEST(ContinuationIntTest, Constructor) {
+  auto functor = [](std::shared_ptr<future_shared_state<int>> state) {};
+
+  using tested_type = continuation<decltype(functor), int>;
+
+  auto input = std::make_shared<future_shared_state<int>>();
+  auto cont = std::make_shared<tested_type>(std::move(functor), input);
+
+  auto current = cont->input.lock();
+  EXPECT_EQ(input.get(), current.get());
+}
+
+/// @test Verify that satisfying the shared state with an exception calls the
+/// continuation.
+TEST(ContinuationIntTest, SetExceptionCallsContinuation) {
+  bool called = false;
+  auto functor = [&called](std::shared_ptr<future_shared_state<int>> state) {
+    called = true;
+    return 2 * state->get();
+  };
+
+  auto input = std::make_shared<future_shared_state<int>>();
+  std::shared_ptr<future_shared_state<int>> output =
+      input->make_continuation(input, std::move(functor));
+
+  input->set_exception(
+      std::make_exception_ptr(std::runtime_error("test message")));
+  EXPECT_TRUE(called);
+  EXPECT_TRUE(output->is_ready());
+  EXPECT_THROW(
+      try { output->get(); } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test message"));
+        throw;
+      },
+      std::runtime_error);
+}
+
+/// @test Verify that satisfying the shared state with a value calls the
+/// continuation.
+TEST(ContinuationIntTest, SetValueCallsContinuation) {
+  bool called = false;
+  auto functor = [&called](std::shared_ptr<future_shared_state<int>> state) {
+    called = true;
+    return 2 * state->get();
+  };
+
+  auto input = std::make_shared<future_shared_state<int>>();
+  std::shared_ptr<future_shared_state<int>> output =
+      input->make_continuation(input, std::move(functor));
+
+  input->set_value(42);
+  EXPECT_TRUE(called);
+  EXPECT_TRUE(output->is_ready());
+  EXPECT_NO_THROW(output->get());
 }
 
 TEST(FutureImplNoDefaultConstructor, SetValue) {

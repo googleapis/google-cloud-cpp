@@ -354,8 +354,7 @@ class future_shared_state final : private future_shared_state_base {
    *     of the continuation.
    */
   template <typename F>
-  static std::shared_ptr<
-      typename internal::continuation_helper<F, void>::state_t>
+  static std::shared_ptr<typename internal::continuation_helper<F, T>::state_t>
   make_continuation(std::shared_ptr<future_shared_state> self, F&& functor);
 
   /**
@@ -380,7 +379,6 @@ class future_shared_state final : private future_shared_state_base {
     if (sh->retrieved_.test_and_set()) {
       throw std::future_error(std::future_errc::future_already_retrieved);
     }
-    return sh;
   }
 
  private:
@@ -490,12 +488,31 @@ void continuation_execute_delegate(
     Functor& functor, std::shared_ptr<future_shared_state<T>> input,
     future_shared_state<R>& output, std::true_type requires_unwrap);
 
-// TODO(#1345) - implement the generic version when future_shared_state<T> is
-// implemented.
+/**
+ * Calls a functor passing `future<T>` as an argument and stores the results in
+ * a `future_shared_state<R>`.
+ *
+ * @tparam Functor the type of the functor.
+ * @param functor the callable to invoke.
+ * @param input the input shared state, it must be satisfied when this function
+ *     is called.
+ * @param output the output shared state, it will become satisfied by passing
+ *     the results of calling `functor`
+ */
 template <typename Functor, typename R, typename T>
 void continuation_execute_delegate(
     Functor& functor, std::shared_ptr<future_shared_state<T>> input,
-    future_shared_state<R>& output, std::false_type requires_unwrap);
+    future_shared_state<R>& output, std::false_type) try {
+  T value = functor(std::move(input));
+  output.set_value(std::move(value));
+} catch (std::future_error const& f) {
+  // failing to set the output with a future_error is non-recoverable, raise
+  // immediately.
+  throw;
+} catch (...) {
+  // Other errors can be reported via the promise.
+  output.set_exception(std::current_exception());
+}
 
 /**
  * Calls a functor passing `future<T>` as an argument and stores the results in
@@ -612,10 +629,10 @@ struct continuation : public continuation_base {
 // Implement the helper function to create a shared state for continuations.
 template <typename T>
 template <typename F>
-std::shared_ptr<typename internal::continuation_helper<F, void>::state_t>
+std::shared_ptr<typename internal::continuation_helper<F, T>::state_t>
 future_shared_state<T>::make_continuation(
     std::shared_ptr<future_shared_state<T>> self, F&& functor) {
-  using continuation_type = internal::continuation<F, void>;
+  using continuation_type = internal::continuation<F, T>;
   auto continuation = google::cloud::internal::make_unique<continuation_type>(
       std::forward<F>(functor), self);
   auto result = continuation->output;
