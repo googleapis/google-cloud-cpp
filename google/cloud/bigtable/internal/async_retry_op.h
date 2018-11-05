@@ -155,7 +155,7 @@ class AsyncRetryOp : public std::enable_shared_from_this<
                         IdempotencyPolicy idempotent_policy,
                         MetadataUpdatePolicy metadata_update_policy,
                         Functor&& callback, Operation&& operation)
-      : started_(),
+      : cancelled_(),
         error_message_(error_message),
         rpc_retry_policy_(std::move(rpc_retry_policy)),
         rpc_backoff_policy_(std::move(rpc_backoff_policy)),
@@ -166,17 +166,11 @@ class AsyncRetryOp : public std::enable_shared_from_this<
 
   void Cancel() override {
     std::lock_guard<std::mutex> lk(mu_);
-    if (not started_) {
-      google::cloud::internal::RaiseLogicError(
-          "Attempting to cancel an "
-          "unstarted operation");
-    }
+    cancelled_ = true;
     if (current_op_) {
       current_op_->Cancel();
       current_op_.reset();
     }
-    // If there is no current_op_ it means the request has already finished,
-    // so don't do anything.
   }
 
   bool Notify(CompletionQueue& cq, bool ok) override {
@@ -188,9 +182,26 @@ class AsyncRetryOp : public std::enable_shared_from_this<
   }
 
   std::shared_ptr<AsyncOperation> Start(CompletionQueue& cq) {
-    std::lock_guard<std::mutex> lk(mu_);
+    auto res =
+        std::static_pointer_cast<AsyncOperation>(this->shared_from_this());
+    std::unique_lock<std::mutex> lk(mu_);
+    if (cancelled_) {
+      lk.unlock();
+      // We could fire the callback right here, but we'd be risking a deadlock
+      // if the user held a lock while submitting this request. Instead, let's
+      // schedule the callback to fire on the thread running the completion
+      // queue by submitting an expired timer.
+      // There is no reason to store this timer in current_op_.
+      auto self = this->shared_from_this();
+      cq.MakeRelativeTimer(
+          std::chrono::seconds(0),
+          [self](CompletionQueue& cq, AsyncTimerResult result) {
+            self->OnTimer(cq, result);
+          });
+      return res;
+    }
     StartUnlocked(cq);
-    return std::static_pointer_cast<AsyncOperation>(this->shared_from_this());
+    return res;
   }
 
  private:
@@ -200,7 +211,6 @@ class AsyncRetryOp : public std::enable_shared_from_this<
    * @param cq the completion queue to run the asynchronous operations.
    */
   void StartUnlocked(CompletionQueue& cq) {
-    started_ = true;
     auto self = this->shared_from_this();
     auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
     rpc_retry_policy_->Setup(*context);
@@ -232,9 +242,6 @@ class AsyncRetryOp : public std::enable_shared_from_this<
   /// The callback to handle one asynchronous request completing.
   void OnCompletion(CompletionQueue& cq, grpc::Status& status) {
     std::unique_lock<std::mutex> lk(mu_);
-    // current_op_ is set to nullptr if Cancel was called in the middle of an
-    // operation
-    bool const whole_op_cancelled = not current_op_;
     // If we don't schedule a timer, we don't want this object to
     // hold the operation.
     current_op_.reset();
@@ -283,7 +290,7 @@ class AsyncRetryOp : public std::enable_shared_from_this<
       callback_(cq, res, res_status);
       return;
     }
-    if (whole_op_cancelled) {
+    if (cancelled_) {
       // At this point we know that the user intended to Cancel and we'd retry,
       // so let's report the cancellation status to them.
       auto res = operation_.AccumulatedResult();
@@ -306,7 +313,7 @@ class AsyncRetryOp : public std::enable_shared_from_this<
 
   void OnTimer(CompletionQueue& cq, AsyncTimerResult& timer) {
     std::unique_lock<std::mutex> lk(mu_);
-    if (timer.cancelled or not current_op_) {
+    if (timer.cancelled or cancelled_) {
       // Cancelled, no more action to take.
       current_op_.reset();
       auto res = operation_.AccumulatedResult();
@@ -321,7 +328,11 @@ class AsyncRetryOp : public std::enable_shared_from_this<
   }
 
   std::mutex mu_;
-  bool started_;
+  // Because of the racy nature of cancellation, a cancelled timer or operation
+  // might occasionally return a non-cancelled status (e.g. when cancellation
+  // occurs right before firing the callback). In order to not schedule a next
+  // retry in such a scenario, we indicate cancellation by using this flag.
+  bool cancelled_;
   char const* error_message_;
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
@@ -330,12 +341,6 @@ class AsyncRetryOp : public std::enable_shared_from_this<
   Functor callback_;
   // A handle to a currently ongoing async operation - either a timer or one
   // created through `Operation::Start`.
-  // Because of the racy nature of cancellation, a cancelled timer or operation
-  // might occasionally return a non-cancelled status (e.g. when cancellation
-  // occurs right before firing the callback). In order to not schedule a next
-  // retry in such a scenario, we indicate cancellation by storing a nullptr in
-  // this pointer. In other words, this pointer is not null iff AsyncRetryOp
-  // should continue trying.
   std::shared_ptr<AsyncOperation> current_op_;
 
  protected:

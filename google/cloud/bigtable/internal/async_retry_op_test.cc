@@ -101,7 +101,9 @@ class DummyOperationMock : public DummyOperationImpl {
   MOCK_METHOD0(AccumulatedResult, int());
 };
 
-TEST_F(NoexTableAsyncRetryOpTest, CantCancelBeforeStart) {
+TEST_F(NoexTableAsyncRetryOpTest, CancelBeforeStart) {
+  // Test if calling `Start` on an already cancelled operation completes the
+  // operation immediately with a `CANCELLED` status.
   auto rpc_retry_policy =
       bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits);
   auto rpc_backoff_policy =
@@ -110,21 +112,36 @@ TEST_F(NoexTableAsyncRetryOpTest, CantCancelBeforeStart) {
                                               MetadataParamTypes::TABLE_NAME);
   internal::ConstantIdempotencyPolicy idempotency_policy(true);
 
+  std::promise<void> op_completed;
+
   auto dummy_op_mock = std::make_shared<DummyOperationMock>();
-  auto callback = [](CompletionQueue&, int&, grpc::Status&) {
-    EXPECT_TRUE(false);  // This callback should never be called
+  auto callback = [&op_completed](CompletionQueue&, int& response,
+                                  grpc::Status& status) {
+    EXPECT_FALSE(status.ok());
+    EXPECT_EQ(grpc::StatusCode::CANCELLED, status.error_code());
+    EXPECT_EQ(27, response);
+    op_completed.set_value();
   };
+  EXPECT_CALL(*dummy_op_mock, AccumulatedResult()).WillOnce(Invoke([]() {
+    return 27;
+  }));
+
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
   auto async_op = std::make_shared<internal::AsyncRetryOp<
       internal::ConstantIdempotencyPolicy, decltype(callback), DummyOperation>>(
       __func__, rpc_retry_policy->clone(), rpc_backoff_policy->clone(),
       idempotency_policy, metadata_update_policy, std::move(callback),
       DummyOperation(dummy_op_mock));
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(async_op->Cancel(), std::logic_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(async_op->Cancel(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  async_op->Cancel();
+  async_op->Start(cq);
+
+  op_completed.get_future().get();
+
+  cq.Shutdown();
+  pool.join();
 }
 
 struct CancelInOpTestConfig {
