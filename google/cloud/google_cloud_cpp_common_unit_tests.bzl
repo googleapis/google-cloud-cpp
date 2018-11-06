@@ -5,6 +5,7 @@ google_cloud_cpp_common_unit_tests = [
     "internal/big_endian_test.cc",
     "internal/filesystem_test.cc",
     "internal/future_impl_test.cc",
+    "internal/future_generic_test.cc",
     "internal/future_void_test.cc",
     "internal/future_void_then_test.cc",
     "internal/invoke_result_test.cc",
