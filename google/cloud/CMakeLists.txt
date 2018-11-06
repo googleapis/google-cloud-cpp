@@ -92,6 +92,7 @@ configure_file(internal/build_info.cc.in internal/build_info.cc)
 
 # the client library
 add_library(google_cloud_cpp_common
+            future.h
             iam_binding.h
             iam_bindings.h
             iam_bindings.cc
@@ -107,6 +108,7 @@ add_library(google_cloud_cpp_common
             internal/future_base.h
             internal/future_fwd.h
             internal/future_impl.h
+            internal/future_then_impl.h
             internal/future_then_meta.h
             internal/future_generic.h
             internal/future_void.h
