@@ -140,6 +140,19 @@ class MockAdminClient : public bigtable::AdminClient {
           google::bigtable::admin::v2::DropRowRangeRequest const& request,
           grpc::CompletionQueue* cq));
   MOCK_METHOD3(
+      AsyncGenerateConsistencyToken,
+      std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+          google::bigtable::admin::v2::GenerateConsistencyTokenResponse>>(
+          grpc::ClientContext*,
+          const google::bigtable::admin::v2::GenerateConsistencyTokenRequest&,
+          grpc::CompletionQueue*));
+  MOCK_METHOD3(AsyncCheckConsistency,
+               std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+                   google::bigtable::admin::v2::CheckConsistencyResponse>>(
+                   grpc::ClientContext*,
+                   const google::bigtable::admin::v2::CheckConsistencyRequest&,
+                   grpc::CompletionQueue*));
+  MOCK_METHOD3(
       AsyncGetSnapshot,
       std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
           google::bigtable::admin::v2::Snapshot>>(
