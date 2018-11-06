@@ -693,7 +693,8 @@ class Client {
    *   `Crc32cChecksumValue`, `DisableCrc32cChecksum`, `DisableMD5Hash`,
    *   `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
    *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
-   *   `MD5HashValue`, `PredefinedAcl`, `Projection`, and `UserProject`.
+   *   `MD5HashValue`, `PredefinedAcl`, `Projection`, `UserProject`, and
+   *   `WithObjectMetadata`.
    *
    * @par Examples
    *

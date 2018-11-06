@@ -125,7 +125,8 @@ class InsertObjectStreamingRequest
           Crc32cChecksumValue, DisableCrc32cChecksum, DisableMD5Hash,
           EncryptionKey, IfGenerationMatch, IfGenerationNotMatch,
           IfMetagenerationMatch, IfMetagenerationNotMatch, KmsKeyName,
-          MD5HashValue, PredefinedAcl, Projection, UserProject> {
+          MD5HashValue, PredefinedAcl, Projection, UserProject,
+          WithObjectMetadata> {
  public:
   using GenericObjectRequest::GenericObjectRequest;
 };

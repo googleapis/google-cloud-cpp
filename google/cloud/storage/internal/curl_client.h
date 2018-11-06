@@ -197,13 +197,21 @@ class CurlClient : public RawClient,
       InsertObjectMediaRequest const& request);
   std::string PickBoundary(std::string const& text_to_avoid);
 
-  /// Insert an objet using uploadType=media.
+  /// Insert an object using uploadType=media.
   std::pair<Status, ObjectMetadata> InsertObjectMediaSimple(
       InsertObjectMediaRequest const& request);
 
   /// Upload an object using uploadType=simple.
   std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>> WriteObjectSimple(
       InsertObjectStreamingRequest const& request);
+
+  /// Upload an object using uploadType=resumable.
+  std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>> WriteObjectResumable(
+      InsertObjectStreamingRequest const& request);
+
+  template <typename RequestType>
+  std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+  CreateResumableSessionGeneric(RequestType const& request);
 
   ClientOptions options_;
   std::string storage_endpoint_;

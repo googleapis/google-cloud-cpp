@@ -10,6 +10,7 @@ storage_client_integration_tests = [
     "object_media_integration_test.cc",
     "object_insert_integration_test.cc",
     "object_integration_test.cc",
+    "object_resumable_write_integration_test.cc",
     "service_account_integration_test.cc",
     "storage_include_test.cc",
     "thread_integration_test.cc",

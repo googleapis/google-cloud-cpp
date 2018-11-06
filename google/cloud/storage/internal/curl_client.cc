@@ -16,6 +16,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
+#include "google/cloud/storage/internal/curl_resumable_streambuf.h"
 #include "google/cloud/storage/internal/curl_resumable_upload_session.h"
 #include "google/cloud/storage/internal/curl_streambuf.h"
 #include "google/cloud/storage/internal/generate_message_boundary.h"
@@ -135,6 +136,43 @@ Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
     }
   }
   return Status();
+}
+
+template <typename RequestType>
+std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
+  CurlRequestBuilder builder(
+      upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
+  auto status = SetupBuilder(builder, request, "POST");
+  if (not status.ok()) {
+    return std::make_pair(status, std::unique_ptr<ResumableUploadSession>());
+  }
+  builder.AddQueryParameter("uploadType", "resumable");
+  builder.AddQueryParameter("name", request.object_name());
+  builder.AddHeader("Content-Type: application/json; charset=UTF-8");
+  std::string request_payload;
+  if (request.template HasOption<WithObjectMetadata>()) {
+    request_payload = request.template GetOption<WithObjectMetadata>()
+                          .value()
+                          .JsonPayloadForUpdate();
+  }
+  builder.AddHeader("Content-Length: " +
+                    std::to_string(request_payload.size()));
+  auto payload = builder.BuildRequest().MakeRequest(request_payload);
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        std::unique_ptr<ResumableUploadSession>());
+  }
+  auto response = ResumableUploadResponse::FromHttpResponse(std::move(payload));
+  if (response.upload_session_url.empty()) {
+    return std::make_pair(Status(600, std::string("Invalid server response")),
+                          std::unique_ptr<ResumableUploadSession>());
+  }
+  auto session =
+      google::cloud::internal::make_unique<CurlResumableUploadSession>(
+          shared_from_this(), std::move(response.upload_session_url));
+  return std::make_pair(Status(), std::move(session));
 }
 
 CurlClient::CurlClient(ClientOptions options)
@@ -518,6 +556,10 @@ CurlClient::WriteObject(InsertObjectStreamingRequest const& request) {
     return WriteObjectXml(request);
   }
 
+  if (request.HasOption<WithObjectMetadata>()) {
+    return WriteObjectResumable(request);
+  }
+
   return WriteObjectSimple(request);
 }
 
@@ -654,37 +696,7 @@ std::pair<Status, RewriteObjectResponse> CurlClient::RewriteObject(
 
 std::pair<Status, std::unique_ptr<ResumableUploadSession>>
 CurlClient::CreateResumableSession(ResumableUploadRequest const& request) {
-  CurlRequestBuilder builder(
-      upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
-  if (not status.ok()) {
-    return std::make_pair(status, std::unique_ptr<ResumableUploadSession>());
-  }
-  builder.AddQueryParameter("uploadType", "resumable");
-  builder.AddQueryParameter("name", request.object_name());
-  builder.AddHeader("Content-Type: application/json; charset=UTF-8");
-  std::string request_payload;
-  if (request.HasOption<WithObjectMetadata>()) {
-    request_payload =
-        request.GetOption<WithObjectMetadata>().value().JsonPayloadForUpdate();
-  }
-  builder.AddHeader("Content-Length: " +
-                    std::to_string(request_payload.size()));
-  auto payload = builder.BuildRequest().MakeRequest(request_payload);
-  if (payload.status_code >= 300) {
-    return std::make_pair(
-        Status{payload.status_code, std::move(payload.payload)},
-        std::unique_ptr<ResumableUploadSession>());
-  }
-  auto response = ResumableUploadResponse::FromHttpResponse(std::move(payload));
-  if (response.upload_session_url.empty()) {
-    return std::make_pair(Status(600, std::string("Invalid server response")),
-                          std::unique_ptr<ResumableUploadSession>());
-  }
-  auto session =
-      google::cloud::internal::make_unique<CurlResumableUploadSession>(
-          shared_from_this(), std::move(response.upload_session_url));
-  return std::make_pair(Status(), std::move(session));
+  return CreateResumableSessionGeneric(request);
 }
 
 std::pair<Status, ListBucketAclResponse> CurlClient::ListBucketAcl(
@@ -1490,8 +1502,7 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaSimple(
 }
 
 std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>>
-CurlClient::WriteObjectSimple(
-    InsertObjectStreamingRequest const& request) {
+CurlClient::WriteObjectSimple(InsertObjectStreamingRequest const& request) {
   auto url = upload_endpoint_ + "/b/" + request.bucket_name() + "/o";
   CurlRequestBuilder builder(url, upload_factory_);
   auto status = SetupBuilder(builder, request, "POST");
@@ -1510,6 +1521,23 @@ CurlClient::WriteObjectSimple(
   std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
       builder.BuildUpload(), client_options().upload_buffer_size(),
       CreateHashValidator(request)));
+  return std::make_pair(
+      Status(),
+      std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf)));
+}
+
+std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>>
+CurlClient::WriteObjectResumable(InsertObjectStreamingRequest const& request) {
+  auto session = CreateResumableSessionGeneric(request);
+  if (not session.first.ok()) {
+    return std::make_pair(std::move(session.first),
+                          std::unique_ptr<ObjectWriteStreambuf>(nullptr));
+  }
+
+  auto buf =
+      google::cloud::internal::make_unique<internal::CurlResumableStreambuf>(
+          std::move(session.second), client_options().upload_buffer_size(),
+          CreateHashValidator(request));
   return std::make_pair(
       Status(),
       std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf)));

@@ -70,6 +70,10 @@ echo "Running GCS Object media integration tests."
 ./object_media_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
 
 echo
+echo "Running GCS Object resumable upload integration tests."
+./object_resumable_write_integration_test "${BUCKET_NAME}"
+
+echo
 echo "Running GCS multi-threaded integration test."
 ./thread_integration_test "${PROJECT_ID}" "${LOCATION}"
 
