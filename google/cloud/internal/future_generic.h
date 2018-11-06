@@ -62,6 +62,7 @@ class future final : private internal::future_base<T> {
     return tmp->get();
   }
 
+  using internal::future_base<T>::is_ready;
   using internal::future_base<T>::valid;
   using internal::future_base<T>::wait;
   using internal::future_base<T>::wait_for;
