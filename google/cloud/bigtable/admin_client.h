@@ -182,6 +182,19 @@ class AdminClient {
       google::bigtable::admin::v2::DropRowRangeRequest const& request,
       grpc::CompletionQueue* cq) = 0;
   virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::GenerateConsistencyTokenResponse>>
+  AsyncGenerateConsistencyToken(
+      grpc::ClientContext* context,
+      const google::bigtable::admin::v2::GenerateConsistencyTokenRequest&
+          request,
+      grpc::CompletionQueue* cq) = 0;
+  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::CheckConsistencyResponse>>
+  AsyncCheckConsistency(
+      grpc::ClientContext* context,
+      const google::bigtable::admin::v2::CheckConsistencyRequest& request,
+      grpc::CompletionQueue* cq) = 0;
+  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::Snapshot>>
   AsyncGetSnapshot(
       grpc::ClientContext* context,

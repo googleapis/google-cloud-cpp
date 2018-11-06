@@ -142,6 +142,24 @@ InProcessAdminClient::AsyncDropRowRange(
 }
 
 std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    google::bigtable::admin::v2::GenerateConsistencyTokenResponse>>
+InProcessAdminClient::AsyncGenerateConsistencyToken(
+    grpc::ClientContext* context,
+    const google::bigtable::admin::v2::GenerateConsistencyTokenRequest& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncGenerateConsistencyToken(context, request, cq);
+}
+
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    google::bigtable::admin::v2::CheckConsistencyResponse>>
+InProcessAdminClient::AsyncCheckConsistency(
+    grpc::ClientContext* context,
+    const google::bigtable::admin::v2::CheckConsistencyRequest& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncCheckConsistency(context, request, cq);
+}
+
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
     google::bigtable::admin::v2::Snapshot>>
 InProcessAdminClient::AsyncGetSnapshot(
     grpc::ClientContext* context,
