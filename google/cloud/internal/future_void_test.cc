@@ -14,16 +14,16 @@
 
 #include "google/cloud/internal/future_void.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/expect_future_error.h"
 #include <gmock/gmock.h>
 
-// C++ futures only make sense when exceptions are enabled.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 using ::testing::HasSubstr;
 using namespace testing_util::chrono_literals;
+using testing_util::ExpectFutureError;
 
 // Verify we are testing the types we think we should be testing.
 static_assert(std::is_same<future<void>, ::google::cloud::future<void>>::value,
@@ -46,7 +46,8 @@ TEST(FutureTestVoid, conform_30_6_5_4_default) {
   auto f0 = p0.get_future();
   p0.set_value();
   ASSERT_EQ(std::future_status::ready, f0.wait_for(0_ms));
-  EXPECT_NO_THROW(f0.get());
+  f0.get();
+  SUCCEED();
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
@@ -59,17 +60,9 @@ TEST(FutureTestVoid, conform_30_6_5_5) {
   auto f1 = p1.get_future();
   p1.set_value();
   ASSERT_EQ(std::future_status::ready, f1.wait_for(0_ms));
-  EXPECT_NO_THROW(f1.get());
+  f1.get();
 
-  // Verify 30.6.5.6
-  EXPECT_THROW(  // NOLINT
-      try {
-        p0.set_value();  // NOLINT
-      } catch (std::future_error const& ex) {
-        EXPECT_EQ(std::future_errc::no_state, ex.code());
-        throw;
-      },
-      std::future_error);
+  ExpectFutureError([&] { p0.set_value(); }, std::future_errc::no_state);
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
@@ -85,12 +78,18 @@ TEST(FutureTestVoid, conform_30_6_5_7) {
   }
   EXPECT_TRUE(f0.valid());
   ASSERT_EQ(std::future_status::ready, f0.wait_for(0_ms));
-  EXPECT_THROW(  // NOLINT
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
       try { f0.get(); } catch (std::future_error const& ex) {
         EXPECT_EQ(std::future_errc::broken_promise, ex.code());
         throw;
       },
       std::future_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      f0.get(),
+      "future<void>::get\\(\\) had an exception but exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
@@ -104,16 +103,8 @@ TEST(FutureTestVoid, conform_30_6_5_8) {
   auto f1 = p1.get_future();
   p1.set_value();
   ASSERT_EQ(std::future_status::ready, f1.wait_for(0_ms));
-  EXPECT_NO_THROW(f1.get());
-
-  EXPECT_THROW(  // NOLINT
-      try {
-        p0.set_value();  // NOLINT
-      } catch (std::future_error const& ex) {
-        EXPECT_EQ(std::future_errc::no_state, ex.code());
-        throw;
-      },
-      std::future_error);
+  f1.get();
+  ExpectFutureError([&] { p0.set_value(); }, std::future_errc::no_state);
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
@@ -128,8 +119,10 @@ TEST(FutureTestVoid, conform_30_6_5_10) {
   auto f1 = p1.get_future();
   ASSERT_NE(std::future_status::ready, f0.wait_for(0_ms));
   ASSERT_EQ(std::future_status::ready, f1.wait_for(0_ms));
-  EXPECT_NO_THROW(f1.get());
-  EXPECT_NO_THROW(p0.set_value());
+  f1.get();
+  SUCCEED();
+  p0.set_value();
+  SUCCEED();
   ASSERT_EQ(std::future_status::ready, f0.wait_for(0_ms));
 }
 
@@ -138,13 +131,8 @@ TEST(FutureTestVoid, conform_30_6_5_14_1) {
   // promise<R>::get_future() raises if future was already retrieved.
   promise<void> p0;
   auto f0 = p0.get_future();
-
-  EXPECT_THROW(  // NOLINT
-      try { p0.get_future(); } catch (std::future_error const& ex) {
-        EXPECT_EQ(std::future_errc::future_already_retrieved, ex.code());
-        throw;
-      },
-      std::future_error);
+  ExpectFutureError([&] { p0.get_future(); },
+                    std::future_errc::future_already_retrieved);
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
@@ -152,15 +140,7 @@ TEST(FutureTestVoid, conform_30_6_5_14_2) {
   // promise<R>::get_future() raises if there is no shared state.
   promise<void> p0;
   promise<void> p1(std::move(p0));
-
-  EXPECT_THROW(  // NOLINT
-      try {
-        p0.get_future();  // NOLINT
-      } catch (std::future_error const& ex) {
-        EXPECT_EQ(std::future_errc::no_state, ex.code());
-        throw;
-      },
-      std::future_error);
+  ExpectFutureError([&] { p0.set_value(); }, std::future_errc::no_state);
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
@@ -172,7 +152,8 @@ TEST(FutureTestVoid, conform_30_6_5_15) {
   ASSERT_NE(std::future_status::ready, f0.wait_for(0_ms));
   p0.set_value();
   ASSERT_EQ(std::future_status::ready, f0.wait_for(0_ms));
-  EXPECT_NO_THROW(f0.get());
+  f0.get();
+  SUCCEED();
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
@@ -180,12 +161,8 @@ TEST(FutureTestVoid, conform_30_6_5_16_1) {
   // promise<R>::set_value() raises if there is a value in the shared state.
   promise<void> p0;
   p0.set_value();
-  EXPECT_THROW(  // NOLINT
-      try { p0.set_value(); } catch (std::future_error const& ex) {
-        EXPECT_EQ(std::future_errc::promise_already_satisfied, ex.code());
-        throw;
-      },
-      std::future_error);
+  ExpectFutureError([&] { p0.set_value(); },
+                    std::future_errc::promise_already_satisfied);
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
@@ -193,14 +170,7 @@ TEST(FutureTestVoid, conform_30_6_5_17_2) {
   // promise<R>::set_value() raises if there is no shared state.
   promise<void> p0;
   promise<void> p1(std::move(p0));
-  EXPECT_THROW(  // NOLINT
-      try {
-        p0.set_value();  // NOLINT
-      } catch (std::future_error const& ex) {
-        EXPECT_EQ(std::future_errc::no_state, ex.code());
-        throw;
-      },
-      std::future_error);
+  ExpectFutureError([&] { p0.set_value(); }, std::future_errc::no_state);
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
@@ -212,12 +182,18 @@ TEST(FutureTestVoid, conform_30_6_5_18) {
   ASSERT_NE(std::future_status::ready, f0.wait_for(0_ms));
   p0.set_exception(std::make_exception_ptr(std::runtime_error("testing")));
   ASSERT_EQ(std::future_status::ready, f0.wait_for(0_ms));
-  EXPECT_THROW(  // NOLINT
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
       try { f0.get(); } catch (std::runtime_error const& ex) {
         EXPECT_EQ(std::string("testing"), ex.what());
         throw;
       },
       std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      f0.get(),
+      "future<void>::get\\(\\) had an exception but exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
@@ -226,15 +202,12 @@ TEST(FutureTestVoid, conform_30_6_5_20_1_value) {
   // a value.
   promise<void> p0;
   p0.set_value();
-  EXPECT_THROW(
-      try {
+  ExpectFutureError(
+      [&] {
         p0.set_exception(
             std::make_exception_ptr(std::runtime_error("testing")));
-      } catch (std::future_error const& ex) {
-        EXPECT_EQ(std::future_errc::promise_already_satisfied, ex.code());
-        throw;
       },
-      std::future_error);
+      std::future_errc::promise_already_satisfied);
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
@@ -243,15 +216,12 @@ TEST(FutureTestVoid, conform_30_6_5_20_1_exception) {
   // an exception.
   promise<void> p0;
   p0.set_exception(std::make_exception_ptr(std::runtime_error("original ex")));
-  EXPECT_THROW(
-      try {
+  ExpectFutureError(
+      [&] {
         p0.set_exception(
             std::make_exception_ptr(std::runtime_error("testing")));
-      } catch (std::future_error const& ex) {
-        EXPECT_EQ(std::future_errc::promise_already_satisfied, ex.code());
-        throw;
       },
-      std::future_error);
+      std::future_errc::promise_already_satisfied);
 }
 
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
@@ -260,15 +230,12 @@ TEST(FutureTestVoid, conform_30_6_5_20_2) {
   // state.
   promise<void> p0;
   promise<void> p1(std::move(p0));
-  EXPECT_THROW(  // NOLINT
-      try {
-        p0.set_exception(  // NOLINT
+  ExpectFutureError(
+      [&] {
+        p0.set_exception(
             std::make_exception_ptr(std::runtime_error("testing")));
-      } catch (std::future_error const& ex) {
-        EXPECT_EQ(std::future_errc::no_state, ex.code());
-        throw;
       },
-      std::future_error);
+      std::future_errc::no_state);
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
@@ -278,11 +245,7 @@ TEST(FutureTestVoid, conform_30_6_6_3_a) {
   // of `future_errc::no_state`
   future<void> f;
   EXPECT_FALSE(f.valid());
-  EXPECT_THROW(try { f.get(); } catch (std::future_error const& ex) {
-    EXPECT_EQ(std::future_errc::no_state, ex.code());
-    throw;
-  },
-               std::future_error);
+  ExpectFutureError([&] { f.get(); }, std::future_errc::no_state);
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
@@ -292,11 +255,7 @@ TEST(FutureTestVoid, conform_30_6_6_3_b) {
   // of `future_errc::no_state`
   future<void> f;
   EXPECT_FALSE(f.valid());
-  EXPECT_THROW(try { f.wait(); } catch (std::future_error const& ex) {
-    EXPECT_EQ(std::future_errc::no_state, ex.code());
-    throw;
-  },
-               std::future_error);
+  ExpectFutureError([&] { f.wait(); }, std::future_errc::no_state);
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
@@ -306,11 +265,7 @@ TEST(FutureTestVoid, conform_30_6_6_3_c) {
   // of `future_errc::no_state`
   future<void> f;
   EXPECT_FALSE(f.valid());
-  EXPECT_THROW(try { f.wait_for(3_ms); } catch (std::future_error const& ex) {
-    EXPECT_EQ(std::future_errc::no_state, ex.code());
-    throw;
-  },
-               std::future_error);
+  ExpectFutureError([&] { f.wait_for(3_ms); }, std::future_errc::no_state);
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
@@ -320,14 +275,9 @@ TEST(FutureTestVoid, conform_30_6_6_3_d) {
   // of `future_errc::no_state`
   future<void> f;
   EXPECT_FALSE(f.valid());
-  EXPECT_THROW(
-      try {
-        f.wait_until(std::chrono::system_clock::now() + 3_ms);
-      } catch (std::future_error const& ex) {
-        EXPECT_EQ(std::future_errc::no_state, ex.code());
-        throw;
-      },
-      std::future_error);
+  ExpectFutureError(
+      [&] { f.wait_until(std::chrono::system_clock::now() + 3_ms); },
+      std::future_errc::no_state);
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
@@ -430,7 +380,7 @@ TEST(FutureTestVoid, conform_30_6_6_15) {
   std::thread t([&] {
     future<void> f = p.get_future();
     p_get_future_called.set_value();
-    EXPECT_NO_THROW(f.get());
+    f.get();
     f_get_called.set_value();
   });
 
@@ -462,11 +412,18 @@ TEST(FutureTestVoid, conform_30_6_6_17) {
 
   future<void> f = p.get_future();
   p.set_exception(std::make_exception_ptr(std::runtime_error("test message")));
-  EXPECT_THROW(try { f.get(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("test message"));
-    throw;
-  },
-               std::runtime_error);
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try { f.get(); } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test message"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      f.get(),
+      "future<void>::get\\(\\) had an exception but exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
@@ -475,7 +432,7 @@ TEST(FutureTestVoid, conform_30_6_6_18_a) {
   promise<void> p;
   future<void> f = p.get_future();
   p.set_value();
-  EXPECT_NO_THROW(f.get());
+  f.get();
   EXPECT_FALSE(f.valid());
 }
 
@@ -485,8 +442,16 @@ TEST(FutureTestVoid, conform_30_6_6_18_b) {
   promise<void> p;
   future<void> f = p.get_future();
   p.set_exception(std::make_exception_ptr(std::runtime_error("unused")));
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(f.get(), std::runtime_error);
   EXPECT_FALSE(f.valid());
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      f.get(),
+      "future<void>::get\\(\\) had an exception but exceptions are disabled");
+  // Cannot evaluate side effects with EXPECT_DEATH*()
+  //     EXPECT_FALSE(f.valid());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
@@ -575,7 +540,8 @@ TEST(FutureTestVoid, conform_30_6_6_22_2) {
   p0.set_value();
   auto s = f0.wait_for(0_ms);
   EXPECT_EQ(std::future_status::ready, s);
-  EXPECT_NO_THROW(f0.get());
+  f0.get();
+  SUCCEED();
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
@@ -635,7 +601,8 @@ TEST(FutureTestVoid, conform_30_6_6_25_2) {
   auto s = f0.wait_until(std::chrono::system_clock::now());
   EXPECT_EQ(std::future_status::ready, s);
   ASSERT_EQ(std::future_status::ready, f0.wait_for(0_ms));
-  EXPECT_NO_THROW(f0.get());
+  f0.get();
+  SUCCEED();
 }
 
 /// @test Verify conformance with section 30.6.6 of the C++14 spec.
@@ -658,5 +625,3 @@ TEST(FutureTestVoid, conform_30_6_6_25_3) {
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

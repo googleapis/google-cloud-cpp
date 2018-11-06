@@ -20,10 +20,6 @@
  * Define the implementation details for `google::cloud::future<T>`.
  */
 
-#include "google/cloud/internal/port_platform.h"
-
-// C++ futures only make sense when exceptions are enabled.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 #include "google/cloud/internal/future_impl.h"
 
 namespace google {
@@ -138,7 +134,7 @@ class future_base {
   /// Raises an exception if the shared state is not valid.
   void check_valid() const {
     if (not shared_state_) {
-      throw std::future_error(std::future_errc::no_state);
+      RaiseFutureError(std::future_errc::no_state, __func__);
     }
   }
 
@@ -174,7 +170,7 @@ class promise_base {
    */
   void set_exception(std::exception_ptr ex) {
     if (not shared_state_) {
-      throw std::future_error(std::future_errc::no_state);
+      RaiseFutureError(std::future_errc::no_state, __func__);
     }
     shared_state_->set_exception(std::move(ex));
   }
@@ -190,5 +186,4 @@ class promise_base {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FUTURE_BASE_H_

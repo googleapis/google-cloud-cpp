@@ -20,10 +20,6 @@
  * Fully specialize `future<void>` and `promise<R>` for void.
  */
 
-#include "google/cloud/internal/port_platform.h"
-
-// C++ futures only make sense when exceptions are enabled.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 #include "google/cloud/internal/future_base.h"
 #include "google/cloud/internal/future_fwd.h"
 #include "google/cloud/internal/future_impl.h"
@@ -178,7 +174,7 @@ class promise<void> final : private internal::promise_base<void> {
    */
   void set_value() {
     if (not shared_state_) {
-      throw std::future_error(std::future_errc::no_state);
+      internal::RaiseFutureError(std::future_errc::no_state, __func__);
     }
     shared_state_->set_value();
   }
@@ -190,5 +186,4 @@ class promise<void> final : private internal::promise_base<void> {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FUTURE_VOID_H_

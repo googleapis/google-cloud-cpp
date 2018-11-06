@@ -20,12 +20,9 @@
  * Define the implementation details for `google::cloud::future<T>`.
  */
 
-#include "google/cloud/internal/port_platform.h"
-
-// C++ futures only make sense when exceptions are enabled.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 #include "google/cloud/internal/future_then_meta.h"
 #include "google/cloud/internal/make_unique.h"
+#include "google/cloud/terminate_handler.h"
 #include <condition_variable>
 #include <exception>
 #include <future>
@@ -35,6 +32,8 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
+[[noreturn]] void RaiseFutureError(std::future_errc ec, char const* msg);
+
 /**
  * Define an interface to type-erased continuations.
  *
@@ -181,7 +180,7 @@ class future_shared_state_base {
   void set_continuation(std::unique_ptr<continuation_base> c) {
     std::unique_lock<std::mutex> lk(mu_);
     if (continuation_) {
-      throw std::future_error(std::future_errc::future_already_retrieved);
+      RaiseFutureError(std::future_errc::future_already_retrieved, __func__);
     }
     // If the future is already satisfied, invoke the continuation immediately.
     if (is_ready_unlocked()) {
@@ -200,7 +199,7 @@ class future_shared_state_base {
   /// Satisfy the shared state using an exception.
   void set_exception(std::exception_ptr ex, std::unique_lock<std::mutex>& lk) {
     if (is_ready_unlocked()) {
-      throw std::future_error(std::future_errc::promise_already_satisfied);
+      RaiseFutureError(std::future_errc::promise_already_satisfied, __func__);
     }
     exception_ = std::move(ex);
     current_state_ = state::has_exception;
@@ -241,10 +240,10 @@ class future_shared_state_base {
    */
   static void mark_retrieved(future_shared_state_base* sh) {
     if (not sh) {
-      throw std::future_error(std::future_errc::no_state);
+      RaiseFutureError(std::future_errc::no_state, __func__);
     }
     if (sh->retrieved_.test_and_set()) {
-      throw std::future_error(std::future_errc::future_already_retrieved);
+      RaiseFutureError(std::future_errc::future_already_retrieved, __func__);
     }
   }
 
@@ -330,7 +329,12 @@ class future_shared_state final : private future_shared_state_base {
     std::unique_lock<std::mutex> lk(mu_);
     cv_.wait(lk, [this] { return is_ready_unlocked(); });
     if (current_state_ == state::has_exception) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
       std::rethrow_exception(exception_);
+#else
+      google::cloud::Terminate(
+          "future<T>::get() had an exception but exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     }
     // Note that the value is moved out. It is impossible to retrieve the value
     // a second time. The `.get()` operation on a `future<T>` invalidates the
@@ -351,7 +355,7 @@ class future_shared_state final : private future_shared_state_base {
   void set_value(T&& value) {
     std::unique_lock<std::mutex> lk(mu_);
     if (is_ready_unlocked()) {
-      throw std::future_error(std::future_errc::promise_already_satisfied);
+      RaiseFutureError(std::future_errc::promise_already_satisfied, __func__);
     }
     // We can only reach this point once, all other states are terminal.
     // Therefore we know that `buffer_` has not been initialized and calling
@@ -450,7 +454,12 @@ class future_shared_state<void> final : private future_shared_state_base {
     std::unique_lock<std::mutex> lk(mu_);
     cv_.wait(lk, [this] { return is_ready_unlocked(); });
     if (current_state_ == state::has_exception) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
       std::rethrow_exception(exception_);
+#else
+      google::cloud::Terminate(
+          "future<void>::get() had an exception but exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     }
   }
 
@@ -526,7 +535,7 @@ class future_shared_state<void> final : private future_shared_state_base {
  private:
   void set_value(std::unique_lock<std::mutex> const& lk) {
     if (is_ready_unlocked()) {
-      throw std::future_error(std::future_errc::promise_already_satisfied);
+      RaiseFutureError(std::future_errc::promise_already_satisfied, __func__);
     }
     current_state_ = state::has_value;
   }
@@ -546,15 +555,21 @@ class future_shared_state<void> final : private future_shared_state_base {
 template <typename Functor, typename R, typename T>
 void continuation_execute_delegate(
     Functor& functor, std::shared_ptr<future_shared_state<T>> input,
-    future_shared_state<R>& output, std::false_type) try {
+    future_shared_state<R>& output, std::false_type) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  try {
+    output.set_value(functor(std::move(input)));
+  } catch (std::future_error const&) {
+    // failing to set the output with a future_error is non-recoverable, raise
+    // immediately.
+    throw;
+  } catch (...) {
+    // Other errors can be reported via the promise.
+    output.set_exception(std::current_exception());
+  }
+#else
   output.set_value(functor(std::move(input)));
-} catch (std::future_error const&) {
-  // failing to set the output with a future_error is non-recoverable, raise
-  // immediately.
-  throw;
-} catch (...) {
-  // Other errors can be reported via the promise.
-  output.set_exception(std::current_exception());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /**
@@ -576,16 +591,23 @@ void continuation_execute_delegate(
 template <typename Functor, typename T>
 void continuation_execute_delegate(
     Functor& functor, std::shared_ptr<future_shared_state<T>> input,
-    future_shared_state<void>& output, std::false_type) try {
+    future_shared_state<void>& output, std::false_type) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  try {
+    functor(std::move(input));
+    output.set_value();
+  } catch (std::future_error const&) {
+    // failing to set the output with a future_error is non-recoverable, raise
+    // immediately.
+    throw;
+  } catch (...) {
+    // Other errors can be reported via the promise.
+    output.set_exception(std::current_exception());
+  }
+#else
   functor(std::move(input));
   output.set_value();
-} catch (std::future_error const&) {
-  // failing to set the output with a future_error is non-recoverable, raise
-  // immediately.
-  throw;
-} catch (...) {
-  // Other errors can be reported via the promise.
-  output.set_exception(std::current_exception());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /**
@@ -679,12 +701,16 @@ struct unwrapping_continuation : public continuation_base {
     }
     // The transfer of the state depends on the types involved, delegate to
     // some helper functions.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
       intermediate = functor(std::move(tmp));
     } catch (...) {
       output->set_exception(std::current_exception());
       return;
     }
+#else
+    intermediate = functor(std::move(tmp));
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
     if (not intermediate) {
       output->set_exception(std::make_exception_ptr(
@@ -804,5 +830,4 @@ future_shared_state<void>::make_continuation(
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FUTURE_IMPL_H_

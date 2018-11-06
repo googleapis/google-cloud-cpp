@@ -40,4 +40,5 @@ google_cloud_cpp_common_SRCS = [
     "internal/throw_delegate.cc",
     "log.cc",
     "terminate_handler.cc",
+    "internal/future_impl.cc",
 ]
