@@ -133,6 +133,10 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:aacf19e480e27c830d2983b390d636e67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abcd1591d57becb5880ac95ecfc360ad4"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::protobuf::Empty &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#abcd1591d57becb5880ac95ecfc360ad4">AsyncDropRowRange</a> (grpc::ClientContext *context, google::bigtable::admin::v2::DropRowRangeRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
 <tr class="separator:abcd1591d57becb5880ac95ecfc360ad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a368e3bd1cdda3c371bdb4fc2f9248a62"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::GenerateConsistencyTokenResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a368e3bd1cdda3c371bdb4fc2f9248a62">AsyncGenerateConsistencyToken</a> (grpc::ClientContext *context, const google::bigtable::admin::v2::GenerateConsistencyTokenRequest &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
+<tr class="separator:a368e3bd1cdda3c371bdb4fc2f9248a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7773c90eeba68b35f17b9be0b8b31726"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::CheckConsistencyResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a7773c90eeba68b35f17b9be0b8b31726">AsyncCheckConsistency</a> (grpc::ClientContext *context, const google::bigtable::admin::v2::CheckConsistencyRequest &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
+<tr class="separator:a7773c90eeba68b35f17b9be0b8b31726"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8db283ef4776ea5f809d6db9eda0ac9a"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::Snapshot &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a8db283ef4776ea5f809d6db9eda0ac9a">AsyncGetSnapshot</a> (grpc::ClientContext *context, google::bigtable::admin::v2::GetSnapshotRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
 <tr class="separator:a8db283ef4776ea5f809d6db9eda0ac9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6260afd04046713a6ef99c3601a2bcf4"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::protobuf::Empty &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a6260afd04046713a6ef99c3601a2bcf4">AsyncDeleteSnapshot</a> (grpc::ClientContext *context, google::bigtable::admin::v2::DeleteSnapshotRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
@@ -179,6 +183,48 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7773c90eeba68b35f17b9be0b8b31726"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7773c90eeba68b35f17b9be0b8b31726">&#9670;&nbsp;</a></span>AsyncCheckConsistency()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::CheckConsistencyResponse&gt; &gt; google::cloud::bigtable::v0::AdminClient::AsyncCheckConsistency </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const google::bigtable::admin::v2::CheckConsistencyRequest &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">grpc::CompletionQueue *&#160;</td>
+          <td class="paramname"><em>cq</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="aabe70dc2b9855c2faf82a4235e4d910f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aabe70dc2b9855c2faf82a4235e4d910f">&#9670;&nbsp;</a></span>AsyncCreateTable()</h2>
 
@@ -282,6 +328,48 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">google::bigtable::admin::v2::DropRowRangeRequest const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">grpc::CompletionQueue *&#160;</td>
+          <td class="paramname"><em>cq</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a368e3bd1cdda3c371bdb4fc2f9248a62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a368e3bd1cdda3c371bdb4fc2f9248a62">&#9670;&nbsp;</a></span>AsyncGenerateConsistencyToken()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::GenerateConsistencyTokenResponse&gt; &gt; google::cloud::bigtable::v0::AdminClient::AsyncGenerateConsistencyToken </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const google::bigtable::admin::v2::GenerateConsistencyTokenRequest &amp;&#160;</td>
           <td class="paramname"><em>request</em>, </td>
         </tr>
         <tr>
