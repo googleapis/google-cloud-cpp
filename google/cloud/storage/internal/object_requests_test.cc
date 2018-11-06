@@ -303,7 +303,6 @@ TEST(ObjectRequestsTest, Rewrite) {
                                DestinationPredefinedAcl("private"),
                                UserProject("my-project"));
 
-
   std::ostringstream os;
   os << request;
   std::string actual = os.str();
@@ -361,6 +360,45 @@ TEST(ObjectRequestsTest, RewriteObjectResponse) {
   EXPECT_THAT(actual_str, HasSubstr("done=false"));
   EXPECT_THAT(actual_str, HasSubstr("rewrite_token=abcd-test-token"));
   EXPECT_THAT(actual_str, HasSubstr("test-object-name"));
+}
+
+TEST(ObjectRequestsTest, ResumableUpload) {
+  ResumableUploadRequest request(
+      "source-bucket", "source-object",
+      ObjectMetadata().set_content_type("text/plain"));
+  EXPECT_EQ("source-bucket", request.bucket_name());
+  EXPECT_EQ("source-object", request.object_name());
+  request.set_multiple_options(IfMetagenerationNotMatch(7),
+                               PredefinedAcl("private"),
+                               UserProject("my-project"));
+
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("source-bucket"));
+  EXPECT_THAT(actual, HasSubstr("source-object"));
+  EXPECT_THAT(actual, HasSubstr("text/plain"));
+  EXPECT_THAT(actual, HasSubstr("predefinedAcl=private"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=7"));
+  EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
+}
+
+TEST(ObjectRequestsTest, UploadChunk) {
+  std::string const url = "https://www.googleapis.com/upload/storage/v1/b/"
+                          "myBucket/o?uploadType=resumable"
+                          "&upload_id=xa298sd_sdlkj2";
+  UploadChunkRequest request(
+      url, 0, "abc123", true);
+  EXPECT_EQ(url, request.upload_session_url());
+  EXPECT_EQ(0U, request.range_begin());
+  EXPECT_EQ(5U, request.range_end());
+  EXPECT_TRUE(request.final_chunk());
+
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr(url));
+  EXPECT_THAT(actual, HasSubstr("0-5/5"));
 }
 
 ObjectMetadata CreateObjectMetadataForTest() {
@@ -604,8 +642,7 @@ TEST(PatchObjectRequestTest, DiffSetEventBasedHold) {
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
   nl::json patch = nl::json::parse(request.payload());
-  nl::json expected =
-      nl::json::parse(R"""({"eventBasedHold": true})""");
+  nl::json expected = nl::json::parse(R"""({"eventBasedHold": true})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -650,8 +687,7 @@ TEST(PatchObjectRequestTest, DiffSetTemporaryHold) {
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
   nl::json patch = nl::json::parse(request.payload());
-  nl::json expected =
-      nl::json::parse(R"""({"temporaryHold": true})""");
+  nl::json expected = nl::json::parse(R"""({"temporaryHold": true})""");
   EXPECT_EQ(expected, patch);
 }
 

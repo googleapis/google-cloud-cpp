@@ -547,6 +547,28 @@ TEST(StrictIdempotencyPolicyTest, DeleteNotification) {
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
+TEST(StrictIdempotencyPolicyTest, ResumableUpload) {
+  StrictIdempotencyPolicy policy;
+  internal::ResumableUploadRequest request(
+      "test-bucket-name", "test-object-name", ObjectMetadata());
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, ResumableUploadIfGenerationMatch) {
+  StrictIdempotencyPolicy policy;
+  internal::ResumableUploadRequest request(
+      "test-bucket-name", "test-object-name", ObjectMetadata());
+  request.set_option(IfGenerationMatch(0));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, UploadChunk) {
+  StrictIdempotencyPolicy policy;
+  internal::UploadChunkRequest request(
+      "https://test-url.example.com", 0, "test-payload", false);
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

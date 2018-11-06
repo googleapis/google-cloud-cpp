@@ -366,6 +366,68 @@ struct RewriteObjectResponse {
 
 std::ostream& operator<<(std::ostream& os, RewriteObjectResponse const& r);
 
+/**
+ * Represents a request to start a resumable upload in `Objects: insert`.
+ *
+ * This request type is used to start resumable uploads. A resumable upload is
+ * started with a `Objects: insert` request with the `uploadType=resumable`
+ * query parameter. The payload for the initial request includes the (optional)
+ * object metadata. The response includes a URL to send requests that upload
+ * the media.
+ */
+class ResumableUploadRequest
+    : public GenericObjectRequest<
+          ResumableUploadRequest, ContentEncoding, ContentType,
+          Crc32cChecksumValue, DisableCrc32cChecksum, DisableMD5Hash,
+          EncryptionKey, IfGenerationMatch, IfGenerationNotMatch,
+          IfMetagenerationMatch, IfMetagenerationNotMatch, KmsKeyName,
+          MD5HashValue, PredefinedAcl, Projection, UserProject> {
+ public:
+  ResumableUploadRequest() = default;
+
+  ResumableUploadRequest(std::string bucket_name, std::string object_name,
+                         ObjectMetadata const& metadata)
+      : GenericObjectRequest(std::move(bucket_name), std::move(object_name)),
+        json_payload_(metadata.JsonPayloadForUpdate()) {}
+
+  std::string const& json_payload() const { return json_payload_; }
+
+ private:
+  std::string json_payload_;
+};
+
+std::ostream& operator<<(std::ostream& os, ResumableUploadRequest const& r);
+
+/**
+ * A request to send one chunk in an upload session.
+ */
+class UploadChunkRequest
+    : public GenericRequestBase<UploadChunkRequest, CustomHeader> {
+ public:
+  UploadChunkRequest() = default;
+  UploadChunkRequest(std::string upload_session_url, std::uint64_t range_begin,
+                     std::string payload, bool final_chunk = false)
+      : GenericRequestBase(),
+        upload_session_url_(std::move(upload_session_url)),
+        range_begin_(range_begin),
+        payload_(std::move(payload)),
+        final_chunk_(final_chunk) {}
+
+  std::string const& upload_session_url() const { return upload_session_url_; }
+  std::uint64_t range_begin() const { return range_begin_; }
+  std::uint64_t range_end() const { return range_begin_ + payload_.size() - 1; }
+  std::string const& payload() const { return payload_; }
+  bool final_chunk() const { return final_chunk_; }
+
+ private:
+  std::string upload_session_url_;
+  std::uint64_t range_begin_;
+  std::string payload_;
+  bool final_chunk_;
+};
+
+std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

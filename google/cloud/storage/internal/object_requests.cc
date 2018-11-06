@@ -326,6 +326,27 @@ std::ostream& operator<<(std::ostream& os, RewriteObjectResponse const& r) {
             << ", resource=" << r.resource << "}";
 }
 
+std::ostream& operator<<(std::ostream& os, ResumableUploadRequest const& r) {
+  os << "ResumableUploadRequest={bucket_name=" << r.bucket_name()
+     << ", object_name=" << r.object_name();
+  r.DumpOptions(os, ", ");
+  return os << ", payload=" << r.json_payload() << "}";
+}
+
+std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r) {
+  os << "ResumableUploadRequest={upload_session_url=" << r.upload_session_url()
+     << ", range=" << r.range_begin() << "-" << r.range_end() << "/";
+  if (r.final_chunk()) {
+    os << r.range_end();
+  } else {
+    os << "*";
+  }
+  r.DumpOptions(os, ", ");
+  return os << ", payload="
+            << BinaryDataAsDebugString(r.payload().data(), r.payload().size())
+            << "}";
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
