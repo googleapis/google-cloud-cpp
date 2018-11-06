@@ -510,7 +510,7 @@ void continuation_execute_delegate(
     future_shared_state<R>& output, std::false_type) try {
   T value = functor(std::move(input));
   output.set_value(std::move(value));
-} catch (std::future_error const& f) {
+} catch (std::future_error const&) {
   // failing to set the output with a future_error is non-recoverable, raise
   // immediately.
   throw;
@@ -541,7 +541,7 @@ void continuation_execute_delegate(
     future_shared_state<void>& output, std::false_type) try {
   functor(std::move(input));
   output.set_value();
-} catch (std::future_error const& f) {
+} catch (std::future_error const&) {
   // failing to set the output with a future_error is non-recoverable, raise
   // immediately.
   throw;
