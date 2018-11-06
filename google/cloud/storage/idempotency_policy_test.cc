@@ -291,6 +291,231 @@ TEST(StrictIdempotencyPolicyTest, RewriteObjectIfGenerationMatch) {
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
+TEST(StrictIdempotencyPolicyTest, ListBucketAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::ListBucketAclRequest request("test-bucket-name");
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, CreateBucketAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::CreateBucketAclRequest request("test-bucket-name",
+                                           "test-entity-name", "READER");
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, CreateBucketAclIfMatchEtag) {
+  StrictIdempotencyPolicy policy;
+  internal::CreateBucketAclRequest request("test-bucket-name",
+                                           "test-entity-name", "READER");
+  request.set_option(IfMatchEtag("ABC123="));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, DeleteBucketAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::DeleteBucketAclRequest request("test-bucket-name",
+                                           "test-entity-name");
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, DeleteBucketAclIfMatchEtag) {
+  StrictIdempotencyPolicy policy;
+  internal::DeleteBucketAclRequest request("test-bucket-name",
+                                           "test-entity-name");
+  request.set_option(IfMatchEtag("ABC123="));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, GetBucketAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::GetBucketAclRequest request("test-bucket-name", "test-entity-name");
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, UpdateBucketAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::UpdateBucketAclRequest request("test-bucket-name",
+                                           "test-entity-name", "READER");
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, UpdateBucketAclIfMatchEtag) {
+  StrictIdempotencyPolicy policy;
+  internal::UpdateBucketAclRequest request("test-bucket-name",
+                                           "test-entity-name", "READER");
+  request.set_option(IfMatchEtag("ABC123="));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, PatchBucketAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::PatchBucketAclRequest request("test-bucket-name",
+                                          "test-entity-name",
+                                          BucketAccessControlPatchBuilder());
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, PatchBucketAclIfMatchEtag) {
+  StrictIdempotencyPolicy policy;
+  internal::PatchBucketAclRequest request("test-bucket-name",
+                                          "test-entity-name",
+                                          BucketAccessControlPatchBuilder());
+  request.set_option(IfMatchEtag("ABC123="));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, ListObjectAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::ListObjectAclRequest request("test-bucket-name",
+                                         "test-object-name");
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, CreateObjectAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::CreateObjectAclRequest request(
+      "test-bucket-name", "test-object-name", "test-entity-name", "READER");
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, CreateObjectAclIfMatchEtag) {
+  StrictIdempotencyPolicy policy;
+  internal::CreateObjectAclRequest request(
+      "test-bucket-name", "test-object-name", "test-entity-name", "READER");
+  request.set_option(IfMatchEtag("ABC123="));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, DeleteObjectAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::DeleteObjectAclRequest request(
+      "test-bucket-name", "test-object-name", "test-entity-name");
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, DeleteObjectAclIfMatchEtag) {
+  StrictIdempotencyPolicy policy;
+  internal::DeleteObjectAclRequest request(
+      "test-bucket-name", "test-object-name", "test-entity-name");
+  request.set_option(IfMatchEtag("ABC123="));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, GetObjectAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::GetObjectAclRequest request("test-bucket-name", "test-object-name",
+                                        "test-entity-name");
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, UpdateObjectAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::UpdateObjectAclRequest request(
+      "test-bucket-name", "test-object-name", "test-entity-name", "READER");
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, UpdateObjectAclIfMatchEtag) {
+  StrictIdempotencyPolicy policy;
+  internal::UpdateObjectAclRequest request(
+      "test-bucket-name", "test-object-name", "test-entity-name", "READER");
+  request.set_option(IfMatchEtag("ABC123="));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, PatchObjectAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::PatchObjectAclRequest request(
+      "test-bucket-name", "test-object-name", "test-entity-name",
+      ObjectAccessControlPatchBuilder());
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, PatchObjectAclIfMatchEtag) {
+  StrictIdempotencyPolicy policy;
+  internal::PatchObjectAclRequest request(
+      "test-bucket-name", "test-object-name", "test-entity-name",
+      ObjectAccessControlPatchBuilder());
+  request.set_option(IfMatchEtag("ABC123="));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, ListDefaultObjectAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::ListDefaultObjectAclRequest request("test-bucket-name");
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, CreateDefaultObjectAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::CreateDefaultObjectAclRequest request("test-bucket-name",
+                                                  "test-entity-name", "READER");
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, CreateDefaultObjectAclIfMatchEtag) {
+  StrictIdempotencyPolicy policy;
+  internal::CreateDefaultObjectAclRequest request("test-bucket-name",
+                                                  "test-entity-name", "READER");
+  request.set_option(IfMatchEtag("ABC123="));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, DeleteDefaultObjectAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::DeleteDefaultObjectAclRequest request("test-bucket-name",
+                                                  "test-entity-name");
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, DeleteDefaultObjectAclIfMatchEtag) {
+  StrictIdempotencyPolicy policy;
+  internal::DeleteDefaultObjectAclRequest request("test-bucket-name",
+                                                  "test-entity-name");
+  request.set_option(IfMatchEtag("ABC123="));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, GetDefaultObjectAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::GetDefaultObjectAclRequest request("test-bucket-name",
+                                               "test-entity-name");
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, UpdateDefaultObjectAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::UpdateDefaultObjectAclRequest request("test-bucket-name",
+                                                  "test-entity-name", "READER");
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, UpdateDefaultObjectAclIfMatchEtag) {
+  StrictIdempotencyPolicy policy;
+  internal::UpdateDefaultObjectAclRequest request("test-bucket-name",
+                                                  "test-entity-name", "READER");
+  request.set_option(IfMatchEtag("ABC123="));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, PatchDefaultObjectAcl) {
+  StrictIdempotencyPolicy policy;
+  internal::PatchDefaultObjectAclRequest request(
+      "test-bucket-name", "test-entity-name",
+      ObjectAccessControlPatchBuilder());
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, PatchDefaultObjectAclIfMatchEtag) {
+  StrictIdempotencyPolicy policy;
+  internal::PatchDefaultObjectAclRequest request(
+      "test-bucket-name", "test-entity-name",
+      ObjectAccessControlPatchBuilder());
+  request.set_option(IfMatchEtag("ABC123="));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
