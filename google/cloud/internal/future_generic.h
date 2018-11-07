@@ -38,6 +38,9 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 template <typename T>
 class future final : private internal::future_base<T> {
  public:
+  using shared_state_type =
+      typename internal::future_base<T>::shared_state_type;
+
   future() noexcept = default;
 
   // TODO(#1345) - implement the unwrapping constructor.
@@ -68,13 +71,38 @@ class future final : private internal::future_base<T> {
   using internal::future_base<T>::wait_for;
   using internal::future_base<T>::wait_until;
 
- private:
-  /// Shorthand to refer to the shared state type.
-  using shared_state_type = internal::future_shared_state<T>;
+  /**
+   * Attach a continuation to the future.
+   *
+   * Attach a callable @a func to be invoked when the future is
+   * ready.  The return type is a future wrapping the return type of
+   * @a func.
+   *
+   * @return future<T> where T is std::result_of_t<F, R> (basically).
+   * If T matches future<U> then it returns future<U>.  The returned
+   * future will contain the result of @a func.
+   * @param func a Callable to be invoked when the future is ready.
+   * The function might be called immediately, e.g., if the future is
+   * ready.
+   *
+   * Side effects: valid() == false if the operation is successful.
+   */
+  template <typename F>
+  typename internal::then_helper<F, T>::future_t then(F&& func) {
+    this->check_valid();
+    using requires_unwrap_t =
+        typename internal::then_helper<F, T>::requires_unwrap_t;
+    return then_impl(std::forward<F>(func), requires_unwrap_t{});
+  }
 
-  friend class promise<T>;
   explicit future(std::shared_ptr<shared_state_type> state)
       : internal::future_base<T>(std::move(state)) {}
+
+ private:
+  /// Implement `then()` if the result does not require unwrapping.
+  template <typename F>
+  typename internal::then_helper<F, T>::future_t then_impl(F&& functor,
+                                                           std::false_type);
 };
 
 /**

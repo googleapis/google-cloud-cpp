@@ -38,6 +38,9 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 template <>
 class future<void> final : private internal::future_base<void> {
  public:
+  using shared_state_type =
+      typename internal::future_base<void>::shared_state_type;
+
   future() noexcept = default;
 
   // TODO(#1345) - implement the unwrapping constructor.
@@ -89,21 +92,14 @@ class future<void> final : private internal::future_base<void> {
     return then_impl(std::forward<F>(func), requires_unwrap_t{});
   }
 
- private:
-  friend class promise<void>;
   explicit future(std::shared_ptr<shared_state_type> state)
       : future_base<void>(std::move(state)) {}
 
+ private:
   /// Implement `then()` if the result does not require unwrapping.
   template <typename F>
   typename internal::then_helper<F, void>::future_t then_impl(F&& functor,
                                                               std::false_type);
-
-  /// Implement `then()` if the result requires unwrapping.
-  // TODO(#1345) - implement this in a future PR.
-  template <typename F>
-  typename std::shared_ptr<typename internal::then_helper<F, void>::state_t>
-  then_impl(F&& func, std::true_type);
 };
 
 /**
