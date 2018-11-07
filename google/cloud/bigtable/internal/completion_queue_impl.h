@@ -85,6 +85,8 @@ class AsyncTimerFunctor : public AsyncOperation {
     alarm_.reset();
     timer_.cancelled = not ok;
     lk.unlock();
+    // At this point timer_ is not going to be used by any other thread, so we
+    // might use it without a lock.
     functor_(cq, timer_);
     return true;
   }
@@ -147,23 +149,23 @@ class AsyncUnaryRpcFunctor : public AsyncOperation {
   void Set(Client& client, MemberFunction Client::*call,
            std::unique_ptr<grpc::ClientContext> context, Request const& request,
            grpc::CompletionQueue* cq, void* tag) {
-    std::unique_lock<std::mutex> lk(mu_);
     context_ = std::move(context);
-    lk.unlock();
+    // Make sure context_ is visible in other threads.
+    std::atomic_thread_fence(std::memory_order_release);
     auto rpc = (client.*call)(context_.get(), request, cq);
     rpc->Finish(&response_, &status_, tag);
   }
 
   void Cancel() override {
-    std::unique_lock<std::mutex> lk(mu_);
+    // Make sure context_ is visible in this thread.
+    std::atomic_thread_fence(std::memory_order_acquire);
     context_->TryCancel();
   }
 
  private:
   bool Notify(CompletionQueue& cq, bool ok) override {
-    {
-      std::unique_lock<std::mutex> lk(mu_);  // just act as a barrier
-    }
+    // Make sure members are visible.
+    std::atomic_thread_fence(std::memory_order_acquire);
     if (not ok) {
       // This would mean a bug in grpc. Documentation states that Finish()
       // always returns true.
@@ -174,14 +176,6 @@ class AsyncUnaryRpcFunctor : public AsyncOperation {
     return true;
   }
 
-  // It might not be clear why the mutex is needed.
-  // The mutex also acts as a barrier here to make sure that whatever is written
-  // to this object's fields is visible in the thread which gets subsequently
-  // `Notify()`ed or in threads which are calling `Cancel()`.
-  // For example, without the mutex, `context_` could be written to after
-  // calling `rpc->Finish()` because of either compiler or CPU reordering the
-  // writes, which would result in dereferencing nullptr in `Cancel()`.
-  std::mutex mu_;
   std::unique_ptr<grpc::ClientContext> context_;
   Functor functor_;
   grpc::Status status_;
