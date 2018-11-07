@@ -441,7 +441,7 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::CreateNotificationRequest const& request) const {
-  return request.HasOption<IfMatchEtag>();
+  return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
@@ -451,7 +451,7 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::DeleteNotificationRequest const& request) const {
-  return request.HasOption<IfMatchEtag>();
+  return true;
 }
 
 }  // namespace STORAGE_CLIENT_NS

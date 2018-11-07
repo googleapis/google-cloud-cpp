@@ -532,13 +532,6 @@ TEST(StrictIdempotencyPolicyTest, ListNotification) {
 TEST(StrictIdempotencyPolicyTest, CreateNotification) {
   StrictIdempotencyPolicy policy;
   internal::CreateNotificationRequest request("test-bucket-name", NotificationMetadata());
-  EXPECT_FALSE(policy.IsIdempotent(request));
-}
-
-TEST(StrictIdempotencyPolicyTest, CreateNotificationIfMatchEtag) {
-  StrictIdempotencyPolicy policy;
-  internal::CreateNotificationRequest request("test-bucket-name", NotificationMetadata());
-  request.set_option(IfMatchEtag("ABC123="));
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
@@ -551,13 +544,6 @@ TEST(StrictIdempotencyPolicyTest, GetNotification) {
 TEST(StrictIdempotencyPolicyTest, DeleteNotification) {
   StrictIdempotencyPolicy policy;
   internal::DeleteNotificationRequest request("test-bucket-name", "test-notification-id");
-  EXPECT_FALSE(policy.IsIdempotent(request));
-}
-
-TEST(StrictIdempotencyPolicyTest, DeleteNotificationIfMatchEtag) {
-  StrictIdempotencyPolicy policy;
-  internal::DeleteNotificationRequest request("test-bucket-name", "test-notification-id");
-  request.set_option(IfMatchEtag("ABC123="));
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
