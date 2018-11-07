@@ -73,6 +73,32 @@ TEST(FutureTestVoid, ThenException) {
   EXPECT_FALSE(next.valid());
 }
 
+TEST(FutureTestVoid, ThenUnwrap) {
+  promise<void> p;
+  future<void> fut = p.get_future();
+  EXPECT_TRUE(fut.valid());
+
+  promise<std::string> pp;
+  bool called = false;
+  auto cont = [&pp, &called](future<void> r) {
+    called = true;
+    return pp.get_future();
+  };
+  future<std::string> next = fut.then(std::move(cont));
+  EXPECT_FALSE(fut.valid());
+  EXPECT_TRUE(next.valid());
+  EXPECT_FALSE(next.is_ready());
+
+  p.set_value();
+  EXPECT_TRUE(called);
+  EXPECT_FALSE(next.is_ready());
+
+  pp.set_value("value=42");
+  EXPECT_TRUE(next.is_ready());
+  EXPECT_EQ("value=42", next.get());
+  EXPECT_FALSE(next.valid());
+}
+
 // The following tests reference the technical specification:
 //   http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0159r0.html
 // The test names match the section and paragraph from the TS.
@@ -220,17 +246,124 @@ TEST(FutureTestVoid, conform_2_3_9_b) {
   promise<void> p;
   future<void> f = p.get_future();
 
-  // TODO(#1345) - implement the unwrapping functions.
-  // The current implementation only declares that `.then()` should unwrap the
-  // types, but does not actually work if called. These tests simply validate
-  // that the declared types are correct.
   auto returns_void = [](future<void>) -> future<void> {
     return promise<void>().get_future();
   };
   EXPECT_TRUE(
       (std::is_same<future<void>, decltype(f.then(returns_void))>::value));
 
-  // TODO(#1345) - add tests for other types when future<T> is implemented.
+  auto returns_int = [](future<void>) -> future<int> {
+    return promise<int>().get_future();
+  };
+  EXPECT_TRUE(
+      (std::is_same<future<int>, decltype(f.then(returns_int))>::value));
+
+  // The spec says the returned type must be future<R2> *exactly*, references do
+  // not count.
+  promise<int> p_int;
+  future<int> f_int = p_int.get_future();
+  auto returns_int_ref = [&f_int](future<void>) -> future<int>& {
+    return f_int;
+  };
+  EXPECT_FALSE(
+      (std::is_same<future<int>, decltype(f.then(returns_int_ref))>::value));
+}
+
+/// @test Verify conformance with section 2.3 of the Concurrency TS.
+TEST(FutureTestVoid, conform_2_3_9_c) {
+  // future<void>::then() implicitly unwrapping captures the returned value.
+  promise<void> p;
+  future<void> f = p.get_future();
+
+  promise<int> p2;
+  bool called = false;
+  future<int> r = f.then([&p2, &called](future<void> f) {
+    called = true;
+    f.get();
+    return p2.get_future();
+  });
+  EXPECT_TRUE(r.valid());
+  EXPECT_FALSE(r.is_ready());
+  EXPECT_FALSE(f.valid());
+
+  p.set_value();
+  EXPECT_TRUE(called);
+  EXPECT_FALSE(r.is_ready());
+
+  p2.set_value(42);
+  EXPECT_TRUE(r.is_ready());
+  EXPECT_EQ(42, r.get());
+}
+
+/// @test Verify conformance with section 2.3 of the Concurrency TS.
+TEST(FutureTestVoid, conform_2_3_9_d) {
+  // future<void>::then() implicitly unwrapping captures exceptions.
+  promise<void> p;
+  future<void> f = p.get_future();
+
+  promise<int> p2;
+  bool called = false;
+  future<int> r = f.then([&p2, &called](future<void> f) {
+    called = true;
+    f.get();
+    return p2.get_future();
+  });
+  EXPECT_TRUE(r.valid());
+  EXPECT_FALSE(r.is_ready());
+  EXPECT_FALSE(f.valid());
+
+  p.set_exception(std::make_exception_ptr(std::runtime_error("test message")));
+  EXPECT_TRUE(called);
+  EXPECT_TRUE(r.is_ready());
+
+  EXPECT_THROW(try { r.get(); } catch(std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("test message"));
+    throw;
+  }, std::runtime_error);
+}
+
+/// @test Verify conformance with section 2.3 of the Concurrency TS.
+TEST(FutureTestVoid, conform_2_3_9_e) {
+  // future<void>::then() implicitly unwrapping raises on invalid future
+  // returned by continuation.
+  promise<void> p;
+  future<void> f = p.get_future();
+
+  bool called = false;
+  future<int> r = f.then([&called](future<void> f) {
+    called = true;
+    f.get();
+    return future<int>{};
+  });
+  EXPECT_TRUE(r.valid());
+  EXPECT_FALSE(r.is_ready());
+  EXPECT_FALSE(f.valid());
+
+  p.set_value();
+  EXPECT_TRUE(called);
+  EXPECT_TRUE(r.is_ready());
+
+  EXPECT_THROW(try { r.get(); } catch(std::future_error const& ex) {
+    EXPECT_EQ(std::future_errc::broken_promise, ex.code());
+    throw;
+  }, std::future_error);
+}
+
+/// @test Verify conformance with section 2.3 of the Concurrency TS.
+TEST(FutureTestVoid, conform_2_3_10) {
+  // future<void>::then() invalidates the source future.
+  promise<void> p;
+  future<void> f = p.get_future();
+  future<void> r = f.then([](future<void> f) {
+    f.get();
+  });
+  EXPECT_TRUE(r.valid());
+  EXPECT_FALSE(r.is_ready());
+  EXPECT_FALSE(f.valid());
+
+  p.set_value();
+  EXPECT_TRUE(r.is_ready());
+  EXPECT_NO_THROW(r.get());
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.

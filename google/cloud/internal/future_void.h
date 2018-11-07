@@ -100,6 +100,14 @@ class future<void> final : private internal::future_base<void> {
   template <typename F>
   typename internal::then_helper<F, void>::future_t then_impl(F&& functor,
                                                               std::false_type);
+
+  /// Implement `then()` if the result requires unwrapping.
+  template <typename F>
+  typename internal::then_helper<F, void>::future_t then_impl(F&& functor,
+                                                              std::true_type);
+
+  template <typename U>
+  friend class future;
 };
 
 /**
