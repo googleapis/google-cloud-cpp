@@ -104,7 +104,7 @@ class future final : private internal::future_base<T> {
   typename internal::then_helper<F, T>::future_t then_impl(F&& functor,
                                                            std::false_type);
 
-  /// Implement `then()` if the result does not require unwrapping.
+  /// Implement `then()` if the result requires unwrapping.
   template <typename F>
   typename internal::then_helper<F, T>::future_t then_impl(F&& functor,
                                                            std::true_type);

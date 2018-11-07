@@ -612,12 +612,12 @@ struct continuation : public continuation_base {
 
   continuation(Functor&& f, std::shared_ptr<input_shared_state_t> s)
       : functor(std::move(f)),
-        input(s),
+        input(std::move(s)),
         output(std::make_shared<future_shared_state<result_t>>()) {}
 
   continuation(Functor&& f, std::shared_ptr<input_shared_state_t> s,
                std::shared_ptr<output_shared_state_t> o)
-      : functor(std::move(f)), input(s), output(o) {}
+      : functor(std::move(f)), input(std::move(s)), output(std::move(o)) {}
 
   void execute() override {
     auto tmp = input.lock();
@@ -666,7 +666,7 @@ struct unwrapping_continuation : public continuation_base {
 
   unwrapping_continuation(Functor&& f, std::shared_ptr<input_shared_state_t> s)
       : functor(std::move(f)),
-        input(s),
+        input(std::move(s)),
         intermediate(),
         output(std::make_shared<output_shared_state_t>()) {}
 
@@ -697,8 +697,7 @@ struct unwrapping_continuation : public continuation_base {
     };
     using continuation_type = internal::continuation<decltype(unwrapper), R>;
     auto continuation = google::cloud::internal::make_unique<continuation_type>(
-        std::move(unwrapper), intermediate);
-    continuation->output = output;
+        std::move(unwrapper), intermediate, output);
     // assert(intermediate->continuation_ == nullptr)
     // If intermediate has a continuation then the associated future would have
     // been invalid, and we never get here.
@@ -775,7 +774,7 @@ future_shared_state<void>::make_continuation(
 }
 
 // Implement the helper function to create a shared state for continuations that
-// need upwrapping.
+// need unwrapping.
 template <typename F>
 std::shared_ptr<
     typename internal::unwrapping_continuation_helper<F, void>::state_t>
