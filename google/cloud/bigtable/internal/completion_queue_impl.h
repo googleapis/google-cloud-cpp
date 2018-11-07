@@ -200,6 +200,7 @@ class AsyncUnaryStreamRpcFunctor : public AsyncOperation {
   void Set(Client& client, MemberFunction Client::*call,
            std::unique_ptr<grpc::ClientContext> context, Request const& request,
            grpc::CompletionQueue* cq, void* tag) {
+    std::unique_lock<std::mutex> lk(mu_);
     tag_ = tag;
     context_ = std::move(context);
     response_reader_ = (client.*call)(context_.get(), request, cq, tag);
