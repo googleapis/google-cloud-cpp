@@ -151,21 +151,21 @@ class AsyncUnaryRpcFunctor : public AsyncOperation {
            grpc::CompletionQueue* cq, void* tag) {
     context_ = std::move(context);
     // Make sure context_ is visible in other threads.
-    std::atomic_thread_fence(std::memory_order_release);
+    sync_.store(0, std::memory_order_release);
     auto rpc = (client.*call)(context_.get(), request, cq);
     rpc->Finish(&response_, &status_, tag);
   }
 
   void Cancel() override {
     // Make sure context_ is visible in this thread.
-    std::atomic_thread_fence(std::memory_order_acquire);
+    sync_.load(std::memory_order_acquire);
     context_->TryCancel();
   }
 
  private:
   bool Notify(CompletionQueue& cq, bool ok) override {
     // Make sure members are visible.
-    std::atomic_thread_fence(std::memory_order_acquire);
+    sync_.load(std::memory_order_acquire);
     if (not ok) {
       // This would mean a bug in grpc. Documentation states that Finish()
       // always returns true.
@@ -176,6 +176,9 @@ class AsyncUnaryRpcFunctor : public AsyncOperation {
     return true;
   }
 
+  // sync_ doesn't have any semantics. It is used to generate proper barriers
+  // for synchronization.
+  std::atomic<bool> sync_;
   std::unique_ptr<grpc::ClientContext> context_;
   Functor functor_;
   grpc::Status status_;
