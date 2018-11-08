@@ -43,9 +43,22 @@ class future final : private internal::future_base<T> {
 
   future() noexcept = default;
 
-  // TODO(#1345) - implement the unwrapping constructor.
-  // future(future<future<T>>&& f) noexcept;
-  // future& operator=(future<future<T>>&& f) noexcept;
+  /**
+   * Creates a new future that unwraps @p rhs.
+   *
+   * This constructor creates a new shared state that becomes satisfied when
+   * both `rhs` and `rhs.get()` become satisfied. If `rhs` is satisfied, but
+   * `rhs.get()` returns an invalid future then the newly created future becomes
+   * satisfied with a `std::future_error` exception, and the exception error
+   * code is `std::future_errc::broken_promise`.
+   *
+   * @note The technical specification requires this to be a `noexcept`
+   *   constructor I (@coryan) believe this is a defect in the technical
+   *   specification, as this *creates* a new shared state: shared states are
+   *   dynamically allocated, and the allocator (which might be the default
+   *   `operator new`) may raise.
+   */
+  future(future<future<T>>&& rhs) noexcept(false);
 
   /**
    * Waits until the shared state becomes ready, then retrieves the value stored
@@ -111,6 +124,7 @@ class future final : private internal::future_base<T> {
 
   template <typename U>
   friend class future;
+  friend class future<void>;
 };
 
 /**
