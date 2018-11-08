@@ -158,14 +158,14 @@ class AsyncUnaryRpcFunctor : public AsyncOperation {
 
   void Cancel() override {
     // Make sure context_ is visible in this thread.
-    sync_.load(std::memory_order_acquire);
+    static_cast<void>(sync_.load(std::memory_order_acquire));
     context_->TryCancel();
   }
 
  private:
   bool Notify(CompletionQueue& cq, bool ok) override {
     // Make sure members are visible.
-    sync_.load(std::memory_order_acquire);
+    static_cast<void>(sync_.load(std::memory_order_acquire));
     if (not ok) {
       // This would mean a bug in grpc. Documentation states that Finish()
       // always returns true.
