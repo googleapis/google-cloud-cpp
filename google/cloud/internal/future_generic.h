@@ -54,7 +54,9 @@ class future final : private internal::future_base<T> {
    *
    * @note The technical specification requires this to be a `noexcept`
    *   constructor I (@coryan) believe this is a defect in the technical
-   *   specification, as this *creates* a new shared state, and that can raise.
+   *   specification, as this *creates* a new shared state: shared states are
+   *   dynamically allocated, and the allocator (which might be the default
+   *   `operator new`) may raise.
    */
   future(future<future<T>>&& rhs) noexcept(false);
 
