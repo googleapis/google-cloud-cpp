@@ -65,6 +65,7 @@ class AsyncTimerFunctor : public AsyncOperation {
 
   void Set(grpc::CompletionQueue& cq,
            std::chrono::system_clock::time_point deadline, void* tag) {
+    std::unique_lock<std::mutex> lk(mu_);
     timer_.deadline = deadline;
     if (alarm_) {
       alarm_->Set(&cq, deadline, tag);
@@ -72,6 +73,7 @@ class AsyncTimerFunctor : public AsyncOperation {
   }
 
   void Cancel() override {
+    std::unique_lock<std::mutex> lk(mu_);
     if (alarm_) {
       alarm_->Cancel();
     }
@@ -79,12 +81,20 @@ class AsyncTimerFunctor : public AsyncOperation {
 
  private:
   bool Notify(CompletionQueue& cq, bool ok) override {
+    std::unique_lock<std::mutex> lk(mu_);
     alarm_.reset();
     timer_.cancelled = not ok;
+    lk.unlock();
+    // At this point timer_ is not going to be used by any other thread, so we
+    // might use it without a lock.
     functor_(cq, timer_);
     return true;
   }
 
+  // It might not be clear why the mutex is needed.
+  // We need to make sure that `if (alarm_) { alarm_->Cancel(); }` is atomic.
+  // Without the mutex it is not because `Notify` resets `alarm_`.
+  std::mutex mu_;
   Functor functor_;
   AsyncTimerResult timer_;
   std::unique_ptr<grpc::Alarm> alarm_;
@@ -140,14 +150,22 @@ class AsyncUnaryRpcFunctor : public AsyncOperation {
            std::unique_ptr<grpc::ClientContext> context, Request const& request,
            grpc::CompletionQueue* cq, void* tag) {
     context_ = std::move(context);
+    // Make sure context_ is visible in other threads.
+    sync_.store(0, std::memory_order_release);
     auto rpc = (client.*call)(context_.get(), request, cq);
     rpc->Finish(&response_, &status_, tag);
   }
 
-  void Cancel() override { context_->TryCancel(); }
+  void Cancel() override {
+    // Make sure context_ is visible in this thread.
+    sync_.load(std::memory_order_acquire);
+    context_->TryCancel();
+  }
 
  private:
   bool Notify(CompletionQueue& cq, bool ok) override {
+    // Make sure members are visible.
+    sync_.load(std::memory_order_acquire);
     if (not ok) {
       // This would mean a bug in grpc. Documentation states that Finish()
       // always returns true.
@@ -158,6 +176,9 @@ class AsyncUnaryRpcFunctor : public AsyncOperation {
     return true;
   }
 
+  // sync_ doesn't have any semantics. It is used to generate proper barriers
+  // for synchronization.
+  std::atomic<bool> sync_;
   std::unique_ptr<grpc::ClientContext> context_;
   Functor functor_;
   grpc::Status status_;
@@ -206,14 +227,14 @@ class AsyncUnaryStreamRpcFunctor : public AsyncOperation {
     response_reader_ = (client.*call)(context_.get(), request, cq, tag);
   }
 
-  void Cancel() override { context_->TryCancel(); }
+  void Cancel() override {
+    std::unique_lock<std::mutex> lk(mu_);
+    context_->TryCancel();
+  }
 
  private:
   enum State { CREATING, PROCESSING, FINISHING };
   bool Notify(CompletionQueue& cq, bool ok) override {
-    // TODO(#1308) - the disposition types do not quite work for streaming
-    // requests, that will be fixed in a future PR.
-
     std::unique_lock<std::mutex> lk(mu_);
 
     switch (state_) {
@@ -258,7 +279,12 @@ class AsyncUnaryStreamRpcFunctor : public AsyncOperation {
         std::to_string(state_));
   }
 
-  // It is not obvious why the mutex is used. There are 2 reasons:
+  // It is not obvious why the mutex is used. There are 4 reasons:
+  //
+  // Cancel() might be called after Start() in a different thread. We need a
+  // synchronization point to make sure that it has the context to act on.
+  //
+  // Changes to members in `Set()` need to be reflected in what `Notify()` sees.
   //
   // Read()s should not be run concurrently on response_reader_. There is no
   // guarantee that a thread is going to get Notify()ed only after Read() is
@@ -268,7 +294,7 @@ class AsyncUnaryStreamRpcFunctor : public AsyncOperation {
   // to this object's fields is visible in threads which get subsequently
   // Notify()ed.
   //
-  // The likelihood of any of these reasons materializing is low, but it's
+  // The likelihood of some of these reasons materializing is low, but it's
   // better to be on the safe side.
   std::mutex mu_;
   void* tag_;
