@@ -246,7 +246,16 @@ TEST(FutureTestVoid, conform_2_3_5) {
   auto callable = [](future<void> f) -> void { f.get(); };
   EXPECT_TRUE((std::is_same<future<void>, decltype(f.then(callable))>::value));
 
-  // TODO(#1345) - test with callables returning non-void.
+  auto c2 = [](future<void> f) -> int {
+    f.get();
+    return 42;
+  };
+  EXPECT_TRUE((std::is_same<future<int>, decltype(f.then(c2))>::value));
+  auto c3 = [](future<void> f) -> std::string {
+    f.get();
+    return "";
+  };
+  EXPECT_TRUE((std::is_same<future<std::string>, decltype(f.then(c3))>::value));
 }
 
 // Use SFINAE to test if future<void>::then() accepts a T parameter.
@@ -265,7 +274,6 @@ auto test_then(long) -> std::false_type {
 TEST(FutureTestVoid, conform_2_3_7) {
   // future<void>::then() requires callables that take future<void> as a
   // parameter.
-
   future<void> f;
   using valid_callable_type = std::function<void(future<void>)>;
   using invalid_callable_type = std::function<void(int)>;
@@ -273,7 +281,11 @@ TEST(FutureTestVoid, conform_2_3_7) {
   EXPECT_TRUE(decltype(test_then<valid_callable_type>(0))::value);
   EXPECT_FALSE(decltype(test_then<invalid_callable_type>(0))::value);
 
-  // TODO(#1345) - test with callables returning non-void.
+  EXPECT_TRUE(decltype(test_then<std::function<int(future<void>)>>(0))::value);
+  EXPECT_FALSE(decltype(test_then<std::function<int()>>(0))::value);
+  EXPECT_TRUE(
+      decltype(test_then<std::function<std::string(future<void>)>>(0))::value);
+  EXPECT_FALSE(decltype(test_then<std::function<std::string()>>(0))::value);
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
@@ -316,18 +328,16 @@ TEST(FutureTestVoid, conform_2_3_8_c) {
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
 TEST(FutureTestVoid, conform_2_3_8_d) {
-  // TODO(#1345) - test with an actual value when future<T> is implemented.
   // future<void>::then() propagates the value from the functor to the returned
   // future.
   promise<void> p;
   future<void> f = p.get_future();
 
-  future<void> next = f.then([&](future<void> r) {});
+  future<int> next = f.then([&](future<void> r) -> int { return 42; });
   EXPECT_TRUE(next.valid());
   p.set_value();
   EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
-  next.get();
-  SUCCEED();
+  EXPECT_EQ(42, next.get());
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.

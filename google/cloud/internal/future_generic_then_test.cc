@@ -277,7 +277,6 @@ auto test_then(long) -> std::false_type {
 TEST(FutureTestInt, conform_2_3_7) {
   // future<int>::then() requires callables that take future<int> as a
   // parameter.
-
   future<int> f;
   using valid_callable_type = std::function<void(future<int>)>;
   using invalid_callable_type = std::function<void(int)>;
@@ -285,7 +284,11 @@ TEST(FutureTestInt, conform_2_3_7) {
   EXPECT_TRUE(decltype(test_then<valid_callable_type>(0))::value);
   EXPECT_FALSE(decltype(test_then<invalid_callable_type>(0))::value);
 
-  // TODO(#1345) - test with callables returning non-void.
+  EXPECT_TRUE(decltype(test_then<std::function<int(future<int>)>>(0))::value);
+  EXPECT_FALSE(decltype(test_then<std::function<int()>>(0))::value);
+  EXPECT_TRUE(
+      decltype(test_then<std::function<std::string(future<int>)>>(0))::value);
+  EXPECT_FALSE(decltype(test_then<std::function<std::string()>>(0))::value);
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
@@ -328,7 +331,6 @@ TEST(FutureTestInt, conform_2_3_8_c) {
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
 TEST(FutureTestInt, conform_2_3_8_d) {
-  // TODO(#1345) - test with an actual value when future<T> is implemented.
   // future<int>::then() propagates the value from the functor to the returned
   // future.
   promise<int> p;
