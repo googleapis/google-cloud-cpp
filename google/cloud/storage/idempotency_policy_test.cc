@@ -516,6 +516,37 @@ TEST(StrictIdempotencyPolicyTest, PatchDefaultObjectAclIfMatchEtag) {
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
+TEST(StrictIdempotencyPolicyTest, GetProjectServiceAccount) {
+  StrictIdempotencyPolicy policy;
+  internal::GetProjectServiceAccountRequest request(
+      "test-project-id");
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, ListNotification) {
+  StrictIdempotencyPolicy policy;
+  internal::ListNotificationsRequest request("test-bucket-name");
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, CreateNotification) {
+  StrictIdempotencyPolicy policy;
+  internal::CreateNotificationRequest request("test-bucket-name", NotificationMetadata());
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, GetNotification) {
+  StrictIdempotencyPolicy policy;
+  internal::GetNotificationRequest request("test-bucket-name", "test-notification-id");
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, DeleteNotification) {
+  StrictIdempotencyPolicy policy;
+  internal::DeleteNotificationRequest request("test-bucket-name", "test-notification-id");
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
