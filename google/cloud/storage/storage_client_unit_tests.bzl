@@ -6,6 +6,7 @@ storage_client_unit_tests = [
     "client_bucket_acl_test.cc",
     "client_default_object_acl_test.cc",
     "client_object_acl_test.cc",
+    "client_object_copy_test.cc",
     "client_service_account_test.cc",
     "client_notifications_test.cc",
     "client_test.cc",
