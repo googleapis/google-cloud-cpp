@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
@@ -53,7 +54,7 @@ class ObjectMediaIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 bool UsingTestbench() {
-  return std::getenv("CLOUD_STORAGE_TESTBENCH_ENDPOINT") != nullptr;
+  return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT").has_value();
 }
 
 TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
