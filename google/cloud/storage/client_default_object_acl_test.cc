@@ -134,6 +134,10 @@ TEST_F(DefaultObjectAccessControlsTest, CreateDefaultObjectAclTooManyFailures) {
         client.CreateDefaultObjectAcl("test-bucket-name", "user-test-user-1",
                                       "READER");
       },
+      [](Client& client) {
+        client.CreateDefaultObjectAcl("test-bucket-name", "user-test-user-1",
+                                      "READER", IfMatchEtag("ABC="));
+      },
       "CreateDefaultObjectAcl");
 }
 
@@ -169,6 +173,10 @@ TEST_F(DefaultObjectAccessControlsTest, DeleteDefaultObjectAclTooManyFailures) {
       mock, EXPECT_CALL(*mock, DeleteDefaultObjectAcl(_)),
       [](Client& client) {
         client.DeleteDefaultObjectAcl("test-bucket-name", "user-test-user-1");
+      },
+      [](Client& client) {
+        client.DeleteDefaultObjectAcl("test-bucket-name", "user-test-user-1",
+                                      IfMatchEtag("ABC="));
       },
       "DeleteDefaultObjectAcl");
 }
@@ -261,6 +269,10 @@ TEST_F(DefaultObjectAccessControlsTest, UpdateDefaultObjectAclTooManyFailures) {
         client.UpdateDefaultObjectAcl("test-bucket-name",
                                       ObjectAccessControl());
       },
+      [](Client& client) {
+        client.UpdateDefaultObjectAcl("test-bucket-name", ObjectAccessControl(),
+                                      IfMatchEtag("ABC="));
+      },
       "UpdateDefaultObjectAcl");
 }
 
@@ -307,6 +319,11 @@ TEST_F(DefaultObjectAccessControlsTest, PatchDefaultObjectAclTooManyFailures) {
       [](Client& client) {
         client.PatchDefaultObjectAcl("test-bucket-name", "user-test-user-1",
                                      ObjectAccessControlPatchBuilder());
+      },
+      [](Client& client) {
+        client.PatchDefaultObjectAcl("test-bucket-name", "user-test-user-1",
+                                     ObjectAccessControlPatchBuilder(),
+                                     IfMatchEtag("ABC="));
       },
       "PatchDefaultObjectAcl");
 }

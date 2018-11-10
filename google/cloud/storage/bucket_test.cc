@@ -181,6 +181,9 @@ TEST_F(BucketTest, DeleteBucketTooManyFailures) {
   testing::TooManyFailuresTest<internal::EmptyResponse>(
       mock, EXPECT_CALL(*mock, DeleteBucket(_)),
       [](Client& client) { client.DeleteBucket("test-bucket-name"); },
+      [](Client& client) {
+        client.DeleteBucket("test-bucket-name", IfMetagenerationMatch(42));
+      },
       "DeleteBucket");
 }
 
@@ -229,6 +232,10 @@ TEST_F(BucketTest, UpdateBucketTooManyFailures) {
       mock, EXPECT_CALL(*mock, UpdateBucket(_)),
       [](Client& client) {
         client.UpdateBucket("test-bucket-name", BucketMetadata());
+      },
+      [](Client& client) {
+        client.UpdateBucket("test-bucket-name", BucketMetadata(),
+                            IfMetagenerationMatch(42));
       },
       "UpdateBucket");
 }
@@ -279,6 +286,10 @@ TEST_F(BucketTest, PatchBucketTooManyFailures) {
       mock, EXPECT_CALL(*mock, PatchBucket(_)),
       [](Client& client) {
         client.PatchBucket("test-bucket-name", BucketMetadataPatchBuilder());
+      },
+      [](Client& client) {
+        client.PatchBucket("test-bucket-name", BucketMetadataPatchBuilder(),
+            IfMetagenerationMatch(42));
       },
       "PatchBucket");
 }
@@ -350,6 +361,9 @@ TEST_F(BucketTest, SetBucketIamPolicyTooManyFailures) {
       mock, EXPECT_CALL(*mock, SetBucketIamPolicy(_)),
       [](Client& client) {
         client.SetBucketIamPolicy("test-bucket-name", IamPolicy{});
+      },
+      [](Client& client) {
+        client.SetBucketIamPolicy("test-bucket-name", IamPolicy{}, IfMatchEtag("ABC="));
       },
       "SetBucketIamPolicy");
 }
