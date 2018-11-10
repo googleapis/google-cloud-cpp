@@ -165,10 +165,14 @@ class CurlClient : public RawClient {
   std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>> WriteObjectXml(
       InsertObjectStreamingRequest const& request);
 
-  /// Insert an object using the uploadType=multipart.
+  /// Insert an object using uploadType=multipart.
   std::pair<Status, ObjectMetadata> InsertObjectMediaMultipart(
       InsertObjectMediaRequest const& request);
   std::string PickBoundary(std::string const& text_to_avoid);
+
+  /// Insert an objet using uploadType=media.
+  std::pair<Status, ObjectMetadata> InsertObjectMediaSimple(
+      InsertObjectMediaRequest const& request);
 
   ClientOptions options_;
   std::string storage_endpoint_;

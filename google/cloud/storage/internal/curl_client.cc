@@ -331,26 +331,7 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
     return InsertObjectMediaMultipart(request);
   }
 
-  CurlRequestBuilder builder(
-      upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
-  SetupBuilder(builder, request, "POST");
-  // Set the content type of a sensible value, the application can override this
-  // in the options for the request.
-  if (not request.HasOption<ContentType>()) {
-    builder.AddHeader("content-type: application/octet-stream");
-  }
-  builder.AddQueryParameter("uploadType", "media");
-  builder.AddQueryParameter("name", request.object_name());
-  builder.AddHeader("Content-Length: " +
-                    std::to_string(request.contents().size()));
-  auto payload = builder.BuildRequest().MakeRequest(request.contents());
-  if (payload.status_code >= 300) {
-    return std::make_pair(
-        Status{payload.status_code, std::move(payload.payload)},
-        ObjectMetadata{});
-  }
-  return std::make_pair(Status(),
-                        ObjectMetadata::ParseFromString(payload.payload));
+  return InsertObjectMediaSimple(request);
 }
 
 std::pair<Status, ObjectMetadata> CurlClient::CopyObject(
@@ -1225,6 +1206,30 @@ std::string CurlClient::PickBoundary(std::string const& text_to_avoid) {
   constexpr int CANDIDATE_GROWTH_SIZE = 4;
   return GenerateMessageBoundary(text_to_avoid, std::move(generate_candidate),
                                  INITIAL_CANDIDATE_SIZE, CANDIDATE_GROWTH_SIZE);
+}
+
+std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaSimple(
+    InsertObjectMediaRequest const& request) {
+  CurlRequestBuilder builder(
+      upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
+  SetupBuilder(builder, request, "POST");
+  // Set the content type of a sensible value, the application can override this
+  // in the options for the request.
+  if (not request.HasOption<ContentType>()) {
+    builder.AddHeader("content-type: application/octet-stream");
+  }
+  builder.AddQueryParameter("uploadType", "media");
+  builder.AddQueryParameter("name", request.object_name());
+  builder.AddHeader("Content-Length: " +
+      std::to_string(request.contents().size()));
+  auto payload = builder.BuildRequest().MakeRequest(request.contents());
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        ObjectMetadata{});
+  }
+  return std::make_pair(Status(),
+                        ObjectMetadata::ParseFromString(payload.payload));
 }
 
 }  // namespace internal
