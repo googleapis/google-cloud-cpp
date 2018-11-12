@@ -25,6 +25,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
+using google::cloud::storage::testing::TestPermanentFailure;
 
 /// Store the project and instance captured from the command-line arguments.
 class BucketTestEnvironment : public ::testing::Environment {
@@ -58,19 +59,6 @@ class BucketIntegrationTest
     return "project-viewers-" + BucketTestEnvironment::project_id();
   }
 };
-
-template <typename Callable>
-void TestPermanentFailure(Callable&& callable) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { callable(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
-    throw;
-  },
-               std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(callable(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
 
 TEST_F(BucketIntegrationTest, BasicCRUD) {
   auto project_id = BucketTestEnvironment::project_id();

@@ -19,12 +19,15 @@
 #include "google/cloud/storage/well_known_headers.h"
 #include <gmock/gmock.h>
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
 namespace storage {
 namespace testing {
-
+/**
+ * Common class for storage integration tests.
+ */
 class StorageIntegrationTest : public ::testing::Test {
  protected:
   std::string MakeRandomObjectName();
@@ -40,6 +43,41 @@ class StorageIntegrationTest : public ::testing::Test {
   google::cloud::internal::DefaultPRNG generator_ =
       google::cloud::internal::MakeDefaultPRNG();
 };
+
+/**
+ * Tests that a callable reports permanent errors correctly.
+ *
+ * @param callable the function / code snippet under test. This is typically a
+ *     lambda expression that exercises some code path expected to report
+ *     a permanent failure.
+ * @tparam Callable the type of @p callable.
+ */
+template <typename Callable>
+void TestPermanentFailure(Callable&& callable) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(try { callable(); } catch (std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), ::testing::HasSubstr("Permanent error in"));
+    throw;
+  },
+               std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(callable(), "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/**
+ * Count the number of *AccessControl entities with matching name and role.
+ */
+template <typename AccessControlResource>
+typename std::vector<AccessControlResource>::difference_type
+CountMatchingEntities(std::vector<AccessControlResource> const& acl,
+                      AccessControlResource const& expected) {
+  return std::count_if(
+      acl.begin(), acl.end(), [&expected](AccessControlResource const& x) {
+        return x.entity() == expected.entity() and x.role() == expected.role();
+      });
+}
+
 }  // namespace testing
 }  // namespace storage
 }  // namespace cloud

@@ -1,0 +1,479 @@
+// Copyright 2018 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "google/cloud/log.h"
+#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/init_google_mock.h"
+#include <gmock/gmock.h>
+#include <regex>
+
+namespace google {
+namespace cloud {
+namespace storage {
+inline namespace STORAGE_CLIENT_NS {
+namespace {
+using ::testing::HasSubstr;
+using google::cloud::storage::testing::CountMatchingEntities;
+using google::cloud::storage::testing::TestPermanentFailure;
+
+/// Store the project and instance captured from the command-line arguments.
+class ObjectTestEnvironment : public ::testing::Environment {
+ public:
+  ObjectTestEnvironment(std::string project, std::string instance) {
+    project_id_ = std::move(project);
+    bucket_name_ = std::move(instance);
+  }
+
+  static std::string const& project_id() { return project_id_; }
+  static std::string const& bucket_name() { return bucket_name_; }
+
+ private:
+  static std::string project_id_;
+  static std::string bucket_name_;
+};
+
+std::string ObjectTestEnvironment::project_id_;
+std::string ObjectTestEnvironment::bucket_name_;
+
+class ObjectInsertIntegrationTest
+    : public google::cloud::storage::testing::StorageIntegrationTest {
+};
+
+TEST_F(ObjectInsertIntegrationTest, InsertWithMD5) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0),
+      MD5HashValue("96HF9K981B+JfoQuTVnyCg=="));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0),
+      MD5HashValue(ComputeMD5Hash(expected)));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0), Fields(""),
+      MD5HashValue("96HF9K981B+JfoQuTVnyCg=="));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
+      PredefinedAcl::AuthenticatedRead(), Projection::Full());
+  EXPECT_LT(0, CountMatchingEntities(meta.acl(),
+                                     ObjectAccessControl()
+                                         .set_entity("allAuthenticatedUsers")
+                                         .set_role("READER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  BucketMetadata bucket =
+      client.GetBucketMetadata(bucket_name, Projection::Full());
+  ASSERT_TRUE(bucket.has_owner());
+  std::string owner = bucket.owner().entity;
+
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
+      PredefinedAcl::BucketOwnerFullControl(), Projection::Full());
+  EXPECT_LT(0, CountMatchingEntities(
+      meta.acl(),
+      ObjectAccessControl().set_entity(owner).set_role("OWNER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  BucketMetadata bucket =
+      client.GetBucketMetadata(bucket_name, Projection::Full());
+  ASSERT_TRUE(bucket.has_owner());
+  std::string owner = bucket.owner().entity;
+
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
+      PredefinedAcl::BucketOwnerRead(), Projection::Full());
+  EXPECT_LT(0, CountMatchingEntities(
+      meta.acl(),
+      ObjectAccessControl().set_entity(owner).set_role("READER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
+      PredefinedAcl::Private(), Projection::Full());
+  ASSERT_TRUE(meta.has_owner());
+  EXPECT_LT(
+      0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
+      .set_entity(meta.owner().entity)
+      .set_role("OWNER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclProjectPrivate) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
+      PredefinedAcl::ProjectPrivate(), Projection::Full());
+  ASSERT_TRUE(meta.has_owner());
+  EXPECT_LT(
+      0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
+      .set_entity(meta.owner().entity)
+      .set_role("OWNER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
+      PredefinedAcl::PublicRead(), Projection::Full());
+  EXPECT_LT(
+      0, CountMatchingEntities(
+      meta.acl(),
+      ObjectAccessControl().set_entity("allUsers").set_role("READER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclAuthenticatedRead) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                      IfGenerationMatch(0), PredefinedAcl::AuthenticatedRead(),
+                      Fields(""));
+  ObjectMetadata meta =
+      client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
+  EXPECT_LT(0, CountMatchingEntities(meta.acl(),
+                                     ObjectAccessControl()
+                                         .set_entity("allAuthenticatedUsers")
+                                         .set_role("READER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerFullControl) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  BucketMetadata bucket =
+      client.GetBucketMetadata(bucket_name, Projection::Full());
+  ASSERT_TRUE(bucket.has_owner());
+  std::string owner = bucket.owner().entity;
+
+  client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                      IfGenerationMatch(0),
+                      PredefinedAcl::BucketOwnerFullControl(), Fields(""));
+  ObjectMetadata meta =
+      client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
+  EXPECT_LT(0, CountMatchingEntities(
+      meta.acl(),
+      ObjectAccessControl().set_entity(owner).set_role("OWNER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerRead) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  BucketMetadata bucket =
+      client.GetBucketMetadata(bucket_name, Projection::Full());
+  ASSERT_TRUE(bucket.has_owner());
+  std::string owner = bucket.owner().entity;
+
+  client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                      IfGenerationMatch(0), PredefinedAcl::BucketOwnerRead(),
+                      Fields(""));
+  ObjectMetadata meta =
+      client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
+  EXPECT_LT(0, CountMatchingEntities(
+      meta.acl(),
+      ObjectAccessControl().set_entity(owner).set_role("READER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPrivate) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                      IfGenerationMatch(0), PredefinedAcl::Private(),
+                      Fields(""));
+  ObjectMetadata meta =
+      client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
+  ASSERT_TRUE(meta.has_owner());
+  EXPECT_LT(
+      0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
+      .set_entity(meta.owner().entity)
+      .set_role("OWNER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclProjectPrivate) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                      IfGenerationMatch(0), PredefinedAcl::ProjectPrivate(),
+                      Fields(""));
+  ObjectMetadata meta =
+      client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
+  ASSERT_TRUE(meta.has_owner());
+  EXPECT_LT(
+      0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
+      .set_entity(meta.owner().entity)
+      .set_role("OWNER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPublicRead) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                      IfGenerationMatch(0), PredefinedAcl::PublicRead(),
+                      Fields(""));
+  ObjectMetadata meta =
+      client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
+  EXPECT_LT(
+      0, CountMatchingEntities(
+      meta.acl(),
+      ObjectAccessControl().set_entity("allUsers").set_role("READER")))
+            << meta;
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/**
+ * @test Verify that `QuotaUser` inserts the correct query parameter.
+ *
+ * Testing for `QuotaUser` is less straightforward that most other parameters.
+ * This parameter typically has no effect, so we simply verify that the
+ * parameter appears in the request, and that the parameter is not rejected by
+ * the server.  To verify that the parameter appears in the request we rely
+ * on the logging facilities in the library, which is ugly to do.
+ */
+TEST_F(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
+  Client client(ClientOptions()
+                    .set_enable_raw_client_tracing(true)
+                    .set_enable_http_tracing(true));
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
+  auto id = LogSink::Instance().AddBackend(backend);
+  ObjectMetadata insert_meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), QuotaUser("test-quota-user"));
+  LogSink::Instance().RemoveBackend(id);
+
+  // Create the regular expression we want to match.
+  std::regex re = [&bucket_name] {
+    std::string regex = ".* POST .*";
+    regex += "/b/" + bucket_name + "/o";
+    regex += ".*quotaUser=test-quota-user.*";
+    return std::regex(regex, std::regex_constants::egrep);
+  }();
+
+  auto count = std::count_if(
+      backend->log_lines.begin(), backend->log_lines.end(),
+      [&re](std::string const& line) { return std::regex_match(line, re); });
+  EXPECT_LT(0, count);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, InsertWithContentType) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), ContentType("text/plain"));
+  EXPECT_EQ("text/plain", meta.content_type());
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, InsertFailure) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta = client.InsertObject(bucket_name, object_name, expected,
+                                            IfGenerationMatch(0));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  // This operation should fail because the object already exists.
+  TestPermanentFailure([&] {
+    client.InsertObject(bucket_name, object_name, expected,
+                        IfGenerationMatch(0));
+  });
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, InsertXmlFailure) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta = client.InsertObject(bucket_name, object_name, expected,
+                                            Fields(""), IfGenerationMatch(0));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  // This operation should fail because the object already exists.
+  TestPermanentFailure([&] {
+    client.InsertObject(bucket_name, object_name, expected, Fields(""),
+                        IfGenerationMatch(0));
+  });
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+}  // anonymous namespace
+}  // namespace STORAGE_CLIENT_NS
+}  // namespace storage
+}  // namespace cloud
+}  // namespace google
+
+int main(int argc, char* argv[]) {
+  google::cloud::testing_util::InitGoogleMock(argc, argv);
+
+  // Make sure the arguments are valid.
+  if (argc != 3) {
+    std::string const cmd = argv[0];
+    auto last_slash = std::string(argv[0]).find_last_of('/');
+    std::cerr << "Usage: " << cmd.substr(last_slash + 1)
+              << " <project-id> <bucket-name>" << std::endl;
+    return 1;
+  }
+
+  std::string const project_id = argv[1];
+  std::string const bucket_name = argv[2];
+  (void)::testing::AddGlobalTestEnvironment(
+      new google::cloud::storage::ObjectTestEnvironment(project_id,
+                                                        bucket_name));
+
+  return RUN_ALL_TESTS();
+}
