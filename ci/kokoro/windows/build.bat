@@ -23,12 +23,14 @@ set CONFIG=Debug
 set PROVIDER=vcpkg
 call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
 
-cmd /c gcloud auth activate-service-account --key-file %KOKORO_GFILE_DIR%/build-results-service-account.json
+echo %date% %time%
+cmd /c gcloud auth activate-service-account --key-file "%KOKORO_GFILE_DIR%/build-results-service-account.json"
 
 echo %date% %time%
 powershell -exec bypass ci\kokoro\windows\build-dependencies.ps1
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+echo %date% %time%
 cmd /c gcloud auth revoke --all
 
 echo %date% %time%
