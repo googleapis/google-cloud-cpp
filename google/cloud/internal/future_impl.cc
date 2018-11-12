@@ -12,35 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FUTURE_FWD_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FUTURE_FWD_H_
-
-#include "google/cloud/version.h"
+#include "google/cloud/internal/future_impl.h"
+#include "google/cloud/terminate_handler.h"
+#include <iostream>
+#include <sstream>
+#include <stdexcept>
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-// Forward declare the promise type so we can write some helpers.
-template <typename R>
-class promise;
-
-// Forward declare the future type so we can write some helpers.
-template <typename R>
-class future;
-
-// Forward declare the specializations for references.
-template <typename R>
-class promise<R&>;
-template <typename R>
-class future<R&>;
-
-// Forward declare the specialization for `void`.
-template <>
-class promise<void>;
-template <>
-class future<void>;
+namespace internal {
+[[noreturn]] void RaiseFutureError(std::future_errc ec, char const* msg) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  throw std::future_error(ec);
+#else
+  std::string full_msg = "future_error[";
+  full_msg += std::make_error_code(ec).message();
+  full_msg += "]: ";
+  full_msg += msg;
+  google::cloud::Terminate(full_msg.c_str());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FUTURE_FWD_H_

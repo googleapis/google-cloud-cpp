@@ -26,10 +26,6 @@
  * functions inline.
  */
 
-#include "google/cloud/internal/port_platform.h"
-
-// C++ futures only make sense when exceptions are enabled.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 #include "google/cloud/internal/future_generic.h"
 #include "google/cloud/internal/future_void.h"
 
@@ -213,5 +209,4 @@ typename internal::then_helper<F, void>::future_t future<void>::then_impl(
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FUTURE_THEN_IMPL_H_

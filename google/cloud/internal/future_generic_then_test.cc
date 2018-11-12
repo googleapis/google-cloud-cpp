@@ -13,18 +13,19 @@
 // limitations under the License.
 
 #include "google/cloud/future.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/expect_future_error.h"
 #include <gmock/gmock.h>
 #include <functional>
 
-// C++ futures only make sense when exceptions are enabled.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 using ::testing::HasSubstr;
 using namespace testing_util::chrono_literals;
+using testing_util::ExpectFutureError;
 
 TEST(FutureTestInt, ThenSimple) {
   promise<int> p;
@@ -59,7 +60,7 @@ TEST(FutureTestInt, ThenException) {
     called = true;
     int value = r.get();
     if (value == 42) {
-      throw std::runtime_error("test message");
+      internal::RaiseRuntimeError("test message");
     }
     return 2 * value;
   });
@@ -67,17 +68,22 @@ TEST(FutureTestInt, ThenException) {
   EXPECT_TRUE(next.valid());
   EXPECT_FALSE(called);
 
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   p.set_value(42);
   EXPECT_TRUE(called);
   EXPECT_TRUE(next.valid());
   EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
 
-  EXPECT_THROW(try { next.get(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("test message"));
-    throw;
-  },
-               std::runtime_error);
+  EXPECT_THROW(
+      try { next.get(); } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test message"));
+        throw;
+      },
+      std::runtime_error);
   EXPECT_FALSE(next.valid());
+#else
+  EXPECT_DEATH_IF_SUPPORTED(p.set_value(42), "test message");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST(FutureTestInt, ThenUnwrap) {
@@ -149,12 +155,21 @@ TEST(FutureTestInt, conform_2_3_3_b) {
   EXPECT_TRUE(unwrapped.valid());
   EXPECT_FALSE(unwrapped.is_ready());
 
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   p.set_exception(std::make_exception_ptr(std::runtime_error("test message")));
   EXPECT_TRUE(unwrapped.is_ready());
-  EXPECT_THROW( try { unwrapped.get(); } catch(std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("test message"));
-    throw;
-  }, std::runtime_error);
+  EXPECT_THROW(
+      try { unwrapped.get(); } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test message"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      p.set_exception(
+          std::make_exception_ptr(std::runtime_error("test message"))),
+      "future<T>::get\\(\\) had an exception but exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
@@ -171,12 +186,21 @@ TEST(FutureTestInt, conform_2_3_3_c) {
   p.set_value(p2.get_future());
   EXPECT_FALSE(unwrapped.is_ready());
 
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   p2.set_exception(std::make_exception_ptr(std::runtime_error("test message")));
   EXPECT_TRUE(unwrapped.is_ready());
-  EXPECT_THROW( try { unwrapped.get(); } catch(std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("test message"));
-    throw;
-  }, std::runtime_error);
+  EXPECT_THROW(
+      try { unwrapped.get(); } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test message"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      p2.set_exception(
+          std::make_exception_ptr(std::runtime_error("test message"))),
+      "future<T>::get\\(\\) had an exception but exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
@@ -192,11 +216,18 @@ TEST(FutureTestInt, conform_2_3_3_d) {
   promise<int> p2;
   p.set_value(future<int>{});
   EXPECT_TRUE(unwrapped.is_ready());
-
-  EXPECT_THROW( try { unwrapped.get(); } catch(std::future_error const& ex) {
-    EXPECT_EQ(std::future_errc::broken_promise, ex.code());
-    throw;
-  }, std::future_error);
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try { unwrapped.get(); } catch (std::future_error const& ex) {
+        EXPECT_EQ(std::future_errc::broken_promise, ex.code());
+        throw;
+      },
+      std::future_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      unwrapped.get(),
+      "future<T>::get\\(\\) had an exception but exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
@@ -318,17 +349,22 @@ TEST(FutureTestInt, conform_2_3_8_e) {
   future<int> f = p.get_future();
 
   future<void> next = f.then([&](future<int> r) {
-    throw std::runtime_error("test exception in functor");
+    internal::RaiseRuntimeError("test exception in functor");
   });
   EXPECT_TRUE(next.valid());
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   p.set_value(42);
   EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
-  EXPECT_THROW(try { next.get(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("test exception in functor"));
-    throw;
-  },
-               std::runtime_error);
+  EXPECT_THROW(
+      try { next.get(); } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test exception in functor"));
+        throw;
+      },
+      std::runtime_error);
   EXPECT_FALSE(next.valid());
+#else
+  EXPECT_DEATH_IF_SUPPORTED(p.set_value(42), "test exception in functor");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
@@ -424,14 +460,24 @@ TEST(FutureTestInt, conform_2_3_9_d) {
   EXPECT_FALSE(r.is_ready());
   EXPECT_FALSE(f.valid());
 
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   p.set_exception(std::make_exception_ptr(std::runtime_error("test message")));
   EXPECT_TRUE(called);
   EXPECT_TRUE(r.is_ready());
-
-  EXPECT_THROW(try { r.get(); } catch(std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("test message"));
-    throw;
-  }, std::runtime_error);
+  EXPECT_THROW(
+      try { r.get(); } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test message"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  // With exceptions disabled the program terminates as soon as the exception is
+  // set.
+  EXPECT_DEATH_IF_SUPPORTED(
+      p.set_exception(
+          std::make_exception_ptr(std::runtime_error("test message"))),
+      "future<T>::get\\(\\) had an exception but exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
@@ -455,10 +501,18 @@ TEST(FutureTestInt, conform_2_3_9_e) {
   EXPECT_TRUE(called);
   EXPECT_TRUE(r.is_ready());
 
-  EXPECT_THROW(try { r.get(); } catch(std::future_error const& ex) {
-    EXPECT_EQ(std::future_errc::broken_promise, ex.code());
-    throw;
-  }, std::future_error);
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try { r.get(); } catch (std::future_error const& ex) {
+        EXPECT_EQ(std::future_errc::broken_promise, ex.code());
+        throw;
+      },
+      std::future_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      r.get(),
+      "future<T>::get\\(\\) had an exception but exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
@@ -466,9 +520,7 @@ TEST(FutureTestInt, conform_2_3_10) {
   // future<int>::then() invalidates the source future.
   promise<int> p;
   future<int> f = p.get_future();
-  future<int> r = f.then([](future<int> f) {
-    return 2 * f.get();
-  });
+  future<int> r = f.then([](future<int> f) { return 2 * f.get(); });
   EXPECT_TRUE(r.valid());
   EXPECT_FALSE(r.is_ready());
   EXPECT_FALSE(f.valid());
@@ -499,16 +551,10 @@ TEST(FutureTestInt, conform_2_3_11_b) {
 TEST(FutureTestInt, conform_2_3_11_c) {
   // future<int>::is_ready() raises for futures that are not valid.
   future<int> const f;
-  EXPECT_THROW(try { f.is_ready(); } catch (std::future_error const& ex) {
-    EXPECT_EQ(std::future_errc::no_state, ex.code());
-    throw;
-  },
-               std::future_error);
+  ExpectFutureError([&] { f.is_ready(); }, std::future_errc::no_state);
 }
 
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

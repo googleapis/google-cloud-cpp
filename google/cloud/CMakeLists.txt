@@ -108,6 +108,7 @@ add_library(google_cloud_cpp_common
             internal/future_base.h
             internal/future_fwd.h
             internal/future_impl.h
+            internal/future_impl.cc
             internal/future_then_impl.h
             internal/future_then_meta.h
             internal/future_generic.h
@@ -158,6 +159,7 @@ add_library(google_cloud_cpp_testing
             testing_util/chrono_literals.h
             testing_util/environment_variable_restore.h
             testing_util/environment_variable_restore.cc
+            testing_util/expect_future_error.h
             testing_util/custom_google_mock_main.cc
             testing_util/init_google_mock.h
             testing_util/init_google_mock.cc
