@@ -108,6 +108,7 @@ add_library(google_cloud_cpp_common
             internal/future_base.h
             internal/future_fwd.h
             internal/future_impl.h
+            internal/future_impl.cc
             internal/future_then_impl.h
             internal/future_then_meta.h
             internal/future_generic.h
@@ -130,8 +131,7 @@ add_library(google_cloud_cpp_common
             optional.h
             terminate_handler.h
             terminate_handler.cc
-            version.h
-            internal/future_impl.cc)
+            version.h)
 target_link_libraries(google_cloud_cpp_common
                       PUBLIC Threads::Threads
                       PRIVATE google_cloud_cpp_common_options)

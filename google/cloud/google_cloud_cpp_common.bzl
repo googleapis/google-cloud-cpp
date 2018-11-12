@@ -34,11 +34,11 @@ google_cloud_cpp_common_SRCS = [
     "iam_policy.cc",
     "internal/backoff_policy.cc",
     "internal/filesystem.cc",
+    "internal/future_impl.cc",
     "internal/getenv.cc",
     "internal/random.cc",
     "internal/setenv.cc",
     "internal/throw_delegate.cc",
     "log.cc",
     "terminate_handler.cc",
-    "internal/future_impl.cc",
 ]
