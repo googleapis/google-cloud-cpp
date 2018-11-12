@@ -316,6 +316,12 @@ std::pair<Status, EmptyResponse> CurlClient::LockBucketRetentionPolicy(
 
 std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
+  // If the object metadata is specified, then we need to do a multipart upload.
+  if (request.HasOption<WithObjectMetadata>()) {
+    return InsertObjectMediaMultipart(request);
+  }
+
+  // Unless the request uses a feature that disables it, prefer to use XML.
   if (not request.HasOption<IfMetagenerationNotMatch>() and
       not request.HasOption<IfGenerationNotMatch>() and
       not request.HasOption<QuotaUser>() and
@@ -331,6 +337,7 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
     return InsertObjectMediaMultipart(request);
   }
 
+  // Otherwise do a simple upload.
   return InsertObjectMediaSimple(request);
 }
 
@@ -1149,6 +1156,9 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   ObjectWriteStream writer(std::move(buf));
 
   nl::json metadata = nl::json::object();
+  if (request.HasOption<WithObjectMetadata>()) {
+    metadata = request.GetOption<WithObjectMetadata>().value().JsonForUpdate();
+  }
   if (request.HasOption<MD5HashValue>()) {
     metadata["md5Hash"] = request.GetOption<MD5HashValue>().value();
   } else {
@@ -1170,11 +1180,14 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
 
   // 5. Format the second part, which includes all the contents and a final
   //    separator.
-  if (not request.HasOption<ContentType>()) {
-    writer << "content-type: application/octet-stream" << crlf;
-  } else {
+  if (request.HasOption<ContentType>()) {
     writer << "content-type: " << request.GetOption<ContentType>().value()
            << crlf;
+  } else if (metadata.count("contentType") != 0) {
+    writer << "content-type: "
+           << metadata.value("contentType", "application/octet-stream") << crlf;
+  } else {
+    writer << "content-type: application/octet-stream" << crlf;
   }
   writer << crlf << request.contents() << crlf << marker << "--" << crlf;
 
@@ -1221,7 +1234,7 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaSimple(
   builder.AddQueryParameter("uploadType", "media");
   builder.AddQueryParameter("name", request.object_name());
   builder.AddHeader("Content-Length: " +
-      std::to_string(request.contents().size()));
+                    std::to_string(request.contents().size()));
   auto payload = builder.BuildRequest().MakeRequest(request.contents());
   if (payload.status_code >= 300) {
     return std::make_pair(

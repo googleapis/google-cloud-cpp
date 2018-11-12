@@ -17,6 +17,7 @@
 
 #include "google/cloud/optional.h"
 #include "google/cloud/storage/internal/common_metadata.h"
+#include "google/cloud/storage/internal/complex_option.h"
 #include "google/cloud/storage/object_access_control.h"
 #include <map>
 
@@ -247,9 +248,9 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   bool operator==(ObjectMetadata const& rhs) const;
   bool operator!=(ObjectMetadata const& rhs) const { return not(*this == rhs); }
 
- private:
   internal::nl::json JsonForUpdate() const;
 
+ private:
   friend std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs);
   // Keep the fields in alphabetical order.
   std::vector<ObjectAccessControl> acl_;
@@ -329,6 +330,15 @@ class ObjectMetadataPatchBuilder {
   internal::PatchBuilder impl_;
   bool metadata_subpatch_dirty_;
   internal::PatchBuilder metadata_subpatch_;
+};
+
+/**
+ * A request option to define the object metadata attributes.
+ */
+struct WithObjectMetadata
+    : public internal::ComplexOption<WithObjectMetadata, ObjectMetadata> {
+  using ComplexOption<WithObjectMetadata, ObjectMetadata>::ComplexOption;
+  static char const* name() { return "object-metadata"; }
 };
 
 }  // namespace STORAGE_CLIENT_NS

@@ -25,9 +25,9 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-using ::testing::HasSubstr;
 using google::cloud::storage::testing::CountMatchingEntities;
 using google::cloud::storage::testing::TestPermanentFailure;
+using ::testing::HasSubstr;
 
 /// Store the project and instance captured from the command-line arguments.
 class ObjectTestEnvironment : public ::testing::Environment {
@@ -49,8 +49,7 @@ std::string ObjectTestEnvironment::project_id_;
 std::string ObjectTestEnvironment::bucket_name_;
 
 class ObjectInsertIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {
-};
+    : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(ObjectInsertIntegrationTest, InsertWithMD5) {
   Client client;
@@ -118,6 +117,33 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
   client.DeleteObject(bucket_name, object_name);
 }
 
+TEST_F(ObjectInsertIntegrationTest, InsertWithMetadata) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0),
+      WithObjectMetadata(ObjectMetadata()
+                             .upsert_metadata("test-key", "test-value")
+                             .set_content_type("text/plain")));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+  EXPECT_TRUE(meta.has_metadata("test-key"));
+  EXPECT_EQ("test-value", meta.metadata("test-key"));
+  EXPECT_EQ("text/plain", meta.content_type());
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
@@ -130,7 +156,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
                                      ObjectAccessControl()
                                          .set_entity("allAuthenticatedUsers")
                                          .set_role("READER")))
-            << meta;
+      << meta;
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -149,9 +175,9 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
       PredefinedAcl::BucketOwnerFullControl(), Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(
-      meta.acl(),
-      ObjectAccessControl().set_entity(owner).set_role("OWNER")))
-            << meta;
+                   meta.acl(),
+                   ObjectAccessControl().set_entity(owner).set_role("OWNER")))
+      << meta;
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -170,9 +196,9 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
       PredefinedAcl::BucketOwnerRead(), Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(
-      meta.acl(),
-      ObjectAccessControl().set_entity(owner).set_role("READER")))
-            << meta;
+                   meta.acl(),
+                   ObjectAccessControl().set_entity(owner).set_role("READER")))
+      << meta;
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -188,9 +214,9 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
   ASSERT_TRUE(meta.has_owner());
   EXPECT_LT(
       0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
-      .set_entity(meta.owner().entity)
-      .set_role("OWNER")))
-            << meta;
+                                               .set_entity(meta.owner().entity)
+                                               .set_role("OWNER")))
+      << meta;
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -206,9 +232,9 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclProjectPrivate) {
   ASSERT_TRUE(meta.has_owner());
   EXPECT_LT(
       0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
-      .set_entity(meta.owner().entity)
-      .set_role("OWNER")))
-            << meta;
+                                               .set_entity(meta.owner().entity)
+                                               .set_role("OWNER")))
+      << meta;
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -223,9 +249,9 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
       PredefinedAcl::PublicRead(), Projection::Full());
   EXPECT_LT(
       0, CountMatchingEntities(
-      meta.acl(),
-      ObjectAccessControl().set_entity("allUsers").set_role("READER")))
-            << meta;
+             meta.acl(),
+             ObjectAccessControl().set_entity("allUsers").set_role("READER")))
+      << meta;
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -244,12 +270,13 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclAuthenticatedRead) {
                                      ObjectAccessControl()
                                          .set_entity("allAuthenticatedUsers")
                                          .set_role("READER")))
-            << meta;
+      << meta;
 
   client.DeleteObject(bucket_name, object_name);
 }
 
-TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerFullControl) {
+TEST_F(ObjectInsertIntegrationTest,
+       XmlInsertPredefinedAclBucketOwnerFullControl) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -265,9 +292,9 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerFullControl
   ObjectMetadata meta =
       client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(
-      meta.acl(),
-      ObjectAccessControl().set_entity(owner).set_role("OWNER")))
-            << meta;
+                   meta.acl(),
+                   ObjectAccessControl().set_entity(owner).set_role("OWNER")))
+      << meta;
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -288,9 +315,9 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerRead) {
   ObjectMetadata meta =
       client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(
-      meta.acl(),
-      ObjectAccessControl().set_entity(owner).set_role("READER")))
-            << meta;
+                   meta.acl(),
+                   ObjectAccessControl().set_entity(owner).set_role("READER")))
+      << meta;
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -308,9 +335,9 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPrivate) {
   ASSERT_TRUE(meta.has_owner());
   EXPECT_LT(
       0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
-      .set_entity(meta.owner().entity)
-      .set_role("OWNER")))
-            << meta;
+                                               .set_entity(meta.owner().entity)
+                                               .set_role("OWNER")))
+      << meta;
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -328,9 +355,9 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclProjectPrivate) {
   ASSERT_TRUE(meta.has_owner());
   EXPECT_LT(
       0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
-      .set_entity(meta.owner().entity)
-      .set_role("OWNER")))
-            << meta;
+                                               .set_entity(meta.owner().entity)
+                                               .set_role("OWNER")))
+      << meta;
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -347,9 +374,9 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPublicRead) {
       client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
   EXPECT_LT(
       0, CountMatchingEntities(
-      meta.acl(),
-      ObjectAccessControl().set_entity("allUsers").set_role("READER")))
-            << meta;
+             meta.acl(),
+             ObjectAccessControl().set_entity("allUsers").set_role("READER")))
+      << meta;
 
   client.DeleteObject(bucket_name, object_name);
 }
