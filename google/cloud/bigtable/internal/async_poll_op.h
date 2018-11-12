@@ -12,17 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_RETRY_OP_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_RETRY_OP_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_POLL_OP_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_POLL_OP_H_
 
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/internal/async_op_traits.h"
 #include "google/cloud/bigtable/internal/conjunction.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
-#include "google/cloud/bigtable/rpc_backoff_policy.h"
-#include "google/cloud/bigtable/rpc_retry_policy.h"
+#include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/internal/make_unique.h"
-#include "google/cloud/internal/throw_delegate.h"
 
 namespace google {
 namespace cloud {
@@ -30,102 +28,86 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-/**
- * A dummy function object only to ease specification of retriable operations.
- *
- * It is an example type which could be passed to `Start()` member function of
- * the operation to be retried.
- */
-struct PrototypeStartCallback {
-  void operator()(CompletionQueue&, grpc::Status&) const {}
+struct PrototypePollOpStartCallback {
+  void operator()(CompletionQueue&, bool finished, grpc::Status&) const {}
 };
 
 /**
- * A check if the template parameter meets criteria for `AsyncRetryOp`.
+ * A check if the template parameter meets criteria for `AsyncPollOp`.
  *
- * This struct inherits from `std::true_type` of `std::false_type` depending on
- * whether it meets the criteria for an `Operation` parameter to `AsyncRetryOp`.
+ * This struct inherits from `std::true_type` or `std::false_type` depending on
+ * whether it meets the criteria for an `Operation` parameter to `AsyncPollOp`.
  *
  * These criteria are:
  *  - has a `Start` member function,
  *  - has a `AccumulatedResult` member function,
  *  - the `Start` function is invokable with `CompletionQueue&`,
  *    `std::unique_ptr<grpc::ClientContext>&&` and `Functor&&`, where `Functor`
- *    is invokable with `CompletionQueue&` and `grpc::Status&`,
+ *    is invokable with `CompletionQueue&`, bool and `grpc::Status&`,
  *  - the `AccumulatedResult` is invocable with no arguments,
  *  - the `Start` function returns a std::shared_ptr<AsyncOperation>
  *  - the `AccumulatedResult` function has the same return type as
  *    `Operation::Response`.
  */
 template <typename Operation>
-struct MeetsAsyncOperationRequirements
+struct MeetsAsyncPollOperationRequirements
     : public conjunction<
-          HasStart<Operation, PrototypeStartCallback>,
+          HasStart<Operation, PrototypePollOpStartCallback>,
           HasAccumulatedResult<Operation>,
           google::cloud::internal::is_invocable<
-              decltype(&Operation::template Start<PrototypeStartCallback>),
+              decltype(
+                  &Operation::template Start<PrototypePollOpStartCallback>),
               Operation&, CompletionQueue&,
-              std::unique_ptr<grpc::ClientContext>&&, PrototypeStartCallback&&>,
+              std::unique_ptr<grpc::ClientContext>&&,
+              PrototypePollOpStartCallback&&>,
           google::cloud::internal::is_invocable<
               decltype(&Operation::AccumulatedResult), Operation&>,
           std::is_same<google::cloud::internal::invoke_result_t<
                            decltype(&Operation::AccumulatedResult), Operation&>,
                        typename Operation::Response>,
-          std::is_same<
-              google::cloud::internal::invoke_result_t<
-                  decltype(&Operation::template Start<PrototypeStartCallback>),
-                  Operation&, CompletionQueue&,
-                  std::unique_ptr<grpc::ClientContext>&&,
-                  PrototypeStartCallback&&>,
-              std::shared_ptr<AsyncOperation>>> {};
+          std::is_same<google::cloud::internal::invoke_result_t<
+                           decltype(&Operation::template Start<
+                                    PrototypePollOpStartCallback>),
+                           Operation&, CompletionQueue&,
+                           std::unique_ptr<grpc::ClientContext>&&,
+                           PrototypePollOpStartCallback&&>,
+                       std::shared_ptr<AsyncOperation>>> {};
 
 /**
- * Perform an asynchronous operation, with retries.
- *
- * @tparam IdempotencyPolicy the policy used to determine if an operation is
- *     idempotent. In most cases this is just `ConstantIdempotentPolicy`
- *     because the decision around idempotency can be made before the retry loop
- *     starts. Some calls may dynamically determine if a retry (or a partial
- *     retry for `BulkApply`) are idempotent.
+ * Perform asynchronous polling.
  *
  * @tparam Functor the type of the function-like object that will receive the
  *     results.
  *
  * @tparam Operation a class responsible for submitting requests. Its `Start()`
  *     member function will be used for sending the retries and the original
- *     request. In case of simple operations, it will just keep sending the same
- *     request, but in case of more sophisticated ones (e.g. `BulkApply`), the
- *     content might change with every retry. For reference, consult
- *     `AsyncUnaryRpc` and `MeetsAsyncOperationRequirements`.
+ *     request. It follows the same scheme as AsyncRetryOp.
+ *     `AsyncCheckConsistency` and `MeetsAsyncPollOperationRequirements`.
  *
  * @tparam valid_callback_type a format parameter, uses `std::enable_if<>` to
  *     disable this template if the functor does not match the expected
  *     signature.
  */
-template <
-    typename IdempotencyPolicy, typename Functor, typename Operation,
-    typename std::enable_if<
-        google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                              typename Operation::Response&,
-                                              grpc::Status&>::value,
-        int>::type valid_callback_type = 0,
-    typename std::enable_if<MeetsAsyncOperationRequirements<Operation>::value,
-                            int>::type operation_meets_requirements = 0>
-class AsyncRetryOp : public std::enable_shared_from_this<
-                         AsyncRetryOp<IdempotencyPolicy, Functor, Operation>>,
-                     public AsyncOperation {
+template <typename Functor, typename Operation,
+          typename std::enable_if<
+              google::cloud::internal::is_invocable<
+                  Functor, CompletionQueue&, typename Operation::Response&,
+                  grpc::Status&>::value,
+              int>::type valid_callback_type = 0,
+          typename std::enable_if<
+              MeetsAsyncPollOperationRequirements<Operation>::value, int>::type
+              operation_meets_requirements = 0>
+class AsyncPollOp
+    : public std::enable_shared_from_this<AsyncPollOp<Functor, Operation>>,
+      public AsyncOperation {
  public:
-  explicit AsyncRetryOp(char const* error_message,
-                        std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-                        std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-                        IdempotencyPolicy idempotent_policy,
-                        MetadataUpdatePolicy metadata_update_policy,
-                        Functor&& callback, Operation&& operation)
+  explicit AsyncPollOp(char const* error_message,
+                       std::unique_ptr<PollingPolicy> polling_policy,
+                       MetadataUpdatePolicy metadata_update_policy,
+                       Functor&& callback, Operation&& operation)
       : cancelled_(),
         error_message_(error_message),
-        rpc_retry_policy_(std::move(rpc_retry_policy)),
-        rpc_backoff_policy_(std::move(rpc_backoff_policy)),
-        idempotent_policy_(std::move(idempotent_policy)),
+        polling_policy_(std::move(polling_policy)),
         metadata_update_policy_(std::move(metadata_update_policy)),
         callback_(std::forward<Functor>(callback)),
         operation_(std::move(operation)) {}
@@ -179,15 +161,14 @@ class AsyncRetryOp : public std::enable_shared_from_this<
   void StartUnlocked(CompletionQueue& cq) {
     auto self = this->shared_from_this();
     auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
-    rpc_retry_policy_->Setup(*context);
-    rpc_backoff_policy_->Setup(*context);
+    // TODO(1431): add polling_policy_->Setup();
     metadata_update_policy_.Setup(*context);
 
-    current_op_ =
-        operation_.Start(cq, std::move(context),
-                         [self](CompletionQueue& cq, grpc::Status& status) {
-                           self->OnCompletion(cq, status);
-                         });
+    current_op_ = operation_.Start(
+        cq, std::move(context),
+        [self](CompletionQueue& cq, bool finished, grpc::Status& status) {
+          self->OnCompletion(cq, finished, status);
+        });
   }
 
   std::string FullErrorMessageUnlocked(char const* where) {
@@ -206,7 +187,7 @@ class AsyncRetryOp : public std::enable_shared_from_this<
   }
 
   /// The callback to handle one asynchronous request completing.
-  void OnCompletion(CompletionQueue& cq, grpc::Status& status) {
+  void OnCompletion(CompletionQueue& cq, bool finished, grpc::Status& status) {
     std::unique_lock<std::mutex> lk(mu_);
     // If we don't schedule a timer, we don't want this object to
     // hold the operation.
@@ -226,32 +207,32 @@ class AsyncRetryOp : public std::enable_shared_from_this<
       callback_(cq, res, res_status);
       return;
     }
-    if (status.ok()) {
-      // Success, just report the result.
+    if (finished) {
+      // Finished, just report the result.
       auto res = operation_.AccumulatedResult();
       lk.unlock();
       callback_(cq, res, status);
       return;
     }
-    if (not idempotent_policy_.is_idempotent()) {
-      auto res = operation_.AccumulatedResult();
-      grpc::Status res_status(
-          status.error_code(),
-          FullErrorMessageUnlocked("non-idempotent operation failed", status),
-          status.error_details());
-      lk.unlock();
-      callback_(cq, res, res_status);
-      return;
-    }
-    if (not rpc_retry_policy_->OnFailure(status)) {
+    // At this point we know the operation is not finished and not cancelled.
+    if (not status.ok() and not polling_policy_->OnFailure(status)) {
       std::string full_message =
-          FullErrorMessageUnlocked(RPCRetryPolicy::IsPermanentFailure(status)
+          FullErrorMessageUnlocked(polling_policy_->IsPermanentError(status)
                                        ? "permanent error"
                                        : "too many transient errors",
                                    status);
       auto res = operation_.AccumulatedResult();
       grpc::Status res_status(status.error_code(), full_message,
                               status.error_details());
+      lk.unlock();
+      callback_(cq, res, res_status);
+      return;
+    }
+    if (polling_policy_->Exhausted()) {
+      auto res = operation_.AccumulatedResult();
+      grpc::Status res_status(
+          grpc::StatusCode::UNKNOWN,
+          FullErrorMessageUnlocked("polling policy exhausted"));
       lk.unlock();
       callback_(cq, res, res_status);
       return;
@@ -269,7 +250,7 @@ class AsyncRetryOp : public std::enable_shared_from_this<
       return;
     }
 
-    auto delay = rpc_backoff_policy_->OnCompletion(status);
+    auto delay = polling_policy_->WaitPeriod();
     auto self = this->shared_from_this();
     current_op_ = cq.MakeRelativeTimer(
         delay, [self](CompletionQueue& cq, AsyncTimerResult result) {
@@ -300,9 +281,7 @@ class AsyncRetryOp : public std::enable_shared_from_this<
   // retry in such a scenario, we indicate cancellation by using this flag.
   bool cancelled_;
   char const* error_message_;
-  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
-  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
-  IdempotencyPolicy idempotent_policy_;
+  std::unique_ptr<PollingPolicy> polling_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
   Functor callback_;
   // A handle to a currently ongoing async operation - either a timer or one
@@ -313,29 +292,10 @@ class AsyncRetryOp : public std::enable_shared_from_this<
   Operation operation_;
 };
 
-/**
- * An idempotent policy for `AsyncRetryOp` based on a pre-computed value.
- *
- * In most APIs the idempotency of the API is either known at compile-time or
- * the value is unchanged during the retry loop. This class can be used in
- * those cases as the `IdempotentPolicy` template parameter for
- * `AsyncRetryOp`.
- */
-class ConstantIdempotencyPolicy {
- public:
-  explicit ConstantIdempotencyPolicy(bool is_idempotent)
-      : is_idempotent_(is_idempotent) {}
-
-  bool is_idempotent() const { return is_idempotent_; }
-
- private:
-  bool is_idempotent_;
-};
-
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_RETRY_OP_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_POLL_OP_H_
