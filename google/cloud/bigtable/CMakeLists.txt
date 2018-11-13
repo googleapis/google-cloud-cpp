@@ -155,6 +155,7 @@ add_library(bigtable_client
             internal/async_bulk_apply.h
             internal/async_sample_row_keys.h
             internal/async_sample_row_keys.cc
+            internal/async_op_traits.h
             internal/async_retry_op.h
             internal/async_retry_unary_rpc.h
             internal/bulk_mutator.h

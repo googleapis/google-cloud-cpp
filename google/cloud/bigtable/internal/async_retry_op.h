@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_RETRY_OP_H_
 
 #include "google/cloud/bigtable/completion_queue.h"
+#include "google/cloud/bigtable/internal/async_op_traits.h"
 #include "google/cloud/bigtable/internal/conjunction.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
@@ -40,42 +41,6 @@ struct PrototypeStartCallback {
 };
 
 /**
- * SFINAE detector whether class `C` has a `Start` member function.
- *
- * Catch-all, negative branch.
- */
-template <typename C, typename M = void>
-struct HasStart : public std::false_type {};
-
-/**
- * SFINAE detector whether class `C` has a `Start` member function.
- *
- * Positive branch.
- */
-template <typename C>
-struct HasStart<C, google::cloud::internal::void_t<decltype(
-                       &C::template Start<PrototypeStartCallback>)>>
-    : public std::true_type {};
-
-/**
- * SFINAE detector whether class `C` has a `AccumulatedResult` member function.
- *
- * Catch-all, negative branch.
- */
-template <typename C, typename M = void>
-struct HasAccumulatedResult : public std::false_type {};
-
-/**
- * SFINAE detector whether class `C` has a `AccumulatedResult` member function.
- *
- * Positive branch.
- */
-template <typename C>
-struct HasAccumulatedResult<
-    C, google::cloud::internal::void_t<decltype(&C::AccumulatedResult)>>
-    : public std::true_type {};
-
-/**
  * A check if the template parameter meets criteria for `AsyncRetryOp`.
  *
  * This struct inherits from `std::true_type` of `std::false_type` depending on
@@ -95,7 +60,8 @@ struct HasAccumulatedResult<
 template <typename Operation>
 struct MeetsAsyncOperationRequirements
     : public conjunction<
-          HasStart<Operation>, HasAccumulatedResult<Operation>,
+          HasStart<Operation, PrototypeStartCallback>,
+          HasAccumulatedResult<Operation>,
           google::cloud::internal::is_invocable<
               decltype(&Operation::template Start<PrototypeStartCallback>),
               Operation&, CompletionQueue&,
