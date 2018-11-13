@@ -148,6 +148,10 @@ class AsyncPollOp
 
     auto delay = polling_policy_->WaitPeriod();
     auto self = this->shared_from_this();
+    cq.MakeRelativeTimer(delay,
+                         [self](CompletionQueue& cq, AsyncTimerResult result) {
+                           self->OnTimer(cq, result);
+                         });
   }
 
   void OnTimer(CompletionQueue& cq, AsyncTimerResult& timer) {
