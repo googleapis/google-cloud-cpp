@@ -37,6 +37,14 @@ echo %date% %time%
 powershell -exec bypass ci\kokoro\windows\build-project.ps1
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+@rem Kokoro rsyncs all the files in the %KOKORO_ARTIFACTS_DIR%, which takes a
+@rem long time. The recommended workaround is to remove all the files that are
+@rem not interesting artifacts.
+echo %date% %time%
+cd "%KOKORO_ARTIFACTS_DIR%"
+powershell -Command "& {Get-ChildItem -Recurse -File -Exclude test.xml,sponge_log.xml,build.bat | Remove-Item}"
+if %errorlevel% neq 0 exit /b %errorlevel%
+
 @echo %date% %time%
 @echo DONE DONE DONE "============================================="
 @echo DONE DONE DONE "============================================="
