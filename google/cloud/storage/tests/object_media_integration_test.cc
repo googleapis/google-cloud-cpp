@@ -29,8 +29,11 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-using ::testing::HasSubstr;
 namespace {
+using ::testing::HasSubstr;
+using google::cloud::storage::testing::CountMatchingEntities;
+using google::cloud::storage::testing::TestPermanentFailure;
+
 /// Store the project and instance captured from the command-line arguments.
 class ObjectMediaTestEnvironment : public ::testing::Environment {
  public:
@@ -544,19 +547,6 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingWriteJSON) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
   client.DeleteObject(bucket_name, object_name);
-}
-
-template <typename Callable>
-void TestPermanentFailure(Callable&& callable) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { callable(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("Permanent error in"));
-    throw;
-  },
-               std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(callable(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST_F(ObjectMediaIntegrationTest, InsertWithCrc32c) {

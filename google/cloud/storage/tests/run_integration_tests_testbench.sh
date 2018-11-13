@@ -54,6 +54,10 @@ echo "Running GCS Bucket APIs integration tests."
 ./bucket_integration_test "${PROJECT_ID}" "${BUCKET_NAME}" "${TOPIC_NAME}"
 
 echo
+echo "Running GCS Object Insert API integration tests."
+./object_insert_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
+
+echo
 echo "Running GCS Object APIs integration tests."
 ./object_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
 

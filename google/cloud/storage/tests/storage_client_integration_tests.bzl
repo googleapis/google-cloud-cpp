@@ -6,6 +6,7 @@ storage_client_integration_tests = [
     "curl_request_integration_test.cc",
     "curl_streambuf_integration_test.cc",
     "object_media_integration_test.cc",
+    "object_insert_integration_test.cc",
     "object_integration_test.cc",
     "service_account_integration_test.cc",
     "storage_include_test.cc",
