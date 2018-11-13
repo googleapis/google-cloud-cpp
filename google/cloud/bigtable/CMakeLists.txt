@@ -153,6 +153,7 @@ add_library(bigtable_client
             instance_update_config.h
             instance_update_config.cc
             internal/async_bulk_apply.h
+            internal/async_op_traits.h
             internal/async_sample_row_keys.h
             internal/async_sample_row_keys.cc
             internal/async_retry_op.h
