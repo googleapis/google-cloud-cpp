@@ -440,7 +440,7 @@ void GenerateEncryptionKey(google::cloud::storage::Client client, int& argc,
   if (argc != 1) {
     throw Usage{"generate-encryption-key"};
   }
-  //! [generate encryption key] [START generate_encryption_key_base64]
+  //! [generate encryption key] [START storage_generate_encryption_key]
   // Create a pseudo-random number generator (PRNG), this is included for
   // demonstration purposes only. You should consult your security team about
   // best practices to initialize PRNG. In particular, you should verify that
@@ -477,7 +477,7 @@ void GenerateEncryptionKey(google::cloud::storage::Client client, int& argc,
 
   std::cout << "Base64 encoded key = " << data.key << "\n"
             << "Base64 encoded SHA256 of key = " << data.sha256 << std::endl;
-  //! [generate encryption key] [END generate_encryption_key_base64]
+  //! [generate encryption key] [END storage_generate_encryption_key]
 }
 
 void WriteEncryptedObject(google::cloud::storage::Client client, int& argc,
