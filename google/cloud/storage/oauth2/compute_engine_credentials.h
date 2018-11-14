@@ -59,8 +59,12 @@ class ComputeEngineCredentials : public Credentials {
       : expiration_time_(), service_account_email_(service_account_email) {}
 
   std::string AuthorizationHeader() override {
-    std::unique_lock<std::mutex> lk(mu_);
-    cv_.wait(lk, [this]() { return Refresh().ok(); });
+    std::unique_lock<std::mutex> lock(mu_);
+    if (IsValid()) {
+      return authorization_header_;
+    }
+    // TODO(#516) - Return Refresh() result so caller can do retries instead.
+    cv_.wait(lock, [this]() { return Refresh().ok(); });
     return authorization_header_;
   }
 
@@ -85,6 +89,15 @@ class ComputeEngineCredentials : public Credentials {
   std::set<std::string> scopes() { return scopes_; }
 
  private:
+  bool IsExpired() {
+    auto now = std::chrono::system_clock::now();
+    return now > (expiration_time_ - GoogleOAuthAccessTokenExpirationSlack());
+  }
+
+  bool IsValid() {
+    return not authorization_header_.empty() and not IsExpired();
+  }
+
   storage::internal::HttpResponse DoMetadataServerGetRequest(std::string path,
                                                              bool recursive) {
     std::string metadata_server_hostname =
@@ -133,13 +146,9 @@ class ComputeEngineCredentials : public Credentials {
 
   storage::Status Refresh() {
     namespace nl = storage::internal::nl;
-    if (std::chrono::system_clock::now() < expiration_time_) {
-      return storage::Status();
-    }
 
     auto status = RetrieveServiceAccountInfo();
     if (!status.ok()) {
-      // TODO(#516) - use retry policies.
       return status;
     }
 
@@ -147,7 +156,6 @@ class ComputeEngineCredentials : public Credentials {
         "/computeMetadata/v1/instance/service-accounts/" +
             service_account_email_ + "/token",
         false);
-    // TODO(#516) - use retry policies to refresh the credentials.
     if (response.status_code >= 300) {
       return storage::Status(response.status_code, std::move(response.payload));
     }
@@ -170,8 +178,7 @@ class ComputeEngineCredentials : public Credentials {
     header += access_token.value("access_token", "");
     auto expires_in =
         std::chrono::seconds(access_token.value("expires_in", int(0)));
-    auto new_expiration = std::chrono::system_clock::now() + expires_in -
-                          GoogleOAuthAccessTokenExpirationSlack();
+    auto new_expiration = std::chrono::system_clock::now() + expires_in;
 
     // Do not update any state until all potential exceptions are raised.
     authorization_header_ = std::move(header);

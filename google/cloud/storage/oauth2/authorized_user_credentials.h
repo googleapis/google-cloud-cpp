@@ -90,19 +90,28 @@ class AuthorizedUserCredentials : public Credentials {
   }
 
   std::string AuthorizationHeader() override {
-    std::unique_lock<std::mutex> lk(mu_);
-    cv_.wait(lk, [this]() { return Refresh().ok(); });
+    std::unique_lock<std::mutex> lock(mu_);
+    if (IsValid()) {
+      return authorization_header_;
+    }
+    // TODO(#516) - Return Refresh() result so caller can do retries instead.
+    cv_.wait(lock, [this]() { return Refresh().ok(); });
     return authorization_header_;
   }
 
  private:
-  storage::Status Refresh() {
-    namespace nl = storage::internal::nl;
-    if (std::chrono::system_clock::now() < expiration_time_) {
-      return storage::Status();
-    }
+  bool IsExpired() {
+    auto now = std::chrono::system_clock::now();
+    return now > (expiration_time_ - GoogleOAuthAccessTokenExpirationSlack());
+  }
 
-    // TODO(#516) - use retry policies to refresh the credentials.
+  bool IsValid() {
+    return not authorization_header_.empty() and not IsExpired();
+  }
+
+  google::cloud::storage::Status Refresh() {
+    namespace nl = storage::internal::nl;
+
     auto response = request_.MakeRequest(payload_);
     if (response.status_code >= 300) {
       return storage::Status(response.status_code, std::move(response.payload));
@@ -125,8 +134,7 @@ class AuthorizedUserCredentials : public Credentials {
     std::string new_id = access_token.value("id_token", "");
     auto expires_in =
         std::chrono::seconds(access_token.value("expires_in", int(0)));
-    auto new_expiration = std::chrono::system_clock::now() + expires_in -
-                          GoogleOAuthAccessTokenExpirationSlack();
+    auto new_expiration = std::chrono::system_clock::now() + expires_in;
     // Do not update any state until all potential exceptions are raised.
     authorization_header_ = std::move(header);
     expiration_time_ = new_expiration;
