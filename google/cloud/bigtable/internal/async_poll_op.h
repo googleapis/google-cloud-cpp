@@ -82,8 +82,7 @@ class AsyncPollOp
   }
 
   std::shared_ptr<AsyncOperation> Start(CompletionQueue& cq) {
-    auto res =
-        std::static_pointer_cast<AsyncOperation>(this->shared_from_this());
+    auto self = this->shared_from_this();
     std::unique_lock<std::mutex> lk(mu_);
     if (cancelled_) {
       lk.unlock();
@@ -92,16 +91,15 @@ class AsyncPollOp
       // schedule the callback to fire on the thread running the completion
       // queue by submitting an expired timer.
       // There is no reason to store this timer in current_op_.
-      auto self = this->shared_from_this();
       cq.MakeRelativeTimer(
           std::chrono::seconds(0),
           [self](CompletionQueue& cq, AsyncTimerResult result) {
             self->OnTimer(cq, result);
           });
-      return res;
+      return self;
     }
     StartUnlocked(cq);
-    return res;
+    return self;
   }
 
  private:
