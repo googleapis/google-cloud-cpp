@@ -153,6 +153,7 @@ add_library(bigtable_client
             instance_update_config.h
             instance_update_config.cc
             internal/async_bulk_apply.h
+            internal/async_check_consistency.h
             internal/async_op_traits.h
             internal/async_poll_op.h
             internal/async_sample_row_keys.h
@@ -299,6 +300,7 @@ set(bigtable_client_unit_tests
     instance_update_config_test.cc
     internal/async_poll_op_test.cc
     internal/async_retry_op_test.cc
+    internal/async_check_consistency_test.cc
     internal/bulk_mutator_test.cc
     internal/table_async_check_and_mutate_row_test.cc
     internal/instance_admin_test.cc

@@ -17,6 +17,7 @@ bigtable_client_HDRS = [
     "instance_config.h",
     "instance_update_config.h",
     "internal/async_bulk_apply.h",
+    "internal/async_check_consistency.h",
     "internal/async_op_traits.h",
     "internal/async_poll_op.h",
     "internal/async_sample_row_keys.h",
