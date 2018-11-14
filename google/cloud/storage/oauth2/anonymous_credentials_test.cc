@@ -27,7 +27,7 @@ class AnonymousCredentialsTest : public ::testing::Test {};
 /// @test Verify `AnonymousCredentials` works as expected.
 TEST_F(AnonymousCredentialsTest, AuthorizationHeaderReturnsEmptyString) {
   AnonymousCredentials credentials;
-  EXPECT_EQ("", credentials.AuthorizationHeader());
+  EXPECT_EQ("", credentials.AuthorizationHeader().second);
 }
 
 }  // namespace

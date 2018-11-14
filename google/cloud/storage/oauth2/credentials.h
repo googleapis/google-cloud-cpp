@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_CREDENTIALS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_CREDENTIALS_H_
 
-#include "google/cloud/storage/version.h"
+#include "google/cloud/storage/status.h"
 #include <chrono>
 
 namespace google {
@@ -31,9 +31,16 @@ class Credentials {
   virtual ~Credentials() = default;
 
   /**
-   * Returns the value for the Authorization header in HTTP requests.
+   * Returns a pair consisting of:
+   * - The status containing failure details if we were unable to obtain a
+   *   value for the Authorization header. For credentials that need to be
+   *   periodically refreshed, this might include failure details from a refresh
+   *   HTTP request. Otherwise an OK status is returned.
+   * - The value for the Authorization header in HTTP requests, or an empty
+   *   string if we were unable to obtain one.
    */
-  virtual std::string AuthorizationHeader() = 0;
+  virtual std::pair<google::cloud::storage::Status, std::string>
+  AuthorizationHeader() = 0;
 };
 
 }  // namespace oauth2

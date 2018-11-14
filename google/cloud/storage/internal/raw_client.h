@@ -158,6 +158,9 @@ class RawClient {
   virtual std::pair<Status, EmptyResponse> DeleteNotification(
       DeleteNotificationRequest const&) = 0;
   //@}
+
+  virtual std::pair<Status, std::string> AuthorizationHeader(
+      std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&) = 0;
 };
 
 }  // namespace internal

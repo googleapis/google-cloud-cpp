@@ -118,6 +118,16 @@ ClientOptions const& RetryClient::client_options() const {
   return client_->client_options();
 }
 
+std::pair<Status, std::string> RetryClient::AuthorizationHeader(
+    std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&
+        credentials) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  auto is_idempotent = true;
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
+                  &RawClient::AuthorizationHeader, credentials, __func__);
+};
+
 std::pair<Status, ListBucketsResponse> RetryClient::ListBuckets(
     ListBucketsRequest const& request) {
   auto retry_policy = retry_policy_->clone();

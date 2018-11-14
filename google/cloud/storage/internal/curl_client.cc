@@ -104,11 +104,12 @@ std::string XmlMapPredefinedAcl(std::string const& acl) {
 
 void CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
                                     char const* method) {
+  auto auth_header_pair = AuthorizationHeader(options_.credentials());
   builder.SetMethod(method)
       .SetDebugLogging(options_.enable_http_tracing())
       .SetCurlShare(share_.get())
       .AddUserAgentPrefix(options_.user_agent_prefix())
-      .AddHeader(options_.credentials()->AuthorizationHeader());
+      .AddHeader(auth_header_pair.second);
 }
 
 template <typename Request>
@@ -1244,6 +1245,12 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaSimple(
   return std::make_pair(Status(),
                         ObjectMetadata::ParseFromString(payload.payload));
 }
+
+std::pair<Status, std::string> CurlClient::AuthorizationHeader(
+    std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&
+    credentials) {
+  return credentials->AuthorizationHeader();
+};
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

@@ -89,14 +89,16 @@ class AuthorizedUserCredentials : public Credentials {
     request_ = request_builder.BuildRequest();
   }
 
-  std::string AuthorizationHeader() override {
+  std::pair<google::cloud::storage::Status, std::string>
+  AuthorizationHeader() override {
+    using google::cloud::storage::Status;
     std::unique_lock<std::mutex> lock(mu_);
     if (IsValid()) {
-      return authorization_header_;
+      return std::make_pair(Status(), authorization_header_);
     }
-    // TODO(#516) - Return Refresh() result so caller can do retries instead.
-    cv_.wait(lock, [this]() { return Refresh().ok(); });
-    return authorization_header_;
+    Status status = Refresh();
+    return std::make_pair(
+        status, status.ok() ? authorization_header_ : std::string(""));
   }
 
  private:
