@@ -119,11 +119,8 @@ Please note that we use more strict settings for release branches than for
   * The `Require branches to be up to date before merging` sub-option
     is set. This prevents two merges that do not conflict, but nevertheless
     break if both are pushed, to actually merge.
-  * The `Kokoro Ubuntu`, `cla/google`,
-    `continuous-integration/appveyor/pr`, and `continuous-integration/travis-ci`
-    are required to pass.
-  * The `continuous-integration/appveyor/branch` is not required because we do
-    not care about the source branch for a PR passing or not.
+  * The `Kokoro Ubuntu`, `Kokoro Windows`, `cla/google`, and
+    `continuous-integration/travis-ci` checks are required to pass.
 
 * The `Include administrators` checkbox is turned on, we want to stop ourselves
   from making mistakes.
