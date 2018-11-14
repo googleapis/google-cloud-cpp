@@ -28,6 +28,51 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
+struct PrototypePollOpStartCallback {
+  void operator()(CompletionQueue&, bool finished, grpc::Status&) const {}
+};
+
+/**
+ * A check if the template parameter meets criteria for `AsyncPollOp`.
+ *
+ * This struct inherits from `std::true_type` or `std::false_type` depending on
+ * whether it meets the criteria for an `Operation` parameter to `AsyncPollOp`.
+ *
+ * These criteria are:
+ *  - has a `Start` member function,
+ *  - has a `AccumulatedResult` member function,
+ *  - the `Start` function is invokable with `CompletionQueue&`,
+ *    `std::unique_ptr<grpc::ClientContext>&&` and `Functor&&`, where `Functor`
+ *    is invokable with `CompletionQueue&`, bool and `grpc::Status&`,
+ *  - the `AccumulatedResult` is invocable with no arguments,
+ *  - the `Start` function returns a std::shared_ptr<AsyncOperation>
+ *  - the `AccumulatedResult` function has the same return type as
+ *    `Operation::Response`.
+ */
+template <typename Operation>
+struct MeetsAsyncPollOperationRequirements
+    : public conjunction<
+          HasStart<Operation, PrototypePollOpStartCallback>,
+          HasAccumulatedResult<Operation>,
+          google::cloud::internal::is_invocable<
+              decltype(
+                  &Operation::template Start<PrototypePollOpStartCallback>),
+              Operation&, CompletionQueue&,
+              std::unique_ptr<grpc::ClientContext>&&,
+              PrototypePollOpStartCallback&&>,
+          google::cloud::internal::is_invocable<
+              decltype(&Operation::AccumulatedResult), Operation&>,
+          std::is_same<google::cloud::internal::invoke_result_t<
+                           decltype(&Operation::AccumulatedResult), Operation&>,
+                       typename Operation::Response>,
+          std::is_same<google::cloud::internal::invoke_result_t<
+                           decltype(&Operation::template Start<
+                                    PrototypePollOpStartCallback>),
+                           Operation&, CompletionQueue&,
+                           std::unique_ptr<grpc::ClientContext>&&,
+                           PrototypePollOpStartCallback&&>,
+                       std::shared_ptr<AsyncOperation>>> {};
+
 /**
  * Perform asynchronous polling.
  *
@@ -48,7 +93,10 @@ template <typename Functor, typename Operation,
               google::cloud::internal::is_invocable<
                   Functor, CompletionQueue&, typename Operation::Response&,
                   grpc::Status&>::value,
-              int>::type valid_callback_type = 0>
+              int>::type valid_callback_type = 0,
+          typename std::enable_if<
+              MeetsAsyncPollOperationRequirements<Operation>::value, int>::type
+              operation_meets_requirements = 0>
 class AsyncPollOp
     : public std::enable_shared_from_this<AsyncPollOp<Functor, Operation>>,
       public AsyncOperation {
