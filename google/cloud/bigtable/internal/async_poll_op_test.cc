@@ -181,44 +181,75 @@ INSTANTIATE_TEST_CASE_P(
     ImmediateFinish, NoexTableAsyncPollOpImmediateFinishTest,
     ::testing::Values(
         // Finished in first shot.
-        ImmediateFinishTestConfig{.dummy_op_error_code = grpc::StatusCode::OK,
-                                  .dummy_op_poll_finished = true,
-                                  .poll_exhausted = false,
-                                  .expected = grpc::StatusCode::OK},
+        ImmediateFinishTestConfig{
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::OK,
+            // DummyOperation will indicate that operation is finished.
+            true,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::OK},
         // Finished in first shot, policy exhausted.
-        ImmediateFinishTestConfig{.dummy_op_error_code = grpc::StatusCode::OK,
-                                  .dummy_op_poll_finished = true,
-                                  .poll_exhausted = true,
-                                  .expected = grpc::StatusCode::OK},
+        ImmediateFinishTestConfig{
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::OK,
+            // DummyOperation will indicate that operation is finished.
+            true,
+            // PollingPolicy.Finish() will return this.
+            true,
+            // Expected overall result.
+            grpc::StatusCode::OK},
         // Finished in first shot but returned UNAVAILABLE
         ImmediateFinishTestConfig{
-            .dummy_op_error_code = grpc::StatusCode::UNAVAILABLE,
-            .dummy_op_poll_finished = true,
-            .poll_exhausted = false,
-            .expected = grpc::StatusCode::UNAVAILABLE},
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::UNAVAILABLE,
+            // DummyOperation will indicate that operation is finished.
+            true,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::UNAVAILABLE},
         // Finished in first shot but returned PERMISSION_DENIED
         ImmediateFinishTestConfig{
-            .dummy_op_error_code = grpc::StatusCode::PERMISSION_DENIED,
-            .dummy_op_poll_finished = true,
-            .poll_exhausted = false,
-            .expected = grpc::StatusCode::PERMISSION_DENIED},
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::PERMISSION_DENIED,
+            // DummyOperation will indicate that operation is finished.
+            true,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::PERMISSION_DENIED},
         // RPC succeeded, operation not finished, policy exhausted
-        ImmediateFinishTestConfig{.dummy_op_error_code = grpc::StatusCode::OK,
-                                  .dummy_op_poll_finished = false,
-                                  .poll_exhausted = true,
-                                  .expected = grpc::StatusCode::UNKNOWN},
+        ImmediateFinishTestConfig{
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::OK,
+            // DummyOperation will indicate that operation is not finished.
+            false,
+            // PollingPolicy.Finish() will return this.
+            true,
+            // Expected overall result.
+            grpc::StatusCode::UNKNOWN},
         // RPC failed with UNAVAILABLE, policy exhausted
         ImmediateFinishTestConfig{
-            .dummy_op_error_code = grpc::StatusCode::UNAVAILABLE,
-            .dummy_op_poll_finished = false,
-            .poll_exhausted = true,
-            .expected = grpc::StatusCode::UNAVAILABLE},
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::UNAVAILABLE,
+            // DummyOperation will indicate that operation is not finished.
+            false,
+            // PollingPolicy.Finish() will return this.
+            true,
+            // Expected overall result.
+            grpc::StatusCode::UNAVAILABLE},
         // RPC failed with PERMISSION_DENIED, policy exhausted
         ImmediateFinishTestConfig{
-            .dummy_op_error_code = grpc::StatusCode::PERMISSION_DENIED,
-            .dummy_op_poll_finished = false,
-            .poll_exhausted = true,
-            .expected = grpc::StatusCode::PERMISSION_DENIED}));
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::PERMISSION_DENIED,
+            // DummyOperation will indicate that operation is not finished.
+            false,
+            // PollingPolicy.Finish() will return this.
+            true,
+            // Expected overall result.
+            grpc::StatusCode::PERMISSION_DENIED}));
 
 class OneRetryTestConfig {
  public:
@@ -317,28 +348,44 @@ INSTANTIATE_TEST_CASE_P(
     ::testing::Values(
         // No error, not finished, then OK, finished == true,
         // return OK
-        OneRetryTestConfig{.dummy_op1_error_code = grpc::StatusCode::OK,
-                           .dummy_op1_poll_finished = false,
-                           .dummy_op2_error_code = grpc::StatusCode::OK,
-                           .dummy_op2_poll_finished = true,
-                           .expected = grpc::StatusCode::OK},
+        OneRetryTestConfig{
+            // First DummyOperation will finish with this code.
+            grpc::StatusCode::OK,
+            // First DummyOperation will indicate that operation isn't finished.
+            false,
+            // Second DummyOperation will finish with this code.
+            grpc::StatusCode::OK,
+            // Second DummyOperation will indicate that operation is finished.
+            true,
+            // Expected overall result.
+            grpc::StatusCode::OK},
         // Transient error, then OK, finished == true,
         // return OK
         OneRetryTestConfig{
-            .dummy_op1_error_code = grpc::StatusCode::UNAVAILABLE,
-            .dummy_op1_poll_finished = false,
-            .dummy_op2_error_code = grpc::StatusCode::OK,
-            .dummy_op2_poll_finished = true,
-            .expected = grpc::StatusCode::OK},
+            // First DummyOperation will finish with this code.
+            grpc::StatusCode::UNAVAILABLE,
+            // First DummyOperation will indicate that operation isn't finished.
+            false,
+            // Second DummyOperation will finish with this code.
+            grpc::StatusCode::OK,
+            // Second DummyOperation will indicate that operation is finished.
+            true,
+            // Expected overall result.
+            grpc::StatusCode::OK},
         // Transient error, then still transient from
         // underlying op, finished == true,
         // return UNAVAILABLE
         OneRetryTestConfig{
-            .dummy_op1_error_code = grpc::StatusCode::UNAVAILABLE,
-            .dummy_op1_poll_finished = false,
-            .dummy_op2_error_code = grpc::StatusCode::UNAVAILABLE,
-            .dummy_op2_poll_finished = true,
-            .expected = grpc::StatusCode::UNAVAILABLE}));
+            // First DummyOperation will finish with this code.
+            grpc::StatusCode::UNAVAILABLE,
+            // First DummyOperation will indicate that operation isn't finished.
+            false,
+            // Second DummyOperation will finish with this code.
+            grpc::StatusCode::UNAVAILABLE,
+            // Second DummyOperation will indicate that operation is finished.
+            true,
+            // Expected overall result.
+            grpc::StatusCode::UNAVAILABLE}));
 
 }  // namespace
 }  // namespace noex

@@ -231,33 +231,45 @@ INSTANTIATE_TEST_CASE_P(
         // Simulate Cancel being called when an underlying operation is ongoing.
         // We assume that the underlying operation handled it and returned
         // CANCELLED. In such a scenario, CANCELLED status should be reported.
-        CancelInOpTestConfig{.dummy_op_error_code = grpc::StatusCode::CANCELLED,
-                             .idempotent = true,
-                             .expected = grpc::StatusCode::CANCELLED},
+        CancelInOpTestConfig{// DummyOperation will finish with this code.
+                             grpc::StatusCode::CANCELLED,
+                             // Consider DummyOperation idempotent.
+                             true,
+                             // Expected overall result.
+                             grpc::StatusCode::CANCELLED},
         // Simulate Cancel call happening exactly between an underlying
         // operation succeeding and its callback being called. In such a
         // scenario, a success should be reported.
-        CancelInOpTestConfig{.dummy_op_error_code = grpc::StatusCode::OK,
-                             .idempotent = true,
-                             .expected = grpc::StatusCode::OK},
+        CancelInOpTestConfig{// DummyOperation will finish with this code.
+                             grpc::StatusCode::OK,
+                             // Consider DummyOperation idempotent.
+                             true,
+                             // Expected overall result.
+                             grpc::StatusCode::OK},
         // Just like the above case, except an error has been reported. In such
         // a scenario, we should not retry and return CANCELLED
-        CancelInOpTestConfig{
-            .dummy_op_error_code = grpc::StatusCode::UNAVAILABLE,
-            .idempotent = true,
-            .expected = grpc::StatusCode::CANCELLED},
+        CancelInOpTestConfig{// DummyOperation will finish with this code.
+                             grpc::StatusCode::UNAVAILABLE,
+                             // Consider DummyOperation idempotent.
+                             true,
+                             // Expected overall result.
+                             grpc::StatusCode::CANCELLED},
         // Just like the above case, except the retry policy tells it's not
         // retriable, so we return the original error as if there was no cancel.
-        CancelInOpTestConfig{
-            .dummy_op_error_code = grpc::StatusCode::PERMISSION_DENIED,
-            .idempotent = true,
-            .expected = grpc::StatusCode::PERMISSION_DENIED},
+        CancelInOpTestConfig{// DummyOperation will finish with this code.
+                             grpc::StatusCode::PERMISSION_DENIED,
+                             // Consider DummyOperation idempotent.
+                             true,
+                             // Expected overall result.
+                             grpc::StatusCode::PERMISSION_DENIED},
         // Just like the above UNAVAILABLE case, except idempotency forbids
         // retries. In such a scenario, we should return the original error.
-        CancelInOpTestConfig{
-            .dummy_op_error_code = grpc::StatusCode::UNAVAILABLE,
-            .idempotent = false,
-            .expected = grpc::StatusCode::UNAVAILABLE}));
+        CancelInOpTestConfig{// DummyOperation will finish with this code.
+                             grpc::StatusCode::UNAVAILABLE,
+                             // Consider DummyOperation not idempotent.
+                             false,
+                             // Expected overall result.
+                             grpc::StatusCode::UNAVAILABLE}));
 
 // This test checks if the Cancel request is propagated to the actual timer.
 // Because it is hard to mock it, it runs an actual CompletionQueue.
