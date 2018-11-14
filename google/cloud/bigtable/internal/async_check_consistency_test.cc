@@ -99,6 +99,7 @@ TEST_F(NoexAsyncCheckConsistencyTest, Simple) {
 class NoexAsyncCheckConsistencyRetryTest
     : public bigtable::testing::internal::TableTestFixture,
       public WithParamInterface<bool> {};
+
 // Verify that one retry works. No reason for many tests - AsyncPollOp is
 // thoroughly tested.
 TEST_P(NoexAsyncCheckConsistencyRetryTest, OneRetry) {
@@ -180,7 +181,12 @@ TEST_P(NoexAsyncCheckConsistencyRetryTest, OneRetry) {
 }
 
 INSTANTIATE_TEST_CASE_P(OneRetry, NoexAsyncCheckConsistencyRetryTest,
-                        ::testing::Values(false, true));
+                        ::testing::Values(
+                            // First RPC returns an OK status but indicates that
+                            // replication has not yet caught up.
+                            false,
+                            // First RPC fails.
+                            true));
 
 }  // namespace
 }  // namespace noex

@@ -52,7 +52,8 @@ class AsyncCheckConsistency {
     request_.set_consistency_token(consistency_token.get());
   }
 
-  /** Start the bound aynchronous request.
+  /**
+   * Start the bound aynchronous request.
    *
    * @tparam Functor the type of the function-like object that will receive the
    *     results.
