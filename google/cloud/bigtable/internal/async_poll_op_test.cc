@@ -452,64 +452,106 @@ INSTANTIATE_TEST_CASE_P(
         // The `poll_finished` parameter shouldn't affect the result (though it
         // doesn't make much sense for it to be false, TBH).
         CancelInOpTestConfig{
-            .dummy_op_finish_code = grpc::StatusCode::CANCELLED,
-            .poll_finished = true,
-            .poll_exhausted = false,
-            .expected = grpc::StatusCode::CANCELLED},
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::CANCELLED,
+            // DummyOperation will indicate that operation is finished.
+            true,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::CANCELLED},
         CancelInOpTestConfig{
-            .dummy_op_finish_code = grpc::StatusCode::CANCELLED,
-            .poll_finished = false,
-            .poll_exhausted = false,
-            .expected = grpc::StatusCode::CANCELLED},
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::CANCELLED,
+            // DummyOperation will indicate that operation isn't finished.
+            false,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::CANCELLED},
         // Simulate Cancel call happening exactly between an underlying
         // operation succeeding and its callback being called. If the operation
         // is finished, it should return OK, otherwise - CANCELLED.
-        CancelInOpTestConfig{.dummy_op_finish_code = grpc::StatusCode::OK,
-                             .poll_finished = true,
-                             .poll_exhausted = false,
-                             .expected = grpc::StatusCode::OK},
-        CancelInOpTestConfig{.dummy_op_finish_code = grpc::StatusCode::OK,
-                             .poll_finished = false,
-                             .poll_exhausted = false,
-                             .expected = grpc::StatusCode::CANCELLED},
+        CancelInOpTestConfig{
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::OK,
+            // DummyOperation will indicate that operation is finished.
+            true,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::OK},
+        CancelInOpTestConfig{
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::OK,
+            // DummyOperation will indicate that operation isn't finished.
+            false,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::CANCELLED},
         // Just like the above case, except an error has been reported.
         // If the operation is finished, we should return it, otherwise,
         // CANCELLED.
         CancelInOpTestConfig{
-            .dummy_op_finish_code = grpc::StatusCode::UNAVAILABLE,
-            .poll_finished = true,
-            .poll_exhausted = false,
-            .expected = grpc::StatusCode::UNAVAILABLE},
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::UNAVAILABLE,
+            // DummyOperation will indicate that operation is finished.
+            true,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::UNAVAILABLE},
         CancelInOpTestConfig{
-            .dummy_op_finish_code = grpc::StatusCode::UNAVAILABLE,
-            .poll_finished = false,
-            .poll_exhausted = false,
-            .expected = grpc::StatusCode::CANCELLED},
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::UNAVAILABLE,
+            // DummyOperation will indicate that operation isn't finished.
+            false,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::CANCELLED},
         // Just like the above case, except the polling policy says it's not
         // retriable, so we return the original error as if there was no cancel.
         // This should happen for both poll_finished and not.
         CancelInOpTestConfig{
-            .dummy_op_finish_code = grpc::StatusCode::PERMISSION_DENIED,
-            .poll_finished = true,
-            .poll_exhausted = false,
-            .expected = grpc::StatusCode::PERMISSION_DENIED},
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::PERMISSION_DENIED,
+            // DummyOperation will indicate that operation is finished.
+            true,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::PERMISSION_DENIED},
         CancelInOpTestConfig{
-            .dummy_op_finish_code = grpc::StatusCode::PERMISSION_DENIED,
-            .poll_finished = false,
-            .poll_exhausted = false,
-            .expected = grpc::StatusCode::PERMISSION_DENIED},
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::PERMISSION_DENIED,
+            // DummyOperation will indicate that operation isn't finished.
+            false,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::PERMISSION_DENIED},
         // Just like the above UNAVAILABLE case, except, the polling policy says
         // that we've exhausted the retries.
         CancelInOpTestConfig{
-            .dummy_op_finish_code = grpc::StatusCode::UNAVAILABLE,
-            .poll_finished = true,
-            .poll_exhausted = true,
-            .expected = grpc::StatusCode::UNAVAILABLE},
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::UNAVAILABLE,
+            // DummyOperation will indicate that operation is finished.
+            true,
+            // PollingPolicy.Finish() will return this.
+            true,
+            // Expected overall result.
+            grpc::StatusCode::UNAVAILABLE},
         CancelInOpTestConfig{
-            .dummy_op_finish_code = grpc::StatusCode::UNAVAILABLE,
-            .poll_finished = false,
-            .poll_exhausted = true,
-            .expected = grpc::StatusCode::UNAVAILABLE}));
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::UNAVAILABLE,
+            // DummyOperation will indicate that operation isn't finished.
+            false,
+            // PollingPolicy.Finish() will return this.
+            true,
+            // Expected overall result.
+            grpc::StatusCode::UNAVAILABLE}));
 
 // This test checks if the Cancel request is propagated to the actual timer.
 // Because it is hard to mock it, it runs an actual CompletionQueue.
