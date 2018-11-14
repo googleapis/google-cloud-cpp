@@ -53,7 +53,7 @@ class AsyncCheckConsistency {
   }
 
   /**
-   * Start the bound aynchronous request.
+   * Start the bound asynchronous request.
    *
    * @tparam Functor the type of the function-like object that will receive the
    *     results.
