@@ -106,11 +106,10 @@ class DummyOperationMock : public DummyOperationImpl {
 
 class ImmediateFinishTestConfig {
  public:
-  // Error code returned from the first Start()
-  grpc::StatusCode error_code;
-  // finished flag returned from the second Start()
-  bool finished;
-  bool exhausted;
+  grpc::StatusCode dummy_op_error_code;
+  // Whether DummyOperation reports this poll attempt as finished.
+  bool dummy_op_poll_finished;
+  bool poll_exhausted;
   grpc::StatusCode expected;
 };
 
@@ -120,13 +119,17 @@ class NoexTableAsyncPollOpImmediateFinishTest
 
 TEST_P(NoexTableAsyncPollOpImmediateFinishTest, ImmediateFinish) {
   auto const config = GetParam();
+
+  // Make sure polling policy doesn't allow for any retries if
+  // config.poll_exhausted is set, so that polling_policy.Exhausted() returns
+  // false.
   internal::RPCPolicyParameters const noRetries = {
       std::chrono::hours(0),
       std::chrono::hours(0),
       std::chrono::hours(0),
   };
   auto polling_policy = bigtable::DefaultPollingPolicy(
-      config.exhausted ? noRetries : internal::kBigtableLimits);
+      config.poll_exhausted ? noRetries : internal::kBigtableLimits);
   MetadataUpdatePolicy metadata_update_policy(kTableId,
                                               MetadataParamTypes::TABLE_NAME);
 
@@ -134,82 +137,99 @@ TEST_P(NoexTableAsyncPollOpImmediateFinishTest, ImmediateFinish) {
   CompletionQueue cq(cq_impl);
 
   auto dummy_op_mock = std::make_shared<DummyOperationMock>();
-  auto async_op_mock = new AsyncOperationMock;
-  auto async_op_mock_smart = std::shared_ptr<AsyncOperation>(async_op_mock);
 
-  Functor stored_callback;
-  bool op_completed = false;
+  Functor on_dummy_op_finished;
+  bool user_op_completed = false;
 
-  auto callback = [&op_completed, config](CompletionQueue&, int& response,
-                                          grpc::Status& status) {
+  auto user_callback = [&user_op_completed, config](CompletionQueue&,
+                                                    int& response,
+                                                    grpc::Status& status) {
     EXPECT_EQ(config.expected, status.error_code());
     EXPECT_EQ(27, response);
-    op_completed = true;
+    user_op_completed = true;
   };
 
   auto async_op = std::make_shared<
-      internal::AsyncPollOp<decltype(callback), DummyOperation>>(
+      internal::AsyncPollOp<decltype(user_callback), DummyOperation>>(
       __func__, polling_policy->clone(), metadata_update_policy,
-      std::move(callback), DummyOperation(dummy_op_mock));
+      std::move(user_callback), DummyOperation(dummy_op_mock));
 
   EXPECT_CALL(*dummy_op_mock, Start(_, _, _))
       .WillOnce(
-          Invoke([&stored_callback, &async_op_mock_smart](
-                     CompletionQueue&, std::unique_ptr<grpc::ClientContext>&,
-                     Functor const& callback) {
-            stored_callback = callback;
-            return async_op_mock_smart;
+          Invoke([&on_dummy_op_finished](CompletionQueue&,
+                                         std::unique_ptr<grpc::ClientContext>&,
+                                         Functor const& callback) {
+            on_dummy_op_finished = callback;
+            return std::shared_ptr<AsyncOperation>(new AsyncOperationMock);
           }));
   EXPECT_CALL(*dummy_op_mock, AccumulatedResult()).WillOnce(Invoke([]() {
     return 27;
   }));
 
-  EXPECT_FALSE(stored_callback);
+  EXPECT_FALSE(on_dummy_op_finished);
   async_op->Start(cq);
-  EXPECT_TRUE(stored_callback);
+  EXPECT_TRUE(on_dummy_op_finished);
 
-  grpc::Status status(config.error_code, "");
-  stored_callback(cq, config.finished, status);
+  grpc::Status status(config.dummy_op_error_code, "");
+  on_dummy_op_finished(cq, config.dummy_op_poll_finished, status);
 
   EXPECT_TRUE(cq_impl->empty());
-  EXPECT_TRUE(op_completed);
+  EXPECT_TRUE(user_op_completed);
 }
 
 INSTANTIATE_TEST_CASE_P(
     ImmediateFinish, NoexTableAsyncPollOpImmediateFinishTest,
     ::testing::Values(
         // Finished in first shot.
-        ImmediateFinishTestConfig{grpc::StatusCode::OK, true, false,
-                                  grpc::StatusCode::OK},
+        ImmediateFinishTestConfig{.dummy_op_error_code = grpc::StatusCode::OK,
+                                  .dummy_op_poll_finished = true,
+                                  .poll_exhausted = false,
+                                  .expected = grpc::StatusCode::OK},
         // Finished in first shot, policy exhausted.
-        ImmediateFinishTestConfig{grpc::StatusCode::OK, true, true,
-                                  grpc::StatusCode::OK},
+        ImmediateFinishTestConfig{.dummy_op_error_code = grpc::StatusCode::OK,
+                                  .dummy_op_poll_finished = true,
+                                  .poll_exhausted = true,
+                                  .expected = grpc::StatusCode::OK},
         // Finished in first shot but returned UNAVAILABLE
-        ImmediateFinishTestConfig{grpc::StatusCode::UNAVAILABLE, true, false,
-                                  grpc::StatusCode::UNAVAILABLE},
+        ImmediateFinishTestConfig{
+            .dummy_op_error_code = grpc::StatusCode::UNAVAILABLE,
+            .dummy_op_poll_finished = true,
+            .poll_exhausted = false,
+            .expected = grpc::StatusCode::UNAVAILABLE},
         // Finished in first shot but returned PERMISSION_DENIED
-        ImmediateFinishTestConfig{grpc::StatusCode::PERMISSION_DENIED, true,
-                                  false, grpc::StatusCode::PERMISSION_DENIED},
+        ImmediateFinishTestConfig{
+            .dummy_op_error_code = grpc::StatusCode::PERMISSION_DENIED,
+            .dummy_op_poll_finished = true,
+            .poll_exhausted = false,
+            .expected = grpc::StatusCode::PERMISSION_DENIED},
         // RPC succeeded, operation not finished, policy exhausted
-        ImmediateFinishTestConfig{grpc::StatusCode::OK, false, true,
-                                  grpc::StatusCode::UNKNOWN},
+        ImmediateFinishTestConfig{.dummy_op_error_code = grpc::StatusCode::OK,
+                                  .dummy_op_poll_finished = false,
+                                  .poll_exhausted = true,
+                                  .expected = grpc::StatusCode::UNKNOWN},
         // RPC failed with UNAVAILABLE, policy exhausted
-        ImmediateFinishTestConfig{grpc::StatusCode::UNAVAILABLE, false, true,
-                                  grpc::StatusCode::UNAVAILABLE},
+        ImmediateFinishTestConfig{
+            .dummy_op_error_code = grpc::StatusCode::UNAVAILABLE,
+            .dummy_op_poll_finished = false,
+            .poll_exhausted = true,
+            .expected = grpc::StatusCode::UNAVAILABLE},
         // RPC failed with PERMISSION_DENIED, policy exhausted
-        ImmediateFinishTestConfig{grpc::StatusCode::PERMISSION_DENIED, false,
-                                  true, grpc::StatusCode::PERMISSION_DENIED}));
+        ImmediateFinishTestConfig{
+            .dummy_op_error_code = grpc::StatusCode::PERMISSION_DENIED,
+            .dummy_op_poll_finished = false,
+            .poll_exhausted = true,
+            .expected = grpc::StatusCode::PERMISSION_DENIED}));
 
 class OneRetryTestConfig {
  public:
-  // Error code returned from the first Start()
-  grpc::StatusCode error_code1;
-  // finished flag returned from the second Start()
-  bool finished1;
-  // Error code returned from the second Start()
-  grpc::StatusCode error_code2;
-  // finished flag returned from the second Start()
-  bool finished2;
+  // Error code which the first DummyOperation ends with.
+  grpc::StatusCode dummy_op1_error_code;
+  // Whether the first DummyOperation indicates if the poll is finished.
+  bool dummy_op1_poll_finished;
+  // Error code which the first DummyOperation ends with.
+  grpc::StatusCode dummy_op2_error_code;
+  // Whether the first DummyOperation indicates if the poll is finished.
+  bool dummy_op2_poll_finished;
   grpc::StatusCode expected;
 };
 
@@ -228,69 +248,68 @@ TEST_P(NoexTableAsyncPollOpOneRetryTest, OneRetry) {
   CompletionQueue cq(cq_impl);
 
   auto dummy_op_mock = std::make_shared<DummyOperationMock>();
-  auto async_op_mock = new AsyncOperationMock;
-  auto async_op_mock_smart = std::shared_ptr<AsyncOperation>(async_op_mock);
 
-  Functor stored_callback1;
-  Functor stored_callback2;
-  bool op_completed = false;
+  Functor on_dummy_op1_finished;
+  Functor on_dummy_op2_finished;
+  bool user_op_completed = false;
 
-  auto callback = [&op_completed, config](CompletionQueue&, int& response,
-                                          grpc::Status& status) {
+  auto user_callback = [&user_op_completed, config](CompletionQueue&,
+                                                    int& response,
+                                                    grpc::Status& status) {
     EXPECT_EQ(config.expected, status.error_code());
     EXPECT_EQ(27, response);
-    op_completed = true;
+    user_op_completed = true;
   };
 
   auto async_op = std::make_shared<
-      internal::AsyncPollOp<decltype(callback), DummyOperation>>(
+      internal::AsyncPollOp<decltype(user_callback), DummyOperation>>(
       __func__, polling_policy->clone(), metadata_update_policy,
-      std::move(callback), DummyOperation(dummy_op_mock));
+      std::move(user_callback), DummyOperation(dummy_op_mock));
 
   EXPECT_CALL(*dummy_op_mock, Start(_, _, _))
       .WillOnce(
-          Invoke([&stored_callback1, &async_op_mock_smart](
-                     CompletionQueue&, std::unique_ptr<grpc::ClientContext>&,
-                     Functor const& callback) {
-            stored_callback1 = callback;
-            return async_op_mock_smart;
+          Invoke([&on_dummy_op1_finished](CompletionQueue&,
+                                          std::unique_ptr<grpc::ClientContext>&,
+                                          Functor const& callback) {
+            on_dummy_op1_finished = callback;
+            return std::shared_ptr<AsyncOperation>(new AsyncOperationMock);
           }))
       .WillOnce(
-          Invoke([&stored_callback2, &async_op_mock_smart](
-                     CompletionQueue&, std::unique_ptr<grpc::ClientContext>&,
-                     Functor const& callback) {
-            stored_callback2 = callback;
-            return async_op_mock_smart;
+          Invoke([&on_dummy_op2_finished](CompletionQueue&,
+                                          std::unique_ptr<grpc::ClientContext>&,
+                                          Functor const& callback) {
+            on_dummy_op2_finished = callback;
+            return std::shared_ptr<AsyncOperation>(new AsyncOperationMock);
           }));
   EXPECT_CALL(*dummy_op_mock, AccumulatedResult()).WillOnce(Invoke([]() {
     return 27;
   }));
 
-  EXPECT_FALSE(stored_callback1);
+  EXPECT_FALSE(on_dummy_op1_finished);
   async_op->Start(cq);
-  EXPECT_TRUE(stored_callback1);
+  EXPECT_TRUE(on_dummy_op1_finished);
 
   {
-    grpc::Status status(config.error_code1, "");
-    stored_callback1(cq, config.finished1, status);
+    grpc::Status status(config.dummy_op1_error_code, "");
+    on_dummy_op1_finished(cq, config.dummy_op1_poll_finished, status);
   }
 
   EXPECT_EQ(1U, cq_impl->size());  // It's the timer
-  EXPECT_FALSE(op_completed);
+  EXPECT_FALSE(user_op_completed);
 
   cq_impl->SimulateCompletion(cq, true);
 
   EXPECT_TRUE(cq_impl->empty());
-  EXPECT_TRUE(stored_callback2);
-  EXPECT_FALSE(op_completed);
+  EXPECT_TRUE(on_dummy_op2_finished);
+  EXPECT_FALSE(user_op_completed);
 
   {
-    grpc::Status status(config.error_code2, "");
-    stored_callback2(cq, config.finished2, status);
+    grpc::Status status(config.dummy_op2_error_code, "");
+    on_dummy_op2_finished(cq, config.dummy_op2_poll_finished, status);
   }
 
   EXPECT_TRUE(cq_impl->empty());
-  EXPECT_TRUE(op_completed);
+  EXPECT_TRUE(user_op_completed);
 }
 
 INSTANTIATE_TEST_CASE_P(
@@ -298,18 +317,28 @@ INSTANTIATE_TEST_CASE_P(
     ::testing::Values(
         // No error, not finished, then OK, finished == true,
         // return OK
-        OneRetryTestConfig{grpc::StatusCode::OK, false, grpc::StatusCode::OK,
-                           true, grpc::StatusCode::OK},
+        OneRetryTestConfig{.dummy_op1_error_code = grpc::StatusCode::OK,
+                           .dummy_op1_poll_finished = false,
+                           .dummy_op2_error_code = grpc::StatusCode::OK,
+                           .dummy_op2_poll_finished = true,
+                           .expected = grpc::StatusCode::OK},
         // Transient error, then OK, finished == true,
         // return OK
-        OneRetryTestConfig{grpc::StatusCode::UNAVAILABLE, false,
-                           grpc::StatusCode::OK, true, grpc::StatusCode::OK},
+        OneRetryTestConfig{
+            .dummy_op1_error_code = grpc::StatusCode::UNAVAILABLE,
+            .dummy_op1_poll_finished = false,
+            .dummy_op2_error_code = grpc::StatusCode::OK,
+            .dummy_op2_poll_finished = true,
+            .expected = grpc::StatusCode::OK},
         // Transient error, then still transient from
         // underlying op, finished == true,
         // return UNAVAILABLE
-        OneRetryTestConfig{grpc::StatusCode::UNAVAILABLE, false,
-                           grpc::StatusCode::UNAVAILABLE, true,
-                           grpc::StatusCode::UNAVAILABLE}));
+        OneRetryTestConfig{
+            .dummy_op1_error_code = grpc::StatusCode::UNAVAILABLE,
+            .dummy_op1_poll_finished = false,
+            .dummy_op2_error_code = grpc::StatusCode::UNAVAILABLE,
+            .dummy_op2_poll_finished = true,
+            .expected = grpc::StatusCode::UNAVAILABLE}));
 
 }  // namespace
 }  // namespace noex
