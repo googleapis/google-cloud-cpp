@@ -17,6 +17,7 @@ bigtable_client_unit_tests = [
     "instance_admin_test.cc",
     "instance_config_test.cc",
     "instance_update_config_test.cc",
+    "internal/async_check_consistency_test.cc",
     "internal/async_poll_op_test.cc",
     "internal/async_retry_op_test.cc",
     "internal/bulk_mutator_test.cc",
