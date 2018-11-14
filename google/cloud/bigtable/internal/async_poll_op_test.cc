@@ -88,11 +88,7 @@ class AsyncOperationMock : public AsyncOperation {
         "This member function doesn't make sense in "
         "AsyncPollOp");
   }
-
-  void Cancel() override {
-    google::cloud::internal::RaiseLogicError(
-        "Cancellation is not yet supported in AsyncPollOp");
-  }
+  MOCK_METHOD0(Cancel, void());
 };
 
 class DummyOperationMock : public DummyOperationImpl {
@@ -310,6 +306,415 @@ INSTANTIATE_TEST_CASE_P(
         OneRetryTestConfig{grpc::StatusCode::UNAVAILABLE, false,
                            grpc::StatusCode::UNAVAILABLE, true,
                            grpc::StatusCode::UNAVAILABLE}));
+
+TEST_F(NoexTableAsyncPollOpTest, CancelBeforeStart) {
+  // Test if calling `Start` on an already cancelled operation completes the
+  // operation immediately with a `CANCELLED` status.
+  auto polling_policy =
+      bigtable::DefaultPollingPolicy(internal::kBigtableLimits);
+  MetadataUpdatePolicy metadata_update_policy(kTableId,
+                                              MetadataParamTypes::TABLE_NAME);
+
+  // Will be satisfied when the operation completed for the user's point of
+  // view.
+  std::promise<void> user_op_completed;
+
+  auto dummy_op_mock = std::make_shared<DummyOperationMock>();
+  auto callback = [&user_op_completed](CompletionQueue&, int& response,
+                                       grpc::Status& status) {
+    EXPECT_FALSE(status.ok());
+    EXPECT_EQ(grpc::StatusCode::CANCELLED, status.error_code());
+    EXPECT_EQ(27, response);
+    user_op_completed.set_value();
+  };
+  EXPECT_CALL(*dummy_op_mock, AccumulatedResult()).WillOnce(Invoke([]() {
+    return 27;
+  }));
+
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  auto async_op = std::make_shared<
+      internal::AsyncPollOp<decltype(callback), DummyOperation>>(
+      __func__, polling_policy->clone(), metadata_update_policy,
+      std::move(callback), DummyOperation(dummy_op_mock));
+
+  async_op->Cancel();
+  async_op->Start(cq);
+
+  user_op_completed.get_future().get();
+
+  cq.Shutdown();
+  pool.join();
+}
+
+struct CancelInOpTestConfig {
+  grpc::StatusCode dummy_op_finish_code;
+  bool poll_finished;
+  bool poll_exhausted;
+  grpc::StatusCode expected;
+};
+
+class NoexTableAsyncPollOpCancelInOpTest
+    : public bigtable::testing::internal::TableTestFixture,
+      public WithParamInterface<CancelInOpTestConfig> {};
+
+TEST_P(NoexTableAsyncPollOpCancelInOpTest, CancelInOperation) {
+  CancelInOpTestConfig const config = GetParam();
+
+  // In order to simulate polling_policy.Exhausted() we create a policy which
+  // doesn't allow any retries (as specified by `noRetries`). We use it when
+  // config.poll_exhausted is true.
+  internal::RPCPolicyParameters const noRetries = {
+      std::chrono::hours(0),
+      std::chrono::hours(0),
+      std::chrono::hours(0),
+  };
+  auto polling_policy = bigtable::DefaultPollingPolicy(
+      config.poll_exhausted ? noRetries : internal::kBigtableLimits);
+
+  MetadataUpdatePolicy metadata_update_policy(kTableId,
+                                              MetadataParamTypes::TABLE_NAME);
+
+  auto cq_impl = std::make_shared<bigtable::testing::MockCompletionQueue>();
+  CompletionQueue cq(cq_impl);
+
+  // The underlying, polled operation.
+  auto dummy_op_mock = std::make_shared<DummyOperationMock>();
+  // This is the handle which the user receives from DummyOperation::Start().
+  auto dummy_op_handle_mock =
+      std::shared_ptr<AsyncOperation>(new AsyncOperationMock);
+
+  // This variable will hold the callback passed by the AsyncPollOp to
+  // DummyOperation::Start(), which it wants to be called once DummyOperation
+  // completes.
+  Functor on_dummy_op_finished;
+  bool cancel_called = false;
+  // Will be set to true when the operation completed for the user's point of
+  // view.
+  bool user_op_completed = false;
+
+  auto user_callback = [&user_op_completed, config](CompletionQueue&,
+                                                    int& response,
+                                                    grpc::Status& status) {
+    EXPECT_EQ(status.error_code(), config.expected);
+    EXPECT_EQ(27, response);
+    user_op_completed = true;
+  };
+
+  auto async_op = std::make_shared<
+      internal::AsyncPollOp<decltype(user_callback), DummyOperation>>(
+      __func__, polling_policy->clone(), metadata_update_policy,
+      std::move(user_callback), DummyOperation(dummy_op_mock));
+
+  EXPECT_CALL(*dummy_op_mock, Start(_, _, _))
+      .WillOnce(
+          Invoke([&on_dummy_op_finished, &dummy_op_handle_mock](
+                     CompletionQueue&, std::unique_ptr<grpc::ClientContext>&,
+                     Functor const& callback) {
+            on_dummy_op_finished = callback;
+            return dummy_op_handle_mock;
+          }));
+  EXPECT_CALL(*dummy_op_mock, AccumulatedResult()).WillOnce(Invoke([]() {
+    return 27;
+  }));
+  EXPECT_CALL(static_cast<AsyncOperationMock&>(*dummy_op_handle_mock), Cancel())
+      .WillOnce(Invoke([&cancel_called]() { cancel_called = true; }));
+
+  EXPECT_FALSE(on_dummy_op_finished);
+  EXPECT_FALSE(cancel_called);
+  async_op->Start(cq);
+  EXPECT_TRUE(on_dummy_op_finished);
+  EXPECT_FALSE(cancel_called);
+  EXPECT_TRUE(cq_impl->empty());
+
+  // Now we're in the middle of the simulated operation. We'll finish it by
+  // calling on_dummy_op_finished. Before we finish the operation, we'll cancel
+  // it though.
+
+  async_op->Cancel();
+  EXPECT_TRUE(cq_impl->empty());
+  EXPECT_TRUE(cancel_called);
+
+  grpc::Status status(config.dummy_op_finish_code, "");
+  on_dummy_op_finished(cq, config.poll_finished, status);
+
+  EXPECT_TRUE(cq_impl->empty());
+  EXPECT_TRUE(user_op_completed);
+}
+
+INSTANTIATE_TEST_CASE_P(
+    CancelInOperation, NoexTableAsyncPollOpCancelInOpTest,
+    ::testing::Values(
+        // Simulate Cancel being called when an underlying operation is ongoing.
+        // We assume that the underlying operation handled it and returned
+        // CANCELLED. In such a scenario, CANCELLED status should be reported.
+        // The `poll_finished` parameter shouldn't affect the result (though it
+        // doesn't make much sense for it to be false, TBH).
+        CancelInOpTestConfig{
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::CANCELLED,
+            // DummyOperation will indicate that operation is finished.
+            true,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::CANCELLED},
+        CancelInOpTestConfig{
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::CANCELLED,
+            // DummyOperation will indicate that operation isn't finished.
+            false,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::CANCELLED},
+        // Simulate Cancel call happening exactly between an underlying
+        // operation succeeding and its callback being called. If the operation
+        // is finished, it should return OK, otherwise - CANCELLED.
+        CancelInOpTestConfig{
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::OK,
+            // DummyOperation will indicate that operation is finished.
+            true,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::OK},
+        CancelInOpTestConfig{
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::OK,
+            // DummyOperation will indicate that operation isn't finished.
+            false,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::CANCELLED},
+        // Just like the above case, except an error has been reported.
+        // If the operation is finished, we should return it, otherwise,
+        // CANCELLED.
+        CancelInOpTestConfig{
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::UNAVAILABLE,
+            // DummyOperation will indicate that operation is finished.
+            true,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::UNAVAILABLE},
+        CancelInOpTestConfig{
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::UNAVAILABLE,
+            // DummyOperation will indicate that operation isn't finished.
+            false,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::CANCELLED},
+        // Just like the above case, except the polling policy says it's not
+        // retriable, so we return the original error as if there was no cancel.
+        // This should happen for both poll_finished and not.
+        CancelInOpTestConfig{
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::PERMISSION_DENIED,
+            // DummyOperation will indicate that operation is finished.
+            true,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::PERMISSION_DENIED},
+        CancelInOpTestConfig{
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::PERMISSION_DENIED,
+            // DummyOperation will indicate that operation isn't finished.
+            false,
+            // PollingPolicy.Finish() will return this.
+            false,
+            // Expected overall result.
+            grpc::StatusCode::PERMISSION_DENIED},
+        // Just like the above UNAVAILABLE case, except, the polling policy says
+        // that we've exhausted the retries.
+        CancelInOpTestConfig{
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::UNAVAILABLE,
+            // DummyOperation will indicate that operation is finished.
+            true,
+            // PollingPolicy.Finish() will return this.
+            true,
+            // Expected overall result.
+            grpc::StatusCode::UNAVAILABLE},
+        CancelInOpTestConfig{
+            // DummyOperation will finish with this code.
+            grpc::StatusCode::UNAVAILABLE,
+            // DummyOperation will indicate that operation isn't finished.
+            false,
+            // PollingPolicy.Finish() will return this.
+            true,
+            // Expected overall result.
+            grpc::StatusCode::UNAVAILABLE}));
+
+// This test checks if the Cancel request is propagated to the actual timer.
+// Because it is hard to mock it, it runs an actual CompletionQueue.
+TEST_F(NoexTableAsyncPollOpTest, TestRealTimerCancellation) {
+  // In order to make sure that the timer scheduled by AsyncPollOp doesn't
+  // expire during the test, we need to increase the delay in PollingPolicy.
+  internal::RPCPolicyParameters const inifinitePoll = {
+      std::chrono::hours(100),
+      std::chrono::hours(1000),
+      std::chrono::hours(10000),
+  };
+  auto polling_policy = bigtable::DefaultPollingPolicy(inifinitePoll);
+  MetadataUpdatePolicy metadata_update_policy(kTableId,
+                                              MetadataParamTypes::TABLE_NAME);
+
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  auto dummy_op_mock = std::make_shared<DummyOperationMock>();
+
+  // This variable will hold the callback passed by the AsyncPollOp to
+  // DummyOperation::Start(), which it wants to be run once DummyOperation
+  // completes.
+  Functor on_dummy_op_finished;
+  std::promise<void> user_op_completed_promise;
+
+  auto user_callback = [&user_op_completed_promise](CompletionQueue&,
+                                                    int& response,
+                                                    grpc::Status& status) {
+    EXPECT_FALSE(status.ok());
+    EXPECT_EQ(27, response);
+    user_op_completed_promise.set_value();
+  };
+
+  auto async_op = std::make_shared<
+      internal::AsyncPollOp<decltype(user_callback), DummyOperation>>(
+      __func__, polling_policy->clone(), metadata_update_policy,
+      std::move(user_callback), DummyOperation(dummy_op_mock));
+
+  EXPECT_CALL(*dummy_op_mock, Start(_, _, _))
+      .WillOnce(
+          Invoke([&on_dummy_op_finished](CompletionQueue&,
+                                         std::unique_ptr<grpc::ClientContext>&,
+                                         Functor const& callback) {
+            on_dummy_op_finished = callback;
+            return std::shared_ptr<AsyncOperation>(new AsyncOperationMock);
+          }));
+  EXPECT_CALL(*dummy_op_mock, AccumulatedResult()).WillOnce(Invoke([]() {
+    return 27;
+  }));
+
+  EXPECT_FALSE(on_dummy_op_finished);
+  async_op->Start(cq);
+  EXPECT_TRUE(on_dummy_op_finished);
+
+  // Now we're in the middle of the simulated operation. We'll finish it by
+  // calling on_dummy_op_finished. We're executing the AsyncPollOp code
+  // synchronously here, so we can be sure that the timer has been scheduled
+  // after the following call returns.
+
+  grpc::Status status(grpc::StatusCode::UNAVAILABLE, "");
+  on_dummy_op_finished(cq, false, status);
+
+  auto user_op_completed_future = user_op_completed_promise.get_future();
+  // The whole operation should not complete yet.
+  EXPECT_EQ(std::future_status::timeout,
+            user_op_completed_future.wait_for(50_ms));
+
+  // We're now reasonably sure that the timer hasn't completed, so we can test
+  // its cancellation.
+  async_op->Cancel();
+
+  user_op_completed_future.get();
+
+  cq.Shutdown();
+  pool.join();
+}
+
+class NoexTableAsyncPollOpCancelInTimerTest
+    : public bigtable::testing::internal::TableTestFixture,
+      public WithParamInterface<bool> {};
+
+TEST_P(NoexTableAsyncPollOpCancelInTimerTest, TestCancelInTimer) {
+  bool const notice_cancel = GetParam();
+
+  auto polling_policy =
+      bigtable::DefaultPollingPolicy(internal::kBigtableLimits);
+  MetadataUpdatePolicy metadata_update_policy(kTableId,
+                                              MetadataParamTypes::TABLE_NAME);
+
+  auto cq_impl = std::make_shared<bigtable::testing::MockCompletionQueue>();
+  CompletionQueue cq(cq_impl);
+
+  auto dummy_op_mock = std::make_shared<DummyOperationMock>();
+
+  // This variable will hold the callback passed by the AsyncPollOp to
+  // DummyOperation, which it wants to be run once DummyOperation completes.
+  Functor on_dummy_op_finished;
+  // Will be set to true when the operation completed for the user's point of
+  // view.
+  bool user_op_completed = false;
+
+  auto user_callback = [&user_op_completed](CompletionQueue&, int& response,
+                                            grpc::Status& status) {
+    EXPECT_FALSE(status.ok());
+    EXPECT_EQ(grpc::StatusCode::CANCELLED, status.error_code());
+    EXPECT_EQ(27, response);
+    user_op_completed = true;
+  };
+
+  auto async_op = std::make_shared<
+      internal::AsyncPollOp<decltype(user_callback), DummyOperation>>(
+      __func__, polling_policy->clone(), metadata_update_policy,
+      std::move(user_callback), DummyOperation(dummy_op_mock));
+
+  EXPECT_CALL(*dummy_op_mock, Start(_, _, _))
+      .WillOnce(
+          Invoke([&on_dummy_op_finished](CompletionQueue&,
+                                         std::unique_ptr<grpc::ClientContext>&,
+                                         Functor const& callback) {
+            on_dummy_op_finished = callback;
+            return std::shared_ptr<AsyncOperation>(new AsyncOperationMock);
+          }));
+  EXPECT_CALL(*dummy_op_mock, AccumulatedResult()).WillOnce(Invoke([]() {
+    return 27;
+  }));
+
+  EXPECT_FALSE(on_dummy_op_finished);
+  async_op->Start(cq);
+  EXPECT_TRUE(on_dummy_op_finished);
+
+  // Now we're in the middle of the simulated operation. We'll finish it by
+  // calling on_dummy_op_finished with a failure.
+  grpc::Status status(grpc::StatusCode::UNAVAILABLE, "");
+  on_dummy_op_finished(cq, false, status);
+
+  // Now a timer should have been scheduled.
+  EXPECT_EQ(1U, cq_impl->size());
+  EXPECT_FALSE(user_op_completed);
+
+  // Let's call Cancel on the timer (will be a noop on a mock queue).
+  async_op->Cancel();
+  EXPECT_EQ(1U, cq_impl->size());
+
+  // Sometime the timer might return timeout despite having been cancelled.
+  cq_impl->SimulateCompletion(cq, not notice_cancel);
+
+  EXPECT_TRUE(cq_impl->empty());
+  EXPECT_TRUE(user_op_completed);
+}
+
+INSTANTIATE_TEST_CASE_P(
+    CancelInTimer, NoexTableAsyncPollOpCancelInTimerTest,
+    ::testing::Values(
+        // Simulate Cancel being called when sleeping in a timer.
+        // This test checks the case when the timer noticed and reported
+        // CANCELLED status.
+        true,
+        // Similar scenario, except we test the corner case in which the Cancel
+        // request happens exactly between the timer timing out and a callback
+        // being fired. In this scenario the timer reports an OK status, but we
+        // should still return CANCELLED to the user.
+        false));
 
 }  // namespace
 }  // namespace noex
