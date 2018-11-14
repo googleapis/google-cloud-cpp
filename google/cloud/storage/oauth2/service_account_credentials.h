@@ -131,23 +131,12 @@ class ServiceAccountCredentials : public Credentials {
   }
 
   std::string AuthorizationHeader() override {
-    // Avoid locking if we don't need to refresh.
-    if (IsValid()) {
-      return authorization_header_;
-    }
-
-    std::unique_lock<std::mutex> credlock(mu_);
-    // Note that if multiple threads tried to request an authorization header
-    // at the same time and it had expired, they would all attempt to grab the
-    // lock and perform a token refresh. To avoid this and ensure only the first
-    // call results in a refresh, we grab the lock, then first check if the
-    // credential is valid (i.e. if another thread already refreshed it) before
-    // refreshing.
+    std::unique_lock<std::mutex> lock(mu_);
     if (IsValid()) {
       return authorization_header_;
     }
     // TODO(#516) - Return Refresh() result so caller can do retries instead.
-    cv_.wait(credlock, [this]() { return Refresh().ok(); });
+    cv_.wait(lock, [this]() { return Refresh().ok(); });
     return authorization_header_;
   }
 
