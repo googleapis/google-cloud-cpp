@@ -382,7 +382,7 @@ TEST_P(NoexTableAsyncPollOpCancelInOpTest, CancelInOperation) {
   // The underlying, polled operation.
   auto dummy_op_mock = std::make_shared<DummyOperationMock>();
   // This is the handle which the user receives from DummyOperation::Start().
-  auto user_handle_mock =
+  auto dummy_op_handle_mock =
       std::shared_ptr<AsyncOperation>(new AsyncOperationMock);
 
   // This variable will hold the callback passed by the AsyncPollOp to
@@ -409,16 +409,16 @@ TEST_P(NoexTableAsyncPollOpCancelInOpTest, CancelInOperation) {
 
   EXPECT_CALL(*dummy_op_mock, Start(_, _, _))
       .WillOnce(
-          Invoke([&on_dummy_op_finished, &user_handle_mock](
+          Invoke([&on_dummy_op_finished, &dummy_op_handle_mock](
                      CompletionQueue&, std::unique_ptr<grpc::ClientContext>&,
                      Functor const& callback) {
             on_dummy_op_finished = callback;
-            return user_handle_mock;
+            return dummy_op_handle_mock;
           }));
   EXPECT_CALL(*dummy_op_mock, AccumulatedResult()).WillOnce(Invoke([]() {
     return 27;
   }));
-  EXPECT_CALL(static_cast<AsyncOperationMock&>(*user_handle_mock), Cancel())
+  EXPECT_CALL(static_cast<AsyncOperationMock&>(*dummy_op_handle_mock), Cancel())
       .WillOnce(Invoke([&cancel_called]() { cancel_called = true; }));
 
   EXPECT_FALSE(on_dummy_op_finished);
