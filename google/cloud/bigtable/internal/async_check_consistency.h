@@ -135,6 +135,169 @@ class AsyncPollCheckConsistency
                                   std::move(table_name))) {}
 };
 
+class AsyncAwaitConsistency
+    : public std::enable_shared_from_this<AsyncAwaitConsistency>,
+      public AsyncOperation {
+ public:
+  AsyncAwaitConsistency(char const* error_message,
+                        std::unique_ptr<PollingPolicy> polling_policy,
+                        std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
+                        std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+                        MetadataUpdatePolicy metadata_update_policy,
+                        std::shared_ptr<bigtable::AdminClient> client,
+                        std::string const& table_name)
+      : error_message_(error_message),
+        polling_policy_(std::move(polling_policy)),
+        rpc_retry_policy_(std::move(rpc_retry_policy)),
+        rpc_backoff_policy_(std::move(rpc_backoff_policy)),
+        metadata_update_policy_(metadata_update_policy),
+        client_(std::move(client)),
+        table_name_(table_name),
+        cancelled_() {}
+
+  bool Notify(CompletionQueue& cq, bool ok) override {
+    // TODO(#1389) Notify should be moved from AsyncOperation to some more
+    // specific derived class.
+    google::cloud::internal::RaiseLogicError(
+        "This member function doesn't make sense here");
+  }
+  void Cancel() override {
+    std::lock_guard<std::mutex> lk(mu_);
+    cancelled_ = true;
+    if (current_op_) {
+      current_op_->Cancel();
+    }
+  }
+
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> Start(CompletionQueue& cq,
+                                        Functor&& callback) {
+    std::unique_lock<std::mutex> lk(mu_);
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &AdminClient::AsyncGenerateConsistencyToken)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &AdminClient::AsyncGenerateConsistencyToken)>::MemberFunction;
+    using Retry =
+        internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
+                                     internal::ConstantIdempotencyPolicy,
+                                     ConsistencyTokenGeneratedFunctor<Functor>>;
+    google::bigtable::admin::v2::GenerateConsistencyTokenRequest request;
+    request.set_name(table_name_);
+
+    auto retry = std::make_shared<Retry>(
+        error_message_, std::move(rpc_retry_policy_),
+        std::move(rpc_backoff_policy_),
+        internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
+        client_, &AdminClient::AsyncGenerateConsistencyToken,
+        std::move(request),
+        ConsistencyTokenGeneratedFunctor<Functor>(
+            shared_from_this(), std::forward<Functor>(callback)));
+    current_op_ = retry->Start(cq);
+    return std::static_pointer_cast<AsyncOperation>(this->shared_from_this());
+  }
+
+  std::mutex mu_;
+  char const* error_message_;
+  std::unique_ptr<PollingPolicy> polling_policy_;
+  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
+  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
+  MetadataUpdatePolicy metadata_update_policy_;
+  std::shared_ptr<bigtable::AdminClient> client_;
+  std::string table_name_;
+  std::shared_ptr<AsyncOperation> current_op_;
+  bool cancelled_;
+
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  class CheckConsistencyFunctor {
+   public:
+    CheckConsistencyFunctor(std::shared_ptr<AsyncAwaitConsistency> parent,
+                            Functor&& callback)
+        : parent_(parent), callback_(std::forward<Functor>(callback)) {}
+
+    void operator()(CompletionQueue& cq, bool response,
+                    grpc::Status const& status) {
+      std::unique_lock<std::mutex> lk(parent_->mu_);
+      parent_->current_op_.reset();
+      if (status.ok() && not response) {
+        // I don't think it could happen, TBH.
+        grpc::Status res_status(grpc::StatusCode::UNKNOWN,
+                                "The state is not consistent and for some "
+                                "unknown reason we didn't "
+                                "reply. That's probably a bug.");
+        lk.unlock();
+        callback_(cq, res_status);
+        return;
+      }
+      lk.unlock();
+      callback_(cq, status);
+    };
+
+   private:
+    std::shared_ptr<AsyncAwaitConsistency> parent_;
+    Functor callback_;
+  };
+
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  class ConsistencyTokenGeneratedFunctor {
+   public:
+    ConsistencyTokenGeneratedFunctor(
+        std::shared_ptr<AsyncAwaitConsistency> parent, Functor&& callback)
+        : parent_(parent), callback_(std::forward<Functor>(callback)) {}
+    void operator()(
+        CompletionQueue& cq,
+        google::bigtable::admin::v2::GenerateConsistencyTokenResponse& response,
+        grpc::Status& status) {
+      std::unique_lock<std::mutex> lk(parent_->mu_);
+      parent_->current_op_.reset();
+      if (parent_->cancelled_) {
+        // Cancel could have been called to late for GenerateConsistencyToken to
+        // notice - it might have finished with a success. In such a scenario we
+        // should still interrupt the execution, i.e. not schedule
+        // CheckConsistency.
+        grpc::Status res_status(grpc::StatusCode::CANCELLED,
+                                "User requested to cancel.");
+        lk.unlock();
+        callback_(cq, res_status);
+        return;
+      }
+      if (not status.ok()) {
+        lk.unlock();
+        callback_(cq, status);
+        return;
+      }
+      // All good, move on to polling for consistency.
+      auto op = std::make_shared<
+          AsyncPollCheckConsistency<CheckConsistencyFunctor<Functor>>>(
+          __func__, std::move(parent_->polling_policy_),
+          std::move(parent_->metadata_update_policy_),
+          std::move(parent_->client_),
+          ConsistencyToken(std::move(response.consistency_token())),
+          std::move(parent_->table_name_),
+          CheckConsistencyFunctor<Functor>(parent_,
+                                           std::forward<Functor>(callback_)));
+      parent_->current_op_ = op->Start(cq);
+    }
+
+   private:
+    std::shared_ptr<AsyncAwaitConsistency> parent_;
+    Functor callback_;
+  };
+};
+
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
