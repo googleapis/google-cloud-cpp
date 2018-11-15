@@ -110,17 +110,15 @@ TEST_F(NoexTableAsyncRetryOpTest, CancelBeforeStart) {
       bigtable::DefaultRPCBackoffPolicy(internal::kBigtableLimits);
   MetadataUpdatePolicy metadata_update_policy(kTableId,
                                               MetadataParamTypes::TABLE_NAME);
-  internal::ConstantIdempotencyPolicy idempotency_policy(true);
 
-  std::promise<void> op_completed;
-
+  std::promise<void> user_op_completed;
   auto dummy_op_mock = std::make_shared<DummyOperationMock>();
-  auto callback = [&op_completed](CompletionQueue&, int& response,
-                                  grpc::Status& status) {
+  auto user_callback = [&user_op_completed](CompletionQueue&, int& response,
+                                            grpc::Status& status) {
     EXPECT_FALSE(status.ok());
     EXPECT_EQ(grpc::StatusCode::CANCELLED, status.error_code());
     EXPECT_EQ(27, response);
-    op_completed.set_value();
+    user_op_completed.set_value();
   };
   EXPECT_CALL(*dummy_op_mock, AccumulatedResult()).WillOnce(Invoke([]() {
     return 27;
@@ -129,23 +127,24 @@ TEST_F(NoexTableAsyncRetryOpTest, CancelBeforeStart) {
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
 
-  auto async_op = std::make_shared<internal::AsyncRetryOp<
-      internal::ConstantIdempotencyPolicy, decltype(callback), DummyOperation>>(
+  auto async_op = std::make_shared<
+      internal::AsyncRetryOp<internal::ConstantIdempotencyPolicy,
+                             decltype(user_callback), DummyOperation>>(
       __func__, rpc_retry_policy->clone(), rpc_backoff_policy->clone(),
-      idempotency_policy, metadata_update_policy, std::move(callback),
-      DummyOperation(dummy_op_mock));
+      internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
+      std::move(user_callback), DummyOperation(dummy_op_mock));
 
   async_op->Cancel();
   async_op->Start(cq);
 
-  op_completed.get_future().get();
+  user_op_completed.get_future().get();
 
   cq.Shutdown();
   pool.join();
 }
 
 struct CancelInOpTestConfig {
-  grpc::StatusCode finish_code;
+  grpc::StatusCode dummy_op_error_code;
   bool idempotent;
   grpc::StatusCode expected;
 };
@@ -163,66 +162,67 @@ TEST_P(NoexTableAsyncRetryOpCancelInOpTest, CancelInOperation) {
       bigtable::DefaultRPCBackoffPolicy(internal::kBigtableLimits);
   MetadataUpdatePolicy metadata_update_policy(kTableId,
                                               MetadataParamTypes::TABLE_NAME);
-  internal::ConstantIdempotencyPolicy idempotency_policy(config.idempotent);
 
   auto cq_impl = std::make_shared<bigtable::testing::MockCompletionQueue>();
   CompletionQueue cq(cq_impl);
 
   auto dummy_op_mock = std::make_shared<DummyOperationMock>();
-  auto async_op_mock = new AsyncOperationMock;
-  auto async_op_mock_smart = std::shared_ptr<AsyncOperation>(async_op_mock);
+  auto dummy_op_handle_mock =
+      std::shared_ptr<AsyncOperation>(new AsyncOperationMock);
 
-  Functor stored_callback;
+  Functor on_dummy_op_finished;
   bool cancel_called = false;
-  bool op_completed = false;
+  bool user_op_completed = false;
 
-  auto callback = [&op_completed, config](CompletionQueue&, int& response,
-                                          grpc::Status& status) {
+  auto user_callback = [&user_op_completed, config](CompletionQueue&,
+                                                    int& response,
+                                                    grpc::Status& status) {
     EXPECT_EQ(status.error_code(), config.expected);
     EXPECT_EQ(27, response);
-    op_completed = true;
+    user_op_completed = true;
   };
 
-  auto async_op = std::make_shared<internal::AsyncRetryOp<
-      internal::ConstantIdempotencyPolicy, decltype(callback), DummyOperation>>(
+  auto async_op = std::make_shared<
+      internal::AsyncRetryOp<internal::ConstantIdempotencyPolicy,
+                             decltype(user_callback), DummyOperation>>(
       __func__, rpc_retry_policy->clone(), rpc_backoff_policy->clone(),
-      idempotency_policy, metadata_update_policy, std::move(callback),
+      internal::ConstantIdempotencyPolicy(config.idempotent),
+      metadata_update_policy, std::move(user_callback),
       DummyOperation(dummy_op_mock));
 
   EXPECT_CALL(*dummy_op_mock, Start(_, _, _))
       .WillOnce(
-          Invoke([&stored_callback, &async_op_mock_smart](
+          Invoke([&on_dummy_op_finished, &dummy_op_handle_mock](
                      CompletionQueue&, std::unique_ptr<grpc::ClientContext>&,
                      Functor const& callback) {
-            stored_callback = callback;
-            return async_op_mock_smart;
+            on_dummy_op_finished = callback;
+            return dummy_op_handle_mock;
           }));
   EXPECT_CALL(*dummy_op_mock, AccumulatedResult()).WillOnce(Invoke([]() {
     return 27;
   }));
-  EXPECT_CALL(*async_op_mock, Cancel()).WillOnce(Invoke([&cancel_called]() {
-    cancel_called = true;
-  }));
+  EXPECT_CALL(static_cast<AsyncOperationMock&>(*dummy_op_handle_mock), Cancel())
+      .WillOnce(Invoke([&cancel_called]() { cancel_called = true; }));
 
-  EXPECT_FALSE(stored_callback);
+  EXPECT_FALSE(on_dummy_op_finished);
   EXPECT_FALSE(cancel_called);
   async_op->Start(cq);
-  EXPECT_TRUE(stored_callback);
+  EXPECT_TRUE(on_dummy_op_finished);
   EXPECT_FALSE(cancel_called);
 
   // Now we're in the middle of the simulated operation. We'll finish it by
-  // calling stored_callback. Before we finish the operation, we'll cancel it
-  // though.
+  // calling on_dummy_op_finished. Before we finish the operation, we'll cancel
+  // it though.
 
   async_op->Cancel();
   EXPECT_TRUE(cq_impl->empty());
   EXPECT_TRUE(cancel_called);
 
-  grpc::Status status(config.finish_code, "");
-  stored_callback(cq, status);
+  grpc::Status status(config.dummy_op_error_code, "");
+  on_dummy_op_finished(cq, status);
 
   EXPECT_TRUE(cq_impl->empty());
-  EXPECT_TRUE(op_completed);
+  EXPECT_TRUE(user_op_completed);
 }
 
 INSTANTIATE_TEST_CASE_P(
@@ -231,28 +231,51 @@ INSTANTIATE_TEST_CASE_P(
         // Simulate Cancel being called when an underlying operation is ongoing.
         // We assume that the underlying operation handled it and returned
         // CANCELLED. In such a scenario, CANCELLED status should be reported.
-        CancelInOpTestConfig{grpc::StatusCode::CANCELLED, true,
+        CancelInOpTestConfig{// DummyOperation will finish with this code.
+                             grpc::StatusCode::CANCELLED,
+                             // Consider DummyOperation idempotent.
+                             true,
+                             // Expected overall result.
                              grpc::StatusCode::CANCELLED},
         // Simulate Cancel call happening exactly between an underlying
         // operation succeeding and its callback being called. In such a
         // scenario, a success should be reported.
-        CancelInOpTestConfig{grpc::StatusCode::OK, true, grpc::StatusCode::OK},
+        CancelInOpTestConfig{// DummyOperation will finish with this code.
+                             grpc::StatusCode::OK,
+                             // Consider DummyOperation idempotent.
+                             true,
+                             // Expected overall result.
+                             grpc::StatusCode::OK},
         // Just like the above case, except an error has been reported. In such
         // a scenario, we should not retry and return CANCELLED
-        CancelInOpTestConfig{grpc::StatusCode::UNAVAILABLE, true,
+        CancelInOpTestConfig{// DummyOperation will finish with this code.
+                             grpc::StatusCode::UNAVAILABLE,
+                             // Consider DummyOperation idempotent.
+                             true,
+                             // Expected overall result.
                              grpc::StatusCode::CANCELLED},
         // Just like the above case, except the retry policy tells it's not
         // retriable, so we return the original error as if there was no cancel.
-        CancelInOpTestConfig{grpc::StatusCode::PERMISSION_DENIED, true,
+        CancelInOpTestConfig{// DummyOperation will finish with this code.
+                             grpc::StatusCode::PERMISSION_DENIED,
+                             // Consider DummyOperation idempotent.
+                             true,
+                             // Expected overall result.
                              grpc::StatusCode::PERMISSION_DENIED},
         // Just like the above UNAVAILABLE case, except idempotency forbids
         // retries. In such a scenario, we should return the original error.
-        CancelInOpTestConfig{grpc::StatusCode::UNAVAILABLE, false,
+        CancelInOpTestConfig{// DummyOperation will finish with this code.
+                             grpc::StatusCode::UNAVAILABLE,
+                             // Consider DummyOperation not idempotent.
+                             false,
+                             // Expected overall result.
                              grpc::StatusCode::UNAVAILABLE}));
 
 // This test checks if the Cancel request is propagated to the actual timer.
 // Because it is hard to mock it, it runs an actual CompletionQueue.
 TEST_F(NoexTableAsyncRetryOpTest, TestRealTimerCancellation) {
+  // We're using a real CompletionQueue and a real timer, so we need to make
+  // sure it doesn't expire during the test.
   internal::RPCPolicyParameters const inifiniteRetry = {
       std::chrono::hours(100),
       std::chrono::hours(1000),
@@ -262,51 +285,50 @@ TEST_F(NoexTableAsyncRetryOpTest, TestRealTimerCancellation) {
   auto rpc_backoff_policy = bigtable::DefaultRPCBackoffPolicy(inifiniteRetry);
   MetadataUpdatePolicy metadata_update_policy(kTableId,
                                               MetadataParamTypes::TABLE_NAME);
-  internal::ConstantIdempotencyPolicy idempotency_policy(true);
 
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
 
   auto dummy_op_mock = std::make_shared<DummyOperationMock>();
-
-  Functor stored_callback;
+  Functor on_dummy_op_finished;
   std::promise<void> completed_promise;
-
-  auto callback = [&completed_promise](CompletionQueue&, int& response,
-                                       grpc::Status& status) {
+  auto user_callback = [&completed_promise](CompletionQueue&, int& response,
+                                            grpc::Status& status) {
     EXPECT_FALSE(status.ok());
     EXPECT_EQ(27, response);
     completed_promise.set_value();
   };
 
-  auto async_op = std::make_shared<internal::AsyncRetryOp<
-      internal::ConstantIdempotencyPolicy, decltype(callback), DummyOperation>>(
+  auto async_op = std::make_shared<
+      internal::AsyncRetryOp<internal::ConstantIdempotencyPolicy,
+                             decltype(user_callback), DummyOperation>>(
       __func__, rpc_retry_policy->clone(), rpc_backoff_policy->clone(),
-      idempotency_policy, metadata_update_policy, std::move(callback),
-      DummyOperation(dummy_op_mock));
+      internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
+      std::move(user_callback), DummyOperation(dummy_op_mock));
 
   EXPECT_CALL(*dummy_op_mock, Start(_, _, _))
-      .WillOnce(Invoke([&stored_callback](CompletionQueue&,
-                                          std::unique_ptr<grpc::ClientContext>&,
-                                          Functor const& callback) {
-        stored_callback = callback;
-        return std::shared_ptr<AsyncOperation>(new AsyncOperationMock);
-      }));
+      .WillOnce(
+          Invoke([&on_dummy_op_finished](CompletionQueue&,
+                                         std::unique_ptr<grpc::ClientContext>&,
+                                         Functor const& callback) {
+            on_dummy_op_finished = callback;
+            return std::shared_ptr<AsyncOperation>(new AsyncOperationMock);
+          }));
   EXPECT_CALL(*dummy_op_mock, AccumulatedResult()).WillOnce(Invoke([]() {
     return 27;
   }));
 
-  EXPECT_FALSE(stored_callback);
+  EXPECT_FALSE(on_dummy_op_finished);
   async_op->Start(cq);
-  EXPECT_TRUE(stored_callback);
+  EXPECT_TRUE(on_dummy_op_finished);
 
   // Now we're in the middle of the simulated operation. We'll finish it by
-  // calling stored_callback. We're executing the AsyncRetryOp code
+  // calling on_dummy_op_finished. We're executing the AsyncRetryOp code
   // synchronously here, so we can be sure that the timer has been scheduled
   // after the following call returns.
 
   grpc::Status status(grpc::StatusCode::UNAVAILABLE, "");
-  stored_callback(cq, status);
+  on_dummy_op_finished(cq, status);
 
   auto completed_future = completed_promise.get_future();
   // The whole operation should not complete yet.
@@ -327,66 +349,60 @@ class NoexTableAsyncRetryOpCancelInTimerTest
 
 TEST_P(NoexTableAsyncRetryOpCancelInTimerTest, TestCancelInTimer) {
   bool const notice_cancel = GetParam();
-  internal::RPCPolicyParameters const inifiniteRetry = {
-      std::chrono::hours(100),
-      std::chrono::hours(1000),
-      std::chrono::hours(10000),
-  };
 
-  auto rpc_retry_policy = bigtable::DefaultRPCRetryPolicy(inifiniteRetry);
-  auto rpc_backoff_policy = bigtable::DefaultRPCBackoffPolicy(inifiniteRetry);
+  auto rpc_retry_policy =
+      bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits);
+  auto rpc_backoff_policy =
+      bigtable::DefaultRPCBackoffPolicy(internal::kBigtableLimits);
   MetadataUpdatePolicy metadata_update_policy(kTableId,
                                               MetadataParamTypes::TABLE_NAME);
-  internal::ConstantIdempotencyPolicy idempotency_policy(true);
 
   auto cq_impl = std::make_shared<bigtable::testing::MockCompletionQueue>();
   CompletionQueue cq(cq_impl);
 
   auto dummy_op_mock = std::make_shared<DummyOperationMock>();
-  auto async_op_mock = new AsyncOperationMock;
-  auto async_op_mock_smart = std::shared_ptr<AsyncOperation>(async_op_mock);
 
-  Functor stored_callback;
-  bool op_completed = false;
-
-  auto callback = [&op_completed](CompletionQueue&, int& response,
-                                  grpc::Status& status) {
+  Functor on_dummy_op_finished;
+  bool user_op_completed = false;
+  auto user_callback = [&user_op_completed](CompletionQueue&, int& response,
+                                            grpc::Status& status) {
     EXPECT_FALSE(status.ok());
     EXPECT_EQ(grpc::StatusCode::CANCELLED, status.error_code());
     EXPECT_EQ(27, response);
-    op_completed = true;
+    user_op_completed = true;
   };
 
-  auto async_op = std::make_shared<internal::AsyncRetryOp<
-      internal::ConstantIdempotencyPolicy, decltype(callback), DummyOperation>>(
+  auto async_op = std::make_shared<
+      internal::AsyncRetryOp<internal::ConstantIdempotencyPolicy,
+                             decltype(user_callback), DummyOperation>>(
       __func__, rpc_retry_policy->clone(), rpc_backoff_policy->clone(),
-      idempotency_policy, metadata_update_policy, std::move(callback),
-      DummyOperation(dummy_op_mock));
+      internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
+      std::move(user_callback), DummyOperation(dummy_op_mock));
 
   EXPECT_CALL(*dummy_op_mock, Start(_, _, _))
       .WillOnce(
-          Invoke([&stored_callback, &async_op_mock_smart](
-                     CompletionQueue&, std::unique_ptr<grpc::ClientContext>&,
-                     Functor const& callback) {
-            stored_callback = callback;
-            return async_op_mock_smart;
+          Invoke([&on_dummy_op_finished](CompletionQueue&,
+                                         std::unique_ptr<grpc::ClientContext>&,
+                                         Functor const& callback) {
+            on_dummy_op_finished = callback;
+            return std::shared_ptr<AsyncOperation>(new AsyncOperationMock);
           }));
   EXPECT_CALL(*dummy_op_mock, AccumulatedResult()).WillOnce(Invoke([]() {
     return 27;
   }));
 
-  EXPECT_FALSE(stored_callback);
+  EXPECT_FALSE(on_dummy_op_finished);
   async_op->Start(cq);
-  EXPECT_TRUE(stored_callback);
+  EXPECT_TRUE(on_dummy_op_finished);
 
   // Now we're in the middle of the simulated operation. We'll finish it by
-  // calling stored_callback with a failure.
+  // calling on_dummy_op_finished with a failure.
   grpc::Status status(grpc::StatusCode::UNAVAILABLE, "");
-  stored_callback(cq, status);
+  on_dummy_op_finished(cq, status);
 
   // Now a timer should have been scheduled.
   EXPECT_EQ(1U, cq_impl->size());
-  EXPECT_FALSE(op_completed);
+  EXPECT_FALSE(user_op_completed);
 
   // Let's call Cancel on the timer (will be a noop on a mock queue).
   async_op->Cancel();
@@ -396,7 +412,7 @@ TEST_P(NoexTableAsyncRetryOpCancelInTimerTest, TestCancelInTimer) {
   cq_impl->SimulateCompletion(cq, not notice_cancel);
 
   EXPECT_TRUE(cq_impl->empty());
-  EXPECT_TRUE(op_completed);
+  EXPECT_TRUE(user_op_completed);
 }
 
 INSTANTIATE_TEST_CASE_P(
