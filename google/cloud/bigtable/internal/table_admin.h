@@ -243,7 +243,23 @@ class TableAdmin {
                         grpc::Status& status);
 
   /**
-   * Make an asynchronous request to wait for replication to catch up.
+   * Asynchronously wait for replication to catch up.
+   *
+   * This function asks for a consistency token, and polls Cloud Bigtable until
+   * the replication has caught up to that consistency token, or until the
+   * polling policy has expired.
+   *
+   * When the replication catches up the callback receives a `grpc::Status::OK`.
+   *
+   * If the policy expires before the replication catches up with the
+   * consistency token then the callback receives `grpc::StatusCode::UNKNOWN`
+   * status code.
+   *
+   * After this function returns OK you can be sure that all mutations which
+   * have been applied before this call have made it to their replicas.
+   *
+   * @see https://cloud.google.com/bigtable/docs/replication-overview for an
+   * overview of Cloud Bigtable replication.
    *
    * @param table_id the table to wait on
    * @param cq the completion queue that will execute the asynchronous calls,

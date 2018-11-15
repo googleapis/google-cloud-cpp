@@ -248,7 +248,9 @@ class AsyncAwaitConsistency
                                 "unknown reason we didn't retry. Expected "
                                 "that either a consistent state is reached or "
                                 "a polling error is reported. That's a bug, "
-                                "please report it.");
+                                "please report it to "
+                                "https://github.com/GoogleCloudPlatform/"
+                                "google-cloud-cpp/issues/new");
         lk.unlock();
         callback_(cq, res_status);
         return;
