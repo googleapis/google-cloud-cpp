@@ -14,8 +14,8 @@
 
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/random.h"
-#include <fstream>
 #include <gmock/gmock.h>
+#include <fstream>
 #if GTEST_OS_LINUX
 #include <sys/socket.h>
 #include <sys/un.h>
@@ -30,7 +30,10 @@ using ::testing::HasSubstr;
 
 std::string CreateRandomFileName() {
   static DefaultPRNG generator = MakeDefaultPRNG();
-  return Sample(generator, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  // When running on the internal Google CI systems we cannot write to the local
+  // directory, GTest has a good temporary directory in that case.
+  return ::testing::TempDir() +
+         Sample(generator, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 }
 
 TEST(FilesystemTest, PermissionsOperatorBitand) {
@@ -246,11 +249,14 @@ TEST(FilesystemTest, StatusErrorDoesThrow) {
   std::ofstream(file_name).close();
   auto path = file_name + "/files/cannot/be/directories";
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { status(path); } catch(std::system_error const& ex) {
-    EXPECT_EQ(static_cast<int>(std::errc::not_a_directory), ex.code().value());
-    EXPECT_THAT(ex.what(), HasSubstr(path));
-    throw;
-    }, std::system_error);
+  EXPECT_THROW(
+      try { status(path); } catch (std::system_error const& ex) {
+        EXPECT_EQ(static_cast<int>(std::errc::not_a_directory),
+                  ex.code().value());
+        EXPECT_THAT(ex.what(), HasSubstr(path));
+        throw;
+      },
+      std::system_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(status(path), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -260,6 +266,52 @@ TEST(FilesystemTest, StatusErrorDoesThrow) {
   // need to pass a null string (not empty, null) or something similar, and the
   // function signatures do not allow for that type of mistake.
 #endif  // GTEST_OS_LINUX
+}
+
+TEST(FilesystemTest, FileSize) {
+  auto file_name = CreateRandomFileName();
+  std::ofstream os(file_name);
+  os << std::string(1000, ' ');
+  os.close();
+  std::error_code ec;
+  auto size = file_size(file_name, ec);
+  EXPECT_FALSE(static_cast<bool>(ec));
+  EXPECT_EQ(1000U, size);
+  std::remove(file_name.c_str());
+}
+
+TEST(FilesystemTest, FileSizeEmpty) {
+  auto file_name = CreateRandomFileName();
+  std::ofstream(file_name).close();
+  std::error_code ec;
+  auto size = file_size(file_name, ec);
+  EXPECT_FALSE(static_cast<bool>(ec));
+  EXPECT_EQ(0U, size);
+  std::remove(file_name.c_str());
+}
+
+TEST(FilesystemTest, FileSizeNotFound) {
+  auto file_name = CreateRandomFileName();
+  std::error_code ec;
+  auto size = file_size(file_name, ec);
+  EXPECT_TRUE(static_cast<bool>(ec));
+  EXPECT_EQ(std::uintmax_t(-1), size);
+}
+
+TEST(FilesystemTest, FileSizeNotFoundDoesThrow) {
+  auto path = CreateRandomFileName();
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try { file_size(path); } catch (std::system_error const& ex) {
+        EXPECT_EQ(static_cast<int>(std::errc::no_such_file_or_directory),
+                  ex.code().value());
+        EXPECT_THAT(ex.what(), HasSubstr(path));
+        throw;
+      },
+      std::system_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(file_size(path), "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 }  // namespace
