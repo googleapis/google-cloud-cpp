@@ -3,13 +3,19 @@
 C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 
 [![Travis CI status][travis-shield]][travis-link]
+[![Kokoro CI status][kokoro-ubuntu-shield]][kokoro-ubuntu-link]
+[![Kokoro CI status][kokoro-windows-shield]][kokoro-windows-link]
 [![Codecov Coverage status][codecov-shield]][codecov-link]
 
 - [Google Cloud Platform Documentation][cloud-platform-docs]
 - [Client Library Documentation][client-library-docs]
 
-[travis-shield]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp.svg?branch=master
+[travis-shield]: https://img.shields.io/travis/GoogleCloudPlatform/google-cloud-cpp/master.svg?label=travis
 [travis-link]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp/builds
+[kokoro-ubuntu-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-ubuntu.svg
+[kokoro-ubuntu-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-ubuntu-link.html
+[kokoro-windows-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows.svg
+[kokoro-windows-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-link.html
 [codecov-shield]: https://codecov.io/gh/GoogleCloudPlatform/google-cloud-cpp/branch/master/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/GoogleCloudPlatform/google-cloud-cpp
 [cloud-platform]: https://cloud.google.com/
