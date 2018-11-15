@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/instance_admin.h"
+#include "google/cloud/bigtable/instance_admin_client.h"
 #include "google/cloud/bigtable/internal/endian.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/testing_util/chrono_literals.h"
@@ -279,6 +281,95 @@ TEST_F(AdminAsyncIntegrationTest, AsyncDropAllRowsTest) {
   ASSERT_TRUE(actual_cells.empty());
   cq.Shutdown();
   pool.join();
+}
+
+/// @test Verify that `bigtable::TableAdmin` CheckConsistency works as expected.
+TEST_F(AdminAsyncIntegrationTest, CheckConsistencyIntegrationTest) {
+  using namespace google::cloud::testing_util::chrono_literals;
+
+  std::string id =
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  std::string const random_table_id = RandomTableId();
+
+  auto project_id = bigtable::testing::TableTestEnvironment::project_id();
+
+  auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
+      project_id, bigtable::ClientOptions());
+  bigtable::InstanceAdmin instance_admin(instance_admin_client);
+
+  // need to create table_admin for dynamically created instance
+  auto admin_client =
+      bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions());
+  bigtable::TableAdmin table_admin(admin_client, id);
+  auto noex_table_admin =
+      google::cloud::internal::make_unique<noex::TableAdmin>(admin_client, id);
+  ASSERT_EQ(table_admin.instance_name(), noex_table_admin->instance_name());
+
+  auto data_client = bigtable::CreateDefaultDataClient(
+      project_id, id, bigtable::ClientOptions());
+  bigtable::Table table(data_client, random_table_id);
+
+  bigtable::InstanceId instance_id(id);
+  bigtable::DisplayName display_name("Integration Tests " + id);
+
+  // Replication needs at least two clusters
+  auto cluster_config_1 =
+      bigtable::ClusterConfig(bigtable::testing::TableTestEnvironment::zone(),
+                              3, bigtable::ClusterConfig::HDD);
+  auto cluster_config_2 = bigtable::ClusterConfig(
+      bigtable::testing::TableTestEnvironment::replication_zone(), 3,
+      bigtable::ClusterConfig::HDD);
+  bigtable::InstanceConfig config(
+      instance_id, display_name,
+      {{id + "-c1", cluster_config_1}, {id + "-c2", cluster_config_2}});
+
+  auto instance = instance_admin.CreateInstance(config).get();
+
+  google::cloud::bigtable::TableId table_id(random_table_id);
+
+  std::string const column_family1 = "family1";
+  std::string const column_family2 = "family2";
+  std::string const column_family3 = "family3";
+  bigtable::TableConfig table_config = bigtable::TableConfig(
+      {{column_family1, bigtable::GcRule::MaxNumVersions(10)},
+       {column_family2, bigtable::GcRule::MaxNumVersions(10)},
+       {column_family3, bigtable::GcRule::MaxNumVersions(10)}},
+      {});
+
+  // create table
+  auto table_created = table_admin.CreateTable(table_id.get(), table_config);
+
+  // Create a vector of cell which will be inserted into bigtable
+  std::string const row_key1 = "DropRowKey1";
+  std::string const row_key2 = "DropRowKey2";
+  std::vector<bigtable::Cell> created_cells{
+      {row_key1, column_family1, "column_id1", 1000, "v-c-0-0", {}},
+      {row_key1, column_family1, "column_id2", 1000, "v-c-0-1", {}},
+      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2", {}},
+      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
+      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2", {}},
+  };
+
+  CreateCells(table, created_cells);
+
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  std::promise<grpc::Status> consistent_promise;
+  noex_table_admin->AsyncAwaitConsistency(
+      table_id, cq,
+      [&consistent_promise](CompletionQueue& cq, grpc::Status& status) {
+        consistent_promise.set_value(status);
+      });
+
+  EXPECT_TRUE(consistent_promise.get_future().get().ok());
+
+  cq.Shutdown();
+  pool.join();
+
+  table_admin.DeleteTable(table_id.get());
+  instance_admin.DeleteInstance(id);
 }
 
 }  // namespace
