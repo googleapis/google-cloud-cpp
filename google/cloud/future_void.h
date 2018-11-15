@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FUTURE_VOID_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FUTURE_VOID_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUTURE_VOID_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUTURE_VOID_H_
 /**
  * @file
  *
@@ -49,7 +49,7 @@ class future<void> final : private internal::future_base<void> {
    * code is `std::future_errc::broken_promise`.
    *
    * @note The technical specification requires this to be a `noexcept`
-   *   constructor I (@coryan) believe this is a defect in the technical
+   *   constructor I (coryan) believe this is a defect in the technical
    *   specification, as this *creates* a new shared state: shared states are
    *   dynamically allocated, and the allocator (which might be the default
    *   `operator new`) may raise.
@@ -186,4 +186,4 @@ class promise<void> final : private internal::promise_base<void> {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FUTURE_VOID_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUTURE_VOID_H_

@@ -26,8 +26,8 @@
  * functions inline.
  */
 
-#include "google/cloud/internal/future_generic.h"
-#include "google/cloud/internal/future_void.h"
+#include "google/cloud/future_generic.h"
+#include "google/cloud/future_void.h"
 
 namespace google {
 namespace cloud {
