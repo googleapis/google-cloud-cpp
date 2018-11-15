@@ -205,7 +205,7 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotWriteToFile) {
 
 TEST_F(ObjectMediaIntegrationTest, UploadFile) {
   Client client;
-  auto file_name = MakeRandomObjectName();
+  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -274,7 +274,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileMissingFileFailure) {
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileUploadFailure) {
   Client client;
-  auto file_name = MakeRandomObjectName();
+  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -314,7 +314,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileNonRegularWarning) {
   // the test there.
 #if GTEST_OS_LINUX
   Client client;
-  auto file_name = MakeRandomObjectName();
+  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -351,7 +351,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileNonRegularWarning) {
 
 TEST_F(ObjectMediaIntegrationTest, XmlUploadFile) {
   Client client;
-  auto file_name = MakeRandomObjectName();
+  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
