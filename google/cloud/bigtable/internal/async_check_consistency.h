@@ -135,6 +135,18 @@ class AsyncPollCheckConsistency
                                   std::move(table_name))) {}
 };
 
+/**
+ * Await until replication catches up.
+ *
+ * This implementation of `AsyncOperation` wraps getting a `ConsistencyToken`
+ * via a retried `AsyncGenerateConsistencyToken` call and passing it on to
+ * `AsyncPollCheckConsistency` to poll until consistency is reached.
+ *
+ * It holds all the necessary data to launch the following
+ * `AsyncPollCheckConsistency` after `AsyncGenerateConsistencyToken` finishes
+ * and implements `AsyncOperation` so that it can return itself to the user as a
+ * handle for cancellation.
+ */
 class AsyncAwaitConsistency
     : public std::enable_shared_from_this<AsyncAwaitConsistency>,
       public AsyncOperation {
@@ -161,6 +173,7 @@ class AsyncAwaitConsistency
     google::cloud::internal::RaiseLogicError(
         "This member function doesn't make sense here");
   }
+
   void Cancel() override {
     std::lock_guard<std::mutex> lk(mu_);
     cancelled_ = true;
@@ -232,8 +245,10 @@ class AsyncAwaitConsistency
         // I don't think it could happen, TBH.
         grpc::Status res_status(grpc::StatusCode::UNKNOWN,
                                 "The state is not consistent and for some "
-                                "unknown reason we didn't "
-                                "reply. That's probably a bug.");
+                                "unknown reason we didn't retry. Expected "
+                                "that either a consistent state is reached or "
+                                "a polling error is reported. That's a bug, "
+                                "please report it.");
         lk.unlock();
         callback_(cq, res_status);
         return;

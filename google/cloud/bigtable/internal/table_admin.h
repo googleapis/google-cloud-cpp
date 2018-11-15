@@ -249,10 +249,11 @@ class TableAdmin {
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
-   * @param callback a functor to be called when the operation completes. It
-   *     must satisfy (using C++17 types):
+   * @param callback a functor to be called when the operation completes. The
+   *     replication will have caught up if status received by this callback is
+   *     OK. It must satisfy (using C++17 types):
    *     static_assert(std::is_invocable_v<
-   *         Functor, grpc::Status const&>);
+   *         Functor, CompletionQueue&, grpc::Status const&>);
    *
    * @tparam Functor the type of the callback.
    */
