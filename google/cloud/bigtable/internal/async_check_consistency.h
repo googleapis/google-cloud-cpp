@@ -239,7 +239,8 @@ class AsyncAwaitConsistency
         return;
       }
       lk.unlock();
-      callback_(cq, status);
+      grpc::Status res_status(status);
+      callback_(cq, res_status);
     };
 
    private:
@@ -264,19 +265,20 @@ class AsyncAwaitConsistency
       std::unique_lock<std::mutex> lk(parent_->mu_);
       parent_->current_op_.reset();
       if (parent_->cancelled_) {
-        // Cancel could have been called to late for GenerateConsistencyToken to
-        // notice - it might have finished with a success. In such a scenario we
-        // should still interrupt the execution, i.e. not schedule
+        // Cancel could have been called too late for GenerateConsistencyToken
+        // to notice - it might have finished with a success. In such a scenario
+        // we should still interrupt the execution, i.e. not schedule
         // CheckConsistency.
+        lk.unlock();
         grpc::Status res_status(grpc::StatusCode::CANCELLED,
                                 "User requested to cancel.");
-        lk.unlock();
         callback_(cq, res_status);
         return;
       }
       if (not status.ok()) {
         lk.unlock();
-        callback_(cq, status);
+        grpc::Status res_status(status);
+        callback_(cq, res_status);
         return;
       }
       // All good, move on to polling for consistency.

@@ -270,7 +270,7 @@ class TableAdmin {
         MetadataUpdatePolicy(instance_name(), MetadataParamTypes::NAME,
                              table_id.get()),
         client_, TableName(table_id.get()));
-    return op->Start(cq, callback);
+    return op->Start(cq, std::forward<Functor>(callback));
   }
 
   void DeleteSnapshot(bigtable::ClusterId const& cluster_id,
