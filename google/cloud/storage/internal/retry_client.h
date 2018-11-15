@@ -143,7 +143,7 @@ class RetryClient : public RawClient {
 
   std::pair<Status, std::string> AuthorizationHeader(
       std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&)
-  override;
+      override;
 
  private:
   void Apply(RetryPolicy& policy) { retry_policy_ = policy.clone(); }

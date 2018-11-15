@@ -1248,7 +1248,7 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaSimple(
 
 std::pair<Status, std::string> CurlClient::AuthorizationHeader(
     std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&
-    credentials) {
+        credentials) {
   return credentials->AuthorizationHeader();
 };
 

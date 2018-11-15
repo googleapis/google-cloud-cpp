@@ -316,11 +316,10 @@ std::pair<Status, EmptyResponse> LoggingClient::DeleteNotification(
 
 std::pair<Status, std::string> LoggingClient::AuthorizationHeader(
     std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&
-    credentials) {
-  return MakeCall(
-      *client_, &RawClient::AuthorizationHeader, credentials, __func__);
+        credentials) {
+  return MakeCall(*client_, &RawClient::AuthorizationHeader, credentials,
+                  __func__);
 };
-
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

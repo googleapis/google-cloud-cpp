@@ -332,11 +332,13 @@ TEST_F(ServiceAccountCredentialsTest, ParseEmptyField) {
           EXPECT_THAT(ex.what(), HasSubstr("test-data"));
           throw;
         },
-        std::invalid_argument) << "field=" << field;
+        std::invalid_argument)
+        << "field=" << field;
 #else
     EXPECT_DEATH_IF_SUPPORTED(
         ParseServiceAccountCredentials(json.dump(), "test-data", "unused"),
-        "exceptions are disabled") << "field=" << field;
+        "exceptions are disabled")
+        << "field=" << field;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   }
 }
@@ -351,8 +353,7 @@ TEST_F(ServiceAccountCredentialsTest, ParseMissingField) {
       "token_uri": "https://oauth2.googleapis.com/token"
 })""";
 
-  for (auto const& field :
-      {"private_key_id", "private_key", "client_email"}) {
+  for (auto const& field : {"private_key_id", "private_key", "client_email"}) {
     internal::nl::json json = internal::nl::json::parse(contents);
     json.erase(field);
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -365,11 +366,13 @@ TEST_F(ServiceAccountCredentialsTest, ParseMissingField) {
           EXPECT_THAT(ex.what(), HasSubstr("test-data"));
           throw;
         },
-        std::invalid_argument) << "field=" << field;
+        std::invalid_argument)
+        << "field=" << field;
 #else
     EXPECT_DEATH_IF_SUPPORTED(
         ParseServiceAccountCredentials(json.dump(), "test-data", "unused"),
-        "exceptions are disabled") << "field=" << field;
+        "exceptions are disabled")
+        << "field=" << field;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   }
 }

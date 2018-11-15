@@ -77,8 +77,8 @@ MakeCall(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
     last_status = std::move(result.first);
     if (not is_idempotent) {
       std::ostringstream os;
-      os << "Error in non-idempotent operation " << error_message
-         << ": " << last_status;
+      os << "Error in non-idempotent operation " << error_message << ": "
+         << last_status;
       google::cloud::internal::RaiseRuntimeError(os.str());
     }
     if (not retry_policy.OnFailure(last_status)) {
@@ -142,7 +142,7 @@ std::pair<Status, BucketMetadata> RetryClient::CreateBucket(
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
   auto is_idempotent = idempotency_policy_->IsIdempotent(request);
-  return MakeCall(*retry_policy, *backoff_policy, is_idempotent,  *client_,
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::CreateBucket, request, __func__);
 }
 

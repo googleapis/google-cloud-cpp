@@ -151,7 +151,7 @@ class CurlClient : public RawClient {
 
   std::pair<Status, std::string> AuthorizationHeader(
       std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&)
-  override;
+      override;
 
  private:
   /// Setup the configuration parameters that do not depend on the request.
