@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/column_family.h"
+#include "google/cloud/bigtable/internal/async_check_consistency.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/polling_policy.h"
@@ -240,6 +241,54 @@ class TableAdmin {
   bool CheckConsistency(bigtable::TableId const& table_id,
                         bigtable::ConsistencyToken const& consistency_token,
                         grpc::Status& status);
+
+  /**
+   * Asynchronously wait for replication to catch up.
+   *
+   * This function asks for a consistency token, and polls Cloud Bigtable until
+   * the replication has caught up to that consistency token, or until the
+   * polling policy has expired.
+   *
+   * When the replication catches up the callback receives a `grpc::Status::OK`.
+   *
+   * If the policy expires before the replication catches up with the
+   * consistency token then the callback receives `grpc::StatusCode::UNKNOWN`
+   * status code.
+   *
+   * After this function returns OK you can be sure that all mutations which
+   * have been applied before this call have made it to their replicas.
+   *
+   * @see https://cloud.google.com/bigtable/docs/replication-overview for an
+   * overview of Cloud Bigtable replication.
+   *
+   * @param table_id the table to wait on
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. The
+   *     replication will have caught up if status received by this callback is
+   *     OK. It must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, CompletionQueue&, grpc::Status const&>);
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> AsyncAwaitConsistency(
+      bigtable::TableId const& table_id, CompletionQueue& cq,
+      Functor&& callback) {
+    auto op = std::make_shared<internal::AsyncAwaitConsistency>(
+        __func__, polling_policy_->clone(), rpc_retry_policy_->clone(),
+        rpc_backoff_policy_->clone(),
+        MetadataUpdatePolicy(instance_name(), MetadataParamTypes::NAME,
+                             table_id.get()),
+        client_, TableName(table_id.get()));
+    return op->Start(cq, std::forward<Functor>(callback));
+  }
 
   void DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                       bigtable::SnapshotId const& snapshot_id,

@@ -28,6 +28,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 // Forward declare some classes so we can be friends.
 class TableAdmin;
 namespace internal {
+class AsyncAwaitConsistency;
 class AsyncCheckConsistency;
 }  // namespace internal
 namespace noex {
@@ -84,6 +85,7 @@ class AdminClient {
  protected:
   friend class TableAdmin;
   friend class noex::TableAdmin;
+  friend class internal::AsyncAwaitConsistency;
   friend class internal::AsyncCheckConsistency;
   template <typename ResultType, typename ClientType>
   friend ResultType internal::PollLongRunningOperation(
