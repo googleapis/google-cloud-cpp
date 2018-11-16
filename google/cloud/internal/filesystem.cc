@@ -133,6 +133,43 @@ file_status status(std::string const& path, std::error_code& ec) noexcept {
   return file_status(ExtractFileType(stat), ExtractPermissions(stat));
 }
 
+// NOLINTNEXTLINE(readability-identifier-naming)
+std::uintmax_t file_size(std::string const& path) {
+  std::error_code ec;
+  auto s = file_size(path, ec);
+  if (ec) {
+    std::string msg = __func__;
+    msg += ": getting size of file=";
+    msg += path;
+    RaiseSystemError(ec, msg);
+  }
+  return s;
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+std::uintmax_t file_size(std::string const& path,
+                         std::error_code& ec) noexcept {
+  os_stat_type stat;
+  ec.clear();
+#if _WIN32
+  int r = ::_stat(path.c_str(), &stat);
+  if (r == -1) {
+    ec.assign(errno, std::generic_category());
+    return static_cast<std::uintmax_t>(-1);
+  } else if (r == EINVAL) {
+    ec.assign(errno, std::generic_category());
+    return static_cast<std::uintmax_t>(-1);
+  }
+#else
+  int r = ::stat(path.c_str(), &stat);
+  if (r != 0) {
+    ec.assign(errno, std::generic_category());
+    return static_cast<std::uintmax_t>(-1);
+  }
+#endif  // _WIN32
+  return static_cast<std::uintmax_t>(stat.st_size);
+}
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

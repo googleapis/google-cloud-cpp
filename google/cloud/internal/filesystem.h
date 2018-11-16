@@ -164,6 +164,9 @@ inline bool is_other(file_status s) noexcept {
          not is_symlink(s);
 }
 
+std::uintmax_t file_size(std::string const& path);
+std::uintmax_t file_size(std::string const& path, std::error_code& ec) noexcept;
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
