@@ -177,6 +177,18 @@ InProcessAdminClient::AsyncDeleteSnapshot(
   return Stub()->AsyncDeleteSnapshot(context, request, cq);
 }
 
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+InProcessAdminClient::AsyncGetOperation(
+    grpc::ClientContext* context,
+    const google::longrunning::GetOperationRequest& request,
+    grpc::CompletionQueue* cq) {
+  auto stub = google::longrunning::Operations::NewStub(Channel());
+  return std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>(
+      stub->AsyncGetOperation(context, request, cq).release());
+}
+
 }  // namespace testing
 }  // namespace bigtable
 }  // namespace cloud

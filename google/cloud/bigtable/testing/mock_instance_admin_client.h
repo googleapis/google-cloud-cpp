@@ -192,6 +192,12 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
                grpc::Status(grpc::ClientContext*,
                             google::iam::v1::TestIamPermissionsRequest const&,
                             google::iam::v1::TestIamPermissionsResponse*));
+  MOCK_METHOD3(AsyncGetOperation,
+               std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+                   google::longrunning::Operation>>(
+                   grpc::ClientContext* context,
+                   const google::longrunning::GetOperationRequest& request,
+                   grpc::CompletionQueue* cq));
 };
 
 }  // namespace testing

@@ -221,6 +221,17 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
     return impl_.Stub()->AsyncDeleteSnapshot(context, request, cq);
   };
 
+  std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  AsyncGetOperation(grpc::ClientContext* context,
+                    const google::longrunning::GetOperationRequest& request,
+                    grpc::CompletionQueue* cq) override {
+    auto stub = google::longrunning::Operations::NewStub(Channel());
+    return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        google::longrunning::Operation>>(
+        stub->AsyncGetOperation(context, request, cq).release());
+  }
+
  private:
   std::string project_;
   Impl impl_;
