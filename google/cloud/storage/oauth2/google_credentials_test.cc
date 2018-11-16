@@ -74,8 +74,8 @@ std::string const AUTHORIZED_USER_CRED_CONTENTS = R"""({
   "type": "authorized_user"
 })""";
 
-void SetupAuthorizedUserCredentialsFileForTest() {
-  std::ofstream os(AUTHORIZED_USER_CRED_FILENAME);
+void SetupAuthorizedUserCredentialsFileForTest(std::string const& filename) {
+  std::ofstream os(filename);
   os << AUTHORIZED_USER_CRED_CONTENTS;
   os.close();
 }
@@ -91,11 +91,12 @@ void SetupAuthorizedUserCredentialsFileForTest() {
  * make this an integration test.
  */
 TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaEnvVar) {
-  SetupAuthorizedUserCredentialsFileForTest();
+  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  SetupAuthorizedUserCredentialsFileForTest(filename);
 
   // Test that the authorized user credentials are loaded as the default when
   // specified via the well known environment variable.
-  SetEnv(GoogleAdcEnvVar(), AUTHORIZED_USER_CRED_FILENAME.c_str());
+  SetEnv(GoogleAdcEnvVar(), filename.c_str());
   auto credentials = GoogleDefaultCredentials();
   // Need to create a temporary for the pointer because clang-tidy warns about
   // using expressions with (potential) side-effects inside typeid().
@@ -104,20 +105,21 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaEnvVar) {
 }
 
 TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaGcloudFile) {
-  SetupAuthorizedUserCredentialsFileForTest();
+  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  SetupAuthorizedUserCredentialsFileForTest(filename);
   // Test that the authorized user credentials are loaded as the default when
   // stored in the the well known gcloud ADC file path.
   UnsetEnv(GoogleAdcEnvVar());
-  SetEnv(GoogleGcloudAdcFileEnvVar(), AUTHORIZED_USER_CRED_FILENAME.c_str());
+  SetEnv(GoogleGcloudAdcFileEnvVar(), filename.c_str());
   auto credentials = GoogleDefaultCredentials();
   auto ptr = credentials.get();
   EXPECT_EQ(typeid(*ptr), typeid(AuthorizedUserCredentials<>));
 }
 
 TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsFromFilename) {
-  SetupAuthorizedUserCredentialsFileForTest();
-  auto credentials = CreateAuthorizedUserCredentialsFromJsonFilePath(
-      AUTHORIZED_USER_CRED_FILENAME);
+  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  SetupAuthorizedUserCredentialsFileForTest(filename);
+  auto credentials = CreateAuthorizedUserCredentialsFromJsonFilePath(filename);
   auto ptr = credentials.get();
   EXPECT_EQ(typeid(*ptr), typeid(AuthorizedUserCredentials<>));
 }
@@ -156,18 +158,19 @@ std::string const SERVICE_ACCOUNT_CRED_CONTENTS = R"""({
     "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
 })""";
 
-void SetupServiceAccountCredentialsFileForTest() {
-  std::ofstream os(SERVICE_ACCOUNT_CRED_FILENAME);
+void SetupServiceAccountCredentialsFileForTest(std::string const& filename) {
+  std::ofstream os(filename);
   os << SERVICE_ACCOUNT_CRED_CONTENTS;
   os.close();
 }
 
 TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaEnvVar) {
-  SetupServiceAccountCredentialsFileForTest();
+  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  SetupServiceAccountCredentialsFileForTest(filename);
 
   // Test that the service account credentials are loaded as the default when
   // specified via the well known environment variable.
-  SetEnv(GoogleAdcEnvVar(), SERVICE_ACCOUNT_CRED_FILENAME.c_str());
+  SetEnv(GoogleAdcEnvVar(), filename.c_str());
   auto credentials = GoogleDefaultCredentials();
   // Need to create a temporary for the pointer because clang-tidy warns about
   // using expressions with (potential) side-effects inside typeid().
@@ -176,19 +179,24 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaEnvVar) {
 }
 
 TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaGcloudFile) {
+  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  SetupServiceAccountCredentialsFileForTest(filename);
+
   // Test that the service account credentials are loaded as the default when
   // stored in the the well known gcloud ADC file path.
   UnsetEnv(GoogleAdcEnvVar());
-  SetEnv(GoogleGcloudAdcFileEnvVar(), SERVICE_ACCOUNT_CRED_FILENAME.c_str());
+  SetEnv(GoogleGcloudAdcFileEnvVar(), filename.c_str());
   auto credentials = GoogleDefaultCredentials();
   auto ptr = credentials.get();
   EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
 }
 
 TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromFilename) {
+  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  SetupServiceAccountCredentialsFileForTest(filename);
+
   // Test that the service account credentials are loaded from a file.
-  auto credentials = CreateServiceAccountCredentialsFromJsonFilePath(
-      SERVICE_ACCOUNT_CRED_FILENAME);
+  auto credentials = CreateServiceAccountCredentialsFromJsonFilePath(filename);
   auto ptr = credentials.get();
   EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
 }
@@ -235,14 +243,14 @@ TEST_F(GoogleCredentialsTest, CreateComputeEngineCredentialsWithExplicitEmail) {
 }
 
 TEST_F(GoogleCredentialsTest, LoadUnknownTypeCredentials) {
-  char const filename[] = "unknown-type-credentials.json";
+  std::string filename = ::testing::TempDir() + "unknown-type-credentials.json";
   std::ofstream os(filename);
   std::string contents_str = R"""({
   "type": "unknown_type"
 })""";
   os << contents_str;
   os.close();
-  SetEnv(GoogleAdcEnvVar(), filename);
+  SetEnv(GoogleAdcEnvVar(), filename.c_str());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(try { auto credentials = GoogleDefaultCredentials(); } catch (
@@ -259,12 +267,12 @@ TEST_F(GoogleCredentialsTest, LoadUnknownTypeCredentials) {
 }
 
 TEST_F(GoogleCredentialsTest, LoadInvalidCredentials) {
-  char const filename[] = "invalid-credentials.json";
+  std::string filename = ::testing::TempDir() + "invalid-credentials.json";
   std::ofstream os(filename);
   std::string contents_str = R"""( not-a-json-object-string )""";
   os << contents_str;
   os.close();
-  SetEnv(GoogleAdcEnvVar(), filename);
+  SetEnv(GoogleAdcEnvVar(), filename.c_str());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(try { auto credentials = GoogleDefaultCredentials(); } catch (
