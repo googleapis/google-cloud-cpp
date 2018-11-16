@@ -252,6 +252,17 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
     return impl_.Stub()->AsyncCreateAppProfile(context, request, cq);
   }
 
+  std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  AsyncGetOperation(grpc::ClientContext* context,
+                    const google::longrunning::GetOperationRequest& request,
+                    grpc::CompletionQueue* cq) override {
+    auto stub = google::longrunning::Operations::NewStub(Channel());
+    return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        google::longrunning::Operation>>(
+        stub->AsyncGetOperation(context, request, cq).release());
+  }
+
   DefaultInstanceAdminClient(DefaultInstanceAdminClient const&) = delete;
   DefaultInstanceAdminClient& operator=(DefaultInstanceAdminClient const&) =
       delete;

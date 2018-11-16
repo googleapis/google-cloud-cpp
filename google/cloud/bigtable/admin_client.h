@@ -213,6 +213,15 @@ class AdminClient {
       google::bigtable::admin::v2::DeleteSnapshotRequest const& request,
       grpc::CompletionQueue* cq) = 0;
   //@}
+
+  //@{
+  /// @name The `google.longrunning.Operations` async wrappers.
+  virtual std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  AsyncGetOperation(grpc::ClientContext* context,
+                    const google::longrunning::GetOperationRequest& request,
+                    grpc::CompletionQueue* cq) = 0;
+  //@}
 };
 
 /// Create a new admin client configured via @p options.

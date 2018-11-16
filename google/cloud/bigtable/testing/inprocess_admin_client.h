@@ -157,6 +157,11 @@ class InProcessAdminClient : public bigtable::AdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteSnapshotRequest const& request,
       grpc::CompletionQueue* cq) override;
+  std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  AsyncGetOperation(grpc::ClientContext* context,
+                    const google::longrunning::GetOperationRequest& request,
+                    grpc::CompletionQueue* cq) override;
   //@}
 
  private:

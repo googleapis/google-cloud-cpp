@@ -179,7 +179,18 @@ class InstanceAdminClient {
       grpc::ClientContext* context,
       google::iam::v1::TestIamPermissionsRequest const& request,
       google::iam::v1::TestIamPermissionsResponse* response) = 0;
+  //@}
 
+  //@{
+  /// @name The `google.longrunning.Operations` wrappers.
+  virtual grpc::Status GetOperation(
+      grpc::ClientContext* context,
+      google::longrunning::GetOperationRequest const& request,
+      google::longrunning::Operation* response) = 0;
+  //@}
+
+  //@{
+  /// @name The `google.bigtable.admin.v2.TableAdmin` Async operations.
   virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::Instance>>
   AsyncGetInstance(
@@ -230,11 +241,12 @@ class InstanceAdminClient {
   //@}
 
   //@{
-  /// @name The `google.longrunning.Operations` wrappers.
-  virtual grpc::Status GetOperation(
-      grpc::ClientContext* context,
-      google::longrunning::GetOperationRequest const& request,
-      google::longrunning::Operation* response) = 0;
+  /// @name The `google.longrunning.Operations` async wrappers.
+  virtual std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  AsyncGetOperation(grpc::ClientContext* context,
+                    const google::longrunning::GetOperationRequest& request,
+                    grpc::CompletionQueue* cq) = 0;
   //@}
 };
 
