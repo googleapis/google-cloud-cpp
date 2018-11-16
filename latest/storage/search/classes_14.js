@@ -31,5 +31,6 @@ var searchData=
   ['wellknownparameter_3c_20quotauser_2c_20std_3a_3astring_20_3e',['WellKnownParameter&lt; QuotaUser, std::string &gt;',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1WellKnownParameter.html',1,'google::cloud::storage::v0::internal']]],
   ['wellknownparameter_3c_20sourcegeneration_2c_20std_3a_3aint64_5ft_20_3e',['WellKnownParameter&lt; SourceGeneration, std::int64_t &gt;',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1WellKnownParameter.html',1,'google::cloud::storage::v0::internal']]],
   ['wellknownparameter_3c_20userproject_2c_20std_3a_3astring_20_3e',['WellKnownParameter&lt; UserProject, std::string &gt;',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1WellKnownParameter.html',1,'google::cloud::storage::v0::internal']]],
-  ['wellknownparameter_3c_20versions_2c_20bool_20_3e',['WellKnownParameter&lt; Versions, bool &gt;',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1WellKnownParameter.html',1,'google::cloud::storage::v0::internal']]]
+  ['wellknownparameter_3c_20versions_2c_20bool_20_3e',['WellKnownParameter&lt; Versions, bool &gt;',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1WellKnownParameter.html',1,'google::cloud::storage::v0::internal']]],
+  ['withobjectmetadata',['WithObjectMetadata',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1WithObjectMetadata.html',1,'google::cloud::storage::v0']]]
 ];
