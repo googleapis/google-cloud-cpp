@@ -650,6 +650,29 @@ class GcsObject(object):
         self._insert_revision(revision)
         return revision
 
+    def insert_resumable(self, gcs_url, request, media, resource):
+        """Implement the final insert for a resumable upload.
+
+        :param gcs_url:str the root URL for the fake GCS service.
+        :param request:flask.Request the contents of the HTTP request.
+        :param media:str the media for the object.
+        :param resource:dict the metadata for the object.
+        :return: the newly created object version.
+        :rtype: GcsObjectVersion
+        """
+        self.generation += 1
+        revision = GcsObjectVersion(
+            gcs_url, self.bucket_name, self.name, self.generation, request,
+            media)
+        meta = revision.metadata.setdefault('metadata', {})
+        meta['x_testbench_upload'] = 'resumable'
+        meta['x_testbench_md5'] = resource.get('md5Hash', '')
+        meta['x_testbench_crc32c'] = resource.get('crc32c', '')
+        # Apply any overrides from the resource object part.
+        revision.update_from_metadata(resource)
+        self._insert_revision(revision)
+        return revision
+
     def insert_xml(self, gcs_url, request):
         """Implement the insert operation using the XML API.
 
