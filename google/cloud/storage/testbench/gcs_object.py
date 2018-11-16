@@ -331,6 +331,7 @@ class GcsObjectVersion(object):
         hashes = ['%s=%s' % (key, val) for key, val in hashes.iteritems() if val]
         return ','.join(hashes)
 
+
 class GcsObject(object):
     """Represent a GCS Object, including all its revisions."""
 
@@ -620,23 +621,32 @@ class GcsObject(object):
             raise error_response.ErrorResponse(
                 'Missing end marker (--%s--) in media body' % boundary)
         media_body = media_body[:end]
+        resource = json.loads(resource_body)
+        # There are two ways to specify the content-type, the 'content-type'
+        # header and the resource['contentType'] field. They must be consistent,
+        # and the service generates an error when they are not.
+        if (resource.get('contentType') is not None and
+            media_headers.get('content-type') is not None and
+                resource.get('contentType') != media_headers.get('content-type')):
+            raise error_response.ErrorResponse(
+                ('Content-Type specified in the upload (%s) does not match' +
+                 'contentType specified in the metadata (%s).') % (
+                    media_headers.get('content-type'),
+                    resource.get('contentType')),
+                status_code=400)
+        # Set the contentType in the resource from the header. Note that if both
+        # are set they have the same value.
+        resource.setdefault('contentType', media_headers.get('content-type'))
         self.generation += 1
         revision = GcsObjectVersion(
             gcs_url, self.bucket_name, self.name, self.generation, request,
             media_body)
-        resource = json.loads(resource_body)
         meta = revision.metadata.setdefault('metadata', {})
         meta['x_testbench_upload'] = 'multipart'
         meta['x_testbench_md5'] = resource.get('md5Hash', '')
         meta['x_testbench_crc32c'] = resource.get('crc32c', '')
         # Apply any overrides from the resource object part.
         revision.update_from_metadata(resource)
-        # The content-type needs to be patched up, yuck.
-        if media_headers.get('content-type') is not None:
-            revision.update_from_metadata({
-                'contentType':
-                    media_headers.get('content-type')
-            })
         self._insert_revision(revision)
         return revision
 
