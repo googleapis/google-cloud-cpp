@@ -131,6 +131,10 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a8cdfe9c4ed1b18bf96b7e37e82169faf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade5023f94bdcd5e12e0ca914aff3f9b3"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ade5023f94bdcd5e12e0ca914aff3f9b3">TestIamPermissions</a> (grpc::ClientContext *context, google::iam::v1::TestIamPermissionsRequest const &amp;request, google::iam::v1::TestIamPermissionsResponse *response)=0</td></tr>
 <tr class="separator:ade5023f94bdcd5e12e0ca914aff3f9b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">The `google.longrunning.Operations` wrappers.</div></td></tr>
+<tr class="memitem:ae0827d5d6f3443d5d286a2b212c1bd16"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ae0827d5d6f3443d5d286a2b212c1bd16">GetOperation</a> (grpc::ClientContext *context, google::longrunning::GetOperationRequest const &amp;request, google::longrunning::Operation *response)=0</td></tr>
+<tr class="separator:ae0827d5d6f3443d5d286a2b212c1bd16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">The `google.bigtable.admin.v2.TableAdmin` Async operations.</div></td></tr>
 <tr class="memitem:a292d8c8d42eb639cf8e039703f36536a"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::Instance &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a292d8c8d42eb639cf8e039703f36536a">AsyncGetInstance</a> (grpc::ClientContext *context, google::bigtable::admin::v2::GetInstanceRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
 <tr class="separator:a292d8c8d42eb639cf8e039703f36536a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9e878f90c0aacede206e156792f211f"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::Cluster &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ae9e878f90c0aacede206e156792f211f">AsyncGetCluster</a> (grpc::ClientContext *context, google::bigtable::admin::v2::GetClusterRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
@@ -145,9 +149,9 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a4fb54f0cd2cffde2d4bb2cd998d29c7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45775397a789981a689fdb2e9a040055"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::AppProfile &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a45775397a789981a689fdb2e9a040055">AsyncCreateAppProfile</a> (grpc::ClientContext *context, google::bigtable::admin::v2::CreateAppProfileRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
 <tr class="separator:a45775397a789981a689fdb2e9a040055"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">The `google.longrunning.Operations` wrappers.</div></td></tr>
-<tr class="memitem:ae0827d5d6f3443d5d286a2b212c1bd16"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ae0827d5d6f3443d5d286a2b212c1bd16">GetOperation</a> (grpc::ClientContext *context, google::longrunning::GetOperationRequest const &amp;request, google::longrunning::Operation *response)=0</td></tr>
-<tr class="separator:ae0827d5d6f3443d5d286a2b212c1bd16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">The `google.longrunning.Operations` async wrappers.</div></td></tr>
+<tr class="memitem:ad6979f56cf382a26f6f3d6fbb2775bd1"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::longrunning::Operation &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ad6979f56cf382a26f6f3d6fbb2775bd1">AsyncGetOperation</a> (grpc::ClientContext *context, const google::longrunning::GetOperationRequest &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
+<tr class="separator:ad6979f56cf382a26f6f3d6fbb2775bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -461,6 +465,48 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">google::bigtable::admin::v2::GetInstanceRequest const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">grpc::CompletionQueue *&#160;</td>
+          <td class="paramname"><em>cq</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad6979f56cf382a26f6f3d6fbb2775bd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6979f56cf382a26f6f3d6fbb2775bd1">&#9670;&nbsp;</a></span>AsyncGetOperation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt;google::longrunning::Operation&gt; &gt; google::cloud::bigtable::v0::InstanceAdminClient::AsyncGetOperation </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const google::longrunning::GetOperationRequest &amp;&#160;</td>
           <td class="paramname"><em>request</em>, </td>
         </tr>
         <tr>
