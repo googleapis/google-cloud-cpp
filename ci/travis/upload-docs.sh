@@ -31,8 +31,8 @@ case "${TRAVIS_BRANCH:-}" in
     master)
       subdir="latest"
       ;;
-    v[0-9]+\.[0-9]+\.[0-9]+)
-      subdir=$(echo "${TRAVIS_BRANCH:-}" | sed 's/^v//')
+    v[0-9]\.*)
+      subdir=$(echo "${TRAVIS_BRANCH:-}" | sed -r -e 's/^v//' -e 's/^([0-9]+).([0-9]+).x/\1.\2.0/')
       ;;
     *)
       echo "Skipping document generation as it is only used in master and release branches."

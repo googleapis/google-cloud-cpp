@@ -77,10 +77,25 @@ git commit -m"Create ${RELEASE}.x release branch" .
 git push --set-upstream ${RELEASE}.x
 ```
 
+## Update the documentation links
+
+Pushing the branch should start the CI builds, one of the CI builds
+automatically pushes a new version of the documentation to the `gh-pages`
+branch. You should checkout that branch, change the `index.html` page to link to
+this new version and commit it:
+
+```bash
+git pull
+git checkout gh-pages
+sed -i "s;\(.*URL='\).*\(/index.html.*\);\1${RELEASE}\2;" index.html 
+git commit -m"Update documentation to ${RELEASE}" .
+git push
+```
+
 ## Bump the version numbers in `master`
 
-Bump the version numbers, create a PR in your fork, send the PR for review
-against `master`. For an example, look at
+Working in your fork of `gooogle-cloud-cpp`: bump the version numbers, and send
+the PR for review against `master`. For an example, look at
 [#1375](https://github.com/GoogleCloudPlatform/google-cloud-cpp/pull/1375).
 
 ## Create a pre-release tag
