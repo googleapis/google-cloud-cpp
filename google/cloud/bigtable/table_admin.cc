@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/bigtable/grpc_error.h"
+#include "google/cloud/bigtable/internal/async_future_from_callback.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/poll_longrunning_operation.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
@@ -25,6 +27,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+
 static_assert(std::is_copy_constructible<bigtable::TableAdmin>::value,
               "bigtable::TableAdmin must be constructible");
 static_assert(std::is_copy_assignable<bigtable::TableAdmin>::value,
@@ -38,6 +41,31 @@ btadmin::Table TableAdmin::CreateTable(std::string table_id,
   if (not status.ok()) {
     internal::RaiseRpcError(status, status.error_message());
   }
+  return result;
+}
+
+future<google::bigtable::admin::v2::Table> TableAdmin::AsyncCreateTable(
+    std::string table_id, TableConfig config, CompletionQueue& cq) {
+  promise<google::bigtable::admin::v2::Table> p;
+  auto result = p.get_future();
+
+  impl_.AsyncCreateTable(
+      std::move(table_id), std::move(config), cq,
+      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncCreateTable"));
+
+  return result;
+}
+
+future<google::bigtable::admin::v2::Table> TableAdmin::AsyncGetTable(
+    std::string const& table_id, btadmin::Table::View view,
+    CompletionQueue& cq) {
+  promise<google::bigtable::admin::v2::Table> p;
+  auto result = p.get_future();
+
+  impl_.AsyncGetTable(
+      table_id, view, cq,
+      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetTable"));
+
   return result;
 }
 

@@ -183,7 +183,35 @@ function run_all_table_admin_examples {
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
-  run_example_usage ./bigtable_samples
+  run_example_usage ./table_admin_snippets
+}
+
+# Run all the table admin async examples.
+#
+# This function allows us to keep a single place where all the examples are
+# listed. We want to run these examples in the continuous integration builds
+# because they rot otherwise.
+function run_all_table_admin_async_examples {
+  local project_id=$1
+  local zone_id=$2
+  shift 2
+
+  EMULATOR_LOG="emulator.log"
+
+  # Create a (very likely unique) instance name.
+  local -r INSTANCE="in-${RANDOM}-${RANDOM}"
+
+  # Use the same table in all the tests.
+  local -r TABLE="sample-table-for-admin-${RANDOM}"
+
+  run_example ./table_admin_async_snippets async-create-table \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_async_snippets async-get-table \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
+
+  # Verify that calling without a command produces the right exit status and
+  # some kind of Usage message.
+  run_example_usage ./table_admin_async_snippets
 }
 
 ################################################

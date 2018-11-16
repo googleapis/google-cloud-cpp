@@ -22,6 +22,7 @@
 #include "google/cloud/bigtable/internal/table_admin.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/table_config.h"
+#include "google/cloud/future.h"
 #include <future>
 #include <memory>
 
@@ -108,6 +109,33 @@ class TableAdmin {
                                                    TableConfig config);
 
   /**
+   * Sends an asynchronous request to create a new table in the instance.
+   *
+   * @param table_id the name of the table relative to the instance managed by
+   *     this object.  The full table name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of this object.
+   * @param config the initial schema for the table.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   *
+   * @return a future that will be satisfied when the request succeeds or the
+   *   retry policy expires.  In the first case, the future will contain the
+   *   response from the service. In the second the future is satisfied with
+   *   an exception. Note that the service only fills out the `table_name` field
+   *   for this request.
+   *
+   * @throws std::exception if the operation cannot be started.
+   *
+   * @par Example
+   * @snippet table_admin_async_snippets.cc async create table
+   */
+  future<google::bigtable::admin::v2::Table> AsyncCreateTable(
+      std::string table_id, TableConfig config, CompletionQueue& cq);
+
+  /**
    * Return all the tables in the instance.
    *
    * @param view define what information about the tables is retrieved.
@@ -144,6 +172,35 @@ class TableAdmin {
       std::string const& table_id,
       ::google::bigtable::admin::v2::Table::View view =
           ::google::bigtable::admin::v2::Table::SCHEMA_VIEW);
+
+  /**
+   * Sends an asynchronous request to get information about an existing table.
+   *
+   * @param table_id the id of the table within the instance associated with
+   *     this object. The full name of the table is
+   *     `this->instance_name() + "/tables/" + table_id`
+   * @param view describes how much information to get about the name.
+   *   - VIEW_UNSPECIFIED: equivalent to VIEW_SCHEMA.
+   *   - NAME: return only the name of the table.
+   *   - VIEW_SCHEMA: return the name and the schema.
+   *   - FULL: return all the information about the table.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   *
+   * @return a future that will be satisfied when the request succeeds or the
+   *   retry policy expires. In the first case, the future will contain the
+   *   response from the service. In the second the future is satisfied with
+   *   an exception.
+   *
+   * @throws std::exception if the operation cannot be started.
+   *
+   * @par Example
+   * @snippet table_admin_async_snippets.cc async get table
+   */
+  future<google::bigtable::admin::v2::Table> AsyncGetTable(
+      std::string const& table_id,
+      google::bigtable::admin::v2::Table::View view, CompletionQueue& cq);
 
   /**
    * Delete a table.

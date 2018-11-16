@@ -137,7 +137,7 @@ class TableAdmin {
                     Functor, CompletionQueue&,
                     google::bigtable::admin::v2::Table&, grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
-  void AsyncCreateTable(std::string const& table_id, TableConfig config,
+  void AsyncCreateTable(std::string table_id, TableConfig config,
                         CompletionQueue& cq, Functor&& callback) {
     auto request = config.as_proto_move();
     request.set_parent(instance_name());

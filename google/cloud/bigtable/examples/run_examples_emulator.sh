@@ -35,6 +35,7 @@ run_quickstart_example "${PROJECT_ID}" "${INSTANCE_ID}"
 run_hello_world_example "${PROJECT_ID}" "${INSTANCE_ID}"
 run_hello_app_profile_example "${PROJECT_ID}" "${INSTANCE_ID}"
 run_all_table_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
+run_all_table_admin_async_examples "${PROJECT_ID}" "${ZONE_ID}"
 run_all_instance_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
 
 exit ${EXIT_STATUS}
