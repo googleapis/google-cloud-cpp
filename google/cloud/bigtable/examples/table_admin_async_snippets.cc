@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
 #include <google/protobuf/text_format.h>
+#include <algorithm>
 
 namespace {
 namespace cbt = google::cloud::bigtable;
@@ -23,20 +24,9 @@ struct Usage {
   std::string msg;
 };
 
-char const* ConsumeArg(int& argc, char* argv[]) {
-  if (argc < 2) {
-    return nullptr;
-  }
-  char const* result = argv[1];
-  std::copy(argv + 2, argv + argc, argv + 1);
-  argc--;
-  return result;
-}
-
 std::string command_usage;
 
-void PrintUsage(int argc, char* argv[], std::string const& msg) {
-  std::string const cmd = argv[0];
+void PrintUsage(std::string const& cmd, std::string const& msg) {
   auto last_slash = std::string(cmd).find_last_of('/');
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
@@ -44,12 +34,11 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
             << command_usage << std::endl;
 }
 
-void AsyncCreateTable(cbt::TableAdmin admin, cbt::CompletionQueue cq, int argc,
-                      char* argv[]) {
-  if (argc != 2) {
+void AsyncCreateTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
+                      std::vector<std::string> argv) {
+  if (argv.size() != 2U) {
     throw Usage{"async-create-table: <project-id> <instance-id> <table-id>"};
   }
-  std::string const table_id = ConsumeArg(argc, argv);
 
   //! [async create table]
   namespace cbt = google::cloud::bigtable;
@@ -72,15 +61,14 @@ void AsyncCreateTable(cbt::TableAdmin admin, cbt::CompletionQueue cq, int argc,
     final.get();  // block to keep sample small and correct.
   }
   //! [async create table]
-  (std::move(admin), std::move(cq), table_id);
+  (std::move(admin), std::move(cq), argv[1]);
 }
 
-void AsyncGetTable(cbt::TableAdmin admin, cbt::CompletionQueue cq, int argc,
-                   char* argv[]) {
-  if (argc != 2) {
+void AsyncGetTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
+                   std::vector<std::string> argv) {
+  if (argv.size() != 2U) {
     throw Usage{"async-get-table: <project-id> <instance-id> <table-id>"};
   }
-  std::string const table_id = ConsumeArg(argc, argv);
 
   //! [async get table]
   namespace cbt = google::cloud::bigtable;
@@ -105,7 +93,7 @@ void AsyncGetTable(cbt::TableAdmin admin, cbt::CompletionQueue cq, int argc,
     final.get();
   }
   //! [async get table]
-  (std::move(admin), std::move(cq), table_id);
+  (std::move(admin), std::move(cq), argv[1]);
 }
 
 }  // anonymous namespace
@@ -113,7 +101,7 @@ void AsyncGetTable(cbt::TableAdmin admin, cbt::CompletionQueue cq, int argc,
 int main(int argc, char* argv[]) try {
   using CommandType = std::function<void(
       google::cloud::bigtable::TableAdmin,
-      google::cloud::bigtable::CompletionQueue, int, char*[])>;
+      google::cloud::bigtable::CompletionQueue, std::vector<std::string>)>;
 
   std::map<std::string, CommandType> commands = {
       {"async-create-table", &AsyncCreateTable},
@@ -133,8 +121,7 @@ int main(int argc, char* argv[]) try {
         "Unused-instance");
     for (auto&& kv : commands) {
       try {
-        int fake_argc = 0;
-        kv.second(unused, cq, fake_argc, argv);
+        kv.second(unused, cq, {});
       } catch (Usage const& u) {
         command_usage += "    ";
         command_usage += u.msg;
@@ -146,17 +133,20 @@ int main(int argc, char* argv[]) try {
   }
 
   if (argc < 4) {
-    PrintUsage(argc, argv, "Missing command and/or project-id/ or instance-id");
+    PrintUsage(argv[0], "Missing command and/or project-id/ or instance-id");
     return 1;
   }
 
-  std::string const command_name = ConsumeArg(argc, argv);
-  std::string const project_id = ConsumeArg(argc, argv);
-  std::string const instance_id = ConsumeArg(argc, argv);
+  std::vector<std::string> args;
+  args.emplace_back(argv[0]);
+  std::string const command_name = argv[1];
+  std::string const project_id = argv[2];
+  std::string const instance_id = argv[3];
+  std::transform(argv + 4, argv + argc, std::back_inserter(args), [](char* x) { return std::string(x); });
 
   auto command = commands.find(command_name);
   if (commands.end() == command) {
-    PrintUsage(argc, argv, "Unknown command: " + command_name);
+    PrintUsage(argv[0], "Unknown command: " + command_name);
     return 1;
   }
 
@@ -169,7 +159,7 @@ int main(int argc, char* argv[]) try {
           project_id, google::cloud::bigtable::ClientOptions()),
       instance_id);
 
-  command->second(admin, cq, argc, argv);
+  command->second(admin, cq, args);
 
   // Shutdown the completion queue event loop and join the thread.
   cq.Shutdown();
@@ -177,7 +167,7 @@ int main(int argc, char* argv[]) try {
 
   return 0;
 } catch (Usage const& ex) {
-  PrintUsage(argc, argv, ex.msg);
+  PrintUsage(argv[0], ex.msg);
   return 1;
 } catch (std::exception const& ex) {
   std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;

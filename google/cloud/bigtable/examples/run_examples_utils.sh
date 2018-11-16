@@ -199,7 +199,7 @@ function run_all_table_admin_async_examples {
   EMULATOR_LOG="emulator.log"
 
   # Create a (very likely unique) instance name.
-  local -r INSTANCE="in-$(date +%s)"
+  local -r INSTANCE="in-${RANDOM}-${RANDOM}"
 
   # Use the same table in all the tests.
   local -r TABLE="sample-table-for-admin-${RANDOM}"
