@@ -79,7 +79,7 @@ git push --set-upstream ${RELEASE}.x
 
 ## Update the documentation links
 
-Pushing the branch should start the CI builds, one of the CI builds
+Pushing the branch should start the CI builds. One of the CI builds
 automatically pushes a new version of the documentation to the `gh-pages`
 branch. You should checkout that branch, change the `index.html` page to link to
 this new version and commit it:
