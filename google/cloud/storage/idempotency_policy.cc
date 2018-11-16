@@ -110,6 +110,14 @@ bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
     internal::RewriteObjectRequest const& request) const {
   return true;
 }
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::ResumableUploadRequest const& request) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::UploadChunkRequest const& request) const {
+  return true;
+}
 
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
     internal::ListBucketAclRequest const& request) const {
@@ -337,6 +345,20 @@ bool StrictIdempotencyPolicy::IsIdempotent(
   // pre-conditions are set. If they are set, the operation can only succeed
   // once, but the results may be different.
   return request.HasOption<IfGenerationMatch>();
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::ResumableUploadRequest const& request) const {
+  // Only the pre-conditions on the destination matter. If they are not set, it
+  // is possible for the request to succeed more than once, even if the source
+  // pre-conditions are set. If they are set, the operation can only succeed
+  // once, but the results may be different.
+  return request.HasOption<IfGenerationMatch>();
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::UploadChunkRequest const& request) const {
+  return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
