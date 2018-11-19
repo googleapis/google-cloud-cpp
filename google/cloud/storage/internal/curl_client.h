@@ -147,8 +147,7 @@ class CurlClient : public RawClient {
       DeleteNotificationRequest const&) override;
 
   std::pair<Status, std::string> AuthorizationHeader(
-      std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&)
-      override;
+      std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&);
 
   void LockShared();
   void UnlockShared();

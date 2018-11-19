@@ -1407,7 +1407,7 @@ std::pair<Status, std::string> CurlClient::AuthorizationHeader(
     std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&
         credentials) {
   return credentials->AuthorizationHeader();
-};
+}
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

@@ -58,8 +58,8 @@ class ComputeEngineCredentials : public Credentials {
   explicit ComputeEngineCredentials(std::string const& service_account_email)
       : expiration_time_(), service_account_email_(service_account_email) {}
 
-  std::pair<google::cloud::storage::Status, std::string>
-  AuthorizationHeader() override {
+  std::pair<google::cloud::storage::Status, std::string> AuthorizationHeader()
+      override {
     using google::cloud::storage::Status;
     std::unique_lock<std::mutex> lock(mu_);
     if (IsValid()) {

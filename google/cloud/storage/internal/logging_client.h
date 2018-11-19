@@ -129,10 +129,6 @@ class LoggingClient : public RawClient {
 
   std::shared_ptr<RawClient> client() const { return client_; }
 
-  std::pair<Status, std::string> AuthorizationHeader(
-      std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&)
-      override;
-
  private:
   std::shared_ptr<RawClient> client_;
 };

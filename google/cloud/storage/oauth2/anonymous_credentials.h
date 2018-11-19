@@ -35,8 +35,8 @@ class AnonymousCredentials : public Credentials {
  public:
   AnonymousCredentials() = default;
 
-  std::pair<google::cloud::storage::Status, std::string>
-  AuthorizationHeader() override;
+  std::pair<google::cloud::storage::Status, std::string> AuthorizationHeader()
+      override;
 };
 
 }  // namespace oauth2

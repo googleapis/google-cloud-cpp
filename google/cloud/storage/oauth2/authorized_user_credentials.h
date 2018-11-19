@@ -89,8 +89,8 @@ class AuthorizedUserCredentials : public Credentials {
     request_ = request_builder.BuildRequest();
   }
 
-  std::pair<google::cloud::storage::Status, std::string>
-  AuthorizationHeader() override {
+  std::pair<google::cloud::storage::Status, std::string> AuthorizationHeader()
+      override {
     using google::cloud::storage::Status;
     std::unique_lock<std::mutex> lock(mu_);
     if (IsValid()) {
