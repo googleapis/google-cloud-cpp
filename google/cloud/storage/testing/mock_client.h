@@ -145,6 +145,10 @@ class MockClient : public google::cloud::storage::internal::RawClient {
   MOCK_METHOD1(DeleteNotification,
                ResponseWrapper<internal::EmptyResponse>(
                    internal::DeleteNotificationRequest const&));
+  MOCK_METHOD1(
+      AuthorizationHeader,
+      ResponseWrapper<std::string>(
+          std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&));
 };
 }  // namespace testing
 }  // namespace storage
