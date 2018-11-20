@@ -14,6 +14,7 @@ var searchData=
   ['max_5fage_5fseconds',['max_age_seconds',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html#af48b23ba58bd9b15a3e95b935861c86a',1,'google::cloud::storage::v0::CorsEntry']]],
   ['maxage',['MaxAge',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a93883230f52887e9aa84bcada3992c41',1,'google::cloud::storage::v0::LifecycleRule']]],
   ['maxbytesrewrittenpercall',['MaxBytesRewrittenPerCall',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1MaxBytesRewrittenPerCall.html',1,'google::cloud::storage::v0']]],
+  ['maximum_5fsimple_5fupload_5fsize',['maximum_simple_upload_size',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a37d1216647c1a614a68e4d58c73e667e',1,'google::cloud::storage::v0::ClientOptions']]],
   ['maxresults',['MaxResults',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1MaxResults.html',1,'google::cloud::storage::v0']]],
   ['maybeloadcredsfromadcenvvar',['MaybeLoadCredsFromAdcEnvVar',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#ad78fc46c0e7d24d5d9fa4e04610e410e',1,'google::cloud::storage::v0::oauth2']]],
   ['maybeloadcredsfromgcloudadcfile',['MaybeLoadCredsFromGcloudAdcFile',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#a7a9f16eaaf691fb13a02c60b164af81a',1,'google::cloud::storage::v0::oauth2']]],

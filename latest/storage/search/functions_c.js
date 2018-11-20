@@ -10,6 +10,7 @@ var searchData=
   ['matchesstorageclassregional',['MatchesStorageClassRegional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a24af31f289263dda2607f3bf9c54204a',1,'google::cloud::storage::v0::LifecycleRule']]],
   ['matchesstorageclassstandard',['MatchesStorageClassStandard',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a0b4069a274f93f43d520b68b77a470a6',1,'google::cloud::storage::v0::LifecycleRule']]],
   ['maxage',['MaxAge',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a93883230f52887e9aa84bcada3992c41',1,'google::cloud::storage::v0::LifecycleRule']]],
+  ['maximum_5fsimple_5fupload_5fsize',['maximum_simple_upload_size',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a37d1216647c1a614a68e4d58c73e667e',1,'google::cloud::storage::v0::ClientOptions']]],
   ['maybeloadcredsfromadcenvvar',['MaybeLoadCredsFromAdcEnvVar',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#ad78fc46c0e7d24d5d9fa4e04610e410e',1,'google::cloud::storage::v0::oauth2']]],
   ['maybeloadcredsfromgcloudadcfile',['MaybeLoadCredsFromGcloudAdcFile',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#a7a9f16eaaf691fb13a02c60b164af81a',1,'google::cloud::storage::v0::oauth2']]],
   ['md5_5fhash',['md5_hash',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a7072ee8071901c1c8a2af53ac6e31894',1,'google::cloud::storage::v0::ObjectMetadata']]],

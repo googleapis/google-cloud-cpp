@@ -31,6 +31,7 @@ var searchData=
   ['set_5flifecycle',['set_lifecycle',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#ae803a5da356a8281276d57fda2582efa',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['set_5flocation',['set_location',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a5c75f1196d77653be4673105fef5b91b',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['set_5flogging',['set_logging',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a2376d47750cbb2e774b425822b69f681',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['set_5fmaximum_5fsimple_5fupload_5fsize',['set_maximum_simple_upload_size',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a366074666789a41921ad692059664cb1',1,'google::cloud::storage::v0::ClientOptions']]],
   ['set_5fname',['set_name',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#ad66b4ed2f6fe8636950357d74605215d',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['set_5fobject_5fname_5fprefix',['set_object_name_prefix',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#ab2c1e0c0717d798def3a0fc05853b179',1,'google::cloud::storage::v0::NotificationMetadata']]],
   ['set_5fpayload_5fformat',['set_payload_format',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a7b79e40630e65b2374f0ddaef5329edd',1,'google::cloud::storage::v0::NotificationMetadata']]],

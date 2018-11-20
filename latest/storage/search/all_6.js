@@ -16,6 +16,7 @@ var searchData=
   ['google_5fapplication_5fdefault_5fcredentials_5ffile_2ecc',['google_application_default_credentials_file.cc',['../google__application__default__credentials__file_8cc.html',1,'']]],
   ['google_5fapplication_5fdefault_5fcredentials_5ffile_2eh',['google_application_default_credentials_file.h',['../google__application__default__credentials__file_8h.html',1,'']]],
   ['google_5fcloud_5fcpp_5fstorage_5fdefault_5fbuffer_5fsize',['GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE',['../client__options_8cc.html#aeba036b7d1f0290f9bf4e589822293db',1,'client_options.cc']]],
+  ['google_5fcloud_5fcpp_5fstorage_5fdefault_5fmaximum_5fsimple_5fupload_5fsize',['GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE',['../client__options_8cc.html#ad1ea59f83e217a9986e59f1bf9b1a2c5',1,'client_options.cc']]],
   ['google_5fcredentials_2ecc',['google_credentials.cc',['../google__credentials_8cc.html',1,'']]],
   ['google_5fcredentials_2eh',['google_credentials.h',['../google__credentials_8h.html',1,'']]],
   ['googleadcenvvar',['GoogleAdcEnvVar',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#ac901bdd15f2d5defad50b169b95203d9',1,'google::cloud::storage::v0::oauth2']]],
