@@ -592,8 +592,8 @@ class GcsBucket(object):
                     received_bytes, begin), status_code=400)
         if end - begin != len(request.data):
             raise error_response.ErrorResponse(
-                'Mismatched data range vs. content-length %d, got %d' % (
-                    len(request.data), end - begin), status_code=400)
+                'Mismatched data range (%d) vs. content-length (%d)' % (
+                    end - begin, len(request.data)), status_code=400)
 
         received_bytes = received_bytes + len(request.data)
         upload['media'] = upload.get('media', '') + request.data
