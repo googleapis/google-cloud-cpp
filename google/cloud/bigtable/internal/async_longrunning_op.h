@@ -30,21 +30,21 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
 /**
- * A wrapper around longrunning.Operation and a client to check it on.
+ * Asynchronously checks the status of a `google.longrunning.Operation`.
  *
- * This class, binds a client and a longrunning.Operation, so that one can check
- * if the operation is completed via the `Start` member function. It also
- * performs the unwrapping of the result, if one is obtained.
+ * This class, binds a client and a `google.longrunning.Operation`, so that one
+ * can check if the operation is completed via the `Start` member function. It
+ * also performs the unwrapping of the result, if one is obtained.
  *
  * It satisfies the requirements to be used as the `Operation` parameter in
  * `AsyncPollOp`.
  *
- * @tparam Client the type of client to execute AsyncGetOperation on
+ * @tparam Client the type of client to execute `AsyncGetOperation` on
  * @tparam ResponseType the type of the response packed in the
- *     longrunning.Operation
+ *     `google.longrunning.Operation`
  * @tparam valid_cliend a formal parameter, uses
- *     `std::enable_if<>` to disable this template if the Client doesn't have a
- *     proper AsyncGetOperation member function.
+ *     `std::enable_if<>` to disable this template if the `Client` doesn't have
+ * a proper `AsyncGetOperation` member function.
  */
 template <typename Client, typename ResponseType,
           typename std::enable_if<
@@ -88,12 +88,13 @@ class AsyncLongrunningOp {
       Functor&& callback) {
     if (operation_.done()) {
       // The operation supplied in the ctor can be already completed. In such a
-      // case, let's not send the RPC.
+      // case, we shouldn't send the RPC - we already have the response.
       //
       // We could fire the callback right here, but we'd be risking a deadlock
       // if the user held a lock while submitting this request. Instead, let's
       // schedule the callback to fire on the thread running the completion
       // queue by submitting an expired timer.
+      // TODO(#1467): stop using a timer for this purpose
       return cq.MakeRelativeTimer(
           std::chrono::seconds(0),
           [callback, this](CompletionQueue& cq, AsyncTimerResult result) {
@@ -132,10 +133,9 @@ class AsyncLongrunningOp {
                 "Error in operation " + operation_.name());
             callback(cq, true, res_status);
             return;
-          } else {
-            callback(cq, true, status);
-            return;
           }
+          callback(cq, true, status);
+          return;
         });
   }
 
