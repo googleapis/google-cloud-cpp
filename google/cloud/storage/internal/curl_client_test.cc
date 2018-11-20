@@ -53,6 +53,10 @@ class CurlClientTest : public ::testing::Test {
         std::make_shared<FailingCredentials>());
   }
 
+  static void TearDownTestCase() {
+    client_.reset();
+  }
+
   static std::unique_ptr<CurlClient> client_;
 };
 std::unique_ptr<CurlClient> CurlClientTest::client_ = nullptr;
