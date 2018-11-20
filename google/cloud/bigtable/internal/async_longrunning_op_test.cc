@@ -314,7 +314,7 @@ INSTANTIATE_TEST_CASE_P(
                       grpc::StatusCode::OK},
         // First RPC fails, but second succeeds.
         OpRetryConfig{// The error code returned by the first attempt.
-                      grpc::StatusCode::OK,
+                      grpc::StatusCode::UNAVAILABLE,
                       // The error code returned by the whole long running
                       // operation on the
                       // second attempt.
