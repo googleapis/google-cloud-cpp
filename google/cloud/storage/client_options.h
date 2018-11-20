@@ -105,6 +105,14 @@ class ClientOptions {
     return *this;
   }
 
+  std::size_t maximum_simple_upload_size() const {
+    return maximum_simple_upload_size_;
+  }
+  ClientOptions& set_maximum_simple_upload_size(std::size_t v) {
+    maximum_simple_upload_size_ = v;
+    return *this;
+  }
+
  private:
   void SetupFromEnvironment();
 
@@ -119,6 +127,7 @@ class ClientOptions {
   std::size_t download_buffer_size_;
   std::size_t upload_buffer_size_;
   std::string user_agent_prefix_;
+  std::size_t maximum_simple_upload_size_;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

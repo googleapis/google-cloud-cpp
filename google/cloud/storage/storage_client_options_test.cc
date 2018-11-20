@@ -141,6 +141,16 @@ TEST_F(ClientOptionsTest, UserAgentPrefix) {
   EXPECT_EQ("bar-2.2/foo-1.0", options.user_agent_prefix());
 }
 
+TEST_F(ClientOptionsTest, SetMaximumSimpleUploadSize) {
+  ClientOptions client_options;
+  auto default_size = client_options.maximum_simple_upload_size();
+  EXPECT_NE(0U, default_size);
+  client_options.set_maximum_simple_upload_size(1024);
+  EXPECT_EQ(1024U, client_options.maximum_simple_upload_size());
+  client_options.set_maximum_simple_upload_size(0);
+  EXPECT_EQ(0U, client_options.maximum_simple_upload_size());
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

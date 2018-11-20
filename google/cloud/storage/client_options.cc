@@ -52,6 +52,13 @@ std::size_t DefaultConnectionPoolSize() {
 #define GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE 128 * 1024
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE
 
+// The documentation recommends uploads below "5MiB" to use simple uploads:
+//   https://cloud.google.com/storage/docs/json_api/v1/how-tos/upload
+#ifndef GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE
+#define GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE \
+  5 * 1024 * 1024L
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE
+
 }  // namespace
 
 ClientOptions::ClientOptions() : ClientOptions(StorageDefaultCredentials()) {}
@@ -64,7 +71,9 @@ ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials)
       enable_raw_client_tracing_(false),
       connection_pool_size_(DefaultConnectionPoolSize()),
       download_buffer_size_(GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE),
-      upload_buffer_size_(GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE) {
+      upload_buffer_size_(GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE),
+      maximum_simple_upload_size_(
+          GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE) {
   auto emulator =
       google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
   if (emulator.has_value()) {
