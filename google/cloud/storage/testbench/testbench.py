@@ -624,20 +624,28 @@ def objects_insert(bucket_name):
     """Implement the 'Objects: insert' API.  Insert a new GCS Object."""
     gcs_url = flask.url_for(
         'objects_insert', bucket_name=bucket_name, _external=True).replace(
-            '/upload/', '/')
+        '/upload/', '/')
     insert_magic_bucket(gcs_url)
+
+    upload_type = flask.request.args.get('uploadType')
+    if upload_type is None:
+        raise error_response.ErrorResponse(
+            'uploadType not set in Objects: insert', status_code=400)
+    if upload_type not in {'multipart', 'media', 'resumable'}:
+        raise error_response.ErrorResponse(
+            'testbench does not support %s uploadType' % upload_type,
+            status_code=400)
+
+    if upload_type == 'resumable':
+        bucket = testbench_utils.lookup_bucket(bucket_name)
+        upload_url = flask.url_for(
+            'objects_insert', bucket_name=bucket_name, _external=True)
+        return bucket.create_resumable_upload(upload_url, flask.request)
+
     object_name = flask.request.args.get('name', None)
     if object_name is None:
         raise error_response.ErrorResponse(
             'name not set in Objects: insert', status_code=412)
-    upload_type = flask.request.args.get('uploadType')
-    if upload_type is None:
-        raise error_response.ErrorResponse(
-            'uploadType not set in Objects: insert', status_code=412)
-    if upload_type not in {'multipart', 'media'}:
-        raise error_response.ErrorResponse(
-            'testbench does not support %s uploadType' % upload_type,
-            status_code=400)
     object_path, blob = testbench_utils.get_object(
         bucket_name, object_name, gcs_object.GcsObject(bucket_name, object_name))
     blob.check_preconditions(flask.request)
@@ -647,6 +655,16 @@ def objects_insert(bucket_name):
         current_version = blob.insert_multipart(gcs_url, flask.request)
     testbench_utils.insert_object(object_path, blob)
     return testbench_utils.filtered_response(flask.request, current_version.metadata)
+
+
+@upload.route('/b/<bucket_name>/o', methods=['PUT'])
+def resumable_upload_chunk(bucket_name):
+    """Receive a chunk for a resumable upload."""
+    gcs_url = flask.url_for(
+        'objects_insert', bucket_name=bucket_name, _external=True).replace(
+        '/upload/', '/')
+    bucket = testbench_utils.lookup_bucket(bucket_name)
+    return bucket.receive_upload_chunk(gcs_url, flask.request)
 
 
 # Define the WSGI application to handle (a few) requests in the XML API.

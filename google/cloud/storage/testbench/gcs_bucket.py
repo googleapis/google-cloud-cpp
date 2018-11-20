@@ -17,7 +17,10 @@
 
 import base64
 import error_response
+import flask
+import gcs_object
 import json
+import re
 import testbench_utils
 import time
 
@@ -47,6 +50,7 @@ class GcsBucket(object):
         self.notifications = {}
         self.iam_version = 1
         self.iam_bindings = {}
+        self.resumable_uploads = {}
         # Update the derived metadata attributes (e.g.: id, kind, selfLink)
         self.update_from_metadata({})
         self.insert_acl(
@@ -499,3 +503,125 @@ class GcsBucket(object):
         retention_policy['isLocked'] = True
         self.metadata['retentionPolicy'] = retention_policy
         self.increase_metageneration()
+
+    def create_resumable_upload(self, upload_url, request):
+        """Capture the details for a resumable upload.
+
+        :param upload_url: str the base URL for uploads.
+        :param request: flask.Request the original http request.
+        :return: the HTTP response to send back.
+        """
+        object_name = request.args.get('name')
+        x_upload_content_type = request.headers.get(
+            'x-upload-content-type', 'application/octet-stream')
+        x_upload_content_length = request.headers.get(
+            'x-upload-content-length')
+        expected_bytes = None
+        if x_upload_content_length:
+            expected_bytes = int(x_upload_content_length)
+        if len(request.data):
+            metadata = json.loads(request.data)
+        else:
+            metadata = {}
+        metadata.setdefault('name', object_name)
+        metadata.setdefault('contentType', x_upload_content_type)
+        upload = {
+            'metadata': metadata,
+            'received_bytes': 0,
+            'expected_bytes': expected_bytes,
+            'object_name': metadata.get('name'),
+            'media': '',
+            'request': request,
+            'done': False,
+        }
+        upload_id = base64.b64encode(metadata.get('name'))
+        self.resumable_uploads[upload_id] = upload
+        location = '%s?uploadType=resumable&upload_id=%s' % (
+            upload_url, upload_id)
+        response = flask.make_response('')
+        response.headers['Location'] = location
+        return response
+
+    def receive_upload_chunk(self, gcs_url, request):
+        """Receive a new upload chunk.
+
+        :param gcs_url: str the base URL for the service.
+        :param request: flask.Request the original http request.
+        :return: the HTTP response.
+        """
+        upload_id = request.args.get('upload_id')
+        if upload_id is None:
+            raise error_response.ErrorResponse(
+                'Missing upload_id in resumable_upload_chunk', status_code=400)
+        upload = self.resumable_uploads.get(upload_id)
+        if upload is None:
+            raise error_response.ErrorResponse(
+                'Cannot find resumable upload %s' % upload_id, status_code=404)
+        # Be gracious in what you accept, if the Content-Range header is not
+        # set we assume it is a good header and it is the end of the file.
+        received_bytes = upload['received_bytes']
+        begin = received_bytes
+        end = received_bytes + len(request.data)
+        total = end
+        content_range = request.headers.get('content-range')
+        if content_range is not None:
+            if content_range.starts_with('*/'):
+                # This is just a query to resume an upload, if it is done, return
+                # an empty
+                response = flask.make_response('')
+                response.headers['Range'] = 'bytes=0-%d' % upload.get('received_bytes')
+                if upload.get('done', False):
+                    # We could also return 200, but this is a better test for the
+                    # library.
+                    response.status_code = 201
+                else:
+                    response.status_code = 308
+                return response
+            match = re.match('([0-9]+)-([0-9]+)/(\*|[0-9]+)', content_range)
+            if not match:
+                raise error_response.ErrorResponse(
+                    'Invalid Content-Range in upload %s' % content_range,
+                    status_code=400)
+            begin = int(match.group(1))
+            end = int(match.group(2))
+            total = int(match.group(3))
+
+        if begin != received_bytes:
+            raise error_response.ErrorResponse(
+                'Mismatched data range, expected data at %d, got %d' % (
+                    received_bytes, begin), status_code=400)
+        if end - begin != len(request.data):
+            raise error_response.ErrorResponse(
+                'Mismatched data range (%d) vs. content-length (%d)' % (
+                    end - begin, len(request.data)), status_code=400)
+
+        received_bytes = received_bytes + len(request.data)
+        upload['media'] = upload.get('media', '') + request.data
+        upload['received_bytes'] = received_bytes
+        response_payload = ''
+        if received_bytes == total:
+            upload['done'] = True
+            object_name = upload.get('object_name')
+            object_path, blob = testbench_utils.get_object(
+                self.name, object_name,
+                gcs_object.GcsObject(self.name, object_name))
+            # Release a few resources to control memory usage.
+            original_metadata = upload.pop('metadata', None)
+            media = upload.pop('media', None)
+            original_request = upload.pop('request', None)
+            blob.check_preconditions(original_request)
+            revision = blob.insert_resumable(
+                gcs_url, original_request, media,
+                original_metadata)
+            print("\n\n\n%d %s\n\n" % (len(media), object_name))
+            response_payload = testbench_utils.filtered_response(
+                request, revision.metadata)
+            testbench_utils.insert_object(object_path, blob)
+
+        response = flask.make_response(response_payload)
+        response.headers['Range'] = 'bytes=0-%d' % received_bytes
+        if upload.get('done', False):
+            response.status_code = 200
+        else:
+            response.status_code = 308
+        return response
