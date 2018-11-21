@@ -217,6 +217,15 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
   }
 
   std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  AsyncCreateCluster(
+      grpc::ClientContext* context,
+      const google::bigtable::admin::v2::CreateClusterRequest& request,
+      grpc::CompletionQueue* cq) override {
+    return impl_.Stub()->AsyncCreateCluster(context, request, cq);
+  }
+
+  std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
   AsyncDeleteInstance(
       grpc::ClientContext* context,
