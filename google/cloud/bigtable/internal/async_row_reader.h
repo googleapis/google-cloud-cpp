@@ -191,6 +191,7 @@ class AsyncRowReader {
 
   grpc::Status status_;
   ReadRowCallback read_row_callback_;
+
 };
 
 }  // namespace BIGTABLE_CLIENT_NS
