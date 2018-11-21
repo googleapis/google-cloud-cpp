@@ -66,6 +66,11 @@ class MockDataClient : public bigtable::DataClient {
           grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>(
           grpc::ClientContext* context,
           google::bigtable::v2::ReadRowsRequest const& request));
+  MOCK_METHOD4(AsyncReadRows, std::unique_ptr<grpc::ClientAsyncReaderInterface<
+                                  google::bigtable::v2::ReadRowsResponse>>(
+                                  grpc::ClientContext*,
+                                  const google::bigtable::v2::ReadRowsRequest&,
+                                  grpc::CompletionQueue*, void*));
   MOCK_METHOD2(SampleRowKeys,
                std::unique_ptr<grpc::ClientReaderInterface<
                    google::bigtable::v2::SampleRowKeysResponse>>(

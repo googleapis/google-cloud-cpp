@@ -21,6 +21,7 @@
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
+#include "google/cloud/bigtable/internal/async_read_row_operation.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/internal/async_sample_row_keys.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
@@ -254,6 +255,54 @@ class Table {
 
   std::pair<bool, Row> ReadRow(std::string row_key, Filter filter,
                                grpc::Status& status);
+
+  /**
+   * Reads a limited set of rows from the table asynchronously.
+   *
+   * @param row_set the rows to read from.
+   * @param rows_limit the maximum number of rows to read. Must be larger than
+   *     zero. Use `ReadRows(RowSet, Filter)` to read all matching rows.
+   * @param filter is applied on the server-side to data in the rows.
+   *
+   * @throws std::runtime_error if rows_limit is < 0. rows_limit = 0(default)
+   * will return all rows
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the row is ready for reading.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable< Functor, CompletionQueue&,
+   * grpc::Status&>);
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename ReadRowCallback, typename DoneCallback,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<
+                    ReadRowCallback, CompletionQueue&, grpc::ClientContext&,
+                    Row&, grpc::Status&>::value,
+                int>::type valid_data_callback_type = 0,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<
+                    DoneCallback, CompletionQueue&, void, grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> AsyncReadRows(
+      RowSet row_set, std::int64_t rows_limit, Filter filter,
+      CompletionQueue& cq, ReadRowCallback&& readrow_callback,
+      DoneCallback&& done_callback, bool raise_on_error = false) {
+    auto op = std::make_shared<
+        internal::AsyncReadRowsOperation<ReadRowCallback, DoneCallback>>(
+        rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        metadata_update_policy_, client_, app_profile_id_, table_name_,
+        std::move(row_set), rows_limit, std::move(filter), raise_on_error,
+        google::cloud::internal::make_unique<
+            bigtable::internal::ReadRowsParserFactory>(),
+        cq, std::forward<ReadRowCallback>(readrow_callback),
+        std::forward<DoneCallback>(done_callback));
+
+    return op->Start();
+  }
 
   bool CheckAndMutateRow(std::string row_key, Filter filter,
                          std::vector<Mutation> true_mutations,
