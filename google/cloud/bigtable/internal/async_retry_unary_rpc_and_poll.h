@@ -60,10 +60,10 @@ namespace internal {
  *     retry for `BulkApply`) are idempotent.
  */
 template <typename Client, typename Response, typename MemberFunctionType,
-          typename IdempotencyPolicy>
+          typename IdempotencyPolicy, typename Functor>
 class AsyncRetryAndPollUnaryRpc
     : public std::enable_shared_from_this<AsyncRetryAndPollUnaryRpc<
-          Client, Response, MemberFunctionType, IdempotencyPolicy>>,
+          Client, Response, MemberFunctionType, IdempotencyPolicy, Functor>>,
       public AsyncOperation {
   using Sig = internal::CheckAsyncUnaryRpcSignature<MemberFunctionType>;
   static_assert(Sig::value, "MemberFunctionType is invalid");
@@ -71,6 +71,9 @@ class AsyncRetryAndPollUnaryRpc
       std::is_same<typename Sig::ResponseType,
                    google::longrunning::Operation>::value,
       "MemberFunctionType doesn't return a google.longrunning.Operation");
+  static_assert(google::cloud::internal::is_invocable<
+                    Functor, CompletionQueue&, Response&, grpc::Status&>::value,
+                "Provided Functor type doesn't have the expected signature.");
 
  public:
   using Request = typename Sig::RequestType;
@@ -82,7 +85,7 @@ class AsyncRetryAndPollUnaryRpc
       IdempotencyPolicy idempotency_policy,
       MetadataUpdatePolicy metadata_update_policy,
       std::shared_ptr<Client> client, MemberFunctionType Client::*call,
-      Request&& request)
+      Request&& request, Functor&& callback)
       : error_message_(error_message),
         polling_policy_(std::move(polling_policy)),
         rpc_retry_policy_(std::move(rpc_retry_policy)),
@@ -92,7 +95,8 @@ class AsyncRetryAndPollUnaryRpc
         client_(std::move(client)),
         call_(call),
         request(std::move(request)),
-        cancelled_() {}
+        cancelled_(),
+        callback_(callback) {}
 
   bool Notify(CompletionQueue& cq, bool ok) override {
     // TODO(#1389) Notify should be moved from AsyncOperation to some more
@@ -109,27 +113,74 @@ class AsyncRetryAndPollUnaryRpc
     }
   }
 
-  template <typename Functor,
-            typename std::enable_if<
-                google::cloud::internal::is_invocable<
-                    Functor, CompletionQueue&, Response&, grpc::Status&>::value,
-                int>::type valid_callback_type = 0>
-  std::shared_ptr<AsyncOperation> Start(CompletionQueue& cq,
-                                        Functor&& callback) {
+  std::shared_ptr<AsyncOperation> Start(CompletionQueue& cq) {
     std::unique_lock<std::mutex> lk(mu_);
+    auto self = this->shared_from_this();
+    auto on_longrunning_started =
+        [self](CompletionQueue& cq, google::longrunning::Operation& operation,
+               grpc::Status& status) {
+          self->OnLongrunningStarted(cq, operation, status);
+        };
     using Retry =
         internal::AsyncRetryUnaryRpc<Client, MemberFunctionType,
                                      IdempotencyPolicy,
-                                     LongrunningStartedFunctor<Functor>>;
+                                     decltype(on_longrunning_started)>;
     auto retry = std::make_shared<Retry>(
         error_message_, std::move(rpc_retry_policy_),
         std::move(rpc_backoff_policy_), std::move(idempotency_policy_),
         metadata_update_policy_, client_, call_, std::move(request),
-        LongrunningStartedFunctor<Functor>(this->shared_from_this(),
-                                           std::forward<Functor>(callback)));
+        std::move(on_longrunning_started));
     current_op_ = retry->Start(cq);
     return this->shared_from_this();
   }
+
+ private:
+  void OnLongrunningStarted(CompletionQueue& cq,
+                            google::longrunning::Operation& operation,
+                            grpc::Status& status) {
+    std::unique_lock<std::mutex> lk(mu_);
+    current_op_.reset();
+    if (cancelled_) {
+      // Cancel could have been called too late for the RPC to notice - it
+      // might have finished with a success. In such a scenario we should
+      // still interrupt the execution, i.e. not schedule the poll.
+      lk.unlock();
+      grpc::Status res_status(grpc::StatusCode::CANCELLED,
+                              "User requested to cancel.");
+      Response response;
+      callback_(cq, response, res_status);
+      return;
+    }
+    if (not status.ok()) {
+      lk.unlock();
+      grpc::Status res_status(status);
+      Response response;
+      callback_(cq, response, res_status);
+      return;
+    }
+    // All good, move on to polling for result.
+    auto self = this->shared_from_this();
+    auto on_longrunning_completed = [self](CompletionQueue& cq,
+                                           Response& response,
+                                           grpc::Status const& status) {
+      self->OnLongrunningCompleted(cq, response, status);
+    };
+    auto op = std::make_shared<AsyncPollLongrunningOp<
+        decltype(on_longrunning_completed), Client, Response>>(
+        error_message_, std::move(polling_policy_),
+        std::move(metadata_update_policy_), std::move(client_),
+        std::move(operation), std::move(on_longrunning_completed));
+    current_op_ = op->Start(cq);
+  }
+
+  void OnLongrunningCompleted(CompletionQueue& cq, Response& response,
+                              grpc::Status const& status) {
+    std::unique_lock<std::mutex> lk(mu_);
+    current_op_.reset();
+    lk.unlock();
+    grpc::Status res_status(status);
+    callback_(cq, response, res_status);
+  };
 
   std::mutex mu_;
   char const* error_message_;
@@ -143,80 +194,7 @@ class AsyncRetryAndPollUnaryRpc
   Request request;
   std::shared_ptr<AsyncOperation> current_op_;
   bool cancelled_;
-
-  template <typename Functor,
-            typename std::enable_if<
-                google::cloud::internal::is_invocable<
-                    Functor, CompletionQueue&, Response&, grpc::Status&>::value,
-                int>::type valid_callback_type = 0>
-  class LongrunningCompletedFunctor {
-   public:
-    LongrunningCompletedFunctor(
-        std::shared_ptr<AsyncRetryAndPollUnaryRpc> parent, Functor&& callback)
-        : parent_(parent), callback_(std::forward<Functor>(callback)) {}
-
-    void operator()(CompletionQueue& cq, Response& response,
-                    grpc::Status const& status) {
-      std::unique_lock<std::mutex> lk(parent_->mu_);
-      parent_->current_op_.reset();
-      lk.unlock();
-      grpc::Status res_status(status);
-      callback_(cq, response, res_status);
-    };
-
-   private:
-    std::shared_ptr<AsyncRetryAndPollUnaryRpc> parent_;
-    Functor callback_;
-  };
-
-  template <typename Functor,
-            typename std::enable_if<
-                google::cloud::internal::is_invocable<
-                    Functor, CompletionQueue&, Response&, grpc::Status&>::value,
-                int>::type valid_callback_type = 0>
-  class LongrunningStartedFunctor {
-   public:
-    LongrunningStartedFunctor(std::shared_ptr<AsyncRetryAndPollUnaryRpc> parent,
-                              Functor&& callback)
-        : parent_(parent), callback_(std::forward<Functor>(callback)) {}
-    void operator()(CompletionQueue& cq,
-                    google::longrunning::Operation& operation,
-                    grpc::Status& status) {
-      std::unique_lock<std::mutex> lk(parent_->mu_);
-      parent_->current_op_.reset();
-      if (parent_->cancelled_) {
-        // Cancel could have been called too late for the RPC to notice - it
-        // might have finished with a success. In such a scenario we should
-        // still interrupt the execution, i.e. not schedule the poll.
-        lk.unlock();
-        grpc::Status res_status(grpc::StatusCode::CANCELLED,
-                                "User requested to cancel.");
-        Response response;
-        callback_(cq, response, res_status);
-        return;
-      }
-      if (not status.ok()) {
-        lk.unlock();
-        grpc::Status res_status(status);
-        Response response;
-        callback_(cq, response, res_status);
-        return;
-      }
-      // All good, move on to polling for result.
-      auto op = std::make_shared<AsyncPollLongrunningOp<
-          LongrunningCompletedFunctor<Functor>, Client, Response>>(
-          parent_->error_message_, std::move(parent_->polling_policy_),
-          std::move(parent_->metadata_update_policy_),
-          std::move(parent_->client_), std::move(operation),
-          LongrunningCompletedFunctor<Functor>(
-              parent_, std::forward<Functor>(callback_)));
-      parent_->current_op_ = op->Start(cq);
-    }
-
-   private:
-    std::shared_ptr<AsyncRetryAndPollUnaryRpc> parent_;
-    Functor callback_;
-  };
+  Functor callback_;
 };
 
 }  // namespace internal

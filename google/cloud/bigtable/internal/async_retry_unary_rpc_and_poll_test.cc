@@ -165,10 +165,9 @@ TEST_P(AsyncRetryUnaryRpcAndPollResEndToEnd, EndToEnd) {
   using MemberFunction = typename internal::ExtractMemberFunctionType<decltype(
       &testing::MockInstanceAdminClient::AsyncCreateCluster)>::MemberFunction;
 
-  using Retry =
-      internal::AsyncRetryAndPollUnaryRpc<testing::MockInstanceAdminClient,
-                                          btproto::Cluster, MemberFunction,
-                                          internal::ConstantIdempotencyPolicy>;
+  using Retry = internal::AsyncRetryAndPollUnaryRpc<
+      testing::MockInstanceAdminClient, btproto::Cluster, MemberFunction,
+      internal::ConstantIdempotencyPolicy, decltype(user_callback)>;
 
   btproto::CreateClusterRequest request;
   request.set_cluster_id("my_newly_created_cluster");
@@ -176,9 +175,9 @@ TEST_P(AsyncRetryUnaryRpcAndPollResEndToEnd, EndToEnd) {
       __func__, std::move(polling_policy), std::move(rpc_retry_policy),
       std::move(rpc_backoff_policy), internal::ConstantIdempotencyPolicy(false),
       metadata_update_policy, client,
-      &testing::MockInstanceAdminClient::AsyncCreateCluster,
-      std::move(request));
-  op->Start(cq, user_callback);
+      &testing::MockInstanceAdminClient::AsyncCreateCluster, std::move(request),
+      std::move(user_callback));
+  op->Start(cq);
 
   EXPECT_FALSE(user_op_called);
 
@@ -379,10 +378,9 @@ TEST_P(AsyncRetryUnaryRpcAndPollResCancel, Cancellations) {
   using MemberFunction = typename internal::ExtractMemberFunctionType<decltype(
       &testing::MockInstanceAdminClient::AsyncCreateCluster)>::MemberFunction;
 
-  using Retry =
-      internal::AsyncRetryAndPollUnaryRpc<testing::MockInstanceAdminClient,
-                                          btproto::Cluster, MemberFunction,
-                                          internal::ConstantIdempotencyPolicy>;
+  using Retry = internal::AsyncRetryAndPollUnaryRpc<
+      testing::MockInstanceAdminClient, btproto::Cluster, MemberFunction,
+      internal::ConstantIdempotencyPolicy, decltype(user_callback)>;
 
   btproto::CreateClusterRequest request;
   request.set_cluster_id("my_newly_created_cluster");
@@ -390,9 +388,9 @@ TEST_P(AsyncRetryUnaryRpcAndPollResCancel, Cancellations) {
       __func__, std::move(polling_policy), std::move(rpc_retry_policy),
       std::move(rpc_backoff_policy), internal::ConstantIdempotencyPolicy(false),
       metadata_update_policy, client,
-      &testing::MockInstanceAdminClient::AsyncCreateCluster,
-      std::move(request));
-  op->Start(cq, user_callback);
+      &testing::MockInstanceAdminClient::AsyncCreateCluster, std::move(request),
+      std::move(user_callback));
+  op->Start(cq);
 
   EXPECT_FALSE(user_op_called);
   EXPECT_EQ(1U, cq_impl->size());  // AsyncCreateCluster
