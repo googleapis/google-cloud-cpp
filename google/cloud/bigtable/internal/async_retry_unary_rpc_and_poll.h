@@ -58,22 +58,6 @@ namespace internal {
  *     because the decision around idempotency can be made before the retry loop
  *     starts. Some calls may dynamically determine if a retry (or a partial
  *     retry for `BulkApply`) are idempotent.
- *
- * @tparam Sig A formal parameter to discover if `MemberFunctionType` matches
- *     the required signature for an asynchronous gRPC call, and if so, what are
- *     the request and response parameter types for the RPC.
- *
- * @tparam valid_member_function_type a formal parameter, uses
- *     `std::enable_if<>` to disable this template if the client does not match
- *     have a proper `AsyncGetOperation` member function.
- *
- * @tparam valid_member_function_type a formal parameter, uses
- *     `std::enable_if<>` to disable this template if the member function type
- *     does not match the desired signature.
- *
- * @tparam operation_returns_longrunning a formal parameter, uses
- *     `std::enable_if<>` to disable this template if the member function type
- *     does not return `google::longrunning::Operation`
  */
 template <typename Client, typename Response, typename MemberFunctionType,
           typename IdempotencyPolicy>
