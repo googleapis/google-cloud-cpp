@@ -75,24 +75,19 @@ namespace internal {
  *     `std::enable_if<>` to disable this template if the member function type
  *     does not return `google::longrunning::Operation`
  */
-template <
-    typename Client, typename Response, typename MemberFunctionType,
-    typename IdempotencyPolicy,
-    typename Sig = internal::CheckAsyncUnaryRpcSignature<MemberFunctionType>,
-    typename std::enable_if<
-        CheckAsyncUnaryRpcSignature<
-            typename internal::ExtractMemberFunctionType<decltype(
-                &Client::AsyncGetOperation)>::MemberFunction>::value,
-        int>::type client_has_get_operation = 0,
-    typename std::enable_if<Sig::value, int>::type valid_member_function_type =
-        0,
-    typename std::enable_if<std::is_same<typename Sig::ResponseType,
-                                         google::longrunning::Operation>::value,
-                            int>::type operation_returns_longrunning = 0>
+template <typename Client, typename Response, typename MemberFunctionType,
+          typename IdempotencyPolicy>
 class AsyncRetryAndPollUnaryRpc
     : public std::enable_shared_from_this<AsyncRetryAndPollUnaryRpc<
           Client, Response, MemberFunctionType, IdempotencyPolicy>>,
       public AsyncOperation {
+  using Sig = internal::CheckAsyncUnaryRpcSignature<MemberFunctionType>;
+  static_assert(Sig::value, "MemberFunctionType is invalid");
+  static_assert(
+      std::is_same<typename Sig::ResponseType,
+                   google::longrunning::Operation>::value,
+      "MemberFunctionType doesn't return a google.longrunning.Operation");
+
  public:
   using Request = typename Sig::RequestType;
 
