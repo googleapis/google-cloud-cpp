@@ -518,8 +518,7 @@ TEST(StrictIdempotencyPolicyTest, PatchDefaultObjectAclIfMatchEtag) {
 
 TEST(StrictIdempotencyPolicyTest, GetProjectServiceAccount) {
   StrictIdempotencyPolicy policy;
-  internal::GetProjectServiceAccountRequest request(
-      "test-project-id");
+  internal::GetProjectServiceAccountRequest request("test-project-id");
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
@@ -531,33 +530,36 @@ TEST(StrictIdempotencyPolicyTest, ListNotification) {
 
 TEST(StrictIdempotencyPolicyTest, CreateNotification) {
   StrictIdempotencyPolicy policy;
-  internal::CreateNotificationRequest request("test-bucket-name", NotificationMetadata());
+  internal::CreateNotificationRequest request("test-bucket-name",
+                                              NotificationMetadata());
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, GetNotification) {
   StrictIdempotencyPolicy policy;
-  internal::GetNotificationRequest request("test-bucket-name", "test-notification-id");
+  internal::GetNotificationRequest request("test-bucket-name",
+                                           "test-notification-id");
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, DeleteNotification) {
   StrictIdempotencyPolicy policy;
-  internal::DeleteNotificationRequest request("test-bucket-name", "test-notification-id");
+  internal::DeleteNotificationRequest request("test-bucket-name",
+                                              "test-notification-id");
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, ResumableUpload) {
   StrictIdempotencyPolicy policy;
-  internal::ResumableUploadRequest request(
-      "test-bucket-name", "test-object-name", ObjectMetadata());
+  internal::ResumableUploadRequest request("test-bucket-name",
+                                           "test-object-name");
   EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, ResumableUploadIfGenerationMatch) {
   StrictIdempotencyPolicy policy;
-  internal::ResumableUploadRequest request(
-      "test-bucket-name", "test-object-name", ObjectMetadata());
+  internal::ResumableUploadRequest request("test-bucket-name",
+                                           "test-object-name");
   request.set_option(IfGenerationMatch(0));
   EXPECT_TRUE(policy.IsIdempotent(request));
 }

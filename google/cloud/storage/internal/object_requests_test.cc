@@ -121,6 +121,13 @@ TEST(ObjectRequestsTest, InsertObjectMedia) {
   EXPECT_THAT(str, HasSubstr("predefinedAcl=authenticatedRead"));
 }
 
+TEST(ObjectRequestsTest, InsertObjectMediaUpdateContents) {
+  InsertObjectMediaRequest request("my-bucket", "my-object", "object contents");
+  EXPECT_EQ("object contents", request.contents());
+  request.set_contents("new contents");
+  EXPECT_EQ("new contents", request.contents());
+}
+
 TEST(ObjectRequestsTest, Copy) {
   CopyObjectRequest request("source-bucket", "source-object", "my-bucket",
                             "my-object",
@@ -363,14 +370,13 @@ TEST(ObjectRequestsTest, RewriteObjectResponse) {
 }
 
 TEST(ObjectRequestsTest, ResumableUpload) {
-  ResumableUploadRequest request(
-      "source-bucket", "source-object",
-      ObjectMetadata().set_content_type("text/plain"));
+  ResumableUploadRequest request("source-bucket", "source-object");
   EXPECT_EQ("source-bucket", request.bucket_name());
   EXPECT_EQ("source-object", request.object_name());
-  request.set_multiple_options(IfMetagenerationNotMatch(7),
-                               PredefinedAcl("private"),
-                               UserProject("my-project"));
+  request.set_multiple_options(
+      IfMetagenerationNotMatch(7), PredefinedAcl("private"),
+      UserProject("my-project"),
+      WithObjectMetadata(ObjectMetadata().set_content_type("text/plain")));
 
   std::ostringstream os;
   os << request;
@@ -384,21 +390,135 @@ TEST(ObjectRequestsTest, ResumableUpload) {
 }
 
 TEST(ObjectRequestsTest, UploadChunk) {
-  std::string const url = "https://www.googleapis.com/upload/storage/v1/b/"
-                          "myBucket/o?uploadType=resumable"
-                          "&upload_id=xa298sd_sdlkj2";
-  UploadChunkRequest request(
-      url, 0, "abc123", true);
+  std::string const url =
+      "https://www.googleapis.com/upload/storage/v1/b/"
+      "myBucket/o?uploadType=resumable"
+      "&upload_id=xa298sd_sdlkj2";
+  UploadChunkRequest request(url, 0, "abc123", 2048);
   EXPECT_EQ(url, request.upload_session_url());
   EXPECT_EQ(0U, request.range_begin());
   EXPECT_EQ(5U, request.range_end());
-  EXPECT_TRUE(request.final_chunk());
+  EXPECT_EQ(2048U, request.source_size());
+  EXPECT_EQ("Content-Range: bytes 0-5/2048", request.RangeHeader());
 
   std::ostringstream os;
   os << request;
   std::string actual = os.str();
   EXPECT_THAT(actual, HasSubstr(url));
-  EXPECT_THAT(actual, HasSubstr("0-5/5"));
+  EXPECT_THAT(actual, HasSubstr("<Content-Range: bytes 0-5/2048>"));
+}
+
+TEST(ObjectRequestsTest, QueryResumableUpload) {
+  std::string const url =
+      "https://www.googleapis.com/upload/storage/v1/b/"
+      "myBucket/o?uploadType=resumable"
+      "&upload_id=xa298sd_sdlkj2";
+  QueryResumableUploadRequest request(url);
+  EXPECT_EQ(url, request.upload_session_url());
+
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr(url));
+}
+
+TEST(ObjectRequestsTest, ResumableUploadResponse) {
+  auto actual = ResumableUploadResponse::FromHttpResponse(
+      HttpResponse{200,
+                   "test-payload",
+                   {{"ignored-header", "value"},
+                    {"location", "location-value"},
+                    {"range", "bytes=0-2000"}}});
+  EXPECT_EQ("test-payload", actual.payload);
+  EXPECT_EQ("location-value", actual.upload_session_url);
+  EXPECT_EQ(2000U, actual.last_committed_byte);
+
+  std::ostringstream os;
+  os << actual;
+  auto actual_str = os.str();
+  EXPECT_THAT(actual_str, HasSubstr("upload_session_url=location-value"));
+  EXPECT_THAT(actual_str, HasSubstr("last_committed_byte=2000"));
+}
+
+TEST(ObjectRequestsTest, ResumableUploadResponseNoLocation) {
+  auto actual = ResumableUploadResponse::FromHttpResponse(
+      HttpResponse{200,
+                   "test-payload",
+                   {{"range", "bytes=0-2000"}}});
+  EXPECT_EQ("test-payload", actual.payload);
+  EXPECT_EQ("", actual.upload_session_url);
+  EXPECT_EQ(2000U, actual.last_committed_byte);
+}
+
+TEST(ObjectRequestsTest, ResumableUploadResponseNoRange) {
+  auto actual = ResumableUploadResponse::FromHttpResponse(HttpResponse{
+      200,
+      "test-payload",
+      {{"location", "location-value"}}});
+  EXPECT_EQ("test-payload", actual.payload);
+  EXPECT_EQ("location-value", actual.upload_session_url);
+  EXPECT_EQ(0U, actual.last_committed_byte);
+}
+
+TEST(ObjectRequestsTest, ResumableUploadResponseMissingBytesInRange) {
+  auto actual = ResumableUploadResponse::FromHttpResponse(
+      HttpResponse{200,
+                   "test-payload",
+                   {{"location", "location-value"},
+                    {"range", "units=0-2000"}}});
+  EXPECT_EQ("test-payload", actual.payload);
+  EXPECT_EQ("location-value", actual.upload_session_url);
+  EXPECT_EQ(0U, actual.last_committed_byte);
+}
+
+TEST(ObjectRequestsTest, ResumableUploadResponseMissingRangeEnd) {
+  auto actual = ResumableUploadResponse::FromHttpResponse(
+      HttpResponse{200,
+                   "test-payload",
+                   {{"range", "bytes=0-"}}});
+  EXPECT_EQ("test-payload", actual.payload);
+  EXPECT_EQ("", actual.upload_session_url);
+  EXPECT_EQ(0U, actual.last_committed_byte);
+}
+
+TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeEnd) {
+  auto actual = ResumableUploadResponse::FromHttpResponse(
+      HttpResponse{200,
+                   "test-payload",
+                   {{"range", "bytes=0-abcd"}}});
+  EXPECT_EQ("test-payload", actual.payload);
+  EXPECT_EQ("", actual.upload_session_url);
+  EXPECT_EQ(0U, actual.last_committed_byte);
+}
+
+TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeBegin) {
+  auto actual = ResumableUploadResponse::FromHttpResponse(
+      HttpResponse{200,
+                   "test-payload",
+                   {{"range", "bytes=abcd-2000"}}});
+  EXPECT_EQ("test-payload", actual.payload);
+  EXPECT_EQ("", actual.upload_session_url);
+  EXPECT_EQ(0U, actual.last_committed_byte);
+}
+
+TEST(ObjectRequestsTest, ResumableUploadResponseUnexpectedRangeBegin) {
+  auto actual = ResumableUploadResponse::FromHttpResponse(
+      HttpResponse{200,
+                   "test-payload",
+                   {{"range", "bytes=3000-2000"}}});
+  EXPECT_EQ("test-payload", actual.payload);
+  EXPECT_EQ("", actual.upload_session_url);
+  EXPECT_EQ(0U, actual.last_committed_byte);
+}
+
+TEST(ObjectRequestsTest, ResumableUploadResponseNegativeEnd) {
+  auto actual = ResumableUploadResponse::FromHttpResponse(
+      HttpResponse{200,
+                   "test-payload",
+                   {{"range", "bytes=0--7"}}});
+  EXPECT_EQ("test-payload", actual.payload);
+  EXPECT_EQ("", actual.upload_session_url);
+  EXPECT_EQ(0U, actual.last_committed_byte);
 }
 
 ObjectMetadata CreateObjectMetadataForTest() {

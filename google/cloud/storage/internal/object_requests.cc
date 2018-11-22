@@ -330,20 +330,81 @@ std::ostream& operator<<(std::ostream& os, ResumableUploadRequest const& r) {
   os << "ResumableUploadRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name();
   r.DumpOptions(os, ", ");
-  return os << ", payload=" << r.json_payload() << "}";
+  return os << "}";
+}
+
+std::string UploadChunkRequest::RangeHeader() const {
+  std::ostringstream os;
+  os << "Content-Range: bytes " << range_begin() << "-";
+  if (payload().empty()) {
+    // This typically happens when the sender realizes too late that the
+    // previous chunk was really the last chunk (e.g. the file is exactly a
+    // multiple of the quantum, reading the last chunk does not detect the EOF),
+    // the formatting of the range is special in this case.
+    os << range_begin();
+  } else {
+    os << range_begin() + payload().size() - 1;
+  }
+  if (source_size() == 0) {
+    os << "/*";
+  } else {
+    os << "/" << source_size();
+  }
+  return std::move(os).str();
 }
 
 std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r) {
-  os << "ResumableUploadRequest={upload_session_url=" << r.upload_session_url()
-     << ", range=" << r.range_begin() << "-" << r.range_end() << "/";
-  if (r.final_chunk()) {
-    os << r.range_end();
-  } else {
-    os << "*";
-  }
+  os << "UploadChunkRequest={upload_session_url=" << r.upload_session_url()
+     << ", range=<" << r.RangeHeader() << ">";
   r.DumpOptions(os, ", ");
   return os << ", payload="
-            << BinaryDataAsDebugString(r.payload().data(), r.payload().size())
+            << BinaryDataAsDebugString(r.payload().data(), r.payload().size(),
+                                       128)
+            << "}";
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         QueryResumableUploadRequest const& r) {
+  os << "QueryResumableUploadRequest={upload_session_url="
+     << r.upload_session_url();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
+ResumableUploadResponse ResumableUploadResponse::FromHttpResponse(
+    HttpResponse&& response) {
+  ResumableUploadResponse result;
+  result.last_committed_byte = 0;
+  result.payload = std::move(response.payload);
+  if (response.headers.find("location") != response.headers.end()) {
+    result.upload_session_url = response.headers.find("location")->second;
+  }
+  if (response.headers.find("range") != response.headers.end()) {
+    std::string const& range = response.headers.find("range")->second;
+
+    if (range.rfind("bytes=", 0) != 0) {
+      return result;
+    }
+    char const* buffer = range.data() + 6;
+    char* endptr;
+    auto first = std::strtoll(buffer, &endptr, 10);
+    if (*endptr != '-' or first != 0) {
+      return result;
+    }
+    auto last = std::strtoll(endptr + 1, &endptr, 10);
+    if (*endptr == '\0' and 0 <= last) {
+      result.last_committed_byte = last;
+    }
+  }
+
+  return result;
+}
+
+std::ostream& operator<<(std::ostream& os, ResumableUploadResponse const& r) {
+  return os << "ResumableUploadResponse={upload_session_url="
+            << r.upload_session_url
+            << ", last_committed_byte=" << r.last_committed_byte << ", payload="
+            << BinaryDataAsDebugString(r.payload.data(), r.payload.size(), 128)
             << "}";
 }
 

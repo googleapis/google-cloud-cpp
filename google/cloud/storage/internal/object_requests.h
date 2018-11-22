@@ -100,6 +100,10 @@ class InsertObjectMediaRequest
         contents_(std::move(contents)) {}
 
   std::string const& contents() const { return contents_; }
+  InsertObjectMediaRequest& set_contents(std::string&& v) {
+    contents_ = std::move(v);
+    return *this;
+  }
 
  private:
   std::string contents_;
@@ -381,19 +385,13 @@ class ResumableUploadRequest
           Crc32cChecksumValue, DisableCrc32cChecksum, DisableMD5Hash,
           EncryptionKey, IfGenerationMatch, IfGenerationNotMatch,
           IfMetagenerationMatch, IfMetagenerationNotMatch, KmsKeyName,
-          MD5HashValue, PredefinedAcl, Projection, UserProject> {
+          MD5HashValue, PredefinedAcl, Projection, UserProject,
+          WithObjectMetadata> {
  public:
   ResumableUploadRequest() = default;
 
-  ResumableUploadRequest(std::string bucket_name, std::string object_name,
-                         ObjectMetadata const& metadata)
-      : GenericObjectRequest(std::move(bucket_name), std::move(object_name)),
-        json_payload_(metadata.JsonPayloadForUpdate()) {}
-
-  std::string const& json_payload() const { return json_payload_; }
-
- private:
-  std::string json_payload_;
+  ResumableUploadRequest(std::string bucket_name, std::string object_name)
+      : GenericObjectRequest(std::move(bucket_name), std::move(object_name)) {}
 };
 
 std::ostream& operator<<(std::ostream& os, ResumableUploadRequest const& r);
@@ -406,27 +404,74 @@ class UploadChunkRequest
  public:
   UploadChunkRequest() = default;
   UploadChunkRequest(std::string upload_session_url, std::uint64_t range_begin,
-                     std::string payload, bool final_chunk = false)
+                     std::string payload, std::uint64_t source_size)
       : GenericRequestBase(),
         upload_session_url_(std::move(upload_session_url)),
         range_begin_(range_begin),
         payload_(std::move(payload)),
-        final_chunk_(final_chunk) {}
+        source_size_(source_size) {}
 
   std::string const& upload_session_url() const { return upload_session_url_; }
   std::uint64_t range_begin() const { return range_begin_; }
   std::uint64_t range_end() const { return range_begin_ + payload_.size() - 1; }
+  std::uint64_t source_size() const { return source_size_; }
   std::string const& payload() const { return payload_; }
-  bool final_chunk() const { return final_chunk_; }
+
+  std::string RangeHeader() const;
+
+  // Chunks must be multiples of 256 KiB:
+  //  https://cloud.google.com/storage/docs/json_api/v1/how-tos/resumable-upload
+  static constexpr std::size_t kChunkSizeQuantum = 256 * 1024UL;
+
+  static std::size_t RoundUpToQuantum(std::size_t max_chunk_size) {
+    // If you are tempted to use bit manipulation to do this, modern compilers
+    // known how to optimize this (coryan tested this at godbolt.org):
+    //   https://godbolt.org/z/xxUsjg
+    if (max_chunk_size % kChunkSizeQuantum == 0) {
+      return max_chunk_size;
+    }
+    auto n = max_chunk_size / kChunkSizeQuantum;
+    return (n + 1) * kChunkSizeQuantum;
+  }
 
  private:
   std::string upload_session_url_;
-  std::uint64_t range_begin_;
+  std::uint64_t range_begin_ = 0U;
   std::string payload_;
-  bool final_chunk_;
+  std::uint64_t source_size_ = 0U;
 };
 
 std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r);
+
+/**
+ * A request to query the status of a resumable upload.
+ */
+class QueryResumableUploadRequest
+    : public GenericRequestBase<QueryResumableUploadRequest, CustomHeader> {
+ public:
+  QueryResumableUploadRequest() = default;
+  explicit QueryResumableUploadRequest(std::string upload_session_url)
+      : GenericRequestBase(),
+        upload_session_url_(std::move(upload_session_url)) {}
+
+  std::string const& upload_session_url() const { return upload_session_url_; }
+
+ private:
+  std::string upload_session_url_;
+};
+
+std::ostream& operator<<(std::ostream& os,
+                         QueryResumableUploadRequest const& r);
+
+struct ResumableUploadResponse {
+  static ResumableUploadResponse FromHttpResponse(HttpResponse&& response);
+
+  std::string upload_session_url;
+  std::uint64_t last_committed_byte;
+  std::string payload;
+};
+
+std::ostream& operator<<(std::ostream& os, ResumableUploadResponse const& r);
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
