@@ -162,6 +162,7 @@ add_library(bigtable_client
             internal/async_sample_row_keys.cc
             internal/async_retry_op.h
             internal/async_retry_unary_rpc.h
+            internal/async_retry_unary_rpc_and_poll.h
             internal/bulk_mutator.h
             internal/bulk_mutator.cc
             internal/completion_queue_impl.h
@@ -305,6 +306,7 @@ set(bigtable_client_unit_tests
     internal/async_longrunning_op_test.cc
     internal/async_poll_op_test.cc
     internal/async_retry_op_test.cc
+    internal/async_retry_unary_rpc_and_poll_test.cc
     internal/bulk_mutator_test.cc
     internal/table_async_check_and_mutate_row_test.cc
     internal/instance_admin_test.cc
