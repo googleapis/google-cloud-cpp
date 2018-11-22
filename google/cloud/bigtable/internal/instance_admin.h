@@ -16,8 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_INSTANCE_ADMIN_H_
 
 #include "google/cloud/bigtable/app_profile_config.h"
+#include "google/cloud/bigtable/cluster_config.h"
 #include "google/cloud/bigtable/instance_admin_client.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
+#include "google/cloud/bigtable/internal/async_retry_unary_rpc_and_poll.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/polling_policy.h"
@@ -272,6 +274,66 @@ class InstanceAdmin {
         client_, &InstanceAdminClient::AsyncDeleteCluster, std::move(request),
         std::forward<Functor>(callback));
     retry->Start(cq);
+  }
+
+  /**
+   * Makes an asynchronous request to create a cluster.
+   *
+   * @param cluster_config the desired configuration of the cluster.
+   * @param instance_id the Cloud Bigtable instance that contains the cluster.
+   * @param cluster_id the id of the cluster in the project to be deleted.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, CompletionQueue&,
+   *         google::bigtable::admin::v2::Cluster&,
+   *         grpc::Status&>);
+   *
+   * @tparam Functor the type of the callback.
+   *
+   * @tparam valid_callback_type a formal parameter, uses
+   *     `std::enable_if<>` to disable this template if Functor has a wrong
+   *     signature.
+   */
+  template <typename Functor,
+            typename std::enable_if<google::cloud::internal::is_invocable<
+                                        Functor, CompletionQueue&,
+                                        google::bigtable::admin::v2::Cluster&,
+                                        grpc::Status&>::value,
+                                    int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> AsyncCreateCluster(
+      bigtable::ClusterConfig cluster_config,
+      bigtable::InstanceId const& instance_id,
+      bigtable::ClusterId const& cluster_id, CompletionQueue& cq,
+      Functor&& callback) {
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &InstanceAdminClient::AsyncCreateCluster)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &InstanceAdminClient::AsyncCreateCluster)>::MemberFunction;
+
+    using Operation = internal::AsyncRetryAndPollUnaryRpc<
+        InstanceAdminClient, google::bigtable::admin::v2::Cluster,
+        MemberFunction, internal::ConstantIdempotencyPolicy, Functor>;
+
+    auto cluster = cluster_config.as_proto_move();
+    cluster.set_location(project_name() + "/locations/" + cluster.location());
+
+    google::bigtable::admin::v2::CreateClusterRequest request;
+    request.mutable_cluster()->Swap(&cluster);
+    request.set_parent(project_name() + "/instances/" + instance_id.get());
+    request.set_cluster_id(cluster_id.get());
+    auto op = std::make_shared<Operation>(
+        __func__, polling_policy_->clone(), rpc_retry_policy_->clone(),
+        rpc_backoff_policy_->clone(), internal::ConstantIdempotencyPolicy(true),
+        metadata_update_policy_, client_,
+        &InstanceAdminClient::AsyncCreateCluster, std::move(request),
+        std::forward<Functor>(callback));
+    return op->Start(cq);
   }
 
   google::bigtable::admin::v2::Cluster GetCluster(
