@@ -42,6 +42,7 @@ storage_client_HDRS = [
     "internal/patch_builder.h",
     "internal/raw_client.h",
     "internal/raw_client_wrapper_utils.h",
+    "internal/resumable_upload_session.h",
     "internal/retry_client.h",
     "internal/service_account_requests.h",
     "lifecycle_rule.h",
