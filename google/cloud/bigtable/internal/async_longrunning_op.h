@@ -42,17 +42,14 @@ namespace internal {
  * @tparam Client the type of client to execute `AsyncGetOperation` on
  * @tparam ResponseType the type of the response packed in the
  *     `google.longrunning.Operation`
- * @tparam valid_cliend a formal parameter, uses
- *     `std::enable_if<>` to disable this template if the `Client` doesn't have
- * a proper `AsyncGetOperation` member function.
  */
-template <typename Client, typename ResponseType,
-          typename std::enable_if<
-              CheckAsyncUnaryRpcSignature<
-                  typename internal::ExtractMemberFunctionType<decltype(
-                      &Client::AsyncGetOperation)>::MemberFunction>::value,
-              int>::type valid_client = 0>
+template <typename Client, typename ResponseType>
 class AsyncLongrunningOp {
+  static_assert(
+      CheckAsyncUnaryRpcSignature<typename internal::ExtractMemberFunctionType<
+          decltype(&Client::AsyncGetOperation)>::MemberFunction>::value,
+      "Client toesn't have a proper AsyncGetOperation member function.");
+
  public:
   using Request = google::longrunning::GetOperationRequest;
   using Response = ResponseType;
