@@ -25,6 +25,10 @@ set -eu
 #   to the VMs running the integration tests.
 
 echo
+echo "Running storage::internal::CurlResumableUploadSession integration tests."
+./curl_resumable_upload_session_integration_test "${BUCKET_NAME}"
+
+echo
 echo "Running GCS Bucket APIs integration tests."
 ./bucket_integration_test "${PROJECT_ID}" "${BUCKET_NAME}" "${TOPIC_NAME}"
 

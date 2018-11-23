@@ -168,8 +168,23 @@ std::pair<Status, ResumableUploadResponse> CurlClient::UploadChunk(
   if (not status.ok()) {
     return std::make_pair(status, ResumableUploadResponse{});
   }
-  return std::make_pair(Status(600, "not-implemented"),
-                        ResumableUploadResponse{});
+  builder.AddHeader(request.RangeHeader());
+  builder.AddHeader("Content-Type: application/octet-stream");
+  builder.AddHeader("Content-Length: " +
+                    std::to_string(request.payload().size()));
+  auto payload = builder.BuildRequest().MakeRequest(request.payload());
+  if (payload.status_code == 308 and
+      payload.headers.find("range") != payload.headers.end()) {
+    return std::make_pair(Status(), ResumableUploadResponse::FromHttpResponse(
+                                        std::move(payload)));
+  }
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        ResumableUploadResponse{});
+  }
+  return std::make_pair(
+      Status(), ResumableUploadResponse::FromHttpResponse(std::move(payload)));
 }
 
 std::pair<Status, ResumableUploadResponse> CurlClient::QueryResumableUpload(
@@ -179,8 +194,22 @@ std::pair<Status, ResumableUploadResponse> CurlClient::QueryResumableUpload(
   if (not status.ok()) {
     return std::make_pair(status, ResumableUploadResponse{});
   }
-  return std::make_pair(Status(600, "not-implemented"),
-                        ResumableUploadResponse{});
+  builder.AddHeader("Content-Range: bytes */*");
+  builder.AddHeader("Content-Type: application/octet-stream");
+  builder.AddHeader("Content-Length: 0");
+  auto payload = builder.BuildRequest().MakeRequest(std::string{});
+  if (payload.status_code == 308 and
+      payload.headers.find("range") != payload.headers.end()) {
+    return std::make_pair(Status(), ResumableUploadResponse::FromHttpResponse(
+                                        std::move(payload)));
+  }
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        ResumableUploadResponse{});
+  }
+  return std::make_pair(
+      Status(), ResumableUploadResponse::FromHttpResponse(std::move(payload)));
 }
 
 std::pair<Status, ListBucketsResponse> CurlClient::ListBuckets(
@@ -637,6 +666,41 @@ std::pair<Status, RewriteObjectResponse> CurlClient::RewriteObject(
   }
   return std::make_pair(Status(),
                         RewriteObjectResponse::FromHttpResponse(payload));
+}
+
+std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+CurlClient::CreateResumableSession(ResumableUploadRequest const& request) {
+  CurlRequestBuilder builder(
+      upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
+  auto status = SetupBuilder(builder, request, "POST");
+  if (not status.ok()) {
+    return std::make_pair(status, std::unique_ptr<ResumableUploadSession>());
+  }
+  builder.AddQueryParameter("uploadType", "resumable");
+  builder.AddQueryParameter("name", request.object_name());
+  builder.AddHeader("Content-Type: application/json; charset=UTF-8");
+  std::string request_payload;
+  if (request.HasOption<WithObjectMetadata>()) {
+    request_payload =
+        request.GetOption<WithObjectMetadata>().value().JsonPayloadForUpdate();
+  }
+  builder.AddHeader("Content-Length: " +
+                    std::to_string(request_payload.size()));
+  auto payload = builder.BuildRequest().MakeRequest(request_payload);
+  if (payload.status_code >= 300) {
+    return std::make_pair(
+        Status{payload.status_code, std::move(payload.payload)},
+        std::unique_ptr<ResumableUploadSession>());
+  }
+  auto response = ResumableUploadResponse::FromHttpResponse(std::move(payload));
+  if (response.upload_session_url.empty()) {
+    return std::make_pair(Status(600, std::string("Invalid server response")),
+                          std::unique_ptr<ResumableUploadSession>());
+  }
+  auto session =
+      google::cloud::internal::make_unique<CurlResumableUploadSession>(
+          shared_from_this(), std::move(response.upload_session_url));
+  return std::make_pair(Status(), std::move(session));
 }
 
 std::pair<Status, ListBucketAclResponse> CurlClient::ListBucketAcl(

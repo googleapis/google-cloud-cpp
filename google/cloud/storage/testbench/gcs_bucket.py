@@ -527,7 +527,7 @@ class GcsBucket(object):
         metadata.setdefault('contentType', x_upload_content_type)
         upload = {
             'metadata': metadata,
-            'received_bytes': 0,
+            'next_byte': 0,
             'expected_bytes': expected_bytes,
             'object_name': metadata.get('name'),
             'media': '',
@@ -559,47 +559,45 @@ class GcsBucket(object):
                 'Cannot find resumable upload %s' % upload_id, status_code=404)
         # Be gracious in what you accept, if the Content-Range header is not
         # set we assume it is a good header and it is the end of the file.
-        received_bytes = upload['received_bytes']
-        begin = received_bytes
-        end = received_bytes + len(request.data)
+        next_byte = upload['next_byte']
+        begin = next_byte
+        end = next_byte + len(request.data)
         total = end
         content_range = request.headers.get('content-range')
         if content_range is not None:
-            if content_range.starts_with('*/'):
+            if content_range.startswith('bytes */*'):
                 # This is just a query to resume an upload, if it is done, return
                 # an empty
                 response = flask.make_response('')
-                response.headers['Range'] = 'bytes=0-%d' % upload.get('received_bytes')
-                if upload.get('done', False):
-                    # We could also return 200, but this is a better test for the
-                    # library.
-                    response.status_code = 201
-                else:
-                    response.status_code = 308
+                response.headers['Range'] = 'bytes=0-%d' % (next_byte - 1)
+                response.status_code = 200
                 return response
-            match = re.match('([0-9]+)-([0-9]+)/(\*|[0-9]+)', content_range)
+            match = re.match('bytes ([0-9]+)-([0-9]+)/(\*|[0-9]+)', content_range)
             if not match:
                 raise error_response.ErrorResponse(
                     'Invalid Content-Range in upload %s' % content_range,
                     status_code=400)
             begin = int(match.group(1))
             end = int(match.group(2))
-            total = int(match.group(3))
+            if match.group(3) == '*':
+                total = 0
+            else:
+                total = int(match.group(3))
 
-        if begin != received_bytes:
+        if begin != next_byte:
             raise error_response.ErrorResponse(
                 'Mismatched data range, expected data at %d, got %d' % (
-                    received_bytes, begin), status_code=400)
-        if end - begin != len(request.data):
+                    next_byte, begin), status_code=400)
+        if len(request.data) != end - begin + 1:
             raise error_response.ErrorResponse(
                 'Mismatched data range (%d) vs. content-length (%d)' % (
-                    end - begin, len(request.data)), status_code=400)
+                    end - begin + 1, len(request.data)), status_code=400)
 
-        received_bytes = received_bytes + len(request.data)
         upload['media'] = upload.get('media', '') + request.data
-        upload['received_bytes'] = received_bytes
+        next_byte = len(upload.get('media', ''))
+        upload['next_byte'] = next_byte
         response_payload = ''
-        if received_bytes == total:
+        if total != 0 and next_byte >= total:
             upload['done'] = True
             object_name = upload.get('object_name')
             object_path, blob = testbench_utils.get_object(
@@ -613,13 +611,15 @@ class GcsBucket(object):
             revision = blob.insert_resumable(
                 gcs_url, original_request, media,
                 original_metadata)
-            print("\n\n\n%d %s\n\n" % (len(media), object_name))
             response_payload = testbench_utils.filtered_response(
                 request, revision.metadata)
             testbench_utils.insert_object(object_path, blob)
 
         response = flask.make_response(response_payload)
-        response.headers['Range'] = 'bytes=0-%d' % received_bytes
+        if next_byte == 0:
+            response.headers['Range'] = 'bytes=0-0'
+        else:
+            response.headers['Range'] = 'bytes=0-%d' % (next_byte - 1)
         if upload.get('done', False):
             response.status_code = 200
         else:
