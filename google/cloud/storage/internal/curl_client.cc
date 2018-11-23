@@ -16,6 +16,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
+#include "google/cloud/storage/internal/curl_resumable_upload_session.h"
 #include "google/cloud/storage/internal/curl_streambuf.h"
 #include "google/cloud/storage/internal/generate_message_boundary.h"
 #include "google/cloud/storage/object_stream.h"
@@ -158,6 +159,28 @@ CurlClient::CurlClient(ClientOptions options)
   curl_share_setopt(share_.get(), CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
 
   CurlInitializeOnce(options.enable_ssl_locking_callbacks());
+}
+
+std::pair<Status, ResumableUploadResponse> CurlClient::UploadChunk(
+    UploadChunkRequest const& request) {
+  CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
+  auto status = SetupBuilder(builder, request, "PUT");
+  if (not status.ok()) {
+    return std::make_pair(status, ResumableUploadResponse{});
+  }
+  return std::make_pair(Status(600, "not-implemented"),
+                        ResumableUploadResponse{});
+}
+
+std::pair<Status, ResumableUploadResponse> CurlClient::QueryResumableUpload(
+    QueryResumableUploadRequest const& request) {
+  CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
+  auto status = SetupBuilder(builder, request, "PUT");
+  if (not status.ok()) {
+    return std::make_pair(status, ResumableUploadResponse{});
+  }
+  return std::make_pair(Status(600, "not-implemented"),
+                        ResumableUploadResponse{});
 }
 
 std::pair<Status, ListBucketsResponse> CurlClient::ListBuckets(
