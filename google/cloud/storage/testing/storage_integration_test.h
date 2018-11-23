@@ -38,7 +38,12 @@ class StorageIntegrationTest : public ::testing::Test {
 
   std::string MakeRandomBucketName();
 
-  void WriteRandomLines(std::ostream& upload, std::ostream& local);
+  static constexpr int kDefaultRandomLineCount = 1000;
+  static constexpr int kDefaultLineSize = 200;
+
+  void WriteRandomLines(std::ostream& upload, std::ostream& local,
+                        int line_count = kDefaultRandomLineCount,
+                        int line_size = kDefaultLineSize);
 
   google::cloud::internal::DefaultPRNG generator_ =
       google::cloud::internal::MakeDefaultPRNG();
