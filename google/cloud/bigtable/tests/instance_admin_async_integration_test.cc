@@ -170,6 +170,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
   google::cloud::bigtable::CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
 
+  bigtable::noex::InstanceAdmin admin(instance_admin_client_);
   // create cluster
   auto clusters_before = instance_admin_->ListClusters(id);
   ASSERT_FALSE(IsClusterPresent(clusters_before, cluster_id_str))
@@ -177,18 +178,23 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
       << " This is unexpected, as the cluster ids are"
       << " generated at random.";
   bigtable::ClusterId cluster_id(cluster_id_str);
+  std::promise<btadmin::Cluster> create_promise;
   auto cluster_config =
       bigtable::ClusterConfig(InstanceTestEnvironment::replication_zone(), 3,
                               bigtable::ClusterConfig::HDD);
-  auto cluster =
-      instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
-          .get();
+  admin.AsyncCreateCluster(
+      cluster_config, instance_id, cluster_id, cq,
+      [&create_promise](google::cloud::bigtable::CompletionQueue&,
+                        btadmin::Cluster& response, grpc::Status& status) {
+        ASSERT_TRUE(status.ok());
+        create_promise.set_value(std::move(response));
+      });
+  auto cluster = create_promise.get_future().get();
   auto clusters_after = instance_admin_->ListClusters(id);
   EXPECT_FALSE(IsClusterPresent(clusters_before, cluster.name()));
   EXPECT_TRUE(IsClusterPresent(clusters_after, cluster.name()));
 
   // Get cluster
-  bigtable::noex::InstanceAdmin admin(instance_admin_client_);
   std::promise<btadmin::Cluster> done;
   admin.AsyncGetCluster(
       instance_id, cluster_id, cq,

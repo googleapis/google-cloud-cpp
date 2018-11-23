@@ -30,6 +30,13 @@ class InstanceAdmin;
 namespace noex {
 class InstanceAdmin;
 }  // namespace noex
+namespace internal {
+template <typename Client, typename ResponseType>
+class AsyncLongrunningOp;
+template <typename Client, typename Response, typename MemberFunctionType,
+          typename IdempotencyPolicy, typename Functor>
+class AsyncRetryAndPollUnaryRpc;
+}  // namespace internal
 
 /**
  * Connects to Cloud Bigtable's instance administration APIs.
@@ -81,6 +88,11 @@ class InstanceAdminClient {
  protected:
   friend class InstanceAdmin;
   friend class noex::InstanceAdmin;
+  template <typename Client, typename ResponseType>
+  friend class internal::AsyncLongrunningOp;
+  template <typename Client, typename Response, typename MemberFunctionType,
+            typename IdempotencyPolicy>
+  class AsyncRetryAndPollUnaryRpc;
   template <typename ResultType, typename ClientType>
   friend ResultType internal::PollLongRunningOperation(
       std::shared_ptr<ClientType> client,
