@@ -25,6 +25,7 @@ bigtable_client_HDRS = [
     "internal/async_sample_row_keys.h",
     "internal/async_retry_op.h",
     "internal/async_retry_unary_rpc.h",
+    "internal/async_retry_unary_rpc_and_poll.h",
     "internal/bulk_mutator.h",
     "internal/completion_queue_impl.h",
     "internal/common_client.h",
