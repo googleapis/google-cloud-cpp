@@ -40,8 +40,7 @@ using MockAsyncLongrunningOpReader =
     google::cloud::bigtable::testing::MockAsyncResponseReader<
         google::longrunning::Operation>;
 
-// AsyncRetryUnaryRpcAndPollRes tests are on CreateCluterImpl to not overdo on
-// mocks.
+// AsyncRetryUnaryRpcAndPollRes tests use CreateCluter to not create new mocks.
 
 class EndToEndConfig {
  public:

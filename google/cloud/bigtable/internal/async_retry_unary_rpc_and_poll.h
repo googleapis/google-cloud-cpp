@@ -35,7 +35,7 @@ namespace internal {
  * Issue an async RPC with retries and asynchronously poll its result.
  *
  * This asynchronous operation can be used for executing API calls, which return
- * a `google.longrunning.Operation`. It will first retry the API call and it it
+ * a `google.longrunning.Operation`. It will first retry the API call and if it
  * succeeds, it will poll that operation for result.
  *
  * This operation implements `AsyncOperation`, hence it is cancellable. On
@@ -58,6 +58,11 @@ namespace internal {
  *     because the decision around idempotency can be made before the retry loop
  *     starts. Some calls may dynamically determine if a retry (or a partial
  *     retry for `BulkApply`) are idempotent.
+
+ * @tparam Functor the type of the function-like object that will receive the
+ *     results. This functor must satisfy (using C++17 types):
+ *     static_assert(std::is_invocable_v<
+ *         Functor, CompletionQueue&, Response&, grpc::Status&>
  */
 template <typename Client, typename Response, typename MemberFunctionType,
           typename IdempotencyPolicy, typename Functor>
