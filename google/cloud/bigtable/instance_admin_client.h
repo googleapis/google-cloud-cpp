@@ -231,6 +231,13 @@ class InstanceAdminClient {
       grpc::CompletionQueue* cq) = 0;
 
   virtual std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  AsyncCreateInstance(
+      grpc::ClientContext* context,
+      const google::bigtable::admin::v2::CreateInstanceRequest& request,
+      grpc::CompletionQueue* cq) = 0;
+
+  virtual std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
   AsyncDeleteInstance(
       grpc::ClientContext* context,

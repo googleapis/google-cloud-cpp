@@ -117,7 +117,15 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteInstanceTest) {
 
   // create instance
   auto config = IntegrationTestConfig(instance_id);
-  auto instance = instance_admin_->CreateInstance(config).get();
+  std::promise<btadmin::Instance> create_promise;
+  admin.AsyncCreateInstance(
+      config, cq,
+      [&create_promise](google::cloud::bigtable::CompletionQueue&,
+                        btadmin::Instance& response, grpc::Status& status) {
+        ASSERT_TRUE(status.ok());
+        create_promise.set_value(std::move(response));
+      });
+  auto instance = create_promise.get_future().get();
   auto instances_current = instance_admin_->ListInstances();
   EXPECT_TRUE(IsInstancePresent(instances_current, instance.name()));
 
@@ -164,13 +172,22 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
   auto instance_config =
       IntegrationTestConfig(id, InstanceTestEnvironment::zone(),
                             bigtable::InstanceConfig::PRODUCTION, 3);
-  auto instance_details =
-      instance_admin_->CreateInstance(instance_config).get();
 
   google::cloud::bigtable::CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
-
   bigtable::noex::InstanceAdmin admin(instance_admin_client_);
+
+  std::promise<btadmin::Instance> create_instance_promise;
+  admin.AsyncCreateInstance(
+      instance_config, cq,
+      [&create_instance_promise](google::cloud::bigtable::CompletionQueue&,
+                                 btadmin::Instance& response,
+                                 grpc::Status& status) {
+        ASSERT_TRUE(status.ok());
+        create_instance_promise.set_value(std::move(response));
+      });
+  auto instance_details = create_instance_promise.get_future().get();
+
   // create cluster
   auto clusters_before = instance_admin_->ListClusters(id);
   ASSERT_FALSE(IsClusterPresent(clusters_before, cluster_id_str))
