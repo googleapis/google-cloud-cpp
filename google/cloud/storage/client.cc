@@ -31,8 +31,7 @@ static_assert(std::is_copy_assignable<storage::Client>::value,
               "storage::Client must be assignable");
 
 Client::Client(ClientOptions options)
-    : Client(std::shared_ptr<internal::RawClient>(
-          new internal::CurlClient(std::move(options)))) {}
+    : Client(internal::CurlClient::Create(std::move(options))) {}
 
 ObjectMetadata Client::UploadFileImpl(
     std::string const& file_name,
