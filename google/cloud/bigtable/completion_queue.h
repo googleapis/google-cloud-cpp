@@ -205,6 +205,30 @@ class CompletionQueue {
     return op;
   }
 
+  /**
+   * Create a no-op operation.
+   *
+   * Such an operation might be useful for executing the passed callback on one
+   * of the threads executing the completion queue.
+   *
+   * @tparam Functor the functor to call on the CompletionQueue thread.
+   *   It must satisfy the `void(CompletionQueue&)` signature.
+   * @param functor the value of the functor.
+   * @return an asynchronous operation wrapping the functor; it can be used for
+   *   cancelling but it makes little sense given that it will be completed
+   *   straight away
+   */
+  template <typename Functor,
+            typename std::enable_if<internal::CheckNoopCallback<Functor>::value,
+                                    int>::type = 0>
+  std::shared_ptr<AsyncOperation> MakeNoop(Functor&& functor) {
+    return MakeRelativeTimer(
+        std::chrono::seconds(0),
+        [functor](CompletionQueue& cq, AsyncTimerResult result) {
+          functor(cq);
+        });
+  }
+
  private:
   std::shared_ptr<internal::CompletionQueueImpl> impl_;
 };

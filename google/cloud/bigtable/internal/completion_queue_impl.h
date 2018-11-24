@@ -359,6 +359,15 @@ struct CheckAsyncUnaryStreamRpcSignature<
 };
 
 /**
+ * Tests if @p Functor meets the requirements for a no-op callback.
+ *
+ * @tparam Functor a type the application wants to use as a callback.
+ */
+template <typename Functor>
+using CheckNoopCallback =
+    google::cloud::internal::is_invocable<Functor, CompletionQueue&>;
+
+/**
  * The implementation details for `CompletionQueue`.
  *
  * `CompletionQueue` is implemented using the PImpl idiom:

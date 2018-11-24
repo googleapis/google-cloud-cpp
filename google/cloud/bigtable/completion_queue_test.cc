@@ -287,6 +287,21 @@ TEST(CompletionQueueTest, AsyncRpcStreamNotCreated) {
   EXPECT_TRUE(completion_called);
 }
 
+TEST(CompletionQueueTest, Noop) {
+  bigtable::CompletionQueue cq;
+
+  std::thread t([&cq]() { cq.Run(); });
+
+  std::promise<void> promise;
+  auto alarm =
+      cq.MakeNoop([&promise](CompletionQueue& cq) { promise.set_value(); });
+
+  promise.get_future().get();
+
+  cq.Shutdown();
+  t.join();
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
