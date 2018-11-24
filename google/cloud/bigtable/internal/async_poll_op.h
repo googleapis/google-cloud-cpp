@@ -121,14 +121,6 @@ class AsyncPollOp
     }
   }
 
-  bool Notify(CompletionQueue& cq, bool ok) override {
-    // TODO(#1389) Notify should be moved from AsyncOperation to some more
-    // specific derived class.
-    google::cloud::internal::RaiseLogicError(
-        "This member function doesn't make sense in "
-        "AsyncRetryOp");
-  }
-
   std::shared_ptr<AsyncOperation> Start(CompletionQueue& cq) {
     auto self = this->shared_from_this();
     std::unique_lock<std::mutex> lk(mu_);
