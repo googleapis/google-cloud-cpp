@@ -149,6 +149,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:abadc27ffe28fb29f3a49982bc578c50f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c290a1daebe474f40410fab63b5cbea"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::longrunning::Operation &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a0c290a1daebe474f40410fab63b5cbea">AsyncCreateCluster</a> (grpc::ClientContext *context, const google::bigtable::admin::v2::CreateClusterRequest &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
 <tr class="separator:a0c290a1daebe474f40410fab63b5cbea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac70eb2df2dc4eaa01bacaf35f212d4b8"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::longrunning::Operation &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ac70eb2df2dc4eaa01bacaf35f212d4b8">AsyncCreateInstance</a> (grpc::ClientContext *context, const google::bigtable::admin::v2::CreateInstanceRequest &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
+<tr class="separator:ac70eb2df2dc4eaa01bacaf35f212d4b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68625b16fcf7b5f8a43c0c8bf77c3430"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::protobuf::Empty &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a68625b16fcf7b5f8a43c0c8bf77c3430">AsyncDeleteInstance</a> (grpc::ClientContext *context, google::bigtable::admin::v2::DeleteInstanceRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
 <tr class="separator:a68625b16fcf7b5f8a43c0c8bf77c3430"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43d9f23e2a0dc9f530bcf398eb291f38"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::AppProfile &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a43d9f23e2a0dc9f530bcf398eb291f38">AsyncGetAppProfile</a> (grpc::ClientContext *context, google::bigtable::admin::v2::GetAppProfileRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
@@ -266,6 +268,48 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const google::bigtable::admin::v2::CreateClusterRequest &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">grpc::CompletionQueue *&#160;</td>
+          <td class="paramname"><em>cq</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac70eb2df2dc4eaa01bacaf35f212d4b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac70eb2df2dc4eaa01bacaf35f212d4b8">&#9670;&nbsp;</a></span>AsyncCreateInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt;google::longrunning::Operation&gt; &gt; google::cloud::bigtable::v0::InstanceAdminClient::AsyncCreateInstance </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const google::bigtable::admin::v2::CreateInstanceRequest &amp;&#160;</td>
           <td class="paramname"><em>request</em>, </td>
         </tr>
         <tr>
