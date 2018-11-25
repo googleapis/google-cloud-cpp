@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/cluster_config.h"
 #include "google/cloud/bigtable/instance_admin_client.h"
 #include "google/cloud/bigtable/instance_config.h"
+#include "google/cloud/bigtable/instance_update_config.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc_and_poll.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
@@ -169,6 +170,57 @@ class InstanceAdmin {
         rpc_backoff_policy_->clone(), internal::ConstantIdempotencyPolicy(true),
         metadata_update_policy_, client_,
         &InstanceAdminClient::AsyncCreateInstance, std::move(request),
+        std::forward<Functor>(callback));
+    return op->Start(cq);
+  }
+
+  /**
+   * Makes an asynchronous request to Update an existing instance of Cloud
+   * Bigtable.
+   *
+   * @param instance_update_config config with modified instance..
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, CompletionQueue&,
+   *         google::bigtable::admin::v2::Instance&,
+   *         grpc::Status&>);
+   *
+   * @tparam Functor the type of the callback.
+   *
+   * @tparam valid_callback_type a formal parameter, uses
+   *     `std::enable_if<>` to disable this template if Functor has a wrong
+   *     signature.
+   */
+  template <typename Functor,
+            typename std::enable_if<google::cloud::internal::is_invocable<
+                                        Functor, CompletionQueue&,
+                                        google::bigtable::admin::v2::Instance&,
+                                        grpc::Status&>::value,
+                                    int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> AsyncUpdateInstance(
+      InstanceUpdateConfig instance_update_config, CompletionQueue& cq,
+      Functor&& callback) {
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &InstanceAdminClient::AsyncUpdateInstance)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &InstanceAdminClient::AsyncUpdateInstance)>::MemberFunction;
+
+    using Operation = internal::AsyncRetryAndPollUnaryRpc<
+        InstanceAdminClient, google::bigtable::admin::v2::Instance,
+        MemberFunction, internal::ConstantIdempotencyPolicy, Functor>;
+
+    auto request = instance_update_config.as_proto_move();
+    auto op = std::make_shared<Operation>(
+        __func__, polling_policy_->clone(), rpc_retry_policy_->clone(),
+        rpc_backoff_policy_->clone(), internal::ConstantIdempotencyPolicy(true),
+        metadata_update_policy_, client_,
+        &InstanceAdminClient::AsyncUpdateInstance, std::move(request),
         std::forward<Functor>(callback));
     return op->Start(cq);
   }
