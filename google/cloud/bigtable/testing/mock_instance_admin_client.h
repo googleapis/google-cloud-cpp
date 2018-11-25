@@ -93,6 +93,13 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
                    google::bigtable::admin::v2::ListClustersRequest const&,
                    google::bigtable::admin::v2::ListClustersResponse*));
 
+  MOCK_METHOD3(AsyncListClusters,
+               std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+                   google::bigtable::admin::v2::ListClustersResponse>>(
+                   grpc::ClientContext*,
+                   const google::bigtable::admin::v2::ListClustersRequest&,
+                   grpc::CompletionQueue*));
+
   MOCK_METHOD3(
       GetCluster,
       grpc::Status(grpc::ClientContext*,
