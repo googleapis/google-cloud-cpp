@@ -36,6 +36,8 @@ storage_client_unit_tests = [
     "internal/object_requests_test.cc",
     "internal/parse_rfc3339_test.cc",
     "internal/patch_builder_test.cc",
+    "internal/retry_client_test.cc",
+    "internal/retry_resumable_upload_session_test.cc",
     "internal/service_account_requests_test.cc",
     "lifecycle_rule_test.cc",
     "list_buckets_reader_test.cc",
