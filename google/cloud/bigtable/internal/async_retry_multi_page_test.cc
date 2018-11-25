@@ -47,7 +47,6 @@ namespace bt = ::google::cloud::bigtable;
 namespace btproto = google::bigtable::v2;
 using namespace google::cloud::testing_util::chrono_literals;
 using namespace ::testing;
-using google::cloud::internal::make_unique;
 
 class RetryMultiPageTest
     : public bigtable::testing::internal::TableTestFixture {};
@@ -115,8 +114,9 @@ class MultipagePollingPolicyTest
             bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
         rpc_backoff_policy_(
             bigtable::DefaultRPCBackoffPolicy(internal::kBigtableLimits)),
-        polling_policy_(make_unique<MultipagePollingPolicy>(
-            rpc_retry_policy_->clone(), rpc_backoff_policy_->clone())) {}
+        polling_policy_(
+            google::cloud::internal::make_unique<MultipagePollingPolicy>(
+                rpc_retry_policy_->clone(), rpc_backoff_policy_->clone())) {}
 
  protected:
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
