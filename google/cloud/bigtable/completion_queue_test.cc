@@ -294,7 +294,7 @@ TEST(CompletionQueueTest, Noop) {
 
   std::promise<void> promise;
   auto alarm =
-      cq.MakeNoop([&promise](CompletionQueue& cq) { promise.set_value(); });
+      cq.RunAsync([&promise](CompletionQueue& cq) { promise.set_value(); });
 
   promise.get_future().get();
 

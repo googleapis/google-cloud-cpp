@@ -159,7 +159,7 @@ class AsyncRetryOp : public std::enable_shared_from_this<
       // queue.
       // There is no reason to store this timer in current_op_.
       auto self = this->shared_from_this();
-      cq.MakeNoop([self](CompletionQueue& cq) { self->OnTimer(cq, false); });
+      cq.RunAsync([self](CompletionQueue& cq) { self->OnTimer(cq, false); });
       return res;
     }
     StartUnlocked(cq);

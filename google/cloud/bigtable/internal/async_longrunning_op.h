@@ -92,7 +92,7 @@ class AsyncLongrunningOp {
       // if the user held a lock while submitting this request. Instead, let's
       // schedule the callback to fire on the thread running the completion
       // queue.
-      return cq.MakeNoop([callback, this](CompletionQueue& cq) {
+      return cq.RunAsync([callback, this](CompletionQueue& cq) {
         if (operation_.has_error()) {
           grpc::Status status(
               static_cast<grpc::StatusCode>(operation_.error().code()),

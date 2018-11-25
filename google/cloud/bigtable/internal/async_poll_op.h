@@ -139,7 +139,7 @@ class AsyncPollOp
       // schedule the callback to fire on the thread running the completion
       // queue.
       // There is no reason to store this timer in current_op_.
-      cq.MakeNoop([self](CompletionQueue& cq) { self->OnTimer(cq, false); });
+      cq.RunAsync([self](CompletionQueue& cq) { self->OnTimer(cq, false); });
       return self;
     }
     StartUnlocked(cq);
