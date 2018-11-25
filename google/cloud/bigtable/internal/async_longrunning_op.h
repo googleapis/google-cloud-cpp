@@ -91,22 +91,19 @@ class AsyncLongrunningOp {
       // We could fire the callback right here, but we'd be risking a deadlock
       // if the user held a lock while submitting this request. Instead, let's
       // schedule the callback to fire on the thread running the completion
-      // queue by submitting an expired timer.
-      // TODO(#1467): stop using a timer for this purpose
-      return cq.MakeRelativeTimer(
-          std::chrono::seconds(0),
-          [callback, this](CompletionQueue& cq, AsyncTimerResult result) {
-            if (operation_.has_error()) {
-              grpc::Status status(
-                  static_cast<grpc::StatusCode>(operation_.error().code()),
-                  operation_.error().message(),
-                  "Error in operation " + operation_.name());
-              callback(cq, true, status);
-            } else {
-              grpc::Status status;
-              callback(cq, true, status);
-            }
-          });
+      // queue.
+      return cq.RunAsync([callback, this](CompletionQueue& cq) {
+        if (operation_.has_error()) {
+          grpc::Status status(
+              static_cast<grpc::StatusCode>(operation_.error().code()),
+              operation_.error().message(),
+              "Error in operation " + operation_.name());
+          callback(cq, true, status);
+        } else {
+          grpc::Status status;
+          callback(cq, true, status);
+        }
+      });
     }
     google::longrunning::GetOperationRequest request;
     request.set_name(operation_.name());

@@ -148,14 +148,10 @@ class AsyncRetryOp : public std::enable_shared_from_this<
       // We could fire the callback right here, but we'd be risking a deadlock
       // if the user held a lock while submitting this request. Instead, let's
       // schedule the callback to fire on the thread running the completion
-      // queue by submitting an expired timer.
+      // queue.
       // There is no reason to store this timer in current_op_.
       auto self = this->shared_from_this();
-      cq.MakeRelativeTimer(
-          std::chrono::seconds(0),
-          [self](CompletionQueue& cq, AsyncTimerResult result) {
-            self->OnTimer(cq, result);
-          });
+      cq.RunAsync([self](CompletionQueue& cq) { self->OnTimer(cq, false); });
       return res;
     }
     StartUnlocked(cq);
@@ -265,13 +261,13 @@ class AsyncRetryOp : public std::enable_shared_from_this<
     auto self = this->shared_from_this();
     current_op_ = cq.MakeRelativeTimer(
         delay, [self](CompletionQueue& cq, AsyncTimerResult result) {
-          self->OnTimer(cq, result);
+          self->OnTimer(cq, result.cancelled);
         });
   }
 
-  void OnTimer(CompletionQueue& cq, AsyncTimerResult& timer) {
+  void OnTimer(CompletionQueue& cq, bool cancelled) {
     std::unique_lock<std::mutex> lk(mu_);
-    if (timer.cancelled or cancelled_) {
+    if (cancelled or cancelled_) {
       // Cancelled, no more action to take.
       current_op_.reset();
       auto res = operation_.AccumulatedResult();
