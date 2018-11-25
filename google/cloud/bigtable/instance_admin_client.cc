@@ -244,6 +244,15 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
   }
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::ListClustersResponse>>
+  AsyncListClusters(
+      grpc::ClientContext* context,
+      const google::bigtable::admin::v2::ListClustersRequest& request,
+      grpc::CompletionQueue* cq) override {
+    return impl_.Stub()->AsyncListClusters(context, request, cq);
+  }
+
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::AppProfile>>
   AsyncGetAppProfile(
       grpc::ClientContext* context,

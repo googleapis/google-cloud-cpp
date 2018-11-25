@@ -245,6 +245,13 @@ class InstanceAdminClient {
       grpc::CompletionQueue* cq) = 0;
 
   virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::ListClustersResponse>>
+  AsyncListClusters(
+      grpc::ClientContext* context,
+      const google::bigtable::admin::v2::ListClustersRequest& request,
+      grpc::CompletionQueue* cq) = 0;
+
+  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::AppProfile>>
   AsyncGetAppProfile(
       grpc::ClientContext* context,
