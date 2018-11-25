@@ -33,6 +33,36 @@ class CompletionQueue;
 namespace internal {
 
 /**
+ * Represents an AsyncOperation which gRPC understands.
+ *
+ * When applications create an asynchronous operations with a `CompletionQueue`
+ * they provide a callback to be invoked when the operation completes
+ * (successfully or not). The completion queue type-erases the callback and
+ * hides it in a class derived from `AsyncOperation`. A shared pointer to the
+ * `AsyncOperation` is returned by the completion queue so library developers
+ * can cancel the operation if needed.
+ */
+class AsyncGrpcOperation : public AsyncOperation {
+ private:
+  friend class internal::CompletionQueueImpl;
+  /**
+   * Notifies the application that the operation completed.
+   *
+   * Derived classes wrap the callbacks provided by the application and invoke
+   * the callback when this virtual member function is called.
+   *
+   * @param cq the completion queue sending the notification, this is useful in
+   *   case the callback needs to retry the operation.
+   * @param ok opaque parameter returned by grpc::CompletionQueue.  The
+   *   semantics defined by gRPC depend on the type of operation, therefore the
+   *   operation needs to interpret this parameter based on those semantics.
+   * @return Whether the operation is completed (e.g. in case of streaming
+   *   response, it would return true only after the stream is finished).
+   */
+  virtual bool Notify(CompletionQueue& cq, bool ok) = 0;
+};
+
+/**
  * Tests if @p Functor meets the requirements for a timer callback.
  *
  * @tparam Functor a type the application wants to use as a timer callback.
@@ -57,7 +87,7 @@ using CheckTimerCallback =
 template <
     typename Functor,
     typename std::enable_if<CheckTimerCallback<Functor>::value, int>::type = 0>
-class AsyncTimerFunctor : public AsyncOperation {
+class AsyncTimerFunctor : public AsyncGrpcOperation {
  public:
   explicit AsyncTimerFunctor(Functor&& functor,
                              std::unique_ptr<grpc::Alarm> alarm)
@@ -139,7 +169,7 @@ using CheckUnaryStreamRpcFinishedCallback =
 template <typename Request, typename Response, typename Functor,
           typename std::enable_if<
               CheckUnaryRpcCallback<Functor, Response>::value, int>::type = 0>
-class AsyncUnaryRpcFunctor : public AsyncOperation {
+class AsyncUnaryRpcFunctor : public AsyncGrpcOperation {
  public:
   explicit AsyncUnaryRpcFunctor(Functor&& functor)
       : functor_(std::forward<Functor>(functor)) {}
@@ -208,7 +238,7 @@ template <typename Request, typename Response, typename DataFunctor,
           typename std::enable_if<CheckUnaryStreamRpcFinishedCallback<
                                       FinishedFunctor, Response>::value,
                                   int>::type = 0>
-class AsyncUnaryStreamRpcFunctor : public AsyncOperation {
+class AsyncUnaryStreamRpcFunctor : public AsyncGrpcOperation {
  public:
   explicit AsyncUnaryStreamRpcFunctor(DataFunctor&& data_functor,
                                       FinishedFunctor&& finished_functor)
@@ -388,11 +418,11 @@ class CompletionQueueImpl {
   grpc::CompletionQueue& cq() { return cq_; }
 
   /// Add a new asynchronous operation to the completion queue.
-  void* RegisterOperation(std::shared_ptr<AsyncOperation> op);
+  void* RegisterOperation(std::shared_ptr<AsyncGrpcOperation> op);
 
  protected:
   /// Return the asynchronous operation associated with @p tag.
-  std::shared_ptr<AsyncOperation> FindOperation(void* tag);
+  std::shared_ptr<AsyncGrpcOperation> FindOperation(void* tag);
 
   /// Unregister @p tag from pending operations.
   void ForgetOperation(void* tag);
@@ -418,7 +448,7 @@ class CompletionQueueImpl {
   grpc::CompletionQueue cq_;
   std::atomic<bool> shutdown_;
   mutable std::mutex mu_;
-  std::unordered_map<std::intptr_t, std::shared_ptr<AsyncOperation>>
+  std::unordered_map<std::intptr_t, std::shared_ptr<AsyncGrpcOperation>>
       pending_ops_;
 };
 

@@ -139,14 +139,6 @@ class AsyncRetryOp : public std::enable_shared_from_this<
     }
   }
 
-  bool Notify(CompletionQueue& cq, bool ok) override {
-    // TODO(#1389) Notify should be moved from AsyncOperation to some more
-    // specific derived class.
-    google::cloud::internal::RaiseLogicError(
-        "This member function doesn't make sense in "
-        "AsyncRetryOp");
-  }
-
   std::shared_ptr<AsyncOperation> Start(CompletionQueue& cq) {
     auto res =
         std::static_pointer_cast<AsyncOperation>(this->shared_from_this());

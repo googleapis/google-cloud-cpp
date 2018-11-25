@@ -103,13 +103,6 @@ class AsyncRetryAndPollUnaryRpc
         cancelled_(),
         callback_(callback) {}
 
-  bool Notify(CompletionQueue& cq, bool ok) override {
-    // TODO(#1389) Notify should be moved from AsyncOperation to some more
-    // specific derived class.
-    google::cloud::internal::RaiseLogicError(
-        "This member function doesn't make sense here");
-  }
-
   void Cancel() override {
     std::lock_guard<std::mutex> lk(mu_);
     cancelled_ = true;

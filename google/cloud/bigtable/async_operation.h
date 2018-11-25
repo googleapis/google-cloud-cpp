@@ -43,12 +43,8 @@ struct AsyncTimerResult {
 /**
  * Represents a pending asynchronous operation.
  *
- * When applications create an asynchronous operations with a `CompletionQueue`
- * they provide a callback to be invoked when the operation completes
- * (successfully or not). The completion queue type-erases the callback and
- * hides it in a class derived from `AsyncOperation`.  A shared pointer to the
- * `AsyncOperation` is returned by the completion queue so library developers
- * can cancel the operation if needed.
+ * It can either be a simple RPC, or a more complex operation involving
+ * potentially many RPCs, sleeping and processing.
  */
 class AsyncOperation {
  public:
@@ -56,29 +52,8 @@ class AsyncOperation {
 
   /**
    * Requests that the operation be canceled.
-   *
-   * The result of canceling the operation is reported via `Notify()`, which
-   * invokes the callback registered when the operation was created.
    */
   virtual void Cancel() = 0;
-
- private:
-  friend class internal::CompletionQueueImpl;
-  /**
-   * Notifies the application that the operation completed.
-   *
-   * Derived classes wrap the callbacks provided by the application and invoke
-   * the callback when this virtual member function is called.
-   *
-   * @param cq the completion queue sending the notification, this is useful in
-   *   case the callback needs to retry the operation.
-   * @param ok opaque parameter returned by grpc::CompletionQueue.  The
-   *   semantics defined by gRPC depend on the type of operation, therefore the
-   *   operation needs to interpret this parameter based on those semantics.
-   * @return Whether the operation is completed (e.g. in case of streaming
-   *   response, it would return true only after the stream is finished).
-   */
-  virtual bool Notify(CompletionQueue& cq, bool ok) = 0;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

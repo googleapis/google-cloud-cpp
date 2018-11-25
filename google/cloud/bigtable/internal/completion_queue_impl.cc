@@ -59,7 +59,7 @@ std::unique_ptr<grpc::Alarm> CompletionQueueImpl::CreateAlarm() const {
 }
 
 void* CompletionQueueImpl::RegisterOperation(
-    std::shared_ptr<AsyncOperation> op) {
+    std::shared_ptr<AsyncGrpcOperation> op) {
   void* tag = op.get();
   std::unique_lock<std::mutex> lk(mu_);
   auto ins =
@@ -73,7 +73,8 @@ void* CompletionQueueImpl::RegisterOperation(
       "assertion failure: insertion should succeed");
 }
 
-std::shared_ptr<AsyncOperation> CompletionQueueImpl::FindOperation(void* tag) {
+std::shared_ptr<AsyncGrpcOperation> CompletionQueueImpl::FindOperation(
+    void* tag) {
   std::lock_guard<std::mutex> lk(mu_);
   auto loc = pending_ops_.find(reinterpret_cast<std::intptr_t>(tag));
   if (pending_ops_.end() == loc) {

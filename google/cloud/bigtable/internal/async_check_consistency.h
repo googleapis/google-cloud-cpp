@@ -167,13 +167,6 @@ class AsyncAwaitConsistency
         table_name_(table_name),
         cancelled_() {}
 
-  bool Notify(CompletionQueue& cq, bool ok) override {
-    // TODO(#1389) Notify should be moved from AsyncOperation to some more
-    // specific derived class.
-    google::cloud::internal::RaiseLogicError(
-        "This member function doesn't make sense here");
-  }
-
   void Cancel() override {
     std::lock_guard<std::mutex> lk(mu_);
     cancelled_ = true;
