@@ -132,6 +132,7 @@ class InstanceAdmin {
    *     static_assert(std::is_invocable_v<
    *         Functor, google::bigtable::admin::v2::Instance&,
    *         grpc::Status const&>);
+   * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    */
@@ -141,8 +142,8 @@ class InstanceAdmin {
                                         google::bigtable::admin::v2::Instance&,
                                         grpc::Status&>::value,
                                     int>::type valid_callback_type = 0>
-  void AsyncGetInstance(std::string const& instance_id, CompletionQueue& cq,
-                        Functor&& callback) {
+  std::shared_ptr<AsyncOperation> AsyncGetInstance(
+      std::string const& instance_id, CompletionQueue& cq, Functor&& callback) {
     google::bigtable::admin::v2::GetInstanceRequest request;
     // Setting instance name.
     request.set_name(project_name_ + "/instances/" + instance_id);
@@ -164,7 +165,7 @@ class InstanceAdmin {
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncGetInstance, std::move(request),
         std::forward<Functor>(callback));
-    retry->Start(cq);
+    return retry->Start(cq);
   }
 
   void DeleteInstance(std::string const& instance_id, grpc::Status& status);
@@ -181,6 +182,7 @@ class InstanceAdmin {
    *     static_assert(std::is_invocable_v<
    *         Functor, google::protobuf::Empty&,
    *         grpc::Status const&>);
+   * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    *
@@ -192,8 +194,8 @@ class InstanceAdmin {
                                                       google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
-  void AsyncDeleteInstance(std::string const& instance_id, CompletionQueue& cq,
-                           Functor&& callback) {
+  std::shared_ptr<AsyncOperation> AsyncDeleteInstance(
+      std::string const& instance_id, CompletionQueue& cq, Functor&& callback) {
     google::bigtable::admin::v2::DeleteInstanceRequest request;
     // Setting instance name.
     request.set_name(InstanceName(instance_id));
@@ -215,7 +217,7 @@ class InstanceAdmin {
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncDeleteInstance, std::move(request),
         std::forward<Functor>(callback));
-    retry->Start(cq);
+    return retry->Start(cq);
   }
 
   std::vector<google::bigtable::admin::v2::Cluster> ListClusters(
@@ -238,6 +240,7 @@ class InstanceAdmin {
    *     static_assert(std::is_invocable_v<
    *         Functor, google::protobuf::Empty&,
    *         grpc::Status const&>);
+   * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    *
@@ -249,9 +252,10 @@ class InstanceAdmin {
                                                       google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
-  void AsyncDeleteCluster(bigtable::InstanceId const& instance_id,
-                          bigtable::ClusterId const& cluster_id,
-                          CompletionQueue& cq, Functor&& callback) {
+  std::shared_ptr<AsyncOperation> AsyncDeleteCluster(
+      bigtable::InstanceId const& instance_id,
+      bigtable::ClusterId const& cluster_id, CompletionQueue& cq,
+      Functor&& callback) {
     google::bigtable::admin::v2::DeleteClusterRequest request;
     // Setting cluster name.
     request.set_name(ClusterName(instance_id, cluster_id));
@@ -273,7 +277,7 @@ class InstanceAdmin {
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncDeleteCluster, std::move(request),
         std::forward<Functor>(callback));
-    retry->Start(cq);
+    return retry->Start(cq);
   }
 
   /**
@@ -291,6 +295,7 @@ class InstanceAdmin {
    *         Functor, CompletionQueue&,
    *         google::bigtable::admin::v2::Cluster&,
    *         grpc::Status&>);
+   * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    *
@@ -355,6 +360,7 @@ class InstanceAdmin {
    *     static_assert(std::is_invocable_v<
    *         Functor, google::bigtable::admin::v2::Cluster&,
    *         grpc::Status const&>);
+   * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    */
@@ -364,9 +370,10 @@ class InstanceAdmin {
                                         google::bigtable::admin::v2::Cluster&,
                                         grpc::Status&>::value,
                                     int>::type valid_callback_type = 0>
-  void AsyncGetCluster(bigtable::InstanceId const& instance_id,
-                       bigtable::ClusterId const& cluster_id,
-                       CompletionQueue& cq, Functor&& callback) {
+  std::shared_ptr<AsyncOperation> AsyncGetCluster(
+      bigtable::InstanceId const& instance_id,
+      bigtable::ClusterId const& cluster_id, CompletionQueue& cq,
+      Functor&& callback) {
     google::bigtable::admin::v2::GetClusterRequest request;
     // Setting cluster name.
     request.set_name(ClusterName(instance_id, cluster_id));
@@ -388,7 +395,7 @@ class InstanceAdmin {
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncGetCluster, std::move(request),
         std::forward<Functor>(callback));
-    retry->Start(cq);
+    return retry->Start(cq);
   }
 
   google::longrunning::Operation UpdateAppProfile(
@@ -412,6 +419,7 @@ class InstanceAdmin {
    *     static_assert(std::is_invocable_v<
    *         Functor, google::bigtable::admin::v2::AppProfile&,
    *         grpc::Status const&>);
+   * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    */
@@ -422,9 +430,9 @@ class InstanceAdmin {
               Functor, CompletionQueue&,
               google::bigtable::admin::v2::AppProfile&, grpc::Status&>::value,
           int>::type valid_callback_type = 0>
-  void AsyncCreateAppProfile(bigtable::InstanceId const& instance_id,
-                             AppProfileConfig config, CompletionQueue& cq,
-                             Functor&& callback) {
+  std::shared_ptr<AsyncOperation> AsyncCreateAppProfile(
+      bigtable::InstanceId const& instance_id, AppProfileConfig config,
+      CompletionQueue& cq, Functor&& callback) {
     auto request = config.as_proto_move();
     request.set_parent(InstanceName(instance_id.get()));
 
@@ -445,7 +453,7 @@ class InstanceAdmin {
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncCreateAppProfile,
         std::move(request), std::forward<Functor>(callback));
-    retry->Start(cq);
+    return retry->Start(cq);
   }
 
   google::bigtable::admin::v2::AppProfile GetAppProfile(
@@ -467,6 +475,7 @@ class InstanceAdmin {
    *     static_assert(std::is_invocable_v<
    *         Functor, google::bigtable::admin::v2::AppProfile&,
    *         grpc::Status const&>);
+   * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    */
@@ -477,9 +486,10 @@ class InstanceAdmin {
               Functor, CompletionQueue&,
               google::bigtable::admin::v2::AppProfile&, grpc::Status&>::value,
           int>::type valid_callback_type = 0>
-  void AsyncGetAppProfile(bigtable::InstanceId const& instance_id,
-                          bigtable::AppProfileId const& profile_id,
-                          CompletionQueue& cq, Functor&& callback) {
+  std::shared_ptr<AsyncOperation> AsyncGetAppProfile(
+      bigtable::InstanceId const& instance_id,
+      bigtable::AppProfileId const& profile_id, CompletionQueue& cq,
+      Functor&& callback) {
     google::bigtable::admin::v2::GetAppProfileRequest request;
     // Setting profile name.
     request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
@@ -502,7 +512,7 @@ class InstanceAdmin {
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncGetAppProfile, std::move(request),
         std::forward<Functor>(callback));
-    retry->Start(cq);
+    return retry->Start(cq);
   }
 
   std::vector<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
@@ -525,6 +535,7 @@ class InstanceAdmin {
    *     static_assert(std::is_invocable_v<
    *         Functor, google::protobuf::Empty&,
    *         grpc::Status const&>);
+   * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    *
@@ -536,9 +547,10 @@ class InstanceAdmin {
                                                       google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
-  void AsyncDeleteAppProfile(bigtable::InstanceId const& instance_id,
-                             bigtable::AppProfileId const& profile_id,
-                             CompletionQueue& cq, Functor&& callback) {
+  std::shared_ptr<AsyncOperation> AsyncDeleteAppProfile(
+      bigtable::InstanceId const& instance_id,
+      bigtable::AppProfileId const& profile_id, CompletionQueue& cq,
+      Functor&& callback) {
     google::bigtable::admin::v2::DeleteAppProfileRequest request;
     // Setting profile name.
     request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
@@ -561,7 +573,7 @@ class InstanceAdmin {
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncDeleteAppProfile,
         std::move(request), std::forward<Functor>(callback));
-    retry->Start(cq);
+    return retry->Start(cq);
   }
 
   google::cloud::IamPolicy GetIamPolicy(std::string const& instance_id,

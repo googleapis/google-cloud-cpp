@@ -149,6 +149,7 @@ class Table {
    *     static_assert(std::is_invocable_v<
    *         Functor, google::bigtable::v2::MutateRowResponse&,
    *         grpc::Status const&>);
+   * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    */
@@ -159,8 +160,9 @@ class Table {
               Functor, CompletionQueue&,
               google::bigtable::v2::MutateRowResponse&, grpc::Status&>::value,
           int>::type valid_callback_type = 0>
-  void AsyncApply(SingleRowMutation&& mut, CompletionQueue& cq,
-                  Functor&& callback) {
+  std::shared_ptr<AsyncOperation> AsyncApply(SingleRowMutation&& mut,
+                                             CompletionQueue& cq,
+                                             Functor&& callback) {
     google::bigtable::v2::MutateRowRequest request;
     internal::SetCommonTableOperationRequest<
         google::bigtable::v2::MutateRowRequest>(request, app_profile_id_.get(),
@@ -195,7 +197,7 @@ class Table {
         internal::ConstantIdempotencyPolicy(is_idempotent),
         metadata_update_policy_, client_, &DataClient::AsyncMutateRow,
         std::move(request), std::forward<Functor>(callback));
-    retry->Start(cq);
+    return retry->Start(cq);
   }
 
   /**
@@ -210,6 +212,7 @@ class Table {
    *     static_assert(std::is_invocable_v<
    *         Functor, CompletionQueue&, std::vector<FailedMutation>&,
    *             grpc::Status&>);
+   * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    */
@@ -219,8 +222,9 @@ class Table {
                     Functor, CompletionQueue&, std::vector<FailedMutation>&,
                     grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
-  void AsyncBulkApply(BulkMutation&& mut, CompletionQueue& cq,
-                      Functor&& callback) {
+  std::shared_ptr<AsyncOperation> AsyncBulkApply(BulkMutation&& mut,
+                                                 CompletionQueue& cq,
+                                                 Functor&& callback) {
     auto op =
         std::make_shared<bigtable::internal::AsyncRetryBulkApply<Functor>>(
             rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
@@ -228,7 +232,7 @@ class Table {
             app_profile_id_, table_name_, std::move(mut),
             std::forward<Functor>(callback));
 
-    op->Start(cq);
+    return op->Start(cq);
   }
 
   std::vector<FailedMutation> BulkApply(BulkMutation&& mut,
@@ -267,6 +271,7 @@ class Table {
    *     static_assert(std::is_invocable_v< Functor, CompletionQueue&, bool,
    *         grpc::Status&>); the second argument to this callback indicates
    *         whether true_mutations or false_mutations were executed.
+   * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    */
@@ -275,10 +280,10 @@ class Table {
                 google::cloud::internal::is_invocable<
                     Functor, CompletionQueue&, bool, grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
-  void AsyncCheckAndMutateRow(std::string row_key, Filter filter,
-                              std::vector<Mutation> true_mutations,
-                              std::vector<Mutation> false_mutations,
-                              CompletionQueue& cq, Functor&& callback) {
+  std::shared_ptr<AsyncOperation> AsyncCheckAndMutateRow(
+      std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
+      std::vector<Mutation> false_mutations, CompletionQueue& cq,
+      Functor&& callback) {
     google::bigtable::v2::CheckAndMutateRowRequest request;
     request.set_row_key(std::move(row_key));
     bigtable::internal::SetCommonTableOperationRequest<
@@ -292,7 +297,7 @@ class Table {
       *request.add_false_mutations() = std::move(m.op);
     }
 
-    auto operation = cq.MakeUnaryRpc(
+    return cq.MakeUnaryRpc(
         *client_, &DataClient::AsyncCheckAndMutateRow, request,
         google::cloud::internal::make_unique<grpc::ClientContext>(),
         [callback](CompletionQueue& cq,
@@ -347,6 +352,7 @@ class Table {
    *     static_assert(std::is_invocable_v<
    *         Functor, CompletionQueue&, std::vector<RowKeySample>&,
    *             grpc::Status&>);
+   * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    */
@@ -356,14 +362,15 @@ class Table {
                     Functor, CompletionQueue&, std::vector<RowKeySample>&,
                     grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
-  void AsyncSampleRowKeys(CompletionQueue& cq, Functor&& callback) {
+  std::shared_ptr<AsyncOperation> AsyncSampleRowKeys(CompletionQueue& cq,
+                                                     Functor&& callback) {
     auto op =
         std::make_shared<bigtable::internal::AsyncRetrySampleRowKeys<Functor>>(
             __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
             metadata_update_policy_, client_, app_profile_id_, table_name_,
             std::forward<Functor>(callback));
 
-    op->Start(cq);
+    return op->Start(cq);
   }
   //@}
 
