@@ -151,6 +151,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a0c290a1daebe474f40410fab63b5cbea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac70eb2df2dc4eaa01bacaf35f212d4b8"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::longrunning::Operation &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ac70eb2df2dc4eaa01bacaf35f212d4b8">AsyncCreateInstance</a> (grpc::ClientContext *context, const google::bigtable::admin::v2::CreateInstanceRequest &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
 <tr class="separator:ac70eb2df2dc4eaa01bacaf35f212d4b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e6474974b076a2c940d42b2780d18df"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::longrunning::Operation &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a4e6474974b076a2c940d42b2780d18df">AsyncUpdateInstance</a> (grpc::ClientContext *context, const google::bigtable::admin::v2::PartialUpdateInstanceRequest &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
+<tr class="separator:a4e6474974b076a2c940d42b2780d18df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68625b16fcf7b5f8a43c0c8bf77c3430"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::protobuf::Empty &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a68625b16fcf7b5f8a43c0c8bf77c3430">AsyncDeleteInstance</a> (grpc::ClientContext *context, google::bigtable::admin::v2::DeleteInstanceRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
 <tr class="separator:a68625b16fcf7b5f8a43c0c8bf77c3430"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98d2d21f5f2698f72be98f3b1db96589"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::ListClustersResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a98d2d21f5f2698f72be98f3b1db96589">AsyncListClusters</a> (grpc::ClientContext *context, const google::bigtable::admin::v2::ListClustersRequest &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
@@ -692,6 +694,48 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const google::bigtable::admin::v2::UpdateAppProfileRequest &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">grpc::CompletionQueue *&#160;</td>
+          <td class="paramname"><em>cq</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4e6474974b076a2c940d42b2780d18df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e6474974b076a2c940d42b2780d18df">&#9670;&nbsp;</a></span>AsyncUpdateInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt;google::longrunning::Operation&gt; &gt; google::cloud::bigtable::v0::InstanceAdminClient::AsyncUpdateInstance </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const google::bigtable::admin::v2::PartialUpdateInstanceRequest &amp;&#160;</td>
           <td class="paramname"><em>request</em>, </td>
         </tr>
         <tr>
