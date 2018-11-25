@@ -235,6 +235,15 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
   }
 
   std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  AsyncUpdateInstance(
+      grpc::ClientContext* context,
+      const google::bigtable::admin::v2::PartialUpdateInstanceRequest& request,
+      grpc::CompletionQueue* cq) override {
+    return impl_.Stub()->AsyncPartialUpdateInstance(context, request, cq);
+  }
+
+  std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
   AsyncDeleteInstance(
       grpc::ClientContext* context,
