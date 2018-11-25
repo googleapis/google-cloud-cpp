@@ -95,13 +95,6 @@ class DummyOperation {
 
 class AsyncOperationMock : public AsyncOperation {
  public:
-  bool Notify(CompletionQueue& cq, bool ok) override {
-    // TODO(#1389) Notify should be moved from AsyncOperation to some more
-    // specific derived class.
-    google::cloud::internal::RaiseLogicError(
-        "This member function doesn't make sense in "
-        "AsyncPollOp");
-  }
   MOCK_METHOD0(Cancel, void());
 };
 
