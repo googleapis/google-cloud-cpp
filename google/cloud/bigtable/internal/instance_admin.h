@@ -459,6 +459,65 @@ class InstanceAdmin {
       bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
       AppProfileUpdateConfig config, grpc::Status& status);
 
+  /**
+   * Make an asynchronous request to update the profile.
+   *
+   * @param instance_id the Cloud Bigtable instance that contains the profile.
+   * @param profile_id update the attributes for this profile id. The full name
+   * of the profile is
+   * `projects/<PROJECT_ID>/instances/<instance_id>/appProfiles/<profile_id>`
+   * @param config the modified configuration for the profile.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, CompletionQueue&,
+   *         google::bigtable::admin::v2::AppProfile&,
+   *         grpc::Status&>);
+   *
+   * @tparam Functor the type of the callback.
+   *
+   * @tparam valid_callback_type a formal parameter, uses
+   *     `std::enable_if<>` to disable this template if Functor has a wrong
+   *     signature.
+   */
+  template <
+      typename Functor,
+      typename std::enable_if<
+          google::cloud::internal::is_invocable<
+              Functor, CompletionQueue&,
+              google::bigtable::admin::v2::AppProfile&, grpc::Status&>::value,
+          int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> AsyncUpdateAppProfile(
+      bigtable::InstanceId const& instance_id,
+      bigtable::AppProfileId profile_id, AppProfileUpdateConfig config,
+      CompletionQueue& cq, Functor&& callback) {
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &InstanceAdminClient::AsyncUpdateAppProfile)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &InstanceAdminClient::AsyncUpdateAppProfile)>::MemberFunction;
+
+    using Operation = internal::AsyncRetryAndPollUnaryRpc<
+        InstanceAdminClient, google::bigtable::admin::v2::AppProfile,
+        MemberFunction, internal::ConstantIdempotencyPolicy, Functor>;
+
+    auto request = config.as_proto_move();
+    request.mutable_app_profile()->set_name(
+        InstanceName(instance_id.get() + "/appProfiles/" + profile_id.get()));
+
+    auto op = std::make_shared<Operation>(
+        __func__, polling_policy_->clone(), rpc_retry_policy_->clone(),
+        rpc_backoff_policy_->clone(), internal::ConstantIdempotencyPolicy(true),
+        metadata_update_policy_, client_,
+        &InstanceAdminClient::AsyncUpdateAppProfile, std::move(request),
+        std::forward<Functor>(callback));
+    return op->Start(cq);
+  }
+
   google::bigtable::admin::v2::AppProfile CreateAppProfile(
       bigtable::InstanceId const& instance_id, AppProfileConfig config,
       grpc::Status& status);

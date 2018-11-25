@@ -344,11 +344,18 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
   EXPECT_THAT(detail_2.name(), HasSubstr(instance_id));
   EXPECT_THAT(detail_2.name(), HasSubstr(id2));
 
-  auto profile_updated_future = instance_admin_->UpdateAppProfile(
+  // update profile
+  std::promise<btadmin::AppProfile> update_promise;
+  admin.AsyncUpdateAppProfile(
       bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2),
-      bigtable::AppProfileUpdateConfig().set_description("new description"));
+      bigtable::AppProfileUpdateConfig().set_description("new description"), cq,
+      [&update_promise](google::cloud::bigtable::CompletionQueue&,
+                        btadmin::AppProfile& response, grpc::Status& status) {
+        ASSERT_TRUE(status.ok());
+        update_promise.set_value(std::move(response));
+      });
+  auto update_2 = update_promise.get_future().get();
 
-  auto update_2 = profile_updated_future.get();
   std::promise<btadmin::AppProfile> promise_get_profile_after_update;
   admin.AsyncGetAppProfile(
       bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2), cq,

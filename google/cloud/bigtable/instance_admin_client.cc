@@ -281,6 +281,15 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  AsyncUpdateAppProfile(
+      grpc::ClientContext* context,
+      const google::bigtable::admin::v2::UpdateAppProfileRequest& request,
+      grpc::CompletionQueue* cq) override {
+    return impl_.Stub()->AsyncUpdateAppProfile(context, request, cq);
+  }
+
+  std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncGetOperation(grpc::ClientContext* context,
                     const google::longrunning::GetOperationRequest& request,
                     grpc::CompletionQueue* cq) override {
