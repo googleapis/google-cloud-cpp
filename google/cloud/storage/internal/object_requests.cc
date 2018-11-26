@@ -380,18 +380,17 @@ ResumableUploadResponse ResumableUploadResponse::FromHttpResponse(
     result.upload_session_url = response.headers.find("location")->second;
   }
   if (response.headers.find("range") != response.headers.end()) {
+    // We expect a `Range:` header in the format described here:
+    //    https://cloud.google.com/storage/docs/json_api/v1/how-tos/resumable-upload
+    // that is the value should match `bytes=0-[0-9]+`:
     std::string const& range = response.headers.find("range")->second;
 
-    if (range.rfind("bytes=", 0) != 0) {
+    if (range.rfind("bytes=0-", 0) != 0) {
       return result;
     }
-    char const* buffer = range.data() + 6;
+    char const* buffer = range.data() + 8;
     char* endptr;
-    auto first = std::strtoll(buffer, &endptr, 10);
-    if (*endptr != '-' or first != 0) {
-      return result;
-    }
-    auto last = std::strtoll(endptr + 1, &endptr, 10);
+    auto last = std::strtoll(buffer, &endptr, 10);
     if (*endptr == '\0' and 0 <= last) {
       result.last_committed_byte = last;
     }
