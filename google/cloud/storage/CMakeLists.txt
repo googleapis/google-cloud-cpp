@@ -175,6 +175,7 @@ add_library(storage_client
             internal/patch_builder.h
             internal/raw_client.h
             internal/raw_client_wrapper_utils.h
+            internal/resumable_upload_session.h
             internal/retry_client.h
             internal/retry_client.cc
             internal/service_account_requests.h
