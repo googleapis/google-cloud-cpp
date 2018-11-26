@@ -48,5 +48,6 @@ var searchData=
   ['asyncsamplerowkeys',['AsyncSampleRowKeys',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DefaultDataClient.html#a20b72b4e08c9ea65d749796a188c95c7',1,'google::cloud::bigtable::v0::DefaultDataClient::AsyncSampleRowKeys()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#a43352e9c26888b01fc71942b42f0a3ee',1,'google::cloud::bigtable::v0::DataClient::AsyncSampleRowKeys()']]],
   ['asynctimerresult',['AsyncTimerResult',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncTimerResult.html',1,'google::cloud::bigtable::v0']]],
   ['asyncupdateappprofile',['AsyncUpdateAppProfile',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a1dce371a401ff3c846ac2930018ae0de',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
+  ['asyncupdatecluster',['AsyncUpdateCluster',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ac77cd4c285aa00de8f43e38482cb4c28',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
   ['asyncupdateinstance',['AsyncUpdateInstance',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a4e6474974b076a2c940d42b2780d18df',1,'google::cloud::bigtable::v0::InstanceAdminClient']]]
 ];
