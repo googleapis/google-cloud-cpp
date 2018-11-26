@@ -475,7 +475,7 @@ class InstanceAdmin {
   }
 
   /**
-   * Makes an asynchronous request to Update an existing cluster of Cloud
+   * Makes an asynchronous request to update an existing cluster of Cloud
    * Bigtable.
    *
    * @warning This is an early version of the asynchronous APIs for Cloud
