@@ -474,6 +474,60 @@ class InstanceAdmin {
     return op->Start(cq);
   }
 
+  /**
+   * Makes an asynchronous request to update an existing cluster of Cloud
+   * Bigtable.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cluster_config cluster with updated values.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, CompletionQueue&,
+   *         google::bigtable::admin::v2::Cluster&,
+   *         grpc::Status&>);
+   *
+   * @tparam Functor the type of the callback.
+   *
+   * @tparam valid_callback_type a formal parameter, uses
+   *     `std::enable_if<>` to disable this template if Functor has a wrong
+   *     signature.
+   */
+  template <typename Functor,
+            typename std::enable_if<google::cloud::internal::is_invocable<
+                                        Functor, CompletionQueue&,
+                                        google::bigtable::admin::v2::Cluster&,
+                                        grpc::Status&>::value,
+                                    int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> AsyncUpdateCluster(
+      ClusterConfig cluster_config, CompletionQueue& cq, Functor&& callback) {
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &InstanceAdminClient::AsyncUpdateCluster)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &InstanceAdminClient::AsyncUpdateCluster)>::MemberFunction;
+
+    using Operation = internal::AsyncRetryAndPollUnaryRpc<
+        InstanceAdminClient, google::bigtable::admin::v2::Cluster,
+        MemberFunction, internal::ConstantIdempotencyPolicy, Functor>;
+
+    auto request = cluster_config.as_proto_move();
+    auto op = std::make_shared<Operation>(
+        __func__, polling_policy_->clone(), rpc_retry_policy_->clone(),
+        rpc_backoff_policy_->clone(), internal::ConstantIdempotencyPolicy(true),
+        metadata_update_policy_, client_,
+        &InstanceAdminClient::AsyncUpdateCluster, std::move(request),
+        std::forward<Functor>(callback));
+    return op->Start(cq);
+  }
+
   google::bigtable::admin::v2::Cluster GetCluster(
       bigtable::InstanceId const& instance_id,
       bigtable::ClusterId const& cluster_id, grpc::Status& status);
