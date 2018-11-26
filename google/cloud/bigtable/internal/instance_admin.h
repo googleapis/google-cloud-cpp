@@ -121,6 +121,10 @@ class InstanceAdmin {
   /**
    * Makes an asynchronous request to create a instance.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
    * @param instance_config the desired configuration of the instance.
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
@@ -178,6 +182,10 @@ class InstanceAdmin {
    * Makes an asynchronous request to Update an existing instance of Cloud
    * Bigtable.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
    * @param instance_update_config config with modified instance..
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
@@ -231,6 +239,10 @@ class InstanceAdmin {
   /**
    * Makes an asynchronous request to get the attributes of an instance.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
    * @param instance_id the id of the instance in the project that to be
    *     retrieved.
    * @param cq the completion queue that will execute the asynchronous calls,
@@ -281,6 +293,10 @@ class InstanceAdmin {
 
   /**
    * Makes an asynchronous request to delete an instance.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
    *
    * @param instance_id the id of the instance in the project to be deleted.
    * @param cq the completion queue that will execute the asynchronous calls,
@@ -339,6 +355,10 @@ class InstanceAdmin {
   /**
    * Makes an asynchronous request to delete the cluster.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
    * @param instance_id the Cloud Bigtable instance that contains the cluster.
    * @param cluster_id the id of the cluster in the project to be deleted.
    * @param cq the completion queue that will execute the asynchronous calls,
@@ -391,6 +411,10 @@ class InstanceAdmin {
 
   /**
    * Makes an asynchronous request to create a cluster.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
    *
    * @param cluster_config the desired configuration of the cluster.
    * @param instance_id the Cloud Bigtable instance that contains the cluster.
@@ -457,6 +481,10 @@ class InstanceAdmin {
   /**
    * Makes an asynchronous request to get the attributes of a cluster.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
    * @param instance_id the Cloud Bigtable instance that contains the cluster.
    * @param cluster_id fetch the attributes for this cluster id. The full name
    * of the cluster is
@@ -513,6 +541,10 @@ class InstanceAdmin {
 
   /**
    * Make an asynchronous request to update the profile.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
    *
    * @param instance_id the Cloud Bigtable instance that contains the profile.
    * @param profile_id update the attributes for this profile id. The full name
@@ -577,6 +609,10 @@ class InstanceAdmin {
   /**
    * Make an asynchronous request to create the profile.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
    * @param instance_id the Cloud Bigtable instance that contains the profile.
    * @param config the initial configuration for the profile.
    * @param cq the completion queue that will execute the asynchronous calls,
@@ -630,6 +666,10 @@ class InstanceAdmin {
 
   /**
    * Makes an asynchronous request to get the attributes of a profile.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
    *
    * @param instance_id the Cloud Bigtable instance that contains the profile.
    * @param profile_id fetch the attributes for this profile id. The full name
@@ -692,6 +732,10 @@ class InstanceAdmin {
 
   /**
    * Makes an asynchronous request to delete the profile.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
    *
    * @param instance_id the Cloud Bigtable instance that contains the cluster.
    * @param profile_id the id of the profile in the project to be deleted.
