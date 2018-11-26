@@ -140,6 +140,10 @@ class Table {
   /**
    * Make an asynchronous request to mutate a single row.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
    * @param mut the mutation to apply.
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
@@ -203,6 +207,10 @@ class Table {
   /**
    * Make an asynchronous request to mutate a multiple rows.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
    * @param mut the bulk mutation to apply.
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
@@ -254,6 +262,10 @@ class Table {
 
   /**
    * Make an asynchronous request to conditionally mutate a row.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
    *
    * @param row_key the row key on which the conditional mutation will be
    *     performed
@@ -343,6 +355,10 @@ class Table {
 
   /**
    * Make an asynchronous request to get sample row keys.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
    *
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on

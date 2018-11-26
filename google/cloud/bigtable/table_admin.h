@@ -111,6 +111,10 @@ class TableAdmin {
   /**
    * Sends an asynchronous request to create a new table in the instance.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
    * @param table_id the name of the table relative to the instance managed by
    *     this object.  The full table name is
    *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
@@ -175,6 +179,10 @@ class TableAdmin {
 
   /**
    * Sends an asynchronous request to get information about an existing table.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
    *
    * @param table_id the id of the table within the instance associated with
    *     this object. The full name of the table is

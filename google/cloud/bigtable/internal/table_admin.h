@@ -114,6 +114,10 @@ class TableAdmin {
   /**
    * Make an asynchronous request to create the table.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
    * @param table_id the name of the table relative to the instance managed by
    *     this object.  The full table name is
    *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
@@ -176,6 +180,10 @@ class TableAdmin {
 
   /**
    * Make an asynchronous request to get the table metadata.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
    *
    * @param mut the mutation to apply.
    * @param cq the completion queue that will execute the asynchronous calls,
@@ -250,6 +258,10 @@ class TableAdmin {
   /**
    * Asynchronously wait for replication to catch up.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
    * This function asks for a consistency token, and polls Cloud Bigtable until
    * the replication has caught up to that consistency token, or until the
    * polling policy has expired.
@@ -317,6 +329,10 @@ class TableAdmin {
   /**
    * Make an asynchronous request to modify the column families of a table.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
    * @param table_id the name of the table relative to the instance managed by
    *     this object.  The full table name is
    *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
@@ -377,6 +393,10 @@ class TableAdmin {
    * Make an asynchronous request to delete all the rows that start with a given
    * prefix.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
    * @param table_id the id of the table within the instance associated with
    *     this object. The full name of the table is
    *     `this->instance_name() + "/tables/" + table_id`
@@ -431,6 +451,10 @@ class TableAdmin {
   /**
    * Make an asynchronous request to delete all the rows of a table.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
    * @param table_id the id of the table within the instance associated with
    *     this object. The full name of the table is
    *     `this->instance_name() + "/tables/" + table_id`
@@ -483,6 +507,10 @@ class TableAdmin {
 
   /**
    * Make an asynchronous request to get information about a single snapshot.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
    *
    * @warning This is a private alpha release of Cloud Bigtable snapshots. This
    * feature is not currently available to most Cloud Bigtable customers. This
@@ -541,6 +569,10 @@ class TableAdmin {
 
   /**
    * Make an asynchronous request to delete a snapshot.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
    *
    * @warning This is a private alpha release of Cloud Bigtable snapshots. This
    * feature is not currently available to most Cloud Bigtable customers. This
