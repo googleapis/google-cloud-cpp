@@ -18,9 +18,9 @@ if (NOT TARGET crc32c_project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
     set(GOOGLE_CLOUD_CPP_CRC32C_URL
-        "https://github.com/google/crc32c/archive/1.0.5.tar.gz")
+        "https://github.com/google/crc32c/archive/1.0.6.tar.gz")
     set(GOOGLE_CLOUD_CPP_CRC32C_SHA256
-        "c2c0dcc8d155a6a56cc8d56bc1413e076aa32c35784f4d457831e8ccebd9260b")
+        "6b3b1d861bb8307658b2407bc7a4c59e566855ef5368a60b35c893551e4788e9")
 
     if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
         OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")

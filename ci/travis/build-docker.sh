@@ -40,9 +40,9 @@ ccache_command="$(which ccache)"
 function install_crc32c {
   # Install googletest.
   echo "${COLOR_YELLOW}Installing Crc32c $(date)${COLOR_RESET}"
-  wget -q https://github.com/google/crc32c/archive/1.0.5.tar.gz
-  tar -xf 1.0.5.tar.gz
-  cd crc32c-1.0.5
+  wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
+  tar -xf 1.0.6.tar.gz
+  cd crc32c-1.0.6
   env CXX="${cached_cxx}" CC="${cached_cc}"  cmake \
       -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
       -DCRC32C_BUILD_TESTS=OFF \
