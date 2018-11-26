@@ -126,7 +126,7 @@ function install_googletest {
   tar -xf release-1.8.1.tar.gz
   cd googletest-release-1.8.1
   env CXX="${cached_cxx}" CC="${cached_cc}"  cmake \
-      -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
+      -DCMAKE_BUILD_TYPE="Release" \
       ${CMAKE_FLAGS} \
       -H. -B.build/googletest
   cmake --build .build/googletest --target install -- -j ${NCPU}
