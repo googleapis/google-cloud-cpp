@@ -62,20 +62,22 @@ std::string StorageIntegrationTest::MakeRandomBucketName() {
 }
 
 void StorageIntegrationTest::WriteRandomLines(std::ostream& upload,
-                                              std::ostream& local) {
-  auto generate_random_line = [this] {
+                                              std::ostream& local,
+                                              int line_count, int line_size) {
+  auto generate_random_line = [this, line_size] {
     std::string const characters =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz"
         "0123456789"
         ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
-    return google::cloud::internal::Sample(generator_, 200, characters);
+    return google::cloud::internal::Sample(generator_, line_size - 1,
+                                           characters);
   };
 
-  for (int line = 0; line != 1000; ++line) {
+  for (int line = 0; line != line_count; ++line) {
     std::string random = generate_random_line() + "\n";
-    upload << line << ": " << random;
-    local << line << ": " << random;
+    upload << random;
+    local << random;
   }
 }
 
