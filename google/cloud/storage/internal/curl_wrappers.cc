@@ -37,6 +37,7 @@ namespace {
 //     https://curl.haxx.se/libcurl/c/threadsafe.html
 //
 std::once_flag ssl_locking_initialized;
+
 #if OPENSSL_VERSION_NUMBER < 0x10100000L  // Older than version 1.1.0
 // OpenSSL before 1.1.0, and LibreSSL require the application to set locks
 // explicitly.  Both report OPENSSL_VERSION_NUMBER.
@@ -51,22 +52,24 @@ extern "C" void ssl_locking_cb(int mode, int type, char const* file, int line) {
   }
 }
 
-bool SslLibraryNeedsLocking(std::string const& curl_ssl_id) {
-  // Based on:
-  //    https://curl.haxx.se/libcurl/c/threadsafe.html
-  // Only these library prefixes require special configuration for using safely
-  // with multiple threads.
-  return (curl_ssl_id.rfind("OpenSSL/1.0", 0) == 0 or
-          curl_ssl_id.rfind("LibreSSL/2", 0) == 0);
-}
-
-void InitializeSslLocking() {
-  auto vinfo = curl_version_info(CURLVERSION_NOW);
-  std::string curl_ssl = vinfo->ssl_version;
+void InitializeSslLocking(bool enable_ssl_callbacks) {
+  std::string curl_ssl = CurlSslLibraryId();
   // Only enable the lock callbacks if needed. We need to look at what SSL
   // library is used by libcurl.  Many of them work fine without any additional
   // setup.
   if (not SslLibraryNeedsLocking(curl_ssl)) {
+    GCP_LOG(INFO) << "SSL locking callbacks not installed because the"
+                  << " SSL library does not need them.";
+    return;
+  }
+  if (not enable_ssl_callbacks) {
+    GCP_LOG(INFO) << "SSL locking callbacks not installed because the"
+                  << " application disabled them.";
+    return;
+  }
+  if (CRYPTO_get_locking_callback() != nullptr) {
+    GCP_LOG(INFO) << "SSL locking callbacks not installed because there are"
+                  << " callbacks already installed.";
     return;
   }
   // If we need to configure locking, make sure the library we linked against is
@@ -114,7 +117,9 @@ void InitializeSslLocking() {
   // is a bit hard to parse, but basically one must create CRYPTO_num_lock()
   // mutexes, and a single callback for all of them.
   //
-  ssl_locks = std::vector<std::mutex>(CRYPTO_num_locks());
+  GCP_LOG(INFO) << "Installing SSL locking callbacks.";
+  ssl_locks =
+      std::vector<std::mutex>(static_cast<std::size_t>(CRYPTO_num_locks()));
   CRYPTO_set_locking_callback(ssl_locking_cb);
 
   // The documentation also recommends calling CRYPTO_THREADID_set_callback() to
@@ -141,22 +146,39 @@ void InitializeSslLocking() {
   // default version.
 }
 #else
-void InitializeSslLocking() {}
+void InitializeSslLocking(bool enable_ssl_callbacks) {}
 #endif  // OPENSSL_VERSION_NUMBER < 0x10100000L
 
 /// Automatically initialize (and cleanup) the libcurl library.
 class CurlInitializer {
  public:
-  CurlInitializer() {
-    std::call_once(ssl_locking_initialized, InitializeSslLocking);
-    curl_global_init(CURL_GLOBAL_ALL);
-  }
+  CurlInitializer() { curl_global_init(CURL_GLOBAL_ALL); }
   ~CurlInitializer() { curl_global_cleanup(); }
 };
-
-CurlInitializer const CURL_INITIALIZER;
-
 }  // namespace
+
+
+std::string CurlSslLibraryId() {
+  auto vinfo = curl_version_info(CURLVERSION_NOW);
+  return vinfo->ssl_version;
+}
+
+bool SslLibraryNeedsLocking(std::string const& curl_ssl_id) {
+  // Based on:
+  //    https://curl.haxx.se/libcurl/c/threadsafe.html
+  // Only these library prefixes require special configuration for using safely
+  // with multiple threads.
+  return (curl_ssl_id.rfind("OpenSSL/1.0", 0) == 0 or
+      curl_ssl_id.rfind("LibreSSL/2", 0) == 0);
+}
+
+bool SslLockingCallbacksInstalled() {
+#if OPENSSL_VERSION_NUMBER < 0x10100000L  // Older than version 1.1.0
+  return not ssl_locks.empty();
+#else
+  return false;
+#endif  // OPENSSL_VERSION_NUMBER < 0x10100000L
+}
 
 std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
                                  char const* data, std::size_t size) {
@@ -179,6 +201,12 @@ std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
                  [](char x) { return std::tolower(x); });
   received_headers.emplace(std::move(header_name), std::move(header_value));
   return size;
+}
+
+void CurlInitializeOnce(bool enable_ssl_callbacks) {
+  static CurlInitializer curl_initializer;
+  std::call_once(ssl_locking_initialized, InitializeSslLocking,
+                 enable_ssl_callbacks);
 }
 
 }  // namespace internal

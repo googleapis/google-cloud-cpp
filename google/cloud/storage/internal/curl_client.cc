@@ -156,6 +156,8 @@ CurlClient::CurlClient(ClientOptions options)
   curl_share_setopt(share_.get(), CURLSHOPT_SHARE, CURL_LOCK_DATA_CONNECT);
   curl_share_setopt(share_.get(), CURLSHOPT_SHARE, CURL_LOCK_DATA_SSL_SESSION);
   curl_share_setopt(share_.get(), CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
+
+  CurlInitializeOnce(options.enable_ssl_locking_callbacks());
 }
 
 std::pair<Status, ListBucketsResponse> CurlClient::ListBuckets(

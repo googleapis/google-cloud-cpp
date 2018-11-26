@@ -45,6 +45,18 @@ std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
 
 using CurlShare = std::unique_ptr<CURLSH, decltype(&curl_share_cleanup)>;
 
+/// Returns true if the SSL locking callbacks are installed.
+bool SslLockingCallbacksInstalled();
+
+/// Initializes (if needed) the SSL locking callbacks.
+void CurlInitializeOnce(bool enable_ssl_callbacks);
+
+/// Returns the id of the SSL library used by libcurl.
+std::string CurlSslLibraryId();
+
+/// Determines if the SSL library requires locking.
+bool SslLibraryNeedsLocking(std::string const& curl_ssl_id);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -151,6 +151,16 @@ TEST_F(ClientOptionsTest, SetMaximumSimpleUploadSize) {
   EXPECT_EQ(0U, client_options.maximum_simple_upload_size());
 }
 
+TEST_F(ClientOptionsTest, SetEnableLockingCallbacks) {
+  ClientOptions client_options;
+  auto default_value = client_options.enable_ssl_locking_callbacks();
+  EXPECT_TRUE(default_value);
+  client_options.set_enable_ssl_locking_callbacks(false);
+  EXPECT_FALSE(client_options.enable_ssl_locking_callbacks());
+  client_options.set_enable_ssl_locking_callbacks(true);
+  EXPECT_TRUE(client_options.enable_ssl_locking_callbacks());
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

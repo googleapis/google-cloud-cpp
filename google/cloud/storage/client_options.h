@@ -113,6 +113,18 @@ class ClientOptions {
     return *this;
   }
 
+  /**
+   * If true and using OpenSSL 1.0.2 the library configures the OpenSSL
+   * callbacks for locking.
+   */
+  bool enable_ssl_locking_callbacks() const {
+    return enable_ssl_locking_callbacks_;
+  }
+  ClientOptions& set_enable_ssl_locking_callbacks(bool v) {
+    enable_ssl_locking_callbacks_ = v;
+    return *this;
+  }
+
  private:
   void SetupFromEnvironment();
 
@@ -128,6 +140,7 @@ class ClientOptions {
   std::size_t upload_buffer_size_;
   std::string user_agent_prefix_;
   std::size_t maximum_simple_upload_size_;
+  bool enable_ssl_locking_callbacks_ = true;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
