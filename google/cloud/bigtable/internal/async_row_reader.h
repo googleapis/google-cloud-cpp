@@ -96,6 +96,7 @@ class AsyncRowReader {
         ++rows_count_;
         read_row_callback_(cq, std::move(parser_->Next(status_)), status_);
       }
+
       ++processed_chunks_count_;
     }
   }
@@ -191,7 +192,6 @@ class AsyncRowReader {
 
   grpc::Status status_;
   ReadRowCallback read_row_callback_;
-
 };
 
 }  // namespace BIGTABLE_CLIENT_NS
