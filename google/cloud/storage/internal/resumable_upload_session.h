@@ -41,10 +41,16 @@ class ResumableUploadSession {
   virtual std::pair<Status, ResumableUploadResponse> UploadChunk(
       std::string const& buffer, std::uint64_t upload_size) = 0;
 
-  /// Reset the session by querying its current state.
+  /// Resets the session by querying its current state.
   virtual std::pair<Status, ResumableUploadResponse> ResetSession() = 0;
 
-  ///
+  /**
+   * Returns the next expected byte in the server.
+   *
+   * Users of this class should check this value in case a previous
+   * UploadChunk() has partially failed and the application (or the component
+   * using this class) needs to re-send a chunk.
+   */
   virtual std::uint64_t next_expected_byte() const = 0;
 };
 
