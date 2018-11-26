@@ -324,6 +324,7 @@ template&lt;typename... Policies&gt; </div>
 </div><div class="memdoc">
 
 <p>Sends an asynchronous request to create a new table in the instance. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This is an early version of the asynchronous APIs for Cloud Bigtable. These APIs might be changed in backward-incompatible ways. It is not subject to any SLA or deprecation policy.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">table_id</td><td>the name of the table relative to the instance managed by this object. The full table name is <code>projects/&lt;PROJECT_ID&gt;/instances/&lt;INSTANCE_ID&gt;/tables/&lt;table_id&gt;</code> where PROJECT_ID is obtained from the associated <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs. ">AdminClient</a> and INSTANCE_ID is the <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a9f5a3424f6ae7f71c458dd892d807820">instance_id()</a> of this object. </td></tr>
@@ -376,6 +377,7 @@ template&lt;typename... Policies&gt; </div>
 </div><div class="memdoc">
 
 <p>Sends an asynchronous request to get information about an existing table. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This is an early version of the asynchronous APIs for Cloud Bigtable. These APIs might be changed in backward-incompatible ways. It is not subject to any SLA or deprecation policy.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">table_id</td><td>the id of the table within the instance associated with this object. The full name of the table is <code>this-&gt;<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#afe13c89a8088b7a4119df6f3891e02b6">instance_name()</a> + "/tables/" + table_id</code> </td></tr>
