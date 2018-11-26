@@ -55,7 +55,7 @@ function install_crc32c {
 }
 
 function install_protobuf {
-  # Install protobuf using CMake.  Some distributions include protobuf, gRPC
+  # Install protobuf using CMake. Some distributions include protobuf, but gRPC
   # requires 3.4.x or newer, and many of those distribution use older versions.
   # We need to install both the debug and Release version because:
   # - When using pkg-config, only the release version works, the pkg-config
@@ -63,9 +63,9 @@ function install_protobuf {
   # - When using CMake, only the version compiled with the same CMAKE_BUILD_TYPE
   #   as the dependent (gRPC or google-cloud-cpp) works.
   echo "${COLOR_YELLOW}Installing protobuf $(date)${COLOR_RESET}"
-  wget -q https://github.com/google/protobuf/archive/v3.5.2.tar.gz
-  tar -xf v3.5.2.tar.gz
-  cd protobuf-3.5.2/cmake
+  wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
+  tar -xf v3.6.1.tar.gz
+  cd protobuf-3.6.1/cmake
   for build_type in "Debug" "Release"; do
     env CXX="${cached_cxx}" CC="${cached_cc}" cmake \
         -DCMAKE_BUILD_TYPE="${build_type}" \
@@ -102,9 +102,9 @@ function install_grpc {
   # Install gRPC. Note that we use the system's zlib and ssl libraries.
   # For similar reasons to c-ares (see above), we need two install steps.
   echo "${COLOR_YELLOW}Installing gRPC $(date)${COLOR_RESET}"
-  wget -q https://github.com/grpc/grpc/archive/v1.14.0.tar.gz
-  tar -xf v1.14.0.tar.gz
-  cd grpc-1.14.0
+  wget -q https://github.com/grpc/grpc/archive/v1.16.1.tar.gz
+  tar -xf v1.16.1.tar.gz
+  cd grpc-1.16.1
   env CXX="${cached_cxx}" CC="${cached_cc}"  cmake \
       -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
       -DgRPC_BUILD_TESTS=OFF \
