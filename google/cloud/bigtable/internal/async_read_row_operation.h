@@ -42,13 +42,12 @@ using PP = decltype(pp);
 template <typename ReadRowCallback, typename DoneCallback,
           typename std::enable_if<
               google::cloud::internal::is_invocable<
-                  ReadRowCallback, CompletionQueue&, grpc::ClientContext&, Row&,
-                  grpc::Status&>::value,
+                  ReadRowCallback, CompletionQueue&, Row, grpc::Status&>::value,
               int>::type valid_data_callback_type = 0,
-          typename std::enable_if<
-              google::cloud::internal::is_invocable<
-                  DoneCallback, CompletionQueue&, void, grpc::Status&>::value,
-              int>::type valid_callback_type = 0>
+          typename std::enable_if<google::cloud::internal::is_invocable<
+                                      DoneCallback, CompletionQueue&, bool&,
+                                      grpc::Status const&>::value,
+                                  int>::type valid_callback_type = 0>
 class AsyncReadRowsOperation
     : public AsyncRetryOp<ConstantIdempotencyPolicy, DoneCallback,
                           AsyncRowReader<ReadRowCallback>> {
@@ -62,7 +61,7 @@ class AsyncReadRowsOperation
       bigtable::TableId const& table_name, RowSet row_set,
       std::int64_t rows_limit, Filter filter, bool raise_on_error,
       std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
-      ReadRowCallback&& readrow_callback, DoneCallback&& done_callback)
+      ReadRowCallback&& read_row_callback, DoneCallback&& done_callback)
       : AsyncRetryOp<ConstantIdempotencyPolicy, DoneCallback,
                      AsyncRowReader<ReadRowCallback>>(
             __func__, std::move(rpc_retry_policy),
@@ -72,8 +71,8 @@ class AsyncReadRowsOperation
             AsyncRowReader<ReadRowCallback>(
                 client, std::move(app_profile_id), std::move(table_name),
                 std::move(row_set), rows_limit, std::move(filter),
-                raise_on_error, parser_factory,
-                std::forward<ReadRowCallback>(readrow_callback))) {}
+                raise_on_error, std::move(parser_factory),
+                std::forward<ReadRowCallback>(read_row_callback))) {}
 };
 
 }  // namespace internal

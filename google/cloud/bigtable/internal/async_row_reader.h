@@ -41,15 +41,12 @@ inline namespace BIGTABLE_CLIENT_NS {
  *
  * It satisfies the requirements to be used in `AsyncRetryOp`.
  *
- * It extends the normal RowReader with logic to do its job asynchronously.
- * Conceptually it reimplements MakeOneRequest in an async way.
  */
 
 template <typename ReadRowCallback,
           typename std::enable_if<
               google::cloud::internal::is_invocable<
-                  ReadRowCallback, CompletionQueue&, grpc::ClientContext&, Row&,
-                  grpc::Status&>::value,
+                  ReadRowCallback, CompletionQueue&, Row, grpc::Status&>::value,
               int>::type valid_data_callback_type = 0>
 class AsyncRowReader {
  public:
@@ -67,7 +64,7 @@ class AsyncRowReader {
       bigtable::TableId const& table_name, RowSet row_set,
       std::int64_t rows_limit, Filter filter, bool raise_on_error,
       std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
-      ReadRowCallback&& readrow_callback)
+      ReadRowCallback&& read_row_callback)
       : client_(std::move(client)),
         app_profile_id_(std::move(app_profile_id)),
         table_name_(std::move(table_name)),
@@ -75,30 +72,25 @@ class AsyncRowReader {
         rows_limit_(rows_limit),
         filter_(std::move(filter)),
         context_(),
-        processed_chunks_count_(0),
+        parser_factory_(std::move(parser_factory)),
         rows_count_(0),
         status_(grpc::Status::OK),
-        parser_factory_(parser_factory),
-        readrow_callback_(readrow_callback) {}
+        read_row_callback_(read_row_callback) {}
 
   using Request = google::bigtable::v2::ReadRowsRequest;
-  using Response = void;
+  using Response = bool;
 
-  grpc::Status ProcessResponse(
-      google::bigtable::v2::ReadRowsResponse& response) {
-    grpc::Status status;
-
-//    	  if(parser_->HasNext()){
-//    		  readrow_callback(*this, parser_->Next(status), status);
-//    	  }
-//    	  ++processed_chunks_count_;
-//    	  parser_->HandleChunk(
-//    	            std::move(*(response.mutable_chunks(processed_chunks_count_))),
-//    	            status);
-//    	        if (not status.ok()) {
-//    	          return status;
-//    	        }
-    return status;
+  void ProcessResponse(google::bigtable::v2::ReadRowsResponse& response) {
+    int processed_chunks_count_ = 0;
+    while (processed_chunks_count_ < response.chunks_size()) {
+      parser_->HandleChunk(
+          std::move(*(response.mutable_chunks(processed_chunks_count_))),
+          status_);
+      if (not status_.ok()) {
+        return;
+      }
+      ++processed_chunks_count_;
+    }
   }
 
   template <typename Functor,
@@ -109,8 +101,6 @@ class AsyncRowReader {
   std::shared_ptr<AsyncOperation> Start(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext>&& context,
       Functor&& callback) {
-    response_ = {};
-    processed_chunks_count_ = 0;
     parser_ = parser_factory_->Create();
 
     google::bigtable::v2::ReadRowsRequest request;
@@ -132,15 +122,21 @@ class AsyncRowReader {
     return cq.MakeUnaryStreamRpc(
         *client_, &DataClient::AsyncReadRows, request, std::move(context),
         [this](CompletionQueue& cq, const grpc::ClientContext& context,
-               google::bigtable::v2::ReadRowsResponse& response,
-               grpc::Status& status) {
+               google::bigtable::v2::ReadRowsResponse& response) {
           ProcessResponse(response);
-          //		   readrow_callback_(cq, context, response, status);
+          if (not status_.ok()) {
+            return;
+          }
+          if (not parser_->HasNext()) {
+            return;
+          }
+          ++rows_count_;
+          read_row_callback_(cq, std::move(parser_->Next(status_)), status_);
         },
         FinishedCallback<Functor>(*this, std::forward<Functor>(callback)));
   }
 
-  void AccumulatedResult() { }
+  bool AccumulatedResult() { return status_.ok(); }
 
  private:
   template <typename Functor,
@@ -154,25 +150,12 @@ class AsyncRowReader {
 
     void operator()(CompletionQueue& cq, grpc::ClientContext& context,
                     grpc::Status& status) {
-      //        if (not status.ok()) {
-      //          // The sample must be a consistent sample of the rows in the
-      //          table. On
-      //          // failure we must forget the previous responses and
-      //          accumulate only
-      //          // new values.
-      //          parent_.response_ = google::bigtable::v2::ReadRowsResponse();
-      //        }
-      //  	  if(parent_.parser_->HasNext()){
-      //  		 readrow_callback_(*this, parser_->Next(status),
-      //  status);
-      //  	  }
-      //	  ++(parent_.processed_chunks_count_);
-      //	  parent_.parser_->HandleChunk(
-      //	            std::move(*(parent_.response_.mutable_chunks(parent_.processed_chunks_count_))),
-      //	            status);
-      //
-      //	  parent_.parser_->HandleEndOfStream(status);
-      //
+      std::cout << "Response Ends here...." << std::endl;
+
+      // TODO : need to find out
+      if (not status.ok()) {
+      }
+      parent_.parser_->HandleEndOfStream(status);
       callback_(cq, status);
     }
 
@@ -180,7 +163,6 @@ class AsyncRowReader {
     // before all callbacks return, so we have a guarantee that this reference
     // is valid for as long as we don't call callback_.
     AsyncRowReader& parent_;
-
     Functor callback_;
   };
 
@@ -191,25 +173,17 @@ class AsyncRowReader {
   RowSet row_set_;
   std::int64_t rows_limit_;
   Filter filter_;
-  Row row_;
 
   std::unique_ptr<grpc::ClientContext> context_;
 
   std::unique_ptr<internal::ReadRowsParserFactory> parser_factory_;
   std::unique_ptr<internal::ReadRowsParser> parser_;
 
-  /// The last received response, chunks are being parsed one by one from it.
-  google::bigtable::v2::ReadRowsResponse response_;
-  /// Number of chunks already parsed in response_.
-  int processed_chunks_count_;
-
   /// Number of rows read so far, used to set row_limit in retries.
   std::int64_t rows_count_;
-  /// Holds the last read row key, for retries.
-  std::string last_read_row_key_;
 
   grpc::Status status_;
-  ReadRowCallback&& readrow_callback_;
+  ReadRowCallback read_row_callback_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

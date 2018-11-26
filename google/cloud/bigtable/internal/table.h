@@ -278,18 +278,17 @@ class Table {
    * @tparam Functor the type of the callback.
    */
   template <typename ReadRowCallback, typename DoneCallback,
-            typename std::enable_if<
-                google::cloud::internal::is_invocable<
-                    ReadRowCallback, CompletionQueue&, grpc::ClientContext&,
-                    Row&, grpc::Status&>::value,
-                int>::type valid_data_callback_type = 0,
-            typename std::enable_if<
-                google::cloud::internal::is_invocable<
-                    DoneCallback, CompletionQueue&, void, grpc::Status&>::value,
-                int>::type valid_callback_type = 0>
+            typename std::enable_if<google::cloud::internal::is_invocable<
+                                        ReadRowCallback, CompletionQueue&, Row,
+                                        grpc::Status&>::value,
+                                    int>::type valid_data_callback_type = 0,
+            typename std::enable_if<google::cloud::internal::is_invocable<
+                                        DoneCallback, CompletionQueue&, bool&,
+                                        grpc::Status const&>::value,
+                                    int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncReadRows(
       RowSet row_set, std::int64_t rows_limit, Filter filter,
-      CompletionQueue& cq, ReadRowCallback&& readrow_callback,
+      CompletionQueue& cq, ReadRowCallback&& read_row_callback,
       DoneCallback&& done_callback, bool raise_on_error = false) {
     auto op = std::make_shared<
         internal::AsyncReadRowsOperation<ReadRowCallback, DoneCallback>>(
@@ -298,10 +297,10 @@ class Table {
         std::move(row_set), rows_limit, std::move(filter), raise_on_error,
         google::cloud::internal::make_unique<
             bigtable::internal::ReadRowsParserFactory>(),
-        cq, std::forward<ReadRowCallback>(readrow_callback),
+        std::forward<ReadRowCallback>(read_row_callback),
         std::forward<DoneCallback>(done_callback));
 
-    return op->Start();
+    return op->Start(cq);
   }
 
   bool CheckAndMutateRow(std::string row_key, Filter filter,
