@@ -18,6 +18,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include <mutex>
 
@@ -53,6 +54,19 @@ class CurlClient : public RawClient,
   using LockFunction =
       std::function<void(CURL*, curl_lock_data, curl_lock_access)>;
   using UnlockFunction = std::function<void(CURL*, curl_lock_data)>;
+
+  //@{
+  /// @name Implement the CurlResumableSession operations.
+  // Note that these member functions are not inherited from RawClient, they are
+  // called only by `CurlResumableUploadSession`, because the retry loop for
+  // them is very different from the standard retry loop. Also note that these
+  // are virtual functions only because we need to override them in the unit
+  // tests.
+  virtual std::pair<Status, ResumableUploadResponse> UploadChunk(
+      UploadChunkRequest const&);
+  virtual std::pair<Status, ResumableUploadResponse> QueryResumableUpload(
+      QueryResumableUploadRequest const&);
+  //@}
 
   ClientOptions const& client_options() const override { return options_; }
 

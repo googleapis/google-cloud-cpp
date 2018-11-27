@@ -52,9 +52,7 @@ class CurlClientTest : public ::testing::Test {
     client_ = CurlClient::Create(std::make_shared<FailingCredentials>());
   }
 
-  static void TearDownTestCase() {
-    client_.reset();
-  }
+  static void TearDownTestCase() { client_.reset(); }
 
   static std::shared_ptr<CurlClient> client_;
 };
@@ -64,6 +62,20 @@ std::shared_ptr<CurlClient> CurlClientTest::client_;
 void TestCorrectFailureStatus(Status const& status) {
   EXPECT_EQ(status.status_code(), STATUS_ERROR_CODE);
   EXPECT_EQ(status.error_message(), STATUS_ERROR_MSG);
+}
+
+TEST_F(CurlClientTest, UploadChunk) {
+  auto status_and_foo = client_->UploadChunk(
+      UploadChunkRequest("http://unused.googleapis.com/invalid-session-id", 0U,
+                         std::string{}, 0U));
+  TestCorrectFailureStatus(status_and_foo.first);
+}
+
+TEST_F(CurlClientTest, QueryResumableUpload) {
+  auto status_and_foo =
+      client_->QueryResumableUpload(QueryResumableUploadRequest(
+          "http://unused.googleapis.com/invalid-session-id"));
+  TestCorrectFailureStatus(status_and_foo.first);
 }
 
 TEST_F(CurlClientTest, ListBuckets) {

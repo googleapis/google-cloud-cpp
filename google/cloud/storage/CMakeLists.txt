@@ -140,6 +140,8 @@ add_library(storage_client
             internal/curl_wrappers.cc
             internal/curl_client.h
             internal/curl_client.cc
+            internal/curl_resumable_upload_session.h
+            internal/curl_resumable_upload_session.cc
             internal/curl_streambuf.h
             internal/curl_streambuf.cc
             internal/default_object_acl_requests.h
@@ -308,6 +310,7 @@ set(storage_client_unit_tests
     internal/bucket_requests_test.cc
     internal/compute_engine_util_test.cc
     internal/curl_client_test.cc
+    internal/curl_resumable_upload_session_test.cc
     internal/curl_wrappers_locking_already_present_test.cc
     internal/curl_wrappers_locking_enabled_test.cc
     internal/curl_wrappers_locking_disabled_test.cc
@@ -324,7 +327,6 @@ set(storage_client_unit_tests
     internal/object_requests_test.cc
     internal/parse_rfc3339_test.cc
     internal/patch_builder_test.cc
-    internal/retry_client_test.cc
     internal/service_account_requests_test.cc
     lifecycle_rule_test.cc
     list_buckets_reader_test.cc
