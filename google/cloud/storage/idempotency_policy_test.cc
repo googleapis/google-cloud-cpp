@@ -150,7 +150,7 @@ TEST(StrictIdempotencyPolicyTest, CopyObject) {
   StrictIdempotencyPolicy policy;
   internal::CopyObjectRequest request("test-source-bucket",
                                       "test-source-object", "test-bucket-name",
-                                      "test-object-name", ObjectMetadata());
+                                      "test-object-name");
   EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
@@ -158,7 +158,7 @@ TEST(StrictIdempotencyPolicyTest, CopyObjectIfGenerationMatch) {
   StrictIdempotencyPolicy policy;
   internal::CopyObjectRequest request("test-source-bucket",
                                       "test-source-object", "test-bucket-name",
-                                      "test-object-name", ObjectMetadata());
+                                      "test-object-name");
   request.set_option(IfGenerationMatch(0));
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
@@ -269,7 +269,7 @@ TEST(StrictIdempotencyPolicyTest, ComposeObjectIfGenerationMatch) {
   StrictIdempotencyPolicy policy;
   internal::CopyObjectRequest request("test-source-bucket",
                                       "test-source-object", "test-bucket-name",
-                                      "test-object-name", ObjectMetadata());
+                                      "test-object-name");
   request.set_option(IfGenerationMatch(0));
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
