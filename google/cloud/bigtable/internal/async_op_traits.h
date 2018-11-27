@@ -62,6 +62,41 @@ struct HasStart<
     google::cloud::internal::void_t<decltype(&C::template Start<Functor>)>>
     : public std::true_type {};
 
+/**
+ * SFINAE detector whether class `C` has a `Cancel` member function.
+ *
+ * Catch-all, negative branch.
+ */
+template <typename C, typename M = void>
+struct HasCancel : public std::false_type {};
+
+/**
+ * SFINAE detector whether class `C` has a `Cancel` member function.
+ *
+ * Positive branch.
+ */
+template <typename C>
+struct HasCancel<C, google::cloud::internal::void_t<decltype(&C::Cancel)>>
+    : public std::true_type {};
+
+/**
+ * SFINAE detector whether class `C` has a `WaitPeriod` member function.
+ *
+ * Catch-all, negative branch.
+ */
+template <typename C, typename M = void>
+struct HasWaitPeriod : public std::false_type {};
+
+/**
+ * SFINAE detector whether class `C` has a `WaitPeriod` member function.
+ *
+ * Positive branch.
+ */
+template <typename C>
+struct HasWaitPeriod<C,
+                     google::cloud::internal::void_t<decltype(&C::WaitPeriod)>>
+    : public std::true_type {};
+
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

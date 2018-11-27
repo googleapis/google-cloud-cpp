@@ -77,9 +77,6 @@ class DummyOperation {
   std::shared_ptr<DummyOperationImpl> impl_;
 };
 
-static_assert(internal::MeetsAsyncOperationRequirements<DummyOperation>::value,
-              "DummyOperation is not a valid retriable operation.");
-
 class AsyncOperationMock : public AsyncOperation {
  public:
   MOCK_METHOD0(Cancel, void());
