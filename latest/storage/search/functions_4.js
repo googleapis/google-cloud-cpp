@@ -3,6 +3,7 @@ var searchData=
   ['email_5faddress',['email_address',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html#acead61b0be479c4dd0a2609a5649d372',1,'google::cloud::storage::v0::ServiceAccount']]],
   ['enable_5fhttp_5ftracing',['enable_http_tracing',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#aa1a26e0476ca5585823cc1f90032cfb4',1,'google::cloud::storage::v0::ClientOptions']]],
   ['enable_5fraw_5fclient_5ftracing',['enable_raw_client_tracing',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a056cbe14d839d03e78104c778a514889',1,'google::cloud::storage::v0::ClientOptions']]],
+  ['enable_5fssl_5flocking_5fcallbacks',['enable_ssl_locking_callbacks',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#ac58c76e9ed5ba41e2aff803bc3635c9a',1,'google::cloud::storage::v0::ClientOptions']]],
   ['enable_5fversioning',['enable_versioning',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#adf0908a198aab9d9712fbfa0b9296630',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['encryption',['encryption',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a70cfce9ef47ea8af8a6b8eeb854fab32',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['encryption_5fas_5foptional',['encryption_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#ab2fdc55e1d8c1d4a6b09164545c93817',1,'google::cloud::storage::v0::BucketMetadata']]],
