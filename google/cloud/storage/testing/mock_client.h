@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_CLIENT_H_
 
 #include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/resumable_upload_session.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -149,6 +150,17 @@ class MockClient : public google::cloud::storage::internal::RawClient {
       AuthorizationHeader,
       ResponseWrapper<std::string>(
           std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&));
+};
+
+class MockResumableUploadSession
+    : public google::cloud::storage::internal::ResumableUploadSession {
+ public:
+  using ResponseType = std::pair<Status, internal::ResumableUploadResponse>;
+
+  MOCK_METHOD2(UploadChunk, ResponseType(std::string const& buffer,
+                                         std::uint64_t upload_size));
+  MOCK_METHOD0(ResetSession, ResponseType());
+  MOCK_CONST_METHOD0(next_expected_byte, std::uint64_t());
 };
 }  // namespace testing
 }  // namespace storage
