@@ -278,7 +278,7 @@ TEST(StrictIdempotencyPolicyTest, RewriteObject) {
   StrictIdempotencyPolicy policy;
   internal::RewriteObjectRequest request(
       "test-source-bucket", "test-source-object", "test-bucket-name",
-      "test-object-name", std::string{}, ObjectMetadata());
+      "test-object-name", std::string{});
   EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
@@ -286,7 +286,7 @@ TEST(StrictIdempotencyPolicyTest, RewriteObjectIfGenerationMatch) {
   StrictIdempotencyPolicy policy;
   internal::RewriteObjectRequest request(
       "test-source-bucket", "test-source-object", "test-bucket-name",
-      "test-object-name", std::string{}, ObjectMetadata());
+      "test-object-name", std::string{});
   request.set_option(IfGenerationMatch(0));
   EXPECT_TRUE(policy.IsIdempotent(request));
 }

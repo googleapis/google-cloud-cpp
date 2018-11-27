@@ -194,8 +194,6 @@ TEST_F(ObjectCopyTest, RewriteObject) {
         EXPECT_EQ("test-destination-object-name", r.destination_object());
         EXPECT_EQ("", r.rewrite_token());
 
-        EXPECT_THAT(r.json_payload(), HasSubstr("test-key"));
-        EXPECT_THAT(r.json_payload(), HasSubstr("test-value"));
         std::string response = R"""({
             "kind": "storage#rewriteResponse",
             "totalBytesRewritten": 1048576,
@@ -214,8 +212,6 @@ TEST_F(ObjectCopyTest, RewriteObject) {
         EXPECT_EQ("test-destination-object-name", r.destination_object());
         EXPECT_EQ("abcd-test-token-0", r.rewrite_token());
 
-        EXPECT_THAT(r.json_payload(), HasSubstr("test-key"));
-        EXPECT_THAT(r.json_payload(), HasSubstr("test-value"));
         std::string response = R"""({
             "kind": "storage#rewriteResponse",
             "totalBytesRewritten": 2097152,
@@ -234,8 +230,6 @@ TEST_F(ObjectCopyTest, RewriteObject) {
         EXPECT_EQ("test-destination-object-name", r.destination_object());
         EXPECT_EQ("abcd-test-token-2", r.rewrite_token());
 
-        EXPECT_THAT(r.json_payload(), HasSubstr("test-key"));
-        EXPECT_THAT(r.json_payload(), HasSubstr("test-value"));
         std::string response = R"""({
             "kind": "storage#rewriteResponse",
             "totalBytesRewritten": 10485760,
@@ -257,7 +251,8 @@ TEST_F(ObjectCopyTest, RewriteObject) {
   auto copier = client.RewriteObject(
       "test-source-bucket-name", "test-source-object-name",
       "test-destination-bucket-name", "test-destination-object-name",
-      ObjectMetadata().upsert_metadata("test-key", "test-value"));
+      WithObjectMetadata(
+          ObjectMetadata().upsert_metadata("test-key", "test-value")));
   auto actual = copier.Iterate();
   EXPECT_FALSE(actual.done);
   EXPECT_EQ(1048576UL, actual.total_bytes_rewritten);
@@ -284,13 +279,13 @@ TEST_F(ObjectCopyTest, RewriteObjectTooManyFailures) {
       [](Client& client) {
         auto rewrite = client.RewriteObject(
             "test-source-bucket-name", "test-source-object",
-            "test-dest-bucket-name", "test-dest-object", ObjectMetadata());
+            "test-dest-bucket-name", "test-dest-object");
         rewrite.Result();
       },
       [](Client& client) {
         client.RewriteObjectBlocking(
             "test-source-bucket-name", "test-source-object",
-            "test-dest-bucket-name", "test-dest-object", ObjectMetadata(),
+            "test-dest-bucket-name", "test-dest-object",
             IfGenerationMatch(7));
       },
       "RewriteObject");
@@ -302,12 +297,11 @@ TEST_F(ObjectCopyTest, RewriteObjectPermanentFailure) {
       [](Client& client) {
         auto rewrite = client.RewriteObject(
             "test-source-bucket-name", "test-source-object",
-            "test-dest-bucket-name", "test-dest-object", ObjectMetadata());
+            "test-dest-bucket-name", "test-dest-object");
         rewrite.Result();
       },
       "RewriteObject");
 }
-
 
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS

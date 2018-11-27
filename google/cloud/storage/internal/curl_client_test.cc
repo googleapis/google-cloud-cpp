@@ -257,7 +257,7 @@ TEST_F(CurlClientTest, PatchObjectAcl) {
 
 TEST_F(CurlClientTest, RewriteObject) {
   auto status_and_foo = client_->RewriteObject(RewriteObjectRequest(
-      "bkt", "obj", "bkt2", "obj2", "token", ObjectMetadata()));
+      "bkt", "obj", "bkt2", "obj2", "token"));
   TestCorrectFailureStatus(status_and_foo.first);
 }
 

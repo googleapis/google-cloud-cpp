@@ -594,7 +594,12 @@ std::pair<Status, RewriteObjectResponse> CurlClient::RewriteObject(
     builder.AddQueryParameter("rewriteToken", request.rewrite_token());
   }
   builder.AddHeader("Content-Type: application/json");
-  auto payload = builder.BuildRequest().MakeRequest(request.json_payload());
+  std::string json_payload("{}");
+  if (request.HasOption<WithObjectMetadata>()) {
+    json_payload =
+        request.GetOption<WithObjectMetadata>().value().JsonPayloadForCopy();
+  }
+  auto payload = builder.BuildRequest().MakeRequest(json_payload);
   if (payload.status_code >= 300) {
     return std::make_pair(
         Status{payload.status_code, std::move(payload.payload)},
