@@ -21,9 +21,9 @@ if (NOT TARGET protobuf_project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
     set(GOOGLE_CLOUD_CPP_PROTOBUF_URL
-        "https://github.com/google/protobuf/archive/v3.5.2.tar.gz")
+        "https://github.com/google/protobuf/archive/v3.6.1.tar.gz")
     set(GOOGLE_CLOUD_CPP_PROTOBUF_SHA256
-        "4ffd420f39f226e96aebc3554f9c66a912f6cad6261f39f194f16af8a1f6dab2")
+        "3d4e589d81b2006ca603c1ab712c9715a76227293032d05b26fca603f90b3f5b")
 
     if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
         OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")

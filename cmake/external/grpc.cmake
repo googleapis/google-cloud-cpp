@@ -22,9 +22,9 @@ if (NOT TARGET gprc_project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
     set(GOOGLE_CLOUD_CPP_GRPC_URL
-        "https://github.com/grpc/grpc/archive/v1.14.1.tar.gz")
+        "https://github.com/grpc/grpc/archive/v1.16.1.tar.gz")
     set(GOOGLE_CLOUD_CPP_GRPC_SHA256
-        "16f22430210abf92e06626a5a116e114591075e5854ac78f1be8564171658b70")
+        "a5342629fe1b689eceb3be4d4f167b04c70a84b9d61cf8b555e968bc500bdb5a")
 
     if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
         OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
