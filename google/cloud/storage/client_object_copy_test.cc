@@ -142,7 +142,7 @@ TEST_F(ObjectCopyTest, ComposeObject) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
         EXPECT_EQ("test-object-name", r.object_name());
         internal::nl::json actual_payload =
-            internal::nl::json::parse(r.json_payload());
+            internal::nl::json::parse(r.JsonPayload());
         internal::nl::json expected_payload = {
             {"kind", "storage#composeRequest"},
             {"sourceObjects", {{{"name", "object1"}}, {{"name", "object2"}}}}};
@@ -154,7 +154,7 @@ TEST_F(ObjectCopyTest, ComposeObject) {
 
   auto actual =
       client.ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
-                           "test-object-name", ObjectMetadata());
+                           "test-object-name");
   EXPECT_EQ(expected, actual);
 }
 
@@ -163,12 +163,11 @@ TEST_F(ObjectCopyTest, ComposeObjectTooManyFailures) {
       mock, EXPECT_CALL(*mock, ComposeObject(_)),
       [](Client& client) {
         client.ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
-                             "test-object-name", ObjectMetadata());
+                             "test-object-name");
       },
       [](Client& client) {
         client.ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
-                             "test-object-name", ObjectMetadata(),
-                             IfGenerationMatch(7));
+                             "test-object-name", IfGenerationMatch(7));
       },
       "ComposeObject");
 }
@@ -178,7 +177,7 @@ TEST_F(ObjectCopyTest, ComposeObjectPermanentFailure) {
       *client, EXPECT_CALL(*mock, ComposeObject(_)),
       [](Client& client) {
         client.ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
-                             "test-object-name", ObjectMetadata());
+                             "test-object-name");
       },
       "ComposeObject");
 }

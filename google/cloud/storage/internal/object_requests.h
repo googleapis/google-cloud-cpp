@@ -263,28 +263,21 @@ std::ostream& operator<<(std::ostream& os, UpdateObjectRequest const& r);
  * Represents a request to the `Objects: compose` API.
  */
 class ComposeObjectRequest
-    : public GenericObjectRequest<ComposeObjectRequest, EncryptionKey,
-                                  Generation, DestinationPredefinedAcl,
-                                  KmsKeyName, IfGenerationMatch,
-                                  IfMetagenerationMatch, UserProject> {
+    : public GenericObjectRequest<
+          ComposeObjectRequest, EncryptionKey, Generation,
+          DestinationPredefinedAcl, KmsKeyName, IfGenerationMatch,
+          IfMetagenerationMatch, UserProject, WithObjectMetadata> {
  public:
   ComposeObjectRequest() = default;
-  explicit ComposeObjectRequest(
-      std::string bucket_name,
-      std::vector<ComposeSourceObject> const& source_objects,
-      std::string destination_object_name,
-      ObjectMetadata destination_object_metadata);
+  explicit ComposeObjectRequest(std::string bucket_name,
+                                std::vector<ComposeSourceObject> source_objects,
+                                std::string destination_object_name);
 
   /// Returns the request as the JSON API payload.
-  std::string json_payload() const { return json_payload_; }
-
-  ObjectMetadata const& destination_metadata() const {
-    return destination_metadata_;
-  }
+  std::string JsonPayload() const;
 
  private:
-  ObjectMetadata destination_metadata_;
-  std::string json_payload_;
+  std::vector<ComposeSourceObject> source_objects_;
 };
 
 std::ostream& operator<<(std::ostream& os, ComposeObjectRequest const& r);
