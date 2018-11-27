@@ -33,12 +33,17 @@ class CurlRequestBuilder;
  *
  * TODO(#717) - document the CurlRequest interface as a concept.
  */
-class CurlClient : public RawClient {
+class CurlClient : public RawClient,
+                   public std::enable_shared_from_this<CurlClient> {
  public:
-  explicit CurlClient(std::shared_ptr<oauth2::Credentials> credentials)
-      : CurlClient(ClientOptions(std::move(credentials))) {}
-
-  explicit CurlClient(ClientOptions options);
+  static std::shared_ptr<CurlClient> Create(ClientOptions options) {
+    // Cannot use std::make_shared because the constructor is private.
+    return std::shared_ptr<CurlClient>(new CurlClient(std::move(options)));
+  }
+  static std::shared_ptr<CurlClient> Create(
+      std::shared_ptr<oauth2::Credentials> credentials) {
+    return Create(ClientOptions(std::move(credentials)));
+  }
 
   CurlClient(CurlClient const& rhs) = delete;
   CurlClient(CurlClient&& rhs) = delete;
@@ -151,6 +156,11 @@ class CurlClient : public RawClient {
 
   void LockShared();
   void UnlockShared();
+
+ protected:
+  // The constructor is private because the class must always be created
+  // as a shared_ptr<>.
+  explicit CurlClient(ClientOptions options);
 
  private:
   /// Setup the configuration parameters that do not depend on the request.

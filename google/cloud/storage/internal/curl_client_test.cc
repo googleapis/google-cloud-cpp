@@ -49,17 +49,17 @@ class FailingCredentials : public Credentials {
 class CurlClientTest : public ::testing::Test {
  protected:
   static void SetUpTestCase() {
-    client_ = google::cloud::internal::make_unique<CurlClient>(
-        std::make_shared<FailingCredentials>());
+    client_ = CurlClient::Create(std::make_shared<FailingCredentials>());
   }
 
   static void TearDownTestCase() {
     client_.reset();
   }
 
-  static std::unique_ptr<CurlClient> client_;
+  static std::shared_ptr<CurlClient> client_;
 };
-std::unique_ptr<CurlClient> CurlClientTest::client_ = nullptr;
+
+std::shared_ptr<CurlClient> CurlClientTest::client_;
 
 void TestCorrectFailureStatus(Status const& status) {
   EXPECT_EQ(status.status_code(), STATUS_ERROR_CODE);
