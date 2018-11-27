@@ -33,7 +33,16 @@ CurlPtr DefaultCurlHandleFactory::CreateHandle() {
   return CurlPtr(curl_easy_init(), &curl_easy_cleanup);
 }
 
-void DefaultCurlHandleFactory::CleanupHandle(CurlPtr&& h) { h.reset(); }
+void DefaultCurlHandleFactory::CleanupHandle(CurlPtr&& h) {
+  char* ip;
+  auto res = curl_easy_getinfo(h.get(), CURLINFO_LOCAL_IP, &ip);
+  if (res == CURLE_OK and ip != nullptr) {
+    std::lock_guard<std::mutex> lk(mu_);
+    last_client_ip_address_ = ip;
+  }
+
+  h.reset();
+}
 
 CurlMulti DefaultCurlHandleFactory::CreateMultiHandle() {
   return CurlMulti(curl_multi_init(), &curl_multi_cleanup);
@@ -70,6 +79,11 @@ CurlPtr PooledCurlHandleFactory::CreateHandle() {
 
 void PooledCurlHandleFactory::CleanupHandle(CurlPtr&& h) {
   std::unique_lock<std::mutex> lk(mu_);
+  char* ip;
+  auto res = curl_easy_getinfo(h.get(), CURLINFO_LOCAL_IP, &ip);
+  if (res == CURLE_OK and ip != nullptr) {
+    last_client_ip_address_ = ip;
+  }
   if (handles_.size() >= maximum_size_) {
     CURL* tmp = handles_.front();
     handles_.erase(handles_.begin());

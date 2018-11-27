@@ -124,6 +124,15 @@ Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
     return status;
   }
   request.AddOptionsToHttpRequest(builder);
+  if (request.template HasOption<UserIp>()) {
+    std::string value = request.template GetOption<UserIp>().value();
+    if (value.empty()) {
+      value = builder.LastClientIpAddress();
+    }
+    if (not value.empty()) {
+      builder.AddQueryParameter(UserIp::name(), value);
+    }
+  }
   return Status();
 }
 
@@ -363,7 +372,7 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMedia(
   // Unless the request uses a feature that disables it, prefer to use XML.
   if (not request.HasOption<IfMetagenerationNotMatch>() and
       not request.HasOption<IfGenerationNotMatch>() and
-      not request.HasOption<QuotaUser>() and
+      not request.HasOption<QuotaUser>() and not request.HasOption<UserIp>() and
       not request.HasOption<Projection>() and request.HasOption<Fields>() and
       request.GetOption<Fields>().value().empty()) {
     return InsertObjectMediaXml(request);
@@ -425,7 +434,7 @@ std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObject(
     ReadObjectRangeRequest const& request) {
   if (not request.HasOption<IfMetagenerationNotMatch>() and
       not request.HasOption<IfGenerationNotMatch>() and
-      not request.HasOption<QuotaUser>()) {
+      not request.HasOption<QuotaUser>() and not request.HasOption<UserIp>()) {
     return ReadObjectXml(request);
   }
   // Assume the bucket name is validated by the caller.
@@ -450,7 +459,7 @@ std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>>
 CurlClient::WriteObject(InsertObjectStreamingRequest const& request) {
   if (not request.HasOption<IfMetagenerationNotMatch>() and
       not request.HasOption<IfGenerationNotMatch>() and
-      not request.HasOption<QuotaUser>() and
+      not request.HasOption<QuotaUser>() and not request.HasOption<UserIp>() and
       not request.HasOption<Projection>() and request.HasOption<Fields>() and
       request.GetOption<Fields>().value().empty()) {
     return WriteObjectXml(request);
@@ -1152,6 +1161,7 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaXml(
   builder.AddOption(request.GetOption<IfMatchEtag>());
   builder.AddOption(request.GetOption<IfNoneMatchEtag>());
   // QuotaUser cannot be set, checked by the caller.
+  // UserIp cannot be set, checked by the caller.
 
   builder.AddHeader("Content-Length: " +
                     std::to_string(request.contents().size()));
@@ -1209,6 +1219,7 @@ CurlClient::ReadObjectXml(ReadObjectRangeRequest const& request) {
   builder.AddOption(request.GetOption<IfMatchEtag>());
   builder.AddOption(request.GetOption<IfNoneMatchEtag>());
   // QuotaUser cannot be set, checked by the caller.
+  // UserIp cannot be set, checked by the caller.
 
   std::unique_ptr<CurlReadStreambuf> buf(new CurlReadStreambuf(
       builder.BuildDownloadRequest(std::string{}),
@@ -1275,6 +1286,7 @@ CurlClient::WriteObjectXml(InsertObjectStreamingRequest const& request) {
   builder.AddOption(request.GetOption<IfMatchEtag>());
   builder.AddOption(request.GetOption<IfNoneMatchEtag>());
   // QuotaUser cannot be set, checked by the caller.
+  // UserIp cannot be set, checked by the caller.
 
   std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
       builder.BuildUpload(), client_options().upload_buffer_size(),

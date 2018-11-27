@@ -36,6 +36,8 @@ class CurlHandleFactory {
 
   virtual CurlMulti CreateMultiHandle() = 0;
   virtual void CleanupMultiHandle(CurlMulti&&) = 0;
+
+  virtual std::string LastClientIpAddress() const = 0;
 };
 
 std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory();
@@ -56,6 +58,15 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
 
   CurlMulti CreateMultiHandle() override;
   void CleanupMultiHandle(CurlMulti&&) override;
+
+  std::string LastClientIpAddress() const override {
+    std::lock_guard<std::mutex> lk(mu_);
+    return last_client_ip_address_;
+  }
+
+ private:
+  mutable std::mutex mu_;
+  std::string last_client_ip_address_;
 };
 
 /**
@@ -75,11 +86,17 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
   CurlMulti CreateMultiHandle() override;
   void CleanupMultiHandle(CurlMulti&&) override;
 
+  std::string LastClientIpAddress() const override {
+    std::lock_guard<std::mutex> lk(mu_);
+    return last_client_ip_address_;
+  }
+
  private:
   std::size_t maximum_size_;
-  std::mutex mu_;
+  mutable std::mutex mu_;
   std::vector<CURL*> handles_;
   std::vector<CURLM*> multi_handles_;
+  std::string last_client_ip_address_;
 };
 
 }  // namespace internal

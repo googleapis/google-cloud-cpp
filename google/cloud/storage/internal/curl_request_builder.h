@@ -168,6 +168,11 @@ class CurlRequestBuilder {
     return handle_.MakeEscapedString(s);
   }
 
+  /// Get the last local IP address from the factory.
+  std::string LastClientIpAddress() const {
+    return factory_->LastClientIpAddress();
+  }
+
  private:
   void ValidateBuilderState(char const* where) const;
 
