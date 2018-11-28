@@ -312,20 +312,18 @@ class RewriteObjectRequest
           IfSourceGenerationMatch, IfSourceGenerationNotMatch,
           IfSourceMetagenerationMatch, IfSourceMetagenerationNotMatch,
           MaxBytesRewrittenPerCall, Projection, SourceEncryptionKey,
-          SourceGeneration, UserProject> {
+          SourceGeneration, UserProject, WithObjectMetadata> {
  public:
   RewriteObjectRequest() = default;
   RewriteObjectRequest(std::string source_bucket, std::string source_object,
                        std::string destination_bucket,
                        std::string destination_object,
-                       std::string rewrite_token,
-                       ObjectMetadata const& metadata)
+                       std::string rewrite_token)
       : source_bucket_(std::move(source_bucket)),
         source_object_(std::move(source_object)),
         destination_bucket_(std::move(destination_bucket)),
         destination_object_(std::move(destination_object)),
-        rewrite_token_(std::move(rewrite_token)),
-        json_payload_(metadata.JsonPayloadForCopy()) {}
+        rewrite_token_(std::move(rewrite_token)) {}
 
   std::string const& source_bucket() const { return source_bucket_; }
   std::string const& source_object() const { return source_object_; }
@@ -333,7 +331,6 @@ class RewriteObjectRequest
   std::string const& destination_object() const { return destination_object_; }
   std::string const& rewrite_token() const { return rewrite_token_; }
   void set_rewrite_token(std::string v) { rewrite_token_ = std::move(v); }
-  std::string const& json_payload() const { return json_payload_; }
 
  private:
   std::string source_bucket_;
@@ -341,7 +338,6 @@ class RewriteObjectRequest
   std::string destination_bucket_;
   std::string destination_object_;
   std::string rewrite_token_;
-  std::string json_payload_;
 };
 
 std::ostream& operator<<(std::ostream& os, RewriteObjectRequest const& r);

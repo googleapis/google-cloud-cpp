@@ -933,9 +933,6 @@ class Client {
    * @param destination_bucket_name where the destination object will be
    *     located.
    * @param destination_object_name what to name the destination object.
-   * @param destination_object_metadata the new metadata for the Object. Only
-   *     the writeable fields accepted by the `Objects: rewrite` API are used,
-   *     all other fields are ignored.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `DestinationKmsKeyName`,
    *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
@@ -943,7 +940,7 @@ class Client {
    *      `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
    *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
    *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey,
-   *      `SourceGeneration`, `UserProject`.
+   *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
    *
    * @throw std::runtime_error if the operation fails.
    *
@@ -951,15 +948,15 @@ class Client {
    * @snippet storage_object_samples.cc rewrite object non blocking
    */
   template <typename... Options>
-  ObjectRewriter RewriteObject(
-      std::string source_bucket_name, std::string source_object_name,
-      std::string destination_bucket_name, std::string destination_object_name,
-      ObjectMetadata const& destination_object_metadata, Options&&... options) {
+  ObjectRewriter RewriteObject(std::string source_bucket_name,
+                               std::string source_object_name,
+                               std::string destination_bucket_name,
+                               std::string destination_object_name,
+                               Options&&... options) {
     return ResumeRewriteObject(
         std::move(source_bucket_name), std::move(source_object_name),
         std::move(destination_bucket_name), std::move(destination_object_name),
-        std::string{}, destination_object_metadata,
-        std::forward<Options>(options)...);
+        std::string{}, std::forward<Options>(options)...);
   }
 
   /**
@@ -979,9 +976,6 @@ class Client {
    * @param destination_bucket_name where the destination object will be
    *     located.
    * @param destination_object_name what to name the destination object.
-   * @param destination_object_metadata the new metadata for the Object. Only
-   *     the writeable fields accepted by the `Objects: rewrite` API are used,
-   *     all other fields are ignored.
    * @param rewrite_token the token from a previous successful rewrite
    *     iteration. Can be the empty string, in which case this starts a new
    *     rewrite operation.
@@ -992,7 +986,7 @@ class Client {
    *      `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
    *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
    *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey,
-   *      `SourceGeneration`, `UserProject`.
+   *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
    *
    * @throw std::runtime_error if the operation fails.
    *
@@ -1000,15 +994,16 @@ class Client {
    * @snippet storage_object_samples.cc rewrite object resume
    */
   template <typename... Options>
-  ObjectRewriter ResumeRewriteObject(
-      std::string source_bucket_name, std::string source_object_name,
-      std::string destination_bucket_name, std::string destination_object_name,
-      std::string rewrite_token,
-      ObjectMetadata const& destination_object_metadata, Options&&... options) {
+  ObjectRewriter ResumeRewriteObject(std::string source_bucket_name,
+                                     std::string source_object_name,
+                                     std::string destination_bucket_name,
+                                     std::string destination_object_name,
+                                     std::string rewrite_token,
+                                     Options&&... options) {
     internal::RewriteObjectRequest request(
         std::move(source_bucket_name), std::move(source_object_name),
         std::move(destination_bucket_name), std::move(destination_object_name),
-        std::move(rewrite_token), destination_object_metadata);
+        std::move(rewrite_token));
     request.set_multiple_options(std::forward<Options>(options)...);
     return ObjectRewriter(raw_client_, std::move(request));
   }
@@ -1032,9 +1027,6 @@ class Client {
    * @param destination_bucket_name where the destination object will be
    *     located.
    * @param destination_object_name what to name the destination object.
-   * @param destination_object_metadata the new metadata for the Object. Only
-   *     the writeable fields accepted by the `Objects: rewrite` API are used,
-   *     all other fields are ignored.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `DestinationKmsKeyName`,
    *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
@@ -1042,7 +1034,7 @@ class Client {
    *      `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
    *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
    *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey,
-   *      `SourceGeneration`, `UserProject`.
+   *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
    *
    * @throw std::runtime_error if the operation fails.
    *
@@ -1056,15 +1048,16 @@ class Client {
    *
    */
   template <typename... Options>
-  ObjectMetadata RewriteObjectBlocking(
-      std::string source_bucket_name, std::string source_object_name,
-      std::string destination_bucket_name, std::string destination_object_name,
-      ObjectMetadata const& destination_object_metadata, Options&&... options) {
-    return ResumeRewriteObject(
-               std::move(source_bucket_name), std::move(source_object_name),
-               std::move(destination_bucket_name),
-               std::move(destination_object_name), std::string{},
-               destination_object_metadata, std::forward<Options>(options)...)
+  ObjectMetadata RewriteObjectBlocking(std::string source_bucket_name,
+                                       std::string source_object_name,
+                                       std::string destination_bucket_name,
+                                       std::string destination_object_name,
+                                       Options&&... options) {
+    return ResumeRewriteObject(std::move(source_bucket_name),
+                               std::move(source_object_name),
+                               std::move(destination_bucket_name),
+                               std::move(destination_object_name),
+                               std::string{}, std::forward<Options>(options)...)
         .Result();
   }
   //@}

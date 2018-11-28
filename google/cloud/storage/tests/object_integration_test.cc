@@ -749,8 +749,7 @@ TEST_F(ObjectIntegrationTest, RewriteSimple) {
   // Rewrite object into a new object.
   auto object_name = MakeRandomObjectName();
   ObjectMetadata rewritten_meta = client.RewriteObjectBlocking(
-      bucket_name, source_name, bucket_name, object_name,
-      ObjectMetadata().set_content_type("plain/text"));
+      bucket_name, source_name, bucket_name, object_name);
 
   EXPECT_EQ(bucket_name, rewritten_meta.bucket());
   EXPECT_EQ(object_name, rewritten_meta.name());
@@ -777,7 +776,6 @@ TEST_F(ObjectIntegrationTest, RewriteEncrypted) {
   EncryptionKeyData dest_key = MakeEncryptionKeyData();
   ObjectRewriter rewriter = client.RewriteObject(
       bucket_name, source_name, bucket_name, object_name,
-      ObjectMetadata().set_content_type("plain/text"),
       SourceEncryptionKey(source_key), EncryptionKey(dest_key));
 
   ObjectMetadata rewritten_meta = rewriter.Result();
@@ -812,8 +810,7 @@ TEST_F(ObjectIntegrationTest, RewriteLarge) {
   // Rewrite object into a new object.
   auto object_name = MakeRandomObjectName();
   ObjectRewriter writer =
-      client.RewriteObject(bucket_name, source_name, bucket_name, object_name,
-                           ObjectMetadata().set_content_type("plain/text"));
+      client.RewriteObject(bucket_name, source_name, bucket_name, object_name);
 
   ObjectMetadata rewritten_meta =
       writer.ResultWithProgressCallback([](RewriteProgress const& p) {
@@ -1242,7 +1239,7 @@ TEST_F(ObjectIntegrationTest, RewriteFailure) {
   // This operation should fail because the source object does not exist.
   TestPermanentFailure([&] {
     client.RewriteObjectBlocking(bucket_name, source_object_name, bucket_name,
-                                 destination_object_name, ObjectMetadata());
+                                 destination_object_name);
   });
 }
 

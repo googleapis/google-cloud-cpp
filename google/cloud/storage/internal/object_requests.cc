@@ -302,7 +302,7 @@ std::ostream& operator<<(std::ostream& os, RewriteObjectRequest const& r) {
      << ", source_object=" << r.source_object()
      << ", rewrite_token=" << r.rewrite_token();
   r.DumpOptions(os, ", ");
-  return os << ", payload=" << r.json_payload() << "}";
+  return os << "}";
 }
 
 RewriteObjectResponse RewriteObjectResponse::FromHttpResponse(
