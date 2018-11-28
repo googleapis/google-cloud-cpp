@@ -29,35 +29,143 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
 /**
- * A polling pollicy which backs off only on errors.
+ * A wrapper for enabling fetching multiple pages if passed to `AsyncLoopOp`.
  *
- * An `AsyncPollOp` operation with this policy would keep polling with no sleeps
- * between successful attempts. Only failures (e.g. transient unavailability)
- * would result in a delay, as dictated by the RPCBackoffPolicy passed in the
- * ctor.
+ * If used in `AsyncLoopOp` `MultipageRetriableAdapter` will keep calling
+ * `Operation::Start()` to retrieve all parts (pages) of an API call whose
+ * response come in parts. The callback passed to `Operation::Start()` is
+ * expected to be called with `finished == true` iff all parts of the response
+ * have arrived. There will be no delays between sending successful requests for
+ * parts of data.
  *
- * This abuse of polling is used for getting responses, which come in pages.
- * There is no reason to wait between portions of data.
+ * @tparam UserFunctor the type of the function-like object that will receive
+ *     the results.
  *
- * TODO(#1475) This class should not be used elsewhere. It makes assumptions on
- * how it is used.
+ * @tparam Operation a class responsible for submitting requests. Its `Start()`
+ *     member function will be used for sending the requests for individual
+ *     pages and their retries. It should also accumulate the result. It should
+ *     satisfy `MeetsAsyncPollOperationRequirements`.
  */
-class MultipagePollingPolicy : public PollingPolicy {
+template <typename UserFunctor, typename Operation>
+class MultipageRetriableAdapter {
+  using Response =
+      typename MeetsAsyncPollOperationRequirements<Operation>::Response;
+  static_assert(
+      google::cloud::internal::is_invocable<UserFunctor, CompletionQueue&,
+                                            Response&, grpc::Status&>::value,
+      "UserFunctor should be callable with Operation::AccumulatedResult()'s "
+      "return value.");
+
  public:
-  MultipagePollingPolicy(std::unique_ptr<RPCRetryPolicy> retry,
-                         std::unique_ptr<RPCBackoffPolicy> backoff);
-  std::unique_ptr<PollingPolicy> clone() override;
-  bool IsPermanentError(grpc::Status const& status) override;
-  bool OnFailure(grpc::Status const& status) override;
-  bool Exhausted() override;
-  std::chrono::milliseconds WaitPeriod() override;
+  explicit MultipageRetriableAdapter(
+      char const* error_message,
+      std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
+      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+      MetadataUpdatePolicy metadata_update_policy, UserFunctor&& callback,
+      Operation&& operation)
+      : error_message_(error_message),
+        rpc_retry_policy_(std::move(rpc_retry_policy)),
+        rpc_backoff_policy_(std::move(rpc_backoff_policy)),
+        rpc_backoff_policy_prototype_(rpc_backoff_policy_->clone()),
+        metadata_update_policy_(std::move(metadata_update_policy)),
+        user_callback_(std::forward<UserFunctor>(callback)),
+        operation_(std::move(operation)) {}
+
+  template <typename AttemptFunctor>
+  std::shared_ptr<AsyncOperation> Start(
+      CompletionQueue& cq, AttemptFunctor&& attempt_completed_callback) {
+    auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+    rpc_retry_policy_->Setup(*context);
+    rpc_backoff_policy_->Setup(*context);
+    metadata_update_policy_.Setup(*context);
+
+    return operation_.Start(
+        cq, std::move(context),
+        [this, attempt_completed_callback](CompletionQueue& cq, bool finished,
+                                           grpc::Status& status) {
+          OnCompletion(cq, finished, status,
+                       std::move(attempt_completed_callback));
+        });
+  }
+
+  std::chrono::milliseconds WaitPeriod() {
+    if (status_.ok()) {
+      return std::chrono::milliseconds(0);
+    }
+    return rpc_backoff_policy_->OnCompletion(status_);
+  }
+
+  void Cancel(CompletionQueue& cq) {
+    auto res = operation_.AccumulatedResult();
+    grpc::Status res_status(
+        grpc::StatusCode::CANCELLED,
+        FullErrorMessageUnlocked("pending operation cancelled"));
+    user_callback_(cq, res, res_status);
+  }
 
  private:
-  // Indicates if the last seen status was a success.
-  bool last_was_success_;
+  /// The callback to handle one asynchronous request completing.
+  template <typename AttemptFunctor>
+  void OnCompletion(CompletionQueue& cq, bool finished, grpc::Status& status,
+                    AttemptFunctor&& attempt_completed_callback) {
+    if (status.error_code() == grpc::StatusCode::CANCELLED) {
+      // Cancelled, no retry necessary.
+      Cancel(cq);
+      attempt_completed_callback(cq, true);
+      return;
+    }
+    if (finished) {
+      // Finished, just report the result.
+      auto res = operation_.AccumulatedResult();
+      user_callback_(cq, res, status);
+      attempt_completed_callback(cq, true);
+      return;
+    }
+    if (status.ok()) {
+      // Somethig is working, so let's reset backoff policy, so that if a
+      // failure happens, we start from small wait periods.
+      rpc_backoff_policy_ = rpc_backoff_policy_prototype_->clone();
+    }
+    if (not rpc_retry_policy_->OnFailure(status)) {
+      std::string full_message =
+          FullErrorMessageUnlocked(RPCRetryPolicy::IsPermanentFailure(status)
+                                       ? "permanent error"
+                                       : "too many transient errors",
+                                   status);
+      grpc::Status res_status(status.error_code(), full_message,
+                              status.error_details());
+      auto res = operation_.AccumulatedResult();
+      user_callback_(cq, res, res_status);
+      attempt_completed_callback(cq, true);
+      return;
+    }
+    status_ = status;
+    attempt_completed_callback(cq, false);
+  }
+
+  std::string FullErrorMessageUnlocked(char const* where) {
+    std::string full_message = error_message_;
+    full_message += "(" + metadata_update_policy_.value() + ") ";
+    full_message += where;
+    return full_message;
+  }
+
+  std::string FullErrorMessageUnlocked(char const* where,
+                                       grpc::Status const& status) {
+    std::string full_message = FullErrorMessageUnlocked(where);
+    full_message += ", last error=";
+    full_message += status.error_message();
+    return full_message;
+  }
+
+  char const* error_message_;
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_prototype_;
+  MetadataUpdatePolicy metadata_update_policy_;
+  UserFunctor user_callback_;
+  Operation operation_;
+  grpc::Status status_;
 };
 
 /**
@@ -76,36 +184,22 @@ class MultipagePollingPolicy : public PollingPolicy {
  *     member function will be used for sending the requests for individual
  *     pages and their retries. It should also accumulate the result. It should
  *     satisfy `MeetsAsyncPollOperationRequirements`.
- *
- * @tparam valid_callback_type a formal parameter, uses `std::enable_if<>` to
- *     disable this template if the functor does not match the expected
- *     signature. It must satisfy (using C++17 types):
- *     static_assert(std::is_invocable_v<
- *         Functor, CompletionQueue&, typename Operation::Response&,
- *         grpc::Status&>);
  */
-template <typename Functor, typename Operation,
-          typename std::enable_if<
-              google::cloud::internal::is_invocable<
-                  Functor, CompletionQueue&, typename Operation::Response&,
-                  grpc::Status&>::value,
-              int>::type valid_callback_type = 0,
-          typename std::enable_if<
-              MeetsAsyncPollOperationRequirements<Operation>::value, int>::type
-              operation_meets_requirements = 0>
-class AsyncRetryMultiPage : public AsyncPollOp<Functor, Operation> {
+template <typename Functor, typename Operation>
+class AsyncRetryMultiPage
+    : public AsyncLoopOp<MultipageRetriableAdapter<Functor, Operation>> {
  public:
   AsyncRetryMultiPage(char const* error_message,
                       std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
                       std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
                       MetadataUpdatePolicy metadata_update_policy,
                       Functor&& callback, Operation&& operation)
-      : AsyncPollOp<Functor, Operation>(
-            error_message,
-            google::cloud::internal::make_unique<MultipagePollingPolicy>(
-                std::move(rpc_retry_policy), std::move(rpc_backoff_policy)),
-            std::move(metadata_update_policy), std::forward<Functor>(callback),
-            std::move(operation)) {}
+      : AsyncLoopOp<MultipageRetriableAdapter<Functor, Operation>>(
+            MultipageRetriableAdapter<Functor, Operation>(
+                error_message, std::move(rpc_retry_policy),
+                std::move(rpc_backoff_policy),
+                std::move(metadata_update_policy),
+                std::forward<Functor>(callback), std::move(operation))) {}
 };
 
 }  // namespace internal
