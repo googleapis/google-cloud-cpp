@@ -15,7 +15,7 @@ var searchData=
   ['closeraw',['CloseRaw',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectWriteStream.html#a245b4f43c4518f6550eb9b55f3d65de9',1,'google::cloud::storage::v0::ObjectWriteStream']]],
   ['coldline',['Coldline',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1storage__class.html#aa712796263130d30270650fe484706d7',1,'google::cloud::storage::v0::storage_class']]],
   ['component_5fcount',['component_count',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#ad7f50a0cf8f114d215f25ac5172f4b6b',1,'google::cloud::storage::v0::ObjectMetadata']]],
-  ['composeobject',['ComposeObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a294901ed4bc568fd7b3934d42dc9b2e0',1,'google::cloud::storage::v0::Client']]],
+  ['composeobject',['ComposeObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a6d2d9a808d004228b1aec91e92e8fe23',1,'google::cloud::storage::v0::Client']]],
   ['composesourceobject',['ComposeSourceObject',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1ComposeSourceObject.html',1,'google::cloud::storage::v0']]],
   ['compute_5fengine_5fcredentials_2eh',['compute_engine_credentials.h',['../compute__engine__credentials_8h.html',1,'']]],
   ['computecrc32cchecksum',['ComputeCrc32cChecksum',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a566615900865281465ce6636fb9416cd',1,'google::cloud::storage::v0']]],
