@@ -171,22 +171,25 @@ std::ostream& operator<<(std::ostream& os, UpdateObjectRequest const& r) {
 
 ComposeObjectRequest::ComposeObjectRequest(
     std::string bucket_name,
-    std::vector<ComposeSourceObject> const& source_objects,
-    std::string destination_object_name,
-    ObjectMetadata destination_object_metadata)
+    std::vector<ComposeSourceObject> source_objects,
+    std::string destination_object_name)
     : GenericObjectRequest(std::move(bucket_name),
                            std::move(destination_object_name)),
-      destination_metadata_(std::move(destination_object_metadata)) {
+                           source_objects_(std::move(source_objects)) {}
+
+std::string ComposeObjectRequest::JsonPayload() const {
   using internal::nl::json;
   json compose_object_payload_json;
   compose_object_payload_json["kind"] = "storage#composeRequest";
-  auto destination_metadata_payload =
-      destination_metadata_.JsonPayloadForCompose();
+  json destination_metadata_payload;
+  if (HasOption<WithObjectMetadata>()) {
+    destination_metadata_payload = GetOption<WithObjectMetadata>().value().JsonPayloadForCompose();
+  }
   if (!destination_metadata_payload.is_null()) {
     compose_object_payload_json["destination"] = destination_metadata_payload;
   }
   json source_object_list;
-  for (auto const& source_object : source_objects) {
+  for (auto const& source_object : source_objects_) {
     json source_object_json;
     source_object_json["name"] = source_object.object_name;
     if (source_object.generation.has_value()) {
@@ -199,16 +202,15 @@ ComposeObjectRequest::ComposeObjectRequest(
     source_object_list.emplace_back(std::move(source_object_json));
   }
   compose_object_payload_json["sourceObjects"] = source_object_list;
-  json_payload_ = compose_object_payload_json.dump();
+
+  return compose_object_payload_json.dump();
 }
 
 std::ostream& operator<<(std::ostream& os, ComposeObjectRequest const& r) {
   os << "ComposeObjectRequest={bucket_name=" << r.bucket_name()
-     << ", destination_object_name=" << r.object_name()
-     << ", destination_metadata="
-     << r.destination_metadata().JsonPayloadForCompose();
+     << ", destination_object_name=" << r.object_name();
   r.DumpOptions(os, ", ");
-  return os << ", payload=" << r.json_payload() << "}";
+  return os << ", payload=" << r.JsonPayload() << "}";
 }
 
 PatchObjectRequest::PatchObjectRequest(std::string bucket_name,

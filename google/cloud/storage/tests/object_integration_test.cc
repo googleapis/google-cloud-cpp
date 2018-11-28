@@ -696,9 +696,9 @@ TEST_F(ObjectIntegrationTest, ComposeSimple) {
   auto composed_object_name = MakeRandomObjectName();
   std::vector<ComposeSourceObject> source_objects = {{object_name},
                                                      {object_name}};
-  ObjectMetadata composed_meta =
-      client.ComposeObject(bucket_name, source_objects, composed_object_name,
-                           ObjectMetadata().set_content_type("plain/text"));
+  ObjectMetadata composed_meta = client.ComposeObject(
+      bucket_name, source_objects, composed_object_name,
+      WithObjectMetadata(ObjectMetadata().set_content_type("plain/text")));
 
   EXPECT_EQ(meta.size() * 2, composed_meta.size());
   client.DeleteObject(bucket_name, composed_object_name);
@@ -728,8 +728,7 @@ TEST_F(ObjectIntegrationTest, ComposedUsingEncryptedObject) {
   std::vector<ComposeSourceObject> source_objects = {{object_name},
                                                      {object_name}};
   ObjectMetadata composed_meta = client.ComposeObject(
-      bucket_name, source_objects, composed_object_name,
-      ObjectMetadata().set_content_type("plain/text"), EncryptionKey(key));
+      bucket_name, source_objects, composed_object_name, EncryptionKey(key));
 
   EXPECT_EQ(meta.size() * 2, composed_meta.size());
   client.DeleteObject(bucket_name, composed_object_name);
@@ -1230,8 +1229,7 @@ TEST_F(ObjectIntegrationTest, ComposeFailure) {
 
   // This operation should fail because the source object does not exist.
   TestPermanentFailure([&] {
-    client.ComposeObject(bucket_name, source_objects, composed_object_name,
-                         ObjectMetadata());
+    client.ComposeObject(bucket_name, source_objects, composed_object_name);
   });
 }
 

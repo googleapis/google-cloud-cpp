@@ -547,7 +547,7 @@ void ComposeObject(google::cloud::storage::Client client, int& argc,
      std::vector<gcs::ComposeSourceObject> compose_objects) {
     gcs::ObjectMetadata composed_object =
         client.ComposeObject(bucket_name, compose_objects,
-                             destination_object_name, gcs::ObjectMetadata());
+                             destination_object_name);
     std::cout << "Composed new object " << destination_object_name
               << " Metadata: " << composed_object << std::endl;
   }
@@ -578,7 +578,6 @@ void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
      std::vector<gcs::ComposeSourceObject> compose_objects) {
     gcs::ObjectMetadata composed_object = client.ComposeObject(
         bucket_name, compose_objects, destination_object_name,
-        gcs::ObjectMetadata(),
         gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
     std::cout << "Composed new object " << destination_object_name
               << " Metadata: " << composed_object << std::endl;

@@ -186,7 +186,7 @@ TEST_F(CurlClientTest, PatchObject) {
 
 TEST_F(CurlClientTest, ComposeObject) {
   auto status_and_foo = client_->ComposeObject(
-      ComposeObjectRequest("bkt", {}, "obj", ObjectMetadata()));
+      ComposeObjectRequest("bkt", {}, "obj"));
   TestCorrectFailureStatus(status_and_foo.first);
 }
 
