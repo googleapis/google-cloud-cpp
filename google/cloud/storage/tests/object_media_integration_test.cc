@@ -30,9 +30,9 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-using ::testing::HasSubstr;
 using google::cloud::storage::testing::CountMatchingEntities;
 using google::cloud::storage::testing::TestPermanentFailure;
+using ::testing::HasSubstr;
 
 /// Store the project and instance captured from the command-line arguments.
 class ObjectMediaTestEnvironment : public ::testing::Environment {
@@ -57,7 +57,8 @@ class ObjectMediaIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 bool UsingTestbench() {
-  return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT").has_value();
+  return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
+      .has_value();
 }
 
 TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
@@ -211,23 +212,9 @@ TEST_F(ObjectMediaIntegrationTest, UploadFile) {
 
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
-
-  auto generate_random_line = [this] {
-    std::string const characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz"
-        "0123456789"
-        ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
-    return google::cloud::internal::Sample(generator_, 200, characters);
-  };
-
   // Create a file with the contents to upload.
   std::ofstream os(file_name);
-  for (int line = 0; line != 1000; ++line) {
-    std::string random = generate_random_line() + "\n";
-    os << line << ": " << random;
-    expected << line << ": " << random;
-  }
+  WriteRandomLines(os, expected);
   os.close();
 
   ObjectMetadata meta = client.UploadFile(file_name, bucket_name, object_name,
@@ -243,6 +230,32 @@ TEST_F(ObjectMediaIntegrationTest, UploadFile) {
   ASSERT_FALSE(actual.empty());
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
   EXPECT_EQ(expected_str, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+  std::remove(file_name.c_str());
+}
+
+TEST_F(ObjectMediaIntegrationTest, UploadFileEmpty) {
+  Client client;
+  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Create a file with the contents to upload.
+  std::ofstream(file_name).close();
+
+  ObjectMetadata meta = client.UploadFile(file_name, bucket_name, object_name,
+                                          IfGenerationMatch(0));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+  EXPECT_EQ(0U, meta.size());
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_TRUE(actual.empty());
+  EXPECT_EQ(0U, actual.size());
+  EXPECT_EQ("", actual);
 
   client.DeleteObject(bucket_name, object_name);
   std::remove(file_name.c_str());
@@ -391,6 +404,141 @@ TEST_F(ObjectMediaIntegrationTest, XmlUploadFile) {
   std::remove(file_name.c_str());
 }
 
+TEST_F(ObjectMediaIntegrationTest, UploadFileResumable) {
+  // Create a client that always uses resumable uploads.
+  Client client(ClientOptions().set_maximum_simple_upload_size(0));
+  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+  // Create a file with the contents to upload.
+  std::ofstream os(file_name);
+  WriteRandomLines(os, expected);
+  os.close();
+
+  ObjectMetadata meta = client.UploadFile(file_name, bucket_name, object_name,
+                                          IfGenerationMatch(0));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+  auto expected_str = expected.str();
+  ASSERT_EQ(expected_str.size(), meta.size());
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_FALSE(actual.empty());
+  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
+  EXPECT_EQ(expected_str, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+  std::remove(file_name.c_str());
+}
+
+TEST_F(ObjectMediaIntegrationTest, UploadFileResumableQuantum) {
+  // Create a client that always uses resumable uploads.
+  Client client(ClientOptions().set_maximum_simple_upload_size(0));
+  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+  // Create a file with the contents to upload.
+  std::ofstream os(file_name);
+  static_assert(internal::UploadChunkRequest::kChunkSizeQuantum % 128 == 0,
+                "This test assumes the chunk quantum is a multiple of 128; it "
+                "needs fixing");
+  WriteRandomLines(os, expected,
+                   3 * internal::UploadChunkRequest::kChunkSizeQuantum / 128,
+                   128);
+  os.close();
+
+  ObjectMetadata meta = client.UploadFile(file_name, bucket_name, object_name,
+                                          IfGenerationMatch(0));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+  auto expected_str = expected.str();
+  ASSERT_EQ(expected_str.size(), meta.size());
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_FALSE(actual.empty());
+  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
+  EXPECT_EQ(expected_str, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+  std::remove(file_name.c_str());
+}
+
+TEST_F(ObjectMediaIntegrationTest, UploadFileResumableNonQuantum) {
+  // Create a client that always uses resumable uploads.
+  Client client(ClientOptions().set_maximum_simple_upload_size(0));
+  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+  // Create a file with the contents to upload.
+  std::ofstream os(file_name);
+  static_assert(internal::UploadChunkRequest::kChunkSizeQuantum % 256 == 0,
+                "This test assumes the chunk quantum is a multiple of 256; it "
+                "needs fixing");
+  auto desired_size = (5 * internal::UploadChunkRequest::kChunkSizeQuantum / 2);
+  WriteRandomLines(os, expected, desired_size / 128, 128);
+  os.close();
+
+  ObjectMetadata meta = client.UploadFile(file_name, bucket_name, object_name,
+                                          IfGenerationMatch(0));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+  auto expected_str = expected.str();
+  ASSERT_EQ(expected_str.size(), meta.size());
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_FALSE(actual.empty());
+  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
+  EXPECT_EQ(expected_str, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+  std::remove(file_name.c_str());
+}
+
+TEST_F(ObjectMediaIntegrationTest, UploadFileResumableUploadFailure) {
+  // Create a client that always uses resumable uploads.
+  Client client(ClientOptions().set_maximum_simple_upload_size(0));
+  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  auto bucket_name = MakeRandomBucketName();
+  auto object_name = MakeRandomObjectName();
+
+  // Create the file.
+  std::ofstream(file_name) << LoremIpsum();
+
+  // Trying to upload the file to a non-existing bucket should fail.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        client.UploadFile(file_name, bucket_name, object_name,
+                          IfGenerationMatch(0));
+      } catch (std::runtime_error const& ex) {
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      client.UploadFile(file_name, bucket_name, object_name,
+                        IfGenerationMatch(0)),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+
+  std::remove(file_name.c_str());
+}
+
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
 TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingReadXML) {
   if (not UsingTestbench()) {
@@ -493,12 +641,13 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingWriteXML) {
   std::string md5_hash = ComputeMD5Hash(LoremIpsum() + "\n" + LoremIpsum());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
-    EXPECT_NE(ex.received_hash(), ex.computed_hash());
-    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
-    throw;
-  },
-               HashMismatchError);
+  EXPECT_THROW(
+      try { stream.Close(); } catch (HashMismatchError const& ex) {
+        EXPECT_NE(ex.received_hash(), ex.computed_hash());
+        EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
+        throw;
+      },
+      HashMismatchError);
 #else
   stream.Close();
   EXPECT_FALSE(stream.received_hash().empty());
@@ -532,12 +681,13 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingWriteJSON) {
   std::string md5_hash = ComputeMD5Hash(LoremIpsum() + "\n" + LoremIpsum());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
-    EXPECT_NE(ex.received_hash(), ex.computed_hash());
-    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
-    throw;
-  },
-               HashMismatchError);
+  EXPECT_THROW(
+      try { stream.Close(); } catch (HashMismatchError const& ex) {
+        EXPECT_NE(ex.received_hash(), ex.computed_hash());
+        EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
+        throw;
+      },
+      HashMismatchError);
 #else
   stream.Close();
   EXPECT_FALSE(stream.received_hash().empty());
@@ -898,12 +1048,13 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingWriteXML) {
       ComputeCrc32cChecksum(LoremIpsum() + "\n" + LoremIpsum());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
-    EXPECT_NE(ex.received_hash(), ex.computed_hash());
-    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
-    throw;
-  },
-               HashMismatchError);
+  EXPECT_THROW(
+      try { stream.Close(); } catch (HashMismatchError const& ex) {
+        EXPECT_NE(ex.received_hash(), ex.computed_hash());
+        EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
+        throw;
+      },
+      HashMismatchError);
 #else
   stream.Close();
   EXPECT_FALSE(stream.received_hash().empty());
@@ -938,12 +1089,13 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
       ComputeCrc32cChecksum(LoremIpsum() + "\n" + LoremIpsum());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
-    EXPECT_NE(ex.received_hash(), ex.computed_hash());
-    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
-    throw;
-  },
-               HashMismatchError);
+  EXPECT_THROW(
+      try { stream.Close(); } catch (HashMismatchError const& ex) {
+        EXPECT_NE(ex.received_hash(), ex.computed_hash());
+        EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
+        throw;
+      },
+      HashMismatchError);
 #else
   stream.Close();
   EXPECT_FALSE(stream.received_hash().empty());

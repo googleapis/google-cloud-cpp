@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/retry_policy.h"
 
 namespace google {
@@ -87,6 +88,8 @@ class RetryClient : public RawClient {
       ComposeObjectRequest const& request) override;
   std::pair<Status, RewriteObjectResponse> RewriteObject(
       RewriteObjectRequest const&) override;
+  std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+  CreateResumableSession(ResumableUploadRequest const& request) override;
 
   std::pair<Status, ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;

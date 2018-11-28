@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/retry_client.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/internal/raw_client_wrapper_utils.h"
+#include "google/cloud/storage/internal/retry_resumable_upload_session.h"
 #include <sstream>
 #include <thread>
 
@@ -307,6 +309,25 @@ std::pair<Status, RewriteObjectResponse> RetryClient::RewriteObject(
   auto is_idempotent = idempotency_policy_->IsIdempotent(request);
   return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::RewriteObject, request, __func__);
+}
+
+std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+RetryClient::CreateResumableSession(ResumableUploadRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  auto result =
+      MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
+               &RawClient::CreateResumableSession, request, __func__);
+  if (not result.first.ok()) {
+    return result;
+  }
+
+  return std::make_pair(
+      Status(),
+      google::cloud::internal::make_unique<RetryResumableUploadSession>(
+          std::move(result.second), std::move(retry_policy),
+          std::move(backoff_policy)));
 }
 
 std::pair<Status, ListBucketAclResponse> RetryClient::ListBucketAcl(

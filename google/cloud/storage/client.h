@@ -727,7 +727,8 @@ class Client {
    *   `Crc32cChecksumValue`, `DisableCrc32cChecksum`, `DisableMD5Hash`,
    *   `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
    *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
-   *   `MD5HashValue`, `PredefinedAcl`, `Projection`, and `UserProject`.
+   *   `MD5HashValue`, `PredefinedAcl`, `Projection`, `UserProject`, and
+   *   `WithObjectMetadata`.
    *
    * @par Example
    * @snippet storage_object_samples.cc upload file
@@ -737,9 +738,15 @@ class Client {
                             std::string const& bucket_name,
                             std::string const& object_name,
                             Options&&... options) {
-    internal::InsertObjectStreamingRequest request(bucket_name, object_name);
+    if (UseSimpleUpload(file_name)) {
+      internal::InsertObjectMediaRequest request(bucket_name, object_name,
+                                                 std::string{});
+      request.set_multiple_options(std::forward<Options>(options)...);
+      return UploadFileSimple(file_name, request);
+    }
+    internal::ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return UploadFileImpl(file_name, std::move(request));
+    return UploadFileResumable(file_name, std::move(request));
   }
 
   /**
@@ -1941,8 +1948,18 @@ class Client {
     return retry;
   }
 
-  ObjectMetadata UploadFileImpl(std::string const& file_name,
-                                internal::InsertObjectStreamingRequest request);
+  bool UseSimpleUpload(std::string const& file_name) const;
+
+  ObjectMetadata UploadFileSimple(std::string const& file_name,
+                                  internal::InsertObjectMediaRequest request);
+
+  ObjectMetadata UploadFileResumable(
+      std::string const& file_name,
+      internal::ResumableUploadRequest const& request);
+
+  std::pair<Status, ObjectMetadata> UploadStreamResumable(
+      std::istream& source, std::uint64_t source_size,
+      internal::ResumableUploadRequest const& request);
 
   void DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
                         std::string const& file_name);
