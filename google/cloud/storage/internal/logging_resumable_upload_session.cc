@@ -48,6 +48,13 @@ std::uint64_t LoggingResumableUploadSession::next_expected_byte() const {
   return response;
 }
 
+std::string const& LoggingResumableUploadSession::session_id() const {
+  GCP_LOG(INFO) << __func__ << " << ()";
+  auto const& response = session_->session_id();
+  GCP_LOG(INFO) << __func__ << " >> " << response;
+  return response;
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -52,6 +52,13 @@ class ResumableUploadSession {
    * using this class) needs to re-send a chunk.
    */
   virtual std::uint64_t next_expected_byte() const = 0;
+
+  /**
+   * Returns the current upload session id.
+   *
+   * Note that the session id might change during an upload.
+   */
+  virtual std::string const& session_id() const = 0;
 };
 
 }  // namespace internal

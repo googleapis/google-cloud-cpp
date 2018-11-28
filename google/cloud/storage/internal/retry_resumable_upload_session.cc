@@ -90,6 +90,10 @@ RetryResumableUploadSession::ResetSession() {
 std::uint64_t RetryResumableUploadSession::next_expected_byte() const {
   return session_->next_expected_byte();
 }
+
+std::string const& RetryResumableUploadSession::session_id() const {
+  return session_->session_id();
+}
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

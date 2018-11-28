@@ -39,7 +39,7 @@ class CurlResumableUploadSession : public ResumableUploadSession {
 
   std::uint64_t next_expected_byte() const override;
 
-  std::string const& session_id() const { return session_id_; }
+  std::string const& session_id() const override { return session_id_; }
 
  private:
   void Update(std::pair<Status, ResumableUploadResponse> const& result);
