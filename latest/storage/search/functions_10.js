@@ -36,10 +36,10 @@ var searchData=
   ['resetwebsite',['ResetWebsite',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a99d364a0ca372cc5bcca3e9c146a079d',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['result',['Result',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html#a70135d91f3936fa1fb6c76467f0d3844',1,'google::cloud::storage::v0::ObjectRewriter']]],
   ['resultwithprogresscallback',['ResultWithProgressCallback',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html#ab14a1ad23c742f13611c2277fdac64ae',1,'google::cloud::storage::v0::ObjectRewriter']]],
-  ['resumerewriteobject',['ResumeRewriteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#adedb2d43fb995db0b8b6037f195ad316',1,'google::cloud::storage::v0::Client']]],
+  ['resumerewriteobject',['ResumeRewriteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ada8f04abb2ebbceae9272fd3d6a3d2c4',1,'google::cloud::storage::v0::Client']]],
   ['retention_5fexpiration_5ftime',['retention_expiration_time',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a371cea70f882b5e46c0f84da32a84f0a',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['retention_5fpolicy',['retention_policy',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a14dc1ca650289da4065f65e8dcec78f7',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['retention_5fpolicy_5fas_5foptional',['retention_policy_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a86c1537dcb29d8a1ea8fb49d5d091023',1,'google::cloud::storage::v0::BucketMetadata']]],
-  ['rewriteobject',['RewriteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a6f79ed0314f8655e71c4292895636f1c',1,'google::cloud::storage::v0::Client']]],
-  ['rewriteobjectblocking',['RewriteObjectBlocking',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a025a3894a62fe0f4f8fd96beabce8c5f',1,'google::cloud::storage::v0::Client']]]
+  ['rewriteobject',['RewriteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a16f1e39a3259246f296cb38627426b6e',1,'google::cloud::storage::v0::Client']]],
+  ['rewriteobjectblocking',['RewriteObjectBlocking',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ac2b4c5610080c6b672f3d644e9bfd1cb',1,'google::cloud::storage::v0::Client']]]
 ];
