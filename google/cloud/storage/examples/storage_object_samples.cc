@@ -105,7 +105,7 @@ void CopyObject(google::cloud::storage::Client client, int& argc,
      std::string destination_object_name) {
     gcs::ObjectMetadata new_copy_meta = client.CopyObject(
         source_bucket_name, source_object_name, destination_bucket_name,
-        destination_object_name, gcs::ObjectMetadata());
+        destination_object_name);
     std::cout << "Object copied. The full metadata after the copy is: "
               << new_copy_meta << std::endl;
   }
@@ -134,8 +134,7 @@ void CopyEncryptedObject(google::cloud::storage::Client client, int& argc,
      std::string destination_object_name, std::string key_base64) {
     gcs::ObjectMetadata new_copy_meta = client.CopyObject(
         source_bucket_name, source_object_name, destination_bucket_name,
-        destination_object_name, gcs::ObjectMetadata(),
-        gcs::EncryptionKey::FromBase64Key(key_base64));
+        destination_object_name, gcs::EncryptionKey::FromBase64Key(key_base64));
     std::cout << "Object copied. The full metadata after the copy is: "
               << new_copy_meta << std::endl;
   }

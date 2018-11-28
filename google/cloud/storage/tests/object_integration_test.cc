@@ -25,9 +25,9 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-using ::testing::HasSubstr;
 using google::cloud::storage::testing::CountMatchingEntities;
 using google::cloud::storage::testing::TestPermanentFailure;
+using ::testing::HasSubstr;
 
 /// Store the project and instance captured from the command-line arguments.
 class ObjectTestEnvironment : public ::testing::Environment {
@@ -346,7 +346,7 @@ TEST_F(ObjectIntegrationTest, Copy) {
 
   ObjectMetadata meta = client.CopyObject(
       bucket_name, source_object_name, bucket_name, destination_object_name,
-      ObjectMetadata().set_content_type("text/plain"));
+      WithObjectMetadata(ObjectMetadata().set_content_type("text/plain")));
   EXPECT_EQ(destination_object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
   EXPECT_EQ("text/plain", meta.content_type());
@@ -548,7 +548,7 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
+      bucket_name, object_name, bucket_name, copy_name,
       IfGenerationMatch(0), DestinationPredefinedAcl::AuthenticatedRead(),
       Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(meta.acl(),
@@ -575,7 +575,7 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
+      bucket_name, object_name, bucket_name, copy_name,
       IfGenerationMatch(0), DestinationPredefinedAcl::BucketOwnerFullControl(),
       Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(
@@ -601,7 +601,7 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
+      bucket_name, object_name, bucket_name, copy_name,
       IfGenerationMatch(0), DestinationPredefinedAcl::BucketOwnerRead(),
       Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(
@@ -622,7 +622,7 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclPrivate) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
+      bucket_name, object_name, bucket_name, copy_name,
       IfGenerationMatch(0), DestinationPredefinedAcl::Private(),
       Projection::Full());
   ASSERT_TRUE(meta.has_owner());
@@ -645,7 +645,7 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclProjectPrivate) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
+      bucket_name, object_name, bucket_name, copy_name,
       IfGenerationMatch(0), DestinationPredefinedAcl::ProjectPrivate(),
       Projection::Full());
   ASSERT_TRUE(meta.has_owner());
@@ -668,7 +668,7 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclPublicRead) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name, ObjectMetadata(),
+      bucket_name, object_name, bucket_name, copy_name,
       IfGenerationMatch(0), DestinationPredefinedAcl::PublicRead(),
       Projection::Full());
   EXPECT_LT(
@@ -1135,7 +1135,7 @@ TEST_F(ObjectIntegrationTest, CopyFailure) {
   // This operation should fail because the source object does not exist.
   TestPermanentFailure([&] {
     client.CopyObject(bucket_name, source_object_name, bucket_name,
-                      destination_object_name, ObjectMetadata());
+                      destination_object_name);
   });
 }
 

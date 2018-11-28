@@ -197,7 +197,7 @@ TEST_F(CurlClientTest, ListBucketAcl) {
 
 TEST_F(CurlClientTest, CopyObject) {
   auto status_and_foo = client_->CopyObject(
-      CopyObjectRequest("bkt", "obj1", "bkt", "obj2", ObjectMetadata()));
+      CopyObjectRequest("bkt", "obj1", "bkt", "obj2"));
   TestCorrectFailureStatus(status_and_foo.first);
 }
 

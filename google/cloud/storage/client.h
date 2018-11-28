@@ -578,15 +578,14 @@ class Client {
    * @param destination_bucket_name the name of the bucket that will contain the
    *     new object.
    * @param destination_object_name the name of the new object.
-   * @param metadata additional metadata attributes that you want to set in the
-   *     new object.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `DestinationPredefinedAcl`,
    *     `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
    *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`,
    *     `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
    *     `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
-   *     `Projection`, `SourceGeneration`, and `UserProject`.
+   *     `Projection`, `SourceGeneration`, `UserProject`, and
+   *     `WithObjectMetadata`.
    *
    * @throw std::runtime_error if the operation cannot be completed using the
    *   current policies.
@@ -602,12 +601,10 @@ class Client {
                             std::string source_object_name,
                             std::string destination_bucket_name,
                             std::string destination_object_name,
-                            ObjectMetadata const& metadata,
                             Options&&... options) {
     internal::CopyObjectRequest request(
         std::move(source_bucket_name), std::move(source_object_name),
-        std::move(destination_bucket_name), std::move(destination_object_name),
-        metadata);
+        std::move(destination_bucket_name), std::move(destination_object_name));
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->CopyObject(request).second;
   }

@@ -82,7 +82,7 @@ std::ostream& operator<<(std::ostream& os, CopyObjectRequest const& r) {
      << ", source_bucket=" << r.source_bucket()
      << ", source_object=" << r.source_object();
   r.DumpOptions(os, ", ");
-  return os << ", payload=" << r.json_payload() << "}";
+  return os << "}";
 }
 
 std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r) {

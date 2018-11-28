@@ -71,7 +71,6 @@ TEST_F(ObjectCopyTest, CopyObject) {
         EXPECT_EQ("test-object-name", request.destination_object());
         EXPECT_EQ("source-bucket-name", request.source_bucket());
         EXPECT_EQ("source-object-name", request.source_object());
-        EXPECT_THAT(request.json_payload(), HasSubstr("text/plain"));
         return std::make_pair(storage::Status(), expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
@@ -79,7 +78,7 @@ TEST_F(ObjectCopyTest, CopyObject) {
 
   ObjectMetadata actual = client.CopyObject(
       "source-bucket-name", "source-object-name", "test-bucket-name",
-      "test-object-name", ObjectMetadata().set_content_type("text/plain"));
+      "test-object-name");
   EXPECT_EQ(expected, actual);
 }
 
@@ -88,13 +87,12 @@ TEST_F(ObjectCopyTest, CopyObjectTooManyFailures) {
       mock, EXPECT_CALL(*mock, CopyObject(_)),
       [](Client& client) {
         client.CopyObject("source-bucket-name", "source-object-name",
-                          "test-bucket-name", "test-object-name",
-                          ObjectMetadata());
+                          "test-bucket-name", "test-object-name");
       },
       [](Client& client) {
         client.CopyObject("source-bucket-name", "source-object-name",
                           "test-bucket-name", "test-object-name",
-                          ObjectMetadata(), IfGenerationMatch(0));
+                          IfGenerationMatch(0));
       },
       "CopyObject");
 }
@@ -104,8 +102,7 @@ TEST_F(ObjectCopyTest, CopyObjectPermanentFailure) {
       *client, EXPECT_CALL(*mock, CopyObject(_)),
       [](Client& client) {
         client.CopyObject("source-bucket-name", "source-object-name",
-                          "test-bucket-name", "test-object-name",
-                          ObjectMetadata());
+                          "test-bucket-name", "test-object-name");
       },
       "CopyObject");
 }

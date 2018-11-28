@@ -143,31 +143,27 @@ class CopyObjectRequest
           IfMetagenerationNotMatch, IfSourceGenerationMatch,
           IfSourceGenerationNotMatch, IfSourceMetagenerationMatch,
           IfSourceMetagenerationNotMatch, Projection, SourceGeneration,
-          UserProject> {
+          UserProject, WithObjectMetadata> {
  public:
   CopyObjectRequest() = default;
   CopyObjectRequest(std::string source_bucket, std::string source_object,
                     std::string destination_bucket,
-                    std::string destination_object,
-                    ObjectMetadata const& metadata)
+                    std::string destination_object)
       : source_bucket_(std::move(source_bucket)),
         source_object_(std::move(source_object)),
         destination_bucket_(std::move(destination_bucket)),
-        destination_object_(std::move(destination_object)),
-        json_payload_(metadata.JsonPayloadForCopy()) {}
+        destination_object_(std::move(destination_object)) {}
 
   std::string const& source_bucket() const { return source_bucket_; }
   std::string const& source_object() const { return source_object_; }
   std::string const& destination_bucket() const { return destination_bucket_; }
   std::string const& destination_object() const { return destination_object_; }
-  std::string const& json_payload() const { return json_payload_; }
 
  private:
   std::string source_bucket_;
   std::string source_object_;
   std::string destination_bucket_;
   std::string destination_object_;
-  std::string json_payload_;
 };
 
 std::ostream& operator<<(std::ostream& os, CopyObjectRequest const& r);
