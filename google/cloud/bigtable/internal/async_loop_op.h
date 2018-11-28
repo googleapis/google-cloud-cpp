@@ -38,6 +38,10 @@ struct PrototypeLoopOperationStartCallback {
 
 template <typename Operation>
 struct MeetsLoopOperationRequirements {
+  // Looks like MSVC 15.7.3 has a bug and evaluates the Has.* detectors to
+  // false. 15.9.2 seems to have worked, but I'm not adding specific version
+  // conditionals to avoid future surprises.
+#ifndef _MSC_VER
   static_assert(
       HasStart<Operation, PrototypeLoopOperationStartCallback>::value,
       "Operation has to have a templated Start() member function "
@@ -46,6 +50,7 @@ struct MeetsLoopOperationRequirements {
                 "Operation has to have an Cancel() member function.");
   static_assert(HasWaitPeriod<Operation>::value,
                 "Operation has to have an WaitPeriod() member function.");
+#endif
   static_assert(
       google::cloud::internal::is_invocable<
           decltype(
