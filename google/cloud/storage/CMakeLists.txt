@@ -182,6 +182,8 @@ add_library(storage_client
             internal/resumable_upload_session.h
             internal/retry_client.h
             internal/retry_client.cc
+            internal/retry_resumable_upload_session.h
+            internal/retry_resumable_upload_session.cc
             internal/service_account_requests.h
             internal/service_account_requests.cc
             lifecycle_rule.h
@@ -330,6 +332,8 @@ set(storage_client_unit_tests
     internal/object_requests_test.cc
     internal/parse_rfc3339_test.cc
     internal/patch_builder_test.cc
+    internal/retry_client_test.cc
+    internal/retry_resumable_upload_session_test.cc
     internal/service_account_requests_test.cc
     lifecycle_rule_test.cc
     list_buckets_reader_test.cc
