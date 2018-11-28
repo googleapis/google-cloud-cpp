@@ -420,6 +420,93 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
   client.DeleteObject(bucket_name, object_name);
 }
 
+/**
+ * @test Verify that `userIp` inserts the correct query parameter.
+ *
+ * Testing for `userIp` is less straightforward that most other parameters.
+ * This parameter typically has no effect, so we simply verify that the
+ * parameter appears in the request, and that the parameter is not rejected by
+ * the server.  To verify that the parameter appears in the request we rely
+ * on the logging facilities in the library, which is ugly to do.
+ */
+TEST_F(ObjectInsertIntegrationTest, InsertWithUserIp) {
+  Client client(ClientOptions()
+                    .set_enable_raw_client_tracing(true)
+                    .set_enable_http_tracing(true));
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
+  auto id = LogSink::Instance().AddBackend(backend);
+  ObjectMetadata insert_meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), UserIp("127.0.0.1"));
+  LogSink::Instance().RemoveBackend(id);
+
+  // Create the regular expression we want to match.
+  std::regex re = [&bucket_name] {
+    std::string regex = ".* POST .*";
+    regex += "/b/" + bucket_name + "/o";
+    regex += ".*userIp=127\\.0\\.0\\.1.*";
+    return std::regex(regex, std::regex_constants::egrep);
+  }();
+
+  auto count = std::count_if(
+      backend->log_lines.begin(), backend->log_lines.end(),
+      [&re](std::string const& line) { return std::regex_match(line, re); });
+  EXPECT_LT(0, count);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/**
+ * @test Verify that `userIp` inserts a query parameter.
+ *
+ * Testing for `userIp` is less straightforward that most other parameters.
+ * This parameter typically has no effect, so we simply verify that the
+ * parameter appears in the request, and that the parameter is not rejected by
+ * the server.  To verify that the parameter appears in the request we rely
+ * on the logging facilities in the library, which is ugly to do.
+ */
+TEST_F(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
+  Client client(ClientOptions()
+                    .set_enable_raw_client_tracing(true)
+                    .set_enable_http_tracing(true));
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // Make sure at least one connection was created before we run the test, the
+  // IP address can only be obtained once the first request to a given endpoint
+  // is completed.
+  {
+    auto seed_object_name = MakeRandomObjectName();
+    (void)client.InsertObject(bucket_name, seed_object_name, LoremIpsum());
+    client.DeleteObject(bucket_name, seed_object_name);
+  }
+
+  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
+  auto id = LogSink::Instance().AddBackend(backend);
+  ObjectMetadata insert_meta =
+      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), UserIp(""));
+  LogSink::Instance().RemoveBackend(id);
+
+  // Create the regular expression we want to match.
+  std::regex re = [&bucket_name] {
+    std::string regex = ".* POST .*";
+    regex += "/b/" + bucket_name + "/o";
+    regex += ".*userIp=.*";
+    return std::regex(regex, std::regex_constants::egrep);
+  }();
+
+  auto count = std::count_if(
+      backend->log_lines.begin(), backend->log_lines.end(),
+      [&re](std::string const& line) { return std::regex_match(line, re); });
+  EXPECT_LT(0, count);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
 TEST_F(ObjectInsertIntegrationTest, InsertWithContentType) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();
