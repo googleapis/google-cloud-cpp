@@ -159,6 +159,8 @@ add_library(storage_client
             internal/http_response.cc
             internal/logging_client.h
             internal/logging_client.cc
+            internal/logging_resumable_upload_session.h
+            internal/logging_resumable_upload_session.cc
             internal/metadata_parser.h
             internal/metadata_parser.cc
             internal/nljson.h
@@ -320,6 +322,7 @@ set(storage_client_unit_tests
     internal/hash_validator_test.cc
     internal/http_response_test.cc
     internal/logging_client_test.cc
+    internal/logging_resumable_upload_session_test.cc
     internal/metadata_parser_test.cc
     internal/nljson_test.cc
     internal/notification_requests_test.cc
