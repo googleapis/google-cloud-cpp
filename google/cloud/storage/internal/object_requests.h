@@ -384,13 +384,12 @@ std::ostream& operator<<(std::ostream& os, ResumableUploadRequest const& r);
 /**
  * A request to send one chunk in an upload session.
  */
-class UploadChunkRequest
-    : public GenericRequestBase<UploadChunkRequest, CustomHeader> {
+class UploadChunkRequest : public GenericRequest<UploadChunkRequest> {
  public:
   UploadChunkRequest() = default;
   UploadChunkRequest(std::string upload_session_url, std::uint64_t range_begin,
                      std::string payload, std::uint64_t source_size)
-      : GenericRequestBase(),
+      : GenericRequest(),
         upload_session_url_(std::move(upload_session_url)),
         range_begin_(range_begin),
         payload_(std::move(payload)),
@@ -432,12 +431,11 @@ std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r);
  * A request to query the status of a resumable upload.
  */
 class QueryResumableUploadRequest
-    : public GenericRequestBase<QueryResumableUploadRequest, CustomHeader> {
+    : public GenericRequest<QueryResumableUploadRequest> {
  public:
   QueryResumableUploadRequest() = default;
   explicit QueryResumableUploadRequest(std::string upload_session_url)
-      : GenericRequestBase(),
-        upload_session_url_(std::move(upload_session_url)) {}
+      : GenericRequest(), upload_session_url_(std::move(upload_session_url)) {}
 
   std::string const& upload_session_url() const { return upload_session_url_; }
 
