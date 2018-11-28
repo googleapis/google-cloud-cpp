@@ -296,8 +296,8 @@ TEST_F(DataAsyncIntegrationTest, TableReadRowsAllRows) {
   std::vector<bigtable::Cell> actual;
 
   table.AsyncReadRows(
-      RowSet(RowRange::Range("0001", "1000")), RowReader::NO_ROWS_LIMIT,
-      Filter::PassAllFilter(), cq,
+      bigtable::RowSet(bigtable::RowRange::InfiniteRange()),
+      RowReader::NO_ROWS_LIMIT, Filter::PassAllFilter(), cq,
       [&actual](CompletionQueue& cq, Row row, grpc::Status& status) {
         std::move(row.cells().begin(), row.cells().end(),
                   std::back_inserter(actual));

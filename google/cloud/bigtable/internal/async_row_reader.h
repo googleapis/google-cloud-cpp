@@ -80,14 +80,21 @@ class AsyncRowReader {
   using Request = google::bigtable::v2::ReadRowsRequest;
   using Response = bool;
 
-  void ProcessResponse(google::bigtable::v2::ReadRowsResponse& response) {
+  void ProcessResponse(CompletionQueue& cq,
+                       google::bigtable::v2::ReadRowsResponse& response) {
     int processed_chunks_count_ = 0;
     while (processed_chunks_count_ < response.chunks_size()) {
       parser_->HandleChunk(
           std::move(*(response.mutable_chunks(processed_chunks_count_))),
           status_);
+
       if (not status_.ok()) {
         return;
+      }
+
+      if (parser_->HasNext()) {
+        ++rows_count_;
+        read_row_callback_(cq, std::move(parser_->Next(status_)), status_);
       }
       ++processed_chunks_count_;
     }
@@ -123,7 +130,7 @@ class AsyncRowReader {
         *client_, &DataClient::AsyncReadRows, request, std::move(context),
         [this](CompletionQueue& cq, const grpc::ClientContext& context,
                google::bigtable::v2::ReadRowsResponse& response) {
-          ProcessResponse(response);
+          ProcessResponse(cq, response);
           if (not status_.ok()) {
             return;
           }
