@@ -96,7 +96,6 @@ class AsyncRowReader {
         ++rows_count_;
         read_row_callback_(cq, std::move(parser_->Next(status_)), status_);
       }
-
       ++processed_chunks_count_;
     }
   }
