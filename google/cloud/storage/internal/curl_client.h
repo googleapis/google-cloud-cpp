@@ -31,8 +31,6 @@ class CurlRequestBuilder;
 
 /**
  * Implements the low-level RPCs to Google Cloud Storage using libcurl.
- *
- * TODO(#717) - document the CurlRequest interface as a concept.
  */
 class CurlClient : public RawClient,
                    public std::enable_shared_from_this<CurlClient> {

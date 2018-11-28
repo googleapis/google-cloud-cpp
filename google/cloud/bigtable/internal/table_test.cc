@@ -627,7 +627,6 @@ TEST_F(NoexTableTest, BulkApplyRetryPartialFailure) {
   SUCCEED();
 }
 
-// TODO(#234) - this test could be enabled when bug is closed.
 /// @test Verify that Table::BulkApply() handles permanent failures.
 TEST_F(NoexTableTest, BulkApplyPermanentFailure) {
   using namespace ::testing;

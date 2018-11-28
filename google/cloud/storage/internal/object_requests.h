@@ -179,7 +179,6 @@ class ReadObjectRangeRequest
  public:
   ReadObjectRangeRequest() : GenericObjectRequest(), begin_(0), end_(0) {}
 
-  // TODO(#724) - consider using StrongType<> for arguments with similar types.
   explicit ReadObjectRangeRequest(std::string bucket_name,
                                   std::string object_name, std::int64_t begin,
                                   std::int64_t end)
@@ -187,7 +186,6 @@ class ReadObjectRangeRequest
         begin_(begin),
         end_(end) {}
 
-  // TODO(#724) - consider using StrongType<> for arguments with similar types.
   explicit ReadObjectRangeRequest(std::string bucket_name,
                                   std::string object_name)
       : GenericObjectRequest(std::move(bucket_name), std::move(object_name)),

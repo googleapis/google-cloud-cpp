@@ -45,8 +45,6 @@ auto const kLimitedTimeTolerance = std::chrono::milliseconds(10);
  * @test Verify that a retry policy configured to run for 50ms works correctly.
  *
  * This eliminates some amount of code duplication in the following tests.
- *
- * TODO(#733) - refactor this and the implementations in bigtable/
  */
 void CheckLimitedTime(RetryPolicyForTest& tested) {
   google::cloud::testing_util::CheckPredicateBecomesFalse(

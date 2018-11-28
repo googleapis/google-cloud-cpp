@@ -386,8 +386,6 @@ inline bool operator>=(BucketWebsite const& lhs, BucketWebsite const& rhs) {
  * @warning This is an incomplete implementation to validate the design. It does
  * not support changes to the metadata. It also lacks support for ACLs, CORS,
  * encryption keys, lifecycle rules, and other features.
- *
- * TODO(#537) - complete the implementation.
  */
 class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
  public:
