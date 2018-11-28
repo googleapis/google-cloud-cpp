@@ -78,7 +78,6 @@ bigtable_client_SRCS = [
     "instance_config.cc",
     "instance_update_config.cc",
     "internal/async_sample_row_keys.cc",
-    "internal/async_retry_multi_page.cc",
     "internal/bulk_mutator.cc",
     "internal/completion_queue_impl.cc",
     "internal/common_client.cc",
