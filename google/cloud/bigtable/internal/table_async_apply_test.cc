@@ -482,7 +482,7 @@ TEST_F(NoexTableAsyncApplyTest, StopRetryOnTimerCancel) {
   EXPECT_THAT(capture_status.error_message(), HasSubstr("AsyncApply"));
   EXPECT_THAT(capture_status.error_message(), HasSubstr(tested.table_name()));
   EXPECT_THAT(capture_status.error_message(),
-              HasSubstr("pending timer cancelled"));
+              HasSubstr("pending operation cancelled"));
 }
 
 struct Counter : public grpc::ClientAsyncResponseReaderInterface<
