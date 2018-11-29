@@ -195,9 +195,7 @@ class AsyncLoopOp : public std::enable_shared_from_this<AsyncLoopOp<Operation>>,
     }
     auto delay = operation_.WaitPeriod();
     if (delay == std::chrono::milliseconds(0)) {
-      auto self = this->shared_from_this();
-      current_op_ = cq.RunAsync(
-          [self](CompletionQueue& cq) { self->OnTimer(cq, false); });
+      StartUnlocked(cq);
       return;
     }
     auto self = this->shared_from_this();

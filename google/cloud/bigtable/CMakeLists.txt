@@ -161,6 +161,7 @@ add_library(bigtable_client
             internal/async_poll_op.h
             internal/async_sample_row_keys.h
             internal/async_sample_row_keys.cc
+            internal/async_retry_multi_page.h
             internal/async_retry_op.h
             internal/async_retry_unary_rpc.h
             internal/async_retry_unary_rpc_and_poll.h
@@ -306,6 +307,7 @@ set(bigtable_client_unit_tests
     internal/async_future_from_callback_test.cc
     internal/async_longrunning_op_test.cc
     internal/async_poll_op_test.cc
+    internal/async_retry_multi_page_test.cc
     internal/async_retry_op_test.cc
     internal/async_retry_unary_rpc_and_poll_test.cc
     internal/bulk_mutator_test.cc
