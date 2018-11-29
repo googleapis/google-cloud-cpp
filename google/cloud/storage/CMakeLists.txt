@@ -224,6 +224,7 @@ add_library(storage_client
             service_account.cc
             status.h
             storage_class.h
+            upload_options.h
             version.h
             version.cc
             well_known_headers.h
@@ -354,6 +355,7 @@ set(storage_client_unit_tests
     storage_class_test.cc
     storage_client_options_test.cc
     storage_version_test.cc
+    upload_options.h
     well_known_headers_test.cc)
 
 foreach (fname ${storage_client_unit_tests})

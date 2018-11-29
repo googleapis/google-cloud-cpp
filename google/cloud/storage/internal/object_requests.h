@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/generic_object_request.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/well_known_parameters.h"
 
 namespace google {
@@ -368,8 +369,8 @@ class ResumableUploadRequest
           Crc32cChecksumValue, DisableCrc32cChecksum, DisableMD5Hash,
           EncryptionKey, IfGenerationMatch, IfGenerationNotMatch,
           IfMetagenerationMatch, IfMetagenerationNotMatch, KmsKeyName,
-          MD5HashValue, PredefinedAcl, Projection, UserProject,
-          WithObjectMetadata> {
+          MD5HashValue, PredefinedAcl, Projection, UseResumableUploadSession,
+          UserProject, WithObjectMetadata> {
  public:
   ResumableUploadRequest() = default;
 
