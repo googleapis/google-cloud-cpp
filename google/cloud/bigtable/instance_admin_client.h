@@ -94,7 +94,7 @@ class InstanceAdminClient {
   template <typename Client, typename Response, typename MemberFunctionType,
             typename IdempotencyPolicy>
   class AsyncRetryAndPollUnaryRpc;
-  friend class AsyncListClusters;
+  friend class internal::AsyncListClusters;
   template <typename ResultType, typename ClientType>
   friend ResultType internal::PollLongRunningOperation(
       std::shared_ptr<ClientType> client,

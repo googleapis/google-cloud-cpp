@@ -26,6 +26,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+
 struct ClusterList {
   std::vector<google::bigtable::admin::v2::Cluster> clusters;
   std::vector<std::string> failed_locations;
@@ -90,17 +91,17 @@ class AsyncListClusters {
             return;
           }
           next_page_token_ = response.next_page_token();
-          std::copy(response.failed_locations().begin(),
+          std::move(response.failed_locations().begin(),
                     response.failed_locations().end(),
                     std::inserter(failed_locations_, failed_locations_.end()));
-          std::copy(response.clusters().begin(), response.clusters().end(),
+          std::move(response.clusters().begin(), response.clusters().end(),
                     std::back_inserter(response_.clusters));
           callback(cq, next_page_token_.empty(), status);
         });
   }
 
   ClusterList AccumulatedResult() {
-    std::copy(failed_locations_.begin(), failed_locations_.end(),
+    std::move(failed_locations_.begin(), failed_locations_.end(),
               std::back_inserter(response_.failed_locations));
     failed_locations_.clear();
     return response_;
