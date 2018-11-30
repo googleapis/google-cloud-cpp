@@ -101,7 +101,7 @@ class AsyncListClusters {
   }
 
   ClusterList AccumulatedResult() {
-    std::move(failed_locations_.begin(), failed_locations_.end(),
+    std::copy(failed_locations_.begin(), failed_locations_.end(),
               std::back_inserter(response_.failed_locations));
     failed_locations_.clear();
     return response_;
