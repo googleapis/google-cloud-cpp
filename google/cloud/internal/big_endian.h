@@ -39,6 +39,7 @@ struct EndianTransform {
   static constexpr IntegralType as_big_endian(IntegralType native) {
     return native;
   }
+
   template <typename IntegralType>
   static constexpr IntegralType as_native(IntegralType big_endian) {
     return big_endian;
@@ -47,7 +48,7 @@ struct EndianTransform {
 
 template <>
 struct EndianTransform<false> {
-  static constexpr std::int16_t byte_swap(std::int16_t value) {
+  static inline std::int16_t byte_swap(std::int16_t value) {
 #ifdef _MSC_VER
     return _byteswap_ushort(value);
 #elif defined(__APPLE__)
@@ -62,7 +63,7 @@ struct EndianTransform<false> {
 #endif
   }
 
-  static constexpr std::int32_t byte_swap(std::int32_t value) {
+  static inline std::int32_t byte_swap(std::int32_t value) {
 #ifdef _MSC_VER
     return _byteswap_ulong(value);
 #elif defined(__APPLE__)
@@ -79,7 +80,7 @@ struct EndianTransform<false> {
 #endif
   }
 
-  static constexpr std::int64_t byte_swap(std::int64_t value) {
+  static inline std::int64_t byte_swap(std::int64_t value) {
 #ifdef _MSC_VER
     return _byteswap_uint64(value);
 #elif defined(__APPLE__)
@@ -100,7 +101,7 @@ struct EndianTransform<false> {
 #endif
   }
 
-  static constexpr std::uint16_t byte_swap(std::uint16_t value) {
+  static inline std::uint16_t byte_swap(std::uint16_t value) {
 #ifdef _MSC_VER
     return _byteswap_ushort(value);
 #elif defined(__APPLE__)
@@ -115,7 +116,7 @@ struct EndianTransform<false> {
 #endif
   }
 
-  static constexpr std::uint32_t byte_swap(std::uint32_t value) {
+  static inline std::uint32_t byte_swap(std::uint32_t value) {
 #ifdef _MSC_VER
     return _byteswap_ulong(value);
 #elif defined(__APPLE__)
@@ -132,7 +133,7 @@ struct EndianTransform<false> {
 #endif
   }
 
-  static constexpr std::uint64_t byte_swap(std::uint64_t value) {
+  static inline std::uint64_t byte_swap(std::uint64_t value) {
 #ifdef _MSC_VER
     return _byteswap_uint64(value);
 #elif defined(__APPLE__)
@@ -154,12 +155,12 @@ struct EndianTransform<false> {
   }
 
   template <typename IntegralType>
-  static constexpr IntegralType as_big_endian(IntegralType native) {
+  static inline IntegralType as_big_endian(IntegralType native) {
     return byte_swap(native);
   }
 
   template <typename IntegralType>
-  static constexpr IntegralType as_native(IntegralType big_endian) {
+  static inline IntegralType as_native(IntegralType big_endian) {
     return byte_swap(big_endian);
   }
 };
