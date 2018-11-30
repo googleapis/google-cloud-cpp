@@ -26,7 +26,6 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 struct ClusterList {
   std::vector<google::bigtable::admin::v2::Cluster> clusters;
   std::vector<std::string> failed_locations;
