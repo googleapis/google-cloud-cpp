@@ -85,6 +85,10 @@ class MockClient : public google::cloud::storage::internal::RawClient {
                                   internal::ComposeObjectRequest const&));
   MOCK_METHOD1(RewriteObject, ResponseWrapper<internal::RewriteObjectResponse>(
                                   internal::RewriteObjectRequest const&));
+  MOCK_METHOD1(
+      CreateResumableSession,
+      ResponseWrapper<std::unique_ptr<internal::ResumableUploadSession>>(
+          internal::ResumableUploadRequest const&));
 
   MOCK_METHOD1(ListBucketAcl, ResponseWrapper<internal::ListBucketAclResponse>(
                                   internal::ListBucketAclRequest const&));

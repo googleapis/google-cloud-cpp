@@ -33,9 +33,34 @@ static_assert(std::is_copy_assignable<storage::Client>::value,
 Client::Client(ClientOptions options)
     : Client(internal::CurlClient::Create(std::move(options))) {}
 
-ObjectMetadata Client::UploadFileImpl(
+bool Client::UseSimpleUpload(std::string const& file_name) const {
+  auto status = google::cloud::internal::status(file_name);
+  if (not is_regular(status)) {
+    return false;
+  }
+  auto size = google::cloud::internal::file_size(file_name);
+  return size <= raw_client()->client_options().maximum_simple_upload_size();
+}
+
+ObjectMetadata Client::UploadFileSimple(
+    std::string const& file_name, internal::InsertObjectMediaRequest request) {
+  std::ifstream is(file_name);
+  if (not is.is_open()) {
+    std::string msg = __func__;
+    msg += ": cannot open source file ";
+    msg += file_name;
+    google::cloud::internal::RaiseRuntimeError(msg);
+  }
+
+  std::string payload(std::istreambuf_iterator<char>{is}, {});
+  request.set_contents(std::move(payload));
+
+  return raw_client_->InsertObjectMedia(request).second;
+}
+
+ObjectMetadata Client::UploadFileResumable(
     std::string const& file_name,
-    internal::InsertObjectStreamingRequest request) {
+    google::cloud::storage::internal::ResumableUploadRequest const& request) {
   auto status = google::cloud::internal::status(file_name);
   if (not is_regular(status)) {
     GCP_LOG(WARNING) << "Trying to upload " << file_name
@@ -52,56 +77,71 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
 )""";
   }
 
-  std::ifstream is(file_name);
-  if (not is.is_open()) {
+  std::ifstream source(file_name);
+  if (not source.is_open()) {
     std::string msg = __func__;
     msg += ": cannot open source file ";
     msg += file_name;
     google::cloud::internal::RaiseRuntimeError(msg);
   }
-  if (not request.HasOption<DisableMD5Hash>() and
-      not request.HasOption<MD5HashValue>()) {
-    // Open a separate stream to read the file, because once we hit EOF there
-    // is no guarantee we can rewind the file to the beginning.
-    std::ifstream is2(file_name);
-    MD5_CTX md5;
-    MD5_Init(&md5);
-    std::string buffer;
-    buffer.resize(raw_client_->client_options().upload_buffer_size(), '\0');
-    while (not is2.eof()) {
-      is2.read(&buffer[0], buffer.size());
-      MD5_Update(&md5, &buffer[0], static_cast<std::size_t>(is2.gcount()));
+  // This function only works for regular files, and the `storage::Client()`
+  // class checks before calling it.
+  std::uint64_t source_size = google::cloud::internal::file_size(file_name);
+
+  auto result = UploadStreamResumable(source, source_size, request);
+  if (not result.first.ok()) {
+    google::cloud::internal::RaiseRuntimeError(result.first.error_message());
+  }
+  return result.second;
+}
+
+std::pair<Status, ObjectMetadata> Client::UploadStreamResumable(
+    std::istream& source, std::uint64_t source_size,
+    internal::ResumableUploadRequest const& request) {
+  Status status;
+  std::unique_ptr<internal::ResumableUploadSession> session;
+  std::tie(status, session) = raw_client()->CreateResumableSession(request);
+  if (not status.ok()) {
+    return std::make_pair(status, ObjectMetadata{});
+  }
+
+  // GCS requires chunks to be a multiple of 256KiB.
+  auto chunk_size = internal::UploadChunkRequest::RoundUpToQuantum(
+      raw_client()->client_options().upload_buffer_size());
+
+  internal::ResumableUploadResponse upload_response;
+  // We iterate while `source` is good and the retry policy has not been
+  // exhausted.
+  while (not source.eof() and upload_response.payload.empty()) {
+    // Read a chunk of data from the source file.
+    std::string buffer(chunk_size, '\0');
+    source.read(&buffer[0], buffer.size());
+    auto gcount = static_cast<std::size_t>(source.gcount());
+    if (gcount < buffer.size()) {
+      source_size = session->next_expected_byte() + gcount;
     }
+    buffer.resize(gcount);
 
-    std::string hash(MD5_DIGEST_LENGTH, ' ');
-    MD5_Final(reinterpret_cast<unsigned char*>(&hash[0]), &md5);
-    request.set_option(
-        MD5HashValue(internal::OpenSslUtils::Base64Encode(hash)));
+    auto expected = session->next_expected_byte() + gcount - 1;
+    std::tie(status, upload_response) =
+        session->UploadChunk(buffer, source_size);
+    if (not status.ok()) {
+      return std::make_pair(Status(), ObjectMetadata());
+    }
+    if (session->next_expected_byte() != expected) {
+      GCP_LOG(WARNING) << "unexpected last committed byte "
+                       << " expected=" << expected
+                       << " got=" << session->next_expected_byte();
+      source.seekg(session->next_expected_byte(), std::ios::beg);
+    }
   }
 
-  auto result = raw_client_->WriteObject(request);
-  auto streambuf = std::move(result.second);
+  if (not status.ok()) {
+    return std::make_pair(status, ObjectMetadata{});
+  }
 
-  std::string buffer;
-  buffer.resize(raw_client_->client_options().upload_buffer_size(), '\0');
-  while (not is.eof() and is.good()) {
-    is.read(&buffer[0], buffer.size());
-    streambuf->sputn(&buffer[0], is.gcount());
-  }
-  auto response = streambuf->Close();
-  if (response.status_code >= 300) {
-    std::ostringstream os;
-    os << __func__ << ": error in during upload "
-       << Status(response.status_code, response.payload);
-    google::cloud::internal::RaiseRuntimeError(os.str());
-  }
-  if (response.payload.empty()) {
-    streambuf->ValidateHash(ObjectMetadata());
-    return ObjectMetadata();
-  }
-  auto metadata = ObjectMetadata::ParseFromString(response.payload);
-  streambuf->ValidateHash(metadata);
-  return metadata;
+  return std::make_pair(
+      Status(), ObjectMetadata::ParseFromString(upload_response.payload));
 }
 
 void Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,

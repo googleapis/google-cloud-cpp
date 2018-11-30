@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/logging_client.h"
+#include "google/cloud/storage/internal/logging_resumable_upload_session.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/internal/raw_client_wrapper_utils.h"
 
@@ -191,6 +193,19 @@ std::pair<Status, ObjectMetadata> LoggingClient::ComposeObject(
 std::pair<Status, RewriteObjectResponse> LoggingClient::RewriteObject(
     RewriteObjectRequest const& request) {
   return MakeCall(*client_, &RawClient::RewriteObject, request, __func__);
+}
+
+std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+LoggingClient::CreateResumableSession(ResumableUploadRequest const& request) {
+  auto result = MakeCallNoResponseLogging(
+      *client_, &RawClient::CreateResumableSession, request, __func__);
+  if (not result.first.ok()) {
+    return result;
+  }
+  return std::make_pair(
+      Status(),
+      google::cloud::internal::make_unique<LoggingResumableUploadSession>(
+          std::move(result.second)));
 }
 
 std::pair<Status, ListBucketAclResponse> LoggingClient::ListBucketAcl(
