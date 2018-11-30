@@ -169,13 +169,16 @@ run_retention_policy_examples() {
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
+#   None
 # Returns:
 #   None
-################################################
+###############################################
 run_all_bucket_acl_examples() {
-  local bucket_name=$1
-  shift
+  # Use a fresh bucket to avoid flaky tests due to other tests also making
+  # changes on the bucket.
+  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  run_example ./storage_bucket_samples create-bucket-for-project \
+      "${bucket_name}" "${PROJECT_ID}"
 
   run_example ./storage_bucket_acl_samples list-bucket-acl \
       "${bucket_name}"
@@ -192,6 +195,9 @@ run_all_bucket_acl_examples() {
   run_example ./storage_bucket_acl_samples delete-bucket-acl \
       "${bucket_name}" allAuthenticatedUsers
 
+  run_example ./storage_bucket_samples delete-bucket \
+      "${bucket_name}"
+
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
   run_example_usage ./storage_bucket_acl_samples
@@ -203,13 +209,16 @@ run_all_bucket_acl_examples() {
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
+#   None
 # Returns:
 #   None
 ################################################
 run_all_default_object_acl_examples() {
-  local bucket_name=$1
-  shift
+  # Use a fresh bucket to avoid flaky tests due to other tests also making
+  # changes on the bucket.
+  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  run_example ./storage_bucket_samples create-bucket-for-project \
+      "${bucket_name}" "${PROJECT_ID}"
 
   run_example ./storage_default_object_acl_samples list-default-object-acl \
       "${bucket_name}"
@@ -225,6 +234,9 @@ run_all_default_object_acl_examples() {
       "${bucket_name}" allAuthenticatedUsers OWNER
   run_example ./storage_default_object_acl_samples delete-default-object-acl \
       "${bucket_name}" allAuthenticatedUsers
+
+  run_example ./storage_bucket_samples delete-bucket \
+      "${bucket_name}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
@@ -676,13 +688,16 @@ run_all_notification_examples() {
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
+#   None
 # Returns:
 #   None
 ################################################
 run_all_bucket_iam_examples() {
-  local bucket_name=$1
-  shift
+  # Use a fresh bucket to avoid flaky tests due to other tests also making
+  # changes on the bucket.
+  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  run_example ./storage_bucket_samples create-bucket-for-project \
+      "${bucket_name}" "${PROJECT_ID}"
 
   run_example ./storage_bucket_iam_samples get-bucket-iam-policy \
       "${bucket_name}"
@@ -692,6 +707,9 @@ run_all_bucket_iam_examples() {
       "${bucket_name}" "roles/storage.objectViewer" "allAuthenticatedUsers"
   run_example ./storage_bucket_iam_samples test-bucket-iam-permissions \
       "${bucket_name}" "storage.objects.list" "storage.objects.delete"
+
+  run_example ./storage_bucket_samples delete-bucket \
+      "${bucket_name}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
@@ -735,8 +753,8 @@ run_all_storage_examples() {
   run_all_bucket_examples
   run_default_event_based_hold_examples
   run_retention_policy_examples
-  run_all_bucket_acl_examples "${BUCKET_NAME}"
-  run_all_default_object_acl_examples "${BUCKET_NAME}"
+  run_all_bucket_acl_examples
+  run_all_default_object_acl_examples
   run_all_requester_pays_examples
   run_all_object_examples "${BUCKET_NAME}"
   run_upload_and_download_examples "${BUCKET_NAME}"
@@ -747,7 +765,7 @@ run_all_storage_examples() {
   run_all_object_acl_examples "${BUCKET_NAME}"
   run_all_notification_examples "${TOPIC_NAME}"
   run_all_cmek_examples "${STORAGE_CMEK_KEY}"
-  run_all_bucket_iam_examples "${BUCKET_NAME}"
+  run_all_bucket_iam_examples
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
   if [ "${EXIT_STATUS}" = "0" ]; then

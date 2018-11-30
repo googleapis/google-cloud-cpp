@@ -23,9 +23,9 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
+using google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
-using google::cloud::storage::testing::TestPermanentFailure;
 
 /// Store the project and instance captured from the command-line arguments.
 class BucketTestEnvironment : public ::testing::Environment {
@@ -373,8 +373,10 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
 
   new_acl = get_result;
   new_acl.set_role("OWNER");
-  get_result = client.PatchBucketAcl(bucket_name, entity_name, get_result,
-                                     new_acl, IfMatchEtag(get_result.etag()));
+  // Because this is a freshly created bucket, with a random name, we do not
+  // worry about implementing optimistic concurrency control.
+  get_result =
+      client.PatchBucketAcl(bucket_name, entity_name, get_result, new_acl);
   EXPECT_EQ(get_result.role(), new_acl.role());
 
   client.DeleteBucketAcl(bucket_name, entity_name);
