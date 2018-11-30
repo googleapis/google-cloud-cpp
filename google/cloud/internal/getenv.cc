@@ -20,6 +20,7 @@
 // On Unix-like systems we need setenv()/unsetenv(), which are defined here:
 #include <cstdlib>
 #endif  // _WIN32
+#include <memory>
 
 namespace google {
 namespace cloud {
