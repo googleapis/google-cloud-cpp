@@ -345,6 +345,30 @@ void UploadFile(google::cloud::storage::Client client, int& argc,
   (std::move(client), file_name, bucket_name, object_name);
 }
 
+void UploadFileResumable(google::cloud::storage::Client client, int& argc,
+                         char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"upload-file-resumable <file-name> <bucket-name> <object-name>"};
+  }
+  auto file_name = ConsumeArg(argc, argv);
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+
+  //! [upload file resumable]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string file_name, std::string bucket_name,
+     std::string object_name) {
+    // Note that the client library automatically computes a hash on the
+    // client-side to verify data integrity during transmission.
+    gcs::ObjectMetadata meta = client.UploadFile(
+        file_name, bucket_name, object_name, gcs::IfGenerationMatch(0),
+        gcs::NewResumableUploadSession());
+    std::cout << "Uploaded " << file_name << " to " << object_name << std::endl;
+  }
+  //! [upload file resumable]
+  (std::move(client), file_name, bucket_name, object_name);
+}
+
 void DownloadFile(google::cloud::storage::Client client, int& argc,
                   char* argv[]) {
   if (argc != 4) {
@@ -965,6 +989,7 @@ int main(int argc, char* argv[]) try {
       {"write-object", &WriteObject},
       {"write-large-object", &WriteLargeObject},
       {"upload-file", &UploadFile},
+      {"upload-file-resumable", &UploadFileResumable},
       {"download-file", &DownloadFile},
       {"update-object-metadata", &UpdateObjectMetadata},
       {"patch-object-delete-metadata", &PatchObjectDeleteMetadata},
