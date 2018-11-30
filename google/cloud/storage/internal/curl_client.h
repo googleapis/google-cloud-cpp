@@ -201,6 +201,10 @@ class CurlClient : public RawClient,
   std::pair<Status, ObjectMetadata> InsertObjectMediaSimple(
       InsertObjectMediaRequest const& request);
 
+  /// Upload an object using uploadType=simple.
+  std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>> WriteObjectSimple(
+      InsertObjectStreamingRequest const& request);
+
   ClientOptions options_;
   std::string storage_endpoint_;
   std::string upload_endpoint_;

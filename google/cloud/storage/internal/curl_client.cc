@@ -517,27 +517,8 @@ CurlClient::WriteObject(InsertObjectStreamingRequest const& request) {
       request.GetOption<Fields>().value().empty()) {
     return WriteObjectXml(request);
   }
-  auto url = upload_endpoint_ + "/b/" + request.bucket_name() + "/o";
-  CurlRequestBuilder builder(url, upload_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
-  if (not status.ok()) {
-    return std::make_pair(status,
-                          std::unique_ptr<ObjectWriteStreambuf>(nullptr));
-  }
 
-  // Set the content type of a sensible value, the application can override this
-  // in the options for the request.
-  if (not request.HasOption<ContentType>()) {
-    builder.AddHeader("content-type: application/octet-stream");
-  }
-  builder.AddQueryParameter("uploadType", "media");
-  builder.AddQueryParameter("name", request.object_name());
-  std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
-      builder.BuildUpload(), client_options().upload_buffer_size(),
-      CreateHashValidator(request)));
-  return std::make_pair(
-      Status(),
-      std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf)));
+  return WriteObjectSimple(request);
 }
 
 std::pair<Status, ListObjectsResponse> CurlClient::ListObjects(
@@ -1506,6 +1487,32 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaSimple(
   }
   return std::make_pair(Status(),
                         ObjectMetadata::ParseFromString(payload.payload));
+}
+
+std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>>
+CurlClient::WriteObjectSimple(
+    InsertObjectStreamingRequest const& request) {
+  auto url = upload_endpoint_ + "/b/" + request.bucket_name() + "/o";
+  CurlRequestBuilder builder(url, upload_factory_);
+  auto status = SetupBuilder(builder, request, "POST");
+  if (not status.ok()) {
+    return std::make_pair(status,
+                          std::unique_ptr<ObjectWriteStreambuf>(nullptr));
+  }
+
+  // Set the content type of a sensible value, the application can override this
+  // in the options for the request.
+  if (not request.HasOption<ContentType>()) {
+    builder.AddHeader("content-type: application/octet-stream");
+  }
+  builder.AddQueryParameter("uploadType", "media");
+  builder.AddQueryParameter("name", request.object_name());
+  std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
+      builder.BuildUpload(), client_options().upload_buffer_size(),
+      CreateHashValidator(request)));
+  return std::make_pair(
+      Status(),
+      std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf)));
 }
 
 std::pair<Status, std::string> CurlClient::AuthorizationHeader(
