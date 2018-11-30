@@ -746,7 +746,7 @@ class Client {
     }
     internal::ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return UploadFileResumable(file_name, std::move(request));
+    return UploadFileResumable(file_name, request);
   }
 
   /**
