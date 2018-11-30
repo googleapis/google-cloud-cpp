@@ -159,9 +159,8 @@ void PatchBucketAcl(google::cloud::storage::Client client, int& argc,
         client.GetBucketAcl(bucket_name, entity);
     auto new_acl = original_acl;
     new_acl.set_role(role);
-    gcs::BucketAccessControl updated_acl =
-        client.PatchBucketAcl(bucket_name, entity, original_acl, new_acl,
-                              gcs::IfMatchEtag(original_acl.etag()));
+    gcs::BucketAccessControl updated_acl = client.PatchBucketAcl(
+        bucket_name, entity, original_acl, new_acl);
     std::cout << "ACL entry for " << entity << " in bucket " << bucket_name
               << " is now " << updated_acl << std::endl;
   }
@@ -198,7 +197,7 @@ int main(int argc, char* argv[]) try {
 
   // Build the list of commands and the usage string from that list.
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char* [])>;
+      std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
       {"list-bucket-acl", &ListBucketAcl},
       {"create-bucket-acl", &CreateBucketAcl},

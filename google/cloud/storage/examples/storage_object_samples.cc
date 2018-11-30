@@ -332,7 +332,7 @@ void UpdateObjectMetadata(google::cloud::storage::Client client, int& argc,
     gcs::ObjectMetadata desired = meta;
     desired.mutable_metadata().emplace(key, value);
     gcs::ObjectMetadata updated = client.UpdateObject(
-        bucket_name, object_name, desired, gcs::IfMatchEtag(meta.etag()));
+        bucket_name, object_name, desired, gcs::Generation(meta.generation()));
     std::cout << "Object updated. The full metadata after the update is: "
               << updated << std::endl;
   }
