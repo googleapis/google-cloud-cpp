@@ -36,6 +36,7 @@ class AsyncLongrunningOp;
 template <typename Client, typename Response, typename MemberFunctionType,
           typename IdempotencyPolicy, typename Functor>
 class AsyncRetryAndPollUnaryRpc;
+class AsyncListClusters;
 }  // namespace internal
 
 /**
@@ -93,6 +94,7 @@ class InstanceAdminClient {
   template <typename Client, typename Response, typename MemberFunctionType,
             typename IdempotencyPolicy>
   class AsyncRetryAndPollUnaryRpc;
+  friend class internal::AsyncListClusters;
   template <typename ResultType, typename ClientType>
   friend ResultType internal::PollLongRunningOperation(
       std::shared_ptr<ClientType> client,

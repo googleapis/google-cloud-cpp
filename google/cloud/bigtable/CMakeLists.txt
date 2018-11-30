@@ -155,6 +155,7 @@ add_library(bigtable_client
             internal/async_bulk_apply.h
             internal/async_check_consistency.h
             internal/async_future_from_callback.h
+            internal/async_list_clusters.h
             internal/async_longrunning_op.h
             internal/async_loop_op.h
             internal/async_op_traits.h
@@ -305,6 +306,7 @@ set(bigtable_client_unit_tests
     instance_update_config_test.cc
     internal/async_check_consistency_test.cc
     internal/async_future_from_callback_test.cc
+    internal/async_list_clusters_test.cc
     internal/async_longrunning_op_test.cc
     internal/async_poll_op_test.cc
     internal/async_retry_multi_page_test.cc

@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/instance_admin_client.h"
 #include "google/cloud/bigtable/instance_config.h"
 #include "google/cloud/bigtable/instance_update_config.h"
+#include "google/cloud/bigtable/internal/async_list_clusters.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc_and_poll.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
@@ -347,6 +348,40 @@ class InstanceAdmin {
 
   std::vector<google::bigtable::admin::v2::Cluster> ListClusters(
       std::string const& instance_id, grpc::Status& status);
+
+  /**
+   * Makes an asynchronous request to list clusters
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param instance_id the id of the instance from which clusters will be
+   *     listed
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, ClusterList&, grpc::Status const&>);
+   * @return a handle to the submitted operation
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<google::cloud::internal::is_invocable<
+                                        Functor, CompletionQueue&, ClusterList&,
+                                        grpc::Status&>::value,
+                                    int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> AsyncListClusters(
+      std::string const& instance_id, CompletionQueue& cq, Functor&& callback) {
+    auto op = std::make_shared<internal::AsyncRetryListClusters<Functor>>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        metadata_update_policy_, client_, InstanceName(instance_id),
+        std::forward<Functor>(callback));
+    return op->Start(cq);
+  }
 
   void DeleteCluster(bigtable::InstanceId const& instance_id,
                      bigtable::ClusterId const& cluster_id,
