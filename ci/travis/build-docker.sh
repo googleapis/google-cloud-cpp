@@ -209,7 +209,11 @@ if [ -n "${ccache_command}" ]; then
   echo
   echo "${COLOR_YELLOW}Print and clearing ccache stats: $(date)${COLOR_RESET}"
   ${ccache_command} --show-stats
-  ${ccache_command} --zero-stats --cleanup --max-size=2.5Gi
+  max_size="1GiB"
+  if [ "${BUILD_TYPE}" = "Coverage" ]; then
+    max_size="2.5GiB"
+  fi
+  ${ccache_command} --zero-stats --cleanup --max-size="${max_size}"
 fi
 
 # Run the tests and output any failures.
