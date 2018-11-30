@@ -46,6 +46,12 @@ class CurlResumableStreambuf : public ObjectWriteStreambuf {
   std::string const& computed_hash() const override {
     return hash_validator_result_.computed;
   }
+  std::string const& resumable_session_id() const override {
+    return upload_session_->session_id();
+  }
+  std::uint64_t next_expected_byte() const override {
+    return upload_session_->next_expected_byte();
+  }
 
  protected:
   int sync() override;

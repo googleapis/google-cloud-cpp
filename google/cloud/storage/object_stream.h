@@ -123,6 +123,43 @@ class ObjectWriteStream : public std::basic_ostream<char> {
   std::string const& received_hash() const { return buf_->received_hash(); }
   std::string const& computed_hash() const { return buf_->computed_hash(); }
 
+  /**
+   * Returns the resumable upload session id for this upload.
+   *
+   * Note that this is an empty string for uploads that do not use resumable
+   * upload session ids. `Client::WriteObject()` enables resumable uploads based
+   * on the options set by the application.
+   *
+   * Furthermore, this value might change during an upload.
+   */
+  std::string const& resumable_session_id() const {
+    return buf_->resumable_session_id();
+  }
+
+  /**
+   * Returns the next expected byte.
+   *
+   * For non-resumable uploads this is always zero. Applications that use
+   * resumable uploads can use this value to resend any data not committed in
+   * the GCS.
+   */
+  std::uint64_t next_expected_byte() const {
+    return buf_->next_expected_byte();
+  }
+
+  /**
+   * Suspends an upload.
+   *
+   * For resumable uploads this function suspends the current upload, future
+   *
+   *
+   * This is a destructive operation. Using this object after calling this
+   * function results in undefined behavior. Applications should copy any
+   * necessary state (such as the value `resumable_session_id()`) before calling
+   * this function.
+   */
+  void Suspend();
+
  private:
   std::unique_ptr<internal::ObjectWriteStreambuf> buf_;
 };

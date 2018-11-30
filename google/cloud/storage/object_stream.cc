@@ -95,6 +95,10 @@ ObjectMetadata ObjectWriteStream::Close() {
   return metadata;
 }
 
+void ObjectWriteStream::Suspend() {
+  buf_.reset();
+}
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

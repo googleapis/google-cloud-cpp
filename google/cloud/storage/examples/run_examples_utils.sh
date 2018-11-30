@@ -375,7 +375,7 @@ _EOF_
 }
 
 ################################################
-# Run upload and download examples.
+# Run resumable file upload examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
@@ -384,7 +384,7 @@ _EOF_
 # Returns:
 #   None
 ################################################
-run_upload_resumable_examples() {
+run_resumable_file_upload_examples() {
   local bucket_name=$1
   shift
 
@@ -405,6 +405,45 @@ _EOF_
   run_example ./storage_object_samples download-file \
       "${bucket_name}" "${object_name}" "${download_file_name}"
   diff "${upload_file_name}" "${download_file_name}"
+
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name}"
+}
+
+################################################
+# Run resumable write object examples.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   bucket_name: the name of the bucket to run the examples against.
+# Returns:
+#   None
+################################################
+run_resumable_write_object_examples() {
+  local bucket_name=$1
+  shift
+
+  local object_name="resumable-upload-$(date +%s)-${RANDOM}.txt"
+
+  # We need to capture the output, so the usual `run_example` helper does not
+  # help here :-)
+  set +e
+  echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
+        " storage_object_samples start-resumable-upload"
+  local session_id
+  session_id=$(./storage_object_samples start-resumable-upload \
+      "${bucket_name}" "${object_name}" | \
+      sed "s/Created resumable upload: //")
+  if [[ $? = 0 ]]; then
+    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
+        " storage_object_samples start-resumable-upload"
+  else
+    echo   "${COLOR_RED}[   FAILED ]${COLOR_RESET}" \
+        " storage_object_samples start-resumable-upload"
+  fi
+  run_example ./storage_object_samples resume-resumable-upload \
+      "${bucket_name}" "${object_name}" "${session_id}"
 
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
@@ -875,7 +914,8 @@ run_all_storage_examples() {
   run_all_requester_pays_examples
   run_all_object_examples "${BUCKET_NAME}"
   run_upload_and_download_examples "${BUCKET_NAME}"
-  run_upload_resumable_examples "${BUCKET_NAME}"
+  run_resumable_file_upload_examples "${BUCKET_NAME}"
+  run_resumable_write_object_examples "${BUCKET_NAME}"
   run_all_object_rewrite_examples "${BUCKET_NAME}" "${DESTINATION_BUCKET_NAME}"
   run_all_public_object_examples "${BUCKET_NAME}"
   run_event_based_hold_examples "${BUCKET_NAME}"

@@ -141,6 +141,14 @@ Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
 template <typename RequestType>
 std::pair<Status, std::unique_ptr<ResumableUploadSession>>
 CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
+  if (request.template HasOption<UseResumableUploadSession>()) {
+    auto session_id =
+        request.template GetOption<UseResumableUploadSession>().value();
+    if (not session_id.empty()) {
+      return RestoreResumableSession(session_id);
+    }
+  }
+
   CurlRequestBuilder builder(
       upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
   auto status = SetupBuilder(builder, request, "POST");
@@ -559,7 +567,8 @@ CurlClient::WriteObject(InsertObjectStreamingRequest const& request) {
     return WriteObjectXml(request);
   }
 
-  if (request.HasOption<WithObjectMetadata>()) {
+  if (request.HasOption<WithObjectMetadata>() or
+      request.HasOption<UseResumableUploadSession>()) {
     return WriteObjectResumable(request);
   }
 
