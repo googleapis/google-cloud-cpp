@@ -22,6 +22,24 @@ the reference guide includes a quick start guide.
 
 ### v0.2.x - TBD
 
+* Use resumable uploads for large files in `Client::UploadFile()`.
+* Implement support for the `userIp` optional query parameter.
+* **BREAKING CHANGE** `Client::RewriteObject()`, `Client::CopyObject()`, and
+  `Client::ComposeObject` no longer require the `ObjectMetadata` argument.
+  Instead use `WithObjectMetadata()`, which can be omitted if you do not need
+  to set any metadata attributes in the new object.
+* When using OpenSSL-1.0.2 the client library needs to configure the
+  [locking callbacks](https://www.openssl.org/docs/man1.0.2/crypto/threads.html)
+  for OpenSSL. However, the application may disable this behavior if the
+  application developer is going to use their own locking callbacks.
+* When refreshing OAuth2 access tokens the client library uses the same retry
+  and backoff policies as used for the request itself.
+* Applications can set object metadata attributes via the `WithObjectMetadata`
+  optional argument to `Client::InsertObjectMedia()`.
+* Applications can configure the library to only retry idempotent operations.
+* The client library can use Google Compute Engine credentials to access the
+  service.
+
 ### v0.1.x - 2018-11
 
 * Automatically compute MD5 hashes and CRC32C checksums when objects are
