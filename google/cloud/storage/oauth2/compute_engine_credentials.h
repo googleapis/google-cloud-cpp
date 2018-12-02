@@ -70,6 +70,19 @@ class ComputeEngineCredentials : public Credentials {
         status, status.ok() ? authorization_header_ : std::string(""));
   }
 
+  std::pair<google::cloud::storage::Status, std::string> SignBlob(
+      std::string const& blob) const override {
+    return std::make_pair(
+        google::cloud::storage::Status(
+            600, "ComputeEngineCredentials cannot sign blobs"),
+        "");
+  }
+
+  std::string client_id() const override {
+    std::unique_lock<std::mutex> lock(mu_);
+    return service_account_email_;
+  }
+
   /**
    * Returns the email or alias of this credential's service account.
    *
@@ -188,7 +201,7 @@ class ComputeEngineCredentials : public Credentials {
     return storage::Status();
   }
 
-  std::mutex mu_;
+  mutable std::mutex mu_;
   std::condition_variable cv_;
   // Credential attributes
   std::string authorization_header_;

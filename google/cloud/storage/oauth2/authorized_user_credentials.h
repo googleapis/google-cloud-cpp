@@ -101,6 +101,16 @@ class AuthorizedUserCredentials : public Credentials {
         status, status.ok() ? authorization_header_ : std::string(""));
   }
 
+  std::pair<google::cloud::storage::Status, std::string> SignBlob(
+      std::string const& blob) const override {
+    return std::make_pair(
+        google::cloud::storage::Status(
+            600, "AuthorizedUserCredentials cannot sign blobs"),
+        "");
+  }
+
+  std::string client_id() const override { return std::string(); }
+
  private:
   bool IsExpired() {
     auto now = std::chrono::system_clock::now();

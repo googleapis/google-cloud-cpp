@@ -41,6 +41,22 @@ class Credentials {
    */
   virtual std::pair<google::cloud::storage::Status, std::string>
   AuthorizationHeader() = 0;
+
+  /**
+   * Sign a blob using the credentials.
+   *
+   * Create a RSA SHA256 signature of the blob using the Credential object. If
+   * the credentials do not support signing blobs it returns an error status.
+   *
+   * @param blob the bytes to sign.
+   * @return a Base64-encoded RSA SHA256 digest of @p blob using the current
+   *   credentials.
+   */
+  virtual std::pair<google::cloud::storage::Status, std::string> SignBlob(
+      std::string const& blob) const = 0;
+
+  /// Return the client id of these credentials.
+  virtual std::string client_id() const = 0;
 };
 
 }  // namespace oauth2

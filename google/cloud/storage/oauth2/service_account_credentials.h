@@ -128,6 +128,7 @@ class ServiceAccountCredentials : public Credentials {
     request_builder.AddHeader(
         "Content-Type: application/x-www-form-urlencoded");
     request_ = request_builder.BuildRequest();
+    info_ = std::move(info);
   }
 
   std::pair<google::cloud::storage::Status, std::string> AuthorizationHeader()
@@ -141,6 +142,16 @@ class ServiceAccountCredentials : public Credentials {
     return std::make_pair(
         status, status.ok() ? authorization_header_ : std::string(""));
   }
+
+  std::pair<google::cloud::storage::Status, std::string> SignBlob(
+      std::string const& blob) const override {
+    using storage::internal::OpenSslUtils;
+    return std::make_pair(
+        Status(), OpenSslUtils::Base64Encode(OpenSslUtils::SignStringWithPem(
+                      blob, info_.private_key, JwtSigningAlgorithms::RS256)));
+  }
+
+  std::string client_id() const override { return info_.client_email; }
 
  private:
   bool IsExpired() {
@@ -201,6 +212,7 @@ class ServiceAccountCredentials : public Credentials {
 
   typename HttpRequestBuilderType::RequestType request_;
   std::string payload_;
+  ServiceAccountCredentialsInfo info_;
   std::mutex mu_;
   std::condition_variable cv_;
   std::string authorization_header_;

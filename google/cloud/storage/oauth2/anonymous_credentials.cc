@@ -25,6 +25,15 @@ AnonymousCredentials::AuthorizationHeader() {
   return std::make_pair(google::cloud::storage::Status(), "");
 }
 
+std::pair<google::cloud::storage::Status, std::string>
+AnonymousCredentials::SignBlob(std::string const& blob) const {
+  return std::make_pair(google::cloud::storage::Status(
+                            600, "AnonymousCredentials cannot sign blobs"),
+                        "");
+}
+
+std::string AnonymousCredentials::client_id() const { return std::string(); }
+
 }  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

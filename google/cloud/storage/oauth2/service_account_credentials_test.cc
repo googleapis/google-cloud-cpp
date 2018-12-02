@@ -377,6 +377,87 @@ TEST_F(ServiceAccountCredentialsTest, ParseMissingField) {
   }
 }
 
+/// @test Verify that we can create sign blobs using a service account.
+TEST_F(ServiceAccountCredentialsTest, SignBlob) {
+  auto mock_builder = MockHttpRequestBuilder::mock;
+  std::string expected_header =
+      "Content-Type: application/x-www-form-urlencoded";
+  EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)));
+  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
+      .Times(1);
+  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
+      .WillRepeatedly(
+          Invoke([](std::string const& s) -> std::unique_ptr<char[]> {
+            EXPECT_EQ(kGrantParamUnescaped, s);
+            auto t =
+                std::unique_ptr<char[]>(new char[sizeof(kGrantParamEscaped)]);
+            std::copy(kGrantParamEscaped,
+                      kGrantParamEscaped + sizeof(kGrantParamEscaped), t.get());
+            return t;
+          }));
+  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([] {
+    return MockHttpRequest();
+  }));
+
+  ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
+      kJsonKeyfileContents, "test");
+
+  std::string blob = R"""(GET
+rmYdCNHKFXam78uCt7xQLw==
+text/plain
+1388534400
+x-goog-encryption-algorithm:AES256
+x-goog-meta-foo:bar,baz
+/bucket/objectname)""";
+
+  auto actual = credentials.SignBlob(blob);
+  ASSERT_TRUE(actual.first.ok());
+
+  // To generate the expected output I used:
+  //   openssl dgst -sha256 -sign private.pem blob.txt | openssl base64 -A
+  // where `blob.txt` contains the `blob` string, and `private.pem` contains
+  // the private key embedded in `kJsonKeyfileContents`.
+  std::string expected_signed =
+      "Zsy8o5ci07DQTvO/"
+      "SVr47PKsCXvN+"
+      "FzXga0iYrReAnngdZYewHdcAnMQ8bZvFlTM8HY3msrRw64Jc6hoXVL979An5ugXoZ1ol/"
+      "DT1KlKp3l9E0JSIbqL88ogpElTxFvgPHOtHOUsy2mzhqOVrNSXSj4EM50gKHhvHKSbFq8Pcj"
+      "lAkROtq5gqp5t0OFd7EMIaRH+tekVUZjQPfFT/"
+      "hRW9bSCCV8w1Ex+"
+      "QxmB5z7P7zZn2pl7JAcL850emTo8f2tfv1xXWQGhACvIJeMdPmyjbc04Ye4M8Ljpkg3YhE6l"
+      "4GwC2MnI8TkuoHe4Bj2MvA8mM8TVwIvpBs6Etsj6Jdaz4rg==";
+  EXPECT_EQ(expected_signed, actual.second);
+}
+
+/// @test Verify that we can get the client id from a service account.
+TEST_F(ServiceAccountCredentialsTest, ClientId) {
+  auto mock_builder = MockHttpRequestBuilder::mock;
+  std::string expected_header =
+      "Content-Type: application/x-www-form-urlencoded";
+  EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)));
+  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
+      .Times(1);
+  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
+      .WillRepeatedly(
+          Invoke([](std::string const& s) -> std::unique_ptr<char[]> {
+            EXPECT_EQ(kGrantParamUnescaped, s);
+            auto t =
+                std::unique_ptr<char[]>(new char[sizeof(kGrantParamEscaped)]);
+            std::copy(kGrantParamEscaped,
+                      kGrantParamEscaped + sizeof(kGrantParamEscaped), t.get());
+            return t;
+          }));
+  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([] {
+    return MockHttpRequest();
+  }));
+
+  ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
+      kJsonKeyfileContents, "test");
+
+  EXPECT_EQ("foo-email@foo-project.iam.gserviceaccount.com",
+            credentials.client_id());
+}
+
 }  // namespace
 }  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
