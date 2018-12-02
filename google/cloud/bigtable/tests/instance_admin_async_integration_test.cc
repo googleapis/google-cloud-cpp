@@ -104,16 +104,26 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteInstanceTest) {
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
-  // verify new instance id in list of instances
-  auto instances_before = instance_admin_->ListInstances();
-  ASSERT_FALSE(IsInstancePresent(instances_before, instance_id))
-      << "Instance (" << instance_id << ") already exists."
-      << " This is unexpected, as the instance ids are"
-      << " generated at random.";
-
   bigtable::noex::InstanceAdmin admin(instance_admin_client_);
   google::cloud::bigtable::CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
+
+  // verify new instance id in list of instances
+  std::promise<bigtable::InstanceList> promise_instances_before;
+  admin.AsyncListInstances(
+      cq, [&promise_instances_before](bigtable::CompletionQueue& cq,
+                                      bigtable::InstanceList& response,
+                                      grpc::Status const& status) {
+        ASSERT_TRUE(status.ok());
+        ASSERT_TRUE(response.failed_locations.empty());
+        promise_instances_before.set_value(response);
+      });
+  auto response_instances_before =
+      promise_instances_before.get_future().get().instances;
+  ASSERT_FALSE(IsInstancePresent(response_instances_before, instance_id))
+      << "Instance (" << instance_id << ") already exists."
+      << " This is unexpected, as the instance ids are"
+      << " generated at random.";
 
   // create instance
   auto config = IntegrationTestConfig(instance_id);

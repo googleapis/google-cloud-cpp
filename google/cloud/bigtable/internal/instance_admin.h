@@ -21,6 +21,7 @@
 #include "google/cloud/bigtable/instance_config.h"
 #include "google/cloud/bigtable/instance_update_config.h"
 #include "google/cloud/bigtable/internal/async_list_clusters.h"
+#include "google/cloud/bigtable/internal/async_list_instances.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc_and_poll.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
@@ -118,6 +119,38 @@ class InstanceAdmin {
    */
   std::vector<google::bigtable::admin::v2::Instance> ListInstances(
       grpc::Status& status);
+
+  /**
+   * Makes an asynchronous request to list instances
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, InstanceList&, grpc::Status const&>);
+   * @return a handle to the submitted operation
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<google::cloud::internal::is_invocable<
+                                        Functor, CompletionQueue&,
+                                        InstanceList&, grpc::Status&>::value,
+                                    int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> AsyncListInstances(CompletionQueue& cq,
+                                                     Functor&& callback) {
+    auto op = std::make_shared<internal::AsyncRetryListInstances<Functor>>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        metadata_update_policy_, client_, project_name_,
+        std::forward<Functor>(callback));
+    return op->Start(cq);
+  }
 
   /**
    * Makes an asynchronous request to create a instance.

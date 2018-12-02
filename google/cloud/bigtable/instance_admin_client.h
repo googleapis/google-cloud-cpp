@@ -37,6 +37,7 @@ template <typename Client, typename Response, typename MemberFunctionType,
           typename IdempotencyPolicy, typename Functor>
 class AsyncRetryAndPollUnaryRpc;
 class AsyncListClusters;
+class AsyncListInstances;
 }  // namespace internal
 
 /**
@@ -95,6 +96,7 @@ class InstanceAdminClient {
             typename IdempotencyPolicy>
   class AsyncRetryAndPollUnaryRpc;
   friend class internal::AsyncListClusters;
+  friend class internal::AsyncListInstances;
   template <typename ResultType, typename ClientType>
   friend ResultType internal::PollLongRunningOperation(
       std::shared_ptr<ClientType> client,
@@ -205,6 +207,13 @@ class InstanceAdminClient {
 
   //@{
   /// @name The `google.bigtable.admin.v2.TableAdmin` Async operations.
+  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::ListInstancesResponse>>
+  AsyncListInstances(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ListInstancesRequest const& request,
+      grpc::CompletionQueue* cq) = 0;
+
   virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::Instance>>
   AsyncGetInstance(
