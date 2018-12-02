@@ -128,6 +128,7 @@ add_library(bigtable_client
             admin_client.cc
             app_profile_config.h
             app_profile_config.cc
+            async_instance_data.h
             async_operation.h
             bigtable_strong_types.h
             ${CMAKE_CURRENT_BINARY_DIR}/version_info.h

@@ -2,6 +2,7 @@
 bigtable_client_HDRS = [
     "admin_client.h",
     "app_profile_config.h",
+    "async_instance_data.h",
     "async_operation.h",
     "bigtable_strong_types.h",
     "cell.h",

@@ -12,15 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ASYNC_INSTANCES_DATA_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ASYNC_INSTANCES_DATA_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ASYNC_INSTANCE_DATA_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ASYNC_INSTANCE_DATA_H_
 
 #include "google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h"
-//#include "google/cloud/bigtable/completion_queue.h"
-//#include "google/cloud/bigtable/instance_admin_client.h"
-//#include "google/cloud/bigtable/internal/async_retry_multi_page.h"
-//#include "google/cloud/bigtable/metadata_update_policy.h"
-//#include "google/cloud/internal/make_unique.h"
 
 namespace google {
 namespace cloud {
@@ -41,4 +36,4 @@ struct InstanceList {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ASYNC_INSTANCES_DATA_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ASYNC_INSTANCE_DATA_H_
