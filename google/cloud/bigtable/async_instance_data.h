@@ -16,13 +16,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ASYNC_INSTANCE_DATA_H_
 
 #include "google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h"
+#include "google/cloud/bigtable/version.h"
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
- * The result of an async list instances.
+ * The result of an async list instances, it holds list of
+ * instances and failed location.
  *
  * Callbacks async list instances will use for response.
  */
