@@ -151,7 +151,7 @@ if [ "${TEST_INSTALL:-}" = "yes" -o "${SCAN_BUILD:-}" = "yes" ]; then
   (cd /var/tmp/build-dependencies; install_c_ares)
   (cd /var/tmp/build-dependencies; install_grpc)
   (cd /var/tmp/build-dependencies; install_googletest)
-  ${ccache_command} --show-stats
+  "${ccache_command}" --show-stats
   echo
   echo "${COLOR_YELLOW}Finished dependency install at: $(date)${COLOR_RESET}"
   echo
@@ -208,12 +208,12 @@ echo "${COLOR_YELLOW}Finished build at: $(date)${COLOR_RESET}"
 if [ -n "${ccache_command}" ]; then
   echo
   echo "${COLOR_YELLOW}Print and clearing ccache stats: $(date)${COLOR_RESET}"
-  ${ccache_command} --show-stats
-  max_size="1GiB"
+  "${ccache_command}" --show-stats
+  max_size="1Gi"
   if [ "${BUILD_TYPE}" = "Coverage" ]; then
-    max_size="2.5GiB"
+    max_size="2.5Gi"
   fi
-  ${ccache_command} --zero-stats --cleanup --max-size="${max_size}"
+  "${ccache_command}" --zero-stats --cleanup --max-size="${max_size}"
 fi
 
 # Run the tests and output any failures.
