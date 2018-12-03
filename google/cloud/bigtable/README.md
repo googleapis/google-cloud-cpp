@@ -23,6 +23,16 @@ is available [online][doxygen-link].
 
 ### v0.4.x - TBD
 
+* More experimental asynchronous APIs, note that we expect to change all these
+  experimental APIs as described in
+  [#1543](https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues/1543).
+* Most of the admin operations now have asynchronous APIs.
+* All asynchronous APIs in `noex::*` return an object through which applications
+  can request cancellation of pending requests.
+* Prototype asynchronous APIs returning a `google::cloud::future<T>`,
+  applications can attach callbacks and/or block on a
+  `google::cloud::future<T>`.
+
 ### v0.3.0 - 2018-11
 
 * Include an example that illustrates how to use OpenCensus and the Cloud
