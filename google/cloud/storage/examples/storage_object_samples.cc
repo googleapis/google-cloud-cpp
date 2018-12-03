@@ -944,6 +944,27 @@ void ReleaseObjectTemporaryHold(google::cloud::storage::Client client,
   (std::move(client), bucket_name, object_name);
 }
 
+void SignUrl(google::cloud::storage::Client client, int& argc, char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"sign-url <verb> <bucket-name> <object-name>"};
+  }
+  auto verb = ConsumeArg(argc, argv);
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  //! [sign url] [START storage_sign_url]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string verb, std::string bucket_name,
+     std::string object_name) {
+    std::string signed_url = client.CreateV2SignedUrl(
+        std::move(verb), std::move(bucket_name), std::move(object_name),
+        gcs::ExpirationTime(std::chrono::system_clock::now() +
+                            std::chrono::minutes(15)));
+    std::cout << "The signed url is\n" << signed_url << std::endl;
+  }
+  //! [sign url] [END storage_sign_url]
+  (std::move(client), verb, bucket_name, object_name);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -951,7 +972,7 @@ int main(int argc, char* argv[]) try {
   google::cloud::storage::Client client;
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char* [])>;
+      std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
       {"list-objects", &ListObjects},
       {"insert-object", &InsertObject},
@@ -988,6 +1009,7 @@ int main(int argc, char* argv[]) try {
       {"release-event-based-hold", &ReleaseObjectEventBasedHold},
       {"set-temporary-hold", &SetObjectTemporaryHold},
       {"release-temporary-hold", &ReleaseObjectTemporaryHold},
+      {"sign-url", &SignUrl},
   };
   for (auto&& kv : commands) {
     try {

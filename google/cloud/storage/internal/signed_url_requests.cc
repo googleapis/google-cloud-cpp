@@ -22,16 +22,22 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
+SignUrlRequest::SignUrlRequest(std::string verb, std::string bucket_name,
+                               std::string object_name)
+    : verb_(std::move(verb)),
+      bucket_name_(std::move(bucket_name)),
+      object_name_(std::move(object_name)) {
+  expiration_time_ =
+      std::chrono::system_clock::now() + std::chrono::hours(7 * 24);
+}
+
 std::string SignUrlRequest::StringToSign() const {
   std::ostringstream os;
-
-  auto seconds = std::chrono::duration_cast<std::chrono::seconds>(
-      expiration_time_.time_since_epoch());
 
   os << verb() << "\n"
      << md5_hash_value_ << "\n"
      << content_type_ << "\n"
-     << seconds.count() << "\n";
+     << expiration_time_as_seconds().count() << "\n";
 
   for (auto const& kv : extension_headers_) {
     os << kv.first << ":" << kv.second << "\n";

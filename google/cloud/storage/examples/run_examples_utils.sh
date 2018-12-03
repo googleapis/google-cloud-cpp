@@ -612,6 +612,51 @@ run_all_cmek_examples() {
 }
 
 ################################################
+# Run all Object examples.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   bucket_name: the name of the bucket to run the examples against.
+# Returns:
+#   None
+################################################
+run_all_signed_url_examples() {
+  local bucket_name=$1
+  shift
+
+  local object_name="object-$(date +%s)-${RANDOM}.txt"
+
+  if [[ -n "${CLOUD_STORAGE_TESTBENCH_ENDPOINT:-}" ]]; then
+    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
+        " signed URL examples disabled when using the testbench."
+    return
+  fi
+
+  run_example ./storage_object_samples insert-object \
+      "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
+  run_example ./storage_object_samples sign-url \
+      "GET" "${bucket_name}" "${object_name}"
+
+  set +e
+  echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
+        " using signed URL"
+  local url
+  url=$(./storage_object_samples sign-url \
+      "GET" "${bucket_name}" "${object_name}" | tail -1)
+  if curl --silent "${url}" | grep -q "a-string-to-serve-as-object-media"; then
+    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
+        " using signed URL"
+  else
+    echo   "${COLOR_RED}[   FAILED ]${COLOR_RESET}" \
+        " using signed URL"
+  fi
+
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name}"
+}
+
+################################################
 # Run all Object ACL examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -776,6 +821,7 @@ run_all_storage_examples() {
   run_all_public_object_examples "${BUCKET_NAME}"
   run_event_based_hold_examples "${BUCKET_NAME}"
   run_temporary_hold_examples "${BUCKET_NAME}"
+  run_all_signed_url_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
   run_all_notification_examples "${TOPIC_NAME}"
   run_all_cmek_examples "${STORAGE_CMEK_KEY}"

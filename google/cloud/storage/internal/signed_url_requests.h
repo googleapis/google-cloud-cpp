@@ -34,14 +34,15 @@ class SignUrlRequest {
  public:
   SignUrlRequest() = default;
   explicit SignUrlRequest(std::string verb, std::string bucket_name,
-                          std::string object_name)
-      : verb_(std::move(verb)),
-        bucket_name_(std::move(bucket_name)),
-        object_name_(std::move(object_name)) {}
+                          std::string object_name);
 
   std::string const& verb() const { return verb_; }
   std::string const& bucket_name() const { return bucket_name_; }
   std::string const& object_name() const { return object_name_; }
+  std::chrono::seconds expiration_time_as_seconds() const {
+    return std::chrono::duration_cast<std::chrono::seconds>(
+        expiration_time_.time_since_epoch());
+  }
 
   /// Creates the blob to be signed.
   std::string StringToSign() const;
