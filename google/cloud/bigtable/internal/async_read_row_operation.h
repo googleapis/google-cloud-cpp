@@ -23,7 +23,6 @@
 #include "google/cloud/bigtable/internal/async_retry_op.h"
 #include "google/cloud/bigtable/internal/async_row_reader.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
-#include "google/cloud/bigtable/row_reader.h"
 #include "google/cloud/bigtable/table_strong_types.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/make_unique.h"

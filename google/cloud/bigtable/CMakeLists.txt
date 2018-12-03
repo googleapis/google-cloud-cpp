@@ -331,6 +331,7 @@ if (BUILD_TESTING)
         internal/table_admin_test.cc
         internal/table_async_apply_test.cc
         internal/table_async_bulk_apply_test.cc
+        internal/table_async_row_reader_test.cc
         internal/table_async_sample_row_keys_test.cc
         internal/table_test.cc
         mutations_test.cc

@@ -157,11 +157,6 @@ class AsyncRowReader {
 
     void operator()(CompletionQueue& cq, grpc::ClientContext& context,
                     grpc::Status& status) {
-      std::cout << "Response Ends here...." << std::endl;
-
-      // TODO : need to find out
-      if (not status.ok()) {
-      }
       parent_.parser_->HandleEndOfStream(status);
       callback_(cq, status);
     }
