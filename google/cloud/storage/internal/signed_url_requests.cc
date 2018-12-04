@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/signed_url_requests.h"
+#include "google/cloud/storage/internal/curl_handle.h"
 #include <sstream>
 
 namespace google {
@@ -35,7 +36,9 @@ std::string SignUrlRequest::StringToSign() const {
   for (auto const& kv : extension_headers_) {
     os << kv.first << ":" << kv.second << "\n";
   }
-  os << "/" << bucket_name() << "/" << object_name();
+  CurlHandle curl;
+  os << "/" << bucket_name() << "/"
+     << curl.MakeEscapedString(object_name()).get();
 
   return std::move(os).str();
 }

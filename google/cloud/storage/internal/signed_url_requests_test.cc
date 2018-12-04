@@ -32,13 +32,11 @@ TEST(SignedUrlRequests, Sign) {
 
   request.set_multiple_options(
       ExpirationTime(ParseRfc3339("2018-12-03T12:00:00Z")),
-      MD5HashValue("rmYdCNHKFXam78uCt7xQLw=="),
-      ContentType("text/plain"),
+      MD5HashValue("rmYdCNHKFXam78uCt7xQLw=="), ContentType("text/plain"),
       AddExtensionHeader("x-goog-meta-foo", "bar"),
       AddExtensionHeader("x-goog-meta-foo", "baz"),
       AddExtensionHeader("x-goog-encryption-algorithm", "AES256"),
-      AddExtensionHeader("x-goog-acl", "project-private")
-  );
+      AddExtensionHeader("x-goog-acl", "project-private"));
 
   // Used this command to get the date in seconds:
   //   date +%s -u --date=2018-12-03T12:00:00Z
@@ -50,6 +48,30 @@ x-goog-acl:project-private
 x-goog-encryption-algorithm:AES256
 x-goog-meta-foo:bar,baz
 /test-bucket/test-object)""";
+
+  EXPECT_EQ(expected_blob, request.StringToSign());
+
+  std::ostringstream os;
+  os << request;
+  EXPECT_THAT(os.str(), HasSubstr(expected_blob));
+}
+
+TEST(SignedUrlRequests, SignEscaped) {
+  SignUrlRequest request("GET", "test-bucket", "test- -?-+-/-:-&-object");
+  EXPECT_EQ("GET", request.verb());
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ("test- -?-+-/-:-&-object", request.object_name());
+
+  request.set_multiple_options(
+      ExpirationTime(ParseRfc3339("2018-12-03T12:00:00Z")));
+
+  // Used this command to get the date in seconds:
+  //   date +%s -u --date=2018-12-03T12:00:00Z
+  std::string expected_blob = R"""(GET
+
+
+1543838400
+/test-bucket/test-%20-%3F-%2B-%2F-%3A-%26-object)""";
 
   EXPECT_EQ(expected_blob, request.StringToSign());
 
