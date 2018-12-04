@@ -38,6 +38,17 @@ struct UseResumableUploadSession
   static char const* name() { return "resumable-upload"; }
 };
 
+/// Create a UseResumableUploadSession option that restores previous sessions.
+UseResumableUploadSession RestoreResumableUploadSession(
+    std::string session_id) {
+  return UseResumableUploadSession(std::move(session_id));
+}
+
+/// Create a UseResumableUploadSession option that requests new sessions.
+UseResumableUploadSession NewResumableUploadSession() {
+  return UseResumableUploadSession("");
+}
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
