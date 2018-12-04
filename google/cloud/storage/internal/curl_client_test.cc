@@ -44,13 +44,6 @@ class FailingCredentials : public Credentials {
   std::pair<Status, std::string> AuthorizationHeader() override {
     return std::make_pair(Status(STATUS_ERROR_CODE, STATUS_ERROR_MSG), "");
   }
-  std::pair<google::cloud::storage::Status, std::string> SignBlob(
-      std::string const& blob) const override {
-    return std::make_pair(Status(), std::string());
-  }
-
-  /// Return the client id of these credentials.
-  std::string client_id() const override { return std::string(); }
 };
 
 class CurlClientTest : public ::testing::Test {

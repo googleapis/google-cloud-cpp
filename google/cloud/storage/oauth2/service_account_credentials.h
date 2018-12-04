@@ -143,15 +143,26 @@ class ServiceAccountCredentials : public Credentials {
         status, status.ok() ? authorization_header_ : std::string(""));
   }
 
+  /**
+   * Sign a blob using the credentials.
+   *
+   * Create a RSA SHA256 signature of the blob using the Credential object. If
+   * the credentials do not support signing blobs it returns an error status.
+   *
+   * @param blob the bytes to sign.
+   * @return a Base64-encoded RSA SHA256 digest of @p blob using the current
+   *   credentials.
+   */
   std::pair<google::cloud::storage::Status, std::string> SignBlob(
-      std::string const& blob) const override {
+      std::string const& blob) const {
     using storage::internal::OpenSslUtils;
     return std::make_pair(
         Status(), OpenSslUtils::Base64Encode(OpenSslUtils::SignStringWithPem(
                       blob, info_.private_key, JwtSigningAlgorithms::RS256)));
   }
 
-  std::string client_id() const override { return info_.client_email; }
+  /// Return the client id of these credentials.
+  std::string client_id() const { return info_.client_email; }
 
  private:
   bool IsExpired() {
