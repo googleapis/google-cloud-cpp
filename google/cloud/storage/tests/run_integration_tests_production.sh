@@ -21,7 +21,6 @@ set -eu
 #   tests should have Storage.Admin access to this project.
 # - BUCKET_NAME: the name of a Google Cloud Storage Bucket, the integration
 #   tests should have read/write access to this bucket.
-# - TOPIC_NAME: a valid Cloud Pub/Sub topic.
 # - STORAGE_REGION_ID: the name of of Google Cloud Storage region, ideally close
 #   to the VMs running the integration tests.
 
@@ -46,7 +45,11 @@ echo "Running GCS Object media integration tests."
 ./object_media_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
 
 echo
-echo "Running GCS multi-threaded integration test."
+echo "Running GCS Object resumable upload integration tests."
+./object_resumable_write_integration_test "${BUCKET_NAME}"
+
+echo
+echo "Running GCS Projects.serviceAccount integration tests."
 ./thread_integration_test "${PROJECT_ID}" "${STORAGE_REGION_ID}"
 
 echo
