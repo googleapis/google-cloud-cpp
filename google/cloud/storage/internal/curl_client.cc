@@ -166,7 +166,9 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
   }
   auto response = ResumableUploadResponse::FromHttpResponse(std::move(payload));
   if (response.upload_session_url.empty()) {
-    return std::make_pair(Status(600, std::string("Invalid server response")),
+    std::ostringstream os;
+    os << __func__ << " - invalid server response, parsed to " << response;
+    return std::make_pair(Status(600, std::move(os).str()),
                           std::unique_ptr<ResumableUploadSession>());
   }
   auto session =
