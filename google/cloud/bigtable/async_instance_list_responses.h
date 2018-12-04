@@ -28,6 +28,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 struct InstanceList {
   /// The list of instances received from Cloud Bigtable.
   std::vector<google::bigtable::admin::v2::Instance> instances;
+
   /// The list of Google Cloud Platform locations where the request could not get a response from.
   std::vector<std::string> failed_locations;
 };
