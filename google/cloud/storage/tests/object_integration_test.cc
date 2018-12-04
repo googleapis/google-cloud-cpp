@@ -506,9 +506,10 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
 
   new_acl = get_result;
   new_acl.set_role("OWNER");
-  get_result =
-      client.PatchObjectAcl(bucket_name, object_name, entity_name, get_result,
-                            new_acl, IfMatchEtag(get_result.etag()));
+  // Because this is a freshly created object, with a random name, we do not
+  // worry about implementing optimistic concurrency control.
+  get_result = client.PatchObjectAcl(bucket_name, object_name, entity_name,
+                                     get_result, new_acl);
   EXPECT_EQ(get_result.role(), new_acl.role());
 
   // Remove an entity and verify it is no longer in the ACL.
@@ -548,9 +549,8 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name,
-      IfGenerationMatch(0), DestinationPredefinedAcl::AuthenticatedRead(),
-      Projection::Full());
+      bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
+      DestinationPredefinedAcl::AuthenticatedRead(), Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(meta.acl(),
                                      ObjectAccessControl()
                                          .set_entity("allAuthenticatedUsers")
@@ -575,9 +575,8 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name,
-      IfGenerationMatch(0), DestinationPredefinedAcl::BucketOwnerFullControl(),
-      Projection::Full());
+      bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
+      DestinationPredefinedAcl::BucketOwnerFullControl(), Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(
                    meta.acl(),
                    ObjectAccessControl().set_entity(owner).set_role("OWNER")))
@@ -601,9 +600,8 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name,
-      IfGenerationMatch(0), DestinationPredefinedAcl::BucketOwnerRead(),
-      Projection::Full());
+      bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
+      DestinationPredefinedAcl::BucketOwnerRead(), Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(
                    meta.acl(),
                    ObjectAccessControl().set_entity(owner).set_role("READER")))
@@ -622,9 +620,8 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclPrivate) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name,
-      IfGenerationMatch(0), DestinationPredefinedAcl::Private(),
-      Projection::Full());
+      bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
+      DestinationPredefinedAcl::Private(), Projection::Full());
   ASSERT_TRUE(meta.has_owner());
   EXPECT_LT(
       0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
@@ -645,9 +642,8 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclProjectPrivate) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name,
-      IfGenerationMatch(0), DestinationPredefinedAcl::ProjectPrivate(),
-      Projection::Full());
+      bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
+      DestinationPredefinedAcl::ProjectPrivate(), Projection::Full());
   ASSERT_TRUE(meta.has_owner());
   EXPECT_LT(
       0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
@@ -668,9 +664,8 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclPublicRead) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name,
-      IfGenerationMatch(0), DestinationPredefinedAcl::PublicRead(),
-      Projection::Full());
+      bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
+      DestinationPredefinedAcl::PublicRead(), Projection::Full());
   EXPECT_LT(
       0, CountMatchingEntities(
              meta.acl(),
@@ -1163,11 +1158,12 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
 
   // This operation should fail because the object already exists.
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { os.Close(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("[412]"));
-    throw;
-  },
-               std::runtime_error);
+  EXPECT_THROW(
+      try { os.Close(); } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("[412]"));
+        throw;
+      },
+      std::runtime_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(os.Close(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

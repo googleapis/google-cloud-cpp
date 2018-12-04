@@ -87,6 +87,59 @@ void InsertObject(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name, contents);
 }
 
+void InsertObjectStrictIdempotency(google::cloud::storage::Client unused,
+                                   int& argc, char* argv[]) {
+  if (argc < 3) {
+    throw Usage{
+        "insert-object-strict-idempotency <bucket-name> <object-name> "
+        "<object-contents (string)>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto contents = ConsumeArg(argc, argv);
+  //! [insert object strict idempotency]
+  namespace gcs = google::cloud::storage;
+  [](std::string bucket_name, std::string object_name, std::string contents) {
+    // Create a client that only retries idempotent operations, the default is
+    // to retry all operations.
+    gcs::Client client{gcs::ClientOptions(), gcs::StrictIdempotencyPolicy()};
+    gcs::ObjectMetadata meta =
+        client.InsertObject(bucket_name, object_name, std::move(contents),
+                            gcs::IfGenerationMatch(0));
+    std::cout << "The object was created. The new object metadata is " << meta
+              << std::endl;
+  }
+  //! [insert object strict idempotency]
+  (bucket_name, object_name, contents);
+}
+
+void InsertObjectModifiedRetry(google::cloud::storage::Client unused, int& argc,
+                               char* argv[]) {
+  if (argc < 3) {
+    throw Usage{
+        "insert-object-modified-retry <bucket-name> <object-name> "
+        "<object-contents (string)>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto contents = ConsumeArg(argc, argv);
+  //! [insert object modified retry]
+  namespace gcs = google::cloud::storage;
+  [](std::string bucket_name, std::string object_name, std::string contents) {
+    // Create a client that only gives up on the third error. The default policy
+    // is to retry for several minutes.
+    gcs::Client client{gcs::ClientOptions(),
+                       gcs::LimitedErrorCountRetryPolicy(3)};
+    gcs::ObjectMetadata meta =
+        client.InsertObject(bucket_name, object_name, std::move(contents),
+                            gcs::IfGenerationMatch(0));
+    std::cout << "The object was created. The new object metadata is " << meta
+              << std::endl;
+  }
+  //! [insert object modified retry]
+  (bucket_name, object_name, contents);
+}
+
 void CopyObject(google::cloud::storage::Client client, int& argc,
                 char* argv[]) {
   if (argc != 5) {
@@ -103,9 +156,9 @@ void CopyObject(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string source_bucket_name,
      std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name) {
-    gcs::ObjectMetadata new_copy_meta = client.CopyObject(
-        source_bucket_name, source_object_name, destination_bucket_name,
-        destination_object_name);
+    gcs::ObjectMetadata new_copy_meta =
+        client.CopyObject(source_bucket_name, source_object_name,
+                          destination_bucket_name, destination_object_name);
     std::cout << "Object copied. The full metadata after the copy is: "
               << new_copy_meta << std::endl;
   }
@@ -332,7 +385,7 @@ void UpdateObjectMetadata(google::cloud::storage::Client client, int& argc,
     gcs::ObjectMetadata desired = meta;
     desired.mutable_metadata().emplace(key, value);
     gcs::ObjectMetadata updated = client.UpdateObject(
-        bucket_name, object_name, desired, gcs::IfMatchEtag(meta.etag()));
+        bucket_name, object_name, desired, gcs::Generation(meta.generation()));
     std::cout << "Object updated. The full metadata after the update is: "
               << updated << std::endl;
   }
@@ -545,9 +598,8 @@ void ComposeObject(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string bucket_name,
      std::string destination_object_name,
      std::vector<gcs::ComposeSourceObject> compose_objects) {
-    gcs::ObjectMetadata composed_object =
-        client.ComposeObject(bucket_name, compose_objects,
-                             destination_object_name);
+    gcs::ObjectMetadata composed_object = client.ComposeObject(
+        bucket_name, compose_objects, destination_object_name);
     std::cout << "Composed new object " << destination_object_name
               << " Metadata: " << composed_object << std::endl;
   }
@@ -903,6 +955,8 @@ int main(int argc, char* argv[]) try {
   std::map<std::string, CommandType> commands = {
       {"list-objects", &ListObjects},
       {"insert-object", &InsertObject},
+      {"insert-object-strict-idempotency", &InsertObjectStrictIdempotency},
+      {"insert-object-modified-retry", &InsertObjectModifiedRetry},
       {"copy-object", &CopyObject},
       {"copy-encrypted-object", &CopyEncryptedObject},
       {"get-object-metadata", &GetObjectMetadata},

@@ -31,8 +31,6 @@ class CurlRequestBuilder;
 
 /**
  * Implements the low-level RPCs to Google Cloud Storage using libcurl.
- *
- * TODO(#717) - document the CurlRequest interface as a concept.
  */
 class CurlClient : public RawClient,
                    public std::enable_shared_from_this<CurlClient> {
@@ -109,6 +107,10 @@ class CurlClient : public RawClient,
       PatchObjectRequest const& request) override;
   std::pair<Status, ObjectMetadata> ComposeObject(
       ComposeObjectRequest const& request) override;
+  std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+  CreateResumableSession(ResumableUploadRequest const& request) override;
+  std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+  RestoreResumableSession(std::string const& session_id);
 
   std::pair<Status, ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;
@@ -200,6 +202,10 @@ class CurlClient : public RawClient,
   /// Insert an objet using uploadType=media.
   std::pair<Status, ObjectMetadata> InsertObjectMediaSimple(
       InsertObjectMediaRequest const& request);
+
+  /// Upload an object using uploadType=simple.
+  std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>> WriteObjectSimple(
+      InsertObjectStreamingRequest const& request);
 
   ClientOptions options_;
   std::string storage_endpoint_;

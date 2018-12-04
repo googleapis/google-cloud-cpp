@@ -88,9 +88,6 @@ google::cloud::optional<ObjectMetadata> ListObjectsReader::GetNext() {
     }
     request_.set_page_token(std::move(next_page_token_));
     auto response = client_->ListObjects(request_);
-    // TODO(#759) - once the refactoring dust settles, the client either raises
-    // if there was an error, or we get here with a success status, so there
-    // is no need to check response.first.ok().
     next_page_token_ = std::move(response.second.next_page_token);
     current_objects_ = std::move(response.second.items);
     current_ = current_objects_.begin();

@@ -134,6 +134,8 @@ add_library(storage_client
             internal/curl_request.cc
             internal/curl_request_builder.h
             internal/curl_request_builder.cc
+            internal/curl_resumable_streambuf.h
+            internal/curl_resumable_streambuf.cc
             internal/curl_upload_request.cc
             internal/curl_upload_request.h
             internal/curl_wrappers.h
@@ -238,7 +240,7 @@ target_link_libraries(storage_client
                              ZLIB::ZLIB
                       PRIVATE storage_common_options)
 if (WIN32)
-    target_link_libraries(storage_client PUBLIC wsock32 ws2_32)
+    target_link_libraries(storage_client PUBLIC crypt32 wsock32 ws2_32)
 endif ()
 target_include_directories(storage_client
                            PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -332,7 +334,6 @@ set(storage_client_unit_tests
     internal/object_requests_test.cc
     internal/parse_rfc3339_test.cc
     internal/patch_builder_test.cc
-    internal/retry_client_test.cc
     internal/retry_resumable_upload_session_test.cc
     internal/service_account_requests_test.cc
     lifecycle_rule_test.cc

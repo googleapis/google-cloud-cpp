@@ -273,6 +273,12 @@ TEST_F(CurlClientTest, RewriteObject) {
   TestCorrectFailureStatus(status_and_foo.first);
 }
 
+TEST_F(CurlClientTest, CreateResumableSession) {
+  auto status_and_foo = client_->CreateResumableSession(
+      ResumableUploadRequest("test-bucket", "test-object"));
+  TestCorrectFailureStatus(status_and_foo.first);
+}
+
 TEST_F(CurlClientTest, ListDefaultObjectAcl) {
   auto status_and_foo =
       client_->ListDefaultObjectAcl(ListDefaultObjectAclRequest("bkt"));

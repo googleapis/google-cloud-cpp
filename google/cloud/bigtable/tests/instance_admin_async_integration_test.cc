@@ -189,7 +189,17 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
   auto instance_details = create_instance_promise.get_future().get();
 
   // create cluster
-  auto clusters_before = instance_admin_->ListClusters(id);
+  std::promise<bigtable::ClusterList> clusters_before_promise;
+  admin.AsyncListClusters(
+      id, cq,
+      [&clusters_before_promise](bigtable::CompletionQueue&,
+                                 bigtable::ClusterList& response,
+                                 grpc::Status& status) {
+        ASSERT_TRUE(status.ok());
+        ASSERT_TRUE(response.failed_locations.empty());
+        clusters_before_promise.set_value(response);
+      });
+  auto clusters_before = clusters_before_promise.get_future().get().clusters;
   ASSERT_FALSE(IsClusterPresent(clusters_before, cluster_id_str))
       << "Cluster (" << cluster_id_str << ") already exists."
       << " This is unexpected, as the cluster ids are"
@@ -207,7 +217,17 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
         create_promise.set_value(std::move(response));
       });
   auto cluster = create_promise.get_future().get();
-  auto clusters_after = instance_admin_->ListClusters(id);
+  std::promise<bigtable::ClusterList> clusters_after_promise;
+  admin.AsyncListClusters(
+      id, cq,
+      [&clusters_after_promise](bigtable::CompletionQueue&,
+                                bigtable::ClusterList& response,
+                                grpc::Status& status) {
+        ASSERT_TRUE(status.ok());
+        ASSERT_TRUE(response.failed_locations.empty());
+        clusters_after_promise.set_value(response);
+      });
+  auto clusters_after = clusters_after_promise.get_future().get().clusters;
   EXPECT_FALSE(IsClusterPresent(clusters_before, cluster.name()));
   EXPECT_TRUE(IsClusterPresent(clusters_after, cluster.name()));
 

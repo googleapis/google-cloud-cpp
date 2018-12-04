@@ -24,6 +24,10 @@ is available [online][doxygen-link].
 
 ### v0.2.x - TBD
 
+* Implement `google::cloud::future<T>` and `google::cloud::promise<T>` based on
+  ISO/IEC TS 19571:2016, the "C++ Extensions for Concurrency" technical
+  specification, also known as "futures with continuations". 
+
 ### v0.1.x - 2018-11
 
 * `google::cloud::optional<T>` an intentionally incomplete implementation of

@@ -297,7 +297,6 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForEmptyTimestampRangeTest) {
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // Try to delete the columns with an invalid range:
-  // TODO(#119) - change the expected exception to the wrapper.
   EXPECT_THROW(table->Apply(bigtable::SingleRowMutation(
                    key, bigtable::DeleteFromColumn(column_family2, "c2",
                                                    2000_us, 2000_us))),

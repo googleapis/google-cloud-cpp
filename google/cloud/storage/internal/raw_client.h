@@ -25,6 +25,7 @@
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/object_streambuf.h"
+#include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/internal/service_account_requests.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/object_metadata.h"
@@ -93,6 +94,8 @@ class RawClient {
       ComposeObjectRequest const&) = 0;
   virtual std::pair<Status, RewriteObjectResponse> RewriteObject(
       RewriteObjectRequest const&) = 0;
+  virtual std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+  CreateResumableSession(ResumableUploadRequest const& request) = 0;
   //@}
 
   //@{

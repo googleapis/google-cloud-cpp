@@ -24,7 +24,8 @@ namespace internal {
 std::pair<Status, ResumableUploadResponse>
 LoggingResumableUploadSession::UploadChunk(std::string const& buffer,
                                            std::uint64_t upload_size) {
-  GCP_LOG(INFO) << __func__ << " << upload_size=" << upload_size;
+  GCP_LOG(INFO) << __func__ << " << upload_size=" << upload_size
+                << ", buffer.size=" << buffer.size();
   auto response = session_->UploadChunk(buffer, upload_size);
   GCP_LOG(INFO) << __func__ << " >> status={" << response.first
                 << "}, payload={" << response.second << "}";
@@ -43,6 +44,13 @@ LoggingResumableUploadSession::ResetSession() {
 std::uint64_t LoggingResumableUploadSession::next_expected_byte() const {
   GCP_LOG(INFO) << __func__ << " << ()";
   auto response = session_->next_expected_byte();
+  GCP_LOG(INFO) << __func__ << " >> " << response;
+  return response;
+}
+
+std::string const& LoggingResumableUploadSession::session_id() const {
+  GCP_LOG(INFO) << __func__ << " << ()";
+  auto const& response = session_->session_id();
   GCP_LOG(INFO) << __func__ << " >> " << response;
   return response;
 }
