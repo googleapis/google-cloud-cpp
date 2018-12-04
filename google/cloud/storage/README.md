@@ -20,7 +20,7 @@ the reference guide includes a quick start guide.
 
 ## Release Notes
 
-### v0.2.x - TBD
+### v0.2.x - 2018-12
 
 * Use resumable uploads for large files in `Client::UploadFile()`.
 * Implement support for the `userIp` optional query parameter.
