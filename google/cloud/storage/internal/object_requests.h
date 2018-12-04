@@ -257,10 +257,10 @@ std::ostream& operator<<(std::ostream& os, UpdateObjectRequest const& r);
  * Represents a request to the `Objects: compose` API.
  */
 class ComposeObjectRequest
-    : public GenericObjectRequest<
-          ComposeObjectRequest, EncryptionKey, Generation,
-          DestinationPredefinedAcl, KmsKeyName, IfGenerationMatch,
-          IfMetagenerationMatch, UserProject, WithObjectMetadata> {
+    : public GenericObjectRequest<ComposeObjectRequest, EncryptionKey,
+                                  DestinationPredefinedAcl, KmsKeyName,
+                                  IfGenerationMatch, IfMetagenerationMatch,
+                                  UserProject, WithObjectMetadata> {
  public:
   ComposeObjectRequest() = default;
   explicit ComposeObjectRequest(std::string bucket_name,
