@@ -158,13 +158,14 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
   }
   builder.AddHeader("Content-Length: " +
                     std::to_string(request_payload.size()));
-  auto payload = builder.BuildRequest().MakeRequest(request_payload);
-  if (payload.status_code >= 300) {
+  auto http_response = builder.BuildRequest().MakeRequest(request_payload);
+  if (http_response.status_code >= 300) {
     return std::make_pair(
-        Status{payload.status_code, std::move(payload.payload)},
+        Status{http_response.status_code, std::move(http_response.payload)},
         std::unique_ptr<ResumableUploadSession>());
   }
-  auto response = ResumableUploadResponse::FromHttpResponse(std::move(payload));
+  auto response =
+      ResumableUploadResponse::FromHttpResponse(std::move(http_response));
   if (response.upload_session_url.empty()) {
     std::ostringstream os;
     os << __func__ << " - invalid server response, parsed to " << response;
