@@ -23,14 +23,12 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
- * The response of a an async list instances.
- * instances and failed location.
- * `instances` contains the requested list of instances.
- * `failed_locations` contains the list of GCP locations which the request
- *  failed to get a response from.
+ * The response for an asynchronous request listing all the instances.
  */
 struct InstanceList {
+  /// The list of instances received from Cloud Bigtable.
   std::vector<google::bigtable::admin::v2::Instance> instances;
+  /// The list of Google Cloud Platform locations where the request could not get a response from.
   std::vector<std::string> failed_locations;
 };
 
