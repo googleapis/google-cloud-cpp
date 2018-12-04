@@ -44,7 +44,7 @@ class SignUrlRequest {
   std::string const& object_name() const { return object_name_; }
 
   /// Creates the blob to be signed.
-  std::string CreateBlob() const;
+  std::string StringToSign() const;
 
   template <typename H, typename... T>
   SignUrlRequest& set_multiple_options(H&& h, T&&... tail) {

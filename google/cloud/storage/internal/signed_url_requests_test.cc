@@ -51,7 +51,7 @@ x-goog-encryption-algorithm:AES256
 x-goog-meta-foo:bar,baz
 /test-bucket/test-object)""";
 
-  EXPECT_EQ(expected_blob, request.CreateBlob());
+  EXPECT_EQ(expected_blob, request.StringToSign());
 
   std::ostringstream os;
   os << request;

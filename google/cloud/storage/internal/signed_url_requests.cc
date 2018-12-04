@@ -21,7 +21,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-std::string SignUrlRequest::CreateBlob() const {
+std::string SignUrlRequest::StringToSign() const {
   std::ostringstream os;
 
   auto seconds = std::chrono::duration_cast<std::chrono::seconds>(
@@ -41,7 +41,7 @@ std::string SignUrlRequest::CreateBlob() const {
 }
 
 std::ostream& operator<<(std::ostream& os, SignUrlRequest const& r) {
-  return os << "SingUrlRequest={" << r.CreateBlob() << "}";
+  return os << "SingUrlRequest={" << r.StringToSign() << "}";
 }
 
 }  // namespace internal
