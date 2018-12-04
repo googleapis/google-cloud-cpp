@@ -82,11 +82,13 @@ int main(int argc, char* argv[]) try {
   }
   //! [write rows] [END writing_rows]
 
+  //! [create filter] [START creating_a_filter]
+  auto filter = google::cloud::bigtable::Filter::ColumnRangeClosed("family", "c0", "c0");
+  //! [create filter] [END creating_a_filter]
+
   // Read a single row.
   //! [read row] [START getting_a_row]
-  auto result = table.ReadRow(
-      "key-0",
-      google::cloud::bigtable::Filter::ColumnRangeClosed("family", "c0", "c0"));
+  auto result = table.ReadRow("key-0", filter);
   if (not result.first) {
     std::cout << "Cannot find row 'key-0' in the table: " << table.table_name()
               << std::endl;

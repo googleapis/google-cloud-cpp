@@ -60,6 +60,15 @@ operation.  In addition to `SetCell()` there
 are functions to delete columns (e.g., `DeleteFromFamily()`) or to delete the
 whole row (`DeleteFromRow()`).
 
+### Creating filter for the column families
+
+Create a filer of family Column with`bigtable::Filter::ColumnRangeClosed()`:
+
+@snippet bigtable_hello_world.cc create filter
+
+@see `bigtable::v0::Filter` to filter the column families, columns, and even
+  the timestamps returned by `ReadRow()`.
+
 ### Reading a row by its key
 
 Get a row directly using its key with `bigtable::Table::ReadRow()`:
@@ -67,7 +76,6 @@ Get a row directly using its key with `bigtable::Table::ReadRow()`:
 @snippet bigtable_hello_world.cc read row
 
 @see `bigtable::v0::Filter` to filter the column families, columns, and even
-  the timestamps returned by `ReadRow()`.
 @see `bigtable::v0::Table::ReadRows()` to iterate over multiple rows.
 
 ### Scanning all table rows
