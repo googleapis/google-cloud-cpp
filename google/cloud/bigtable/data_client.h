@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_DATA_CLIENT_H_
 
 #include "google/cloud/bigtable/client_options.h"
+#include "google/cloud/bigtable/internal/completion_queue_impl.h"
+#include "google/cloud/bigtable/row.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
 namespace google {
@@ -31,6 +33,12 @@ namespace internal {
 class AsyncBulkMutator;
 class AsyncSampleRowKeys;
 class BulkMutator;
+template <typename ReadRowCallback,
+          typename std::enable_if<
+              google::cloud::internal::is_invocable<
+                  ReadRowCallback, CompletionQueue&, Row, grpc::Status&>::value,
+              int>::type>
+class AsyncRowReader;
 }  // namespace internal
 
 /**
@@ -86,6 +94,12 @@ class DataClient {
   friend class internal::AsyncSampleRowKeys;
   friend class internal::BulkMutator;
   friend class RowReader;
+  template <typename ReadRowCallback,
+            typename std::enable_if<google::cloud::internal::is_invocable<
+                                        ReadRowCallback, CompletionQueue&, Row,
+                                        grpc::Status&>::value,
+                                    int>::type>
+  friend class internal::AsyncRowReader;
   //@{
   /// @name the `google.bigtable.v2.Bigtable` wrappers.
   virtual grpc::Status MutateRow(

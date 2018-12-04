@@ -36,6 +36,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+namespace internal {
 /**
  * Async-friendly version RowReader.
  *
@@ -188,6 +189,7 @@ class AsyncRowReader {
   ReadRowCallback read_row_callback_;
 };
 
+}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
