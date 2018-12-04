@@ -22,7 +22,9 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.2.x - TBD
+### v0.3.x - TBD
+
+### v0.2.x - 2018-12
 
 * Implement `google::cloud::future<T>` and `google::cloud::promise<T>` based on
   ISO/IEC TS 19571:2016, the "C++ Extensions for Concurrency" technical

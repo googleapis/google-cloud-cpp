@@ -21,7 +21,9 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.4.x - TBD
+### v0.5.x - TBD
+
+### v0.4.x - 2018-12
 
 * More experimental asynchronous APIs, note that we expect to change all these
   experimental APIs as described in
