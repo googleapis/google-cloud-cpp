@@ -39,13 +39,13 @@ struct UseResumableUploadSession
 };
 
 /// Create a UseResumableUploadSession option that restores previous sessions.
-UseResumableUploadSession RestoreResumableUploadSession(
+inline UseResumableUploadSession RestoreResumableUploadSession(
     std::string session_id) {
   return UseResumableUploadSession(std::move(session_id));
 }
 
 /// Create a UseResumableUploadSession option that requests new sessions.
-UseResumableUploadSession NewResumableUploadSession() {
+inline UseResumableUploadSession NewResumableUploadSession() {
   return UseResumableUploadSession("");
 }
 
