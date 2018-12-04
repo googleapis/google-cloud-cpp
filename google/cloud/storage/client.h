@@ -24,6 +24,7 @@
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/object_rewriter.h"
 #include "google/cloud/storage/object_stream.h"
+#include "google/cloud/storage/retry_policy.h"
 
 namespace google {
 namespace cloud {
@@ -60,22 +61,41 @@ inline namespace STORAGE_CLIENT_NS {
 class Client {
  public:
   /**
-   * Creates the default client type given the options.
-   */
-  explicit Client(ClientOptions options);
-
-  /**
    * Creates the default client type with the default configuration.
    */
   explicit Client() : Client(ClientOptions()) {}
 
   /**
-   * Creates the default client type given the credentials.
+   * Creates the default client type given the options.
+   *
+   * @param options the client options, these are used to control credentials,
+   *   buffer sizes, etc.
+   * @param policies the client policies, these control the behavior of the
+   *   client, for example, how to backoff when a operation needs to be retried,
+   *   or what operations cannot be retried because they are not idempotent.
+   *
+   * @par Idempotency Policy Example
+   * @snippet storage_object_samples.cc insert object strict idempotency
+   *
+   * @par Modified Retry Policy Example
+   * @snippet storage_object_samples.cc insert object modified retry
    */
-  explicit Client(std::shared_ptr<oauth2::Credentials> credentials)
-      : Client(ClientOptions(std::move(credentials))) {}
+  template <typename... Policies>
+  explicit Client(ClientOptions options, Policies&&... policies)
+      : Client(CreateDefaultClient(std::move(options)),
+               std::forward<Policies>(policies)...) {}
 
-  /// Builds a client and maybe override the retry and/or backoff policies.
+  /**
+   * Creates the default client type given the credentials and policies.
+   */
+  template <typename... Policies>
+  explicit Client(std::shared_ptr<oauth2::Credentials> credentials,
+                  Policies&&... policies)
+      : Client(ClientOptions(std::move(credentials)),
+               std::forward<Policies>(policies)...) {}
+
+  /// Builds a client and maybe override the retry, idempotency, and/or backoff
+  /// policies.
   template <typename... Policies>
   explicit Client(std::shared_ptr<internal::RawClient> client,
                   Policies&&... policies)
@@ -1939,6 +1959,9 @@ class Client {
   //@}
 
  private:
+  static std::shared_ptr<internal::RawClient> CreateDefaultClient(
+      ClientOptions options);
+
   template <typename... Policies>
   std::shared_ptr<internal::RawClient> Decorate(
       std::shared_ptr<internal::RawClient> client, Policies&&... policies) {

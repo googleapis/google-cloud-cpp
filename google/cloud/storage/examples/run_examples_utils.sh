@@ -322,6 +322,20 @@ run_all_object_examples() {
 
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${encrypted_object_name}"
+
+  local object_name_strict="object-strict-$(date +%s)-${RANDOM}.txt"
+  run_example ./storage_object_samples insert-object-strict-idempotency \
+      "${bucket_name}" "${object_name_strict}" \
+      "a-string-to-serve-as-object-media"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name_strict}"
+
+  local object_name_retry="object-retry-$(date +%s)-${RANDOM}.txt"
+  run_example ./storage_object_samples insert-object-modified-retry \
+      "${bucket_name}" "${object_name_retry}" \
+      "a-string-to-serve-as-object-media"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name_retry}"
 }
 
 ################################################

@@ -30,8 +30,10 @@ static_assert(std::is_copy_constructible<storage::Client>::value,
 static_assert(std::is_copy_assignable<storage::Client>::value,
               "storage::Client must be assignable");
 
-Client::Client(ClientOptions options)
-    : Client(internal::CurlClient::Create(std::move(options))) {}
+std::shared_ptr<internal::RawClient>
+Client::CreateDefaultClient(ClientOptions options) {
+  return internal::CurlClient::Create(std::move(options));
+}
 
 bool Client::UseSimpleUpload(std::string const& file_name) const {
   auto status = google::cloud::internal::status(file_name);
