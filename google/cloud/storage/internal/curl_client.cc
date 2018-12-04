@@ -687,6 +687,20 @@ CurlClient::CreateResumableSession(ResumableUploadRequest const& request) {
   return std::make_pair(Status(), std::move(session));
 }
 
+std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+CurlClient::RestoreResumableSession(std::string const& session_id) {
+  auto session =
+      google::cloud::internal::make_unique<CurlResumableUploadSession>(
+          shared_from_this(), session_id);
+  auto response = session->ResetSession();
+  if (response.first.status_code() == 308 or
+      response.first.status_code() < 300) {
+    return std::make_pair(Status(), std::move(session));
+  }
+  return std::make_pair(std::move(response.first),
+                        std::unique_ptr<ResumableUploadSession>());
+}
+
 std::pair<Status, ListBucketAclResponse> CurlClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
   CurlRequestBuilder builder(

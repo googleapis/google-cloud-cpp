@@ -109,6 +109,8 @@ class CurlClient : public RawClient,
       ComposeObjectRequest const& request) override;
   std::pair<Status, std::unique_ptr<ResumableUploadSession>>
   CreateResumableSession(ResumableUploadRequest const& request) override;
+  std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+  RestoreResumableSession(std::string const& session_id);
 
   std::pair<Status, ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;
