@@ -314,6 +314,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StrictIdempotencyPolicy.html">StrictIdempotencyPolicy</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html" title="Define the interface for the idempotency policy. ">IdempotencyPolicy</a> that only retries strictly idempotent requests.  <a href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StrictIdempotencyPolicy.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UseResumableUploadSession.html">UseResumableUploadSession</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request a resumable upload, restoring a previous session if necessary.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UseResumableUploadSession.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html">UserProject</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the project used for billing in "requester pays" Buckets.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UserProject.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -519,6 +522,12 @@ Functions</h2></td></tr>
 <tr class="memitem:abca1cce326f7aa9912580588c4517e70"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKeyData.html">EncryptionKeyData</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#abca1cce326f7aa9912580588c4517e70">CreateKeyFromGenerator</a> (Generator &amp;gen)</td></tr>
 <tr class="memdesc:abca1cce326f7aa9912580588c4517e70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an encryption key parameter from a pseudo-random number generator.  <a href="#abca1cce326f7aa9912580588c4517e70">More...</a><br /></td></tr>
 <tr class="separator:abca1cce326f7aa9912580588c4517e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4011e191a6a3b96add28f23b04db3957"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UseResumableUploadSession.html">UseResumableUploadSession</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a4011e191a6a3b96add28f23b04db3957">RestoreResumableUploadSession</a> (std::string session_id)</td></tr>
+<tr class="memdesc:a4011e191a6a3b96add28f23b04db3957"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UseResumableUploadSession.html" title="Request a resumable upload, restoring a previous session if necessary. ">UseResumableUploadSession</a> option that restores previous sessions.  <a href="#a4011e191a6a3b96add28f23b04db3957">More...</a><br /></td></tr>
+<tr class="separator:a4011e191a6a3b96add28f23b04db3957"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b44fe45cc1adf04685b817928056f47"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UseResumableUploadSession.html">UseResumableUploadSession</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a7b44fe45cc1adf04685b817928056f47">NewResumableUploadSession</a> ()</td></tr>
+<tr class="memdesc:a7b44fe45cc1adf04685b817928056f47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UseResumableUploadSession.html" title="Request a resumable upload, restoring a previous session if necessary. ">UseResumableUploadSession</a> option that requests new sessions.  <a href="#a7b44fe45cc1adf04685b817928056f47">More...</a><br /></td></tr>
+<tr class="separator:a7b44fe45cc1adf04685b817928056f47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Comparison operators for CorsEntry.</div></td></tr>
 <tr class="memitem:a392fb8bf4acb46a45dd5165e7a40b2ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a392fb8bf4acb46a45dd5165e7a40b2ee">operator==</a> (<a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html">CorsEntry</a> const &amp;lhs, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html">CorsEntry</a> const &amp;rhs)</td></tr>
 <tr class="separator:a392fb8bf4acb46a45dd5165e7a40b2ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -803,6 +812,33 @@ template&lt;typename Generator &gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a7b44fe45cc1adf04685b817928056f47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b44fe45cc1adf04685b817928056f47">&#9670;&nbsp;</a></span>NewResumableUploadSession()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UseResumableUploadSession.html">UseResumableUploadSession</a> google::cloud::storage::v0::NewResumableUploadSession </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UseResumableUploadSession.html" title="Request a resumable upload, restoring a previous session if necessary. ">UseResumableUploadSession</a> option that requests new sessions. </p>
 
 </div>
 </div>
@@ -3663,6 +3699,34 @@ template&lt;typename Generator &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4011e191a6a3b96add28f23b04db3957"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4011e191a6a3b96add28f23b04db3957">&#9670;&nbsp;</a></span>RestoreResumableUploadSession()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UseResumableUploadSession.html">UseResumableUploadSession</a> google::cloud::storage::v0::RestoreResumableUploadSession </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>session_id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1UseResumableUploadSession.html" title="Request a resumable upload, restoring a previous session if necessary. ">UseResumableUploadSession</a> option that restores previous sessions. </p>
 
 </div>
 </div>
