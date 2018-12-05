@@ -77,6 +77,8 @@ var searchData=
   ['setversioning',['SetVersioning',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a1bb070361951c813f9fd9b22dd1dba44',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['setwebsite',['SetWebsite',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#afe028b3adeb3021cecae8f7220d81b26',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['sha256',['sha256',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKeyData.html#a6151c273153473b834590873b9afcf6a',1,'google::cloud::storage::v0::EncryptionKeyData']]],
+  ['signed_5furl_5foptions_2ecc',['signed_url_options.cc',['../signed__url__options_8cc.html',1,'']]],
+  ['signed_5furl_5foptions_2eh',['signed_url_options.h',['../signed__url__options_8h.html',1,'']]],
   ['size',['size',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#aa3bc2d054c4f030bcbe4a781f4271925',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['sourceencryptionkey',['SourceEncryptionKey',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1SourceEncryptionKey.html',1,'google::cloud::storage::v0']]],
   ['sourcegeneration',['SourceGeneration',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1SourceGeneration.html',1,'google::cloud::storage::v0']]],

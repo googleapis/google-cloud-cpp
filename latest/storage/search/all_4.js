@@ -23,5 +23,6 @@ var searchData=
   ['event_5ftype',['event_type',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a490539df25124d80b6eaff5f57202c91',1,'google::cloud::storage::v0::NotificationMetadata']]],
   ['event_5ftype_5fsize',['event_type_size',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a616410cfc69ab8372353bbb76cd29512',1,'google::cloud::storage::v0::NotificationMetadata']]],
   ['event_5ftypes',['event_types',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a107401780b14fcbec78ee66fb4e6fcd1',1,'google::cloud::storage::v0::NotificationMetadata']]],
+  ['expirationtime',['ExpirationTime',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1ExpirationTime.html',1,'google::cloud::storage::v0']]],
   ['exponentialbackoffpolicy',['ExponentialBackoffPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a6271071b268ae795cb94cb628a4fc24c',1,'google::cloud::storage::v0']]]
 ];
