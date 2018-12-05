@@ -314,19 +314,20 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::DeleteObjectRequest const& request) const {
-  return request.HasOption<IfGenerationMatch>();
+  return request.HasOption<Generation>() or
+         request.HasOption<IfGenerationMatch>();
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::UpdateObjectRequest const& request) const {
-  return (request.HasOption<IfMatchEtag>() or
-      request.HasOption<IfMetagenerationMatch>());
+  return request.HasOption<IfMatchEtag>() or
+         request.HasOption<IfMetagenerationMatch>();
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::PatchObjectRequest const& request) const {
-  return (request.HasOption<IfMatchEtag>() or
-      request.HasOption<IfMetagenerationMatch>());
+  return request.HasOption<IfMatchEtag>() or
+         request.HasOption<IfMetagenerationMatch>();
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
