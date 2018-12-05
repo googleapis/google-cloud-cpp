@@ -410,7 +410,7 @@ x-goog-encryption-algorithm:AES256
 x-goog-meta-foo:bar,baz
 /bucket/objectname)""";
 
-  auto actual = credentials.SignBlob(blob);
+  auto actual = credentials.SignString(blob);
   ASSERT_TRUE(actual.first.ok());
 
   // To generate the expected output I used:
