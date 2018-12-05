@@ -135,7 +135,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc list buckets for project
@@ -167,7 +167,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc list buckets
@@ -260,7 +260,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc get bucket metadata
@@ -285,9 +285,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions, in this case,
-   * `IfMetagenerationMatch`.
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc delete bucket
@@ -314,12 +313,11 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions, in this case,
-   * `IfMetagenerationMatch`.
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case,`IfMetagenerationMatch`.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc update bucket
@@ -353,9 +351,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions, in this case,
-   * `IfMetagenerationMatch`.
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc patch bucket storage class
@@ -386,9 +383,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions, in this case,
-   * `IfMetagenerationMatch`.
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc patch bucket storage class with builder
@@ -429,7 +425,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_iam_samples.cc get bucket iam policy
@@ -479,9 +475,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions, in this case,
-   * `IfMetagenerationMatch`.
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
    *
    * @par Example: adding a new member
    * @snippet storage_bucket_iam_samples.cc add bucket iam member
@@ -523,7 +518,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_iam_samples.cc test bucket iam permissions
@@ -630,9 +625,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions, in this case,
-   * `IfGenerationMatch`.
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc insert object
@@ -681,9 +675,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions, in this case,
-   * `IfGenerationMatch`.
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc copy object
@@ -719,7 +712,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_object_samples.cc get object metadata
@@ -746,7 +739,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_object_samples.cc list objects
@@ -773,7 +766,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_object_samples.cc read object
@@ -806,9 +799,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions, in this case,
-   * `IfGenerationMatch`.
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc write object
@@ -846,9 +838,8 @@ class Client {
    *   `WithObjectMetadata`.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions, in this case,
-   * `IfGenerationMatch`.
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
    * @throw std::runtime_error if there is a permanent failure, or if there were
    *     more transient failures than allowed by the current retry policy.
@@ -888,7 +879,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_object_samples.cc download file
@@ -945,9 +936,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions, in this case,
-   * `IfMetagenerationMatch`.
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc update object metadata
@@ -984,9 +974,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions, in this case,
-   * `IfMetagenerationMatch`.
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc patch object delete metadata
@@ -1023,9 +1012,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions, in this case,
-   * `IfMetagenerationMatch`.
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc patch object content type
@@ -1057,9 +1045,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions, in this case,
-   * `IfGenerationMatch`.
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc compose object
@@ -1107,9 +1094,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions, in this case,
-   * `IfGenerationMatch`.
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc rewrite object non blocking
@@ -1159,9 +1145,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions, in this case,
-   * `IfGenerationMatch`.
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc rewrite object resume
@@ -1213,9 +1198,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions, in this case,
-   * `IfGenerationMatch`.
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc rewrite object
@@ -1280,7 +1264,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc list bucket acl
@@ -1306,9 +1290,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions. There are no pre-conditions for
-   * this operation that can make it idempotent.
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc create bucket acl
@@ -1335,9 +1318,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions. There are no pre-conditions for
-   * this operation that can make it idempotent.
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc delete bucket acl
@@ -1362,7 +1344,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc get bucket acl
@@ -1389,9 +1371,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions. There are no pre-conditions for
-   * this operation that can make it idempotent.
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc update bucket acl
@@ -1436,9 +1417,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions. There are no pre-conditions for
-   * this operation that can make it idempotent.
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc patch bucket acl
@@ -1484,9 +1464,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions. There are no pre-conditions for
-   * this operation that can make it idempotent.
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc patch bucket acl no-read
@@ -1536,7 +1515,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc list object acl
@@ -1564,9 +1543,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions. There are no pre-conditions for
-   * this operation that can make it idempotent.
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc create object acl
@@ -1597,9 +1575,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions. There are no pre-conditions for
-   * this operation that can make it idempotent.
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc delete object acl
@@ -1626,7 +1603,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc get object acl
@@ -1655,9 +1632,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions. There are no pre-conditions for
-   * this operation that can make it idempotent.
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc update object acl
@@ -1704,9 +1680,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions. There are no pre-conditions for
-   * this operation that can make it idempotent.
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc patch object acl
@@ -1753,9 +1728,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions. There are no pre-conditions for
-   * this operation that can make it idempotent.
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc patch object acl no-read
@@ -1801,7 +1775,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc list default object acl
@@ -1833,9 +1807,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions. There are no pre-conditions for
-   * this operation that can make it idempotent.
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc create default object acl
@@ -1868,9 +1841,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions. There are no pre-conditions for
-   * this operation that can make it idempotent.
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc delete default object acl
@@ -1901,7 +1873,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc get default object acl
@@ -1934,9 +1906,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions. There are no pre-conditions for
-   * this operation that can make it idempotent.
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc update default object acl
@@ -1982,9 +1953,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions. There are no pre-conditions for
-   * this operation that can make it idempotent.
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc patch default object acl
@@ -2029,9 +1999,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions. There are no pre-conditions for
-   * this operation that can make it idempotent.
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc patch default object acl
@@ -2079,7 +2048,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc get service account for project
@@ -2119,7 +2088,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc get service account
@@ -2165,7 +2134,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_notification_samples.cc list notifications
@@ -2202,9 +2171,8 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Like other operations that mutate the state of GCS, this operation is only
-   * idempotent if restricted by pre-conditions. There are no pre-conditions for
-   * this operation that can make it idempotent.
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_notification_samples.cc create notification
@@ -2244,7 +2212,7 @@ class Client {
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * Being a read-only operation this is always idempotent.
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_notification_samples.cc get notification
