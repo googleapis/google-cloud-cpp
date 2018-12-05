@@ -2,6 +2,7 @@
 bigtable_client_HDRS = [
     "admin_client.h",
     "app_profile_config.h",
+    "async_instance_list_responses.h",
     "async_operation.h",
     "bigtable_strong_types.h",
     "cell.h",
@@ -20,6 +21,7 @@ bigtable_client_HDRS = [
     "internal/async_check_consistency.h",
     "internal/async_future_from_callback.h",
     "internal/async_list_clusters.h",
+    "internal/async_list_instances.h",
     "internal/async_longrunning_op.h",
     "internal/async_loop_op.h",
     "internal/async_op_traits.h",

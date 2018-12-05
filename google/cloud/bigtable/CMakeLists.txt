@@ -128,6 +128,7 @@ add_library(bigtable_client
             admin_client.cc
             app_profile_config.h
             app_profile_config.cc
+            async_instance_list_responses.h
             async_operation.h
             bigtable_strong_types.h
             ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
@@ -156,6 +157,7 @@ add_library(bigtable_client
             internal/async_check_consistency.h
             internal/async_future_from_callback.h
             internal/async_list_clusters.h
+            internal/async_list_instances.h
             internal/async_longrunning_op.h
             internal/async_loop_op.h
             internal/async_op_traits.h
@@ -307,6 +309,7 @@ set(bigtable_client_unit_tests
     internal/async_check_consistency_test.cc
     internal/async_future_from_callback_test.cc
     internal/async_list_clusters_test.cc
+    internal/async_list_instances_test.cc
     internal/async_longrunning_op_test.cc
     internal/async_poll_op_test.cc
     internal/async_retry_multi_page_test.cc
