@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['op',['op',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html#aba644eb7442dd634667e390f3492af0c',1,'google::cloud::bigtable::v0::Mutation']]]
+  ['millis',['MILLIS',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableConfig.html#a0797d9ae05d1227beeeb7c5d9f8866b3',1,'google::cloud::bigtable::v0::TableConfig']]]
 ];
