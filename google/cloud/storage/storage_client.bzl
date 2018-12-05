@@ -73,6 +73,7 @@ storage_client_HDRS = [
     "signed_url_options.h",
     "status.h",
     "storage_class.h",
+    "upload_options.h",
     "version.h",
     "well_known_headers.h",
     "well_known_parameters.h",

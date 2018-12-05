@@ -228,6 +228,7 @@ add_library(storage_client
             signed_url_options.cc
             status.h
             storage_class.h
+            upload_options.h
             version.h
             version.cc
             well_known_headers.h
