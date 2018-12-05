@@ -188,6 +188,8 @@ add_library(storage_client
             internal/retry_resumable_upload_session.cc
             internal/service_account_requests.h
             internal/service_account_requests.cc
+            internal/signed_url_requests.h
+            internal/signed_url_requests.cc
             lifecycle_rule.h
             lifecycle_rule.cc
             list_buckets_reader.h
@@ -222,6 +224,8 @@ add_library(storage_client
             retry_policy.h
             service_account.h
             service_account.cc
+            signed_url_options.h
+            signed_url_options.cc
             status.h
             storage_class.h
             version.h
@@ -336,6 +340,7 @@ set(storage_client_unit_tests
     internal/patch_builder_test.cc
     internal/retry_resumable_upload_session_test.cc
     internal/service_account_requests_test.cc
+    internal/signed_url_requests_test.cc
     lifecycle_rule_test.cc
     list_buckets_reader_test.cc
     list_objects_reader_test.cc
