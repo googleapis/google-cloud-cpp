@@ -131,8 +131,8 @@ class Client {
    *     Valid types for this operation include `MaxResults`, `Prefix`,
    *     `UserProject`, and `Projection`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -163,8 +163,8 @@ class Client {
    * @throw std::logic_error if the function is called without a default
    *     project id set.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -193,11 +193,11 @@ class Client {
    *     Valid types for this operation include `PredefinedAcl`,
    *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * This operation is always idempotent, it fails if the bucket already exists.
+   * This operation is always idempotent. It fails if the bucket already exists.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc create bucket
@@ -227,11 +227,11 @@ class Client {
    *     Valid types for this operation include `PredefinedAcl`,
    *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
-   * This operation is always idempotent, it fails if the bucket already exists.
+   * This operation is always idempotent. It fails if the bucket already exists.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc create bucket for project
@@ -256,8 +256,8 @@ class Client {
    *     Valid types for this operation include `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `UserProject`, and `Projection`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -281,8 +281,8 @@ class Client {
    *     Valid types for this operation include `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -310,8 +310,8 @@ class Client {
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -349,8 +349,8 @@ class Client {
    *     Valid types for this operation include `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -382,8 +382,8 @@ class Client {
    *     Valid types for this operation include `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -425,8 +425,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -475,8 +475,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -519,8 +519,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -568,8 +568,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * This operation is always idempotent because the `metageneration` parameter
@@ -626,8 +626,8 @@ class Client {
    *     `IfMetagenerationNotMatch`, `KmsKeyName`, `MD5HashValue`,
    *     `PredefinedAcl`, `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -677,8 +677,8 @@ class Client {
    *     `Projection`, `SourceGeneration`, `UserProject`, and
    *     `WithObjectMetadata`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -715,8 +715,8 @@ class Client {
    *     `IfMetagenerationNotMatch`, `Projection`, and `UserProject`.
    *
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -742,8 +742,8 @@ class Client {
    *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
    *     `Projection`, `Prefix`, and `Versions`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -769,8 +769,8 @@ class Client {
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -802,8 +802,8 @@ class Client {
    *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
    *   `MD5HashValue`, `PredefinedAcl`, `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -850,8 +850,8 @@ class Client {
    * idempotent if restricted by pre-conditions, in this case,
    * `IfGenerationMatch`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Example
    * @snippet storage_object_samples.cc upload file
@@ -884,8 +884,8 @@ class Client {
    *   `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *   `IfMetagenerationNotMatch`, `Generation`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -912,8 +912,8 @@ class Client {
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Example
    * @snippet storage_object_samples.cc delete object
@@ -941,8 +941,8 @@ class Client {
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -980,8 +980,8 @@ class Client {
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1019,8 +1019,8 @@ class Client {
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1053,8 +1053,8 @@ class Client {
    *      `IfGenerationMatch`, `IfMetagenerationMatch`, `KmsKeyName`,
    *      `UserProject`, and `WithObjectMetadata`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1103,8 +1103,8 @@ class Client {
    *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey`,
    *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1155,8 +1155,8 @@ class Client {
    *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey`,
    *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1209,8 +1209,8 @@ class Client {
    *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey`,
    *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1276,8 +1276,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -1302,8 +1302,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1331,8 +1331,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1358,8 +1358,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -1385,8 +1385,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1432,8 +1432,8 @@ class Client {
    *     Valid types for this operation include `UserProject`, and the standard
    *     options available to all operations.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1480,8 +1480,8 @@ class Client {
    *     headers. Valid types for this operation include `Generation`,
    *     `UserProject`, `IfMatchEtag`, and `IfNoneMatchEtag`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1532,8 +1532,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -1560,8 +1560,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1593,8 +1593,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1622,8 +1622,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -1651,8 +1651,8 @@ class Client {
    * @param options a list of optional query parameters and/or request
    *     Valid types for this operation include `Generation`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1700,8 +1700,8 @@ class Client {
    *     headers. Valid types for this operation include `Generation`,
    *     `UserProject`, `IfMatchEtag`, and `IfNoneMatchEtag`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1749,8 +1749,8 @@ class Client {
    *     headers. Valid types for this operation include `Generation`,
    *     `UserProject`, `IfMatchEtag`, and `IfNoneMatchEtag`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1797,8 +1797,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -1829,8 +1829,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1864,8 +1864,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1897,8 +1897,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -1930,8 +1930,8 @@ class Client {
    * @param options a list of optional query parameters and/or request
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -1978,8 +1978,8 @@ class Client {
    *     as the standard parameters, such as `IfMatchEtag`, and
    *     `IfNoneMatchEtag`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -2025,8 +2025,8 @@ class Client {
    *     as the standard parameters, such as `IfMatchEtag`, and
    *     `IfNoneMatchEtag`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -2075,8 +2075,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -2115,8 +2115,8 @@ class Client {
    * @throw std::logic_error if the function is called without a default
    *     project id set.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -2161,8 +2161,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -2198,8 +2198,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Like other operations that mutate the state of GCS, this operation is only
@@ -2240,8 +2240,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * Being a read-only operation this is always idempotent.
@@ -2277,8 +2277,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there more
-   *     transient failures than allowed by the current retry policy.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * This operation is always idempotent because it only acts on a specific
