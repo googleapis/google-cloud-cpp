@@ -922,9 +922,9 @@ class Client {
    * @param destination_object_name the composed object name.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include
-   *      `DestinationPredefinedAcl`, `EncryptionKey`, `Generation`,
-   *      `IfGenerationMatch`, `IfMetagenerationMatch`, `KmsKeyName`,
-   *      `UserProject`, and `WithObjectMetadata`.
+   *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
+   *      `IfMetagenerationMatch`, `KmsKeyName`, `UserProject`, and
+   *      `WithObjectMetadata`.
    *
    * @throw std::runtime_error if the operation fails.
    *
