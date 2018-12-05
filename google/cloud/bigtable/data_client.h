@@ -34,10 +34,10 @@ class AsyncBulkMutator;
 class AsyncSampleRowKeys;
 class BulkMutator;
 template <typename ReadRowCallback,
-          typename std::enable_if<google::cloud::internal::is_invocable<
-                                      ReadRowCallback, CompletionQueue&, Row&,
-                                      grpc::Status&>::value,
-                                  int>::type>
+          typename std::enable_if<
+              google::cloud::internal::is_invocable<
+                  ReadRowCallback, CompletionQueue&, Row, grpc::Status&>::value,
+              int>::type>
 class AsyncRowReader;
 }  // namespace internal
 
@@ -96,7 +96,7 @@ class DataClient {
   friend class RowReader;
   template <typename ReadRowCallback,
             typename std::enable_if<google::cloud::internal::is_invocable<
-                                        ReadRowCallback, CompletionQueue&, Row&,
+                                        ReadRowCallback, CompletionQueue&, Row,
                                         grpc::Status&>::value,
                                     int>::type>
   friend class internal::AsyncRowReader;

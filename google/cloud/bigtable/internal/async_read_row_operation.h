@@ -33,16 +33,15 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-template <
-    typename ReadRowCallback, typename DoneCallback,
-    typename std::enable_if<
-        google::cloud::internal::is_invocable<ReadRowCallback, CompletionQueue&,
-                                              Row&, grpc::Status&>::value,
-        int>::type valid_data_callback_type = 0,
-    typename std::enable_if<
-        google::cloud::internal::is_invocable<
-            DoneCallback, CompletionQueue&, bool&, grpc::Status const&>::value,
-        int>::type valid_callback_type = 0>
+template <typename ReadRowCallback, typename DoneCallback,
+          typename std::enable_if<
+              google::cloud::internal::is_invocable<
+                  ReadRowCallback, CompletionQueue&, Row, grpc::Status&>::value,
+              int>::type valid_data_callback_type = 0,
+          typename std::enable_if<google::cloud::internal::is_invocable<
+                                      DoneCallback, CompletionQueue&, bool&,
+                                      grpc::Status const&>::value,
+                                  int>::type valid_callback_type = 0>
 class AsyncReadRowsOperation
     : public AsyncRetryOp<ConstantIdempotencyPolicy, DoneCallback,
                           AsyncRowReader<ReadRowCallback>> {

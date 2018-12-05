@@ -303,8 +303,7 @@ TEST_F(DataAsyncIntegrationTest, TableReadRowsAllRows) {
       },
       [&done](CompletionQueue& cq, bool& response, grpc::Status const& status) {
         done.set_value();
-        std::cout << "ReadRows() is done! : " << status.error_message() << ":"
-                  << std::endl;
+        EXPECT_TRUE(status.ok());
       });
 
   done.get_future().get();

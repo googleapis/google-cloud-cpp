@@ -45,10 +45,10 @@ namespace internal {
  */
 
 template <typename ReadRowCallback,
-          typename std::enable_if<google::cloud::internal::is_invocable<
-                                      ReadRowCallback, CompletionQueue&, Row&,
-                                      grpc::Status&>::value,
-                                  int>::type valid_data_callback_type = 0>
+          typename std::enable_if<
+              google::cloud::internal::is_invocable<
+                  ReadRowCallback, CompletionQueue&, Row, grpc::Status&>::value,
+              int>::type valid_data_callback_type = 0>
 class AsyncRowReader {
  public:
   /**
@@ -130,7 +130,6 @@ class AsyncRowReader {
         [this](CompletionQueue& cq, const grpc::ClientContext& context,
                google::bigtable::v2::ReadRowsResponse& response) {
           ProcessResponse(cq, response);
-          read_row_callback_(cq, std::move(parser_->Next(status_)), status_);
         },
         FinishedCallback<Functor>(*this, std::forward<Functor>(callback)));
   }
