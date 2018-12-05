@@ -188,7 +188,7 @@ class ComputeEngineCredentials : public Credentials {
     return storage::Status();
   }
 
-  std::mutex mu_;
+  mutable std::mutex mu_;
   std::condition_variable cv_;
   // Credential attributes
   std::string authorization_header_;

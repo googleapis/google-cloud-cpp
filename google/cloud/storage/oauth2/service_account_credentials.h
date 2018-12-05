@@ -128,6 +128,7 @@ class ServiceAccountCredentials : public Credentials {
     request_builder.AddHeader(
         "Content-Type: application/x-www-form-urlencoded");
     request_ = request_builder.BuildRequest();
+    info_ = std::move(info);
   }
 
   std::pair<google::cloud::storage::Status, std::string> AuthorizationHeader()
@@ -141,6 +142,27 @@ class ServiceAccountCredentials : public Credentials {
     return std::make_pair(
         status, status.ok() ? authorization_header_ : std::string(""));
   }
+
+  /**
+   * Sign a blob using the credentials.
+   *
+   * Create a RSA SHA256 signature of the blob using the Credential object. If
+   * the credentials do not support signing blobs it returns an error status.
+   *
+   * @param text the bytes to sign.
+   * @return a Base64-encoded RSA SHA256 digest of @p blob using the current
+   *   credentials.
+   */
+  std::pair<google::cloud::storage::Status, std::string> SignString(
+      std::string const& text) const {
+    using storage::internal::OpenSslUtils;
+    return std::make_pair(
+        Status(), OpenSslUtils::Base64Encode(OpenSslUtils::SignStringWithPem(
+                      text, info_.private_key, JwtSigningAlgorithms::RS256)));
+  }
+
+  /// Return the client id of these credentials.
+  std::string client_id() const { return info_.client_email; }
 
  private:
   bool IsExpired() {
@@ -201,6 +223,7 @@ class ServiceAccountCredentials : public Credentials {
 
   typename HttpRequestBuilderType::RequestType request_;
   std::string payload_;
+  ServiceAccountCredentialsInfo info_;
   std::mutex mu_;
   std::condition_variable cv_;
   std::string authorization_header_;

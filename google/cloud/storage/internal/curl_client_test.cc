@@ -185,8 +185,8 @@ TEST_F(CurlClientTest, PatchObject) {
 }
 
 TEST_F(CurlClientTest, ComposeObject) {
-  auto status_and_foo = client_->ComposeObject(
-      ComposeObjectRequest("bkt", {}, "obj"));
+  auto status_and_foo =
+      client_->ComposeObject(ComposeObjectRequest("bkt", {}, "obj"));
   TestCorrectFailureStatus(status_and_foo.first);
 }
 
@@ -196,8 +196,8 @@ TEST_F(CurlClientTest, ListBucketAcl) {
 }
 
 TEST_F(CurlClientTest, CopyObject) {
-  auto status_and_foo = client_->CopyObject(
-      CopyObjectRequest("bkt", "obj1", "bkt", "obj2"));
+  auto status_and_foo =
+      client_->CopyObject(CopyObjectRequest("bkt", "obj1", "bkt", "obj2"));
   TestCorrectFailureStatus(status_and_foo.first);
 }
 
@@ -268,8 +268,8 @@ TEST_F(CurlClientTest, PatchObjectAcl) {
 }
 
 TEST_F(CurlClientTest, RewriteObject) {
-  auto status_and_foo = client_->RewriteObject(RewriteObjectRequest(
-      "bkt", "obj", "bkt2", "obj2", "token"));
+  auto status_and_foo = client_->RewriteObject(
+      RewriteObjectRequest("bkt", "obj", "bkt2", "obj2", "token"));
   TestCorrectFailureStatus(status_and_foo.first);
 }
 
