@@ -633,24 +633,46 @@ run_all_signed_url_examples() {
     return
   fi
 
-  run_example ./storage_object_samples insert-object \
-      "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
-  run_example ./storage_object_samples sign-url \
-      "GET" "${bucket_name}" "${object_name}"
+  run_example ./storage_object_samples create-put-signed-url \
+      "${bucket_name}" "${object_name}"
+  run_example ./storage_object_samples create-get-signed-url \
+      "${bucket_name}" "${object_name}"
+
+  local magic_string="${RANDOM}-some-data-to-serve-as-object-media"
 
   set +e
   echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
-        " using signed URL"
-  local url
-  url=$(./storage_object_samples sign-url \
-      "GET" "${bucket_name}" "${object_name}" | tail -1)
-  if curl --silent "${url}" | grep -q "a-string-to-serve-as-object-media"; then
+        " using PUT signed URL"
+  local put_url
+  put_url=$(./storage_object_samples create-put-signed-url \
+      "${bucket_name}" "${object_name}" | head -1 | \
+      sed "s/The signed url is: //")
+  curl --silent -X PUT -H 'Content-Type: application/octet-stream' \
+      "${put_url}" -d "${magic_string}"
+  if [[ $? = 0 ]]; then
     echo "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
-        " using signed URL"
+        " using PUT signed URL"
   else
     echo   "${COLOR_RED}[   FAILED ]${COLOR_RESET}" \
-        " using signed URL"
+        " using PUT signed URL"
   fi
+  set -e
+
+  set +e
+  echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
+        " using GET signed URL"
+  local get_url
+  get_url=$(./storage_object_samples create-get-signed-url \
+      "${bucket_name}" "${object_name}" | head -1 | \
+      sed "s/The signed url is: //")
+  if curl --silent "${get_url}" | grep -q "${magic_string}"; then
+    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
+        " using PUT signed URL"
+  else
+    echo   "${COLOR_RED}[   FAILED ]${COLOR_RESET}" \
+        " using PUT signed URL"
+  fi
+  set -e
 
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"

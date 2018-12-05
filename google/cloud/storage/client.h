@@ -1828,6 +1828,8 @@ class Client {
   /**
    * Create a signed URL for the given parameters.
    *
+   * @note By default URLs created with this function expire after 7 days.
+   *
    * @param verb the operation allowed through this signed URL, `GET`, `POST`,
    *     `PUT`, etc. are valid values.
    * @param bucket_name the name of the bucket.
