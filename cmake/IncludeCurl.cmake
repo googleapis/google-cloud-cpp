@@ -19,8 +19,15 @@ find_package(Threads REQUIRED)
 
 # Configure the gRPC dependency, this can be found as a submodule, package, or
 # installed with pkg-config support.
-set(GOOGLE_CLOUD_CPP_CURL_PROVIDER ${GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER}
-    CACHE STRING "How to find the libcurl.")
+if (APPLE)
+    # Still cannot make libcurl work as an external project on macOS. The
+    # default static build just does not work for me.
+    set(GOOGLE_CLOUD_CPP_CURL_PROVIDER "package"
+        CACHE STRING "How to find the libcurl library.")
+else()
+    set(GOOGLE_CLOUD_CPP_CURL_PROVIDER ${GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER}
+        CACHE STRING "How to find the libcurl.")
+endif ()
 set_property(CACHE GOOGLE_CLOUD_CPP_CURL_PROVIDER
              PROPERTY STRINGS
                       "external"
@@ -60,6 +67,19 @@ elseif("${GOOGLE_CLOUD_CPP_CURL_PROVIDER}" MATCHES "^(package|vcpkg)$")
                               OpenSSL::Crypto
                               ZLIB::ZLIB)
         message(STATUS "CURL linkage will be static")
+        if (WIN32)
+            set_property(TARGET CURL::CURL
+                         APPEND
+                         PROPERTY INTERFACE_LINK_LIBRARIES
+                                  crypt32
+                                  wsock32
+                                  ws2_32)
+        endif ()
+        if (APPLE)
+            set_property(TARGET CURL::CURL
+                         APPEND
+                         PROPERTY INTERFACE_LINK_LIBRARIES ldap)
+        endif ()
     else()
         message(STATUS "CURL linkage will be non-static")
     endif ()
