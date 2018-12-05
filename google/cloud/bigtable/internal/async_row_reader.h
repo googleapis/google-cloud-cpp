@@ -45,10 +45,10 @@ namespace internal {
  */
 
 template <typename ReadRowCallback,
-          typename std::enable_if<
-              google::cloud::internal::is_invocable<
-                  ReadRowCallback, CompletionQueue&, Row, grpc::Status&>::value,
-              int>::type valid_data_callback_type = 0>
+          typename std::enable_if<google::cloud::internal::is_invocable<
+                                      ReadRowCallback, CompletionQueue&, Row&,
+                                      grpc::Status&>::value,
+                                  int>::type valid_data_callback_type = 0>
 class AsyncRowReader {
  public:
   /**
@@ -74,6 +74,7 @@ class AsyncRowReader {
         filter_(std::move(filter)),
         context_(),
         parser_factory_(std::move(parser_factory)),
+        parser_(parser_factory_->Create()),
         rows_count_(0),
         status_(grpc::Status::OK),
         read_row_callback_(read_row_callback) {}
@@ -109,8 +110,6 @@ class AsyncRowReader {
   std::shared_ptr<AsyncOperation> Start(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext>&& context,
       Functor&& callback) {
-    parser_ = parser_factory_->Create();
-
     google::bigtable::v2::ReadRowsRequest request;
     request.set_app_profile_id(app_profile_id_.get());
     request.set_table_name(table_name_.get());
@@ -124,7 +123,6 @@ class AsyncRowReader {
     if (rows_limit_ != NO_ROWS_LIMIT) {
       request.set_rows_limit(rows_limit_ - rows_count_);
     }
-
     context_ = google::cloud::internal::make_unique<grpc::ClientContext>();
 
     return cq.MakeUnaryStreamRpc(
@@ -132,13 +130,6 @@ class AsyncRowReader {
         [this](CompletionQueue& cq, const grpc::ClientContext& context,
                google::bigtable::v2::ReadRowsResponse& response) {
           ProcessResponse(cq, response);
-          if (not status_.ok()) {
-            return;
-          }
-          if (not parser_->HasNext()) {
-            return;
-          }
-          ++rows_count_;
           read_row_callback_(cq, std::move(parser_->Next(status_)), status_);
         },
         FinishedCallback<Functor>(*this, std::forward<Functor>(callback)));
@@ -176,7 +167,6 @@ class AsyncRowReader {
   RowSet row_set_;
   std::int64_t rows_limit_;
   Filter filter_;
-
   std::unique_ptr<grpc::ClientContext> context_;
 
   std::unique_ptr<internal::ReadRowsParserFactory> parser_factory_;

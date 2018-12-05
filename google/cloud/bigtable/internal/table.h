@@ -279,7 +279,7 @@ class Table {
    */
   template <typename ReadRowCallback, typename DoneCallback,
             typename std::enable_if<google::cloud::internal::is_invocable<
-                                        ReadRowCallback, CompletionQueue&, Row,
+                                        ReadRowCallback, CompletionQueue&, Row&,
                                         grpc::Status&>::value,
                                     int>::type valid_data_callback_type = 0,
             typename std::enable_if<google::cloud::internal::is_invocable<
