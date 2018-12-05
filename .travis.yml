@@ -23,6 +23,7 @@ matrix:
     - # This is the only macOS entry in the matrix.  It is disabled on pull
       # requests because Travis often has long backlogs for macOS.
       os: osx
+      osx_image: xcode7.3
       compiler: clang
       env:
         OPENSSL_ROOT_DIR=/usr/local/opt/libressl
