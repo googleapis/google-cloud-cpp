@@ -22,7 +22,7 @@ Some of these libraries have dependencies themselves:
 
 * [protobuf](https://developers.google.com/protocol-buffers/) is a dependency
   for gRPC.
-* [zlib](https://github.com/madler/zlib) is a dependencies for protobuf.
+* [zlib](https://github.com/madler/zlib) is a dependency for protobuf.
 * [c-ares](https://c-ares.haxx.se/) is a dependency for gRPC.
 * One of the forks of [OpenSSL](https://www.openssl.org/source/), such as
   [BoringSSL](https://github.com/google/boringssl) or
