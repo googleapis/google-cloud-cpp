@@ -351,6 +351,11 @@ When you apply a new ACL to an object, GCS adds <code>OWNER</code> permission to
 <tr class="memitem:a60b75719e0b7d19eea3cdaa97796d35e"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html">ServiceAccount</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a60b75719e0b7d19eea3cdaa97796d35e">GetServiceAccount</a> (Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:a60b75719e0b7d19eea3cdaa97796d35e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the GCS service account for the default project.  <a href="#a60b75719e0b7d19eea3cdaa97796d35e">More...</a><br /></td></tr>
 <tr class="separator:a60b75719e0b7d19eea3cdaa97796d35e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:a77260fb12c54b8f6db447241ba809d29"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a77260fb12c54b8f6db447241ba809d29"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a77260fb12c54b8f6db447241ba809d29">CreateV2SignedUrl</a> (std::string verb, std::string bucket_name, std::string object_name, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a77260fb12c54b8f6db447241ba809d29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a signed URL for the given parameters.  <a href="#a77260fb12c54b8f6db447241ba809d29">More...</a><br /></td></tr>
+<tr class="separator:a77260fb12c54b8f6db447241ba809d29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Pub/Sub operations.</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>Cloud Pub/Sub Notifications sends information about changes to objects in your buckets to Cloud Pub/Sub, where the information is added to a Cloud Pub/Sub topic of your choice in the form of messages.</p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/pubsub-notifications">https://cloud.google.com/storage/docs/pubsub-notifications</a> for more information about Cloud Pub/Sub in the context of GCS. </dd></dl>
@@ -1150,6 +1155,70 @@ template&lt;typename... Options&gt; </div>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is only idempotent if restricted by pre-conditions. There are no pre-conditions for this operation that can make it idempotent.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name,</div><div class="line">     std::string entity, std::string role) {</div><div class="line">    gcs::ObjectAccessControl result =</div><div class="line">        client.CreateObjectAcl(bucket_name, object_name, entity, role);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Role &quot;</span> &lt;&lt; result.role() &lt;&lt; <span class="stringliteral">&quot; granted to &quot;</span> &lt;&lt; result.entity()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; on &quot;</span> &lt;&lt; result.object() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;Full attributes: &quot;</span> &lt;&lt; result &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+
+</div>
+</div>
+<a id="a77260fb12c54b8f6db447241ba809d29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77260fb12c54b8f6db447241ba809d29">&#9670;&nbsp;</a></span>CreateV2SignedUrl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Options&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string google::cloud::storage::v0::Client::CreateV2SignedUrl </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>verb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>object_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Options &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a signed URL for the given parameters. </p>
+<dl class="section note"><dt>Note</dt><dd>By default URLs created with this function expire after 7 days.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">verb</td><td>the operation allowed through this signed URL, <code>GET</code>, <code>POST</code>, <code>PUT</code>, etc. are valid values. </td></tr>
+    <tr><td class="paramname">bucket_name</td><td>the name of the bucket. </td></tr>
+    <tr><td class="paramname">object_name</td><td>the name of the object, note that the object may not exist for signed URLs that upload new objects. </td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional parameters for the signed URL, this include: <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ExpirationTime.html" title="Define the expiration time for a signed URL. ">ExpirationTime</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1MD5HashValue.html" title="Provide a pre-computed MD5 hash value to an upload or download request. ">MD5HashValue</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ContentType.html" title="Set the MIME content type of an object. ">ContentType</a></code>, and <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddExtensionHeaderOption.html" title="Add a extension header to a signed URL. ">AddExtensionHeaderOption</a></code>. The <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aca1486b27694404d1667d43a68e030b0">AddExtensionHeader()</a></code> function provides a simpler way to create extension headers. Note that you can provides multiple values of this option.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name) {</div><div class="line">    std::string signed_url = client.CreateV2SignedUrl(</div><div class="line">        <span class="stringliteral">&quot;GET&quot;</span>, std::move(bucket_name), std::move(object_name),</div><div class="line">        gcs::ExpirationTime(std::chrono::system_clock::now() +</div><div class="line">                            std::chrono::minutes(15)));</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The signed url is: &quot;</span> &lt;&lt; signed_url &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;You can use this URL with any user agent, for example:\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;curl &#39;&quot;</span> &lt;&lt; signed_url &lt;&lt; <span class="stringliteral">&quot;&#39;&quot;</span> &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the signed URL. </dd></dl>
 
 </div>
 </div>
