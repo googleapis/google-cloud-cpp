@@ -16,6 +16,7 @@
 
 include(ExternalProjectHelper)
 include(external/c-ares)
+include(external/ssl)
 include(external/protobuf)
 
 if (NOT TARGET gprc_project)
@@ -44,7 +45,7 @@ if (NOT TARGET gprc_project)
     include(ExternalProject)
     externalproject_add(
         grpc_project
-        DEPENDS c_ares_project protobuf_project
+        DEPENDS c_ares_project protobuf_project ssl_project
         EXCLUDE_FROM_ALL ON
         PREFIX "external/grpc"
         INSTALL_DIR "external"
@@ -54,7 +55,6 @@ if (NOT TARGET gprc_project)
                    -DCMAKE_BUILD_TYPE=Release
                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-                   -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
                    -DgRPC_BUILD_TESTS=OFF
                    -DgRPC_ZLIB_PROVIDER=package
                    -DgRPC_SSL_PROVIDER=package
@@ -71,8 +71,6 @@ if (NOT TARGET gprc_project)
         LOG_CONFIGURE ON
         LOG_BUILD ON
         LOG_INSTALL ON)
-
-    find_package(OpenSSL REQUIRED)
 
     add_library(gRPC::address_sorting INTERFACE IMPORTED)
     set_library_properties_for_external_project(gRPC::address_sorting

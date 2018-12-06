@@ -24,8 +24,7 @@ if (NOT TARGET googletest_project)
     set(GOOGLE_CLOUD_CPP_GOOGLETEST_SHA256
         "9bf1fe5182a604b4135edc1a425ae356c9ad15e9b23f9f12a02e80184c3a249c")
 
-    if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
-        OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
+    if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles")
         include(ProcessorCount)
         processorcount(NCPU)
         set(PARALLEL "--" "-j" "${NCPU}")
@@ -103,5 +102,4 @@ if (NOT TARGET googletest_project)
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES
                           "GTest::gmock;GTest::gtest;Threads::Threads")
-
 endif ()
