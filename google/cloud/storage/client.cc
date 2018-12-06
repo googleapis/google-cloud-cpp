@@ -16,7 +16,9 @@
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_client.h"
+#include "google/cloud/storage/internal/curl_handle.h"
 #include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include <openssl/md5.h>
 #include <fstream>
 #include <thread>
@@ -30,8 +32,8 @@ static_assert(std::is_copy_constructible<storage::Client>::value,
 static_assert(std::is_copy_assignable<storage::Client>::value,
               "storage::Client must be assignable");
 
-std::shared_ptr<internal::RawClient>
-Client::CreateDefaultClient(ClientOptions options) {
+std::shared_ptr<internal::RawClient> Client::CreateDefaultClient(
+    ClientOptions options) {
   return internal::CurlClient::Create(std::move(options));
 }
 
@@ -182,6 +184,37 @@ void Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
     msg += file_name;
     google::cloud::internal::RaiseRuntimeError(msg);
   }
+}
+
+std::string Client::SignUrl(internal::SignUrlRequest const& request) {
+  auto base_credentials = raw_client()->client_options().credentials();
+  auto credentials = dynamic_cast<oauth2::ServiceAccountCredentials<>*>(
+      base_credentials.get());
+
+  if (credentials == nullptr) {
+    google::cloud::internal::RaiseRuntimeError(
+        R"""(The current credentials cannot be used to sign URLs.
+Please configure your google::cloud::storage::Client to use service account
+credentials, as described in:
+https://cloud.google.com/storage/docs/authentication
+)""");
+  }
+
+  auto result = credentials->SignString(request.StringToSign());
+  if (not result.first.ok()) {
+    google::cloud::internal::RaiseRuntimeError(result.first.error_message());
+  }
+
+  internal::CurlHandle curl;
+  std::string signature = curl.MakeEscapedString(result.second).get();
+
+  std::ostringstream os;
+  os << "https://storage.googleapis.com/" << request.bucket_name() << '/'
+     << request.object_name() << "?GoogleAccessId=" << credentials->client_id()
+     << "&Expires=" << request.expiration_time_as_seconds().count()
+     << "&Signature=" << signature;
+
+  return std::move(os).str();
 }
 
 }  // namespace STORAGE_CLIENT_NS

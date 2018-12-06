@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/storage/internal/retry_client.h"
+#include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/list_buckets_reader.h"
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/notification_event_type.h"
@@ -2112,6 +2113,38 @@ class Client {
 
   //@{
   /**
+   * Create a signed URL for the given parameters.
+   *
+   * @note By default URLs created with this function expire after 7 days.
+   *
+   * @param verb the operation allowed through this signed URL, `GET`, `POST`,
+   *     `PUT`, etc. are valid values.
+   * @param bucket_name the name of the bucket.
+   * @param object_name the name of the object, note that the object may not
+   *     exist for signed URLs that upload new objects.
+   * @param options a list of optional parameters for the signed URL, this
+   *     include: `ExpirationTime`, `MD5HashValue`, `ContentType`, and
+   *     `AddExtensionHeaderOption`. The `AddExtensionHeader()` function
+   *     provides a simpler way to create extension headers. Note that you can
+   *     provides multiple values of this option.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc sign url
+   *
+   * @return the signed URL.
+   */
+  template <typename... Options>
+  std::string CreateV2SignedUrl(std::string verb, std::string bucket_name,
+                                std::string object_name, Options&&... options) {
+    internal::SignUrlRequest request(std::move(verb), std::move(bucket_name),
+                                     std::move(object_name));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return SignUrl(request);
+  }
+  //@}
+
+  //@{
+  /**
    * @name Pub/Sub operations.
    *
    * Cloud Pub/Sub Notifications sends information about changes to objects in
@@ -2301,6 +2334,8 @@ class Client {
 
   void DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
                         std::string const& file_name);
+
+  std::string SignUrl(internal::SignUrlRequest const& request);
 
   std::shared_ptr<internal::RawClient> raw_client_;
 };
