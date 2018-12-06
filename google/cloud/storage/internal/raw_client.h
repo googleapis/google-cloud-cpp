@@ -96,6 +96,8 @@ class RawClient {
       RewriteObjectRequest const&) = 0;
   virtual std::pair<Status, std::unique_ptr<ResumableUploadSession>>
   CreateResumableSession(ResumableUploadRequest const& request) = 0;
+  virtual std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+  RestoreResumableSession(std::string const& session_id) = 0;
   //@}
 
   //@{

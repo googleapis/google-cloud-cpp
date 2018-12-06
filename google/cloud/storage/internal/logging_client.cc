@@ -208,6 +208,12 @@ LoggingClient::CreateResumableSession(ResumableUploadRequest const& request) {
           std::move(result.second)));
 }
 
+std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+LoggingClient::RestoreResumableSession(std::string const &request){
+  return MakeCallNoResponseLogging(
+      *client_, &RawClient::RestoreResumableSession, request, __func__);
+}
+
 std::pair<Status, ListBucketAclResponse> LoggingClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
   return MakeCall(*client_, &RawClient::ListBucketAcl, request, __func__);

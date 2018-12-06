@@ -77,6 +77,8 @@ class LoggingClient : public RawClient {
       RewriteObjectRequest const&) override;
   std::pair<Status, std::unique_ptr<ResumableUploadSession>>
   CreateResumableSession(ResumableUploadRequest const& request) override;
+  std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+  RestoreResumableSession(std::string const& request) override;
 
   std::pair<Status, ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;

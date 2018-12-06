@@ -330,6 +330,15 @@ RetryClient::CreateResumableSession(ResumableUploadRequest const& request) {
           std::move(backoff_policy)));
 }
 
+std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+RetryClient::RestoreResumableSession(std::string const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  auto is_idempotent = true;
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
+                  &RawClient::RestoreResumableSession, request, __func__);
+}
+
 std::pair<Status, ListBucketAclResponse> RetryClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
   auto retry_policy = retry_policy_->clone();
