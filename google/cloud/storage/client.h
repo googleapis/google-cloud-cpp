@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_
 
+#include "google/cloud/internal/disjunction.h"
 #include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
@@ -26,6 +27,7 @@
 #include "google/cloud/storage/object_rewriter.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/retry_policy.h"
+#include "google/cloud/storage/upload_options.h"
 
 namespace google {
 namespace cloud {
@@ -848,21 +850,24 @@ class Client {
    *
    * @par Example
    * @snippet storage_object_samples.cc upload file
+   *
+   * @par Example: manually selecting a resumable upload
+   * @snippet storage_object_samples.cc upload file resumable
    */
   template <typename... Options>
   ObjectMetadata UploadFile(std::string const& file_name,
                             std::string const& bucket_name,
                             std::string const& object_name,
                             Options&&... options) {
-    if (UseSimpleUpload(file_name)) {
-      internal::InsertObjectMediaRequest request(bucket_name, object_name,
-                                                 std::string{});
-      request.set_multiple_options(std::forward<Options>(options)...);
-      return UploadFileSimple(file_name, request);
-    }
-    internal::ResumableUploadRequest request(bucket_name, object_name);
-    request.set_multiple_options(std::forward<Options>(options)...);
-    return UploadFileResumable(file_name, request);
+    // Determine, at compile time, which version of UploadFileImpl we should
+    // call. This needs to be done at compile time because ObjectInsertMedia
+    // does not support (nor should it support) the UseResumableUploadSession
+    // option.
+    using HasUseResumableUpload = google::cloud::internal::disjunction<
+        std::is_same<UseResumableUploadSession, Options>...>;
+    return UploadFileImpl(file_name, bucket_name, object_name,
+                          HasUseResumableUpload{},
+                          std::forward<Options>(options)...);
   }
 
   /**
@@ -2317,6 +2322,39 @@ class Client {
     auto retry = std::make_shared<internal::RetryClient>(
         std::move(logging), std::forward<Policies>(policies)...);
     return retry;
+  }
+
+  // The version of UploadFile() where UseResumableUploadSession is one of the
+  // options. Note how this does not use InsertObjectMedia at all.
+  template <typename... Options>
+  ObjectMetadata UploadFileImpl(std::string const& file_name,
+                                std::string const& bucket_name,
+                                std::string const& object_name,
+                                std::true_type has_resumable_option,
+                                Options&&... options) {
+    internal::ResumableUploadRequest request(bucket_name, object_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return UploadFileResumable(file_name, request);
+  }
+
+  // The version of UploadFile() where UseResumableUploadSession is *not* one of
+  // the options. In this case we can use InsertObjectMediaRequest because it
+  // is safe.
+  template <typename... Options>
+  ObjectMetadata UploadFileImpl(std::string const& file_name,
+                                std::string const& bucket_name,
+                                std::string const& object_name,
+                                std::false_type does_not_have_resumable_option,
+                                Options&&... options) {
+    if (UseSimpleUpload(file_name)) {
+      internal::InsertObjectMediaRequest request(bucket_name, object_name,
+                                                 std::string{});
+      request.set_multiple_options(std::forward<Options>(options)...);
+      return UploadFileSimple(file_name, request);
+    }
+    internal::ResumableUploadRequest request(bucket_name, object_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return UploadFileResumable(file_name, request);
   }
 
   bool UseSimpleUpload(std::string const& file_name) const;

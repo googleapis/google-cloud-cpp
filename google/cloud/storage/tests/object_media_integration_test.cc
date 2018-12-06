@@ -404,7 +404,7 @@ TEST_F(ObjectMediaIntegrationTest, XmlUploadFile) {
   std::remove(file_name.c_str());
 }
 
-TEST_F(ObjectMediaIntegrationTest, UploadFileResumable) {
+TEST_F(ObjectMediaIntegrationTest, UploadFileResumableBySize) {
   // Create a client that always uses resumable uploads.
   Client client(ClientOptions().set_maximum_simple_upload_size(0));
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
@@ -424,6 +424,48 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumable) {
   EXPECT_EQ(bucket_name, meta.bucket());
   auto expected_str = expected.str();
   ASSERT_EQ(expected_str.size(), meta.size());
+
+  if (UsingTestbench()) {
+    ASSERT_TRUE(meta.has_metadata("x_testbench_upload"));
+    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+  }
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_FALSE(actual.empty());
+  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
+  EXPECT_EQ(expected_str, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+  std::remove(file_name.c_str());
+}
+
+TEST_F(ObjectMediaIntegrationTest, UploadFileResumableByOption) {
+  Client client;
+  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+  // Create a file with the contents to upload.
+  std::ofstream os(file_name);
+  WriteRandomLines(os, expected);
+  os.close();
+
+  ObjectMetadata meta =
+      client.UploadFile(file_name, bucket_name, object_name,
+                        IfGenerationMatch(0), NewResumableUploadSession());
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+  auto expected_str = expected.str();
+  ASSERT_EQ(expected_str.size(), meta.size());
+
+  if (UsingTestbench()) {
+    ASSERT_TRUE(meta.has_metadata("x_testbench_upload"));
+    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+  }
 
   // Create a iostream to read the object back.
   auto stream = client.ReadObject(bucket_name, object_name);
@@ -525,9 +567,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableUploadFailure) {
       try {
         client.UploadFile(file_name, bucket_name, object_name,
                           IfGenerationMatch(0));
-      } catch (std::runtime_error const& ex) {
-        throw;
-      },
+      } catch (std::runtime_error const& ex) { throw; },
       std::runtime_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
