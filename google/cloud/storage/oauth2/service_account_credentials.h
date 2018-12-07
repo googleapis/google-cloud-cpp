@@ -47,24 +47,29 @@ ServiceAccountCredentialsInfo ParseServiceAccountCredentials(
     std::string const& default_token_uri);
 
 /**
- * A C++ wrapper for Google's Service Account Credentials.
+ * Wrapper class for Google OAuth 2.0 service account credentials.
  *
  * Takes a JSON object representing the contents of a service account keyfile,
- * and uses Google's OAuth2 service to obtain an access token.
+ * and obtains access tokens from the Google Authorization Service as needed.
+ * Instances of this class should usually be created via the convenience methods
+ * declared in google_credentials.h.
  *
- * @warning
- * The current implementation is a placeholder to unblock development of the
- * Google Cloud Storage client libraries. There is substantial work needed
- * before this class is complete, in fact, we do not even have a complete set of
- * requirements for it.
+ * An HTTP Authorization header, with an access token as its value,
+ * can be obtained by calling the AuthorizationHeader() method; if the current
+ * access token is invalid or nearing expiration, this will class will first
+ * obtain a new access token before returning the Authorization header string.
+
+ * @see https://developers.google.com/identity/protocols/OAuth2ServiceAccount
+ * for an overview of using service accounts with Google's OAuth 2.0 system.
  *
- * @see
- *   https://developers.google.com/identity/protocols/OAuth2ServiceAccount
- *   https://tools.ietf.org/html/rfc7523
+ * @see https://cloud.google.com/storage/docs/reference/libraries for details on
+ * how to obtain and get started with service account credentials.
  *
  * @tparam HttpRequestBuilderType a dependency injection point. It makes it
- *     possible to mock the libcurl wrappers.
+ *     possible to mock internal libcurl wrappers. This should generally not be
+ *     overridden except for testing.
  * @tparam ClockType a dependency injection point to fetch the current time.
+ *     This should generally not be overridden except for testing.
  */
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder,
@@ -81,34 +86,10 @@ class ServiceAccountCredentials : public Credentials {
                                      std::string const& default_token_uri)
       : expiration_time_(), clock_() {
     namespace nl = storage::internal::nl;
+
     auto info =
         ParseServiceAccountCredentials(content, source, default_token_uri);
-    // Below, we construct a JWT refresh request used to obtain an access token.
-    // The structure of a JWT is defined in RFC 7519 (see
-    // https://tools.ietf.org/html/rfc7519), and Google-specific JWT validation
-    // logic is further described at:
-    // https://cloud.google.com/endpoints/docs/frameworks/java/troubleshoot-jwt
-    nl::json assertion_header = {
-        {"alg", "RS256"}, {"kid", info.private_key_id}, {"typ", "JWT"}};
-
-    std::string scope = GoogleOAuthScopeCloudPlatform();
-
-    // As much as possible do the time arithmetic using the std::chrono types,
-    // convert to longs only when we are dealing with timestamps since the
-    // epoch.
-    auto now = clock_.now();
-    auto expiration = now + GoogleOAuthAccessTokenLifetime();
-    auto now_from_epoch =
-        static_cast<long>(std::chrono::system_clock::to_time_t(now));
-    auto expiration_from_epoch =
-        static_cast<long>(std::chrono::system_clock::to_time_t(expiration));
-    nl::json assertion_payload = {
-        {"iss", info.client_email},
-        {"scope", scope},
-        {"aud", info.token_uri},
-        {"iat", now_from_epoch},
-        // Resulting access token should be expire after one hour.
-        {"exp", expiration_from_epoch}};
+    auto assertion_components = std::move(AssertionComponentsFromInfo(info));
 
     HttpRequestBuilderType request_builder(
         std::move(info.token_uri),
@@ -121,8 +102,8 @@ class ServiceAccountCredentials : public Credentials {
             .MakeEscapedString("urn:ietf:params:oauth:grant-type:jwt-bearer")
             .get();
     payload += "&assertion=";
-    payload +=
-        MakeJWTAssertion(assertion_header, assertion_payload, info.private_key);
+    payload += MakeJWTAssertion(assertion_components.first,
+                                assertion_components.second, info.private_key);
     payload_ = std::move(payload);
 
     request_builder.AddHeader(
@@ -131,14 +112,14 @@ class ServiceAccountCredentials : public Credentials {
     info_ = std::move(info);
   }
 
-  std::pair<google::cloud::storage::Status, std::string> AuthorizationHeader()
-      override {
-    using google::cloud::storage::Status;
+  std::pair<storage::Status, std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
+
     if (IsValid()) {
-      return std::make_pair(Status(), authorization_header_);
+      return std::make_pair(storage::Status(), authorization_header_);
     }
-    Status status = Refresh();
+
+    storage::Status status = Refresh();
     return std::make_pair(
         status, status.ok() ? authorization_header_ : std::string(""));
   }
@@ -165,6 +146,43 @@ class ServiceAccountCredentials : public Credentials {
   std::string client_id() const { return info_.client_email; }
 
  private:
+  /**
+   * Returns the header and payload components needed to make a JWT assertion.
+   *
+   * @see
+   * https://cloud.google.com/endpoints/docs/frameworks/java/troubleshoot-jwt
+   *
+   * @see https://tools.ietf.org/html/rfc7523
+   */
+  std::pair<storage::internal::nl::json, storage::internal::nl::json>
+  AssertionComponentsFromInfo(ServiceAccountCredentialsInfo const& info) {
+    namespace nl = storage::internal::nl;
+    nl::json assertion_header = {
+        {"alg", "RS256"}, {"kid", info.private_key_id}, {"typ", "JWT"}};
+
+    std::string scope = GoogleOAuthScopeCloudPlatform();
+
+    auto now = clock_.now();
+    auto expiration = now + GoogleOAuthAccessTokenLifetime();
+    // As much as possible, do the time arithmetic using the std::chrono types.
+    // Convert to longs only when we are dealing with timestamps since the
+    // epoch.
+    auto now_from_epoch =
+        static_cast<long>(std::chrono::system_clock::to_time_t(now));
+    auto expiration_from_epoch =
+        static_cast<long>(std::chrono::system_clock::to_time_t(expiration));
+    nl::json assertion_payload = {
+        {"iss", info.client_email},
+        {"scope", scope},
+        {"aud", info.token_uri},
+        {"iat", now_from_epoch},
+        // Resulting access token should be expire after one hour.
+        {"exp", expiration_from_epoch}};
+
+    return std::make_pair(std::move(assertion_header),
+                          std::move(assertion_payload));
+  }
+
   bool IsExpired() {
     auto now = std::chrono::system_clock::now();
     return now > (expiration_time_ - GoogleOAuthAccessTokenExpirationSlack());
@@ -174,6 +192,11 @@ class ServiceAccountCredentials : public Credentials {
     return not authorization_header_.empty() and not IsExpired();
   }
 
+  /**
+   * Given a key and a JSON header and payload, creates a JWT assertion string.
+   *
+   * @see https://tools.ietf.org/html/rfc7519
+   */
   std::string MakeJWTAssertion(storage::internal::nl::json const& header,
                                storage::internal::nl::json const& payload,
                                std::string const& pem_contents) {

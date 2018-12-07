@@ -25,16 +25,23 @@ inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
 /**
- * Defines credentials to access Google Cloud Storage anonymously.
+ * A Credentials subclass representing "anonymous" Google OAuth2.0 credentials.
  *
  * This is only useful in two cases: (a) in testing, where you want to access
  * a test bench without having to worry about authentication or SSL setup, and
- * (b) when accessing publicly readable buckets or objects without credentials.
+ * (b) when accessing publicly readable resources (e.g. a Google Cloud Storage
+ * object that is readable by the "allUsers" entity), which requires no
+ * authentication or authorization.
  */
 class AnonymousCredentials : public Credentials {
  public:
   AnonymousCredentials() = default;
 
+  /**
+   * While other Credentials subclasses return a string containing an
+   * Authorization HTTP header from this method, this class always returns an
+   * empty string.
+   */
   std::pair<google::cloud::storage::Status, std::string> AuthorizationHeader()
       override;
 };
