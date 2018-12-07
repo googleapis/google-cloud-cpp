@@ -362,6 +362,8 @@ void ResumeResumableUpload(google::cloud::storage::Client client, int &argc,
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string session_id) {
+    // Restore a resumable upload stream, the library automatically queries the
+    // state of the upload and discovers the next expected byte.
     gcs::ObjectWriteStream stream =
         client.WriteObject(bucket_name, object_name,
                            gcs::RestoreResumableUploadSession(session_id));
