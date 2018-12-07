@@ -342,7 +342,7 @@ void StartResumableUpload(google::cloud::storage::Client client, int& argc,
     // example we want to restore the session as-if the application had crashed,
     // where no destructors get called.
     stream << "This data will not get uploaded, it is too small" << std::endl;
-    stream.Suspend();
+    std::move(stream).Suspend();
   }
   //! [start resumable upload]
   (std::move(client), bucket_name, object_name);

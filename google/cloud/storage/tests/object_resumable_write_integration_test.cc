@@ -132,7 +132,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
         client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                            NewResumableUploadSession());
     session_id = old_os.resumable_session_id();
-    old_os.Suspend();
+    std::move(old_os).Suspend();
   }
 
   auto os = client.WriteObject(bucket_name, object_name,

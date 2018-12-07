@@ -95,7 +95,7 @@ ObjectMetadata ObjectWriteStream::Close() {
   return metadata;
 }
 
-void ObjectWriteStream::Suspend() {
+void ObjectWriteStream::Suspend() && {
   buf_.reset();
 }
 

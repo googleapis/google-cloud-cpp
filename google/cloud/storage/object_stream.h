@@ -150,15 +150,12 @@ class ObjectWriteStream : public std::basic_ostream<char> {
   /**
    * Suspends an upload.
    *
-   * For resumable uploads this function suspends the current upload, future
-   *
-   *
    * This is a destructive operation. Using this object after calling this
    * function results in undefined behavior. Applications should copy any
    * necessary state (such as the value `resumable_session_id()`) before calling
    * this function.
    */
-  void Suspend();
+  void Suspend() &&;
 
  private:
   std::unique_ptr<internal::ObjectWriteStreambuf> buf_;
