@@ -212,9 +212,6 @@ target_link_libraries(storage_client
                              OpenSSL::Crypto
                              ZLIB::ZLIB
                       PRIVATE storage_common_options)
-if (WIN32)
-    target_link_libraries(storage_client PUBLIC crypt32 wsock32 ws2_32)
-endif ()
 target_include_directories(storage_client
                            PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
                                   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
