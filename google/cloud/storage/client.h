@@ -789,6 +789,34 @@ class Client {
   /**
    * Writes contents into an object.
    *
+   * This creates a `std::ostream` object to upload contents. The application
+   * can use either the regular `operator<<()`, or `std::ostream::write()` to
+   * upload data.
+   *
+   * The application can explicitly request a new resumable upload using the
+   * result of `NewResumableUploadSession`. To restore a previously created
+   * resumable session use `RestoreResumableUploadSession`.
+   *
+   * @note It is the application's responsibility to query the stream to find
+   *     the latest committed byte and to upload data starting from the next
+   *     byte expected by the upload session.
+   *
+   * @note Using the `WithObjectMetadata` option implicitly creates a resumable
+   *     upload.
+   *
+   * Without resumable uploads an interrupted upload has to be restarted from
+   * the beginning. Therefore, applications streaming large objects should try
+   * to use resumable uploads, and save the session id to restore them if
+   * needed.
+   *
+   * Non-resumable uploads may be more efficient for small and medium sized
+   * uploads, as they require fewer roundtrips to the service.
+   *
+   * For small uploads we recommed using `InsertObject`, consult
+   * [the
+   * documentation](https://cloud.google.com/storage/docs/json_api/v1/how-tos/upload)
+   * for details.
+   *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
    * @param options a list of optional query parameters and/or request headers.
@@ -796,8 +824,8 @@ class Client {
    *   `Crc32cChecksumValue`, `DisableCrc32cChecksum`, `DisableMD5Hash`,
    *   `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
    *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
-   *   `MD5HashValue`, `PredefinedAcl`, `Projection`, `UserProject`, and
-   *   `WithObjectMetadata`.
+   *   `MD5HashValue`, `PredefinedAcl`, `Projection`,
+   *   `UseResumableUploadSession`, `UserProject`, and `WithObjectMetadata`.
    *
    * @throw std::runtime_error if there is a permanent failure, or if there were
    *     more transient failures than allowed by the current retry policy.
@@ -811,6 +839,12 @@ class Client {
    *
    * @par Example: write an object with a CMEK.
    * @snippet storage_object_samples.cc write object with kms key
+   *
+   * @par Example: starting a resumable upload.
+   * @snippet storage_object_samples.cc start resumable upload
+   *
+   * @par Example: resuming a resumable upload.
+   * @snippet storage_object_samples.cc resume resumable upload
    */
   template <typename... Options>
   ObjectWriteStream WriteObject(std::string const& bucket_name,

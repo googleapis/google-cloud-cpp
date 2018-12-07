@@ -70,6 +70,12 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   virtual std::string const& received_hash() const = 0;
   virtual std::string const& computed_hash() const = 0;
 
+  /// The session id, if applicable, it is empty for non-resumable uploads.
+  virtual std::string const& resumable_session_id() const = 0;
+
+  /// The next expected byte, if applicable, always 0 for non-resumable uploads.
+  virtual std::uint64_t next_expected_byte() const = 0;
+
  protected:
   virtual HttpResponse DoClose() = 0;
 };

@@ -62,6 +62,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
       bucket_name, object_name, IfGenerationMatch(0),
       WithObjectMetadata(ObjectMetadata().set_content_type("text/plain")));
   os << LoremIpsum();
+  EXPECT_FALSE(os.resumable_session_id().empty());
   ObjectMetadata meta = os.Close();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
@@ -90,6 +91,63 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
     os << LoremIpsum();
     ObjectMetadata meta = os.Close();
   });
+}
+
+TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
+  Client client;
+  auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+
+  // Create the object, but only if it does not exist already.
+  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                               NewResumableUploadSession());
+  os << LoremIpsum();
+  EXPECT_FALSE(os.resumable_session_id().empty());
+  ObjectMetadata meta = os.Close();
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+  if (UsingTestbench()) {
+    EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
+    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+  }
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
+  Client client;
+  auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+
+  // Create the object, but only if it does not exist already.
+  std::string session_id;
+  {
+    auto old_os =
+        client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                           NewResumableUploadSession());
+    session_id = old_os.resumable_session_id();
+    std::move(old_os).Suspend();
+  }
+
+  auto os = client.WriteObject(bucket_name, object_name,
+                               RestoreResumableUploadSession(session_id));
+  EXPECT_EQ(session_id, os.resumable_session_id());
+  os << LoremIpsum();
+  ObjectMetadata meta = os.Close();
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+  if (UsingTestbench()) {
+    EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
+    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+  }
+
+  client.DeleteObject(bucket_name, object_name);
 }
 
 }  // anonymous namespace

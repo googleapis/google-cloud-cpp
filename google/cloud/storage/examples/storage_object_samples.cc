@@ -322,6 +322,74 @@ void WriteLargeObject(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name, object_size_in_MiB);
 }
 
+void StartResumableUpload(google::cloud::storage::Client client, int& argc,
+                          char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"start-resumable-upload <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+
+  //! [start resumable upload]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+    gcs::ObjectWriteStream stream = client.WriteObject(
+        bucket_name, object_name, gcs::NewResumableUploadSession());
+    std::cout << "Created resumable upload: " << stream.resumable_session_id()
+              << std::endl;
+    // As it is customary in C++, the destructor automatically closes the
+    // stream, that would finish the upload and create the object. For this
+    // example we want to restore the session as-if the application had crashed,
+    // where no destructors get called.
+    stream << "This data will not get uploaded, it is too small" << std::endl;
+    std::move(stream).Suspend();
+  }
+  //! [start resumable upload]
+  (std::move(client), bucket_name, object_name);
+}
+
+void ResumeResumableUpload(google::cloud::storage::Client client, int &argc,
+                           char **argv) {
+  if (argc != 4) {
+    throw Usage{
+        "resume-resumable-upload <bucket-name> <object-name> <session-id>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto session_id = ConsumeArg(argc, argv);
+
+  //! [resume resumable upload]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string session_id) {
+    // Restore a resumable upload stream, the library automatically queries the
+    // state of the upload and discovers the next expected byte.
+    gcs::ObjectWriteStream stream =
+        client.WriteObject(bucket_name, object_name,
+                           gcs::RestoreResumableUploadSession(session_id));
+    if (stream.next_expected_byte() == 0) {
+      // In this example we create a small object, smaller than the resumable
+      // upload quantum (256 KiB), so either all the data is there or not.
+      // Applications use `next_expected_byte()` to find the position in their
+      // input where they need to start uploading.
+      stream << R"""(
+Lorem ipsum dolor sit amet, consectetur adipiscing
+elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+)""";
+    }
+
+    gcs::ObjectMetadata metadata = stream.Close();
+    std::cout << "Upload completed, the new object metadata is: " << metadata
+              << std::endl;
+  }
+  //! [resume resumable upload]
+  (std::move(client), bucket_name, object_name, session_id);
+}
+
 void UploadFile(google::cloud::storage::Client client, int& argc,
                 char* argv[]) {
   if (argc != 4) {
@@ -1034,6 +1102,8 @@ int main(int argc, char* argv[]) try {
       {"delete-object", &DeleteObject},
       {"write-object", &WriteObject},
       {"write-large-object", &WriteLargeObject},
+      {"start-resumable-upload", &StartResumableUpload},
+      {"resume-resumable-upload", &ResumeResumableUpload},
       {"upload-file", &UploadFile},
       {"upload-file-resumable", &UploadFileResumable},
       {"download-file", &DownloadFile},

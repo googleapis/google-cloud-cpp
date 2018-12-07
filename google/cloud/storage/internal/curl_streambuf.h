@@ -76,6 +76,10 @@ class CurlStreambuf : public ObjectWriteStreambuf {
   std::string const& computed_hash() const override {
     return hash_validator_result_.computed;
   }
+  std::string const& resumable_session_id() const override {
+    return session_id_;
+  }
+  std::uint64_t next_expected_byte() const override { return 0; }
 
  protected:
   int sync() override;
@@ -96,6 +100,7 @@ class CurlStreambuf : public ObjectWriteStreambuf {
 
   std::unique_ptr<HashValidator> hash_validator_;
   HashValidator::Result hash_validator_result_;
+  std::string session_id_;
 };
 
 }  // namespace internal
