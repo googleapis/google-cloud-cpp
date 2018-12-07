@@ -43,23 +43,24 @@ AuthorizedUserCredentialsInfo ParseAuthorizedUserCredentials(
     std::string const& content, std::string const& source);
 
 /**
- * A C++ wrapper for Google's Authorized User Credentials.
+ * Wrapper class for Google OAuth 2.0 user account credentials.
  *
- * Takes a JSON object with the authorized user client id, secret, and access
- * token and uses Google's OAuth2 service to obtain an access token.
+ * Takes a JSON object with a client id, client secret, and the user's refresh
+ * token, and obtains access tokens from the Google Authorization Service as
+ * needed. Instances of this class should usually be created via the convenience
+ * methods declared in google_credentials.h.
  *
- * @warning
- * The current implementation is a placeholder to unblock development of the
- * Google Cloud Storage client libraries. There is substantial work needed
- * before this class is complete, in fact, we do not even have a complete set of
- * requirements for it.
+ * An HTTP Authorization header, with an access token as its value,
+ * can be obtained by calling the AuthorizationHeader() method; if the current
+ * access token is invalid or nearing expiration, this will class will first
+ * obtain a new access token before returning the Authorization header string.
  *
- * @see
- *   https://developers.google.com/identity/protocols/OAuth2ServiceAccount
- *   https://tools.ietf.org/html/rfc7523
+ * @see https://developers.google.com/identity/protocols/OAuth for an overview
+ * of using user credentials with Google's OAuth 2.0 system.
  *
  * @tparam HttpRequestBuilderType a dependency injection point. It makes it
- *     possible to mock the libcurl wrappers.
+ *     possible to mock internal libcurl wrappers. This should generally not be
+ *     overridden except for testing.
  */
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder>

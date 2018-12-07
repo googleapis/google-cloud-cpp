@@ -37,17 +37,25 @@ inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
 /**
- * A C++ wrapper for Google's Compute Engine Service Account Credentials.
+ * Wrapper class for Google OAuth 2.0 GCE instance service account credentials.
  *
- * Takes a service account email address or alias (e.g. "default") and uses
- * the Google Compute Engine VM instance's metadata server to obtain service
- * account metadata and OAuth2 access tokens.
+ * Takes a service account email address or alias (e.g. "default") and uses the
+ * Google Compute Engine instance's metadata server to obtain service account
+ * metadata and OAuth 2.0 access tokens as needed. Instances of this class
+ * should usually be created via the convenience methods declared in
+ * google_credentials.h.
  *
- * @see
- *   https://cloud.google.com/compute/docs/authentication#using
+ * An HTTP Authorization header, with an access token as its value, can be
+ * obtained by calling the AuthorizationHeader() method; if the current access
+ * token is invalid or nearing expiration, this will class will first obtain a
+ * new access token before returning the Authorization header string.
+ *
+ * @see https://cloud.google.com/compute/docs/authentication#using for details
+ * on how to get started with Compute Engine service account credentials.
  *
  * @tparam HttpRequestBuilderType a dependency injection point. It makes it
- *     possible to mock the libcurl wrappers.
+ *     possible to mock internal libcurl wrappers. This should generally not
+ *     be overridden except for testing.
  */
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder>
@@ -73,22 +81,28 @@ class ComputeEngineCredentials : public Credentials {
   /**
    * Returns the email or alias of this credential's service account.
    *
-   * Note that this class must query the Compute Engine instance's metadata
-   * server to fetch service account metadata. Because of this, if an alias
-   * (e.g. "default") was supplied in place of an actual email address when
+   * @note This class must query the Compute Engine instance's metadata server
+   * to fetch service account metadata. Because of this, if an alias (e.g.
+   * "default") was supplied in place of an actual email address when
    * initializing this credential, that alias is returned as this credential's
    * email address if the credential has not been refreshed yet.
    */
-  std::string service_account_email() { return service_account_email_; }
+  std::string service_account_email() {
+    std::unique_lock<std::mutex> lock(mu_);
+    return service_account_email_;
+  }
 
   /**
    * Returns the set of scopes granted to this credential's service account.
    *
-   * Note that because this class must query the Compute Engine instance's
-   * metadata server to fetch service account metadata, this method will return
-   * an empty set if the credential has not been refreshed yet.
+   * @note Because this class must query the Compute Engine instance's metadata
+   * server to fetch service account metadata, this method will return an empty
+   * set if the credential has not been refreshed yet.
    */
-  std::set<std::string> scopes() { return scopes_; }
+  std::set<std::string> scopes() {
+    std::unique_lock<std::mutex> lock(mu_);
+    return scopes_;
+  }
 
  private:
   bool IsExpired() {
