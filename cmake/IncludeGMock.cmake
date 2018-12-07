@@ -32,7 +32,6 @@ set_property(CACHE GOOGLE_CLOUD_CPP_GMOCK_PROVIDER
              PROPERTY STRINGS
                       "external"
                       "package"
-                      "vcpkg"
                       "pkg-config")
 
 function (create_googletest_aliases)
@@ -52,58 +51,6 @@ if (TARGET GTest::gmock)
     # GTest::gmock is already defined, do not define it again.
 elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "external")
     include(external/googletest)
-
-elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "vcpkg")
-    find_package(GTest REQUIRED)
-
-    create_googletest_aliases()
-
-    # The FindGTest module finds GTest by default, but does not search for
-    # GMock, though they are usually installed together. Define the
-    # GTest::gmock* targets manually.
-    __gtest_find_library(GMOCK_LIBRARY gmock)
-    __gtest_find_library(GMOCK_LIBRARY_DEBUG gmockd)
-    if ("${GMOCK_LIBRARY}" MATCHES "-NOTFOUND")
-        message(FATAL_ERROR "Cannot find gmock library ${GMOCK_LIBRARY}.")
-    endif ()
-    mark_as_advanced(GMOCK_LIBRARY)
-
-    find_path(GMOCK_INCLUDE_DIR gmock/gmock.h
-              HINTS $ENV{GTEST_ROOT}/include ${GTEST_ROOT}/include
-              DOC "The GoogleTest Mocking Library headers")
-    if ("${GMOCK_INCLUDE_DIR}" MATCHES "-NOTFOUND")
-        message(FATAL_ERROR "Cannot find gmock library ${GMOCK_INCLUDE_DIR}.")
-    endif ()
-    mark_as_advanced(GMOCK_INCLUDE_DIR)
-
-    add_library(GTest::gmock STATIC IMPORTED)
-    set_target_properties(GTest::gmock
-                          PROPERTIES IMPORTED_LINK_INTERFACE_LIBRARIES
-                                     GTest::GTest
-                                     INTERFACE_INCLUDE_DIRECTORIES
-                                     "${GMOCK_INCLUDE_DIRS}")
-    __gtest_import_library(GTest::gmock GMOCK_LIBRARY "")
-    __gtest_import_library(GTest::gmock GMOCK_LIBRARY "RELEASE")
-    __gtest_import_library(GTest::gmock GMOCK_LIBRARY "DEBUG")
-
-    __gtest_find_library(GMOCK_MAIN_LIBRARY gmock_main)
-    __gtest_find_library(GMOCK_MAIN_LIBRARY_DEBUG gmock_maind)
-    if ("${GMOCK_MAIN_LIBRARY}" MATCHES "-NOTFOUND")
-        message(
-            FATAL_ERROR "Cannot find gmock main_library ${GMOCK_MAIN_LIBRARY}.")
-    endif ()
-    mark_as_advanced(GMOCK_MAIN_LIBRARY)
-
-    add_library(GTest::gmock_main STATIC IMPORTED)
-    set_target_properties(GTest::gmock_main
-                          PROPERTIES IMPORTED_LINK_INTERFACE_LIBRARIES
-                                     GTest::gmock
-                                     INTERFACE_INCLUDE_DIRECTORIES
-                                     "${GMOCK_INCLUDE_DIRS}")
-    __gtest_import_library(GTest::gmock_main GMOCK_MAIN_LIBRARY "")
-    __gtest_import_library(GTest::gmock_main GMOCK_MAIN_LIBRARY "RELEASE")
-    __gtest_import_library(GTest::gmock_main GMOCK_MAIN_LIBRARY "DEBUG")
-
 elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "package")
     find_package(GTest REQUIRED)
 
@@ -120,36 +67,46 @@ elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "package")
     endif ()
     mark_as_advanced(GMOCK_INCLUDE_DIR)
 
-    find_library(GMOCK_LIBRARY gmock)
-    if ("${GMOCK_LIBRARY}" MATCHES "-NOTFOUND")
-        message(FATAL_ERROR "Cannot find gmock library ${GMOCK_LIBRARY}.")
-    endif ()
-    mark_as_advanced(GMOCK_LIBRARY)
+    function (__gmock_library_import_location target lib)
+        find_library(_library_release ${lib})
+        find_library(_library_debug ${lib}d)
 
-    find_library(GMOCK_MAIN_LIBRARY gmock_main)
-    if ("${GMOCK_LIBRARY}" MATCHES "-NOTFOUND")
-        message(
-            FATAL_ERROR "Cannot find gmock_main library ${GMOCK_MAIN_LIBRARY}.")
-    endif ()
-    mark_as_advanced(GMOCK_MAIN_LIBRARY)
+        if ("${_library_debug}" MATCHES "-NOTFOUND"
+            AND "${_library_release}" MATCHES "-NOTFOUND")
+            message(FATAL_ERROR "Cannot find library ${lib} for ${target}.")
+        elseif("${_library_debug}" MATCHES "-NOTFOUND")
+            set_target_properties(${target}
+                                  PROPERTIES IMPORTED_LOCATION
+                                             "${_library_release}")
+        elseif("${_library_release}" MATCHES "-NOTFOUND")
+            set_target_properties(${target}
+                                  PROPERTIES IMPORTED_LOCATION
+                                             "${_library_debug}")
+        else()
+            set_target_properties(${target}
+                                  PROPERTIES IMPORTED_LOCATION_DEBUG
+                                             "${_library_debug}")
+            set_target_properties(${target}
+                                  PROPERTIES IMPORTED_LOCATION_RELEASE
+                                             "${_library_release}")
+        endif ()
+    endfunction ()
 
     add_library(GTest::gmock UNKNOWN IMPORTED)
+    __gmock_library_import_location(GTest::gmock gmock)
     set_target_properties(GTest::gmock
                           PROPERTIES IMPORTED_LINK_INTERFACE_LIBRARIES
                                      "GTest::GTest;Threads::Threads"
                                      INTERFACE_INCLUDE_DIRECTORIES
-                                     "${GMOCK_INCLUDE_DIRS}"
-                                     IMPORTED_LOCATION
-                                     "${GMOCK_LIBRARY}")
+                                     "${GMOCK_INCLUDE_DIRS}")
 
     add_library(GTest::gmock_main UNKNOWN IMPORTED)
+    __gmock_library_import_location(GTest::gmock_main gmock_main)
     set_target_properties(GTest::gmock_main
                           PROPERTIES IMPORTED_LINK_INTERFACE_LIBRARIES
                                      "GTest::gmock;Threads::Threads"
                                      INTERFACE_INCLUDE_DIRECTORIES
-                                     "${GMOCK_INCLUDE_DIRS}"
-                                     IMPORTED_LOCATION
-                                     "${GMOCK_MAIN_LIBRARY}")
+                                     "${GMOCK_INCLUDE_DIRS}")
 
 elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "pkg-config")
 

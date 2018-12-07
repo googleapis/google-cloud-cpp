@@ -25,13 +25,12 @@ set_property(CACHE GOOGLE_CLOUD_CPP_CRC32C_PROVIDER
              PROPERTY STRINGS
                       "external"
                       "package"
-                      "vcpkg"
                       "pkg-config")
 
 if (TARGET Crc32c::crc32c)
     # Crc32c::crc32c is already defined, do not define it again.
 elseif("${GOOGLE_CLOUD_CPP_CRC32C_PROVIDER}" STREQUAL "external")
     include(external/crc32c)
-elseif("${GOOGLE_CLOUD_CPP_CRC32C_PROVIDER}" MATCHES "^(package|vcpkg)$")
+elseif("${GOOGLE_CLOUD_CPP_CRC32C_PROVIDER}" STREQUAL "package")
     find_package(Crc32c CONFIG REQUIRED)
 endif ()
