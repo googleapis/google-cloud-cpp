@@ -37,6 +37,7 @@ var searchData=
   ['restoreresumableuploadsession',['RestoreResumableUploadSession',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a4011e191a6a3b96add28f23b04db3957',1,'google::cloud::storage::v0']]],
   ['result',['Result',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html#a70135d91f3936fa1fb6c76467f0d3844',1,'google::cloud::storage::v0::ObjectRewriter']]],
   ['resultwithprogresscallback',['ResultWithProgressCallback',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html#ab14a1ad23c742f13611c2277fdac64ae',1,'google::cloud::storage::v0::ObjectRewriter']]],
+  ['resumable_5fsession_5fid',['resumable_session_id',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectWriteStream.html#a2ec1829e41e662dd91d3dc277f637c5b',1,'google::cloud::storage::v0::ObjectWriteStream']]],
   ['resumerewriteobject',['ResumeRewriteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ada8f04abb2ebbceae9272fd3d6a3d2c4',1,'google::cloud::storage::v0::Client']]],
   ['retention_5fexpiration_5ftime',['retention_expiration_time',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a371cea70f882b5e46c0f84da32a84f0a',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['retention_5fpolicy',['retention_policy',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a14dc1ca650289da4065f65e8dcec78f7',1,'google::cloud::storage::v0::BucketMetadata']]],

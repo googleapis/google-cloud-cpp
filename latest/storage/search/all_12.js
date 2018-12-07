@@ -102,5 +102,6 @@ var searchData=
   ['storage_5fobject_5fsamples_2ecc',['storage_object_samples.cc',['../storage__object__samples_8cc.html',1,'']]],
   ['storage_5fquickstart_2ecc',['storage_quickstart.cc',['../storage__quickstart_8cc.html',1,'']]],
   ['storage_5fthroughput_5fbenchmark_2ecc',['storage_throughput_benchmark.cc',['../storage__throughput__benchmark_8cc.html',1,'']]],
-  ['strictidempotencypolicy',['StrictIdempotencyPolicy',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1StrictIdempotencyPolicy.html',1,'google::cloud::storage::v0::StrictIdempotencyPolicy'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1StrictIdempotencyPolicy.html#a708a6a8b4828256418b7d54a1b973f27',1,'google::cloud::storage::v0::StrictIdempotencyPolicy::StrictIdempotencyPolicy()']]]
+  ['strictidempotencypolicy',['StrictIdempotencyPolicy',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1StrictIdempotencyPolicy.html',1,'google::cloud::storage::v0::StrictIdempotencyPolicy'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1StrictIdempotencyPolicy.html#a708a6a8b4828256418b7d54a1b973f27',1,'google::cloud::storage::v0::StrictIdempotencyPolicy::StrictIdempotencyPolicy()']]],
+  ['suspend',['Suspend',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectWriteStream.html#a490e502fe2056510670609fd2ac00220',1,'google::cloud::storage::v0::ObjectWriteStream']]]
 ];
