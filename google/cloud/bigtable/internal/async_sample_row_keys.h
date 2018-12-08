@@ -22,7 +22,7 @@
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/internal/async_retry_op.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
-#include "google/cloud/bigtable/internal/row_key_sample.h"
+#include "google/cloud/bigtable/row_key_sample.h"
 #include "google/cloud/bigtable/table_strong_types.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/make_unique.h"
