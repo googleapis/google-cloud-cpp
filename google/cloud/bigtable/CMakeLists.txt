@@ -187,7 +187,6 @@ add_library(bigtable_client
             internal/prefix_range_end.cc
             internal/readrowsparser.h
             internal/readrowsparser.cc
-            internal/row_key_sample.h
             internal/rpc_policy_parameters.inc
             internal/rpc_policy_parameters.h
             internal/rowreaderiterator.h
@@ -206,6 +205,7 @@ add_library(bigtable_client
             polling_policy.cc
             read_modify_write_rule.h
             row.h
+            row_key_sample.h
             row_range.h
             row_range.cc
             row_reader.h
