@@ -2162,10 +2162,18 @@ class Client {
    * @param object_name the name of the object, note that the object may not
    *     exist for signed URLs that upload new objects.
    * @param options a list of optional parameters for the signed URL, this
-   *     include: `ExpirationTime`, `MD5HashValue`, `ContentType`, and
-   *     `AddExtensionHeaderOption`. The `AddExtensionHeader()` function
-   *     provides a simpler way to create extension headers. Note that you can
-   *     provides multiple values of this option.
+   *     include: `ExpirationTime`, `MD5HashValue`, `ContentType`,
+   *     `AddExtensionHeaderOption`, and `AddQueryParameterOption`. The
+   *     `AddExtensionHeader()` function provides a simpler way to create
+   *     extension headers. Note that you can provides multiple values of this
+   *     option. Likewise, the following helper functions can create properly
+   *     formatted query parameters: `WithAcl()`, `WithBilling()`,
+   *     `WithCompose()`, `WithCors()`, `WithDelimiter()`,
+   *     `WithEncryption()`, `WithEncryptionConfig()`,`WithGeneration()`,
+   *     `WithGenerationMarker()`, `WithLifecycle()`, `WithLocation()`,
+   *     `WithLogging()`, `WithMarker()`, `WithMaxKeys()`, `WithPrefix()`,
+   *     `WithResponseContentDisposition()`, `WithResponseContentType()`,
+   *     `WithStorageClass()`, `WithTagging()`, `WithUserProject()`.
    *
    * @par Example
    * @snippet storage_object_samples.cc sign url

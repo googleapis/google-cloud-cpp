@@ -89,6 +89,13 @@ class SignUrlRequest {
     }
   }
 
+  void set_option(AddQueryParameterOption const& o) {
+    if (not o.has_value()) {
+      return;
+    }
+    query_parameters_.push_back(o.value());
+  }
+
   std::string verb_;
   std::string bucket_name_;
   std::string object_name_;
@@ -96,6 +103,7 @@ class SignUrlRequest {
   std::string content_type_;
   std::chrono::system_clock::time_point expiration_time_;
   std::map<std::string, std::string> extension_headers_;
+  std::vector<std::string> query_parameters_;
 };
 
 std::ostream& operator<<(std::ostream& os, SignUrlRequest const& r);

@@ -56,6 +56,120 @@ inline AddExtensionHeaderOption AddExtensionHeader(std::string header,
       std::make_pair(std::move(header), std::move(value)));
 }
 
+/**
+ * Add a extension header to a signed URL.
+ */
+struct AddQueryParameterOption
+    : public internal::ComplexOption<AddQueryParameterOption, std::string> {
+  using ComplexOption<AddQueryParameterOption, std::string>::ComplexOption;
+  static char const* name() { return "query-parameter"; }
+
+  /**
+   * Escapes a string using URL encoding.
+   *
+   * This function acts as a compilation barrier because including
+   * internal/curl_wrappers.h in this header would expose that header (and the
+   * headers it depends on) in the public interface, and we want to avoid that.
+   */
+  static std::string UrlEscape(std::string const& value);
+};
+
+inline AddQueryParameterOption WithAcl() {
+  return AddQueryParameterOption("acl");
+}
+
+inline AddQueryParameterOption WithBilling() {
+  return AddQueryParameterOption("billing");
+}
+
+inline AddQueryParameterOption WithCompose() {
+  return AddQueryParameterOption("compose");
+}
+
+inline AddQueryParameterOption WithCors() {
+  return AddQueryParameterOption("cors");
+}
+
+inline AddQueryParameterOption WithDelimiter(std::string const& delimiter) {
+  return AddQueryParameterOption("delimiter=" +
+                                 AddQueryParameterOption::UrlEscape(delimiter));
+}
+
+inline AddQueryParameterOption WithEncryption() {
+  return AddQueryParameterOption("encryption");
+}
+
+inline AddQueryParameterOption WithEncryptionConfig() {
+  return AddQueryParameterOption("encryptionConfig");
+}
+
+inline AddQueryParameterOption WithGeneration(std::uint64_t generation) {
+  return AddQueryParameterOption(
+      "generation=" +
+      AddQueryParameterOption::UrlEscape(std::to_string(generation)));
+}
+
+inline AddQueryParameterOption WithGenerationMarker(std::uint64_t generation) {
+  return AddQueryParameterOption(
+      "generation-marker=" +
+      AddQueryParameterOption::UrlEscape(std::to_string(generation)));
+}
+
+inline AddQueryParameterOption WithLifecycle() {
+  return AddQueryParameterOption("lifecycle");
+}
+
+inline AddQueryParameterOption WithLocation() {
+  return AddQueryParameterOption("location");
+}
+
+inline AddQueryParameterOption WithLogging() {
+  return AddQueryParameterOption("logging");
+}
+
+inline AddQueryParameterOption WithMarker(std::string const& marker) {
+  return AddQueryParameterOption("marker=" +
+                                 AddQueryParameterOption::UrlEscape(marker));
+}
+
+inline AddQueryParameterOption WithMaxKeys(std::int32_t max_keys) {
+  return AddQueryParameterOption(
+      "max-keys=" +
+      AddQueryParameterOption::UrlEscape(std::to_string(max_keys)));
+}
+
+inline AddQueryParameterOption WithPrefix(std::string const& prefix) {
+  return AddQueryParameterOption("prefix=" +
+                                 AddQueryParameterOption::UrlEscape(prefix));
+}
+
+inline AddQueryParameterOption WithResponseContentDisposition(
+    std::string const& disposition) {
+  return AddQueryParameterOption(
+      "response-content-disposition=" +
+      AddQueryParameterOption::UrlEscape(disposition));
+}
+
+inline AddQueryParameterOption WithResponseContentType(
+    std::string const& type) {
+  return AddQueryParameterOption("response-content-type=" +
+                                 AddQueryParameterOption::UrlEscape(type));
+}
+
+inline AddQueryParameterOption WithStorageClass() {
+  return AddQueryParameterOption("storageClass");
+}
+
+inline AddQueryParameterOption WithTagging() {
+  return AddQueryParameterOption("tagging");
+}
+
+inline AddQueryParameterOption WithUserProject(
+    std::string const& user_project) {
+  return AddQueryParameterOption(
+      "userProject=" + AddQueryParameterOption::UrlEscape(user_project));
+}
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
