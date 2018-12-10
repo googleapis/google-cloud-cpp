@@ -37,9 +37,10 @@ TEST(CurlStreambufIntegrationTest, WriteManyBytes) {
                                        internal::GetDefaultCurlHandleFactory());
   builder.AddHeader("Content-Type: application/octet-stream");
   builder.SetMethod("POST");
-  std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
-      builder.BuildUpload(), 128 * 1024,
-      google::cloud::internal::make_unique<internal::NullHashValidator>()));
+  std::unique_ptr<internal::CurlWriteStreambuf> buf(
+      new internal::CurlWriteStreambuf(
+          builder.BuildUpload(), 128 * 1024,
+          google::cloud::internal::make_unique<internal::NullHashValidator>()));
   ObjectWriteStream writer(std::move(buf));
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();

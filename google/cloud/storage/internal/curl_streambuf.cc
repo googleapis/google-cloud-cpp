@@ -73,24 +73,24 @@ CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
   return traits_type::eof();
 }
 
-CurlStreambuf::CurlStreambuf(CurlUploadRequest&& upload,
-                             std::size_t max_buffer_size,
-                             std::unique_ptr<HashValidator> hash_validator)
+CurlWriteStreambuf::CurlWriteStreambuf(
+    CurlUploadRequest&& upload, std::size_t max_buffer_size,
+    std::unique_ptr<HashValidator> hash_validator)
     : upload_(std::move(upload)),
       max_buffer_size_(max_buffer_size),
       hash_validator_(std::move(hash_validator)) {
   current_ios_buffer_.reserve(max_buffer_size);
 }
 
-bool CurlStreambuf::IsOpen() const { return upload_.IsOpen(); }
+bool CurlWriteStreambuf::IsOpen() const { return upload_.IsOpen(); }
 
-void CurlStreambuf::ValidateHash(ObjectMetadata const& meta) {
+void CurlWriteStreambuf::ValidateHash(ObjectMetadata const& meta) {
   hash_validator_->ProcessMetadata(meta);
   hash_validator_result_ =
       HashValidator::FinishAndCheck(__func__, std::move(*hash_validator_));
 }
 
-CurlStreambuf::int_type CurlStreambuf::overflow(int_type ch) {
+CurlWriteStreambuf::int_type CurlWriteStreambuf::overflow(int_type ch) {
   Validate(__func__);
   SwapBuffers();
   if (not traits_type::eq_int_type(ch, traits_type::eof())) {
@@ -100,7 +100,7 @@ CurlStreambuf::int_type CurlStreambuf::overflow(int_type ch) {
   return 0;
 }
 
-int CurlStreambuf::sync() {
+int CurlWriteStreambuf::sync() {
   // The default destructor calls sync(), for already closed streams this should
   // be a no-op.
   if (not IsOpen()) {
@@ -111,7 +111,8 @@ int CurlStreambuf::sync() {
   return 0;
 }
 
-std::streamsize CurlStreambuf::xsputn(char const* s, std::streamsize count) {
+std::streamsize CurlWriteStreambuf::xsputn(char const* s,
+                                           std::streamsize count) {
   Validate(__func__);
   current_ios_buffer_.append(s, static_cast<std::size_t>(count));
   pbump(static_cast<int>(count));
@@ -121,7 +122,7 @@ std::streamsize CurlStreambuf::xsputn(char const* s, std::streamsize count) {
   return count;
 }
 
-HttpResponse CurlStreambuf::DoClose() {
+HttpResponse CurlWriteStreambuf::DoClose() {
   GCP_LOG(INFO) << __func__ << "()";
   Validate(__func__);
   SwapBuffers();
@@ -132,7 +133,7 @@ HttpResponse CurlStreambuf::DoClose() {
   return response;
 }
 
-void CurlStreambuf::Validate(char const* where) const {
+void CurlWriteStreambuf::Validate(char const* where) const {
   if (upload_.IsOpen()) {
     return;
   }
@@ -141,7 +142,7 @@ void CurlStreambuf::Validate(char const* where) const {
   google::cloud::internal::RaiseRuntimeError(msg);
 }
 
-void CurlStreambuf::SwapBuffers() {
+void CurlWriteStreambuf::SwapBuffers() {
   // Shorten the buffer to the actual used size.
   current_ios_buffer_.resize(pptr() - pbase());
   // Push the buffer to the libcurl wrapper to be written as needed
