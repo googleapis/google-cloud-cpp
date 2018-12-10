@@ -326,6 +326,36 @@ TEST(PatchBucketRequestTest, DiffResetEncryption) {
   EXPECT_EQ(expected, patch);
 }
 
+TEST(PatchBucketRequestTest, DiffSetIamConfiguration) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.reset_encryption();
+  BucketMetadata updated = original;
+  BucketIamConfiguration configuration;
+  configuration.bucket_only_policy = BucketOnlyPolicy{true};
+  updated.set_iam_configuration(std::move(configuration));
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({
+      "iamConfiguration": {"bucketOnlyPolicy": {"enabled": true}}
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetIamConfiguration) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  BucketIamConfiguration configuration;
+  configuration.bucket_only_policy = BucketOnlyPolicy{true};
+  original.set_iam_configuration(std::move(configuration));
+  BucketMetadata updated = original;
+  updated.reset_iam_configuration();
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"iamConfiguration": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
 TEST(PatchBucketRequestTest, DiffSetLabels) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.mutable_labels() = {

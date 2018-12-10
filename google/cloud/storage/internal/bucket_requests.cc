@@ -114,6 +114,15 @@ PatchBucketRequest::PatchBucketRequest(std::string bucket,
     }
   }
 
+  if (original.iam_configuration_as_optional() !=
+      updated.iam_configuration_as_optional()) {
+    if (updated.has_iam_configuration()) {
+      builder.SetIamConfiguration(updated.iam_configuration());
+    } else {
+      builder.ResetIamConfiguration();
+    }
+  }
+
   if (original.labels() != updated.labels()) {
     if (updated.labels().empty()) {
       builder.ResetLabels();

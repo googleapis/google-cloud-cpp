@@ -51,6 +51,13 @@ void SetIfNotEmpty(internal::nl::json& json, char const* key,
   json[key] = value;
 }
 
+BucketOnlyPolicy ParseBucketOnlyPolicy(internal::nl::json const& json) {
+  BucketOnlyPolicy result;
+  result.enabled = internal::ParseBoolField(json, "enabled");
+  result.locked_time = internal::ParseTimestampField(json, "lockedTime");
+  return result;
+}
+
 }  // namespace
 
 std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
@@ -74,6 +81,21 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
   return os << sep << "method=[" << join(", ", rhs.method) << "], origin=["
             << join(", ", rhs.origin) << "], response_header=["
             << join(", ", rhs.response_header) << "]}";
+}
+
+std::ostream& operator<<(std::ostream& os, BucketOnlyPolicy const& rhs) {
+  return os << "BucketOnlyPolicy={enabled=" << std::boolalpha
+            << rhs.enabled
+            << ", locked_time=" << internal::FormatRfc3339(rhs.locked_time)
+            << "}";
+}
+
+std::ostream& operator<<(std::ostream& os, BucketIamConfiguration const& rhs) {
+  os << "BucketIamConfiguration={";
+  if (rhs.bucket_only_policy.has_value()) {
+    os << "bucket_only_policy=" << *rhs.bucket_only_policy;
+  }
+  return os << "}";
 }
 
 std::ostream& operator<<(std::ostream& os, BucketLogging const& rhs) {
@@ -123,6 +145,15 @@ BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
     BucketEncryption e;
     e.default_kms_key_name = json["encryption"].value("defaultKmsKeyName", "");
     result.encryption_ = std::move(e);
+  }
+
+  if (json.count("iamConfiguration") != 0) {
+    BucketIamConfiguration c;
+    auto config = json["iamConfiguration"];
+    if (config.count("bucketOnlyPolicy") != 0) {
+      c.bucket_only_policy = ParseBucketOnlyPolicy(config["bucketOnlyPolicy"]);
+    }
+    result.iam_configuration_ = c;
   }
 
   if (json.count("lifecycle") != 0) {
@@ -241,6 +272,18 @@ std::string BucketMetadata::ToJsonString() const {
     metadata_as_json["encryption"] = std::move(e);
   }
 
+  if (has_iam_configuration()) {
+    json c;
+    if (iam_configuration().bucket_only_policy.has_value()) {
+      json bop;
+      bop["enabled"] = iam_configuration().bucket_only_policy->enabled;
+      // The lockedTime field is not mutable and should not be set by the client
+      // the server will provide a value.
+      c["bucketOnlyPolicy"] = std::move(bop);
+    }
+    metadata_as_json["iamConfiguration"] = std::move(c);
+  }
+
   if (not labels_.empty()) {
     json labels_as_json;
     for (auto const& kv : labels_) {
@@ -318,6 +361,7 @@ bool BucketMetadata::operator==(BucketMetadata const& rhs) const {
          cors_ == rhs.cors_ and
          default_event_based_hold_ == rhs.default_event_based_hold_ and
          default_acl_ == rhs.default_acl_ and encryption_ == rhs.encryption_ and
+         iam_configuration_ == rhs.iam_configuration_ and
          project_number_ == rhs.project_number_ and
          lifecycle_ == rhs.lifecycle_ and location_ == rhs.location_ and
          logging_ == rhs.logging_ and labels_ == rhs.labels_ and
@@ -367,8 +411,13 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
        << rhs.encryption().default_kms_key_name;
   }
 
-  os << ", etag=" << rhs.etag() << ", id=" << rhs.id()
-     << ", kind=" << rhs.kind();
+  os << ", etag=" << rhs.etag();
+
+  if (rhs.has_iam_configuration()) {
+    os << ", iam_configuration=" << rhs.iam_configuration();
+  }
+
+  os << ", id=" << rhs.id() << ", kind=" << rhs.kind();
 
   for (auto const& kv : rhs.labels_) {
     os << ", labels." << kv.first << "=" << kv.second;
@@ -549,6 +598,26 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetEncryption(
 
 BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetEncryption() {
   impl_.RemoveField("encryption");
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetIamConfiguration(
+    BucketIamConfiguration const& v) {
+  internal::PatchBuilder iam_configuration;
+  if (v.bucket_only_policy.has_value()) {
+    internal::PatchBuilder bucket_only_policy;
+    bucket_only_policy.SetBoolField("enabled", v.bucket_only_policy->enabled);
+    // The lockedTime field should not be set, this is not a mutable field, it
+    // is set by the server when the policy is enabled.
+    iam_configuration.AddSubPatch("bucketOnlyPolicy", bucket_only_policy);
+  }
+  impl_.AddSubPatch("iamConfiguration", iam_configuration);
+  return *this;
+}
+
+BucketMetadataPatchBuilder&
+BucketMetadataPatchBuilder::ResetIamConfiguration() {
+  impl_.RemoveField("iamConfiguration");
   return *this;
 }
 

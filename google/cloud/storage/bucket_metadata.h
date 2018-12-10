@@ -127,6 +127,102 @@ inline bool operator>=(CorsEntry const& lhs, CorsEntry const& rhs) {
 std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
 
 /**
+ * Configure if only the IAM policies are used for access control.
+ *
+ * @warning this is an Alpha feature of Google Cloud Storage, it is not subject
+ *     to the deprecation policy and subject to change without notice.
+ */
+struct BucketOnlyPolicy {
+  bool enabled;
+  std::chrono::system_clock::time_point locked_time;
+};
+
+//@{
+/// @name Comparison operators For BucketOnlyPolicy.
+inline bool operator==(BucketOnlyPolicy const& lhs,
+                       BucketOnlyPolicy const& rhs) {
+  return std::tie(lhs.enabled, lhs.locked_time) ==
+         std::tie(rhs.enabled, rhs.locked_time);
+}
+
+inline bool operator<(BucketOnlyPolicy const& lhs,
+                      BucketOnlyPolicy const& rhs) {
+  return std::tie(lhs.enabled, lhs.locked_time) <
+         std::tie(rhs.enabled, rhs.locked_time);
+}
+
+inline bool operator!=(BucketOnlyPolicy const& lhs,
+                       BucketOnlyPolicy const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(BucketOnlyPolicy const& lhs,
+                      BucketOnlyPolicy const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(BucketOnlyPolicy const& lhs,
+                       BucketOnlyPolicy const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(BucketOnlyPolicy const& lhs,
+                       BucketOnlyPolicy const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+//@}
+
+std::ostream& operator<<(std::ostream& os, BucketOnlyPolicy const& rhs);
+
+/**
+ * The IAM configuration for a Bucket.
+ *
+ * Currently this only holds the BucketOnlyPolicy. In the future, we may define
+ * additional IAM which would be included in this object.
+ *
+ * @warning this is an Alpha feature of Google Cloud Storage, it is not subject
+ *     to the deprecation policy and subject to change without notice.
+ */
+struct BucketIamConfiguration {
+  google::cloud::optional<BucketOnlyPolicy> bucket_only_policy;
+};
+
+//@{
+/// @name Comparison operators for BucketIamConfiguration.
+inline bool operator==(BucketIamConfiguration const& lhs,
+                       BucketIamConfiguration const& rhs) {
+  return lhs.bucket_only_policy == rhs.bucket_only_policy;
+}
+
+inline bool operator<(BucketIamConfiguration const& lhs,
+                      BucketIamConfiguration const& rhs) {
+  return lhs.bucket_only_policy < rhs.bucket_only_policy;
+}
+
+inline bool operator!=(BucketIamConfiguration const& lhs,
+                       BucketIamConfiguration const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(BucketIamConfiguration const& lhs,
+                      BucketIamConfiguration const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(BucketIamConfiguration const& lhs,
+                       BucketIamConfiguration const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(BucketIamConfiguration const& lhs,
+                       BucketIamConfiguration const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+//@}
+
+std::ostream& operator<<(std::ostream& os, BucketIamConfiguration const& rhs);
+
+/**
  * The Object Lifecycle configuration for a Bucket.
  *
  * @see https://cloud.google.com/storage/docs/managing-lifecycles for general
@@ -530,6 +626,29 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   //@}
 
   using CommonMetadata::etag;
+
+  //@{
+  /**
+   * @name Get and set the IAM configuration.
+   */
+  bool has_iam_configuration() const { return iam_configuration_.has_value(); }
+  BucketIamConfiguration const& iam_configuration() const {
+    return *iam_configuration_;
+  }
+  google::cloud::optional<BucketIamConfiguration> const&
+  iam_configuration_as_optional() const {
+    return iam_configuration_;
+  }
+  BucketMetadata& set_iam_configuration(BucketIamConfiguration v) {
+    iam_configuration_ = std::move(v);
+    return *this;
+  }
+  BucketMetadata& reset_iam_configuration() {
+    iam_configuration_.reset();
+    return *this;
+  }
+  //@}
+
   using CommonMetadata::id;
   using CommonMetadata::kind;
 
@@ -720,6 +839,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   bool default_event_based_hold_ = false;
   std::vector<ObjectAccessControl> default_acl_;
   google::cloud::optional<BucketEncryption> encryption_;
+  google::cloud::optional<BucketIamConfiguration> iam_configuration_;
   std::map<std::string, std::string> labels_;
   google::cloud::optional<BucketLifecycle> lifecycle_;
   std::string location_;
@@ -777,6 +897,10 @@ class BucketMetadataPatchBuilder {
    * @warning Currently the server ignores requests to reset the full ACL.
    */
   BucketMetadataPatchBuilder& ResetDefaultAcl();
+
+  BucketMetadataPatchBuilder& SetIamConfiguration(
+      BucketIamConfiguration const& v);
+  BucketMetadataPatchBuilder& ResetIamConfiguration();
 
   BucketMetadataPatchBuilder& SetEncryption(BucketEncryption const& v);
   BucketMetadataPatchBuilder& ResetEncryption();

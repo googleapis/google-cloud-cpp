@@ -127,6 +127,21 @@ class GcsBucket(object):
             'timeCreated': '2018-05-19T19:31:14Z',
             'updated': '2018-05-19T19:31:24Z',
         })
+        bop_was_enabled = False
+        if metadata.get('iamConfiguration'):
+            bop = metadata.get('iamConfiguration').get('bucketOnlyPolicy')
+            if bop:
+                bop_was_enabled = bop.get('enabled')
+        config = tmp.get('iamConfiguration')
+        if config is not None:
+            if config.get('bucketOnlyPolicy'):
+                bop_enabled = config.get('bucketOnlyPolicy').get('enabled')
+                if not bop_was_enabled and bop_enabled:
+                    # Set the locked time (arbitrarily) to 7 days from now.
+                    locked_time = time.gmtime(time.time() + 7 * 24 * 3600)
+                    config.get('bucketOnlyPolicy').set(
+                        'lockedTime', time.strftime(
+                            '%Y-%m-%dT%H:%M:%SZ', locked_time))
         self.metadata = tmp
         self.increase_metageneration()
 
