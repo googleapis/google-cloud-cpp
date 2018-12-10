@@ -288,6 +288,10 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
   // Wait for instance creation
   ASSERT_THAT(future.get().name(), HasSubstr(instance_id));
 
+  bigtable::noex::InstanceAdmin admin(instance_admin_client_);
+  google::cloud::bigtable::CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
   std::string id1 =
       "profile-" + google::cloud::internal::Sample(
                        generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
@@ -295,7 +299,16 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
       "profile-" + google::cloud::internal::Sample(
                        generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
-  auto initial_profiles = instance_admin_->ListAppProfiles(instance_id);
+  std::promise<std::vector<btadmin::AppProfile>> initial_appprofiles_promise;
+  admin.AsyncListAppProfiles(
+      instance_id, cq,
+      [&initial_appprofiles_promise](bigtable::CompletionQueue&,
+                                     std::vector<btadmin::AppProfile>& response,
+                                     grpc::Status& status) {
+        ASSERT_TRUE(status.ok());
+        initial_appprofiles_promise.set_value(response);
+      });
+  auto initial_profiles = initial_appprofiles_promise.get_future().get();
 
   // Simplify writing the rest of the test.
   auto count_matching_profiles =
@@ -309,10 +322,6 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
 
   EXPECT_EQ(0U, count_matching_profiles(id1, initial_profiles));
   EXPECT_EQ(0U, count_matching_profiles(id2, initial_profiles));
-
-  bigtable::noex::InstanceAdmin admin(instance_admin_client_);
-  google::cloud::bigtable::CompletionQueue cq;
-  std::thread pool([&cq] { cq.Run(); });
 
   // Create First profile
   std::promise<btadmin::AppProfile> promise_create_first_profile;
@@ -344,7 +353,17 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
   auto response_create_second_profile =
       promise_create_second_profile.get_future().get();
 
-  auto current_profiles = instance_admin_->ListAppProfiles(instance_id);
+  std::promise<std::vector<btadmin::AppProfile>>
+      after_second_appprofiles_promise;
+  admin.AsyncListAppProfiles(
+      instance_id, cq,
+      [&after_second_appprofiles_promise](
+          bigtable::CompletionQueue&,
+          std::vector<btadmin::AppProfile>& response, grpc::Status& status) {
+        ASSERT_TRUE(status.ok());
+        after_second_appprofiles_promise.set_value(response);
+      });
+  auto current_profiles = after_second_appprofiles_promise.get_future().get();
   EXPECT_EQ(1U, count_matching_profiles(id1, current_profiles));
   EXPECT_EQ(1U, count_matching_profiles(id2, current_profiles));
 
@@ -410,7 +429,18 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
       });
   auto response_delete_first_profile =
       promise_delete_first_profile.get_future().get();
-  current_profiles = instance_admin_->ListAppProfiles(instance_id);
+
+  std::promise<std::vector<btadmin::AppProfile>>
+      after_delete_appprofiles_promise;
+  admin.AsyncListAppProfiles(
+      instance_id, cq,
+      [&after_delete_appprofiles_promise](
+          bigtable::CompletionQueue&,
+          std::vector<btadmin::AppProfile>& response, grpc::Status& status) {
+        ASSERT_TRUE(status.ok());
+        after_delete_appprofiles_promise.set_value(response);
+      });
+  current_profiles = after_delete_appprofiles_promise.get_future().get();
   EXPECT_EQ(0U, count_matching_profiles(id1, current_profiles));
   EXPECT_EQ(1U, count_matching_profiles(id2, current_profiles));
 
@@ -425,7 +455,18 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
       });
   auto response_delete_second_profile =
       promise_delete_second_profile.get_future().get();
-  current_profiles = instance_admin_->ListAppProfiles(instance_id);
+
+  std::promise<std::vector<btadmin::AppProfile>>
+      after_delete_second_appprofiles_promise;
+  admin.AsyncListAppProfiles(
+      instance_id, cq,
+      [&after_delete_second_appprofiles_promise](
+          bigtable::CompletionQueue&,
+          std::vector<btadmin::AppProfile>& response, grpc::Status& status) {
+        ASSERT_TRUE(status.ok());
+        after_delete_second_appprofiles_promise.set_value(response);
+      });
+  current_profiles = after_delete_second_appprofiles_promise.get_future().get();
   EXPECT_EQ(0U, count_matching_profiles(id1, current_profiles));
   EXPECT_EQ(0U, count_matching_profiles(id2, current_profiles));
 

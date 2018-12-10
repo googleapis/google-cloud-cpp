@@ -206,6 +206,13 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
                    google::bigtable::admin::v2::ListAppProfilesRequest const&,
                    google::bigtable::admin::v2::ListAppProfilesResponse*));
 
+  MOCK_METHOD3(AsyncListAppProfiles,
+               std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+                   google::bigtable::admin::v2::ListAppProfilesResponse>>(
+                   grpc::ClientContext*,
+                   const google::bigtable::admin::v2::ListAppProfilesRequest&,
+                   grpc::CompletionQueue*));
+
   MOCK_METHOD3(
       UpdateAppProfile,
       grpc::Status(grpc::ClientContext*,
