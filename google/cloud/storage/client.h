@@ -2156,11 +2156,21 @@ class Client {
    *
    * @note By default URLs created with this function expire after 7 days.
    *
+   * @note The application must ensure that any URL created with this function
+   *     is a valid request via the XML API. For example, the options for
+   *     bucket requests may include a sub-resource (e.g. `WithAcl()`) but this
+   *     is not valid when querying objects.  Likewise, only a single
+   *     sub-resource may be retrieved in each request.
+   *
+   * @see https://cloud.google.com/storage/docs/xml-api/overview for a detailed
+   *     description of the XML API.
+   *
    * @param verb the operation allowed through this signed URL, `GET`, `POST`,
    *     `PUT`, etc. are valid values.
    * @param bucket_name the name of the bucket.
    * @param object_name the name of the object, note that the object may not
-   *     exist for signed URLs that upload new objects.
+   *     exist for signed URLs that upload new objects. Use an empty string for
+   *     requests that only affect a bucket.
    * @param options a list of optional parameters for the signed URL, this
    *     include: `ExpirationTime`, `MD5HashValue`, `ContentType`,
    *     `AddExtensionHeaderOption`, and `AddQueryParameterOption`. The
@@ -2168,10 +2178,9 @@ class Client {
    *     extension headers. Note that you can provides multiple values of this
    *     option. Likewise, the following helper functions can create properly
    *     formatted query parameters: `WithAcl()`, `WithBilling()`,
-   *     `WithCompose()`, `WithCors()`, `WithDelimiter()`,
-   *     `WithEncryption()`, `WithEncryptionConfig()`,`WithGeneration()`,
-   *     `WithGenerationMarker()`, `WithLifecycle()`, `WithLocation()`,
-   *     `WithLogging()`, `WithMarker()`, `WithMaxKeys()`, `WithPrefix()`,
+   *     `WithCompose()`, `WithCors()`, `WithEncryption()`,
+   *     `WithEncryptionConfig()`,`WithGeneration()`, `WithGenerationMarker()`,
+   *     `WithLifecycle()`, `WithLocation()`, `WithLogging()`, `WithMarker()`,
    *     `WithResponseContentDisposition()`, `WithResponseContentType()`,
    *     `WithStorageClass()`, `WithTagging()`, `WithUserProject()`.
    *

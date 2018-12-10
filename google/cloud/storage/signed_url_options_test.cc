@@ -25,7 +25,6 @@ TEST(SignedUrlOptions, QueryParamters) {
   EXPECT_EQ("billing", WithBilling().value());
   EXPECT_EQ("compose", WithCompose().value());
   EXPECT_EQ("cors", WithCors().value());
-  EXPECT_EQ("delimiter=%3A", WithDelimiter(":").value());
   EXPECT_EQ("encryption", WithEncryption().value());
   EXPECT_EQ("encryptionConfig", WithEncryptionConfig().value());
   EXPECT_EQ("generation=12345", WithGeneration(12345U).value());
@@ -34,8 +33,6 @@ TEST(SignedUrlOptions, QueryParamters) {
   EXPECT_EQ("location", WithLocation().value());
   EXPECT_EQ("logging", WithLogging().value());
   EXPECT_EQ("marker=abcd", WithMarker("abcd").value());
-  EXPECT_EQ("max-keys=1024", WithMaxKeys(1024).value());
-  EXPECT_EQ("prefix=foo%2Fbar%2F", WithPrefix("foo/bar/").value());
   EXPECT_EQ("response-content-disposition=inline",
             WithResponseContentDisposition("inline").value());
   EXPECT_EQ("response-content-type=text%2Fplain",

@@ -90,11 +90,6 @@ inline AddQueryParameterOption WithCors() {
   return AddQueryParameterOption("cors");
 }
 
-inline AddQueryParameterOption WithDelimiter(std::string const& delimiter) {
-  return AddQueryParameterOption("delimiter=" +
-                                 AddQueryParameterOption::UrlEscape(delimiter));
-}
-
 inline AddQueryParameterOption WithEncryption() {
   return AddQueryParameterOption("encryption");
 }
@@ -130,17 +125,6 @@ inline AddQueryParameterOption WithLogging() {
 inline AddQueryParameterOption WithMarker(std::string const& marker) {
   return AddQueryParameterOption("marker=" +
                                  AddQueryParameterOption::UrlEscape(marker));
-}
-
-inline AddQueryParameterOption WithMaxKeys(std::int32_t max_keys) {
-  return AddQueryParameterOption(
-      "max-keys=" +
-      AddQueryParameterOption::UrlEscape(std::to_string(max_keys)));
-}
-
-inline AddQueryParameterOption WithPrefix(std::string const& prefix) {
-  return AddQueryParameterOption("prefix=" +
-                                 AddQueryParameterOption::UrlEscape(prefix));
 }
 
 inline AddQueryParameterOption WithResponseContentDisposition(

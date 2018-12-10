@@ -65,7 +65,7 @@ TEST(SignedUrlRequests, SignEscaped) {
 
   request.set_multiple_options(
       ExpirationTime(ParseRfc3339("2018-12-03T12:00:00Z")),
-      WithDelimiter("+"));
+      WithMarker("foo+bar"));
 
   // Used this command to get the date in seconds:
   //   date +%s -u --date=2018-12-03T12:00:00Z
@@ -73,7 +73,7 @@ TEST(SignedUrlRequests, SignEscaped) {
 
 
 1543838400
-/test-bucket/test-%20-%3F-%2B-%2F-%3A-%26-object?delimiter=%2B)""";
+/test-bucket/test-%20-%3F-%2B-%2F-%3A-%26-object?marker=foo%2Bbar)""";
 
   EXPECT_EQ(expected_blob, request.StringToSign());
 

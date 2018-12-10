@@ -50,6 +50,25 @@ TEST(SignedUrlIntegrationTest, Sign) {
   EXPECT_THAT(actual, HasSubstr("test-object"));
 }
 
+TEST(SignedUrlIntegrationTest, BucketOnly) {
+  Client client(oauth2::CreateServiceAccountCredentialsFromJsonContents(
+      kJsonKeyfileContents));
+
+  auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "", WithAcl());
+
+  EXPECT_THAT(actual, HasSubstr("test-bucket?GoogleAccessId="));
+}
+
+TEST(SignedUrlIntegrationTest, SignEscape) {
+  Client client(oauth2::CreateServiceAccountCredentialsFromJsonContents(
+      kJsonKeyfileContents));
+
+  auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "test+object");
+
+  EXPECT_THAT(actual, HasSubstr("test-bucket"));
+  EXPECT_THAT(actual, HasSubstr("test%2Bobject"));
+}
+
 TEST(SignedUrlIntegrationTest, SignFailure) {
   Client client(google::cloud::storage::oauth2::CreateAnonymousCredentials());
 
