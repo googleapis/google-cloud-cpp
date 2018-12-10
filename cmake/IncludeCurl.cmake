@@ -32,12 +32,11 @@ set_property(CACHE GOOGLE_CLOUD_CPP_CURL_PROVIDER
              PROPERTY STRINGS
                       "external"
                       "package"
-                      "vcpkg"
                       "pkg-config")
 
 if ("${GOOGLE_CLOUD_CPP_CURL_PROVIDER}" STREQUAL "external")
     include(external/curl)
-elseif("${GOOGLE_CLOUD_CPP_CURL_PROVIDER}" MATCHES "^(package|vcpkg)$")
+elseif("${GOOGLE_CLOUD_CPP_CURL_PROVIDER}" STREQUAL "package")
     # Search for libcurl, in CMake 3.5 this does not define a target, but it
     # will in 3.12 (see https://cmake.org/cmake/help/git-
     # stage/module/FindCURL.html for details).  Until then, define the target

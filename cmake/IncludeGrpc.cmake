@@ -25,7 +25,6 @@ set_property(CACHE GOOGLE_CLOUD_CPP_GRPC_PROVIDER
              PROPERTY STRINGS
                       "external"
                       "package"
-                      "vcpkg"
                       "pkg-config")
 
 # Additional compile-time definitions for WIN32.  We need to manually set these
@@ -52,7 +51,7 @@ set(GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS
 
 if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "external")
     include(external/grpc)
-elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" MATCHES "^(package|vcpkg)$")
+elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
     find_package(protobuf REQUIRED protobuf>=3.5.2)
     find_package(gRPC REQUIRED gRPC>=1.9)
 
