@@ -51,6 +51,70 @@ std::string ObjectTestEnvironment::bucket_name_;
 class ObjectInsertIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
+TEST_F(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = "name-+-&-=- -%-" + MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0),
+      DisableCrc32cChecksum(true), DisableMD5Hash(true));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, XmlInsertWithNonUrlSafeName) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = "name-+-&-=- -%-" + MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0), Fields(""));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = "name-+-&-=- -%-" + MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
 TEST_F(ObjectInsertIntegrationTest, InsertWithMD5) {
   Client client;
   auto bucket_name = ObjectTestEnvironment::bucket_name();

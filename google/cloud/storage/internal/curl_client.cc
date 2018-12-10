@@ -102,6 +102,11 @@ std::string XmlMapPredefinedAcl(std::string const& acl) {
   return loc->second;
 }
 
+std::string UrlEscapeString(std::string const& value) {
+  CurlHandle handle;
+  return std::string(handle.MakeEscapedString(value).get());
+}
+
 }  // namespace
 
 Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
@@ -490,8 +495,9 @@ std::pair<Status, ObjectMetadata> CurlClient::CopyObject(
     CopyObjectRequest const& request) {
   CurlRequestBuilder builder(
       storage_endpoint_ + "/b/" + request.source_bucket() + "/o/" +
-          request.source_object() + "/copyTo/b/" +
-          request.destination_bucket() + "/o/" + request.destination_object(),
+          UrlEscapeString(request.source_object()) + "/copyTo/b/" +
+          request.destination_bucket() + "/o/" +
+          UrlEscapeString(request.destination_object()),
       storage_factory_);
   auto status = SetupBuilder(builder, request, "POST");
   if (not status.ok()) {
@@ -516,7 +522,7 @@ std::pair<Status, ObjectMetadata> CurlClient::CopyObject(
 std::pair<Status, ObjectMetadata> CurlClient::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/o/" + request.object_name(),
+                                 "/o/" + UrlEscapeString(request.object_name()),
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "GET");
   if (not status.ok()) {
@@ -541,7 +547,7 @@ std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObject(
   }
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/o/" + request.object_name(),
+                                 "/o/" + UrlEscapeString(request.object_name()),
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "GET");
   if (not status.ok()) {
@@ -601,7 +607,7 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteObject(
     DeleteObjectRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/o/" + request.object_name(),
+                                 "/o/" + UrlEscapeString(request.object_name()),
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "DELETE");
   if (not status.ok()) {
@@ -619,7 +625,7 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteObject(
 std::pair<Status, ObjectMetadata> CurlClient::UpdateObject(
     UpdateObjectRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/o/" + request.object_name(),
+                                 "/o/" + UrlEscapeString(request.object_name()),
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "PUT");
   if (not status.ok()) {
@@ -639,7 +645,7 @@ std::pair<Status, ObjectMetadata> CurlClient::UpdateObject(
 std::pair<Status, ObjectMetadata> CurlClient::PatchObject(
     PatchObjectRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/o/" + request.object_name(),
+                                 "/o/" + UrlEscapeString(request.object_name()),
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "PATCH");
   if (not status.ok()) {
@@ -659,7 +665,7 @@ std::pair<Status, ObjectMetadata> CurlClient::PatchObject(
 std::pair<Status, ObjectMetadata> CurlClient::ComposeObject(
     ComposeObjectRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/o/" + request.object_name() + "/compose",
+                                 "/o/" + UrlEscapeString(request.object_name()) + "/compose",
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "POST");
   if (not status.ok()) {
@@ -680,8 +686,9 @@ std::pair<Status, RewriteObjectResponse> CurlClient::RewriteObject(
     RewriteObjectRequest const& request) {
   CurlRequestBuilder builder(
       storage_endpoint_ + "/b/" + request.source_bucket() + "/o/" +
-          request.source_object() + "/rewriteTo/b/" +
-          request.destination_bucket() + "/o/" + request.destination_object(),
+          UrlEscapeString(request.source_object()) + "/rewriteTo/b/" +
+          request.destination_bucket() + "/o/" +
+          UrlEscapeString(request.destination_object()),
       storage_factory_);
   auto status = SetupBuilder(builder, request, "POST");
   if (not status.ok()) {
@@ -748,7 +755,7 @@ std::pair<Status, ListBucketAclResponse> CurlClient::ListBucketAcl(
 std::pair<Status, BucketAccessControl> CurlClient::GetBucketAcl(
     GetBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/acl/" + request.entity(),
+                                 "/acl/" + UrlEscapeString(request.entity()),
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "GET");
   if (not status.ok()) {
@@ -790,7 +797,7 @@ std::pair<Status, BucketAccessControl> CurlClient::CreateBucketAcl(
 std::pair<Status, EmptyResponse> CurlClient::DeleteBucketAcl(
     DeleteBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/acl/" + request.entity(),
+                                 "/acl/" + UrlEscapeString(request.entity()),
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "DELETE");
   if (not status.ok()) {
@@ -808,7 +815,7 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteBucketAcl(
 std::pair<Status, BucketAccessControl> CurlClient::UpdateBucketAcl(
     UpdateBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/acl/" + request.entity(),
+                                 "/acl/" + UrlEscapeString(request.entity()),
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "PUT");
   if (not status.ok()) {
@@ -831,7 +838,7 @@ std::pair<Status, BucketAccessControl> CurlClient::UpdateBucketAcl(
 std::pair<Status, BucketAccessControl> CurlClient::PatchBucketAcl(
     PatchBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/acl/" + request.entity(),
+                                 "/acl/" + UrlEscapeString(request.entity()),
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "PATCH");
   if (not status.ok()) {
@@ -852,7 +859,7 @@ std::pair<Status, ListObjectAclResponse> CurlClient::ListObjectAcl(
     ListObjectAclRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/o/" + request.object_name() + "/acl",
+                                 "/o/" + UrlEscapeString(request.object_name()) + "/acl",
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "GET");
   if (not status.ok()) {
@@ -872,7 +879,7 @@ std::pair<Status, ListObjectAclResponse> CurlClient::ListObjectAcl(
 std::pair<Status, ObjectAccessControl> CurlClient::CreateObjectAcl(
     CreateObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/o/" + request.object_name() + "/acl",
+                                 "/o/" + UrlEscapeString(request.object_name()) + "/acl",
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "POST");
   if (not status.ok()) {
@@ -895,8 +902,8 @@ std::pair<Status, ObjectAccessControl> CurlClient::CreateObjectAcl(
 std::pair<Status, EmptyResponse> CurlClient::DeleteObjectAcl(
     DeleteObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/o/" + request.object_name() + "/acl/" +
-                                 request.entity(),
+                                 "/o/" + UrlEscapeString(request.object_name()) + "/acl/" +
+                                 UrlEscapeString(request.entity()),
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "DELETE");
   if (not status.ok()) {
@@ -914,8 +921,8 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteObjectAcl(
 std::pair<Status, ObjectAccessControl> CurlClient::GetObjectAcl(
     GetObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/o/" + request.object_name() + "/acl/" +
-                                 request.entity(),
+                                 "/o/" + UrlEscapeString(request.object_name()) + "/acl/" +
+                                 UrlEscapeString(request.entity()),
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "GET");
   if (not status.ok()) {
@@ -934,8 +941,8 @@ std::pair<Status, ObjectAccessControl> CurlClient::GetObjectAcl(
 std::pair<Status, ObjectAccessControl> CurlClient::UpdateObjectAcl(
     UpdateObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/o/" + request.object_name() + "/acl/" +
-                                 request.entity(),
+                                 "/o/" + UrlEscapeString(request.object_name()) + "/acl/" +
+                                 UrlEscapeString(request.entity()),
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "PUT");
   if (not status.ok()) {
@@ -958,8 +965,8 @@ std::pair<Status, ObjectAccessControl> CurlClient::UpdateObjectAcl(
 std::pair<Status, ObjectAccessControl> CurlClient::PatchObjectAcl(
     PatchObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/o/" + request.object_name() + "/acl/" +
-                                 request.entity(),
+                                 "/o/" + UrlEscapeString(request.object_name()) + "/acl/" +
+                                 UrlEscapeString(request.entity()),
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "PATCH");
   if (not status.ok()) {
@@ -1023,7 +1030,8 @@ std::pair<Status, ObjectAccessControl> CurlClient::CreateDefaultObjectAcl(
 std::pair<Status, EmptyResponse> CurlClient::DeleteDefaultObjectAcl(
     DeleteDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/defaultObjectAcl/" + request.entity(),
+                                 "/defaultObjectAcl/" +
+                                 UrlEscapeString(request.entity()),
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "DELETE");
   if (not status.ok()) {
@@ -1041,7 +1049,8 @@ std::pair<Status, EmptyResponse> CurlClient::DeleteDefaultObjectAcl(
 std::pair<Status, ObjectAccessControl> CurlClient::GetDefaultObjectAcl(
     GetDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/defaultObjectAcl/" + request.entity(),
+                                 "/defaultObjectAcl/" +
+                                 UrlEscapeString(request.entity()),
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "GET");
   if (not status.ok()) {
@@ -1060,7 +1069,8 @@ std::pair<Status, ObjectAccessControl> CurlClient::GetDefaultObjectAcl(
 std::pair<Status, ObjectAccessControl> CurlClient::UpdateDefaultObjectAcl(
     UpdateDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/defaultObjectAcl/" + request.entity(),
+                                 "/defaultObjectAcl/" +
+                                 UrlEscapeString(request.entity()),
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "PUT");
   if (not status.ok()) {
@@ -1083,7 +1093,8 @@ std::pair<Status, ObjectAccessControl> CurlClient::UpdateDefaultObjectAcl(
 std::pair<Status, ObjectAccessControl> CurlClient::PatchDefaultObjectAcl(
     PatchDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
-                                 "/defaultObjectAcl/" + request.entity(),
+                                 "/defaultObjectAcl/" +
+                                 UrlEscapeString(request.entity()),
                              storage_factory_);
   auto status = SetupBuilder(builder, request, "PATCH");
   if (not status.ok()) {
@@ -1207,7 +1218,7 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaXml(
     InsertObjectMediaRequest const& request) {
   CurlRequestBuilder builder(xml_upload_endpoint_ + "/" +
                                  request.bucket_name() + "/" +
-                                 request.object_name(),
+                                 UrlEscapeString(request.object_name()),
                              xml_upload_factory_);
   auto status = SetupBuilderCommon(builder, "PUT");
   if (not status.ok()) {
@@ -1294,7 +1305,7 @@ std::pair<Status, std::unique_ptr<ObjectReadStreambuf>>
 CurlClient::ReadObjectXml(ReadObjectRangeRequest const& request) {
   CurlRequestBuilder builder(xml_download_endpoint_ + "/" +
                                  request.bucket_name() + "/" +
-                                 request.object_name(),
+                                 UrlEscapeString(request.object_name()),
                              xml_download_factory_);
   auto status = SetupBuilderCommon(builder, "GET");
   if (not status.ok()) {
@@ -1344,7 +1355,7 @@ std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>>
 CurlClient::WriteObjectXml(InsertObjectStreamingRequest const& request) {
   CurlRequestBuilder builder(xml_upload_endpoint_ + "/" +
                                  request.bucket_name() + "/" +
-                                 request.object_name(),
+                                 UrlEscapeString(request.object_name()),
                              xml_upload_factory_);
   auto status = SetupBuilderCommon(builder, "PUT");
   if (not status.ok()) {

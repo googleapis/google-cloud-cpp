@@ -37,8 +37,6 @@ bool CurlResumableStreambuf::IsOpen() const {
 
 void CurlResumableStreambuf::ValidateHash(ObjectMetadata const& meta) {
   hash_validator_->ProcessMetadata(meta);
-  std::cout << "meta=" << meta << std::endl;
-
   hash_validator_result_ =
       HashValidator::FinishAndCheck(__func__, std::move(*hash_validator_));
 }
