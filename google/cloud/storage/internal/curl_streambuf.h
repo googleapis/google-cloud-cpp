@@ -60,13 +60,13 @@ class CurlReadStreambuf : public ObjectReadStreambuf {
 /**
  * Implement a wrapper for libcurl-based streaming uploads.
  */
-class CurlStreambuf : public ObjectWriteStreambuf {
+class CurlWriteStreambuf : public ObjectWriteStreambuf {
  public:
-  explicit CurlStreambuf(CurlUploadRequest&& upload,
-                         std::size_t max_buffer_size,
-                         std::unique_ptr<HashValidator> hash_validator);
+  explicit CurlWriteStreambuf(CurlUploadRequest&& upload,
+                              std::size_t max_buffer_size,
+                              std::unique_ptr<HashValidator> hash_validator);
 
-  ~CurlStreambuf() override = default;
+  ~CurlWriteStreambuf() override = default;
 
   bool IsOpen() const override;
   void ValidateHash(ObjectMetadata const& meta) override;

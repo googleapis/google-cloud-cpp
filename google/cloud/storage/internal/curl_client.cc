@@ -1400,9 +1400,10 @@ CurlClient::WriteObjectXml(InsertObjectStreamingRequest const& request) {
   // QuotaUser cannot be set, checked by the caller.
   // UserIp cannot be set, checked by the caller.
 
-  std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
-      builder.BuildUpload(), client_options().upload_buffer_size(),
-      CreateHashValidator(request)));
+  std::unique_ptr<internal::CurlWriteStreambuf> buf(
+      new internal::CurlWriteStreambuf(builder.BuildUpload(),
+                                       client_options().upload_buffer_size(),
+                                       CreateHashValidator(request)));
   return std::make_pair(
       Status(),
       std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf)));
@@ -1429,9 +1430,10 @@ std::pair<Status, ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
 
   // 3. Perform a streaming upload because computing the size upfront is more
   //    complicated than it is worth.
-  std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
-      builder.BuildUpload(), client_options().upload_buffer_size(),
-      CreateHashValidator(request)));
+  std::unique_ptr<internal::CurlWriteStreambuf> buf(
+      new internal::CurlWriteStreambuf(builder.BuildUpload(),
+                                       client_options().upload_buffer_size(),
+                                       CreateHashValidator(request)));
   ObjectWriteStream writer(std::move(buf));
 
   nl::json metadata = nl::json::object();
@@ -1544,9 +1546,10 @@ CurlClient::WriteObjectSimple(InsertObjectStreamingRequest const& request) {
   }
   builder.AddQueryParameter("uploadType", "media");
   builder.AddQueryParameter("name", request.object_name());
-  std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
-      builder.BuildUpload(), client_options().upload_buffer_size(),
-      CreateHashValidator(request)));
+  std::unique_ptr<internal::CurlWriteStreambuf> buf(
+      new internal::CurlWriteStreambuf(builder.BuildUpload(),
+                                       client_options().upload_buffer_size(),
+                                       CreateHashValidator(request)));
   return std::make_pair(
       Status(),
       std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf)));
