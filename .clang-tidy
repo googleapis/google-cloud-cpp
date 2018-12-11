@@ -5,6 +5,7 @@
 #  -google-readability-namespace-comments the BIGTABLE_CLIENT_NS is a macro, and
 #   clang-tidy fails to match it against the initial value.
 Checks: >-
+  bugprone-*,
   google-readability-*,
   misc-*,
   modernize-*,
@@ -15,6 +16,7 @@ Checks: >-
 
 # Enable most warnings as errors.
 WarningsAsErrors: >-
+  bugprone-*,
   clang-*,
   google-*,
   misc-*,
