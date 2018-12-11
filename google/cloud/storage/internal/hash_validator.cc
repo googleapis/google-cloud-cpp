@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/internal/big_endian.h"
+#include "google/cloud/log.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/status.h"
@@ -37,6 +38,10 @@ void HashValidator::CheckResult(std::string const& msg,
   // all the components. In that case we just do not raise an exception even if
   // there is a mismatch.
   throw HashMismatchError(msg, result.received, result.computed);
+#else
+  GCP_LOG(ERROR) << "Mismatched hashes: "
+                 << HashMismatchError(
+                     msg, result.received, result.computed).what();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 

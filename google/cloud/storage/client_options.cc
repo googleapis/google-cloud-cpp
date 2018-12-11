@@ -49,14 +49,14 @@ std::size_t DefaultConnectionPoolSize() {
 // application. They are larger than the typical socket buffer size (64KiB), to
 // be able to read the full buffer into userspace if it happens to be full.
 #ifndef GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE
-#define GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE 128 * 1024
+#define GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE (128 * 1024)
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE
 
 // The documentation recommends uploads below "5MiB" to use simple uploads:
 //   https://cloud.google.com/storage/docs/json_api/v1/how-tos/upload
 #ifndef GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE
 #define GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE \
-  5 * 1024 * 1024L
+  (5 * 1024 * 1024L)
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE
 
 }  // namespace

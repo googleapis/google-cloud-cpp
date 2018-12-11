@@ -44,7 +44,7 @@ std::unique_ptr<IdempotentMutationPolicy> AlwaysRetryMutationPolicy::clone()
 }
 
 bool AlwaysRetryMutationPolicy::is_idempotent(
-    google::bigtable::v2::Mutation const& m) {
+    google::bigtable::v2::Mutation const& /*m*/) {
   return true;
 }
 }  // namespace BIGTABLE_CLIENT_NS

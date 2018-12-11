@@ -155,7 +155,7 @@ void InitializeSslLocking(bool enable_ssl_callbacks) {
   // default version.
 }
 #else
-void InitializeSslLocking(bool enable_ssl_callbacks) {}
+void InitializeSslLocking(bool /*enable_ssl_callbacks*/) {}
 #endif  // GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS
 
 /// Automatically initialize (and cleanup) the libcurl library.

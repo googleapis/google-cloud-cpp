@@ -103,7 +103,7 @@ MakeCall(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
 }  // namespace
 
 RetryClient::RetryClient(std::shared_ptr<RawClient> client,
-                         DefaultPolicies unused)
+                         DefaultPolicies /*unused*/)
     : client_(std::move(client)) {
   retry_policy_ =
       LimitedTimeRetryPolicy(STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD)
