@@ -197,7 +197,7 @@ class InstanceAdmin {
         InstanceAdminClient, google::bigtable::admin::v2::Instance,
         MemberFunction, internal::ConstantIdempotencyPolicy, Functor>;
 
-    auto request = instance_config.as_proto_move();
+    auto request = std::move(instance_config).as_proto_move();
     request.set_parent(project_name());
     for (auto& kv : *request.mutable_clusters()) {
       kv.second.set_location(project_name() + "/locations/" +
@@ -258,7 +258,7 @@ class InstanceAdmin {
         InstanceAdminClient, google::bigtable::admin::v2::Instance,
         MemberFunction, internal::ConstantIdempotencyPolicy, Functor>;
 
-    auto request = instance_update_config.as_proto_move();
+    auto request = std::move(instance_update_config).as_proto_move();
     auto op = std::make_shared<Operation>(
         __func__, polling_policy_->clone(), rpc_retry_policy_->clone(),
         rpc_backoff_policy_->clone(), internal::ConstantIdempotencyPolicy(true),
@@ -527,7 +527,7 @@ class InstanceAdmin {
         InstanceAdminClient, google::bigtable::admin::v2::Cluster,
         MemberFunction, internal::ConstantIdempotencyPolicy, Functor>;
 
-    auto cluster = cluster_config.as_proto_move();
+    auto cluster = std::move(cluster_config).as_proto_move();
     cluster.set_location(project_name() + "/locations/" + cluster.location());
 
     google::bigtable::admin::v2::CreateClusterRequest request;
@@ -587,7 +587,7 @@ class InstanceAdmin {
         InstanceAdminClient, google::bigtable::admin::v2::Cluster,
         MemberFunction, internal::ConstantIdempotencyPolicy, Functor>;
 
-    auto request = cluster_config.as_proto_move();
+    auto request = std::move(cluster_config).as_proto_move();
     auto op = std::make_shared<Operation>(
         __func__, polling_policy_->clone(), rpc_retry_policy_->clone(),
         rpc_backoff_policy_->clone(), internal::ConstantIdempotencyPolicy(true),
@@ -712,7 +712,7 @@ class InstanceAdmin {
         InstanceAdminClient, google::bigtable::admin::v2::AppProfile,
         MemberFunction, internal::ConstantIdempotencyPolicy, Functor>;
 
-    auto request = config.as_proto_move();
+    auto request = std::move(config).as_proto_move();
     request.mutable_app_profile()->set_name(
         InstanceName(instance_id.get() + "/appProfiles/" + profile_id.get()));
 
@@ -760,7 +760,7 @@ class InstanceAdmin {
   std::shared_ptr<AsyncOperation> AsyncCreateAppProfile(
       bigtable::InstanceId const& instance_id, AppProfileConfig config,
       CompletionQueue& cq, Functor&& callback) {
-    auto request = config.as_proto_move();
+    auto request = std::move(config).as_proto_move();
     request.set_parent(InstanceName(instance_id.get()));
 
     static_assert(internal::ExtractMemberFunctionType<decltype(

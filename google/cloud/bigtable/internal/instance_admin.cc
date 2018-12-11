@@ -152,7 +152,7 @@ void InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
 btadmin::AppProfile InstanceAdmin::CreateAppProfile(
     bigtable::InstanceId const& instance_id, AppProfileConfig config,
     grpc::Status& status) {
-  auto request = config.as_proto_move();
+  auto request = std::move(config).as_proto_move();
   request.set_parent(InstanceName(instance_id.get()));
 
   // This API is not idempotent, call it without retry.
@@ -178,7 +178,7 @@ btadmin::AppProfile InstanceAdmin::GetAppProfile(
 ::google::longrunning::Operation InstanceAdmin::UpdateAppProfile(
     bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
     AppProfileUpdateConfig config, grpc::Status& status) {
-  auto request = config.as_proto_move();
+  auto request = std::move(config).as_proto_move();
   request.mutable_app_profile()->set_name(
       InstanceName(instance_id.get() + "/appProfiles/" + profile_id.get()));
 

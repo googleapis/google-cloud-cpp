@@ -294,7 +294,7 @@ TEST(FiltersTest, MoveProto) {
   auto filter = F::Chain(F::FamilyRegex("fam"), F::ColumnRegex("col"),
                          F::CellsRowOffset(2), F::Latest(1));
   auto proto_copy = filter.as_proto();
-  auto proto_move = filter.as_proto_move();
+  auto proto_move = std::move(filter).as_proto_move();
   ASSERT_FALSE(filter.as_proto().has_chain());
 
   std::string delta;

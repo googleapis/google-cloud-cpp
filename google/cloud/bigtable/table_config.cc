@@ -19,7 +19,7 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 // NOLINTNEXTLINE(readability-identifier-naming)
-::google::bigtable::admin::v2::CreateTableRequest TableConfig::as_proto_move() {
+::google::bigtable::admin::v2::CreateTableRequest TableConfig::as_proto_move() && {
   // As a challenge, we implement the strong exception guarantee in this
   // function.
   // First create a temporary value to hold intermediate computations.
@@ -38,7 +38,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 
   // None of the operations that follow can fail, they are all `noexcept`:
   for (auto& kv : column_families_) {
-    *families[kv.first].mutable_gc_rule() = kv.second.as_proto_move();
+    *families[kv.first].mutable_gc_rule() = std::move(kv.second).as_proto_move();
   }
   for (auto& split : initial_splits_) {
     tmp.add_initial_splits()->set_key(std::move(split));

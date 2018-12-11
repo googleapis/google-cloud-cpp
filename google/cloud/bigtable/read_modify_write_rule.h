@@ -65,7 +65,7 @@ class ReadModifyWriteRule {
   google::bigtable::v2::ReadModifyWriteRule as_proto() const { return rule_; }
 
   /// Move out the underlying protobuf value.
-  google::bigtable::v2::ReadModifyWriteRule as_proto_move() {
+  google::bigtable::v2::ReadModifyWriteRule as_proto_move() && {
     return std::move(rule_);
   }
 

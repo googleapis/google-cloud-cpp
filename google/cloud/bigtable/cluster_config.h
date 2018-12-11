@@ -49,7 +49,7 @@ class ClusterConfig {
   }
 
   // NOLINT: accessors can (and should) be snake_case.
-  google::bigtable::admin::v2::Cluster as_proto_move() const {
+  google::bigtable::admin::v2::Cluster as_proto_move() && {
     return std::move(proto_);
   }
 

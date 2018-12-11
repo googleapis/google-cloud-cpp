@@ -27,7 +27,7 @@ TEST(ClusterConfigTest, Constructor) {
 
 TEST(ClusterConfigTest, Move) {
   bigtable::ClusterConfig config("somewhere", 7, bigtable::ClusterConfig::HDD);
-  auto proto = config.as_proto_move();
+  auto proto = std::move(config).as_proto_move();
   EXPECT_EQ("somewhere", proto.location());
   EXPECT_EQ(7, proto.serve_nodes());
   EXPECT_EQ(bigtable::ClusterConfig::HDD, proto.default_storage_type());

@@ -151,7 +151,7 @@ class RowRange {
   ::google::bigtable::v2::RowRange as_proto() const { return row_range_; }
 
   /// Move out the underlying protobuf value.
-  ::google::bigtable::v2::RowRange as_proto_move() {
+  ::google::bigtable::v2::RowRange as_proto_move() && {
     return std::move(row_range_);
   }
 

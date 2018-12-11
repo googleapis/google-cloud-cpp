@@ -594,7 +594,7 @@ class Filter {
   ::google::bigtable::v2::RowFilter as_proto() const { return filter_; }
 
   /// Move out the underlying protobuf value.
-  ::google::bigtable::v2::RowFilter as_proto_move() {
+  ::google::bigtable::v2::RowFilter as_proto_move() && {
     return std::move(filter_);
   }
 
