@@ -2158,15 +2158,18 @@ class Client {
    *
    * @note The application must ensure that any URL created with this function
    *     is a valid request via the XML API. For example, the options for
-   *     bucket requests may include a sub-resource (e.g. `WithAcl()`) but this
-   *     is not valid when querying objects.  Likewise, only a single
+   *     bucket requests may include a sub-resource (e.g. `WithBilling()`) but
+   *     not all sub-resources are valid for objects.  Likewise, only a single
    *     sub-resource may be retrieved in each request.
+   *
+   * @see https://cloud.google.com/storage/docs/access-control/signed-urls for
+   *     a general description of signed URLs and how they can be used.
    *
    * @see https://cloud.google.com/storage/docs/xml-api/overview for a detailed
    *     description of the XML API.
    *
    * @param verb the operation allowed through this signed URL, `GET`, `POST`,
-   *     `PUT`, etc. are valid values.
+   *     `PUT`, 'HEAD', etc. are valid values.
    * @param bucket_name the name of the bucket.
    * @param object_name the name of the object, note that the object may not
    *     exist for signed URLs that upload new objects. Use an empty string for
