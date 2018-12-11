@@ -38,24 +38,24 @@ sed -e 's/@BIGTABLE_CLIENT_VERSION_MAJOR@/%s/' \
     ),
 )
 
-load(":bigtable_client.bzl", "bigtable_client_HDRS", "bigtable_client_SRCS")
+load(":bigtable_client.bzl", "bigtable_client_hdrs", "bigtable_client_srcs")
 
 cc_library(
     name = "bigtable_client",
-    srcs = bigtable_client_SRCS,
-    hdrs = bigtable_client_HDRS + ["version_info.h"],
+    srcs = bigtable_client_srcs,
+    hdrs = bigtable_client_hdrs + ["version_info.h"],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "@com_github_googleapis_googleapis//:bigtable_protos",
     ],
 )
 
-load(":bigtable_client_testing.bzl", "bigtable_client_testing_HDRS", "bigtable_client_testing_SRCS")
+load(":bigtable_client_testing.bzl", "bigtable_client_testing_hdrs", "bigtable_client_testing_srcs")
 
 cc_library(
     name = "bigtable_client_testing",
-    srcs = bigtable_client_testing_SRCS,
-    hdrs = bigtable_client_testing_HDRS,
+    srcs = bigtable_client_testing_srcs,
+    hdrs = bigtable_client_testing_hdrs,
     deps = [
         ":bigtable_client",
         "//google/cloud:google_cloud_cpp_common",

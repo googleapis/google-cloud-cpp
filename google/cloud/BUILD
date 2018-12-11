@@ -55,21 +55,21 @@ sed -e 's/@GOOGLE_CLOUD_CPP_VERSION_MAJOR@/%s/' \
     ),
 )
 
-load(":google_cloud_cpp_common.bzl", "google_cloud_cpp_common_HDRS", "google_cloud_cpp_common_SRCS")
+load(":google_cloud_cpp_common.bzl", "google_cloud_cpp_common_hdrs", "google_cloud_cpp_common_srcs")
 
 cc_library(
     name = "google_cloud_cpp_common",
-    srcs = google_cloud_cpp_common_SRCS + ["internal/build_info.cc"],
-    hdrs = google_cloud_cpp_common_HDRS + ["internal/version_info.h"],
+    srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
+    hdrs = google_cloud_cpp_common_hdrs + ["internal/version_info.h"],
     deps = [],
 )
 
-load(":google_cloud_cpp_testing.bzl", "google_cloud_cpp_testing_HDRS", "google_cloud_cpp_testing_SRCS")
+load(":google_cloud_cpp_testing.bzl", "google_cloud_cpp_testing_hdrs", "google_cloud_cpp_testing_srcs")
 
 cc_library(
     name = "google_cloud_cpp_testing",
-    srcs = google_cloud_cpp_testing_SRCS,
-    hdrs = google_cloud_cpp_testing_HDRS,
+    srcs = google_cloud_cpp_testing_srcs,
+    hdrs = google_cloud_cpp_testing_hdrs,
     deps = [
         ":google_cloud_cpp_common",
         "@com_google_googletest//:gtest",
