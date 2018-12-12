@@ -36,7 +36,8 @@ TEST(SignedUrlRequests, Sign) {
       AddExtensionHeader("x-goog-meta-foo", "bar"),
       AddExtensionHeader("x-goog-meta-foo", "baz"),
       AddExtensionHeader("x-goog-encryption-algorithm", "AES256"),
-      AddExtensionHeader("x-goog-acl", "project-private"));
+      AddExtensionHeader("x-goog-acl", "project-private"),
+      WithUserProject("test-project"));
 
   // Used this command to get the date in seconds:
   //   date +%s -u --date=2018-12-03T12:00:00Z
@@ -47,7 +48,7 @@ text/plain
 x-goog-acl:project-private
 x-goog-encryption-algorithm:AES256
 x-goog-meta-foo:bar,baz
-/test-bucket/test-object)""";
+/test-bucket/test-object?userProject=test-project)""";
 
   EXPECT_EQ(expected_blob, request.StringToSign());
 
@@ -63,7 +64,8 @@ TEST(SignedUrlRequests, SignEscaped) {
   EXPECT_EQ("test- -?-+-/-:-&-object", request.object_name());
 
   request.set_multiple_options(
-      ExpirationTime(ParseRfc3339("2018-12-03T12:00:00Z")));
+      ExpirationTime(ParseRfc3339("2018-12-03T12:00:00Z")),
+      WithMarker("foo+bar"));
 
   // Used this command to get the date in seconds:
   //   date +%s -u --date=2018-12-03T12:00:00Z
@@ -71,7 +73,7 @@ TEST(SignedUrlRequests, SignEscaped) {
 
 
 1543838400
-/test-bucket/test-%20-%3F-%2B-%2F-%3A-%26-object)""";
+/test-bucket/test-%20-%3F-%2B-%2F-%3A-%26-object?marker=foo%2Bbar)""";
 
   EXPECT_EQ(expected_blob, request.StringToSign());
 

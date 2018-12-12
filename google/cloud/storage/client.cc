@@ -209,8 +209,11 @@ https://cloud.google.com/storage/docs/authentication
   std::string signature = curl.MakeEscapedString(result.second).get();
 
   std::ostringstream os;
-  os << "https://storage.googleapis.com/" << request.bucket_name() << '/'
-     << request.object_name() << "?GoogleAccessId=" << credentials->client_id()
+  os << "https://storage.googleapis.com/" << request.bucket_name();
+  if (not request.object_name().empty()) {
+    os << '/' << curl.MakeEscapedString(request.object_name()).get();
+  }
+  os << "?GoogleAccessId=" << credentials->client_id()
      << "&Expires=" << request.expiration_time_as_seconds().count()
      << "&Signature=" << signature;
 

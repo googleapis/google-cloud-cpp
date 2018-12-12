@@ -42,9 +42,17 @@ std::string SignUrlRequest::StringToSign() const {
   for (auto const& kv : extension_headers_) {
     os << kv.first << ":" << kv.second << "\n";
   }
+
   CurlHandle curl;
-  os << "/" << bucket_name() << "/"
-     << curl.MakeEscapedString(object_name()).get();
+  os << '/' << bucket_name();
+  if (not object_name().empty()) {
+    os << '/'  << curl.MakeEscapedString(object_name()).get();
+  }
+  char const* sep = "?";
+  for (auto const& key_value : query_parameters_) {
+    os << sep << key_value;
+    sep = "&";
+  }
 
   return std::move(os).str();
 }
