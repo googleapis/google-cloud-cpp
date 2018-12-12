@@ -86,7 +86,7 @@ inline namespace STORAGE_CLIENT_NS {
  *     underlying API.
  *
  * @see https://cloud.google.com/docs/authentication/production for details
- * about Application Default Credentials.
+ *     about Application Default Credentials.
  *
  */
 class Client {
