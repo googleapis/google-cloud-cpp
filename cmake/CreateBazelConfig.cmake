@@ -104,6 +104,7 @@ function (export_list_to_bazel filename VAR)
             "${filename}"
             [=[
 """Automatically generated unit tests list - DO NOT EDIT."""
+
 ]=]
         )
     file(APPEND "${filename}" "${VAR} = [\n")
@@ -126,6 +127,7 @@ function (export_variables_to_bazel filename)
             "${filename}"
             [=[
 """Automatically generated version numbers - DO NOT EDIT."""
+
 ]=])
     foreach (item ${ARGN})
         file(APPEND "${filename}" "${item} = \"${${item}}\"\n")
