@@ -53,6 +53,30 @@ inline namespace STORAGE_CLIENT_NS {
  * threads is guaranteed to work. Two threads operating on the same instance of
  * this class is not guaranteed to work.
  *
+ * @par Credentials
+ * The default constructor for this class will attempt to load Application
+ * Default Credentials (ADCs). If you wish to use no credentials or to supply a
+ * specific credential type, you can use the functions declared in
+ * google_credentials.h:
+ * @code
+ * namespace gcs = google::cloud::storage;
+ * // Use ADCs, implicitly or explicitly:
+ * gcs::Client client;
+ * gcs::Client client(
+ *     gcs::ClientOptions(gcs::oauth2::GoogleDefaultCredentials));
+ * // Use service account credentials from a JSON keyfile:
+ * std::string path = "/path/to/keyfile.json";
+ * gcs::Client client(
+ *     gcs::ClientOptions(
+ *         gcs::oauth2::CreateServiceAccountCredentialsFromJsonFilePath(path)));
+ * // Use Compute Engine credentials for the instance's default service account:
+ * gcs::Client client(
+ *     gcs::ClientOptions(gcs::oauth2::CreateComputeEngineCredentials()));
+ * // Use no credentials:
+ * gcs::Client client(
+ *     gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials()));
+ * @endcode
+ *
  * @see https://cloud.google.com/storage/ for an overview of GCS.
  *
  * @see https://cloud.google.com/storage/docs/key-terms for an introduction of
@@ -60,6 +84,10 @@ inline namespace STORAGE_CLIENT_NS {
  *
  * @see https://cloud.google.com/storage/docs/json_api/ for an overview of the
  *     underlying API.
+ *
+ * @see https://cloud.google.com/docs/authentication/production for details
+ *     about Application Default Credentials.
+ *
  */
 class Client {
  public:
