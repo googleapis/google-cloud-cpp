@@ -5,6 +5,7 @@ var searchData=
   ['add_5fuser_5fagent_5fprefx',['add_user_agent_prefx',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a37526865451ab740dc053ab8d107d0d0',1,'google::cloud::storage::v0::ClientOptions']]],
   ['addextensionheader',['AddExtensionHeader',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aca1486b27694404d1667d43a68e030b0',1,'google::cloud::storage::v0']]],
   ['addextensionheaderoption',['AddExtensionHeaderOption',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddExtensionHeaderOption.html',1,'google::cloud::storage::v0']]],
+  ['addqueryparameteroption',['AddQueryParameterOption',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html',1,'google::cloud::storage::v0']]],
   ['age',['age',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html#a623ff753ebcf6e140dbc7f9545a34a0d',1,'google::cloud::storage::v0::LifecycleRuleCondition']]],
   ['algorithm',['algorithm',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKeyData.html#a0b5c8e4f9176cade86754b04885dfa39',1,'google::cloud::storage::v0::EncryptionKeyData']]],
   ['alwaysretryidempotencypolicy',['AlwaysRetryIdempotencyPolicy',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1AlwaysRetryIdempotencyPolicy.html',1,'google::cloud::storage::v0::AlwaysRetryIdempotencyPolicy'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1AlwaysRetryIdempotencyPolicy.html#a85f674c58b8bf1b456dec8d0212ab6b2',1,'google::cloud::storage::v0::AlwaysRetryIdempotencyPolicy::AlwaysRetryIdempotencyPolicy()']]],
