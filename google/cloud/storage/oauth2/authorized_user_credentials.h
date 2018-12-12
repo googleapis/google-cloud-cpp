@@ -55,7 +55,7 @@ AuthorizedUserCredentialsInfo ParseAuthorizedUserCredentials(
  * access token is invalid or nearing expiration, this will class will first
  * obtain a new access token before returning the Authorization header string.
  *
- * @see https://developers.google.com/identity/protocols/OAuth for an overview
+ * @see https://developers.google.com/identity/protocols/OAuth2 for an overview
  * of using user credentials with Google's OAuth 2.0 system.
  *
  * @tparam HttpRequestBuilderType a dependency injection point. It makes it
