@@ -38,12 +38,12 @@ sed -e 's/@FIRESTORE_CLIENT_VERSION_MAJOR@/%s/' \
     ),
 )
 
-load(":firestore_client.bzl", "firestore_client_HDRS", "firestore_client_SRCS")
+load(":firestore_client.bzl", "firestore_client_hdrs", "firestore_client_srcs")
 
 cc_library(
     name = "firestore_client",
-    srcs = firestore_client_SRCS,
-    hdrs = firestore_client_HDRS + ["version_info.h"],
+    srcs = firestore_client_srcs,
+    hdrs = firestore_client_hdrs + ["version_info.h"],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
     ],
