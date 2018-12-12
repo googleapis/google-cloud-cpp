@@ -31,8 +31,6 @@ RUN yum makecache && yum install -y \
     curl \
     curl-devel \
     git \
-    golang \
-    graphviz \
     openssl-devel \
     pkgconfig \
     python \

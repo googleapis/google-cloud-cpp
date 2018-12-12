@@ -32,7 +32,6 @@ RUN apt update && \
         git \
         gcc \
         g++ \
-        golang \
         cmake \
         libcurl4-openssl-dev \
         libssl-dev \
