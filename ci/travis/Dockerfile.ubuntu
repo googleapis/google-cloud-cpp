@@ -38,6 +38,7 @@ RUN apt update && \
         libtool \
         lsb-release \
         make \
+        pkg-config \
         python-pip \
         tar \
         wget \
