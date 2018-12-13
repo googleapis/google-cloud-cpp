@@ -26,193 +26,193 @@ std::unique_ptr<IdempotencyPolicy> AlwaysRetryIdempotencyPolicy::clone() const {
 }
 
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::ListBucketsRequest const& request) const {
+    internal::ListBucketsRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::CreateBucketRequest const& request) const {
+    internal::CreateBucketRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::GetBucketMetadataRequest const& request) const {
+    internal::GetBucketMetadataRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::DeleteBucketRequest const& request) const {
+    internal::DeleteBucketRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::UpdateBucketRequest const& request) const {
+    internal::UpdateBucketRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::PatchBucketRequest const& request) const {
+    internal::PatchBucketRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::GetBucketIamPolicyRequest const& request) const {
+    internal::GetBucketIamPolicyRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::SetBucketIamPolicyRequest const& request) const {
+    internal::SetBucketIamPolicyRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::TestBucketIamPermissionsRequest const& request) const {
+    internal::TestBucketIamPermissionsRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::LockBucketRetentionPolicyRequest const& request) const {
-  return true;
-}
-
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::InsertObjectMediaRequest const& request) const {
-  return true;
-}
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::CopyObjectRequest const& request) const {
-  return true;
-}
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::GetObjectMetadataRequest const& request) const {
-  return true;
-}
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::ReadObjectRangeRequest const& request) const {
-  return true;
-}
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::InsertObjectStreamingRequest const& request) const {
-  return true;
-}
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::ListObjectsRequest const& request) const {
-  return true;
-}
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::DeleteObjectRequest const& request) const {
-  return true;
-}
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::UpdateObjectRequest const& request) const {
-  return true;
-}
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::PatchObjectRequest const& request) const {
-  return true;
-}
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::ComposeObjectRequest const& request) const {
-  return true;
-}
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::RewriteObjectRequest const& request) const {
-  return true;
-}
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::ResumableUploadRequest const& request) const {
-  return true;
-}
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::UploadChunkRequest const& request) const {
+    internal::LockBucketRetentionPolicyRequest const&) const {
   return true;
 }
 
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::ListBucketAclRequest const& request) const {
+    internal::InsertObjectMediaRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::CreateBucketAclRequest const& request) const {
+    internal::CopyObjectRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::DeleteBucketAclRequest const& request) const {
+    internal::GetObjectMetadataRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::GetBucketAclRequest const& request) const {
+    internal::ReadObjectRangeRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::UpdateBucketAclRequest const& request) const {
+    internal::InsertObjectStreamingRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::PatchBucketAclRequest const& request) const {
-  return true;
-}
-
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::ListObjectAclRequest const& request) const {
+    internal::ListObjectsRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::CreateObjectAclRequest const& request) const {
+    internal::DeleteObjectRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::DeleteObjectAclRequest const& request) const {
+    internal::UpdateObjectRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::GetObjectAclRequest const& request) const {
+    internal::PatchObjectRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::UpdateObjectAclRequest const& request) const {
+    internal::ComposeObjectRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::PatchObjectAclRequest const& request) const {
-  return true;
-}
-
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::ListDefaultObjectAclRequest const& request) const {
+    internal::RewriteObjectRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::CreateDefaultObjectAclRequest const& request) const {
+    internal::ResumableUploadRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::DeleteDefaultObjectAclRequest const& request) const {
-  return true;
-}
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::GetDefaultObjectAclRequest const& request) const {
-  return true;
-}
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::UpdateDefaultObjectAclRequest const& request) const {
-  return true;
-}
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::PatchDefaultObjectAclRequest const& request) const {
+    internal::UploadChunkRequest const&) const {
   return true;
 }
 
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::GetProjectServiceAccountRequest const& request) const {
+    internal::ListBucketAclRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::CreateBucketAclRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::DeleteBucketAclRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::GetBucketAclRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::UpdateBucketAclRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::PatchBucketAclRequest const&) const {
   return true;
 }
 
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::ListNotificationsRequest const& request) const {
+    internal::ListObjectAclRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::CreateNotificationRequest const& request) const {
+    internal::CreateObjectAclRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::GetNotificationRequest const& request) const {
+    internal::DeleteObjectAclRequest const&) const {
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::DeleteNotificationRequest const& request) const {
+    internal::GetObjectAclRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::UpdateObjectAclRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::PatchObjectAclRequest const&) const {
+  return true;
+}
+
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::ListDefaultObjectAclRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::CreateDefaultObjectAclRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::DeleteDefaultObjectAclRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::GetDefaultObjectAclRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::UpdateDefaultObjectAclRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::PatchDefaultObjectAclRequest const&) const {
+  return true;
+}
+
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::GetProjectServiceAccountRequest const&) const {
+  return true;
+}
+
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::ListNotificationsRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::CreateNotificationRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::GetNotificationRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::DeleteNotificationRequest const&) const {
   return true;
 }
 
@@ -221,20 +221,20 @@ std::unique_ptr<IdempotencyPolicy> StrictIdempotencyPolicy::clone() const {
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::ListBucketsRequest const& request) const {
+    internal::ListBucketsRequest const&) const {
   // Read operations are always idempotent.
   return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::CreateBucketRequest const& request) const {
+    internal::CreateBucketRequest const&) const {
   // Creating a bucket is idempotent because you cannot create a new version
   // of a bucket, it succeeds only once.
   return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::GetBucketMetadataRequest const& request) const {
+    internal::GetBucketMetadataRequest const&) const {
   // Read operations are always idempotent.
   return true;
 }
@@ -258,7 +258,7 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::GetBucketIamPolicyRequest const& request) const {
+    internal::GetBucketIamPolicyRequest const&) const {
   return true;
 }
 
@@ -268,12 +268,12 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::TestBucketIamPermissionsRequest const& request) const {
+    internal::TestBucketIamPermissionsRequest const&) const {
   return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::LockBucketRetentionPolicyRequest const& request) const {
+    internal::LockBucketRetentionPolicyRequest const&) const {
   // This request type always requires a metageneration pre-condition.
   return true;
 }
@@ -293,12 +293,12 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::GetObjectMetadataRequest const& request) const {
+    internal::GetObjectMetadataRequest const&) const {
   return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::ReadObjectRangeRequest const& request) const {
+    internal::ReadObjectRangeRequest const&) const {
   return true;
 }
 
@@ -308,7 +308,7 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::ListObjectsRequest const& request) const {
+    internal::ListObjectsRequest const&) const {
   return true;
 }
 
@@ -358,12 +358,12 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::UploadChunkRequest const& request) const {
+    internal::UploadChunkRequest const&) const {
   return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::ListBucketAclRequest const& request) const {
+    internal::ListBucketAclRequest const&) const {
   return true;
 }
 
@@ -378,7 +378,7 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::GetBucketAclRequest const& request) const {
+    internal::GetBucketAclRequest const&) const {
   return true;
 }
 
@@ -393,7 +393,7 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::ListObjectAclRequest const& request) const {
+    internal::ListObjectAclRequest const&) const {
   return true;
 }
 
@@ -408,7 +408,7 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::GetObjectAclRequest const& request) const {
+    internal::GetObjectAclRequest const&) const {
   return true;
 }
 
@@ -423,7 +423,7 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::ListDefaultObjectAclRequest const& request) const {
+    internal::ListDefaultObjectAclRequest const&) const {
   return true;
 }
 
@@ -438,7 +438,7 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::GetDefaultObjectAclRequest const& request) const {
+    internal::GetDefaultObjectAclRequest const&) const {
   return true;
 }
 
@@ -453,27 +453,27 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::GetProjectServiceAccountRequest const& request) const {
+    internal::GetProjectServiceAccountRequest const&) const {
   return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::ListNotificationsRequest const& request) const {
+    internal::ListNotificationsRequest const&) const {
   return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::CreateNotificationRequest const& request) const {
+    internal::CreateNotificationRequest const&) const {
   return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::GetNotificationRequest const& request) const {
+    internal::GetNotificationRequest const&) const {
   return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::DeleteNotificationRequest const& request) const {
+    internal::DeleteNotificationRequest const&) const {
   return true;
 }
 

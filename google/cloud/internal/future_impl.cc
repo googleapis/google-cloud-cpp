@@ -24,6 +24,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 [[noreturn]] void RaiseFutureError(std::future_errc ec, char const* msg) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  (void)msg;  // disable unused argument warning.
   throw std::future_error(ec);
 #else
   std::string full_msg = "future_error[";
