@@ -88,12 +88,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a6063dcd9bfba12bf9ca1409d389e981f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f86adc970912f45441d1657ecf51ecf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html">Filter</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#a8f86adc970912f45441d1657ecf51ecf">operator=</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html">Filter</a> const &amp;rhs)=default</td></tr>
 <tr class="separator:a8f86adc970912f45441d1657ecf51ecf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42558e442f66f01ac4d4e3261ee0c47e"><td class="memItemLeft" align="right" valign="top">::google::bigtable::v2::RowFilter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#a42558e442f66f01ac4d4e3261ee0c47e">as_proto</a> () const</td></tr>
-<tr class="memdesc:a42558e442f66f01ac4d4e3261ee0c47e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the filter expression as a protobuf.  <a href="#a42558e442f66f01ac4d4e3261ee0c47e">More...</a><br /></td></tr>
-<tr class="separator:a42558e442f66f01ac4d4e3261ee0c47e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28cd350ec8d65524fe5eee23bfb70c97"><td class="memItemLeft" align="right" valign="top">::google::bigtable::v2::RowFilter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#a28cd350ec8d65524fe5eee23bfb70c97">as_proto_move</a> ()</td></tr>
-<tr class="memdesc:a28cd350ec8d65524fe5eee23bfb70c97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move out the underlying protobuf value.  <a href="#a28cd350ec8d65524fe5eee23bfb70c97">More...</a><br /></td></tr>
-<tr class="separator:a28cd350ec8d65524fe5eee23bfb70c97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad885aa5b1e1aa2c05e7e0240e2ab3aa7"><td class="memItemLeft" align="right" valign="top">::google::bigtable::v2::RowFilter const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#ad885aa5b1e1aa2c05e7e0240e2ab3aa7">as_proto</a> () const &amp;</td></tr>
+<tr class="memdesc:ad885aa5b1e1aa2c05e7e0240e2ab3aa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the filter expression as a protobuf.  <a href="#ad885aa5b1e1aa2c05e7e0240e2ab3aa7">More...</a><br /></td></tr>
+<tr class="separator:ad885aa5b1e1aa2c05e7e0240e2ab3aa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3dc60ba2d68fe61ce71b6707d9eb989"><td class="memItemLeft" align="right" valign="top">::google::bigtable::v2::RowFilter &amp;&amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#ab3dc60ba2d68fe61ce71b6707d9eb989">as_proto</a> () &amp;&amp;</td></tr>
+<tr class="memdesc:ab3dc60ba2d68fe61ce71b6707d9eb989"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move out the underlying protobuf value.  <a href="#ab3dc60ba2d68fe61ce71b6707d9eb989">More...</a><br /></td></tr>
+<tr class="separator:ab3dc60ba2d68fe61ce71b6707d9eb989"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -115,6 +115,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ad198a81324e82c2b5fdee54687139cc4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html">Filter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#ad198a81324e82c2b5fdee54687139cc4">ColumnRange</a> (std::string family, std::string start, std::string end)</td></tr>
 <tr class="memdesc:ad198a81324e82c2b5fdee54687139cc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a filter that accepts columns in the range [<code>start</code>, <code>end</code>) within the <code>family</code> column family.  <a href="#ad198a81324e82c2b5fdee54687139cc4">More...</a><br /></td></tr>
 <tr class="separator:ad198a81324e82c2b5fdee54687139cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4689b52570cb064ae896def06b4153e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html">Filter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#ad4689b52570cb064ae896def06b4153e">ColumnName</a> (std::string family, std::string column)</td></tr>
+<tr class="memdesc:ad4689b52570cb064ae896def06b4153e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the filter that accepts the named <code>column</code> within the <code>family</code> column family.  <a href="#ad4689b52570cb064ae896def06b4153e">More...</a><br /></td></tr>
+<tr class="separator:ad4689b52570cb064ae896def06b4153e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb5fb39ea8943a61184d9bbfdab20149"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html">Filter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#aeb5fb39ea8943a61184d9bbfdab20149">TimestampRangeMicros</a> (std::int64_t start, std::int64_t end)</td></tr>
 <tr class="memdesc:aeb5fb39ea8943a61184d9bbfdab20149"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a filter that accepts cells with timestamps in the range [<code>start</code>, <code>end</code>).  <a href="#aeb5fb39ea8943a61184d9bbfdab20149">More...</a><br /></td></tr>
 <tr class="separator:aeb5fb39ea8943a61184d9bbfdab20149"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -286,8 +289,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a42558e442f66f01ac4d4e3261ee0c47e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42558e442f66f01ac4d4e3261ee0c47e">&#9670;&nbsp;</a></span>as_proto()</h2>
+<a id="ad885aa5b1e1aa2c05e7e0240e2ab3aa7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad885aa5b1e1aa2c05e7e0240e2ab3aa7">&#9670;&nbsp;</a></span>as_proto() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -296,10 +299,10 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">::google::bigtable::v2::RowFilter google::cloud::bigtable::v0::Filter::as_proto </td>
+          <td class="memname">::google::bigtable::v2::RowFilter const&amp; google::cloud::bigtable::v0::Filter::as_proto </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td> const &amp;</td>
         </tr>
       </table>
   </td>
@@ -313,8 +316,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a28cd350ec8d65524fe5eee23bfb70c97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28cd350ec8d65524fe5eee23bfb70c97">&#9670;&nbsp;</a></span>as_proto_move()</h2>
+<a id="ab3dc60ba2d68fe61ce71b6707d9eb989"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3dc60ba2d68fe61ce71b6707d9eb989">&#9670;&nbsp;</a></span>as_proto() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -323,10 +326,10 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">::google::bigtable::v2::RowFilter google::cloud::bigtable::v0::Filter::as_proto_move </td>
+          <td class="memname">::google::bigtable::v2::RowFilter&amp;&amp; google::cloud::bigtable::v0::Filter::as_proto </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> &amp;&amp;</td>
         </tr>
       </table>
   </td>
@@ -475,6 +478,45 @@ template&lt;typename... FilterTypes&gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ad4689b52570cb064ae896def06b4153e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4689b52570cb064ae896def06b4153e">&#9670;&nbsp;</a></span>ColumnName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html">Filter</a> google::cloud::bigtable::v0::Filter::ColumnName </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>family</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>column</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the filter that accepts the named <code>column</code> within the <code>family</code> column family. </p>
+<p>This function makes no attempt to validate the column family or column range before sending them to the server. </p>
 
 </div>
 </div>
