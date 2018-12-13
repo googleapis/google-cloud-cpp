@@ -29,15 +29,15 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-extern "C" void CurlShareLockCallback(CURL* /*handle*/, curl_lock_data /*data*/,
-                                      curl_lock_access /*access*/,
+extern "C" void CurlShareLockCallback(CURL*, curl_lock_data,
+                                      curl_lock_access,
                                       void* userptr) {
   auto* client = reinterpret_cast<CurlClient*>(userptr);
   client->LockShared();
 }
 
-extern "C" void CurlShareUnlockCallback(CURL* /*handle*/,
-                                        curl_lock_data /*data*/,
+extern "C" void CurlShareUnlockCallback(CURL*,
+                                        curl_lock_data,
                                         void* userptr) {
   auto* client = reinterpret_cast<CurlClient*>(userptr);
   client->UnlockShared();
@@ -84,7 +84,7 @@ std::unique_ptr<HashValidator> CreateHashValidator(
 
 /// Create a HashValidator for an insert request.
 std::unique_ptr<HashValidator> CreateHashValidator(
-    InsertObjectMediaRequest const& /*request*/) {
+    InsertObjectMediaRequest const&) {
   return google::cloud::internal::make_unique<NullHashValidator>();
 }
 

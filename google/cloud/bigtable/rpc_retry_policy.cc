@@ -31,7 +31,7 @@ std::unique_ptr<RPCRetryPolicy> LimitedErrorCountRetryPolicy::clone() const {
 }
 
 void LimitedErrorCountRetryPolicy::Setup(
-    grpc::ClientContext& /*unused*/) const {}
+    grpc::ClientContext&) const {}
 
 bool LimitedErrorCountRetryPolicy::OnFailure(grpc::Status const& status) {
   return impl_.OnFailure(status);
