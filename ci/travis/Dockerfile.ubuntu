@@ -32,13 +32,13 @@ RUN apt update && \
         git \
         gcc \
         g++ \
-        golang \
         cmake \
         libcurl4-openssl-dev \
         libssl-dev \
         libtool \
         lsb-release \
         make \
+        pkg-config \
         python-pip \
         tar \
         wget \

@@ -29,9 +29,6 @@ RUN dnf makecache && dnf install -y \
     doxygen \
     gcc-c++ \
     git \
-    golang \
-    graphviz \
-    lcov \
     libcurl-devel \
     libtool \
     make \
