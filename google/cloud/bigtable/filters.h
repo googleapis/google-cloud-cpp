@@ -129,6 +129,19 @@ class Filter {
   }
 
   /**
+   * Return the filter that accepts the named @p column within the @p family
+   * column family.
+   *
+   * This function makes no attempt to validate the column family or column
+   * range before sending them to the server.
+   */
+  static Filter ColumnName(std::string family, std::string column) {
+    std::string end = column;
+    return ColumnRangeClosed(std::move(family), std::move(column),
+                             std::move(end));
+  }
+
+  /**
    * Return a filter that accepts cells with timestamps in the range
    * [@p start, @p end).
    *

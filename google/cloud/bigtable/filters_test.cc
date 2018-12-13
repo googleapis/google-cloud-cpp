@@ -56,6 +56,13 @@ TEST(FiltersTest, ColumnRange) {
   EXPECT_EQ("colF", proto.column_range_filter().end_qualifier_open());
 }
 
+TEST(FiltersTest, ColumnName) {
+  auto proto = bigtable::Filter::ColumnName("fam", "colA").as_proto();
+  EXPECT_EQ("fam", proto.column_range_filter().family_name());
+  EXPECT_EQ("colA", proto.column_range_filter().start_qualifier_closed());
+  EXPECT_EQ("colA", proto.column_range_filter().end_qualifier_closed());
+}
+
 TEST(FiltersTest, TimestampRangeMicros) {
   auto proto = bigtable::Filter::TimestampRangeMicros(0, 10).as_proto();
   EXPECT_EQ(0, proto.timestamp_range_filter().start_timestamp_micros());
