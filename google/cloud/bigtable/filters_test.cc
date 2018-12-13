@@ -297,6 +297,11 @@ TEST(FiltersTest, MoveProto) {
   auto proto_move = std::move(filter).as_proto();
   ASSERT_FALSE(filter.as_proto().has_chain());
 
+  // Verify that as_proto() for rvalue-references returns the right type.
+  static_assert(std::is_rvalue_reference<decltype(
+                    std::move(std::declval<F>()).as_proto())>::value,
+                "Return type from as_proto() must be rvalue-reference");
+
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
