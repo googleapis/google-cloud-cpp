@@ -27,7 +27,7 @@ std::unique_ptr<BackoffPolicy> ExponentialBackoffPolicy::clone() const {
   tmp->generator_seeded_ = false;
   // Older versions of GCC (4.9) and Clang (Apple Xcode 7.3) need this
   // explicit move-constructor.
-  return std::unique_ptr<BackoffPolicy>(std::move(tmp));
+  return std::move(tmp);
 }
 
 std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {
