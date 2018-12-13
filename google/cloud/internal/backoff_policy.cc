@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/backoff_policy.h"
+#include "google/cloud/internal/make_unique.h"
 
 namespace google {
 namespace cloud {
@@ -20,16 +21,35 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 std::unique_ptr<BackoffPolicy> ExponentialBackoffPolicy::clone() const {
-  return std::unique_ptr<BackoffPolicy>(new ExponentialBackoffPolicy(*this));
+  auto tmp =
+      google::cloud::internal::make_unique<ExponentialBackoffPolicy>(*this);
+  // Force OnCompletion() to reseed the generator.
+  tmp->generator_.reset();
+  // Older versions of GCC (4.9) and Clang (Apple Xcode 7.3) need this
+  // explicit move-constructor.
+  return std::move(tmp);
 }
 
 std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {
+  // We do not want to copy the seed in `clone()` because then all operations
+  // will have the same sequence of backoffs. Nor do we want to use a shared
+  // PRNG because that would require locking and some more complicated lifecycle
+  // management of the shared PRNG.
+  //
+  // Instead we exploit the following observation: most requests never need to
+  // backoff, they succeed on the first call.
+  //
+  // So we delay the initialization of the PRNG until the first call that needs
+  // to, that is here:
+  if (not generator_) {
+    generator_ = google::cloud::internal::MakeDefaultPRNG();
+  }
   using namespace std::chrono;
   std::uniform_int_distribution<microseconds::rep> rng_distribution(
       current_delay_range_.count() / 2, current_delay_range_.count());
   // Randomized sleep period because it is possible that after some time all
   // client have same sleep period if we use only exponential backoff policy.
-  auto delay = microseconds(rng_distribution(generator_));
+  auto delay = microseconds(rng_distribution(*generator_));
   current_delay_range_ = microseconds(
       static_cast<microseconds::rep>(current_delay_range_.count() * scaling_));
   if (current_delay_range_ >= maximum_delay_) {
