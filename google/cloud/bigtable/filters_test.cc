@@ -288,14 +288,19 @@ TEST(FiltersTest, Sink) {
   ASSERT_TRUE(proto.sink());
 }
 
-/// @test Verify that `bigtable::Filter::as_proto_move` works as expected.
+/// @test Verify that `bigtable::Filter::as_proto` works as expected.
 TEST(FiltersTest, MoveProto) {
   using F = bigtable::Filter;
   auto filter = F::Chain(F::FamilyRegex("fam"), F::ColumnRegex("col"),
                          F::CellsRowOffset(2), F::Latest(1));
   auto proto_copy = filter.as_proto();
-  auto proto_move = filter.as_proto_move();
+  auto proto_move = std::move(filter).as_proto();
   ASSERT_FALSE(filter.as_proto().has_chain());
+
+  // Verify that as_proto() for rvalue-references returns the right type.
+  static_assert(std::is_rvalue_reference<decltype(
+                    std::move(std::declval<F>()).as_proto())>::value,
+                "Return type from as_proto() must be rvalue-reference");
 
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;

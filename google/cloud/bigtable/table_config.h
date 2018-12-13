@@ -36,7 +36,10 @@ class TableConfig {
         granularity_(TIMESTAMP_GRANULARITY_UNSPECIFIED) {}
 
   /// Move the contents to the proto to create tables.
-  ::google::bigtable::admin::v2::CreateTableRequest as_proto_move();
+  // Note that this function returns a copy intentionally, the object does not
+  // have the proto as a member variable, it constructs the proto from its own
+  // data structures for "reasons".
+  ::google::bigtable::admin::v2::CreateTableRequest as_proto() &&;
 
   using TimestampGranularity =
       ::google::bigtable::admin::v2::Table::TimestampGranularity;

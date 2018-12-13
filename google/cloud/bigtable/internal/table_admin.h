@@ -146,7 +146,7 @@ class TableAdmin {
                                                    TableConfig config,
                                                    CompletionQueue& cq,
                                                    Functor&& callback) {
-    auto request = config.as_proto_move();
+    auto request = std::move(config).as_proto();
     request.set_parent(instance_name());
     request.set_table_id(std::move(table_id));
 
@@ -364,7 +364,7 @@ class TableAdmin {
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest request;
     request.set_name(TableName(table_id));
     for (auto& m : modifications) {
-      *request.add_modifications() = m.as_proto_move();
+      *request.add_modifications() = std::move(m).as_proto();
     }
     MetadataUpdatePolicy metadata_update_policy(
         instance_name(), MetadataParamTypes::NAME, table_id);

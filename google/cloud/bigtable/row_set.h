@@ -49,7 +49,7 @@ class RowSet {
 
   /// Add @p range to the set.
   void Append(RowRange range) {
-    *row_set_.add_row_ranges() = range.as_proto_move();
+    *row_set_.add_row_ranges() = std::move(range).as_proto();
   }
 
   /**
@@ -80,8 +80,8 @@ class RowSet {
    */
   bool IsEmpty() const;
 
-  ::google::bigtable::v2::RowSet as_proto() const { return row_set_; }
-  ::google::bigtable::v2::RowSet as_proto_move() { return std::move(row_set_); }
+  ::google::bigtable::v2::RowSet const& as_proto() const& { return row_set_; }
+  ::google::bigtable::v2::RowSet&& as_proto() && { return std::move(row_set_); }
 
  private:
   template <typename T>

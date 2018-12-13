@@ -173,7 +173,7 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
   bigtable::internal::SetCommonTableOperationRequest<
       btproto::CheckAndMutateRowRequest>(request, app_profile_id_.get(),
                                          table_name_.get());
-  *request.mutable_predicate_filter() = filter.as_proto_move();
+  *request.mutable_predicate_filter() = std::move(filter).as_proto();
   for (auto& m : true_mutations) {
     *request.add_true_mutations() = std::move(m.op);
   }

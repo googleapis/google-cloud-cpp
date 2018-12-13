@@ -27,7 +27,12 @@ TEST(ClusterConfigTest, Constructor) {
 
 TEST(ClusterConfigTest, Move) {
   bigtable::ClusterConfig config("somewhere", 7, bigtable::ClusterConfig::HDD);
-  auto proto = config.as_proto_move();
+  auto proto = std::move(config).as_proto();
+  // Verify that as_proto() for rvalue-references returns the right type.
+  static_assert(std::is_rvalue_reference<decltype(
+                    std::move(std::declval<bigtable::ClusterConfig>())
+                        .as_proto())>::value,
+                "Return type from as_proto() must be rvalue-reference");
   EXPECT_EQ("somewhere", proto.location());
   EXPECT_EQ(7, proto.serve_nodes());
   EXPECT_EQ(bigtable::ClusterConfig::HDD, proto.default_storage_type());

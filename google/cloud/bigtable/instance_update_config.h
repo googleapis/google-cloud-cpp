@@ -97,12 +97,12 @@ class InstanceUpdateConfig {
 
   // NOLINT: accessors can (and should) be snake_case.
   google::bigtable::admin::v2::PartialUpdateInstanceRequest const& as_proto()
-      const {
+      const& {
     return proto_;
   }
 
   // NOLINT: accessors can (and should) be snake_case.
-  google::bigtable::admin::v2::PartialUpdateInstanceRequest as_proto_move() {
+  google::bigtable::admin::v2::PartialUpdateInstanceRequest&& as_proto() && {
     return std::move(proto_);
   }
 

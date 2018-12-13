@@ -34,7 +34,7 @@ using ClientUtils = bigtable::internal::noex::UnaryClientUtils<AdminClient>;
 
 btadmin::Table TableAdmin::CreateTable(std::string table_id, TableConfig config,
                                        grpc::Status& status) {
-  auto request = config.as_proto_move();
+  auto request = std::move(config).as_proto();
   request.set_parent(instance_name());
   request.set_table_id(std::move(table_id));
 
@@ -108,7 +108,7 @@ btadmin::Table TableAdmin::ModifyColumnFamilies(
   btadmin::ModifyColumnFamiliesRequest request;
   request.set_name(TableName(table_id));
   for (auto& m : modifications) {
-    *request.add_modifications() = m.as_proto_move();
+    *request.add_modifications() = std::move(m).as_proto();
   }
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id);
