@@ -62,10 +62,12 @@ class ReadModifyWriteRule {
   }
 
   /// Return the filter expression as a protobuf.
-  google::bigtable::v2::ReadModifyWriteRule as_proto() const { return rule_; }
+  google::bigtable::v2::ReadModifyWriteRule const& as_proto() const& {
+    return rule_;
+  }
 
   /// Move out the underlying protobuf value.
-  google::bigtable::v2::ReadModifyWriteRule as_proto_move() && {
+  google::bigtable::v2::ReadModifyWriteRule&& as_proto() && {
     return std::move(rule_);
   }
 

@@ -288,13 +288,13 @@ TEST(FiltersTest, Sink) {
   ASSERT_TRUE(proto.sink());
 }
 
-/// @test Verify that `bigtable::Filter::as_proto_move` works as expected.
+/// @test Verify that `bigtable::Filter::as_proto` works as expected.
 TEST(FiltersTest, MoveProto) {
   using F = bigtable::Filter;
   auto filter = F::Chain(F::FamilyRegex("fam"), F::ColumnRegex("col"),
                          F::CellsRowOffset(2), F::Latest(1));
   auto proto_copy = filter.as_proto();
-  auto proto_move = std::move(filter).as_proto_move();
+  auto proto_move = std::move(filter).as_proto();
   ASSERT_FALSE(filter.as_proto().has_chain());
 
   std::string delta;

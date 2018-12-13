@@ -135,10 +135,12 @@ class GcRule {
   }
 
   /// Convert to the proto form.
-  google::bigtable::admin::v2::GcRule as_proto() const { return gc_rule_; }
+  google::bigtable::admin::v2::GcRule const& as_proto() const& {
+    return gc_rule_;
+  }
 
   /// Move the internal proto out.
-  google::bigtable::admin::v2::GcRule as_proto_move() && {
+  google::bigtable::admin::v2::GcRule&& as_proto() && {
     return std::move(gc_rule_);
   }
 
@@ -174,8 +176,7 @@ class ColumnFamilyModification {
   static ColumnFamilyModification Create(std::string id, GcRule gc) {
     ColumnFamilyModification tmp;
     tmp.mod_.set_id(std::move(id));
-    *tmp.mod_.mutable_create()->mutable_gc_rule() =
-        std::move(gc).as_proto_move();
+    *tmp.mod_.mutable_create()->mutable_gc_rule() = std::move(gc).as_proto();
     return tmp;
   }
 
@@ -183,8 +184,7 @@ class ColumnFamilyModification {
   static ColumnFamilyModification Update(std::string id, GcRule gc) {
     ColumnFamilyModification tmp;
     tmp.mod_.set_id(std::move(id));
-    *tmp.mod_.mutable_update()->mutable_gc_rule() =
-        std::move(gc).as_proto_move();
+    *tmp.mod_.mutable_update()->mutable_gc_rule() = std::move(gc).as_proto();
     return tmp;
   }
 
@@ -197,14 +197,15 @@ class ColumnFamilyModification {
   }
 
   /// Convert to the proto form.
-  ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest::Modification
-  as_proto() const {
+  ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest::
+      Modification const&
+      as_proto() const& {
     return mod_;
   }
 
   /// Move out the underlying proto contents.
-  ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest::Modification
-  as_proto_move() && {
+  ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest::Modification&&
+  as_proto() && {
     return std::move(mod_);
   }
 

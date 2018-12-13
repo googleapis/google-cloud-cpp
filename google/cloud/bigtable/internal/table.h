@@ -301,7 +301,7 @@ class Table {
     bigtable::internal::SetCommonTableOperationRequest<
         google::bigtable::v2::CheckAndMutateRowRequest>(
         request, app_profile_id_.get(), table_name_.get());
-    *request.mutable_predicate_filter() = std::move(filter).as_proto_move();
+    *request.mutable_predicate_filter() = std::move(filter).as_proto();
     for (auto& m : true_mutations) {
       *request.add_true_mutations() = std::move(m.op);
     }
@@ -336,7 +336,7 @@ class Table {
         "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
         "convertible to bigtable::ReadModifyWriteRule");
 
-    *request.add_rules() = std::move(rule).as_proto_move();
+    *request.add_rules() = std::move(rule).as_proto();
     AddRules(request, std::forward<Args>(rules)...);
 
     return CallReadModifyWriteRowRequest(request, status);
@@ -440,7 +440,7 @@ class Table {
   template <typename... Args>
   void AddRules(google::bigtable::v2::ReadModifyWriteRowRequest& request,
                 bigtable::ReadModifyWriteRule rule, Args&&... args) {
-    *request.add_rules() = std::move(rule).as_proto_move();
+    *request.add_rules() = std::move(rule).as_proto();
     AddRules(request, std::forward<Args>(args)...);
   }
 

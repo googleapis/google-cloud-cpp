@@ -59,7 +59,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
   auto backoff_policy = impl_.rpc_backoff_policy_->clone();
 
   // Build the RPC request, try to minimize copying.
-  auto request = std::move(instance_config).as_proto_move();
+  auto request = std::move(instance_config).as_proto();
   request.set_parent(project_name());
   for (auto& kv : *request.mutable_clusters()) {
     kv.second.set_location(project_name() + "/locations/" +
@@ -106,7 +106,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::UpdateInstanceImpl(
   MetadataUpdatePolicy metadata_update_policy(instance_update_config.GetName(),
                                               MetadataParamTypes::NAME);
 
-  auto request = std::move(instance_update_config).as_proto_move();
+  auto request = std::move(instance_update_config).as_proto();
 
   using ClientUtils =
       bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;
@@ -190,7 +190,7 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::UpdateClusterImpl(
   MetadataUpdatePolicy metadata_update_policy(cluster_config.GetName(),
                                               MetadataParamTypes::NAME);
 
-  auto request = std::move(cluster_config).as_proto_move();
+  auto request = std::move(cluster_config).as_proto();
 
   using ClientUtils =
       bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;

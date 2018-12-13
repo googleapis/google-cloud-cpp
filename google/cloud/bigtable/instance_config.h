@@ -37,8 +37,7 @@ class InstanceConfig {
     proto_.set_instance_id(std::move(instance_id.get()));
     proto_.mutable_instance()->set_display_name(std::move(display_name.get()));
     for (auto& kv : clusters) {
-      (*proto_.mutable_clusters())[kv.first] =
-          std::move(kv.second).as_proto_move();
+      (*proto_.mutable_clusters())[kv.first] = std::move(kv.second).as_proto();
     }
   }
 
@@ -70,12 +69,12 @@ class InstanceConfig {
   }
 
   // NOLINT: accessors can (and should) be snake_case.
-  google::bigtable::admin::v2::CreateInstanceRequest const& as_proto() const {
+  google::bigtable::admin::v2::CreateInstanceRequest const& as_proto() const& {
     return proto_;
   }
 
   // NOLINT: accessors can (and should) be snake_case.
-  google::bigtable::admin::v2::CreateInstanceRequest as_proto_move() && {
+  google::bigtable::admin::v2::CreateInstanceRequest&& as_proto() && {
     return std::move(proto_);
   }
 

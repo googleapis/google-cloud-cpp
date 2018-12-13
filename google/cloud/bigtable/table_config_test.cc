@@ -56,7 +56,7 @@ initial_splits { key: 'qux' }
   ASSERT_TRUE(
       google::protobuf::TextFormat::ParseFromString(expected_text, &expected));
 
-  auto request = std::move(config).as_proto_move();
+  auto request = std::move(config).as_proto();
 
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
