@@ -130,7 +130,7 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
         maximum_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
             maximum_delay)),
         scaling_(scaling),
-        generator_(google::cloud::internal::MakeDefaultPRNG()) {
+        generator_() {
     if (scaling_ <= 1.0) {
       google::cloud::internal::RaiseInvalidArgument(
           "scaling factor must be > 1.0");
@@ -144,6 +144,7 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   std::chrono::microseconds current_delay_range_;
   std::chrono::microseconds maximum_delay_;
   double scaling_;
+  bool generator_seeded_ = false;
   google::cloud::internal::DefaultPRNG generator_;
 };
 

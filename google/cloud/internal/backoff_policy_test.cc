@@ -20,6 +20,9 @@
 using google::cloud::internal::ExponentialBackoffPolicy;
 using ms = std::chrono::milliseconds;
 
+using ::testing::ElementsAreArray;
+using ::testing::Not;
+
 /// @test A simple test for the ExponentialBackoffPolicy.
 TEST(ExponentialBackoffPolicy, Simple) {
   ExponentialBackoffPolicy tested(ms(10), ms(100), 2.0);
@@ -109,4 +112,27 @@ TEST(ExponentialBackoffPolicy, Randomness) {
     output2.push_back(test_object2.OnCompletion().count());
   }
   EXPECT_NE(output1, output2);
+}
+
+/// @test Test that cloning produces different numbers.
+TEST(ExponentialBackoffPolicy, ClonesHaveDifferentSequences) {
+  // This test could flake, if two pseudo-random number generators seeded with
+  // whatever the C++ library uses for entropy (typically /dev/random and/or the
+  // RND instruction) manage to produce the same 20 numbers. If that happens,
+  // my apologies.... and remember to buy yourself a lottery ticket today.
+  std::size_t test_length = 20;
+  ExponentialBackoffPolicy original(ms(10), ms((1 << 20) * 10), 2.0);
+  auto c1 = original.clone();
+  auto c2 = original.clone();
+
+  using milliseconds_type = std::chrono::milliseconds::rep;
+  std::vector<milliseconds_type> sequence_1(test_length);
+  std::generate_n(sequence_1.begin(), test_length,
+                  [&] { return c1->OnCompletion().count(); });
+
+  std::vector<milliseconds_type> sequence_2(test_length);
+  std::generate_n(sequence_2.begin(), test_length,
+                  [&] { return c2->OnCompletion().count(); });
+
+  EXPECT_THAT(sequence_1, Not(ElementsAreArray(sequence_2)));
 }
