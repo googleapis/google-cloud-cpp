@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_REFRESHING_CREDENTIALS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_REFRESHING_CREDENTIALS_H_
 
-#include "google/cloud/storage/status.h"
 #include "google/cloud/storage/oauth2/credentials.h"
+#include "google/cloud/storage/status.h"
 #include <chrono>
 #include <mutex>
 #include <string>
