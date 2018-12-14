@@ -23,6 +23,8 @@ var searchData=
   ['cluster_5fconfig_2eh',['cluster_config.h',['../cluster__config_8h.html',1,'']]],
   ['clusterconfig',['ClusterConfig',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClusterConfig.html',1,'google::cloud::bigtable::v0::ClusterConfig'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClusterConfig.html#a420abdb1d65e1ff34367eccdcb1949e6',1,'google::cloud::bigtable::v0::ClusterConfig::ClusterConfig(google::bigtable::admin::v2::Cluster cluster)'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClusterConfig.html#a01fee8794ddf4ae7669094155bdd9227',1,'google::cloud::bigtable::v0::ClusterConfig::ClusterConfig(std::string location, std::int32_t serve_nodes, StorageType storage)']]],
   ['clusterid',['ClusterId',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a73d20496d86761052e55848775b1e30b',1,'google::cloud::bigtable::v0']]],
+  ['clusterlist',['ClusterList',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClusterList.html',1,'google::cloud::bigtable::v0']]],
+  ['clusters',['clusters',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClusterList.html#a7010569bf3d62050a0eaccd29fc31ebb',1,'google::cloud::bigtable::v0::ClusterList']]],
   ['column_5ffamilies',['column_families',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableConfig.html#a78891f1a8b0355cb25a2a800175ff1db',1,'google::cloud::bigtable::v0::TableConfig']]],
   ['column_5ffamily_2eh',['column_family.h',['../column__family_8h.html',1,'']]],
   ['column_5fqualifier',['column_qualifier',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Cell.html#a6304b8e5be4471f3cf2260f2592fcacb',1,'google::cloud::bigtable::v0::Cell']]],
