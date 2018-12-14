@@ -15,9 +15,13 @@
 # ~~~
 
 add_executable(storage_latency_benchmark storage_latency_benchmark.cc)
-target_link_libraries(storage_latency_benchmark storage_client
+target_link_libraries(storage_latency_benchmark
+                      storage_client
+                      storage_common_options
                       google_cloud_cpp_common_options)
 
 add_executable(storage_throughput_benchmark storage_throughput_benchmark.cc)
-target_link_libraries(storage_throughput_benchmark storage_client
+target_link_libraries(storage_throughput_benchmark
+                      storage_client
+                      storage_common_options
                       google_cloud_cpp_common_options)

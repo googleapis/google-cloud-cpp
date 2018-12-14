@@ -275,8 +275,6 @@ void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
         google::cloud::bigtable::ReadModifyWriteRule::AppendValue("fam", "list",
                                                                   ";element"));
     std::cout << row.row_key() << "\n";
-    for (auto const& cell : row.cells()) {
-    }
   }
   //! [read modify write]
   (std::move(table));
