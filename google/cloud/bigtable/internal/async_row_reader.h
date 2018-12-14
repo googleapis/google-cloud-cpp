@@ -19,7 +19,6 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/internal/readrowsparser.h"
-#include "google/cloud/bigtable/internal/rowreaderiterator.h"
 #include "google/cloud/bigtable/internal/table.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/row.h"
@@ -41,9 +40,7 @@ namespace internal {
  * Async-friendly version RowReader.
  *
  * It satisfies the requirements to be used in `AsyncRetryOp`.
- *
  */
-
 template <typename ReadRowCallback,
           typename std::enable_if<
               google::cloud::internal::is_invocable<
@@ -89,14 +86,21 @@ class AsyncRowReader {
       parser_->HandleChunk(
           std::move(*(response.mutable_chunks(processed_chunks_count_))),
           status_);
-
       if (not status_.ok()) {
+        // An error must result in a retry, so we return without calling the
+        // callback function and check for status before finishing the call
         return;
       }
 
       if (parser_->HasNext()) {
+        // We have a complete row in the parser.
+        Row parsed_row = parser_->Next(status_);
+        if (not status_.ok()) {
+          return;
+        }
         ++rows_count_;
-        read_row_callback_(cq, std::move(parser_->Next(status_)), status_);
+        last_read_row_key_ = std::string(parsed_row.row_key());
+        read_row_callback_(cq, std::move(parsed_row), status_);
       }
       ++processed_chunks_count_;
     }
@@ -114,6 +118,11 @@ class AsyncRowReader {
     request.set_app_profile_id(app_profile_id_.get());
     request.set_table_name(table_name_.get());
 
+    if (not last_read_row_key_.empty()) {
+      // We've returned some rows and need to make sure we don't
+      // request them again.
+      row_set_ = row_set_.Intersect(RowRange::Open(last_read_row_key_, ""));
+    }
     auto row_set_proto = row_set_.as_proto();
     request.mutable_rows()->Swap(&row_set_proto);
 
@@ -144,11 +153,20 @@ class AsyncRowReader {
                 int>::type valid_callback_type = 0>
   struct FinishedCallback {
     FinishedCallback(AsyncRowReader& parent, Functor&& callback)
-        : parent_(parent), callback_(callback) {}
+        : parent_(parent), callback_(std::move(callback)) {}
 
     void operator()(CompletionQueue& cq, grpc::ClientContext& context,
                     grpc::Status& status) {
-      parent_.parser_->HandleEndOfStream(status);
+      if (status.ok() && parent_.status_.ok()) {
+        // a successful call so close the parser.
+        parent_.parser_->HandleEndOfStream(status);
+      }
+
+      if (not parent_.status_.ok() && status.ok()) {
+        status = grpc::Status(grpc::StatusCode::UNAVAILABLE,
+                              "Some rows were not returned");
+      }
+
       callback_(cq, status);
     }
 
@@ -173,6 +191,8 @@ class AsyncRowReader {
 
   /// Number of rows read so far, used to set row_limit in retries.
   std::int64_t rows_count_;
+  /// Holds the last read row key, for retries.
+  std::string last_read_row_key_;
 
   grpc::Status status_;
   ReadRowCallback read_row_callback_;

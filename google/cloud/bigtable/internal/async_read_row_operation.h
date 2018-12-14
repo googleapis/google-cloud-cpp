@@ -33,6 +33,30 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
+/**
+ * Perform an AsyncReadRows operation request with retries.
+ *
+ * @tparam Client the class implementing the asynchronous operation, examples
+ *     include `DataClient`, `AdminClient`, and `InstanceAdminClient`.
+ *
+ * @tparam ReadRowCallback the type of the function-like object that will
+ * receive the results. It must satisfy (using C++17 types):
+ *     static_assert(std::is_invocable_v<
+ *         Functor, CompletionQueue&, Row, grpc::Status&>);
+ *
+ * @tparam DoneCallback the type of the function-like object that will receive
+ * the results. It must satisfy (using C++17 types):
+ *     static_assert(std::is_invocable_v<
+ *         Functor, CompletionQueue&, bool&, grpc::Status&>);
+ *
+ * @tparam valid_data_callback_type a format parameter, uses `std::enable_if<>`
+ * to disable this template if the ReadRowCallback functor does not match the
+ * expected signature.
+ *
+ * @tparam valid_callback_type a format parameter, uses `std::enable_if<>` to
+ *     disable this template if the DoneCallback functor does not match the
+ * expected signature.
+ */
 template <typename ReadRowCallback, typename DoneCallback,
           typename std::enable_if<
               google::cloud::internal::is_invocable<
@@ -66,7 +90,7 @@ class AsyncReadRowsOperation
                 client, std::move(app_profile_id), std::move(table_name),
                 std::move(row_set), rows_limit, std::move(filter),
                 raise_on_error, std::move(parser_factory),
-                std::forward<ReadRowCallback>(read_row_callback))) {}
+                std::move(read_row_callback))) {}
 };
 
 }  // namespace internal

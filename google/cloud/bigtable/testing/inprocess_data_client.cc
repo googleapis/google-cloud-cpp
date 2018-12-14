@@ -70,10 +70,9 @@ InProcessDataClient::ReadRows(grpc::ClientContext* context,
 }
 
 std::unique_ptr<::grpc::ClientAsyncReaderInterface<btproto::ReadRowsResponse>>
-InProcessDataClient::AsyncReadRows(
-    ::grpc::ClientContext* context,
-    const ::google::bigtable::v2::ReadRowsRequest& request,
-    ::grpc::CompletionQueue* cq, void* tag) {
+InProcessDataClient::AsyncReadRows(::grpc::ClientContext* context,
+                                   btproto::ReadRowsRequest const& request,
+                                   ::grpc::CompletionQueue* cq, void* tag) {
   return Stub()->AsyncReadRows(context, request, cq, tag);
 }
 

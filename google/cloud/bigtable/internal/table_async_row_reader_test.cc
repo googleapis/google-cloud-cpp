@@ -108,6 +108,116 @@ TEST_F(NoexTableAsyncReadRowsTest, Simple) {
   EXPECT_TRUE(done_op_called);
 }
 
+/// @test Verify that noex::Table::AsyncReadRows() works for retry scenario.
+TEST_F(NoexTableAsyncReadRowsTest, ReadRowsWithRetry) {
+  using bigtable::testing::MockClientAsyncReaderInterface;
+
+  MockClientAsyncReaderInterface<btproto::ReadRowsResponse>* reader1 =
+      new MockClientAsyncReaderInterface<btproto::ReadRowsResponse>;
+  std::unique_ptr<MockClientAsyncReaderInterface<btproto::ReadRowsResponse>>
+      reader_deleter1(reader1);
+
+  MockClientAsyncReaderInterface<btproto::ReadRowsResponse>* reader2 =
+      new MockClientAsyncReaderInterface<btproto::ReadRowsResponse>;
+  std::unique_ptr<MockClientAsyncReaderInterface<btproto::ReadRowsResponse>>
+      reader_deleter2(reader2);
+
+  EXPECT_CALL(*reader1, Read(_, _))
+      .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
+        {
+          auto c = r->add_chunks();
+          c->set_row_key("0001");
+          c->set_timestamp_micros(1000);
+          c->set_value("test-0001");
+          c->set_value_size(0);
+          c->set_commit_row(true);
+        }
+      }))
+      .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {}));
+
+  EXPECT_CALL(*reader1, Finish(_, _))
+      .WillOnce(Invoke([](grpc::Status* status, void*) {
+        *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "mocked-status");
+      }));
+
+  EXPECT_CALL(*reader2, Read(_, _))
+      .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
+        {
+          auto c = r->add_chunks();
+          c->set_row_key("0002");
+          c->set_timestamp_micros(1000);
+          c->set_value("test-0002");
+          c->set_value_size(0);
+          c->set_commit_row(true);
+        }
+      }))
+      .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {}))
+      .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {}));
+
+  EXPECT_CALL(*reader2, Finish(_, _))
+      .WillOnce(Invoke([](grpc::Status* status, void*) {
+        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+      }));
+
+  EXPECT_CALL(*client_, AsyncReadRows(_, _, _, _))
+      .WillOnce(Invoke([&reader_deleter1](grpc::ClientContext*,
+                                          btproto::ReadRowsRequest const& r,
+                                          grpc::CompletionQueue*, void*) {
+        return std::move(reader_deleter1);
+      }))
+      .WillOnce(Invoke([&reader_deleter2](grpc::ClientContext*,
+                                          btproto::ReadRowsRequest const& r,
+                                          grpc::CompletionQueue*, void*) {
+        return std::move(reader_deleter2);
+      }));
+
+  auto policy = bt::DefaultIdempotentMutationPolicy();
+  auto impl = std::make_shared<bigtable::testing::MockCompletionQueue>();
+  using bigtable::CompletionQueue;
+  bigtable::CompletionQueue cq(impl);
+
+  bool read_rows_op_called = false;
+  bool done_op_called = false;
+
+  table_.AsyncReadRows(bt::RowSet("0001", "0002"), bt::RowReader::NO_ROWS_LIMIT,
+                       bt::Filter::PassAllFilter(), cq,
+                       [&read_rows_op_called](CompletionQueue& cq, Row row,
+                                              grpc::Status& status) {
+                         EXPECT_TRUE(status.ok());
+                         read_rows_op_called = true;
+                       },
+                       [&done_op_called](CompletionQueue& cq, bool& response,
+                                         grpc::Status const& status) {
+                         EXPECT_TRUE(response);
+                         EXPECT_TRUE(status.ok());
+                         EXPECT_EQ("mocked-status", status.error_message());
+                         done_op_called = true;
+                       });
+
+  using bigtable::AsyncOperation;
+  impl->SimulateCompletion(cq, true);
+  // state == PROCESSING
+  impl->SimulateCompletion(cq, true);
+  // state == PROCESSING, 1 read
+  impl->SimulateCompletion(cq, false);
+  // state == FINISHING
+  impl->SimulateCompletion(cq, true);
+  // finished, scheduled timer
+  impl->SimulateCompletion(cq, true);
+  // timer finished, retry
+  impl->SimulateCompletion(cq, true);
+  // state == PROCESSING
+  impl->SimulateCompletion(cq, true);
+  // state == PROCESSING, 1 read
+  impl->SimulateCompletion(cq, true);
+  // state == PROCESSING, 2 read
+  impl->SimulateCompletion(cq, false);
+  // state == FINISHING
+  EXPECT_FALSE(done_op_called);
+  impl->SimulateCompletion(cq, true);
+  EXPECT_TRUE(done_op_called);
+}
+
 /// @test Verify that noex::Table::AsyncReadRows() works when cancelled
 TEST_F(NoexTableAsyncReadRowsTest, Cancelled) {
   // This test attempts to read row but fails straight away because

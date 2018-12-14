@@ -269,13 +269,17 @@ class Table {
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
-   * @param callback a functor to be called when the row is ready for reading.
-   * @param callback a functor to be called when the operation completes. It
-   *     must satisfy (using C++17 types):
-   *     static_assert(std::is_invocable< Functor, CompletionQueue&,
-   * grpc::Status&>);
+   * @param read_row_callback a functor to be called when the row is ready for
+   * reading. It must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable< ReadRowCallback, CompletionQueue&,
+   * Row, grpc::Status&>);
+   * @param done_callback a functor to be called when the operation completes.
+   * It must satisfy (using C++17 types): static_assert(std::is_invocable<
+   * DoneCallback, CompletionQueue&, bool& grpc::Status&>);
    *
-   * @tparam Functor the type of the callback.
+   * @tparam ReadRowCallback the type of the callback when a row is ready.
+   *
+   * @tparam DoneCallback the type of the callback when operation is finished.
    */
   template <typename ReadRowCallback, typename DoneCallback,
             typename std::enable_if<google::cloud::internal::is_invocable<

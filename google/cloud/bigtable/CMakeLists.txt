@@ -168,8 +168,6 @@ add_library(bigtable_client
             internal/async_sample_row_keys.cc
             internal/async_read_row_operation.h
             internal/async_retry_multi_page.h
-            internal/async_read_row_operation.h
-            internal/async_row_reader.h
             internal/async_retry_op.h
             internal/async_retry_unary_rpc.h
             internal/async_retry_unary_rpc_and_poll.h
