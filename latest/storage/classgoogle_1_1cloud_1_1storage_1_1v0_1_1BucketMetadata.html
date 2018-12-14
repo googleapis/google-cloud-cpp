@@ -146,6 +146,17 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a676b7876b13a8ef799b594bdb4ed9767"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96fe7df007dc0ed3dbcddd1e50f8bcb6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a96fe7df007dc0ed3dbcddd1e50f8bcb6">reset_encryption</a> ()</td></tr>
 <tr class="separator:a96fe7df007dc0ed3dbcddd1e50f8bcb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Get and set the IAM configuration.</div></td></tr>
+<tr class="memitem:a635bf75a33ccea7aeef8b907f9f05928"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a635bf75a33ccea7aeef8b907f9f05928">has_iam_configuration</a> () const</td></tr>
+<tr class="separator:a635bf75a33ccea7aeef8b907f9f05928"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f4f6a1b97cb52e4869c3756a38f7d86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketIamConfiguration.html">BucketIamConfiguration</a> const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a2f4f6a1b97cb52e4869c3756a38f7d86">iam_configuration</a> () const</td></tr>
+<tr class="separator:a2f4f6a1b97cb52e4869c3756a38f7d86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa64b0e9f59786025dc68e96b4702eafb"><td class="memItemLeft" align="right" valign="top">google::cloud::optional&lt; <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketIamConfiguration.html">BucketIamConfiguration</a> &gt; const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#aa64b0e9f59786025dc68e96b4702eafb">iam_configuration_as_optional</a> () const</td></tr>
+<tr class="separator:aa64b0e9f59786025dc68e96b4702eafb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89550b7b26e02085664c62460487a612"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a89550b7b26e02085664c62460487a612">set_iam_configuration</a> (<a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketIamConfiguration.html">BucketIamConfiguration</a> v)</td></tr>
+<tr class="separator:a89550b7b26e02085664c62460487a612"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d7f55b5492d64ab2abf3d6497513543"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a3d7f55b5492d64ab2abf3d6497513543">reset_iam_configuration</a> ()</td></tr>
+<tr class="separator:a3d7f55b5492d64ab2abf3d6497513543"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Accessors and modifiers to the `labels`.</div></td></tr>
 <tr class="memitem:a8bd70ae38d1dcfbbe172d60d165f9cd7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a8bd70ae38d1dcfbbe172d60d165f9cd7">has_label</a> (std::string const &amp;key) const</td></tr>
 <tr class="separator:a8bd70ae38d1dcfbbe172d60d165f9cd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -592,6 +603,31 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a635bf75a33ccea7aeef8b907f9f05928"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a635bf75a33ccea7aeef8b907f9f05928">&#9670;&nbsp;</a></span>has_iam_configuration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool google::cloud::storage::v0::BucketMetadata::has_iam_configuration </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a8bd70ae38d1dcfbbe172d60d165f9cd7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8bd70ae38d1dcfbbe172d60d165f9cd7">&#9670;&nbsp;</a></span>has_label()</h2>
 
@@ -729,6 +765,56 @@ Friends</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">bool google::cloud::storage::v0::BucketMetadata::has_website </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2f4f6a1b97cb52e4869c3756a38f7d86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f4f6a1b97cb52e4869c3756a38f7d86">&#9670;&nbsp;</a></span>iam_configuration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketIamConfiguration.html">BucketIamConfiguration</a> const&amp; google::cloud::storage::v0::BucketMetadata::iam_configuration </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa64b0e9f59786025dc68e96b4702eafb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa64b0e9f59786025dc68e96b4702eafb">&#9670;&nbsp;</a></span>iam_configuration_as_optional()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">google::cloud::optional&lt;<a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketIamConfiguration.html">BucketIamConfiguration</a>&gt; const&amp; google::cloud::storage::v0::BucketMetadata::iam_configuration_as_optional </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -1190,6 +1276,31 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a3d7f55b5492d64ab2abf3d6497513543"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d7f55b5492d64ab2abf3d6497513543">&#9670;&nbsp;</a></span>reset_iam_configuration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a>&amp; google::cloud::storage::v0::BucketMetadata::reset_iam_configuration </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a510f0db77879b9562233e324c6c724af"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a510f0db77879b9562233e324c6c724af">&#9670;&nbsp;</a></span>reset_lifecycle()</h2>
 
@@ -1508,6 +1619,32 @@ Friends</h2></td></tr>
           <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a>&amp; google::cloud::storage::v0::BucketMetadata::set_encryption </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketEncryption.html">BucketEncryption</a>&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a89550b7b26e02085664c62460487a612"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89550b7b26e02085664c62460487a612">&#9670;&nbsp;</a></span>set_iam_configuration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a>&amp; google::cloud::storage::v0::BucketMetadata::set_iam_configuration </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketIamConfiguration.html">BucketIamConfiguration</a>&#160;</td>
           <td class="paramname"><em>v</em></td><td>)</td>
           <td></td>
         </tr>

@@ -4,6 +4,7 @@ var searchData=
   ['has_5fcustom_5fattribute',['has_custom_attribute',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#af90deddb7631754c0bf9c8a4c956339d',1,'google::cloud::storage::v0::NotificationMetadata']]],
   ['has_5fcustomer_5fencryption',['has_customer_encryption',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#aa0724175f83a69b8b0df6cd121e85c7f',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['has_5fencryption',['has_encryption',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a330cfc7a05cd54335a7f4cdfadb459de',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['has_5fiam_5fconfiguration',['has_iam_configuration',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a635bf75a33ccea7aeef8b907f9f05928',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['has_5flabel',['has_label',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a8bd70ae38d1dcfbbe172d60d165f9cd7',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['has_5flifecycle',['has_lifecycle',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a870a4d47bdf58d4b85dcde0a742212d0',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['has_5flogging',['has_logging',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a08d05b49607fc67bbbede20a1a0532c0',1,'google::cloud::storage::v0::BucketMetadata']]],
