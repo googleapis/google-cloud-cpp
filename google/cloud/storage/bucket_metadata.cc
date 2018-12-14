@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/bucket_metadata.h"
+#include "google/cloud/internal/ios_flags_saver.h"
 #include "google/cloud/storage/internal/format_rfc3339.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
@@ -84,6 +85,7 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
 }
 
 std::ostream& operator<<(std::ostream& os, BucketOnlyPolicy const& rhs) {
+  google::cloud::internal::IosFlagsSaver save_format(os);
   return os << "BucketOnlyPolicy={enabled=" << std::boolalpha
             << rhs.enabled
             << ", locked_time=" << internal::FormatRfc3339(rhs.locked_time)
@@ -370,6 +372,7 @@ bool BucketMetadata::operator==(BucketMetadata const& rhs) const {
 }
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
+  google::cloud::internal::IosFlagsSaver save_format(os);
   os << "BucketMetadata={name=" << rhs.name();
 
   os << ", acl=[";

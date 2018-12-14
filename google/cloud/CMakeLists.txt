@@ -116,6 +116,7 @@ add_library(google_cloud_cpp_common
             internal/future_then_meta.h
             internal/getenv.h
             internal/getenv.cc
+            internal/ios_flags_saver.h
             internal/make_unique.h
             internal/port_platform.h
             internal/random.h
