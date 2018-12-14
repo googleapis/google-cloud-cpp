@@ -34,6 +34,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/future_then_impl.h",
     "internal/future_then_meta.h",
     "internal/getenv.h",
+    "internal/ios_flags_saver.h",
     "internal/make_unique.h",
     "internal/port_platform.h",
     "internal/random.h",
