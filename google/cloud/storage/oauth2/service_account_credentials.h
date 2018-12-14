@@ -19,14 +19,10 @@
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
-#include "google/cloud/storage/oauth2/credentials.h"
-#include "google/cloud/storage/status.h"
-#include <chrono>
+#include "google/cloud/storage/oauth2/refreshing_credentials.h"
 #include <condition_variable>
 #include <ctime>
 #include <iostream>
-#include <mutex>
-#include <string>
 
 namespace google {
 namespace cloud {
@@ -74,7 +70,12 @@ ServiceAccountCredentialsInfo ParseServiceAccountCredentials(
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder,
           typename ClockType = std::chrono::system_clock>
-class ServiceAccountCredentials : public Credentials {
+class ServiceAccountCredentials
+    : public RefreshingCredentials<
+          ServiceAccountCredentials<HttpRequestBuilderType, ClockType>> {
+  friend class RefreshingCredentials<
+      ServiceAccountCredentials<HttpRequestBuilderType, ClockType>>;
+
  public:
   explicit ServiceAccountCredentials(std::string const& content,
                                      std::string const& source)
@@ -84,7 +85,7 @@ class ServiceAccountCredentials : public Credentials {
   explicit ServiceAccountCredentials(std::string const& content,
                                      std::string const& source,
                                      std::string const& default_token_uri)
-      : expiration_time_(), clock_() {
+      : clock_() {
     namespace nl = storage::internal::nl;
 
     auto info =
@@ -110,18 +111,6 @@ class ServiceAccountCredentials : public Credentials {
         "Content-Type: application/x-www-form-urlencoded");
     request_ = request_builder.BuildRequest();
     info_ = std::move(info);
-  }
-
-  std::pair<storage::Status, std::string> AuthorizationHeader() override {
-    std::unique_lock<std::mutex> lock(mu_);
-
-    if (IsValid()) {
-      return std::make_pair(storage::Status(), authorization_header_);
-    }
-
-    storage::Status status = Refresh();
-    return std::make_pair(
-        status, status.ok() ? authorization_header_ : std::string(""));
   }
 
   /**
@@ -183,15 +172,6 @@ class ServiceAccountCredentials : public Credentials {
                           std::move(assertion_payload));
   }
 
-  bool IsExpired() {
-    auto now = std::chrono::system_clock::now();
-    return now > (expiration_time_ - GoogleOAuthAccessTokenExpirationSlack());
-  }
-
-  bool IsValid() {
-    return not authorization_header_.empty() and not IsExpired();
-  }
-
   /**
    * Given a key and a JSON header and payload, creates a JWT assertion string.
    *
@@ -239,18 +219,14 @@ class ServiceAccountCredentials : public Credentials {
         std::chrono::seconds(access_token.value("expires_in", int(0)));
     auto new_expiration = std::chrono::system_clock::now() + expires_in;
     // Do not update any state until all potential exceptions are raised.
-    authorization_header_ = std::move(header);
-    expiration_time_ = new_expiration;
+    this->authorization_header_ = std::move(header);
+    this->expiration_time_ = new_expiration;
     return storage::Status();
   }
 
   typename HttpRequestBuilderType::RequestType request_;
   std::string payload_;
   ServiceAccountCredentialsInfo info_;
-  std::mutex mu_;
-  std::condition_variable cv_;
-  std::string authorization_header_;
-  std::chrono::system_clock::time_point expiration_time_;
   ClockType clock_;
 };
 

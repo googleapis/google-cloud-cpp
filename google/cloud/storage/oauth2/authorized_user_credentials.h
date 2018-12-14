@@ -18,13 +18,9 @@
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
-#include "google/cloud/storage/oauth2/credentials.h"
+#include "google/cloud/storage/oauth2/refreshing_credentials.h"
 #include "google/cloud/storage/status.h"
-#include <chrono>
-#include <condition_variable>
 #include <iostream>
-#include <mutex>
-#include <string>
 
 namespace google {
 namespace cloud {
@@ -64,7 +60,12 @@ AuthorizedUserCredentialsInfo ParseAuthorizedUserCredentials(
  */
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder>
-class AuthorizedUserCredentials : public Credentials {
+class AuthorizedUserCredentials
+    : public RefreshingCredentials<
+          AuthorizedUserCredentials<HttpRequestBuilderType>> {
+  friend class RefreshingCredentials<
+      AuthorizedUserCredentials<HttpRequestBuilderType>>;
+
  public:
   explicit AuthorizedUserCredentials(std::string const& contents,
                                      std::string const& source)
@@ -73,8 +74,7 @@ class AuthorizedUserCredentials : public Credentials {
 
   explicit AuthorizedUserCredentials(std::string const& content,
                                      std::string const& source,
-                                     std::string oauth_server)
-      : expiration_time_() {
+                                     std::string oauth_server) {
     HttpRequestBuilderType request_builder(
         std::move(oauth_server),
         storage::internal::GetDefaultCurlHandleFactory());
@@ -90,28 +90,7 @@ class AuthorizedUserCredentials : public Credentials {
     request_ = request_builder.BuildRequest();
   }
 
-  std::pair<google::cloud::storage::Status, std::string> AuthorizationHeader()
-      override {
-    using google::cloud::storage::Status;
-    std::unique_lock<std::mutex> lock(mu_);
-    if (IsValid()) {
-      return std::make_pair(Status(), authorization_header_);
-    }
-    Status status = Refresh();
-    return std::make_pair(
-        status, status.ok() ? authorization_header_ : std::string(""));
-  }
-
  private:
-  bool IsExpired() {
-    auto now = std::chrono::system_clock::now();
-    return now > (expiration_time_ - GoogleOAuthAccessTokenExpirationSlack());
-  }
-
-  bool IsValid() {
-    return not authorization_header_.empty() and not IsExpired();
-  }
-
   google::cloud::storage::Status Refresh() {
     namespace nl = storage::internal::nl;
 
@@ -139,17 +118,13 @@ class AuthorizedUserCredentials : public Credentials {
         std::chrono::seconds(access_token.value("expires_in", int(0)));
     auto new_expiration = std::chrono::system_clock::now() + expires_in;
     // Do not update any state until all potential exceptions are raised.
-    authorization_header_ = std::move(header);
-    expiration_time_ = new_expiration;
+    this->authorization_header_ = std::move(header);
+    this->expiration_time_ = new_expiration;
     return storage::Status();
   }
 
   typename HttpRequestBuilderType::RequestType request_;
   std::string payload_;
-  std::mutex mu_;
-  std::condition_variable cv_;
-  std::string authorization_header_;
-  std::chrono::system_clock::time_point expiration_time_;
 };
 
 }  // namespace oauth2

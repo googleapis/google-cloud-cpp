@@ -179,6 +179,7 @@ add_library(storage_client
             oauth2/google_application_default_credentials_file.cc
             oauth2/google_credentials.h
             oauth2/google_credentials.cc
+            oauth2/refreshing_credentials.h
             oauth2/service_account_credentials.h
             oauth2/service_account_credentials.cc
             object_access_control.h

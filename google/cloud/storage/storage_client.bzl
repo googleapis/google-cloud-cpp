@@ -80,6 +80,7 @@ storage_client_hdrs = [
     "oauth2/credentials.h",
     "oauth2/google_application_default_credentials_file.h",
     "oauth2/google_credentials.h",
+    "oauth2/refreshing_credentials.h",
     "oauth2/service_account_credentials.h",
     "object_access_control.h",
     "object_metadata.h",
