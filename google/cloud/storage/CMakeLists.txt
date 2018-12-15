@@ -202,6 +202,7 @@ add_library(storage_client
             signed_url_options.cc
             status.h
             status.cc
+            status_or.h
             storage_class.h
             upload_options.h
             version.h
@@ -334,6 +335,7 @@ set(storage_client_unit_tests
     retry_policy_test.cc
     service_account_test.cc
     signed_url_options_test.cc
+    status_or_test.cc
     storage_class_test.cc
     storage_client_options_test.cc
     storage_version_test.cc
