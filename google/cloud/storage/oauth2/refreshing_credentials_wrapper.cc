@@ -23,11 +23,11 @@ namespace oauth2 {
 
 bool RefreshingCredentialsWrapper::IsExpired() {
   auto now = std::chrono::system_clock::now();
-  return now > (expiration_time_ - GoogleOAuthAccessTokenExpirationSlack());
+  return now > (expiration_time - GoogleOAuthAccessTokenExpirationSlack());
 }
 
 bool RefreshingCredentialsWrapper::IsValid() {
-  return not authorization_header_.empty() and not IsExpired();
+  return not authorization_header.empty() and not IsExpired();
 }
 
 }  // namespace oauth2

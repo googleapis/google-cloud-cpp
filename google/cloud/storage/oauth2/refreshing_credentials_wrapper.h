@@ -34,20 +34,20 @@ class RefreshingCredentialsWrapper {
   std::pair<storage::Status, std::string> AuthorizationHeader(
       RefreshFunctor refresh_fn) {
     if (IsValid()) {
-      return std::make_pair(storage::Status(), authorization_header_);
+      return std::make_pair(storage::Status(), authorization_header);
     }
 
     storage::Status status = refresh_fn();
     return std::make_pair(status,
-                          status.ok() ? authorization_header_ : std::string{});
+                          status.ok() ? authorization_header : std::string{});
   }
 
   bool IsExpired();
 
   bool IsValid();
 
-  std::string authorization_header_;
-  std::chrono::system_clock::time_point expiration_time_;
+  std::string authorization_header;
+  std::chrono::system_clock::time_point expiration_time;
 };
 
 }  // namespace oauth2

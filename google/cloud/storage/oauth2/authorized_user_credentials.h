@@ -89,7 +89,7 @@ class AuthorizedUserCredentials : public Credentials {
 
   std::pair<storage::Status, std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
-    return refreshing_creds.AuthorizationHeader([this] { return Refresh(); });
+    return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
   }
 
  private:
@@ -120,15 +120,15 @@ class AuthorizedUserCredentials : public Credentials {
         std::chrono::seconds(access_token.value("expires_in", int(0)));
     auto new_expiration = std::chrono::system_clock::now() + expires_in;
     // Do not update any state until all potential exceptions are raised.
-    refreshing_creds.authorization_header_ = std::move(header);
-    refreshing_creds.expiration_time_ = new_expiration;
+    refreshing_creds_.authorization_header = std::move(header);
+    refreshing_creds_.expiration_time = new_expiration;
     return storage::Status();
   }
 
   typename HttpRequestBuilderType::RequestType request_;
   std::string payload_;
   mutable std::mutex mu_;
-  RefreshingCredentialsWrapper refreshing_creds;
+  RefreshingCredentialsWrapper refreshing_creds_;
 };
 
 }  // namespace oauth2
