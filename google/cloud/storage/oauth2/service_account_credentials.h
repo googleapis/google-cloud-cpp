@@ -19,10 +19,12 @@
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
-#include "google/cloud/storage/oauth2/refreshing_credentials.h"
+#include "google/cloud/storage/oauth2/credentials.h"
+#include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include <condition_variable>
 #include <ctime>
 #include <iostream>
+#include <mutex>
 
 namespace google {
 namespace cloud {
@@ -70,12 +72,7 @@ ServiceAccountCredentialsInfo ParseServiceAccountCredentials(
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder,
           typename ClockType = std::chrono::system_clock>
-class ServiceAccountCredentials
-    : public RefreshingCredentials<
-          ServiceAccountCredentials<HttpRequestBuilderType, ClockType>> {
-  friend class RefreshingCredentials<
-      ServiceAccountCredentials<HttpRequestBuilderType, ClockType>>;
-
+class ServiceAccountCredentials : public Credentials {
  public:
   explicit ServiceAccountCredentials(std::string const& content,
                                      std::string const& source)
@@ -111,6 +108,11 @@ class ServiceAccountCredentials
         "Content-Type: application/x-www-form-urlencoded");
     request_ = request_builder.BuildRequest();
     info_ = std::move(info);
+  }
+
+  std::pair<storage::Status, std::string> AuthorizationHeader() override {
+    std::unique_lock<std::mutex> lock(mu_);
+    return refreshing_creds.AuthorizationHeader([this] { return Refresh(); });
   }
 
   /**
@@ -219,14 +221,16 @@ class ServiceAccountCredentials
         std::chrono::seconds(access_token.value("expires_in", int(0)));
     auto new_expiration = std::chrono::system_clock::now() + expires_in;
     // Do not update any state until all potential exceptions are raised.
-    this->authorization_header_ = std::move(header);
-    this->expiration_time_ = new_expiration;
+    refreshing_creds.authorization_header_ = std::move(header);
+    refreshing_creds.expiration_time_ = new_expiration;
     return storage::Status();
   }
 
   typename HttpRequestBuilderType::RequestType request_;
   std::string payload_;
   ServiceAccountCredentialsInfo info_;
+  mutable std::mutex mu_;
+  RefreshingCredentialsWrapper refreshing_creds;
   ClockType clock_;
 };
 

@@ -21,9 +21,11 @@
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
-#include "google/cloud/storage/oauth2/refreshing_credentials.h"
+#include "google/cloud/storage/oauth2/credentials.h"
+#include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/status.h"
 #include <ctime>
+#include <mutex>
 #include <set>
 
 namespace google {
@@ -55,17 +57,17 @@ namespace oauth2 {
  */
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder>
-class ComputeEngineCredentials
-    : public RefreshingCredentials<
-          ComputeEngineCredentials<HttpRequestBuilderType>> {
-  friend class RefreshingCredentials<
-      ComputeEngineCredentials<HttpRequestBuilderType>>;
-
+class ComputeEngineCredentials : public Credentials {
  public:
   explicit ComputeEngineCredentials() : ComputeEngineCredentials("default") {}
 
   explicit ComputeEngineCredentials(std::string const& service_account_email)
       : service_account_email_(service_account_email) {}
+  std::pair<storage::Status, std::string> AuthorizationHeader() override {
+    std::unique_lock<std::mutex> lock(mu_);
+    return refreshing_creds.AuthorizationHeader([this] { return Refresh(); });
+  }
+
   /**
    * Returns the email or alias of this credential's service account.
    *
@@ -76,7 +78,7 @@ class ComputeEngineCredentials
    * email address if the credential has not been refreshed yet.
    */
   std::string service_account_email() {
-    std::unique_lock<std::mutex> lock(this->mu_);
+    std::unique_lock<std::mutex> lock(mu_);
     return service_account_email_;
   }
 
@@ -88,7 +90,7 @@ class ComputeEngineCredentials
    * set if the credential has not been refreshed yet.
    */
   std::set<std::string> scopes() {
-    std::unique_lock<std::mutex> lock(this->mu_);
+    std::unique_lock<std::mutex> lock(mu_);
     return scopes_;
   }
 
@@ -176,11 +178,13 @@ class ComputeEngineCredentials
     auto new_expiration = std::chrono::system_clock::now() + expires_in;
 
     // Do not update any state until all potential exceptions are raised.
-    this->authorization_header_ = std::move(header);
-    this->expiration_time_ = new_expiration;
+    refreshing_creds.authorization_header_ = std::move(header);
+    refreshing_creds.expiration_time_ = new_expiration;
     return storage::Status();
   }
 
+  mutable std::mutex mu_;
+  RefreshingCredentialsWrapper refreshing_creds;
   std::set<std::string> scopes_;
   std::string service_account_email_;
 };

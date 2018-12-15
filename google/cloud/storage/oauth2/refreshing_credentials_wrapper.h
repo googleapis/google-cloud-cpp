@@ -15,11 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_REFRESHING_CREDENTIALS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_REFRESHING_CREDENTIALS_H_
 
-#include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/status.h"
 #include <chrono>
-#include <mutex>
 #include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -27,36 +26,28 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 /**
- * Interface for OAuth 2.0 credentials that can be refreshed.
+ * Wrapper for refreshable parts of a Credentials object.
  */
-template <class Derived>
-class RefreshingCredentials : public Credentials {
+class RefreshingCredentialsWrapper {
  public:
-  std::pair<storage::Status, std::string> AuthorizationHeader() override {
-    std::unique_lock<std::mutex> lock(mu_);
-
+  template <typename RefreshFunctor>
+  std::pair<storage::Status, std::string> AuthorizationHeader(
+      RefreshFunctor refresh_fn) {
     if (IsValid()) {
       return std::make_pair(storage::Status(), authorization_header_);
     }
 
-    storage::Status status = static_cast<Derived*>(this)->Refresh();
-    return std::make_pair(
-        status, status.ok() ? authorization_header_ : std::string(""));
+    storage::Status status = refresh_fn();
+    return std::make_pair(status,
+                          status.ok() ? authorization_header_ : std::string{});
   }
 
- protected:
-  bool IsExpired() {
-    auto now = std::chrono::system_clock::now();
-    return now > (expiration_time_ - GoogleOAuthAccessTokenExpirationSlack());
-  }
+  bool IsExpired();
 
-  bool IsValid() {
-    return not authorization_header_.empty() and not IsExpired();
-  }
+  bool IsValid();
 
   std::string authorization_header_;
   std::chrono::system_clock::time_point expiration_time_;
-  std::mutex mu_;
 };
 
 }  // namespace oauth2

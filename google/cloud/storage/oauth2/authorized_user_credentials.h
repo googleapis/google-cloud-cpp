@@ -18,9 +18,11 @@
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
-#include "google/cloud/storage/oauth2/refreshing_credentials.h"
+#include "google/cloud/storage/oauth2/credentials.h"
+#include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/status.h"
 #include <iostream>
+#include <mutex>
 
 namespace google {
 namespace cloud {
@@ -60,12 +62,7 @@ AuthorizedUserCredentialsInfo ParseAuthorizedUserCredentials(
  */
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder>
-class AuthorizedUserCredentials
-    : public RefreshingCredentials<
-          AuthorizedUserCredentials<HttpRequestBuilderType>> {
-  friend class RefreshingCredentials<
-      AuthorizedUserCredentials<HttpRequestBuilderType>>;
-
+class AuthorizedUserCredentials : public Credentials {
  public:
   explicit AuthorizedUserCredentials(std::string const& contents,
                                      std::string const& source)
@@ -88,6 +85,11 @@ class AuthorizedUserCredentials
     payload += request_builder.MakeEscapedString(info.refresh_token).get();
     payload_ = std::move(payload);
     request_ = request_builder.BuildRequest();
+  }
+
+  std::pair<storage::Status, std::string> AuthorizationHeader() override {
+    std::unique_lock<std::mutex> lock(mu_);
+    return refreshing_creds.AuthorizationHeader([this] { return Refresh(); });
   }
 
  private:
@@ -118,13 +120,15 @@ class AuthorizedUserCredentials
         std::chrono::seconds(access_token.value("expires_in", int(0)));
     auto new_expiration = std::chrono::system_clock::now() + expires_in;
     // Do not update any state until all potential exceptions are raised.
-    this->authorization_header_ = std::move(header);
-    this->expiration_time_ = new_expiration;
+    refreshing_creds.authorization_header_ = std::move(header);
+    refreshing_creds.expiration_time_ = new_expiration;
     return storage::Status();
   }
 
   typename HttpRequestBuilderType::RequestType request_;
   std::string payload_;
+  mutable std::mutex mu_;
+  RefreshingCredentialsWrapper refreshing_creds;
 };
 
 }  // namespace oauth2
