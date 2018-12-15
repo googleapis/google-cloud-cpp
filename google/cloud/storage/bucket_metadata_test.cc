@@ -95,6 +95,12 @@ BucketMetadata CreateBucketMetadataForTest() {
         "defaultKmsKeyName": "projects/test-project-name/locations/us-central1/keyRings/test-keyring-name/cryptoKeys/test-key-name"
       },
       "etag": "XYZ=",
+      "iamConfiguration": {
+        "bucketOnlyPolicy": {
+          "enabled": true,
+          "lockedTime": "2020-01-02T03:04:05Z"
+        }
+      },
       "id": "test-bucket",
       "kind": "storage#bucket",
       "labels": {
@@ -179,6 +185,12 @@ TEST(BucketMetadataTest, Parse) {
       "test-keyring-name/cryptoKeys/test-key-name",
       actual.encryption().default_kms_key_name);
   EXPECT_EQ("XYZ=", actual.etag());
+  ASSERT_TRUE(actual.has_iam_configuration());
+  ASSERT_TRUE(actual.iam_configuration().bucket_only_policy.has_value());
+  EXPECT_TRUE(actual.iam_configuration().bucket_only_policy->enabled);
+  EXPECT_EQ("2020-01-02T03:04:05Z",
+            internal::FormatRfc3339(
+                actual.iam_configuration().bucket_only_policy->locked_time));
   EXPECT_EQ("test-bucket", actual.id());
   EXPECT_EQ("storage#bucket", actual.kind());
   EXPECT_EQ(2U, actual.labels().size());
@@ -287,6 +299,11 @@ TEST(BucketMetadataTest, IOStream) {
               HasSubstr("projects/test-project-name/locations/us-central1/"
                         "keyRings/test-keyring-name/cryptoKeys/test-key-name"));
 
+  // iam_policy()
+  EXPECT_THAT(actual, HasSubstr("BucketIamConfiguration={"));
+  EXPECT_THAT(actual, HasSubstr("BucketOnlyPolicy={"));
+  EXPECT_THAT(actual, HasSubstr("locked_time=2020-01-02T03:04:05Z"));
+
   // lifecycle()
   EXPECT_THAT(actual, HasSubstr("age=30"));
 
@@ -303,7 +320,9 @@ TEST(BucketMetadataTest, IOStream) {
 
   // retention_policy()
   EXPECT_THAT(actual, HasSubstr("retention_policy.retention_period=86400"));
-  EXPECT_THAT(actual, HasSubstr("retention_policy.effective_time=2018-10-01T12:34:56Z"));
+  EXPECT_THAT(
+      actual,
+      HasSubstr("retention_policy.effective_time=2018-10-01T12:34:56Z"));
   EXPECT_THAT(actual, HasSubstr("retention_policy.is_locked=false"));
 
   // versioning()
@@ -355,6 +374,13 @@ TEST(BucketMetadataTest, ToJsonString) {
       "projects/test-project-name/locations/us-central1/keyRings/"
       "test-keyring-name/cryptoKeys/test-key-name",
       actual["encryption"].value("defaultKmsKeyName", ""));
+
+  // iam_configuration()
+  ASSERT_EQ(1U, actual.count("iamConfiguration"));
+  internal::nl::json expected_iam_configuration{
+      {"bucketOnlyPolicy",
+       internal::nl::json{{"enabled", true}}}};
+  EXPECT_EQ(expected_iam_configuration, actual["iamConfiguration"]);
 
   // labels()
   ASSERT_EQ(1U, actual.count("labels")) << actual;
@@ -561,7 +587,35 @@ TEST(BucketMetadataTest, SetDefaultObjectAcl) {
   EXPECT_NE(expected, copy);
 }
 
-/// @test Verify we can change the full DefaultObjectAcl in BucketMetadata.
+/// @test Verify we can change the IAM Configuration in BucketMetadata.
+TEST(BucketMetadataTest, SetIamConfiguration) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  BucketIamConfiguration new_configuration;
+  new_configuration.bucket_only_policy =
+      BucketOnlyPolicy{true, internal::ParseRfc3339("2019-02-03T04:05:06Z")};
+  copy.set_iam_configuration(new_configuration);
+  ASSERT_TRUE(copy.has_iam_configuration());
+  EXPECT_EQ(new_configuration, copy.iam_configuration());
+  EXPECT_NE(expected, copy) << "expected = " << expected.iam_configuration()
+                            << "\n  actual=" << copy.iam_configuration()
+                            << "\n";
+}
+
+/// @test Verify we can reset the IAM Configuration in BucketMetadata.
+TEST(BucketMetadataTest, ResetIamConfiguraiton) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.has_encryption());
+  auto copy = expected;
+  copy.reset_iam_configuration();
+  EXPECT_FALSE(copy.has_iam_configuration());
+  EXPECT_NE(expected, copy);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), Not(HasSubstr("iam_configuration=")));
+}
+
+/// @test Verify we can change the default encryption in BucketMetadata.
 TEST(BucketMetadataTest, SetEncryption) {
   auto expected = CreateBucketMetadataForTest();
   auto copy = expected;
@@ -573,7 +627,7 @@ TEST(BucketMetadataTest, SetEncryption) {
   EXPECT_NE(expected, copy);
 }
 
-/// @test Verify we can change the full DefaultObjectAcl in BucketMetadata.
+/// @test Verify we can reset the default encryption in BucketMetadata.
 TEST(BucketMetadataTest, ResetEncryption) {
   auto expected = CreateBucketMetadataForTest();
   EXPECT_TRUE(expected.has_encryption());
@@ -859,6 +913,31 @@ TEST(BucketMetadataPatchBuilder, ResetDefaultAcl) {
   auto json = internal::nl::json::parse(actual);
   ASSERT_EQ(1U, json.count("defaultObjectAcl")) << json;
   ASSERT_TRUE(json["defaultObjectAcl"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetIamConfiguration) {
+  BucketMetadataPatchBuilder builder;
+  std::string expected =
+      "projects/test-project-name/locations/us-central1/keyRings/"
+      "test-keyring-name/cryptoKeys/test-key-name";
+  builder.SetEncryption(BucketEncryption{expected});
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("encryption")) << json;
+  ASSERT_TRUE(json["encryption"].is_object()) << json;
+  EXPECT_EQ(expected, json["encryption"].value("defaultKmsKeyName", ""))
+      << json;
+}
+
+TEST(BucketMetadataPatchBuilder, ResetIamConfiguration) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetEncryption();
+
+  auto actual = builder.BuildPatch();
+  auto json = internal::nl::json::parse(actual);
+  ASSERT_EQ(1U, json.count("encryption")) << json;
+  ASSERT_TRUE(json["encryption"].is_null()) << json;
 }
 
 TEST(BucketMetadataPatchBuilder, SetEncryption) {

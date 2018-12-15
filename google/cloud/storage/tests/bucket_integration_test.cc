@@ -178,6 +178,11 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   // encryption()
   // TODO(#1003) - need a valid KMS entry to set the encryption.
 
+  // iam_configuration()
+  BucketIamConfiguration iam_configuration;
+  iam_configuration.bucket_only_policy = BucketOnlyPolicy{true};
+  desired_state.set_iam_configuration(std::move(iam_configuration));
+
   // labels()
   desired_state.mutable_labels().emplace("test-label", "testing-full-patch");
 

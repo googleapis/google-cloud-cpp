@@ -30,7 +30,8 @@ target_link_libraries(bigtable_benchmark_common
                       bigtable_protos
                       gRPC::grpc++
                       gRPC::grpc
-                      protobuf::libprotobuf)
+                      protobuf::libprotobuf
+                      bigtable_common_options)
 
 # List the unit tests, then setup the targets and dependencies.
 set(bigtable_benchmarks_unit_tests

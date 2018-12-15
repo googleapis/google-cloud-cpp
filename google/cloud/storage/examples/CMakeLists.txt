@@ -19,27 +19,36 @@
 # part of the examples.
 
 add_executable(storage_bucket_samples storage_bucket_samples.cc)
-target_link_libraries(storage_bucket_samples storage_client)
+target_link_libraries(storage_bucket_samples storage_client
+                      storage_common_options)
 
 add_executable(storage_bucket_acl_samples storage_bucket_acl_samples.cc)
-target_link_libraries(storage_bucket_acl_samples storage_client)
+target_link_libraries(storage_bucket_acl_samples storage_client
+                      storage_common_options)
 
 add_executable(storage_bucket_iam_samples storage_bucket_iam_samples.cc)
-target_link_libraries(storage_bucket_iam_samples storage_client)
+target_link_libraries(storage_bucket_iam_samples storage_client
+                      storage_common_options)
 
 add_executable(storage_default_object_acl_samples
                storage_default_object_acl_samples.cc)
-target_link_libraries(storage_default_object_acl_samples storage_client)
+target_link_libraries(storage_default_object_acl_samples storage_client
+                      storage_common_options)
 
 add_executable(storage_object_samples storage_object_samples.cc)
-target_link_libraries(storage_object_samples storage_client)
+target_link_libraries(storage_object_samples storage_client
+                      storage_common_options)
 
 add_executable(storage_object_acl_samples storage_object_acl_samples.cc)
-target_link_libraries(storage_object_acl_samples storage_client)
+target_link_libraries(storage_object_acl_samples storage_client
+                      storage_common_options)
 
 add_executable(storage_notification_samples storage_notification_samples.cc)
-target_link_libraries(storage_notification_samples storage_client)
+target_link_libraries(storage_notification_samples storage_client
+                      storage_common_options)
 
 add_executable(storage_quickstart storage_quickstart.cc)
-target_link_libraries(storage_quickstart storage_client
+target_link_libraries(storage_quickstart
+                      storage_client
+                      storage_common_options
                       google_cloud_cpp_common_options)
