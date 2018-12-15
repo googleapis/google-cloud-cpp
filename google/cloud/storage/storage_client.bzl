@@ -67,6 +67,7 @@ storage_client_hdrs = [
     "internal/retry_resumable_upload_session.h",
     "internal/service_account_requests.h",
     "internal/signed_url_requests.h",
+    "internal/throw_status_delegate.h",
     "lifecycle_rule.h",
     "list_buckets_reader.h",
     "list_objects_reader.h",
@@ -137,6 +138,7 @@ storage_client_srcs = [
     "internal/retry_resumable_upload_session.cc",
     "internal/service_account_requests.cc",
     "internal/signed_url_requests.cc",
+    "internal/throw_status_delegate.cc",
     "lifecycle_rule.cc",
     "list_buckets_reader.cc",
     "list_objects_reader.cc",
@@ -152,6 +154,7 @@ storage_client_srcs = [
     "object_stream.cc",
     "service_account.cc",
     "signed_url_options.cc",
+    "status.cc",
     "version.cc",
     "well_known_headers.cc",
 ]

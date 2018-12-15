@@ -158,6 +158,8 @@ add_library(storage_client
             internal/service_account_requests.cc
             internal/signed_url_requests.h
             internal/signed_url_requests.cc
+            internal/throw_status_delegate.h
+            internal/throw_status_delegate.cc
             lifecycle_rule.h
             lifecycle_rule.cc
             list_buckets_reader.h
@@ -195,6 +197,7 @@ add_library(storage_client
             signed_url_options.h
             signed_url_options.cc
             status.h
+            status.cc
             storage_class.h
             upload_options.h
             version.h
@@ -308,6 +311,7 @@ set(storage_client_unit_tests
     internal/retry_resumable_upload_session_test.cc
     internal/service_account_requests_test.cc
     internal/signed_url_requests_test.cc
+    internal/throw_status_delegate_test.cc
     lifecycle_rule_test.cc
     list_buckets_reader_test.cc
     list_objects_reader_test.cc

@@ -21,6 +21,7 @@ google_cloud_cpp_testing_hdrs = [
     "testing_util/check_predicate_becomes_false.h",
     "testing_util/chrono_literals.h",
     "testing_util/environment_variable_restore.h",
+    "testing_util/expect_exception.h",
     "testing_util/expect_future_error.h",
     "testing_util/init_google_mock.h",
     "testing_util/testing_types.h",
