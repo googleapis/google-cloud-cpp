@@ -50,6 +50,7 @@ storage_client_unit_tests = [
     "internal/logging_resumable_upload_session_test.cc",
     "internal/metadata_parser_test.cc",
     "internal/nljson_test.cc",
+    "internal/noex_client_test.cc",
     "internal/notification_requests_test.cc",
     "internal/object_acl_requests_test.cc",
     "internal/object_requests_test.cc",
