@@ -26,7 +26,7 @@ if [ "${TEST_BAZEL_AS_DEPENDENCY:-}" = "yes" ]; then
   echo "${COLOR_YELLOW}Testing Bazel files as dependency${COLOR_RESET}"
   (cd ci/test-install && bazel --batch build \
       --incompatible_remove_native_http_archive=false \
-      -- "//google/cloud/...:all")
+      -- "//...:all")
 else
   # We cannot simply use //...:all because when submodules are checked out that
   # includes the BUILD files for gRPC, protobuf, etc.
