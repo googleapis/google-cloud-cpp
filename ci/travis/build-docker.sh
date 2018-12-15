@@ -182,6 +182,14 @@ echo
 echo "travis_fold:end:configure-cmake"
 echo "${COLOR_YELLOW}Finished CMake config at: $(date)${COLOR_RESET}"
 
+# CMake can generate dependency graphs, which are useful to understand and
+# troubleshoot dependencies.
+if [[ "${CREATE_GRAPHVIZ:-}" = "yes" ]]; then
+  ${CMAKE_COMMAND} \
+      --graphviz="${BUILD_DIR}/graphviz/google-cloud-cpp" \
+      --build "${BUILD_DIR}"
+fi
+
 # If scan-build is enabled, we need to manually compile the dependencies;
 # otherwise, the static analyzer finds issues in them, and there is no way to
 # ignore them.  When scan-build is not enabled, this is still useful because

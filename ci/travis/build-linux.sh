@@ -56,6 +56,7 @@ sudo docker run \
      --env SCAN_BUILD="${SCAN_BUILD:-}" \
      --env GENERATE_DOCS="${GENERATE_DOCS:-}" \
      --env TEST_INSTALL="${TEST_INSTALL:-}" \
+     --env CREATE_GRAPHVIZ="${CREATE_GRAPHVIZ:-}" \
      --env CMAKE_FLAGS="${CMAKE_FLAGS:-}" \
      --env CBT=/usr/local/google-cloud-sdk/bin/cbt \
      --env CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
