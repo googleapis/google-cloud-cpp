@@ -55,6 +55,7 @@ bazel test \
     --test_output=errors \
     --verbose_failures=true \
     --keep_going \
+    --incompatible_remove_native_http_archive=false \
     -- //google/cloud/...:all
 
 echo
@@ -73,6 +74,7 @@ bazel build \
     --test_output=errors \
     --verbose_failures=true \
     --keep_going \
+    --incompatible_remove_native_http_archive=false \
     -- //google/cloud/...:all
 
 # The integration tests need further configuration and tools.
