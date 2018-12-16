@@ -31,6 +31,8 @@ namespace internal {
 class RetryClient : public RawClient {
  public:
   struct DefaultPolicies {};
+  struct NoexPolicy {};
+
   explicit RetryClient(std::shared_ptr<RawClient> client,
                        DefaultPolicies unused);
 
@@ -155,6 +157,8 @@ class RetryClient : public RawClient {
     idempotency_policy_ = policy.clone();
   }
 
+  void Apply(NoexPolicy const&) { enable_exceptions_ = false; }
+
   void ApplyPolicies() {}
 
   template <typename P, typename... Policies>
@@ -167,6 +171,9 @@ class RetryClient : public RawClient {
   std::shared_ptr<RetryPolicy> retry_policy_;
   std::shared_ptr<BackoffPolicy> backoff_policy_;
   std::shared_ptr<IdempotencyPolicy> idempotency_policy_;
+  // TODO(#1694) - remove the code to support enable_exceptions == true when
+  //   the storage::Client class no longer needs it.
+  bool enable_exceptions_ = true;
 };
 
 }  // namespace internal
