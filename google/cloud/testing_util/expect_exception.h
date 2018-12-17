@@ -86,6 +86,25 @@ void ExpectException(
   EXPECT_DEATH_IF_SUPPORTED(expression(), expected_message);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+
+/**
+ * Verify that an expression does not throw.
+ *
+ * Testing `void` expressions is tedious because `EXPECT_NO_THROW` does not
+ * compile when exceptions are disabled. Writing `expression()` in a test does
+ * detect exceptions, but does not express the intent.
+ *
+ * @param expression the expression (typically a lambda) that we want to verify
+ *     does not throw.
+ */
+inline void ExpectNoException(std::function<void()> const& expression) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_NO_THROW(expression());
+#else
+  EXPECT_NO_FATAL_FAILURE(expression());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
 }  // namespace testing_util
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

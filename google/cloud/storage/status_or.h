@@ -204,6 +204,117 @@ class StatusOr final {
   T value_;
 };
 
+/**
+ * `StatusOr<T>` is used to return a value or an error status when exceptions
+ * are disabled.
+ *
+ * If the library is compiled with exceptions disabled there is no standard C++
+ * mechanism to report errors. In that case we use this class to wrap the values
+ * returned to the application.
+ *
+ * The application typically calls an API in the library and must check the
+ * returned error status:
+ *
+ * @code
+ * namespace gcs = google::cloud::storage;
+ * void AppCode(gcs::noex::Client client) {
+ *   gcs::StatusOr<gcs::BucketMetadata> meta_err = client.GetBucketMetadata(
+ *       "my-bucket-name");
+ *   if (not meta_err.ok()) {
+ *       std::cerr << "Error in GetBucketMetadata: " << meta_err.status()
+ *                 << std::endl;
+ *       return;
+ *   }
+ *   gcs::BucketMetadata meta = std::move(meta_err).value();
+ *   // Do useful work here.
+ * }
+ * @endcode
+ *
+ * Note that the storage client retries most requests for you, resending the
+ * request after an error is probably not useful. You should consider changing
+ * the retry policies instead.
+ *
+ * TODO(...) - the current implementation is fairly naive with respect to `T`,
+ *   it is unlikely to work correctly for reference types, types without default
+ *   constructors, arrays.
+ *
+ * @tparam T the type of the value.
+ */
+template <>
+class StatusOr<void> final {
+ public:
+  /**
+   * Initializes with an error status (UNKNOWN).
+   *
+   * TODO(#548) - currently storage::Status does not define the status codes,
+   *     they are simply integers, usually HTTP status codes. We need to map to
+   *     the well-defined set of status codes.
+   */
+  StatusOr() : StatusOr(Status(500, "UNKNOWN")) {}
+
+  /**
+   * Creates a new `StatusOr<T>` holding the status @p rhs.
+   *
+   * When `rhs.ok() == true` the object is treated as if it held a `void` value.
+   *
+   * @param rhs the status to initialize the object.
+   */
+  // NOLINTNEXTLINE(google-explicit-constructor)
+  StatusOr(Status rhs) : status_(std::move(rhs)) {}
+
+  bool ok() const { return status_.ok(); }
+  explicit operator bool() const { return ok(); }
+
+  //@{
+  /**
+   * @name Value accessors.
+   *
+   * @return All these member functions return a (properly ref and
+   *     const-qualified) reference to the underlying value.
+   *
+   * @throws `RuntimeStatusError` with the contents of `status()` if the object
+   *   does not contain a value, i.e., if `ok() == false`.
+   */
+  void value() & { CheckHasValue(); }
+
+  void value() const& { CheckHasValue(); }
+
+  void value() && { CheckHasValue(); }
+
+  void value() const&& { CheckHasValue(); }
+  //@}
+
+  //@{
+  /**
+   * @name Status accessors.
+   *
+   * @return All these member functions return the (properly ref and
+   *     const-qualified) status. If the object contains a value then
+   *     `status().ok() == true`.
+   */
+  Status& status() & { return status_; }
+  Status const& status() const& { return status_; }
+  Status&& status() && { return std::move(status_); }
+  Status const&& status() const&& { return std::move(status_); }
+  //@}
+
+ private:
+  void CheckHasValue() const& {
+    if (not ok()) {
+      internal::ThrowStatus(Status(status_));
+    }
+  }
+
+  // When possible, do not copy the status.
+  void CheckHasValue() && {
+    if (not ok()) {
+      internal::ThrowStatus(std::move(status_));
+    }
+  }
+
+  Status status_;
+};
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
