@@ -21,7 +21,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-[[noreturn]] void ThrowStatus(Status&& status) {
+[[noreturn]] void ThrowStatus(Status status) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   throw storage::RuntimeStatusError(std::move(status));
 #else

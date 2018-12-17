@@ -23,7 +23,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /// Throw an exception wrapping @p status.
-[[noreturn]] void ThrowStatus(Status&& status);
+[[noreturn]] void ThrowStatus(Status status);
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
