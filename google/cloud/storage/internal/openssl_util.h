@@ -137,7 +137,7 @@ struct OpenSslUtils {
 
     std::size_t signed_str_size = 0;
     // Calling this method with a nullptr buffer will populate our size var
-    // with, the resulting buffer's size. This allows us to then call it again,
+    // with the resulting buffer's size. This allows us to then call it again,
     // with the correct buffer and size, which actually populates the buffer.
     if (DIGEST_SIGN_SUCCESS_CODE !=
         EVP_DigestSignFinal(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
@@ -175,12 +175,12 @@ struct OpenSslUtils {
  private:
   static std::unique_ptr<BIO, decltype(&BIO_free_all)>
   MakeBioChainForBase64Transcoding() {
-    std::ostringstream err_builder;
     auto base64_io = std::unique_ptr<BIO, decltype(&BIO_free)>(
         BIO_new(BIO_f_base64()), &BIO_free);
     auto mem_io = std::unique_ptr<BIO, decltype(&BIO_free)>(
         BIO_new(BIO_s_mem()), &BIO_free);
     if (not(base64_io and mem_io)) {
+      std::ostringstream err_builder;
       err_builder << "Permanent error in " << __func__ << ": "
                   << "Could not allocate BIO* for Base64 encoding.";
       google::cloud::internal::RaiseRuntimeError(err_builder.str());
@@ -196,7 +196,8 @@ struct OpenSslUtils {
     return bio_chain;
   }
 
-#if (OPENSSL_VERSION_NUMBER < 0x10100000L)  // Older than version 1.1.0
+// The name of the function to free an EVP_MD_CTX changed in OpenSSL 1.1.0.
+#if (OPENSSL_VERSION_NUMBER < 0x10100000L)  // Older than version 1.1.0.
   inline static std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_destroy)>
   GetDigestCtx() {
     return std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_destroy)>(

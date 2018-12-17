@@ -59,18 +59,18 @@ automatically compiled when you follow said instructions.
 
 ### Configuring authentication for the C++ Client Library
 
-This library uses the `GOOGLE_APPLICATION_DEFAULT_CREDENTIALS` environment
-variable to find the credentials file. This is the recommended way to configure
-the authentication preferences, though if the environment variable is not set,
-the library searches for a credentials file in the same location as the
-[Cloud SDK](https://cloud.google.com/sdk/).
+This library uses the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to
+find the credentials file. This is the recommended way to configure the
+authentication preferences, though if the environment variable is not set, the
+library searches for a credentials file in the same location as the [Cloud
+SDK](https://cloud.google.com/sdk/).
 
 ### Create a bucket
 
 This is a short example to create a
 [GCS bucket](https://cloud.google.com/storage/docs/key-terms#buckets).
 This example assumes you have configured the authentication using
-`GOOGLE_APPLICATION_DEFAULT_CREDENTIALS`:
+`GOOGLE_APPLICATION_CREDENTIALS`:
 
 @snippet storage_quickstart.cc full quickstart
 

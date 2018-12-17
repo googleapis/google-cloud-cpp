@@ -29,24 +29,25 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
-/// A plain object to hold the result of parsing authorized user credentials.
+/// Object to hold the result of parsing a user credentials JSON file.
 struct AuthorizedUserCredentialsInfo {
   std::string client_id;
   std::string client_secret;
   std::string refresh_token;
 };
 
-/// Parse a JSON object string as an AuthorizedUserCredentials.
+/// Parses a user credentials JSON string into an AuthorizedUserCredentialsInfo.
 AuthorizedUserCredentialsInfo ParseAuthorizedUserCredentials(
     std::string const& content, std::string const& source);
 
 /**
  * Wrapper class for Google OAuth 2.0 user account credentials.
  *
- * Takes a JSON object with a client id, client secret, and the user's refresh
- * token, and obtains access tokens from the Google Authorization Service as
- * needed. Instances of this class should usually be created via the convenience
- * methods declared in google_credentials.h.
+ * Takes a string representing JSON contents including a client id, client
+ * secret, and the user's refresh token, and obtains access tokens from the
+ * Google Authorization Service as needed. Instances of this class should
+ * usually be created via the convenience methods declared in
+ * google_credentials.h.
  *
  * An HTTP Authorization header, with an access token as its value,
  * can be obtained by calling the AuthorizationHeader() method; if the current

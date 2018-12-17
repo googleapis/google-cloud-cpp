@@ -95,8 +95,15 @@ class ComputeEngineCredentials : public Credentials {
   }
 
  private:
+  /**
+   * Sends an HTTP GET request to the GCE metadata server.
+   *
+   * @see https://cloud.google.com/compute/docs/storing-retrieving-metadata for
+   * an overview of retrieving information from the GCE metadata server.
+   */
   storage::internal::HttpResponse DoMetadataServerGetRequest(std::string path,
                                                              bool recursive) {
+    // Allows mocking the metadata server hostname for testing.
     std::string metadata_server_hostname =
         google::cloud::storage::internal::GceMetadataHostname();
 
@@ -110,6 +117,13 @@ class ComputeEngineCredentials : public Credentials {
     return request_builder.BuildRequest().MakeRequest("");
   }
 
+  /**
+   * Fetches metadata for an instance's service account.
+   *
+   * @see
+   * https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances
+   * for more details.
+   */
   storage::Status RetrieveServiceAccountInfo() {
     namespace nl = google::cloud::storage::internal::nl;
     auto response = DoMetadataServerGetRequest(
