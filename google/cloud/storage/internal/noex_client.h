@@ -27,6 +27,7 @@
 #include "google/cloud/storage/object_rewriter.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/retry_policy.h"
+#include "google/cloud/storage/status_or.h"
 #include "google/cloud/storage/upload_options.h"
 
 namespace google {
@@ -98,7 +99,173 @@ class Client {
     return raw_client_;
   }
 
+  //@{
+  /**
+   * @name Pub/Sub operations.
+   *
+   * Cloud Pub/Sub Notifications sends information about changes to objects in
+   * your buckets to Cloud Pub/Sub, where the information is added to a Cloud
+   * Pub/Sub topic of your choice in the form of messages.
+   *
+   * @see https://cloud.google.com/storage/docs/pubsub-notifications for more
+   *     information about Cloud Pub/Sub in the context of GCS.
+   */
+  /**
+   * Retrieves the list of Notifications for a Bucket.
+   *
+   * Cloud Pub/Sub Notifications sends information about changes to objects
+   * in your buckets to Google Cloud Pub/Sub service.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @par Example
+   * @snippet storage_notification_samples.cc list notifications
+   */
+  template <typename... Options>
+  StatusOr<std::vector<NotificationMetadata>> ListNotifications(
+      std::string const& bucket_name, Options&&... options) {
+    internal::ListNotificationsRequest request(bucket_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    auto result = raw_client_->ListNotifications(request);
+    if (not result.first.ok()) {
+      return std::move(result.first);
+    }
+    return std::move(result.second.items);
+  }
+
+  /**
+   * Creates a new notification config for a Bucket.
+   *
+   * Cloud Pub/Sub Notifications sends information about changes to objects
+   * in your buckets to Google Cloud Pub/Sub service. You can create multiple
+   * notifications per Bucket, with different topics and filtering options.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param topic_name the Google Cloud Pub/Sub topic that will receive the
+   *     notifications. This requires the full name of the topic, i.e.:
+   *     `projects/<PROJECT_ID>/topics/<TOPIC_ID>`.
+   * @param payload_format how will the data be formatted in the notifications,
+   *     consider using the helpers in the `payload_format` namespace, or
+   *     specify one of the valid formats defined in:
+   *     https://cloud.google.com/storage/docs/json_api/v1/notifications
+   * @param metadata define any optional parameters for the notification, such
+   *     as the list of event types, or any custom attributes.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
+   * @par Example
+   * @snippet storage_notification_samples.cc create notification
+   *
+   * @see https://cloud.google.com/storage/docs/pubsub-notifications for general
+   *     information on Cloud Pub/Sub Notifications for Google Cloud Storage.
+   *
+   * @see https://cloud.google.com/pubsub/ for general information on Google
+   *     Cloud Pub/Sub service.
+   */
+  template <typename... Options>
+  StatusOr<NotificationMetadata> CreateNotification(
+      std::string const& bucket_name, std::string const& topic_name,
+      std::string const& payload_format, NotificationMetadata metadata,
+      Options&&... options) {
+    metadata.set_topic(topic_name).set_payload_format(payload_format);
+    internal::CreateNotificationRequest request(bucket_name, metadata);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return AsStatusOr(raw_client()->CreateNotification(request));
+  }
+
+  /**
+   * Gets the details about a notification config in a given Bucket.
+   *
+   * Cloud Pub/Sub Notifications sends information about changes to objects
+   * in your buckets to Google Cloud Pub/Sub service. You can create multiple
+   * notifications per Bucket, with different topics and filtering options. This
+   * function fetches the detailed information for a given notification config.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param notification_id the id of the notification config.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @par Example
+   * @snippet storage_notification_samples.cc get notification
+   *
+   * @see https://cloud.google.com/storage/docs/pubsub-notifications for general
+   *     information on Cloud Pub/Sub Notifications for Google Cloud Storage.
+   *
+   * @see https://cloud.google.com/pubsub/ for general information on Google
+   *     Cloud Pub/Sub service.
+   */
+  template <typename... Options>
+  StatusOr<NotificationMetadata> GetNotification(
+      std::string const& bucket_name, std::string const& notification_id,
+      Options&&... options) {
+    internal::GetNotificationRequest request(bucket_name, notification_id);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return AsStatusOr(raw_client()->GetNotification(request));
+  }
+
+  /**
+   * Delete an existing notification config in a given Bucket.
+   *
+   * Cloud Pub/Sub Notifications sends information about changes to objects
+   * in your buckets to Google Cloud Pub/Sub service. You can create multiple
+   * notifications per Bucket, with different topics and filtering options. This
+   * function deletes one of the notification configs.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param notification_id the id of the notification config.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is always idempotent because it only acts on a specific
+   * `notification_id`, the state after calling this function multiple times is
+   * to delete that notification.  New notifications get different ids.
+   *
+   * @par Example
+   * @snippet storage_notification_samples.cc delete notification
+   *
+   * @see https://cloud.google.com/storage/docs/pubsub-notifications for general
+   *     information on Cloud Pub/Sub Notifications for Google Cloud Storage.
+   *
+   * @see https://cloud.google.com/pubsub/ for general information on Google
+   *     Cloud Pub/Sub service.
+   */
+  template <typename... Options>
+  StatusOr<void> DeleteNotification(std::string const& bucket_name,
+                                    std::string const& notification_id,
+                                    Options&&... options) {
+    internal::DeleteNotificationRequest request(bucket_name, notification_id);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return AsStatusOr(raw_client()->DeleteNotification(request));
+  }
+  //@}
+
  private:
+  template <typename T>
+  StatusOr<T> AsStatusOr(std::pair<Status, T> result) {
+    if (not result.first.ok()) {
+      return std::move(result.first);
+    }
+    return std::move(result.second);
+  }
+
+  StatusOr<void> AsStatusOr(std::pair<Status, internal::EmptyResponse> result) {
+    return std::move(result.first);
+  }
+
   // TODO(#1694) - remove all the code duplicated in `storage::Client`.
   static std::shared_ptr<internal::RawClient> CreateDefaultClient(
       ClientOptions options);

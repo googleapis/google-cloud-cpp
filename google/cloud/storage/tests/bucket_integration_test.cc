@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/noex_client.h"
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/init_google_mock.h"
@@ -455,7 +456,7 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
   client.DeleteBucket(bucket_name);
 }
 
-TEST_F(BucketIntegrationTest, NotificationsCRUD) {
+TEST_F(BucketIntegrationTest, ExNotificationsCRUD) {
   auto project_id = BucketTestEnvironment::project_id();
   std::string bucket_name = MakeRandomBucketName();
   Client client;
@@ -498,6 +499,105 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
   EXPECT_EQ(0U, count) << create;
 
   client.DeleteBucket(bucket_name);
+}
+
+TEST_F(BucketIntegrationTest, NoexNotificationsCRUD) {
+  auto project_id = BucketTestEnvironment::project_id();
+  std::string bucket_name = MakeRandomBucketName();
+  noex::Client client;
+
+  // TODO(#1681) - just use the noex::Client when it implements bucket CRUD
+  //     operations (both #1681 and #1679 are needed for this).
+  Client ex_client;
+
+  // Create a new bucket to run the test.
+  auto meta = ex_client.CreateBucketForProject(bucket_name, project_id,
+                                               BucketMetadata());
+
+  auto current_notifications = ex_client.ListNotifications(bucket_name);
+  EXPECT_TRUE(current_notifications.empty())
+      << "Test aborted. Non-empty notification list returned from newly"
+      << " created bucket <" << bucket_name
+      << ">. This is unexpected because the bucket name is chosen at random.";
+
+  StatusOr<NotificationMetadata> create_err = client.CreateNotification(
+      bucket_name, BucketTestEnvironment::topic(), payload_format::JsonApiV1(),
+      NotificationMetadata().append_event_type(event_type::ObjectFinalize()));
+  ASSERT_TRUE(create_err.ok())
+      << "Unexpected CreateNotification() failure in integration test: "
+      << create_err.status();
+
+  NotificationMetadata create = std::move(create_err).value();
+  EXPECT_EQ(payload_format::JsonApiV1(), create.payload_format());
+  EXPECT_THAT(create.topic(), HasSubstr(BucketTestEnvironment::topic()));
+
+  auto current_err = client.ListNotifications(bucket_name);
+  ASSERT_TRUE(current_err.ok())
+      << "Unexpected ListNotifications() failure in integration test: "
+      << current_err.status();
+
+  current_notifications = std::move(current_err).value();
+  auto count =
+      std::count_if(current_notifications.begin(), current_notifications.end(),
+                    [create](NotificationMetadata const& x) {
+                      return x.id() == create.id();
+                    });
+  EXPECT_EQ(1U, count) << create;
+
+  auto get_err = client.GetNotification(bucket_name, create.id());
+  ASSERT_TRUE(get_err.ok())
+      << "Unexpected GetNotification() failure in integration test: "
+      << get_err.status();
+  EXPECT_EQ(create, get_err.value());
+
+  auto delete_err = client.DeleteNotification(bucket_name, create.id());
+  ASSERT_TRUE(delete_err.ok())
+      << "Unexpected DeleteNotification() failure in integration test: "
+      << delete_err.status();
+
+  current_err = client.ListNotifications(bucket_name);
+  ASSERT_TRUE(current_err.ok())
+      << "Unexpected ListNotifications() failure in integration test: "
+      << current_err.status();
+
+  current_notifications = std::move(current_err).value();
+  count =
+      std::count_if(current_notifications.begin(), current_notifications.end(),
+                    [create](NotificationMetadata const& x) {
+                      return x.id() == create.id();
+                    });
+  EXPECT_EQ(0U, count) << create;
+
+  ex_client.DeleteBucket(bucket_name);
+}
+
+TEST_F(BucketIntegrationTest, NoexNotificationsFailures) {
+  auto project_id = BucketTestEnvironment::project_id();
+  std::string bucket_name = MakeRandomBucketName();
+  noex::Client client;
+
+  StatusOr<NotificationMetadata> create_err = client.CreateNotification(
+      bucket_name, BucketTestEnvironment::topic(), payload_format::JsonApiV1(),
+      NotificationMetadata().append_event_type(event_type::ObjectFinalize()));
+  EXPECT_FALSE(create_err.ok())
+      << "Unexpected CreateNotification() success in integration test: "
+      << create_err.status();
+
+  auto current_err = client.ListNotifications(bucket_name);
+  EXPECT_FALSE(current_err.ok())
+      << "Unexpected ListNotifications() success in integration test: "
+      << current_err.status();
+
+  auto get_err = client.GetNotification(bucket_name, "invalid-notification-id");
+  EXPECT_FALSE(get_err.ok())
+      << "Unexpected GetNotification() success in integration test: "
+      << get_err.status();
+
+  auto delete_err =
+      client.DeleteNotification(bucket_name, "invalid-notification-id");
+  EXPECT_FALSE(delete_err.ok())
+      << "Unexpected DeleteNotification() success in integration test: "
+      << delete_err.status();
 }
 
 TEST_F(BucketIntegrationTest, IamCRUD) {
