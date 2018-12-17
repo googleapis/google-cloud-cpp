@@ -42,8 +42,25 @@ class RefreshingCredentialsWrapper {
                           status.ok() ? authorization_header : std::string{});
   }
 
+  /**
+   * Returns whether the current access token should be considered expired.
+   *
+   * When determining if a Credentials object needs to be refreshed, the IsValid
+   * method should be used instead; there may be cases where a Credentials is
+   * not expired but should be considered invalid.
+   *
+   * If a Credentials is close to expiration but not quite expired, this method
+   * may still return false. This helps prevent the case where an access token
+   * expires between when it is obtained and when it is used.
+   */
   bool IsExpired();
 
+  /**
+   * Returns whether the current access token should be considered valid.
+   *
+   * This method should be used to determine whether a Credentials object needs
+   * to be refreshed.
+   */
   bool IsValid();
 
   std::string authorization_header;

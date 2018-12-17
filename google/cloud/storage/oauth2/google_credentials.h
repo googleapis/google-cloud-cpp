@@ -25,7 +25,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
 /**
- * Produces a credential type based on the runtime environment.
+ * Produces a Credentials type based on the runtime environment.
  *
  * If the GOOGLE_APPLICATION_CREDENTIALS environment variable is set, the JSON
  * file it points to will be loaded and used to create a credential of the
@@ -34,7 +34,7 @@ namespace oauth2 {
  * account will be used.
  *
  * @see https://cloud.google.com/docs/authentication/production for details
- * about Application Default Credentials.
+ * about Application Default %Credentials.
  */
 std::shared_ptr<Credentials> GoogleDefaultCredentials();
 
@@ -43,11 +43,11 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials();
  * @name Functions to manually create specific credential types.
  */
 
-/// Creates an "anonymous" credential.
+/// Creates an AnonymousCredentials.
 std::shared_ptr<Credentials> CreateAnonymousCredentials();
 
 /**
- * Creates an AuthorizedUserCredentials from a JSON file at the given path.
+ * Creates an AuthorizedUserCredentials from a JSON file at the specified path.
  *
  * @note It is strongly preferred to instead use service account credentials
  * with Cloud Storage client libraries.
@@ -64,7 +64,7 @@ std::shared_ptr<Credentials> CreateAuthorizedUserCredentialsFromJsonFilePath(
 std::shared_ptr<Credentials> CreateAuthorizedUserCredentialsFromJsonContents(
     std::string const&);
 
-/// Creates a ServiceAccountCredentials rom a JSON file at the given path.
+/// Creates a ServiceAccountCredentials rom a JSON file at the specified path.
 std::shared_ptr<Credentials> CreateServiceAccountCredentialsFromJsonFilePath(
     std::string const&);
 

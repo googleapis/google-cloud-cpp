@@ -31,7 +31,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
-/// A plain object to hold the result of parsing a service account credentials.
+/// Object to hold the result of parsing a service account JSON keyfile.
 struct ServiceAccountCredentialsInfo {
   std::string private_key_id;
   std::string private_key;
@@ -39,7 +39,7 @@ struct ServiceAccountCredentialsInfo {
   std::string client_email;
 };
 
-/// Parse a JSON object as a ServiceAccountCredentials.
+/// Parses the contents of a JSON keyfile into a ServiceAccountCredentialsInfo.
 ServiceAccountCredentialsInfo ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri);
@@ -47,7 +47,7 @@ ServiceAccountCredentialsInfo ParseServiceAccountCredentials(
 /**
  * Wrapper class for Google OAuth 2.0 service account credentials.
  *
- * Takes a JSON object representing the contents of a service account keyfile,
+ * Takes a string representing the JSON contents of a service account keyfile
  * and obtains access tokens from the Google Authorization Service as needed.
  * Instances of this class should usually be created via the convenience methods
  * declared in google_credentials.h.

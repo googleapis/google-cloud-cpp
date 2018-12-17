@@ -25,10 +25,10 @@ inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
 /**
- * Returns the Application Default Credentials environment variable name.
+ * Returns the Application Default %Credentials environment variable name.
  *
  * This environment variable should be checked for a valid file path when
- * attempting to load Google Application Default Credentials.
+ * attempting to load Google Application Default %Credentials.
  */
 inline char const* GoogleAdcEnvVar() {
   static constexpr char kEnvVarName[] = "GOOGLE_APPLICATION_CREDENTIALS";
@@ -36,20 +36,20 @@ inline char const* GoogleAdcEnvVar() {
 }
 
 /**
- * Returns the path to the Application Default Credentials file, if set.
+ * Returns the path to the Application Default %Credentials file, if set.
  *
- * If the Application Default Credentials environment variable is set, we check
+ * If the Application Default %Credentials environment variable is set, we check
  * the path specified by its value for a file containing ADCs. Returns an
  * empty string if no such path exists or the environment variable is not set.
  */
 std::string GoogleAdcFilePathFromEnvVarOrEmpty();
 
 /**
- * Returns the path to the Application Default Credentials file, if set.
+ * Returns the path to the Application Default %Credentials file, if set.
  *
- * If the gcloud utility has configured an Application Default Credentials file,
- * the path to that file is returned. Returns an empty string if no such file
- * exists at the well known path.
+ * If the gcloud utility has configured an Application Default %Credentials
+ * file, the path to that file is returned. Returns an empty string if no such
+ * file exists at the well known path.
  */
 std::string GoogleAdcFilePathFromWellKnownPathOrEmpty();
 
@@ -57,7 +57,7 @@ std::string GoogleAdcFilePathFromWellKnownPathOrEmpty();
  * Returns the environment variable to override the gcloud ADC path.
  *
  * This environment variable is used for testing to override the path that
- * should be searched for the gcloud Application Default Credentials file.
+ * should be searched for the gcloud Application Default %Credentials file.
  */
 inline char const* GoogleGcloudAdcFileEnvVar() {
   static constexpr char kEnvVarName[] = "GOOGLE_GCLOUD_ADC_PATH_OVERRIDE";

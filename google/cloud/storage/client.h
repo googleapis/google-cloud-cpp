@@ -55,8 +55,8 @@ inline namespace STORAGE_CLIENT_NS {
  *
  * @par Credentials
  * The default constructor for this class will attempt to load Application
- * Default Credentials (ADCs). If you wish to use no credentials or to supply a
- * specific credential type, you can use the functions declared in
+ * Default %Credentials (ADCs). If you wish to use no credentials or to supply a
+ * specific Credentials type, you can use the functions declared in
  * google_credentials.h:
  * @code
  * namespace gcs = google::cloud::storage;
@@ -86,7 +86,7 @@ inline namespace STORAGE_CLIENT_NS {
  *     underlying API.
  *
  * @see https://cloud.google.com/docs/authentication/production for details
- *     about Application Default Credentials.
+ *     about Application Default %Credentials.
  *
  */
 class Client {
