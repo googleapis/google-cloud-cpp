@@ -22,13 +22,11 @@
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/credentials.h"
+#include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/status.h"
-#include <chrono>
-#include <condition_variable>
 #include <ctime>
 #include <mutex>
 #include <set>
-#include <string>
 
 namespace google {
 namespace cloud {
@@ -64,18 +62,10 @@ class ComputeEngineCredentials : public Credentials {
   explicit ComputeEngineCredentials() : ComputeEngineCredentials("default") {}
 
   explicit ComputeEngineCredentials(std::string const& service_account_email)
-      : expiration_time_(), service_account_email_(service_account_email) {}
-
-  std::pair<google::cloud::storage::Status, std::string> AuthorizationHeader()
-      override {
-    using google::cloud::storage::Status;
+      : service_account_email_(service_account_email) {}
+  std::pair<storage::Status, std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
-    if (IsValid()) {
-      return std::make_pair(Status(), authorization_header_);
-    }
-    Status status = Refresh();
-    return std::make_pair(
-        status, status.ok() ? authorization_header_ : std::string(""));
+    return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
   }
 
   /**
@@ -105,15 +95,6 @@ class ComputeEngineCredentials : public Credentials {
   }
 
  private:
-  bool IsExpired() {
-    auto now = std::chrono::system_clock::now();
-    return now > (expiration_time_ - GoogleOAuthAccessTokenExpirationSlack());
-  }
-
-  bool IsValid() {
-    return not authorization_header_.empty() and not IsExpired();
-  }
-
   storage::internal::HttpResponse DoMetadataServerGetRequest(std::string path,
                                                              bool recursive) {
     std::string metadata_server_hostname =
@@ -197,16 +178,13 @@ class ComputeEngineCredentials : public Credentials {
     auto new_expiration = std::chrono::system_clock::now() + expires_in;
 
     // Do not update any state until all potential exceptions are raised.
-    authorization_header_ = std::move(header);
-    expiration_time_ = new_expiration;
+    refreshing_creds_.authorization_header = std::move(header);
+    refreshing_creds_.expiration_time = new_expiration;
     return storage::Status();
   }
 
   mutable std::mutex mu_;
-  std::condition_variable cv_;
-  // Credential attributes
-  std::string authorization_header_;
-  std::chrono::system_clock::time_point expiration_time_;
+  RefreshingCredentialsWrapper refreshing_creds_;
   std::set<std::string> scopes_;
   std::string service_account_email_;
 };

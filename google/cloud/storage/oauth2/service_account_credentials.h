@@ -20,13 +20,11 @@
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/credentials.h"
-#include "google/cloud/storage/status.h"
-#include <chrono>
+#include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include <condition_variable>
 #include <ctime>
 #include <iostream>
 #include <mutex>
-#include <string>
 
 namespace google {
 namespace cloud {
@@ -84,7 +82,7 @@ class ServiceAccountCredentials : public Credentials {
   explicit ServiceAccountCredentials(std::string const& content,
                                      std::string const& source,
                                      std::string const& default_token_uri)
-      : expiration_time_(), clock_() {
+      : clock_() {
     namespace nl = storage::internal::nl;
 
     auto info =
@@ -114,14 +112,7 @@ class ServiceAccountCredentials : public Credentials {
 
   std::pair<storage::Status, std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
-
-    if (IsValid()) {
-      return std::make_pair(storage::Status(), authorization_header_);
-    }
-
-    storage::Status status = Refresh();
-    return std::make_pair(
-        status, status.ok() ? authorization_header_ : std::string(""));
+    return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
   }
 
   /**
@@ -183,15 +174,6 @@ class ServiceAccountCredentials : public Credentials {
                           std::move(assertion_payload));
   }
 
-  bool IsExpired() {
-    auto now = std::chrono::system_clock::now();
-    return now > (expiration_time_ - GoogleOAuthAccessTokenExpirationSlack());
-  }
-
-  bool IsValid() {
-    return not authorization_header_.empty() and not IsExpired();
-  }
-
   /**
    * Given a key and a JSON header and payload, creates a JWT assertion string.
    *
@@ -239,18 +221,16 @@ class ServiceAccountCredentials : public Credentials {
         std::chrono::seconds(access_token.value("expires_in", int(0)));
     auto new_expiration = std::chrono::system_clock::now() + expires_in;
     // Do not update any state until all potential exceptions are raised.
-    authorization_header_ = std::move(header);
-    expiration_time_ = new_expiration;
+    refreshing_creds_.authorization_header = std::move(header);
+    refreshing_creds_.expiration_time = new_expiration;
     return storage::Status();
   }
 
   typename HttpRequestBuilderType::RequestType request_;
   std::string payload_;
   ServiceAccountCredentialsInfo info_;
-  std::mutex mu_;
-  std::condition_variable cv_;
-  std::string authorization_header_;
-  std::chrono::system_clock::time_point expiration_time_;
+  mutable std::mutex mu_;
+  RefreshingCredentialsWrapper refreshing_creds_;
   ClockType clock_;
 };
 
