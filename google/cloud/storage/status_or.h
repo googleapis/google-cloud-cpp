@@ -153,7 +153,7 @@ class StatusOr final {
  private:
   void CheckHasValue() const& {
     if (not ok()) {
-      internal::ThrowStatus(Status(status_));
+      internal::ThrowStatus(status_);
     }
   }
 
