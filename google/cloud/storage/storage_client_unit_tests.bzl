@@ -77,6 +77,7 @@ storage_client_unit_tests = [
     "retry_policy_test.cc",
     "service_account_test.cc",
     "signed_url_options_test.cc",
+    "status_or_test.cc",
     "storage_class_test.cc",
     "storage_client_options_test.cc",
     "storage_version_test.cc",

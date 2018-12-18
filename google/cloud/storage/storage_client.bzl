@@ -92,6 +92,7 @@ storage_client_hdrs = [
     "service_account.h",
     "signed_url_options.h",
     "status.h",
+    "status_or.h",
     "storage_class.h",
     "upload_options.h",
     "version.h",
