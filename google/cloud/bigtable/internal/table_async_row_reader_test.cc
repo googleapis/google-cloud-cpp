@@ -122,6 +122,8 @@ TEST_F(NoexTableAsyncReadRowsTest, ReadRowsWithRetry) {
   std::unique_ptr<MockClientAsyncReaderInterface<btproto::ReadRowsResponse>>
       reader_deleter2(reader2);
 
+  // first attempt to AsyncReadRows will fail after returning one row
+  // and results in second call to AsyncReadRows.
   EXPECT_CALL(*reader1, Read(_, _))
       .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
         {
@@ -163,11 +165,16 @@ TEST_F(NoexTableAsyncReadRowsTest, ReadRowsWithRetry) {
       .WillOnce(Invoke([&reader_deleter1](grpc::ClientContext*,
                                           btproto::ReadRowsRequest const& r,
                                           grpc::CompletionQueue*, void*) {
+        EXPECT_EQ("0000", r.rows().row_ranges(0).start_key_closed());
+        EXPECT_EQ("0005", r.rows().row_ranges(0).end_key_open());
         return std::move(reader_deleter1);
       }))
       .WillOnce(Invoke([&reader_deleter2](grpc::ClientContext*,
                                           btproto::ReadRowsRequest const& r,
                                           grpc::CompletionQueue*, void*) {
+        // second attempt will request the rows that have not been returned.
+        EXPECT_EQ("0001", r.rows().row_ranges(0).start_key_open());
+        EXPECT_EQ("0005", r.rows().row_ranges(0).end_key_open());
         return std::move(reader_deleter2);
       }));
 
@@ -179,7 +186,8 @@ TEST_F(NoexTableAsyncReadRowsTest, ReadRowsWithRetry) {
   bool read_rows_op_called = false;
   bool done_op_called = false;
 
-  table_.AsyncReadRows(bt::RowSet("0001", "0002"), bt::RowReader::NO_ROWS_LIMIT,
+  table_.AsyncReadRows(bt::RowSet(bt::RowRange::Range("0000", "0005")),
+                       bt::RowReader::NO_ROWS_LIMIT,
                        bt::Filter::PassAllFilter(), cq,
                        [&read_rows_op_called](CompletionQueue& cq, Row row,
                                               grpc::Status& status) {
