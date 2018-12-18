@@ -140,6 +140,84 @@ TEST(StatusOrTest, ValueConstArrow) {
   EXPECT_EQ(std::string("42"), actual->c_str());
 }
 
+TEST(StatusOrVoidTest, DefaultConstructor) {
+  StatusOr<void> actual;
+  EXPECT_FALSE(actual.ok());
+  EXPECT_FALSE(actual.status().ok());
+}
+
+TEST(StatusOrVoidTest, StatusConstructorNormal) {
+  StatusOr<void> actual(Status(404, "NOT FOUND", "It was there yesterday!"));
+  EXPECT_FALSE(actual.ok());
+  EXPECT_EQ(404, actual.status().status_code());
+  EXPECT_EQ("NOT FOUND", actual.status().error_message());
+  EXPECT_EQ("It was there yesterday!", actual.status().error_details());
+}
+
+TEST(StatusOrVoidTest, ValueConstructor) {
+  StatusOr<void> actual(Status{});
+  EXPECT_TRUE(actual.ok());
+  testing_util::ExpectNoException([&] { actual.value(); });
+  testing_util::ExpectNoException([&] { std::move(actual).value(); });
+}
+
+TEST(StatusOrVoidTest, ValueConstAccessors) {
+  StatusOr<void> const actual(Status{});
+  EXPECT_TRUE(actual.ok());
+  testing_util::ExpectNoException([&] { actual.value(); });
+  testing_util::ExpectNoException([&] { std::move(actual).value(); });
+}
+
+TEST(StatusOrVoidTest, ValueAccessorNonConstThrows) {
+  StatusOr<void> actual(Status(500, "BAD"));
+
+  testing_util::ExpectException<RuntimeStatusError>(
+      [&] { actual.value(); },
+      [&](RuntimeStatusError const& ex) {
+        EXPECT_EQ(500, ex.status().status_code());
+        EXPECT_EQ("BAD", ex.status().error_message());
+      },
+      "exceptions are disabled: BAD \\[500\\]"
+  );
+
+  testing_util::ExpectException<RuntimeStatusError>(
+      [&] { std::move(actual).value(); },
+      [&](RuntimeStatusError const& ex) {
+        EXPECT_EQ(500, ex.status().status_code());
+        EXPECT_EQ("BAD", ex.status().error_message());
+      },
+      "exceptions are disabled: BAD \\[500\\]"
+  );
+}
+
+TEST(StatusOrVoidTest, ValueAccessorConstThrows) {
+  StatusOr<void> actual(Status(500, "BAD"));
+
+  testing_util::ExpectException<RuntimeStatusError>(
+      [&] { actual.value(); },
+      [&](RuntimeStatusError const& ex) {
+        EXPECT_EQ(500, ex.status().status_code());
+        EXPECT_EQ("BAD", ex.status().error_message());
+      },
+      "exceptions are disabled: BAD \\[500\\]"
+  );
+
+  testing_util::ExpectException<RuntimeStatusError>(
+      [&] { std::move(actual).value(); },
+      [&](RuntimeStatusError const& ex) {
+        EXPECT_EQ(500, ex.status().status_code());
+        EXPECT_EQ("BAD", ex.status().error_message());
+      },
+      "exceptions are disabled: BAD \\[500\\]"
+  );
+}
+
+TEST(StatusOrVoidTest, StatusConstAccessors) {
+  StatusOr<void> const actual(Status(500, "BAD"));
+  EXPECT_EQ(500, actual.status().status_code());
+  EXPECT_EQ(500, std::move(actual).status().status_code());
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
