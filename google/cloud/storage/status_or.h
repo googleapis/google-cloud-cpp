@@ -272,6 +272,17 @@ class StatusOr<void> final {
 
   //@{
   /**
+   * @name Member access operators.
+   *
+   * These are provided mostly so generic code can use `StatusOr<void>` just
+   * like `StatusOr<T>`.
+   */
+  void* operator->() & { return nullptr; }
+  void const* operator->() const& { return nullptr; }
+  //@}
+
+  //@{
+  /**
    * @name Value accessors.
    *
    * @return All these member functions return a (properly ref and
