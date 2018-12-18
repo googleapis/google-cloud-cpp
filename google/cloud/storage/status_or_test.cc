@@ -27,11 +27,13 @@ TEST(StatusOrTest, DefaultConstructor) {
   StatusOr<int> actual;
   EXPECT_FALSE(actual.ok());
   EXPECT_FALSE(actual.status().ok());
+  EXPECT_TRUE(not actual);
 }
 
 TEST(StatusOrTest, StatusConstructorNormal) {
   StatusOr<int> actual(Status(404, "NOT FOUND", "It was there yesterday!"));
   EXPECT_FALSE(actual.ok());
+  EXPECT_TRUE(not actual);
   EXPECT_EQ(404, actual.status().status_code());
   EXPECT_EQ("NOT FOUND", actual.status().error_message());
   EXPECT_EQ("It was there yesterday!", actual.status().error_details());
@@ -50,15 +52,16 @@ TEST(StatusOrTest, StatusConstructorInvalid) {
 TEST(StatusOrTest, ValueConstructor) {
   StatusOr<int> actual(42);
   EXPECT_TRUE(actual.ok());
+  EXPECT_FALSE(not actual);
   EXPECT_EQ(42, actual.value());
-  EXPECT_EQ(42, std::move(actual.value()));
+  EXPECT_EQ(42, std::move(actual).value());
 }
 
 TEST(StatusOrTest, ValueConstAccessors) {
   StatusOr<int> const actual(42);
   EXPECT_TRUE(actual.ok());
   EXPECT_EQ(42, actual.value());
-  EXPECT_EQ(42, std::move(actual.value()));
+  EXPECT_EQ(42, std::move(actual).value());
 }
 
 TEST(StatusOrTest, ValueAccessorNonConstThrows) {
@@ -109,6 +112,32 @@ TEST(StatusOrTest, StatusConstAccessors) {
   StatusOr<int> const actual(Status(500, "BAD"));
   EXPECT_EQ(500, actual.status().status_code());
   EXPECT_EQ(500, std::move(actual).status().status_code());
+}
+
+TEST(StatusOrTest, ValueDeference) {
+  StatusOr<std::string> actual("42");
+  EXPECT_TRUE(actual.ok());
+  EXPECT_EQ("42", *actual);
+  EXPECT_EQ("42", std::move(actual).value());
+}
+
+TEST(StatusOrTest, ValueConstDeference) {
+  StatusOr<std::string> const actual("42");
+  EXPECT_TRUE(actual.ok());
+  EXPECT_EQ("42", *actual);
+  EXPECT_EQ("42", std::move(actual).value());
+}
+
+TEST(StatusOrTest, ValueArrow) {
+  StatusOr<std::string> actual("42");
+  EXPECT_TRUE(actual.ok());
+  EXPECT_EQ(std::string("42"), actual->c_str());
+}
+
+TEST(StatusOrTest, ValueConstArrow) {
+  StatusOr<std::string> const actual("42");
+  EXPECT_TRUE(actual.ok());
+  EXPECT_EQ(std::string("42"), actual->c_str());
 }
 
 }  // namespace

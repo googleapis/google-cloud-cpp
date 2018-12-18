@@ -26,8 +26,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
- * `StatusOr<T>` is used to return a value or an error status when exceptions
- * are disabled.
+ * `StatusOr<T>` is used to return a value or an error status.
  *
  * If the library is compiled with exceptions disabled there is no standard C++
  * mechanism to report errors. In that case we use this class to wrap the values
@@ -41,12 +40,12 @@ inline namespace STORAGE_CLIENT_NS {
  * void AppCode(gcs::noex::Client client) {
  *   gcs::StatusOr<gcs::BucketMetadata> meta_err = client.GetBucketMetadata(
  *       "my-bucket-name");
- *   if (not meta_err.ok()) {
+ *   if (not meta_err) {
  *       std::cerr << "Error in GetBucketMetadata: " << meta_err.status()
  *                 << std::endl;
  *       return;
  *   }
- *   gcs::BucketMetadata meta = std::move(meta_err).value();
+ *   gcs::BucketMetadata meta = *meta_err;
  *   // Do useful work here.
  * }
  * @endcode
@@ -104,6 +103,41 @@ class StatusOr final {
   StatusOr(T rhs) : status_(), value_(std::move(rhs)) {}
 
   bool ok() const { return status_.ok(); }
+  explicit operator bool() const { return status_.ok(); }
+
+  //@{
+  /**
+   * @name Deference operators.
+   *
+   * @warning Using these operators when `ok() == false` results in undefined
+   *     behavior.
+   *
+   * @return All these return a (properly ref and const-qualified) reference to
+   *     the underlying value.
+   */
+  T& operator*() & { return value_; }
+
+  T const& operator*() const& { return value_; }
+
+  T&& operator*() && { return std::move(value_); }
+
+  T const&& operator*() const&& { return std::move(value_); }
+  //@}
+
+  //@{
+  /**
+   * @name Member access operators.
+   *
+   * @warning Using these operators when `ok() == false` results in undefined
+   *     behavior.
+   *
+   * @return All these return a (properly ref and const-qualified) pointer to
+   *     the underlying value.
+   */
+  T* operator->() & { return &value_; }
+
+  T const* operator->() const& { return &value_; }
+  //@}
 
   //@{
   /**
