@@ -208,9 +208,8 @@ class StatusOr final {
  * `StatusOr<void>` is used to return an error or nothing.
  *
  * `StatusOr<T>` does not work for `T = void` because some of the member
- * functions (`StatusOr<T>(T)`, `operator*()` , `operator->()`) make no sense
- * for `void`. Likewise, the class cannot contain an object of type `void`
- * because there is no such thing.
+ * functions (`StatusOr<T>(T)`) make no sense for `void`. Likewise, the class
+ * cannot contain an object of type `void` because there is no such thing.
  *
  * The application typically calls an API in the library and must check the
  * returned error status:
