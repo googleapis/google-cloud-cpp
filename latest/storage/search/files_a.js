@@ -8,6 +8,7 @@ var searchData=
   ['signed_5furl_5foptions_2eh',['signed_url_options.h',['../signed__url__options_8h.html',1,'']]],
   ['status_2ecc',['status.cc',['../status_8cc.html',1,'']]],
   ['status_2eh',['status.h',['../status_8h.html',1,'']]],
+  ['status_5for_2eh',['status_or.h',['../status__or_8h.html',1,'']]],
   ['storage_2dmain_2edox',['storage-main.dox',['../storage-main_8dox.html',1,'']]],
   ['storage_5fbucket_5facl_5fsamples_2ecc',['storage_bucket_acl_samples.cc',['../storage__bucket__acl__samples_8cc.html',1,'']]],
   ['storage_5fbucket_5fiam_5fsamples_2ecc',['storage_bucket_iam_samples.cc',['../storage__bucket__iam__samples_8cc.html',1,'']]],
