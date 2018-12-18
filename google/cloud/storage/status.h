@@ -77,6 +77,16 @@ inline std::ostream& operator<<(std::ostream& os, Status const& rhs) {
             << "], details=" << rhs.error_details();
 }
 
+class RuntimeStatusError : public std::runtime_error {
+ public:
+  explicit RuntimeStatusError(Status status);
+
+  Status const& status() const { return status_; }
+
+ private:
+  Status status_;
+};
+
 /**
  * Report checksum mismatches as exceptions.
  */
