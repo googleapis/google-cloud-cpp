@@ -109,7 +109,8 @@ class Client {
     // TODO(#1694) - remove all the code duplicated in `storage::Client`.
     auto logging = std::make_shared<internal::LoggingClient>(std::move(client));
     auto retry = std::make_shared<internal::RetryClient>(
-        std::move(logging), std::forward<Policies>(policies)...);
+        std::move(logging), internal::RetryClient::NoexPolicy{},
+        std::forward<Policies>(policies)...);
     return retry;
   }
 
