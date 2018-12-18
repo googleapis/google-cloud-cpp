@@ -259,6 +259,19 @@ class StatusOr<void> final {
 
   //@{
   /**
+   * @name Deference operators.
+   *
+   * These are provided mostly so generic code can use `StatusOr<void>` just
+   * like `StatusOr<T>`.
+   */
+  void operator*() & {}
+  void operator*() const& {}
+  void operator*() && {}
+  void operator*() const&& {}
+  //@}
+
+  //@{
+  /**
    * @name Value accessors.
    *
    * @return All these member functions return a (properly ref and
