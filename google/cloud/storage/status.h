@@ -23,6 +23,29 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+/// Well-known status codes with `grpc::StatusCode`-compatible values.
+///    https://grpc.io/grpc/cpp/classgrpc_1_1_status.html
+enum StatusCode {
+  OK = 0,
+  CANCELLED = 1,
+  UNKNOWN = 2,
+  INVALID_ARGUMENT = 3,
+  DEADLINE_EXCEEDED = 4,
+  NOT_FOUND = 5,
+  ALREADY_EXISTS = 6,
+  PERMISSION_DENIED = 7,
+  UNAUTHENTICATED = 16,
+  RESOURCE_EXHAUSTED = 8,
+  FAILED_PRECONDITION = 9,
+  ABORTED = 10,
+  OUT_OF_RANGE = 11,
+  UNIMPLEMENTED = 12,
+  INTERNAL = 13,
+  UNAVAILABLE = 14,
+  DATA_LOSS = 15,
+  DO_NOT_USE = -1
+};
+
 /**
  * Reports error code and details from a remote request.
  *
@@ -46,7 +69,7 @@ class Status {
         error_message_(std::move(error_message)),
         error_details_(std::move(error_details)) {}
 
-  bool ok() const { return 200 == status_code(); }
+  bool ok() const { return 200 == status_code() or 0 == status_code(); }
 
   bool operator==(Status const& rhs) const {
     return status_code() == rhs.status_code() and
