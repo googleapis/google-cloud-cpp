@@ -45,5 +45,6 @@ var searchData=
   ['retention_5fpolicy',['retention_policy',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a14dc1ca650289da4065f65e8dcec78f7',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['retention_5fpolicy_5fas_5foptional',['retention_policy_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a86c1537dcb29d8a1ea8fb49d5d091023',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['rewriteobject',['RewriteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a16f1e39a3259246f296cb38627426b6e',1,'google::cloud::storage::v0::Client']]],
-  ['rewriteobjectblocking',['RewriteObjectBlocking',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ac2b4c5610080c6b672f3d644e9bfd1cb',1,'google::cloud::storage::v0::Client']]]
+  ['rewriteobjectblocking',['RewriteObjectBlocking',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ac2b4c5610080c6b672f3d644e9bfd1cb',1,'google::cloud::storage::v0::Client']]],
+  ['runtimestatuserror',['RuntimeStatusError',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1RuntimeStatusError.html#af1be02dd4f1ec432454a36502762f5a3',1,'google::cloud::storage::v0::RuntimeStatusError']]]
 ];

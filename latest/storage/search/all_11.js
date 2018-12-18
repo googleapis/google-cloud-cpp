@@ -58,5 +58,6 @@ var searchData=
   ['rewriteobjectblocking',['RewriteObjectBlocking',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ac2b4c5610080c6b672f3d644e9bfd1cb',1,'google::cloud::storage::v0::Client']]],
   ['rewriteprogress',['RewriteProgress',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1RewriteProgress.html',1,'google::cloud::storage::v0']]],
   ['rs256',['RS256',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#adf56d5c10f381e0e82e9a2e421ead186ab774c36caa844a2b0e94f9c04c3ccacc',1,'google::cloud::storage::v0::oauth2']]],
-  ['rule',['rule',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLifecycle.html#aeab8470eaeb634e17f7e854f99c9af31',1,'google::cloud::storage::v0::BucketLifecycle']]]
+  ['rule',['rule',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLifecycle.html#aeab8470eaeb634e17f7e854f99c9af31',1,'google::cloud::storage::v0::BucketLifecycle']]],
+  ['runtimestatuserror',['RuntimeStatusError',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1RuntimeStatusError.html',1,'google::cloud::storage::v0::RuntimeStatusError'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1RuntimeStatusError.html#af1be02dd4f1ec432454a36502762f5a3',1,'google::cloud::storage::v0::RuntimeStatusError::RuntimeStatusError()']]]
 ];
