@@ -31,7 +31,9 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_google_googletest",
             strip_prefix = "googletest-release-1.8.1",
-            url = "https://github.com/google/googletest/archive/release-1.8.1.tar.gz",
+            urls = [
+                "https://github.com/google/googletest/archive/release-1.8.1.tar.gz",
+            ],
             sha256 = "9bf1fe5182a604b4135edc1a425ae356c9ad15e9b23f9f12a02e80184c3a249c",
         )
 
@@ -39,7 +41,9 @@ def google_cloud_cpp_deps():
     if "com_github_googleapis_googleapis" not in native.existing_rules():
         http_archive(
             name = "com_github_googleapis_googleapis",
-            url = "https://github.com/google/googleapis/archive/6a3277c0656219174ff7c345f31fb20a90b30b97.zip",
+            urls = [
+                "https://github.com/google/googleapis/archive/6a3277c0656219174ff7c345f31fb20a90b30b97.zip",
+            ],
             strip_prefix = "googleapis-6a3277c0656219174ff7c345f31fb20a90b30b97",
             sha256 = "82ba91a41fb01305de4e8805c0a9270ed2035007161aa5a4ec60f887a499f5e9",
             build_file = "@com_github_googlecloudplatform_google_cloud_cpp//bazel:googleapis.BUILD",
