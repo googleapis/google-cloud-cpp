@@ -271,11 +271,11 @@ class Table {
    *     `cq.Run()`.
    * @param read_row_callback a functor to be called when the row is ready for
    * reading. It must satisfy (using C++17 types):
-   *     static_assert(std::is_invocable< ReadRowCallback, CompletionQueue&,
-   * Row, grpc::Status&>);
+   *     static_assert(std::is_invocable<ReadRowCallback, CompletionQueue&,
+   *         Row, grpc::Status&>);
    * @param done_callback a functor to be called when the operation completes.
    * It must satisfy (using C++17 types): static_assert(std::is_invocable<
-   * DoneCallback, CompletionQueue&, bool& grpc::Status&>);
+   *         DoneCallback, CompletionQueue&, bool& grpc::Status&>);
    *
    * @tparam ReadRowCallback the type of the callback when a row is ready.
    *
