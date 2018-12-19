@@ -52,6 +52,7 @@ if (BUILD_TESTING)
         target_link_libraries(${target}
                               PRIVATE bigtable_benchmark_common
                                       bigtable_client
+                                      bigtable_client_testing
                                       bigtable_protos
                                       bigtable_common_options
                                       google_cloud_cpp_testing

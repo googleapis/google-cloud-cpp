@@ -358,7 +358,6 @@ if (BUILD_TESTING)
                                   PRIVATE storage_client_testing
                                           google_cloud_cpp_testing
                                           storage_client
-                                          google_cloud_cpp_testing
                                           GTest::gmock_main
                                           GTest::gmock
                                           GTest::gtest
