@@ -106,6 +106,7 @@ matrix:
       os: linux
       compiler: gcc
       env:
+        BUILD_TESTING=no
         CMAKE_FLAGS=-DBUILD_TESTING=OFF
         DISTRO=ubuntu
         DISTRO_VERSION=18.04

@@ -224,20 +224,22 @@ if [ -n "${ccache_command}" ]; then
   "${ccache_command}" --zero-stats --cleanup --max-size="${max_size}"
 fi
 
-# Run the tests and output any failures.
-echo
-echo "${COLOR_YELLOW}Running unit and integration tests $(date)${COLOR_RESET}"
-echo
-cd "${BUILD_DIR}"
-ctest --output-on-failure
-
-# Run the integration tests. Not all projects have them, so just iterate over
-# the ones that do.
-for subdir in google/cloud google/cloud/bigtable google/cloud/storage; do
+if [ "${BUILD_TESTING:-}" != "no" ]; then
+  # Run the tests and output any failures.
   echo
-  echo "${COLOR_GREEN}Running integration tests for ${subdir}${COLOR_RESET}"
-  /v/${subdir}/ci/run_integration_tests.sh
-done
+  echo "${COLOR_YELLOW}Running unit and integration tests $(date)${COLOR_RESET}"
+  echo
+  cd "${BUILD_DIR}"
+  ctest --output-on-failure
+
+  # Run the integration tests. Not all projects have them, so just iterate over
+  # the ones that do.
+  for subdir in google/cloud google/cloud/bigtable google/cloud/storage; do
+    echo
+    echo "${COLOR_GREEN}Running integration tests for ${subdir}${COLOR_RESET}"
+    /v/${subdir}/ci/run_integration_tests.sh
+  done
+if
 
 # Test the install rule and that the installation works.
 if [ "${TEST_INSTALL:-}" = "yes" ]; then
