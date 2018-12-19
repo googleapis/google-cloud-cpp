@@ -229,7 +229,7 @@ after cloning this repo:
 
 ```bash
 git submodule update --init
-# Add -DBUILD_TESTING=Off to disable tests
+# Add -DBUILD_TESTING=OFF to disable tests
 cmake -H. -Bbuild-output
 
 # Adjust the number of threads used by modifying parameter for `-j 4`
@@ -246,7 +246,7 @@ You will find compiled binaries in `build-output/` respective to their source pa
 ```bash
 git submodule update --init
 export OPENSSL_ROOT_DIR=/usr/local/opt/libressl
-# Add -DBUILD_TESTING=Off to disable tests
+# Add -DBUILD_TESTING=OFF to disable tests
 cmake -H. -Bbuild-output
 
 # Adjust the number of threads used by modifying parameter for `-j 4`

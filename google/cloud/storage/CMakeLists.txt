@@ -247,6 +247,9 @@ set_target_properties(
         SOVERSION
         ${STORAGE_CLIENT_VERSION_MAJOR})
 
+create_bazel_config(storage_client)
+google_cloud_cpp_add_clang_tidy(storage_client)
+
 if (BUILD_TESTING)
     add_library(storage_client_testing
                 testing/canonical_errors.h
@@ -269,12 +272,7 @@ if (BUILD_TESTING)
                                       $<INSTALL_INTERFACE:include>)
     target_compile_options(storage_client_testing
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-endif ()
 
-create_bazel_config(storage_client)
-google_cloud_cpp_add_clang_tidy(storage_client)
-
-if (BUILD_TESTING)
     create_bazel_config(storage_client_testing)
 
     # List the unit tests, then setup the targets and dependencies.

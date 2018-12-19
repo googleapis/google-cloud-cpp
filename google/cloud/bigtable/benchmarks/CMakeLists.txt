@@ -33,8 +33,6 @@ target_link_libraries(bigtable_benchmark_common
                       bigtable_common_options)
 
 if (BUILD_TESTING)
-    target_link_libraries(bigtable_benchmark_common bigtable_client_testing)
-
     # List the unit tests, then setup the targets and dependencies.
     set(bigtable_benchmarks_unit_tests
         bigtable_benchmark_test.cc
