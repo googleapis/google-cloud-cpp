@@ -520,53 +520,51 @@ TEST_F(BucketIntegrationTest, NoexNotificationsCRUD) {
       << " created bucket <" << bucket_name
       << ">. This is unexpected because the bucket name is chosen at random.";
 
-  StatusOr<NotificationMetadata> create_err = client.CreateNotification(
+  StatusOr<NotificationMetadata> create = client.CreateNotification(
       bucket_name, BucketTestEnvironment::topic(), payload_format::JsonApiV1(),
       NotificationMetadata().append_event_type(event_type::ObjectFinalize()));
-  ASSERT_TRUE(create_err.ok())
+  ASSERT_TRUE(create)
       << "Unexpected CreateNotification() failure in integration test: "
-      << create_err.status();
+      << create.status();
 
-  NotificationMetadata create = std::move(create_err).value();
-  EXPECT_EQ(payload_format::JsonApiV1(), create.payload_format());
-  EXPECT_THAT(create.topic(), HasSubstr(BucketTestEnvironment::topic()));
+  EXPECT_EQ(payload_format::JsonApiV1(), create->payload_format());
+  EXPECT_THAT(create->topic(), HasSubstr(BucketTestEnvironment::topic()));
 
-  auto current_err = client.ListNotifications(bucket_name);
-  ASSERT_TRUE(current_err.ok())
+  StatusOr<std::vector<NotificationMetadata>> current =
+      client.ListNotifications(bucket_name);
+  ASSERT_TRUE(current)
       << "Unexpected ListNotifications() failure in integration test: "
-      << current_err.status();
+      << current.status();
 
-  current_notifications = std::move(current_err).value();
-  auto count =
-      std::count_if(current_notifications.begin(), current_notifications.end(),
-                    [create](NotificationMetadata const& x) {
-                      return x.id() == create.id();
-                    });
-  EXPECT_EQ(1U, count) << create;
+  auto count = std::count_if(current->begin(), current->end(),
+                             [create](NotificationMetadata const& x) {
+                               return x.id() == create->id();
+                             });
+  EXPECT_EQ(1U, count) << *create;
 
-  auto get_err = client.GetNotification(bucket_name, create.id());
-  ASSERT_TRUE(get_err.ok())
+  StatusOr<NotificationMetadata> get =
+      client.GetNotification(bucket_name, create->id());
+  ASSERT_TRUE(get)
       << "Unexpected GetNotification() failure in integration test: "
-      << get_err.status();
-  EXPECT_EQ(create, get_err.value());
+      << get.status();
+  EXPECT_EQ(*create, *get);
 
-  auto delete_err = client.DeleteNotification(bucket_name, create.id());
-  ASSERT_TRUE(delete_err.ok())
+  StatusOr<void> delete_status =
+      client.DeleteNotification(bucket_name, create->id());
+  ASSERT_TRUE(delete_status)
       << "Unexpected DeleteNotification() failure in integration test: "
-      << delete_err.status();
+      << delete_status.status();
 
-  current_err = client.ListNotifications(bucket_name);
-  ASSERT_TRUE(current_err.ok())
+  current = client.ListNotifications(bucket_name);
+  ASSERT_TRUE(current)
       << "Unexpected ListNotifications() failure in integration test: "
-      << current_err.status();
+      << current.status();
 
-  current_notifications = std::move(current_err).value();
-  count =
-      std::count_if(current_notifications.begin(), current_notifications.end(),
-                    [create](NotificationMetadata const& x) {
-                      return x.id() == create.id();
-                    });
-  EXPECT_EQ(0U, count) << create;
+  count = std::count_if(current->begin(), current->end(),
+                        [create](NotificationMetadata const& x) {
+                          return x.id() == create->id();
+                        });
+  EXPECT_EQ(0U, count) << *create;
 
   ex_client.DeleteBucket(bucket_name);
 }
@@ -576,28 +574,30 @@ TEST_F(BucketIntegrationTest, NoexNotificationsFailures) {
   std::string bucket_name = MakeRandomBucketName();
   noex::Client client;
 
-  StatusOr<NotificationMetadata> create_err = client.CreateNotification(
+  StatusOr<NotificationMetadata> create = client.CreateNotification(
       bucket_name, BucketTestEnvironment::topic(), payload_format::JsonApiV1(),
       NotificationMetadata().append_event_type(event_type::ObjectFinalize()));
-  EXPECT_FALSE(create_err.ok())
+  EXPECT_FALSE(create)
       << "Unexpected CreateNotification() success in integration test: "
-      << create_err.status();
+      << create.status();
 
-  auto current_err = client.ListNotifications(bucket_name);
-  EXPECT_FALSE(current_err.ok())
+  StatusOr<std::vector<NotificationMetadata>> current =
+      client.ListNotifications(bucket_name);
+  EXPECT_FALSE(current)
       << "Unexpected ListNotifications() success in integration test: "
-      << current_err.status();
+      << current.status();
 
-  auto get_err = client.GetNotification(bucket_name, "invalid-notification-id");
-  EXPECT_FALSE(get_err.ok())
+  StatusOr<NotificationMetadata> get =
+      client.GetNotification(bucket_name, "invalid-notification-id");
+  EXPECT_FALSE(get)
       << "Unexpected GetNotification() success in integration test: "
-      << get_err.status();
+      << get.status();
 
-  auto delete_err =
+  StatusOr<void> delete_status =
       client.DeleteNotification(bucket_name, "invalid-notification-id");
-  EXPECT_FALSE(delete_err.ok())
+  EXPECT_FALSE(delete_status)
       << "Unexpected DeleteNotification() success in integration test: "
-      << delete_err.status();
+      << delete_status.status();
 }
 
 TEST_F(BucketIntegrationTest, IamCRUD) {

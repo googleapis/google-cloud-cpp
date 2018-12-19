@@ -257,13 +257,13 @@ class Client {
   template <typename T>
   StatusOr<T> AsStatusOr(std::pair<Status, T> result) {
     if (not result.first.ok()) {
-      return std::move(result.first);
+      return result.first;
     }
-    return std::move(result.second);
+    return result.second;
   }
 
   StatusOr<void> AsStatusOr(std::pair<Status, internal::EmptyResponse> result) {
-    return std::move(result.first);
+    return result.first;
   }
 
   // TODO(#1694) - remove all the code duplicated in `storage::Client`.
