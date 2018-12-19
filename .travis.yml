@@ -102,6 +102,13 @@ matrix:
         BUILD_TYPE=Coverage
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
+    - # Compile with tests disabled.
+      os: linux
+      compiler: gcc
+      env:
+        CMAKE_FLAGS=-DBUILD_TESTING=OFF
+        DISTRO=ubuntu
+        DISTRO_VERSION=18.04
     - # Compile with exceptions disabled.
       os: linux
       compiler: gcc
