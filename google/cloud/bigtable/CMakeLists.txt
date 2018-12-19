@@ -108,7 +108,7 @@ set_target_properties(
 add_library(bigtable::protos ALIAS bigtable_protos)
 
 # Enable unit tests
-enable_testing()
+include(CTest)
 
 add_dependencies(skip-scanbuild-targets bigtable_protos)
 
@@ -255,133 +255,135 @@ include(CreateBazelConfig)
 create_bazel_config(bigtable_client)
 google_cloud_cpp_add_clang_tidy(bigtable_client)
 
-add_library(bigtable_client_testing
-            testing/embedded_server_test_fixture.h
-            testing/embedded_server_test_fixture.cc
-            testing/internal_table_test_fixture.h
-            testing/internal_table_test_fixture.cc
-            testing/mock_admin_client.h
-            testing/mock_data_client.h
-            testing/mock_instance_admin_client.h
-            testing/inprocess_data_client.h
-            testing/inprocess_data_client.cc
-            testing/inprocess_admin_client.h
-            testing/inprocess_admin_client.cc
-            testing/mock_completion_queue.h
-            testing/mock_mutate_rows_reader.h
-            testing/mock_read_rows_reader.h
-            testing/mock_response_reader.h
-            testing/mock_sample_row_keys_reader.h
-            testing/table_integration_test.h
-            testing/table_integration_test.cc
-            testing/table_test_fixture.h
-            testing/table_test_fixture.cc)
-target_link_libraries(bigtable_client_testing
-                      PUBLIC bigtable_client
-                             bigtable_protos
-                             GTest::gmock_main
-                             GTest::gmock
-                             GTest::gtest
-                             gRPC::grpc++
-                             gRPC::grpc
-                             protobuf::libprotobuf
-                      PRIVATE bigtable_common_options)
+if (BUILD_TESTING)
+    add_library(bigtable_client_testing
+                testing/embedded_server_test_fixture.h
+                testing/embedded_server_test_fixture.cc
+                testing/internal_table_test_fixture.h
+                testing/internal_table_test_fixture.cc
+                testing/mock_admin_client.h
+                testing/mock_data_client.h
+                testing/mock_instance_admin_client.h
+                testing/inprocess_data_client.h
+                testing/inprocess_data_client.cc
+                testing/inprocess_admin_client.h
+                testing/inprocess_admin_client.cc
+                testing/mock_completion_queue.h
+                testing/mock_mutate_rows_reader.h
+                testing/mock_read_rows_reader.h
+                testing/mock_response_reader.h
+                testing/mock_sample_row_keys_reader.h
+                testing/table_integration_test.h
+                testing/table_integration_test.cc
+                testing/table_test_fixture.h
+                testing/table_test_fixture.cc)
+    target_link_libraries(bigtable_client_testing
+                          PUBLIC bigtable_client
+                                 bigtable_protos
+                                 GTest::gmock_main
+                                 GTest::gmock
+                                 GTest::gtest
+                                 gRPC::grpc++
+                                 gRPC::grpc
+                                 protobuf::libprotobuf
+                          PRIVATE bigtable_common_options)
 
-create_bazel_config(bigtable_client_testing)
+    create_bazel_config(bigtable_client_testing)
 
-# List the unit tests, then setup the targets and dependencies.
-set(bigtable_client_unit_tests
-    admin_client_test.cc
-    app_profile_config_test.cc
-    bigtable_version_test.cc
-    cell_test.cc
-    client_options_test.cc
-    cluster_config_test.cc
-    column_family_test.cc
-    completion_queue_test.cc
-    data_client_test.cc
-    filters_test.cc
-    force_sanitizer_failures_test.cc
-    grpc_error_test.cc
-    idempotent_mutation_policy_test.cc
-    instance_admin_client_test.cc
-    instance_admin_test.cc
-    instance_config_test.cc
-    instance_update_config_test.cc
-    internal/async_check_consistency_test.cc
-    internal/async_future_from_callback_test.cc
-    internal/async_list_app_profiles_test.cc
-    internal/async_list_clusters_test.cc
-    internal/async_list_instances_test.cc
-    internal/async_longrunning_op_test.cc
-    internal/async_poll_op_test.cc
-    internal/async_retry_multi_page_test.cc
-    internal/async_retry_op_test.cc
-    internal/async_retry_unary_rpc_and_poll_test.cc
-    internal/bulk_mutator_test.cc
-    internal/table_async_check_and_mutate_row_test.cc
-    internal/instance_admin_test.cc
-    internal/grpc_error_delegate_test.cc
-    internal/prefix_range_end_test.cc
-    internal/table_admin_test.cc
-    internal/table_async_apply_test.cc
-    internal/table_async_bulk_apply_test.cc
-    internal/table_async_sample_row_keys_test.cc
-    internal/table_test.cc
-    mutations_test.cc
-    table_admin_test.cc
-    table_apply_test.cc
-    table_bulk_apply_test.cc
-    table_check_and_mutate_row_test.cc
-    table_config_test.cc
-    table_readrow_test.cc
-    table_readrows_test.cc
-    table_sample_row_keys_test.cc
-    table_test.cc
-    table_readmodifywriterow_test.cc
-    read_modify_write_rule_test.cc
-    row_reader_test.cc
-    row_test.cc
-    row_range_test.cc
-    row_set_test.cc
-    rpc_backoff_policy_test.cc
-    metadata_update_policy_test.cc
-    rpc_retry_policy_test.cc
-    polling_policy_test.cc)
+    # List the unit tests, then setup the targets and dependencies.
+    set(bigtable_client_unit_tests
+        admin_client_test.cc
+        app_profile_config_test.cc
+        bigtable_version_test.cc
+        cell_test.cc
+        client_options_test.cc
+        cluster_config_test.cc
+        column_family_test.cc
+        completion_queue_test.cc
+        data_client_test.cc
+        filters_test.cc
+        force_sanitizer_failures_test.cc
+        grpc_error_test.cc
+        idempotent_mutation_policy_test.cc
+        instance_admin_client_test.cc
+        instance_admin_test.cc
+        instance_config_test.cc
+        instance_update_config_test.cc
+        internal/async_check_consistency_test.cc
+        internal/async_future_from_callback_test.cc
+        internal/async_list_app_profiles_test.cc
+        internal/async_list_clusters_test.cc
+        internal/async_list_instances_test.cc
+        internal/async_longrunning_op_test.cc
+        internal/async_poll_op_test.cc
+        internal/async_retry_multi_page_test.cc
+        internal/async_retry_op_test.cc
+        internal/async_retry_unary_rpc_and_poll_test.cc
+        internal/bulk_mutator_test.cc
+        internal/table_async_check_and_mutate_row_test.cc
+        internal/instance_admin_test.cc
+        internal/grpc_error_delegate_test.cc
+        internal/prefix_range_end_test.cc
+        internal/table_admin_test.cc
+        internal/table_async_apply_test.cc
+        internal/table_async_bulk_apply_test.cc
+        internal/table_async_sample_row_keys_test.cc
+        internal/table_test.cc
+        mutations_test.cc
+        table_admin_test.cc
+        table_apply_test.cc
+        table_bulk_apply_test.cc
+        table_check_and_mutate_row_test.cc
+        table_config_test.cc
+        table_readrow_test.cc
+        table_readrows_test.cc
+        table_sample_row_keys_test.cc
+        table_test.cc
+        table_readmodifywriterow_test.cc
+        read_modify_write_rule_test.cc
+        row_reader_test.cc
+        row_test.cc
+        row_range_test.cc
+        row_set_test.cc
+        rpc_backoff_policy_test.cc
+        metadata_update_policy_test.cc
+        rpc_retry_policy_test.cc
+        polling_policy_test.cc)
 
-# Export the list of unit tests so the Bazel BUILD file can pick it up.
-export_list_to_bazel("bigtable_client_unit_tests.bzl"
-                     "bigtable_client_unit_tests")
+    # Export the list of unit tests so the Bazel BUILD file can pick it up.
+    export_list_to_bazel("bigtable_client_unit_tests.bzl"
+                         "bigtable_client_unit_tests")
 
-# Append this unit test after exporting to Bazel because it requires special
-# treatment
-list(APPEND bigtable_client_unit_tests internal/readrowsparser_test.cc)
+    # Append this unit test after exporting to Bazel because it requires special
+    # treatment
+    list(APPEND bigtable_client_unit_tests internal/readrowsparser_test.cc)
 
-foreach (fname ${bigtable_client_unit_tests})
-    string(REPLACE "/"
-                   "_"
-                   target
-                   ${fname})
-    string(REPLACE ".cc"
-                   ""
-                   target
-                   ${target})
-    add_executable(${target} ${fname})
-    target_link_libraries(${target}
-                          PRIVATE bigtable_client_testing
-                                  bigtable_client
-                                  bigtable_protos
-                                  google_cloud_cpp_testing
-                                  google_cloud_cpp_common
-                                  GTest::gmock_main
-                                  GTest::gmock
-                                  GTest::gtest
-                                  gRPC::grpc++
-                                  gRPC::grpc
-                                  protobuf::libprotobuf
-                                  bigtable_common_options)
-    add_test(NAME ${target} COMMAND ${target})
-endforeach ()
+    foreach (fname ${bigtable_client_unit_tests})
+        string(REPLACE "/"
+                       "_"
+                       target
+                       ${fname})
+        string(REPLACE ".cc"
+                       ""
+                       target
+                       ${target})
+        add_executable(${target} ${fname})
+        target_link_libraries(${target}
+                              PRIVATE bigtable_client_testing
+                                      bigtable_client
+                                      bigtable_protos
+                                      google_cloud_cpp_testing
+                                      google_cloud_cpp_common
+                                      GTest::gmock_main
+                                      GTest::gmock
+                                      GTest::gtest
+                                      gRPC::grpc++
+                                      gRPC::grpc
+                                      protobuf::libprotobuf
+                                      bigtable_common_options)
+        add_test(NAME ${target} COMMAND ${target})
+    endforeach ()
+endif ()
 
 option(FORCE_SANITIZER_ERRORS
        "If set, enable tests that force errors detected by the sanitizers." "")
@@ -399,7 +401,9 @@ if (FORCE_STATIC_ANALYZER_ERRORS)
                                -DBIGTABLE_CLIENT_FORCE_STATIC_ANALYZER_ERRORS)
 endif (FORCE_STATIC_ANALYZER_ERRORS)
 
-add_subdirectory(tests)
+if (BUILD_TESTING)
+    add_subdirectory(tests)
+endif ()
 
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(benchmarks)

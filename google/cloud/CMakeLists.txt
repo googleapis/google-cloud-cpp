@@ -154,66 +154,68 @@ set_target_properties(
 create_bazel_config(google_cloud_cpp_common)
 google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 
-add_library(google_cloud_cpp_testing
-            testing_util/capture_log_lines_backend.h
-            testing_util/capture_log_lines_backend.cc
-            testing_util/check_predicate_becomes_false.h
-            testing_util/chrono_literals.h
-            testing_util/environment_variable_restore.h
-            testing_util/environment_variable_restore.cc
-            testing_util/expect_exception.h
-            testing_util/expect_future_error.h
-            testing_util/custom_google_mock_main.cc
-            testing_util/init_google_mock.h
-            testing_util/init_google_mock.cc
-            testing_util/testing_types.h
-            testing_util/testing_types.cc)
-target_link_libraries(google_cloud_cpp_testing
-                      PUBLIC google_cloud_cpp_common GTest::gmock)
+if (BUILD_TESTING)
+    add_library(google_cloud_cpp_testing
+                testing_util/capture_log_lines_backend.h
+                testing_util/capture_log_lines_backend.cc
+                testing_util/check_predicate_becomes_false.h
+                testing_util/chrono_literals.h
+                testing_util/environment_variable_restore.h
+                testing_util/environment_variable_restore.cc
+                testing_util/expect_exception.h
+                testing_util/expect_future_error.h
+                testing_util/custom_google_mock_main.cc
+                testing_util/init_google_mock.h
+                testing_util/init_google_mock.cc
+                testing_util/testing_types.h
+                testing_util/testing_types.cc)
+    target_link_libraries(google_cloud_cpp_testing
+                          PUBLIC google_cloud_cpp_common GTest::gmock)
 
-create_bazel_config(google_cloud_cpp_testing)
+    create_bazel_config(google_cloud_cpp_testing)
 
-set(google_cloud_cpp_common_unit_tests
-    future_generic_test.cc
-    future_generic_then_test.cc
-    future_void_test.cc
-    future_void_then_test.cc
-    iam_bindings_test.cc
-    internal/backoff_policy_test.cc
-    internal/big_endian_test.cc
-    internal/filesystem_test.cc
-    internal/future_impl_test.cc
-    internal/invoke_result_test.cc
-    internal/random_test.cc
-    internal/retry_policy_test.cc
-    internal/throw_delegate_test.cc
-    log_test.cc
-    optional_test.cc
-    terminate_handler_test.cc)
+    set(google_cloud_cpp_common_unit_tests
+        future_generic_test.cc
+        future_generic_then_test.cc
+        future_void_test.cc
+        future_void_then_test.cc
+        iam_bindings_test.cc
+        internal/backoff_policy_test.cc
+        internal/big_endian_test.cc
+        internal/filesystem_test.cc
+        internal/future_impl_test.cc
+        internal/invoke_result_test.cc
+        internal/random_test.cc
+        internal/retry_policy_test.cc
+        internal/throw_delegate_test.cc
+        log_test.cc
+        optional_test.cc
+        terminate_handler_test.cc)
 
-# Export the list of unit tests so the Bazel BUILD file can pick it up.
-export_list_to_bazel("google_cloud_cpp_common_unit_tests.bzl"
-                     "google_cloud_cpp_common_unit_tests")
+    # Export the list of unit tests so the Bazel BUILD file can pick it up.
+    export_list_to_bazel("google_cloud_cpp_common_unit_tests.bzl"
+                         "google_cloud_cpp_common_unit_tests")
 
-foreach (fname ${google_cloud_cpp_common_unit_tests})
-    string(REPLACE "/"
-                   "_"
-                   target
-                   ${fname})
-    string(REPLACE ".cc"
-                   ""
-                   target
-                   ${target})
-    add_executable(${target} ${fname})
-    target_link_libraries(${target}
-                          PRIVATE google_cloud_cpp_testing
-                                  google_cloud_cpp_common
-                                  GTest::gmock_main
-                                  GTest::gmock
-                                  GTest::gtest
-                                  google_cloud_cpp_common_options)
-    add_test(NAME ${target} COMMAND ${target})
-endforeach ()
+    foreach (fname ${google_cloud_cpp_common_unit_tests})
+        string(REPLACE "/"
+                       "_"
+                       target
+                       ${fname})
+        string(REPLACE ".cc"
+                       ""
+                       target
+                       ${target})
+        add_executable(${target} ${fname})
+        target_link_libraries(${target}
+                              PRIVATE google_cloud_cpp_testing
+                                      google_cloud_cpp_common
+                                      GTest::gmock_main
+                                      GTest::gmock
+                                      GTest::gtest
+                                      google_cloud_cpp_common_options)
+        add_test(NAME ${target} COMMAND ${target})
+    endforeach ()
+endif ()
 
 # Export the CMake targets to make it easy to create configuration files.
 install(EXPORT google_cloud_cpp_common-targets
