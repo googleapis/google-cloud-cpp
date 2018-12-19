@@ -239,7 +239,7 @@ if [ "${BUILD_TESTING:-}" != "no" ]; then
     echo "${COLOR_GREEN}Running integration tests for ${subdir}${COLOR_RESET}"
     /v/${subdir}/ci/run_integration_tests.sh
   done
-if
+fi
 
 # Test the install rule and that the installation works.
 if [ "${TEST_INSTALL:-}" = "yes" ]; then
