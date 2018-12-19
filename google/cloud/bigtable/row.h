@@ -31,11 +31,6 @@ inline namespace BIGTABLE_CLIENT_NS {
  */
 class Row {
  public:
-  Row(Row&& rhs) noexcept = default;
-  Row& operator=(Row&& rhs) noexcept = default;
-  Row(Row const& rhs) = default;
-  Row& operator=(Row const& rhs) = default;
-
   /// Create a row from a list of cells.
   Row(std::string row_key, std::vector<Cell> cells)
       : row_key_(std::move(row_key)), cells_(std::move(cells)) {}

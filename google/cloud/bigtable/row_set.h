@@ -33,6 +33,11 @@ class RowSet {
   /// Create an empty set.
   RowSet() {}
 
+  RowSet(RowSet&& rhs) noexcept = default;
+  RowSet& operator=(RowSet&& rhs) noexcept = default;
+  RowSet(RowSet const& rhs) = default;
+  RowSet& operator=(RowSet const& rhs) = default;
+
   template <typename... Arg>
   RowSet(Arg&&... a) {
     // Generate a better error message when the parameters do not match.
