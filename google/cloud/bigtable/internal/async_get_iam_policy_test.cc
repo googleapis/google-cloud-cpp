@@ -116,6 +116,59 @@ TEST_F(NoexAsyncGetamPolicyTest, Simple) {
   EXPECT_TRUE(cq_impl_->empty());
 }
 
+/// @test Verify that InstanceAdmin::AsyncGetIamPolicy() works for retry
+/// case.
+TEST_F(NoexAsyncGetamPolicyTest, Retry) {
+  EXPECT_CALL(*client_, AsyncGetIamPolicy(_, _, _))
+      .WillOnce(Invoke([this](
+                           grpc::ClientContext*,
+                           google::iam::v1::GetIamPolicyRequest const& request,
+                           grpc::CompletionQueue*) {
+        return std::unique_ptr<
+            grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>(
+            get_iam_policy_reader_.get());
+      }))
+      .WillOnce(Invoke([this](
+                           grpc::ClientContext*,
+                           google::iam::v1::GetIamPolicyRequest const& request,
+                           grpc::CompletionQueue*) {
+        return std::unique_ptr<
+            grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>(
+            get_iam_policy_reader_.get());
+      }));
+
+  EXPECT_CALL(*get_iam_policy_reader_, Finish(_, _, _))
+      .WillOnce(Invoke(
+          [](google::iam::v1::Policy* response, grpc::Status* status, void*) {
+            response->set_etag("test_etag");
+            *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "");
+          }))
+      .WillOnce(Invoke(
+          [](google::iam::v1::Policy* response, grpc::Status* status, void*) {
+            response->set_etag("test_etag");
+            *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+          }));
+
+  op_->Start(cq_);
+
+  EXPECT_FALSE(user_op_called_);
+  EXPECT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);
+
+  EXPECT_FALSE(user_op_called_);
+  EXPECT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);
+
+  EXPECT_FALSE(user_op_called_);
+  EXPECT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);
+
+  EXPECT_TRUE(user_op_called_);
+  EXPECT_TRUE(user_status_.ok());
+  EXPECT_EQ("test_etag", user_res_.etag);
+  EXPECT_TRUE(cq_impl_->empty());
+}
+
 }  // namespace
 }  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
