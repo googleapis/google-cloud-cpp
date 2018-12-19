@@ -143,8 +143,9 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 # interested in compiling and running the gRPC tests.
 include(IncludeGrpc)
 
-# Enable testing in this directory so we can do a top-level `make test`.
-enable_testing()
+# Enable testing in this directory so we can do a top-level `make test`. This
+# also includes the BUILD_TESTING option, which is on by default.
+include(CTest)
 
 # Each subproject adds dependencies to this target to have their docs generated.
 add_custom_target(doxygen-docs)

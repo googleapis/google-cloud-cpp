@@ -61,7 +61,7 @@ add_library(storage_common_options INTERFACE)
 google_cloud_cpp_add_common_options(storage_common_options)
 
 # Enable unit tests
-enable_testing()
+include(CTest)
 
 include(IncludeCurl)
 
@@ -247,129 +247,133 @@ set_target_properties(
         SOVERSION
         ${STORAGE_CLIENT_VERSION_MAJOR})
 
-add_library(storage_client_testing
-            testing/canonical_errors.h
-            testing/mock_client.h
-            testing/mock_http_request.h
-            testing/mock_http_request.cc
-            testing/retry_tests.h
-            testing/storage_integration_test.h
-            testing/storage_integration_test.cc)
-target_link_libraries(storage_client_testing
-                      PUBLIC storage_client
-                             nlohmann_json
-                             GTest::gmock_main
-                             GTest::gmock
-                             GTest::gtest
-                      PRIVATE storage_common_options)
-target_include_directories(storage_client_testing
-                           PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                                  $<INSTALL_INTERFACE:include>)
-target_compile_options(storage_client_testing
-                       PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-
 create_bazel_config(storage_client)
 google_cloud_cpp_add_clang_tidy(storage_client)
-create_bazel_config(storage_client_testing)
 
-# List the unit tests, then setup the targets and dependencies.
-set(storage_client_unit_tests
-    bucket_access_control_test.cc
-    bucket_metadata_test.cc
-    bucket_test.cc
-    client_bucket_acl_test.cc
-    client_default_object_acl_test.cc
-    client_object_acl_test.cc
-    client_object_copy_test.cc
-    client_service_account_test.cc
-    client_notifications_test.cc
-    client_sign_url_test.cc
-    client_test.cc
-    client_write_object_test.cc
-    hashing_options_test.cc
-    idempotency_policy_test.cc
-    internal/access_control_common_test.cc
-    internal/binary_data_as_debug_string_test.cc
-    internal/bucket_acl_requests_test.cc
-    internal/bucket_requests_test.cc
-    internal/compute_engine_util_test.cc
-    internal/curl_client_test.cc
-    internal/curl_resumable_upload_session_test.cc
-    internal/curl_wrappers_locking_already_present_test.cc
-    internal/curl_wrappers_locking_enabled_test.cc
-    internal/curl_wrappers_locking_disabled_test.cc
-    internal/default_object_acl_requests_test.cc
-    internal/format_rfc3339_test.cc
-    internal/generate_message_boundary_test.cc
-    internal/hash_validator_test.cc
-    internal/http_response_test.cc
-    internal/logging_client_test.cc
-    internal/logging_resumable_upload_session_test.cc
-    internal/metadata_parser_test.cc
-    internal/nljson_test.cc
-    internal/noex_client_test.cc
-    internal/notification_requests_test.cc
-    internal/object_acl_requests_test.cc
-    internal/object_requests_test.cc
-    internal/parse_rfc3339_test.cc
-    internal/patch_builder_test.cc
-    internal/retry_client_test.cc
-    internal/retry_resumable_upload_session_test.cc
-    internal/service_account_requests_test.cc
-    internal/signed_url_requests_test.cc
-    internal/throw_status_delegate_test.cc
-    lifecycle_rule_test.cc
-    list_buckets_reader_test.cc
-    list_objects_reader_test.cc
-    oauth2/anonymous_credentials_test.cc
-    oauth2/authorized_user_credentials_test.cc
-    oauth2/compute_engine_credentials_test.cc
-    oauth2/google_application_default_credentials_file_test.cc
-    oauth2/google_credentials_test.cc
-    oauth2/service_account_credentials_test.cc
-    object_access_control_test.cc
-    object_metadata_test.cc
-    object_test.cc
-    notification_metadata_test.cc
-    retry_policy_test.cc
-    service_account_test.cc
-    signed_url_options_test.cc
-    status_or_test.cc
-    storage_class_test.cc
-    storage_client_options_test.cc
-    storage_version_test.cc
-    well_known_headers_test.cc)
+if (BUILD_TESTING)
+    add_library(storage_client_testing
+                testing/canonical_errors.h
+                testing/mock_client.h
+                testing/mock_http_request.h
+                testing/mock_http_request.cc
+                testing/retry_tests.h
+                testing/storage_integration_test.h
+                testing/storage_integration_test.cc)
+    target_link_libraries(storage_client_testing
+                          PUBLIC storage_client
+                                 nlohmann_json
+                                 GTest::gmock_main
+                                 GTest::gmock
+                                 GTest::gtest
+                          PRIVATE storage_common_options)
+    target_include_directories(storage_client_testing
+                               PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                      $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+                                      $<INSTALL_INTERFACE:include>)
+    target_compile_options(storage_client_testing
+                           PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-foreach (fname ${storage_client_unit_tests})
-    string(REPLACE "/"
-                   "_"
-                   target
-                   ${fname})
-    string(REPLACE ".cc"
-                   ""
-                   target
-                   ${target})
-    add_executable(${target} ${fname})
-    target_link_libraries(${target}
-                          PRIVATE storage_client_testing
-                                  google_cloud_cpp_testing
-                                  storage_client
-                                  google_cloud_cpp_testing
-                                  GTest::gmock_main
-                                  GTest::gmock
-                                  GTest::gtest
-                                  CURL::CURL
-                                  storage_common_options
-                                  nlohmann_json)
-    add_test(NAME ${target} COMMAND ${target})
-endforeach ()
+    create_bazel_config(storage_client_testing)
 
-# Export the list of unit tests so the Bazel BUILD file can pick it up.
-export_list_to_bazel(
-    "storage_client_unit_tests.bzl" "storage_client_unit_tests")
+    # List the unit tests, then setup the targets and dependencies.
+    set(storage_client_unit_tests
+        bucket_access_control_test.cc
+        bucket_metadata_test.cc
+        bucket_test.cc
+        client_bucket_acl_test.cc
+        client_default_object_acl_test.cc
+        client_object_acl_test.cc
+        client_object_copy_test.cc
+        client_service_account_test.cc
+        client_notifications_test.cc
+        client_sign_url_test.cc
+        client_test.cc
+        client_write_object_test.cc
+        hashing_options_test.cc
+        idempotency_policy_test.cc
+        internal/access_control_common_test.cc
+        internal/binary_data_as_debug_string_test.cc
+        internal/bucket_acl_requests_test.cc
+        internal/bucket_requests_test.cc
+        internal/compute_engine_util_test.cc
+        internal/curl_client_test.cc
+        internal/curl_resumable_upload_session_test.cc
+        internal/curl_wrappers_locking_already_present_test.cc
+        internal/curl_wrappers_locking_enabled_test.cc
+        internal/curl_wrappers_locking_disabled_test.cc
+        internal/default_object_acl_requests_test.cc
+        internal/format_rfc3339_test.cc
+        internal/generate_message_boundary_test.cc
+        internal/hash_validator_test.cc
+        internal/http_response_test.cc
+        internal/logging_client_test.cc
+        internal/logging_resumable_upload_session_test.cc
+        internal/metadata_parser_test.cc
+        internal/nljson_test.cc
+        internal/noex_client_test.cc
+        internal/notification_requests_test.cc
+        internal/object_acl_requests_test.cc
+        internal/object_requests_test.cc
+        internal/parse_rfc3339_test.cc
+        internal/patch_builder_test.cc
+        internal/retry_client_test.cc
+        internal/retry_resumable_upload_session_test.cc
+        internal/service_account_requests_test.cc
+        internal/signed_url_requests_test.cc
+        internal/throw_status_delegate_test.cc
+        lifecycle_rule_test.cc
+        list_buckets_reader_test.cc
+        list_objects_reader_test.cc
+        oauth2/anonymous_credentials_test.cc
+        oauth2/authorized_user_credentials_test.cc
+        oauth2/compute_engine_credentials_test.cc
+        oauth2/google_application_default_credentials_file_test.cc
+        oauth2/google_credentials_test.cc
+        oauth2/service_account_credentials_test.cc
+        object_access_control_test.cc
+        object_metadata_test.cc
+        object_test.cc
+        notification_metadata_test.cc
+        retry_policy_test.cc
+        service_account_test.cc
+        signed_url_options_test.cc
+        status_or_test.cc
+        storage_class_test.cc
+        storage_client_options_test.cc
+        storage_version_test.cc
+        well_known_headers_test.cc)
 
-add_subdirectory(tests)
+    foreach (fname ${storage_client_unit_tests})
+        string(REPLACE "/"
+                       "_"
+                       target
+                       ${fname})
+        string(REPLACE ".cc"
+                       ""
+                       target
+                       ${target})
+        add_executable(${target} ${fname})
+        if (BUILD_TESTING)
+            target_link_libraries(${target}
+                                  PRIVATE storage_client_testing
+                                          google_cloud_cpp_testing
+                                          storage_client
+                                          GTest::gmock_main
+                                          GTest::gmock
+                                          GTest::gtest
+                                          CURL::CURL
+                                          storage_common_options
+                                          nlohmann_json)
+            add_test(NAME ${target} COMMAND ${target})
+        endif ()
+    endforeach ()
+
+    # Export the list of unit tests so the Bazel BUILD file can pick it up.
+    export_list_to_bazel("storage_client_unit_tests.bzl"
+                         "storage_client_unit_tests")
+
+    add_subdirectory(tests)
+endif ()
 
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(benchmarks)
