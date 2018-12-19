@@ -39,6 +39,7 @@ class AsyncRetryAndPollUnaryRpc;
 class AsyncListClusters;
 class AsyncListInstances;
 class AsyncListAppProfiles;
+class AsyncGetIamPolicy;
 }  // namespace internal
 
 /**
@@ -99,6 +100,7 @@ class InstanceAdminClient {
   friend class internal::AsyncListClusters;
   friend class internal::AsyncListInstances;
   friend class internal::AsyncListAppProfiles;
+  friend class internal::AsyncGetIamPolicy;
   template <typename ResultType, typename ClientType>
   friend ResultType internal::PollLongRunningOperation(
       std::shared_ptr<ClientType> client,
@@ -311,6 +313,12 @@ class InstanceAdminClient {
       grpc::ClientContext* context,
       const google::bigtable::admin::v2::ListAppProfilesRequest& request,
       grpc::CompletionQueue* cq) = 0;
+
+  virtual std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>
+  AsyncGetIamPolicy(grpc::ClientContext* context,
+                    google::iam::v1::GetIamPolicyRequest const& request,
+                    grpc::CompletionQueue* cq) = 0;
   //@}
 
   //@{

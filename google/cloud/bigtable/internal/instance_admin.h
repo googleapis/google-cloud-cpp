@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/instance_admin_client.h"
 #include "google/cloud/bigtable/instance_config.h"
 #include "google/cloud/bigtable/instance_update_config.h"
+#include "google/cloud/bigtable/internal/async_get_iam_policy.h"
 #include "google/cloud/bigtable/internal/async_list_app_profiles.h"
 #include "google/cloud/bigtable/internal/async_list_clusters.h"
 #include "google/cloud/bigtable/internal/async_list_instances.h"
@@ -950,6 +951,37 @@ class InstanceAdmin {
 
   google::cloud::IamPolicy GetIamPolicy(std::string const& instance_id,
                                         grpc::Status& status);
+
+  /**
+   * Makes an asynchronous request to get the policy of an instance.
+   *
+   * @param instance_id the Cloud Bigtable instance that hold the policy.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, google::cloud::IamPolicy&,
+   *         grpc::Status const&>);
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      google::cloud::IamPolicy&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  void AsyncGetIamPolicy(std::string const& instance_id, CompletionQueue& cq,
+                         Functor&& callback) {
+    auto op =
+        std::make_shared<bigtable::internal::AsyncRetryGetIamPolicy<Functor>>(
+            __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+            metadata_update_policy_, client_, project_name_, instance_id,
+            std::forward<Functor>(callback));
+    op->Start(cq);
+  }
 
   google::cloud::IamPolicy SetIamPolicy(
       std::string const& instance_id,

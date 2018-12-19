@@ -476,6 +476,53 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
   pool.join();
 }
 
+/// @test Verify that Async IAM Policy APIs work as expected.
+TEST_F(InstanceAdminAsyncIntegrationTest, AsyncSetGetTestIamAPIsTest) {
+  std::string id =
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+
+  // create instance prerequisites for cluster operations
+  bigtable::InstanceId instance_id(id);
+  auto instance_config = IntegrationTestConfig(
+      id, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance_details =
+      instance_admin_->CreateInstance(instance_config).get();
+
+  bigtable::noex::InstanceAdmin admin(instance_admin_client_);
+  google::cloud::bigtable::CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  std::string resource = id;
+  auto iam_bindings = google::cloud::IamBindings(
+      "writer", {"abc@gmail.com", "xyz@gmail.com", "pqr@gmail.com"});
+
+  auto initial_policy =
+      instance_admin_->SetIamPolicy(id, iam_bindings, "test-tag");
+
+  // Get policy
+  std::promise<google::cloud::IamPolicy> promise_get_policy;
+  admin.AsyncGetIamPolicy(
+      id, cq,
+      [&promise_get_policy](google::cloud::bigtable::CompletionQueue& cq,
+                            google::cloud::IamPolicy& policy,
+                            grpc::Status const& status) {
+        promise_get_policy.set_value(std::move(policy));
+      });
+  auto response_get_policy = promise_get_policy.get_future().get();
+
+  EXPECT_EQ(initial_policy.version, response_get_policy.version);
+  EXPECT_EQ(initial_policy.etag, response_get_policy.etag);
+
+  auto permission_set = instance_admin_->TestIamPermissions(
+      id, {"bigtable.tables.list", "bigtable.tables.delete"});
+
+  EXPECT_EQ(2U, permission_set.size());
+
+  cq.Shutdown();
+  pool.join();
+}
+
 int main(int argc, char* argv[]) {
   google::cloud::testing_util::InitGoogleMock(argc, argv);
 

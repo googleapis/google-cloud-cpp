@@ -36,6 +36,7 @@ bigtable_client_unit_tests = [
     "instance_update_config_test.cc",
     "internal/async_check_consistency_test.cc",
     "internal/async_future_from_callback_test.cc",
+    "internal/async_get_iam_policy_test.cc",
     "internal/async_list_app_profiles_test.cc",
     "internal/async_list_clusters_test.cc",
     "internal/async_list_instances_test.cc",
