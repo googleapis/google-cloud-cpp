@@ -34,18 +34,64 @@ accept your pull requests.
 ### More Information on Forks and Pull Requests
 
 If you are just getting started with `git` and [GitHub](https://github.com),
-we think the following links may help you understand the usual workflow used
-in this project:
+this section might be helpful. In this project we use the (more or less)
+standard [GitHub workflow][workflow-link]:
 
-* [Forking Projects](https://guides.github.com/activities/forking/)
-* [Understanding the GitHub Flow](https://guides.github.com/introduction/flow/)
-* [Syncing a Fork](https://help.github.com/articles/syncing-a-fork/)
-  * A more succinct guide to [Keeping a Fork up to date](https://gist.github.com/CristinaSolana/1885435)
+1. You create a [fork][fork-link] of [google-cloud-cpp][repo-link]. Then
+   [clone][about-clone] that fork into your workstation:
+   ```console
+   cd $HOME
+   git clone git@github.com:YOUR-USER-NAME/google-cloud-cpp.git
+   ```
+2. You pick an existing [GitHub bug][mastering-issues] to work on.
+3. You start a new [branch][about-branches] for each feature (or bug fix).
+   ```console
+   cd into/cloned/fork-repo
+   git checkout master
+   git checkout -b my-feature-branch
+   # make your changes
+   git push
+   ```
+4. You submit a [pull-request][about-pull-requests] to merge your branch into
+   `GoogleCloudPlatform/google-cloud-cpp`.
+5. Your reviewers may ask questions, suggest improvements or alternatives. You
+   address those by either answering the questions in the review or adding more
+   [commits][about-commits] to your branch.
+6. From time to time your pull request may have conflicts with the destination
+   branch, if so, we request that you [rebase][about-rebase] your branch
+   instead of merging with the destination branch. The reviews can become very
+   confusing if you merge during a pull request. Assuming you have recently
+   synchronized your `master` branch (see below), the commands to rebase would
+   be:
+   ```console
+   git checkout my-feature-branch
+   git rebase master
+   git push -f
+   ```
+7. If one of the CI builds fail please see below, most of the CI builds can
+   be reproduced locally on your workstations using Docker.
+8. Eventually the reviewers accept your changes, and they are merged into the
+   `master` branch.
+9. Periodically, and almost certainly before starting your next task, you need
+   to [sync your fork][syncing-a-fork] to update your fork to the new state of
+   the main repository.
+   ```console
+   cd into/cloned/fork-repo
+   git remote add upstream git://github.com/GoogleCloudPlatform/google-cloud-cpp.git
+   git fetch upstream
+   git pull upstream master
+   ```
 
-If your pull request has a conflict with the destination branch we request
-that you [rebase](https://help.github.com/articles/about-git-rebase/) your
-branch against the destination branch. Reviewing PRs that include both existing
-and new changes is a source of error that we would rather eliminate.
+[workflow-link]: https://guides.github.com/introduction/flow/
+[fork-link]: https://guides.github.com/activities/forking/
+[repo-link]: https://github.com/GoogleCloudPlatform/google-cloud-cpp.git
+[mastering-issues]: https://guides.github.com/features/issues/
+[about-clone]: https://help.github.com/articles/cloning-a-repository/
+[about-branches]: https://help.github.com/articles/about-branches/
+[about-pull-requests]: https://help.github.com/articles/about-pull-requests/
+[about-commits]: https://help.github.com/desktop/guides/contributing-to-projects/committing-and-reviewing-changes-to-your-project/#about-commits
+[about-rebase]: https://help.github.com/articles/about-git-rebase/
+[syncing-a-fork]: https://help.github.com/articles/syncing-a-fork/
 
 ## Style
 
