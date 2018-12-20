@@ -104,6 +104,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4d1c8bc911dc11665c8fcc59bc032c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25f8ec5bf45729f3fe8e56e1d787b55b"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; grpc::ClientReaderInterface&lt; btproto::ReadRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DefaultDataClient.html#a25f8ec5bf45729f3fe8e56e1d787b55b">ReadRows</a> (grpc::ClientContext *context, btproto::ReadRowsRequest const &amp;request) override</td></tr>
 <tr class="separator:a25f8ec5bf45729f3fe8e56e1d787b55b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f9c3f0a61f3c9b82f87c3768e9ee561"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; grpc::ClientAsyncReaderInterface&lt; btproto::ReadRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DefaultDataClient.html#a6f9c3f0a61f3c9b82f87c3768e9ee561">AsyncReadRows</a> (grpc::ClientContext *context, const google::bigtable::v2::ReadRowsRequest &amp;request, grpc::CompletionQueue *cq, void *tag) override</td></tr>
+<tr class="separator:a6f9c3f0a61f3c9b82f87c3768e9ee561"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad807b3cf9bbc87d2c29353fdfd6a1032"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; grpc::ClientReaderInterface&lt; btproto::SampleRowKeysResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DefaultDataClient.html#ad807b3cf9bbc87d2c29353fdfd6a1032">SampleRowKeys</a> (grpc::ClientContext *context, btproto::SampleRowKeysRequest const &amp;request) override</td></tr>
 <tr class="separator:ad807b3cf9bbc87d2c29353fdfd6a1032"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20b72b4e08c9ea65d749796a188c95c7"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt;::grpc::ClientAsyncReaderInterface&lt; ::google::bigtable::v2::SampleRowKeysResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DefaultDataClient.html#a20b72b4e08c9ea65d749796a188c95c7">AsyncSampleRowKeys</a> (::grpc::ClientContext *context, const ::google::bigtable::v2::SampleRowKeysRequest &amp;request, ::grpc::CompletionQueue *cq, void *tag) override</td></tr>
@@ -389,6 +391,56 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#ab362e75e4fc9e33260d8883e451d4df3">google::cloud::bigtable::v0::DataClient</a>.</p>
+
+</div>
+</div>
+<a id="a6f9c3f0a61f3c9b82f87c3768e9ee561"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f9c3f0a61f3c9b82f87c3768e9ee561">&#9670;&nbsp;</a></span>AsyncReadRows()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;grpc::ClientAsyncReaderInterface&lt;btproto::ReadRowsResponse&gt; &gt; google::cloud::bigtable::v0::DefaultDataClient::AsyncReadRows </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const google::bigtable::v2::ReadRowsRequest &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">grpc::CompletionQueue *&#160;</td>
+          <td class="paramname"><em>cq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>tag</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#ab8e2db2fd029376255a1958b577a530e">google::cloud::bigtable::v0::DataClient</a>.</p>
 
 </div>
 </div>
