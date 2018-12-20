@@ -28,12 +28,19 @@
 #include "google/cloud/storage/object_rewriter.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/retry_policy.h"
+#include "google/cloud/storage/status_or.h"
 #include "google/cloud/storage/upload_options.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+/// A tag to dispatch the non-throwing versions of the API.
+struct nothrow_t {};
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+extern nothrow_t const nothrow;
+
 /**
  * The Google Cloud Storage (GCS) Client.
  *
@@ -2279,13 +2286,26 @@ class Client {
   template <typename... Options>
   std::vector<NotificationMetadata> ListNotifications(
       std::string const& bucket_name, Options&&... options) {
+    return ListNotifications(nothrow, bucket_name,
+                             std::forward<Options>(options)...)
+        .value();
+  }
+
+  /**
+   * This overload works exactly the `ListNotifications()` without a `nothrow_t`
+   * parameter, except that it returns a `Status` on error, and the normal
+   * return value on success.
+   */
+  template <typename... Options>
+  StatusOr<std::vector<NotificationMetadata>> ListNotifications(
+      nothrow_t, std::string const& bucket_name, Options&&... options) {
     internal::ListNotificationsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto result = raw_client_->ListNotifications(request);
     if (result.first.ok()) {
-      return result.second.items;
+      return std::move(result.second.items);
     }
-    internal::ThrowStatus(std::move(result.first));
+    return std::move(result.first);
   }
 
   /**
@@ -2330,10 +2350,26 @@ class Client {
                                           std::string const& payload_format,
                                           NotificationMetadata metadata,
                                           Options&&... options) {
+    return CreateNotification(nothrow, bucket_name, topic_name, payload_format,
+                              std::move(metadata),
+                              std::forward<Options>(options)...)
+        .value();
+  }
+
+  /**
+   * This overload works exactly the `CreateNotifications()` without a
+   * `nothrow_t` parameter, except that it returns a `Status` on error, and the
+   * normal return value on success.
+   */
+  template <typename... Options>
+  StatusOr<NotificationMetadata> CreateNotification(
+      nothrow_t, std::string const& bucket_name, std::string const& topic_name,
+      std::string const& payload_format, NotificationMetadata metadata,
+      Options&&... options) {
     metadata.set_topic(topic_name).set_payload_format(payload_format);
     internal::CreateNotificationRequest request(bucket_name, metadata);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return ThrowOnError(raw_client_->CreateNotification(request));
+    return AsStatusOr(raw_client_->CreateNotification(request));
   }
 
   /**
@@ -2414,6 +2450,18 @@ class Client {
   //@}
 
  private:
+  template <typename T>
+  StatusOr<T> AsStatusOr(std::pair<Status, T> result) {
+    if (not result.first.ok()) {
+      return std::move(result.first);
+    }
+    return std::move(result.second);
+  }
+
+  Status AsStatusOr(std::pair<Status, internal::EmptyResponse> result) {
+    return std::move(result.first);
+  }
+
   static std::shared_ptr<internal::RawClient> CreateDefaultClient(
       ClientOptions options);
 
