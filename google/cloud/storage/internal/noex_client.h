@@ -133,9 +133,9 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     auto result = raw_client_->ListNotifications(request);
     if (not result.first.ok()) {
-      return std::move(result.first);
+      return result.first;
     }
-    return std::move(result.second.items);
+    return result.second.items;
   }
 
   /**
