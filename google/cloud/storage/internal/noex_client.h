@@ -133,9 +133,9 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     auto result = raw_client_->ListNotifications(request);
     if (not result.first.ok()) {
-      return result.first;
+      return std::move(result.first);
     }
-    return result.second.items;
+    return std::move(result.second.items);
   }
 
   /**
@@ -257,13 +257,13 @@ class Client {
   template <typename T>
   StatusOr<T> AsStatusOr(std::pair<Status, T> result) {
     if (not result.first.ok()) {
-      return result.first;
+      return std::move(result.first);
     }
-    return result.second;
+    return std::move(result.second);
   }
 
   StatusOr<void> AsStatusOr(std::pair<Status, internal::EmptyResponse> result) {
-    return result.first;
+    return std::move(result.first);
   }
 
   // TODO(#1694) - remove all the code duplicated in `storage::Client`.
