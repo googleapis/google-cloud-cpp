@@ -37,9 +37,19 @@ If you are just getting started with `git` and [GitHub](https://github.com),
 this section might be helpful. In this project we use the (more or less)
 standard [GitHub workflow][workflow-link]:
 
-1. You create a [fork][fork-link] of [google-cloud-cpp][repo-link]
+1. You create a [fork][fork-link] of [google-cloud-cpp][repo-link]. Then
+   [clone][about-clone] that fork into your workstation:
+   ```console
+   cd $HOME
+   git clone git@github.com:YOUR-USER-NAME/google-cloud-cpp.git
+   ```
 2. You pick an existing [GitHub bug][mastering-issues] to work on.
 3. You start a new [branch][about-branches] for each feature (or bug fix).
+   ```console
+   cd into/cloned/fork-repo
+   git checkout master
+   git checkout -b my-feature-branch
+   ```
 4. You submit a [pull-request][about-pull-requests] to merge your branch into
    `GoogleCloudPlatform/google-cloud-cpp`.
 5. Your reviewers may ask questions, suggest improvements or alternatives. You
@@ -56,16 +66,23 @@ standard [GitHub workflow][workflow-link]:
 9. Periodically, and almost certainly before starting your next task, you need
    to [sync your fork][syncing-a-fork] to update your fork to the new state of
    the main repository.
+   ```console
+   cd into/cloned/fork-repo
+   git remote add upstream git://github.com/GoogleCloudPlatform/google-cloud-cpp.git
+   git fetch upstream
+   git pull upstream master
+   ```
 
 [workflow-link]: https://guides.github.com/introduction/flow/
 [fork-link]: https://guides.github.com/activities/forking/
 [repo-link]: https://github.com/GoogleCloudPlatform/google-cloud-cpp.git
 [mastering-issues]: https://guides.github.com/features/issues/
+[about-clone]: https://help.github.com/articles/cloning-a-repository/
 [about-branches]: https://help.github.com/articles/about-branches/
 [about-pull-requests]: https://help.github.com/articles/about-pull-requests/
 [about-commits]: https://help.github.com/desktop/guides/contributing-to-projects/committing-and-reviewing-changes-to-your-project/#about-commits
-[syncing-a-fork]: https://gist.github.com/CristinaSolana/1885435
 [about-rebase]: https://help.github.com/articles/about-git-rebase/
+[syncing-a-fork]: https://help.github.com/articles/syncing-a-fork/
 
 ## Style
 
