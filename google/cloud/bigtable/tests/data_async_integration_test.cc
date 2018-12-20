@@ -271,6 +271,50 @@ TEST_F(DataAsyncIntegrationTest, TableCheckAndMutateRowFail) {
   CheckEqualUnordered(expected, actual);
 }
 
+TEST_F(DataAsyncIntegrationTest, TableReadRowsAllRows) {
+  std::string const table_id = RandomTableId();
+  auto sync_table = CreateTable(table_id, table_config);
+  noex::Table table(data_client_, table_id);
+  std::string const row_key1 = "row-key-1";
+  std::string const row_key2 = "row-key-2";
+  std::string const row_key3(1024, '3');    // a long key
+  std::string const long_value(1024, 'v');  // a long value
+
+  std::vector<bigtable::Cell> created{
+      {row_key1, family, "c1", 1000, "data1", {}},
+      {row_key1, family, "c2", 1000, "data2", {}},
+      {row_key2, family, "c1", 1000, "", {}},
+      {row_key3, family, "c1", 1000, long_value, {}}};
+
+  CreateCells(*sync_table, created);
+
+  CompletionQueue cq;
+  std::promise<void> done;
+  std::thread pool([&cq] { cq.Run(); });
+
+  std::vector<bigtable::Cell> actual;
+
+  table.AsyncReadRows(
+      bigtable::RowSet(bigtable::RowRange::InfiniteRange()),
+      RowReader::NO_ROWS_LIMIT, Filter::PassAllFilter(), cq,
+      [&actual](CompletionQueue& cq, Row row, grpc::Status& status) {
+        std::move(row.cells().begin(), row.cells().end(),
+                  std::back_inserter(actual));
+      },
+      [&done](CompletionQueue& cq, bool& response, grpc::Status const& status) {
+        done.set_value();
+        EXPECT_TRUE(status.ok());
+      });
+
+  done.get_future().get();
+
+  cq.Shutdown();
+  pool.join();
+
+  DeleteTable(table_id);
+  CheckEqualUnordered(created, actual);
+}
+
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

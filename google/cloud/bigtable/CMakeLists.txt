@@ -166,10 +166,12 @@ add_library(bigtable_client
             internal/async_poll_op.h
             internal/async_sample_row_keys.h
             internal/async_sample_row_keys.cc
+            internal/async_read_row_operation.h
             internal/async_retry_multi_page.h
             internal/async_retry_op.h
             internal/async_retry_unary_rpc.h
             internal/async_retry_unary_rpc_and_poll.h
+            internal/async_row_reader.h
             internal/bulk_mutator.h
             internal/bulk_mutator.cc
             internal/completion_queue_impl.h
@@ -327,6 +329,7 @@ if (BUILD_TESTING)
         internal/table_admin_test.cc
         internal/table_async_apply_test.cc
         internal/table_async_bulk_apply_test.cc
+        internal/table_async_row_reader_test.cc
         internal/table_async_sample_row_keys_test.cc
         internal/table_test.cc
         mutations_test.cc
