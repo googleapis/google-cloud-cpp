@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/list_objects_reader.h"
+#include "google/cloud/storage/internal/throw_status_delegate.h"
 
 namespace google {
 namespace cloud {
@@ -88,6 +89,9 @@ google::cloud::optional<ObjectMetadata> ListObjectsReader::GetNext() {
     }
     request_.set_page_token(std::move(next_page_token_));
     auto response = client_->ListObjects(request_);
+    if (not response.first.ok()) {
+      internal::ThrowStatus(std::move(response.first));
+    }
     next_page_token_ = std::move(response.second.next_page_token);
     current_objects_ = std::move(response.second.items);
     current_ = current_objects_.begin();
