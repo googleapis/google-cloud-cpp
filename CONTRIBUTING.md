@@ -49,6 +49,8 @@ standard [GitHub workflow][workflow-link]:
    cd into/cloned/fork-repo
    git checkout master
    git checkout -b my-feature-branch
+   # make your changes
+   git push
    ```
 4. You submit a [pull-request][about-pull-requests] to merge your branch into
    `GoogleCloudPlatform/google-cloud-cpp`.
@@ -58,7 +60,14 @@ standard [GitHub workflow][workflow-link]:
 6. From time to time your pull request may have conflicts with the destination
    branch, if so, we request that you [rebase][about-rebase] your branch
    instead of merging with the destination branch. The reviews can become very
-   confusing if you merge during a pull request.
+   confusing if you merge during a pull request. Assuming you have recently
+   synchronized your `master` branch (see below), the commands to rebase would
+   be:
+   ```console
+   git checkout my-feature-branch
+   git rebase master
+   git push -f
+   ```
 7. If one of the CI builds fail please see below, most of the CI builds can
    be reproduced locally on your workstations using Docker.
 8. Eventually the reviewers accept your changes, and they are merged into the
