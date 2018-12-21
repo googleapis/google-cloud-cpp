@@ -49,6 +49,7 @@ export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
 bazel test \
     --copt=-DGRPC_BAZEL_BUILD \
     --action_env=GOOGLE_APPLICATION_CREDENTIALS="${GOOGLE_APPLICATION_CREDENTIALS}" \
+    --incompatible_package_name_is_a_function=false \
     --test_output=errors \
     --verbose_failures=true \
     --keep_going \
@@ -60,6 +61,7 @@ echo "================================================================"
 bazel build \
     --copt=-DGRPC_BAZEL_BUILD \
     --action_env=GOOGLE_APPLICATION_CREDENTIALS="${GOOGLE_APPLICATION_CREDENTIALS}" \
+    --incompatible_package_name_is_a_function=false \
     --test_output=errors \
     --verbose_failures=true \
     --keep_going \
