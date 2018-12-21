@@ -134,8 +134,6 @@ add_library(storage_client
             internal/metadata_parser.h
             internal/metadata_parser.cc
             internal/nljson.h
-            internal/noex_client.h
-            internal/noex_client.cc
             internal/notification_requests.h
             internal/notification_requests.cc
             internal/openssl_util.h
@@ -310,7 +308,6 @@ if (BUILD_TESTING)
         internal/logging_resumable_upload_session_test.cc
         internal/metadata_parser_test.cc
         internal/nljson_test.cc
-        internal/noex_client_test.cc
         internal/notification_requests_test.cc
         internal/object_acl_requests_test.cc
         internal/object_requests_test.cc
