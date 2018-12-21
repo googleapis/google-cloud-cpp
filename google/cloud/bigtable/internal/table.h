@@ -34,6 +34,7 @@
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/table_strong_types.h"
+#include "google/cloud/bigtable/version.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
 namespace google {
@@ -360,15 +361,32 @@ class Table {
     for (auto& m : false_mutations) {
       *request.add_false_mutations() = std::move(m.op);
     }
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &DataClient::AsyncCheckAndMutateRow)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &DataClient::AsyncCheckAndMutateRow)>::MemberFunction;
 
-    return cq.MakeUnaryRpc(
-        *client_, &DataClient::AsyncCheckAndMutateRow, request,
-        google::cloud::internal::make_unique<grpc::ClientContext>(),
+    auto unwrap_callback =
         [callback](CompletionQueue& cq,
                    google::bigtable::v2::CheckAndMutateRowResponse& response,
                    grpc::Status& status) {
           callback(cq, response.predicate_matched(), status);
-        });
+        };
+    using Retry =
+        internal::AsyncRetryUnaryRpc<DataClient, MemberFunction,
+                                     internal::ConstantIdempotencyPolicy,
+                                     decltype(unwrap_callback)>;
+
+    bool const is_idempotent =
+        idempotent_mutation_policy_->is_idempotent(request);
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        internal::ConstantIdempotencyPolicy(is_idempotent),
+        metadata_update_policy_, client_, &DataClient::AsyncCheckAndMutateRow,
+        std::move(request), std::move(unwrap_callback));
+    return retry->Start(cq);
   }
 
   template <typename... Args>

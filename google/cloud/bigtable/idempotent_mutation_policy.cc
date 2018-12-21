@@ -37,6 +37,12 @@ bool SafeIdempotentMutationPolicy::is_idempotent(
   return m.set_cell().timestamp_micros() != ServerSetTimestamp();
 }
 
+bool SafeIdempotentMutationPolicy::is_idempotent(
+    google::bigtable::v2::CheckAndMutateRowRequest const&) {
+  // TODO(#1715): this is overly conservative
+  return false;
+}
+
 std::unique_ptr<IdempotentMutationPolicy> AlwaysRetryMutationPolicy::clone()
     const {
   return std::unique_ptr<IdempotentMutationPolicy>(
@@ -47,6 +53,12 @@ bool AlwaysRetryMutationPolicy::is_idempotent(
     google::bigtable::v2::Mutation const&) {
   return true;
 }
+
+bool AlwaysRetryMutationPolicy::is_idempotent(
+    google::bigtable::v2::CheckAndMutateRowRequest const&) {
+  return true;
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
