@@ -230,6 +230,8 @@ which combinations are tested regularly.
    documentation.
  * `BUILD_TYPE`: if set, override the `CMAKE_BUILD_TYPE` flag when configuring
    the build.
+ * `BUILD_TESTING`: if set to `no`, disable the unit tests. This is sometimes
+   useful for package maintainers that may want to reduce their build times.
  * `SCAN_BUILD`: if set to `yes`, use Clang static analyzer (aka `scan-build`)
    to compile the code.  Remember to also set the compiler to Clang as described
    above.  Builds with this configuration can be substantially slower.
@@ -255,3 +257,6 @@ which combinations are tested regularly.
    for the Google Cloud C++ Libraries.  Check the
    [configuration file](.clang-tidy) for details on what `clang-tidy` options
    we use.
+ * `CREATE_GRAPHVIZ`: if set to `yes`, use `CMake` to generate a dependency
+   graph of each target. This is useful when troubleshooting dependencies, or
+   simply when trying to document them.
