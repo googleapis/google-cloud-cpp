@@ -1,4 +1,4 @@
-# Google Cloud Strorage
+# Google Cloud Storage
 
 [![Documentation][doxygen-shield]][doxygen-link]
 
