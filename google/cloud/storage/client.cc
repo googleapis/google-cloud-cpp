@@ -32,9 +32,6 @@ static_assert(std::is_copy_constructible<storage::Client>::value,
 static_assert(std::is_copy_assignable<storage::Client>::value,
               "storage::Client must be assignable");
 
-// NOLINTNEXTLINE(readability-identifier-naming)
-nothrow_t const nothrow = nothrow_t{};
-
 std::shared_ptr<internal::RawClient> Client::CreateDefaultClient(
     ClientOptions options) {
   return internal::CurlClient::Create(std::move(options));

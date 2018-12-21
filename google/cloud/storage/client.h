@@ -35,12 +35,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-/// A tag to dispatch the non-throwing versions of the API.
-struct nothrow_t {};
-
-// NOLINTNEXTLINE(readability-identifier-naming)
-extern nothrow_t const nothrow;
-
 /**
  * The Google Cloud Storage (GCS) Client.
  *
@@ -2286,7 +2280,7 @@ class Client {
   template <typename... Options>
   std::vector<NotificationMetadata> ListNotifications(
       std::string const& bucket_name, Options&&... options) {
-    return ListNotifications(nothrow, bucket_name,
+    return ListNotifications(std::nothrow, bucket_name,
                              std::forward<Options>(options)...)
         .value();
   }
@@ -2298,7 +2292,7 @@ class Client {
    */
   template <typename... Options>
   StatusOr<std::vector<NotificationMetadata>> ListNotifications(
-      nothrow_t, std::string const& bucket_name, Options&&... options) {
+      std::nothrow_t, std::string const& bucket_name, Options&&... options) {
     internal::ListNotificationsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto result = raw_client_->ListNotifications(request);
@@ -2350,8 +2344,8 @@ class Client {
                                           std::string const& payload_format,
                                           NotificationMetadata metadata,
                                           Options&&... options) {
-    return CreateNotification(nothrow, bucket_name, topic_name, payload_format,
-                              std::move(metadata),
+    return CreateNotification(std::nothrow, bucket_name, topic_name,
+                              payload_format, std::move(metadata),
                               std::forward<Options>(options)...)
         .value();
   }
@@ -2363,9 +2357,9 @@ class Client {
    */
   template <typename... Options>
   StatusOr<NotificationMetadata> CreateNotification(
-      nothrow_t, std::string const& bucket_name, std::string const& topic_name,
-      std::string const& payload_format, NotificationMetadata metadata,
-      Options&&... options) {
+      std::nothrow_t, std::string const& bucket_name,
+      std::string const& topic_name, std::string const& payload_format,
+      NotificationMetadata metadata, Options&&... options) {
     metadata.set_topic(topic_name).set_payload_format(payload_format);
     internal::CreateNotificationRequest request(bucket_name, metadata);
     request.set_multiple_options(std::forward<Options>(options)...);
