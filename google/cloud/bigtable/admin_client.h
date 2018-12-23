@@ -175,6 +175,12 @@ class AdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::CreateTableRequest const& request,
       grpc::CompletionQueue* cq) = 0;
+  virtual std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+  AsyncDeleteTable(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteTableRequest const& request,
+      grpc::CompletionQueue* cq) = 0;
   virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::Table>>
   AsyncModifyColumnFamilies(

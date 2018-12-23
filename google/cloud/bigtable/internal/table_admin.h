@@ -234,6 +234,57 @@ class TableAdmin {
 
   void DeleteTable(std::string const& table_id, grpc::Status& status);
 
+  /**
+   * Make an asynchronous request to delete the table.
+   *
+   * @param table_id the name of the table relative to the instance managed by
+   *     this object.  The full table name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of this object.
+   * @param config the initial schema of the table.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, google::bigtable::admin::v2::Table&,
+   *         grpc::Status const&>);
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      google::protobuf::Empty&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  void AsyncDeleteTable(std::string const& table_id, TableConfig config,
+                        CompletionQueue& cq, Functor&& callback) {
+    google::bigtable::admin::v2::DeleteTableRequest request;
+    request.set_name(TableName(table_id));
+
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &AdminClient::AsyncDeleteTable)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &AdminClient::AsyncDeleteTable)>::MemberFunction;
+
+    using Retry =
+        internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
+                                     internal::ConstantIdempotencyPolicy,
+                                     Functor>;
+
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        internal::ConstantIdempotencyPolicy(false), metadata_update_policy_,
+        client_, &AdminClient::AsyncDeleteTable, std::move(request),
+        std::forward<Functor>(callback));
+    retry->Start(cq);
+  }
+
   google::bigtable::admin::v2::Table ModifyColumnFamilies(
       std::string const& table_id,
       std::vector<ColumnFamilyModification> modifications,
