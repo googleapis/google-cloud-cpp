@@ -37,7 +37,7 @@ CurlDownloadRequest::CurlDownloadRequest(std::size_t initial_buffer_size)
   buffer_.reserve(initial_buffer_size);
 }
 
-HttpResponse CurlDownloadRequest::Close() {
+StatusOr<HttpResponse> CurlDownloadRequest::Close() {
   // Set the the closing_ flag to trigger a return 0 from the next read
   // callback, see the comments in the header file for more details.
   closing_ = true;
@@ -48,11 +48,14 @@ HttpResponse CurlDownloadRequest::Close() {
   auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
   RaiseOnError(__func__, error);
 
-  long http_code = handle_.GetResponseCode();
-  return HttpResponse{http_code, std::string{}, std::move(received_headers_)};
+  StatusOr<long> http_code = handle_.GetResponseCode();
+  if (not http_code.ok()) {
+    return http_code.status();
+  }
+  return HttpResponse{http_code.value(), std::string{}, std::move(received_headers_)};
 }
 
-HttpResponse CurlDownloadRequest::GetMore(std::string& buffer) {
+StatusOr<HttpResponse> CurlDownloadRequest::GetMore(std::string& buffer) {
   handle_.FlushDebug(__func__);
   Wait([this] {
     return curl_closed_ or buffer_.size() >= initial_buffer_size_;
@@ -66,16 +69,22 @@ HttpResponse CurlDownloadRequest::GetMore(std::string& buffer) {
 
     buffer_.swap(buffer);
     buffer_.clear();
-    long http_code = handle_.GetResponseCode();
+    StatusOr<long> http_code = handle_.GetResponseCode();
+    if (not http_code.ok()) {
+      return std::move(http_code).status();
+    }
     GCP_LOG(DEBUG) << __func__ << "(), size=" << buffer.size()
                    << ", closing=" << closing_ << ", closed=" << curl_closed_
-                   << ", code=" << http_code;
-    return HttpResponse{http_code, std::string{}, std::move(received_headers_)};
+                   << ", code=" << *http_code;
+    return HttpResponse{http_code.value(), std::string{}, std::move(received_headers_)};
   }
   buffer_.swap(buffer);
   buffer_.clear();
   buffer_.reserve(initial_buffer_size_);
-  handle_.EasyPause(CURLPAUSE_RECV_CONT);
+  Status pause = handle_.EasyPause(CURLPAUSE_RECV_CONT);
+  if (not pause.ok()) {
+    return pause;
+  }
   GCP_LOG(DEBUG) << __func__ << "(), size=" << buffer.size()
                  << ", closing=" << closing_ << ", closed=" << curl_closed_
                  << ", code=100";

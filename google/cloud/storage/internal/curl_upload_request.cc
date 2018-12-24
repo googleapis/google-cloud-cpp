@@ -47,7 +47,7 @@ void CurlUploadRequest::Flush() {
   Wait([this] { return buffer_rdptr_ == buffer_.end(); });
 }
 
-HttpResponse CurlUploadRequest::Close() {
+StatusOr<HttpResponse> CurlUploadRequest::Close() {
   ValidateOpen(__func__);
   handle_.FlushDebug(__func__);
   Flush();
@@ -59,10 +59,15 @@ HttpResponse CurlUploadRequest::Close() {
 
   // Now remove the handle from the CURLM* interface and wait for the response.
   auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
-  RaiseOnError(__func__, error);
+  if (error != CURLM_OK) {
+    return AsStatus(error, __func__);
+  }
 
-  long http_code = handle_.GetResponseCode();
-  return HttpResponse{http_code, std::move(response_payload_),
+  StatusOr<long> http_code = handle_.GetResponseCode();
+  if (not http_code.ok()) {
+    return std::move(http_code).status();
+  }
+  return HttpResponse{http_code.value(), std::move(response_payload_),
                       std::move(received_headers_)};
 }
 
@@ -73,10 +78,10 @@ void CurlUploadRequest::NextBuffer(std::string& next_buffer) {
   buffer_rdptr_ = buffer_.begin();
 }
 
-void CurlUploadRequest::SetOptions() {
+Status CurlUploadRequest::SetOptions() {
   ResetOptions();
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
-  RaiseOnError(__func__, error);
+  return AsStatus(error, __func__);
 }
 
 void CurlUploadRequest::ResetOptions() {
@@ -130,7 +135,7 @@ std::size_t CurlUploadRequest::ReadCallback(char* ptr, std::size_t size,
   return available;
 }
 
-int CurlUploadRequest::PerformWork() {
+StatusOr<int> CurlUploadRequest::PerformWork() {
   // Block while there is work to do, apparently newer versions of libcurl do
   // not need this loop and curl_multi_perform() blocks until there is no more
   // work, but is it pretty harmless to keep here.
@@ -143,7 +148,9 @@ int CurlUploadRequest::PerformWork() {
   } while (result == CURLM_CALL_MULTI_PERFORM);
 
   // Raise an exception if the result is unexpected, otherwise return.
-  RaiseOnError(__func__, result);
+  if (result != CURLM_OK) {
+    return AsStatus(result, __func__);
+  }
   if (running_handles == 0) {
     // The only way we get here is if the handle "completed", and therefore the
     // transfer either failed or was successful. Pull all the messages out of
@@ -159,11 +166,11 @@ int CurlUploadRequest::PerformWork() {
         // Raise an exception if the handle is not the right one. This should
         // never happen, but better to give some meaningful error in this case.
         std::ostringstream os;
-        os << __func__ << " unknown handle returned by curl_multi_info_read()"
+        os << __func__ << "() unknown handle returned by curl_multi_info_read()"
            << ", msg.msg=[" << msg->msg << "]"
            << ", result=[" << msg->data.result
            << "]=" << curl_easy_strerror(msg->data.result);
-        google::cloud::internal::RaiseRuntimeError(os.str());
+        return Status(StatusCode::UNKNOWN, std::move(os).str());
       }
       GCP_LOG(DEBUG) << __func__ << "(): msg.msg=[" << msg->msg << "], "
                      << " result=[" << msg->data.result
@@ -175,7 +182,7 @@ int CurlUploadRequest::PerformWork() {
   return running_handles;
 }
 
-void CurlUploadRequest::WaitForHandles(int& repeats) {
+Status CurlUploadRequest::WaitForHandles(int& repeats) {
   int const timeout_ms = 1;
   std::chrono::milliseconds const timeout(timeout_ms);
   int numfds = 0;
@@ -183,7 +190,9 @@ void CurlUploadRequest::WaitForHandles(int& repeats) {
       curl_multi_wait(multi_.get(), nullptr, 0, timeout_ms, &numfds);
   GCP_LOG(DEBUG) << __func__ << "(): numfds=" << numfds
                  << ", result=" << result << ", repeats=" << repeats;
-  RaiseOnError(__func__, result);
+  if (result != CURLM_OK) {
+    return AsStatus(result, __func__);
+  }
   // The documentation for curl_multi_wait() recommends sleeping if it returns
   // numfds == 0 more than once in a row :shrug:
   //    https://curl.haxx.se/libcurl/c/curl_multi_wait.html
@@ -194,16 +203,17 @@ void CurlUploadRequest::WaitForHandles(int& repeats) {
   } else {
     repeats = 0;
   }
+  return Status();
 }
 
-void CurlUploadRequest::RaiseOnError(char const* where, CURLMcode result) {
+Status CurlUploadRequest::AsStatus(CURLMcode result, char const* where) {
   if (result == CURLM_OK) {
-    return;
+    return Status();
   }
   std::ostringstream os;
-  os << where << ": unexpected error code in curl_multi_perform, [" << result
+  os << where << "(): unexpected error code in curl_multi_perform, [" << result
      << "]=" << curl_multi_strerror(result);
-  google::cloud::internal::RaiseRuntimeError(os.str());
+  return Status(StatusCode::UNKNOWN, std::move(os).str());
 }
 
 void CurlUploadRequest::ValidateOpen(char const* where) {

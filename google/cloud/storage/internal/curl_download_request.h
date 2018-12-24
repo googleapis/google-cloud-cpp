@@ -78,7 +78,7 @@ class CurlDownloadRequest {
   }
 
   bool IsOpen() const { return not curl_closed_; }
-  HttpResponse Close();
+  StatusOr<HttpResponse> Close();
 
   /**
    * Waits for additional data or the end of the transfer.
@@ -90,7 +90,7 @@ class CurlDownloadRequest {
    *     of this parameter are completely replaced with the new data.
    * @returns 100-Continue if the transfer is not yet completed.
    */
-  HttpResponse GetMore(std::string& buffer);
+  StatusOr<HttpResponse> GetMore(std::string& buffer);
 
  private:
   friend class CurlRequestBuilder;
