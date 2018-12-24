@@ -70,14 +70,13 @@ TEST_F(NotificationsTest, ListNotifications) {
   };
 
   EXPECT_CALL(*mock_, ListNotifications(_))
-      .WillOnce(Return(std::make_pair(TransientError(),
-                                      internal::ListNotificationsResponse{})))
+      .WillOnce(Return(StatusOr<internal::ListNotificationsResponse>(TransientError()
+                                      )))
       .WillOnce(
           Invoke([&expected](internal::ListNotificationsRequest const& r) {
             EXPECT_EQ("test-bucket", r.bucket_name());
 
-            return std::make_pair(
-                Status(), internal::ListNotificationsResponse{expected});
+            return make_status_or(internal::ListNotificationsResponse{expected});
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
@@ -111,7 +110,7 @@ TEST_F(NotificationsTest, CreateNotification) {
 
   EXPECT_CALL(*mock_, CreateNotification(_))
       .WillOnce(
-          Return(std::make_pair(TransientError(), NotificationMetadata{})))
+          Return(StatusOr<NotificationMetadata>(TransientError())))
       .WillOnce(
           Invoke([&expected](internal::CreateNotificationRequest const& r) {
             EXPECT_EQ("test-bucket", r.bucket_name());
@@ -120,7 +119,7 @@ TEST_F(NotificationsTest, CreateNotification) {
             EXPECT_THAT(r.json_payload(), HasSubstr("test-object-prefix-"));
             EXPECT_THAT(r.json_payload(), HasSubstr("OBJECT_FINALIZE"));
 
-            return std::make_pair(Status(), expected);
+            return make_status_or( expected);
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
@@ -165,12 +164,12 @@ TEST_F(NotificationsTest, GetNotification) {
 
   EXPECT_CALL(*mock_, GetNotification(_))
       .WillOnce(
-          Return(std::make_pair(TransientError(), NotificationMetadata{})))
+          Return(StatusOr<NotificationMetadata>(TransientError())))
       .WillOnce(Invoke([&expected](internal::GetNotificationRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-notification-1", r.notification_id());
 
-        return std::make_pair(Status(), expected);
+        return make_status_or( expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
@@ -200,12 +199,12 @@ TEST_F(NotificationsTest, GetNotificationPermanentFailure) {
 TEST_F(NotificationsTest, DeleteNotification) {
   EXPECT_CALL(*mock_, DeleteNotification(_))
       .WillOnce(
-          Return(std::make_pair(TransientError(), internal::EmptyResponse{})))
+          Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce(Invoke([](internal::DeleteNotificationRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-notification-1", r.notification_id());
 
-        return std::make_pair(Status(), internal::EmptyResponse{});
+        return make_status_or( internal::EmptyResponse{});
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 

@@ -110,7 +110,7 @@ class ServiceAccountCredentials : public Credentials {
     info_ = std::move(info);
   }
 
-  std::pair<storage::Status, std::string> AuthorizationHeader() override {
+  StatusOr<std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
     return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
   }

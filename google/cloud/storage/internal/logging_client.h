@@ -32,103 +32,100 @@ class LoggingClient : public RawClient {
 
   ClientOptions const& client_options() const override;
 
-  std::pair<Status, ListBucketsResponse> ListBuckets(
+  StatusOr<ListBucketsResponse> ListBuckets(
       ListBucketsRequest const& request) override;
-  std::pair<Status, BucketMetadata> CreateBucket(
+  StatusOr<BucketMetadata> CreateBucket(
       CreateBucketRequest const& request) override;
-  std::pair<Status, BucketMetadata> GetBucketMetadata(
+  StatusOr<BucketMetadata> GetBucketMetadata(
       GetBucketMetadataRequest const& request) override;
-  std::pair<Status, EmptyResponse> DeleteBucket(
-      DeleteBucketRequest const&) override;
-  std::pair<Status, BucketMetadata> UpdateBucket(
+  StatusOr<EmptyResponse> DeleteBucket(DeleteBucketRequest const&) override;
+  StatusOr<BucketMetadata> UpdateBucket(
       UpdateBucketRequest const& request) override;
-  std::pair<Status, BucketMetadata> PatchBucket(
+  StatusOr<BucketMetadata> PatchBucket(
       PatchBucketRequest const& request) override;
-  std::pair<Status, IamPolicy> GetBucketIamPolicy(
+  StatusOr<IamPolicy> GetBucketIamPolicy(
       GetBucketIamPolicyRequest const& request) override;
-  std::pair<Status, IamPolicy> SetBucketIamPolicy(
+  StatusOr<IamPolicy> SetBucketIamPolicy(
       SetBucketIamPolicyRequest const& request) override;
-  std::pair<Status, TestBucketIamPermissionsResponse> TestBucketIamPermissions(
+  StatusOr<TestBucketIamPermissionsResponse> TestBucketIamPermissions(
       TestBucketIamPermissionsRequest const& request) override;
-  std::pair<Status, EmptyResponse> LockBucketRetentionPolicy(
+  StatusOr<EmptyResponse> LockBucketRetentionPolicy(
       LockBucketRetentionPolicyRequest const& request) override;
 
-  std::pair<Status, ObjectMetadata> InsertObjectMedia(
+  StatusOr<ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const& request) override;
-  std::pair<Status, ObjectMetadata> CopyObject(
+  StatusOr<ObjectMetadata> CopyObject(
       CopyObjectRequest const& request) override;
-  std::pair<Status, ObjectMetadata> GetObjectMetadata(
+  StatusOr<ObjectMetadata> GetObjectMetadata(
       GetObjectMetadataRequest const& request) override;
-  std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> ReadObject(
+  StatusOr<std::unique_ptr<ObjectReadStreambuf>> ReadObject(
       ReadObjectRangeRequest const&) override;
-  std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>> WriteObject(
+  StatusOr<std::unique_ptr<ObjectWriteStreambuf>> WriteObject(
       InsertObjectStreamingRequest const&) override;
-  std::pair<Status, ListObjectsResponse> ListObjects(
-      ListObjectsRequest const&) override;
-  std::pair<Status, EmptyResponse> DeleteObject(
-      DeleteObjectRequest const&) override;
-  std::pair<Status, ObjectMetadata> UpdateObject(
+  StatusOr<ListObjectsResponse> ListObjects(ListObjectsRequest const&) override;
+  StatusOr<EmptyResponse> DeleteObject(DeleteObjectRequest const&) override;
+  StatusOr<ObjectMetadata> UpdateObject(
       UpdateObjectRequest const& request) override;
-  std::pair<Status, ObjectMetadata> PatchObject(
+  StatusOr<ObjectMetadata> PatchObject(
       PatchObjectRequest const& request) override;
-  std::pair<Status, ObjectMetadata> ComposeObject(
+  StatusOr<ObjectMetadata> ComposeObject(
       ComposeObjectRequest const& request) override;
-  std::pair<Status, RewriteObjectResponse> RewriteObject(
+  StatusOr<RewriteObjectResponse> RewriteObject(
       RewriteObjectRequest const&) override;
-  std::pair<Status, std::unique_ptr<ResumableUploadSession>>
-  CreateResumableSession(ResumableUploadRequest const& request) override;
-  std::pair<Status, std::unique_ptr<ResumableUploadSession>>
-  RestoreResumableSession(std::string const& request) override;
+  StatusOr<std::unique_ptr<ResumableUploadSession>> CreateResumableSession(
+      ResumableUploadRequest const& request) override;
+  StatusOr<std::unique_ptr<ResumableUploadSession>> RestoreResumableSession(
+      std::string const& request) override;
 
-  std::pair<Status, ListBucketAclResponse> ListBucketAcl(
+  StatusOr<ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;
-  std::pair<Status, BucketAccessControl> CreateBucketAcl(
+  StatusOr<BucketAccessControl> CreateBucketAcl(
       CreateBucketAclRequest const&) override;
-  std::pair<Status, EmptyResponse> DeleteBucketAcl(
+  StatusOr<EmptyResponse> DeleteBucketAcl(
       DeleteBucketAclRequest const&) override;
-  std::pair<Status, BucketAccessControl> GetBucketAcl(
+  StatusOr<BucketAccessControl> GetBucketAcl(
       GetBucketAclRequest const&) override;
-  std::pair<Status, BucketAccessControl> UpdateBucketAcl(
+  StatusOr<BucketAccessControl> UpdateBucketAcl(
       UpdateBucketAclRequest const&) override;
-  std::pair<Status, BucketAccessControl> PatchBucketAcl(
+  StatusOr<BucketAccessControl> PatchBucketAcl(
       PatchBucketAclRequest const&) override;
 
-  std::pair<Status, ListObjectAclResponse> ListObjectAcl(
+  StatusOr<ListObjectAclResponse> ListObjectAcl(
       ListObjectAclRequest const& request) override;
-  std::pair<Status, ObjectAccessControl> CreateObjectAcl(
+  StatusOr<ObjectAccessControl> CreateObjectAcl(
       CreateObjectAclRequest const&) override;
-  std::pair<Status, EmptyResponse> DeleteObjectAcl(
+  StatusOr<EmptyResponse> DeleteObjectAcl(
       DeleteObjectAclRequest const&) override;
-  std::pair<Status, ObjectAccessControl> GetObjectAcl(
+  StatusOr<ObjectAccessControl> GetObjectAcl(
       GetObjectAclRequest const&) override;
-  std::pair<Status, ObjectAccessControl> UpdateObjectAcl(
+  StatusOr<ObjectAccessControl> UpdateObjectAcl(
       UpdateObjectAclRequest const&) override;
-  std::pair<Status, ObjectAccessControl> PatchObjectAcl(
+  StatusOr<ObjectAccessControl> PatchObjectAcl(
       PatchObjectAclRequest const&) override;
 
-  std::pair<Status, ListDefaultObjectAclResponse> ListDefaultObjectAcl(
+  StatusOr<ListDefaultObjectAclResponse> ListDefaultObjectAcl(
       ListDefaultObjectAclRequest const& request) override;
-  std::pair<Status, ObjectAccessControl> CreateDefaultObjectAcl(
+  StatusOr<ObjectAccessControl> CreateDefaultObjectAcl(
       CreateDefaultObjectAclRequest const&) override;
-  std::pair<Status, EmptyResponse> DeleteDefaultObjectAcl(
+  StatusOr<EmptyResponse> DeleteDefaultObjectAcl(
       DeleteDefaultObjectAclRequest const&) override;
-  std::pair<Status, ObjectAccessControl> GetDefaultObjectAcl(
+  StatusOr<ObjectAccessControl> GetDefaultObjectAcl(
       GetDefaultObjectAclRequest const&) override;
-  std::pair<Status, ObjectAccessControl> UpdateDefaultObjectAcl(
+  StatusOr<ObjectAccessControl> UpdateDefaultObjectAcl(
       UpdateDefaultObjectAclRequest const&) override;
-  std::pair<Status, ObjectAccessControl> PatchDefaultObjectAcl(
+  StatusOr<ObjectAccessControl> PatchDefaultObjectAcl(
       PatchDefaultObjectAclRequest const&) override;
 
-  std::pair<Status, ServiceAccount> GetServiceAccount(
+  StatusOr<ServiceAccount> GetServiceAccount(
       GetProjectServiceAccountRequest const&) override;
 
-  std::pair<Status, ListNotificationsResponse> ListNotifications(
+  StatusOr<ListNotificationsResponse> ListNotifications(
       ListNotificationsRequest const&) override;
-  std::pair<Status, NotificationMetadata> CreateNotification(
+  StatusOr<NotificationMetadata> CreateNotification(
       CreateNotificationRequest const&) override;
-  std::pair<Status, NotificationMetadata> GetNotification(
+  StatusOr<NotificationMetadata> GetNotification(
       GetNotificationRequest const&) override;
-  std::pair<Status, EmptyResponse> DeleteNotification(
+  StatusOr<EmptyResponse> DeleteNotification(
       DeleteNotificationRequest const&) override;
 
   std::shared_ptr<RawClient> client() const { return client_; }

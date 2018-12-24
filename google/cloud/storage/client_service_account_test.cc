@@ -60,12 +60,12 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccount) {
       })""");
 
   EXPECT_CALL(*mock, GetServiceAccount(_))
-      .WillOnce(Return(std::make_pair(TransientError(), ServiceAccount{})))
+      .WillOnce(Return(StatusOr<ServiceAccount>(TransientError())))
       .WillOnce(Invoke(
           [&expected](internal::GetProjectServiceAccountRequest const& r) {
             EXPECT_EQ("test-project", r.project_id());
 
-            return std::make_pair(Status(), expected);
+            return make_status_or(expected);
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 

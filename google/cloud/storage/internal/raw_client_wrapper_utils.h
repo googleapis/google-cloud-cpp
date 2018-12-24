@@ -37,7 +37,7 @@ namespace raw_client_wrapper_utils {
  * Checks the expected signature for a `RawClient` member function.
  */
 template <typename Request, typename Response>
-using DesiredSignature = std::pair<google::cloud::storage::Status, Response> (
+using DesiredSignature = StatusOr<Response> (
     google::cloud::storage::internal::RawClient::*)(Request const&);
 
 /**
@@ -74,7 +74,7 @@ struct CheckSignature<DesiredSignature<Request, Response>>
   using ResponseType = Response;
   using RequestType = Request;
   using MemberFunctionType = DesiredSignature<Request, Response>;
-  using ReturnType = std::pair<google::cloud::storage::Status, ResponseType>;
+  using ReturnType = StatusOr<ResponseType>;
 };
 }  // namespace raw_client_wrapper_utils
 }  // namespace internal

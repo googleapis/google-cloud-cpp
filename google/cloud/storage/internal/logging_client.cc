@@ -43,10 +43,13 @@ static typename std::enable_if<
 MakeCall(RawClient& client, MemberFunction function,
          typename CheckSignature<MemberFunction>::RequestType const& request,
          char const* context) {
-  GCP_LOG(INFO) << context << " << " << request;
+  GCP_LOG(INFO) << context << "() << " << request;
   auto response = (client.*function)(request);
-  GCP_LOG(INFO) << context << " >> status={" << response.first << "}, payload={"
-                << response.second << "}";
+  if (response.ok()) {
+    GCP_LOG(INFO) << context << "() >> payload={" << response.value() << "}";
+  } else {
+    GCP_LOG(INFO) << context << "() >> status={" << response.status() << "}";
+  }
   return response;
 }
 
@@ -72,9 +75,8 @@ MakeCallNoResponseLogging(
     MemberFunction function,
     typename CheckSignature<MemberFunction>::RequestType const& request,
     char const* context) {
-  GCP_LOG(INFO) << context << " << " << request;
-  auto response = (client.*function)(request);
-  return response;
+  GCP_LOG(INFO) << context << "() << " << request;
+  return (client.*function)(request);
 }
 }  // namespace
 
@@ -85,252 +87,251 @@ ClientOptions const& LoggingClient::client_options() const {
   return client_->client_options();
 }
 
-std::pair<Status, ListBucketsResponse> LoggingClient::ListBuckets(
+StatusOr<ListBucketsResponse> LoggingClient::ListBuckets(
     ListBucketsRequest const& request) {
   return MakeCall(*client_, &RawClient::ListBuckets, request, __func__);
 }
 
-std::pair<Status, BucketMetadata> LoggingClient::CreateBucket(
+StatusOr<BucketMetadata> LoggingClient::CreateBucket(
     CreateBucketRequest const& request) {
   return MakeCall(*client_, &RawClient::CreateBucket, request, __func__);
 }
 
-std::pair<Status, BucketMetadata> LoggingClient::GetBucketMetadata(
+StatusOr<BucketMetadata> LoggingClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
   return MakeCall(*client_, &RawClient::GetBucketMetadata, request, __func__);
 }
 
-std::pair<Status, EmptyResponse> LoggingClient::DeleteBucket(
+StatusOr<EmptyResponse> LoggingClient::DeleteBucket(
     DeleteBucketRequest const& request) {
   return MakeCall(*client_, &RawClient::DeleteBucket, request, __func__);
 }
 
-std::pair<Status, BucketMetadata> LoggingClient::UpdateBucket(
+StatusOr<BucketMetadata> LoggingClient::UpdateBucket(
     UpdateBucketRequest const& request) {
   return MakeCall(*client_, &RawClient::UpdateBucket, request, __func__);
 }
 
-std::pair<Status, BucketMetadata> LoggingClient::PatchBucket(
+StatusOr<BucketMetadata> LoggingClient::PatchBucket(
     PatchBucketRequest const& request) {
   return MakeCall(*client_, &RawClient::PatchBucket, request, __func__);
 }
 
-std::pair<Status, IamPolicy> LoggingClient::GetBucketIamPolicy(
+StatusOr<IamPolicy> LoggingClient::GetBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
   return MakeCall(*client_, &RawClient::GetBucketIamPolicy, request, __func__);
 }
 
-std::pair<Status, IamPolicy> LoggingClient::SetBucketIamPolicy(
+StatusOr<IamPolicy> LoggingClient::SetBucketIamPolicy(
     SetBucketIamPolicyRequest const& request) {
   return MakeCall(*client_, &RawClient::SetBucketIamPolicy, request, __func__);
 }
 
-std::pair<Status, TestBucketIamPermissionsResponse>
+StatusOr<TestBucketIamPermissionsResponse>
 LoggingClient::TestBucketIamPermissions(
     TestBucketIamPermissionsRequest const& request) {
   return MakeCall(*client_, &RawClient::TestBucketIamPermissions, request,
                   __func__);
 }
 
-std::pair<Status, EmptyResponse> LoggingClient::LockBucketRetentionPolicy(
+StatusOr<EmptyResponse> LoggingClient::LockBucketRetentionPolicy(
     LockBucketRetentionPolicyRequest const& request) {
   return MakeCall(*client_, &RawClient::LockBucketRetentionPolicy, request,
                   __func__);
 }
 
-std::pair<Status, ObjectMetadata> LoggingClient::InsertObjectMedia(
+StatusOr<ObjectMetadata> LoggingClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   return MakeCall(*client_, &RawClient::InsertObjectMedia, request, __func__);
 }
 
-std::pair<Status, ObjectMetadata> LoggingClient::CopyObject(
+StatusOr<ObjectMetadata> LoggingClient::CopyObject(
     CopyObjectRequest const& request) {
   return MakeCall(*client_, &RawClient::CopyObject, request, __func__);
 }
 
-std::pair<Status, ObjectMetadata> LoggingClient::GetObjectMetadata(
+StatusOr<ObjectMetadata> LoggingClient::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
   return MakeCall(*client_, &RawClient::GetObjectMetadata, request, __func__);
 }
 
-std::pair<Status, std::unique_ptr<ObjectReadStreambuf>>
+StatusOr<std::unique_ptr<ObjectReadStreambuf>>
 LoggingClient::ReadObject(ReadObjectRangeRequest const& request) {
   return MakeCallNoResponseLogging(*client_, &RawClient::ReadObject, request,
                                    __func__);
 }
 
-std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>>
+StatusOr<std::unique_ptr<ObjectWriteStreambuf>>
 LoggingClient::WriteObject(InsertObjectStreamingRequest const& request) {
   return MakeCallNoResponseLogging(*client_, &RawClient::WriteObject, request,
                                    __func__);
 }
 
-std::pair<Status, ListObjectsResponse> LoggingClient::ListObjects(
+StatusOr<ListObjectsResponse> LoggingClient::ListObjects(
     ListObjectsRequest const& request) {
   return MakeCall(*client_, &RawClient::ListObjects, request, __func__);
 }
 
-std::pair<Status, EmptyResponse> LoggingClient::DeleteObject(
+StatusOr<EmptyResponse> LoggingClient::DeleteObject(
     DeleteObjectRequest const& request) {
   return MakeCall(*client_, &RawClient::DeleteObject, request, __func__);
 }
 
-std::pair<Status, ObjectMetadata> LoggingClient::UpdateObject(
+StatusOr<ObjectMetadata> LoggingClient::UpdateObject(
     UpdateObjectRequest const& request) {
   return MakeCall(*client_, &RawClient::UpdateObject, request, __func__);
 }
 
-std::pair<Status, ObjectMetadata> LoggingClient::PatchObject(
+StatusOr<ObjectMetadata> LoggingClient::PatchObject(
     PatchObjectRequest const& request) {
   return MakeCall(*client_, &RawClient::PatchObject, request, __func__);
 }
 
-std::pair<Status, ObjectMetadata> LoggingClient::ComposeObject(
+StatusOr<ObjectMetadata> LoggingClient::ComposeObject(
     ComposeObjectRequest const& request) {
   return MakeCall(*client_, &RawClient::ComposeObject, request, __func__);
 }
 
-std::pair<Status, RewriteObjectResponse> LoggingClient::RewriteObject(
+StatusOr<RewriteObjectResponse> LoggingClient::RewriteObject(
     RewriteObjectRequest const& request) {
   return MakeCall(*client_, &RawClient::RewriteObject, request, __func__);
 }
 
-std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+StatusOr<std::unique_ptr<ResumableUploadSession>>
 LoggingClient::CreateResumableSession(ResumableUploadRequest const& request) {
   auto result = MakeCallNoResponseLogging(
       *client_, &RawClient::CreateResumableSession, request, __func__);
-  if (not result.first.ok()) {
-    return result;
+  if (not result.ok()) {
+    return std::move(result).status();
   }
-  return std::make_pair(
-      Status(),
+  return std::unique_ptr<ResumableUploadSession>(
       google::cloud::internal::make_unique<LoggingResumableUploadSession>(
-          std::move(result.second)));
+          std::move(result).value()));
 }
 
-std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+StatusOr<std::unique_ptr<ResumableUploadSession>>
 LoggingClient::RestoreResumableSession(std::string const &request){
   return MakeCallNoResponseLogging(
       *client_, &RawClient::RestoreResumableSession, request, __func__);
 }
 
-std::pair<Status, ListBucketAclResponse> LoggingClient::ListBucketAcl(
+StatusOr<ListBucketAclResponse> LoggingClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
   return MakeCall(*client_, &RawClient::ListBucketAcl, request, __func__);
 }
 
-std::pair<Status, BucketAccessControl> LoggingClient::GetBucketAcl(
+StatusOr<BucketAccessControl> LoggingClient::GetBucketAcl(
     GetBucketAclRequest const& request) {
   return MakeCall(*client_, &RawClient::GetBucketAcl, request, __func__);
 }
 
-std::pair<Status, BucketAccessControl> LoggingClient::CreateBucketAcl(
+StatusOr<BucketAccessControl> LoggingClient::CreateBucketAcl(
     CreateBucketAclRequest const& request) {
   return MakeCall(*client_, &RawClient::CreateBucketAcl, request, __func__);
 }
 
-std::pair<Status, EmptyResponse> LoggingClient::DeleteBucketAcl(
+StatusOr<EmptyResponse> LoggingClient::DeleteBucketAcl(
     DeleteBucketAclRequest const& request) {
   return MakeCall(*client_, &RawClient::DeleteBucketAcl, request, __func__);
 }
 
-std::pair<Status, BucketAccessControl> LoggingClient::UpdateBucketAcl(
+StatusOr<BucketAccessControl> LoggingClient::UpdateBucketAcl(
     UpdateBucketAclRequest const& request) {
   return MakeCall(*client_, &RawClient::UpdateBucketAcl, request, __func__);
 }
 
-std::pair<Status, BucketAccessControl> LoggingClient::PatchBucketAcl(
+StatusOr<BucketAccessControl> LoggingClient::PatchBucketAcl(
     PatchBucketAclRequest const& request) {
   return MakeCall(*client_, &RawClient::PatchBucketAcl, request, __func__);
 }
 
-std::pair<Status, ListObjectAclResponse> LoggingClient::ListObjectAcl(
+StatusOr<ListObjectAclResponse> LoggingClient::ListObjectAcl(
     ListObjectAclRequest const& request) {
   return MakeCall(*client_, &RawClient::ListObjectAcl, request, __func__);
 }
 
-std::pair<Status, ObjectAccessControl> LoggingClient::CreateObjectAcl(
+StatusOr<ObjectAccessControl> LoggingClient::CreateObjectAcl(
     CreateObjectAclRequest const& request) {
   return MakeCall(*client_, &RawClient::CreateObjectAcl, request, __func__);
 }
 
-std::pair<Status, EmptyResponse> LoggingClient::DeleteObjectAcl(
+StatusOr<EmptyResponse> LoggingClient::DeleteObjectAcl(
     DeleteObjectAclRequest const& request) {
   return MakeCall(*client_, &RawClient::DeleteObjectAcl, request, __func__);
 }
 
-std::pair<Status, ObjectAccessControl> LoggingClient::GetObjectAcl(
+StatusOr<ObjectAccessControl> LoggingClient::GetObjectAcl(
     GetObjectAclRequest const& request) {
   return MakeCall(*client_, &RawClient::GetObjectAcl, request, __func__);
 }
 
-std::pair<Status, ObjectAccessControl> LoggingClient::UpdateObjectAcl(
+StatusOr<ObjectAccessControl> LoggingClient::UpdateObjectAcl(
     UpdateObjectAclRequest const& request) {
   return MakeCall(*client_, &RawClient::UpdateObjectAcl, request, __func__);
 }
 
-std::pair<Status, ObjectAccessControl> LoggingClient::PatchObjectAcl(
+StatusOr<ObjectAccessControl> LoggingClient::PatchObjectAcl(
     PatchObjectAclRequest const& request) {
   return MakeCall(*client_, &RawClient::PatchObjectAcl, request, __func__);
 }
 
-std::pair<Status, ListDefaultObjectAclResponse>
+StatusOr<ListDefaultObjectAclResponse>
 LoggingClient::ListDefaultObjectAcl(
     ListDefaultObjectAclRequest const& request) {
   return MakeCall(*client_, &RawClient::ListDefaultObjectAcl, request,
                   __func__);
 }
 
-std::pair<Status, ObjectAccessControl> LoggingClient::CreateDefaultObjectAcl(
+StatusOr<ObjectAccessControl> LoggingClient::CreateDefaultObjectAcl(
     CreateDefaultObjectAclRequest const& request) {
   return MakeCall(*client_, &RawClient::CreateDefaultObjectAcl, request,
                   __func__);
 }
 
-std::pair<Status, EmptyResponse> LoggingClient::DeleteDefaultObjectAcl(
+StatusOr<EmptyResponse> LoggingClient::DeleteDefaultObjectAcl(
     DeleteDefaultObjectAclRequest const& request) {
   return MakeCall(*client_, &RawClient::DeleteDefaultObjectAcl, request,
                   __func__);
 }
 
-std::pair<Status, ObjectAccessControl> LoggingClient::GetDefaultObjectAcl(
+StatusOr<ObjectAccessControl> LoggingClient::GetDefaultObjectAcl(
     GetDefaultObjectAclRequest const& request) {
   return MakeCall(*client_, &RawClient::GetDefaultObjectAcl, request, __func__);
 }
 
-std::pair<Status, ObjectAccessControl> LoggingClient::UpdateDefaultObjectAcl(
+StatusOr<ObjectAccessControl> LoggingClient::UpdateDefaultObjectAcl(
     UpdateDefaultObjectAclRequest const& request) {
   return MakeCall(*client_, &RawClient::UpdateDefaultObjectAcl, request,
                   __func__);
 }
 
-std::pair<Status, ObjectAccessControl> LoggingClient::PatchDefaultObjectAcl(
+StatusOr<ObjectAccessControl> LoggingClient::PatchDefaultObjectAcl(
     PatchDefaultObjectAclRequest const& request) {
   return MakeCall(*client_, &RawClient::PatchDefaultObjectAcl, request,
                   __func__);
 }
 
-std::pair<Status, ServiceAccount> LoggingClient::GetServiceAccount(
+StatusOr<ServiceAccount> LoggingClient::GetServiceAccount(
     GetProjectServiceAccountRequest const& request) {
   return MakeCall(*client_, &RawClient::GetServiceAccount, request, __func__);
 }
 
-std::pair<Status, ListNotificationsResponse> LoggingClient::ListNotifications(
+StatusOr<ListNotificationsResponse> LoggingClient::ListNotifications(
     ListNotificationsRequest const& request) {
   return MakeCall(*client_, &RawClient::ListNotifications, request, __func__);
 }
 
-std::pair<Status, NotificationMetadata> LoggingClient::CreateNotification(
+StatusOr<NotificationMetadata> LoggingClient::CreateNotification(
     CreateNotificationRequest const& request) {
   return MakeCall(*client_, &RawClient::CreateNotification, request, __func__);
 }
 
-std::pair<Status, NotificationMetadata> LoggingClient::GetNotification(
+StatusOr<NotificationMetadata> LoggingClient::GetNotification(
     GetNotificationRequest const& request) {
   return MakeCall(*client_, &RawClient::GetNotification, request, __func__);
 }
 
-std::pair<Status, EmptyResponse> LoggingClient::DeleteNotification(
+StatusOr<EmptyResponse> LoggingClient::DeleteNotification(
     DeleteNotificationRequest const& request) {
   return MakeCall(*client_, &RawClient::DeleteNotification, request, __func__);
 }

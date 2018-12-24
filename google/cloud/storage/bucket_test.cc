@@ -81,13 +81,13 @@ TEST_F(BucketTest, CreateBucket) {
 
   EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
   EXPECT_CALL(*mock, CreateBucket(_))
-      .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
+      .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce(Invoke([&expected](internal::CreateBucketRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.metadata().name());
         EXPECT_EQ("US", r.metadata().location());
         EXPECT_EQ("STANDARD", r.metadata().storage_class());
         EXPECT_EQ("test-project-name", r.project_id());
-        return std::make_pair(Status(), expected);
+        return make_status_or(expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
@@ -135,11 +135,11 @@ TEST_F(BucketTest, GetBucketMetadata) {
   auto expected = BucketMetadata::ParseFromString(text);
 
   EXPECT_CALL(*mock, GetBucketMetadata(_))
-      .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
+      .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce(
           Invoke([&expected](internal::GetBucketMetadataRequest const& r) {
             EXPECT_EQ("foo-bar-baz", r.bucket_name());
-            return std::make_pair(Status(), expected);
+            return make_status_or(expected);
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
@@ -165,10 +165,10 @@ TEST_F(BucketTest, GetMetadataPermanentFailure) {
 TEST_F(BucketTest, DeleteBucket) {
   EXPECT_CALL(*mock, DeleteBucket(_))
       .WillOnce(
-          Return(std::make_pair(TransientError(), internal::EmptyResponse{})))
+          Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce(Invoke([](internal::DeleteBucketRequest const& r) {
         EXPECT_EQ("foo-bar-baz", r.bucket_name());
-        return std::make_pair(Status(), internal::EmptyResponse{});
+        return make_status_or(internal::EmptyResponse{});
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
@@ -211,12 +211,12 @@ TEST_F(BucketTest, UpdateBucket) {
   auto expected = BucketMetadata::ParseFromString(text);
 
   EXPECT_CALL(*mock, UpdateBucket(_))
-      .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
+      .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce(Invoke([&expected](internal::UpdateBucketRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.metadata().name());
         EXPECT_EQ("US", r.metadata().location());
         EXPECT_EQ("STANDARD", r.metadata().storage_class());
-        return std::make_pair(Status(), expected);
+        return make_status_or(expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
@@ -266,11 +266,11 @@ TEST_F(BucketTest, PatchBucket) {
   auto expected = BucketMetadata::ParseFromString(text);
 
   EXPECT_CALL(*mock, PatchBucket(_))
-      .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
+      .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce(Invoke([&expected](internal::PatchBucketRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket());
         EXPECT_THAT(r.payload(), HasSubstr("STANDARD"));
-        return std::make_pair(Status(), expected);
+        return make_status_or(expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
@@ -309,11 +309,11 @@ TEST_F(BucketTest, GetBucketIamPolicy) {
   IamPolicy expected{0, bindings, "XYZ="};
 
   EXPECT_CALL(*mock, GetBucketIamPolicy(_))
-      .WillOnce(Return(std::make_pair(TransientError(), IamPolicy{})))
+      .WillOnce(Return(StatusOr<IamPolicy>(TransientError())))
       .WillOnce(
           Invoke([&expected](internal::GetBucketIamPolicyRequest const& r) {
             EXPECT_EQ("test-bucket-name", r.bucket_name());
-            return std::make_pair(Status(), expected);
+            return make_status_or(expected);
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
@@ -342,12 +342,12 @@ TEST_F(BucketTest, SetBucketIamPolicy) {
   IamPolicy expected{0, bindings, "XYZ="};
 
   EXPECT_CALL(*mock, SetBucketIamPolicy(_))
-      .WillOnce(Return(std::make_pair(TransientError(), IamPolicy{})))
+      .WillOnce(Return(StatusOr<IamPolicy>(TransientError())))
       .WillOnce(
           Invoke([&expected](internal::SetBucketIamPolicyRequest const& r) {
             EXPECT_EQ("test-bucket-name", r.bucket_name());
             EXPECT_THAT(r.json_payload(), HasSubstr("test-user"));
-            return std::make_pair(Status(), expected);
+            return make_status_or(expected);
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
@@ -382,13 +382,13 @@ TEST_F(BucketTest, TestBucketIamPermissions) {
   expected.permissions.emplace_back("storage.buckets.delete");
 
   EXPECT_CALL(*mock, TestBucketIamPermissions(_))
-      .WillOnce(Return(std::make_pair(
-          TransientError(), internal::TestBucketIamPermissionsResponse{})))
+      .WillOnce(Return(StatusOr<internal::TestBucketIamPermissionsResponse>(
+          TransientError())))
       .WillOnce(Invoke(
           [&expected](internal::TestBucketIamPermissionsRequest const& r) {
             EXPECT_EQ("test-bucket-name", r.bucket_name());
             EXPECT_THAT(r.permissions(), ElementsAre("storage.buckets.delete"));
-            return std::make_pair(Status(), expected);
+            return make_status_or(expected);
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
@@ -419,11 +419,11 @@ TEST_F(BucketTest, TestBucketIamPermissionsPermanentFailure) {
 TEST_F(BucketTest, LockBucketRetentionPolicy) {
   EXPECT_CALL(*mock, LockBucketRetentionPolicy(_))
       .WillOnce(
-          Return(std::make_pair(TransientError(), internal::EmptyResponse{})))
+          Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce(Invoke([](internal::LockBucketRetentionPolicyRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
         EXPECT_EQ(42U, r.metageneration());
-        return std::make_pair(Status(), internal::EmptyResponse{});
+        return make_status_or(internal::EmptyResponse{});
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};

@@ -116,7 +116,7 @@ HttpResponse CurlResumableStreambuf::Flush(bool final_chunk) {
   }
 
   last_response_ = HttpResponse{
-      result.first.status_code(), std::move(result.second.payload), {}};
+      result.status().status_code(), std::move(result).value().payload, {}};
   return last_response_;
 }
 

@@ -89,8 +89,8 @@ TEST_F(ClientTest, OverrideRetryPolicy) {
   // Call an API (any API) on the client, we do not care about the status, just
   // that our policy is called.
   EXPECT_CALL(*mock, GetBucketMetadata(_))
-      .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
-      .WillOnce(Return(std::make_pair(Status(), BucketMetadata{})));
+      .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
+      .WillOnce(Return(make_status_or(BucketMetadata{})));
   (void)client.GetBucketMetadata("foo-bar-baz");
   EXPECT_LE(1, ObservableRetryPolicy::is_exhausted_call_count);
   EXPECT_EQ(0, ObservableBackoffPolicy::on_completion_call_count);
@@ -104,8 +104,8 @@ TEST_F(ClientTest, OverrideBackoffPolicy) {
   // Call an API (any API) on the client, we do not care about the status, just
   // that our policy is called.
   EXPECT_CALL(*mock, GetBucketMetadata(_))
-      .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
-      .WillOnce(Return(std::make_pair(Status(), BucketMetadata{})));
+      .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
+      .WillOnce(Return(make_status_or( BucketMetadata{})));
   (void)client.GetBucketMetadata("foo-bar-baz");
   EXPECT_EQ(0, ObservableRetryPolicy::is_exhausted_call_count);
   EXPECT_LE(1, ObservableBackoffPolicy::on_completion_call_count);
@@ -120,8 +120,8 @@ TEST_F(ClientTest, OverrideBothPolicies) {
   // Call an API (any API) on the client, we do not care about the status, just
   // that our policy is called.
   EXPECT_CALL(*mock, GetBucketMetadata(_))
-      .WillOnce(Return(std::make_pair(TransientError(), BucketMetadata{})))
-      .WillOnce(Return(std::make_pair(Status(), BucketMetadata{})));
+      .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
+      .WillOnce(Return(make_status_or( BucketMetadata{})));
   (void)client.GetBucketMetadata("foo-bar-baz");
   EXPECT_LE(1, ObservableRetryPolicy::is_exhausted_call_count);
   EXPECT_LE(1, ObservableBackoffPolicy::on_completion_call_count);

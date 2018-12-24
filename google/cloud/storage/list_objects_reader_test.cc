@@ -63,7 +63,7 @@ TEST(ListObjectsReaderTest, Basic) {
       response.items.push_back(expected[2 * i + 1]);
     }
     return [response](ListObjectsRequest const&) {
-      return std::make_pair(Status(), response);
+      return StatusOr<ListObjectsResponse>(response);
     };
   };
 
@@ -84,7 +84,7 @@ TEST(ListObjectsReaderTest, Basic) {
 TEST(ListObjectsReaderTest, Empty) {
   auto mock = std::make_shared<MockClient>();
   EXPECT_CALL(*mock, ListObjects(_))
-      .WillOnce(Return(std::make_pair(Status(), ListObjectsResponse())));
+      .WillOnce(Return(make_status_or(ListObjectsResponse{})));
 
   ListObjectsReader reader(mock, "foo-bar-baz", Prefix("dir/"));
   auto count = std::distance(reader.begin(), reader.end());

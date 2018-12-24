@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_REFRESHING_CREDENTIALS_WRAPPER_H_
 
 #include "google/cloud/storage/status.h"
+#include "google/cloud/storage/status_or.h"
 #include <chrono>
 #include <string>
 #include <utility>
@@ -31,15 +32,16 @@ namespace oauth2 {
 class RefreshingCredentialsWrapper {
  public:
   template <typename RefreshFunctor>
-  std::pair<storage::Status, std::string> AuthorizationHeader(
-      RefreshFunctor refresh_fn) {
+  StatusOr<std::string> AuthorizationHeader(RefreshFunctor refresh_fn) {
     if (IsValid()) {
-      return std::make_pair(storage::Status(), authorization_header);
+      return authorization_header;
     }
 
     storage::Status status = refresh_fn();
-    return std::make_pair(status,
-                          status.ok() ? authorization_header : std::string{});
+    if (status.ok()) {
+      return authorization_header;
+    }
+    return status;
   }
 
   /**

@@ -71,12 +71,12 @@ TEST_F(ObjectAccessControlsTest, ListObjectAcl) {
 
   EXPECT_CALL(*mock, ListObjectAcl(_))
       .WillOnce(Return(
-          std::make_pair(TransientError(), internal::ListObjectAclResponse{})))
+          StatusOr<internal::ListObjectAclResponse>(TransientError())))
       .WillOnce(Invoke([&expected](internal::ListObjectAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-object", r.object_name());
 
-        return std::make_pair(Status(),
+        return make_status_or(
                               internal::ListObjectAclResponse{expected});
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
@@ -113,14 +113,14 @@ TEST_F(ObjectAccessControlsTest, CreateObjectAcl) {
       })""");
 
   EXPECT_CALL(*mock, CreateObjectAcl(_))
-      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
+      .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
       .WillOnce(Invoke([&expected](internal::CreateObjectAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-object", r.object_name());
         EXPECT_EQ("user-test-user-1", r.entity());
         EXPECT_EQ("READER", r.role());
 
-        return std::make_pair(Status(), expected);
+        return make_status_or( expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
@@ -163,13 +163,13 @@ TEST_F(ObjectAccessControlsTest, CreateObjectAclPermanentFailure) {
 TEST_F(ObjectAccessControlsTest, DeleteObjectAcl) {
   EXPECT_CALL(*mock, DeleteObjectAcl(_))
       .WillOnce(
-          Return(std::make_pair(TransientError(), internal::EmptyResponse{})))
+          Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce(Invoke([](internal::DeleteObjectAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-object", r.object_name());
         EXPECT_EQ("user-test-user", r.entity());
 
-        return std::make_pair(Status(), internal::EmptyResponse{});
+        return make_status_or( internal::EmptyResponse{});
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
@@ -210,13 +210,13 @@ TEST_F(ObjectAccessControlsTest, GetObjectAcl) {
       })""");
 
   EXPECT_CALL(*mock, GetObjectAcl(_))
-      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
+      .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
       .WillOnce(Invoke([&expected](internal::GetObjectAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-object", r.object_name());
         EXPECT_EQ("user-test-user-1", r.entity());
 
-        return std::make_pair(Status(), expected);
+        return make_status_or( expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
@@ -253,14 +253,14 @@ TEST_F(ObjectAccessControlsTest, UpdateObjectAcl) {
           "role": "OWNER"
       })""");
   EXPECT_CALL(*mock, UpdateObjectAcl(_))
-      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
+      .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
       .WillOnce(Invoke([expected](internal::UpdateObjectAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-object", r.object_name());
         EXPECT_EQ("user-test-user", r.entity());
         EXPECT_EQ("OWNER", r.role());
 
-        return std::make_pair(Status(), expected);
+        return make_status_or( expected);
       }));
 
   Client client{std::shared_ptr<internal::RawClient>(mock)};
@@ -302,7 +302,7 @@ TEST_F(ObjectAccessControlsTest, PatchObjectAcl) {
           "role": "OWNER"
       })""");
   EXPECT_CALL(*mock, PatchObjectAcl(_))
-      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
+      .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
       .WillOnce(Invoke([result](internal::PatchObjectAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-object", r.object_name());
@@ -311,7 +311,7 @@ TEST_F(ObjectAccessControlsTest, PatchObjectAcl) {
         auto payload = internal::nl::json::parse(r.payload());
         EXPECT_EQ(expected, payload);
 
-        return std::make_pair(Status(), result);
+        return make_status_or( result);
       }));
 
   Client client{std::shared_ptr<internal::RawClient>(mock)};

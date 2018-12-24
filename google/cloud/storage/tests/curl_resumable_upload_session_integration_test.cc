@@ -50,19 +50,16 @@ TEST_F(CurlResumableUploadIntegrationTest, Simple) {
   ResumableUploadRequest request(bucket_name, object_name);
   request.set_multiple_options(IfGenerationMatch(0));
 
-  Status status;
-  std::unique_ptr<ResumableUploadSession> session;
-  std::tie(status, session) = client->CreateResumableSession(request);
+  StatusOr<std::unique_ptr<ResumableUploadSession>> session = client->CreateResumableSession(request);
 
-  ASSERT_TRUE(status.ok());
+  ASSERT_TRUE(session.ok());
 
   std::string const contents = LoremIpsum();
-  ResumableUploadResponse response;
-  std::tie(status, response) = session->UploadChunk(contents, contents.size());
+  StatusOr<ResumableUploadResponse> response = (*session)->UploadChunk(contents, contents.size());
 
-  ASSERT_TRUE(status.ok());
-  EXPECT_FALSE(response.payload.empty());
-  auto metadata = ObjectMetadata::ParseFromString(response.payload);
+  ASSERT_TRUE(response.ok());
+  EXPECT_FALSE(response->payload.empty());
+  auto metadata = ObjectMetadata::ParseFromString(response->payload);
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name, metadata.bucket());
   EXPECT_EQ(contents.size(), metadata.size());
@@ -78,28 +75,25 @@ TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
   ResumableUploadRequest request(bucket_name, object_name);
   request.set_multiple_options(IfGenerationMatch(0));
 
-  Status status;
-  std::unique_ptr<ResumableUploadSession> session;
-  std::tie(status, session) = client->CreateResumableSession(request);
+  StatusOr<std::unique_ptr<ResumableUploadSession>> session = client->CreateResumableSession(request);
 
-  ASSERT_TRUE(status.ok());
+  ASSERT_TRUE(session.ok());
 
   std::string const contents(UploadChunkRequest::kChunkSizeQuantum, '0');
-  ResumableUploadResponse response;
-  std::tie(status, response) =
-      session->UploadChunk(contents, 2 * contents.size());
-  ASSERT_TRUE(status.status_code() == 200 or status.status_code() == 308)
-      << status;
+  StatusOr<ResumableUploadResponse> response =
+      (*session)->UploadChunk(contents, 2 * contents.size());
+  ASSERT_TRUE(response.status().status_code() == 200 or response.status().status_code() == 308)
+      << response.status();
 
-  std::tie(status, response) = session->ResetSession();
-  ASSERT_TRUE(status.ok()) << status;
+  response = (*session)->ResetSession();
+  ASSERT_TRUE(response.ok()) << response.status();
 
-  std::tie(status, response) =
-      session->UploadChunk(contents, 2 * contents.size());
-  ASSERT_TRUE(status.ok()) << status;
+  response =
+      (*session)->UploadChunk(contents, 2 * contents.size());
+  ASSERT_TRUE(response.ok()) << response.status();
 
-  EXPECT_FALSE(response.payload.empty());
-  auto metadata = ObjectMetadata::ParseFromString(response.payload);
+  EXPECT_FALSE(response->payload.empty());
+  auto metadata = ObjectMetadata::ParseFromString(response->payload);
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name, metadata.bucket());
   EXPECT_EQ(2 * contents.size(), metadata.size());
@@ -115,36 +109,33 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
   ResumableUploadRequest request(bucket_name, object_name);
   request.set_multiple_options(IfGenerationMatch(0));
 
-  Status status;
-  std::unique_ptr<ResumableUploadSession> old_session;
-  std::tie(status, old_session) = client->CreateResumableSession(request);
+  StatusOr<std::unique_ptr<ResumableUploadSession>> old_session;
+  old_session = client->CreateResumableSession(request);
 
-  ASSERT_TRUE(status.ok());
+  ASSERT_TRUE(old_session.ok());
 
   std::string const contents(UploadChunkRequest::kChunkSizeQuantum, '0');
 
-  ResumableUploadResponse response;
-  std::tie(status, response) =
-      old_session->UploadChunk(contents, 3 * contents.size());
-  ASSERT_TRUE(status.status_code() == 200 or status.status_code() == 308)
-      << status;
+  StatusOr<ResumableUploadResponse> response =
+      (*old_session)->UploadChunk(contents, 3 * contents.size());
+  ASSERT_TRUE(response.status().status_code() == 200 or response.status().status_code() == 308)
+      << response.status();
 
-  std::unique_ptr<ResumableUploadSession> session;
-  std::tie(status, session) =
-      client->RestoreResumableSession(old_session->session_id());
-  EXPECT_EQ(contents.size(), session->next_expected_byte());
-  old_session.reset();
+  StatusOr<std::unique_ptr<ResumableUploadSession>> session =
+      client->RestoreResumableSession((*old_session)->session_id());
+  EXPECT_EQ(contents.size(), (*session)->next_expected_byte());
+  old_session->reset();
 
-  std::tie(status, response) =
-      session->UploadChunk(contents, 3 * contents.size());
-  ASSERT_TRUE(status.ok()) << status;
+  response =
+      (*session)->UploadChunk(contents, 3 * contents.size());
+  ASSERT_TRUE(response.ok()) << response.status();
 
-  std::tie(status, response) =
-      session->UploadChunk(contents, 3 * contents.size());
-  ASSERT_TRUE(status.ok()) << status;
+  response =
+      (*session)->UploadChunk(contents, 3 * contents.size());
+  ASSERT_TRUE(response.ok()) << response.status();
 
-  EXPECT_FALSE(response.payload.empty());
-  auto metadata = ObjectMetadata::ParseFromString(response.payload);
+  EXPECT_FALSE(response->payload.empty());
+  auto metadata = ObjectMetadata::ParseFromString(response->payload);
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name, metadata.bucket());
   EXPECT_EQ(3 * contents.size(), metadata.size());

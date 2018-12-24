@@ -71,7 +71,7 @@ TEST_F(ObjectTest, InsertObjectMedia) {
             EXPECT_EQ("test-bucket-name", request.bucket_name());
             EXPECT_EQ("test-object-name", request.object_name());
             EXPECT_EQ("test object contents", request.contents());
-            return std::make_pair(storage::Status(), expected);
+            return make_status_or(expected);
           }));
 
   auto actual = client->InsertObject("test-bucket-name", "test-object-name",
@@ -129,12 +129,12 @@ TEST_F(ObjectTest, GetObjectMetadata) {
   auto expected = ObjectMetadata::ParseFromString(text);
 
   EXPECT_CALL(*mock, GetObjectMetadata(_))
-      .WillOnce(Return(std::make_pair(TransientError(), ObjectMetadata{})))
+      .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
       .WillOnce(
           Invoke([&expected](internal::GetObjectMetadataRequest const& r) {
             EXPECT_EQ("test-bucket-name", r.bucket_name());
             EXPECT_EQ("test-object-name", r.object_name());
-            return std::make_pair(Status(), expected);
+            return make_status_or( expected);
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
@@ -165,11 +165,11 @@ TEST_F(ObjectTest, GetObjectMetadataPermanentFailure) {
 TEST_F(ObjectTest, DeleteObject) {
   EXPECT_CALL(*mock, DeleteObject(_))
       .WillOnce(
-          Return(std::make_pair(TransientError(), internal::EmptyResponse{})))
+          Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
         EXPECT_EQ("test-object-name", r.object_name());
-        return std::make_pair(Status(), internal::EmptyResponse{});
+        return make_status_or( internal::EmptyResponse{});
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2),
@@ -227,7 +227,7 @@ TEST_F(ObjectTest, UpdateObject) {
   auto expected = ObjectMetadata::ParseFromString(text);
 
   EXPECT_CALL(*mock, UpdateObject(_))
-      .WillOnce(Return(std::make_pair(TransientError(), ObjectMetadata{})))
+      .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
       .WillOnce(Invoke([&expected](internal::UpdateObjectRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
         EXPECT_EQ("test-object-name", r.object_name());
@@ -250,7 +250,7 @@ TEST_F(ObjectTest, UpdateObject) {
              }},
         };
         EXPECT_EQ(expected_payload, actual_payload);
-        return std::make_pair(Status(), expected);
+        return make_status_or( expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
@@ -323,13 +323,13 @@ TEST_F(ObjectTest, PatchObject) {
   auto expected = ObjectMetadata::ParseFromString(text);
 
   EXPECT_CALL(*mock, PatchObject(_))
-      .WillOnce(Return(std::make_pair(TransientError(), ObjectMetadata{})))
+      .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
       .WillOnce(Invoke([&expected](internal::PatchObjectRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
         EXPECT_EQ("test-object-name", r.object_name());
         EXPECT_THAT(r.payload(), HasSubstr("new-disposition"));
         EXPECT_THAT(r.payload(), HasSubstr("x-made-up-lang"));
-        return std::make_pair(Status(), expected);
+        return make_status_or( expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};

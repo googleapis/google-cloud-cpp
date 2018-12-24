@@ -31,6 +31,7 @@
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/service_account.h"
 #include "google/cloud/storage/status.h"
+#include "google/cloud/storage/status_or.h"
 
 namespace google {
 namespace cloud {
@@ -48,119 +49,113 @@ class RawClient {
 
   //@{
   /// @name Bucket resource operations
-  virtual std::pair<Status, ListBucketsResponse> ListBuckets(
+  virtual StatusOr<ListBucketsResponse> ListBuckets(
       ListBucketsRequest const& request) = 0;
-  virtual std::pair<Status, BucketMetadata> CreateBucket(
-      CreateBucketRequest const&) = 0;
-  virtual std::pair<Status, BucketMetadata> GetBucketMetadata(
+  virtual StatusOr<BucketMetadata> CreateBucket(CreateBucketRequest const&) = 0;
+  virtual StatusOr<BucketMetadata> GetBucketMetadata(
       GetBucketMetadataRequest const& request) = 0;
-  virtual std::pair<Status, EmptyResponse> DeleteBucket(
+  virtual StatusOr<EmptyResponse> DeleteBucket(
       DeleteBucketRequest const& request) = 0;
-  virtual std::pair<Status, BucketMetadata> UpdateBucket(
-      UpdateBucketRequest const&) = 0;
-  virtual std::pair<Status, BucketMetadata> PatchBucket(
+  virtual StatusOr<BucketMetadata> UpdateBucket(UpdateBucketRequest const&) = 0;
+  virtual StatusOr<BucketMetadata> PatchBucket(
       PatchBucketRequest const& request) = 0;
-  virtual std::pair<Status, IamPolicy> GetBucketIamPolicy(
+  virtual StatusOr<IamPolicy> GetBucketIamPolicy(
       GetBucketIamPolicyRequest const& request) = 0;
-  virtual std::pair<Status, IamPolicy> SetBucketIamPolicy(
+  virtual StatusOr<IamPolicy> SetBucketIamPolicy(
       SetBucketIamPolicyRequest const& request) = 0;
-  virtual std::pair<Status, TestBucketIamPermissionsResponse>
-  TestBucketIamPermissions(TestBucketIamPermissionsRequest const& request) = 0;
-  virtual std::pair<Status, EmptyResponse> LockBucketRetentionPolicy(
+  virtual StatusOr<TestBucketIamPermissionsResponse> TestBucketIamPermissions(
+      TestBucketIamPermissionsRequest const& request) = 0;
+  virtual StatusOr<EmptyResponse> LockBucketRetentionPolicy(
       LockBucketRetentionPolicyRequest const& request) = 0;
   //@}
 
   //@{
   /// @name Object resource operations
-  virtual std::pair<Status, ObjectMetadata> InsertObjectMedia(
+  virtual StatusOr<ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const&) = 0;
-  virtual std::pair<Status, ObjectMetadata> CopyObject(
-      CopyObjectRequest const&) = 0;
-  virtual std::pair<Status, ObjectMetadata> GetObjectMetadata(
+  virtual StatusOr<ObjectMetadata> CopyObject(CopyObjectRequest const&) = 0;
+  virtual StatusOr<ObjectMetadata> GetObjectMetadata(
       GetObjectMetadataRequest const& request) = 0;
-  virtual std::pair<Status, std::unique_ptr<ObjectReadStreambuf>> ReadObject(
+  virtual StatusOr<std::unique_ptr<ObjectReadStreambuf>> ReadObject(
       ReadObjectRangeRequest const&) = 0;
-  virtual std::pair<Status, std::unique_ptr<ObjectWriteStreambuf>> WriteObject(
+  virtual StatusOr<std::unique_ptr<ObjectWriteStreambuf>> WriteObject(
       InsertObjectStreamingRequest const&) = 0;
-  virtual std::pair<Status, ListObjectsResponse> ListObjects(
+  virtual StatusOr<ListObjectsResponse> ListObjects(
       ListObjectsRequest const&) = 0;
-  virtual std::pair<Status, EmptyResponse> DeleteObject(
-      DeleteObjectRequest const&) = 0;
-  virtual std::pair<Status, ObjectMetadata> UpdateObject(
-      UpdateObjectRequest const&) = 0;
-  virtual std::pair<Status, ObjectMetadata> PatchObject(
-      PatchObjectRequest const&) = 0;
-  virtual std::pair<Status, ObjectMetadata> ComposeObject(
+  virtual StatusOr<EmptyResponse> DeleteObject(DeleteObjectRequest const&) = 0;
+  virtual StatusOr<ObjectMetadata> UpdateObject(UpdateObjectRequest const&) = 0;
+  virtual StatusOr<ObjectMetadata> PatchObject(PatchObjectRequest const&) = 0;
+  virtual StatusOr<ObjectMetadata> ComposeObject(
       ComposeObjectRequest const&) = 0;
-  virtual std::pair<Status, RewriteObjectResponse> RewriteObject(
+  virtual StatusOr<RewriteObjectResponse> RewriteObject(
       RewriteObjectRequest const&) = 0;
-  virtual std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+  virtual StatusOr<std::unique_ptr<ResumableUploadSession>>
   CreateResumableSession(ResumableUploadRequest const& request) = 0;
-  virtual std::pair<Status, std::unique_ptr<ResumableUploadSession>>
+  virtual StatusOr<std::unique_ptr<ResumableUploadSession>>
   RestoreResumableSession(std::string const& session_id) = 0;
   //@}
 
   //@{
   /// @name BucketAccessControls resource operations
-  virtual std::pair<Status, ListBucketAclResponse> ListBucketAcl(
+  virtual StatusOr<ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const&) = 0;
-  virtual std::pair<Status, BucketAccessControl> CreateBucketAcl(
+  virtual StatusOr<BucketAccessControl> CreateBucketAcl(
       CreateBucketAclRequest const&) = 0;
-  virtual std::pair<Status, EmptyResponse> DeleteBucketAcl(
+  virtual StatusOr<EmptyResponse> DeleteBucketAcl(
       DeleteBucketAclRequest const&) = 0;
-  virtual std::pair<Status, BucketAccessControl> GetBucketAcl(
+  virtual StatusOr<BucketAccessControl> GetBucketAcl(
       GetBucketAclRequest const&) = 0;
-  virtual std::pair<Status, BucketAccessControl> UpdateBucketAcl(
+  virtual StatusOr<BucketAccessControl> UpdateBucketAcl(
       UpdateBucketAclRequest const&) = 0;
-  virtual std::pair<Status, BucketAccessControl> PatchBucketAcl(
+  virtual StatusOr<BucketAccessControl> PatchBucketAcl(
       PatchBucketAclRequest const&) = 0;
   //@}
 
   //@{
   /// @name ObjectAccessControls operations
-  virtual std::pair<Status, ListObjectAclResponse> ListObjectAcl(
+  virtual StatusOr<ListObjectAclResponse> ListObjectAcl(
       ListObjectAclRequest const&) = 0;
-  virtual std::pair<Status, ObjectAccessControl> CreateObjectAcl(
+  virtual StatusOr<ObjectAccessControl> CreateObjectAcl(
       CreateObjectAclRequest const&) = 0;
-  virtual std::pair<Status, EmptyResponse> DeleteObjectAcl(
+  virtual StatusOr<EmptyResponse> DeleteObjectAcl(
       DeleteObjectAclRequest const&) = 0;
-  virtual std::pair<Status, ObjectAccessControl> GetObjectAcl(
+  virtual StatusOr<ObjectAccessControl> GetObjectAcl(
       GetObjectAclRequest const&) = 0;
-  virtual std::pair<Status, ObjectAccessControl> UpdateObjectAcl(
+  virtual StatusOr<ObjectAccessControl> UpdateObjectAcl(
       UpdateObjectAclRequest const&) = 0;
-  virtual std::pair<Status, ObjectAccessControl> PatchObjectAcl(
+  virtual StatusOr<ObjectAccessControl> PatchObjectAcl(
       PatchObjectAclRequest const&) = 0;
   //@}
 
   //@{
   /// @name DefaultObjectAccessControls operations.
-  virtual std::pair<Status, ListDefaultObjectAclResponse> ListDefaultObjectAcl(
+  virtual StatusOr<ListDefaultObjectAclResponse> ListDefaultObjectAcl(
       ListDefaultObjectAclRequest const&) = 0;
-  virtual std::pair<Status, ObjectAccessControl> CreateDefaultObjectAcl(
+  virtual StatusOr<ObjectAccessControl> CreateDefaultObjectAcl(
       CreateDefaultObjectAclRequest const&) = 0;
-  virtual std::pair<Status, EmptyResponse> DeleteDefaultObjectAcl(
+  virtual StatusOr<EmptyResponse> DeleteDefaultObjectAcl(
       DeleteDefaultObjectAclRequest const&) = 0;
-  virtual std::pair<Status, ObjectAccessControl> GetDefaultObjectAcl(
+  virtual StatusOr<ObjectAccessControl> GetDefaultObjectAcl(
       GetDefaultObjectAclRequest const&) = 0;
-  virtual std::pair<Status, ObjectAccessControl> UpdateDefaultObjectAcl(
+  virtual StatusOr<ObjectAccessControl> UpdateDefaultObjectAcl(
       UpdateDefaultObjectAclRequest const&) = 0;
-  virtual std::pair<Status, ObjectAccessControl> PatchDefaultObjectAcl(
+  virtual StatusOr<ObjectAccessControl> PatchDefaultObjectAcl(
       PatchDefaultObjectAclRequest const&) = 0;
   //@}
 
   //@{
-  virtual std::pair<Status, ServiceAccount> GetServiceAccount(
+  virtual StatusOr<ServiceAccount> GetServiceAccount(
       GetProjectServiceAccountRequest const&) = 0;
   //@}
 
   //@{
-  virtual std::pair<Status, ListNotificationsResponse> ListNotifications(
+  virtual StatusOr<ListNotificationsResponse> ListNotifications(
       ListNotificationsRequest const&) = 0;
-  virtual std::pair<Status, NotificationMetadata> CreateNotification(
+  virtual StatusOr<NotificationMetadata> CreateNotification(
       CreateNotificationRequest const&) = 0;
-  virtual std::pair<Status, NotificationMetadata> GetNotification(
+  virtual StatusOr<NotificationMetadata> GetNotification(
       GetNotificationRequest const&) = 0;
-  virtual std::pair<Status, EmptyResponse> DeleteNotification(
+  virtual StatusOr<EmptyResponse> DeleteNotification(
       DeleteNotificationRequest const&) = 0;
   //@}
 };

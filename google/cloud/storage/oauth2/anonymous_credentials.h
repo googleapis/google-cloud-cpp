@@ -42,8 +42,7 @@ class AnonymousCredentials : public Credentials {
    * Authorization HTTP header from this method, this class always returns an
    * empty string.
    */
-  std::pair<google::cloud::storage::Status, std::string> AuthorizationHeader()
-      override;
+  StatusOr<std::string> AuthorizationHeader() override;
 };
 
 }  // namespace oauth2
