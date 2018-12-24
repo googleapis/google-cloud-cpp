@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/instance_config.h"
 #include "google/cloud/bigtable/instance_update_config.h"
 #include "google/cloud/bigtable/internal/instance_admin.h"
+#include "google/cloud/future.h"
 #include <future>
 #include <memory>
 
@@ -160,6 +161,30 @@ class InstanceAdmin {
    */
   google::bigtable::admin::v2::Instance GetInstance(
       std::string const& instance_id);
+
+  /**
+   * Sends an asynchronous request to get information about an existing
+   * instance.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param instance_id the id of the instance in the project that to be
+   *     retrieved.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   *
+   * @return a future that will be satisfied when the request succeeds or the
+   *   retry policy expires. In the first case, the future will contain the
+   *   response from the service. In the second the future is satisfied with
+   *   an exception.
+   *
+   * @throws std::exception if the operation cannot be started.
+   */
+  future<google::bigtable::admin::v2::Instance> AsyncGetInstance(
+      std::string const& instance_id, CompletionQueue& cq);
 
   /**
    * Deletes the instances in the project.
