@@ -143,8 +143,17 @@ TEST_F(AdminAsyncIntegrationTest, CreateListGetDeleteTableTest) {
   EXPECT_TRUE(gc.has_intersection());
   EXPECT_EQ(2, gc.intersection().rules_size());
 
-  // delete table
-  DeleteTable(table_id);
+  // AsyncDeleteTable
+  std::promise<google::protobuf::Empty> promise_delete_table;
+  noex_table_admin_->AsyncDeleteTable(
+      table_id, table_config, cq,
+      [&promise_delete_table](CompletionQueue& cq,
+                              google::protobuf::Empty& response,
+                              grpc::Status const& status) {
+        promise_delete_table.set_value(std::move(response));
+      });
+  auto result = promise_delete_table.get_future().get();
+
   // List to verify it is no longer there
   auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   auto table_count = CountMatchingTables(table_id, current_table_list);

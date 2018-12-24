@@ -82,6 +82,12 @@ class InProcessAdminClient : public bigtable::AdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteTableRequest const& request,
       google::protobuf::Empty* response) override;
+  std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+  AsyncDeleteTable(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteTableRequest const& request,
+      grpc::CompletionQueue* cq) override;
   grpc::Status ModifyColumnFamilies(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request,
