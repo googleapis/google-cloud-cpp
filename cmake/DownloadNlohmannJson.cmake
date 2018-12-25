@@ -19,9 +19,9 @@
 # downloads, and we get failures.  This is a custom cmake script to download
 # that file.
 set(JSON_URL
-    "https://github.com/nlohmann/json/releases/download/v3.1.2/json.hpp")
+    "https://github.com/nlohmann/json/releases/download/v3.4.0/json.hpp")
 set(
-    JSON_SHA256 fbdfec4b4cf63b3b565d09f87e6c3c183bdd45c5be1864d3fcb338f6f02c1733
+    JSON_SHA256 63da6d1f22b2a7bb9e4ff7d6b255cf691a161ff49532dcc45d398a53e295835f
     )
 message("JSON_URL = ${JSON_URL}")
 message("JSON_SHA256 = ${JSON_SHA256}")
