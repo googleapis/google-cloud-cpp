@@ -37,6 +37,10 @@ echo "Running bigtable::InstanceAdmin integration test."
 ./instance_admin_async_integration_test "${PROJECT_ID}" "us-central1-f" "us-central1-b";
 
 echo
+echo "Running bigtable::InstanceAdmin async with futures integration test."
+./instance_admin_async_future_integration_test "${PROJECT_ID}";
+
+echo
 echo "Running bigtable::TableAdmin integration test."
 ./admin_integration_test "${PROJECT_ID}" "admin-test" "fake-zone-1" "fake-zone-2"
 

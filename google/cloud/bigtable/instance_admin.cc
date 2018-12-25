@@ -174,6 +174,19 @@ btadmin::Cluster InstanceAdmin::GetCluster(
   return result;
 }
 
+future<btadmin::Cluster> InstanceAdmin::AsyncGetCluster(
+    bigtable::InstanceId const& instance_id,
+    bigtable::ClusterId const& cluster_id, CompletionQueue& cq) {
+  promise<btadmin::Cluster> p;
+  auto result = p.get_future();
+
+  impl_.AsyncGetCluster(
+      instance_id, cluster_id, cq,
+      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetCluster"));
+
+  return result;
+}
+
 std::vector<btadmin::Cluster> InstanceAdmin::ListClusters() {
   return ListClusters("-");
 }

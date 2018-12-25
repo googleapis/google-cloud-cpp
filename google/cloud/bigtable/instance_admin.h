@@ -182,6 +182,9 @@ class InstanceAdmin {
    *   an exception.
    *
    * @throws std::exception if the operation cannot be started.
+   *
+   * @par Example
+   * @snippet instance_admin_async_snippets.cc async get instance
    */
   future<google::bigtable::admin::v2::Instance> AsyncGetInstance(
       std::string const& instance_id, CompletionQueue& cq);
@@ -262,6 +265,35 @@ class InstanceAdmin {
   google::bigtable::admin::v2::Cluster GetCluster(
       bigtable::InstanceId const& instance_id,
       bigtable::ClusterId const& cluster_id);
+
+  /**
+   * Sends an asynchronous request to get information about existing cluster of
+   * an instance.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param instance_id the id of the instance in the project.
+   * @param cluster_id the id of the cluster in the project that needs to be
+   * reterived.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   *
+   * @return a future that will be satisfied when the request succeeds or the
+   *   retry policy expires. In the first case, the future will contain the
+   *   response from the service. In the second the future is satisfied with
+   *   an exception.
+   *
+   * @throws std::exception if the operation cannot be started.
+   *
+   * @par Example
+   * @snippet instance_admin_async_snippets.cc async get cluster
+   */
+  future<google::bigtable::admin::v2::Cluster> AsyncGetCluster(
+      bigtable::InstanceId const& instance_id,
+      bigtable::ClusterId const& cluster_id, CompletionQueue& cq);
 
   /**
    * Create a new application profile.

@@ -53,6 +53,12 @@ cc_binary(
 )
 
 cc_binary(
+    name = "instance_admin_async_snippets",
+    srcs = ["instance_admin_async_snippets.cc"],
+    deps = ["//google/cloud/bigtable:bigtable_client"],
+)
+
+cc_binary(
     name = "table_admin_snippets",
     srcs = ["table_admin_snippets.cc"],
     deps = ["//google/cloud/bigtable:bigtable_client"],

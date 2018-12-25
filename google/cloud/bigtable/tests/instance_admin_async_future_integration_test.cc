@@ -158,6 +158,9 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   auto instance_details =
       instance_admin_->CreateInstance(instance_config).get();
 
+  google::cloud::bigtable::CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
   // create cluster
   auto clusters_before = instance_admin_->ListClusters(id);
   ASSERT_FALSE(IsClusterPresent(clusters_before, cluster_id_str))
@@ -175,7 +178,9 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   EXPECT_TRUE(IsClusterPresent(clusters_after, cluster.name()));
 
   // Get cluster
-  auto cluster_check = instance_admin_->GetCluster(instance_id, cluster_id);
+  google::cloud::future<btadmin::Cluster> fut =
+      instance_admin_->AsyncGetCluster(instance_id, cluster_id, cq);
+  auto cluster_check = fut.get();
   std::string cluster_name_prefix =
       instance_admin_->project_name() + "/instances/" + id + "/clusters/";
   EXPECT_EQ(cluster_name_prefix + cluster_id.get(), cluster_check.name());
@@ -204,6 +209,8 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   EXPECT_FALSE(
       IsClusterPresent(clusters_after_delete,
                        instance_details.name() + "/clusters/" + id + "-cl2"));
+  cq.Shutdown();
+  pool.join();
 }
 
 int main(int argc, char* argv[]) {
