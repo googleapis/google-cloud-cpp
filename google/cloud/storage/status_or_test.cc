@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/status_or.h"
 #include "google/cloud/testing_util/expect_exception.h"
+#include "google/cloud/testing_util/testing_types.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -216,6 +217,294 @@ TEST(StatusOrVoidTest, StatusConstAccessors) {
   StatusOr<void> const actual(Status(500, "BAD"));
   EXPECT_EQ(500, actual.status().status_code());
   EXPECT_EQ(500, std::move(actual).status().status_code());
+}
+
+TEST(StatusOrNoDefaultConstructor, DefaultConstructed) {
+  StatusOr<testing_util::NoDefaultConstructor> empty;
+  EXPECT_FALSE(empty.ok());
+}
+
+TEST(StatusOrNoDefaultConstructor, ValueConstructed) {
+  StatusOr<testing_util::NoDefaultConstructor> actual(
+      testing_util::NoDefaultConstructor(std::string("foo")));
+  EXPECT_TRUE(actual.ok());
+  EXPECT_EQ(actual->str(), "foo");
+}
+
+using testing_util::Observable;
+
+/// @test A default-constructed status does not call the default constructor.
+TEST(StatusOrObservableTest, NoDefaultConstruction) {
+  Observable::reset_counters();
+  StatusOr<Observable> other;
+  EXPECT_EQ(0, Observable::default_constructor);
+  EXPECT_FALSE(other.ok());
+}
+
+/// @test A copy-constructed status calls the copy constructor for T.
+TEST(StatusOrObservableTest, Copy) {
+  Observable::reset_counters();
+  StatusOr<Observable> other(Observable("foo"));
+  EXPECT_EQ("foo", other.value().str());
+  EXPECT_EQ(1, Observable::move_constructor);
+
+  Observable::reset_counters();
+  StatusOr<Observable> copy(other);
+  EXPECT_EQ(1, Observable::copy_constructor);
+  EXPECT_TRUE(copy.ok());
+  EXPECT_TRUE(other.ok());
+  EXPECT_EQ("foo", copy->str());
+}
+
+/// @test A move-constructed status calls the move constructor for T.
+TEST(StatusOrObservableTest, MoveCopy) {
+  Observable::reset_counters();
+  StatusOr<Observable> other(Observable("foo"));
+  EXPECT_EQ("foo", other.value().str());
+  EXPECT_EQ(1, Observable::move_constructor);
+
+  Observable::reset_counters();
+  StatusOr<Observable> copy(std::move(other));
+  EXPECT_EQ(1, Observable::move_constructor);
+  EXPECT_TRUE(copy.ok());
+  EXPECT_EQ("foo", copy->str());
+  EXPECT_TRUE(other.ok());
+  EXPECT_EQ("moved-out", other->str());
+}
+
+/// @test A move-assigned status calls the right assignments and destructors.
+TEST(StatusOrObservableTest, MoveAssignment_NoValue_NoValue) {
+  StatusOr<Observable> other;
+  StatusOr<Observable> assigned;
+  EXPECT_FALSE(other.ok());
+  EXPECT_FALSE(assigned.ok());
+
+  Observable::reset_counters();
+  assigned = std::move(other);
+  EXPECT_FALSE(other.ok());
+  EXPECT_FALSE(assigned.ok());
+  EXPECT_EQ(0, Observable::destructor);
+  EXPECT_EQ(0, Observable::move_assignment);
+  EXPECT_EQ(0, Observable::copy_assignment);
+  EXPECT_EQ(0, Observable::move_constructor);
+  EXPECT_EQ(0, Observable::copy_constructor);
+}
+
+/// @test A move-assigned status calls the right assignments and destructors.
+TEST(StatusOrObservableTest, MoveAssignment_NoValue_Value) {
+  StatusOr<Observable> other(Observable("foo"));
+  StatusOr<Observable> assigned;
+  EXPECT_TRUE(other.ok());
+  EXPECT_FALSE(assigned.ok());
+
+  Observable::reset_counters();
+  assigned = std::move(other);
+  EXPECT_TRUE(other.ok());
+  EXPECT_TRUE(assigned.ok());
+  EXPECT_EQ("foo", assigned->str());
+  EXPECT_EQ("moved-out", other->str());
+  EXPECT_EQ(0, Observable::destructor);
+  EXPECT_EQ(0, Observable::move_assignment);
+  EXPECT_EQ(0, Observable::copy_assignment);
+  EXPECT_EQ(1, Observable::move_constructor);
+  EXPECT_EQ(0, Observable::copy_constructor);
+}
+
+/// @test A move-assigned status calls the right assignments and destructors.
+TEST(StatusOrObservableTest, MoveAssignment_NoValue_T) {
+  Observable other("foo");
+  StatusOr<Observable> assigned;
+  EXPECT_FALSE(assigned.ok());
+
+  Observable::reset_counters();
+  assigned = std::move(other);
+  EXPECT_TRUE(assigned.ok());
+  EXPECT_EQ("foo", assigned->str());
+  EXPECT_EQ("moved-out", other.str());
+  EXPECT_EQ(0, Observable::destructor);
+  EXPECT_EQ(0, Observable::move_assignment);
+  EXPECT_EQ(0, Observable::copy_assignment);
+  EXPECT_EQ(1, Observable::move_constructor);
+  EXPECT_EQ(0, Observable::copy_constructor);
+}
+
+/// @test A move-assigned status calls the right assignments and destructors.
+TEST(StatusOrObservableTest, MoveAssignment_Value_NoValue) {
+  StatusOr<Observable> other;
+  StatusOr<Observable> assigned(Observable("bar"));
+  EXPECT_FALSE(other.ok());
+  EXPECT_TRUE(assigned.ok());
+
+  Observable::reset_counters();
+  assigned = std::move(other);
+  EXPECT_FALSE(other.ok());
+  EXPECT_FALSE(assigned.ok());
+  EXPECT_EQ(1, Observable::destructor);
+  EXPECT_EQ(0, Observable::move_assignment);
+  EXPECT_EQ(0, Observable::copy_assignment);
+  EXPECT_EQ(0, Observable::move_constructor);
+  EXPECT_EQ(0, Observable::copy_constructor);
+}
+
+/// @test A move-assigned status calls the right assignments and destructors.
+TEST(StatusOrObservableTest, MoveAssignment_Value_Value) {
+  StatusOr<Observable> other(Observable("foo"));
+  StatusOr<Observable> assigned(Observable("bar"));
+  EXPECT_TRUE(other.ok());
+  EXPECT_TRUE(assigned.ok());
+
+  Observable::reset_counters();
+  assigned = std::move(other);
+  EXPECT_TRUE(other.ok());
+  EXPECT_TRUE(assigned.ok());
+  EXPECT_EQ(0, Observable::destructor);
+  EXPECT_EQ(1, Observable::move_assignment);
+  EXPECT_EQ(0, Observable::copy_assignment);
+  EXPECT_EQ(0, Observable::move_constructor);
+  EXPECT_EQ(0, Observable::copy_constructor);
+  EXPECT_EQ("foo", assigned->str());
+  EXPECT_EQ("moved-out", other->str());
+}
+
+/// @test A move-assigned status calls the right assignments and destructors.
+TEST(StatusOrObservableTest, MoveAssignment_Value_T) {
+  Observable other("foo");
+  StatusOr<Observable> assigned(Observable("bar"));
+  EXPECT_TRUE(assigned.ok());
+
+  Observable::reset_counters();
+  assigned = std::move(other);
+  EXPECT_TRUE(assigned.ok());
+  EXPECT_EQ(0, Observable::destructor);
+  EXPECT_EQ(1, Observable::move_assignment);
+  EXPECT_EQ(0, Observable::copy_assignment);
+  EXPECT_EQ(0, Observable::move_constructor);
+  EXPECT_EQ(0, Observable::copy_constructor);
+  EXPECT_EQ("foo", assigned->str());
+  EXPECT_EQ("moved-out", other.str());
+}
+
+/// @test A copy-assigned status calls the right assignments and destructors.
+TEST(StatusOrObservableTest, CopyAssignment_NoValue_NoValue) {
+  StatusOr<Observable> other;
+  StatusOr<Observable> assigned;
+  EXPECT_FALSE(other.ok());
+  EXPECT_FALSE(assigned.ok());
+
+  Observable::reset_counters();
+  assigned = other;
+  EXPECT_FALSE(other.ok());
+  EXPECT_FALSE(assigned.ok());
+  EXPECT_EQ(0, Observable::destructor);
+  EXPECT_EQ(0, Observable::move_assignment);
+  EXPECT_EQ(0, Observable::copy_assignment);
+  EXPECT_EQ(0, Observable::move_constructor);
+  EXPECT_EQ(0, Observable::copy_constructor);
+}
+
+/// @test A copy-assigned status calls the right assignments and destructors.
+TEST(StatusOrObservableTest, CopyAssignment_NoValue_Value) {
+  StatusOr<Observable> other(Observable("foo"));
+  StatusOr<Observable> assigned;
+  EXPECT_TRUE(other.ok());
+  EXPECT_FALSE(assigned.ok());
+
+  Observable::reset_counters();
+  assigned = other;
+  EXPECT_TRUE(other.ok());
+  EXPECT_TRUE(assigned.ok());
+  EXPECT_EQ("foo", assigned->str());
+  EXPECT_EQ("foo", other->str());
+  EXPECT_EQ(0, Observable::destructor);
+  EXPECT_EQ(0, Observable::move_assignment);
+  EXPECT_EQ(0, Observable::copy_assignment);
+  EXPECT_EQ(0, Observable::move_constructor);
+  EXPECT_EQ(1, Observable::copy_constructor);
+}
+
+/// @test A copy-assigned status calls the right assignments and destructors.
+TEST(StatusOrObservableTest, CopyAssignment_NoValue_T) {
+  Observable other("foo");
+  StatusOr<Observable> assigned;
+  EXPECT_FALSE(assigned.ok());
+
+  Observable::reset_counters();
+  assigned = other;
+  EXPECT_TRUE(assigned.ok());
+  EXPECT_EQ("foo", assigned->str());
+  EXPECT_EQ("foo", other.str());
+  EXPECT_EQ(0, Observable::destructor);
+  EXPECT_EQ(0, Observable::move_assignment);
+  EXPECT_EQ(0, Observable::copy_assignment);
+  EXPECT_EQ(0, Observable::move_constructor);
+  EXPECT_EQ(1, Observable::copy_constructor);
+}
+
+/// @test A copy-assigned status calls the right assignments and destructors.
+TEST(StatusOrObservableTest, CopyAssignment_Value_NoValue) {
+  StatusOr<Observable> other;
+  StatusOr<Observable> assigned(Observable("bar"));
+  EXPECT_FALSE(other.ok());
+  EXPECT_TRUE(assigned.ok());
+
+  Observable::reset_counters();
+  assigned = other;
+  EXPECT_FALSE(other.ok());
+  EXPECT_FALSE(assigned.ok());
+  EXPECT_EQ(1, Observable::destructor);
+  EXPECT_EQ(0, Observable::move_assignment);
+  EXPECT_EQ(0, Observable::copy_assignment);
+  EXPECT_EQ(0, Observable::move_constructor);
+  EXPECT_EQ(0, Observable::copy_constructor);
+}
+
+/// @test A copy-assigned status calls the right assignments and destructors.
+TEST(StatusOrObservableTest, CopyAssignment_Value_Value) {
+  StatusOr<Observable> other(Observable("foo"));
+  StatusOr<Observable> assigned(Observable("bar"));
+  EXPECT_TRUE(other.ok());
+  EXPECT_TRUE(assigned.ok());
+
+  Observable::reset_counters();
+  assigned = other;
+  EXPECT_TRUE(other.ok());
+  EXPECT_TRUE(assigned.ok());
+  EXPECT_EQ(0, Observable::destructor);
+  EXPECT_EQ(0, Observable::move_assignment);
+  EXPECT_EQ(1, Observable::copy_assignment);
+  EXPECT_EQ(0, Observable::move_constructor);
+  EXPECT_EQ(0, Observable::copy_constructor);
+  EXPECT_EQ("foo", assigned->str());
+  EXPECT_EQ("foo", other->str());
+}
+
+/// @test A copy-assigned status calls the right assignments and destructors.
+TEST(StatusOrObservableTest, CopyAssignment_Value_T) {
+  Observable other("foo");
+  StatusOr<Observable> assigned(Observable("bar"));
+  EXPECT_TRUE(assigned.ok());
+
+  Observable::reset_counters();
+  assigned = other;
+  EXPECT_TRUE(assigned.ok());
+  EXPECT_EQ(0, Observable::destructor);
+  EXPECT_EQ(0, Observable::move_assignment);
+  EXPECT_EQ(1, Observable::copy_assignment);
+  EXPECT_EQ(0, Observable::move_constructor);
+  EXPECT_EQ(0, Observable::copy_constructor);
+  EXPECT_EQ("foo", assigned->str());
+  EXPECT_EQ("foo", other.str());
+}
+
+TEST(StatusOrObservableTest, MoveValue) {
+  StatusOr<Observable> other(Observable("foo"));
+  EXPECT_EQ("foo", other.value().str());
+
+  Observable::reset_counters();
+  auto observed = std::move(other).value();
+  EXPECT_EQ("foo", observed.str());
+  EXPECT_TRUE(other.ok());
+  EXPECT_EQ("moved-out", other->str());
 }
 
 }  // namespace

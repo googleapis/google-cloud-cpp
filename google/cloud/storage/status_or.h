@@ -89,6 +89,89 @@ class StatusOr final {
     }
   }
 
+  StatusOr(StatusOr&& rhs) : status_(std::move(rhs.status_)) {
+    if (status_.ok()) {
+      new (reinterpret_cast<T*>(&buffer_)) T(std::move(*rhs));
+    }
+  }
+
+  StatusOr& operator=(StatusOr&& rhs) {
+    // There may be shorter ways to express this, but this is fairly readable,
+    // and should be reasonably efficient. Note that we must avoid destructing
+    // the destination and/or default initializing it unless really needed.
+    if (not ok()) {
+      if (not rhs.ok()) {
+        status_ = std::move(rhs.status_);
+        return *this;
+      }
+      new (reinterpret_cast<T*>(&buffer_)) T(std::move(*rhs));
+      status_ = Status();
+      return *this;
+    }
+    if (not rhs.ok()) {
+      reset();
+      status_ = std::move(rhs.status_);
+      return *this;
+    }
+    **this = *std::move(rhs);
+    status_ = Status();
+    return *this;
+  }
+
+  StatusOr(StatusOr const& rhs) noexcept : status_(rhs.status_) {
+    if (status_.ok()) {
+      new (reinterpret_cast<T*>(&buffer_)) T(*rhs);
+    }
+  }
+  StatusOr& operator=(StatusOr const& rhs) {
+    // There may be shorter ways to express this, but this is fairly readable,
+    // and should be reasonably efficient. Note that we must avoid destructing
+    // the destination and/or default initializing it unless really needed.
+    if (not ok()) {
+      if (not rhs.ok()) {
+        status_ = rhs.status_;
+        return *this;
+      }
+      new (reinterpret_cast<T*>(&buffer_)) T(*rhs);
+      status_ = rhs.status_;
+      return *this;
+    }
+    if (not rhs.ok()) {
+      reinterpret_cast<T*>(&buffer_)->~T();
+      status_ = rhs.status_;
+      return *this;
+    }
+    **this = *rhs;
+    status_ = rhs.status_;
+    return *this;
+  }
+
+  ~StatusOr() { reset(); }
+
+  /**
+   * Assign a `T` (or anything convertible to `T`) into the `StatusOr`.
+   */
+  // Disable this assignment if U==StatusOr<T>. Well, really if U is a
+  // cv-qualified version of StatusOr<T>, so we need to apply std::decay<> to
+  // it first.
+  template <typename U = T>
+  typename std::enable_if<
+      not std::is_same<StatusOr, typename std::decay<U>::type>::value,
+      StatusOr>::type&
+  operator=(U&& rhs) {
+    // There may be shorter ways to express this, but this is fairly readable,
+    // and should be reasonably efficient. Note that we must avoid destructing
+    // the destination and/or default initializing it unless really needed.
+    if (not ok()) {
+      new (reinterpret_cast<T*>(&buffer_)) T(std::forward<U>(rhs));
+      status_ = Status();
+      return *this;
+    }
+    **this = std::forward<U>(rhs);
+    status_ = Status();
+    return *this;
+  }
+
   /**
    * Creates a new `StatusOr<T>` holding the value @p rhs.
    *
@@ -100,7 +183,14 @@ class StatusOr final {
    * @throws only if `T`'s move constructor throws.
    */
   // NOLINTNEXTLINE(google-explicit-constructor)
-  StatusOr(T rhs) : status_(), value_(std::move(rhs)) {}
+  StatusOr(T&& rhs) : status_() {
+    new (reinterpret_cast<T*>(&buffer_)) T(std::move(rhs));
+  }
+
+  // NOLINTNEXTLINE(google-explicit-constructor)
+  StatusOr(T const& rhs) : status_() {
+    new (reinterpret_cast<T*>(&buffer_)) T(rhs);
+  }
 
   bool ok() const { return status_.ok(); }
   explicit operator bool() const { return status_.ok(); }
@@ -115,13 +205,15 @@ class StatusOr final {
    * @return All these return a (properly ref and const-qualified) reference to
    *     the underlying value.
    */
-  T& operator*() & { return value_; }
+  T& operator*() & { return *reinterpret_cast<T*>(&buffer_); }
 
-  T const& operator*() const& { return value_; }
+  T const& operator*() const& { return *reinterpret_cast<T const*>(&buffer_); }
 
-  T&& operator*() && { return std::move(value_); }
+  T&& operator*() && { return std::move(*reinterpret_cast<T*>(&buffer_)); }
 
-  T const&& operator*() const&& { return std::move(value_); }
+  T const&& operator*() const&& {
+    return std::move(*reinterpret_cast<T const*>(&buffer_));
+  }
   //@}
 
   //@{
@@ -134,9 +226,9 @@ class StatusOr final {
    * @return All these return a (properly ref and const-qualified) pointer to
    *     the underlying value.
    */
-  T* operator->() & { return &value_; }
+  T* operator->() & { return reinterpret_cast<T*>(&buffer_); }
 
-  T const* operator->() const& { return &value_; }
+  T const* operator->() const& { return reinterpret_cast<T const*>(&buffer_); }
   //@}
 
   //@{
@@ -151,22 +243,22 @@ class StatusOr final {
    */
   T& value() & {
     CheckHasValue();
-    return value_;
+    return **this;
   }
 
   T const& value() const& {
     CheckHasValue();
-    return value_;
+    return **this;
   }
 
   T&& value() && {
     CheckHasValue();
-    return std::move(value_);
+    return std::move(**this);
   }
 
   T const&& value() const&& {
     CheckHasValue();
-    return std::move(value_);
+    return std::move(**this);
   }
   //@}
 
@@ -198,10 +290,16 @@ class StatusOr final {
     }
   }
 
+  void reset() {
+    if (ok()) {
+      reinterpret_cast<T*>(&buffer_)->~T();
+      status_ = Status(StatusCode::UNKNOWN, std::string{});
+    }
+  }
+
   Status status_;
-  // TODO(...) - use std::aligned_buffer (or something like it) to support types
-  //      without a default constructor.
-  T value_;
+  using aligned_storage_t = std::aligned_storage<sizeof(T), alignof(T)>;
+  typename aligned_storage_t::type buffer_;
 };
 
 /**
