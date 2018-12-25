@@ -276,7 +276,7 @@ class InstanceAdmin {
    *
    * @param instance_id the id of the instance in the project.
    * @param cluster_id the id of the cluster in the project that needs to be
-   * reterived.
+   * retrieved.
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
