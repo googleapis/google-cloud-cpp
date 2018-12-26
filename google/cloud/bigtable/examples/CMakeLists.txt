@@ -43,6 +43,10 @@ add_executable(bigtable_samples_instance_admin_ext
 target_link_libraries(bigtable_samples_instance_admin_ext bigtable_client
                       bigtable_common_options)
 
+add_executable(instance_admin_async_snippets instance_admin_async_snippets.cc)
+target_link_libraries(instance_admin_async_snippets bigtable_client
+                      bigtable_common_options)
+
 add_executable(table_admin_async_snippets table_admin_async_snippets.cc)
 target_link_libraries(table_admin_async_snippets bigtable_client
                       bigtable_common_options)

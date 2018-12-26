@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/instance_admin.h"
+#include "google/cloud/bigtable/internal/async_future_from_callback.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/poll_longrunning_operation.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
@@ -142,6 +143,18 @@ btadmin::Instance InstanceAdmin::GetInstance(std::string const& instance_id) {
   return result;
 }
 
+future<btadmin::Instance> InstanceAdmin::AsyncGetInstance(
+    std::string const& instance_id, CompletionQueue& cq) {
+  promise<btadmin::Instance> p;
+  auto result = p.get_future();
+
+  impl_.AsyncGetInstance(
+      instance_id, cq,
+      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetInstance"));
+
+  return result;
+}
+
 void InstanceAdmin::DeleteInstance(std::string const& instance_id) {
   grpc::Status status;
   impl_.DeleteInstance(instance_id, status);
@@ -158,6 +171,19 @@ btadmin::Cluster InstanceAdmin::GetCluster(
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(status, status.error_message());
   }
+  return result;
+}
+
+future<btadmin::Cluster> InstanceAdmin::AsyncGetCluster(
+    bigtable::InstanceId const& instance_id,
+    bigtable::ClusterId const& cluster_id, CompletionQueue& cq) {
+  promise<btadmin::Cluster> p;
+  auto result = p.get_future();
+
+  impl_.AsyncGetCluster(
+      instance_id, cluster_id, cq,
+      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetCluster"));
+
   return result;
 }
 

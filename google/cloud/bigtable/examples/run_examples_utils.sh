@@ -148,6 +148,46 @@ function run_all_instance_admin_examples {
   run_example_usage ./bigtable_samples_instance_admin_ext
 }
 
+# Run all the instance admin async examples.
+#
+# This function allows us to keep a single place where all the examples are
+# listed. We want to run these examples in the continuous integration builds
+# because they rot otherwise.
+function run_all_instance_admin_async_examples {
+  local project_id=$1
+  local zone_id=$2
+  shift 2
+
+  EMULATOR_LOG="instance-admin-emulator.log"
+
+  if [ -z "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" ]; then
+    echo "Aborting the test as the instance admin examples should not run" \
+        " against production."
+    exit 1
+  fi
+
+  # Create a (very likely unique) instance name.
+  local -r INSTANCE="in-$(date +%s)"
+
+  run_example ./bigtable_samples_instance_admin create-instance \
+      "${project_id}" "${INSTANCE}" "${zone_id}"
+  run_example ./instance_admin_async_snippets async-get-instance \
+      "${project_id}" "${INSTANCE}"
+  # TODO(#1726) - do not use a hard-coded zone id here.
+  run_example ./bigtable_samples_instance_admin create-cluster \
+      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "us-central1-a"
+  run_example ./instance_admin_async_snippets async-get-cluster \
+      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
+  run_example ./bigtable_samples_instance_admin delete-cluster \
+      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
+  run_example ./bigtable_samples_instance_admin delete-instance \
+      "${project_id}" "${INSTANCE}"
+
+  # Verify that calling without a command produces the right exit status and
+  # some kind of Usage message.
+  run_example_usage ./instance_admin_async_snippets
+}
+
 # Run all the table admin examples.
 #
 # This function allows us to keep a single place where all the examples are
