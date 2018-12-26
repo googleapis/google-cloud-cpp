@@ -14,10 +14,8 @@
 
 #include "google/cloud/firestore/field_path.h"
 #include <array>
-
-namespace {
-std::regex simple_field_name("[_a-zA-Z][_a-zA-Z0-9]*");
-}
+#include <cctype>
+#include <regex>
 
 namespace google {
 namespace cloud {
@@ -63,10 +61,33 @@ FieldPath FieldPath::Append(FieldPath const& field_path) const {
 }
 
 std::string FieldPath::ToApiRepr() const {
+#if defined(__GNUC__) && __GNUC__ == 4 && __GNUC_MINOR__ == 8
+  // gcc-4.8 ships with a broken regex library (sigh), so don't use it.
+  auto is_simple = [](std::string const& part) {
+    if (part.empty()) {
+      return false;
+    }
+    if (part[0] != '_' and not std::isalpha(part[0])) {
+      return false;
+    }
+    for (auto const& c : part) {
+      if (c != '_' and not std::isalnum(c)) {
+        return false;
+      }
+    }
+    return true;
+  };
+#else
+  auto is_simple = [](std::string const& part) {
+    static std::regex const simple_field_name(
+        "[_a-zA-Z][_a-zA-Z0-9]*", std::regex::basic);
+    return std::regex_match(part, simple_field_name);
+  };
+#endif  // GCC == 4.8
   std::string s;
   if (valid_) {
     for (auto part : parts_) {
-      auto const match = std::regex_match(part, ::simple_field_name);
+      auto const match = is_simple(part);
       if (match) {
         s += part + '.';
       } else {

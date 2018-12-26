@@ -143,9 +143,11 @@ class optional {
   }
   /*constexpr*/ T& operator*() & { return *reinterpret_cast<T*>(&buffer_); }
   // Kind of useless, but the spec requires it.
-  constexpr T const&& operator*() const&& {
+#if GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
+  /*constexpr*/ T const&& operator*() const&& {
     return std::move(*reinterpret_cast<T const*>(&buffer_));
   }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   /*constexpr*/ T&& operator*() && {
     return std::move(*reinterpret_cast<T*>(&buffer_));
   }
