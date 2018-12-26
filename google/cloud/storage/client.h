@@ -2286,9 +2286,9 @@ class Client {
   }
 
   /**
-   * This overload works exactly the `ListNotifications()` without a `nothrow_t`
-   * parameter, except that it returns a `Status` on error, and the normal
-   * return value on success.
+   * This overload works exactly like `ListNotifications()` without a
+   * `nothrow_t` parameter, except that it returns a `Status` on error, and the
+   * normal return value on success.
    */
   template <typename... Options>
   StatusOr<std::vector<NotificationMetadata>> ListNotifications(
@@ -2351,7 +2351,7 @@ class Client {
   }
 
   /**
-   * This overload works exactly the `CreateNotifications()` without a
+   * This overload works exactly like `CreateNotifications()` without a
    * `nothrow_t` parameter, except that it returns a `Status` on error, and the
    * normal return value on success.
    */
@@ -2452,7 +2452,7 @@ class Client {
     return std::move(result.second);
   }
 
-  Status AsStatusOr(std::pair<Status, internal::EmptyResponse> result) {
+  Status AsStatus(std::pair<Status, internal::EmptyResponse> result) {
     return std::move(result.first);
   }
 
