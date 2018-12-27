@@ -22,11 +22,6 @@ if [ "${TRAVIS_OS_NAME}" != "linux" ]; then
 fi
 
 readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
-if [ "${IMAGE}" = "cached-centos-7" ]; then
-  build_script="scl enable devtoolset-7 /v/ci/travis/build-docker.sh";
-else
-  build_script="/v/ci/travis/build-docker.sh";
-fi
 
 # TEST_INSTALL=yes builds work better as root, but other builds should avoid
 # creating root-owned files in the build directory.
@@ -68,4 +63,4 @@ sudo docker run \
      --volume "${PWD}/build-output/ccache":${docker_home}/.ccache \
      --workdir /v \
      "${IMAGE}:tip" \
-     ${build_script}
+     "/v/ci/travis/build-docker.sh"

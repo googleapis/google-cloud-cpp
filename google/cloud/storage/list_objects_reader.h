@@ -53,7 +53,9 @@ class ListObjectsIterator {
 
   ObjectMetadata const& operator*() const& { return *value_; }
   ObjectMetadata& operator*() & { return *value_; }
+#if GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   ObjectMetadata const&& operator*() const&& { return *std::move(value_); }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   ObjectMetadata&& operator*() && { return *std::move(value_); }
 
   bool operator==(ListObjectsIterator const& rhs) const {

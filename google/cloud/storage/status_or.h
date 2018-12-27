@@ -212,7 +212,9 @@ class StatusOr final {
 
   T&& operator*() && { return std::move(value_); }
 
+#if GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   T const&& operator*() const&& { return std::move(value_); }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   //@}
 
   //@{
@@ -255,10 +257,12 @@ class StatusOr final {
     return std::move(**this);
   }
 
+#if GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   T const&& value() const&& {
     CheckHasValue();
     return std::move(**this);
   }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   //@}
 
   //@{
@@ -272,8 +276,10 @@ class StatusOr final {
   Status& status() & { return status_; }
   Status const& status() const& { return status_; }
   Status&& status() && { return std::move(status_); }
+#if GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   Status const&& status() const&& { return std::move(status_); }
-  //@}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
+        //@}
 
  private:
   void CheckHasValue() const& {
@@ -357,7 +363,9 @@ class StatusOr<void> final {
   void operator*() & {}
   void operator*() const& {}
   void operator*() && {}
+#if GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   void operator*() const&& {}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   //@}
 
   //@{
@@ -387,7 +395,9 @@ class StatusOr<void> final {
 
   void value() && { CheckHasValue(); }
 
+#if GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   void value() const&& { CheckHasValue(); }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   //@}
 
   //@{
@@ -401,8 +411,10 @@ class StatusOr<void> final {
   Status& status() & { return status_; }
   Status const& status() const& { return status_; }
   Status&& status() && { return std::move(status_); }
+#if GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   Status const&& status() const&& { return std::move(status_); }
-  //@}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
+        //@}
 
  private:
   void CheckHasValue() const& {

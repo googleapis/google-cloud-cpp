@@ -105,9 +105,9 @@ against the latest version of the SDK on each commit and PR.
 
 #### CentOS
 
-The default compiler on CentOS doesn't fully support C++11. We need to upgrade
-the compiler and other development tools. In these instructions, we use `g++-7`
-via [Software Collections](https://www.softwarecollections.org/).
+Some of the development tools distributed with CentOS (notably CMake) are quite
+old, In these instructions, we use `cmake3` via
+[Software Collections](https://www.softwarecollections.org/).
 
 ```bash
 # Extra Packages for Enterprise Linux used to install cmake3
@@ -117,7 +117,7 @@ yum install centos-release-scl
 yum-config-manager --enable rhel-server-rhscl-7-rpms
 
 yum makecache
-yum install -y devtoolset-7 cmake3 curl-devel git openssl-devel
+yum install -y cmake3 gcc gcc-c++ git make openssl-devel
 
 # Install cmake3 & ctest3 as cmake & ctest respectively.
 ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest

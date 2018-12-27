@@ -27,14 +27,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
-    # gcc-4.8 C++11 support has bugs preventing us from using it.
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9)
+    # gcc-4.8 is the first release that claims C++11 support.
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.8)
         message(
             FATAL_ERROR
-                "GCC version must be at least 4.9. Older versions"
-                " either lack C++11 support or have bugs"
-                " (e.g. https://gcc.gnu.org/bugzilla/show_bug.cgi?id=55817)"
-                " that prevent us from using them.")
+                "GCC version must be at least 4.8. Older versions"
+                " either lack C++11 support or have bugs that prevent us from"
+                " using them.")
     endif ()
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 
