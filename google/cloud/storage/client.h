@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
+#include "google/cloud/storage/internal/throw_status_delegate.h"
 #include "google/cloud/storage/list_buckets_reader.h"
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/notification_event_type.h"
@@ -27,6 +28,7 @@
 #include "google/cloud/storage/object_rewriter.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/retry_policy.h"
+#include "google/cloud/storage/status_or.h"
 #include "google/cloud/storage/upload_options.h"
 
 namespace google {
@@ -276,7 +278,7 @@ class Client {
     internal::CreateBucketRequest request(std::move(project_id),
                                           std::move(metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateBucket(request).second;
+    return ThrowOnError(raw_client_->CreateBucket(request));
   }
 
   /**
@@ -301,7 +303,7 @@ class Client {
                                    Options&&... options) {
     internal::GetBucketMetadataRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetBucketMetadata(request).second;
+    return ThrowOnError(raw_client_->GetBucketMetadata(request));
   }
 
   /**
@@ -326,7 +328,7 @@ class Client {
   void DeleteBucket(std::string const& bucket_name, Options&&... options) {
     internal::DeleteBucketRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->DeleteBucket(request);
+    ThrowOnError(raw_client_->DeleteBucket(request));
   }
 
   /**
@@ -359,7 +361,7 @@ class Client {
     metadata.set_name(std::move(bucket_name));
     internal::UpdateBucketRequest request(std::move(metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateBucket(request).second;
+    return ThrowOnError(raw_client_->UpdateBucket(request));
   }
 
   /**
@@ -396,7 +398,7 @@ class Client {
     internal::PatchBucketRequest request(std::move(bucket_name), original,
                                          updated);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchBucket(request).second;
+    return ThrowOnError(raw_client_->PatchBucket(request));
   }
 
   /**
@@ -426,7 +428,7 @@ class Client {
                              Options&&... options) {
     internal::PatchBucketRequest request(std::move(bucket_name), builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchBucket(request).second;
+    return ThrowOnError(raw_client_->PatchBucket(request));
   }
 
   /**
@@ -467,7 +469,7 @@ class Client {
                                Options&&... options) {
     internal::GetBucketIamPolicyRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetBucketIamPolicy(request).second;
+    return ThrowOnError(raw_client_->GetBucketIamPolicy(request));
   }
 
   /**
@@ -521,7 +523,7 @@ class Client {
                                Options&&... options) {
     internal::SetBucketIamPolicyRequest request(bucket_name, iam_policy);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->SetBucketIamPolicy(request).second;
+    return ThrowOnError(raw_client_->SetBucketIamPolicy(request));
   }
 
   /**
@@ -561,7 +563,11 @@ class Client {
     internal::TestBucketIamPermissionsRequest request(std::move(bucket_name),
                                                       std::move(permissions));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->TestBucketIamPermissions(request).second.permissions;
+    auto result = raw_client_->TestBucketIamPermissions(request);
+    if (result.first.ok()) {
+      return result.second.permissions;
+    }
+    internal::ThrowStatus(std::move(result.first));
   }
 
   /**
@@ -620,9 +626,8 @@ class Client {
     internal::LockBucketRetentionPolicyRequest request(bucket_name,
                                                        metageneration);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->LockBucketRetentionPolicy(request);
+    ThrowOnError(raw_client_->LockBucketRetentionPolicy(request));
   }
-
   //@}
 
   //@{
@@ -669,7 +674,7 @@ class Client {
     internal::InsertObjectMediaRequest request(bucket_name, object_name,
                                                std::move(contents));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->InsertObjectMedia(request).second;
+    return ThrowOnError(raw_client_->InsertObjectMedia(request));
   }
 
   /**
@@ -725,7 +730,7 @@ class Client {
         std::move(source_bucket_name), std::move(source_object_name),
         std::move(destination_bucket_name), std::move(destination_object_name));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CopyObject(request).second;
+    return ThrowOnError(raw_client_->CopyObject(request));
   }
 
   /**
@@ -754,7 +759,7 @@ class Client {
                                    Options&&... options) {
     internal::GetObjectMetadataRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetObjectMetadata(request).second;
+    return ThrowOnError(raw_client_->GetObjectMetadata(request));
   }
 
   /**
@@ -811,7 +816,7 @@ class Client {
                               Options&&... options) {
     internal::ReadObjectRangeRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return ObjectReadStream(raw_client_->ReadObject(request).second);
+    return ObjectReadStream(ThrowOnError(raw_client_->ReadObject(request)));
   }
 
   /**
@@ -880,7 +885,7 @@ class Client {
                                 Options&&... options) {
     internal::InsertObjectStreamingRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return ObjectWriteStream(raw_client_->WriteObject(request).second);
+    return ObjectWriteStream(ThrowOnError(raw_client_->WriteObject(request)));
   }
 
   /**
@@ -983,7 +988,7 @@ class Client {
                     std::string const& object_name, Options&&... options) {
     internal::DeleteObjectRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->DeleteObject(request);
+    ThrowOnError(raw_client_->DeleteObject(request));
   }
 
   /**
@@ -1017,7 +1022,7 @@ class Client {
     internal::UpdateObjectRequest request(
         std::move(bucket_name), std::move(object_name), std::move(metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateObject(request).second;
+    return ThrowOnError(raw_client_->UpdateObject(request));
   }
 
   /**
@@ -1057,7 +1062,7 @@ class Client {
     internal::PatchObjectRequest request(
         std::move(bucket_name), std::move(object_name), original, updated);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchObject(request).second;
+    return ThrowOnError(raw_client_->PatchObject(request));
   }
 
   /**
@@ -1094,7 +1099,7 @@ class Client {
     internal::PatchObjectRequest request(std::move(bucket_name),
                                          std::move(object_name), builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchObject(request).second;
+    return ThrowOnError(raw_client_->PatchObject(request));
   }
 
   /**
@@ -1132,7 +1137,7 @@ class Client {
                                            std::move(source_objects),
                                            std::move(destination_object_name));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->ComposeObject(request).second;
+    return ThrowOnError(raw_client_->ComposeObject(request));
   }
 
   /**
@@ -1343,7 +1348,11 @@ class Client {
                                                  Options&&... options) {
     internal::ListBucketAclRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->ListBucketAcl(request).second.items;
+    auto result = raw_client_->ListBucketAcl(request);
+    if (result.first.ok()) {
+      return result.second.items;
+    }
+    internal::ThrowStatus(std::move(result.first));
   }
 
   /**
@@ -1372,7 +1381,7 @@ class Client {
                                       Options&&... options) {
     internal::CreateBucketAclRequest request(bucket_name, entity, role);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateBucketAcl(request).second;
+    return ThrowOnError(raw_client_->CreateBucketAcl(request));
   }
 
   /**
@@ -1398,7 +1407,7 @@ class Client {
                        std::string const& entity, Options&&... options) {
     internal::DeleteBucketAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->DeleteBucketAcl(request);
+    ThrowOnError(raw_client_->DeleteBucketAcl(request));
   }
 
   /**
@@ -1424,7 +1433,7 @@ class Client {
                                    Options&&... options) {
     internal::GetBucketAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetBucketAcl(request).second;
+    return ThrowOnError(raw_client_->GetBucketAcl(request));
   }
 
   /**
@@ -1456,7 +1465,7 @@ class Client {
     internal::UpdateBucketAclRequest request(bucket_name, acl.entity(),
                                              acl.role());
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateBucketAcl(request).second;
+    return ThrowOnError(raw_client_->UpdateBucketAcl(request));
   }
 
   /**
@@ -1504,7 +1513,7 @@ class Client {
     internal::PatchBucketAclRequest request(bucket_name, entity, original_acl,
                                             new_acl);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchBucketAcl(request).second;
+    return ThrowOnError(raw_client_->PatchBucketAcl(request));
   }
 
   /**
@@ -1548,7 +1557,7 @@ class Client {
       BucketAccessControlPatchBuilder const& builder, Options&&... options) {
     internal::PatchBucketAclRequest request(bucket_name, entity, builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchBucketAcl(request).second;
+    return ThrowOnError(raw_client_->PatchBucketAcl(request));
   }
   //@}
 
@@ -1595,7 +1604,11 @@ class Client {
                                                  Options&&... options) {
     internal::ListObjectAclRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->ListObjectAcl(request).second.items;
+    auto result = raw_client_->ListObjectAcl(request);
+    if (result.first.ok()) {
+      return result.second.items;
+    }
+    internal::ThrowStatus(std::move(result.first));
   }
 
   /**
@@ -1627,7 +1640,7 @@ class Client {
     internal::CreateObjectAclRequest request(bucket_name, object_name, entity,
                                              role);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateObjectAcl(request).second;
+    return ThrowOnError(raw_client_->CreateObjectAcl(request));
   }
 
   /**
@@ -1656,7 +1669,7 @@ class Client {
                        std::string const& entity, Options&&... options) {
     internal::DeleteObjectAclRequest request(bucket_name, object_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->DeleteObjectAcl(request);
+    ThrowOnError(raw_client_->DeleteObjectAcl(request));
   }
 
   /**
@@ -1684,7 +1697,7 @@ class Client {
                                    Options&&... options) {
     internal::GetObjectAclRequest request(bucket_name, object_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetObjectAcl(request).second;
+    return ThrowOnError(raw_client_->GetObjectAcl(request));
   }
 
   /**
@@ -1718,7 +1731,7 @@ class Client {
     internal::UpdateObjectAclRequest request(bucket_name, object_name,
                                              acl.entity(), acl.role());
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateObjectAcl(request).second;
+    return ThrowOnError(raw_client_->UpdateObjectAcl(request));
   }
 
   /**
@@ -1768,7 +1781,7 @@ class Client {
     internal::PatchObjectAclRequest request(bucket_name, object_name, entity,
                                             original_acl, new_acl);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchObjectAcl(request).second;
+    return ThrowOnError(raw_client_->PatchObjectAcl(request));
   }
 
   /**
@@ -1814,7 +1827,7 @@ class Client {
     internal::PatchObjectAclRequest request(bucket_name, object_name, entity,
                                             builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchObjectAcl(request).second;
+    return ThrowOnError(raw_client_->PatchObjectAcl(request));
   }
   //@}
 
@@ -1857,7 +1870,11 @@ class Client {
       std::string const& bucket_name, Options&&... options) {
     internal::ListDefaultObjectAclRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->ListDefaultObjectAcl(request).second.items;
+    auto result = raw_client_->ListDefaultObjectAcl(request);
+    if (result.first.ok()) {
+      return result.second.items;
+    }
+    internal::ThrowStatus(result.first);
   }
 
   /**
@@ -1892,7 +1909,7 @@ class Client {
                                              Options&&... options) {
     internal::CreateDefaultObjectAclRequest request(bucket_name, entity, role);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateDefaultObjectAcl(request).second;
+    return ThrowOnError(raw_client_->CreateDefaultObjectAcl(request));
   }
 
   /**
@@ -1924,7 +1941,7 @@ class Client {
                               std::string const& entity, Options&&... options) {
     internal::DeleteDefaultObjectAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->DeleteDefaultObjectAcl(request);
+    ThrowOnError(raw_client_->DeleteDefaultObjectAcl(request));
   }
 
   /**
@@ -1956,7 +1973,7 @@ class Client {
                                           Options&&... options) {
     internal::GetDefaultObjectAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetDefaultObjectAcl(request).second;
+    return ThrowOnError(raw_client_->GetDefaultObjectAcl(request));
   }
 
   /**
@@ -1991,7 +2008,7 @@ class Client {
     internal::UpdateDefaultObjectAclRequest request(bucket_name, acl.entity(),
                                                     acl.role());
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateDefaultObjectAcl(request).second;
+    return ThrowOnError(raw_client_->UpdateDefaultObjectAcl(request));
   }
 
   /**
@@ -2039,7 +2056,7 @@ class Client {
     internal::PatchDefaultObjectAclRequest request(bucket_name, entity,
                                                    original_acl, new_acl);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchDefaultObjectAcl(request).second;
+    return ThrowOnError(raw_client_->PatchDefaultObjectAcl(request));
   }
 
   /**
@@ -2085,7 +2102,7 @@ class Client {
     internal::PatchDefaultObjectAclRequest request(bucket_name, entity,
                                                    builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchDefaultObjectAcl(request).second;
+    return ThrowOnError(raw_client_->PatchDefaultObjectAcl(request));
   }
   //@}
 
@@ -2130,7 +2147,7 @@ class Client {
                                              Options&&... options) {
     internal::GetProjectServiceAccountRequest request(project_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetServiceAccount(request).second;
+    return ThrowOnError(raw_client_->GetServiceAccount(request));
   }
 
   /**
@@ -2263,9 +2280,26 @@ class Client {
   template <typename... Options>
   std::vector<NotificationMetadata> ListNotifications(
       std::string const& bucket_name, Options&&... options) {
+    return ListNotifications(std::nothrow, bucket_name,
+                             std::forward<Options>(options)...)
+        .value();
+  }
+
+  /**
+   * This overload works exactly like `ListNotifications()` without a
+   * `nothrow_t` parameter, except that it returns a `Status` on error, and the
+   * normal return value on success.
+   */
+  template <typename... Options>
+  StatusOr<std::vector<NotificationMetadata>> ListNotifications(
+      std::nothrow_t, std::string const& bucket_name, Options&&... options) {
     internal::ListNotificationsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->ListNotifications(request).second.items;
+    auto result = raw_client_->ListNotifications(request);
+    if (result.first.ok()) {
+      return std::move(result.second.items);
+    }
+    return std::move(result.first);
   }
 
   /**
@@ -2310,10 +2344,26 @@ class Client {
                                           std::string const& payload_format,
                                           NotificationMetadata metadata,
                                           Options&&... options) {
+    return CreateNotification(std::nothrow, bucket_name, topic_name,
+                              payload_format, std::move(metadata),
+                              std::forward<Options>(options)...)
+        .value();
+  }
+
+  /**
+   * This overload works exactly like `CreateNotifications()` without a
+   * `nothrow_t` parameter, except that it returns a `Status` on error, and the
+   * normal return value on success.
+   */
+  template <typename... Options>
+  StatusOr<NotificationMetadata> CreateNotification(
+      std::nothrow_t, std::string const& bucket_name,
+      std::string const& topic_name, std::string const& payload_format,
+      NotificationMetadata metadata, Options&&... options) {
     metadata.set_topic(topic_name).set_payload_format(payload_format);
     internal::CreateNotificationRequest request(bucket_name, metadata);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateNotification(request).second;
+    return AsStatusOr(raw_client_->CreateNotification(request));
   }
 
   /**
@@ -2350,7 +2400,7 @@ class Client {
                                        Options&&... options) {
     internal::GetNotificationRequest request(bucket_name, notification_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetNotification(request).second;
+    return ThrowOnError(raw_client_->GetNotification(request));
   }
 
   /**
@@ -2389,11 +2439,23 @@ class Client {
                           Options&&... options) {
     internal::DeleteNotificationRequest request(bucket_name, notification_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->DeleteNotification(request);
+    ThrowOnError(raw_client_->DeleteNotification(request));
   }
   //@}
 
  private:
+  template <typename T>
+  StatusOr<T> AsStatusOr(std::pair<Status, T> result) {
+    if (not result.first.ok()) {
+      return std::move(result.first);
+    }
+    return std::move(result.second);
+  }
+
+  Status AsStatus(std::pair<Status, internal::EmptyResponse> result) {
+    return std::move(result.first);
+  }
+
   static std::shared_ptr<internal::RawClient> CreateDefaultClient(
       ClientOptions options);
 
@@ -2456,6 +2518,14 @@ class Client {
                         std::string const& file_name);
 
   std::string SignUrl(internal::SignUrlRequest const& request);
+
+  template <typename T>
+  T ThrowOnError(std::pair<Status, T> result) {
+    if (result.first.ok()) {
+      return std::move(result.second);
+    }
+    internal::ThrowStatus(std::move(result.first));
+  }
 
   std::shared_ptr<internal::RawClient> raw_client_;
 };

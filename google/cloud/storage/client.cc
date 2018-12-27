@@ -59,7 +59,7 @@ ObjectMetadata Client::UploadFileSimple(
   std::string payload(std::istreambuf_iterator<char>{is}, {});
   request.set_contents(std::move(payload));
 
-  return raw_client_->InsertObjectMedia(request).second;
+  return ThrowOnError(raw_client_->InsertObjectMedia(request));
 }
 
 ObjectMetadata Client::UploadFileResumable(
@@ -94,7 +94,7 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
 
   auto result = UploadStreamResumable(source, source_size, request);
   if (not result.first.ok()) {
-    google::cloud::internal::RaiseRuntimeError(result.first.error_message());
+    internal::ThrowStatus(std::move(result.first));
   }
   return result.second;
 }

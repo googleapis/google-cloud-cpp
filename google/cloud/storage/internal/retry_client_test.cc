@@ -44,8 +44,7 @@ TEST_F(RetryClientTest, NonIdempotentErrorHandling) {
   RetryClient client(std::shared_ptr<internal::RawClient>(mock),
                      LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
                      // Make the tests faster.
-                     ExponentialBackoffPolicy(1_us, 2_us, 2),
-                     RetryClient::NoexPolicy{});
+                     ExponentialBackoffPolicy(1_us, 2_us, 2));
 
   EXPECT_CALL(*mock, DeleteObject(_))
       .WillOnce(Return(std::make_pair(TransientError(), EmptyResponse{})));
@@ -62,8 +61,7 @@ TEST_F(RetryClientTest, PermanentErrorHandling) {
   RetryClient client(std::shared_ptr<internal::RawClient>(mock),
                      LimitedErrorCountRetryPolicy(3),
                      // Make the tests faster.
-                     ExponentialBackoffPolicy(1_us, 2_us, 2),
-                     RetryClient::NoexPolicy{});
+                     ExponentialBackoffPolicy(1_us, 2_us, 2));
 
   // Use a read-only operation because these are always idempotent.
   EXPECT_CALL(*mock, GetObjectMetadata(_))
@@ -80,8 +78,7 @@ TEST_F(RetryClientTest, TooManyTransientsHandling) {
   RetryClient client(std::shared_ptr<internal::RawClient>(mock),
                      LimitedErrorCountRetryPolicy(3),
                      // Make the tests faster.
-                     ExponentialBackoffPolicy(1_us, 2_us, 2),
-                     RetryClient::NoexPolicy{});
+                     ExponentialBackoffPolicy(1_us, 2_us, 2));
 
   // Use a read-only operation because these are always idempotent.
   EXPECT_CALL(*mock, GetObjectMetadata(_))

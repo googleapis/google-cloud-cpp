@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/object_rewriter.h"
 #include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/throw_status_delegate.h"
 
 namespace google {
 namespace cloud {
@@ -26,8 +27,11 @@ ObjectRewriter::ObjectRewriter(std::shared_ptr<internal::RawClient> client,
       progress_{0, 0, false} {}
 
 RewriteProgress ObjectRewriter::Iterate() {
-  internal::RewriteObjectResponse response =
-      client_->RewriteObject(request_).second;
+  auto result = client_->RewriteObject(request_);
+  if (not result.first.ok()) {
+    internal::ThrowStatus(std::move(result.first));
+  }
+  internal::RewriteObjectResponse response = std::move(result.second);
   progress_ = RewriteProgress{response.total_bytes_rewritten,
                               response.object_size, response.done};
   if (response.done) {
