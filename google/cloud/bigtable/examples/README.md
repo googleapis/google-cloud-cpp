@@ -99,6 +99,8 @@ Examples:
   bigtable_samples_instance_admin_ext delete-cluster my-project my-instance my-cluster
 ```
 
+**Note:** In the `create-cluster` line, a different zone is chosen as an instance's clusters must be placed in unique zones that are within the same region. See the [documentation](https://cloud.google.com/bigtable/docs/replication-overview#how-it-works) for more details.
+
 #### Run instance admin samples
 
 After configuring gRPC, you can run the examples using:
