@@ -76,7 +76,7 @@ function run_all_instance_admin_examples {
   run_example ./bigtable_samples_instance_admin list-all-clusters \
       "${project_id}"
   run_example ./bigtable_samples_instance_admin create-cluster \
-      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "us-central1-a"
+      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${zone_id}"
   run_example ./bigtable_samples_instance_admin update-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
   run_example ./bigtable_samples_instance_admin get-cluster \
@@ -130,7 +130,7 @@ function run_all_instance_admin_examples {
   run_example ./bigtable_samples_instance_admin create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"
   run_example ./bigtable_samples_instance_admin_ext create-cluster \
-      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "us-central1-a"
+      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${zone_id}"
   run_example ./bigtable_samples_instance_admin_ext delete-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
   run_example ./bigtable_samples_instance_admin_ext delete-instance \
@@ -173,9 +173,8 @@ function run_all_instance_admin_async_examples {
       "${project_id}" "${INSTANCE}" "${zone_id}"
   run_example ./instance_admin_async_snippets async-get-instance \
       "${project_id}" "${INSTANCE}"
-  # TODO(#1726) - do not use a hard-coded zone id here.
   run_example ./bigtable_samples_instance_admin create-cluster \
-      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "us-central1-a"
+      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${zone_id}"
   run_example ./instance_admin_async_snippets async-get-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
   run_example ./bigtable_samples_instance_admin delete-cluster \

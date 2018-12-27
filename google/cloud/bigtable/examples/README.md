@@ -92,10 +92,10 @@ $ ./bigtable_samples_instance_admin_ext
 Usage: bigtable_samples_instance_admin_ext <command> <project_id> [arguments]
 
 Examples:
-  bigtable_samples_instance_admin_ext run my-project my-instance my-cluster us-central1-f
-  bigtable_samples_instance_admin_ext create-dev-instance my-project my-instance us-central1-f
+  bigtable_samples_instance_admin_ext run my-project my-instance my-cluster my-zone
+  bigtable_samples_instance_admin_ext create-dev-instance my-project my-instance my-zone
   bigtable_samples_instance_admin_ext delete-instance my-project my-instance
-  bigtable_samples_instance_admin_ext create-cluster my-project my-instance my-cluster us-central1-a
+  bigtable_samples_instance_admin_ext create-cluster my-project my-instance my-cluster my-zone
   bigtable_samples_instance_admin_ext delete-cluster my-project my-instance my-cluster
 ```
 
