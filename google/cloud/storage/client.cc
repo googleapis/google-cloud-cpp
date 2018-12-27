@@ -104,7 +104,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     return std::move(session_status).status();
   }
 
-  auto session = *std::move(session_status);
+  auto session = std::move(*session_status);
 
   // GCS requires chunks to be a multiple of 256KiB.
   auto chunk_size = internal::UploadChunkRequest::RoundUpToQuantum(

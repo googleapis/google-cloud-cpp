@@ -119,7 +119,7 @@ TEST_F(NotificationsTest, CreateNotification) {
             EXPECT_THAT(r.json_payload(), HasSubstr("test-object-prefix-"));
             EXPECT_THAT(r.json_payload(), HasSubstr("OBJECT_FINALIZE"));
 
-            return make_status_or( expected);
+            return make_status_or(expected);
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
@@ -169,7 +169,7 @@ TEST_F(NotificationsTest, GetNotification) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-notification-1", r.notification_id());
 
-        return make_status_or( expected);
+        return make_status_or(expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
@@ -204,7 +204,7 @@ TEST_F(NotificationsTest, DeleteNotification) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-notification-1", r.notification_id());
 
-        return make_status_or( internal::EmptyResponse{});
+        return make_status_or(internal::EmptyResponse{});
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 

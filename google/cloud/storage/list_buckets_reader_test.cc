@@ -63,7 +63,7 @@ TEST(ListBucketsReaderTest, Basic) {
       response.items.push_back(expected[2 * i + 1]);
     }
     return [response](ListBucketsRequest const&) {
-      return make_status_or( response);
+      return make_status_or(response);
     };
   };
 
@@ -84,7 +84,7 @@ TEST(ListBucketsReaderTest, Basic) {
 TEST(ListBucketsReaderTest, Empty) {
   auto mock = std::make_shared<MockClient>();
   EXPECT_CALL(*mock, ListBuckets(_))
-      .WillOnce(Return(make_status_or( ListBucketsResponse())));
+      .WillOnce(Return(make_status_or(ListBucketsResponse())));
 
   ListBucketsReader reader(mock, "foo-bar-baz", Prefix("dir/"));
   auto count = std::distance(reader.begin(), reader.end());

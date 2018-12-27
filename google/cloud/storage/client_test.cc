@@ -105,7 +105,7 @@ TEST_F(ClientTest, OverrideBackoffPolicy) {
   // that our policy is called.
   EXPECT_CALL(*mock, GetBucketMetadata(_))
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
-      .WillOnce(Return(make_status_or( BucketMetadata{})));
+      .WillOnce(Return(make_status_or(BucketMetadata{})));
   (void)client.GetBucketMetadata("foo-bar-baz");
   EXPECT_EQ(0, ObservableRetryPolicy::is_exhausted_call_count);
   EXPECT_LE(1, ObservableBackoffPolicy::on_completion_call_count);
@@ -121,7 +121,7 @@ TEST_F(ClientTest, OverrideBothPolicies) {
   // that our policy is called.
   EXPECT_CALL(*mock, GetBucketMetadata(_))
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
-      .WillOnce(Return(make_status_or( BucketMetadata{})));
+      .WillOnce(Return(make_status_or(BucketMetadata{})));
   (void)client.GetBucketMetadata("foo-bar-baz");
   EXPECT_LE(1, ObservableRetryPolicy::is_exhausted_call_count);
   EXPECT_LE(1, ObservableBackoffPolicy::on_completion_call_count);

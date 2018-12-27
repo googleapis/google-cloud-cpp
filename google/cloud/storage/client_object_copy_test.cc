@@ -144,7 +144,7 @@ TEST_F(ObjectCopyTest, ComposeObject) {
             {"kind", "storage#composeRequest"},
             {"sourceObjects", {{{"name", "object1"}}, {{"name", "object2"}}}}};
         EXPECT_EQ(expected_payload, actual_payload);
-        return make_status_or( expected);
+        return make_status_or(expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
@@ -197,8 +197,7 @@ TEST_F(ObjectCopyTest, RewriteObject) {
             "done": false,
             "rewriteToken": "abcd-test-token-0"
         })""";
-        return make_status_or(
-                              internal::RewriteObjectResponse::FromHttpResponse(
+        return make_status_or(internal::RewriteObjectResponse::FromHttpResponse(
                                   internal::HttpResponse{200, response, {}}));
       }))
       .WillOnce(Invoke([](internal::RewriteObjectRequest const& r) {
@@ -215,8 +214,7 @@ TEST_F(ObjectCopyTest, RewriteObject) {
             "done": false,
             "rewriteToken": "abcd-test-token-2"
         })""";
-        return make_status_or(
-                              internal::RewriteObjectResponse::FromHttpResponse(
+        return make_status_or(internal::RewriteObjectResponse::FromHttpResponse(
                                   internal::HttpResponse{200, response, {}}));
       }))
       .WillOnce(Invoke([](internal::RewriteObjectRequest const& r) {
@@ -237,8 +235,7 @@ TEST_F(ObjectCopyTest, RewriteObject) {
                "name": "test-destination-object-name"
             }
         })""";
-        return make_status_or(
-                              internal::RewriteObjectResponse::FromHttpResponse(
+        return make_status_or(internal::RewriteObjectResponse::FromHttpResponse(
                                   internal::HttpResponse{200, response, {}}));
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),

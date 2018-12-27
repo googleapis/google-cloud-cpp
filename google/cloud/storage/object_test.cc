@@ -134,7 +134,7 @@ TEST_F(ObjectTest, GetObjectMetadata) {
           Invoke([&expected](internal::GetObjectMetadataRequest const& r) {
             EXPECT_EQ("test-bucket-name", r.bucket_name());
             EXPECT_EQ("test-object-name", r.object_name());
-            return make_status_or( expected);
+            return make_status_or(expected);
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
@@ -169,7 +169,7 @@ TEST_F(ObjectTest, DeleteObject) {
       .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
         EXPECT_EQ("test-object-name", r.object_name());
-        return make_status_or( internal::EmptyResponse{});
+        return make_status_or(internal::EmptyResponse{});
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2),
@@ -250,7 +250,7 @@ TEST_F(ObjectTest, UpdateObject) {
              }},
         };
         EXPECT_EQ(expected_payload, actual_payload);
-        return make_status_or( expected);
+        return make_status_or(expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
@@ -329,7 +329,7 @@ TEST_F(ObjectTest, PatchObject) {
         EXPECT_EQ("test-object-name", r.object_name());
         EXPECT_THAT(r.payload(), HasSubstr("new-disposition"));
         EXPECT_THAT(r.payload(), HasSubstr("x-made-up-lang"));
-        return make_status_or( expected);
+        return make_status_or(expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};

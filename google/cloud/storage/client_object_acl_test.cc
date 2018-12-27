@@ -76,8 +76,7 @@ TEST_F(ObjectAccessControlsTest, ListObjectAcl) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-object", r.object_name());
 
-        return make_status_or(
-                              internal::ListObjectAclResponse{expected});
+        return make_status_or(internal::ListObjectAclResponse{expected});
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
@@ -120,7 +119,7 @@ TEST_F(ObjectAccessControlsTest, CreateObjectAcl) {
         EXPECT_EQ("user-test-user-1", r.entity());
         EXPECT_EQ("READER", r.role());
 
-        return make_status_or( expected);
+        return make_status_or(expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
@@ -169,7 +168,7 @@ TEST_F(ObjectAccessControlsTest, DeleteObjectAcl) {
         EXPECT_EQ("test-object", r.object_name());
         EXPECT_EQ("user-test-user", r.entity());
 
-        return make_status_or( internal::EmptyResponse{});
+        return make_status_or(internal::EmptyResponse{});
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
@@ -216,7 +215,7 @@ TEST_F(ObjectAccessControlsTest, GetObjectAcl) {
         EXPECT_EQ("test-object", r.object_name());
         EXPECT_EQ("user-test-user-1", r.entity());
 
-        return make_status_or( expected);
+        return make_status_or(expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
@@ -260,7 +259,7 @@ TEST_F(ObjectAccessControlsTest, UpdateObjectAcl) {
         EXPECT_EQ("user-test-user", r.entity());
         EXPECT_EQ("OWNER", r.role());
 
-        return make_status_or( expected);
+        return make_status_or(expected);
       }));
 
   Client client{std::shared_ptr<internal::RawClient>(mock)};
@@ -311,7 +310,7 @@ TEST_F(ObjectAccessControlsTest, PatchObjectAcl) {
         auto payload = internal::nl::json::parse(r.payload());
         EXPECT_EQ(expected, payload);
 
-        return make_status_or( result);
+        return make_status_or(result);
       }));
 
   Client client{std::shared_ptr<internal::RawClient>(mock)};
