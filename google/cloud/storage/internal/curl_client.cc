@@ -121,6 +121,27 @@ StatusOr<ReturnType> ParseFromString(StatusOr<HttpResponse> response) {
   return ReturnType::ParseFromString(response->payload);
 }
 
+StatusOr<EmptyResponse> ReturnEmptyResponse(StatusOr<HttpResponse> response) {
+  if (not response.ok()) {
+    return std::move(response).status();
+  }
+  if (response->status_code >= 300) {
+    return AsStatus(*response);
+  }
+  return EmptyResponse{};
+}
+
+template <typename ReturnType>
+StatusOr<ReturnType> ParseFromHttpResponse(StatusOr<HttpResponse> response) {
+  if (not response.ok()) {
+    return std::move(response).status();
+  }
+  if (response->status_code >= 300) {
+    return AsStatus(*response);
+  }
+  return ReturnType::FromHttpResponse(std::move(*response));
+}
+
 }  // namespace
 
 Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
@@ -292,14 +313,8 @@ StatusOr<ListBucketsResponse> CurlClient::ListBuckets(
     return status;
   }
   builder.AddQueryParameter("project", request.project_id());
-  auto response = builder.BuildRequest().MakeRequest(std::string{});
-  if (not response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code >= 300) {
-    return AsStatus(*response);
-  }
-  return ListBucketsResponse::FromHttpResponse(*std::move(response));
+  return ParseFromHttpResponse<ListBucketsResponse>(
+      builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<BucketMetadata> CurlClient::CreateBucket(
@@ -325,7 +340,8 @@ StatusOr<BucketMetadata> CurlClient::GetBucketMetadata(
   if (not status.ok()) {
     return status;
   }
-  return ParseFromString<BucketMetadata>(builder.BuildRequest().MakeRequest(std::string{}));
+  return ParseFromString<BucketMetadata>(
+      builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteBucket(
@@ -337,14 +353,7 @@ StatusOr<EmptyResponse> CurlClient::DeleteBucket(
   if (not status.ok()) {
     return status;
   }
-  auto response = builder.BuildRequest().MakeRequest(std::string{});
-  if (not response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code >= 300) {
-    return AsStatus(*response);
-  }
-  return internal::EmptyResponse{};
+  return ReturnEmptyResponse(builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<BucketMetadata> CurlClient::UpdateBucket(
@@ -357,7 +366,8 @@ StatusOr<BucketMetadata> CurlClient::UpdateBucket(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<BucketMetadata>(builder.BuildRequest().MakeRequest(request.json_payload()));
+  return ParseFromString<BucketMetadata>(
+      builder.BuildRequest().MakeRequest(request.json_payload()));
 }
 
 StatusOr<BucketMetadata> CurlClient::PatchBucket(
@@ -370,7 +380,8 @@ StatusOr<BucketMetadata> CurlClient::PatchBucket(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<BucketMetadata>(builder.BuildRequest().MakeRequest(request.payload()));
+  return ParseFromString<BucketMetadata>(
+      builder.BuildRequest().MakeRequest(request.payload()));
 }
 
 StatusOr<IamPolicy> CurlClient::GetBucketIamPolicy(
@@ -413,8 +424,7 @@ StatusOr<IamPolicy> CurlClient::SetBucketIamPolicy(
 }
 
 StatusOr<TestBucketIamPermissionsResponse> CurlClient::TestBucketIamPermissions(
-    google::cloud::storage::internal::TestBucketIamPermissionsRequest const&
-        request) {
+    TestBucketIamPermissionsRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/iam/testPermissions",
                              storage_factory_);
@@ -447,14 +457,7 @@ StatusOr<EmptyResponse> CurlClient::LockBucketRetentionPolicy(
   builder.AddHeader("content-type: application/json");
   builder.AddHeader("content-length: 0");
   builder.AddOption(IfMetagenerationMatch(request.metageneration()));
-  auto response = builder.BuildRequest().MakeRequest(std::string{});
-  if (not response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code >= 300) {
-    return AsStatus(*response);
-  }
-  return EmptyResponse{};
+  return ReturnEmptyResponse(builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMedia(
@@ -502,7 +505,8 @@ StatusOr<ObjectMetadata> CurlClient::CopyObject(
     json_payload =
         request.GetOption<WithObjectMetadata>().value().JsonPayloadForCopy();
   }
-  return ParseFromString<ObjectMetadata>(builder.BuildRequest().MakeRequest(json_payload));
+  return ParseFromString<ObjectMetadata>(
+      builder.BuildRequest().MakeRequest(json_payload));
 }
 
 StatusOr<ObjectMetadata> CurlClient::GetObjectMetadata(
@@ -514,7 +518,8 @@ StatusOr<ObjectMetadata> CurlClient::GetObjectMetadata(
   if (not status.ok()) {
     return status;
   }
-  return ParseFromString<ObjectMetadata>(builder.BuildRequest().MakeRequest(std::string{}));
+  return ParseFromString<ObjectMetadata>(
+      builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObject(
@@ -569,14 +574,8 @@ StatusOr<ListObjectsResponse> CurlClient::ListObjects(
     return status;
   }
   builder.AddQueryParameter("pageToken", request.page_token());
-  auto response = builder.BuildRequest().MakeRequest(std::string{});
-  if (not response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code >= 300) {
-    return AsStatus(*response);
-  }
-  return internal::ListObjectsResponse::FromHttpResponse(*std::move(response));
+  return ParseFromHttpResponse<ListObjectsResponse>(
+  builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteObject(
@@ -589,14 +588,7 @@ StatusOr<EmptyResponse> CurlClient::DeleteObject(
   if (not status.ok()) {
     return status;
   }
-  auto response = builder.BuildRequest().MakeRequest(std::string{});
-  if (not response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code >= 300) {
-    return AsStatus(*response);
-  }
-  return internal::EmptyResponse{};
+  return ReturnEmptyResponse(builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ObjectMetadata> CurlClient::UpdateObject(
@@ -609,7 +601,8 @@ StatusOr<ObjectMetadata> CurlClient::UpdateObject(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<ObjectMetadata>(builder.BuildRequest().MakeRequest(request.json_payload()));
+  return ParseFromString<ObjectMetadata>(
+      builder.BuildRequest().MakeRequest(request.json_payload()));
 }
 
 StatusOr<ObjectMetadata> CurlClient::PatchObject(
@@ -622,7 +615,8 @@ StatusOr<ObjectMetadata> CurlClient::PatchObject(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<ObjectMetadata>(builder.BuildRequest().MakeRequest(request.payload()));
+  return ParseFromString<ObjectMetadata>(
+      builder.BuildRequest().MakeRequest(request.payload()));
 }
 
 StatusOr<ObjectMetadata> CurlClient::ComposeObject(
@@ -636,7 +630,8 @@ StatusOr<ObjectMetadata> CurlClient::ComposeObject(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<ObjectMetadata>(builder.BuildRequest().MakeRequest(request.JsonPayload()));
+  return ParseFromString<ObjectMetadata>(
+      builder.BuildRequest().MakeRequest(request.JsonPayload()));
 }
 
 StatusOr<RewriteObjectResponse> CurlClient::RewriteObject(
@@ -667,6 +662,8 @@ StatusOr<RewriteObjectResponse> CurlClient::RewriteObject(
   if (response->status_code >= 300) {
     return AsStatus(*response);
   }
+  // This one does not use the common "ParseFromHttpResponse" function because
+  // it takes different arguments.
   return RewriteObjectResponse::FromHttpResponse(*response);
 }
 
@@ -705,7 +702,8 @@ StatusOr<ListBucketAclResponse> CurlClient::ListBucketAcl(
   if (response->status_code >= 300) {
     return AsStatus(*response);
   }
-  return internal::ListBucketAclResponse::FromHttpResponse(*std::move(response));
+  return internal::ListBucketAclResponse::FromHttpResponse(
+      *std::move(response));
 }
 
 StatusOr<BucketAccessControl> CurlClient::GetBucketAcl(
@@ -717,7 +715,8 @@ StatusOr<BucketAccessControl> CurlClient::GetBucketAcl(
   if (not status.ok()) {
     return status;
   }
-  return ParseFromString<BucketAccessControl>(builder.BuildRequest().MakeRequest(std::string{}));
+  return ParseFromString<BucketAccessControl>(
+      builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<BucketAccessControl> CurlClient::CreateBucketAcl(
@@ -733,7 +732,8 @@ StatusOr<BucketAccessControl> CurlClient::CreateBucketAcl(
   nl::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
-  return ParseFromString<BucketAccessControl>(builder.BuildRequest().MakeRequest(object.dump()));
+  return ParseFromString<BucketAccessControl>(
+      builder.BuildRequest().MakeRequest(object.dump()));
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteBucketAcl(
@@ -745,14 +745,7 @@ StatusOr<EmptyResponse> CurlClient::DeleteBucketAcl(
   if (not status.ok()) {
     return status;
   }
-  auto response = builder.BuildRequest().MakeRequest(std::string{});
-  if (not response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code >= 300) {
-    return AsStatus(*response);
-  }
-  return internal::EmptyResponse{};
+  return ReturnEmptyResponse(builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<BucketAccessControl> CurlClient::UpdateBucketAcl(
@@ -768,7 +761,8 @@ StatusOr<BucketAccessControl> CurlClient::UpdateBucketAcl(
   nl::json patch;
   patch["entity"] = request.entity();
   patch["role"] = request.role();
-  return ParseFromString<BucketAccessControl>(builder.BuildRequest().MakeRequest(patch.dump()));
+  return ParseFromString<BucketAccessControl>(
+      builder.BuildRequest().MakeRequest(patch.dump()));
 }
 
 StatusOr<BucketAccessControl> CurlClient::PatchBucketAcl(
@@ -781,7 +775,8 @@ StatusOr<BucketAccessControl> CurlClient::PatchBucketAcl(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<BucketAccessControl>(builder.BuildRequest().MakeRequest(request.payload()));
+  return ParseFromString<BucketAccessControl>(
+      builder.BuildRequest().MakeRequest(request.payload()));
 }
 
 StatusOr<ListObjectAclResponse> CurlClient::ListObjectAcl(
@@ -795,14 +790,8 @@ StatusOr<ListObjectAclResponse> CurlClient::ListObjectAcl(
   if (not status.ok()) {
     return status;
   }
-  auto response = builder.BuildRequest().MakeRequest(std::string{});
-  if (not response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code >= 300) {
-    return AsStatus(*response);
-  }
-  return internal::ListObjectAclResponse::FromHttpResponse(*std::move(response));
+  return ParseFromHttpResponse<ListObjectAclResponse>(
+      builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ObjectAccessControl> CurlClient::CreateObjectAcl(
@@ -819,7 +808,8 @@ StatusOr<ObjectAccessControl> CurlClient::CreateObjectAcl(
   nl::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
-  return ParseFromString<ObjectAccessControl>(builder.BuildRequest().MakeRequest(object.dump()));
+  return ParseFromString<ObjectAccessControl>(
+      builder.BuildRequest().MakeRequest(object.dump()));
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteObjectAcl(
@@ -833,14 +823,7 @@ StatusOr<EmptyResponse> CurlClient::DeleteObjectAcl(
   if (not status.ok()) {
     return status;
   }
-  auto response = builder.BuildRequest().MakeRequest(std::string{});
-  if (not response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code >= 300) {
-    return AsStatus(*response);
-  }
-  return internal::EmptyResponse{};
+  return ReturnEmptyResponse(builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ObjectAccessControl> CurlClient::GetObjectAcl(
@@ -854,7 +837,8 @@ StatusOr<ObjectAccessControl> CurlClient::GetObjectAcl(
   if (not status.ok()) {
     return status;
   }
-  return ParseFromString<ObjectAccessControl>(builder.BuildRequest().MakeRequest(std::string{}));
+  return ParseFromString<ObjectAccessControl>(
+      builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ObjectAccessControl> CurlClient::UpdateObjectAcl(
@@ -872,7 +856,8 @@ StatusOr<ObjectAccessControl> CurlClient::UpdateObjectAcl(
   nl::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
-  return ParseFromString<ObjectAccessControl>(builder.BuildRequest().MakeRequest(object.dump()));
+  return ParseFromString<ObjectAccessControl>(
+      builder.BuildRequest().MakeRequest(object.dump()));
 }
 
 StatusOr<ObjectAccessControl> CurlClient::PatchObjectAcl(
@@ -887,7 +872,8 @@ StatusOr<ObjectAccessControl> CurlClient::PatchObjectAcl(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<ObjectAccessControl>(builder.BuildRequest().MakeRequest(request.payload()));
+  return ParseFromString<ObjectAccessControl>(
+      builder.BuildRequest().MakeRequest(request.payload()));
 }
 
 StatusOr<ListDefaultObjectAclResponse> CurlClient::ListDefaultObjectAcl(
@@ -900,15 +886,8 @@ StatusOr<ListDefaultObjectAclResponse> CurlClient::ListDefaultObjectAcl(
   if (not status.ok()) {
     return status;
   }
-  auto response = builder.BuildRequest().MakeRequest(std::string{});
-  if (not response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code >= 300) {
-    return AsStatus(*response);
-  }
-  return internal::ListDefaultObjectAclResponse::FromHttpResponse(
-      *std::move(response));
+  return ParseFromHttpResponse<ListDefaultObjectAclResponse>(
+      builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ObjectAccessControl> CurlClient::CreateDefaultObjectAcl(
@@ -924,7 +903,8 @@ StatusOr<ObjectAccessControl> CurlClient::CreateDefaultObjectAcl(
   object["entity"] = request.entity();
   object["role"] = request.role();
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<ObjectAccessControl>(builder.BuildRequest().MakeRequest(object.dump()));
+  return ParseFromString<ObjectAccessControl>(
+      builder.BuildRequest().MakeRequest(object.dump()));
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteDefaultObjectAcl(
@@ -937,14 +917,7 @@ StatusOr<EmptyResponse> CurlClient::DeleteDefaultObjectAcl(
   if (not status.ok()) {
     return status;
   }
-  auto response = builder.BuildRequest().MakeRequest(std::string{});
-  if (not response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code >= 300) {
-    return AsStatus(*response);
-  }
-  return internal::EmptyResponse{};
+  return ReturnEmptyResponse(builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ObjectAccessControl> CurlClient::GetDefaultObjectAcl(
@@ -957,7 +930,8 @@ StatusOr<ObjectAccessControl> CurlClient::GetDefaultObjectAcl(
   if (not status.ok()) {
     return status;
   }
-  return ParseFromString<ObjectAccessControl>(builder.BuildRequest().MakeRequest(std::string{}));
+  return ParseFromString<ObjectAccessControl>(
+      builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ObjectAccessControl> CurlClient::UpdateDefaultObjectAcl(
@@ -974,7 +948,8 @@ StatusOr<ObjectAccessControl> CurlClient::UpdateDefaultObjectAcl(
   nl::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
-  return ParseFromString<ObjectAccessControl>(builder.BuildRequest().MakeRequest(object.dump()));
+  return ParseFromString<ObjectAccessControl>(
+      builder.BuildRequest().MakeRequest(object.dump()));
 }
 
 StatusOr<ObjectAccessControl> CurlClient::PatchDefaultObjectAcl(
@@ -988,7 +963,8 @@ StatusOr<ObjectAccessControl> CurlClient::PatchDefaultObjectAcl(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<ObjectAccessControl>(builder.BuildRequest().MakeRequest(request.payload()));
+  return ParseFromString<ObjectAccessControl>(
+      builder.BuildRequest().MakeRequest(request.payload()));
 }
 
 StatusOr<ServiceAccount> CurlClient::GetServiceAccount(
@@ -1000,7 +976,8 @@ StatusOr<ServiceAccount> CurlClient::GetServiceAccount(
   if (not status.ok()) {
     return status;
   }
-  return ParseFromString<ServiceAccount>(builder.BuildRequest().MakeRequest(std::string{}));
+  return ParseFromString<ServiceAccount>(
+      builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ListNotificationsResponse> CurlClient::ListNotifications(
@@ -1013,15 +990,8 @@ StatusOr<ListNotificationsResponse> CurlClient::ListNotifications(
   if (not status.ok()) {
     return status;
   }
-  auto response = builder.BuildRequest().MakeRequest(std::string{});
-  if (not response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code >= 300) {
-    return AsStatus(*response);
-  }
-  return internal::ListNotificationsResponse::FromHttpResponse(
-      *std::move(response));
+  return ParseFromHttpResponse<ListNotificationsResponse>(
+      builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<NotificationMetadata> CurlClient::CreateNotification(
@@ -1034,7 +1004,8 @@ StatusOr<NotificationMetadata> CurlClient::CreateNotification(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<NotificationMetadata>(builder.BuildRequest().MakeRequest(request.json_payload()));
+  return ParseFromString<NotificationMetadata>(
+      builder.BuildRequest().MakeRequest(request.json_payload()));
 }
 
 StatusOr<NotificationMetadata> CurlClient::GetNotification(
@@ -1047,7 +1018,8 @@ StatusOr<NotificationMetadata> CurlClient::GetNotification(
   if (not status.ok()) {
     return status;
   }
-  return ParseFromString<NotificationMetadata>(builder.BuildRequest().MakeRequest(std::string{}));
+  return ParseFromString<NotificationMetadata>(
+      builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteNotification(
@@ -1060,14 +1032,7 @@ StatusOr<EmptyResponse> CurlClient::DeleteNotification(
   if (not status.ok()) {
     return status;
   }
-  auto response = builder.BuildRequest().MakeRequest(std::string{});
-  if (not response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code >= 300) {
-    return AsStatus(*response);
-  }
-  return EmptyResponse{};
+  return ReturnEmptyResponse(builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 void CurlClient::LockShared() { mu_.lock(); }
@@ -1382,7 +1347,8 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaSimple(
   builder.AddQueryParameter("name", request.object_name());
   builder.AddHeader("Content-Length: " +
                     std::to_string(request.contents().size()));
-  return ParseFromString<ObjectMetadata>(builder.BuildRequest().MakeRequest(request.contents()));
+  return ParseFromString<ObjectMetadata>(
+      builder.BuildRequest().MakeRequest(request.contents()));
 }
 
 StatusOr<std::unique_ptr<ObjectWriteStreambuf>> CurlClient::WriteObjectSimple(
