@@ -23,7 +23,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 namespace {
-std::pair<Status, ResumableUploadResponse> ReturnError(
+StatusOr<ResumableUploadResponse> ReturnError(
     Status&& last_status, RetryPolicy const& retry_policy,
     char const* error_message) {
   std::ostringstream os;
@@ -32,22 +32,20 @@ std::pair<Status, ResumableUploadResponse> ReturnError(
   } else {
     os << "Permanent error in " << error_message << ": " << last_status;
   }
-  return std::make_pair(
-      Status(last_status.status_code(), os.str(), last_status.error_details()),
-      ResumableUploadResponse{});
+  return Status(last_status.status_code(), os.str(), last_status.error_details());
 }
 }  // namespace
 
-std::pair<Status, ResumableUploadResponse>
+StatusOr<ResumableUploadResponse>
 RetryResumableUploadSession::UploadChunk(std::string const& buffer,
                                          std::uint64_t upload_size) {
   Status last_status;
   while (not retry_policy_->IsExhausted()) {
     auto result = session_->UploadChunk(buffer, upload_size);
-    if (result.first.ok()) {
+    if (result.ok()) {
       return result;
     }
-    last_status = std::move(result.first);
+    last_status = std::move(result).status();
     if (not retry_policy_->OnFailure(last_status)) {
       return ReturnError(std::move(last_status), *retry_policy_, __func__);
     }
@@ -55,26 +53,24 @@ RetryResumableUploadSession::UploadChunk(std::string const& buffer,
     std::this_thread::sleep_for(delay);
 
     result = ResetSession();
-    if (not result.first.ok()) {
+    if (not result.ok()) {
       return result;
     }
   }
   std::ostringstream os;
   os << "Retry policy exhausted in " << __func__ << ": " << last_status;
-  return std::make_pair(
-      Status(last_status.status_code(), os.str(), last_status.error_details()),
-      ResumableUploadResponse{});
+  return Status(last_status.status_code(), os.str(), last_status.error_details());
 }
 
-std::pair<Status, ResumableUploadResponse>
+StatusOr<ResumableUploadResponse>
 RetryResumableUploadSession::ResetSession() {
   Status last_status;
   while (not retry_policy_->IsExhausted()) {
     auto result = session_->ResetSession();
-    if (result.first.ok()) {
+    if (result.ok()) {
       return result;
     }
-    last_status = std::move(result.first);
+    last_status = std::move(result).status();
     if (not retry_policy_->OnFailure(last_status)) {
       return ReturnError(std::move(last_status), *retry_policy_, __func__);
     }
@@ -83,9 +79,7 @@ RetryResumableUploadSession::ResetSession() {
   }
   std::ostringstream os;
   os << "Retry policy exhausted in " << __func__ << ": " << last_status;
-  return std::make_pair(
-      Status(last_status.status_code(), os.str(), last_status.error_details()),
-      ResumableUploadResponse{});
+  return Status(last_status.status_code(), os.str(), last_status.error_details());
 }
 
 std::uint64_t RetryResumableUploadSession::next_expected_byte() const {

@@ -26,148 +26,137 @@ namespace testing {
 
 class MockClient : public google::cloud::storage::internal::RawClient {
  public:
-  // The MOCK_* macros get confused if the return type is a compound template
-  // with a comma, that is because Foo<T,R> looks like two arguments to the
-  // preprocessor, but Foo<R> will look like a single argument.
-  template <typename R>
-  using ResponseWrapper = std::pair<google::cloud::storage::Status, R>;
-
   MOCK_CONST_METHOD0(client_options, ClientOptions const&());
-  MOCK_METHOD1(ListBuckets, ResponseWrapper<internal::ListBucketsResponse>(
+  MOCK_METHOD1(ListBuckets, StatusOr<internal::ListBucketsResponse>(
                                 internal::ListBucketsRequest const&));
-  MOCK_METHOD1(CreateBucket, ResponseWrapper<storage::BucketMetadata>(
+  MOCK_METHOD1(CreateBucket, StatusOr<storage::BucketMetadata>(
                                  internal::CreateBucketRequest const&));
   MOCK_METHOD1(GetBucketMetadata,
-               ResponseWrapper<storage::BucketMetadata>(
+               StatusOr<storage::BucketMetadata>(
                    internal::GetBucketMetadataRequest const&));
-  MOCK_METHOD1(DeleteBucket, ResponseWrapper<internal::EmptyResponse>(
+  MOCK_METHOD1(DeleteBucket, StatusOr<internal::EmptyResponse>(
                                  internal::DeleteBucketRequest const&));
-  MOCK_METHOD1(UpdateBucket, ResponseWrapper<storage::BucketMetadata>(
+  MOCK_METHOD1(UpdateBucket, StatusOr<storage::BucketMetadata>(
                                  internal::UpdateBucketRequest const&));
-  MOCK_METHOD1(PatchBucket, ResponseWrapper<storage::BucketMetadata>(
+  MOCK_METHOD1(PatchBucket, StatusOr<storage::BucketMetadata>(
                                 internal::PatchBucketRequest const&));
-  MOCK_METHOD1(
-      GetBucketIamPolicy,
-      ResponseWrapper<IamPolicy>(internal::GetBucketIamPolicyRequest const&));
-  MOCK_METHOD1(
-      SetBucketIamPolicy,
-      ResponseWrapper<IamPolicy>(internal::SetBucketIamPolicyRequest const&));
+  MOCK_METHOD1(GetBucketIamPolicy,
+               StatusOr<IamPolicy>(internal::GetBucketIamPolicyRequest const&));
+  MOCK_METHOD1(SetBucketIamPolicy,
+               StatusOr<IamPolicy>(internal::SetBucketIamPolicyRequest const&));
   MOCK_METHOD1(TestBucketIamPermissions,
-               ResponseWrapper<internal::TestBucketIamPermissionsResponse>(
+               StatusOr<internal::TestBucketIamPermissionsResponse>(
                    internal::TestBucketIamPermissionsRequest const&));
   MOCK_METHOD1(LockBucketRetentionPolicy,
-               ResponseWrapper<internal::EmptyResponse>(
+               StatusOr<internal::EmptyResponse>(
                    internal::LockBucketRetentionPolicyRequest const&));
 
   MOCK_METHOD1(InsertObjectMedia,
-               ResponseWrapper<storage::ObjectMetadata>(
+               StatusOr<storage::ObjectMetadata>(
                    internal::InsertObjectMediaRequest const&));
-  MOCK_METHOD1(CopyObject, ResponseWrapper<storage::ObjectMetadata>(
+  MOCK_METHOD1(CopyObject, StatusOr<storage::ObjectMetadata>(
                                internal::CopyObjectRequest const&));
   MOCK_METHOD1(GetObjectMetadata,
-               ResponseWrapper<storage::ObjectMetadata>(
+               StatusOr<storage::ObjectMetadata>(
                    internal::GetObjectMetadataRequest const&));
   MOCK_METHOD1(ReadObject,
-               ResponseWrapper<std::unique_ptr<internal::ObjectReadStreambuf>>(
+               StatusOr<std::unique_ptr<internal::ObjectReadStreambuf>>(
                    internal::ReadObjectRangeRequest const&));
   MOCK_METHOD1(WriteObject,
-               ResponseWrapper<std::unique_ptr<internal::ObjectWriteStreambuf>>(
+               StatusOr<std::unique_ptr<internal::ObjectWriteStreambuf>>(
                    internal::InsertObjectStreamingRequest const&));
-  MOCK_METHOD1(ListObjects, ResponseWrapper<internal::ListObjectsResponse>(
+  MOCK_METHOD1(ListObjects, StatusOr<internal::ListObjectsResponse>(
                                 internal::ListObjectsRequest const&));
-  MOCK_METHOD1(DeleteObject, ResponseWrapper<internal::EmptyResponse>(
+  MOCK_METHOD1(DeleteObject, StatusOr<internal::EmptyResponse>(
                                  internal::DeleteObjectRequest const&));
-  MOCK_METHOD1(UpdateObject, ResponseWrapper<storage::ObjectMetadata>(
+  MOCK_METHOD1(UpdateObject, StatusOr<storage::ObjectMetadata>(
                                  internal::UpdateObjectRequest const&));
-  MOCK_METHOD1(PatchObject, ResponseWrapper<storage::ObjectMetadata>(
+  MOCK_METHOD1(PatchObject, StatusOr<storage::ObjectMetadata>(
                                 internal::PatchObjectRequest const&));
-  MOCK_METHOD1(ComposeObject, ResponseWrapper<storage::ObjectMetadata>(
+  MOCK_METHOD1(ComposeObject, StatusOr<storage::ObjectMetadata>(
                                   internal::ComposeObjectRequest const&));
-  MOCK_METHOD1(RewriteObject, ResponseWrapper<internal::RewriteObjectResponse>(
+  MOCK_METHOD1(RewriteObject, StatusOr<internal::RewriteObjectResponse>(
                                   internal::RewriteObjectRequest const&));
-  MOCK_METHOD1(
-      CreateResumableSession,
-      ResponseWrapper<std::unique_ptr<internal::ResumableUploadSession>>(
-          internal::ResumableUploadRequest const&));
-  MOCK_METHOD1(
-      RestoreResumableSession,
-      ResponseWrapper<std::unique_ptr<internal::ResumableUploadSession>>(
-          std::string const&));
+  MOCK_METHOD1(CreateResumableSession,
+               StatusOr<std::unique_ptr<internal::ResumableUploadSession>>(
+                   internal::ResumableUploadRequest const&));
+  MOCK_METHOD1(RestoreResumableSession,
+               StatusOr<std::unique_ptr<internal::ResumableUploadSession>>(
+                   std::string const&));
 
-  MOCK_METHOD1(ListBucketAcl, ResponseWrapper<internal::ListBucketAclResponse>(
+  MOCK_METHOD1(ListBucketAcl, StatusOr<internal::ListBucketAclResponse>(
                                   internal::ListBucketAclRequest const&));
-  MOCK_METHOD1(CreateBucketAcl, ResponseWrapper<BucketAccessControl>(
+  MOCK_METHOD1(CreateBucketAcl, StatusOr<BucketAccessControl>(
                                     internal::CreateBucketAclRequest const&));
-  MOCK_METHOD1(DeleteBucketAcl, ResponseWrapper<internal::EmptyResponse>(
+  MOCK_METHOD1(DeleteBucketAcl, StatusOr<internal::EmptyResponse>(
                                     internal::DeleteBucketAclRequest const&));
-  MOCK_METHOD1(GetBucketAcl, ResponseWrapper<BucketAccessControl>(
+  MOCK_METHOD1(GetBucketAcl, StatusOr<BucketAccessControl>(
                                  internal::GetBucketAclRequest const&));
-  MOCK_METHOD1(UpdateBucketAcl, ResponseWrapper<BucketAccessControl>(
+  MOCK_METHOD1(UpdateBucketAcl, StatusOr<BucketAccessControl>(
                                     internal::UpdateBucketAclRequest const&));
-  MOCK_METHOD1(PatchBucketAcl, ResponseWrapper<BucketAccessControl>(
+  MOCK_METHOD1(PatchBucketAcl, StatusOr<BucketAccessControl>(
                                    internal::PatchBucketAclRequest const&));
 
-  MOCK_METHOD1(ListObjectAcl, ResponseWrapper<internal::ListObjectAclResponse>(
+  MOCK_METHOD1(ListObjectAcl, StatusOr<internal::ListObjectAclResponse>(
                                   internal::ListObjectAclRequest const&));
-  MOCK_METHOD1(CreateObjectAcl, ResponseWrapper<ObjectAccessControl>(
+  MOCK_METHOD1(CreateObjectAcl, StatusOr<ObjectAccessControl>(
                                     internal::CreateObjectAclRequest const&));
-  MOCK_METHOD1(DeleteObjectAcl, ResponseWrapper<internal::EmptyResponse>(
+  MOCK_METHOD1(DeleteObjectAcl, StatusOr<internal::EmptyResponse>(
                                     internal::DeleteObjectAclRequest const&));
-  MOCK_METHOD1(GetObjectAcl, ResponseWrapper<ObjectAccessControl>(
+  MOCK_METHOD1(GetObjectAcl, StatusOr<ObjectAccessControl>(
                                  internal::GetObjectAclRequest const&));
-  MOCK_METHOD1(UpdateObjectAcl, ResponseWrapper<ObjectAccessControl>(
+  MOCK_METHOD1(UpdateObjectAcl, StatusOr<ObjectAccessControl>(
                                     internal::UpdateObjectAclRequest const&));
-  MOCK_METHOD1(PatchObjectAcl, ResponseWrapper<ObjectAccessControl>(
+  MOCK_METHOD1(PatchObjectAcl, StatusOr<ObjectAccessControl>(
                                    internal::PatchObjectAclRequest const&));
 
   MOCK_METHOD1(ListDefaultObjectAcl,
-               ResponseWrapper<internal::ListDefaultObjectAclResponse>(
+               StatusOr<internal::ListDefaultObjectAclResponse>(
                    internal::ListDefaultObjectAclRequest const&));
   MOCK_METHOD1(CreateDefaultObjectAcl,
-               ResponseWrapper<ObjectAccessControl>(
+               StatusOr<ObjectAccessControl>(
                    internal::CreateDefaultObjectAclRequest const&));
   MOCK_METHOD1(DeleteDefaultObjectAcl,
-               ResponseWrapper<internal::EmptyResponse>(
+               StatusOr<internal::EmptyResponse>(
                    internal::DeleteDefaultObjectAclRequest const&));
   MOCK_METHOD1(GetDefaultObjectAcl,
-               ResponseWrapper<ObjectAccessControl>(
+               StatusOr<ObjectAccessControl>(
                    internal::GetDefaultObjectAclRequest const&));
   MOCK_METHOD1(UpdateDefaultObjectAcl,
-               ResponseWrapper<ObjectAccessControl>(
+               StatusOr<ObjectAccessControl>(
                    internal::UpdateDefaultObjectAclRequest const&));
   MOCK_METHOD1(PatchDefaultObjectAcl,
-               ResponseWrapper<ObjectAccessControl>(
+               StatusOr<ObjectAccessControl>(
                    internal::PatchDefaultObjectAclRequest const&));
 
   MOCK_METHOD1(GetServiceAccount,
-               ResponseWrapper<ServiceAccount>(
+               StatusOr<ServiceAccount>(
                    internal::GetProjectServiceAccountRequest const&));
 
   MOCK_METHOD1(ListNotifications,
-               ResponseWrapper<internal::ListNotificationsResponse>(
+               StatusOr<internal::ListNotificationsResponse>(
                    internal::ListNotificationsRequest const&));
   MOCK_METHOD1(CreateNotification,
-               ResponseWrapper<NotificationMetadata>(
+               StatusOr<NotificationMetadata>(
                    internal::CreateNotificationRequest const&));
-  MOCK_METHOD1(GetNotification, ResponseWrapper<NotificationMetadata>(
+  MOCK_METHOD1(GetNotification, StatusOr<NotificationMetadata>(
                                     internal::GetNotificationRequest const&));
   MOCK_METHOD1(DeleteNotification,
-               ResponseWrapper<internal::EmptyResponse>(
+               StatusOr<internal::EmptyResponse>(
                    internal::DeleteNotificationRequest const&));
   MOCK_METHOD1(
       AuthorizationHeader,
-      ResponseWrapper<std::string>(
+      StatusOr<std::string>(
           std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&));
 };
 
 class MockResumableUploadSession
     : public google::cloud::storage::internal::ResumableUploadSession {
  public:
-  using ResponseType = std::pair<Status, internal::ResumableUploadResponse>;
-
-  MOCK_METHOD2(UploadChunk, ResponseType(std::string const& buffer,
-                                         std::uint64_t upload_size));
-  MOCK_METHOD0(ResetSession, ResponseType());
+  MOCK_METHOD2(UploadChunk,
+               StatusOr<internal::ResumableUploadResponse>(
+                   std::string const& buffer, std::uint64_t upload_size));
+  MOCK_METHOD0(ResetSession, StatusOr<internal::ResumableUploadResponse>());
   MOCK_CONST_METHOD0(next_expected_byte, std::uint64_t());
   MOCK_CONST_METHOD0(session_id, std::string const&());
 };

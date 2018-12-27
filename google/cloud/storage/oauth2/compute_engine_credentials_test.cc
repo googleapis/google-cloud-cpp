@@ -108,7 +108,7 @@ TEST_F(ComputeEngineCredentialsTest,
   ComputeEngineCredentials<MockHttpRequestBuilder> credentials(alias);
   // Calls Refresh to obtain the access token for our authorization header.
   EXPECT_EQ("Authorization: tokentype mysupersecrettoken",
-            credentials.AuthorizationHeader().second);
+            credentials.AuthorizationHeader().value());
   // Make sure we obtain the scopes and email from the metadata server.
   EXPECT_EQ(email, credentials.service_account_email());
   EXPECT_THAT(credentials.scopes(), UnorderedElementsAre("scope1", "scope2"));

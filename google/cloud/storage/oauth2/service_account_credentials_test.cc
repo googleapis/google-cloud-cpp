@@ -130,7 +130,7 @@ TEST_F(ServiceAccountCredentialsTest,
 
   // Calls Refresh to obtain the access token for our authorization header.
   EXPECT_EQ("Authorization: Type access-token-value",
-            credentials.AuthorizationHeader().second);
+            credentials.AuthorizationHeader().value());
 }
 
 /// @test Verify that we refresh service account credentials appropriately.
@@ -179,13 +179,13 @@ TEST_F(ServiceAccountCredentialsTest,
       kJsonKeyfileContents, "test");
   // Calls Refresh to obtain the access token for our authorization header.
   EXPECT_EQ("Authorization: Type access-token-r1",
-            credentials.AuthorizationHeader().second);
+            credentials.AuthorizationHeader().value());
   // Token is expired, resulting in another call to Refresh.
   EXPECT_EQ("Authorization: Type access-token-r2",
-            credentials.AuthorizationHeader().second);
+            credentials.AuthorizationHeader().value());
   // Token still valid; should return cached token instead of calling Refresh.
   EXPECT_EQ("Authorization: Type access-token-r2",
-            credentials.AuthorizationHeader().second);
+            credentials.AuthorizationHeader().value());
 }
 
 /// @test Verify that nl::json::parse() failures are reported as is_discarded.

@@ -83,7 +83,7 @@ TEST_F(WriteObjectTest, WriteObject) {
                 .WillRepeatedly(Return(internal::HttpResponse{200, text, {}}));
             EXPECT_CALL(*mock_result, IsOpen()).WillRepeatedly(Return(true));
             std::unique_ptr<internal::ObjectWriteStreambuf> result(mock_result);
-            return std::make_pair(storage::Status(), std::move(result));
+            return make_status_or(std::move(result));
           }));
 
   auto stream = client->WriteObject("test-bucket-name", "test-object-name");
@@ -97,8 +97,8 @@ TEST_F(WriteObjectTest, WriteObjectTooManyFailures) {
                 LimitedErrorCountRetryPolicy(2)};
 
   auto returner = [](internal::InsertObjectStreamingRequest const&) {
-    return std::make_pair(TransientError(),
-                          std::unique_ptr<internal::ObjectWriteStreambuf>{});
+    return StatusOr<std::unique_ptr<internal::ObjectWriteStreambuf>>(
+        TransientError());
   };
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_CALL(*mock, WriteObject(_))
@@ -126,8 +126,8 @@ TEST_F(WriteObjectTest, WriteObjectTooManyFailures) {
 
 TEST_F(WriteObjectTest, WriteObjectPermanentFailure) {
   auto returner = [](internal::InsertObjectStreamingRequest const&) {
-    return std::make_pair(PermanentError(),
-                          std::unique_ptr<internal::ObjectWriteStreambuf>{});
+    return StatusOr<std::unique_ptr<internal::ObjectWriteStreambuf>>(
+        PermanentError());
   };
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_CALL(*mock, WriteObject(_)).WillOnce(Invoke(returner));

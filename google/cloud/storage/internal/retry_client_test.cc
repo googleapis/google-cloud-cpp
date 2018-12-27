@@ -47,13 +47,13 @@ TEST_F(RetryClientTest, NonIdempotentErrorHandling) {
                      ExponentialBackoffPolicy(1_us, 2_us, 2));
 
   EXPECT_CALL(*mock, DeleteObject(_))
-      .WillOnce(Return(std::make_pair(TransientError(), EmptyResponse{})));
+      .WillOnce(Return(StatusOr<EmptyResponse>(TransientError())));
 
   // Use a delete operation because this is idempotent only if the it has
   // the IfGenerationMatch() and/or Generation() option set.
-  std::pair<Status, EmptyResponse> result =
+  StatusOr<EmptyResponse> result =
       client.DeleteObject(DeleteObjectRequest("test-bucket", "test-object"));
-  EXPECT_EQ(TransientError().status_code(), result.first.status_code());
+  EXPECT_EQ(TransientError().status_code(), result.status().status_code());
 }
 
 /// @test Verify that the retry loop returns on the first permanent failure.
@@ -65,12 +65,12 @@ TEST_F(RetryClientTest, PermanentErrorHandling) {
 
   // Use a read-only operation because these are always idempotent.
   EXPECT_CALL(*mock, GetObjectMetadata(_))
-      .WillOnce(Return(std::make_pair(TransientError(), ObjectMetadata{})))
-      .WillOnce(Return(std::make_pair(PermanentError(), ObjectMetadata{})));
+      .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
+      .WillOnce(Return(StatusOr<ObjectMetadata>(PermanentError())));
 
-  std::pair<Status, ObjectMetadata> result = client.GetObjectMetadata(
+  StatusOr<ObjectMetadata> result = client.GetObjectMetadata(
       GetObjectMetadataRequest("test-bucket", "test-object"));
-  EXPECT_EQ(PermanentError().status_code(), result.first.status_code());
+  EXPECT_EQ(PermanentError().status_code(), result.status().status_code());
 }
 
 /// @test Verify that the retry loop returns on the first permanent failure.
@@ -83,11 +83,11 @@ TEST_F(RetryClientTest, TooManyTransientsHandling) {
   // Use a read-only operation because these are always idempotent.
   EXPECT_CALL(*mock, GetObjectMetadata(_))
       .WillRepeatedly(
-          Return(std::make_pair(TransientError(), ObjectMetadata{})));
+          Return(StatusOr<ObjectMetadata>(TransientError())));
 
-  std::pair<Status, ObjectMetadata> result = client.GetObjectMetadata(
+  StatusOr<ObjectMetadata> result = client.GetObjectMetadata(
       GetObjectMetadataRequest("test-bucket", "test-object"));
-  EXPECT_EQ(TransientError().status_code(), result.first.status_code());
+  EXPECT_EQ(TransientError().status_code(), result.status().status_code());
 }
 
 }  // namespace

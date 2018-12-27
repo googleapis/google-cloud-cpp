@@ -53,15 +53,13 @@ class CurlResumableStreambufIntegrationTest
     ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(IfGenerationMatch(0));
 
-    Status status;
-    std::unique_ptr<ResumableUploadSession> session;
-    std::tie(status, session) =
+    StatusOr<std::unique_ptr<ResumableUploadSession>> session =
         client.raw_client()->CreateResumableSession(request);
-    ASSERT_TRUE(status.ok());
+    ASSERT_TRUE(session.ok());
 
     ObjectWriteStream writer(
         google::cloud::internal::make_unique<CurlResumableStreambuf>(
-            std::move(session),
+            std::move(session).value(),
             client.raw_client()->client_options().upload_buffer_size(),
             google::cloud::internal::make_unique<NullHashValidator>()));
 

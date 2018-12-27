@@ -31,9 +31,9 @@ class LoggingResumableUploadSession : public ResumableUploadSession {
       std::unique_ptr<ResumableUploadSession> session)
       : session_(std::move(session)) {}
 
-  std::pair<Status, ResumableUploadResponse> UploadChunk(
+  StatusOr<ResumableUploadResponse> UploadChunk(
       std::string const& buffer, std::uint64_t upload_size) override;
-  std::pair<Status, ResumableUploadResponse> ResetSession() override;
+  StatusOr<ResumableUploadResponse> ResetSession() override;
   std::uint64_t next_expected_byte() const override;
   std::string const& session_id() const override;
 

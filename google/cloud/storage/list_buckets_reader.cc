@@ -88,12 +88,9 @@ google::cloud::optional<BucketMetadata> ListBucketsReader::GetNext() {
       return google::cloud::optional<BucketMetadata>();
     }
     request_.set_page_token(std::move(next_page_token_));
-    auto response = client_->ListBuckets(request_);
-    if (not response.first.ok()) {
-      internal::ThrowStatus(std::move(response.first));
-    }
-    next_page_token_ = std::move(response.second.next_page_token);
-    current_buckets_ = std::move(response.second.items);
+    auto response = client_->ListBuckets(request_).value();
+    next_page_token_ = std::move(response.next_page_token);
+    current_buckets_ = std::move(response.items);
     current_ = current_buckets_.begin();
     if (next_page_token_.empty()) {
       on_last_page_ = true;

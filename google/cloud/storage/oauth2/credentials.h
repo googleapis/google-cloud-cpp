@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_CREDENTIALS_H_
 
 #include "google/cloud/storage/status.h"
+#include "google/cloud/storage/status_or.h"
 #include <chrono>
 
 namespace google {
@@ -45,8 +46,7 @@ class Credentials {
    * - The value for the Authorization header in HTTP requests, or an empty
    *   string if we were unable to obtain one.
    */
-  virtual std::pair<google::cloud::storage::Status, std::string>
-  AuthorizationHeader() = 0;
+  virtual StatusOr<std::string> AuthorizationHeader() = 0;
 };
 
 }  // namespace oauth2

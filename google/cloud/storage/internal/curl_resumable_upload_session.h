@@ -32,17 +32,17 @@ class CurlResumableUploadSession : public ResumableUploadSession {
                                       std::string session_id)
       : client_(std::move(client)), session_id_(std::move(session_id)) {}
 
-  std::pair<Status, ResumableUploadResponse> UploadChunk(
+  StatusOr<ResumableUploadResponse> UploadChunk(
       std::string const& buffer, std::uint64_t upload_size) override;
 
-  std::pair<Status, ResumableUploadResponse> ResetSession() override;
+  StatusOr<ResumableUploadResponse> ResetSession() override;
 
   std::uint64_t next_expected_byte() const override;
 
   std::string const& session_id() const override { return session_id_; }
 
  private:
-  void Update(std::pair<Status, ResumableUploadResponse> const& result);
+  void Update(StatusOr<ResumableUploadResponse> const& result);
 
   std::shared_ptr<CurlClient> client_;
   std::string session_id_;

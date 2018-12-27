@@ -63,7 +63,7 @@ class ComputeEngineCredentials : public Credentials {
 
   explicit ComputeEngineCredentials(std::string const& service_account_email)
       : service_account_email_(service_account_email) {}
-  std::pair<storage::Status, std::string> AuthorizationHeader() override {
+  StatusOr<std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
     return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
   }

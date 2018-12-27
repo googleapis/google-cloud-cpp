@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/storage/testing/canonical_errors.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -27,6 +28,7 @@ using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
+using google::cloud::storage::testing::canonical_errors::TransientError;
 
 class MockLogBackend : public google::cloud::LogBackend {
  public:
@@ -65,8 +67,31 @@ TEST_F(LoggingClientTest, GetBucketMetadata) {
 
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, GetBucketMetadata(_))
-      .WillOnce(Return(
-          std::make_pair(Status(), BucketMetadata::ParseFromString(text))));
+      .WillOnce(Return(make_status_or(BucketMetadata::ParseFromString(text))));
+
+  // We want to test that the key elements are logged, but do not want a
+  // "change detection test", so this is intentionally not exhaustive.
+  EXPECT_CALL(*log_backend, ProcessWithOwnership(_))
+      .WillOnce(Invoke([](LogRecord lr) {
+        EXPECT_THAT(lr.message, HasSubstr(" << "));
+        EXPECT_THAT(lr.message, HasSubstr("GetBucketMetadataRequest={"));
+        EXPECT_THAT(lr.message, HasSubstr("my-bucket"));
+      }))
+      .WillOnce(Invoke([](LogRecord lr) {
+        EXPECT_THAT(lr.message, HasSubstr(" >> "));
+        EXPECT_THAT(lr.message, HasSubstr("payload={"));
+        EXPECT_THAT(lr.message, HasSubstr("US"));
+        EXPECT_THAT(lr.message, HasSubstr("my-bucket"));
+      }));
+
+  LoggingClient client(mock);
+  client.GetBucketMetadata(GetBucketMetadataRequest("my-bucket"));
+}
+
+TEST_F(LoggingClientTest, GetBucketMetadataWithError) {
+  auto mock = std::make_shared<testing::MockClient>();
+  EXPECT_CALL(*mock, GetBucketMetadata(_))
+      .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())));
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
@@ -79,9 +104,6 @@ TEST_F(LoggingClientTest, GetBucketMetadata) {
       .WillOnce(Invoke([](LogRecord lr) {
         EXPECT_THAT(lr.message, HasSubstr(" >> "));
         EXPECT_THAT(lr.message, HasSubstr("status={"));
-        EXPECT_THAT(lr.message, HasSubstr("payload={"));
-        EXPECT_THAT(lr.message, HasSubstr("US"));
-        EXPECT_THAT(lr.message, HasSubstr("my-bucket"));
       }));
 
   LoggingClient client(mock);
@@ -98,7 +120,7 @@ TEST_F(LoggingClientTest, InsertObjectMedia) {
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, InsertObjectMedia(_))
       .WillOnce(Return(
-          std::make_pair(Status(), ObjectMetadata::ParseFromString(text))));
+          make_status_or(ObjectMetadata::ParseFromString(text))));
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
@@ -112,7 +134,6 @@ TEST_F(LoggingClientTest, InsertObjectMedia) {
       }))
       .WillOnce(Invoke([](LogRecord lr) {
         EXPECT_THAT(lr.message, HasSubstr(" >> "));
-        EXPECT_THAT(lr.message, HasSubstr("status={"));
         EXPECT_THAT(lr.message, HasSubstr("payload={"));
         EXPECT_THAT(lr.message, HasSubstr("foo-bar"));
         EXPECT_THAT(lr.message, HasSubstr("baz"));
@@ -130,8 +151,7 @@ TEST_F(LoggingClientTest, ListObjects) {
   };
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, ListObjects(_))
-      .WillOnce(Return(
-          std::make_pair(Status(), ListObjectsResponse{"a-token", items})));
+      .WillOnce(Return(make_status_or(ListObjectsResponse{"a-token", items})));
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
@@ -143,7 +163,6 @@ TEST_F(LoggingClientTest, ListObjects) {
       }))
       .WillOnce(Invoke([](LogRecord lr) {
         EXPECT_THAT(lr.message, HasSubstr(" >> "));
-        EXPECT_THAT(lr.message, HasSubstr("status={"));
         EXPECT_THAT(lr.message, HasSubstr("payload={"));
         EXPECT_THAT(lr.message, HasSubstr("ListObjectsResponse={"));
         EXPECT_THAT(lr.message, HasSubstr("a-token"));

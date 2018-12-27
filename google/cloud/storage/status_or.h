@@ -330,6 +330,11 @@ class StatusOr<void> final {
   Status status_;
 };
 
+template <typename T>
+StatusOr<T> make_status_or(T rhs) {
+  return StatusOr<T>(std::move(rhs));
+}
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

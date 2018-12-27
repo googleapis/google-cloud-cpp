@@ -65,9 +65,9 @@ void TooManyFailuresTest(
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // Expect exactly 3 calls before the retry policy is exhausted and an
   // exception is raised.
-  oncall.WillOnce(Return(std::make_pair(TransientError(), ReturnType{})))
-      .WillOnce(Return(std::make_pair(TransientError(), ReturnType{})))
-      .WillOnce(Return(std::make_pair(TransientError(), ReturnType{})));
+  oncall.WillOnce(Return(StatusOr<ReturnType>(TransientError())))
+      .WillOnce(Return(StatusOr<ReturnType>(TransientError())))
+      .WillOnce(Return(StatusOr<ReturnType>(TransientError())));
 
   // Verify the right exception type, with the right content, is raised when
   // calling the operation.
@@ -82,7 +82,7 @@ void TooManyFailuresTest(
   // With EXPECT_DEATH*() the mocking framework cannot detect how many times
   // the operation is called, so we cannot set an exact number of calls to
   // expect.
-  oncall.WillRepeatedly(Return(std::make_pair(TransientError(), ReturnType{})));
+  oncall.WillRepeatedly(Return(StatusOr<ReturnType>(TransientError())));
   EXPECT_DEATH_IF_SUPPORTED(tested_operation(client),
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -133,7 +133,7 @@ void NonIdempotentFailuresTest(
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // The first transient error should stop the retries for non-idempotent
   // operations.
-  oncall.WillOnce(Return(std::make_pair(TransientError(), ReturnType{})));
+  oncall.WillOnce(Return(StatusOr<ReturnType>(TransientError())));
 
   // Verify the right exception type, with the right content, is raised when
   // calling the operation.
@@ -149,8 +149,7 @@ void NonIdempotentFailuresTest(
   // the operation is called, so we cannot set an exact number of calls to
   // expect.
   if (not has_will_repeatedly) {
-    oncall.WillRepeatedly(
-        Return(std::make_pair(TransientError(), ReturnType{})));
+    oncall.WillRepeatedly(Return(StatusOr<ReturnType>(TransientError())));
   }
   EXPECT_DEATH_IF_SUPPORTED(tested_operation(client),
                             "exceptions are disabled");
@@ -202,9 +201,9 @@ void IdempotentFailuresTest(
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // Expect exactly 3 calls before the retry policy is exhausted and an
   // exception is raised.
-  oncall.WillOnce(Return(std::make_pair(TransientError(), ReturnType{})))
-      .WillOnce(Return(std::make_pair(TransientError(), ReturnType{})))
-      .WillOnce(Return(std::make_pair(TransientError(), ReturnType{})));
+  oncall.WillOnce(Return(StatusOr<ReturnType>(TransientError())))
+      .WillOnce(Return(StatusOr<ReturnType>(TransientError())))
+      .WillOnce(Return(StatusOr<ReturnType>(TransientError())));
 
   // Verify the right exception type, with the right content, is raised when
   // calling the operation.
@@ -220,8 +219,7 @@ void IdempotentFailuresTest(
   // the operation is called, so we cannot set an exact number of calls to
   // expect.
   if (not has_will_repeatedly) {
-    oncall.WillRepeatedly(
-        Return(std::make_pair(TransientError(), ReturnType{})));
+    oncall.WillRepeatedly(Return(StatusOr<ReturnType>(TransientError())));
   }
   EXPECT_DEATH_IF_SUPPORTED(tested_operation(client),
                             "exceptions are disabled");
@@ -301,7 +299,7 @@ void PermanentFailureTest(Client& client,
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // Expect exactly one call before the retry policy is exhausted and an
   // exception is raised.
-  oncall.WillOnce(Return(std::make_pair(PermanentError(), ReturnType{})));
+  oncall.WillOnce(Return(StatusOr<ReturnType>(PermanentError())));
 
   // Verify the right exception type, with the right content, is raised when
   // calling the operation.
@@ -316,7 +314,7 @@ void PermanentFailureTest(Client& client,
   // With EXPECT_DEATH*() the mocking framework cannot detect how many times
   // the operation is called, so we cannot set an exact number of calls to
   // expect.
-  oncall.WillRepeatedly(Return(std::make_pair(PermanentError(), ReturnType{})));
+  oncall.WillRepeatedly(Return(StatusOr<ReturnType>(PermanentError())));
   EXPECT_DEATH_IF_SUPPORTED(tested_operation(client),
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

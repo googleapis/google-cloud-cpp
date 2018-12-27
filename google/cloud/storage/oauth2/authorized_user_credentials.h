@@ -88,7 +88,7 @@ class AuthorizedUserCredentials : public Credentials {
     request_ = request_builder.BuildRequest();
   }
 
-  std::pair<storage::Status, std::string> AuthorizationHeader() override {
+  StatusOr<std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
     return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
   }

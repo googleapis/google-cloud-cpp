@@ -59,7 +59,7 @@ ObjectMetadata Client::UploadFileSimple(
   std::string payload(std::istreambuf_iterator<char>{is}, {});
   request.set_contents(std::move(payload));
 
-  return ThrowOnError(raw_client_->InsertObjectMedia(request));
+  return raw_client_->InsertObjectMedia(request).value();
 }
 
 ObjectMetadata Client::UploadFileResumable(
@@ -92,31 +92,30 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
   // class checks before calling it.
   std::uint64_t source_size = google::cloud::internal::file_size(file_name);
 
-  auto result = UploadStreamResumable(source, source_size, request);
-  if (not result.first.ok()) {
-    internal::ThrowStatus(std::move(result.first));
-  }
-  return result.second;
+  return UploadStreamResumable(source, source_size, request).value();
 }
 
-std::pair<Status, ObjectMetadata> Client::UploadStreamResumable(
+StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     std::istream& source, std::uint64_t source_size,
     internal::ResumableUploadRequest const& request) {
-  Status status;
-  std::unique_ptr<internal::ResumableUploadSession> session;
-  std::tie(status, session) = raw_client()->CreateResumableSession(request);
-  if (not status.ok()) {
-    return std::make_pair(status, ObjectMetadata{});
+  StatusOr<std::unique_ptr<internal::ResumableUploadSession>> session_status =
+      raw_client()->CreateResumableSession(request);
+  if (not session_status.ok()) {
+    return std::move(session_status).status();
   }
+
+  auto session = std::move(*session_status);
 
   // GCS requires chunks to be a multiple of 256KiB.
   auto chunk_size = internal::UploadChunkRequest::RoundUpToQuantum(
       raw_client()->client_options().upload_buffer_size());
 
-  internal::ResumableUploadResponse upload_response;
+  StatusOr<internal::ResumableUploadResponse> upload_response(
+      internal::ResumableUploadResponse{});
   // We iterate while `source` is good and the retry policy has not been
   // exhausted.
-  while (not source.eof() and upload_response.payload.empty()) {
+  while (not source.eof() and upload_response.ok() and
+         upload_response->payload.empty()) {
     // Read a chunk of data from the source file.
     std::string buffer(chunk_size, '\0');
     source.read(&buffer[0], buffer.size());
@@ -127,10 +126,9 @@ std::pair<Status, ObjectMetadata> Client::UploadStreamResumable(
     buffer.resize(gcount);
 
     auto expected = session->next_expected_byte() + gcount - 1;
-    std::tie(status, upload_response) =
-        session->UploadChunk(buffer, source_size);
-    if (not status.ok()) {
-      return std::make_pair(Status(), ObjectMetadata());
+    upload_response = session->UploadChunk(buffer, source_size);
+    if (not upload_response.ok()) {
+      return std::move(upload_response).status();
     }
     if (session->next_expected_byte() != expected) {
       GCP_LOG(WARNING) << "unexpected last committed byte "
@@ -140,18 +138,17 @@ std::pair<Status, ObjectMetadata> Client::UploadStreamResumable(
     }
   }
 
-  if (not status.ok()) {
-    return std::make_pair(status, ObjectMetadata{});
+  if (not upload_response.ok()) {
+    return std::move(upload_response).status();
   }
 
-  return std::make_pair(
-      Status(), ObjectMetadata::ParseFromString(upload_response.payload));
+  return ObjectMetadata::ParseFromString(upload_response->payload);
 }
 
 void Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
                               std::string const& file_name) {
   std::unique_ptr<internal::ObjectReadStreambuf> streambuf =
-      raw_client_->ReadObject(request).second;
+      raw_client_->ReadObject(request).value();
   ObjectReadStream stream(std::move(streambuf));
   if (stream.eof() and not stream.IsOpen()) {
     std::string msg = __func__;
