@@ -259,7 +259,7 @@ TEST(CompositeHashValidator, ProcessMetadata) {
   auto object_metadata = ObjectMetadata::ParseFromJson(internal::nl::json{
       {"crc32c", QUICK_FOX_CRC32C_CHECKSUM},
       {"md5Hash", QUICK_FOX_MD5_HASH},
-  });
+  }).value();
   validator.ProcessMetadata(object_metadata);
   auto result = std::move(validator).Finish();
   EXPECT_EQ(

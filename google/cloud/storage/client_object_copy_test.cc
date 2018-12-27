@@ -63,7 +63,7 @@ TEST_F(ObjectCopyTest, CopyObject) {
   std::string text = R"""({
       "name": "test-bucket-name/test-object-name/1"
 })""";
-  auto expected = storage::ObjectMetadata::ParseFromString(text);
+  auto expected = storage::ObjectMetadata::ParseFromString(text).value();
 
   EXPECT_CALL(*mock, CopyObject(_))
       .WillOnce(Invoke([&expected](internal::CopyObjectRequest const& request) {
@@ -76,9 +76,9 @@ TEST_F(ObjectCopyTest, CopyObject) {
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
 
-  ObjectMetadata actual = client.CopyObject(
-      "source-bucket-name", "source-object-name", "test-bucket-name",
-      "test-object-name");
+  ObjectMetadata actual =
+      client.CopyObject("source-bucket-name", "source-object-name",
+                        "test-bucket-name", "test-object-name");
   EXPECT_EQ(expected, actual);
 }
 
@@ -131,7 +131,7 @@ TEST_F(ObjectCopyTest, ComposeObject) {
       "updated": "2018-05-19T19:31:24Z",
       "componentCount": 2
 })""";
-  auto expected = ObjectMetadata::ParseFromString(response);
+  auto expected = ObjectMetadata::ParseFromString(response).value();
 
   EXPECT_CALL(*mock, ComposeObject(_))
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
@@ -149,9 +149,8 @@ TEST_F(ObjectCopyTest, ComposeObject) {
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
 
-  auto actual =
-      client.ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
-                           "test-object-name");
+  auto actual = client.ComposeObject(
+      "test-bucket-name", {{"object1"}, {"object2"}}, "test-object-name");
   EXPECT_EQ(expected, actual);
 }
 
@@ -181,8 +180,8 @@ TEST_F(ObjectCopyTest, ComposeObjectPermanentFailure) {
 
 TEST_F(ObjectCopyTest, RewriteObject) {
   EXPECT_CALL(*mock, RewriteObject(_))
-      .WillOnce(Return(
-          StatusOr<internal::RewriteObjectResponse>(TransientError())))
+      .WillOnce(
+          Return(StatusOr<internal::RewriteObjectResponse>(TransientError())))
       .WillOnce(Invoke([](internal::RewriteObjectRequest const& r) {
         EXPECT_EQ("test-source-bucket-name", r.source_bucket());
         EXPECT_EQ("test-source-object-name", r.source_object());
@@ -197,8 +196,8 @@ TEST_F(ObjectCopyTest, RewriteObject) {
             "done": false,
             "rewriteToken": "abcd-test-token-0"
         })""";
-        return make_status_or(internal::RewriteObjectResponse::FromHttpResponse(
-                                  internal::HttpResponse{200, response, {}}));
+        return internal::RewriteObjectResponse::FromHttpResponse(
+            internal::HttpResponse{200, response, {}});
       }))
       .WillOnce(Invoke([](internal::RewriteObjectRequest const& r) {
         EXPECT_EQ("test-source-bucket-name", r.source_bucket());
@@ -214,8 +213,8 @@ TEST_F(ObjectCopyTest, RewriteObject) {
             "done": false,
             "rewriteToken": "abcd-test-token-2"
         })""";
-        return make_status_or(internal::RewriteObjectResponse::FromHttpResponse(
-                                  internal::HttpResponse{200, response, {}}));
+        return internal::RewriteObjectResponse::FromHttpResponse(
+            internal::HttpResponse{200, response, {}});
       }))
       .WillOnce(Invoke([](internal::RewriteObjectRequest const& r) {
         EXPECT_EQ("test-source-bucket-name", r.source_bucket());
@@ -235,8 +234,8 @@ TEST_F(ObjectCopyTest, RewriteObject) {
                "name": "test-destination-object-name"
             }
         })""";
-        return make_status_or(internal::RewriteObjectResponse::FromHttpResponse(
-                                  internal::HttpResponse{200, response, {}}));
+        return internal::RewriteObjectResponse::FromHttpResponse(
+            internal::HttpResponse{200, response, {}});
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
@@ -278,8 +277,7 @@ TEST_F(ObjectCopyTest, RewriteObjectTooManyFailures) {
       [](Client& client) {
         client.RewriteObjectBlocking(
             "test-source-bucket-name", "test-source-object",
-            "test-dest-bucket-name", "test-dest-object",
-            IfGenerationMatch(7));
+            "test-dest-bucket-name", "test-dest-object", IfGenerationMatch(7));
       },
       "RewriteObject");
 }

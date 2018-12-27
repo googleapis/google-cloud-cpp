@@ -102,7 +102,7 @@ ObjectMetadata CreateObjectMetadataForTest() {
       "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
       "updated": "2018-05-19T19:31:24Z"
 })""";
-  return ObjectMetadata::ParseFromString(text);
+  return ObjectMetadata::ParseFromString(text).value();
 }
 
 /// @test Verify that we parse JSON objects into ObjectMetadata objects.
@@ -161,6 +161,32 @@ TEST(ObjectMetadataTest, Parse) {
   EXPECT_EQ(magic_timestamp + 10, duration_cast<std::chrono::seconds>(
                                       actual.updated().time_since_epoch())
                                       .count());
+}
+
+/// @test Verify that we parse JSON objects into ObjectMetadata objects.
+TEST(ObjectMetadataTest, ParseFailure) {
+  auto actual = ObjectMetadata::ParseFromString("{123");
+  EXPECT_FALSE(actual.ok());
+}
+
+/// @test Verify that we parse JSON objects into ObjectMetadata objects.
+TEST(ObjectMetadataTest, ParseAclListFailure) {
+  std::string text = R"""({
+      "acl": [{
+        "kind": "storage#objectAccessControl",
+        "id": "acl-id-0",
+        "entity": "user-qux"
+      },
+      "not-a-valid-acl"
+      ],
+      "bucket": "foo-bar",
+      "generation": "12345",
+      "id": "foo-bar/baz/12345",
+      "kind": "storage#object",
+      "name": "baz"
+})""";
+  auto actual = ObjectMetadata::ParseFromString(text);
+  EXPECT_FALSE(actual.ok());
 }
 
 /// @test Verify that the IOStream operator works as expected.

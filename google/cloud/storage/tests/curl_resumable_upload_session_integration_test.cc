@@ -59,7 +59,7 @@ TEST_F(CurlResumableUploadIntegrationTest, Simple) {
 
   ASSERT_TRUE(response.ok());
   EXPECT_FALSE(response->payload.empty());
-  auto metadata = ObjectMetadata::ParseFromString(response->payload);
+  auto metadata = ObjectMetadata::ParseFromString(response->payload).value();
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name, metadata.bucket());
   EXPECT_EQ(contents.size(), metadata.size());
@@ -93,7 +93,7 @@ TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
   ASSERT_TRUE(response.ok()) << response.status();
 
   EXPECT_FALSE(response->payload.empty());
-  auto metadata = ObjectMetadata::ParseFromString(response->payload);
+  auto metadata = ObjectMetadata::ParseFromString(response->payload).value();
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name, metadata.bucket());
   EXPECT_EQ(2 * contents.size(), metadata.size());
@@ -135,7 +135,7 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
   ASSERT_TRUE(response.ok()) << response.status();
 
   EXPECT_FALSE(response->payload.empty());
-  auto metadata = ObjectMetadata::ParseFromString(response->payload);
+  auto metadata = ObjectMetadata::ParseFromString(response->payload).value();
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name, metadata.bucket());
   EXPECT_EQ(3 * contents.size(), metadata.size());

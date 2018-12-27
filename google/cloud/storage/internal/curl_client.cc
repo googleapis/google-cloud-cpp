@@ -215,14 +215,17 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
   }
   auto response =
       ResumableUploadResponse::FromHttpResponse(*std::move(http_response));
-  if (response.upload_session_url.empty()) {
+  if (not response.ok()) {
+    return std::move(response).status();
+  }
+  if (response->upload_session_url.empty()) {
     std::ostringstream os;
-    os << __func__ << " - invalid server response, parsed to " << response;
+    os << __func__ << " - invalid server response, parsed to " << *response;
     return Status(StatusCode::INTERNAL, std::move(os).str());
   }
   return std::unique_ptr<ResumableUploadSession>(
       google::cloud::internal::make_unique<CurlResumableUploadSession>(
-          shared_from_this(), std::move(response.upload_session_url)));
+          shared_from_this(), std::move(response->upload_session_url)));
 }
 
 CurlClient::CurlClient(ClientOptions options)
