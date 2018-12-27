@@ -35,7 +35,10 @@ CurlReadStreambuf::CurlReadStreambuf(
 
 bool CurlReadStreambuf::IsOpen() const { return download_.IsOpen(); }
 
-HttpResponse CurlReadStreambuf::Close() { return download_.Close().value(); }
+HttpResponse CurlReadStreambuf::Close() {
+  // TODO(#1736) - return StatusOr<> from here.
+  return download_.Close().value();
+}
 
 CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
   if (not IsOpen()) {
@@ -129,7 +132,7 @@ HttpResponse CurlWriteStreambuf::DoClose() {
   GCP_LOG(INFO) << __func__ << "()";
   Validate(__func__);
   SwapBuffers();
-  // TODO(...) - this can throw an exception,
+  // TODO(#1735) - return StatusOr<> from here.
   auto response = upload_.Close().value();
   for (auto const& kv : response.headers) {
     hash_validator_->ProcessHeader(kv.first, kv.second);
