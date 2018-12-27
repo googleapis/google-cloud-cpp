@@ -91,7 +91,7 @@ class StatusOr final {
 
   StatusOr(StatusOr&& rhs) : status_(std::move(rhs.status_)) {
     if (status_.ok()) {
-      new (reinterpret_cast<T*>(&buffer_)) T(std::move(*rhs));
+      new (&value_) T(std::move(*rhs));
     }
   }
 
@@ -104,12 +104,12 @@ class StatusOr final {
         status_ = std::move(rhs.status_);
         return *this;
       }
-      new (reinterpret_cast<T*>(&buffer_)) T(std::move(*rhs));
+      new (&value_) T(std::move(*rhs));
       status_ = Status();
       return *this;
     }
     if (not rhs.ok()) {
-      reinterpret_cast<T*>(&buffer_)->~T();
+      value_.~T();
       status_ = std::move(rhs.status_);
       return *this;
     }
@@ -120,7 +120,7 @@ class StatusOr final {
 
   StatusOr(StatusOr const& rhs) : status_(rhs.status_) {
     if (status_.ok()) {
-      new (reinterpret_cast<T*>(&buffer_)) T(*rhs);
+      new (&value_) T(*rhs);
     }
   }
 
@@ -133,12 +133,12 @@ class StatusOr final {
         status_ = rhs.status_;
         return *this;
       }
-      new (reinterpret_cast<T*>(&buffer_)) T(*rhs);
+      new (&value_) T(*rhs);
       status_ = rhs.status_;
       return *this;
     }
     if (not rhs.ok()) {
-      reinterpret_cast<T*>(&buffer_)->~T();
+      value_.~T();
       status_ = rhs.status_;
       return *this;
     }
@@ -149,7 +149,7 @@ class StatusOr final {
 
   ~StatusOr() {
     if (ok()) {
-      reinterpret_cast<T*>(&buffer_)->~T();
+      value_.~T();
     }
   }
 
@@ -168,7 +168,7 @@ class StatusOr final {
     // and should be reasonably efficient. Note that we must avoid destructing
     // the destination and/or default initializing it unless really needed.
     if (not ok()) {
-      new (reinterpret_cast<T*>(&buffer_)) T(std::forward<U>(rhs));
+      new (&value_) T(std::forward<U>(rhs));
       status_ = Status();
       return *this;
     }
@@ -188,14 +188,10 @@ class StatusOr final {
    * @throws only if `T`'s move constructor throws.
    */
   // NOLINTNEXTLINE(google-explicit-constructor)
-  StatusOr(T&& rhs) : status_() {
-    new (reinterpret_cast<T*>(&buffer_)) T(std::move(rhs));
-  }
+  StatusOr(T&& rhs) : status_() { new (&value_) T(std::move(rhs)); }
 
   // NOLINTNEXTLINE(google-explicit-constructor)
-  StatusOr(T const& rhs) : status_() {
-    new (reinterpret_cast<T*>(&buffer_)) T(rhs);
-  }
+  StatusOr(T const& rhs) : status_() { new (&value_) T(rhs); }
 
   bool ok() const { return status_.ok(); }
   explicit operator bool() const { return status_.ok(); }
@@ -210,15 +206,13 @@ class StatusOr final {
    * @return All these return a (properly ref and const-qualified) reference to
    *     the underlying value.
    */
-  T& operator*() & { return *reinterpret_cast<T*>(&buffer_); }
+  T& operator*() & { return value_; }
 
-  T const& operator*() const& { return *reinterpret_cast<T const*>(&buffer_); }
+  T const& operator*() const& { return value_; }
 
-  T&& operator*() && { return std::move(*reinterpret_cast<T*>(&buffer_)); }
+  T&& operator*() && { return std::move(value_); }
 
-  T const&& operator*() const&& {
-    return std::move(*reinterpret_cast<T const*>(&buffer_));
-  }
+  T const&& operator*() const&& { return std::move(value_); }
   //@}
 
   //@{
@@ -231,9 +225,9 @@ class StatusOr final {
    * @return All these return a (properly ref and const-qualified) pointer to
    *     the underlying value.
    */
-  T* operator->() & { return reinterpret_cast<T*>(&buffer_); }
+  T* operator->() & { return &value_; }
 
-  T const* operator->() const& { return reinterpret_cast<T const*>(&buffer_); }
+  T const* operator->() const& { return &value_; }
   //@}
 
   //@{
@@ -296,8 +290,9 @@ class StatusOr final {
   }
 
   Status status_;
-  using aligned_storage_t = std::aligned_storage<sizeof(T), alignof(T)>;
-  typename aligned_storage_t::type buffer_;
+  union {
+    T value_;
+  };
 };
 
 /**
