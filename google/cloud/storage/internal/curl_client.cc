@@ -575,7 +575,7 @@ StatusOr<ListObjectsResponse> CurlClient::ListObjects(
   }
   builder.AddQueryParameter("pageToken", request.page_token());
   return ParseFromHttpResponse<ListObjectsResponse>(
-  builder.BuildRequest().MakeRequest(std::string{}));
+      builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteObject(
