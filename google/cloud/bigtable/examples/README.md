@@ -92,12 +92,14 @@ $ ./bigtable_samples_instance_admin_ext
 Usage: bigtable_samples_instance_admin_ext <command> <project_id> [arguments]
 
 Examples:
-  bigtable_samples_instance_admin_ext run my-project my-instance my-cluster my-zone
-  bigtable_samples_instance_admin_ext create-dev-instance my-project my-instance my-zone
+  bigtable_samples_instance_admin_ext run my-project my-instance my-cluster us-central1-f
+  bigtable_samples_instance_admin_ext create-dev-instance my-project my-instance us-central1-f
   bigtable_samples_instance_admin_ext delete-instance my-project my-instance
-  bigtable_samples_instance_admin_ext create-cluster my-project my-instance my-cluster my-zone
+  bigtable_samples_instance_admin_ext create-cluster my-project my-instance my-cluster us-central1-a
   bigtable_samples_instance_admin_ext delete-cluster my-project my-instance my-cluster
 ```
+
+**Note:** In the `create-cluster` line, a different zone is chosen as an instance's clusters must be placed in unique zones that are within the same region. See the [documentation](https://cloud.google.com/bigtable/docs/replication-overview#how-it-works) for more details.
 
 #### Run instance admin samples
 

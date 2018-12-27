@@ -29,14 +29,15 @@ start_emulators
 readonly PROJECT_ID="project-$(date +%s)"
 readonly INSTANCE_ID="in-$(date +%s)-${RANDOM}"
 readonly ZONE_ID="fake-zone"
+readonly REPLICATION_ZONE_ID="fake-zone-2"
 
 run_all_data_examples "${PROJECT_ID}" "${INSTANCE_ID}"
 run_quickstart_example "${PROJECT_ID}" "${INSTANCE_ID}"
 run_hello_world_example "${PROJECT_ID}" "${INSTANCE_ID}"
 run_hello_app_profile_example "${PROJECT_ID}" "${INSTANCE_ID}"
-run_all_table_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
-run_all_table_admin_async_examples "${PROJECT_ID}" "${ZONE_ID}"
-run_all_instance_admin_examples "${PROJECT_ID}" "${ZONE_ID}"
-run_all_instance_admin_async_examples "${PROJECT_ID}" "${ZONE_ID}"
+run_all_table_admin_examples "${PROJECT_ID}" "${ZONE_ID}" "${REPLICATION_ZONE_ID}"
+run_all_table_admin_async_examples "${PROJECT_ID}" "${ZONE_ID}" "${REPLICATION_ZONE_ID}"
+run_all_instance_admin_examples "${PROJECT_ID}" "${ZONE_ID}" "${REPLICATION_ZONE_ID}"
+run_all_instance_admin_async_examples "${PROJECT_ID}" "${ZONE_ID}" "${REPLICATION_ZONE_ID}"
 
 exit ${EXIT_STATUS}

@@ -50,6 +50,7 @@ function exit_handler {
 function run_all_instance_admin_examples {
   local project_id=$1
   local zone_id=$2
+  local replication_zone_id=$3
   shift 2
 
   EMULATOR_LOG="instance-admin-emulator.log"
@@ -76,7 +77,7 @@ function run_all_instance_admin_examples {
   run_example ./bigtable_samples_instance_admin list-all-clusters \
       "${project_id}"
   run_example ./bigtable_samples_instance_admin create-cluster \
-      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${zone_id}"
+      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${replication_zone_id}"
   run_example ./bigtable_samples_instance_admin update-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
   run_example ./bigtable_samples_instance_admin get-cluster \
@@ -130,7 +131,7 @@ function run_all_instance_admin_examples {
   run_example ./bigtable_samples_instance_admin create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"
   run_example ./bigtable_samples_instance_admin_ext create-cluster \
-      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${zone_id}"
+      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${replication_zone_id}"
   run_example ./bigtable_samples_instance_admin_ext delete-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
   run_example ./bigtable_samples_instance_admin_ext delete-instance \
@@ -156,6 +157,7 @@ function run_all_instance_admin_examples {
 function run_all_instance_admin_async_examples {
   local project_id=$1
   local zone_id=$2
+  local replication_zone_id=$3
   shift 2
 
   EMULATOR_LOG="instance-admin-emulator.log"
@@ -174,7 +176,7 @@ function run_all_instance_admin_async_examples {
   run_example ./instance_admin_async_snippets async-get-instance \
       "${project_id}" "${INSTANCE}"
   run_example ./bigtable_samples_instance_admin create-cluster \
-      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${zone_id}"
+      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${replication_zone_id}"
   run_example ./instance_admin_async_snippets async-get-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
   run_example ./bigtable_samples_instance_admin delete-cluster \
