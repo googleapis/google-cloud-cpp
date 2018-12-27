@@ -219,14 +219,16 @@ TEST(StatusOrVoidTest, StatusConstAccessors) {
   EXPECT_EQ(500, std::move(actual).status().status_code());
 }
 
+using testing_util::NoDefaultConstructor;
+
 TEST(StatusOrNoDefaultConstructor, DefaultConstructed) {
-  StatusOr<testing_util::NoDefaultConstructor> empty;
+  StatusOr<NoDefaultConstructor> empty;
   EXPECT_FALSE(empty.ok());
 }
 
 TEST(StatusOrNoDefaultConstructor, ValueConstructed) {
-  StatusOr<testing_util::NoDefaultConstructor> actual(
-      testing_util::NoDefaultConstructor(std::string("foo")));
+  StatusOr<NoDefaultConstructor> actual(
+      NoDefaultConstructor(std::string("foo")));
   EXPECT_TRUE(actual.ok());
   EXPECT_EQ(actual->str(), "foo");
 }

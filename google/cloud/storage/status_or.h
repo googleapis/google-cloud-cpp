@@ -109,7 +109,7 @@ class StatusOr final {
       return *this;
     }
     if (not rhs.ok()) {
-      reset();
+      reinterpret_cast<T*>(&buffer_)->~T();
       status_ = std::move(rhs.status_);
       return *this;
     }
@@ -118,11 +118,12 @@ class StatusOr final {
     return *this;
   }
 
-  StatusOr(StatusOr const& rhs) noexcept : status_(rhs.status_) {
+  StatusOr(StatusOr const& rhs) : status_(rhs.status_) {
     if (status_.ok()) {
       new (reinterpret_cast<T*>(&buffer_)) T(*rhs);
     }
   }
+
   StatusOr& operator=(StatusOr const& rhs) {
     // There may be shorter ways to express this, but this is fairly readable,
     // and should be reasonably efficient. Note that we must avoid destructing
@@ -146,7 +147,11 @@ class StatusOr final {
     return *this;
   }
 
-  ~StatusOr() { reset(); }
+  ~StatusOr() {
+    if (ok()) {
+      reinterpret_cast<T*>(&buffer_)->~T();
+    }
+  }
 
   /**
    * Assign a `T` (or anything convertible to `T`) into the `StatusOr`.
@@ -287,13 +292,6 @@ class StatusOr final {
   void CheckHasValue() && {
     if (not ok()) {
       internal::ThrowStatus(std::move(status_));
-    }
-  }
-
-  void reset() {
-    if (ok()) {
-      reinterpret_cast<T*>(&buffer_)->~T();
-      status_ = Status(StatusCode::UNKNOWN, std::string{});
     }
   }
 
