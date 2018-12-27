@@ -31,7 +31,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.8)
         message(
             FATAL_ERROR
-                "GCC version must be at least 4.9. Older versions"
+                "GCC version must be at least 4.8. Older versions"
                 " either lack C++11 support or have bugs that prevent us from"
                 " using them.")
     endif ()
