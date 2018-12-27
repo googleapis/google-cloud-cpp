@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/retry_resumable_upload_session.h"
+#include <sstream>
 #include <thread>
 
 namespace google {

@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/nljson.h"
-#include <iostream>
+#include <sstream>
 
 namespace google {
 namespace cloud {

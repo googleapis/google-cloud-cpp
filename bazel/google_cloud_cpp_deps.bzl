@@ -92,9 +92,9 @@ def google_cloud_cpp_deps():
         http_file(
             name = "com_github_nlohmann_json_single_header",
             urls = [
-                "https://github.com/nlohmann/json/releases/download/v3.1.2/json.hpp",
+                "https://github.com/nlohmann/json/releases/download/v3.4.0/json.hpp",
             ],
-            sha256 = "fbdfec4b4cf63b3b565d09f87e6c3c183bdd45c5be1864d3fcb338f6f02c1733",
+            sha256 = "63da6d1f22b2a7bb9e4ff7d6b255cf691a161ff49532dcc45d398a53e295835f",
         )
 
     # Load google/crc32c, a library to efficiently compute CRC32C checksums.
