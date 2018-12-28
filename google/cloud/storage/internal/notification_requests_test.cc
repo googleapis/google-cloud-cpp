@@ -47,7 +47,8 @@ TEST(NotificationRequestTest, ListResponse) {
       }]})""";
 
   auto actual =
-      ListNotificationsResponse::FromHttpResponse(HttpResponse{200, text, {}});
+      ListNotificationsResponse::FromHttpResponse(HttpResponse{200, text, {}})
+          .value();
   ASSERT_EQ(2UL, actual.items.size());
   EXPECT_EQ("test-notification-id-1", actual.items.at(0).id());
   EXPECT_EQ("test-topic-1", actual.items.at(0).topic());
@@ -61,6 +62,26 @@ TEST(NotificationRequestTest, ListResponse) {
   EXPECT_THAT(str, HasSubstr("id=test-notification-id-2"));
   EXPECT_THAT(str, HasSubstr("ListNotificationResponse={"));
   EXPECT_THAT(str, HasSubstr("NotificationMetadata={"));
+}
+
+TEST(NotificationRequestTest, ListResponseParseFailure) {
+  std::string text = R"""({123)""";
+
+  StatusOr<ListNotificationsResponse> actual =
+      ListNotificationsResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
+}
+
+TEST(NotificationRequestTest, ListResponseParseFailureListElements) {
+  std::string text = R"""({
+      "items": [{
+          "id": "test-notification-id-1",
+          "topic": "test-topic-1"
+      }, "invalid-element"]})""";
+
+  StatusOr<ListNotificationsResponse> actual =
+      ListNotificationsResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
 }
 
 TEST(CreateNotificationRequestTest, Create) {

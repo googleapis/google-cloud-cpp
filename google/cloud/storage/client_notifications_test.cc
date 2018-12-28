@@ -62,22 +62,24 @@ TEST_F(NotificationsTest, ListNotifications) {
       NotificationMetadata::ParseFromString(R"""({
           "id": "test-notification-1",
           "topic": "test-topic-1"
-      })"""),
+      })""")
+          .value(),
       NotificationMetadata::ParseFromString(R"""({
           "id": "test-notification-2",
           "topic": "test-topic-2"
-      })"""),
+      })""")
+          .value(),
   };
 
   EXPECT_CALL(*mock_, ListNotifications(_))
-      .WillOnce(Return(StatusOr<internal::ListNotificationsResponse>(TransientError()
-                                      )))
-      .WillOnce(
-          Invoke([&expected](internal::ListNotificationsRequest const& r) {
-            EXPECT_EQ("test-bucket", r.bucket_name());
+      .WillOnce(Return(
+          StatusOr<internal::ListNotificationsResponse>(TransientError())))
+      .WillOnce(Invoke([&expected](
+                           internal::ListNotificationsRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
 
-            return make_status_or(internal::ListNotificationsResponse{expected});
-          }));
+        return make_status_or(internal::ListNotificationsResponse{expected});
+      }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
   std::vector<NotificationMetadata> actual =
@@ -106,11 +108,11 @@ TEST_F(NotificationsTest, CreateNotification) {
           "payload_format": "JSON_API_V1",
           "object_prefix": "test-object-prefix-",
           "event_type": [ "OBJECT_FINALIZE" ]
-      })""");
+      })""")
+                                      .value();
 
   EXPECT_CALL(*mock_, CreateNotification(_))
-      .WillOnce(
-          Return(StatusOr<NotificationMetadata>(TransientError())))
+      .WillOnce(Return(StatusOr<NotificationMetadata>(TransientError())))
       .WillOnce(
           Invoke([&expected](internal::CreateNotificationRequest const& r) {
             EXPECT_EQ("test-bucket", r.bucket_name());
@@ -160,11 +162,11 @@ TEST_F(NotificationsTest, GetNotification) {
           "payload_format": "JSON_API_V1",
           "object_prefix": "test-object-prefix-",
           "event_type": [ "OBJECT_FINALIZE" ]
-      })""");
+      })""")
+                                      .value();
 
   EXPECT_CALL(*mock_, GetNotification(_))
-      .WillOnce(
-          Return(StatusOr<NotificationMetadata>(TransientError())))
+      .WillOnce(Return(StatusOr<NotificationMetadata>(TransientError())))
       .WillOnce(Invoke([&expected](internal::GetNotificationRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-notification-1", r.notification_id());
@@ -198,8 +200,7 @@ TEST_F(NotificationsTest, GetNotificationPermanentFailure) {
 
 TEST_F(NotificationsTest, DeleteNotification) {
   EXPECT_CALL(*mock_, DeleteNotification(_))
-      .WillOnce(
-          Return(StatusOr<internal::EmptyResponse>(TransientError())))
+      .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce(Invoke([](internal::DeleteNotificationRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-notification-1", r.notification_id());

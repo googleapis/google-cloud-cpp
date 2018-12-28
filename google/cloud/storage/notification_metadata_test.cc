@@ -44,7 +44,7 @@ NotificationMetadata CreateNotificationMetadataForTest() {
       "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket/notificationConfigs/test-id-123",
       "topic": "test-topic"
 })""";
-  return NotificationMetadata::ParseFromString(text);
+  return NotificationMetadata::ParseFromString(text).value();
 }
 
 /// @test Verify that we parse JSON objects into NotificationMetadata objects.
@@ -72,6 +72,12 @@ TEST(NotificationMetadataTest, Parse) {
       "notificationConfigs/test-id-123",
       actual.self_link());
   EXPECT_EQ("test-topic", actual.topic());
+}
+
+/// @test Verify that we parse JSON objects into NotificationMetadata objects.
+TEST(NotificationMetadataTest, ParseFailure) {
+  auto actual = NotificationMetadata::ParseFromString("{123");
+  EXPECT_FALSE(actual.ok());
 }
 
 /// @test Verifies NotificationMetadata iostream operator.
