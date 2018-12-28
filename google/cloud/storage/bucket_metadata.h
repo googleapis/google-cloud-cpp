@@ -487,8 +487,8 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
  public:
   BucketMetadata() : project_number_(0) {}
 
-  static BucketMetadata ParseFromJson(internal::nl::json const& json);
-  static BucketMetadata ParseFromString(std::string const& payload);
+  static StatusOr<BucketMetadata> ParseFromJson(internal::nl::json const& json);
+  static StatusOr<BucketMetadata> ParseFromString(std::string const& payload);
 
   std::string ToJsonString() const;
 

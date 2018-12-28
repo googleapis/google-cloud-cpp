@@ -53,7 +53,8 @@ class ListBucketsRequest
 std::ostream& operator<<(std::ostream& os, ListBucketsRequest const& r);
 
 struct ListBucketsResponse {
-  static ListBucketsResponse FromHttpResponse(HttpResponse&& response);
+  static StatusOr<ListBucketsResponse> FromHttpResponse(
+      HttpResponse&& response);
 
   std::string next_page_token;
   std::vector<BucketMetadata> items;
@@ -199,7 +200,7 @@ class GetBucketIamPolicyRequest
 
 std::ostream& operator<<(std::ostream& os, GetBucketIamPolicyRequest const& r);
 
-IamPolicy ParseIamPolicyFromString(std::string const& payload);
+StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload);
 
 /**
  * Represents a request to the `Buckets: getIamPolicy` API.
@@ -245,7 +246,7 @@ std::ostream& operator<<(std::ostream& os,
                          TestBucketIamPermissionsRequest const& r);
 
 struct TestBucketIamPermissionsResponse {
-  static TestBucketIamPermissionsResponse FromHttpResponse(
+  static StatusOr<TestBucketIamPermissionsResponse> FromHttpResponse(
       HttpResponse const& response);
 
   std::vector<std::string> permissions;

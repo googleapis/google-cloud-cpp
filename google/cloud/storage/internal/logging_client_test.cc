@@ -14,8 +14,8 @@
 
 #include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/log.h"
-#include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/storage/testing/mock_client.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -24,11 +24,11 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+using google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
-using google::cloud::storage::testing::canonical_errors::TransientError;
 
 class MockLogBackend : public google::cloud::LogBackend {
  public:
@@ -67,7 +67,7 @@ TEST_F(LoggingClientTest, GetBucketMetadata) {
 
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, GetBucketMetadata(_))
-      .WillOnce(Return(make_status_or(BucketMetadata::ParseFromString(text))));
+      .WillOnce(Return(BucketMetadata::ParseFromString(text).value()));
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
@@ -119,8 +119,7 @@ TEST_F(LoggingClientTest, InsertObjectMedia) {
 
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, InsertObjectMedia(_))
-      .WillOnce(Return(
-          make_status_or(ObjectMetadata::ParseFromString(text))));
+      .WillOnce(Return(ObjectMetadata::ParseFromString(text)));
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.

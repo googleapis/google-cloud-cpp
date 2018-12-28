@@ -86,8 +86,7 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
 
 std::ostream& operator<<(std::ostream& os, BucketOnlyPolicy const& rhs) {
   google::cloud::internal::IosFlagsSaver save_format(os);
-  return os << "BucketOnlyPolicy={enabled=" << std::boolalpha
-            << rhs.enabled
+  return os << "BucketOnlyPolicy={enabled=" << std::boolalpha << rhs.enabled
             << ", locked_time=" << internal::FormatRfc3339(rhs.locked_time)
             << "}";
 }
@@ -112,16 +111,24 @@ std::ostream& operator<<(std::ostream& os, BucketRetentionPolicy const& rhs) {
             << ", locked=" << rhs.is_locked << "}";
 }
 
-BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
+StatusOr<BucketMetadata> BucketMetadata::ParseFromJson(
+    internal::nl::json const& json) {
+  if (not json.is_object()) {
+    return Status(StatusCode::INVALID_ARGUMENT, __func__);
+  }
   BucketMetadata result{};
-  static_cast<CommonMetadata<BucketMetadata>&>(result) =
-      CommonMetadata<BucketMetadata>::ParseFromJson(json);
+  auto status = CommonMetadata<BucketMetadata>::ParseFromJson(result, json);
+  if (not status.ok()) {
+    return status;
+  }
 
   if (json.count("acl") != 0) {
     for (auto const& kv : json["acl"].items()) {
-      // TODO(#1685) - return a StatusOr<> from here.
-      result.acl_.emplace_back(
-          BucketAccessControl::ParseFromJson(kv.value()).value());
+      auto parsed = BucketAccessControl::ParseFromJson(kv.value());
+      if (not parsed.ok()) {
+        return std::move(parsed).status();
+      }
+      result.acl_.emplace_back(std::move(*parsed));
     }
   }
   if (json.count("billing") != 0) {
@@ -141,9 +148,11 @@ BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
   }
   if (json.count("defaultObjectAcl") != 0) {
     for (auto const& kv : json["defaultObjectAcl"].items()) {
-      // TODO(#1685) - return a StatusOr<> from here.
-      result.default_acl_.emplace_back(
-          ObjectAccessControl::ParseFromJson(kv.value()).value());
+      auto parsed = ObjectAccessControl::ParseFromJson(kv.value());
+      if (not parsed.ok()) {
+        return std::move(parsed).status();
+      }
+      result.default_acl_.emplace_back(std::move(*parsed));
     }
   }
   if (json.count("encryption") != 0) {
@@ -166,7 +175,11 @@ BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
     BucketLifecycle value;
     if (lifecycle.count("rule") != 0) {
       for (auto const& kv : lifecycle["rule"].items()) {
-        value.rule.emplace_back(LifecycleRule::ParseFromJson(kv.value()));
+        auto parsed = LifecycleRule::ParseFromJson(kv.value());
+        if (not parsed.ok()) {
+          return std::move(parsed).status();
+        }
+        value.rule.emplace_back(std::move(*parsed));
       }
     }
     result.lifecycle_ = std::move(value);
@@ -217,8 +230,9 @@ BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
   return result;
 }
 
-BucketMetadata BucketMetadata::ParseFromString(std::string const& payload) {
-  auto json = storage::internal::nl::json::parse(payload);
+StatusOr<BucketMetadata> BucketMetadata::ParseFromString(
+    std::string const& payload) {
+  auto json = storage::internal::nl::json::parse(payload, nullptr, false);
   return ParseFromJson(json);
 }
 

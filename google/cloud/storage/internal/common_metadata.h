@@ -18,6 +18,7 @@
 #include "google/cloud/optional.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/status_or.h"
 #include <chrono>
 #include <map>
 #include <vector>
@@ -72,8 +73,11 @@ class CommonMetadata {
  public:
   CommonMetadata() : metageneration_(0), owner_() {}
 
-  static CommonMetadata<Derived> ParseFromJson(internal::nl::json const& json) {
-    CommonMetadata<Derived> result{};
+  static Status ParseFromJson(CommonMetadata<Derived>& result,
+                              internal::nl::json const& json) {
+    if (not json.is_object()) {
+      return Status(StatusCode::INVALID_ARGUMENT, __func__);
+    }
     result.etag_ = json.value("etag", "");
     result.id_ = json.value("id", "");
     result.kind_ = json.value("kind", "");
@@ -89,9 +93,9 @@ class CommonMetadata {
     result.storage_class_ = json.value("storageClass", "");
     result.time_created_ = ParseTimestampField(json, "timeCreated");
     result.updated_ = ParseTimestampField(json, "updated");
-    return result;
+    return Status();
   }
-  static CommonMetadata ParseFromString(std::string const& payload) {
+  static StatusOr<CommonMetadata> ParseFromString(std::string const& payload) {
     auto json = internal::nl::json::parse(payload);
     return ParseFromJson(json);
   }

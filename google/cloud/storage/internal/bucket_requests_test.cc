@@ -94,13 +94,29 @@ TEST(ListBucketsResponseTest, Parse) {
 )""";
   text += "[" + bucket1 + "," + bucket2 + "]}";
 
-  auto b1 = BucketMetadata::ParseFromString(bucket1);
-  auto b2 = BucketMetadata::ParseFromString(bucket2);
+  auto b1 = BucketMetadata::ParseFromString(bucket1).value();
+  auto b2 = BucketMetadata::ParseFromString(bucket2).value();
+
+  auto actual =
+      ListBucketsResponse::FromHttpResponse(HttpResponse{200, text, {}})
+          .value();
+  EXPECT_EQ("some-token-42", actual.next_page_token);
+  EXPECT_THAT(actual.items, ::testing::ElementsAre(b1, b2));
+}
+
+TEST(ListBucketsResponseTest, ParseFailure) {
+  std::string text("{123");
+  StatusOr<ListBucketsResponse> actual =
+      ListBucketsResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
+}
+
+TEST(ListBucketsResponseTestt, ParseFailureInItems) {
+  std::string text = R"""({"items": [ "invalid-item" ]})""";
 
   auto actual =
       ListBucketsResponse::FromHttpResponse(HttpResponse{200, text, {}});
-  EXPECT_EQ("some-token-42", actual.next_page_token);
-  EXPECT_THAT(actual.items, ::testing::ElementsAre(b1, b2));
+  EXPECT_FALSE(actual.ok());
 }
 
 TEST(CreateBucketsRequestTest, Basic) {
@@ -146,7 +162,8 @@ BucketMetadata CreateBucketMetadataForTest() {
       "location": "US",
       "storageClass": "STANDARD",
       "etag": "XYZ="
-})""");
+})""")
+      .value();
 }
 
 TEST(UpdateBucketRequestTest, Simple) {
@@ -275,7 +292,7 @@ TEST(PatchBucketRequestTest, DiffSetDefaultAcl) {
   BucketMetadata updated = original;
   updated.set_default_acl(
       {ObjectAccessControl::ParseFromString(
-           R"""({"entity": "user-test-user","role": "OWNER"})""")
+           R"""({"entity": "user-test-user", "role": "OWNER"})""")
            .value()});
   PatchBucketRequest request("test-bucket", original, updated);
 
@@ -657,8 +674,14 @@ TEST(BucketRequestsTest, ParseIamPolicyFromString) {
   expected_bindings.AddMember("roles/storage.objectViewer", "test-user-3");
   IamPolicy expected{0, expected_bindings, "XYZ="};
 
-  auto actual = ParseIamPolicyFromString(expected_payload.dump());
+  auto actual = ParseIamPolicyFromString(expected_payload.dump()).value();
   EXPECT_EQ(expected, actual);
+}
+
+TEST(ListBucketsResponseTest, ParseIamPolicyFromStringFailure) {
+  std::string text("{123");
+  StatusOr<IamPolicy> actual = ParseIamPolicyFromString(text);
+  EXPECT_FALSE(actual.ok());
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingRole) {
@@ -822,7 +845,7 @@ TEST(BucketRequestsTest, TestIamPermissionsResponse) {
       ]})""";
 
   auto actual = TestBucketIamPermissionsResponse::FromHttpResponse(
-      HttpResponse{200, text, {}});
+      HttpResponse{200, text, {}}).value();
   EXPECT_THAT(actual.permissions,
               ElementsAre("storage.buckets.get", "storage.buckets.setIamPolicy",
                           "storage.objects.update"));
@@ -835,11 +858,19 @@ TEST(BucketRequestsTest, TestIamPermissionsResponse) {
   EXPECT_THAT(str, HasSubstr("storage.objects.update"));
 }
 
+TEST(ListBucketsResponseTest, TestIamPermissionsResponseParseFailure) {
+  std::string text("{123");
+  StatusOr<TestBucketIamPermissionsResponse> actual =
+      TestBucketIamPermissionsResponse::FromHttpResponse(
+          HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
+}
+
 TEST(BucketRequestsTest, TestIamPermissionsResponseEmpty) {
   std::string text = R"""({})""";
 
   auto actual = TestBucketIamPermissionsResponse::FromHttpResponse(
-      HttpResponse{200, text, {}});
+      HttpResponse{200, text, {}}).value();
   EXPECT_TRUE(actual.permissions.empty());
 }
 

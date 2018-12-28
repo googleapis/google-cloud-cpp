@@ -18,6 +18,7 @@
 #include "google/cloud/optional.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/parse_rfc3339.h"
+#include "google/cloud/storage/status_or.h"
 #include "google/cloud/storage/storage_class.h"
 #include <chrono>
 #include <iosfwd>
@@ -129,8 +130,8 @@ class LifecycleRule {
                          LifecycleRuleAction action)
       : action_(std::move(action)), condition_(std::move(condition)) {}
 
-  static LifecycleRule ParseFromJson(internal::nl::json const& json);
-  static LifecycleRule ParseFromString(std::string const& text);
+  static StatusOr<LifecycleRule> ParseFromJson(internal::nl::json const& json);
+  static StatusOr<LifecycleRule> ParseFromString(std::string const& text);
 
   LifecycleRuleAction const& action() const { return action_; }
   LifecycleRuleCondition const& condition() const { return condition_; }
