@@ -614,9 +614,9 @@ TEST(PatchObjectRequestTest, DiffSetAcl) {
   ObjectMetadata original = CreateObjectMetadataForTest();
   original.set_acl({});
   ObjectMetadata updated = original;
-  updated.set_acl({ObjectAccessControl::ParseFromString(R"""({
-    "entity": "user-test-user",
-    "role": "OWNER"})""")});
+  updated.set_acl({ObjectAccessControl::ParseFromString(
+      R"""({"entity": "user-test-user", "role": "OWNER"})""")
+      .value()});
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
   nl::json patch = nl::json::parse(request.payload());
@@ -628,9 +628,9 @@ TEST(PatchObjectRequestTest, DiffSetAcl) {
 
 TEST(PatchObjectRequestTest, DiffResetAcl) {
   ObjectMetadata original = CreateObjectMetadataForTest();
-  original.set_acl({ObjectAccessControl::ParseFromString(R"""({
-    "entity": "user-test-user",
-    "role": "OWNER"})""")});
+  original.set_acl({ObjectAccessControl::ParseFromString(
+      R"""({"entity": "user-test-user", "role": "OWNER"})""")
+      .value()});
   ObjectMetadata updated = original;
   updated.set_acl({});
   PatchObjectRequest request("test-bucket", "test-object", original, updated);

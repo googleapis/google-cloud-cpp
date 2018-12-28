@@ -378,8 +378,7 @@ TEST(BucketMetadataTest, ToJsonString) {
   // iam_configuration()
   ASSERT_EQ(1U, actual.count("iamConfiguration"));
   internal::nl::json expected_iam_configuration{
-      {"bucketOnlyPolicy",
-       internal::nl::json{{"enabled", true}}}};
+      {"bucketOnlyPolicy", internal::nl::json{{"enabled", true}}}};
   EXPECT_EQ(expected_iam_configuration, actual["iamConfiguration"]);
 
   // labels()
@@ -597,9 +596,9 @@ TEST(BucketMetadataTest, SetIamConfiguration) {
   copy.set_iam_configuration(new_configuration);
   ASSERT_TRUE(copy.has_iam_configuration());
   EXPECT_EQ(new_configuration, copy.iam_configuration());
-  EXPECT_NE(expected, copy) << "expected = " << expected.iam_configuration()
-                            << "\n  actual=" << copy.iam_configuration()
-                            << "\n";
+  EXPECT_NE(expected, copy)
+      << "expected = " << expected.iam_configuration()
+      << "\n  actual=" << copy.iam_configuration() << "\n";
 }
 
 /// @test Verify we can reset the IAM Configuration in BucketMetadata.
@@ -793,7 +792,8 @@ TEST(BucketMetadataTest, ResetWebsite) {
 TEST(BucketMetadataPatchBuilder, SetAcl) {
   BucketMetadataPatchBuilder builder;
   builder.SetAcl({BucketAccessControl::ParseFromString(
-      R"""({"entity": "user-test-user", "role": "OWNER"})""")});
+                      R"""({"entity": "user-test-user", "role": "OWNER"})""")
+                      .value()});
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
@@ -892,8 +892,10 @@ TEST(BucketMetadataPatchBuilder, ResetDefaultEventBasedHold) {
 
 TEST(BucketMetadataPatchBuilder, SetDefaultAcl) {
   BucketMetadataPatchBuilder builder;
-  builder.SetDefaultAcl({ObjectAccessControl::ParseFromString(
-      R"""({"entity": "user-test-user", "role": "OWNER"})""")});
+  builder.SetDefaultAcl(
+      {ObjectAccessControl::ParseFromString(
+           R"""({"entity": "user-test-user", "role": "OWNER"})""")
+           .value()});
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);

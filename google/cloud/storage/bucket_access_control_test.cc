@@ -38,7 +38,7 @@ TEST(BucketAccessControlTest, Parse) {
       },
       "role": "OWNER"
 })""";
-  auto actual = BucketAccessControl::ParseFromString(text);
+  auto actual = BucketAccessControl::ParseFromString(text).value();
 
   EXPECT_EQ("foo-bar", actual.bucket());
   EXPECT_EQ("example.com", actual.domain());
@@ -51,6 +51,12 @@ TEST(BucketAccessControlTest, Parse) {
   EXPECT_EQ("3456789", actual.project_team().project_number);
   EXPECT_EQ("a-team", actual.project_team().team);
   EXPECT_EQ("OWNER", actual.role());
+}
+
+/// @test Verify that we parse JSON objects into BucketAccessControl objects.
+TEST(BucketAccessControlTest, ParseFailure) {
+  auto actual = BucketAccessControl::ParseFromString("{123");
+  EXPECT_FALSE(actual.ok());
 }
 
 /// @test Verify that the IOStream operator works as expected.
@@ -73,7 +79,7 @@ TEST(BucketAccessControlTest, IOStream) {
       "role": "OWNER"
 })""";
 
-  auto meta = BucketAccessControl::ParseFromString(text);
+  auto meta = BucketAccessControl::ParseFromString(text).value();
   std::ostringstream os;
   os << meta;
   auto actual = os.str();
@@ -118,7 +124,7 @@ TEST(BucketAccessControlTest, Compare) {
       },
       "role": "OWNER"
 })""";
-  auto original = BucketAccessControl::ParseFromString(text);
+  auto original = BucketAccessControl::ParseFromString(text).value();
   EXPECT_EQ(original, original);
 
   auto modified = original;

@@ -60,23 +60,25 @@ TEST_F(DefaultObjectAccessControlsTest, ListDefaultObjectAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })"""),
+      })""")
+          .value(),
       ObjectAccessControl::ParseFromString(R"""({
           "bucket": "test-bucket",
           "entity": "user-test-user-2",
           "role": "READER"
-      })"""),
+      })""")
+          .value(),
   };
 
   EXPECT_CALL(*mock, ListDefaultObjectAcl(_))
-      .WillOnce(Return(StatusOr<internal::ListDefaultObjectAclResponse>(
-          TransientError())))
-      .WillOnce(
-          Invoke([&expected](internal::ListDefaultObjectAclRequest const& r) {
-            EXPECT_EQ("test-bucket", r.bucket_name());
+      .WillOnce(Return(
+          StatusOr<internal::ListDefaultObjectAclResponse>(TransientError())))
+      .WillOnce(Invoke([&expected](
+                           internal::ListDefaultObjectAclRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
 
-            return make_status_or(internal::ListDefaultObjectAclResponse{expected});
-          }));
+        return make_status_or(internal::ListDefaultObjectAclResponse{expected});
+      }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
   std::vector<ObjectAccessControl> actual =
@@ -103,7 +105,8 @@ TEST_F(DefaultObjectAccessControlsTest, CreateDefaultObjectAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "READER"
-      })""");
+      })""")
+                      .value();
 
   EXPECT_CALL(*mock, CreateDefaultObjectAcl(_))
       .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
@@ -153,8 +156,7 @@ TEST_F(DefaultObjectAccessControlsTest,
 
 TEST_F(DefaultObjectAccessControlsTest, DeleteDefaultObjectAcl) {
   EXPECT_CALL(*mock, DeleteDefaultObjectAcl(_))
-      .WillOnce(
-          Return(StatusOr<internal::EmptyResponse>(TransientError())))
+      .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce(Invoke([](internal::DeleteDefaultObjectAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user", r.entity());
@@ -195,7 +197,8 @@ TEST_F(DefaultObjectAccessControlsTest, GetDefaultObjectAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })""");
+      })""")
+                                     .value();
 
   EXPECT_CALL(*mock, GetDefaultObjectAcl(_))
       .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
@@ -236,7 +239,8 @@ TEST_F(DefaultObjectAccessControlsTest, UpdateDefaultObjectAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "READER"
-      })""");
+      })""")
+                      .value();
 
   EXPECT_CALL(*mock, UpdateDefaultObjectAcl(_))
       .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
@@ -291,7 +295,9 @@ TEST_F(DefaultObjectAccessControlsTest, PatchDefaultObjectAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })""");
+      })""")
+                    .value();
+
   EXPECT_CALL(*mock, PatchDefaultObjectAcl(_))
       .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
       .WillOnce(

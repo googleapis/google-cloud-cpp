@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/patch_builder.h"
+#include "google/cloud/storage/status_or.h"
 
 namespace google {
 namespace cloud {
@@ -38,8 +39,10 @@ class ObjectAccessControl : private internal::AccessControlCommon {
  public:
   ObjectAccessControl() : generation_(0) {}
 
-  static ObjectAccessControl ParseFromJson(internal::nl::json const& json);
-  static ObjectAccessControl ParseFromString(std::string const& payload);
+  static StatusOr<ObjectAccessControl> ParseFromJson(
+      internal::nl::json const& json);
+  static StatusOr<ObjectAccessControl> ParseFromString(
+      std::string const& payload);
 
   using AccessControlCommon::ROLE_OWNER;
   using AccessControlCommon::ROLE_READER;

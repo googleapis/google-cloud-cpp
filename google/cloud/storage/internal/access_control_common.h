@@ -18,6 +18,7 @@
 #include "google/cloud/optional.h"
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/status.h"
 #include <utility>
 
 namespace google {
@@ -134,7 +135,8 @@ class AccessControlCommon {
   bool operator!=(AccessControlCommon const& rhs) { return not(*this == rhs); }
 
  protected:
-  static void ParseFromJson(AccessControlCommon& result, nl::json const& json);
+  static Status ParseFromJson(AccessControlCommon& result,
+                              nl::json const& json);
 
  private:
   std::string bucket_;

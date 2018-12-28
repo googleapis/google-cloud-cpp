@@ -55,7 +55,9 @@ ObjectMetadata ObjectMetadata::ParseFromJson(internal::nl::json const& json) {
 
   if (json.count("acl") != 0) {
     for (auto const& kv : json["acl"].items()) {
-      result.acl_.emplace_back(ObjectAccessControl::ParseFromJson(kv.value()));
+      // TODO(#1685) - return a StatusOr<> from here.
+      result.acl_.emplace_back(
+          ObjectAccessControl::ParseFromJson(kv.value()).value());
     }
   }
 
