@@ -14,10 +14,10 @@
 
 #include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/internal/make_unique.h"
+#include "google/cloud/internal/setenv.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
 #include <gmock/gmock.h>
 #include <memory>
@@ -52,7 +52,10 @@ class FailingCredentials : public Credentials {
 class CurlClientTest : public ::testing::Test,
                        public ::testing::WithParamInterface<std::string> {
  protected:
-  CurlClientTest() : endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT") {}
+  CurlClientTest()
+      : expected_status_code_(),
+        endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT") {}
+  ~CurlClientTest() override { endpoint_.TearDown(); }
 
   void SetUp() override {
     std::string const error_type = GetParam();
@@ -60,14 +63,17 @@ class CurlClientTest : public ::testing::Test,
       client_ = CurlClient::Create(std::make_shared<FailingCredentials>());
       expected_status_code_ = STATUS_ERROR_CODE;
       expected_status_substr_ = STATUS_ERROR_MSG;
-    } else {
-      google::cloud::internal::SetEnv(
-          "CLOUD_STORAGE_TESTBENCH_ENDPOINT", "http://localhost:0");
-      client_ = CurlClient::Create(
-          ClientOptions(oauth2::CreateAnonymousCredentials())
-              .set_endpoint("http://localhost:0"));
+    } else if (error_type == "libcurl-failure") {
+      google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
+                                      "http://localhost:0");
+      client_ =
+          CurlClient::Create(ClientOptions(oauth2::CreateAnonymousCredentials())
+                                 .set_endpoint("http://localhost:0"));
       expected_status_code_ = StatusCode::UNKNOWN;
       expected_status_substr_ = "CURL error";
+    } else {
+      FAIL() << "Invalid test parameter value: " << error_type
+             << ", expected either credentials-failure or libcurl-failure";
     }
   }
 
