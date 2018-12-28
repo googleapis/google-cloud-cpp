@@ -26,12 +26,19 @@ std::ostream& operator<<(std::ostream& os, ListNotificationsRequest const& r) {
   return os << "}";
 }
 
-ListNotificationsResponse ListNotificationsResponse::FromHttpResponse(
+StatusOr<ListNotificationsResponse> ListNotificationsResponse::FromHttpResponse(
     HttpResponse&& response) {
+  auto json = nl::json::parse(response.payload, nullptr, false);
+  if (not json.is_object()) {
+    return Status(StatusCode::INVALID_ARGUMENT, __func__);
+  }
   ListNotificationsResponse result;
-  auto json = nl::json::parse(response.payload);
   for (auto const& kv : json["items"].items()) {
-    result.items.emplace_back(NotificationMetadata::ParseFromJson(kv.value()));
+    auto parsed = NotificationMetadata::ParseFromJson(kv.value());
+    if (not parsed.ok()) {
+      return std::move(parsed).status();
+    }
+    result.items.emplace_back(std::move(*parsed));
   }
   return result;
 }

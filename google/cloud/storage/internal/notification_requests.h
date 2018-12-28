@@ -44,7 +44,8 @@ std::ostream& operator<<(std::ostream& os, ListNotificationsRequest const& r);
 
 /// Represents a response to the `Notification: list` API.
 struct ListNotificationsResponse {
-  static ListNotificationsResponse FromHttpResponse(HttpResponse&& response);
+  static StatusOr<ListNotificationsResponse> FromHttpResponse(
+      HttpResponse&& response);
 
   std::vector<NotificationMetadata> items;
 };
