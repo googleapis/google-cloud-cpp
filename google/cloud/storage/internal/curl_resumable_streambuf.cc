@@ -42,8 +42,13 @@ void CurlResumableStreambuf::ValidateHash(ObjectMetadata const& meta) {
 }
 
 CurlResumableStreambuf::int_type CurlResumableStreambuf::overflow(int_type ch) {
-  Validate(__func__);
-  Flush(false);
+  if (not IsOpen()) {
+    return traits_type::eof();
+  }
+  auto status = Flush(false);
+  if (not status.ok()) {
+    return traits_type::eof();
+  }
   if (not traits_type::eq_int_type(ch, traits_type::eof())) {
     current_ios_buffer_.push_back(traits_type::to_char_type(ch));
     pbump(1);
@@ -52,34 +57,34 @@ CurlResumableStreambuf::int_type CurlResumableStreambuf::overflow(int_type ch) {
 }
 
 int CurlResumableStreambuf::sync() {
-  Flush(false);
+  auto status = Flush(false);
+  if (not status.ok()) {
+    return traits_type::eof();
+  }
   return 0;
 }
 
 std::streamsize CurlResumableStreambuf::xsputn(char const* s,
                                                std::streamsize count) {
-  Validate(__func__);
-  Flush(false);
+  if (not IsOpen()) {
+    return traits_type::eof();
+  }
+  auto status = Flush(false);
+  if (not status.ok()) {
+    return traits_type::eof();
+  }
+
   current_ios_buffer_.append(s, static_cast<std::size_t>(count));
   pbump(static_cast<int>(count));
   return count;
 }
 
-HttpResponse CurlResumableStreambuf::DoClose() {
+StatusOr<HttpResponse> CurlResumableStreambuf::DoClose() {
   GCP_LOG(INFO) << __func__ << "()";
   return Flush(true);
 }
 
-void CurlResumableStreambuf::Validate(char const* where) const {
-  if (IsOpen()) {
-    return;
-  }
-  std::string msg = "Attempting to use closed CurlResumableStreambuf in ";
-  msg += where;
-  google::cloud::internal::RaiseRuntimeError(msg);
-}
-
-HttpResponse CurlResumableStreambuf::Flush(bool final_chunk) {
+StatusOr<HttpResponse> CurlResumableStreambuf::Flush(bool final_chunk) {
   if (not IsOpen()) {
     return last_response_;
   }
@@ -105,6 +110,10 @@ HttpResponse CurlResumableStreambuf::Flush(bool final_chunk) {
   hash_validator_->Update(current_ios_buffer_);
 
   auto result = upload_session_->UploadChunk(current_ios_buffer_, upload_size);
+  if (not result.ok()) {
+    // This was an unrecoverable error, time to signal an error.
+    return std::move(result).status();
+  }
   current_ios_buffer_.clear();
   current_ios_buffer_.reserve(max_buffer_size_);
   setp(&current_ios_buffer_[0], &current_ios_buffer_[0] + max_buffer_size_);

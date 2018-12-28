@@ -16,6 +16,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/expect_exception.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #include <regex>
@@ -370,11 +371,13 @@ TEST_F(ObjectIntegrationTest, StreamingWrite) {
 
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   WriteRandomLines(os, expected);
 
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
   auto expected_str = expected.str();
@@ -421,12 +424,14 @@ TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                Fields(""));
+  os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
 
   WriteRandomLines(os, expected);
 
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   // When asking for an empty list of fields we should not expect any values:
   EXPECT_TRUE(meta.bucket().empty());
   EXPECT_TRUE(meta.name().empty());
@@ -535,8 +540,10 @@ TEST_F(ObjectIntegrationTest, WriteWithContentType) {
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                ContentType("text/plain"));
+  os.exceptions(std::ios_base::failbit);
   os << LoremIpsum();
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
   EXPECT_EQ("text/plain", meta.content_type());
@@ -1045,13 +1052,15 @@ TEST_F(ObjectIntegrationTest, DefaultMD5StreamingWriteXML) {
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                Fields(""));
+  os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   WriteRandomLines(os, expected);
 
   auto expected_md5hash = ComputeMD5Hash(expected.str());
 
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(os.received_hash(), os.computed_hash());
   EXPECT_THAT(os.received_hash(), HasSubstr(expected_md5hash));
 
@@ -1066,13 +1075,15 @@ TEST_F(ObjectIntegrationTest, DefaultMD5StreamingWriteJSON) {
 
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   WriteRandomLines(os, expected);
 
   auto expected_md5hash = ComputeMD5Hash(expected.str());
 
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(os.received_hash(), os.computed_hash());
   EXPECT_THAT(os.received_hash(), HasSubstr(expected_md5hash));
 
@@ -1089,11 +1100,13 @@ TEST_F(ObjectIntegrationTest, DisableHashesStreamingWriteXML) {
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                Fields(""), DisableMD5Hash(true),
                                DisableCrc32cChecksum(true));
+  os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   WriteRandomLines(os, expected);
 
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_TRUE(os.received_hash().empty());
   EXPECT_TRUE(os.computed_hash().empty());
 
@@ -1110,11 +1123,13 @@ TEST_F(ObjectIntegrationTest, DisableHashesStreamingWriteJSON) {
   auto os =
       client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                          DisableMD5Hash(true), DisableCrc32cChecksum(true));
+  os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   WriteRandomLines(os, expected);
 
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_TRUE(os.received_hash().empty());
   EXPECT_TRUE(os.computed_hash().empty());
 
@@ -1158,18 +1173,44 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
   EXPECT_EQ(bucket_name, meta.bucket());
 
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  os.exceptions(std::ios_base::badbit | std::ios_base::failbit);
   os << "Test message\n";
 
   // This operation should fail because the object already exists.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { os.Close(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("[412]"));
-    throw;
-  },
-               std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(os.Close(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  testing_util::ExpectException<std::ios::failure>(
+      [&] { os.Close(); },
+      [&](std::ios::failure const& ex) {
+        EXPECT_FALSE(os.metadata().ok());
+        EXPECT_EQ(412, os.metadata().status().status_code());
+      },
+      "" /* the message generated by the C++ runtime is unknown */);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, StreamingWriteFailureNoex) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta = client.InsertObject(bucket_name, object_name, expected,
+                                            IfGenerationMatch(0));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  os << "Test message\n";
+
+  // This operation should fail because the object already exists.
+  os.Close();
+  EXPECT_TRUE(os.bad());
+  EXPECT_FALSE(os.metadata().ok());
+  EXPECT_EQ(412, os.metadata().status().status_code());
+
+  client.DeleteObject(bucket_name, object_name);
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsFailure) {

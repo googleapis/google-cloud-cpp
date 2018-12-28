@@ -65,7 +65,8 @@ class CurlResumableStreambufIntegrationTest
 
     std::ostringstream expected_stream;
     WriteRandomLines(writer, expected_stream, line_count, line_size);
-    auto metadata = writer.Close();
+    writer.Close();
+    ObjectMetadata metadata = writer.metadata().value();
     EXPECT_EQ(object_name, metadata.name());
     EXPECT_EQ(bucket_name, metadata.bucket());
 

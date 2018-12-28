@@ -57,15 +57,11 @@ class CurlResumableStreambuf : public ObjectWriteStreambuf {
   int sync() override;
   std::streamsize xsputn(char const* s, std::streamsize count) override;
   int_type overflow(int_type ch) override;
-  // TODO(coryan) this is an ugly return type.
-  HttpResponse DoClose() override;
+  StatusOr<HttpResponse> DoClose() override;
 
  private:
-  /// Raise an exception if the stream is closed.
-  void Validate(char const* where) const;
-
   /// Flush the libcurl buffer and swap it with the iostream buffer.
-  HttpResponse Flush(bool final_chunk);
+  StatusOr<HttpResponse> Flush(bool final_chunk);
 
   std::unique_ptr<ResumableUploadSession> upload_session_;
 

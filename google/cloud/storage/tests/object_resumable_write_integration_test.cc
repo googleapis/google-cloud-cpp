@@ -61,9 +61,11 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
   auto os = client.WriteObject(
       bucket_name, object_name, IfGenerationMatch(0),
       WithObjectMetadata(ObjectMetadata().set_content_type("text/plain")));
+  os.exceptions(std::ios_base::failbit);
   os << LoremIpsum();
   EXPECT_FALSE(os.resumable_session_id().empty());
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
   EXPECT_EQ("text/plain", meta.content_type());
@@ -88,8 +90,10 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
     auto os = client.WriteObject(
         bucket_name, object_name, IfGenerationMatch(0),
         WithObjectMetadata(ObjectMetadata().set_content_type("text/plain")));
+    os.exceptions(std::ios_base::failbit);
     os << LoremIpsum();
-    ObjectMetadata meta = os.Close();
+    os.Close();
+    ObjectMetadata meta = os.metadata().value();
   });
 }
 
@@ -104,9 +108,11 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                NewResumableUploadSession());
+  os.exceptions(std::ios_base::failbit);
   os << LoremIpsum();
   EXPECT_FALSE(os.resumable_session_id().empty());
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
   if (UsingTestbench()) {
@@ -131,15 +137,18 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
     auto old_os =
         client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                            NewResumableUploadSession());
+    old_os.exceptions(std::ios_base::failbit);
     session_id = old_os.resumable_session_id();
     std::move(old_os).Suspend();
   }
 
   auto os = client.WriteObject(bucket_name, object_name,
                                RestoreResumableUploadSession(session_id));
+  os.exceptions(std::ios_base::failbit);
   EXPECT_EQ(session_id, os.resumable_session_id());
   os << LoremIpsum();
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
   if (UsingTestbench()) {

@@ -167,14 +167,43 @@ class ObjectWriteStream : public std::basic_ostream<char> {
   /// Return true while the stream is open.
   bool IsOpen() const { return buf_ != nullptr and buf_->IsOpen(); }
 
-  /// Close the stream and return the metadata of the created object.
-  ObjectMetadata Close();
+  /**
+   * Close the stream, finalizing the upload.
+   *
+   * Closing a stream completes an upload and creates the uploaded object. On
+   * failure it calls `setstate(badbit)`.
+   *
+   * Any success or failure status is accessible via `status()`. The metadata
+   * of the uploaded object, if available, is accessible via `metadata()`. Note
+   * that the metadata may be empty if the application creates a stream with the
+   * `Fields("")` parameter.
+   *
+   * Note that the `failbit` is set if the checksums reported by the server do
+   * not match the locally computed checksums. In this case Google Cloud Storage
+   * may have created an object.
+   *
+   * @throws If the application has enabled exceptions on `badbit` then it
+   *   raises an exception of type `std::ios_base::failure`.
+   */
+  void Close();
 
-  /// Close the stream and return the (unparsed) result, useful for testing.
-  internal::HttpResponse CloseRaw();
+  //@{
+  /**
+   * Access the upload results.
+   *
+   * Note that calling these member functions before `Close()` is undefined
+   * behavior.
+   */
+  StatusOr<ObjectMetadata> const& metadata() const& { return metadata_; }
+  StatusOr<ObjectMetadata>&& metadata() && { return std::move(metadata_); }
 
   std::string const& received_hash() const { return buf_->received_hash(); }
   std::string const& computed_hash() const { return buf_->computed_hash(); }
+
+  std::multimap<std::string, std::string> const& headers() const {
+    return headers_;
+  }
+  //@}
 
   /**
    * Returns the resumable upload session id for this upload.
@@ -210,8 +239,13 @@ class ObjectWriteStream : public std::basic_ostream<char> {
    */
   void Suspend() &&;
 
+  std::string const& payload() const { return payload_; }
+
  private:
   std::unique_ptr<internal::ObjectWriteStreambuf> buf_;
+  StatusOr<ObjectMetadata> metadata_;
+  std::multimap<std::string, std::string> headers_;
+  std::string payload_;
 };
 
 }  // namespace STORAGE_CLIENT_NS

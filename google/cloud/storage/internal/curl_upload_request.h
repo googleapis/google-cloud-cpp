@@ -81,7 +81,7 @@ class CurlUploadRequest {
   bool IsOpen() const { return not closing_; }
 
   /// Blocks until the current buffer has been transferred.
-  void Flush();
+  Status Flush();
 
   /// Closes the transfer and wait for the server's response.
   StatusOr<HttpResponse> Close();
@@ -92,7 +92,7 @@ class CurlUploadRequest {
    * Swapping the buffer permits double buffering in users of this class, and
    * avoid copies between the layers of abstraction.
    */
-  void NextBuffer(std::string& next_buffer);
+  Status NextBuffer(std::string& next_buffer);
 
  private:
   friend class CurlRequestBuilder;
@@ -148,7 +148,7 @@ class CurlUploadRequest {
   Status AsStatus(CURLMcode result, char const* where);
 
   /// Raises an exception if the application tries to use a closed request.
-  void ValidateOpen(char const* where);
+  Status ValidateOpen(char const* where);
 
   std::string url_;
   CurlHeaders headers_;

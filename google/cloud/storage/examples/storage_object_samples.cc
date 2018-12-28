@@ -279,7 +279,8 @@ void WriteObject(google::cloud::storage::Client client, int& argc,
       stream << (lineno + 1) << ": " << text << "\n";
     }
 
-    gcs::ObjectMetadata meta = stream.Close();
+    stream.Close();
+    gcs::ObjectMetadata meta = stream.metadata().value();
     std::cout << "The resulting object size is: " << meta.size() << std::endl;
   }
   //! [write object]
@@ -382,7 +383,8 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 )""";
     }
 
-    gcs::ObjectMetadata metadata = stream.Close();
+    stream.Close();
+    gcs::ObjectMetadata metadata = stream.metadata().value();
     std::cout << "Upload completed, the new object metadata is: " << metadata
               << std::endl;
   }
@@ -754,7 +756,8 @@ void WriteObjectWithKmsKey(google::cloud::storage::Client client, int& argc,
       stream << lineno << ": placeholder text for CMEK example.\n";
     }
 
-    gcs::ObjectMetadata meta = stream.Close();
+    stream.Close();
+    gcs::ObjectMetadata meta = stream.metadata().value();
     std::cout << "The resulting object size is: " << meta.size() << std::endl;
   }
   //! [write object with kms key] [END storage_upload_with_kms_key]

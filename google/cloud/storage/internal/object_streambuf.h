@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_STREAMBUF_H_
 
 #include "google/cloud/storage/internal/http_response.h"
-#include "google/cloud/storage/status.h"
+#include "google/cloud/storage/status_or.h"
 #include <iostream>
 
 namespace google {
@@ -67,7 +67,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   ObjectWriteStreambuf(ObjectWriteStreambuf const&) = delete;
   ObjectWriteStreambuf& operator=(ObjectWriteStreambuf const&) = delete;
 
-  HttpResponse Close();
+  StatusOr<HttpResponse> Close();
   virtual bool IsOpen() const = 0;
   virtual void ValidateHash(ObjectMetadata const& meta) = 0;
   virtual std::string const& received_hash() const = 0;
@@ -80,7 +80,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   virtual std::uint64_t next_expected_byte() const = 0;
 
  protected:
-  virtual HttpResponse DoClose() = 0;
+  virtual StatusOr<HttpResponse> DoClose() = 0;
 };
 
 }  // namespace internal

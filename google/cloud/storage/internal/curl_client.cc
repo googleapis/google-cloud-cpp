@@ -1335,11 +1335,8 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   writer << crlf << request.contents() << crlf << marker << "--" << crlf;
 
   // 6. Return the results as usual.
-  auto response = writer.CloseRaw();
-  if (response.status_code >= 300) {
-    return Status(response.status_code, std::move(response.payload));
-  }
-  return ObjectMetadata::ParseFromString(response.payload);
+  writer.Close();
+  return std::move(writer).metadata();
 }
 
 std::string CurlClient::PickBoundary(std::string const& text_to_avoid) {

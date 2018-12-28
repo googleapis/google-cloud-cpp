@@ -58,49 +58,47 @@ ObjectWriteStream::~ObjectWriteStream() {
   if (not IsOpen()) {
     return;
   }
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  try {
-    CloseRaw();
-  } catch (std::exception const& ex) {
-    GCP_LOG(INFO) << "Ignored exception while trying to close stream: "
-                  << ex.what();
-  } catch (...) {
-    GCP_LOG(INFO) << "Ignored unknown exception while trying to close stream";
-  }
-#else
-  CloseRaw();
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // Disable exceptions, even if the application had enabled exceptions the
+  // destructor is supposed to mask them.
+  exceptions(std::ios_base::goodbit);
+  Close();
 }
 
-internal::HttpResponse ObjectWriteStream::CloseRaw() {
+void ObjectWriteStream::Close() {
   if (not IsOpen()) {
-    google::cloud::internal::RaiseRuntimeError(
-        "Attempting to Close() closed ObjectWriteStream");
+    return;
   }
-  return buf_->Close();
+  StatusOr<internal::HttpResponse> response = buf_->Close();
+  if (not response.ok()) {
+    metadata_ = StatusOr<ObjectMetadata>(std::move(response).status());
+    setstate(std::ios_base::badbit);
+    return;
+  }
+  headers_ = std::move(response->headers);
+  payload_ = std::move(response->payload);
+  if (response->status_code >= 300) {
+    metadata_ =
+        StatusOr<ObjectMetadata>(Status(response->status_code, payload_));
+    setstate(std::ios_base::badbit);
+    return;
+  }
+  if (payload_.empty()) {
+    // With the XML transport the response includes an empty payload, in that
+    // case it cannot be parsed.
+    metadata_ = ObjectMetadata{};
+  } else {
+    metadata_ = ObjectMetadata::ParseFromString(payload_);
+    if (not metadata_.ok()) {
+      setstate(std::ios_base::badbit);
+      return;
+    }
+  }
+
+  // TODO() - do not raise here.
+  buf_->ValidateHash(*metadata_);
 }
 
-ObjectMetadata ObjectWriteStream::Close() {
-  auto response = CloseRaw();
-  if (response.status_code >= 300) {
-    std::ostringstream os;
-    os << "Error in " << __func__ << ": "
-       << Status(response.status_code, response.payload);
-    google::cloud::internal::RaiseRuntimeError(os.str());
-  }
-  if (response.payload.empty()) {
-    buf_->ValidateHash(ObjectMetadata());
-    return ObjectMetadata();
-  }
-  auto metadata = ObjectMetadata::ParseFromString(response.payload);
-  // TODO(#1735) - do not raise here.
-  buf_->ValidateHash(metadata.value());
-  return std::move(metadata).value();
-}
-
-void ObjectWriteStream::Suspend() && {
-  buf_.reset();
-}
+void ObjectWriteStream::Suspend() && { buf_.reset(); }
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
