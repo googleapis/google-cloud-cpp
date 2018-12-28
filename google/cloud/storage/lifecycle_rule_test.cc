@@ -35,7 +35,13 @@ LifecycleRule CreateLifecycleRuleForTest() {
         "storageClass": "NEARLINE"
       }
     })""";
-  return LifecycleRule::ParseFromString(text);
+  return LifecycleRule::ParseFromString(text).value();
+}
+
+/// @test Verify that we parse JSON objects into LifecycleRule objects.
+TEST(LifecycleRuleTest, ParseFailure) {
+  auto actual = LifecycleRule::ParseFromString("{123");
+  EXPECT_FALSE(actual.ok());
 }
 
 /// @test Verify that LifecycleRuleAction streaming works as expected.

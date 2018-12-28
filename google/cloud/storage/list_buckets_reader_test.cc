@@ -50,7 +50,7 @@ TEST(ListBucketsReaderTest, Basic) {
         {"selfLink", link},
         {"kind", "storage#bucket"},
     };
-    expected.emplace_back(BucketMetadata::ParseFromJson(metadata));
+    expected.emplace_back(BucketMetadata::ParseFromJson(metadata).value());
   }
 
   auto create_mock = [&expected, page_count](int i) {

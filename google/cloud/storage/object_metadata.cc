@@ -50,8 +50,8 @@ std::ostream& operator<<(std::ostream& os, ComposeSourceObject const& r) {
 
 ObjectMetadata ObjectMetadata::ParseFromJson(internal::nl::json const& json) {
   ObjectMetadata result{};
-  static_cast<CommonMetadata<ObjectMetadata>&>(result) =
-      CommonMetadata<ObjectMetadata>::ParseFromJson(json);
+  // TODO(#1685) - Return a StatusOr<> from here.
+  CommonMetadata<ObjectMetadata>::ParseFromJson(result, json);
 
   if (json.count("acl") != 0) {
     for (auto const& kv : json["acl"].items()) {

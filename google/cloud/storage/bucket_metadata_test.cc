@@ -155,7 +155,7 @@ BucketMetadata CreateBucketMetadataForTest() {
         "notFoundPage": "404.html"
       }
 })""";
-  return BucketMetadata::ParseFromString(text);
+  return BucketMetadata::ParseFromString(text).value();
 }
 
 /// @test Verify that we parse JSON objects into BucketMetadata objects.
@@ -264,6 +264,12 @@ TEST(BucketMetadataTest, Parse) {
   ASSERT_TRUE(actual.has_website());
   EXPECT_EQ("index.html", actual.website().main_page_suffix);
   EXPECT_EQ("404.html", actual.website().not_found_page);
+}
+
+/// @test Verify that we parse JSON objects into BucketMetadata objects.
+TEST(BucketMetadataTest, ParseFailure) {
+  auto actual = BucketMetadata::ParseFromString("{123");
+  EXPECT_FALSE(actual.ok());
 }
 
 /// @test Verify that the IOStream operator works as expected.
@@ -892,10 +898,8 @@ TEST(BucketMetadataPatchBuilder, ResetDefaultEventBasedHold) {
 
 TEST(BucketMetadataPatchBuilder, SetDefaultAcl) {
   BucketMetadataPatchBuilder builder;
-  builder.SetDefaultAcl(
-      {ObjectAccessControl::ParseFromString(
-           R"""({"entity": "user-test-user", "role": "OWNER"})""")
-           .value()});
+  builder.SetDefaultAcl({ObjectAccessControl::ParseFromString(
+      R"""({"entity": "user-test-user", "role": "OWNER"})""").value()});
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);
