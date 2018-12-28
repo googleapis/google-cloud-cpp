@@ -50,7 +50,7 @@ TEST(ListObjectsReaderTest, Basic) {
         {"selfLink", link},
         {"kind", "storage#object"},
     };
-    expected.emplace_back(ObjectMetadata::ParseFromJson(metadata));
+    expected.emplace_back(ObjectMetadata::ParseFromJson(metadata).value());
   }
 
   auto create_mock = [&expected, page_count](int i) {

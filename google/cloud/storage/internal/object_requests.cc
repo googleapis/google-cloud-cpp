@@ -30,15 +30,23 @@ std::ostream& operator<<(std::ostream& os, ListObjectsRequest const& r) {
   return os << "}";
 }
 
-ListObjectsResponse ListObjectsResponse::FromHttpResponse(
+StatusOr<ListObjectsResponse> ListObjectsResponse::FromHttpResponse(
     HttpResponse&& response) {
-  auto json = storage::internal::nl::json::parse(response.payload);
+  auto json =
+      storage::internal::nl::json::parse(response.payload, nullptr, false);
+  if (not json.is_object()) {
+    return Status(StatusCode::INVALID_ARGUMENT, __func__);
+  }
 
   ListObjectsResponse result;
   result.next_page_token = json.value("nextPageToken", "");
 
   for (auto const& kv : json["items"].items()) {
-    result.items.emplace_back(ObjectMetadata::ParseFromJson(kv.value()));
+    auto parsed = ObjectMetadata::ParseFromJson(kv.value());
+    if (not parsed.ok()) {
+      return std::move(parsed).status();
+    }
+    result.items.emplace_back(std::move(*parsed));
   }
 
   return result;
@@ -170,12 +178,11 @@ std::ostream& operator<<(std::ostream& os, UpdateObjectRequest const& r) {
 }
 
 ComposeObjectRequest::ComposeObjectRequest(
-    std::string bucket_name,
-    std::vector<ComposeSourceObject> source_objects,
+    std::string bucket_name, std::vector<ComposeSourceObject> source_objects,
     std::string destination_object_name)
     : GenericObjectRequest(std::move(bucket_name),
                            std::move(destination_object_name)),
-                           source_objects_(std::move(source_objects)) {}
+      source_objects_(std::move(source_objects)) {}
 
 std::string ComposeObjectRequest::JsonPayload() const {
   using internal::nl::json;
@@ -183,7 +190,8 @@ std::string ComposeObjectRequest::JsonPayload() const {
   compose_object_payload_json["kind"] = "storage#composeRequest";
   json destination_metadata_payload;
   if (HasOption<WithObjectMetadata>()) {
-    destination_metadata_payload = GetOption<WithObjectMetadata>().value().JsonPayloadForCompose();
+    destination_metadata_payload =
+        GetOption<WithObjectMetadata>().value().JsonPayloadForCompose();
   }
   if (!destination_metadata_payload.is_null()) {
     compose_object_payload_json["destination"] = destination_metadata_payload;
@@ -305,9 +313,13 @@ std::ostream& operator<<(std::ostream& os, RewriteObjectRequest const& r) {
   return os << "}";
 }
 
-RewriteObjectResponse RewriteObjectResponse::FromHttpResponse(
+StatusOr<RewriteObjectResponse> RewriteObjectResponse::FromHttpResponse(
     HttpResponse const& response) {
-  nl::json object = nl::json::parse(response.payload);
+  nl::json object = nl::json::parse(response.payload, nullptr, false);
+  if (not object.is_object()) {
+    return Status(StatusCode::INVALID_ARGUMENT, __func__);
+  }
+
   RewriteObjectResponse result;
   result.total_bytes_rewritten =
       ParseUnsignedLongField(object, "totalBytesRewritten");
@@ -315,7 +327,11 @@ RewriteObjectResponse RewriteObjectResponse::FromHttpResponse(
   result.done = object.value("done", false);
   result.rewrite_token = object.value("rewriteToken", "");
   if (object.count("resource") != 0U) {
-    result.resource = ObjectMetadata::ParseFromJson(object["resource"]);
+    auto parsed = ObjectMetadata::ParseFromJson(object["resource"]);
+    if (not parsed.ok()) {
+      return std::move(parsed).status();
+    }
+    result.resource = std::move(*parsed);
   }
   return result;
 }
@@ -373,7 +389,7 @@ std::ostream& operator<<(std::ostream& os,
   return os << "}";
 }
 
-ResumableUploadResponse ResumableUploadResponse::FromHttpResponse(
+StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
     HttpResponse&& response) {
   ResumableUploadResponse result;
   result.last_committed_byte = 0;

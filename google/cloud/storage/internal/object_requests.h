@@ -53,7 +53,8 @@ class ListObjectsRequest
 std::ostream& operator<<(std::ostream& os, ListObjectsRequest const& r);
 
 struct ListObjectsResponse {
-  static ListObjectsResponse FromHttpResponse(HttpResponse&& response);
+  static StatusOr<ListObjectsResponse> FromHttpResponse(
+      HttpResponse&& response);
 
   std::string next_page_token;
   std::vector<ObjectMetadata> items;
@@ -344,7 +345,8 @@ std::ostream& operator<<(std::ostream& os, RewriteObjectRequest const& r);
 
 /// Holds an `Objects: rewrite` response.
 struct RewriteObjectResponse {
-  static RewriteObjectResponse FromHttpResponse(HttpResponse const& response);
+  static StatusOr<RewriteObjectResponse> FromHttpResponse(
+      HttpResponse const& response);
 
   std::uint64_t total_bytes_rewritten;
   std::uint64_t object_size;
@@ -447,7 +449,8 @@ std::ostream& operator<<(std::ostream& os,
                          QueryResumableUploadRequest const& r);
 
 struct ResumableUploadResponse {
-  static ResumableUploadResponse FromHttpResponse(HttpResponse&& response);
+  static StatusOr<ResumableUploadResponse> FromHttpResponse(
+      HttpResponse&& response);
 
   std::string upload_session_url;
   std::uint64_t last_committed_byte;

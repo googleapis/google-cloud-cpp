@@ -76,19 +76,36 @@ TEST(ObjectRequestsTest, ParseListResponse) {
       "updated": "2018-05-19T19:31:24Z"
 })""";
   std::string text = R"""({
-      "kind": "storage#buckets",
+      "kind": "storage#objects",
       "nextPageToken": "some-token-42",
       "items":
 )""";
   text += "[" + object1 + "," + object2 + "]}";
 
-  auto o1 = ObjectMetadata::ParseFromString(object1);
-  auto o2 = ObjectMetadata::ParseFromString(object2);
+  auto o1 = ObjectMetadata::ParseFromString(object1).value();
+  auto o2 = ObjectMetadata::ParseFromString(object2).value();
+
+  auto actual =
+      ListObjectsResponse::FromHttpResponse(HttpResponse{200, text, {}})
+          .value();
+  EXPECT_EQ("some-token-42", actual.next_page_token);
+  EXPECT_THAT(actual.items, ::testing::ElementsAre(o1, o2));
+}
+
+TEST(ObjectRequestsTest, ParseListResponseFailure) {
+  std::string text = R"""({123)""";
 
   auto actual =
       ListObjectsResponse::FromHttpResponse(HttpResponse{200, text, {}});
-  EXPECT_EQ("some-token-42", actual.next_page_token);
-  EXPECT_THAT(actual.items, ::testing::ElementsAre(o1, o2));
+  EXPECT_FALSE(actual.ok());
+}
+
+TEST(ObjectRequestsTest, ParseListResponseFailureInItems) {
+  std::string text = R"""({"items": [ "invalid-item" ]})""";
+
+  auto actual =
+      ListObjectsResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
 }
 
 TEST(ObjectRequestsTest, Get) {
@@ -349,10 +366,11 @@ TEST(ObjectRequestsTest, RewriteObjectResponse) {
 
   text += object1 + "\n}";
 
-  auto expected_resource = ObjectMetadata::ParseFromString(object1);
+  auto expected_resource = ObjectMetadata::ParseFromString(object1).value();
 
   auto actual =
-      RewriteObjectResponse::FromHttpResponse(HttpResponse{200, text, {}});
+      RewriteObjectResponse::FromHttpResponse(HttpResponse{200, text, {}})
+          .value();
   EXPECT_EQ(7U, actual.total_bytes_rewritten);
   EXPECT_EQ(42U, actual.object_size);
   EXPECT_FALSE(actual.done);
@@ -367,6 +385,22 @@ TEST(ObjectRequestsTest, RewriteObjectResponse) {
   EXPECT_THAT(actual_str, HasSubstr("done=false"));
   EXPECT_THAT(actual_str, HasSubstr("rewrite_token=abcd-test-token"));
   EXPECT_THAT(actual_str, HasSubstr("test-object-name"));
+}
+
+TEST(ObjectRequestsTest, RewriteObjectResponseFailure) {
+  std::string text = R"""({123)""";
+
+  auto actual =
+      RewriteObjectResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
+}
+
+TEST(ObjectRequestsTest, RewriteObjectResponseFailureInResource) {
+  std::string text = R"""({"resource": "invalid-resource"})""";
+
+  auto actual =
+      RewriteObjectResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
 }
 
 TEST(ObjectRequestsTest, ResumableUpload) {
@@ -448,11 +482,12 @@ TEST(ObjectRequestsTest, QueryResumableUpload) {
 
 TEST(ObjectRequestsTest, ResumableUploadResponse) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
-      HttpResponse{200,
-                   "test-payload",
-                   {{"ignored-header", "value"},
-                    {"location", "location-value"},
-                    {"range", "bytes=0-2000"}}});
+                    HttpResponse{200,
+                                 "test-payload",
+                                 {{"ignored-header", "value"},
+                                  {"location", "location-value"},
+                                  {"range", "bytes=0-2000"}}})
+                    .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("location-value", actual.upload_session_url);
   EXPECT_EQ(2000U, actual.last_committed_byte);
@@ -465,16 +500,20 @@ TEST(ObjectRequestsTest, ResumableUploadResponse) {
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseNoLocation) {
-  auto actual = ResumableUploadResponse::FromHttpResponse(
-      HttpResponse{200, "test-payload", {{"range", "bytes=0-2000"}}});
+  auto actual =
+      ResumableUploadResponse::FromHttpResponse(
+          HttpResponse{200, "test-payload", {{"range", "bytes=0-2000"}}})
+          .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(2000U, actual.last_committed_byte);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseNoRange) {
-  auto actual = ResumableUploadResponse::FromHttpResponse(
-      HttpResponse{200, "test-payload", {{"location", "location-value"}}});
+  auto actual =
+      ResumableUploadResponse::FromHttpResponse(
+          HttpResponse{200, "test-payload", {{"location", "location-value"}}})
+          .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("location-value", actual.upload_session_url);
   EXPECT_EQ(0U, actual.last_committed_byte);
@@ -484,7 +523,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseMissingBytesInRange) {
   auto actual = ResumableUploadResponse::FromHttpResponse(HttpResponse{
       200,
       "test-payload",
-      {{"location", "location-value"}, {"range", "units=0-2000"}}});
+      {{"location", "location-value"}, {"range", "units=0-2000"}}}).value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("location-value", actual.upload_session_url);
   EXPECT_EQ(0U, actual.last_committed_byte);
@@ -492,7 +531,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseMissingBytesInRange) {
 
 TEST(ObjectRequestsTest, ResumableUploadResponseMissingRangeEnd) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
-      HttpResponse{200, "test-payload", {{"range", "bytes=0-"}}});
+      HttpResponse{200, "test-payload", {{"range", "bytes=0-"}}}).value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0U, actual.last_committed_byte);
@@ -500,7 +539,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseMissingRangeEnd) {
 
 TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeEnd) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
-      HttpResponse{200, "test-payload", {{"range", "bytes=0-abcd"}}});
+      HttpResponse{200, "test-payload", {{"range", "bytes=0-abcd"}}}).value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0U, actual.last_committed_byte);
@@ -508,7 +547,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeEnd) {
 
 TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeBegin) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
-      HttpResponse{200, "test-payload", {{"range", "bytes=abcd-2000"}}});
+      HttpResponse{200, "test-payload", {{"range", "bytes=abcd-2000"}}}).value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0U, actual.last_committed_byte);
@@ -516,7 +555,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeBegin) {
 
 TEST(ObjectRequestsTest, ResumableUploadResponseUnexpectedRangeBegin) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
-      HttpResponse{200, "test-payload", {{"range", "bytes=3000-2000"}}});
+      HttpResponse{200, "test-payload", {{"range", "bytes=3000-2000"}}}).value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0U, actual.last_committed_byte);
@@ -524,7 +563,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseUnexpectedRangeBegin) {
 
 TEST(ObjectRequestsTest, ResumableUploadResponseNegativeEnd) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
-      HttpResponse{200, "test-payload", {{"range", "bytes=0--7"}}});
+      HttpResponse{200, "test-payload", {{"range", "bytes=0--7"}}}).value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0U, actual.last_committed_byte);
@@ -607,7 +646,7 @@ ObjectMetadata CreateObjectMetadataForTest() {
       "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
       "updated": "2018-05-19T19:31:24Z"
 })""";
-  return ObjectMetadata::ParseFromString(text);
+  return ObjectMetadata::ParseFromString(text).value();
 }
 
 TEST(PatchObjectRequestTest, DiffSetAcl) {

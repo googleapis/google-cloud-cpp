@@ -91,8 +91,9 @@ ObjectMetadata ObjectWriteStream::Close() {
     return ObjectMetadata();
   }
   auto metadata = ObjectMetadata::ParseFromString(response.payload);
-  buf_->ValidateHash(metadata);
-  return metadata;
+  // TODO(#1735) - do not raise here.
+  buf_->ValidateHash(metadata.value());
+  return std::move(metadata).value();
 }
 
 void ObjectWriteStream::Suspend() && {
