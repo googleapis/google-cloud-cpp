@@ -55,9 +55,10 @@ class ServiceAccountTest : public ::testing::Test {
 };
 
 TEST_F(ServiceAccountTest, GetProjectServiceAccount) {
-  ServiceAccount expected = ServiceAccount::ParseFromString(R"""({
-          "email_address": "test-service-account@test-domain.com"
-      })""");
+  ServiceAccount expected =
+      ServiceAccount::ParseFromString(
+          R"""({"email_address": "test-service-account@test-domain.com"})""")
+          .value();
 
   EXPECT_CALL(*mock, GetServiceAccount(_))
       .WillOnce(Return(StatusOr<ServiceAccount>(TransientError())))

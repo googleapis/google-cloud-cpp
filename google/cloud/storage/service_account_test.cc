@@ -26,15 +26,21 @@ ServiceAccount CreateServiceAccountForTest() {
   return ServiceAccount::ParseFromString(R"""({
       "email_address": "service-123@example.com",
       "kind": "storage#serviceAccount"
-})""");
+})""").value();
 }
 
-/// @test Verify that we parse JSON objects into ObjectMetadata objects.
+/// @test Verify that we parse JSON objects into ServiceAccount objects.
 TEST(ServiceAccountTest, Parse) {
   auto actual = CreateServiceAccountForTest();
 
   EXPECT_EQ("service-123@example.com", actual.email_address());
   EXPECT_EQ("storage#serviceAccount", actual.kind());
+}
+
+/// @test Verify that we parse JSON objects into ServiceAccount objects.
+TEST(ServiceAccountTest, ParseFailure) {
+  auto actual = ServiceAccount::ParseFromString("{123");
+  EXPECT_FALSE(actual.ok());
 }
 
 /// @test Verify that the IOStream operator works as expected.
