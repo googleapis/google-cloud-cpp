@@ -70,14 +70,14 @@ TEST_F(NotificationsTest, ListNotifications) {
   };
 
   EXPECT_CALL(*mock_, ListNotifications(_))
-      .WillOnce(Return(StatusOr<internal::ListNotificationsResponse>(TransientError()
-                                      )))
-      .WillOnce(
-          Invoke([&expected](internal::ListNotificationsRequest const& r) {
-            EXPECT_EQ("test-bucket", r.bucket_name());
+      .WillOnce(Return(
+          StatusOr<internal::ListNotificationsResponse>(TransientError())))
+      .WillOnce(Invoke([&expected](
+                           internal::ListNotificationsRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
 
-            return make_status_or(internal::ListNotificationsResponse{expected});
-          }));
+        return make_status_or(internal::ListNotificationsResponse{expected});
+      }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
   std::vector<NotificationMetadata> actual =
@@ -109,8 +109,7 @@ TEST_F(NotificationsTest, CreateNotification) {
       })""");
 
   EXPECT_CALL(*mock_, CreateNotification(_))
-      .WillOnce(
-          Return(StatusOr<NotificationMetadata>(TransientError())))
+      .WillOnce(Return(StatusOr<NotificationMetadata>(TransientError())))
       .WillOnce(
           Invoke([&expected](internal::CreateNotificationRequest const& r) {
             EXPECT_EQ("test-bucket", r.bucket_name());
@@ -163,8 +162,7 @@ TEST_F(NotificationsTest, GetNotification) {
       })""");
 
   EXPECT_CALL(*mock_, GetNotification(_))
-      .WillOnce(
-          Return(StatusOr<NotificationMetadata>(TransientError())))
+      .WillOnce(Return(StatusOr<NotificationMetadata>(TransientError())))
       .WillOnce(Invoke([&expected](internal::GetNotificationRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-notification-1", r.notification_id());
@@ -198,8 +196,7 @@ TEST_F(NotificationsTest, GetNotificationPermanentFailure) {
 
 TEST_F(NotificationsTest, DeleteNotification) {
   EXPECT_CALL(*mock_, DeleteNotification(_))
-      .WillOnce(
-          Return(StatusOr<internal::EmptyResponse>(TransientError())))
+      .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce(Invoke([](internal::DeleteNotificationRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-notification-1", r.notification_id());

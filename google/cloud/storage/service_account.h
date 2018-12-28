@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_SERVICE_ACCOUNT_H_
 
 #include "google/cloud/storage/internal/nljson.h"
-#include "google/cloud/storage/version.h"
+#include "google/cloud/storage/status_or.h"
 
 namespace google {
 namespace cloud {
@@ -29,8 +29,8 @@ class ServiceAccount {
  public:
   ServiceAccount() = default;
 
-  static ServiceAccount ParseFromJson(internal::nl::json const& json);
-  static ServiceAccount ParseFromString(std::string const& payload);
+  static StatusOr<ServiceAccount> ParseFromJson(internal::nl::json const& json);
+  static StatusOr<ServiceAccount> ParseFromString(std::string const& payload);
 
   std::string const& email_address() const { return email_address_; }
   std::string const& kind() const { return kind_; }
