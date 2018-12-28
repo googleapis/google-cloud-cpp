@@ -272,6 +272,27 @@ TEST(BucketMetadataTest, ParseFailure) {
   EXPECT_FALSE(actual.ok());
 }
 
+/// @test Verify that we parse JSON objects into BucketMetadata objects.
+TEST(BucketMetadataTest, ParseAclFailure) {
+  auto actual = BucketMetadata::ParseFromString(
+      R"""({"acl: ["invalid-item"]})""");
+  EXPECT_FALSE(actual.ok());
+}
+
+/// @test Verify that we parse JSON objects into BucketMetadata objects.
+TEST(BucketMetadataTest, ParseDefaultObjecAclFailure) {
+  auto actual = BucketMetadata::ParseFromString(
+      R"""({"defaultObjectAcl: ["invalid-item"]})""");
+  EXPECT_FALSE(actual.ok());
+}
+
+/// @test Verify that we parse JSON objects into BucketMetadata objects.
+TEST(BucketMetadataTest, ParseLifecycleFailure) {
+  auto actual = BucketMetadata::ParseFromString(
+      R"""({"lifecycle: {"rule": [ "invalid-item" ]}})""");
+  EXPECT_FALSE(actual.ok());
+}
+
 /// @test Verify that the IOStream operator works as expected.
 TEST(BucketMetadataTest, IOStream) {
   auto meta = CreateBucketMetadataForTest();

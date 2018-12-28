@@ -111,6 +111,14 @@ TEST(ListBucketsResponseTest, ParseFailure) {
   EXPECT_FALSE(actual.ok());
 }
 
+TEST(ListBucketsResponseTestt, ParseFailureInItems) {
+  std::string text = R"""({"items": [ "invalid-item" ]})""";
+
+  auto actual =
+      ListBucketsResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
+}
+
 TEST(CreateBucketsRequestTest, Basic) {
   CreateBucketRequest request("project-for-new-bucket",
                               BucketMetadata().set_name("test-bucket"));
