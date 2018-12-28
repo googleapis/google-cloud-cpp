@@ -54,7 +54,8 @@ TEST(ObjectAclRequestTest, ListResponse) {
       }]})""";
 
   auto actual =
-      ListObjectAclResponse::FromHttpResponse(HttpResponse{200, text, {}}).value();
+      ListObjectAclResponse::FromHttpResponse(HttpResponse{200, text, {}})
+          .value();
   ASSERT_EQ(2UL, actual.items.size());
   EXPECT_EQ("user-qux", actual.items.at(0).entity());
   EXPECT_EQ("OWNER", actual.items.at(0).role());
@@ -74,15 +75,15 @@ TEST(ObjectAclRequestTest, ListResponse) {
 TEST(ObjectAclRequestTest, ListResponseParseFailure) {
   std::string text = R"""({123)""";
 
-  auto actual =
+  StatusOr<ListObjectAclResponse> actual =
       ListObjectAclResponse::FromHttpResponse(HttpResponse{200, text, {}});
   EXPECT_FALSE(actual.ok());
 }
 
 TEST(ObjectAclRequestTest, ListResponseParseFailureElements) {
-  std::string text = R"""({"items": ["should-be-object"]})""";
+  std::string text = R"""({"items": ["invalid-item"]})""";
 
-  auto actual =
+  StatusOr<ListObjectAclResponse> actual =
       ListObjectAclResponse::FromHttpResponse(HttpResponse{200, text, {}});
   EXPECT_FALSE(actual.ok());
 }

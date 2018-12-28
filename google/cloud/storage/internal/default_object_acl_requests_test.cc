@@ -74,6 +74,15 @@ TEST(DefaultObjectAclRequestTest, ListResponseFailure) {
   EXPECT_FALSE(actual.ok());
 }
 
+TEST(DefaultObjectAclRequestTest, ListResponseParseFailureElements) {
+  std::string text = R"""({"items": ["invalid-item"]})""";
+
+  StatusOr<ListDefaultObjectAclResponse> actual =
+      ListDefaultObjectAclResponse::FromHttpResponse(
+          HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
+}
+
 TEST(DefaultObjectAclRequestTest, Get) {
   GetDefaultObjectAclRequest request("my-bucket", "user-testuser");
   request.set_multiple_options(UserProject("my-project"), IfMatchEtag("ABC="));
