@@ -169,23 +169,22 @@ TEST(PatchBucketRequestTest, DiffSetAcl) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.set_acl({});
   BucketMetadata updated = original;
-  updated.set_acl({BucketAccessControl::ParseFromString(R"""({
-    "entity": "user-test-user",
-    "role": "OWNER"})""")});
+  updated.set_acl({BucketAccessControl::ParseFromString(
+                       R"""({"entity": "user-test-user", "role": "OWNER"})""")
+                       .value()});
   PatchBucketRequest request("test-bucket", original, updated);
 
   nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({
-      "acl": [{"entity": "user-test-user", "role": "OWNER"}]
-  })""");
+  nl::json expected = nl::json::parse(
+      R"""({"acl": [{"entity": "user-test-user", "role": "OWNER"}]})""");
   EXPECT_EQ(expected, patch);
 }
 
 TEST(PatchBucketRequestTest, DiffResetAcl) {
   BucketMetadata original = CreateBucketMetadataForTest();
-  original.set_acl({BucketAccessControl::ParseFromString(R"""({
-    "entity": "user-test-user",
-    "role": "OWNER"})""")});
+  original.set_acl({BucketAccessControl::ParseFromString(
+                        R"""({"entity": "user-test-user", "role": "OWNER"})""")
+                        .value()});
   BucketMetadata updated = original;
   updated.set_acl({});
   PatchBucketRequest request("test-bucket", original, updated);
@@ -274,9 +273,10 @@ TEST(PatchBucketRequestTest, DiffSetDefaultAcl) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.set_default_acl({});
   BucketMetadata updated = original;
-  updated.set_default_acl({ObjectAccessControl::ParseFromString(R"""({
-    "entity": "user-test-user",
-    "role": "OWNER"})""")});
+  updated.set_default_acl(
+      {ObjectAccessControl::ParseFromString(
+           R"""({"entity": "user-test-user","role": "OWNER"})""")
+           .value()});
   PatchBucketRequest request("test-bucket", original, updated);
 
   nl::json patch = nl::json::parse(request.payload());
@@ -288,9 +288,9 @@ TEST(PatchBucketRequestTest, DiffSetDefaultAcl) {
 
 TEST(PatchBucketRequestTest, DiffResetDefaultAcl) {
   BucketMetadata original = CreateBucketMetadataForTest();
-  original.set_default_acl({ObjectAccessControl::ParseFromString(R"""({
-    "entity": "user-test-user",
-    "role": "OWNER"})""")});
+  original.set_default_acl({ObjectAccessControl::ParseFromString(
+      R"""({"entity": "user-test-user", "role": "OWNER"})""")
+      .value()});
   BucketMetadata updated = original;
   updated.set_default_acl({});
   PatchBucketRequest request("test-bucket", original, updated);
@@ -643,13 +643,11 @@ TEST(BucketRequestsTest, ParseIamPolicyFromString) {
            // generates them sorted by role. If we ever change that, we will
            // need to change this test, and it will be a bit more difficult to
            // write it.
-           nl::json{
-               {"role", "roles/storage.admin"},
-               {"members", std::vector<std::string>{"test-user-1"}}},
-           nl::json{
-               {"role", "roles/storage.objectViewer"},
-               {"members",
-                std::vector<std::string>{"test-user-2", "test-user-3"}}},
+           nl::json{{"role", "roles/storage.admin"},
+                    {"members", std::vector<std::string>{"test-user-1"}}},
+           nl::json{{"role", "roles/storage.objectViewer"},
+                    {"members",
+                     std::vector<std::string>{"test-user-2", "test-user-3"}}},
        }},
   };
 
@@ -693,10 +691,9 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingMembers) {
   nl::json expected_payload{
       {"kind", "storage#policy"},
       {"etag", "XYZ="},
-      {"bindings",
-       std::vector<nl::json>{nl::json{
-           {"role", "roles/storage.objectViewer"},
-       }}},
+      {"bindings", std::vector<nl::json>{nl::json{
+                       {"role", "roles/storage.objectViewer"},
+                   }}},
   };
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -718,11 +715,10 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidMembers) {
   nl::json expected_payload{
       {"kind", "storage#policy"},
       {"etag", "XYZ="},
-      {"bindings",
-       std::vector<nl::json>{nl::json{
-           {"role", "roles/storage.objectViewer"},
-           {"members", "invalid"},
-       }}},
+      {"bindings", std::vector<nl::json>{nl::json{
+                       {"role", "roles/storage.objectViewer"},
+                       {"members", "invalid"},
+                   }}},
   };
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -782,13 +778,11 @@ TEST(BucketRequestsTest, SetIamPolicy) {
            // generates them sorted by role. If we ever change that, we will
            // need to change this test, and it will be a bit more difficult to
            // write it.
-           nl::json{
-               {"role", "roles/storage.admin"},
-               {"members", std::vector<std::string>{"test-user-1"}}},
-           nl::json{
-               {"role", "roles/storage.objectViewer"},
-               {"members",
-                std::vector<std::string>{"test-user-2", "test-user-3"}}},
+           nl::json{{"role", "roles/storage.admin"},
+                    {"members", std::vector<std::string>{"test-user-1"}}},
+           nl::json{{"role", "roles/storage.objectViewer"},
+                    {"members",
+                     std::vector<std::string>{"test-user-2", "test-user-3"}}},
        }},
   };
   auto actual_payload = nl::json::parse(request.json_payload());

@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/access_control_common.h"
 #include "google/cloud/storage/internal/patch_builder.h"
+#include "google/cloud/storage/status_or.h"
 
 namespace google {
 namespace cloud {
@@ -36,10 +37,12 @@ class BucketAccessControl : private internal::AccessControlCommon {
  public:
   BucketAccessControl() = default;
 
-  static BucketAccessControl ParseFromJson(internal::nl::json const& json);
+  static StatusOr<BucketAccessControl> ParseFromJson(
+      internal::nl::json const& json);
 
   /// Parse from a string in JSON format.
-  static BucketAccessControl ParseFromString(std::string const& payload);
+  static StatusOr<BucketAccessControl> ParseFromString(
+      std::string const& payload);
 
   using AccessControlCommon::ROLE_OWNER;
   using AccessControlCommon::ROLE_READER;

@@ -328,7 +328,7 @@ TEST(ObjectMetadataTest, InsertMetadata) {
 TEST(ObjectMetadataPatchBuilder, SetAcl) {
   ObjectMetadataPatchBuilder builder;
   builder.SetAcl({ObjectAccessControl::ParseFromString(
-      R"""({"entity": "user-test-user", "role": "OWNER"})""")});
+      R"""({"entity": "user-test-user", "role": "OWNER"})""").value()});
 
   auto actual = builder.BuildPatch();
   auto actual_as_json = internal::nl::json::parse(actual);

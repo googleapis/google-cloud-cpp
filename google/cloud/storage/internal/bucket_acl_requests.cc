@@ -27,12 +27,19 @@ std::ostream& operator<<(std::ostream& os, ListBucketAclRequest const& r) {
   return os << "}";
 }
 
-ListBucketAclResponse ListBucketAclResponse::FromHttpResponse(
+StatusOr<ListBucketAclResponse> ListBucketAclResponse::FromHttpResponse(
     HttpResponse&& response) {
   ListBucketAclResponse result;
-  auto json = nl::json::parse(response.payload);
+  auto json = nl::json::parse(response.payload, nullptr, false);
+  if (not json.is_object()) {
+    return Status(StatusCode::INVALID_ARGUMENT, __func__);
+  }
   for (auto const& kv : json["items"].items()) {
-    result.items.emplace_back(BucketAccessControl::ParseFromJson(kv.value()));
+    auto parsed = BucketAccessControl::ParseFromJson(kv.value());
+    if (not parsed.ok()) {
+      return std::move(parsed).status();
+    }
+    result.items.emplace_back(std::move(*parsed));
   }
 
   return result;

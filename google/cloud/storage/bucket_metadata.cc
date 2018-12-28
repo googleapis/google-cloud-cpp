@@ -119,7 +119,9 @@ BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
 
   if (json.count("acl") != 0) {
     for (auto const& kv : json["acl"].items()) {
-      result.acl_.emplace_back(BucketAccessControl::ParseFromJson(kv.value()));
+      // TODO(#1685) - return a StatusOr<> from here.
+      result.acl_.emplace_back(
+          BucketAccessControl::ParseFromJson(kv.value()).value());
     }
   }
   if (json.count("billing") != 0) {
@@ -139,8 +141,9 @@ BucketMetadata BucketMetadata::ParseFromJson(internal::nl::json const& json) {
   }
   if (json.count("defaultObjectAcl") != 0) {
     for (auto const& kv : json["defaultObjectAcl"].items()) {
+      // TODO(#1685) - return a StatusOr<> from here.
       result.default_acl_.emplace_back(
-          ObjectAccessControl::ParseFromJson(kv.value()));
+          ObjectAccessControl::ParseFromJson(kv.value()).value());
     }
   }
   if (json.count("encryption") != 0) {

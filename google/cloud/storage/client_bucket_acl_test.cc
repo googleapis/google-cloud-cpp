@@ -60,12 +60,12 @@ TEST_F(BucketAccessControlsTest, ListBucketAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })"""),
+      })""").value(),
       BucketAccessControl::ParseFromString(R"""({
           "bucket": "test-bucket",
           "entity": "user-test-user-2",
           "role": "READER"
-      })"""),
+      })""").value(),
   };
 
   EXPECT_CALL(*mock, ListBucketAcl(_))
@@ -101,7 +101,7 @@ TEST_F(BucketAccessControlsTest, CreateBucketAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "READER"
-      })""");
+      })""").value();
 
   EXPECT_CALL(*mock, CreateBucketAcl(_))
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
@@ -188,7 +188,7 @@ TEST_F(BucketAccessControlsTest, GetBucketAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })""");
+      })""").value();
 
   EXPECT_CALL(*mock, GetBucketAcl(_))
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
@@ -228,7 +228,7 @@ TEST_F(BucketAccessControlsTest, UpdateBucketAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })""");
+      })""").value();
 
   EXPECT_CALL(*mock, UpdateBucketAcl(_))
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
@@ -283,7 +283,7 @@ TEST_F(BucketAccessControlsTest, PatchBucketAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })""");
+      })""").value();
 
   EXPECT_CALL(*mock, PatchBucketAcl(_))
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
