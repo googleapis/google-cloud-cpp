@@ -67,6 +67,15 @@ TEST(BucketAclRequestTest, ListResponse) {
 
 TEST(BucketAclRequestTest, ListResponseParseFailure) {
   std::string text = "{123";
+
+  StatusOr<ListBucketAclResponse> actual =
+      ListBucketAclResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
+}
+
+TEST(BucketAclRequestTest, ListResponseParseFailureElements) {
+  std::string text = R"""({"items": ["invalid-item"]})""";
+
   StatusOr<ListBucketAclResponse> actual =
       ListBucketAclResponse::FromHttpResponse(HttpResponse{200, text, {}});
   EXPECT_FALSE(actual.ok());
