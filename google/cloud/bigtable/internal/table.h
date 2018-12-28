@@ -324,6 +324,70 @@ class Table {
     return op->Start(cq);
   }
 
+  /**
+   * Reads a single row from the table asynchronously.
+   *
+   * @param row_key the row key of the row to read.
+   * @param filter is applied on the server-side to data in the rows.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, CompletionQueue&, std::pair<bool, Row>,
+   *             grpc::Status&>);
+   * @return a handle to the submitted operation
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <
+      typename Functor,
+      typename std::enable_if<google::cloud::internal::is_invocable<
+                                  Functor, CompletionQueue&,
+                                  std::pair<bool, Row>, grpc::Status&>::value,
+                              int>::type valid_callback1_type = 0>
+  std::shared_ptr<AsyncOperation> AsyncReadRow(std::string row_key,
+                                               Filter filter,
+                                               CompletionQueue& cq,
+                                               Functor&& callback,
+                                               bool raise_on_error = false) {
+    RowSet row_set(std::move(row_key));
+    std::int64_t const rows_limit = 1;
+    auto rows = std::make_shared<std::vector<Row>>();
+
+    return AsyncReadRows(
+        std::move(row_set), rows_limit, std::move(filter), cq,
+        [rows](CompletionQueue& cq, Row row, grpc::Status& status) {
+          rows->emplace_back(
+              Row(std::move(row.row_key()), std::move(row.cells())));
+        },
+        [rows, callback](CompletionQueue& cq, bool& response,
+                         grpc::Status const& status) {
+          if (not status.ok()) {
+            callback(cq, std::make_pair(false, Row("", {})), status);
+            return;
+          }
+
+          auto it = rows->begin();
+          if (it == rows->end()) {
+            callback(cq, std::make_pair(false, Row("", {})), status);
+            return;
+          }
+
+          auto result = std::make_pair(true, Row(std::move(*it)));
+          grpc::Status done_status = status;
+          if (++it != rows->end()) {
+            done_status = grpc::Status(grpc::StatusCode::INTERNAL,
+                                       "internal error - AsyncReadRows "
+                                       "returned 2 rows in AsyncReadRow()");
+            result = std::make_pair(false, Row("", {}));
+          }
+          callback(cq, result, done_status);
+          return;
+        });
+  }
+
   bool CheckAndMutateRow(std::string row_key, Filter filter,
                          std::vector<Mutation> true_mutations,
                          std::vector<Mutation> false_mutations,
