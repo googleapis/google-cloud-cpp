@@ -178,7 +178,7 @@ TEST_F(NotificationsTest, GetNotification) {
   NotificationMetadata actual =
       client.GetNotification("test-bucket", "test-notification-1");
   EXPECT_EQ(expected, actual);
-}  // namespace
+}
 
 TEST_F(NotificationsTest, GetNotificationTooManyFailures) {
   testing::TooManyFailuresTest<NotificationMetadata>(

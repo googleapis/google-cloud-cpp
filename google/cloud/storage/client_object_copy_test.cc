@@ -60,9 +60,7 @@ class ObjectCopyTest : public ::testing::Test {
 };
 
 TEST_F(ObjectCopyTest, CopyObject) {
-  std::string text = R"""({
-      "name": "test-bucket-name/test-object-name/1"
-})""";
+  std::string text = R"""({"name": "test-bucket-name/test-object-name/1"})""";
   auto expected = storage::ObjectMetadata::ParseFromString(text).value();
 
   EXPECT_CALL(*mock, CopyObject(_))
@@ -130,7 +128,7 @@ TEST_F(ObjectCopyTest, ComposeObject) {
       "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
       "updated": "2018-05-19T19:31:24Z",
       "componentCount": 2
-})""";
+  })""";
   auto expected = ObjectMetadata::ParseFromString(response).value();
 
   EXPECT_CALL(*mock, ComposeObject(_))
