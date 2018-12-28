@@ -84,7 +84,7 @@ class CurlUploadRequest {
   void Flush();
 
   /// Closes the transfer and wait for the server's response.
-  HttpResponse Close();
+  StatusOr<HttpResponse> Close();
 
   /**
    * Flushes the current buffer and swap the current buffer with @p next_buffer.
@@ -97,7 +97,7 @@ class CurlUploadRequest {
  private:
   friend class CurlRequestBuilder;
   /// Sets the underlying CurlHandle options initially.
-  void SetOptions();
+  Status SetOptions();
 
   /// Resets the underlying CurlHandle options after a move operation.
   void ResetOptions();
@@ -107,7 +107,7 @@ class CurlUploadRequest {
 
   /// Waits until a condition is met.
   template <typename Predicate>
-  void Wait(Predicate&& predicate) {
+  Status Wait(Predicate&& predicate) {
     int repeats = 0;
     // We can assert that the current thread is the leader, because the
     // predicate is satisfied, and the condition variable exited. Therefore,
@@ -120,25 +120,32 @@ class CurlUploadRequest {
                      << ", curl.end="
                      << std::distance(buffer_.begin(), buffer_.end());
       auto running_handles = PerformWork();
+      if (not running_handles.ok()) {
+        return std::move(running_handles).status();
+      }
       // Only wait if there are CURL handles with pending work *and* the
       // predicate is not satisfied. Note that if the predicate is ill-defined
       // it might continue to be unsatisfied even though the handles have
       // completed their work.
-      if (running_handles == 0 or predicate()) {
-        return;
+      if (*running_handles == 0 or predicate()) {
+        return Status();
       }
-      WaitForHandles(repeats);
+      auto status = WaitForHandles(repeats);
+      if (not status.ok()) {
+        return status;
+      }
     }
+    return Status();
   }
 
   /// Uses libcurl to perform at least part of the transfer.
-  int PerformWork();
+  StatusOr<int> PerformWork();
 
   /// Uses libcurl to wait until the underlying data can perform work.
-  void WaitForHandles(int& repeats);
+  Status WaitForHandles(int& repeats);
 
   /// Simplifies handling of errors in the curl_multi_* API.
-  void RaiseOnError(char const* where, CURLMcode result);
+  Status AsStatus(CURLMcode result, char const* where);
 
   /// Raises an exception if the application tries to use a closed request.
   void ValidateOpen(char const* where);

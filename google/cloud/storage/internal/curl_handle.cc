@@ -145,10 +145,13 @@ void CurlHandle::FlushDebug(char const* where) {
   }
 }
 
-void CurlHandle::RaiseError(CURLcode e, char const* where) {
+Status CurlHandle::AsStatus(CURLcode e, char const* where) {
+  if (e == CURLE_OK) {
+    return Status();
+  }
   std::ostringstream os;
-  os << "Error [" << e << "]=" << curl_easy_strerror(e) << " in " << where;
-  google::cloud::internal::RaiseRuntimeError(os.str());
+  os << where << "() - CURL error [" << e << "]=" << curl_easy_strerror(e);
+  return Status(StatusCode::UNKNOWN, std::move(os).str());
 }
 
 void CurlHandle::RaiseSetOptionError(CURLcode e, CURLoption opt, long param) {

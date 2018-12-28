@@ -77,7 +77,7 @@ class CurlRequest {
    *
    * @throw std::runtime_error if the request cannot be made at all.
    */
-  HttpResponse MakeRequest(std::string const& payload);
+  StatusOr<HttpResponse> MakeRequest(std::string const& payload);
 
  private:
   friend class CurlRequestBuilder;

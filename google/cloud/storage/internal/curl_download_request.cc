@@ -37,7 +37,7 @@ CurlDownloadRequest::CurlDownloadRequest(std::size_t initial_buffer_size)
   buffer_.reserve(initial_buffer_size);
 }
 
-HttpResponse CurlDownloadRequest::Close() {
+StatusOr<HttpResponse> CurlDownloadRequest::Close() {
   // Set the the closing_ flag to trigger a return 0 from the next read
   // callback, see the comments in the header file for more details.
   closing_ = true;
@@ -46,13 +46,20 @@ HttpResponse CurlDownloadRequest::Close() {
 
   // Now remove the handle from the CURLM* interface and wait for the response.
   auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
-  RaiseOnError(__func__, error);
+  auto status = AsStatus(error, __func__);
+  if (not status.ok()) {
+    return status;
+  }
 
-  long http_code = handle_.GetResponseCode();
-  return HttpResponse{http_code, std::string{}, std::move(received_headers_)};
+  StatusOr<long> http_code = handle_.GetResponseCode();
+  if (not http_code.ok()) {
+    return http_code.status();
+  }
+  return HttpResponse{http_code.value(), std::string{},
+                      std::move(received_headers_)};
 }
 
-HttpResponse CurlDownloadRequest::GetMore(std::string& buffer) {
+StatusOr<HttpResponse> CurlDownloadRequest::GetMore(std::string& buffer) {
   handle_.FlushDebug(__func__);
   Wait([this] {
     return curl_closed_ or buffer_.size() >= initial_buffer_size_;
@@ -62,30 +69,40 @@ HttpResponse CurlDownloadRequest::GetMore(std::string& buffer) {
   if (curl_closed_) {
     // Remove the handle from the CURLM* interface and wait for the response.
     auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
-    RaiseOnError(__func__, error);
+    Status status = AsStatus(error, __func__);
+    if (not status.ok()) {
+      return status;
+    }
 
     buffer_.swap(buffer);
     buffer_.clear();
-    long http_code = handle_.GetResponseCode();
+    StatusOr<long> http_code = handle_.GetResponseCode();
+    if (not http_code.ok()) {
+      return std::move(http_code).status();
+    }
     GCP_LOG(DEBUG) << __func__ << "(), size=" << buffer.size()
                    << ", closing=" << closing_ << ", closed=" << curl_closed_
-                   << ", code=" << http_code;
-    return HttpResponse{http_code, std::string{}, std::move(received_headers_)};
+                   << ", code=" << *http_code;
+    return HttpResponse{http_code.value(), std::string{},
+                        std::move(received_headers_)};
   }
   buffer_.swap(buffer);
   buffer_.clear();
   buffer_.reserve(initial_buffer_size_);
-  handle_.EasyPause(CURLPAUSE_RECV_CONT);
+  Status pause = handle_.EasyPause(CURLPAUSE_RECV_CONT);
+  if (not pause.ok()) {
+    return pause;
+  }
   GCP_LOG(DEBUG) << __func__ << "(), size=" << buffer.size()
                  << ", closing=" << closing_ << ", closed=" << curl_closed_
                  << ", code=100";
   return HttpResponse{100, {}, {}};
 }
 
-void CurlDownloadRequest::SetOptions() {
+Status CurlDownloadRequest::SetOptions() {
   ResetOptions();
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
-  RaiseOnError(__func__, error);
+  return AsStatus(error, __func__);
 }
 
 void CurlDownloadRequest::ResetOptions() {
@@ -132,7 +149,7 @@ std::size_t CurlDownloadRequest::WriteCallback(void* ptr, std::size_t size,
   return size * nmemb;
 }
 
-int CurlDownloadRequest::PerformWork() {
+StatusOr<int> CurlDownloadRequest::PerformWork() {
   // Block while there is work to do, apparently newer versions of libcurl do
   // not need this loop and curl_multi_perform() blocks until there is no more
   // work, but is it pretty harmless to keep here.
@@ -143,7 +160,10 @@ int CurlDownloadRequest::PerformWork() {
   } while (result == CURLM_CALL_MULTI_PERFORM);
 
   // Raise an exception if the result is unexpected, otherwise return.
-  RaiseOnError(__func__, result);
+  auto status = AsStatus(result, __func__);
+  if (not status.ok()) {
+    return status;
+  }
   if (running_handles == 0) {
     // The only way we get here is if the handle "completed", and therefore the
     // transfer either failed or was successful. Pull all the messages out of
@@ -159,7 +179,7 @@ int CurlDownloadRequest::PerformWork() {
            << ", msg.msg=[" << msg->msg << "]"
            << ", result=[" << msg->data.result
            << "]=" << curl_easy_strerror(msg->data.result);
-        google::cloud::internal::RaiseRuntimeError(os.str());
+        return Status(StatusCode::UNKNOWN, std::move(os).str());
       }
       GCP_LOG(DEBUG) << __func__ << "(): msg.msg=[" << msg->msg << "], "
                      << " result=[" << msg->data.result
@@ -171,15 +191,15 @@ int CurlDownloadRequest::PerformWork() {
   return running_handles;
 }
 
-void CurlDownloadRequest::WaitForHandles(int& repeats) {
+Status CurlDownloadRequest::WaitForHandles(int& repeats) {
   int const timeout_ms = 1;
   std::chrono::milliseconds const timeout(timeout_ms);
   int numfds = 0;
   CURLMcode result =
       curl_multi_wait(multi_.get(), nullptr, 0, timeout_ms, &numfds);
-  GCP_LOG(DEBUG) << __func__ << "(): numfds=" << numfds
-                 << ", result=" << result << ", repeats=" << repeats;
-  RaiseOnError(__func__, result);
+  GCP_LOG(DEBUG) << __func__ << "(): numfds=" << numfds << ", result=" << result
+                 << ", repeats=" << repeats;
+  return AsStatus(result, __func__);
   // The documentation for curl_multi_wait() recommends sleeping if it returns
   // numfds == 0 more than once in a row :shrug:
   //    https://curl.haxx.se/libcurl/c/curl_multi_wait.html
@@ -190,16 +210,17 @@ void CurlDownloadRequest::WaitForHandles(int& repeats) {
   } else {
     repeats = 0;
   }
+  return Status();
 }
 
-void CurlDownloadRequest::RaiseOnError(char const* where, CURLMcode result) {
+Status CurlDownloadRequest::AsStatus(CURLMcode result, char const *where) {
   if (result == CURLM_OK) {
-    return;
+    return Status();
   }
   std::ostringstream os;
-  os << where << ": unexpected error code in curl_multi_perform, [" << result
+  os << where << "(): unexpected error code in curl_multi_*, [" << result
      << "]=" << curl_multi_strerror(result);
-  google::cloud::internal::RaiseRuntimeError(os.str());
+  return Status(StatusCode::UNKNOWN, std::move(os).str());
 }
 
 }  // namespace internal

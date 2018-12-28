@@ -98,17 +98,21 @@ class AuthorizedUserCredentials : public Credentials {
     namespace nl = storage::internal::nl;
 
     auto response = request_.MakeRequest(payload_);
-    if (response.status_code >= 300) {
-      return storage::Status(response.status_code, std::move(response.payload));
+    if (not response.ok()) {
+      return std::move(response).status();
     }
-    nl::json access_token = nl::json::parse(response.payload, nullptr, false);
+    if (response->status_code >= 300) {
+      return storage::Status(response->status_code,
+                             std::move(response->payload));
+    }
+    nl::json access_token = nl::json::parse(response->payload, nullptr, false);
     if (access_token.is_discarded() or
         access_token.count("access_token") == 0U or
         access_token.count("expires_in") == 0U or
         access_token.count("id_token") == 0U or
         access_token.count("token_type") == 0U) {
       return storage::Status(
-          response.status_code, std::move(response.payload),
+          response->status_code, std::move(response->payload),
           "Could not find all required fields in response (access_token,"
           " id_token, expires_in, token_type).");
     }

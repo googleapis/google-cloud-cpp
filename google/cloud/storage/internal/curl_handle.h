@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_HANDLE_H_
 
 #include "google/cloud/storage/internal/curl_wrappers.h"
+#include "google/cloud/storage/status_or.h"
 #include <curl/curl.h>
 
 namespace google {
@@ -141,28 +142,23 @@ class CurlHandle {
     RaiseSetOptionError(e, option, std::forward<T>(param));
   }
 
-  void EasyPerform() {
+  Status EasyPerform() {
     auto e = curl_easy_perform(handle_.get());
-    if (e == CURLE_OK) {
-      return;
-    }
-    RaiseError(e, __func__);
+    return AsStatus(e, __func__);
   }
 
-  long GetResponseCode() {
+  StatusOr<long> GetResponseCode() {
     long code;
     auto e = curl_easy_getinfo(handle_.get(), CURLINFO_RESPONSE_CODE, &code);
-    if (e != CURLE_OK) {
-      RaiseError(e, __func__);
+    if (e == CURLE_OK) {
+      return code;
     }
-    return code;
+    return AsStatus(e, __func__);
   }
 
-  void EasyPause(int bitmask) {
+  Status EasyPause(int bitmask) {
     auto e = curl_easy_pause(handle_.get(), bitmask);
-    if (e != CURLE_OK) {
-      RaiseError(e, __func__);
-    }
+    return AsStatus(e, __func__);
   }
 
   void EnableLogging(bool enabled);
@@ -178,7 +174,7 @@ class CurlHandle {
   friend class CurlUploadRequest;
   friend class CurlRequestBuilder;
 
-  [[noreturn]] void RaiseError(CURLcode e, char const* where);
+  Status AsStatus(CURLcode e, char const* where);
   [[noreturn]] void RaiseSetOptionError(CURLcode e, CURLoption opt, long param);
   [[noreturn]] void RaiseSetOptionError(CURLcode e, CURLoption opt,
                                         char const* param);

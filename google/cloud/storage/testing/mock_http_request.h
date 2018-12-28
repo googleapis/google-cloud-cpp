@@ -36,13 +36,13 @@ class MockHttpRequest {
  public:
   MockHttpRequest() : mock(std::make_shared<Impl>()) {}
 
-  internal::HttpResponse MakeRequest(std::string const& s) {
+  StatusOr<internal::HttpResponse> MakeRequest(std::string const& s) {
     return mock->MakeRequest(s);
   }
 
   struct Impl {
     MOCK_METHOD1(MakeRequest,
-                 storage::internal::HttpResponse(std::string const&));
+                 StatusOr<storage::internal::HttpResponse>(std::string const&));
   };
 
   std::shared_ptr<Impl> mock;

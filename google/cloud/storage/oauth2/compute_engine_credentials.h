@@ -101,8 +101,8 @@ class ComputeEngineCredentials : public Credentials {
    * @see https://cloud.google.com/compute/docs/storing-retrieving-metadata for
    * an overview of retrieving information from the GCE metadata server.
    */
-  storage::internal::HttpResponse DoMetadataServerGetRequest(std::string path,
-                                                             bool recursive) {
+  StatusOr<storage::internal::HttpResponse> DoMetadataServerGetRequest(
+      std::string path, bool recursive) {
     // Allows mocking the metadata server hostname for testing.
     std::string metadata_server_hostname =
         google::cloud::storage::internal::GceMetadataHostname();
@@ -114,7 +114,7 @@ class ComputeEngineCredentials : public Credentials {
     if (recursive) {
       request_builder.AddQueryParameter("recursive", "true");
     }
-    return request_builder.BuildRequest().MakeRequest("");
+    return request_builder.BuildRequest().MakeRequest(std::string{});
   }
 
   /**
@@ -130,11 +130,15 @@ class ComputeEngineCredentials : public Credentials {
         "/computeMetadata/v1/instance/service-accounts/" +
             service_account_email_ + "/",
         true);
-    if (response.status_code >= 300) {
-      return storage::Status(response.status_code, std::move(response.payload));
+    if (not response.ok()) {
+      return std::move(response).status();
+    }
+    if (response->status_code >= 300) {
+      return storage::Status(response->status_code,
+                             std::move(response->payload));
     }
 
-    nl::json response_body = nl::json::parse(response.payload, nullptr, false);
+    nl::json response_body = nl::json::parse(response->payload, nullptr, false);
     // Note that the "scopes" attribute will always be present and contain a
     // JSON array. At minimum, for the request to succeed, the instance must
     // have been granted the scope that allows it to retrieve info from the
@@ -142,7 +146,7 @@ class ComputeEngineCredentials : public Credentials {
     if (response_body.is_discarded() or response_body.count("email") == 0U or
         response_body.count("scopes") == 0U) {
       return storage::Status(
-          response.status_code, std::move(response.payload),
+          response->status_code, std::move(response->payload),
           "Could not find all required fields in response (email, scopes).");
     }
 
@@ -167,19 +171,23 @@ class ComputeEngineCredentials : public Credentials {
         "/computeMetadata/v1/instance/service-accounts/" +
             service_account_email_ + "/token",
         false);
-    if (response.status_code >= 300) {
-      return storage::Status(response.status_code, std::move(response.payload));
+    if (not response.ok()) {
+      return std::move(response).status();
+    }
+    if (response->status_code >= 300) {
+      return storage::Status(response->status_code,
+                             std::move(response->payload));
     }
 
     // Response should have the attributes "access_token", "expires_in", and
     // "token_type".
-    nl::json access_token = nl::json::parse(response.payload, nullptr, false);
+    nl::json access_token = nl::json::parse(response->payload, nullptr, false);
     if (access_token.is_discarded() or
         access_token.count("access_token") == 0U or
         access_token.count("expires_in") == 0U or
         access_token.count("token_type") == 0U) {
       return storage::Status(
-          response.status_code, std::move(response.payload),
+          response->status_code, std::move(response->payload),
           "Could not find all required fields in response (access_token,"
           " expires_in, token_type).");
     }

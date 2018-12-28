@@ -77,12 +77,13 @@ TEST(CurlUploadRequestTest, UploadPartial) {
   expected_data += current_message;
   upload.NextBuffer(current_message);
   auto response = upload.Close();
-  ASSERT_EQ(200, response.status_code)
-      << ", status_code=" << response.status_code
-      << ", payload=" << response.payload << ", headers={" << [&response] {
+  ASSERT_TRUE(response.ok());
+  ASSERT_EQ(200, response->status_code)
+      << ", status_code=" << response->status_code
+      << ", payload=" << response->payload << ", headers={" << [&response] {
            std::string result;
            char const* sep = "";
-           for (auto&& kv : response.headers) {
+           for (auto&& kv : response->headers) {
              result += sep;
              result += kv.first;
              result += "=";
@@ -93,7 +94,7 @@ TEST(CurlUploadRequestTest, UploadPartial) {
            return result;
          }();
 
-  nl::json parsed = nl::json::parse(response.payload);
+  nl::json parsed = nl::json::parse(response->payload);
   // headers contains the headers that the httpbin server received, use that
   // to verify we configured CURL properly.
   auto headers = parsed["headers"];
