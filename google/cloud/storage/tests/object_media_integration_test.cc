@@ -579,6 +579,40 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableUploadFailure) {
   std::remove(file_name.c_str());
 }
 
+TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+  auto file_name = MakeRandomObjectName();
+
+  // Construct a large object, or at least large enough that it is not
+  // downloaded in the first chunk.
+  long const lines = 4 * 1024 * 1024 / 128;
+  std::string large_text;
+  for (long i = 0; i != lines; ++i) {
+    auto line = google::cloud::internal::Sample(generator_, 127,
+                                                "abcdefghijklmnopqrstuvwxyz"
+                                                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                                "012456789");
+    large_text += line + "\n";
+  }
+  // Create an object with the contents to download.
+  ObjectMetadata source_meta = client.InsertObject(
+      bucket_name, object_name, large_text, IfGenerationMatch(0));
+
+  // Create a iostream to read the object back.
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual;
+  std::copy_n(std::istreambuf_iterator<char>{stream}, 1024,
+              std::back_inserter(actual));
+
+  EXPECT_EQ(large_text.substr(0, 1024), actual);
+  stream.Close();
+  EXPECT_TRUE(stream.status().ok()) << "status=" << stream.status();
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
 TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingReadXML) {
   if (not UsingTestbench()) {
@@ -681,13 +715,12 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingWriteXML) {
   std::string md5_hash = ComputeMD5Hash(LoremIpsum() + "\n" + LoremIpsum());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { stream.Close(); } catch (HashMismatchError const& ex) {
-        EXPECT_NE(ex.received_hash(), ex.computed_hash());
-        EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
-        throw;
-      },
-      HashMismatchError);
+  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
+    EXPECT_NE(ex.received_hash(), ex.computed_hash());
+    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
+    throw;
+  },
+               HashMismatchError);
 #else
   stream.Close();
   EXPECT_FALSE(stream.received_hash().empty());
@@ -721,13 +754,12 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingWriteJSON) {
   std::string md5_hash = ComputeMD5Hash(LoremIpsum() + "\n" + LoremIpsum());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { stream.Close(); } catch (HashMismatchError const& ex) {
-        EXPECT_NE(ex.received_hash(), ex.computed_hash());
-        EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
-        throw;
-      },
-      HashMismatchError);
+  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
+    EXPECT_NE(ex.received_hash(), ex.computed_hash());
+    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
+    throw;
+  },
+               HashMismatchError);
 #else
   stream.Close();
   EXPECT_FALSE(stream.received_hash().empty());
@@ -1088,13 +1120,12 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingWriteXML) {
       ComputeCrc32cChecksum(LoremIpsum() + "\n" + LoremIpsum());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { stream.Close(); } catch (HashMismatchError const& ex) {
-        EXPECT_NE(ex.received_hash(), ex.computed_hash());
-        EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
-        throw;
-      },
-      HashMismatchError);
+  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
+    EXPECT_NE(ex.received_hash(), ex.computed_hash());
+    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
+    throw;
+  },
+               HashMismatchError);
 #else
   stream.Close();
   EXPECT_FALSE(stream.received_hash().empty());
@@ -1129,13 +1160,12 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
       ComputeCrc32cChecksum(LoremIpsum() + "\n" + LoremIpsum());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { stream.Close(); } catch (HashMismatchError const& ex) {
-        EXPECT_NE(ex.received_hash(), ex.computed_hash());
-        EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
-        throw;
-      },
-      HashMismatchError);
+  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
+    EXPECT_NE(ex.received_hash(), ex.computed_hash());
+    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
+    throw;
+  },
+               HashMismatchError);
 #else
   stream.Close();
   EXPECT_FALSE(stream.received_hash().empty());
