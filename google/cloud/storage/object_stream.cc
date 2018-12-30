@@ -44,12 +44,14 @@ ObjectReadStream::~ObjectReadStream() {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-internal::HttpResponse ObjectReadStream::Close() {
+void ObjectReadStream::Close() {
   if (not IsOpen()) {
-    google::cloud::internal::RaiseRuntimeError(
-        "Attempting to Close() closed ObjectReadStream");
+    return;
   }
-  return buf_->Close();
+  buf_->Close();
+  if (not status().ok()) {
+    setstate(std::ios_base::badbit);
+  }
 }
 
 ObjectWriteStream::~ObjectWriteStream() {

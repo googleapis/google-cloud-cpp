@@ -35,17 +35,20 @@ CurlReadStreambuf::CurlReadStreambuf(
 
 bool CurlReadStreambuf::IsOpen() const { return download_.IsOpen(); }
 
-HttpResponse CurlReadStreambuf::Close() {
-  // TODO(#1736) - return StatusOr<> from here.
-  return download_.Close().value();
+void CurlReadStreambuf::Close() {
+  auto response = download_.Close();
+  if (not response.ok()) {
+    status_ = std::move(response).status();
+    ReportError(status_);
+  }
 }
 
 CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
   if (not IsOpen()) {
-    current_ios_buffer_.clear();
-    current_ios_buffer_.push_back('\0');
-    char* data = &current_ios_buffer_[0];
-    setg(data, data + 1, data + 1);
+    // The stream is closed, reading from a closed stream can happen if there is
+    // no object to read from, or the object is empty. In that case just setup
+    // an empty (but valid) region and verify the checksums.
+    SetEmptyRegion();
     hash_validator_result_ = HashValidator::FinishAndCheck(
         __func__ + std::string(" mismatched hashes reading from closed stream"),
         std::move(*hash_validator_));
@@ -55,13 +58,15 @@ CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
   current_ios_buffer_.reserve(target_buffer_size_);
   StatusOr<HttpResponse> response = download_.GetMore(current_ios_buffer_);
   if (not response.ok()) {
-    return traits_type::eof();
+    return ReportError(std::move(response).status());
   }
   for (auto const& kv : response->headers) {
     hash_validator_->ProcessHeader(kv.first, kv.second);
+    headers_.emplace(kv.first, kv.second);
   }
   if (response->status_code >= 300) {
-    return traits_type::eof();
+    return ReportError(
+        Status(response->status_code, std::move(response->payload)));
   }
 
   if (not current_ios_buffer_.empty()) {
@@ -70,13 +75,39 @@ CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
     setg(data, data, data + current_ios_buffer_.size());
     return traits_type::to_int_type(*data);
   }
-  current_ios_buffer_.push_back('\0');
-  char* data = &current_ios_buffer_[0];
-  setg(data, data + 1, data + 1);
+
+  // This is an actual EOF, there is no more data to download, create an
+  // empty (but valid) region:
+  SetEmptyRegion();
+  // Verify the checksums, and return the EOF character.
   hash_validator_result_ = HashValidator::FinishAndCheck(
       __func__ + std::string(" mismatched hashes at end of download"),
       std::move(*hash_validator_));
   return traits_type::eof();
+}
+
+CurlReadStreambuf::int_type CurlReadStreambuf::ReportError(Status status) {
+  // The only way to report errors from a std::basic_streambuf<> (which this
+  // class derives from) is to throw exceptions:
+  //   https://stackoverflow.com/questions/50716688/how-to-set-the-badbit-of-a-stream-by-a-customized-streambuf
+  // but we need to be able to report errors when the application has disabled
+  // exceptions via `-fno-exceptions` or a similar option. In that case we set
+  // `status_`, and report the error as an EOF. This is obviously not ideal,
+  // but it is the best we can do when the application disables the standard
+  // mechanism to signal errors.
+  status_ = std::move(status);
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  internal::ThrowStatus(status_);
+#else
+  return traits_type::eof();
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+void CurlReadStreambuf::SetEmptyRegion() {
+  current_ios_buffer_.clear();
+  current_ios_buffer_.push_back('\0');
+  char* data = &current_ios_buffer_[0];
+  setg(data, data + 1, data + 1);
 }
 
 CurlWriteStreambuf::CurlWriteStreambuf(

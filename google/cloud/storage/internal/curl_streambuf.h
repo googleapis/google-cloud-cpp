@@ -36,17 +36,25 @@ class CurlReadStreambuf : public ObjectReadStreambuf {
 
   ~CurlReadStreambuf() override = default;
 
-  HttpResponse Close() override;
+  void Close() override;
   bool IsOpen() const override;
+  Status const& status() const override { return status_; }
   std::string const& received_hash() const override {
     return hash_validator_result_.received;
   }
   std::string const& computed_hash() const override {
     return hash_validator_result_.computed;
   }
+  std::multimap<std::string, std::string> const& headers() const override {
+    return headers_;
+  }
 
  protected:
   int_type underflow() override;
+
+  int_type ReportError(Status status);
+
+  void SetEmptyRegion();
 
  private:
   CurlDownloadRequest download_;
@@ -55,6 +63,8 @@ class CurlReadStreambuf : public ObjectReadStreambuf {
 
   std::unique_ptr<HashValidator> hash_validator_;
   HashValidator::Result hash_validator_result_;
+  Status status_;
+  std::multimap<std::string, std::string> headers_;
 };
 
 /**
