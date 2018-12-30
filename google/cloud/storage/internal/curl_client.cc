@@ -282,7 +282,7 @@ StatusOr<ResumableUploadResponse> CurlClient::UploadChunk(
   bool success_with_308 =
       response->status_code == 308 and
       response->headers.find("range") != response->headers.end();
-  if (status.ok() or success_with_308) {
+  if (response->status_code < 300 or success_with_308) {
     return ResumableUploadResponse::FromHttpResponse(*std::move(response));
   }
   return AsStatus(*response);
@@ -305,7 +305,7 @@ StatusOr<ResumableUploadResponse> CurlClient::QueryResumableUpload(
   bool success_with_308 =
       response->status_code == 308 and
       response->headers.find("range") != response->headers.end();
-  if (status.ok() or success_with_308) {
+  if (response->status_code < 300 or success_with_308) {
     return ResumableUploadResponse::FromHttpResponse(*std::move(response));
   }
   return AsStatus(*response);

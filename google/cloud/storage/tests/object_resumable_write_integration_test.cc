@@ -159,6 +159,32 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
   client.DeleteObject(bucket_name, object_name);
 }
 
+TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
+  Client client;
+  auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta = client.InsertObject(bucket_name, object_name, expected,
+                                            IfGenerationMatch(0));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                               NewResumableUploadSession());
+  os << "Expected failure data:\n" << LoremIpsum();
+
+  // This operation should fail because the object already exists.
+  os.Close();
+  EXPECT_TRUE(os.bad());
+  EXPECT_FALSE(os.metadata().ok());
+  EXPECT_EQ(412, os.metadata().status().status_code());
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
