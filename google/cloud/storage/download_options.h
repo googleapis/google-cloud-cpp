@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_DOWNLOAD_OPTIONS_H_
 
 #include "google/cloud/storage/internal/complex_option.h"
+#include <cstdint>
 #include <iostream>
 #include <string>
 
@@ -42,7 +43,8 @@ struct ReadRange : public internal::ComplexOption<ReadRange, ReadRangeData> {
 };
 
 inline std::ostream& operator<<(std::ostream& os, ReadRangeData const& rhs) {
-  return os << "ReadRange={begin=" << rhs.begin << ", end=" << rhs.end << "}";
+  return os << "ReadRangeData={begin=" << rhs.begin << ", end=" << rhs.end
+            << "}";
 }
 
 }  // namespace STORAGE_CLIENT_NS
