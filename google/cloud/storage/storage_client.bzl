@@ -21,6 +21,7 @@ storage_client_hdrs = [
     "bucket_metadata.h",
     "client.h",
     "client_options.h",
+    "download_options.h",
     "hashing_options.h",
     "idempotency_policy.h",
     "internal/access_control_common.h",

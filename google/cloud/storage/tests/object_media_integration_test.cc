@@ -681,13 +681,12 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingWriteXML) {
   std::string md5_hash = ComputeMD5Hash(LoremIpsum() + "\n" + LoremIpsum());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { stream.Close(); } catch (HashMismatchError const& ex) {
-        EXPECT_NE(ex.received_hash(), ex.computed_hash());
-        EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
-        throw;
-      },
-      HashMismatchError);
+  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
+    EXPECT_NE(ex.received_hash(), ex.computed_hash());
+    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
+    throw;
+  },
+               HashMismatchError);
 #else
   stream.Close();
   EXPECT_FALSE(stream.received_hash().empty());
@@ -721,13 +720,12 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingWriteJSON) {
   std::string md5_hash = ComputeMD5Hash(LoremIpsum() + "\n" + LoremIpsum());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { stream.Close(); } catch (HashMismatchError const& ex) {
-        EXPECT_NE(ex.received_hash(), ex.computed_hash());
-        EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
-        throw;
-      },
-      HashMismatchError);
+  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
+    EXPECT_NE(ex.received_hash(), ex.computed_hash());
+    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
+    throw;
+  },
+               HashMismatchError);
 #else
   stream.Close();
   EXPECT_FALSE(stream.received_hash().empty());
@@ -1088,13 +1086,12 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingWriteXML) {
       ComputeCrc32cChecksum(LoremIpsum() + "\n" + LoremIpsum());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { stream.Close(); } catch (HashMismatchError const& ex) {
-        EXPECT_NE(ex.received_hash(), ex.computed_hash());
-        EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
-        throw;
-      },
-      HashMismatchError);
+  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
+    EXPECT_NE(ex.received_hash(), ex.computed_hash());
+    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
+    throw;
+  },
+               HashMismatchError);
 #else
   stream.Close();
   EXPECT_FALSE(stream.received_hash().empty());
@@ -1129,13 +1126,12 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
       ComputeCrc32cChecksum(LoremIpsum() + "\n" + LoremIpsum());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { stream.Close(); } catch (HashMismatchError const& ex) {
-        EXPECT_NE(ex.received_hash(), ex.computed_hash());
-        EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
-        throw;
-      },
-      HashMismatchError);
+  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
+    EXPECT_NE(ex.received_hash(), ex.computed_hash());
+    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
+    throw;
+  },
+               HashMismatchError);
 #else
   stream.Close();
   EXPECT_FALSE(stream.received_hash().empty());
@@ -1143,6 +1139,75 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
   EXPECT_EQ(stream.computed_hash(), crc32c);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Read a portion of a relatively large object using the JSON API.
+TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
+  // The testbench always requires multiple iterations to copy this object.
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // This produces a text of around 4 MiB.
+  std::string large_text;
+  long const MiB = 1024; // * 1024L;
+  long const lines = 4 * MiB / 128;
+  for (long i = 0; i != lines; ++i) {
+    auto line = google::cloud::internal::Sample(generator_, 127,
+                                                "abcdefghijklmnopqrstuvwxyz"
+                                                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                                "012456789");
+    large_text += line + "\n";
+  }
+
+  ObjectMetadata source_meta = client.InsertObject(
+      bucket_name, object_name, large_text, IfGenerationMatch(0));
+  EXPECT_EQ(object_name, source_meta.name());
+  EXPECT_EQ(bucket_name, source_meta.bucket());
+
+  // Create a iostream to read the object back.
+  auto stream =
+      client.ReadObject(bucket_name, object_name, ReadRange(1 * MiB, 2 * MiB),
+                        IfGenerationNotMatch(0));
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(1 * MiB, actual.size());
+  EXPECT_EQ(large_text.substr(1 * MiB, 1 * MiB), actual);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+/// @test Read a portion of a relatively large object using the XML API.
+TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
+  // The testbench always requires multiple iterations to copy this object.
+  Client client;
+  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  // This produces a text of around 4 MiB.
+  std::string large_text;
+  long const MiB = 1024L; // 1024 * 1024L;
+  long const lines = 4 * MiB / 128;
+  for (long i = 0; i != lines; ++i) {
+    auto line = google::cloud::internal::Sample(generator_, 127,
+                                                "abcdefghijklmnopqrstuvwxyz"
+                                                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                                "012456789");
+    large_text += line + "\n";
+  }
+
+  ObjectMetadata source_meta = client.InsertObject(
+      bucket_name, object_name, large_text, IfGenerationMatch(0));
+  EXPECT_EQ(object_name, source_meta.name());
+  EXPECT_EQ(bucket_name, source_meta.bucket());
+
+  // Create a iostream to read the object back.
+  auto stream =
+      client.ReadObject(bucket_name, object_name, ReadRange(1 * MiB, 2 * MiB));
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(1 * MiB, actual.size());
+  EXPECT_EQ(large_text.substr(1 * MiB, 1 * MiB), actual);
 
   client.DeleteObject(bucket_name, object_name);
 }

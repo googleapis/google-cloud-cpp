@@ -76,6 +76,7 @@ add_library(storage_client
             client.cc
             client_options.h
             client_options.cc
+            download_options.h
             hashing_options.h
             hashing_options.cc
             idempotency_policy.h

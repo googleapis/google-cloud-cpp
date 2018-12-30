@@ -198,26 +198,25 @@ HttpResponse CreateRangeRequestResponse(
 }
 
 TEST(ObjectRequestsTest, ReadObjectRange) {
-  ReadObjectRangeRequest request("my-bucket", "my-object", 0, 1024);
+  ReadObjectRangeRequest request("my-bucket", "my-object");
 
   EXPECT_EQ("my-bucket", request.bucket_name());
   EXPECT_EQ("my-object", request.object_name());
-  EXPECT_EQ(0, request.begin());
-  EXPECT_EQ(1024, request.end());
 
   request.set_option(storage::UserProject("my-project"));
   request.set_multiple_options(storage::IfGenerationMatch(7),
-                               storage::UserProject("my-project"));
+                               storage::UserProject("my-project"),
+                               storage::ReadRange(0, 1024));
 
   std::ostringstream os;
   os << request;
   std::string actual = os.str();
   EXPECT_THAT(actual, HasSubstr("my-bucket"));
   EXPECT_THAT(actual, HasSubstr("my-object"));
-  EXPECT_THAT(actual, HasSubstr("begin=0"));
-  EXPECT_THAT(actual, HasSubstr("end=1024"));
   EXPECT_THAT(actual, HasSubstr("ifGenerationMatch=7"));
   EXPECT_THAT(actual, HasSubstr("my-project"));
+  EXPECT_THAT(actual, HasSubstr("begin=0"));
+  EXPECT_THAT(actual, HasSubstr("end=1024"));
 }
 
 TEST(ObjectRequestsTest, RangeResponseParse) {

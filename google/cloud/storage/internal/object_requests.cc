@@ -95,8 +95,7 @@ std::ostream& operator<<(std::ostream& os, CopyObjectRequest const& r) {
 
 std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r) {
   os << "ReadObjectRangeRequest={bucket_name=" << r.bucket_name()
-     << ", object_name=" << r.object_name() << ", begin=" << r.begin()
-     << ", end=" << r.end();
+     << ", object_name=" << r.object_name();
   r.DumpOptions(os, ", ");
   return os << "}";
 }
