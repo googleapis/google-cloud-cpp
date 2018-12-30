@@ -1150,10 +1150,12 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
-  // This produces a text of around 4 MiB.
+  // This produces a 64 KiB text object, normally applications should download
+  // much larger chunks from GCS, but it is really hard to figure out what is
+  // broken when the error messages are in the MiB ranges.
+  long const chunk = 16 * 1024L;
+  long const lines = 4 * chunk / 128;
   std::string large_text;
-  long const MiB = 1024; // * 1024L;
-  long const lines = 4 * MiB / 128;
   for (long i = 0; i != lines; ++i) {
     auto line = google::cloud::internal::Sample(generator_, 127,
                                                 "abcdefghijklmnopqrstuvwxyz"
@@ -1168,12 +1170,12 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
   EXPECT_EQ(bucket_name, source_meta.bucket());
 
   // Create a iostream to read the object back.
-  auto stream =
-      client.ReadObject(bucket_name, object_name, ReadRange(1 * MiB, 2 * MiB),
-                        IfGenerationNotMatch(0));
+  auto stream = client.ReadObject(bucket_name, object_name,
+                                  ReadRange(1 * chunk, 2 * chunk),
+                                  IfGenerationNotMatch(0));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_EQ(1 * MiB, actual.size());
-  EXPECT_EQ(large_text.substr(1 * MiB, 1 * MiB), actual);
+  EXPECT_EQ(1 * chunk, actual.size());
+  EXPECT_EQ(large_text.substr(1 * chunk, 1 * chunk), actual);
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -1185,10 +1187,12 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
-  // This produces a text of around 4 MiB.
+  // This produces a 64 KiB text object, normally applications should download
+  // much larger chunks from GCS, but it is really hard to figure out what is
+  // broken when the error messages are in the MiB ranges.
+  long const chunk = 16 * 1024L;
+  long const lines = 4 * chunk / 128;
   std::string large_text;
-  long const MiB = 1024L; // 1024 * 1024L;
-  long const lines = 4 * MiB / 128;
   for (long i = 0; i != lines; ++i) {
     auto line = google::cloud::internal::Sample(generator_, 127,
                                                 "abcdefghijklmnopqrstuvwxyz"
@@ -1203,11 +1207,11 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
   EXPECT_EQ(bucket_name, source_meta.bucket());
 
   // Create a iostream to read the object back.
-  auto stream =
-      client.ReadObject(bucket_name, object_name, ReadRange(1 * MiB, 2 * MiB));
+  auto stream = client.ReadObject(bucket_name, object_name,
+                                  ReadRange(1 * chunk, 2 * chunk));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_EQ(1 * MiB, actual.size());
-  EXPECT_EQ(large_text.substr(1 * MiB, 1 * MiB), actual);
+  EXPECT_EQ(1 * chunk, actual.size());
+  EXPECT_EQ(large_text.substr(1 * chunk, 1 * chunk), actual);
 
   client.DeleteObject(bucket_name, object_name);
 }
