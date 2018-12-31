@@ -792,7 +792,7 @@ class Client {
    *     Valid types for this operation include `DisableCrc32cChecksum`,
    *     `DisableMD5Hash`, `IfGenerationMatch`, `EncryptionKey`, `Generation`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, and `UserProject`.
+   *     `IfMetagenerationNotMatch`, `ReadRange`, and `UserProject`.
    *
    * @throw std::runtime_error if there is a permanent failure, or if there were
    *     more transient failures than allowed by the current retry policy.
@@ -943,7 +943,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *   Valid types for this operation include `IfGenerationMatch`,
    *   `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *   `IfMetagenerationNotMatch`, `Generation`, and `UserProject`.
+   *   `IfMetagenerationNotMatch`, `Generation`, `ReadRange`, and `UserProject`.
    *
    * @throw std::runtime_error if there is a permanent failure, or if there were
    *     more transient failures than allowed by the current retry policy.

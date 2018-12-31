@@ -68,6 +68,9 @@ std::unique_ptr<HashValidator> CreateHashValidator(bool disable_md5,
 /// Create a HashValidator for a download request.
 std::unique_ptr<HashValidator> CreateHashValidator(
     ReadObjectRangeRequest const& request) {
+  if (request.HasOption<ReadRange>()) {
+    return google::cloud::internal::make_unique<NullHashValidator>();
+  }
   return CreateHashValidator(request.HasOption<DisableMD5Hash>(),
                              request.HasOption<DisableCrc32cChecksum>());
 }
@@ -541,6 +544,18 @@ StatusOr<std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObject(
     return status;
   }
   builder.AddQueryParameter("alt", "media");
+  if (request.HasOption<ReadRange>()) {
+    auto range = request.GetOption<ReadRange>().value();
+    std::string header = "Range: bytes=" + std::to_string(range.begin) + "-" +
+                         std::to_string(range.end - 1);
+    builder.AddHeader(header);
+    // When doing a range read we need to disable decompression because range
+    // reads do not work in that case:
+    //   https://cloud.google.com/storage/docs/transcoding#range
+    // and
+    //   https://cloud.google.com/storage/docs/transcoding#decompressive_transcoding
+    builder.AddHeader("Cache-Control: no-transform");
+  }
 
   std::unique_ptr<CurlReadStreambuf> buf(new CurlReadStreambuf(
       builder.BuildDownloadRequest(std::string{}),
@@ -1170,6 +1185,19 @@ StatusOr<std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObjectXml(
   builder.AddOption(request.GetOption<IfNoneMatchEtag>());
   // QuotaUser cannot be set, checked by the caller.
   // UserIp cannot be set, checked by the caller.
+
+  if (request.HasOption<ReadRange>()) {
+    auto range = request.GetOption<ReadRange>().value();
+    std::string header = "Range: bytes=" + std::to_string(range.begin) + "-" +
+                         std::to_string(range.end - 1);
+    builder.AddHeader(header);
+    // When doing a range read we need to disable decompression because range
+    // reads do not work in that case:
+    //   https://cloud.google.com/storage/docs/transcoding#range
+    // and
+    //   https://cloud.google.com/storage/docs/transcoding#decompressive_transcoding
+    builder.AddHeader("Cache-Control: no-transform");
+  }
 
   std::unique_ptr<CurlReadStreambuf> buf(new CurlReadStreambuf(
       builder.BuildDownloadRequest(std::string{}),
