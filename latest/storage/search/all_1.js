@@ -1,7 +1,7 @@
 var searchData=
 [
   ['backoffpolicy',['BackoffPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a7f73bbe5b014de9c6313e2abf756b71e',1,'google::cloud::storage::v0']]],
-  ['begin',['begin',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#a6bad7171015ee092d9a124b39139c167',1,'google::cloud::storage::v0::ListBucketsReader::begin()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsReader.html#a6444af24857f5dbcdaafe9a14e76c3ab',1,'google::cloud::storage::v0::ListObjectsReader::begin()']]],
+  ['begin',['begin',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1ReadRangeData.html#afac1edcd1c7349a6b26f79d09194c752',1,'google::cloud::storage::v0::ReadRangeData::begin()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#a6bad7171015ee092d9a124b39139c167',1,'google::cloud::storage::v0::ListBucketsReader::begin()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsReader.html#a6444af24857f5dbcdaafe9a14e76c3ab',1,'google::cloud::storage::v0::ListObjectsReader::begin()']]],
   ['billing',['billing',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a2f2d0d920e3d3dccb3df90aeded87bf8',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['billing_5fas_5foptional',['billing_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#afc8037964e65062725a81bbe255af263',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['bucket',['bucket',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#aa9c2ef62d0d321c53625bfb21efc216e',1,'google::cloud::storage::v0::ObjectMetadata']]],

@@ -306,6 +306,11 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1QuotaUser.html">QuotaUser</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the user for this operation for quota enforcement purposes.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1QuotaUser.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ReadRange.html">ReadRange</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request only a portion of the GCS object in a ReadObject operation.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ReadRange.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ReadRangeData.html">ReadRangeData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1RewriteProgress.html">RewriteProgress</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the status of a rewrite operation.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1RewriteProgress.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -617,6 +622,8 @@ Functions</h2></td></tr>
 <tr class="memitem:abca1cce326f7aa9912580588c4517e70"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKeyData.html">EncryptionKeyData</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#abca1cce326f7aa9912580588c4517e70">CreateKeyFromGenerator</a> (Generator &amp;gen)</td></tr>
 <tr class="memdesc:abca1cce326f7aa9912580588c4517e70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an encryption key parameter from a pseudo-random number generator.  <a href="#abca1cce326f7aa9912580588c4517e70">More...</a><br /></td></tr>
 <tr class="separator:abca1cce326f7aa9912580588c4517e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb33967b82e40901cdd891fe615372fb"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#acb33967b82e40901cdd891fe615372fb">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ReadRangeData.html">ReadRangeData</a> const &amp;rhs)</td></tr>
+<tr class="separator:acb33967b82e40901cdd891fe615372fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Comparison operators for CorsEntry.</div></td></tr>
 <tr class="memitem:a392fb8bf4acb46a45dd5165e7a40b2ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a392fb8bf4acb46a45dd5165e7a40b2ee">operator==</a> (<a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html">CorsEntry</a> const &amp;lhs, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html">CorsEntry</a> const &amp;rhs)</td></tr>
 <tr class="separator:a392fb8bf4acb46a45dd5165e7a40b2ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1952,7 +1959,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="a7b9a40689d5dff874b53c8bb958c9286"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b9a40689d5dff874b53c8bb958c9286">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[1/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b9a40689d5dff874b53c8bb958c9286">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[1/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1980,7 +1987,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="ab3cdc52bfa25843479b90f9ef12c0ff3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3cdc52bfa25843479b90f9ef12c0ff3">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[2/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3cdc52bfa25843479b90f9ef12c0ff3">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[2/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2008,7 +2015,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="a72c990cbe5503fe21b08d4a0af3d36ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72c990cbe5503fe21b08d4a0af3d36ca">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[3/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a72c990cbe5503fe21b08d4a0af3d36ca">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[3/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2036,7 +2043,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="a39553998e5dcc4ff40ab2eb06b0a5c2d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a39553998e5dcc4ff40ab2eb06b0a5c2d">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[4/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a39553998e5dcc4ff40ab2eb06b0a5c2d">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[4/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2063,8 +2070,44 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="acb33967b82e40901cdd891fe615372fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb33967b82e40901cdd891fe615372fb">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[5/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; google::cloud::storage::v0::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ReadRangeData.html">ReadRangeData</a> const &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ac5e1d14dba2e50ddaa63c13c5a46c368"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5e1d14dba2e50ddaa63c13c5a46c368">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[5/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5e1d14dba2e50ddaa63c13c5a46c368">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[6/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2092,7 +2135,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="a2853d016c5621a676d8986b01e473c6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2853d016c5621a676d8986b01e473c6f">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[6/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2853d016c5621a676d8986b01e473c6f">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[7/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2120,7 +2163,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="adf7f0487f39f062755323ce7bd932b51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adf7f0487f39f062755323ce7bd932b51">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[7/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adf7f0487f39f062755323ce7bd932b51">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[8/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2148,7 +2191,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="a135c438f75bd59f11ddba23746118089"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a135c438f75bd59f11ddba23746118089">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[8/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a135c438f75bd59f11ddba23746118089">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[9/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2176,7 +2219,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="ac2b84b51f78f0e92b307fbf71b60c922"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac2b84b51f78f0e92b307fbf71b60c922">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[9/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2b84b51f78f0e92b307fbf71b60c922">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[10/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2204,7 +2247,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="a76e1eacccfbd6dbfe9673bc06a514e94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a76e1eacccfbd6dbfe9673bc06a514e94">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[10/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a76e1eacccfbd6dbfe9673bc06a514e94">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[11/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2232,7 +2275,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="a4c1c2e6ce5291cb200ca31fe72e961a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c1c2e6ce5291cb200ca31fe72e961a3">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[11/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c1c2e6ce5291cb200ca31fe72e961a3">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[12/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2260,7 +2303,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="ac30c1b95375b86684bfb67e62bbe08c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac30c1b95375b86684bfb67e62bbe08c3">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[12/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac30c1b95375b86684bfb67e62bbe08c3">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[13/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2288,7 +2331,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="ad6a57fa33ba179b662d3877b7802e0f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6a57fa33ba179b662d3877b7802e0f2">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[13/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6a57fa33ba179b662d3877b7802e0f2">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[14/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2316,7 +2359,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="a4acdc213c26a2348d39840aff09839f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4acdc213c26a2348d39840aff09839f0">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[14/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4acdc213c26a2348d39840aff09839f0">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[15/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2352,7 +2395,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="abda4ac5af9c7e1f33aadbc491b014125"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abda4ac5af9c7e1f33aadbc491b014125">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[15/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abda4ac5af9c7e1f33aadbc491b014125">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[16/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2380,7 +2423,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="a626a045cec7e9915f742d3d365b69aa2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a626a045cec7e9915f742d3d365b69aa2">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[16/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a626a045cec7e9915f742d3d365b69aa2">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[17/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2408,7 +2451,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="a43c0febed41579ba67fd4138a287168e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43c0febed41579ba67fd4138a287168e">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[17/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a43c0febed41579ba67fd4138a287168e">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[18/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2436,7 +2479,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="ac3deb3121b3bd5d27a5e23824a5315a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3deb3121b3bd5d27a5e23824a5315a7">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[18/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3deb3121b3bd5d27a5e23824a5315a7">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[19/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2464,7 +2507,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="ababa626e8b146ee5e8a4e9511e0acd41"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ababa626e8b146ee5e8a4e9511e0acd41">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[19/19]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ababa626e8b146ee5e8a4e9511e0acd41">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[20/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

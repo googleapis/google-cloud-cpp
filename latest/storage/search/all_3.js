@@ -26,6 +26,7 @@ var searchData=
   ['do_5fnot_5fuse',['DO_NOT_USE',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a7c6ad160c6632a7277b2b747f9a05f02a1df1937718d92b580a87a94d495583bb',1,'google::cloud::storage::v0']]],
   ['done',['done',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1RewriteProgress.html#adeed7261b94ff34bcbeb04e080883cfa',1,'google::cloud::storage::v0::RewriteProgress']]],
   ['download_5fbuffer_5fsize',['download_buffer_size',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a296af603db8b89499f06568c210790f2',1,'google::cloud::storage::v0::ClientOptions']]],
+  ['download_5foptions_2eh',['download_options.h',['../download__options_8h.html',1,'']]],
   ['downloadtofile',['DownloadToFile',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a9912e594f369136c1a75e76894757aad',1,'google::cloud::storage::v0::Client']]],
   ['durablereducedavailability',['DurableReducedAvailability',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1storage__class.html#a93c7f9d3633f88611eb5fe97477bcedf',1,'google::cloud::storage::v0::storage_class']]]
 ];
