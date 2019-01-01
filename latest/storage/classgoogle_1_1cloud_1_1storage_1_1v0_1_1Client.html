@@ -3675,6 +3675,7 @@ template&lt;typename... Options&gt; </div>
 </div><div class="memdoc">
 
 <p>Reads the contents of an object. </p>
+<p>Returns an object derived from <code>std::istream</code> which can be used to read the contents of the GCS blob. The application should check the <code>badbit</code> (e.g. by calling <code>stream.bad()</code>) on the returned object to detect if there was an error reading from the blob. If <code>badbit</code> is set, the application can check the <code>status()</code> variable to get details about the failure. Applications can also set the exception mask on the returned stream, in which case an exception is thrown if an error is detected.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">bucket_name</td><td>the name of the bucket that contains the object. </td></tr>
