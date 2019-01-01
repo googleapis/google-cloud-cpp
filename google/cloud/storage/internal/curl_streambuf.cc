@@ -44,14 +44,34 @@ void CurlReadStreambuf::Close() {
 }
 
 CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
+  char const* function_name = __func__;
+  auto report_hash_mismatch = [this,
+                               function_name]() -> CurlReadStreambuf::int_type {
+    std::string msg;
+    msg += function_name;
+    msg += "() - mismatched hashes in download";
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    throw HashMismatchError(msg, hash_validator_result_.received,
+                            hash_validator_result_.computed);
+#else
+    msg += ", expected=";
+    msg += hash_validator_result_.computed;
+    msg += ", received=";
+    msg += hash_validator_result_.received;
+    status_ = Status(StatusCode::DATA_LOSS, std::move(msg));
+    return traits_type::eof();
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  };
+
   if (not IsOpen()) {
     // The stream is closed, reading from a closed stream can happen if there is
     // no object to read from, or the object is empty. In that case just setup
     // an empty (but valid) region and verify the checksums.
     SetEmptyRegion();
-    hash_validator_result_ = HashValidator::FinishAndCheck(
-        __func__ + std::string(" mismatched hashes reading from closed stream"),
-        std::move(*hash_validator_));
+    hash_validator_result_ = std::move(*hash_validator_).Finish();
+    if (hash_validator_result_.is_mismatch) {
+      return report_hash_mismatch();
+    }
     return traits_type::eof();
   }
 
@@ -80,9 +100,10 @@ CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
   // empty (but valid) region:
   SetEmptyRegion();
   // Verify the checksums, and return the EOF character.
-  hash_validator_result_ = HashValidator::FinishAndCheck(
-      __func__ + std::string(" mismatched hashes at end of download"),
-      std::move(*hash_validator_));
+  hash_validator_result_ = std::move(*hash_validator_).Finish();
+  if (hash_validator_result_.is_mismatch) {
+    return report_hash_mismatch();
+  }
   return traits_type::eof();
 }
 
@@ -121,10 +142,10 @@ CurlWriteStreambuf::CurlWriteStreambuf(
 
 bool CurlWriteStreambuf::IsOpen() const { return upload_.IsOpen(); }
 
-void CurlWriteStreambuf::ValidateHash(ObjectMetadata const& meta) {
+bool CurlWriteStreambuf::ValidateHash(ObjectMetadata const& meta) {
   hash_validator_->ProcessMetadata(meta);
-  hash_validator_result_ =
-      HashValidator::FinishAndCheck(__func__, std::move(*hash_validator_));
+  hash_validator_result_ = std::move(*hash_validator_).Finish();
+  return not hash_validator_result_.is_mismatch;
 }
 
 CurlWriteStreambuf::int_type CurlWriteStreambuf::overflow(int_type ch) {

@@ -94,8 +94,9 @@ void ObjectWriteStream::Close() {
     }
   }
 
-  // TODO(#1747) - do not throw exceptions here.
-  buf_->ValidateHash(*metadata_);
+  if (not buf_->ValidateHash(*metadata_)) {
+    setstate(std::ios_base::badbit);
+  }
 }
 
 void ObjectWriteStream::Suspend() && { buf_.reset(); }

@@ -65,19 +65,6 @@ class HashValidator {
    *   validators that disable validation.
    */
   virtual Result Finish() && = 0;
-
-  /**
-   * Raise an exception if the hashes do not match.
-   *
-   * @throws google::cloud::storage::HashValidation
-   */
-  static void CheckResult(std::string const& msg, Result const& result);
-
-  /**
-   * Call Finish() on the validator and check the result.
-   */
-  static Result FinishAndCheck(std::string const& msg,
-                               HashValidator&& validator);
 };
 
 /**

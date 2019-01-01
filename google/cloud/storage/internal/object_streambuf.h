@@ -69,7 +69,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
 
   StatusOr<HttpResponse> Close();
   virtual bool IsOpen() const = 0;
-  virtual void ValidateHash(ObjectMetadata const& meta) = 0;
+  virtual bool ValidateHash(ObjectMetadata const& meta) = 0;
   virtual std::string const& received_hash() const = 0;
   virtual std::string const& computed_hash() const = 0;
 
