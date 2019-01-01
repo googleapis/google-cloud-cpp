@@ -63,10 +63,63 @@ class ObjectReadStream : public std::basic_istream<char> {
   /// Closes the stream (if necessary).
   ~ObjectReadStream() override;
 
-  bool IsOpen() const { return buf_.get() != nullptr and buf_->IsOpen(); }
-  internal::HttpResponse Close();
+  bool IsOpen() const { return (bool)buf_ and buf_->IsOpen(); }
+
+  /**
+   * Terminate the download, possibly before completing it.
+   */
+  void Close();
+
+  //@{
+  /**
+   * Report any download errors.
+   *
+   * Note that errors may go undetected until the download completes.
+   */
+  Status const& status() const& { return buf_->status(); }
+
+  /**
+   * The received CRC32C checksum and the MD5 hash values as reported by GCS.
+   *
+   * When the download is finalized (via `Close()` or the end of file) the GCS
+   * server reports the CRC32C checksum and, except for composite objects, the
+   * MD5 hash of the data. This class compares the locally computed and received
+   * hashes so applications can detect data download errors.
+   *
+   * The values are reported as comma separated `tag=value` pairs, e.g.
+   * `crc32c=AAAAAA==,md5=1B2M2Y8AsgTpgAmY7PhCfg==`. The format of this string
+   * is subject to change without notice, they are provided for informational
+   * purposes only.
+   *
+   * @see https://cloud.google.com/storage/docs/hashes-etags for more
+   *     information on checksums and hashes in GCS.
+   */
   std::string const& received_hash() const { return buf_->received_hash(); }
+
+  /**
+   * The locally computed checksum and hashes, as a string.
+   *
+   * This object computes the CRC32C checksum and MD5 hash of the downloaded
+   * data. Note that there are several cases where these values may be empty or
+   * irrelevant, for example:
+   *   - When reading only a portion of a blob the hash of that portion is
+   *     irrelevant, note that GCS only reports the hashes for the full blob.
+   *   - The application may disable the CRC32C and/or the MD5 hash computation.
+   *
+   * The string has the same format as the value returned by `received_hash()`.
+   * Note that the format of this string is also subject to change without
+   * notice.
+   *
+   * @see https://cloud.google.com/storage/docs/hashes-etags for more
+   *     information on checksums and hashes in GCS.
+   */
   std::string const& computed_hash() const { return buf_->computed_hash(); }
+
+  /// The headers returned by the service, for debugging only.
+  std::multimap<std::string, std::string> const& headers() const {
+    return buf_->headers();
+  }
+  //@}
 
  private:
   std::unique_ptr<internal::ObjectReadStreambuf> buf_;

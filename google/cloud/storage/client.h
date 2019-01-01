@@ -786,6 +786,14 @@ class Client {
   /**
    * Reads the contents of an object.
    *
+   * Returns an object derived from `std::istream` which can be used to read the
+   * contents of the GCS blob. The application should check the `badbit` (e.g.
+   * by calling `stream.bad()`) on the returned object to detect if there was
+   * an error reading from the blob. If `badbit` is set, the application can
+   * check the `status()` variable to get details about the failure.
+   * Applications can also set the exception mask on the returned stream, in
+   * which case an exception is thrown if an error is detected.
+   *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
    * @param options a list of optional query parameters and/or request headers.

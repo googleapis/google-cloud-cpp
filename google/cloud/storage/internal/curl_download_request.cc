@@ -42,11 +42,14 @@ StatusOr<HttpResponse> CurlDownloadRequest::Close() {
   // callback, see the comments in the header file for more details.
   closing_ = true;
   // Block until that callback is made.
-  Wait([this] { return curl_closed_; });
+  auto status = Wait([this] { return curl_closed_; });
+  if (not status.ok()) {
+    return status;
+  }
 
   // Now remove the handle from the CURLM* interface and wait for the response.
   auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
-  auto status = AsStatus(error, __func__);
+  status = AsStatus(error, __func__);
   if (not status.ok()) {
     return status;
   }
@@ -61,15 +64,18 @@ StatusOr<HttpResponse> CurlDownloadRequest::Close() {
 
 StatusOr<HttpResponse> CurlDownloadRequest::GetMore(std::string& buffer) {
   handle_.FlushDebug(__func__);
-  Wait([this] {
+  auto status = Wait([this] {
     return curl_closed_ or buffer_.size() >= initial_buffer_size_;
   });
+  if (not status.ok()) {
+    return status;
+  }
   GCP_LOG(DEBUG) << __func__ << "(), curl.size=" << buffer_.size()
                  << ", closing=" << closing_ << ", closed=" << curl_closed_;
   if (curl_closed_) {
     // Remove the handle from the CURLM* interface and wait for the response.
     auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
-    Status status = AsStatus(error, __func__);
+    status = AsStatus(error, __func__);
     if (not status.ok()) {
       return status;
     }
@@ -89,9 +95,9 @@ StatusOr<HttpResponse> CurlDownloadRequest::GetMore(std::string& buffer) {
   buffer_.swap(buffer);
   buffer_.clear();
   buffer_.reserve(initial_buffer_size_);
-  Status pause = handle_.EasyPause(CURLPAUSE_RECV_CONT);
-  if (not pause.ok()) {
-    return pause;
+  status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
+  if (not status.ok()) {
+    return status;
   }
   GCP_LOG(DEBUG) << __func__ << "(), size=" << buffer.size()
                  << ", closing=" << closing_ << ", closed=" << curl_closed_

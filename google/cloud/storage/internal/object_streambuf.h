@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_STREAMBUF_H_
 
 #include "google/cloud/storage/internal/http_response.h"
+#include "google/cloud/storage/status.h"
 #include <iostream>
 
 namespace google {
@@ -41,10 +42,12 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
   ObjectReadStreambuf(ObjectReadStreambuf const&) = delete;
   ObjectReadStreambuf& operator=(ObjectReadStreambuf const&) = delete;
 
-  virtual HttpResponse Close() = 0;
+  virtual void Close() = 0;
   virtual bool IsOpen() const = 0;
+  virtual Status const& status() const = 0;
   virtual std::string const& received_hash() const = 0;
   virtual std::string const& computed_hash() const = 0;
+  virtual std::multimap<std::string, std::string> const& headers() const = 0;
 };
 
 /**

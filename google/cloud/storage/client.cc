@@ -147,39 +147,40 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
 
 void Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
                               std::string const& file_name) {
+  // TODO(#1665) - use Status to report errors.
   std::unique_ptr<internal::ObjectReadStreambuf> streambuf =
       raw_client_->ReadObject(request).value();
+  // Open the download stream and immediately raise an exception on failure.
   ObjectReadStream stream(std::move(streambuf));
-  if (stream.eof() and not stream.IsOpen()) {
-    std::string msg = __func__;
-    msg += ": cannot open source object ";
-    msg += request.object_name();
-    msg += " in bucket ";
-    msg += request.bucket_name();
-    google::cloud::internal::RaiseRuntimeError(msg);
+
+  auto report_error = [&](char const* func, char const* what) {
+    std::ostringstream msg;
+    msg << func << "(" << request << ", " << file_name
+        << "): " << what << " - status=" << stream.status();
+    google::cloud::internal::RaiseRuntimeError(std::move(msg).str());
+  };
+  if (not stream.status().ok()) {
+    report_error(__func__, "cannot open download stream");
   }
+
+  // Open the destination file, and immediate raise an exception on failure.
   std::ofstream os(file_name);
   if (not os.is_open()) {
-    std::string msg = __func__;
-    msg += ": cannot open destination file ";
-    msg += file_name;
-    google::cloud::internal::RaiseRuntimeError(msg);
+    report_error(__func__, "cannot open destination file");
   }
+
   std::string buffer;
   buffer.resize(raw_client_->client_options().download_buffer_size(), '\0');
   do {
     stream.read(&buffer[0], buffer.size());
     os.write(buffer.data(), stream.gcount());
-    if (not stream.good()) {
-      break;
-    }
-  } while (os.good());
+  } while (os.good() and stream.good());
   os.close();
   if (not os.good()) {
-    std::string msg = __func__;
-    msg += ": failure closing destination file ";
-    msg += file_name;
-    google::cloud::internal::RaiseRuntimeError(msg);
+    report_error(__func__, "error closing destination file");
+  }
+  if (not stream.status().ok()) {
+    report_error(__func__, "error in download stream");
   }
 }
 

@@ -327,8 +327,12 @@ TEST_F(ObjectIntegrationTest, ReadNotFound) {
 
   // Create a iostream to read the object back.
   auto stream = client.ReadObject(bucket_name, object_name);
-  EXPECT_TRUE(stream.eof());
+  EXPECT_FALSE(stream.status().ok());
   EXPECT_FALSE(stream.IsOpen());
+  EXPECT_EQ(404, stream.status().status_code()) << "status=" << stream.status();
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_TRUE(stream.bad());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST_F(ObjectIntegrationTest, Copy) {
@@ -1158,12 +1162,11 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
 
   // This operation should fail because the object already exists.
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { os.Close(); } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("[412]"));
-        throw;
-      },
-      std::runtime_error);
+  EXPECT_THROW(try { os.Close(); } catch (std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("[412]"));
+    throw;
+  },
+               std::runtime_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(os.Close(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
