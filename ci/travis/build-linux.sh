@@ -16,20 +16,25 @@
 
 set -eu
 
-if [ "${TRAVIS_OS_NAME}" != "linux" ]; then
+if [[ "${TRAVIS_OS_NAME}" != "linux" ]]; then
   echo "Not a Linux-based build, skipping Linux-specific build steps."
   exit 0
 fi
 
 readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
 
-# TEST_INSTALL=yes builds work better as root, but other builds should avoid
-# creating root-owned files in the build directory.
+# The default user for a Docker container has uid 0 (root). To avoid creating
+# root-owned files in the build directory we tell docker to use the current
+# user ID, if known.
 docker_uid="${UID:-0}"
-docker_home=""
-if [ "${TEST_INSTALL:-}" = "yes" -o "${SCAN_BUILD:-}" = "yes" ]; then
-  docker_uid=0
+if [[ "${docker_uid}" == "0" ]]; then
+  # If the UID is 0, then the HOME directory will be set to /root, and we
+  # need to mount the ccache files is /root/.ccache.
   docker_home=/root
+else
+  # If the UID is not zero then HOME is "/", and we need to mount the ccache
+  # files in /.ccache.
+  docker_home=""
 fi
 
 # Use a volume to store the cache files. This exports the cache files from the
