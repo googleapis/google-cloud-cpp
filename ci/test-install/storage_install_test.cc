@@ -32,17 +32,19 @@ int main(int argc, char* argv[]) try {
   gcs::Client client;
 
   gcs::ObjectWriteStream os = client.WriteObject(bucket_name, object_name);
+  os.exceptions(std::ios_base::badbit | std::ios_base::failbit);
   os << "Hello World" << std::endl;
-  gcs::ObjectMetadata meta = os.Close();
+  os.Close();
+  gcs::ObjectMetadata meta = os.metadata().value();
   std::cout << "Successfully created object, generation=" << meta.generation()
             << std::endl;
 
   gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
+  stream.exceptions(std::ios_base::badbit | std::ios_base::failbit);
 
   int count = 0;
-  while (not stream.eof()) {
-    std::string line;
-    std::getline(stream, line, '\n');
+  std::string line;
+  while (std::getline(stream, line, '\n')) {
     ++count;
   }
   client.DeleteObject(bucket_name, object_name,

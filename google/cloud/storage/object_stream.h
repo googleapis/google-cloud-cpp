@@ -197,9 +197,9 @@ class ObjectWriteStream : public std::basic_ostream<char> {
   /**
    * The received CRC32C checksum and the MD5 hash values as reported by GCS.
    *
-   * Then the upload is finalized (via `Close()`) the GCS server reports the
-   * CRC32C checksum of the uploaded object. Note that in some circumstances the
-   * MD5 hash may not be reported.
+   * When the upload is finalized (via `Close()`) the GCS server reports the
+   * CRC32C checksum and MD5 hash of the uploaded data. Note that in some
+   * circumstances the MD5 hash may not be reported.
    *
    * The values are reported as comma separated `tag=value` pairs, e.g.
    * `crc32c=AAAAAA==,md5=1B2M2Y8AsgTpgAmY7PhCfg==`. The format of this string
