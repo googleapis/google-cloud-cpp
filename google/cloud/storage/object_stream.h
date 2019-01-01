@@ -198,13 +198,17 @@ class ObjectWriteStream : public std::basic_ostream<char> {
    * The received CRC32C checksum and the MD5 hash values as reported by GCS.
    *
    * When the upload is finalized (via `Close()`) the GCS server reports the
-   * CRC32C checksum and MD5 hash of the uploaded data. Note that in some
-   * circumstances the MD5 hash may not be reported.
+   * CRC32C checksum and, if the object is not a composite object, the MDF hash
+   * of the uploaded data. This class compares the reported hashes against
+   * locally computed hash values, and reports an error if they do not match.
    *
    * The values are reported as comma separated `tag=value` pairs, e.g.
    * `crc32c=AAAAAA==,md5=1B2M2Y8AsgTpgAmY7PhCfg==`. The format of this string
    * is subject to change without notice, they are provided for informational
    * purposes only.
+   *
+   * @see https://cloud.google.com/storage/docs/hashes-etags for more
+   *     information on checksums and hashes in GCS.
    */
   std::string const& received_hash() const { return buf_->received_hash(); }
 
@@ -221,6 +225,9 @@ class ObjectWriteStream : public std::basic_ostream<char> {
    * The string has the same format as the value returned by `received_hash()`.
    * Note that the format of this string is also subject to change without
    * notice.
+   *
+   * @see https://cloud.google.com/storage/docs/hashes-etags for more
+   *     information on checksums and hashes in GCS.
    */
   std::string const& computed_hash() const { return buf_->computed_hash(); }
 
