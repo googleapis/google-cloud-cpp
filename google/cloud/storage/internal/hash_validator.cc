@@ -25,6 +25,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+
 void CompositeValidator::Update(std::string const& payload) {
   left_->Update(payload);
   right_->Update(payload);
