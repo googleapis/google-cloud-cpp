@@ -54,6 +54,14 @@ google_cloud_cpp_add_common_options(bigtable_common_options)
 list(APPEND PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis"
             "${PROJECT_SOURCE_DIR}")
 
+# Sometimes (this happens often with vcpkg) protobuf is installed in a non-
+# standard directory. We need to find out where, and then add that directory to
+# the search path for protos.
+find_path(PROTO_INCLUDE_DIR google/protobuf/descriptor.proto)
+if (PROTO_INCLUDE_DIR)
+    list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
+endif ()
+
 # Include the functions to compile proto files.
 include(CompileProtos)
 protobuf_generate_cpp(
