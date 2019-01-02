@@ -35,10 +35,10 @@ bool CurlResumableStreambuf::IsOpen() const {
   return static_cast<bool>(upload_session_);
 }
 
-void CurlResumableStreambuf::ValidateHash(ObjectMetadata const& meta) {
+bool CurlResumableStreambuf::ValidateHash(ObjectMetadata const& meta) {
   hash_validator_->ProcessMetadata(meta);
-  hash_validator_result_ =
-      HashValidator::FinishAndCheck(__func__, std::move(*hash_validator_));
+  hash_validator_result_ = std::move(*hash_validator_).Finish();
+  return not hash_validator_result_.is_mismatch;
 }
 
 CurlResumableStreambuf::int_type CurlResumableStreambuf::overflow(int_type ch) {

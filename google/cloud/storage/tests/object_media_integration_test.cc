@@ -715,22 +715,11 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingWriteXML) {
                                       "inject-upload-data-error"));
   stream << LoremIpsum() << "\n";
   stream << LoremIpsum();
-  std::string md5_hash = ComputeMD5Hash(LoremIpsum() + "\n" + LoremIpsum());
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
-    EXPECT_NE(ex.received_hash(), ex.computed_hash());
-    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
-    throw;
-  },
-               HashMismatchError);
-#else
   stream.Close();
-  EXPECT_FALSE(stream.received_hash().empty());
-  EXPECT_FALSE(stream.computed_hash().empty());
+  EXPECT_TRUE(stream.bad());
+  EXPECT_TRUE(stream.metadata().ok());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
-  EXPECT_EQ(stream.computed_hash(), md5_hash);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -754,22 +743,11 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingWriteJSON) {
                                       "inject-upload-data-error"));
   stream << LoremIpsum() << "\n";
   stream << LoremIpsum();
-  std::string md5_hash = ComputeMD5Hash(LoremIpsum() + "\n" + LoremIpsum());
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
-    EXPECT_NE(ex.received_hash(), ex.computed_hash());
-    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
-    throw;
-  },
-               HashMismatchError);
-#else
   stream.Close();
-  EXPECT_FALSE(stream.received_hash().empty());
-  EXPECT_FALSE(stream.computed_hash().empty());
+  EXPECT_TRUE(stream.bad());
+  EXPECT_TRUE(stream.metadata().ok());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
-  EXPECT_EQ(stream.computed_hash(), md5_hash);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -1123,23 +1101,11 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingWriteXML) {
                                       "inject-upload-data-error"));
   stream << LoremIpsum() << "\n";
   stream << LoremIpsum();
-  std::string crc32c =
-      ComputeCrc32cChecksum(LoremIpsum() + "\n" + LoremIpsum());
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
-    EXPECT_NE(ex.received_hash(), ex.computed_hash());
-    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
-    throw;
-  },
-               HashMismatchError);
-#else
   stream.Close();
-  EXPECT_FALSE(stream.received_hash().empty());
-  EXPECT_FALSE(stream.computed_hash().empty());
+  EXPECT_TRUE(stream.bad());
+  EXPECT_TRUE(stream.metadata().ok());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
-  EXPECT_EQ(stream.computed_hash(), crc32c);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -1163,23 +1129,11 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
                    "inject-upload-data-error"));
   stream << LoremIpsum() << "\n";
   stream << LoremIpsum();
-  std::string crc32c =
-      ComputeCrc32cChecksum(LoremIpsum() + "\n" + LoremIpsum());
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { stream.Close(); } catch (HashMismatchError const& ex) {
-    EXPECT_NE(ex.received_hash(), ex.computed_hash());
-    EXPECT_THAT(ex.what(), HasSubstr("ValidateHash"));
-    throw;
-  },
-               HashMismatchError);
-#else
   stream.Close();
-  EXPECT_FALSE(stream.received_hash().empty());
-  EXPECT_FALSE(stream.computed_hash().empty());
+  EXPECT_TRUE(stream.bad());
+  EXPECT_TRUE(stream.metadata().ok());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
-  EXPECT_EQ(stream.computed_hash(), crc32c);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
   client.DeleteObject(bucket_name, object_name);
 }

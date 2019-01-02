@@ -26,32 +26,6 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-void HashValidator::CheckResult(std::string const& msg,
-                                HashValidator::Result const& result) {
-  if (not result.is_mismatch) {
-    return;
-  }
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  // Sometimes the server simply does not have a MD5 hash to send us, the most
-  // common case is a composed object, particularly one formed from encrypted
-  // components, where computing the MD5 would require decrypting and re-reading
-  // all the components. In that case we just do not raise an exception even if
-  // there is a mismatch.
-  throw HashMismatchError(msg, result.received, result.computed);
-#else
-  GCP_LOG(ERROR) << "Mismatched hashes: "
-                 << HashMismatchError(
-                     msg, result.received, result.computed).what();
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-HashValidator::Result HashValidator::FinishAndCheck(std::string const& msg,
-                                                    HashValidator&& validator) {
-  auto result = std::move(validator).Finish();
-  CheckResult(msg, result);
-  return result;
-}
-
 void CompositeValidator::Update(std::string const& payload) {
   left_->Update(payload);
   right_->Update(payload);

@@ -79,7 +79,7 @@ class CurlWriteStreambuf : public ObjectWriteStreambuf {
   ~CurlWriteStreambuf() override = default;
 
   bool IsOpen() const override;
-  void ValidateHash(ObjectMetadata const& meta) override;
+  bool ValidateHash(ObjectMetadata const& meta) override;
   std::string const& received_hash() const override {
     return hash_validator_result_.received;
   }
