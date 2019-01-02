@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/testing/embedded_server_test_fixture.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/internal/build_info.h"
 #include <thread>
 
 namespace google {
@@ -36,8 +37,18 @@ void EmbeddedServerTestFixture::SetUp() {
   StartServer();
 
   grpc::ChannelArguments channel_arguments;
-  static std::string const prefix = "cbt-c++/" + version_string();
-  channel_arguments.SetUserAgentPrefix(prefix);
+  static std::string const user_agent_prefix = [] {
+    std::string agent = "cbt-c++/" + version_string();
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    agent = " ex";
+#else
+    agent = " noex";
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    agent += ' ';
+    agent += google::cloud::internal::compiler();
+    return agent;
+  }();
+  channel_arguments.SetUserAgentPrefix(user_agent_prefix);
 
   std::shared_ptr<grpc::Channel> data_channel =
       server_->InProcessChannel(channel_arguments);
