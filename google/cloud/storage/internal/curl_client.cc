@@ -282,7 +282,7 @@ StatusOr<ResumableUploadResponse> CurlClient::UploadChunk(
   bool success_with_308 =
       response->status_code == 308 and
       response->headers.find("range") != response->headers.end();
-  if (status.ok() or success_with_308) {
+  if (response->status_code < 300 or success_with_308) {
     return ResumableUploadResponse::FromHttpResponse(*std::move(response));
   }
   return AsStatus(*response);
@@ -305,7 +305,7 @@ StatusOr<ResumableUploadResponse> CurlClient::QueryResumableUpload(
   bool success_with_308 =
       response->status_code == 308 and
       response->headers.find("range") != response->headers.end();
-  if (status.ok() or success_with_308) {
+  if (response->status_code < 300 or success_with_308) {
     return ResumableUploadResponse::FromHttpResponse(*std::move(response));
   }
   return AsStatus(*response);
@@ -1335,11 +1335,8 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   writer << crlf << request.contents() << crlf << marker << "--" << crlf;
 
   // 6. Return the results as usual.
-  auto response = writer.CloseRaw();
-  if (response.status_code >= 300) {
-    return Status(response.status_code, std::move(response.payload));
-  }
-  return ObjectMetadata::ParseFromString(response.payload);
+  writer.Close();
+  return std::move(writer).metadata();
 }
 
 std::string CurlClient::PickBoundary(std::string const& text_to_avoid) {

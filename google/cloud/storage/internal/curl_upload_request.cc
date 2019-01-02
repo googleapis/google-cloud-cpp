@@ -36,7 +36,7 @@ CurlUploadRequest::CurlUploadRequest(std::size_t initial_buffer_size)
   buffer_rdptr_ = buffer_.end();
 }
 
-void CurlUploadRequest::Flush() {
+Status CurlUploadRequest::Flush() {
   ValidateOpen(__func__);
   handle_.FlushDebug(__func__);
   GCP_LOG(DEBUG) << __func__ << "(), curl.size=" << buffer_.size()
@@ -44,18 +44,27 @@ void CurlUploadRequest::Flush() {
                  << std::distance(buffer_.begin(), buffer_rdptr_)
                  << ", curl.end="
                  << std::distance(buffer_.begin(), buffer_.end());
-  Wait([this] { return buffer_rdptr_ == buffer_.end(); });
+  return Wait([this] { return buffer_rdptr_ == buffer_.end(); });
 }
 
 StatusOr<HttpResponse> CurlUploadRequest::Close() {
-  ValidateOpen(__func__);
+  Status status = ValidateOpen(__func__);
+  if (not status.ok()) {
+    return status;
+  }
   handle_.FlushDebug(__func__);
-  Flush();
+  status = Flush();
+  if (not status.ok()) {
+    return status;
+  }
   // Set the the closing_ flag to trigger a return 0 from the next read
   // callback, see the comments in the header file for more details.
   closing_ = true;
   // Block until that callback is made.
-  Wait([this] { return curl_closed_; });
+  status = Wait([this] { return curl_closed_; });
+  if (not status.ok()) {
+    return status;
+  }
 
   // Now remove the handle from the CURLM* interface and wait for the response.
   auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
@@ -71,11 +80,15 @@ StatusOr<HttpResponse> CurlUploadRequest::Close() {
                       std::move(received_headers_)};
 }
 
-void CurlUploadRequest::NextBuffer(std::string& next_buffer) {
-  ValidateOpen(__func__);
-  Flush();
+Status CurlUploadRequest::NextBuffer(std::string& next_buffer) {
+  Status status = ValidateOpen(__func__);
+  if (not status.ok()) {
+    return status;
+  }
+  status = Flush();
   next_buffer.swap(buffer_);
   buffer_rdptr_ = buffer_.begin();
+  return status;
 }
 
 Status CurlUploadRequest::SetOptions() {
@@ -216,13 +229,13 @@ Status CurlUploadRequest::AsStatus(CURLMcode result, char const* where) {
   return Status(StatusCode::UNKNOWN, std::move(os).str());
 }
 
-void CurlUploadRequest::ValidateOpen(char const* where) {
+Status CurlUploadRequest::ValidateOpen(char const* where) {
   if (not closing_) {
-    return;
+    return Status();
   }
-  std::ostringstream os;
-  os << "Attempting to use closed CurlUploadRequest in " << where;
-  google::cloud::internal::RaiseRuntimeError(os.str());
+  std::string msg = "Attempting to use closed CurlUploadRequest in ";
+  msg += where;
+  return Status(StatusCode::FAILED_PRECONDITION, std::move(msg));
 }
 
 }  // namespace internal

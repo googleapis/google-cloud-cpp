@@ -159,37 +159,48 @@ std::streamsize CurlWriteStreambuf::xsputn(char const* s,
   return count;
 }
 
-HttpResponse CurlWriteStreambuf::DoClose() {
-  GCP_LOG(INFO) << __func__ << "()";
-  Validate(__func__);
-  SwapBuffers();
-  // TODO(#1735) - return StatusOr<> from here.
-  auto response = upload_.Close().value();
-  for (auto const& kv : response.headers) {
-    hash_validator_->ProcessHeader(kv.first, kv.second);
+StatusOr<HttpResponse> CurlWriteStreambuf::DoClose() {
+  GCP_LOG(DEBUG) << __func__ << "()";
+  Status status = Validate(__func__);
+  if (not status.ok()) {
+    return status;
+  }
+  status = SwapBuffers();
+  if (not status.ok()) {
+    return status;
+  }
+  auto response = upload_.Close();
+  if (response.ok()) {
+    for (auto const& kv : response->headers) {
+      hash_validator_->ProcessHeader(kv.first, kv.second);
+    }
   }
   return response;
 }
 
-void CurlWriteStreambuf::Validate(char const* where) const {
+Status CurlWriteStreambuf::Validate(char const* where) const {
   if (upload_.IsOpen()) {
-    return;
+    return Status();
   }
   std::string msg = "Attempting to use closed CurlStream in ";
   msg += where;
-  google::cloud::internal::RaiseRuntimeError(msg);
+  return Status(StatusCode::FAILED_PRECONDITION, std::move(msg));
 }
 
-void CurlWriteStreambuf::SwapBuffers() {
+Status CurlWriteStreambuf::SwapBuffers() {
   // Shorten the buffer to the actual used size.
   current_ios_buffer_.resize(pptr() - pbase());
   // Push the buffer to the libcurl wrapper to be written as needed
   hash_validator_->Update(current_ios_buffer_);
-  upload_.NextBuffer(current_ios_buffer_);
+  auto status = upload_.NextBuffer(current_ios_buffer_);
+  if (not status.ok()) {
+    return status;
+  }
   // Make the buffer big enough to receive more data before needing a flush.
   current_ios_buffer_.clear();
   current_ios_buffer_.reserve(max_buffer_size_);
   setp(&current_ios_buffer_[0], &current_ios_buffer_[0] + max_buffer_size_);
+  return Status();
 }
 
 }  // namespace internal

@@ -95,14 +95,14 @@ class CurlWriteStreambuf : public ObjectWriteStreambuf {
   int sync() override;
   std::streamsize xsputn(char const* s, std::streamsize count) override;
   int_type overflow(int_type ch) override;
-  HttpResponse DoClose() override;
+  StatusOr<HttpResponse> DoClose() override;
 
  private:
   /// Raise an exception if the stream is closed.
-  void Validate(char const* where) const;
+  Status Validate(char const* where) const;
 
   /// Flush the libcurl buffer and swap it with the iostream buffer.
-  void SwapBuffers();
+  Status SwapBuffers();
 
   CurlUploadRequest upload_;
   std::string current_ios_buffer_;

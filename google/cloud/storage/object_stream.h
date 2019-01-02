@@ -167,14 +167,78 @@ class ObjectWriteStream : public std::basic_ostream<char> {
   /// Return true while the stream is open.
   bool IsOpen() const { return buf_ != nullptr and buf_->IsOpen(); }
 
-  /// Close the stream and return the metadata of the created object.
-  ObjectMetadata Close();
+  /**
+   * Close the stream, finalizing the upload.
+   *
+   * Closing a stream completes an upload and creates the uploaded object. On
+   * failure it sets the `badbit` of the stream.
+   *
+   * The metadata of the uploaded object, or a detailed error status, is
+   * accessible via the `metadata()` member function. Note that the metadata may
+   * be empty if the application creates a stream with the `Fields("")`
+   * parameter, applications cannot assume that all fields in the metadata are
+   * filled on success.
+   *
+   * @throws If the application has enabled the exception mask this function may
+   *     throw `std::ios_base::failure`.
+   */
+  void Close();
 
-  /// Close the stream and return the (unparsed) result, useful for testing.
-  internal::HttpResponse CloseRaw();
+  //@{
+  /**
+   * Access the upload results.
+   *
+   * Note that calling these member functions before `Close()` is undefined
+   * behavior.
+   */
+  StatusOr<ObjectMetadata> const& metadata() const& { return metadata_; }
+  StatusOr<ObjectMetadata>&& metadata() && { return std::move(metadata_); }
 
+  /**
+   * The received CRC32C checksum and the MD5 hash values as reported by GCS.
+   *
+   * When the upload is finalized (via `Close()`) the GCS server reports the
+   * CRC32C checksum and, if the object is not a composite object, the MDF hash
+   * of the uploaded data. This class compares the reported hashes against
+   * locally computed hash values, and reports an error if they do not match.
+   *
+   * The values are reported as comma separated `tag=value` pairs, e.g.
+   * `crc32c=AAAAAA==,md5=1B2M2Y8AsgTpgAmY7PhCfg==`. The format of this string
+   * is subject to change without notice, they are provided for informational
+   * purposes only.
+   *
+   * @see https://cloud.google.com/storage/docs/hashes-etags for more
+   *     information on checksums and hashes in GCS.
+   */
   std::string const& received_hash() const { return buf_->received_hash(); }
+
+  /**
+   * The locally computed checksum and hashes, as a string.
+   *
+   * This object computes the CRC32C checksum and MD5 hash of the uploaded data.
+   * There are several cases where these values may be empty or irrelevant, for
+   * example:
+   *   - When performing resumable uploads the stream may not have had access to
+   *     the full data.
+   *   - The application may disable the CRC32C and/or the MD5 hash computation.
+   *
+   * The string has the same format as the value returned by `received_hash()`.
+   * Note that the format of this string is also subject to change without
+   * notice.
+   *
+   * @see https://cloud.google.com/storage/docs/hashes-etags for more
+   *     information on checksums and hashes in GCS.
+   */
   std::string const& computed_hash() const { return buf_->computed_hash(); }
+
+  /// The headers returned by the service, for debugging only.
+  std::multimap<std::string, std::string> const& headers() const {
+    return headers_;
+  }
+
+  /// The returned payload as a raw string, for debugging only.
+  std::string const& payload() const { return payload_; }
+  //@}
 
   /**
    * Returns the resumable upload session id for this upload.
@@ -212,6 +276,9 @@ class ObjectWriteStream : public std::basic_ostream<char> {
 
  private:
   std::unique_ptr<internal::ObjectWriteStreambuf> buf_;
+  StatusOr<ObjectMetadata> metadata_;
+  std::multimap<std::string, std::string> headers_;
+  std::string payload_;
 };
 
 }  // namespace STORAGE_CLIENT_NS

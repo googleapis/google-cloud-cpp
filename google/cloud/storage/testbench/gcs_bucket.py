@@ -549,6 +549,10 @@ class GcsBucket(object):
             'request': request,
             'done': False,
         }
+        # Capture the preconditions, including those that are None.
+        for precondition in ['ifGenerationMatch', 'ifGenerationNotMatch',
+                             'ifMetagenerationMatch', 'ifMetagenerationNotMatch']:
+            upload[precondition] = request.args.get(precondition)
         upload_id = base64.b64encode(metadata.get('name'))
         self.resumable_uploads[upload_id] = upload
         location = '%s?uploadType=resumable&upload_id=%s' % (
@@ -622,7 +626,12 @@ class GcsBucket(object):
             original_metadata = upload.pop('metadata', None)
             media = upload.pop('media', None)
             original_request = upload.pop('request', None)
-            blob.check_preconditions(original_request)
+            blob.check_preconditions_by_value(
+                upload.get('ifGenerationMatch'),
+                upload.get('ifGenerationNotMatch'),
+                upload.get('ifMetagenerationMatch'),
+                upload.get('ifMetagenerationNotMatch')
+            )
             revision = blob.insert_resumable(
                 gcs_url, original_request, media,
                 original_metadata)

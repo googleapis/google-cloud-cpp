@@ -61,9 +61,11 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
   auto os = client.WriteObject(
       bucket_name, object_name, IfGenerationMatch(0),
       WithObjectMetadata(ObjectMetadata().set_content_type("text/plain")));
+  os.exceptions(std::ios_base::failbit);
   os << LoremIpsum();
   EXPECT_FALSE(os.resumable_session_id().empty());
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
   EXPECT_EQ("text/plain", meta.content_type());
@@ -88,8 +90,10 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
     auto os = client.WriteObject(
         bucket_name, object_name, IfGenerationMatch(0),
         WithObjectMetadata(ObjectMetadata().set_content_type("text/plain")));
+    os.exceptions(std::ios_base::failbit);
     os << LoremIpsum();
-    ObjectMetadata meta = os.Close();
+    os.Close();
+    ObjectMetadata meta = os.metadata().value();
   });
 }
 
@@ -104,9 +108,11 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                NewResumableUploadSession());
+  os.exceptions(std::ios_base::failbit);
   os << LoremIpsum();
   EXPECT_FALSE(os.resumable_session_id().empty());
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
   if (UsingTestbench()) {
@@ -131,21 +137,50 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
     auto old_os =
         client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                            NewResumableUploadSession());
+    old_os.exceptions(std::ios_base::failbit);
     session_id = old_os.resumable_session_id();
     std::move(old_os).Suspend();
   }
 
   auto os = client.WriteObject(bucket_name, object_name,
                                RestoreResumableUploadSession(session_id));
+  os.exceptions(std::ios_base::failbit);
   EXPECT_EQ(session_id, os.resumable_session_id());
   os << LoremIpsum();
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
   if (UsingTestbench()) {
     EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
+  Client client;
+  auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta = client.InsertObject(bucket_name, object_name, expected,
+                                            IfGenerationMatch(0));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                               NewResumableUploadSession());
+  os << "Expected failure data:\n" << LoremIpsum();
+
+  // This operation should fail because the object already exists.
+  os.Close();
+  EXPECT_TRUE(os.bad());
+  EXPECT_FALSE(os.metadata().ok());
+  EXPECT_EQ(412, os.metadata().status().status_code());
 
   client.DeleteObject(bucket_name, object_name);
 }

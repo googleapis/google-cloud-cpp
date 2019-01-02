@@ -19,7 +19,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-HttpResponse ObjectWriteStreambuf::Close() {
+StatusOr<HttpResponse> ObjectWriteStreambuf::Close() {
   pubsync();
   return DoClose();
 }

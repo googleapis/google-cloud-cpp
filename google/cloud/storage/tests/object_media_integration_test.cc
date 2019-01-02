@@ -72,8 +72,10 @@ TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
   // Create an object with the contents to download.
   auto upload =
       client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  upload.exceptions(std::ios_base::failbit);
   WriteRandomLines(upload, expected);
-  ObjectMetadata meta = upload.Close();
+  upload.Close();
+  ObjectMetadata meta = upload.metadata().value();
 
   client.DownloadToFile(bucket_name, object_name, file_name);
   // Create a iostream to read the object back.
@@ -100,7 +102,8 @@ TEST_F(ObjectMediaIntegrationTest, JsonDownloadFile) {
   auto upload =
       client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
   WriteRandomLines(upload, expected);
-  ObjectMetadata meta = upload.Close();
+  upload.Close();
+  ObjectMetadata meta = upload.metadata().value();
 
   client.DownloadToFile(bucket_name, object_name, file_name,
                         IfMetagenerationNotMatch(0));
@@ -979,13 +982,15 @@ TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cStreamingWriteXML) {
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                Fields(""));
+  os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   WriteRandomLines(os, expected);
 
   auto expected_crc32c = ComputeCrc32cChecksum(expected.str());
 
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(os.received_hash(), os.computed_hash());
   EXPECT_THAT(os.received_hash(), HasSubstr(expected_crc32c));
 
@@ -1000,13 +1005,15 @@ TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cStreamingWriteJSON) {
 
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   WriteRandomLines(os, expected);
 
   auto expected_crc32c = ComputeCrc32cChecksum(expected.str());
 
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(os.received_hash(), os.computed_hash());
   EXPECT_THAT(os.received_hash(), HasSubstr(expected_crc32c));
 
