@@ -141,7 +141,7 @@ matrix:
         TEST_INSTALL=yes
         CMAKE_FLAGS=-DBUILD_SHARED_LIBS=yes
         BUILD_TYPE=Debug
-        DISTRO=ubuntu
+        DISTRO=ubuntu-install
         DISTRO_VERSION=18.04
 
 script:
