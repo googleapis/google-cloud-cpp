@@ -37,17 +37,7 @@ void EmbeddedServerTestFixture::SetUp() {
   StartServer();
 
   grpc::ChannelArguments channel_arguments;
-  static std::string const user_agent_prefix = [] {
-    std::string agent = "cbt-c++/" + version_string();
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    agent = " ex";
-#else
-    agent = " noex";
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    agent += ' ';
-    agent += google::cloud::internal::compiler();
-    return agent;
-  }();
+  static std::string const user_agent_prefix = ClientOptions::UserAgentPrefix();
   channel_arguments.SetUserAgentPrefix(user_agent_prefix);
 
   std::shared_ptr<grpc::Channel> data_channel =

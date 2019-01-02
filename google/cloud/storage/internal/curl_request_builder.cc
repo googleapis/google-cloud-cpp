@@ -135,9 +135,9 @@ std::string CurlRequestBuilder::UserAgentSuffix() const {
     std::string agent = "gcs-c++/";
     agent += storage::version_string();
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    agent = " ex";
+    agent += " ex";
 #else
-    agent = " noex";
+    agent += " noex";
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     agent += ' ';
     agent += google::cloud::internal::compiler();
