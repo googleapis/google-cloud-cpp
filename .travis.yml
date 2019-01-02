@@ -52,7 +52,7 @@ matrix:
       compiler: clang
       env:
         TEST_INSTALL=yes
-        DISTRO=ubuntu
+        DISTRO=ubuntu-install
         DISTRO_VERSION=18.04
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Verify that we can compile shared libraries, and verify that the ABI is
@@ -65,7 +65,7 @@ matrix:
         TEST_INSTALL=yes
         CMAKE_FLAGS=-DBUILD_SHARED_LIBS=yes
         BUILD_TYPE=Debug
-        DISTRO=ubuntu
+        DISTRO=ubuntu-install
         DISTRO_VERSION=18.04
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Run clang-tidy, clang-format, and generate the documentation.
@@ -141,7 +141,7 @@ matrix:
         TEST_INSTALL=yes
         CMAKE_FLAGS=-DBUILD_SHARED_LIBS=yes
         BUILD_TYPE=Debug
-        DISTRO=ubuntu
+        DISTRO=ubuntu-install
         DISTRO_VERSION=18.04
 
 script:
