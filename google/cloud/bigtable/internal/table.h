@@ -64,6 +64,22 @@ void SetCommonTableOperationRequest(Request& request,
   request.set_table_name(table_name);
 }
 
+template <typename Functor>
+class UnwrapCheckAndMutateResponse {
+ public:
+  UnwrapCheckAndMutateResponse(Functor&& callback)
+      : callback_(std::forward<Functor>(callback)) {}
+
+  void operator()(CompletionQueue& cq,
+                  google::bigtable::v2::CheckAndMutateRowResponse& response,
+                  grpc::Status& status) {
+    callback_(cq, response.predicate_matched(), status);
+  }
+
+ private:
+  Functor callback_;
+};
+
 }  // namespace internal
 
 /**
@@ -368,16 +384,9 @@ class Table {
         typename internal::ExtractMemberFunctionType<decltype(
             &DataClient::AsyncCheckAndMutateRow)>::MemberFunction;
 
-    auto unwrap_callback =
-        [callback](CompletionQueue& cq,
-                   google::bigtable::v2::CheckAndMutateRowResponse& response,
-                   grpc::Status& status) {
-          callback(cq, response.predicate_matched(), status);
-        };
-    using Retry =
-        internal::AsyncRetryUnaryRpc<DataClient, MemberFunction,
-                                     internal::ConstantIdempotencyPolicy,
-                                     decltype(unwrap_callback)>;
+    using Retry = internal::AsyncRetryUnaryRpc<
+        DataClient, MemberFunction, internal::ConstantIdempotencyPolicy,
+        internal::UnwrapCheckAndMutateResponse<Functor>>;
 
     bool const is_idempotent =
         idempotent_mutation_policy_->is_idempotent(request);
@@ -385,7 +394,9 @@ class Table {
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(is_idempotent),
         metadata_update_policy_, client_, &DataClient::AsyncCheckAndMutateRow,
-        std::move(request), std::move(unwrap_callback));
+        std::move(request),
+        internal::UnwrapCheckAndMutateResponse<Functor>(
+            std::forward<Functor>(callback)));
     return retry->Start(cq);
   }
 
