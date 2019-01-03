@@ -20,6 +20,8 @@ the reference guide includes a quick start guide.
 
 ## Release Notes
 
+### v0.4.x - TBD
+
 ### v0.3.x - 2019-01
 
 * Try to use the exception mask in the IOStream classes
