@@ -285,6 +285,9 @@ class ClientOptions {
     channel_arguments_.SetSslTargetNameOverride(name);
   }
 
+  /// Return the user agent prefix used by the library.
+  static std::string UserAgentPrefix();
+
  private:
   /// Return the current endpoint for instance admin RPCs.
   friend struct InstanceAdminTraits;

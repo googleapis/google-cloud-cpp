@@ -31,6 +31,8 @@ struct ClientOptionsTestTraits {
 
 namespace {
 
+using ::testing::HasSubstr;
+
 TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   EXPECT_EQ("bigtable.googleapis.com", client_options_object.data_endpoint());
@@ -298,6 +300,13 @@ TEST(ClientOptionsTest, SetSslTargetNameOverride) {
   // 2nd element of test_args.
   EXPECT_EQ(GRPC_SSL_TARGET_NAME_OVERRIDE_ARG,
             grpc::string(test_args.args[1].key));
+}
+
+TEST(ClientOptionsTest, UserAgentPrefix) {
+  std::string const actual = bigtable::ClientOptions::UserAgentPrefix();
+
+  EXPECT_THAT(actual, HasSubstr("cbt-c++/"));
+  EXPECT_THAT(actual, ::testing::AnyOf(HasSubstr(" noex "), HasSubstr(" ex ")));
 }
 
 }  // namespace
