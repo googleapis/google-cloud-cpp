@@ -20,7 +20,23 @@ the reference guide includes a quick start guide.
 
 ## Release Notes
 
-### v0.3.x - TBD
+### v0.3.x - 2019-01
+
+* Try to use the exception mask in the IOStream classes
+  (`storage::ObjectReadStream` and `storage::ObjectWriteStream`). This allows
+  applications to check errors locally via `rdstate()`. Note that applications
+  that disable exceptions altogether must check the `status()` member function
+  for these IOStream classes. It is impossible to set the `rdstate()` for all
+  failures when exceptions are disabled.
+* Support reading only a portion of a Blob.
+* Support building with gcc-4.8.
+* Many internal changes to better support applications that disable exceptions.
+  A future release will include APIs that do not raise exceptions for error
+  conditions.
+* @remyabel contributed changes to disable the unit and integration tests. This
+  can be useful for package maintainers.
+* Implement a function to create signed URLs (`Client::CreateV2SignedUrl`).
+* Support resumable uploads in any upload operation.
 
 ### v0.2.x - 2018-12
 
