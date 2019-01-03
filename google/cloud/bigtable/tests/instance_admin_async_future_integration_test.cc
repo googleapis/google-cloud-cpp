@@ -107,20 +107,23 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
 
   google::cloud::bigtable::CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
-  
+
   // Get async list instances
-  // Make an asynchronous request, but immediately block because this is just a test.
+  // Make an asynchronous request, but immediately block because this is just a
+  // test.
   auto instance_list = instance_admin_->AsyncListInstances(cq).get();
-  EXPECT_TRUE(instance_list.failed_locations.empty()) 
-  << "It is possible that some zones are not currently available for querying."
-  <<" so there might be some locations from which Instance information could not be retrieved,"
-  << " due to an outage or some other transient condition.";
+  EXPECT_TRUE(instance_list.failed_locations.empty())
+      << "It is possible that some zones are not currently available for "
+         "querying."
+      << " so there might be some locations from which Instance information "
+         "could not be retrieved,"
+      << " due to an outage or some other transient condition.";
   ASSERT_FALSE(IsInstancePresent(instance_list.instances, instance_id))
       << "Instance (" << instance_id << ") already exists."
       << " This is unexpected, as the instance ids are"
-      << " generated at random.";  
-            
-  // create instance  
+      << " generated at random.";
+
+  // create instance
   auto config = IntegrationTestConfig(instance_id);
   auto instance = instance_admin_->CreateInstance(config).get();
   auto instances_current = instance_admin_->ListInstances();
