@@ -180,10 +180,12 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
   for (auto& m : false_mutations) {
     *request.add_false_mutations() = std::move(m.op);
   }
-  auto response = ClientUtils::MakeNonIdemponentCall(
-      *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
-      &DataClient::CheckAndMutateRow, request, "Table::CheckAndMutateRow",
-      status);
+  bool const is_idempotent =
+      idempotent_mutation_policy_->is_idempotent(request);
+  auto response = ClientUtils::MakeCall(
+      *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+      metadata_update_policy_, &DataClient::CheckAndMutateRow, request,
+      "Table::CheckAndMutateRow", status, is_idempotent);
 
   return response.predicate_matched();
 }
