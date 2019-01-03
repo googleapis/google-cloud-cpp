@@ -184,8 +184,8 @@ class InstanceAdmin {
                                         grpc::Status&>::value,
                                     int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncCreateInstance(
-      bigtable::InstanceConfig instance_config, CompletionQueue& cq,
-      Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback,
+      bigtable::InstanceConfig instance_config) {
     static_assert(internal::ExtractMemberFunctionType<decltype(
                       &InstanceAdminClient::AsyncCreateInstance)>::value,
                   "Cannot extract member function type");
@@ -245,8 +245,8 @@ class InstanceAdmin {
                                         grpc::Status&>::value,
                                     int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncUpdateInstance(
-      InstanceUpdateConfig instance_update_config, CompletionQueue& cq,
-      Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback,
+      InstanceUpdateConfig instance_update_config) {
     static_assert(internal::ExtractMemberFunctionType<decltype(
                       &InstanceAdminClient::AsyncUpdateInstance)>::value,
                   "Cannot extract member function type");
@@ -299,7 +299,7 @@ class InstanceAdmin {
                                         grpc::Status&>::value,
                                     int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncGetInstance(
-      std::string const& instance_id, CompletionQueue& cq, Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback, std::string const& instance_id) {
     google::bigtable::admin::v2::GetInstanceRequest request;
     // Setting instance name.
     request.set_name(project_name_ + "/instances/" + instance_id);
@@ -355,7 +355,7 @@ class InstanceAdmin {
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncDeleteInstance(
-      std::string const& instance_id, CompletionQueue& cq, Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback, std::string const& instance_id) {
     google::bigtable::admin::v2::DeleteInstanceRequest request;
     // Setting instance name.
     request.set_name(InstanceName(instance_id));
@@ -409,7 +409,7 @@ class InstanceAdmin {
                                         grpc::Status&>::value,
                                     int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncListClusters(
-      std::string const& instance_id, CompletionQueue& cq, Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback, std::string const& instance_id) {
     auto op = std::make_shared<internal::AsyncRetryListClusters<Functor>>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         metadata_update_policy_, client_, InstanceName(instance_id),
@@ -451,9 +451,9 @@ class InstanceAdmin {
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncDeleteCluster(
+      CompletionQueue& cq, Functor&& callback,
       bigtable::InstanceId const& instance_id,
-      bigtable::ClusterId const& cluster_id, CompletionQueue& cq,
-      Functor&& callback) {
+      bigtable::ClusterId const& cluster_id) {
     google::bigtable::admin::v2::DeleteClusterRequest request;
     // Setting cluster name.
     request.set_name(ClusterName(instance_id, cluster_id));
@@ -512,10 +512,10 @@ class InstanceAdmin {
                                         grpc::Status&>::value,
                                     int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncCreateCluster(
+      CompletionQueue& cq, Functor&& callback,
       bigtable::ClusterConfig cluster_config,
       bigtable::InstanceId const& instance_id,
-      bigtable::ClusterId const& cluster_id, CompletionQueue& cq,
-      Functor&& callback) {
+      bigtable::ClusterId const& cluster_id) {
     static_assert(internal::ExtractMemberFunctionType<decltype(
                       &InstanceAdminClient::AsyncCreateCluster)>::value,
                   "Cannot extract member function type");
@@ -575,7 +575,7 @@ class InstanceAdmin {
                                         grpc::Status&>::value,
                                     int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncUpdateCluster(
-      ClusterConfig cluster_config, CompletionQueue& cq, Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback, ClusterConfig cluster_config) {
     static_assert(internal::ExtractMemberFunctionType<decltype(
                       &InstanceAdminClient::AsyncUpdateCluster)>::value,
                   "Cannot extract member function type");
@@ -631,9 +631,9 @@ class InstanceAdmin {
                                         grpc::Status&>::value,
                                     int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncGetCluster(
+      CompletionQueue& cq, Functor&& callback,
       bigtable::InstanceId const& instance_id,
-      bigtable::ClusterId const& cluster_id, CompletionQueue& cq,
-      Functor&& callback) {
+      bigtable::ClusterId const& cluster_id) {
     google::bigtable::admin::v2::GetClusterRequest request;
     // Setting cluster name.
     request.set_name(ClusterName(instance_id, cluster_id));
@@ -698,9 +698,9 @@ class InstanceAdmin {
               google::bigtable::admin::v2::AppProfile&, grpc::Status&>::value,
           int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncUpdateAppProfile(
+      CompletionQueue& cq, Functor&& callback,
       bigtable::InstanceId const& instance_id,
-      bigtable::AppProfileId profile_id, AppProfileUpdateConfig config,
-      CompletionQueue& cq, Functor&& callback) {
+      bigtable::AppProfileId profile_id, AppProfileUpdateConfig config) {
     static_assert(internal::ExtractMemberFunctionType<decltype(
                       &InstanceAdminClient::AsyncUpdateAppProfile)>::value,
                   "Cannot extract member function type");
@@ -758,8 +758,8 @@ class InstanceAdmin {
               google::bigtable::admin::v2::AppProfile&, grpc::Status&>::value,
           int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncCreateAppProfile(
-      bigtable::InstanceId const& instance_id, AppProfileConfig config,
-      CompletionQueue& cq, Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback,
+      bigtable::InstanceId const& instance_id, AppProfileConfig config) {
     auto request = std::move(config).as_proto();
     request.set_parent(InstanceName(instance_id.get()));
 
@@ -818,9 +818,9 @@ class InstanceAdmin {
               google::bigtable::admin::v2::AppProfile&, grpc::Status&>::value,
           int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncGetAppProfile(
+      CompletionQueue& cq, Functor&& callback,
       bigtable::InstanceId const& instance_id,
-      bigtable::AppProfileId const& profile_id, CompletionQueue& cq,
-      Functor&& callback) {
+      bigtable::AppProfileId const& profile_id) {
     google::bigtable::admin::v2::GetAppProfileRequest request;
     // Setting profile name.
     request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
@@ -878,7 +878,7 @@ class InstanceAdmin {
                     grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncListAppProfiles(
-      std::string const& instance_id, CompletionQueue& cq, Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback, std::string const& instance_id) {
     auto op = std::make_shared<internal::AsyncRetryListAppProfiles<Functor>>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         metadata_update_policy_, client_, InstanceName(instance_id),
@@ -920,9 +920,9 @@ class InstanceAdmin {
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncDeleteAppProfile(
+      CompletionQueue& cq, Functor&& callback,
       bigtable::InstanceId const& instance_id,
-      bigtable::AppProfileId const& profile_id, CompletionQueue& cq,
-      Functor&& callback) {
+      bigtable::AppProfileId const& profile_id) {
     google::bigtable::admin::v2::DeleteAppProfileRequest request;
     // Setting profile name.
     request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +

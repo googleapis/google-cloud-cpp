@@ -187,7 +187,7 @@ class InstanceAdmin {
    * @snippet instance_admin_async_snippets.cc async get instance
    */
   future<google::bigtable::admin::v2::Instance> AsyncGetInstance(
-      std::string const& instance_id, CompletionQueue& cq);
+      CompletionQueue& cq, std::string const& instance_id);
 
   /**
    * Deletes the instances in the project.
@@ -292,8 +292,8 @@ class InstanceAdmin {
    * @snippet instance_admin_async_snippets.cc async get cluster
    */
   future<google::bigtable::admin::v2::Cluster> AsyncGetCluster(
-      bigtable::InstanceId const& instance_id,
-      bigtable::ClusterId const& cluster_id, CompletionQueue& cq);
+      CompletionQueue& cq, bigtable::InstanceId const& instance_id,
+      bigtable::ClusterId const& cluster_id);
 
   /**
    * Create a new application profile.

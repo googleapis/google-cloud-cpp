@@ -82,11 +82,12 @@ TEST_F(SnapshotAsyncIntegrationTest, CreateListGetDeleteSnapshot) {
 
   std::promise<btadmin::Table> promise_create_table;
   noex_table_admin_->AsyncCreateTable(
-      table_id.get(), table_config, cq,
+      cq,
       [&promise_create_table](CompletionQueue& cq, btadmin::Table& table,
                               grpc::Status const& status) {
         promise_create_table.set_value(std::move(table));
-      });
+      },
+      table_id.get(), table_config);
 
   auto table_created = promise_create_table.get_future().get();
 
@@ -122,11 +123,12 @@ TEST_F(SnapshotAsyncIntegrationTest, CreateListGetDeleteSnapshot) {
   // get snapshot
   std::promise<btadmin::Snapshot> promise_get_snapshot;
   noex_table_admin_->AsyncGetSnapshot(
-      cluster_id, snapshot_id, cq,
+      cq,
       [&promise_get_snapshot](CompletionQueue& cq, btadmin::Snapshot& snapshot,
                               grpc::Status const& status) {
         promise_get_snapshot.set_value(std::move(snapshot));
-      });
+      },
+      cluster_id, snapshot_id);
 
   auto snapshot_check = promise_get_snapshot.get_future().get();
   auto const npos = std::string::npos;
@@ -134,12 +136,13 @@ TEST_F(SnapshotAsyncIntegrationTest, CreateListGetDeleteSnapshot) {
 
   std::promise<google::protobuf::Empty> promise_delete_snapshot;
   noex_table_admin_->AsyncDeleteSnapshot(
-      cluster_id, snapshot_id, cq,
+      cq,
       [&promise_delete_snapshot](CompletionQueue& cq,
                                  google::protobuf::Empty& response,
                                  grpc::Status const& status) {
         promise_delete_snapshot.set_value(std::move(response));
-      });
+      },
+      cluster_id, snapshot_id);
 
   auto response = promise_delete_snapshot.get_future().get();
 

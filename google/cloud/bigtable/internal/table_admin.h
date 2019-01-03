@@ -142,10 +142,10 @@ class TableAdmin {
                     Functor, CompletionQueue&,
                     google::bigtable::admin::v2::Table&, grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
-  std::shared_ptr<AsyncOperation> AsyncCreateTable(std::string table_id,
-                                                   TableConfig config,
-                                                   CompletionQueue& cq,
-                                                   Functor&& callback) {
+  std::shared_ptr<AsyncOperation> AsyncCreateTable(CompletionQueue& cq,
+                                                   Functor&& callback,
+                                                   std::string table_id,
+                                                   TableConfig config) {
     auto request = std::move(config).as_proto();
     request.set_parent(instance_name());
     request.set_table_id(std::move(table_id));
@@ -205,9 +205,8 @@ class TableAdmin {
                     google::bigtable::admin::v2::Table&, grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncGetTable(
-      std::string const& table_id,
-      google::bigtable::admin::v2::Table::View view, CompletionQueue& cq,
-      Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback, std::string const& table_id,
+      google::bigtable::admin::v2::Table::View view) {
     google::bigtable::admin::v2::GetTableRequest request;
     request.set_name(TableName(table_id));
     request.set_view(view);
@@ -260,8 +259,8 @@ class TableAdmin {
                                                       google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
-  void AsyncDeleteTable(std::string const& table_id, TableConfig config,
-                        CompletionQueue& cq, Functor&& callback) {
+  void AsyncDeleteTable(CompletionQueue& cq, Functor&& callback,
+                        std::string const& table_id, TableConfig config) {
     google::bigtable::admin::v2::DeleteTableRequest request;
     request.set_name(TableName(table_id));
 
@@ -348,8 +347,8 @@ class TableAdmin {
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncAwaitConsistency(
-      bigtable::TableId const& table_id, CompletionQueue& cq,
-      Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback,
+      bigtable::TableId const& table_id) {
     auto op = std::make_shared<internal::AsyncAwaitConsistency>(
         __func__, polling_policy_->clone(), rpc_retry_policy_->clone(),
         rpc_backoff_policy_->clone(),
@@ -409,9 +408,8 @@ class TableAdmin {
                     google::bigtable::admin::v2::Table&, grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncModifyColumnFamilies(
-      std::string const& table_id,
-      std::vector<ColumnFamilyModification> modifications, CompletionQueue& cq,
-      Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback, std::string const& table_id,
+      std::vector<ColumnFamilyModification> modifications) {
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest request;
     request.set_name(TableName(table_id));
     for (auto& m : modifications) {
@@ -471,8 +469,8 @@ class TableAdmin {
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncDropRowsByPrefix(
-      std::string const& table_id, std::string row_key_prefix,
-      CompletionQueue& cq, Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback, std::string const& table_id,
+      std::string row_key_prefix) {
     google::bigtable::admin::v2::DropRowRangeRequest request;
     request.set_name(TableName(table_id));
     request.set_row_key_prefix(std::move(row_key_prefix));
@@ -527,9 +525,8 @@ class TableAdmin {
                                                       google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
-  std::shared_ptr<AsyncOperation> AsyncDropAllRows(std::string const& table_id,
-                                                   CompletionQueue& cq,
-                                                   Functor&& callback) {
+  std::shared_ptr<AsyncOperation> AsyncDropAllRows(
+      CompletionQueue& cq, Functor&& callback, std::string const& table_id) {
     google::bigtable::admin::v2::DropRowRangeRequest request;
     request.set_name(TableName(table_id));
     request.set_delete_all_data_from_table(true);
@@ -590,9 +587,9 @@ class TableAdmin {
                                         grpc::Status&>::value,
                                     int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncGetSnapshot(
+      CompletionQueue& cq, Functor&& callback,
       bigtable::ClusterId const& cluster_id,
-      bigtable::SnapshotId const& snapshot_id, CompletionQueue& cq,
-      Functor&& callback) {
+      bigtable::SnapshotId const& snapshot_id) {
     google::bigtable::admin::v2::GetSnapshotRequest request;
     request.set_name(SnapshotName(cluster_id, snapshot_id));
     MetadataUpdatePolicy metadata_update_policy(
@@ -654,9 +651,9 @@ class TableAdmin {
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncDeleteSnapshot(
+      CompletionQueue& cq, Functor&& callback,
       bigtable::ClusterId const& cluster_id,
-      bigtable::SnapshotId const& snapshot_id, CompletionQueue& cq,
-      Functor&& callback) {
+      bigtable::SnapshotId const& snapshot_id) {
     google::bigtable::admin::v2::DeleteSnapshotRequest request;
     request.set_name(SnapshotName(cluster_id, snapshot_id));
     MetadataUpdatePolicy metadata_update_policy(

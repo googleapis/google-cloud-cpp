@@ -165,9 +165,9 @@ class Table {
               Functor, CompletionQueue&,
               google::bigtable::v2::MutateRowResponse&, grpc::Status&>::value,
           int>::type valid_callback_type = 0>
-  std::shared_ptr<AsyncOperation> AsyncApply(SingleRowMutation&& mut,
-                                             CompletionQueue& cq,
-                                             Functor&& callback) {
+  std::shared_ptr<AsyncOperation> AsyncApply(CompletionQueue& cq,
+                                             Functor&& callback,
+                                             SingleRowMutation&& mut) {
     google::bigtable::v2::MutateRowRequest request;
     internal::SetCommonTableOperationRequest<
         google::bigtable::v2::MutateRowRequest>(request, app_profile_id_.get(),
@@ -231,9 +231,9 @@ class Table {
                     Functor, CompletionQueue&, std::vector<FailedMutation>&,
                     grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
-  std::shared_ptr<AsyncOperation> AsyncBulkApply(BulkMutation&& mut,
-                                                 CompletionQueue& cq,
-                                                 Functor&& callback) {
+  std::shared_ptr<AsyncOperation> AsyncBulkApply(CompletionQueue& cq,
+                                                 Functor&& callback,
+                                                 BulkMutation&& mut) {
     auto op =
         std::make_shared<bigtable::internal::AsyncRetryBulkApply<Functor>>(
             rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
@@ -291,9 +291,9 @@ class Table {
                                         grpc::Status const&>::value,
                                     int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncReadRows(
-      RowSet row_set, std::int64_t rows_limit, Filter filter,
       CompletionQueue& cq, ReadRowCallback&& read_row_callback,
-      DoneCallback&& done_callback, bool raise_on_error = false) {
+      DoneCallback&& done_callback, RowSet row_set, std::int64_t rows_limit,
+      Filter filter, bool raise_on_error = false) {
     auto op = std::make_shared<
         internal::AsyncReadRowsOperation<ReadRowCallback, DoneCallback>>(
         rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
@@ -345,9 +345,9 @@ class Table {
                     Functor, CompletionQueue&, bool, grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncCheckAndMutateRow(
-      std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
-      std::vector<Mutation> false_mutations, CompletionQueue& cq,
-      Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback, std::string row_key,
+      Filter filter, std::vector<Mutation> true_mutations,
+      std::vector<Mutation> false_mutations) {
     google::bigtable::v2::CheckAndMutateRowRequest request;
     request.set_row_key(std::move(row_key));
     bigtable::internal::SetCommonTableOperationRequest<

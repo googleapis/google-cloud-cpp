@@ -45,26 +45,27 @@ btadmin::Table TableAdmin::CreateTable(std::string table_id,
 }
 
 future<google::bigtable::admin::v2::Table> TableAdmin::AsyncCreateTable(
-    std::string table_id, TableConfig config, CompletionQueue& cq) {
+    CompletionQueue& cq, std::string table_id, TableConfig config) {
   promise<google::bigtable::admin::v2::Table> p;
   auto result = p.get_future();
 
   impl_.AsyncCreateTable(
-      std::move(table_id), std::move(config), cq,
-      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncCreateTable"));
+      cq,
+      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncCreateTable"),
+      std::move(table_id), std::move(config));
 
   return result;
 }
 
 future<google::bigtable::admin::v2::Table> TableAdmin::AsyncGetTable(
-    std::string const& table_id, btadmin::Table::View view,
-    CompletionQueue& cq) {
+    CompletionQueue& cq, std::string const& table_id,
+    btadmin::Table::View view) {
   promise<google::bigtable::admin::v2::Table> p;
   auto result = p.get_future();
 
   impl_.AsyncGetTable(
-      table_id, view, cq,
-      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetTable"));
+      cq, internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetTable"),
+      table_id, view);
 
   return result;
 }

@@ -54,12 +54,13 @@ TEST_F(DataAsyncIntegrationTest, TableApply) {
   noex::Table table(data_client_, table_id);
   std::promise<void> done;
   table.AsyncApply(
-      std::move(mut), cq,
+      cq,
       [&done](CompletionQueue& cq, google::bigtable::v2::MutateRowResponse& r,
               grpc::Status const& status) {
         done.set_value();
         EXPECT_TRUE(status.ok());
-      });
+      },
+      std::move(mut));
 
   // Block until the asynchronous operation completes. This is not what one
   // would do in a real application (the synchronous API is better in that
@@ -114,13 +115,14 @@ TEST_F(DataAsyncIntegrationTest, TableBulkApply) {
   noex::Table table(data_client_, table_id);
   std::promise<void> done;
   table.AsyncBulkApply(
-      std::move(mut), cq,
+      cq,
       [&done](CompletionQueue& cq, std::vector<FailedMutation>& failed,
               grpc::Status const& status) {
         done.set_value();
         EXPECT_EQ(0, failed.size());
         EXPECT_TRUE(status.ok());
-      });
+      },
+      std::move(mut));
 
   // Block until the asynchronous operation completes. This is not what one
   // would do in a real application (the synchronous API is better in that
@@ -223,14 +225,15 @@ TEST_F(DataAsyncIntegrationTest, TableCheckAndMutateRowPass) {
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
   table.AsyncCheckAndMutateRow(
-      key, bigtable::Filter::ValueRegex("v1000"),
-      {bigtable::SetCell(family, "c2", 0_ms, "v2000")},
-      {bigtable::SetCell(family, "c3", 0_ms, "v3000")}, cq,
+      cq,
       [&done](CompletionQueue& cq, bool response, grpc::Status const& status) {
         done.set_value();
         EXPECT_TRUE(status.ok());
         EXPECT_TRUE(response);
-      });
+      },
+      key, bigtable::Filter::ValueRegex("v1000"),
+      {bigtable::SetCell(family, "c2", 0_ms, "v2000")},
+      {bigtable::SetCell(family, "c3", 0_ms, "v3000")});
   done.get_future().get();
   cq.Shutdown();
   pool.join();
@@ -253,14 +256,15 @@ TEST_F(DataAsyncIntegrationTest, TableCheckAndMutateRowFail) {
   std::promise<void> done;
   std::thread pool([&cq] { cq.Run(); });
   table.AsyncCheckAndMutateRow(
-      key, bigtable::Filter::ValueRegex("not-there"),
-      {bigtable::SetCell(family, "c2", 0_ms, "v2000")},
-      {bigtable::SetCell(family, "c3", 0_ms, "v3000")}, cq,
+      cq,
       [&done](CompletionQueue& cq, bool response, grpc::Status const& status) {
         done.set_value();
         EXPECT_TRUE(status.ok());
         EXPECT_FALSE(response);
-      });
+      },
+      key, bigtable::Filter::ValueRegex("not-there"),
+      {bigtable::SetCell(family, "c2", 0_ms, "v2000")},
+      {bigtable::SetCell(family, "c3", 0_ms, "v3000")});
   done.get_future().get();
   cq.Shutdown();
   pool.join();
@@ -295,8 +299,7 @@ TEST_F(DataAsyncIntegrationTest, TableReadRowsAllRows) {
   std::vector<bigtable::Cell> actual;
 
   table.AsyncReadRows(
-      bigtable::RowSet(bigtable::RowRange::InfiniteRange()),
-      RowReader::NO_ROWS_LIMIT, Filter::PassAllFilter(), cq,
+      cq,
       [&actual](CompletionQueue& cq, Row row, grpc::Status& status) {
         std::move(row.cells().begin(), row.cells().end(),
                   std::back_inserter(actual));
@@ -304,7 +307,9 @@ TEST_F(DataAsyncIntegrationTest, TableReadRowsAllRows) {
       [&done](CompletionQueue& cq, bool& response, grpc::Status const& status) {
         done.set_value();
         EXPECT_TRUE(status.ok());
-      });
+      },
+      bigtable::RowSet(bigtable::RowRange::InfiniteRange()),
+      RowReader::NO_ROWS_LIMIT, Filter::PassAllFilter());
 
   done.get_future().get();
 
