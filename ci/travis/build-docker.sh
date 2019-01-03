@@ -16,20 +16,20 @@
 
 set -eu
 
-readonly BINDIR="$(dirname $0)"
-source "${BINDIR}/../colors.sh"
-
 # This script is supposed to run inside a Docker container, see
 # ci/travis/build-linux.sh for the expected setup.  The /v directory is a volume
 # pointing to a (clean-ish) checkout of google-cloud-cpp:
-(cd /v ; ./ci/check-style.sh)
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  readonly PROJECT_ROOT="/v"
+fi
+source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
+source "${PROJECT_ROOT}/ci/colors.sh"
 
 # Run the configure / compile / test cycle inside a docker image.
 # This script is designed to work in the context created by the
 # ci/Dockerfile.* build scripts.
-readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
-readonly BUILD_DIR="build-output/${IMAGE}"
-readonly STAGING_DIR="build-output/${IMAGE}-staging"
+
+(cd /v ; ./ci/check-style.sh)
 
 CMAKE_COMMAND="cmake"
 if [ "${SCAN_BUILD}" = "yes" ]; then
@@ -56,7 +56,7 @@ ${CMAKE_COMMAND} \
     ${cmake_install_flags} \
     ${CMAKE_FLAGS:-} \
     -H. \
-    -B"${BUILD_DIR}"
+    -B"${BUILD_OUTPUT}"
 echo
 echo "travis_fold:end:configure-cmake"
 echo "${COLOR_YELLOW}Finished CMake config at: $(date)${COLOR_RESET}"
@@ -65,8 +65,8 @@ echo "${COLOR_YELLOW}Finished CMake config at: $(date)${COLOR_RESET}"
 # troubleshoot dependencies.
 if [[ "${CREATE_GRAPHVIZ:-}" = "yes" ]]; then
   ${CMAKE_COMMAND} \
-      --graphviz="${BUILD_DIR}/graphviz/google-cloud-cpp" \
-      --build "${BUILD_DIR}"
+      --graphviz="${BUILD_OUTPUT}/graphviz/google-cloud-cpp" \
+      --build "${BUILD_OUTPUT}"
 fi
 
 # If scan-build is enabled, we need to manually compile the dependencies;
@@ -76,7 +76,7 @@ fi
 echo "${COLOR_YELLOW}Started dependency build at: $(date)${COLOR_RESET}"
 echo "travis_fold:start:build-dependencies"
 echo
-cmake --build "${BUILD_DIR}" --target skip-scanbuild-targets -- -j ${NCPU}
+cmake --build "${BUILD_OUTPUT}" --target skip-scanbuild-targets -- -j ${NCPU}
 echo
 echo "travis_fold:end:build-dependencies"
 echo "${COLOR_YELLOW}Finished dependency build at: $(date)${COLOR_RESET}"
@@ -86,7 +86,7 @@ echo "${COLOR_YELLOW}Finished dependency build at: $(date)${COLOR_RESET}"
 # scan-build disabled we compile everything, to test the build as most
 # developers will experience it.
 echo "${COLOR_YELLOW}Started build at: $(date)${COLOR_RESET}"
-${CMAKE_COMMAND} --build "${BUILD_DIR}" -- -j ${NCPU}
+${CMAKE_COMMAND} --build "${BUILD_OUTPUT}" -- -j ${NCPU}
 echo "${COLOR_YELLOW}Finished build at: $(date)${COLOR_RESET}"
 
 # If ccache is enabled we want to zero out the statistics because otherwise
@@ -108,7 +108,7 @@ if [ "${BUILD_TESTING:-}" != "no" ]; then
   echo
   echo "${COLOR_YELLOW}Running unit and integration tests $(date)${COLOR_RESET}"
   echo
-  cd "${BUILD_DIR}"
+  cd "${BUILD_OUTPUT}"
   ctest --output-on-failure
 
   # Run the integration tests. Not all projects have them, so just iterate over
@@ -116,7 +116,7 @@ if [ "${BUILD_TESTING:-}" != "no" ]; then
   for subdir in google/cloud google/cloud/bigtable google/cloud/storage; do
     echo
     echo "${COLOR_GREEN}Running integration tests for ${subdir}${COLOR_RESET}"
-    /v/${subdir}/ci/run_integration_tests.sh
+    "${PROJECT_ROOT}/${subdir}/ci/run_integration_tests.sh"
   done
 fi
 
@@ -127,9 +127,9 @@ if [ "${TEST_INSTALL:-}" = "yes" ]; then
   cmake --build . --target install
   echo
   echo "${COLOR_YELLOW}Test installed libraries using cmake(1).${COLOR_RESET}"
-  readonly TEST_INSTALL_DIR=/v/ci/test-install
-  readonly TEST_INSTALL_CMAKE_OUTPUT_DIR=/v/build-output/test-install-cmake
-  readonly TEST_INSTALL_MAKE_OUTPUT_DIR=/v/build-output/test-install-make
+  readonly TEST_INSTALL_DIR="${PROJECT_ROOT}/ci/test-install"
+  readonly TEST_INSTALL_CMAKE_OUTPUT_DIR="${PROJECT_ROOT}/build-output/test-install-cmake"
+  readonly TEST_INSTALL_MAKE_OUTPUT_DIR="${PROJECT_ROOT}/build-output/test-install-make"
   cmake -H"${TEST_INSTALL_DIR}" -B"${TEST_INSTALL_CMAKE_OUTPUT_DIR}"
   cmake --build "${TEST_INSTALL_CMAKE_OUTPUT_DIR}"
   echo
@@ -139,7 +139,7 @@ if [ "${TEST_INSTALL:-}" = "yes" ]; then
 
   # Checking the ABI requires installation, so this is the first opportunity to
   # run the check.
-  (cd /v ; ./ci/check-abi.sh)
+  (cd "${PROJECT_ROOT}" ; ./ci/check-abi.sh)
 
   # Also verify that the install directory does not get unexpected files or
   # directories installed.
@@ -201,7 +201,7 @@ scan-build detected errors.  Please read the log for details. To
 run scan-build locally and examine the HTML output install and configure Docker,
 then run:
 
-DISTRO=ubuntu DISTRO_VERSION=16.04 SCAN_BUILD=yes NCPU=8 TRAVIS_OS_NAME=linux \
+DISTRO=ubuntu DISTRO_VERSION=18.04 SCAN_BUILD=yes NCPU=8 TRAVIS_OS_NAME=linux \
     CXX=clang++ CC=clang ./ci/travis/build-linux.sh
 
 The HTML output will be copied into the scan-build-output subdirectory.

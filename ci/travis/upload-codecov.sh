@@ -16,20 +16,20 @@
 
 set -eu
 
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../.."; pwd)"
+fi
+source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
+source "${PROJECT_ROOT}/ci/define-dump-log.sh"
+
 if [ "${BUILD_TYPE:-Release}" != "Coverage" ]; then
     echo "Skipping code coverage as it is disabled for this build."
     exit 0
 fi
 
-if [ -z "${PROJECT_ROOT+x}" ]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../.."; pwd)"
-fi
-source "${PROJECT_ROOT}/ci/define-dump-log.sh"
-
 # Upload the results using the script from codecov.io
 # Save the log to a file because it exceeds the 4MB limit in Travis.
 readonly CI_ENV=$(bash <(curl -s https://codecov.io/env))
-readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
 sudo docker run $CI_ENV \
     --volume $PWD:/v --workdir /v \
     "${IMAGE}:tip" /bin/bash -c \
