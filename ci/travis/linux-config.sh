@@ -24,6 +24,38 @@ fi
 if [[ -n "${IMAGE+x}" ]]; then
   echo "IMAGE is already defined."
 else
-  readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
-  readonly BUILD_OUTPUT="build-output/${IMAGE}"
+  readonly IMAGE="${DISTRO}-${DISTRO_VERSION}"
+  suffix=""
+  if [[ -n "${CC:-}" ]]; then
+    suffix="${suffix}-${CC}"
+  fi
+  if [[ -n "${BUILD_TYPE+x}" ]]; then
+    suffix="${suffix}-${BUILD_TYPE}"
+  else
+    suffix="${suffix}-Release"
+  fi
+  if [[ "${SCAN_BUILD+x}" = "yes" ]]; then
+    suffix="${suffix}-scan"
+  fi
+  if [[ -z "${CMAKE_FLAGS:-}" ]]; then
+      /bin/true
+  elif echo "${CMAKE_FLAGS}" | grep -Eq BUILD_SHARED_LIBS=yes; then
+      suffix="${suffix}-shared"
+  elif echo "${CMAKE_FLAGS}" | grep -Eq GOOGLE_CLOUD_CPP_CLANG_TIDY=yes; then
+      suffix="${suffix}-tidy"
+  elif echo "${CMAKE_FLAGS}" | grep -Eq TEST_INSTALL=yes; then
+      suffix="${suffix}-install"
+  elif echo "${CMAKE_FLAGS}" | grep -Eq SANITIZE_ADDRESS=yes; then
+      suffix="${suffix}-asan"
+  elif echo "${CMAKE_FLAGS}" | grep -Eq SANITIZE_UNDEFINED=yes; then
+      suffix="${suffix}-ubsan"
+  elif echo "${CMAKE_FLAGS}" | grep -Eq SANITIZE_MEMORY=yes; then
+      suffix="${suffix}-msan"
+  elif echo "${CMAKE_FLAGS}" | grep -Eq SANITIZE_THREAD=yes; then
+      suffix="${suffix}-tsan"
+  elif echo "${CMAKE_FLAGS}" | grep -Eq GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=no; then
+      suffix="${suffix}-noex"
+  fi
+  readonly BUILD_OUTPUT="build-output/${IMAGE}${suffix}"
+  readonly DOCKER_CCACHE_DIR="build-output/ccache/${IMAGE}${suffix}"
 fi
