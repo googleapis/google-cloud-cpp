@@ -743,7 +743,7 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetRetentionPolicy(
   // fields.
   impl_.AddSubPatch("retentionPolicy",
                     internal::PatchBuilder().SetIntField(
-                        "retentionPeriod", v.retention_period.count()));
+                        "retentionPeriod", static_cast<std::uint64_t>(v.retention_period.count())));
   return *this;
 }
 
