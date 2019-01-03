@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/instance_config.h"
 #include "google/cloud/bigtable/instance_update_config.h"
 #include "google/cloud/bigtable/internal/instance_admin.h"
+#include "google/cloud/bigtable/internal/async_list_instances.h"
 #include "google/cloud/future.h"
 #include <future>
 #include <memory>
@@ -153,6 +154,14 @@ class InstanceAdmin {
    */
   std::vector<google::bigtable::admin::v2::Instance> ListInstances();
 
+  /**
+   * Return asynchronously the list of instances in the project.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc list instances
+   */  
+  future<InstanceList>  AsyncListInstances(CompletionQueue& cq);
+  
   /**
    * Return the details of @p instance_id.
    *

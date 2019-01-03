@@ -107,8 +107,18 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
 
   google::cloud::bigtable::CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
-
+  
+  //Get async list instances
+  google::cloud::future<google::cloud::bigtable::v0::InstanceList> future_of_instance_list =
+      instance_admin_->AsyncListInstances(cq);  
+  auto instance_list_check = future_of_instance_list.get(); 
+  auto instance_list_check_vector = instance_list_check.instances;  
+  ASSERT_FALSE(IsInstancePresent(instance_list_check_vector, instance_id))
+      << "Instance (" << instance_id << ") already exists."
+      << " This is unexpected, as the instance ids are"
+      << " generated at random.";  
   // create instance
+  
   auto config = IntegrationTestConfig(instance_id);
   auto instance = instance_admin_->CreateInstance(config).get();
   auto instances_current = instance_admin_->ListInstances();

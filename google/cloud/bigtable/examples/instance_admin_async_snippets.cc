@@ -63,6 +63,30 @@ void AsyncGetInstance(cbt::InstanceAdmin instance_admin,
   //! [async get instance]
   (std::move(instance_admin), std::move(cq), argv[1]);
 }
+void AsyncListInstances(cbt::InstanceAdmin instance_admin,
+                      cbt::CompletionQueue cq, std::vector<std::string> argv) {
+
+  if (argv.size() != 1U) {
+    throw Usage{"async-list-instances: <project-id>"};
+  }   
+
+  //! [async list instances]
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq) {
+   google::cloud::future<google::cloud::bigtable::v0::InstanceList> future = instance_admin.AsyncListInstances(cq);
+      
+    auto final = future.then(
+        [](google::cloud::future<google::cloud::bigtable::v0::InstanceList> f) {			
+	
+	  auto instance_list_vector  = f.get();        
+         for(const auto& instance : instance_list_vector.instances){
+			 std::cout << instance.name() << std::endl;
+		 }   
+        }); 
+    final.get();
+  }
+  //! [async list instances]
+  (std::move(instance_admin), std::move(cq));
+}  
 
 void AsyncGetCluster(cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
                      std::vector<std::string> argv) {
@@ -103,6 +127,7 @@ int main(int argc, char* argv[]) try {
   std::map<std::string, CommandType> commands = {
       {"async-get-instance", &AsyncGetInstance},
       {"async-get-cluster", &AsyncGetCluster},
+      {"async-list-instances", &AsyncListInstances}
   };
 
   google::cloud::bigtable::CompletionQueue cq;

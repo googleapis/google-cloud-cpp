@@ -69,7 +69,9 @@ function run_all_instance_admin_examples {
   run_example ./bigtable_samples_instance_admin create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"
   run_example ./bigtable_samples_instance_admin list-instances \
-      "${project_id}"
+      "${project_id}"      
+  run_example ./instance_admin_async_snippets async-list-instances \
+      "${project_id}"      
   run_example ./bigtable_samples_instance_admin get-instance \
       "${project_id}" "${INSTANCE}"
   run_example ./bigtable_samples_instance_admin list-clusters \
