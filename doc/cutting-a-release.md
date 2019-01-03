@@ -78,7 +78,7 @@ and then commit the changes and push the new branch:
 
 ```bash
 git commit -m"Create ${RELEASE}.x release branch" .
-git push --set-upstream ${RELEASE}.x
+git push --set-upstream origin ${RELEASE}.x
 ```
 
 ## Update the documentation links

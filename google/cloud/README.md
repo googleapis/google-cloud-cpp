@@ -22,6 +22,8 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
+### v0.4.x - TBD
+
 ### v0.3.x - 2019-01
 
 * Support compiling with gcc-4.8.
