@@ -29,6 +29,7 @@ namespace internal {
 
 CurlUploadRequest::CurlUploadRequest(std::size_t initial_buffer_size)
     : headers_(nullptr, &curl_slist_free_all),
+      logging_enabled_(false),
       multi_(nullptr, &curl_multi_cleanup),
       closing_(false),
       curl_closed_(false) {
