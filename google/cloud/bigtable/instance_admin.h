@@ -157,11 +157,16 @@ class InstanceAdmin {
   /**
    * Query (asynchronously) the list of instances in the project.
    *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
    * @return the list of instances. It is possible that some zones are not
    * currently available for querying. In that case this function returns the
    * list of failed locations in the `projects/<project>/locations/<zone_id>`
-   * format. Takes in one parameter
-   * @param cq the completion queue that will execute the asynchronous calls
+   * format.
+   *
+   * @par Example
+   * @snippet instance_admin_async_snippets.cc async list instances
    */
   future<InstanceList> AsyncListInstances(CompletionQueue& cq);
 

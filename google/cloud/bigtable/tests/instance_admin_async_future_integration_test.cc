@@ -113,11 +113,9 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   // test.
   auto instance_list = instance_admin_->AsyncListInstances(cq).get();
   EXPECT_TRUE(instance_list.failed_locations.empty())
-      << "It is possible that some zones are not currently available for "
-         "querying."
-      << " so there might be some locations from which Instance information "
-         "could not be retrieved,"
-      << " due to an outage or some other transient condition.";
+      << "The Cloud Bigtable service (or emulator) reports that it could not"
+      << " retrieve the information for some locations. This is typically due"
+      << " to an outage or some other transient condition.";
   ASSERT_FALSE(IsInstancePresent(instance_list.instances, instance_id))
       << "Instance (" << instance_id << ") already exists."
       << " This is unexpected, as the instance ids are"
@@ -128,6 +126,9 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   auto instance = instance_admin_->CreateInstance(config).get();
   auto instances_current = instance_admin_->ListInstances();
   EXPECT_TRUE(IsInstancePresent(instances_current, instance.name()));
+  auto async_instances_current = instance_admin_->AsyncListInstances(cq).get();
+  EXPECT_TRUE(
+      IsInstancePresent(async_instances_current.instances, instance.name()));
 
   // Get instance
   google::cloud::future<btadmin::Instance> fut =

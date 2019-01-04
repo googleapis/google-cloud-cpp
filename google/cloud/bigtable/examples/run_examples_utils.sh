@@ -175,6 +175,8 @@ function run_all_instance_admin_async_examples {
       "${project_id}" "${INSTANCE}" "${zone_id}"
   run_example ./instance_admin_async_snippets async-get-instance \
       "${project_id}" "${INSTANCE}"
+  run_example ./instance_admin_async_snippets async-list-instances \
+      "${project_id}"
   run_example ./bigtable_samples_instance_admin create-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${replication_zone_id}"
   run_example ./instance_admin_async_snippets async-get-cluster \
@@ -183,8 +185,6 @@ function run_all_instance_admin_async_examples {
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
   run_example ./bigtable_samples_instance_admin delete-instance \
       "${project_id}" "${INSTANCE}"
-  run_example ./instance_admin_async_snippets async-list-instances \
-      "${project_id}"          
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.

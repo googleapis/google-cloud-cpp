@@ -83,9 +83,14 @@ void AsyncListInstances(cbt::InstanceAdmin instance_admin,
             std::cout << instance.name() << std::endl;
           }
           if (not instance_list.failed_locations.empty()) {
+            std::cout << "The Cloud Bigtable service reports that it could not "
+                         "retrieve data for the following zones:\n";
             for (const auto& failed_location : instance_list.failed_locations) {
               std::cout << failed_location << std::endl;
             }
+            std::cout
+                << "This is typically a transient condition, try again later."
+                << std::endl;
           }
         });
     final.get();
