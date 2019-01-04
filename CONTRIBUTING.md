@@ -47,7 +47,7 @@ standard [GitHub workflow][workflow-link]:
    `upstream` repo, which you'll use to pull commits made by others in order to
    keep your local repo and fork up to date.
    ```console
-   git remote add upstream git://github.com/GoogleCloudPlatform/google-cloud-cpp.git
+   git remote add upstream git@github.com:GoogleCloudPlatform/google-cloud-cpp.git
    git remote -v  # Should show 'origin' (your fork) and 'upstream' (main repo)
    ```
 1. To pull new commits from `upstream` into your local repo and
