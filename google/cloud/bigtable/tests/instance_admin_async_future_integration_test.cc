@@ -108,11 +108,25 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   google::cloud::bigtable::CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
 
+  // Get async list instances
+  // Make an asynchronous request, but immediately block because this is just a
+  // test.
+  auto instance_list = instance_admin_->AsyncListInstances(cq).get();
+  EXPECT_TRUE(instance_list.failed_locations.empty())
+      << "The Cloud Bigtable service (or emulator) reports that it could not"
+      << " retrieve the information for some locations. This is typically due"
+      << " to an outage or some other transient condition.";
+  ASSERT_FALSE(IsInstancePresent(instance_list.instances, instance_id))
+      << "Instance (" << instance_id << ") already exists."
+      << " This is unexpected, as the instance ids are"
+      << " generated at random.";
+
   // create instance
   auto config = IntegrationTestConfig(instance_id);
   auto instance = instance_admin_->CreateInstance(config).get();
-  auto instances_current = instance_admin_->ListInstances();
-  EXPECT_TRUE(IsInstancePresent(instances_current, instance.name()));
+  auto async_instances_current = instance_admin_->AsyncListInstances(cq).get();
+  EXPECT_TRUE(
+      IsInstancePresent(async_instances_current.instances, instance.name()));
 
   // Get instance
   google::cloud::future<btadmin::Instance> fut =
@@ -135,9 +149,11 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
 
   // Delete instance
   instance_admin_->DeleteInstance(instance_id);
-  auto instances_after_delete = instance_admin_->ListInstances();
-  EXPECT_TRUE(IsInstancePresent(instances_current, instance_copy.name()));
-  EXPECT_FALSE(IsInstancePresent(instances_after_delete, instance.name()));
+  auto instances_after_delete = instance_admin_->AsyncListInstances(cq).get();
+  EXPECT_TRUE(IsInstancePresent(async_instances_current.instances,
+                                instance_copy.name()));
+  EXPECT_FALSE(
+      IsInstancePresent(instances_after_delete.instances, instance.name()));
 
   cq.Shutdown();
   pool.join();

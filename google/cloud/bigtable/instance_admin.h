@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/instance_admin_client.h"
 #include "google/cloud/bigtable/instance_config.h"
 #include "google/cloud/bigtable/instance_update_config.h"
+#include "google/cloud/bigtable/internal/async_list_instances.h"
 #include "google/cloud/bigtable/internal/instance_admin.h"
 #include "google/cloud/future.h"
 #include <future>
@@ -152,6 +153,22 @@ class InstanceAdmin {
    * @snippet bigtable_samples_instance_admin.cc list instances
    */
   std::vector<google::bigtable::admin::v2::Instance> ListInstances();
+
+  /**
+   * Query (asynchronously) the list of instances in the project.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @return the list of instances. It is possible that some zones are not
+   * currently available for querying. In that case this function returns the
+   * list of failed locations in the `projects/<project>/locations/<zone_id>`
+   * format.
+   *
+   * @par Example
+   * @snippet instance_admin_async_snippets.cc async list instances
+   */
+  future<InstanceList> AsyncListInstances(CompletionQueue& cq);
 
   /**
    * Return the details of @p instance_id.

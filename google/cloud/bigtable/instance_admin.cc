@@ -40,6 +40,16 @@ std::vector<btadmin::Instance> InstanceAdmin::ListInstances() {
   return result;
 }
 
+future<InstanceList> InstanceAdmin::AsyncListInstances(CompletionQueue& cq) {
+  promise<InstanceList> instance_list_promise;
+  future<InstanceList> result = instance_list_promise.get_future();
+
+  impl_.AsyncListInstances(
+      cq, internal::MakeAsyncFutureFromCallback(
+              std::move(instance_list_promise), "AsyncListInstances"));
+  return result;
+}
+
 std::future<google::bigtable::admin::v2::Instance>
 InstanceAdmin::CreateInstance(InstanceConfig instance_config) {
   return std::async(std::launch::async, &InstanceAdmin::CreateInstanceImpl,
