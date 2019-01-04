@@ -191,6 +191,7 @@ TEST(ObjectRequestsTest, InsertObjectStreaming) {
 HttpResponse CreateRangeRequestResponse(
     char const* content_range_header_value) {
   HttpResponse response;
+  response.status_code = 200;
   response.headers.emplace(std::string("content-range"),
                            std::string(content_range_header_value));
   response.payload = "some payload";
