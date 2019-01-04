@@ -58,7 +58,7 @@ standard [GitHub workflow][workflow-link]:
    git push  # Pushes new commits up to your fork on GitHub
    ```
    Note: You probably want to do this periodically, and almost certainly before
-   starting your next task,
+   starting your next task.
 1. You pick an existing [GitHub bug][mastering-issues] to work on.
 1. You start a new [branch][about-branches] for each feature (or bug fix).
    ```console
