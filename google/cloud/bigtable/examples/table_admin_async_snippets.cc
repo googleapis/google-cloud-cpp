@@ -45,13 +45,12 @@ void AsyncCreateTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {
     google::cloud::future<google::bigtable::admin::v2::Table> future =
         admin.AsyncCreateTable(
-            table_id,
+            cq, table_id,
             google::cloud::bigtable::TableConfig(
                 {{"fam", google::cloud::bigtable::GcRule::MaxNumVersions(10)},
                  {"foo", google::cloud::bigtable::GcRule::MaxAge(
                              std::chrono::hours(72))}},
-                {}),
-            cq);
+                {}));
 
     auto final = future.then(
         [](google::cloud::future<google::bigtable::admin::v2::Table> f) {
@@ -74,8 +73,8 @@ void AsyncGetTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {
     google::cloud::future<google::bigtable::admin::v2::Table> future =
-        admin.AsyncGetTable(table_id, google::bigtable::admin::v2::Table::FULL,
-                            cq);
+        admin.AsyncGetTable(cq, table_id,
+                            google::bigtable::admin::v2::Table::FULL);
 
     auto final = future.then(
         [](google::cloud::future<google::bigtable::admin::v2::Table> f) {
@@ -142,7 +141,8 @@ int main(int argc, char* argv[]) try {
   std::string const command_name = argv[1];
   std::string const project_id = argv[2];
   std::string const instance_id = argv[3];
-  std::transform(argv + 4, argv + argc, std::back_inserter(args), [](char* x) { return std::string(x); });
+  std::transform(argv + 4, argv + argc, std::back_inserter(args),
+                 [](char* x) { return std::string(x); });
 
   auto command = commands.find(command_name);
   if (commands.end() == command) {

@@ -80,13 +80,13 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetDeleteTableTest) {
                            {"a1000", "a2000", "b3000", "m5000"});
 
   future<void> chain =
-      table_admin_->AsyncCreateTable(table_id, table_config, cq)
+      table_admin_->AsyncCreateTable(cq, table_id, table_config)
           .then([&](future<btadmin::Table> fut) {
             btadmin::Table result = fut.get();
             EXPECT_THAT(result.name(), ::testing::HasSubstr(table_id));
 
-            return table_admin_->AsyncGetTable(table_id, btadmin::Table::FULL,
-                                               cq);
+            return table_admin_->AsyncGetTable(cq, table_id,
+                                               btadmin::Table::FULL);
           })
           .then([&](future<btadmin::Table> fut) {
             btadmin::Table get_result = fut.get();
@@ -106,7 +106,7 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetDeleteTableTest) {
           });
 
   chain.get();
-  SUCCEED(); // we expect that previous operations do not fail.
+  SUCCEED();  // we expect that previous operations do not fail.
   DeleteTable(table_id);
 
   cq.Shutdown();

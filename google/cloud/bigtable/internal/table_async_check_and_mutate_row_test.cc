@@ -67,15 +67,16 @@ TEST_F(NoexTableAsyncCheckAndMutateRowTest, Simple) {
   bool op_called = false;
   grpc::Status capture_status;
   table_.AsyncCheckAndMutateRow(
-      "foo", bt::Filter::PassAllFilter(),
-      {bt::SetCell("fam", "col", 0_ms, "it was true")},
-      {bt::SetCell("fam", "col", 0_ms, "it was false")}, cq,
+      cq,
       [&op_called, &capture_status](CompletionQueue& cq, bool response,
                                     grpc::Status const& status) {
         EXPECT_TRUE(response);
         op_called = true;
         capture_status = status;
-      });
+      },
+      "foo", bt::Filter::PassAllFilter(),
+      {bt::SetCell("fam", "col", 0_ms, "it was true")},
+      {bt::SetCell("fam", "col", 0_ms, "it was false")});
 
   EXPECT_FALSE(op_called);
   EXPECT_EQ(1U, impl->size());
@@ -115,14 +116,15 @@ TEST_F(NoexTableAsyncCheckAndMutateRowTest, Failure) {
   bool op_called = false;
   grpc::Status capture_status;
   table_.AsyncCheckAndMutateRow(
-      "foo", bt::Filter::PassAllFilter(),
-      {bt::SetCell("fam", "col", 0_ms, "it was true")},
-      {bt::SetCell("fam", "col", 0_ms, "it was false")}, cq,
+      cq,
       [&op_called, &capture_status](CompletionQueue& cq, bool response,
                                     grpc::Status const& status) {
         op_called = true;
         capture_status = status;
-      });
+      },
+      "foo", bt::Filter::PassAllFilter(),
+      {bt::SetCell("fam", "col", 0_ms, "it was true")},
+      {bt::SetCell("fam", "col", 0_ms, "it was false")});
 
   EXPECT_FALSE(op_called);
   EXPECT_EQ(1U, impl->size());

@@ -47,7 +47,7 @@ void AsyncGetInstance(cbt::InstanceAdmin instance_admin,
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id) {
     google::cloud::future<google::bigtable::admin::v2::Instance> future =
-        instance_admin.AsyncGetInstance(instance_id, cq);
+        instance_admin.AsyncGetInstance(cq, instance_id);
 
     auto final = future.then(
         [](google::cloud::future<google::bigtable::admin::v2::Instance> f) {
@@ -77,7 +77,7 @@ void AsyncGetCluster(cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
     google::cloud::bigtable::ClusterId cluster_id1(cluster_id);
 
     google::cloud::future<google::bigtable::admin::v2::Cluster> future =
-        instance_admin.AsyncGetCluster(instance_id1, cluster_id1, cq);
+        instance_admin.AsyncGetCluster(cq, instance_id1, cluster_id1);
 
     auto final = future.then(
         [](google::cloud::future<google::bigtable::admin::v2::Cluster> f) {

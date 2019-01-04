@@ -116,7 +116,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
 
   // Get instance
   google::cloud::future<btadmin::Instance> fut =
-      instance_admin_->AsyncGetInstance(instance_id, cq);
+      instance_admin_->AsyncGetInstance(cq, instance_id);
   auto instance_check = fut.get();
   auto const npos = std::string::npos;
   EXPECT_NE(npos, instance_check.name().find(instance_admin_->project_name()));
@@ -179,7 +179,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
 
   // Get cluster
   google::cloud::future<btadmin::Cluster> fut =
-      instance_admin_->AsyncGetCluster(instance_id, cluster_id, cq);
+      instance_admin_->AsyncGetCluster(cq, instance_id, cluster_id);
   auto cluster_check = fut.get();
   std::string cluster_name_prefix =
       instance_admin_->project_name() + "/instances/" + id + "/clusters/";

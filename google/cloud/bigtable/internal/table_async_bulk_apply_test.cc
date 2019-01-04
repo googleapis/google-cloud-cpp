@@ -121,7 +121,7 @@ TEST_F(NoexTableAsyncBulkApplyTest, IdempotencyAndRetries) {
   bigtable::CompletionQueue cq(impl);
 
   bool mutator_finished = false;
-  table_.AsyncBulkApply(std::move(mut), cq,
+  table_.AsyncBulkApply(cq,
                         [&mutator_finished](CompletionQueue& cq,
                                             std::vector<FailedMutation>& failed,
                                             grpc::Status& status) {
@@ -129,7 +129,8 @@ TEST_F(NoexTableAsyncBulkApplyTest, IdempotencyAndRetries) {
                           EXPECT_EQ("baz", failed[0].mutation().row_key());
                           EXPECT_TRUE(status.ok());
                           mutator_finished = true;
-                        });
+                        },
+                        std::move(mut));
 
   using bigtable::AsyncOperation;
   impl->SimulateCompletion(cq, true);
@@ -184,7 +185,7 @@ TEST_F(NoexTableAsyncBulkApplyTest, Cancelled) {
   bigtable::CompletionQueue cq(impl);
 
   bool mutator_finished = false;
-  table_.AsyncBulkApply(std::move(mut), cq,
+  table_.AsyncBulkApply(cq,
                         [&mutator_finished](CompletionQueue& cq,
                                             std::vector<FailedMutation>& failed,
                                             grpc::Status& status) {
@@ -192,7 +193,7 @@ TEST_F(NoexTableAsyncBulkApplyTest, Cancelled) {
                           EXPECT_EQ(grpc::StatusCode::CANCELLED,
                                     status.error_code());
                           mutator_finished = true;
-                        });
+                        }, std::move(mut));
 
   using bigtable::AsyncOperation;
   impl->SimulateCompletion(cq, false);
@@ -237,7 +238,7 @@ TEST_F(NoexTableAsyncBulkApplyTest, PermanentError) {
   bigtable::CompletionQueue cq(impl);
 
   bool mutator_finished = false;
-  table_.AsyncBulkApply(std::move(mut), cq,
+  table_.AsyncBulkApply(cq,
                         [&mutator_finished](CompletionQueue& cq,
                                             std::vector<FailedMutation>& failed,
                                             grpc::Status& status) {
@@ -245,7 +246,8 @@ TEST_F(NoexTableAsyncBulkApplyTest, PermanentError) {
                           EXPECT_EQ(grpc::StatusCode::PERMISSION_DENIED,
                                     status.error_code());
                           mutator_finished = true;
-                        });
+                        },
+                        std::move(mut));
 
   using bigtable::AsyncOperation;
   impl->SimulateCompletion(cq, false);
@@ -310,14 +312,15 @@ TEST_F(NoexTableAsyncBulkApplyTest, CancelledInTimer) {
   bigtable::CompletionQueue cq(impl);
 
   bool mutator_finished = false;
-  table_.AsyncBulkApply(std::move(mut), cq,
+  table_.AsyncBulkApply(cq,
                         [&mutator_finished](CompletionQueue& cq,
                                             std::vector<FailedMutation>& failed,
                                             grpc::Status& status) {
                           EXPECT_EQ(grpc::StatusCode::CANCELLED,
                                     status.error_code());
                           mutator_finished = true;
-                        });
+                        },
+                        std::move(mut));
 
   using bigtable::AsyncOperation;
   impl->SimulateCompletion(cq, true);

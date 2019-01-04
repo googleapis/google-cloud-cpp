@@ -278,7 +278,7 @@ TEST_P(NoexAsyncCheckConsistencyEndToEnd, EndToEnd) {
     user_op_called = true;
     EXPECT_EQ(config.expected, status.error_code());
   };
-  tested.AsyncAwaitConsistency(kTableId, cq, user_callback);
+  tested.AsyncAwaitConsistency(cq, user_callback, kTableId);
 
   EXPECT_FALSE(user_op_called);
   EXPECT_EQ(1U, cq_impl->size());  // AsyncGenerateConsistencyToken
@@ -455,7 +455,7 @@ TEST_P(NoexAsyncCheckConsistencyCancel, Cancellations) {
     user_op_called = true;
     EXPECT_EQ(config.expected, status.error_code());
   };
-  auto op = tested.AsyncAwaitConsistency(kTableId, cq, user_callback);
+  auto op = tested.AsyncAwaitConsistency(cq, user_callback, kTableId);
 
   EXPECT_FALSE(user_op_called);
   EXPECT_EQ(1U, cq_impl->size());  // AsyncGenerateConsistencyToken

@@ -144,13 +144,14 @@ btadmin::Instance InstanceAdmin::GetInstance(std::string const& instance_id) {
 }
 
 future<btadmin::Instance> InstanceAdmin::AsyncGetInstance(
-    std::string const& instance_id, CompletionQueue& cq) {
+    CompletionQueue& cq, std::string const& instance_id) {
   promise<btadmin::Instance> p;
   auto result = p.get_future();
 
   impl_.AsyncGetInstance(
-      instance_id, cq,
-      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetInstance"));
+      cq,
+      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetInstance"),
+      instance_id);
 
   return result;
 }
@@ -175,14 +176,14 @@ btadmin::Cluster InstanceAdmin::GetCluster(
 }
 
 future<btadmin::Cluster> InstanceAdmin::AsyncGetCluster(
-    bigtable::InstanceId const& instance_id,
-    bigtable::ClusterId const& cluster_id, CompletionQueue& cq) {
+    CompletionQueue& cq, bigtable::InstanceId const& instance_id,
+    bigtable::ClusterId const& cluster_id) {
   promise<btadmin::Cluster> p;
   auto result = p.get_future();
 
   impl_.AsyncGetCluster(
-      instance_id, cluster_id, cq,
-      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetCluster"));
+      cq,
+      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetCluster"), instance_id, cluster_id);
 
   return result;
 }
