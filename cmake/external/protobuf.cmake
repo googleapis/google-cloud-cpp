@@ -51,8 +51,6 @@ if (NOT TARGET protobuf_project)
                           -G${CMAKE_GENERATOR}
                           ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                           -DCMAKE_BUILD_TYPE=Debug
-                          -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
-                          -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
                           -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                           -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                           -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
@@ -60,6 +58,11 @@ if (NOT TARGET protobuf_project)
                           -Dprotobuf_DEBUG_POSTFIX=
                           -H<SOURCE_DIR>/cmake
                           -B<BINARY_DIR>
+                          $<$<BOOL:${GOOGLE_CLOUD_CPP_USE_LIBCXX}>:
+                          -DCMAKE_CXX_FLAGS=-stdlib=libc++
+                          # This is needed for protoc
+                          -DCMAKE_EXE_LINKER_FLAGS=-Wl,-lc++abi
+                          -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-lc++abi >
         BUILD_COMMAND ${CMAKE_COMMAND}
                       --build
                       <BINARY_DIR>

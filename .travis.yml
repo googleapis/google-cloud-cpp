@@ -118,12 +118,14 @@ matrix:
         CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=no
         DISTRO=ubuntu
         DISTRO_VERSION=16.04
-    - # Compile on Fedora.
+    - # Compile on Fedora with libc++.
       os: linux
-      compiler: gcc
+      compiler: clang
       env:
+        CMAKE_FLAGS=-DBUILD_SHARED_LIBS=ON
         DISTRO=fedora
-        DISTRO_VERSION=28
+        DISTRO_VERSION=29
+        USE_LIBCXX=yes
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Compile on CentOS.
       os: linux

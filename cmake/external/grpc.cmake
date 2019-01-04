@@ -41,7 +41,6 @@ if (NOT TARGET gprc_project)
                                                    "grpc++"
                                                    "gpr"
                                                    "address_sorting")
-
     include(ExternalProject)
     externalproject_add(
         grpc_project
@@ -53,8 +52,6 @@ if (NOT TARGET gprc_project)
         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GRPC_SHA256}
         CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                    -DCMAKE_BUILD_TYPE=Release
-                   -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
-                   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                    -DgRPC_BUILD_TESTS=OFF
@@ -62,6 +59,10 @@ if (NOT TARGET gprc_project)
                    -DgRPC_SSL_PROVIDER=package
                    -DgRPC_CARES_PROVIDER=package
                    -DgRPC_PROTOBUF_PROVIDER=package
+                   $<$<BOOL:${GOOGLE_CLOUD_CPP_USE_LIBCXX}>:
+                   -DCMAKE_CXX_FLAGS=-stdlib=libc++
+                   -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-lc++abi
+                   >
         BUILD_COMMAND ${CMAKE_COMMAND}
                       --build
                       <BINARY_DIR>

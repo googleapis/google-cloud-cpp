@@ -73,6 +73,8 @@ cmake -DGOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK=OFF ...
     endif ()
 endif (APPLE)
 
+option(GOOGLE_CLOUD_CPP_USE_LIBCXX "Build with libcxx and libcxxabi" OFF)
+
 # If ccache is installed use it for the build. This makes the Travis
 # configuration agnostic as to wether ccache is installed or not.
 option(

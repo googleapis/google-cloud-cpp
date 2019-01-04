@@ -51,6 +51,10 @@ if (NOT TARGET googletest_project)
                                    -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
                                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+                                   $<$<BOOL:${GOOGLE_CLOUD_CPP_USE_LIBCXX}>:
+                                   -DCMAKE_CXX_FLAGS=-stdlib=libc++
+                                   -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-lc++abi
+                                   >
                         BUILD_COMMAND ${CMAKE_COMMAND}
                                       --build
                                       <BINARY_DIR>
@@ -74,6 +78,7 @@ if (NOT TARGET googletest_project)
     add_dependencies(GTest::gtest googletest_project)
     set_library_properties_for_external_project(GTest::gtest
                                                 gtest${_lib_postfix})
+
     set_property(TARGET GTest::gtest
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES "Threads::Threads")

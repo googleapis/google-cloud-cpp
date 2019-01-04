@@ -99,7 +99,8 @@ add_library(bigtable_protos
 target_link_libraries(bigtable_protos
                       gRPC::grpc++
                       gRPC::grpc
-                      protobuf::libprotobuf)
+                      protobuf::libprotobuf
+                      bigtable_common_options)
 target_include_directories(bigtable_protos
                            PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
                                   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
