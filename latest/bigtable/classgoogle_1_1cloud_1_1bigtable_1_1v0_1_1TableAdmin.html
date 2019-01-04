@@ -98,18 +98,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa4437cea54fbcb2a9b4b83f2301a8c6e"><td class="memItemLeft" align="right" valign="top">::google::bigtable::admin::v2::Table&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#aa4437cea54fbcb2a9b4b83f2301a8c6e">CreateTable</a> (std::string table_id, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableConfig.html">TableConfig</a> config)</td></tr>
 <tr class="memdesc:aa4437cea54fbcb2a9b4b83f2301a8c6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new table in the instance.  <a href="#aa4437cea54fbcb2a9b4b83f2301a8c6e">More...</a><br /></td></tr>
 <tr class="separator:aa4437cea54fbcb2a9b4b83f2301a8c6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade42c2376e6e86bf93a8f69dc68943f8"><td class="memItemLeft" align="right" valign="top">future&lt; google::bigtable::admin::v2::Table &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#ade42c2376e6e86bf93a8f69dc68943f8">AsyncCreateTable</a> (std::string table_id, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableConfig.html">TableConfig</a> config, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;cq)</td></tr>
-<tr class="memdesc:ade42c2376e6e86bf93a8f69dc68943f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an asynchronous request to create a new table in the instance.  <a href="#ade42c2376e6e86bf93a8f69dc68943f8">More...</a><br /></td></tr>
-<tr class="separator:ade42c2376e6e86bf93a8f69dc68943f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a139fd93f825df12b1c7759629ef3669b"><td class="memItemLeft" align="right" valign="top">future&lt; google::bigtable::admin::v2::Table &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a139fd93f825df12b1c7759629ef3669b">AsyncCreateTable</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;cq, std::string table_id, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableConfig.html">TableConfig</a> config)</td></tr>
+<tr class="memdesc:a139fd93f825df12b1c7759629ef3669b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an asynchronous request to create a new table in the instance.  <a href="#a139fd93f825df12b1c7759629ef3669b">More...</a><br /></td></tr>
+<tr class="separator:a139fd93f825df12b1c7759629ef3669b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a256d191e33db16d822d4e74a3b7f23c4"><td class="memItemLeft" align="right" valign="top">std::vector&lt;::google::bigtable::admin::v2::Table &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a256d191e33db16d822d4e74a3b7f23c4">ListTables</a> (::google::bigtable::admin::v2::Table::View view)</td></tr>
 <tr class="memdesc:a256d191e33db16d822d4e74a3b7f23c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return all the tables in the instance.  <a href="#a256d191e33db16d822d4e74a3b7f23c4">More...</a><br /></td></tr>
 <tr class="separator:a256d191e33db16d822d4e74a3b7f23c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07ffada7098773091cbe3c809173e71e"><td class="memItemLeft" align="right" valign="top">::google::bigtable::admin::v2::Table&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a07ffada7098773091cbe3c809173e71e">GetTable</a> (std::string const &amp;table_id, ::google::bigtable::admin::v2::Table::View view=::google::bigtable::admin::v2::Table::SCHEMA_VIEW)</td></tr>
 <tr class="memdesc:a07ffada7098773091cbe3c809173e71e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get information about a single table.  <a href="#a07ffada7098773091cbe3c809173e71e">More...</a><br /></td></tr>
 <tr class="separator:a07ffada7098773091cbe3c809173e71e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb9192889d30a4874f23e77731f16e1b"><td class="memItemLeft" align="right" valign="top">future&lt; google::bigtable::admin::v2::Table &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#adb9192889d30a4874f23e77731f16e1b">AsyncGetTable</a> (std::string const &amp;table_id, google::bigtable::admin::v2::Table::View view, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;cq)</td></tr>
-<tr class="memdesc:adb9192889d30a4874f23e77731f16e1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an asynchronous request to get information about an existing table.  <a href="#adb9192889d30a4874f23e77731f16e1b">More...</a><br /></td></tr>
-<tr class="separator:adb9192889d30a4874f23e77731f16e1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe9fb14a40fb0fe89152f2c703a3c354"><td class="memItemLeft" align="right" valign="top">future&lt; google::bigtable::admin::v2::Table &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#afe9fb14a40fb0fe89152f2c703a3c354">AsyncGetTable</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;cq, std::string const &amp;table_id, google::bigtable::admin::v2::Table::View view)</td></tr>
+<tr class="memdesc:afe9fb14a40fb0fe89152f2c703a3c354"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an asynchronous request to get information about an existing table.  <a href="#afe9fb14a40fb0fe89152f2c703a3c354">More...</a><br /></td></tr>
+<tr class="separator:afe9fb14a40fb0fe89152f2c703a3c354"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0899170ad36c9a89272ed0ab4903933"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#af0899170ad36c9a89272ed0ab4903933">DeleteTable</a> (std::string const &amp;table_id)</td></tr>
 <tr class="memdesc:af0899170ad36c9a89272ed0ab4903933"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a table.  <a href="#af0899170ad36c9a89272ed0ab4903933">More...</a><br /></td></tr>
 <tr class="separator:af0899170ad36c9a89272ed0ab4903933"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -291,8 +291,8 @@ template&lt;typename... Policies&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ade42c2376e6e86bf93a8f69dc68943f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade42c2376e6e86bf93a8f69dc68943f8">&#9670;&nbsp;</a></span>AsyncCreateTable()</h2>
+<a id="a139fd93f825df12b1c7759629ef3669b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a139fd93f825df12b1c7759629ef3669b">&#9670;&nbsp;</a></span>AsyncCreateTable()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -300,6 +300,12 @@ template&lt;typename... Policies&gt; </div>
         <tr>
           <td class="memname">future&lt; google::bigtable::admin::v2::Table &gt; google::cloud::bigtable::v0::TableAdmin::AsyncCreateTable </td>
           <td>(</td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;&#160;</td>
+          <td class="paramname"><em>cq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>table_id</em>, </td>
         </tr>
@@ -307,13 +313,7 @@ template&lt;typename... Policies&gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableConfig.html">TableConfig</a>&#160;</td>
-          <td class="paramname"><em>config</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;&#160;</td>
-          <td class="paramname"><em>cq</em>&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -340,12 +340,12 @@ template&lt;typename... Policies&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div><div class="line">  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {</div><div class="line">    google::cloud::future&lt;google::bigtable::admin::v2::Table&gt; future =</div><div class="line">        admin.AsyncCreateTable(</div><div class="line">            table_id,</div><div class="line">            google::cloud::bigtable::TableConfig(</div><div class="line">                {{<span class="stringliteral">&quot;fam&quot;</span>, google::cloud::bigtable::GcRule::MaxNumVersions(10)},</div><div class="line">                 {<span class="stringliteral">&quot;foo&quot;</span>, google::cloud::bigtable::GcRule::MaxAge(</div><div class="line">                             std::chrono::hours(72))}},</div><div class="line">                {}),</div><div class="line">            cq);</div><div class="line"></div><div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = future.then(</div><div class="line">        [](google::cloud::future&lt;google::bigtable::admin::v2::Table&gt; f) {</div><div class="line">          <span class="keyword">auto</span> table = f.get();</div><div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;Table created as &quot;</span> &lt;&lt; table.name() &lt;&lt; std::endl;</div><div class="line">        });</div><div class="line">    <span class="keyword">final</span>.get();  <span class="comment">// block to keep sample small and correct.</span></div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div><div class="line">  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {</div><div class="line">    google::cloud::future&lt;google::bigtable::admin::v2::Table&gt; future =</div><div class="line">        admin.AsyncCreateTable(</div><div class="line">            cq, table_id,</div><div class="line">            google::cloud::bigtable::TableConfig(</div><div class="line">                {{<span class="stringliteral">&quot;fam&quot;</span>, google::cloud::bigtable::GcRule::MaxNumVersions(10)},</div><div class="line">                 {<span class="stringliteral">&quot;foo&quot;</span>, google::cloud::bigtable::GcRule::MaxAge(</div><div class="line">                             std::chrono::hours(72))}},</div><div class="line">                {}));</div><div class="line"></div><div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = future.then(</div><div class="line">        [](google::cloud::future&lt;google::bigtable::admin::v2::Table&gt; f) {</div><div class="line">          <span class="keyword">auto</span> table = f.get();</div><div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;Table created as &quot;</span> &lt;&lt; table.name() &lt;&lt; std::endl;</div><div class="line">        });</div><div class="line">    <span class="keyword">final</span>.get();  <span class="comment">// block to keep sample small and correct.</span></div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
-<a id="adb9192889d30a4874f23e77731f16e1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb9192889d30a4874f23e77731f16e1b">&#9670;&nbsp;</a></span>AsyncGetTable()</h2>
+<a id="afe9fb14a40fb0fe89152f2c703a3c354"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe9fb14a40fb0fe89152f2c703a3c354">&#9670;&nbsp;</a></span>AsyncGetTable()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -353,6 +353,12 @@ template&lt;typename... Policies&gt; </div>
         <tr>
           <td class="memname">future&lt; google::bigtable::admin::v2::Table &gt; google::cloud::bigtable::v0::TableAdmin::AsyncGetTable </td>
           <td>(</td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;&#160;</td>
+          <td class="paramname"><em>cq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>table_id</em>, </td>
         </tr>
@@ -360,13 +366,7 @@ template&lt;typename... Policies&gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">google::bigtable::admin::v2::Table::View&#160;</td>
-          <td class="paramname"><em>view</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;&#160;</td>
-          <td class="paramname"><em>cq</em>&#160;</td>
+          <td class="paramname"><em>view</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -399,7 +399,7 @@ template&lt;typename... Policies&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div><div class="line">  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {</div><div class="line">    google::cloud::future&lt;google::bigtable::admin::v2::Table&gt; future =</div><div class="line">        admin.AsyncGetTable(table_id, google::bigtable::admin::v2::Table::FULL,</div><div class="line">                            cq);</div><div class="line"></div><div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = future.then(</div><div class="line">        [](google::cloud::future&lt;google::bigtable::admin::v2::Table&gt; f) {</div><div class="line">          <span class="keyword">auto</span> table = f.get();</div><div class="line">          std::cout &lt;&lt; table.name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">          <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; family : table.column_families()) {</div><div class="line">            std::string <span class="keyword">const</span>&amp; family_name = family.first;</div><div class="line">            std::string gc_rule;</div><div class="line">            google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),</div><div class="line">                                                        &amp;gc_rule);</div><div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; family_name &lt;&lt; <span class="stringliteral">&quot;\t\t&quot;</span> &lt;&lt; gc_rule &lt;&lt; std::endl;</div><div class="line">          }</div><div class="line">        });</div><div class="line"></div><div class="line">    <span class="keyword">final</span>.get();</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div><div class="line">  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {</div><div class="line">    google::cloud::future&lt;google::bigtable::admin::v2::Table&gt; future =</div><div class="line">        admin.AsyncGetTable(cq, table_id,</div><div class="line">                            google::bigtable::admin::v2::Table::FULL);</div><div class="line"></div><div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = future.then(</div><div class="line">        [](google::cloud::future&lt;google::bigtable::admin::v2::Table&gt; f) {</div><div class="line">          <span class="keyword">auto</span> table = f.get();</div><div class="line">          std::cout &lt;&lt; table.name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">          <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; family : table.column_families()) {</div><div class="line">            std::string <span class="keyword">const</span>&amp; family_name = family.first;</div><div class="line">            std::string gc_rule;</div><div class="line">            google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),</div><div class="line">                                                        &amp;gc_rule);</div><div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; family_name &lt;&lt; <span class="stringliteral">&quot;\t\t&quot;</span> &lt;&lt; gc_rule &lt;&lt; std::endl;</div><div class="line">          }</div><div class="line">        });</div><div class="line"></div><div class="line">    <span class="keyword">final</span>.get();</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
