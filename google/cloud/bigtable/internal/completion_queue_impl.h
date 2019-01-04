@@ -172,7 +172,7 @@ template <typename Request, typename Response, typename Functor,
 class AsyncUnaryRpcFunctor : public AsyncGrpcOperation {
  public:
   explicit AsyncUnaryRpcFunctor(Functor&& functor)
-      : functor_(std::forward<Functor>(functor)) {}
+      : sync_(false), functor_(std::forward<Functor>(functor)) {}
 
   /// Make the RPC request and prepare the response callback.
   template <typename Client, typename MemberFunction>
