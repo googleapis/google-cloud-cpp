@@ -78,4 +78,11 @@ if (NOT TARGET protobuf_project)
                           protobuf::libprotobuf
                           ZLIB::ZLIB
                           Threads::Threads)
+    add_executable(protobuf::protoc IMPORTED)
+    set_property(
+        TARGET protobuf::protoc
+        PROPERTY
+            IMPORTED_LOCATION
+            "${PROJECT_BINARY_DIR}/external/bin/protoc${CMAKE_EXECUTABLE_SUFFIX}"
+        )
 endif ()

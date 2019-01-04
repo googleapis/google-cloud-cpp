@@ -49,10 +49,12 @@ set(GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS
     /wd4838
     /wd4996)
 
+# gRPC depends on protobuf, so include that too.
+include(IncludeProtobuf)
+
 if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "external")
     include(external/grpc)
 elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
-    find_package(protobuf REQUIRED protobuf>=3.5.2)
     find_package(gRPC REQUIRED gRPC>=1.9)
 
     if (NOT TARGET protobuf::libprotobuf)
@@ -100,19 +102,6 @@ elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
                               ${GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS})
     endif (MSVC)
 
-    # Discover the protobuf compiler and the gRPC plugin.
-    find_program(
-        PROTOBUF_PROTOC_EXECUTABLE
-        NAMES protoc
-        DOC "The Google Protocol Buffers Compiler"
-        PATHS
-            ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Release
-            ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Debug)
-    mark_as_advanced(PROTOBUF_PROTOC_EXECUTABLE)
-    add_executable(protoc IMPORTED)
-    set_property(TARGET protoc
-                 PROPERTY IMPORTED_LOCATION ${PROTOBUF_PROTOC_EXECUTABLE})
-
     find_program(
         PROTOC_GRPCPP_PLUGIN_EXECUTABLE
         NAMES grpc_cpp_plugin
@@ -136,18 +125,6 @@ elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
     # Use pkg-config to find the libraries.
     find_package(PkgConfig REQUIRED)
 
-    # We need a helper function to convert pkg-config(1) output into target
-    # properties.
-    include(${CMAKE_CURRENT_LIST_DIR}/PkgConfigHelper.cmake)
-
-    pkg_check_modules(Protobuf REQUIRED protobuf>=3.5)
-    add_library(protobuf::libprotobuf INTERFACE IMPORTED)
-    set_library_properties_from_pkg_config(protobuf::libprotobuf Protobuf)
-    set_property(TARGET protobuf::libprotobuf
-                 APPEND
-                 PROPERTY INTERFACE_LINK_LIBRARIES Threads::Threads)
-    list(APPEND PROTOBUF_IMPORT_DIRS ${Protobuf_INCLUDE_DIRS})
-
     pkg_check_modules(gRPC REQUIRED grpc>=1.9)
     add_library(gRPC::grpc INTERFACE IMPORTED)
     set_library_properties_from_pkg_config(gRPC::grpc gRPC)
@@ -161,19 +138,6 @@ elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
     set_property(TARGET gRPC::grpc++
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES gRPC::grpc)
-
-    # Discover the protobuf compiler and the gRPC plugin.
-    find_program(
-        PROTOBUF_PROTOC_EXECUTABLE
-        NAMES protoc
-        DOC "The Google Protocol Buffers Compiler"
-        PATHS
-            ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Release
-            ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Debug)
-    mark_as_advanced(PROTOBUF_PROTOC_EXECUTABLE)
-    add_executable(protoc IMPORTED)
-    set_property(TARGET protoc
-                 PROPERTY IMPORTED_LOCATION ${PROTOBUF_PROTOC_EXECUTABLE})
 
     find_program(
         PROTOC_GRPCPP_PLUGIN_EXECUTABLE
