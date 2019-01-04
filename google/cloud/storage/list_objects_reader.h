@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/status_or.h"
 #include <iterator>
 
 namespace google {
@@ -33,10 +34,10 @@ class ListObjectsIterator {
   //@{
   /// @name Iterator traits
   using iterator_category = std::input_iterator_tag;
-  using value_type = ObjectMetadata;
+  using value_type = StatusOr<ObjectMetadata>;
   using difference_type = std::ptrdiff_t;
-  using pointer = ObjectMetadata*;
-  using reference = ObjectMetadata&;
+  using pointer = value_type*;
+  using reference = value_type&;
   //@}
 
   ListObjectsIterator() : owner_(nullptr) {}
@@ -48,15 +49,15 @@ class ListObjectsIterator {
     return tmp;
   }
 
-  ObjectMetadata const* operator->() const { return value_.operator->(); }
-  ObjectMetadata* operator->() { return value_.operator->(); }
+  value_type const* operator->() const { return value_.operator->(); }
+  value_type* operator->() { return value_.operator->(); }
 
-  ObjectMetadata const& operator*() const& { return *value_; }
-  ObjectMetadata& operator*() & { return *value_; }
+  value_type const& operator*() const& { return *value_; }
+  value_type& operator*() & { return *value_; }
 #if GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
-  ObjectMetadata const&& operator*() const&& { return *std::move(value_); }
+  value_type const&& operator*() const&& { return *std::move(value_); }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
-  ObjectMetadata&& operator*() && { return *std::move(value_); }
+  value_type&& operator*() && { return *std::move(value_); }
 
   bool operator==(ListObjectsIterator const& rhs) const {
     // All end iterators are equal.
@@ -74,11 +75,11 @@ class ListObjectsIterator {
  private:
   friend class ListObjectsReader;
   explicit ListObjectsIterator(ListObjectsReader* owner,
-                               google::cloud::optional<ObjectMetadata> value);
+                               google::cloud::optional<value_type> value);
 
  private:
   ListObjectsReader* owner_;
-  google::cloud::optional<ObjectMetadata> value_;
+  google::cloud::optional<value_type> value_;
 };
 
 /**
@@ -126,7 +127,7 @@ class ListObjectsReader {
    *
    * @return an unset optional if there are no more objects in the stream.
    */
-  google::cloud::optional<ObjectMetadata> GetNext();
+  google::cloud::optional<StatusOr<ObjectMetadata>> GetNext();
 
  private:
   std::shared_ptr<internal::RawClient> client_;

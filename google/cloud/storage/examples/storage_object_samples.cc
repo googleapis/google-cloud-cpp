@@ -56,7 +56,8 @@ void ListObjects(google::cloud::storage::Client client, int& argc,
   //! [list objects] [START storage_list_files]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
-    for (gcs::ObjectMetadata const& meta : client.ListObjects(bucket_name)) {
+    for (auto&& m : client.ListObjects(bucket_name)) {
+      gcs::ObjectMetadata meta = std::move(m).value();
       std::cout << "bucket_name=" << meta.bucket()
                 << ", object_name=" << meta.name() << std::endl;
     }

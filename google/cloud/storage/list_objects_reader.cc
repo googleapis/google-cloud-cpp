@@ -28,15 +28,15 @@ static_assert(
     "ListObjectsReader::iterator should be an InputIterator");
 static_assert(
     std::is_same<std::iterator_traits<ListObjectsReader::iterator>::value_type,
-                 ObjectMetadata>::value,
+                 StatusOr<ObjectMetadata>>::value,
     "ListObjectsReader::iterator should be an InputIterator of ObjectMetadata");
 static_assert(
     std::is_same<std::iterator_traits<ListObjectsReader::iterator>::pointer,
-                 ObjectMetadata*>::value,
+                 StatusOr<ObjectMetadata>*>::value,
     "ListObjectsReader::iterator should be an InputIterator of ObjectMetadata");
 static_assert(
     std::is_same<std::iterator_traits<ListObjectsReader::iterator>::reference,
-                 ObjectMetadata&>::value,
+                 StatusOr<ObjectMetadata>&>::value,
     "ListObjectsReader::iterator should be an InputIterator of ObjectMetadata");
 static_assert(std::is_copy_constructible<ListObjectsReader::iterator>::value,
               "ListObjectsReader::iterator must be CopyConstructible");
@@ -60,7 +60,8 @@ static_assert(
     "ListObjectsReader::iterator &>");
 
 ListObjectsIterator::ListObjectsIterator(
-    ListObjectsReader* owner, google::cloud::optional<ObjectMetadata> value)
+    ListObjectsReader* owner,
+    google::cloud::optional<value_type> value)
     : owner_(owner), value_(std::move(value)) {
   if (not value_) {
     // This iterator was initialized by begin() on an empty list, turn it into
@@ -82,24 +83,33 @@ ListObjectsReader::iterator ListObjectsReader::begin() {
   return iterator(this, GetNext());
 }
 
-google::cloud::optional<ObjectMetadata> ListObjectsReader::GetNext() {
+google::cloud::optional<StatusOr<ObjectMetadata>> ListObjectsReader::GetNext() {
   if (current_objects_.end() == current_) {
     if (on_last_page_) {
-      return google::cloud::optional<ObjectMetadata>();
+      return google::cloud::optional<StatusOr<ObjectMetadata>>();
     }
     request_.set_page_token(std::move(next_page_token_));
-    auto response = client_->ListObjects(request_).value();
-    next_page_token_ = std::move(response.next_page_token);
-    current_objects_ = std::move(response.items);
+    auto response = client_->ListObjects(request_);
+    if (not response.ok()) {
+      next_page_token_.clear();
+      current_objects_.clear();
+      on_last_page_ = true;
+      current_ = current_objects_.begin();
+      return google::cloud::optional<StatusOr<ObjectMetadata>>(
+          std::move(response).status());
+    }
+    next_page_token_ = std::move(response->next_page_token);
+    current_objects_ = std::move(response->items);
     current_ = current_objects_.begin();
     if (next_page_token_.empty()) {
       on_last_page_ = true;
     }
     if (current_objects_.end() == current_) {
-      return google::cloud::optional<ObjectMetadata>();
+      return google::cloud::optional<StatusOr<ObjectMetadata>>();
     }
   }
-  return google::cloud::optional<ObjectMetadata>(std::move(*current_++));
+  return google::cloud::optional<StatusOr<ObjectMetadata>>(
+      std::move(*current_++));
 }
 
 }  // namespace STORAGE_CLIENT_NS
