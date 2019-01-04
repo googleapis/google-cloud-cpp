@@ -351,12 +351,12 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileNonRegularWarning) {
 
   LogSink::Instance().RemoveBackend(id);
 
-  auto count =
-      std::count_if(backend->log_lines.begin(), backend->log_lines.end(),
-                    [file_name](std::string const& line) {
-                      return line.find(file_name) != std::string::npos and
-                             line.find("not a regular file");
-                    });
+  auto count = std::count_if(
+      backend->log_lines.begin(), backend->log_lines.end(),
+      [file_name](std::string const& line) {
+        return line.find(file_name) != std::string::npos and
+               line.find("not a regular file") != std::string::npos;
+      });
   EXPECT_NE(0U, count);
 
   t.join();
