@@ -58,7 +58,9 @@ export_variables_to_bazel("firestore_client_version.bzl"
 
 # the client library
 add_library(firestore_client field_path.h field_path.cc)
-target_link_libraries(firestore_client PUBLIC google_cloud_cpp_common)
+target_link_libraries(firestore_client
+                      PUBLIC google_cloud_cpp_common
+                      PRIVATE firestore_common_options)
 target_include_directories(firestore_client
                            PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
                                   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
@@ -120,7 +122,7 @@ install(TARGETS
 install(EXPORT firestore-targets
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/firestore_client")
 
-install(TARGETS firestore_client
+install(TARGETS firestore_client firestore_common_options
         EXPORT firestore-targets
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

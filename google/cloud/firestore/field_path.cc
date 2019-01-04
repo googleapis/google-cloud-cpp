@@ -102,7 +102,7 @@ bool FieldPath::operator<(FieldPath const& other) const {
   auto const this_size = this->parts_.size();
   auto const other_size = other.size();
   auto const min_length = std::min(this_size, other_size);
-  for (auto i = 0; i < min_length; i++) {
+  for (auto i = 0u; i < min_length; i++) {
     if (this->parts_[i] < other.parts_[i]) {
       return true;
     }
