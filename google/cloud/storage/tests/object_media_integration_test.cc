@@ -87,7 +87,7 @@ TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
   EXPECT_EQ(expected_str, actual);
 
   client.DeleteObject(bucket_name, object_name);
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, JsonDownloadFile) {
@@ -116,7 +116,7 @@ TEST_F(ObjectMediaIntegrationTest, JsonDownloadFile) {
   EXPECT_EQ(expected_str, actual);
 
   client.DeleteObject(bucket_name, object_name);
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, DownloadFileFailure) {
@@ -235,7 +235,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFile) {
   EXPECT_EQ(expected_str, actual);
 
   client.DeleteObject(bucket_name, object_name);
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileEmpty) {
@@ -261,7 +261,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileEmpty) {
   EXPECT_EQ("", actual);
 
   client.DeleteObject(bucket_name, object_name);
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileMissingFileFailure) {
@@ -321,7 +321,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileUploadFailure) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
   client.DeleteObject(bucket_name, object_name);
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileNonRegularWarning) {
@@ -361,7 +361,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileNonRegularWarning) {
 
   t.join();
   client.DeleteObject(bucket_name, object_name);
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 #endif  // GTEST_OS_LINUX
 }
 
@@ -404,7 +404,7 @@ TEST_F(ObjectMediaIntegrationTest, XmlUploadFile) {
   EXPECT_EQ(expected_str, actual);
 
   client.DeleteObject(bucket_name, object_name);
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileResumableBySize) {
@@ -441,7 +441,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableBySize) {
   EXPECT_EQ(expected_str, actual);
 
   client.DeleteObject(bucket_name, object_name);
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileResumableByOption) {
@@ -478,7 +478,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableByOption) {
   EXPECT_EQ(expected_str, actual);
 
   client.DeleteObject(bucket_name, object_name);
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileResumableQuantum) {
@@ -515,7 +515,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableQuantum) {
   EXPECT_EQ(expected_str, actual);
 
   client.DeleteObject(bucket_name, object_name);
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileResumableNonQuantum) {
@@ -551,7 +551,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableNonQuantum) {
   EXPECT_EQ(expected_str, actual);
 
   client.DeleteObject(bucket_name, object_name);
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileResumableUploadFailure) {
@@ -579,7 +579,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableUploadFailure) {
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
