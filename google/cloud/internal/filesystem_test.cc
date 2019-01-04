@@ -129,7 +129,7 @@ TEST(FilesystemTest, StatusFifo) {
   EXPECT_FALSE(static_cast<bool>(ec));
   EXPECT_TRUE(is_fifo(file_status));
   EXPECT_TRUE(is_other(file_status));
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 #else
   std::error_code ec;
   auto file_status = status(".", ec);
@@ -146,7 +146,7 @@ TEST(FilesystemTest, StatusRegular) {
   auto file_status = status(file_name, ec);
   EXPECT_FALSE(static_cast<bool>(ec));
   EXPECT_TRUE(is_regular(file_status));
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST(FilesystemTest, StatusSocket) {
@@ -170,7 +170,7 @@ TEST(FilesystemTest, StatusSocket) {
   EXPECT_TRUE(is_socket(file_status));
   EXPECT_TRUE(is_other(file_status));
   EXPECT_NE(-1, close(fd));
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 #else
   std::error_code ec;
   auto file_status = status(".", ec);
@@ -197,8 +197,8 @@ TEST(FilesystemTest, StatusSymlink) {
   EXPECT_TRUE(is_regular(file_status));
   EXPECT_FALSE(is_symlink(file_status));
 
-  std::remove(symbolic_link.c_str());
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(symbolic_link.c_str()));
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 #else
   std::error_code ec;
   auto file_status = status(".", ec);
@@ -263,7 +263,7 @@ TEST(FilesystemTest, StatusErrorDoesThrow) {
 #else
   EXPECT_DEATH_IF_SUPPORTED(status(path), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 #else
   // I (coryan) do not know of a way to generate an error on Windows. One would
   // need to pass a null string (not empty, null) or something similar, and the
@@ -280,7 +280,7 @@ TEST(FilesystemTest, FileSize) {
   auto size = file_size(file_name, ec);
   EXPECT_FALSE(static_cast<bool>(ec));
   EXPECT_EQ(1000U, size);
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST(FilesystemTest, FileSizeEmpty) {
@@ -290,7 +290,7 @@ TEST(FilesystemTest, FileSizeEmpty) {
   auto size = file_size(file_name, ec);
   EXPECT_FALSE(static_cast<bool>(ec));
   EXPECT_EQ(0U, size);
-  std::remove(file_name.c_str());
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST(FilesystemTest, FileSizeNotFound) {
