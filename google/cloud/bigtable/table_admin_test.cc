@@ -117,6 +117,10 @@ struct MockRpcFactory {
     return std::function<SignatureType>(
         [expected_request](grpc::ClientContext* ctx, RequestType const& request,
                            ResponseType* response) {
+          if (response == nullptr) {
+            return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
+                                "invalid call to MockRpcFactory::Create()");
+          }
           RequestType expected;
           // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
           EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
@@ -126,7 +130,6 @@ struct MockRpcFactory {
           differencer.ReportDifferencesToString(&delta);
           EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
 
-          EXPECT_NE(nullptr, response);
           return grpc::Status::OK;
         });
   }
@@ -155,6 +158,11 @@ struct MockRpcMultiCallFactory {
         [expected_request, expected_result](grpc::ClientContext* ctx,
                                             RequestType const& request,
                                             ResponseType* response) {
+          if (response == nullptr) {
+            return grpc::Status(
+                grpc::StatusCode::INVALID_ARGUMENT,
+                "invalid call to MockRpcMultiCallFactory::Create()");
+          }
           RequestType expected;
           response->clear_consistent();
           // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
@@ -165,11 +173,8 @@ struct MockRpcMultiCallFactory {
           differencer.ReportDifferencesToString(&delta);
           EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
 
-          if (response != nullptr) {
-            response->set_consistent(expected_result);
-          }
+          response->set_consistent(expected_result);
 
-          EXPECT_NE(nullptr, response);
           return grpc::Status::OK;
         });
   }
