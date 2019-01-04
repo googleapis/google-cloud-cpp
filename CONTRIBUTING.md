@@ -77,8 +77,9 @@ standard [GitHub workflow][workflow-link]:
 1. From time to time your pull request may have conflicts with the destination
    branch (likely `master`), if so, we request that you [rebase][about-rebase]
    your branch instead of merging. The reviews can become very confusing if you
-   merge during a pull request. Assuming you have recently synchronized your
-   `master` branch (see above), the commands to rebase would be:
+   merge during a pull request. You should first ensure that your `master`
+   branch has all the latest commits by sycing your fork (see above), then do
+   the following:
    ```console
    git checkout my-feature-branch
    git rebase master
