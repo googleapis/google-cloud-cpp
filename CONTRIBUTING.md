@@ -54,7 +54,7 @@ standard [GitHub workflow][workflow-link]:
    [sync your fork][syncing-a-fork] you can do the following:
    ```console
    git checkout master
-   git pull upstream master
+   git pull --ff-only upstream master
    git push  # Pushes new commits up to your fork on GitHub
    ```
    Note: You probably want to do this periodically, and almost certainly before
