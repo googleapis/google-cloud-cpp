@@ -160,6 +160,7 @@ class MultipageRetriableAdapterTest
         cq_impl_(new bigtable::testing::MockCompletionQueue),
         cq_(cq_impl_),
         dummy_op_mock_(new DummyOperationMock),
+        user_res_(0),
         user_op_called_(),
         metadata_update_policy_(kTableId, MetadataParamTypes::TABLE_NAME),
         op_(new AsyncRetryMultiPage<Functor, DummyOperation>(
