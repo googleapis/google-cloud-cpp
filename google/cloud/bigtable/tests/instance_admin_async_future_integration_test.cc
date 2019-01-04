@@ -124,8 +124,6 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   // create instance
   auto config = IntegrationTestConfig(instance_id);
   auto instance = instance_admin_->CreateInstance(config).get();
-  auto instances_current = instance_admin_->ListInstances();
-  EXPECT_TRUE(IsInstancePresent(instances_current, instance.name()));
   auto async_instances_current = instance_admin_->AsyncListInstances(cq).get();
   EXPECT_TRUE(
       IsInstancePresent(async_instances_current.instances, instance.name()));
@@ -151,9 +149,11 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
 
   // Delete instance
   instance_admin_->DeleteInstance(instance_id);
-  auto instances_after_delete = instance_admin_->ListInstances();
-  EXPECT_TRUE(IsInstancePresent(instances_current, instance_copy.name()));
-  EXPECT_FALSE(IsInstancePresent(instances_after_delete, instance.name()));
+  auto instances_after_delete = instance_admin_->AsyncListInstances(cq).get();
+  EXPECT_TRUE(IsInstancePresent(async_instances_current.instances,
+                                instance_copy.name()));
+  EXPECT_FALSE(
+      IsInstancePresent(instances_after_delete.instances, instance.name()));
 
   cq.Shutdown();
   pool.join();
