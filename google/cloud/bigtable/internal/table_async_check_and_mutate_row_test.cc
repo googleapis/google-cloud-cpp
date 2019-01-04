@@ -179,15 +179,15 @@ TEST_F(NoexTableAsyncCheckAndMutateRowTest, RetryFailure) {
   grpc::Status capture_status;
   bigtable::noex::Table table(client_, kTableId, AlwaysRetryMutationPolicy());
   table.AsyncCheckAndMutateRow(
-      "foo", bt::Filter::PassAllFilter(),
-      {bt::SetCell("fam", "col", 0_ms, "it was true")},
-      {bt::SetCell("fam", "col", 0_ms, "it was false")}, cq,
+      cq,
       [&user_op_called, &capture_status](CompletionQueue& cq, bool response,
                                          grpc::Status const& status) {
         user_op_called = true;
         capture_status = status;
-      });
-
+      },
+      "foo", bt::Filter::PassAllFilter(),
+      {bt::SetCell("fam", "col", 0_ms, "it was true")},
+      {bt::SetCell("fam", "col", 0_ms, "it was false")});
   EXPECT_FALSE(user_op_called);
   EXPECT_EQ(1U, impl->size());
   impl->SimulateCompletion(cq, true);
