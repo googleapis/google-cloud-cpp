@@ -159,6 +159,9 @@ TEST(FilesystemTest, StatusSocket) {
   address.sun_family = AF_UNIX;
   strncpy(address.sun_path, file_name.c_str(), sizeof(address.sun_path) - 1);
   int r = bind(fd, reinterpret_cast<sockaddr*>(&address), sizeof(address));
+  if (r == -1) {
+    (void)close(fd);
+  }
   ASSERT_NE(-1, r);
 
   std::error_code ec;
