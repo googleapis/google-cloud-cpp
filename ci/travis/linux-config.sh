@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright 2017 Google Inc.
+# Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,15 +16,14 @@
 
 set -eu
 
-# Create a Docker image with all the dependencies necessary to build the
-# project.
-if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../.."; pwd)"
+if [[ "${TRAVIS_OS_NAME}" != "linux" ]]; then
+  echo "Not a Linux-based build, skipping Linux-specific build steps."
+  exit 0
 fi
-source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 
-cd ${PROJECT_ROOT}
-sudo docker build -t "${IMAGE}:tip" \
-     --build-arg NCPU="${NCPU:-2}" \
-     --build-arg DISTRO_VERSION="${DISTRO_VERSION}" \
-     -f "ci/travis/Dockerfile.${DISTRO}" ci
+if [[ -n "${IMAGE+x}" ]]; then
+  echo "IMAGE is already defined."
+else
+  readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
+  readonly BUILD_OUTPUT="build-output/${IMAGE}"
+fi

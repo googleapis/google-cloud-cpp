@@ -16,12 +16,10 @@
 
 set -eu
 
-if [[ "${TRAVIS_OS_NAME}" != "linux" ]]; then
-  echo "Not a Linux-based build, skipping Linux-specific build steps."
-  exit 0
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../.."; pwd)"
 fi
-
-readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
+source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 
 # The default user for a Docker container has uid 0 (root). To avoid creating
 # root-owned files in the build directory we tell docker to use the current
@@ -62,6 +60,7 @@ sudo docker run \
      --env CBT=/usr/local/google-cloud-sdk/bin/cbt \
      --env CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
      --env TERM="${TERM:-dumb}" \
+     --env TRAVIS_OS_NAME="${TRAVIS_OS_NAME}" \
      --user "${docker_uid}" \
      --volume "${PWD}":/v \
      --volume "${PWD}/build-output/cache":${docker_home}/.cache \

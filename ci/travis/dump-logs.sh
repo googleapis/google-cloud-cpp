@@ -16,23 +16,16 @@
 
 set -eu
 
-if [ -z "${PROJECT_ROOT+x}" ]; then
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
   readonly PROJECT_ROOT="$(cd "$(dirname $0)/../.."; pwd)"
 fi
+source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
-readonly BUILD_OUTPUT="build-output/cached-${DISTRO}-${DISTRO_VERSION}"
 # Dump the emulator log file. Tests run in the google/cloud/bigtable/tests directory.
 echo
 dump_log "${BUILD_OUTPUT}/google/cloud/bigtable/tests/emulator.log"
 dump_log "${BUILD_OUTPUT}/google/cloud/bigtable/tests/instance-admin-emulator.log"
-
-# This script runs on macOS and Linux, there are no analysis steps executed by
-# the macOS builds, so we can safely exit here unless we are running Linux.
-if [ "${TRAVIS_OS_NAME}" != "linux" ]; then
-  echo "Not a Linux-based build, skipping Linux-specific log dumping steps."
-  exit 0
-fi
 
 # Find any analysis reports, currently ABI checks and Clang static analysis are
 # the two things that produce them. Note that the Clang static analysis reports

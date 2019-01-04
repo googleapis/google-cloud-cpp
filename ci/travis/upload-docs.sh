@@ -16,6 +16,11 @@
 
 set -eu
 
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../.."; pwd)"
+fi
+source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
+
 if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then
   echo "Skipping document generation as it is disabled for pull requests."
   exit 0
@@ -64,11 +69,10 @@ git rm -qfr --ignore-unmatch ${subdir}/google/cloud/firestore
 git rm -qfr --ignore-unmatch ${subdir}/google/cloud/storage
 
 # Copy the build results into the gh-pages clone.
-readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
 mkdir -p "${subdir}" || echo "${subdir} already exists"
-cp -r ../build-output/${IMAGE}/google/cloud/bigtable/html/. "${subdir}/bigtable"
-cp -r ../build-output/${IMAGE}/google/cloud/firestore/html/. "${subdir}/firestore"
-cp -r ../build-output/${IMAGE}/google/cloud/storage/html/. "${subdir}/storage"
+cp -r "../${BUILD_OUTPUT}/google/cloud/bigtable/html/." "${subdir}/bigtable"
+cp -r "../${BUILD_OUTPUT}/google/cloud/firestore/html/." "${subdir}/firestore"
+cp -r "../${BUILD_OUTPUT}/google/cloud/storage/html/." "${subdir}/storage"
 if [ "${subdir}" != "latest" ]; then
   cp -r latest/css "${subdir}"
   cp -r latest/img "${subdir}"
