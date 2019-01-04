@@ -55,6 +55,8 @@ if (NOT TARGET curl_project)
                    # can select it using GOOGLE_CLOUD_CPP_CURL_PROVIDER=package.
                    -DHTTP_ONLY=ON
                    -DCMAKE_BUILD_TYPE=Release
+                   -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+                   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                    -DENABLE_ARES=ON
                    -DCURL_STATICLIB=$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>
