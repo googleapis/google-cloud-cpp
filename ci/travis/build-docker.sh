@@ -29,7 +29,7 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 # This script is designed to work in the context created by the
 # ci/Dockerfile.* build scripts.
 
-(cd /v ; ./ci/check-style.sh)
+(cd "${PROJECT_ROOT}" ; ./ci/check-style.sh)
 
 CMAKE_COMMAND="cmake"
 if [ "${SCAN_BUILD}" = "yes" ]; then
