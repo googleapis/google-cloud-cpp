@@ -51,6 +51,8 @@ if (NOT TARGET protobuf_project)
                           -G${CMAKE_GENERATOR}
                           ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                           -DCMAKE_BUILD_TYPE=Debug
+                          -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+                          -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
                           -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                           -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                           -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
