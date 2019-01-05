@@ -82,22 +82,27 @@ TEST_F(NotificationsTest, ListNotifications) {
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
-  std::vector<NotificationMetadata> actual =
+  StatusOr<std::vector<NotificationMetadata>> actual =
       client.ListNotifications("test-bucket");
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok());
+  EXPECT_EQ(expected, actual.value());
 }
 
 TEST_F(NotificationsTest, ListNotificationsTooManyFailures) {
-  testing::TooManyFailuresTest<internal::ListNotificationsResponse>(
+  testing::TooManyFailuresStatusTest<internal::ListNotificationsResponse>(
       mock_, EXPECT_CALL(*mock_, ListNotifications(_)),
-      [](Client& client) { client.ListNotifications("test-bucket-name"); },
+      [](Client& client) {
+        return client.ListNotifications("test-bucket-name").status();
+      },
       "ListNotifications");
 }
 
 TEST_F(NotificationsTest, ListNotificationsPermanentFailure) {
-  testing::PermanentFailureTest<internal::ListNotificationsResponse>(
+  testing::PermanentFailureStatusTest<internal::ListNotificationsResponse>(
       *client_, EXPECT_CALL(*mock_, ListNotifications(_)),
-      [](Client& client) { client.ListNotifications("test-bucket-name"); },
+      [](Client& client) {
+        return client.ListNotifications("test-bucket-name").status();
+      },
       "ListNotifications");
 }
 
@@ -125,32 +130,33 @@ TEST_F(NotificationsTest, CreateNotification) {
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
-  NotificationMetadata actual = client.CreateNotification(
+  StatusOr<NotificationMetadata> actual = client.CreateNotification(
       "test-bucket", "test-topic-1", payload_format::JsonApiV1(),
       NotificationMetadata()
           .set_object_name_prefix("test-object-prefix-")
           .append_event_type(event_type::ObjectFinalize()));
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok());
+  EXPECT_EQ(expected, actual.value());
 }
 
 TEST_F(NotificationsTest, CreateNotificationTooManyFailures) {
-  testing::TooManyFailuresTest<NotificationMetadata>(
+  testing::TooManyFailuresStatusTest<NotificationMetadata>(
       mock_, EXPECT_CALL(*mock_, CreateNotification(_)),
       [](Client& client) {
-        client.CreateNotification("test-bucket-name", "test-topic-1",
-                                  payload_format::JsonApiV1(),
-                                  NotificationMetadata());
+        return client.CreateNotification("test-bucket-name", "test-topic-1",
+                                         payload_format::JsonApiV1(),
+                                         NotificationMetadata()).status();
       },
       "CreateNotification");
 }
 
 TEST_F(NotificationsTest, CreateNotificationPermanentFailure) {
-  testing::PermanentFailureTest<NotificationMetadata>(
+  testing::PermanentFailureStatusTest<NotificationMetadata>(
       *client_, EXPECT_CALL(*mock_, CreateNotification(_)),
       [](Client& client) {
-        client.CreateNotification("test-bucket-name", "test-topic-1",
-                                  payload_format::JsonApiV1(),
-                                  NotificationMetadata());
+        return client.CreateNotification("test-bucket-name", "test-topic-1",
+                                         payload_format::JsonApiV1(),
+                                         NotificationMetadata()).status();
       },
       "CreateNotification");
 }
@@ -175,25 +181,28 @@ TEST_F(NotificationsTest, GetNotification) {
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
-  NotificationMetadata actual =
+  StatusOr<NotificationMetadata> actual =
       client.GetNotification("test-bucket", "test-notification-1");
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok());
+  EXPECT_EQ(expected, actual.value());
 }
 
 TEST_F(NotificationsTest, GetNotificationTooManyFailures) {
-  testing::TooManyFailuresTest<NotificationMetadata>(
+  testing::TooManyFailuresStatusTest<NotificationMetadata>(
       mock_, EXPECT_CALL(*mock_, GetNotification(_)),
       [](Client& client) {
-        client.GetNotification("test-bucket-name", "test-notification-1");
+        return client.GetNotification("test-bucket-name",
+                                      "test-notification-1").status();
       },
       "GetNotification");
 }
 
 TEST_F(NotificationsTest, GetNotificationPermanentFailure) {
-  testing::PermanentFailureTest<NotificationMetadata>(
+  testing::PermanentFailureStatusTest<NotificationMetadata>(
       *client_, EXPECT_CALL(*mock_, GetNotification(_)),
       [](Client& client) {
-        client.GetNotification("test-bucket-name", "test-notification-1");
+        return client.GetNotification("test-bucket-name",
+                                      "test-notification-1").status();
       },
       "GetNotification");
 }
@@ -209,23 +218,27 @@ TEST_F(NotificationsTest, DeleteNotification) {
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
-  client.DeleteNotification("test-bucket", "test-notification-1");
+  Status status =
+      client.DeleteNotification("test-bucket", "test-notification-1");
+  ASSERT_TRUE(status.ok());
 }
 
 TEST_F(NotificationsTest, DeleteNotificationTooManyFailures) {
-  testing::TooManyFailuresTest<internal::EmptyResponse>(
+  testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
       mock_, EXPECT_CALL(*mock_, DeleteNotification(_)),
       [](Client& client) {
-        client.DeleteNotification("test-bucket-name", "test-notification-1");
+        return client.DeleteNotification("test-bucket-name",
+                                         "test-notification-1");
       },
       "DeleteNotification");
 }
 
 TEST_F(NotificationsTest, DeleteNotificationPermanentFailure) {
-  testing::PermanentFailureTest<internal::EmptyResponse>(
+  testing::PermanentFailureStatusTest<internal::EmptyResponse>(
       *client_, EXPECT_CALL(*mock_, DeleteNotification(_)),
       [](Client& client) {
-        client.DeleteNotification("test-bucket-name", "test-notification-1");
+        return client.DeleteNotification("test-bucket-name",
+                                         "test-notification-1");
       },
       "DeleteNotification");
 }

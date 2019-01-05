@@ -2260,7 +2260,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
+   * @returns An error status if there is a permanent failure, or if there were
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
@@ -2270,24 +2270,15 @@ class Client {
    * @snippet storage_notification_samples.cc list notifications
    */
   template <typename... Options>
-  std::vector<NotificationMetadata> ListNotifications(
-      std::string const& bucket_name, Options&&... options) {
-    return ListNotifications(std::nothrow, bucket_name,
-                             std::forward<Options>(options)...)
-        .value();
-  }
-
-  /**
-   * This overload works exactly like `ListNotifications()` without a
-   * `nothrow_t` parameter, except that it returns a `Status` on error, and the
-   * normal return value on success.
-   */
-  template <typename... Options>
   StatusOr<std::vector<NotificationMetadata>> ListNotifications(
-      std::nothrow_t, std::string const& bucket_name, Options&&... options) {
+      std::string const& bucket_name, Options&&... options) {
     internal::ListNotificationsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->ListNotifications(request).value().items;
+    auto result = raw_client_->ListNotifications(request);
+    if (not result.ok()) {
+      return std::move(result).status();
+    }
+    return std::move(result).value().items;
   }
 
   /**
@@ -2310,7 +2301,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
+   * @returns An error status if there is a permanent failure, or if there were
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
@@ -2327,27 +2318,10 @@ class Client {
    *     Cloud Pub/Sub service.
    */
   template <typename... Options>
-  NotificationMetadata CreateNotification(std::string const& bucket_name,
-                                          std::string const& topic_name,
-                                          std::string const& payload_format,
-                                          NotificationMetadata metadata,
-                                          Options&&... options) {
-    return CreateNotification(std::nothrow, bucket_name, topic_name,
-                              payload_format, std::move(metadata),
-                              std::forward<Options>(options)...)
-        .value();
-  }
-
-  /**
-   * This overload works exactly like `CreateNotifications()` without a
-   * `nothrow_t` parameter, except that it returns a `Status` on error, and the
-   * normal return value on success.
-   */
-  template <typename... Options>
   StatusOr<NotificationMetadata> CreateNotification(
-      std::nothrow_t, std::string const& bucket_name,
-      std::string const& topic_name, std::string const& payload_format,
-      NotificationMetadata metadata, Options&&... options) {
+      std::string const& bucket_name, std::string const& topic_name,
+      std::string const& payload_format, NotificationMetadata metadata,
+      Options&&... options) {
     metadata.set_topic(topic_name).set_payload_format(payload_format);
     internal::CreateNotificationRequest request(bucket_name, metadata);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2367,7 +2341,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
+   * @returns An error status if there is a permanent failure, or if there were
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
@@ -2383,12 +2357,12 @@ class Client {
    *     Cloud Pub/Sub service.
    */
   template <typename... Options>
-  NotificationMetadata GetNotification(std::string const& bucket_name,
-                                       std::string const& notification_id,
-                                       Options&&... options) {
+  StatusOr<NotificationMetadata> GetNotification(
+      std::string const& bucket_name, std::string const& notification_id,
+      Options&&... options) {
     internal::GetNotificationRequest request(bucket_name, notification_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetNotification(request).value();
+    return raw_client_->GetNotification(request);
   }
 
   /**
@@ -2404,7 +2378,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
+   * @returns An error status if there is a permanent failure, or if there were
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
@@ -2422,12 +2396,12 @@ class Client {
    *     Cloud Pub/Sub service.
    */
   template <typename... Options>
-  void DeleteNotification(std::string const& bucket_name,
-                          std::string const& notification_id,
-                          Options&&... options) {
+  Status DeleteNotification(std::string const& bucket_name,
+                            std::string const& notification_id,
+                            Options&&... options) {
     internal::DeleteNotificationRequest request(bucket_name, notification_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->DeleteNotification(request).value();
+    return std::move(raw_client_->DeleteNotification(request)).status();
   }
   //@}
 

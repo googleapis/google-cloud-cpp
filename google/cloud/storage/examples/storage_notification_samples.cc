@@ -54,8 +54,9 @@ void ListNotifications(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
     std::cout << "Notifications for bucket=" << bucket_name << std::endl;
-    for (gcs::NotificationMetadata const& notification :
-         client.ListNotifications(bucket_name)) {
+    std::vector<gcs::NotificationMetadata> items =
+        client.ListNotifications(bucket_name).value();
+    for (gcs::NotificationMetadata const& notification : items) {
       std::cout << notification << std::endl;
     }
   }
@@ -73,9 +74,12 @@ void CreateNotification(google::cloud::storage::Client client, int& argc,
   //! [create notification] [START storage_create_pubsub_bucket_notification]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string topic_name) {
-    gcs::NotificationMetadata notification = client.CreateNotification(
-        bucket_name, topic_name, gcs::payload_format::JsonApiV1(),
-        gcs::NotificationMetadata());
+    gcs::NotificationMetadata notification =
+        client
+            .CreateNotification(bucket_name, topic_name,
+                                gcs::payload_format::JsonApiV1(),
+                                gcs::NotificationMetadata())
+            .value();
     std::cout << "Successfully created notification " << notification.id()
               << " for bucket " << bucket_name
               << "\nfull details=" << notification << std::endl;
@@ -95,7 +99,7 @@ void GetNotification(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string notification_id) {
     gcs::NotificationMetadata notification =
-        client.GetNotification(bucket_name, notification_id);
+        client.GetNotification(bucket_name, notification_id).value();
     std::cout << "Notification " << notification.id() << " for bucket "
               << bucket_name << " details=" << notification << std::endl;
   }

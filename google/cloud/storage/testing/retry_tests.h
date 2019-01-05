@@ -320,6 +320,244 @@ void PermanentFailureTest(Client& client,
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
+/**
+ * Tests the "too many failures" case for a `Client::*` member function.
+ *
+ * We need to verify that each API in the client library handles "too many
+ * errors" correctly. The tests are quite repetitive, and all have the same
+ * structure:
+ *
+ * - Create a `storage::Client` with an easy-to-test retry policy.
+ * - Setup the mock to return the right number of transient failures.
+ * - Call the API.
+ * - Verify an error status is returned, with the right contents.
+ *
+ * This function implements these tests, saving us a lot of repetitive code.
+ *
+ * @tparam ReturnType The low-level RawClient return type (modulo StatusOr).
+ * @tparam F a formal parameter, the googlemock representation of the mocked
+ *     call.
+ *
+ * @param oncall The internal type returned by EXPECT_CALL(...).
+ * @param tested_operation a function wrapping the operation to be tested.
+ * @param api_name the name of the api
+ * @return a function that implements the test.
+ */
+template <typename ReturnType, typename F>
+void TooManyFailuresStatusTest(
+    std::shared_ptr<testing::MockClient> const& mock,
+    ::testing::internal::TypedExpectation<F>& oncall,
+    std::function<Status(Client& client)> const& tested_operation,
+    char const* api_name) {
+  using canonical_errors::TransientError;
+  using ::testing::HasSubstr;
+  using ::testing::Return;
+  // A storage::Client with a simple to test policy.
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  // Expect exactly 3 calls before the retry policy is exhausted and an error
+  // status is returned.
+  oncall.WillOnce(Return(StatusOr<ReturnType>(TransientError())))
+      .WillOnce(Return(StatusOr<ReturnType>(TransientError())))
+      .WillOnce(Return(StatusOr<ReturnType>(TransientError())));
+
+  Status status = tested_operation(client);
+  EXPECT_EQ(TransientError().status_code(), status.status_code());
+  EXPECT_THAT(status.error_message(), HasSubstr("Retry policy exhausted"));
+  EXPECT_THAT(status.error_message(), HasSubstr(api_name));
+}
+
+/**
+ * Tests that non-idempotent operations are *not* retried case for a `Client::*`
+ * member function.
+ *
+ * We need to verify that non-idempotent operations are not retied when the
+ * policy says so. The tests are quite repetitive, and all have the same
+ * structure:
+ *
+ * - Create a `storage::Client` with the right idempotency policies.
+ * - Setup the mock to return the right number of transient failures.
+ * - Call the API.
+ * - Verify an error status is returned, with the right contents.
+ *
+ * This function implements these tests, saving us a lot of repetitive code.
+ *
+ * @tparam ReturnType The low-level RawClient return type (modulo StatusOr).
+ * @tparam F a formal parameter, the googlemock representation of the mocked
+ *     call.
+ *
+ * @param oncall The internal type returned by EXPECT_CALL(...).
+ * @param tested_operation a function wrapping the operation to be tested.
+ * @param api_name the name of the api
+ * @param has_will_repeatedly `.WillRepeatedly()` can be called only once
+ *     in @p oncall. If this flag is set, the test will not setup that
+ *     expectation again.
+ * @return a function that implements the test.
+ */
+template <typename ReturnType, typename F>
+void NonIdempotentFailuresStatusTest(
+    std::shared_ptr<testing::MockClient> const& mock,
+    ::testing::internal::TypedExpectation<F>& oncall,
+    std::function<Status(Client& client)> const& tested_operation,
+    char const* api_name, bool has_will_repeatedly = false) {
+  using canonical_errors::TransientError;
+  using ::testing::HasSubstr;
+  using ::testing::Return;
+  // A storage::Client with the strict idempotency policy, but with a generous
+  // retry policy.
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                StrictIdempotencyPolicy(), LimitedErrorCountRetryPolicy(10)};
+
+  // The first transient error should stop the retries for non-idempotent
+  // operations.
+  oncall.WillOnce(Return(StatusOr<ReturnType>(TransientError())));
+
+  // Verify the right error status, with the right content, is returned when
+  // calling the operation.
+  Status status = tested_operation(client);
+  EXPECT_EQ(status.status_code(), TransientError().status_code());
+  EXPECT_THAT(status.error_message(), HasSubstr("Error in non-idempotent"));
+  EXPECT_THAT(status.error_message(), HasSubstr(api_name));
+}
+
+/**
+ * Tests that non-idempotent operations are *not* retried case for a `Client::*`
+ * member function.
+ *
+ * We need to verify that non-idempotent operations are not retied when the
+ * policy says so. The tests are quite repetitive, and all have the same
+ * structure:
+ *
+ * - Create a `storage::Client` with the right idempotency policies.
+ * - Setup the mock to return the right number of transient failures.
+ * - Call the API.
+ * - Verify an error status is returned, with the right contents.
+ *
+ * This function implements these tests, saving us a lot of repetitive code.
+ *
+ * @tparam ReturnType The low-level RawClient return type (modulo StatusOr).
+ * @tparam F a formal parameter, the googlemock representation of the mocked
+ *     call.
+ *
+ * @param oncall The internal type returned by EXPECT_CALL(...).
+ * @param tested_operation a function wrapping the operation to be tested.
+ * @param api_name the name of the api
+ * @param has_will_repeatedly `.WillRepeatedly()` can be called only once
+ *     in @p oncall. If this flag is set, the test will not setup that
+ *     expectation again.
+ * @return a function that implements the test.
+ */
+template <typename ReturnType, typename F>
+void IdempotentFailuresStatusTest(
+    std::shared_ptr<testing::MockClient> const& mock,
+    ::testing::internal::TypedExpectation<F>& oncall,
+    std::function<Status(Client& client)> const& tested_operation,
+    char const* api_name, bool has_will_repeatedly = true) {
+  using canonical_errors::TransientError;
+  using ::testing::HasSubstr;
+  using ::testing::Return;
+  // A storage::Client with the strict idempotency policy, but with a generous
+  // retry policy.
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                StrictIdempotencyPolicy(), LimitedErrorCountRetryPolicy(2)};
+
+  // Expect exactly 3 calls before the retry policy is exhausted and an error
+  // status is returned.
+  oncall.WillOnce(Return(StatusOr<ReturnType>(TransientError())))
+      .WillOnce(Return(StatusOr<ReturnType>(TransientError())))
+      .WillOnce(Return(StatusOr<ReturnType>(TransientError())));
+
+  // Verify the right error status, with the right content, is returned when
+  // calling the operation.
+  Status status = tested_operation(client);
+  EXPECT_EQ(TransientError().status_code(), status.status_code());
+  EXPECT_THAT(status.error_message(), HasSubstr("Retry policy exhausted"));
+  EXPECT_THAT(status.error_message(), HasSubstr(api_name));
+}
+
+/**
+ * Test operations that are idempotent or not depending of their parameters.
+ *
+ * Some operations are idempotent when some parameters are set (preconditions),
+ * when the operation is idempotent, we want to verify that they are retried
+ * multiple times, when they are not, we want to retry them only once if the
+ * right policy is set.
+ *
+ * - Create a `storage::Client` with an easy-to-test retry policy.
+ * - Setup the mock to return the right number of transient failures.
+ * - Call the API.
+ * - Verify an error status is returned, with the right contents.
+ *
+ * This function implements these tests, saving us a lot of repetitive code.
+ *
+ * @tparam ReturnType The low-level RawClient return type (modulo StatusOr).
+ * @tparam F a formal parameter, the googlemock representation of the mocked
+ *     call.
+ *
+ * @param oncall The internal type returned by EXPECT_CALL(...).
+ * @param tested_operation a function wrapping the operation to be tested.
+ * @param api_name the name of the api
+ * @return a function that implements the test.
+ */
+template <typename ReturnType, typename F>
+void TooManyFailuresStatusTest(
+    std::shared_ptr<testing::MockClient> const& mock,
+    ::testing::internal::TypedExpectation<F>& oncall,
+    std::function<Status(Client& client)> const& tested_operation,
+    std::function<Status(Client& client)> const& idempotent_operation,
+    char const* api_name) {
+  TooManyFailuresStatusTest<ReturnType>(mock, oncall, tested_operation,
+                                        api_name);
+  IdempotentFailuresStatusTest<ReturnType>(mock, oncall, idempotent_operation,
+                                           api_name, true);
+  NonIdempotentFailuresStatusTest<ReturnType>(mock, oncall, tested_operation,
+                                              api_name, true);
+}
+
+/**
+ * Tests the "permanent failure" case for a `Client::*` member function.
+ *
+ * We need to verify that each API in the client library handles permanent
+ * failures correctly. The tests are quite repetitive, and all have the same
+ * structure:
+ *
+ * - Setup the mock to return a permanent failure.
+ * - Call the API.
+ * - Verify an error status is returned, with the right contents.
+ *
+ * This function implements these tests, saving us a lot of repetitive code.
+ *
+ * @tparam ReturnType The low-level RawClient return type (modulo StatusOr).
+ * @tparam F a formal parameter, the googlemock representation of the mocked
+ *     call.
+ *
+ * @param oncall The internal type returned by EXPECT_CALL(...).
+ * @param tested_operation a function wrapping the operation to be tested.
+ * @param api_name the name of the api
+ * @return a function that implements the test.
+ */
+template <typename ReturnType, typename F>
+void PermanentFailureStatusTest(
+    Client& client, ::testing::internal::TypedExpectation<F>& oncall,
+    std::function<Status(Client& client)> tested_operation,
+    char const* api_name) {
+  using canonical_errors::PermanentError;
+  using ::testing::HasSubstr;
+  using ::testing::Return;
+
+  // Expect exactly one call before the retry policy is exhausted and an error
+  // status is returned.
+  oncall.WillOnce(Return(StatusOr<ReturnType>(PermanentError())));
+
+  // Verify the right exception type, with the right content, is raised when
+  // calling the operation.
+  Status status = tested_operation(client);
+  EXPECT_EQ(PermanentError().status_code(), status.status_code());
+  EXPECT_THAT(status.error_message(), HasSubstr("Permanent error"));
+  EXPECT_THAT(status.error_message(), HasSubstr(api_name));
+}
+
 }  // namespace testing
 }  // namespace storage
 }  // namespace cloud
