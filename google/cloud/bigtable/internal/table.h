@@ -362,33 +362,10 @@ class Table {
       rows->emplace_back(Row(std::move(row.row_key()), std::move(row.cells())));
     };
 
-    auto done_callback = [rows, &callback](CompletionQueue& cq, bool& response,
-                                           grpc::Status const& status) {
-      if (not status.ok()) {
-        callback(cq, std::make_pair(false, Row("", {})), status);
-        return;
-      }
-
-      if (rows->empty()) {
-        callback(cq, std::make_pair(false, Row("", {})), status);
-        return;
-      }
-
-      if (rows->size() != 1U) {
-        auto done_status = grpc::Status(grpc::StatusCode::INTERNAL,
-                                        "internal error - AsyncReadRows "
-                                        "returned 2 rows in AsyncReadRow()");
-        callback(cq, std::make_pair(false, Row("", {})), done_status);
-        return;
-      }
-
-      callback(cq, std::make_pair(true, Row(std::move(rows->front()))), status);
-      return;
-    };
-
     return AsyncReadRows(std::move(row_set), rows_limit, std::move(filter), cq,
                          std::move(read_row_callback),
-                         std::move(done_callback));
+                         internal::CallbackForAsyncReadRow<Functor>(
+                             std::forward<Functor>(callback), rows));
   }
 
   bool CheckAndMutateRow(std::string row_key, Filter filter,
