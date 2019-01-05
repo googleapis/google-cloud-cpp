@@ -422,12 +422,11 @@ void NonIdempotentFailuresStatusTest(
 }
 
 /**
- * Tests that non-idempotent operations are *not* retried case for a `Client::*`
- * member function.
+ * Tests that idempotent operations *are* retried for a `Client::*` member
+ * function.
  *
- * We need to verify that non-idempotent operations are not retied when the
- * policy says so. The tests are quite repetitive, and all have the same
- * structure:
+ * We need to verify that idempotent operations are retried when the policy says
+ * so. The tests are quite repetitive, and all have the same structure:
  *
  * - Create a `storage::Client` with the right idempotency policies.
  * - Setup the mock to return the right number of transient failures.
@@ -457,8 +456,8 @@ void IdempotentFailuresStatusTest(
   using canonical_errors::TransientError;
   using ::testing::HasSubstr;
   using ::testing::Return;
-  // A storage::Client with the strict idempotency policy, but with a generous
-  // retry policy.
+  // A storage::Client with the strict idempotency policy, and with an
+  // easy-to-test retry policy.
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 StrictIdempotencyPolicy(), LimitedErrorCountRetryPolicy(2)};
 
@@ -479,8 +478,8 @@ void IdempotentFailuresStatusTest(
 /**
  * Test operations that are idempotent or not depending of their parameters.
  *
- * Some operations are idempotent when some parameters are set (preconditions),
- * when the operation is idempotent, we want to verify that they are retried
+ * Some operations are idempotent when some parameters are set (preconditions).
+ * When the operation is idempotent, we want to verify that they are retried
  * multiple times, when they are not, we want to retry them only once if the
  * right policy is set.
  *
