@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Copyright 2018 Google LLC
+#
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,7 +20,7 @@ if [[ -z "$(which cov-build)" ]]; then
   echo "This script requires the coverity scan tool (cov-build) in PATH"
   echo "Please download the tool, make sure your PATH includes the directory"
   echo "that contains it and try again."
-  echo "More details on: https://scan.coverity.com/download"
+  echo "For more details, see: https://scan.coverity.com/download"
   exit 1
 fi
 
@@ -28,7 +29,7 @@ export CXX=g++
 export CC=gcc
 
 # Running with coverity-scan and ccache seems like a bad idea, disable ccache.
-# Also build in Debug mode because this is too slow in Release mode.
+# Also build in Debug mode because building in Release mode takes too long.
 cmake -H. -B.coverity \
     -DCMAKE_BUILD_TYPE=Debug \
     -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF
@@ -46,3 +47,12 @@ cmake --build .coverity --target skip-scanbuild-targets -- -j $(nproc)
 
 # Run coverity scan over our code.
 cov-build --dir cov-int cmake --build .coverity -- -j $(nproc)
+
+# Create a tarball with the build results. Print something because this takes
+# a while.
+/bin/echo -n "Creating a tarball with the Coverity Scan results." \
+  "This may take several minutes..."
+tar caf google-cloud-cpp.tar.xz cov-int
+/bin/echo "DONE"
+
+echo "Manually upload the results to coverity to start a new analysis."
