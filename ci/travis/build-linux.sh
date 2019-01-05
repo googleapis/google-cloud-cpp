@@ -37,8 +37,7 @@ fi
 
 # Use a volume to store the cache files. This exports the cache files from the
 # Docker container, and then we can save them for future Travis builds.
-test -d "${PWD}/build-output/cache" || mkdir -p "${PWD}/build-output/cache"
-test -d "${PWD}/build-output/ccache" || mkdir -p "${PWD}/build-output/ccache"
+mkdir -p "${PWD}/${DOCKER_CCACHE_DIR}"
 
 sudo docker run \
      --cap-add SYS_PTRACE \
@@ -63,8 +62,7 @@ sudo docker run \
      --env TRAVIS_OS_NAME="${TRAVIS_OS_NAME}" \
      --user "${docker_uid}" \
      --volume "${PWD}":/v \
-     --volume "${PWD}/build-output/cache":${docker_home}/.cache \
-     --volume "${PWD}/build-output/ccache":${docker_home}/.ccache \
+     --volume "${PWD}/${DOCKER_CCACHE_DIR}":${docker_home}/.ccache \
      --workdir /v \
      "${IMAGE}:tip" \
      "/v/ci/travis/build-docker.sh"

@@ -172,7 +172,6 @@ cache:
     # Cache the Bazel directories, in builds that do not use Bazel this is
     # empty and trivial to cache.
     - $HOME/.cache/bazel
-    - build-output/cache
     - build-output/ccache
   timeout: 900
 
