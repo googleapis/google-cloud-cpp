@@ -327,8 +327,6 @@ class Table {
   /**
    * Reads a single row from the table asynchronously.
    *
-   * @param row_key the row key of the row to read.
-   * @param filter is applied on the server-side to data in the rows.
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
@@ -337,6 +335,9 @@ class Table {
    *     static_assert(std::is_invocable_v<
    *         Functor, CompletionQueue&, std::pair<bool, Row>,
    *             grpc::Status&>);
+   * @param row_key the row key of the row to read.
+   * @param filter is applied on the server-side to data in the rows.
+   *
    * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
@@ -346,11 +347,11 @@ class Table {
       typename std::enable_if<google::cloud::internal::is_invocable<
                                   Functor, CompletionQueue&,
                                   std::pair<bool, Row>, grpc::Status&>::value,
-                              int>::type valid_callback1_type = 0>
-  std::shared_ptr<AsyncOperation> AsyncReadRow(std::string row_key,
-                                               Filter filter,
-                                               CompletionQueue& cq,
+                              int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> AsyncReadRow(CompletionQueue& cq,
                                                Functor&& callback,
+                                               std::string row_key,
+                                               Filter filter,
                                                bool raise_on_error = false) {
     RowSet row_set(std::move(row_key));
     std::int64_t const rows_limit = 1;
@@ -362,10 +363,11 @@ class Table {
       rows->emplace_back(Row(std::move(row.row_key()), std::move(row.cells())));
     };
 
-    return AsyncReadRows(std::move(row_set), rows_limit, std::move(filter), cq,
-                         std::move(read_row_callback),
+    return AsyncReadRows(cq, std::move(read_row_callback),
                          internal::CallbackForAsyncReadRow<Functor>(
-                             std::forward<Functor>(callback), rows));
+                             std::forward<Functor>(callback), rows),
+                         std::move(row_set), rows_limit, std::move(filter),
+                         raise_on_error);
   }
 
   bool CheckAndMutateRow(std::string row_key, Filter filter,
