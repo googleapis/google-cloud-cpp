@@ -334,7 +334,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileNonRegularWarning) {
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
-  mkfifo(file_name.c_str(), 0777);
+  ASSERT_NE(-1, mkfifo(file_name.c_str(), 0777));
 
   std::string expected = LoremIpsum();
   std::thread t([file_name, expected] {

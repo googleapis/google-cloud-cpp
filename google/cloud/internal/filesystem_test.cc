@@ -123,7 +123,7 @@ TEST(FilesystemTest, StatusCharacter) {
 TEST(FilesystemTest, StatusFifo) {
 #if GTEST_OS_LINUX
   auto file_name = CreateRandomFileName();
-  mkfifo(file_name.c_str(), 0777);
+  ASSERT_NE(-1, mkfifo(file_name.c_str(), 0777));
   std::error_code ec;
   auto file_status = status(file_name, ec);
   EXPECT_FALSE(static_cast<bool>(ec));
