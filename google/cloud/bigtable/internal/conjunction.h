@@ -24,7 +24,9 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-// TODO(#108) - use std::conjunction<> if available.
+#if defined(__cpp_lib_logical_traits) && (__cpp_lib_logical_traits >= 201510L)
+using std::conjunction;
+#else
 /// A metafunction to fold && across a list of types, empty list case.
 template <typename...>
 struct conjunction : std::true_type {};
@@ -38,6 +40,7 @@ struct conjunction<B1> : B1 {};
 template <typename B1, typename... Bn>
 struct conjunction<B1, Bn...>
     : std::conditional<bool(B1::value), conjunction<Bn...>, B1>::type {};
+#endif  // (defined(__cpp_lib_logical_traits)
 
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
