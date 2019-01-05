@@ -223,6 +223,9 @@ CHECK_STYLE=yes GENERATE_DOCS=yes \
     TRAVIS_OS_NAME=linux ./ci/travis/build-linux.sh
 ```
 
+You may want to add `BUILD_TYPE=Debug` to the list of environment variables,
+as the default (`BUILD_TYPE=Release`) may be slightly slower.
+
 You can set any of the following environment variables to control the build.
 Please consult the build matrix in your [`.travis.yml`](.travis.yml) file to see
 which combinations are tested regularly.
