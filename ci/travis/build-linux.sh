@@ -37,7 +37,7 @@ fi
 
 # Use a volume to store the cache files. This exports the cache files from the
 # Docker container, and then we can save them for future Travis builds.
-test -d "${PWD}/${DOCKER_CCACHE_DIR}" || mkdir -p "${PWD}/${DOCKER_CCACHE_DIR}"
+mkdir -p "${PWD}/${DOCKER_CCACHE_DIR}"
 
 sudo docker run \
      --cap-add SYS_PTRACE \

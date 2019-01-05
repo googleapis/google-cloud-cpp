@@ -29,11 +29,7 @@ else
   if [[ -n "${CC:-}" ]]; then
     suffix="${suffix}-${CC}"
   fi
-  if [[ -n "${BUILD_TYPE+x}" ]]; then
-    suffix="${suffix}-${BUILD_TYPE}"
-  else
-    suffix="${suffix}-Release"
-  fi
+  suffix="${suffix}-${BUILD_TYPE:-Release}"
   if [[ "${SCAN_BUILD+x}" = "yes" ]]; then
     suffix="${suffix}-scan"
   fi
