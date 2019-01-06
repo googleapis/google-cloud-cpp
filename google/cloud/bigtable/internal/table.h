@@ -324,6 +324,52 @@ class Table {
     return op->Start(cq);
   }
 
+  /**
+   * Reads a single row from the table asynchronously.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, CompletionQueue&, std::pair<bool, Row>,
+   *             grpc::Status&>);
+   * @param row_key the row key of the row to read.
+   * @param filter is applied on the server-side to data in the rows.
+   *
+   * @return a handle to the submitted operation
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <
+      typename Functor,
+      typename std::enable_if<google::cloud::internal::is_invocable<
+                                  Functor, CompletionQueue&,
+                                  std::pair<bool, Row>, grpc::Status&>::value,
+                              int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> AsyncReadRow(CompletionQueue& cq,
+                                               Functor&& callback,
+                                               std::string row_key,
+                                               Filter filter,
+                                               bool raise_on_error = false) {
+    RowSet row_set(std::move(row_key));
+    std::int64_t const rows_limit = 1;
+    auto rows = std::make_shared<std::vector<Row>>();
+
+    auto read_row_callback = [rows](CompletionQueue& cq, Row row,
+                                    grpc::Status& status) {
+      // TODO(#1746) - remove const& accessors from Row for efficient move
+      rows->emplace_back(Row(std::move(row.row_key()), std::move(row.cells())));
+    };
+
+    return AsyncReadRows(cq, std::move(read_row_callback),
+                         internal::ReadRowCallbackAdapter<Functor>(
+                             std::forward<Functor>(callback), rows),
+                         std::move(row_set), rows_limit, std::move(filter),
+                         raise_on_error);
+  }
+
   bool CheckAndMutateRow(std::string row_key, Filter filter,
                          std::vector<Mutation> true_mutations,
                          std::vector<Mutation> false_mutations,

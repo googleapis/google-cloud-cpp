@@ -320,6 +320,77 @@ TEST_F(DataAsyncIntegrationTest, TableReadRowsAllRows) {
   CheckEqualUnordered(created, actual);
 }
 
+TEST_F(DataAsyncIntegrationTest, TableAsyncReadRow) {
+  std::string const table_id = RandomTableId();
+  auto sync_table = CreateTable(table_id, table_config);
+  noex::Table table(data_client_, table_id);
+  std::string const row_key1 = "row-key-1";
+  std::string const row_key2 = "row-key-2";
+
+  std::vector<bigtable::Cell> created{
+      {row_key1, family, "c1", 1000, "v1000", {}},
+      {row_key2, family, "c2", 2000, "v2000", {}}};
+  std::vector<bigtable::Cell> expected{
+      {row_key1, family, "c1", 1000, "v1000", {}}};
+
+  CreateCells(*sync_table, created);
+
+  CompletionQueue cq;
+  google::cloud::promise<std::pair<bool, Row>> done;
+  std::thread pool([&cq] { cq.Run(); });
+
+  table.AsyncReadRow(cq,
+                     [&done](CompletionQueue& cq, std::pair<bool, Row> response,
+                             grpc::Status const& status) {
+                       done.set_value(response);
+                       EXPECT_TRUE(status.ok());
+                     },
+                     "row-key-1", Filter::PassAllFilter());
+
+  auto response = done.get_future().get();
+  std::vector<bigtable::Cell> actual;
+  actual.emplace_back(response.second.cells().at(0));
+
+  cq.Shutdown();
+  pool.join();
+
+  DeleteTable(table_id);
+  CheckEqualUnordered(expected, actual);
+  EXPECT_TRUE(response.first);
+}
+
+TEST_F(DataAsyncIntegrationTest, TableAsyncReadRowForNoRow) {
+  std::string const table_id = RandomTableId();
+  auto sync_table = CreateTable(table_id, table_config);
+  noex::Table table(data_client_, table_id);
+  std::string const row_key2 = "row-key-2";
+
+  std::vector<bigtable::Cell> created{
+      {row_key2, family, "c2", 2000, "v2000", {}}};
+
+  CreateCells(*sync_table, created);
+
+  CompletionQueue cq;
+  google::cloud::promise<std::pair<bool, Row>> done;
+  std::thread pool([&cq] { cq.Run(); });
+
+  table.AsyncReadRow(cq,
+                     [&done](CompletionQueue& cq, std::pair<bool, Row> response,
+                             grpc::Status const& status) {
+                       done.set_value(response);
+                       EXPECT_TRUE(status.ok());
+                     },
+                     "row-key-1", Filter::PassAllFilter());
+
+  auto response = done.get_future().get();
+
+  cq.Shutdown();
+  pool.join();
+
+  DeleteTable(table_id);
+  EXPECT_FALSE(response.first);
+  EXPECT_EQ(0, response.second.cells().size());
+}
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

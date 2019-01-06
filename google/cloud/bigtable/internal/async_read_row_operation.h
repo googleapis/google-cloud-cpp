@@ -93,6 +93,64 @@ class AsyncReadRowsOperation
                 std::move(read_row_callback))) {}
 };
 
+/**
+ * Wrap a `AsyncReadRow` callback to use in `AsynReadRows`.
+ *
+ * @note With C++14 this class would be unnecessary, as a extended lambda
+ * capture can do the work, but we need to support C++11, so an ad-hoc class is
+ * needed.
+ *
+ * @tparam Functor the type of the function-like object that will receive the
+ *     results. It must satisfy (using C++17 types):
+ *     static_assert(std::is_invocable_v<
+ *         Functor, CompletionQueue&, std::pair<bool, Row>,
+ *             grpc::Status&>);
+ *
+ * @tparam valid_callback_type a format parameter, uses `std::enable_if<>` to
+ *     disable this template if the functor does not match the expected
+ *     signature.
+ */
+template <typename Functor, typename std::enable_if<
+                                google::cloud::internal::is_invocable<
+                                    Functor, CompletionQueue&,
+                                    std::pair<bool, Row>, grpc::Status&>::value,
+                                int>::type valid_callback_type = 0>
+class ReadRowCallbackAdapter {
+ public:
+  explicit ReadRowCallbackAdapter(Functor&& callback,
+                                  std::shared_ptr<std::vector<Row>> row)
+      : callback_(std::move(callback)), rows_(std::move(row)) {}
+
+  const void operator()(CompletionQueue& cq, bool& response,
+                        grpc::Status const& status) const {
+    if (not status.ok()) {
+      callback_(cq, std::make_pair(false, Row("", {})), status);
+      return;
+    }
+
+    if (rows_->empty()) {
+      callback_(cq, std::make_pair(false, Row("", {})), status);
+      return;
+    }
+
+    if (rows_->size() != 1U) {
+      auto done_status =
+          grpc::Status(grpc::StatusCode::INTERNAL,
+                       "internal error - AsyncReadRows "
+                       "returned 2 or more rows in AsyncReadRow()");
+      callback_(cq, std::make_pair(false, Row("", {})), done_status);
+      return;
+    }
+
+    callback_(cq, std::make_pair(true, Row(std::move(rows_->front()))), status);
+    return;
+  }
+
+ private:
+  Functor callback_;
+  std::shared_ptr<std::vector<Row>> rows_;
+};
+
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
