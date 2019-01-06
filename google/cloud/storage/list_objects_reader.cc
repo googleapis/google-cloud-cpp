@@ -12,15 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/diagnostic_push.h"
-#if __GNUC__ && !__clang__
-// #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-#endif  // __GNUC__
-
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/internal/throw_status_delegate.h"
-
-#include "google/cloud/internal/diagnostic_pop.h"
 
 namespace google {
 namespace cloud {
