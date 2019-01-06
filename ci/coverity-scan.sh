@@ -48,6 +48,16 @@ cmake --build .coverity --target skip-scanbuild-targets -- -j $(nproc)
 # Run coverity scan over our code.
 cov-build --dir cov-int cmake --build .coverity -- -j $(nproc)
 
+if [[ -z "${COVERITY_SCAN_TOKEN}" ]]; then
+  echo "COVERITY_SCAN_TOKEN is not defined, skipping upload of results."
+  exit 0
+fi
+
+if [[ -z "${COVERITY_SCAN_EMAIL}" ]]; then
+  echo "COVERITY_SCAN_EMAIL is not defined, skipping upload of results."
+  exit 0
+fi
+
 # Create a tarball with the build results. Print something because this takes
 # a while.
 /bin/echo -n "Creating a tarball with the Coverity Scan results." \
@@ -55,4 +65,9 @@ cov-build --dir cov-int cmake --build .coverity -- -j $(nproc)
 tar caf google-cloud-cpp.tar.xz cov-int
 /bin/echo "DONE"
 
-echo "Manually upload the results to coverity to start a new analysis."
+curl --form "token=${COVERITY_SCAN_TOKEN}" \
+  --form email="${COVERITY_SCAN_EMAIL}" \
+  --form file=@google-cloud-cpp.tar.xz \
+  --form version="master" \
+  --form description="Automatically Compiled Coverity Scan" \
+  https://scan.coverity.com/builds?project=GoogleCloudPlatform%2Fgoogle-cloud-cpp
