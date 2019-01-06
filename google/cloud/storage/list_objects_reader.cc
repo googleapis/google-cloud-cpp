@@ -59,34 +59,27 @@ static_assert(
     "++it when it is of ListObjectsReader::iterator type must be a "
     "ListObjectsReader::iterator &>");
 
-ListObjectsIterator::ListObjectsIterator(
-    ListObjectsReader* owner,
-    google::cloud::optional<value_type> value)
-    : owner_(owner), value_(std::move(value)) {
-  if (not value_) {
-    // This iterator was initialized by begin() on an empty list, turn it into
-    // an end() iterator.
-    owner_ = nullptr;
-  }
-}
+ListObjectsIterator::ListObjectsIterator(ListObjectsReader* owner,
+                                         value_type value)
+    : owner_(owner), value_(std::move(value)) {}
 
 ListObjectsIterator& ListObjectsIterator::operator++() {
-  value_ = owner_->GetNext();
-  if (not value_) {
-    owner_ = nullptr;
-  }
+  *this = owner_->GetNext();
   return *this;
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 ListObjectsReader::iterator ListObjectsReader::begin() {
-  return iterator(this, GetNext());
+  return GetNext();
 }
 
-google::cloud::optional<StatusOr<ObjectMetadata>> ListObjectsReader::GetNext() {
+ListObjectsIterator ListObjectsReader::GetNext() {
+  static Status const past_the_end_error(
+      StatusCode::FAILED_PRECONDITION,
+      "Cannot iterating past the end of ListObjectReader");
   if (current_objects_.end() == current_) {
     if (on_last_page_) {
-      return google::cloud::optional<StatusOr<ObjectMetadata>>();
+      return ListObjectsIterator(nullptr, past_the_end_error);
     }
     request_.set_page_token(std::move(next_page_token_));
     auto response = client_->ListObjects(request_);
@@ -95,8 +88,7 @@ google::cloud::optional<StatusOr<ObjectMetadata>> ListObjectsReader::GetNext() {
       current_objects_.clear();
       on_last_page_ = true;
       current_ = current_objects_.begin();
-      return google::cloud::optional<StatusOr<ObjectMetadata>>(
-          std::move(response).status());
+      return ListObjectsIterator(this, std::move(response).status());
     }
     next_page_token_ = std::move(response->next_page_token);
     current_objects_ = std::move(response->items);
@@ -105,11 +97,10 @@ google::cloud::optional<StatusOr<ObjectMetadata>> ListObjectsReader::GetNext() {
       on_last_page_ = true;
     }
     if (current_objects_.end() == current_) {
-      return google::cloud::optional<StatusOr<ObjectMetadata>>();
+      return ListObjectsIterator(nullptr, past_the_end_error);
     }
   }
-  return google::cloud::optional<StatusOr<ObjectMetadata>>(
-      std::move(*current_++));
+  return ListObjectsIterator(this, std::move(*current_++));
 }
 
 }  // namespace STORAGE_CLIENT_NS

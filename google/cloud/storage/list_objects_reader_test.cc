@@ -78,6 +78,7 @@ TEST(ListObjectsReaderTest, Basic) {
   ListObjectsReader reader(mock, "foo-bar-baz", Prefix("dir/"));
   std::vector<ObjectMetadata> actual;
   for (auto&& object : reader) {
+    ASSERT_TRUE(object.ok());
     actual.emplace_back(std::move(object).value());
   }
   EXPECT_THAT(actual, ContainerEq(expected));

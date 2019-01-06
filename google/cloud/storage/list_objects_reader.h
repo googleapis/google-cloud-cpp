@@ -49,23 +49,30 @@ class ListObjectsIterator {
     return tmp;
   }
 
-  value_type const* operator->() const { return value_.operator->(); }
-  value_type* operator->() { return value_.operator->(); }
+  value_type const* operator->() const { return &value_; }
+  value_type* operator->() { return &value_; }
 
-  value_type const& operator*() const& { return *value_; }
-  value_type& operator*() & { return *value_; }
+  value_type const& operator*() const& { return value_; }
+  value_type& operator*() & { return value_; }
 #if GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
-  value_type const&& operator*() const&& { return *std::move(value_); }
+  value_type const&& operator*() const&& { return std::move(value_); }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
-  value_type&& operator*() && { return *std::move(value_); }
+  value_type&& operator*() && { return std::move(value_); }
 
   bool operator==(ListObjectsIterator const& rhs) const {
     // All end iterators are equal.
     if (owner_ == nullptr) {
       return rhs.owner_ == nullptr;
     }
-    // All non-end iterators in the same reader are equal.
-    return owner_ == rhs.owner_;
+    // Iterators on different streams are always different.
+    if (owner_ != rhs.owner_) {
+      return false;
+    }
+    // Iterators on the same stream are equal if they point to the same object.
+    if (value_.ok() and rhs.value_.ok()) {
+      return value_.value() == rhs.value_.value();
+    }
+    return value_.status() == rhs.value_.status();
   }
 
   bool operator!=(ListObjectsIterator const& rhs) const {
@@ -74,12 +81,11 @@ class ListObjectsIterator {
 
  private:
   friend class ListObjectsReader;
-  explicit ListObjectsIterator(ListObjectsReader* owner,
-                               google::cloud::optional<value_type> value);
+  explicit ListObjectsIterator(ListObjectsReader* owner, value_type value);
 
  private:
   ListObjectsReader* owner_;
-  google::cloud::optional<value_type> value_;
+  value_type value_;
 };
 
 /**
@@ -105,15 +111,10 @@ class ListObjectsReader {
    * Return an iterator over the list of objects.
    *
    * The returned iterator is a single-pass input iterator that reads object
-   * metadata from the BucketListReader when incremented.
+   * metadata from the ListObjectsReader when incremented.
    *
-   * Creating, and particularly incrementing, multiple iterators on
-   * the same RowReader is unsupported and can produce incorrect
-   * results.
-   *
-   * Retry and backoff policies are honored.
-   *
-   * @throws std::runtime_error if the read failed after retries.
+   * Creating, and particularly incrementing, multiple iterators on the same
+   * ListObjectsReader is unsupported and can produce incorrect results.
    */
   iterator begin();
 
@@ -125,9 +126,11 @@ class ListObjectsReader {
   /**
    * Fetches (or returns if already fetched) the next object from the stream.
    *
-   * @return an unset optional if there are no more objects in the stream.
+   * @return An iterator pointing to the next element in the stream. On error,
+   *   it returns an iterator that is different from `.end()`, but has an error
+   *   status. If the stream is exhausted, it returns the `.end()` iterator.
    */
-  google::cloud::optional<StatusOr<ObjectMetadata>> GetNext();
+  ListObjectsIterator GetNext();
 
  private:
   std::shared_ptr<internal::RawClient> client_;
