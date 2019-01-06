@@ -31,7 +31,7 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 
 (cd "${PROJECT_ROOT}" ; ./ci/check-style.sh)
 
-# TODO: this is a workaround for the shared library error.
+# TODO (#1797): this is a workaround for the shared library error.
 readonly LD_LIBRARY_PATH="${PWD}/${BUILD_OUTPUT}/external/lib:${PWD}/${BUILD_OUTPUT}/external/lib64"
 export LD_LIBRARY_PATH
 
