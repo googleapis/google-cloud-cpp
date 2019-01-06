@@ -47,7 +47,6 @@ namespace testing {
  * @param oncall The internal type returned by EXPECT_CALL(...).
  * @param tested_operation a function wrapping the operation to be tested.
  * @param api_name the name of the api
- * @return a function that implements the test.
  */
 template <typename ReturnType, typename F>
 void TooManyFailuresTest(
@@ -114,7 +113,6 @@ void TooManyFailuresTest(
  * @param has_will_repeatedly `.WillRepeatedly()` can be called only once
  *     in @p oncall. If this flag is set, the test will not setup that
  *     expectation again.
- * @return a function that implements the test.
  */
 template <typename ReturnType, typename F>
 void NonIdempotentFailuresTest(
@@ -182,7 +180,6 @@ void NonIdempotentFailuresTest(
  * @param has_will_repeatedly `.WillRepeatedly()` can be called only once
  *     in @p oncall. If this flag is set, the test will not setup that
  *     expectation again.
- * @return a function that implements the test.
  */
 template <typename ReturnType, typename F>
 void IdempotentFailuresTest(
@@ -249,7 +246,6 @@ void IdempotentFailuresTest(
  * @param oncall The internal type returned by EXPECT_CALL(...).
  * @param tested_operation a function wrapping the operation to be tested.
  * @param api_name the name of the api
- * @return a function that implements the test.
  */
 template <typename ReturnType, typename F>
 void TooManyFailuresTest(
@@ -286,7 +282,6 @@ void TooManyFailuresTest(
  * @param oncall The internal type returned by EXPECT_CALL(...).
  * @param tested_operation a function wrapping the operation to be tested.
  * @param api_name the name of the api
- * @return a function that implements the test.
  */
 template <typename ReturnType, typename F>
 void PermanentFailureTest(Client& client,
@@ -341,7 +336,6 @@ void PermanentFailureTest(Client& client,
  * @param oncall The internal type returned by EXPECT_CALL(...).
  * @param tested_operation a function wrapping the operation to be tested.
  * @param api_name the name of the api
- * @return a function that implements the test.
  */
 template <typename ReturnType, typename F>
 void TooManyFailuresStatusTest(
@@ -390,17 +384,13 @@ void TooManyFailuresStatusTest(
  * @param oncall The internal type returned by EXPECT_CALL(...).
  * @param tested_operation a function wrapping the operation to be tested.
  * @param api_name the name of the api
- * @param has_will_repeatedly `.WillRepeatedly()` can be called only once
- *     in @p oncall. If this flag is set, the test will not setup that
- *     expectation again.
- * @return a function that implements the test.
  */
 template <typename ReturnType, typename F>
 void NonIdempotentFailuresStatusTest(
     std::shared_ptr<testing::MockClient> const& mock,
     ::testing::internal::TypedExpectation<F>& oncall,
     std::function<Status(Client& client)> const& tested_operation,
-    char const* api_name, bool has_will_repeatedly = false) {
+    char const* api_name) {
   using canonical_errors::TransientError;
   using ::testing::HasSubstr;
   using ::testing::Return;
@@ -442,17 +432,13 @@ void NonIdempotentFailuresStatusTest(
  * @param oncall The internal type returned by EXPECT_CALL(...).
  * @param tested_operation a function wrapping the operation to be tested.
  * @param api_name the name of the api
- * @param has_will_repeatedly `.WillRepeatedly()` can be called only once
- *     in @p oncall. If this flag is set, the test will not setup that
- *     expectation again.
- * @return a function that implements the test.
  */
 template <typename ReturnType, typename F>
 void IdempotentFailuresStatusTest(
     std::shared_ptr<testing::MockClient> const& mock,
     ::testing::internal::TypedExpectation<F>& oncall,
     std::function<Status(Client& client)> const& tested_operation,
-    char const* api_name, bool has_will_repeatedly = true) {
+    char const* api_name) {
   using canonical_errors::TransientError;
   using ::testing::HasSubstr;
   using ::testing::Return;
@@ -497,7 +483,6 @@ void IdempotentFailuresStatusTest(
  * @param oncall The internal type returned by EXPECT_CALL(...).
  * @param tested_operation a function wrapping the operation to be tested.
  * @param api_name the name of the api
- * @return a function that implements the test.
  */
 template <typename ReturnType, typename F>
 void TooManyFailuresStatusTest(
@@ -509,9 +494,9 @@ void TooManyFailuresStatusTest(
   TooManyFailuresStatusTest<ReturnType>(mock, oncall, tested_operation,
                                         api_name);
   IdempotentFailuresStatusTest<ReturnType>(mock, oncall, idempotent_operation,
-                                           api_name, true);
+                                           api_name);
   NonIdempotentFailuresStatusTest<ReturnType>(mock, oncall, tested_operation,
-                                              api_name, true);
+                                              api_name);
 }
 
 /**
@@ -534,7 +519,6 @@ void TooManyFailuresStatusTest(
  * @param oncall The internal type returned by EXPECT_CALL(...).
  * @param tested_operation a function wrapping the operation to be tested.
  * @param api_name the name of the api
- * @return a function that implements the test.
  */
 template <typename ReturnType, typename F>
 void PermanentFailureStatusTest(

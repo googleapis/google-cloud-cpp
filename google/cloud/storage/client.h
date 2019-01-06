@@ -2301,7 +2301,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @returns An error status if there is a permanent failure, or if there were
+   * @return An error status if there is a permanent failure, or if there were
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
@@ -2341,7 +2341,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @returns An error status if there is a permanent failure, or if there were
+   * @return An error status if there is a permanent failure, or if there were
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
@@ -2378,7 +2378,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @returns An error status if there is a permanent failure, or if there were
+   * @return An error status if there is a permanent failure, or if there were
    *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
