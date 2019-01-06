@@ -364,7 +364,7 @@ class Table {
     };
 
     return AsyncReadRows(cq, std::move(read_row_callback),
-                         internal::CallbackForAsyncReadRow<Functor>(
+                         internal::ReadRowCallbackAdapter<Functor>(
                              std::forward<Functor>(callback), rows),
                          std::move(row_set), rows_limit, std::move(filter),
                          raise_on_error);

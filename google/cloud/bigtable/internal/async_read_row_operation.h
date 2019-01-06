@@ -94,8 +94,7 @@ class AsyncReadRowsOperation
 };
 
 /**
- * A Donecallback for AsyncReadRows operation that check the results and
- * triggers the callback of AsyncReadRow.
+ * Wrap a `AsyncReadRow` callback to use in `AsynReadRows`.
  *
  * @note With C++14 this class would be unnecessary, as a extended lambda
  * capture can do the work, but we need to support C++11, so an ad-hoc class is
@@ -116,10 +115,10 @@ template <typename Functor, typename std::enable_if<
                                     Functor, CompletionQueue&,
                                     std::pair<bool, Row>, grpc::Status&>::value,
                                 int>::type valid_callback_type = 0>
-class CallbackForAsyncReadRow {
+class ReadRowCallbackAdapter {
  public:
-  explicit CallbackForAsyncReadRow(Functor&& callback,
-                                   std::shared_ptr<std::vector<Row>> row)
+  explicit ReadRowCallbackAdapter(Functor&& callback,
+                                  std::shared_ptr<std::vector<Row>> row)
       : callback_(std::move(callback)), rows_(std::move(row)) {}
 
   const void operator()(CompletionQueue& cq, bool& response,
@@ -135,9 +134,10 @@ class CallbackForAsyncReadRow {
     }
 
     if (rows_->size() != 1U) {
-      auto done_status = grpc::Status(grpc::StatusCode::INTERNAL,
-                                      "internal error - AsyncReadRows "
-                                      "returned 2 rows in AsyncReadRow()");
+      auto done_status =
+          grpc::Status(grpc::StatusCode::INTERNAL,
+                       "internal error - AsyncReadRows "
+                       "returned 2 or more rows in AsyncReadRow()");
       callback_(cq, std::make_pair(false, Row("", {})), done_status);
       return;
     }
