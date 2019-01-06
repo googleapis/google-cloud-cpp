@@ -12,8 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/diagnostic_push.h"
+#if __GNUC__ && !__clang__
+// #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif  // __GNUC__
+
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/internal/throw_status_delegate.h"
+
+#include "google/cloud/internal/diagnostic_pop.h"
 
 namespace google {
 namespace cloud {
@@ -79,7 +86,7 @@ ListObjectsIterator ListObjectsReader::GetNext() {
       "Cannot iterating past the end of ListObjectReader");
   if (current_objects_.end() == current_) {
     if (on_last_page_) {
-      return ListObjectsIterator(nullptr, past_the_end_error);
+      return ListObjectsIterator(nullptr, StatusOr<ObjectMetadata>(past_the_end_error));
     }
     request_.set_page_token(std::move(next_page_token_));
     auto response = client_->ListObjects(request_);
