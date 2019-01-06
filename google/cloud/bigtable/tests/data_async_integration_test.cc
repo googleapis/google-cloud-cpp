@@ -336,7 +336,7 @@ TEST_F(DataAsyncIntegrationTest, TableAsyncReadRow) {
   CreateCells(*sync_table, created);
 
   CompletionQueue cq;
-  std::promise<std::pair<bool, Row>> done;
+  google::cloud::promise<std::pair<bool, Row>> done;
   std::thread pool([&cq] { cq.Run(); });
 
   table.AsyncReadRow(cq,
@@ -371,7 +371,7 @@ TEST_F(DataAsyncIntegrationTest, TableAsyncReadRowForNoRow) {
   CreateCells(*sync_table, created);
 
   CompletionQueue cq;
-  std::promise<std::pair<bool, Row>> done;
+  google::cloud::promise<std::pair<bool, Row>> done;
   std::thread pool([&cq] { cq.Run(); });
 
   table.AsyncReadRow(cq,
