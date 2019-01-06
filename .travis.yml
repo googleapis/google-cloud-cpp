@@ -72,9 +72,8 @@ matrix:
       os: linux
       compiler: clang
       env:
-        CHECK_STYLE=yes
-        GENERATE_DOCS=yes
         CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes
+        BUILD_TYPE=Debug
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
     - # Build with the AddressSanitizer.
@@ -107,6 +106,8 @@ matrix:
       compiler: gcc
       env:
         BUILD_TESTING=no
+        CHECK_STYLE=yes
+        GENERATE_DOCS=yes
         CMAKE_FLAGS=-DBUILD_TESTING=OFF
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
