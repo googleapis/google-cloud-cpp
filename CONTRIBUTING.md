@@ -210,13 +210,21 @@ $ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=18.04 ./ci/travis/install-li
 ```
 
 Once you create the image for a given combination of `DISTRO` and
-`DISTRO_VERSION`, you can compile the code multiple times, for example:
+`DISTRO_VERSION`, you can reuse it for many builds, with different options.
+For example, this (rather longish)
+command will verify that your code is formatted correctly, run the
+clang-tidy(1) checks, verify the Doxygen documentation can be generated, and run
+both the unit and integration tests:
 
 ```console
-# Also run from google-cloud-cpp:
-$ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=18.04 \
-      CXX=clang++ CC=clang BUILD_TYPE=Debug ./ci/travis/build-linux.sh
+CHECK_STYLE=yes GENERATE_DOCS=yes \
+    CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes \
+    DISTRO=ubuntu DISTRO_VERSION=18.04 CXX=clang++ CC=clang NCPU=$(nproc) \
+    TRAVIS_OS_NAME=linux ./ci/travis/build-linux.sh
 ```
+
+You may want to add `BUILD_TYPE=Debug` to the list of environment variables,
+as the default (`BUILD_TYPE=Release`) may be slightly slower.
 
 You can set any of the following environment variables to control the build.
 Please consult the build matrix in your [`.travis.yml`](.travis.yml) file to see
