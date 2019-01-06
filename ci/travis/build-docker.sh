@@ -108,15 +108,14 @@ if [ "${BUILD_TESTING:-}" != "no" ]; then
   echo
   echo "${COLOR_YELLOW}Running unit and integration tests $(date)${COLOR_RESET}"
   echo
-  cd "${BUILD_OUTPUT}"
-  ctest --output-on-failure
+  (cd "${BUILD_OUTPUT}" && ctest --output-on-failure)
 
   # Run the integration tests. Not all projects have them, so just iterate over
   # the ones that do.
   for subdir in google/cloud google/cloud/bigtable google/cloud/storage; do
     echo
     echo "${COLOR_GREEN}Running integration tests for ${subdir}${COLOR_RESET}"
-    "${PROJECT_ROOT}/${subdir}/ci/run_integration_tests.sh"
+    (cd "${BUILD_OUTPUT}" && "${PROJECT_ROOT}/${subdir}/ci/run_integration_tests.sh")
   done
 fi
 
@@ -124,7 +123,7 @@ fi
 if [ "${TEST_INSTALL:-}" = "yes" ]; then
   echo
   echo "${COLOR_YELLOW}Testing install rule.${COLOR_RESET}"
-  cmake --build . --target install
+  cmake --build "${BUILD_OUTPUT}" --target install
   echo
   echo "${COLOR_YELLOW}Test installed libraries using cmake(1).${COLOR_RESET}"
   readonly TEST_INSTALL_DIR="${PROJECT_ROOT}/ci/test-install"
@@ -146,7 +145,7 @@ if [ "${TEST_INSTALL:-}" = "yes" ]; then
   echo
   echo "${COLOR_YELLOW}Verify installed headers created only" \
       " expected directories.${COLOR_RESET}"
-  cmake --build . --target install -- DESTDIR=/var/tmp/staging
+  cmake --build "${BUILD_OUTPUT}" --target install -- DESTDIR=/var/tmp/staging
   if comm -23 \
       <(find /var/tmp/staging/usr/local/include/google/cloud -type d | sort) \
       <(echo /var/tmp/staging/usr/local/include/google/cloud ; \
@@ -170,7 +169,7 @@ fi
 if [ "${GENERATE_DOCS}" = "yes" ]; then
   echo
   echo "${COLOR_YELLOW}Generating Doxygen documentation at: $(date).${COLOR_RESET}"
-  cmake --build . --target doxygen-docs
+  cmake --build "${BUILD_OUTPUT}" --target doxygen-docs
 fi
 
 # Some of the sanitizers only emit errors and do not change the error code
