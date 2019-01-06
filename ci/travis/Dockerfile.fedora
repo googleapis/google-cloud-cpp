@@ -30,6 +30,8 @@ RUN dnf makecache && dnf install -y \
     gcc-c++ \
     git \
     libcurl-devel \
+    libcxx-devel \
+    libcxxabi-devel \
     libtool \
     make \
     ncurses-term \

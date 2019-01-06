@@ -59,5 +59,4 @@ if (NOT TARGET zlib_project)
     add_library(ZLIB::ZLIB INTERFACE IMPORTED)
     add_dependencies(ZLIB::ZLIB zlib_project)
     set_library_properties_for_external_project(ZLIB::ZLIB z)
-
 endif ()
