@@ -155,16 +155,15 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteInstanceTest) {
   EXPECT_NE(npos, instance_result.name().find(instance_id));
 
   // Delete instance
-  std::promise<google::protobuf::Empty> promise_delete_instance;
+  std::promise<void> promise_delete_instance;
   admin.AsyncDeleteInstance(
       cq,
       [&promise_delete_instance](google::cloud::bigtable::CompletionQueue& cq,
-                                 google::protobuf::Empty& response,
                                  grpc::Status const& status) {
-        promise_delete_instance.set_value(std::move(response));
+        promise_delete_instance.set_value();
       },
       instance_id);
-  auto response = promise_delete_instance.get_future().get();
+  promise_delete_instance.get_future().get();
   auto instances_after_delete = instance_admin_->ListInstances();
   EXPECT_TRUE(IsInstancePresent(instances_current, instance.name()));
   EXPECT_FALSE(IsInstancePresent(instances_after_delete, instance.name()));
@@ -263,16 +262,15 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
   EXPECT_EQ(cluster_name_prefix + cluster_id.get(), cluster_result.name());
 
   // Delete cluster
-  std::promise<google::protobuf::Empty> promise_delete_cluster;
+  std::promise<void> promise_delete_cluster;
   admin.AsyncDeleteCluster(
       cq,
       [&promise_delete_cluster](google::cloud::bigtable::CompletionQueue& cq,
-                                google::protobuf::Empty& response,
                                 grpc::Status const& status) {
-        promise_delete_cluster.set_value(std::move(response));
+        promise_delete_cluster.set_value();
       },
       instance_id, cluster_id);
-  auto response = promise_delete_cluster.get_future().get();
+  promise_delete_cluster.get_future().get();
   auto clusters_after_delete = instance_admin_->ListClusters(id);
   instance_admin_->DeleteInstance(id);
   EXPECT_TRUE(IsClusterPresent(
@@ -434,17 +432,17 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
   EXPECT_EQ("new description", detail_2_after_update.description());
 
   // delete first profile
-  std::promise<google::protobuf::Empty> promise_delete_first_profile;
-  admin.AsyncDeleteAppProfile(
-      cq,
-      [&promise_delete_first_profile](
-          google::cloud::bigtable::CompletionQueue& cq,
-          google::protobuf::Empty& response, grpc::Status const& status) {
-        promise_delete_first_profile.set_value(std::move(response));
-      },
-      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id1));
-  auto response_delete_first_profile =
-      promise_delete_first_profile.get_future().get();
+  std::promise<void> promise_delete_first_profile;
+  admin.AsyncDeleteAppProfile(cq,
+                              [&promise_delete_first_profile](
+                                  google::cloud::bigtable::CompletionQueue& cq,
+                                  grpc::Status const& status) {
+                                promise_delete_first_profile.set_value();
+                              },
+                              bigtable::InstanceId(instance_id),
+                              bigtable::AppProfileId(id1));
+
+  promise_delete_first_profile.get_future().get();
 
   std::promise<std::vector<btadmin::AppProfile>>
       after_delete_appprofiles_promise;
@@ -462,17 +460,17 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
   EXPECT_EQ(1U, count_matching_profiles(id2, current_profiles));
 
   // delete second profile
-  std::promise<google::protobuf::Empty> promise_delete_second_profile;
-  admin.AsyncDeleteAppProfile(
-      cq,
-      [&promise_delete_second_profile](
-          google::cloud::bigtable::CompletionQueue& cq,
-          google::protobuf::Empty& response, grpc::Status const& status) {
-        promise_delete_second_profile.set_value(std::move(response));
-      },
-      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2));
-  auto response_delete_second_profile =
-      promise_delete_second_profile.get_future().get();
+  std::promise<void> promise_delete_second_profile;
+  admin.AsyncDeleteAppProfile(cq,
+                              [&promise_delete_second_profile](
+                                  google::cloud::bigtable::CompletionQueue& cq,
+                                  grpc::Status const& status) {
+                                promise_delete_second_profile.set_value();
+                              },
+                              bigtable::InstanceId(instance_id),
+                              bigtable::AppProfileId(id2));
+
+  promise_delete_second_profile.get_future().get();
 
   std::promise<std::vector<btadmin::AppProfile>>
       after_delete_second_appprofiles_promise;

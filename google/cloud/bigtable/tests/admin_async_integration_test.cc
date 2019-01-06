@@ -147,16 +147,14 @@ TEST_F(AdminAsyncIntegrationTest, CreateListGetDeleteTableTest) {
   EXPECT_EQ(2, gc.intersection().rules_size());
 
   // AsyncDeleteTable
-  std::promise<google::protobuf::Empty> promise_delete_table;
+  std::promise<void> promise_delete_table;
   noex_table_admin_->AsyncDeleteTable(
       cq,
-      [&promise_delete_table](CompletionQueue& cq,
-                              google::protobuf::Empty& response,
-                              grpc::Status const& status) {
-        promise_delete_table.set_value(std::move(response));
+      [&promise_delete_table](CompletionQueue& cq, grpc::Status const& status) {
+        promise_delete_table.set_value();
       },
       table_id, table_config);
-  auto result = promise_delete_table.get_future().get();
+  promise_delete_table.get_future().get();
 
   // List to verify it is no longer there
   auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
@@ -219,17 +217,15 @@ TEST_F(AdminAsyncIntegrationTest, AsyncDropRowsByPrefixTest) {
   CreateCells(table, created_cells);
 
   // Delete all the records for a row
-  std::promise<google::protobuf::Empty> promise_drop_row;
+  std::promise<void> promise_drop_row;
   noex_table_admin_->AsyncDropRowsByPrefix(
       cq,
-      [&promise_drop_row](CompletionQueue& cq,
-                          google::protobuf::Empty& response,
-                          grpc::Status const& status) {
-        promise_drop_row.set_value(std::move(response));
+      [&promise_drop_row](CompletionQueue& cq, grpc::Status const& status) {
+        promise_drop_row.set_value();
       },
       table_id, row_key1_prefix);
 
-  auto response = promise_drop_row.get_future().get();
+  promise_drop_row.get_future().get();
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_id);
 
@@ -281,16 +277,14 @@ TEST_F(AdminAsyncIntegrationTest, AsyncDropAllRowsTest) {
   CreateCells(table, created_cells);
 
   // Delete all the records from a table
-  std::promise<google::protobuf::Empty> promise_drop_row;
+  std::promise<void> promise_drop_row;
   noex_table_admin_->AsyncDropAllRows(
       cq,
-      [&promise_drop_row](CompletionQueue& cq,
-                          google::protobuf::Empty& response,
-                          grpc::Status const& status) {
-        promise_drop_row.set_value(std::move(response));
+      [&promise_drop_row](CompletionQueue& cq, grpc::Status const& status) {
+        promise_drop_row.set_value();
       },
       table_id);
-  auto response = promise_drop_row.get_future().get();
+  promise_drop_row.get_future().get();
 
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_id);
