@@ -65,6 +65,10 @@ if (NOT TARGET googletest_project)
                         LOG_BUILD ON
                         LOG_INSTALL ON)
 
+    if (TARGET google-cloud-cpp-dependencies)
+        add_dependencies(google-cloud-cpp-dependencies googletest_project)
+    endif ()
+
     # On Windows GTest uses library postfixes for debug versions, that is
     # gtest.lib becomes gtestd.lib when compiled with for debugging.  This ugly
     # expression computes that value. Note that it must be a generator

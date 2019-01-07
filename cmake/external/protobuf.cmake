@@ -76,6 +76,10 @@ if (NOT TARGET protobuf_project)
         LOG_BUILD ON
         LOG_INSTALL ON)
 
+    if (TARGET google-cloud-cpp-dependencies)
+        add_dependencies(google-cloud-cpp-dependencies protobuf_project)
+    endif ()
+
     add_library(protobuf::libprotobuf INTERFACE IMPORTED)
     add_dependencies(protobuf::libprotobuf protobuf_project)
     set_library_properties_for_external_project(protobuf::libprotobuf protobuf)

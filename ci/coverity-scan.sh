@@ -34,16 +34,9 @@ cmake -H. -B.coverity \
     -DCMAKE_BUILD_TYPE=Debug \
     -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF
 
-# The project dependencies should be built without coverity-scan, any errors in
-# them are not actionable.
-cmake --build .coverity --target grpc_project -- -j $(nproc)
-cmake --build .coverity --target curl_project -- -j $(nproc)
-cmake --build .coverity --target crc32c_project -- -j $(nproc)
-cmake --build .coverity --target googletest_project -- -j $(nproc)
-
-# The proto-generated files contain too many errors, and they are not
-# actionable, so they are built without coverity-scan too.
-cmake --build .coverity --target skip-scanbuild-targets -- -j $(nproc)
+# The project dependencies, including the generated protos, should be built
+# without coverity-scan, any errors in them are not actionable.
+cmake --build .coverity --target google-cloud-cpp-dependencies -- -j $(nproc)
 
 # Run coverity scan over our code.
 cov-build --dir cov-int cmake --build .coverity -- -j $(nproc)

@@ -72,6 +72,10 @@ if (NOT TARGET curl_project)
         LOG_BUILD ON
         LOG_INSTALL ON)
 
+    if (TARGET google-cloud-cpp-dependencies)
+        add_dependencies(google-cloud-cpp-dependencies curl_project)
+    endif ()
+
     include(ExternalProjectHelper)
     add_library(CURL::CURL INTERFACE IMPORTED)
     add_dependencies(CURL::CURL curl_project)

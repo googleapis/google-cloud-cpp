@@ -119,7 +119,7 @@ add_library(bigtable::protos ALIAS bigtable_protos)
 # Enable unit tests
 include(CTest)
 
-add_dependencies(skip-scanbuild-targets bigtable_protos)
+add_dependencies(google-cloud-cpp-dependencies bigtable_protos)
 
 # Generate the version information from the CMake values.
 configure_file(version_info.h.in version_info.h)

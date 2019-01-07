@@ -64,6 +64,10 @@ if (NOT TARGET crc32c_project)
                         LOG_BUILD ON
                         LOG_INSTALL ON)
 
+    if (TARGET google-cloud-cpp-dependencies)
+        add_dependencies(google-cloud-cpp-dependencies crc32c_project)
+    endif ()
+
     include(ExternalProjectHelper)
     add_library(Crc32c::crc32c INTERFACE IMPORTED)
     add_dependencies(Crc32c::crc32c crc32c_project)
