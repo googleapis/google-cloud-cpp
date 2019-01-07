@@ -24,6 +24,11 @@
 #define BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU 2
 #endif  // BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU
 
+// Overwrite default message limit size of 4MiB to 256MiB
+#ifndef BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH
+#define BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH (256 * 1024 * 1024)
+#endif  // BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH
+
 namespace {
 std::shared_ptr<grpc::ChannelCredentials> BigtableDefaultCredentials() {
   auto emulator = google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST");
@@ -58,6 +63,10 @@ ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
       instance_admin_endpoint_("bigtableadmin.googleapis.com") {
   static std::string const user_agent_prefix = "cbt-c++/" + version_string();
   channel_arguments_.SetUserAgentPrefix(user_agent_prefix);
+  channel_arguments_.SetMaxSendMessageSize(
+      BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH);
+  channel_arguments_.SetMaxReceiveMessageSize(
+      BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH);
 }
 
 ClientOptions::ClientOptions() : ClientOptions(BigtableDefaultCredentials()) {

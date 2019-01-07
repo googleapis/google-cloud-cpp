@@ -587,3 +587,36 @@ TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
   auto last = samples.back();
   EXPECT_LT(0, last.offset_bytes);
 }
+
+TEST_F(DataIntegrationTest, ReadMuliplestCellsBigValue) {
+  std::string const table_id = RandomTableId();
+  auto table = CreateTable(table_id, table_config);
+
+  std::string const row_key = "row-key-1";
+  // cell vector will contains 25 cell of 25 MB
+  // the row size will be ~ 256 MiB
+  std::string strvalue((25 << 20), 'a');
+  std::vector<bigtable::Cell> created;
+  for (int i = 0; i < 10; i++) {
+    std::string col_qualifiery = "c" + std::to_string(i);
+    created.push_back(
+        bigtable::Cell(row_key, family, col_qualifiery, 1000, strvalue, {}));
+  }
+  CreateCells(*table, created);
+  std::cout << "Size of Create " << created.size() << std::endl;
+  if (!UsingCloudBigtableEmulator()) {
+    // TODO(#151) - remove workarounds for emulator bug(s).
+
+    auto result = table->ReadRow(row_key, bigtable::Filter::PassAllFilter());
+
+    if (result.first) {
+      int totalrowsize = 0;
+      for (auto& cell : result.second.cells()) {
+        totalrowsize += cell.value().size();
+      }
+      EXPECT_LE(totalrowsize, (256 << 20));
+    }
+  }
+
+  DeleteTable(table_id);
+}
