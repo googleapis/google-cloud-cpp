@@ -54,9 +54,14 @@ void ListNotifications(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
     std::cout << "Notifications for bucket=" << bucket_name << std::endl;
-    std::vector<gcs::NotificationMetadata> items =
-        client.ListNotifications(bucket_name).value();
-    for (gcs::NotificationMetadata const& notification : items) {
+    gcs::StatusOr<std::vector<gcs::NotificationMetadata>> status =
+        client.ListNotifications(bucket_name);
+    if (not status.ok()) {
+      std::cerr << "Error reading notification list for " << bucket_name
+                << ", status=" << status.status() << std::endl;
+      return;
+    }
+    for (gcs::NotificationMetadata const& notification : *status) {
       std::cout << notification << std::endl;
     }
   }
@@ -74,12 +79,16 @@ void CreateNotification(google::cloud::storage::Client client, int& argc,
   //! [create notification] [START storage_create_pubsub_bucket_notification]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string topic_name) {
-    gcs::NotificationMetadata notification =
-        client
-            .CreateNotification(bucket_name, topic_name,
-                                gcs::payload_format::JsonApiV1(),
-                                gcs::NotificationMetadata())
-            .value();
+    gcs::StatusOr<gcs::NotificationMetadata> status = client.CreateNotification(
+        bucket_name, topic_name, gcs::payload_format::JsonApiV1(),
+        gcs::NotificationMetadata());
+    if (not status.ok()) {
+      std::cerr << "Error creating notification for " << bucket_name
+                << " on topic " << topic_name << ", status=" << status.status()
+                << std::endl;
+      return;
+    }
+    gcs::NotificationMetadata notification = std::move(*status);
     std::cout << "Successfully created notification " << notification.id()
               << " for bucket " << bucket_name
               << "\nfull details=" << notification << std::endl;
@@ -98,8 +107,15 @@ void GetNotification(google::cloud::storage::Client client, int& argc,
   //! [get notification] [START storage_print_pubsub_bucket_notification]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string notification_id) {
-    gcs::NotificationMetadata notification =
-        client.GetNotification(bucket_name, notification_id).value();
+    gcs::StatusOr<gcs::NotificationMetadata> status =
+        client.GetNotification(bucket_name, notification_id);
+    if (not status.ok()) {
+      std::cerr << "Error getting notification metadata for notification id "
+                << notification_id << " on bucket " << bucket_name
+                << ", status=" << status.status() << std::endl;
+      return;
+    }
+    gcs::NotificationMetadata notification = std::move(*status);
     std::cout << "Notification " << notification.id() << " for bucket "
               << bucket_name << " details=" << notification << std::endl;
   }
@@ -117,8 +133,15 @@ void DeleteNotification(google::cloud::storage::Client client, int& argc,
   //! [delete notification] [START storage_delete_pubsub_bucket_notification]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string notification_id) {
-    client.DeleteNotification(bucket_name, notification_id);
-    std::cout << "Successfully delete notification " << notification_id
+    gcs::Status status =
+        client.DeleteNotification(bucket_name, notification_id);
+    if (not status.ok()) {
+      std::cerr << "Error delete notification id " << notification_id
+                << " on bucket " << bucket_name << ", status=" << status
+                << std::endl;
+      return;
+    }
+    std::cout << "Successfully deleted notification " << notification_id
               << " on bucket " << bucket_name << std::endl;
   }
   //! [delete notification] [END storage_delete_pubsub_bucket_notification]
@@ -133,7 +156,7 @@ int main(int argc, char* argv[]) try {
 
   // Build the list of commands and the usage string from that list.
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char* [])>;
+      std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
       {"list-notifications", &ListNotifications},
       {"create-notification", &CreateNotification},
