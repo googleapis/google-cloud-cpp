@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/internal/table.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/log.h"
 #include <thread>
 
 namespace google {
@@ -291,10 +292,11 @@ void RowReader::Cancel() {
 RowReader::~RowReader() {
   // Make sure we don't leave open streams.
   Cancel();
-  if (not raise_on_error_ and not error_retrieved_ and not status_.ok()) {
-    google::cloud::internal::RaiseRuntimeError(
-        "Exception is disabled and error is not retrieved");
-  }
+  GCP_LOG(ERROR)
+      << "Exceptions are disabled, RowReader has an error,"
+      << " and the error status was not retrieved by the application: {"
+      << "status_code=" << status_.error_code()
+      << "error_message=" << status_.error_message();
 }
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
