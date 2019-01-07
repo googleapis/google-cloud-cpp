@@ -205,7 +205,10 @@ Status CurlDownloadRequest::WaitForHandles(int& repeats) {
       curl_multi_wait(multi_.get(), nullptr, 0, timeout_ms, &numfds);
   GCP_LOG(DEBUG) << __func__ << "(): numfds=" << numfds << ", result=" << result
                  << ", repeats=" << repeats;
-  return AsStatus(result, __func__);
+  Status status = AsStatus(result, __func__);
+  if (not status.ok()) {
+    return status;
+  }
   // The documentation for curl_multi_wait() recommends sleeping if it returns
   // numfds == 0 more than once in a row :shrug:
   //    https://curl.haxx.se/libcurl/c/curl_multi_wait.html
@@ -216,7 +219,7 @@ Status CurlDownloadRequest::WaitForHandles(int& repeats) {
   } else {
     repeats = 0;
   }
-  return Status();
+  return status;
 }
 
 Status CurlDownloadRequest::AsStatus(CURLMcode result, char const *where) {
