@@ -15,10 +15,10 @@ errors.
 
 **Consequences**: This decision will result in a single set of APIs and a
 consistent vocabulary for all users, whether or not they choose to compile with
-exceptions. Indeed, this decision does not prevent callers from using
-exceptions in their own code.
+exceptions. This decision does not prevent callers from using exceptions in
+their own code.
 
-A downside of this decision is that our APIs will not be natrual or idiomatic
+A downside of this decision is that our APIs will not be natural or idiomatic
 for the [50+%][survey-link] of users who might prefer exceptions for error
 reporting.
 
@@ -29,7 +29,7 @@ Cloud Storage][gcs-link] component that is at the Alpha quality level, and a
 level. Since neither of these are at the GA quality level, breaking changes are
 allowed. However, we still want to minimize the disruption caused by these
 changes, especially for the Bigtable library, which is Beta. For Bigtable, we
-will communicate the upcoming changes to the users and try to get them
+will communicate the upcoming changes to the users and try to get the changes
 implemented over the coming months.
 
 
