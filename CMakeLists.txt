@@ -139,7 +139,7 @@ set_property(CACHE GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-# There are a number of targets that are pure depedencies, i.e., do not contain
+# There are a number of targets that are pure dependencies, i.e., do not contain
 # our own code. These targets can be skipped when using static analysis tools.
 # Can be built earlier in the CI environment (for example to warm up the cache).
 # And in general can receive special treatment. This custom target collects all
