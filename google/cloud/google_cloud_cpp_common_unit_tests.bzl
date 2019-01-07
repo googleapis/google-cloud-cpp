@@ -32,5 +32,6 @@ google_cloud_cpp_common_unit_tests = [
     "internal/throw_delegate_test.cc",
     "log_test.cc",
     "optional_test.cc",
+    "status_or_test.cc",
     "terminate_handler_test.cc",
 ]

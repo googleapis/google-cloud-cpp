@@ -12,19 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_STATUS_OR_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_STATUS_OR_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_OR_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_OR_H_
 
 #include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/storage/internal/throw_status_delegate.h"
-#include "google/cloud/storage/status.h"
+#include "google/cloud/status.h"
 #include <type_traits>
 #include <utility>
 
 namespace google {
 namespace cloud {
-namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * `StatusOr<T>` is used to return a value or an error status.
  *
@@ -438,9 +436,8 @@ StatusOr<T> make_status_or(T rhs) {
   return StatusOr<T>(std::move(rhs));
 }
 
-}  // namespace STORAGE_CLIENT_NS
-}  // namespace storage
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_STATUS_OR_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_OR_H_

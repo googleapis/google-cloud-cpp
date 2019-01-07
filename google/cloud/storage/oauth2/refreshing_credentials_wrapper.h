@@ -15,8 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_REFRESHING_CREDENTIALS_WRAPPER_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_REFRESHING_CREDENTIALS_WRAPPER_H_
 
-#include "google/cloud/storage/status.h"
-#include "google/cloud/storage/status_or.h"
+#include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/storage/version.h"
 #include <chrono>
 #include <string>
 #include <utility>
@@ -37,7 +38,7 @@ class RefreshingCredentialsWrapper {
       return authorization_header;
     }
 
-    storage::Status status = refresh_fn();
+    Status status = refresh_fn();
     if (status.ok()) {
       return authorization_header;
     }

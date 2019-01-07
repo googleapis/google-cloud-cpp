@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_ACCESS_CONTROL_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_ACCESS_CONTROL_H_
 
+#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/access_control_common.h"
 #include "google/cloud/storage/internal/patch_builder.h"
-#include "google/cloud/storage/status_or.h"
 
 namespace google {
 namespace cloud {

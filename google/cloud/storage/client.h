@@ -16,10 +16,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_
 
 #include "google/cloud/internal/disjunction.h"
+#include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
-#include "google/cloud/storage/internal/throw_status_delegate.h"
 #include "google/cloud/storage/list_buckets_reader.h"
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/notification_event_type.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/storage/object_rewriter.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/retry_policy.h"
-#include "google/cloud/storage/status_or.h"
 #include "google/cloud/storage/upload_options.h"
 
 namespace google {

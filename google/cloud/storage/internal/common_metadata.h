@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_COMMON_METADATA_H_
 
 #include "google/cloud/optional.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
-#include "google/cloud/storage/status_or.h"
 #include <chrono>
 #include <map>
 #include <vector>

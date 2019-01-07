@@ -12,26 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/throw_status_delegate.h"
-#include "google/cloud/terminate_handler.h"
+#include "google/cloud/status.h"
 #include <sstream>
 
 namespace google {
 namespace cloud {
-namespace storage {
-inline namespace STORAGE_CLIENT_NS {
-namespace internal {
-[[noreturn]] void ThrowStatus(Status status) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  throw storage::RuntimeStatusError(std::move(status));
-#else
+inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace {
+std::string StatusWhat(Status const& status) {
   std::ostringstream os;
   os << status;
-  google::cloud::Terminate(os.str().c_str());
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  return std::move(os).str();
 }
-}  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
-}  // namespace storage
+}  // namespace
+
+RuntimeStatusError::RuntimeStatusError(Status status)
+    : std::runtime_error(StatusWhat(status)), status_(std::move(status)) {}
+
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

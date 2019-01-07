@@ -17,7 +17,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/object_metadata.h"
-#include "google/cloud/storage/status.h"
+#include "google/cloud/status.h"
 #include <crc32c/crc32c.h>
 
 namespace google {

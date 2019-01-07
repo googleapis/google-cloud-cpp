@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_COMPUTE_ENGINE_CREDENTIALS_H_
 
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/status.h"
 #include "google/cloud/storage/internal/compute_engine_util.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
@@ -23,7 +24,6 @@
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
-#include "google/cloud/storage/status.h"
 #include <ctime>
 #include <mutex>
 #include <set>
@@ -124,7 +124,7 @@ class ComputeEngineCredentials : public Credentials {
    * https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances
    * for more details.
    */
-  storage::Status RetrieveServiceAccountInfo() {
+  Status RetrieveServiceAccountInfo() {
     namespace nl = google::cloud::storage::internal::nl;
     auto response = DoMetadataServerGetRequest(
         "/computeMetadata/v1/instance/service-accounts/" +
@@ -134,8 +134,7 @@ class ComputeEngineCredentials : public Credentials {
       return std::move(response).status();
     }
     if (response->status_code >= 300) {
-      return storage::Status(response->status_code,
-                             std::move(response->payload));
+      return Status(response->status_code, std::move(response->payload));
     }
 
     nl::json response_body = nl::json::parse(response->payload, nullptr, false);
@@ -145,7 +144,7 @@ class ComputeEngineCredentials : public Credentials {
     // metadata server.
     if (response_body.is_discarded() or response_body.count("email") == 0U or
         response_body.count("scopes") == 0U) {
-      return storage::Status(
+      return Status(
           response->status_code, std::move(response->payload),
           "Could not find all required fields in response (email, scopes).");
     }
@@ -156,10 +155,10 @@ class ComputeEngineCredentials : public Credentials {
     // Do not update any state until all potential exceptions are raised.
     service_account_email_ = email;
     scopes_ = scopes_set;
-    return storage::Status();
+    return Status();
   }
 
-  storage::Status Refresh() {
+  Status Refresh() {
     namespace nl = storage::internal::nl;
 
     auto status = RetrieveServiceAccountInfo();
@@ -175,8 +174,7 @@ class ComputeEngineCredentials : public Credentials {
       return std::move(response).status();
     }
     if (response->status_code >= 300) {
-      return storage::Status(response->status_code,
-                             std::move(response->payload));
+      return Status(response->status_code, std::move(response->payload));
     }
 
     // Response should have the attributes "access_token", "expires_in", and
@@ -186,7 +184,7 @@ class ComputeEngineCredentials : public Credentials {
         access_token.count("access_token") == 0U or
         access_token.count("expires_in") == 0U or
         access_token.count("token_type") == 0U) {
-      return storage::Status(
+      return Status(
           response->status_code, std::move(response->payload),
           "Could not find all required fields in response (access_token,"
           " expires_in, token_type).");
@@ -202,7 +200,7 @@ class ComputeEngineCredentials : public Credentials {
     // Do not update any state until all potential exceptions are raised.
     refreshing_creds_.authorization_header = std::move(header);
     refreshing_creds_.expiration_time = new_expiration;
-    return storage::Status();
+    return Status();
   }
 
   mutable std::mutex mu_;
