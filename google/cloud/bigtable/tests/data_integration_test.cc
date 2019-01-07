@@ -588,35 +588,50 @@ TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
   EXPECT_LT(0, last.offset_bytes);
 }
 
-TEST_F(DataIntegrationTest, ReadMuliplestCellsBigValue) {
+TEST_F(DataIntegrationTest, TableReadMulipleCellsBigValue) {
+  if (UsingCloudBigtableEmulator()) {
+    // TODO(#151) - remove workarounds for emulator bug(s).
+    return;
+  }
+
   std::string const table_id = RandomTableId();
   auto table = CreateTable(table_id, table_config);
 
   std::string const row_key = "row-key-1";
-  // cell vector will contains 25 cell of 25 MB
-  // the row size will be ~ 256 MiB
-  std::string strvalue((25 << 20), 'a');
+  // cell vector contains 8 cell of ~32 MiB
+  auto const MiB = 1024L * 1024L;
+
+  std::string value((32 * MiB) - 1024, 'a');
   std::vector<bigtable::Cell> created;
-  for (int i = 0; i < 10; i++) {
+
+  for (int i = 0; i < 8; i++) {
     std::string col_qualifiery = "c" + std::to_string(i);
     created.push_back(
-        bigtable::Cell(row_key, family, col_qualifiery, 1000, strvalue, {}));
+        bigtable::Cell(row_key, family, col_qualifiery, 0, value, {}));
   }
+
+  std::vector<bigtable::Cell> expected;
+  for (int i = 0; i < 8; i++) {
+    std::string col_qualifiery = "c" + std::to_string(i);
+    expected.push_back(
+        bigtable::Cell(row_key, family, col_qualifiery, 0, value, {}));
+  }
+
   CreateCells(*table, created);
-  std::cout << "Size of Create " << created.size() << std::endl;
-  if (!UsingCloudBigtableEmulator()) {
-    // TODO(#151) - remove workarounds for emulator bug(s).
+  auto result = table->ReadRow(row_key, bigtable::Filter::PassAllFilter());
 
-    auto result = table->ReadRow(row_key, bigtable::Filter::PassAllFilter());
-
-    if (result.first) {
-      int totalrowsize = 0;
-      for (auto& cell : result.second.cells()) {
-        totalrowsize += cell.value().size();
-      }
-      EXPECT_LE(totalrowsize, (256 << 20));
+  if (result.first) {
+    int totalrowsize = 0;
+    for (auto& cell : result.second.cells()) {
+      totalrowsize += cell.value().size();
     }
+    EXPECT_LE(totalrowsize, (256 * MiB));
   }
-
+  // Ignore the server set timestamp on the returned cells because it is not
+  // predictable.
+  auto expected_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
+  auto actual_ignore_timestamp =
+      GetCellsIgnoringTimestamp(result.second.cells());
   DeleteTable(table_id);
+  CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }

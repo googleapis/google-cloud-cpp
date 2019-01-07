@@ -222,7 +222,7 @@ TEST(ClientOptionsTest, SetCompressionAlgorithm) {
 
 TEST(ClientOptionsTest, SetMaxReceiveMessageSize) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  client_options_object.SetMaxReceiveMessageSize(5);
+  client_options_object.SetMaxReceiveMessageSize(256 * 1024L * 1024L);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
   ASSERT_EQ(4UL, test_args.num_args);
@@ -234,12 +234,12 @@ TEST(ClientOptionsTest, SetMaxReceiveMessageSize) {
   EXPECT_EQ(GRPC_ARG_MAX_RECEIVE_MESSAGE_LENGTH,
             grpc::string(test_args.args[3].key));
 
-  EXPECT_LE(test_args.args[3].value.integer, (256 * 1024 * 1024));
+  EXPECT_EQ(test_args.args[3].value.integer, (256 * 1024L * 1024L));
 }
 
 TEST(ClientOptionsTest, SetMaxSendMessageSize) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  client_options_object.SetMaxSendMessageSize(5);
+  client_options_object.SetMaxSendMessageSize(256 * 1024L * 1024L);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
   ASSERT_EQ(4UL, test_args.num_args);
@@ -251,7 +251,7 @@ TEST(ClientOptionsTest, SetMaxSendMessageSize) {
   EXPECT_EQ(GRPC_ARG_MAX_SEND_MESSAGE_LENGTH,
             grpc::string(test_args.args[3].key));
 
-  EXPECT_LE(test_args.args[3].value.integer, 256 * 1024 * 1024);
+  EXPECT_EQ(test_args.args[3].value.integer, 256 * 1024L * 1024L);
 }
 
 TEST(ClientOptionsTest, SetLoadBalancingPolicyName) {
