@@ -79,6 +79,39 @@ inline namespace STORAGE_CLIENT_NS {
  *     gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials()));
  * @endcode
  *
+ * @par Error Handling
+ * This class uses `StatusOr<T>` to report errors. When an operation fails to
+ * perform its work the returned `StatusOr<T>` contains the error details. If
+ * the `StatusOr<T>` is `ok()` then it contains the expected result.
+ * Applications can also call `.value()` in the returned `StatusOr<T>` to get
+ * the underlying value, this function throws an exception when the
+ * `StatusOr<T>` contains an error.
+ *
+ * @par Error Handling Example (with exceptions):
+ * @code
+ * using namespace google::cloud;
+ * [](storage::Client client) {
+ *   storage::BucketMetadata metadata = client.GetBucketMetadata(
+ *       "my-bucket").value(); // throws on error
+ *   // use `metadata` here.
+ * }
+ * @endcode
+ *
+ * @par Error Handling Example (without exceptions):
+ * @code
+ * using namespace google::cloud;
+ * [](storage::Client client) {
+ *   StatusOr<storage::BucketMetadata> metadata = client.GetBucketMetadata(
+ *       "my-bucket");
+ *   if (not metadata.ok()) {
+ *     std::cerr << "Error retrieving metadata for my-bucket: "
+ *               << metadata.status() << std::endl;
+ *     return;
+ *   }
+ *   // use `metadata.value()` (or `*metadata`) here.
+ * }
+ * @endcode
+ *
  * @see https://cloud.google.com/storage/ for an overview of GCS.
  *
  * @see https://cloud.google.com/storage/docs/key-terms for an introduction of
@@ -2260,9 +2293,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @returns An error status if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -2301,9 +2331,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @return An error status if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions. There
    * are no pre-conditions for this operation that can make it idempotent.
@@ -2341,9 +2368,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @return An error status if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -2378,9 +2402,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @return An error status if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is always idempotent because it only acts on a specific
    * `notification_id`, the state after calling this function multiple times is
@@ -2396,9 +2417,9 @@ class Client {
    *     Cloud Pub/Sub service.
    */
   template <typename... Options>
-  Status DeleteNotification(std::string const& bucket_name,
-                            std::string const& notification_id,
-                            Options&&... options) {
+  StatusOr<void> DeleteNotification(std::string const& bucket_name,
+                                    std::string const& notification_id,
+                                    Options&&... options) {
     internal::DeleteNotificationRequest request(bucket_name, notification_id);
     request.set_multiple_options(std::forward<Options>(options)...);
     return std::move(raw_client_->DeleteNotification(request)).status();
