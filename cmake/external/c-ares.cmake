@@ -58,6 +58,10 @@ if (NOT TARGET c_ares_project)
                         LOG_BUILD ON
                         LOG_INSTALL ON)
 
+    if (TARGET google-cloud-cpp-dependencies)
+        add_dependencies(google-cloud-cpp-dependencies c_ares_project)
+    endif ()
+
     add_library(c-ares::cares INTERFACE IMPORTED)
     set_library_properties_for_external_project(c-ares::cares cares
                                                 ALWAYS_SHARED)

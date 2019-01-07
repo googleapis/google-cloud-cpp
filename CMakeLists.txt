@@ -139,6 +139,13 @@ set_property(CACHE GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
+# There are a number of targets that are pure dependencies, i.e., do not contain
+# our own code. These targets can be skipped when using static analysis tools.
+# Can be built earlier in the CI environment (for example to warm up the cache).
+# And in general can receive special treatment. This custom target collects all
+# these special targets with a single name.
+add_custom_target(google-cloud-cpp-dependencies)
+
 # Add gRPC and protobuf targets as submodules or packages, depending on the
 # configuration.  This should happen before enable_testing(), because we are not
 # interested in compiling and running the gRPC tests.
@@ -150,13 +157,6 @@ include(CTest)
 
 # Each subproject adds dependencies to this target to have their docs generated.
 add_custom_target(doxygen-docs)
-
-# There are a number of targets we cannot, or do not care to compile with the
-# static analyzer enabled. Either because the build times are too long, or
-# because the code is an external dependency, or generated code, or all of
-# above. These targets are added as dependencies of `skip-scanbuild-targets` and
-# compiled with, obviously, scan-build disabled.
-add_custom_target(skip-scanbuild-targets)
 
 # Add subprojects here.
 add_subdirectory(google/cloud)

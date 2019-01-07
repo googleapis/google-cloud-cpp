@@ -77,6 +77,10 @@ if (NOT TARGET gprc_project)
         LOG_BUILD ON
         LOG_INSTALL ON)
 
+    if (TARGET google-cloud-cpp-dependencies)
+        add_dependencies(google-cloud-cpp-dependencies grpc_project)
+    endif ()
+
     add_library(gRPC::address_sorting INTERFACE IMPORTED)
     set_library_properties_for_external_project(gRPC::address_sorting
                                                 address_sorting)

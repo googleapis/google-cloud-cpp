@@ -32,8 +32,7 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 (cd "${PROJECT_ROOT}" ; ./ci/check-style.sh)
 
 # TODO (#1797): this is a workaround for the shared library error.
-readonly LD_LIBRARY_PATH="${PWD}/${BUILD_OUTPUT}/external/lib:${PWD}/${BUILD_OUTPUT}/external/lib64"
-export LD_LIBRARY_PATH
+export LD_LIBRARY_PATH="${PWD}/${BUILD_OUTPUT}/external/lib:${PWD}/${BUILD_OUTPUT}/external/lib64"
 
 CMAKE_COMMAND="cmake"
 if [ "${SCAN_BUILD}" = "yes" ]; then
@@ -41,6 +40,25 @@ if [ "${SCAN_BUILD}" = "yes" ]; then
 fi
 
 ccache_command="$(which ccache)"
+
+if [[ -z "${ccache_command}" ]]; then
+  echo "The Travis builds cannot complete without ccache(1), exiting."
+  exit 1
+fi
+
+bootstrap_ccache="no"
+if ${ccache_command} --show-stats | grep '^cache size' | grep -q '0.0 kB'; then
+  echo "${COLOR_RED}"
+  echo "The ccache is empty. The builds cannot finish in the time allocated by"
+  echo "Travis without a warm cache. As a workaround, until #1800 is fixed,"
+  echo "the cache is bootstrapped in two steps. First, only a subset of the"
+  echo "system will be built, and the build will terminate with a failure."
+  echo "The second build on the same branch will have at least the previously"
+  echo "mentioned subset of the system in the build cache, and should be able"
+  echo "to finish in the time allocated by Travis."
+  echo "${COLOR_RESET}"
+  bootstrap_ccache="yes"
+fi
 
 echo "${COLOR_YELLOW}Started CMake config at: $(date)${COLOR_RESET}"
 echo "travis_fold:start:configure-cmake"
@@ -84,10 +102,20 @@ fi
 echo "${COLOR_YELLOW}Started dependency build at: $(date)${COLOR_RESET}"
 echo "travis_fold:start:build-dependencies"
 echo
-cmake --build "${BUILD_OUTPUT}" --target skip-scanbuild-targets -- -j ${NCPU}
+cmake --build "${BUILD_OUTPUT}" \
+    --target google-cloud-cpp-dependencies -- -j ${NCPU}
 echo
 echo "travis_fold:end:build-dependencies"
 echo "${COLOR_YELLOW}Finished dependency build at: $(date)${COLOR_RESET}"
+
+if [[ "${bootstrap_ccache}" == "yes" ]]; then
+  echo
+  echo
+  echo "${COLOR_RED}Aborting the build early to warm up the cache.${COLOR_RESET}"
+  echo
+  echo
+  exit 1
+fi
 
 # If scan-build is enabled we build the smallest subset of things that is
 # needed; otherwise, we pick errors from things we do not care about. With
