@@ -242,7 +242,8 @@ class AsyncUnaryStreamRpcFunctor : public AsyncGrpcOperation {
  public:
   explicit AsyncUnaryStreamRpcFunctor(DataFunctor&& data_functor,
                                       FinishedFunctor&& finished_functor)
-      : state_(CREATING),
+      : tag_(nullptr),
+        state_(CREATING),
         data_functor_(std::forward<DataFunctor>(data_functor)),
         finished_functor_(std::forward<FinishedFunctor>(finished_functor)) {}
 
