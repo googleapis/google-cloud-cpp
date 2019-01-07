@@ -1,11 +1,17 @@
 **Title**: Functions should report errors using `StatusOr<T>` *instead of*
 throwing exceptions.
 
-**Status**: proposed
+**Status**: accepted
 
 **Context**: We know there will be users of these C++ libraries who want to use
 C++ exceptions as well as those who are not able to. Our C++ libraries must
 work for all of our users, regardless of their ability to use exceptions.
+
+**Decision**: None of our APIs will throw exceptions to indicate errors.
+Instead, our APIs will typically report errors to callers by returning a
+`Status` or `StatusOr<T>` object, unless the library we're using has another
+non-throwing way to report errors (e.g., [badbit][badbit-link] in the standard
+I/O library).
 
 **Decision**: All of our APIs will report errors to callers by returning a
 `StatusOr<T>` object, which will indicate whether the function successfully
@@ -26,13 +32,11 @@ Changing existing APIs from throwing exceptions to returning `StatusOr<T>` is a
 breaking change. As of this writing (Jan 2019), this project has a [Google
 Cloud Storage][gcs-link] component that is at the Alpha quality level, and a
 [Google Cloud Bigtable][bigtable-link] that is already at the Beta quality
-level. Since neither of these are at the GA quality level, breaking changes are
-allowed. However, we still want to minimize the disruption caused by these
-changes, especially for the Bigtable library, which is Beta. For Bigtable, we
-will communicate the upcoming changes to the users and try to get the changes
-implemented over the coming months.
+level. We plan to immediately change the API for Google Cloud Storage. We have
+no immediate plans to change the API for Cloud Bigtable. We will communicate a
+timeline to change this API in a separate document.
 
-
+[badbit-link]: https://en.cppreference.com/w/cpp/io/ios_base/iostate
 [gcs-link]: https://github.com/GoogleCloudPlatform/google-cloud-cpp/tree/master/google/cloud/storage
 [bigtable-link]: https://github.com/GoogleCloudPlatform/google-cloud-cpp/tree/master/google/cloud/bigtable
 [survey-link]: https://isocpp.org/blog/2018/03/results-summary-cpp-foundation-developer-survey-lite-2018-02
