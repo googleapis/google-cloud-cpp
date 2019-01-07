@@ -339,19 +339,15 @@ class InstanceAdmin {
    *     `cq.Run()`.
    * @param callback a functor to be called when the operation completes. It
    *     must satisfy (using C++17 types):
-   *     static_assert(std::is_invocable_v<
-   *         Functor, google::protobuf::Empty&,
-   *         grpc::Status const&>);
+   *     static_assert(std::is_invocable_v<Functor, grpc::Status const&>);
    * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    *
-   * TODO(#1325) - eliminate usage of google::protobuf::Empty from Asysnc APIs.
    */
   template <typename Functor,
             typename std::enable_if<
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                                      google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncDeleteInstance(
@@ -370,13 +366,14 @@ class InstanceAdmin {
     using Retry =
         internal::AsyncRetryUnaryRpc<InstanceAdminClient, MemberFunction,
                                      internal::ConstantIdempotencyPolicy,
-                                     Functor>;
+                                     internal::EmptyResponseAdaptor<Functor>>;
 
     auto retry = std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncDeleteInstance, std::move(request),
-        std::forward<Functor>(callback));
+        internal::EmptyResponseAdaptor<Functor>(
+            std::forward<Functor>(callback)));
     return retry->Start(cq);
   }
 
@@ -435,19 +432,15 @@ class InstanceAdmin {
    *     `cq.Run()`.
    * @param callback a functor to be called when the operation completes. It
    *     must satisfy (using C++17 types):
-   *     static_assert(std::is_invocable_v<
-   *         Functor, google::protobuf::Empty&,
-   *         grpc::Status const&>);
+   *     static_assert(std::is_invocable_v<Functor, grpc::Status const&>);
    * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    *
-   * TODO(#1325) - eliminate usage of google::protobuf::Empty from Asysnc APIs.
    */
   template <typename Functor,
             typename std::enable_if<
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                                      google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncDeleteCluster(
@@ -468,13 +461,14 @@ class InstanceAdmin {
     using Retry =
         internal::AsyncRetryUnaryRpc<InstanceAdminClient, MemberFunction,
                                      internal::ConstantIdempotencyPolicy,
-                                     Functor>;
+                                     internal::EmptyResponseAdaptor<Functor>>;
 
     auto retry = std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncDeleteCluster, std::move(request),
-        std::forward<Functor>(callback));
+        internal::EmptyResponseAdaptor<Functor>(
+            std::forward<Functor>(callback)));
     return retry->Start(cq);
   }
 
@@ -904,19 +898,15 @@ class InstanceAdmin {
    *     `cq.Run()`.
    * @param callback a functor to be called when the operation completes. It
    *     must satisfy (using C++17 types):
-   *     static_assert(std::is_invocable_v<
-   *         Functor, google::protobuf::Empty&,
-   *         grpc::Status const&>);
+   *     static_assert(std::is_invocable_v<Functor, grpc::Status const&>);
    * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    *
-   * TODO(#1325) - eliminate usage of google::protobuf::Empty from Asysnc APIs.
    */
   template <typename Functor,
             typename std::enable_if<
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                                      google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncDeleteAppProfile(
@@ -938,13 +928,15 @@ class InstanceAdmin {
     using Retry =
         internal::AsyncRetryUnaryRpc<InstanceAdminClient, MemberFunction,
                                      internal::ConstantIdempotencyPolicy,
-                                     Functor>;
+                                     internal::EmptyResponseAdaptor<Functor>>;
 
     auto retry = std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncDeleteAppProfile,
-        std::move(request), std::forward<Functor>(callback));
+        std::move(request),
+        internal::EmptyResponseAdaptor<Functor>(
+            std::forward<Functor>(callback)));
     return retry->Start(cq);
   }
 

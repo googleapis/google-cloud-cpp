@@ -247,16 +247,13 @@ class TableAdmin {
    *     `cq.Run()`.
    * @param callback a functor to be called when the operation completes. It
    *     must satisfy (using C++17 types):
-   *     static_assert(std::is_invocable_v<
-   *         Functor, google::bigtable::admin::v2::Table&,
-   *         grpc::Status const&>);
+   *     static_assert(std::is_invocable_v<Functor, grpc::Status const&>);
    *
    * @tparam Functor the type of the callback.
    */
   template <typename Functor,
             typename std::enable_if<
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                                      google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   void AsyncDeleteTable(CompletionQueue& cq, Functor&& callback,
@@ -274,13 +271,14 @@ class TableAdmin {
     using Retry =
         internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
                                      internal::ConstantIdempotencyPolicy,
-                                     Functor>;
+                                     internal::EmptyResponseAdaptor<Functor>>;
 
     auto retry = std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(false), metadata_update_policy_,
         client_, &AdminClient::AsyncDeleteTable, std::move(request),
-        std::forward<Functor>(callback));
+        internal::EmptyResponseAdaptor<Functor>(
+            std::forward<Functor>(callback)));
     retry->Start(cq);
   }
 
@@ -455,9 +453,7 @@ class TableAdmin {
    *     `cq.Run()`.
    * @param callback a functor to be called when the operation completes. It
    *     must satisfy (using C++17 types):
-   *     static_assert(std::is_invocable_v<
-   *         Functor, google::protobuf::Empty&,
-   *         grpc::Status const&>);
+   *     static_assert(std::is_invocable_v<Functor, grpc::Status const&>);
    * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
@@ -465,7 +461,6 @@ class TableAdmin {
   template <typename Functor,
             typename std::enable_if<
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                                      google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncDropRowsByPrefix(
@@ -487,13 +482,14 @@ class TableAdmin {
     using Retry =
         internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
                                      internal::ConstantIdempotencyPolicy,
-                                     Functor>;
+                                     internal::EmptyResponseAdaptor<Functor>>;
 
     auto retry = std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(false), metadata_update_policy,
         client_, &AdminClient::AsyncDropRowRange, std::move(request),
-        std::forward<Functor>(callback));
+        internal::EmptyResponseAdaptor<Functor>(
+            std::forward<Functor>(callback)));
     return retry->Start(cq);
   }
 
@@ -512,9 +508,7 @@ class TableAdmin {
    *     `cq.Run()`.
    * @param callback a functor to be called when the operation completes. It
    *     must satisfy (using C++17 types):
-   *     static_assert(std::is_invocable_v<
-   *         Functor, google::protobuf::Empty&,
-   *         grpc::Status const&>);
+   *     static_assert(std::is_invocable_v<Functor, grpc::Status const&>);
    * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
@@ -522,7 +516,6 @@ class TableAdmin {
   template <typename Functor,
             typename std::enable_if<
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                                      google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncDropAllRows(
@@ -543,13 +536,14 @@ class TableAdmin {
     using Retry =
         internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
                                      internal::ConstantIdempotencyPolicy,
-                                     Functor>;
+                                     internal::EmptyResponseAdaptor<Functor>>;
 
     auto retry = std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(false), metadata_update_policy,
         client_, &AdminClient::AsyncDropRowRange, std::move(request),
-        std::forward<Functor>(callback));
+        internal::EmptyResponseAdaptor<Functor>(
+            std::forward<Functor>(callback)));
     return retry->Start(cq);
   }
 
@@ -635,19 +629,15 @@ class TableAdmin {
    *     `cq.Run()`.
    * @param callback a functor to be called when the operation completes. It
    *     must satisfy (using C++17 types):
-   *     static_assert(std::is_invocable_v<
-   *         Functor, google::protobuf::Empty&,
-   *         grpc::Status const&>);
+   *     static_assert(std::is_invocable_v<Functor, grpc::Status const&>);
    * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    *
-   * TODO(#1325) - eliminate usage of google::protobuf::Empty in the callback
    */
   template <typename Functor,
             typename std::enable_if<
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                                      google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncDeleteSnapshot(
@@ -669,13 +659,14 @@ class TableAdmin {
     using Retry =
         internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
                                      internal::ConstantIdempotencyPolicy,
-                                     Functor>;
+                                     internal::EmptyResponseAdaptor<Functor>>;
 
     auto retry = std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(false), metadata_update_policy,
         client_, &AdminClient::AsyncDeleteSnapshot, std::move(request),
-        std::forward<Functor>(callback));
+        internal::EmptyResponseAdaptor<Functor>(
+            std::forward<Functor>(callback)));
     return retry->Start(cq);
   }
   //@}
