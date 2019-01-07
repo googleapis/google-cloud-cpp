@@ -13,12 +13,6 @@ Instead, our APIs will typically report errors to callers by returning a
 non-throwing way to report errors (e.g., [badbit][badbit-link] in the standard
 I/O library).
 
-**Decision**: All of our APIs will report errors to callers by returning a
-`StatusOr<T>` object, which will indicate whether the function successfully
-returned the requested `T` object, or whether the function failed and returned
-an error `Status` instead. None of our APIs will throw exceptions to indicate
-errors.
-
 **Consequences**: This decision will result in a single set of APIs and a
 consistent vocabulary for all users, whether or not they choose to compile with
 exceptions. This decision does not prevent callers from using exceptions in
