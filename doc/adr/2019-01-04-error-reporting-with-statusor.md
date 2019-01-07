@@ -1,34 +1,39 @@
-**Title**: Functions should report errors using a `StatusOr<T>` instead of
+**Title**: Functions should report errors using `StatusOr<T>` *instead of*
 throwing exceptions.
 
 **Status**: proposed
 
-**Context**: We expect there to be users of this library who use C++
-exceptions, as well as those who do not. The most recent [ISO C++
-survey](https://isocpp.org/blog/2018/03/results-summary-cpp-foundation-developer-survey-lite-2018-02)
-suggests that there are ~50% of users who are allowed to use C++ exceptions,
-~20% who cannot, and about %30 who can use exceptions in some places but not
-others. We must provide a library that works for all users, whether or not they
-can use exceptions.
+**Context**: We know there will be users of these C++ libraries who want to use
+C++ exceptions as well as those who are not able to. Our C++ libraries must
+work for all of our users, regardless of their ability to use exceptions.
 
-**Decision**: All of our APIs will report errors by returning a `StatusOr<T>`
-object, which will indicate whether the requested `T` object was returned or
-whether the function failed and returned a `Status` instead. None of our APIs
-will throw exceptions to indicate errors.
+**Decision**: All of our APIs will report errors to callers by returning a
+`StatusOr<T>` object, which will indicate whether the function successfully
+returned the requested `T` object, or whether the function failed and returned
+an error `Status` instead. None of our APIs will throw exceptions to indicate
+errors.
 
-**Consequences**: The decision to report all errors as a `StatusOr<T>` return
-value supports 100% of potential users, because it works in any environment,
-regardless of the user's ability to use C++ exceptions. Additionally, since
-`StatusOr<T>::value()` may `throw` (if compiled with `-fexceptions`) it can be
-used without explicit error checking in environments where callers want
-exceptions to be thrown anyway.
+**Consequences**: This decision will result in a single set of APIs and a
+consistent vocabulary for all users, whether or not they choose to compile with
+exceptions. Indeed, this decision does not prevent callers from using
+exceptions in their own code.
 
-A downside of this decision is that for the ~50% of users who might prefer an
-exception-based API, the `StatusOr<T>` interface (even with the call to a
-throwing `value()`) is not as natural or idiomatic as a well designed
-exception-based API. More generally, the decision not to throw affects many
-facets of the API's design. For example, since constructors cannot throw (by
-virtue of this ARD) APIs may lean more heavily on factory functions rather than
-constructors for creating objects. This may result in a less natural and more
-verbose expression of code intent.
+A downside of this decision is that our APIs will not be natrual or idiomatic
+for the [50+%][survey-link] of users who might prefer exceptions for error
+reporting.
+
+Changing existing APIs from throwing exceptions to returning `StatusOr<T>` is a
+breaking change. As of this writing (Jan 2019), this project has a [Google
+Cloud Storage][gcs-link] component that is at the Alpha quality level, and a
+[Google Cloud Bigtable][bigtable-link] that is already at the Beta quality
+level. Since neither of these are at the GA quality level, breaking changes are
+allowed. However, we still want to minimize the disruption caused by these
+changes, especially for the Bigtable library, which is Beta. For Bigtable, we
+will communicate the upcoming changes to the users and try to get them
+implemented over the coming months.
+
+
+[gcs-link]: https://github.com/GoogleCloudPlatform/google-cloud-cpp/tree/master/google/cloud/storage
+[bigtable-link]: https://github.com/GoogleCloudPlatform/google-cloud-cpp/tree/master/google/cloud/bigtable
+[survey-link]: https://isocpp.org/blog/2018/03/results-summary-cpp-foundation-developer-survey-lite-2018-02
 
