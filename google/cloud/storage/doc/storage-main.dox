@@ -208,9 +208,13 @@ the `StatusOr<T>` object contains an error.
 @code {.cpp}
 using namespace google::cloud;
 [](storage::Client client) {
-  storage::BucketMetadata metadata = client.GetBucketMetadata(
-      "my-bucket").value(); // throws on error
-  // use `metadata` here.
+  try {
+    storage::BucketMetadata metadata = client.GetBucketMetadata(
+        "my-bucket").value(); // throws on error
+    // use `metadata` here.
+  } catch (storage::RuntimeStatusError const& ex) {
+    std::cerr << "Error status: " << ex.what() << std::endl;
+  }
 }
 @endcode
 
