@@ -54,14 +54,14 @@ void ListNotifications(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
     std::cout << "Notifications for bucket=" << bucket_name << std::endl;
-    gcs::StatusOr<std::vector<gcs::NotificationMetadata>> status =
+    gcs::StatusOr<std::vector<gcs::NotificationMetadata>> items =
         client.ListNotifications(bucket_name);
-    if (not status.ok()) {
+    if (not items.ok()) {
       std::cerr << "Error reading notification list for " << bucket_name
-                << ", status=" << status.status() << std::endl;
+                << ", status=" << items.status() << std::endl;
       return;
     }
-    for (gcs::NotificationMetadata const& notification : *status) {
+    for (gcs::NotificationMetadata const& notification : *items) {
       std::cout << notification << std::endl;
     }
   }

@@ -83,7 +83,7 @@ inline namespace STORAGE_CLIENT_NS {
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `StatusOr<T>` is `ok()` then it contains the expected result.
- * Applications can also call `.value()` in the returned `StatusOr<T>` to get
+ * Applications can also call `.value()` on the returned `StatusOr<T>` to get
  * the underlying value, this function throws an exception when the
  * `StatusOr<T>` contains an error.
  *
