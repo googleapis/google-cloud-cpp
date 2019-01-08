@@ -184,7 +184,7 @@ details are available using the `.status()` member function. If the
 `operator*()` work as you would expect. Note that accessing the value of a
 `StatusOr<T>` that contains an error is undefined behavior.
 
-```{.cpp}
+@code {.cpp}
 using namespace google::cloud;
 [](storage::Client client) {
   StatusOr<storage::BucketMetadata> metadata = client.GetBucketMetadata(
@@ -194,9 +194,9 @@ using namespace google::cloud;
               << metadata.status() << std::endl;
     return;
   }
-  // use `metadata.value()` (use `metadata` as a smart pointer) here.
+  // here, use `metadata` as a smart pointer to `T`, or `metadata.value()`.
 }
-```
+@endcode
 
 @par Error Handling Example (with exceptions):
 
@@ -205,14 +205,14 @@ exceptions to signal errors can simply call `.value()` on the `StatusOr<T>`
 object. This will return a `T` if there was no error, and throw an exception if
 the `StatusOr<T>` object contains an error.
 
-```{.cpp}
+@code {.cpp}
 using namespace google::cloud;
 [](storage::Client client) {
   storage::BucketMetadata metadata = client.GetBucketMetadata(
       "my-bucket").value(); // throws on error
   // use `metadata` here.
 }
-```
+@endcode
 
 ### Next Steps
 
