@@ -29,10 +29,12 @@ fi
 
 # Upload the results using the script from codecov.io
 # Save the log to a file because it exceeds the 4MB limit in Travis.
+echo -n "Uploading code coverage to codecov.io..."
 readonly CI_ENV=$(bash <(curl -s https://codecov.io/env))
 sudo docker run $CI_ENV \
     --volume $PWD:/v --workdir /v \
     "${IMAGE}:tip" /bin/bash -c \
-    "/bin/bash <(curl -s https://codecov.io/bash) -g './build-output/ccache/*'"
+    "/bin/bash <(curl -s https://codecov.io/bash) -g './build-output/ccache/*' >/v/codecov.log 2>&1"
+echo "DONE"
 
 dump_log codecov.log
