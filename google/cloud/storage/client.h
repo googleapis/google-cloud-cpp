@@ -82,35 +82,10 @@ inline namespace STORAGE_CLIENT_NS {
  * @par Error Handling
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
- * the `StatusOr<T>` is `ok()` then it contains the expected result.
- * Applications can also call `.value()` on the returned `StatusOr<T>` to get
- * the underlying value, this function throws an exception when the
- * `StatusOr<T>` contains an error.
- *
- * @par Error Handling Example (with exceptions):
- * @code
- * using namespace google::cloud;
- * [](storage::Client client) {
- *   storage::BucketMetadata metadata = client.GetBucketMetadata(
- *       "my-bucket").value(); // throws on error
- *   // use `metadata` here.
- * }
- * @endcode
- *
- * @par Error Handling Example (without exceptions):
- * @code
- * using namespace google::cloud;
- * [](storage::Client client) {
- *   StatusOr<storage::BucketMetadata> metadata = client.GetBucketMetadata(
- *       "my-bucket");
- *   if (not metadata.ok()) {
- *     std::cerr << "Error retrieving metadata for my-bucket: "
- *               << metadata.status() << std::endl;
- *     return;
- *   }
- *   // use `metadata.value()` (or `*metadata`) here.
- * }
- * @endcode
+ * the `ok()` member function in the `StatusOr<T>` returns `true` then it
+ * contains the expected result. Please consult the `StatusOr<T>` documentation
+ * for more details. In addition, the @ref index "main page" contains examples
+ * using `StatusOr<T>` to handle errors.
  *
  * @see https://cloud.google.com/storage/ for an overview of GCS.
  *

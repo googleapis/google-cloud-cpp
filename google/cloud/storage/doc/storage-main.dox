@@ -167,6 +167,53 @@ add_executable(my_program my_program.cc)
 target_link_libraries(my_program storage_client)
 ```
 
+### Error Handling
+
+This library never throws exceptions to signal error. In general, the library
+returns a `StatusOr<T>` if an error is possible. The exception are classes that
+already have an existing error handling mechanism, such as types derived from
+`std::ostream`.
+
+@par Error Handling Example (without exceptions):
+
+Application developers that cannot or prefer not to use exceptions to signal
+errors can check if the `StatusOr<T>` contains an error using `.ok()`. The error
+details are available using the `.status()` member function. If the
+`StatusOr<T>` does not contain an error then the application can use the\
+`StatusOr<T>` as a smart pointer to `T`, that is, `operator->()` and
+`operator*()` work as you would expect. Note that accessing the value of a
+`StatusOr<T>` that contains an error is undefined behavior.
+
+```{.cpp}
+using namespace google::cloud;
+[](storage::Client client) {
+  StatusOr<storage::BucketMetadata> metadata = client.GetBucketMetadata(
+      "my-bucket");
+  if (not metadata.ok()) {
+    std::cerr << "Error retrieving metadata for my-bucket: "
+              << metadata.status() << std::endl;
+    return;
+  }
+  // use `metadata.value()` (use `metadata` as a smart pointer) here.
+}
+```
+
+@par Error Handling Example (with exceptions):
+
+Applications that prefer to use
+exceptions to signal errors can simply call `.value()` on the `StatusOr<T>`
+object. This will return a `T` if there was no error, and throw an exception if
+the `StatusOr<T>` object contains an error.
+
+```{.cpp}
+using namespace google::cloud;
+[](storage::Client client) {
+  storage::BucketMetadata metadata = client.GetBucketMetadata(
+      "my-bucket").value(); // throws on error
+  // use `metadata` here.
+}
+```
+
 ### Next Steps
 
 The documentation for each member function in the [Client] class includes short
