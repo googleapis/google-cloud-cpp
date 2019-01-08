@@ -79,19 +79,18 @@ void CreateNotification(google::cloud::storage::Client client, int& argc,
   //! [create notification] [START storage_create_pubsub_bucket_notification]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string topic_name) {
-    gcs::StatusOr<gcs::NotificationMetadata> status = client.CreateNotification(
+    gcs::StatusOr<gcs::NotificationMetadata> notification = client.CreateNotification(
         bucket_name, topic_name, gcs::payload_format::JsonApiV1(),
         gcs::NotificationMetadata());
-    if (not status.ok()) {
+    if (not notification.ok()) {
       std::cerr << "Error creating notification for " << bucket_name
-                << " on topic " << topic_name << ", status=" << status.status()
+                << " on topic " << topic_name << ", status=" << notification.status()
                 << std::endl;
       return;
     }
-    gcs::NotificationMetadata notification = std::move(*status);
-    std::cout << "Successfully created notification " << notification.id()
+    std::cout << "Successfully created notification " << notification->id()
               << " for bucket " << bucket_name
-              << "\nfull details=" << notification << std::endl;
+              << "\nfull details=" << *notification << std::endl;
   }
   //! [create notification] [END storage_create_pubsub_bucket_notification]
   (std::move(client), bucket_name, topic_name);
@@ -107,17 +106,16 @@ void GetNotification(google::cloud::storage::Client client, int& argc,
   //! [get notification] [START storage_print_pubsub_bucket_notification]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string notification_id) {
-    gcs::StatusOr<gcs::NotificationMetadata> status =
+    gcs::StatusOr<gcs::NotificationMetadata> notification =
         client.GetNotification(bucket_name, notification_id);
-    if (not status.ok()) {
+    if (not notification.ok()) {
       std::cerr << "Error getting notification metadata for notification id "
                 << notification_id << " on bucket " << bucket_name
-                << ", status=" << status.status() << std::endl;
+                << ", status=" << notification.status() << std::endl;
       return;
     }
-    gcs::NotificationMetadata notification = std::move(*status);
-    std::cout << "Notification " << notification.id() << " for bucket "
-              << bucket_name << " details=" << notification << std::endl;
+    std::cout << "Notification " << notification->id() << " for bucket "
+              << bucket_name << " details=" << *notification << std::endl;
   }
   //! [get notification] [END storage_print_pubsub_bucket_notification]
   (std::move(client), bucket_name, notification_id);
