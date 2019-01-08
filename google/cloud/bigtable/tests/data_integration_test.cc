@@ -598,15 +598,15 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
   auto table = CreateTable(table_id, table_config);
 
   std::string const row_key = "row-key-1";
-  // cell vector contains 8 cell of ~32 MiB
+  // cell vector contains 10 cell of 25 MiB
   auto const MiB = 1024L * 1024L;
 
-  std::string value((32 * MiB) - 1024, 'a');
+  std::string value((25 * MiB), 'a');
   std::vector<bigtable::Cell> created;
   std::vector<bigtable::Cell> expected;
 
   std::string col_qualifier;
-  for (int i = 0; i < 8; i++) {
+  for (int i = 0; i < 10; i++) {
     col_qualifier = "c" + std::to_string(i);
     created.push_back(
         bigtable::Cell(row_key, family, col_qualifier, 0, value, {}));
@@ -621,7 +621,7 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
     return;
   }
   int totalrowsize = 0;
-  for (auto& cell : result.second.cells()) {
+  for (auto const& cell : result.second.cells()) {
     totalrowsize += cell.value().size();
   }
   EXPECT_LE(totalrowsize, (256 * MiB));
