@@ -53,11 +53,6 @@ When designing this style guide we biased towards rules that can be automaticall
 
 ## Major Differences from the Google Style Guide
 
-### Exceptions
-
-This project uses C++ exceptions for error reporting and handling, but the project must compile without exception 
-support, following [this approach](no-exception-support.md).
-
 ### External Libraries
 
 Only use the following libraries:
@@ -391,36 +386,6 @@ member public when you want to give only one other class access to it. However, 
 other classes solely through their public members.
 
 [link to GSG](https://google.github.io/styleguide/cppguide.html#Friends)
-
-#### Exceptions
-
-Use exceptions to represent a failure to complete the desired work in a function. Your library should compile with 
-exceptions disabled, follow [the accompanying design document](no-exception-support.md) to do so. In rare circumstances
-you may need to provide APIs that perform error reporting without using exceptions, the
-[same document](no-exception-support.md) covers how to design such APIs.
-
-There are no hard and fast rules as to when is better to raise an exceptions vs. returning an error status, specially
-for libraries that contact remote systems. In general, this guideline is useful:
-
-```
-Raise an exception when the function could not complete its work.
-```
-
-For purely local functions this is a broadly applicable guideline. If the preconditions are not met, or the arguments
-are out of range or invalid one should raise an exception. It is a harder rule to apply for operations that need to 
-contact a remote server. The following list is not exhaustive, but provides some general principles:
-
-- Failing to contact the server should raise an exception.
-- Receiving an invalid response from the server should raise an exception.
-- Receiving a permanent error status from the server should raise an exception.
-- Being unable to find an object, or row, or file in a remote server should
-  not raise an exception.
-
-As we said, there are no hard and fast rules, consult your colleagues and be
-ready to change your mind.
-
-This is substantially different from the corresponding
-[GSG section](https://google.github.io/styleguide/cppguide.html#Exceptions)
 
 #### RTTI
 
