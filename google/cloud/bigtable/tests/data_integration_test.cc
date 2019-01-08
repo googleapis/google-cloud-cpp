@@ -588,7 +588,7 @@ TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
   EXPECT_LT(0, last.offset_bytes);
 }
 
-TEST_F(DataIntegrationTest, TableReadMulipleCellsBigValue) {
+TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
   if (UsingCloudBigtableEmulator()) {
     // TODO(#151) - remove workarounds for emulator bug(s).
     return;
@@ -603,30 +603,29 @@ TEST_F(DataIntegrationTest, TableReadMulipleCellsBigValue) {
 
   std::string value((32 * MiB) - 1024, 'a');
   std::vector<bigtable::Cell> created;
-
-  for (int i = 0; i < 8; i++) {
-    std::string col_qualifiery = "c" + std::to_string(i);
-    created.push_back(
-        bigtable::Cell(row_key, family, col_qualifiery, 0, value, {}));
-  }
-
   std::vector<bigtable::Cell> expected;
+
+  std::string col_qualifier;
   for (int i = 0; i < 8; i++) {
-    std::string col_qualifiery = "c" + std::to_string(i);
+    col_qualifier = "c" + std::to_string(i);
+    created.push_back(
+        bigtable::Cell(row_key, family, col_qualifier, 0, value, {}));
     expected.push_back(
-        bigtable::Cell(row_key, family, col_qualifiery, 0, value, {}));
+        bigtable::Cell(row_key, family, col_qualifier, 0, value, {}));
   }
 
   CreateCells(*table, created);
   auto result = table->ReadRow(row_key, bigtable::Filter::PassAllFilter());
 
-  if (result.first) {
-    int totalrowsize = 0;
-    for (auto& cell : result.second.cells()) {
-      totalrowsize += cell.value().size();
-    }
-    EXPECT_LE(totalrowsize, (256 * MiB));
+  if (not result.first) {
+    return;
   }
+  int totalrowsize = 0;
+  for (auto& cell : result.second.cells()) {
+    totalrowsize += cell.value().size();
+  }
+  EXPECT_LE(totalrowsize, (256 * MiB));
+
   // Ignore the server set timestamp on the returned cells because it is not
   // predictable.
   auto expected_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
