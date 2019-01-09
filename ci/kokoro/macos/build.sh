@@ -28,12 +28,15 @@ echo "================================================================"
 echo "================================================================"
 echo "Update Bazel."
 echo
-ls -ld /usr/local/bin
-sudo rm /usr/local/bin/bazel
-brew tap bazelbuild/tap
-brew tap-pin bazelbuild/tap
-brew install bazelbuild/tap/bazel
-bazel version
+
+readonly BAZEL_VERSION=0.20.0
+readonly GITHUB_DL="https://github.com/bazelbuild/bazel/releases/download"
+wget -q "${GITHUB_DL}/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-installer-darwin-x86_64.sh"
+chmod +x "bazel-${BAZEL_VERSION}-installer-darwin-x86_64.sh"
+./bazel-${BAZEL_VERSION}-installer-darwin-x86_64.sh --user
+
+export PATH=$HOME/bin:$PATH
+echo "which bazel: $(which bazel)"
 
 # We need this environment variable because on macOS gRPC crashes if it cannot
 # find the credentials, even if you do not use them. Some of the unit tests do
@@ -49,7 +52,6 @@ export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
 bazel test \
     --copt=-DGRPC_BAZEL_BUILD \
     --action_env=GOOGLE_APPLICATION_CREDENTIALS="${GOOGLE_APPLICATION_CREDENTIALS}" \
-    --incompatible_package_name_is_a_function=false \
     --test_output=errors \
     --verbose_failures=true \
     --keep_going \
@@ -61,7 +63,6 @@ echo "================================================================"
 bazel build \
     --copt=-DGRPC_BAZEL_BUILD \
     --action_env=GOOGLE_APPLICATION_CREDENTIALS="${GOOGLE_APPLICATION_CREDENTIALS}" \
-    --incompatible_package_name_is_a_function=false \
     --test_output=errors \
     --verbose_failures=true \
     --keep_going \
