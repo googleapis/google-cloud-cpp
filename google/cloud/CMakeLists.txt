@@ -195,6 +195,7 @@ if (BUILD_TESTING)
         log_test.cc
         optional_test.cc
         status_or_test.cc
+        status_test.cc
         terminate_handler_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.

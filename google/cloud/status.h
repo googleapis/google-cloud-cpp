@@ -38,7 +38,7 @@ enum StatusCode {
   kInvalidArgument = 3,
   kDeadlineExceeded = 4,
   kNotFound = 5,
-  kAlreadExists = 6,
+  kAlreadyExists = 6,
   kPermissionDenied = 7,
   kUnauthenticated = 16,
   kResourceExhausted = 8,
@@ -51,6 +51,9 @@ enum StatusCode {
   kDataLoss = 15,
   kDoNotUse = -1
 };
+
+std::string StatusCodeToString(StatusCode code);
+std::ostream& operator<<(std::ostream& os, StatusCode code);
 
 /**
  * Reports error code and details from a remote request.
@@ -102,7 +105,9 @@ class Status {
 };
 
 inline std::ostream& operator<<(std::ostream& os, Status const& rhs) {
-  return os << rhs.error_message() << " [" << rhs.status_code()
+  return os << rhs.error_message()
+            << StatusCodeToString(static_cast<StatusCode>(rhs.status_code()))
+            << " [" << rhs.status_code()
             << "], details=" << rhs.error_details();
 }
 
