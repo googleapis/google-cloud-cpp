@@ -56,10 +56,10 @@ class ObjectRewriter {
    *   application can use `Result()` to examine the metadata for the newly
    *   created object.
    */
-  RewriteProgress Iterate();
+  StatusOr<RewriteProgress> Iterate();
 
   /// The current progress on the rewrite operation.
-  RewriteProgress CurrentProgress() const { return progress_; }
+  StatusOr<RewriteProgress> CurrentProgress() const { return progress_; }
 
   /**
    * Iterate until the operation completes using a callback to report progress.
@@ -71,8 +71,8 @@ class ObjectRewriter {
    *
    * @return the object metadata once the copy completes.
    */
-  ObjectMetadata Result() {
-    return ResultWithProgressCallback([](RewriteProgress const&) {});
+  StatusOr<ObjectMetadata> Result() {
+    return ResultWithProgressCallback([](StatusOr<RewriteProgress> const&) {});
   }
 
   /**
@@ -90,15 +90,16 @@ class ObjectRewriter {
    *
    * @return the object metadata once the copy completes.
    */
-  template <typename Functor,
-            typename std::enable_if<google::cloud::internal::is_invocable<
-                                        Functor, RewriteProgress>::value,
-                                    int>::type = 0>
-  ObjectMetadata ResultWithProgressCallback(Functor cb) {
-    while (not progress_.done) {
+  template <
+      typename Functor,
+      typename std::enable_if<google::cloud::internal::is_invocable<
+                                  Functor, StatusOr<RewriteProgress>>::value,
+                              int>::type = 0>
+  StatusOr<ObjectMetadata> ResultWithProgressCallback(Functor cb) {
+    do {
       Iterate();
       cb(progress_);
-    }
+    } while (progress_.ok() and not progress_->done);
     return result_;
   }
 
@@ -121,8 +122,8 @@ class ObjectRewriter {
  private:
   std::shared_ptr<internal::RawClient> client_;
   internal::RewriteObjectRequest request_;
-  RewriteProgress progress_;
-  ObjectMetadata result_;
+  StatusOr<RewriteProgress> progress_;
+  StatusOr<ObjectMetadata> result_;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

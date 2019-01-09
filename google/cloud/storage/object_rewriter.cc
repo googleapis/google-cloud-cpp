@@ -23,18 +23,22 @@ inline namespace STORAGE_CLIENT_NS {
 ObjectRewriter::ObjectRewriter(std::shared_ptr<internal::RawClient> client,
                                internal::RewriteObjectRequest request)
     : client_(std::move(client)),
-      request_(std::move(request)),
-      progress_{0, 0, false} {}
+      request_(std::move(request)) {}
 
-RewriteProgress ObjectRewriter::Iterate() {
-  internal::RewriteObjectResponse response =
-      client_->RewriteObject(request_).value();
-  progress_ = RewriteProgress{response.total_bytes_rewritten,
-                              response.object_size, response.done};
-  if (response.done) {
-    result_ = std::move(response.resource);
+StatusOr<RewriteProgress> ObjectRewriter::Iterate() {
+  StatusOr<internal::RewriteObjectResponse> response =
+      client_->RewriteObject(request_);
+  if (not response.ok()) {
+    progress_ = StatusOr<RewriteProgress>(response.status());
+    result_ = StatusOr<ObjectMetadata>(std::move(response).status());
+    return progress_;
   }
-  request_.set_rewrite_token(std::move(response.rewrite_token));
+  progress_ = RewriteProgress{response->total_bytes_rewritten,
+                              response->object_size, response->done};
+  if (response->done) {
+    result_ = std::move(response->resource);
+  }
+  request_.set_rewrite_token(std::move(response->rewrite_token));
   return progress_;
 }
 
