@@ -470,8 +470,8 @@ void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
   auto start = std::chrono::steady_clock::now();
   std::vector<std::future<TestResult>> tasks;
   std::vector<gcs::ObjectMetadata> group;
-  for (auto const& o : client.ListObjects(bucket_name, gcs::Versions(true))) {
-    group.push_back(o);
+  for (auto&& o : client.ListObjects(bucket_name, gcs::Versions(true))) {
+    group.emplace_back(std::move(o).value());
     if (group.size() >= static_cast<std::size_t>(max_group_size)) {
       tasks.emplace_back(std::async(std::launch::async, &DeleteGroup, client,
                                     std::move(group)));

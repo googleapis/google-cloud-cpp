@@ -64,7 +64,10 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
   auto bucket_name = ObjectTestEnvironment::bucket_name();
 
   auto objects = client.ListObjects(bucket_name);
-  std::vector<ObjectMetadata> initial_list(objects.begin(), objects.end());
+  std::vector<ObjectMetadata> initial_list;
+  for (auto&& o : objects) {
+    initial_list.emplace_back(std::move(o).value());
+  }
 
   auto name_counter = [](std::string const& name,
                          std::vector<ObjectMetadata> const& list) {
@@ -84,7 +87,10 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
                           IfGenerationMatch(0), Projection("full"));
   objects = client.ListObjects(bucket_name);
 
-  std::vector<ObjectMetadata> current_list(objects.begin(), objects.end());
+  std::vector<ObjectMetadata> current_list;
+  for (auto&& o : objects) {
+    current_list.emplace_back(std::move(o).value());
+  }
   EXPECT_EQ(1U, name_counter(object_name, current_list));
 
   ObjectMetadata get_meta = client.GetObjectMetadata(
@@ -144,7 +150,10 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
 
   client.DeleteObject(bucket_name, object_name);
   objects = client.ListObjects(bucket_name);
-  current_list.assign(objects.begin(), objects.end());
+  current_list.clear();
+  for (auto&& o : objects) {
+    current_list.emplace_back(std::move(o).value());
+  }
 
   EXPECT_EQ(0U, name_counter(object_name, current_list));
 }
@@ -250,7 +259,7 @@ TEST_F(ObjectIntegrationTest, ListObjectsVersions) {
   ListObjectsReader reader = client.ListObjects(bucket_name, Versions(true));
   std::vector<std::string> actual;
   for (auto it = reader.begin(); it != reader.end(); ++it) {
-    auto const& meta = *it;
+    auto const& meta = it->value();
     EXPECT_EQ(bucket_name, meta.bucket());
     actual.push_back(meta.name());
   }
@@ -1222,7 +1231,9 @@ TEST_F(ObjectIntegrationTest, ListObjectsFailure) {
   // This operation should fail because the bucket does not exist.
   TestPermanentFailure([&] {
     std::vector<ObjectMetadata> actual;
-    actual.assign(reader.begin(), reader.end());
+    for (auto&& o : reader) {
+      actual.emplace_back(std::move(o).value());
+    }
   });
 }
 

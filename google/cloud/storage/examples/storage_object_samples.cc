@@ -56,9 +56,14 @@ void ListObjects(google::cloud::storage::Client client, int& argc,
   //! [list objects] [START storage_list_files]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
-    for (gcs::ObjectMetadata const& meta : client.ListObjects(bucket_name)) {
-      std::cout << "bucket_name=" << meta.bucket()
-                << ", object_name=" << meta.name() << std::endl;
+    for (auto&& object_metadata : client.ListObjects(bucket_name)) {
+      if (not object_metadata.ok()) {
+        std::cerr << "Error reading object list for " << bucket_name
+                  << ", status=" << object_metadata.status();
+        return;
+      }
+      std::cout << "bucket_name=" << object_metadata->bucket()
+                << ", object_name=" << object_metadata->name() << std::endl;
     }
   }
   //! [list objects] [END storage_list_files]
@@ -349,8 +354,8 @@ void StartResumableUpload(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name);
 }
 
-void ResumeResumableUpload(google::cloud::storage::Client client, int &argc,
-                           char **argv) {
+void ResumeResumableUpload(google::cloud::storage::Client client, int& argc,
+                           char** argv) {
   if (argc != 4) {
     throw Usage{
         "resume-resumable-upload <bucket-name> <object-name> <session-id>"};
@@ -418,7 +423,8 @@ void UploadFile(google::cloud::storage::Client client, int& argc,
 void UploadFileResumable(google::cloud::storage::Client client, int& argc,
                          char* argv[]) {
   if (argc != 4) {
-    throw Usage{"upload-file-resumable <file-name> <bucket-name> <object-name>"};
+    throw Usage{
+        "upload-file-resumable <file-name> <bucket-name> <object-name>"};
   }
   auto file_name = ConsumeArg(argc, argv);
   auto bucket_name = ConsumeArg(argc, argv);
