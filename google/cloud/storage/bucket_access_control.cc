@@ -22,7 +22,7 @@ inline namespace STORAGE_CLIENT_NS {
 StatusOr<BucketAccessControl> BucketAccessControl::ParseFromJson(
     internal::nl::json const& json) {
   if (not json.is_object()) {
-    return Status(StatusCode::INVALID_ARGUMENT, __func__);
+    return Status(StatusCode::kInvalidArgument, __func__);
   }
   BucketAccessControl result{};
   auto status = AccessControlCommon::ParseFromJson(result, json);

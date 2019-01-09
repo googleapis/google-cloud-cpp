@@ -51,7 +51,7 @@ std::ostream& operator<<(std::ostream& os, ComposeSourceObject const& r) {
 StatusOr<ObjectMetadata> ObjectMetadata::ParseFromJson(
     internal::nl::json const& json) {
   if (not json.is_object()) {
-    return Status(StatusCode::INVALID_ARGUMENT, __func__);
+    return Status(StatusCode::kInvalidArgument, __func__);
   }
   ObjectMetadata result{};
   auto status = CommonMetadata<ObjectMetadata>::ParseFromJson(result, json);

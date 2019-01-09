@@ -151,7 +151,7 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
   }
   std::ostringstream os;
   os << where << "() - CURL error [" << e << "]=" << curl_easy_strerror(e);
-  return Status(StatusCode::UNKNOWN, std::move(os).str());
+  return Status(StatusCode::kUnknown, std::move(os).str());
 }
 
 void CurlHandle::RaiseSetOptionError(CURLcode e, CURLoption opt, long param) {

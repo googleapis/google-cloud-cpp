@@ -185,7 +185,7 @@ StatusOr<int> CurlDownloadRequest::PerformWork() {
            << ", msg.msg=[" << msg->msg << "]"
            << ", result=[" << msg->data.result
            << "]=" << curl_easy_strerror(msg->data.result);
-        return Status(StatusCode::UNKNOWN, std::move(os).str());
+        return Status(StatusCode::kUnknown, std::move(os).str());
       }
       GCP_LOG(DEBUG) << __func__ << "(): msg.msg=[" << msg->msg << "], "
                      << " result=[" << msg->data.result
@@ -229,7 +229,7 @@ Status CurlDownloadRequest::AsStatus(CURLMcode result, char const *where) {
   std::ostringstream os;
   os << where << "(): unexpected error code in curl_multi_*, [" << result
      << "]=" << curl_multi_strerror(result);
-  return Status(StatusCode::UNKNOWN, std::move(os).str());
+  return Status(StatusCode::kUnknown, std::move(os).str());
 }
 
 }  // namespace internal

@@ -23,7 +23,7 @@ inline namespace STORAGE_CLIENT_NS {
 StatusOr<ObjectAccessControl> ObjectAccessControl::ParseFromJson(
     internal::nl::json const& json) {
   if (not json.is_object()) {
-    return Status(StatusCode::INVALID_ARGUMENT, __func__);
+    return Status(StatusCode::kInvalidArgument, __func__);
   }
   ObjectAccessControl result{};
   auto status = AccessControlCommon::ParseFromJson(result, json);
