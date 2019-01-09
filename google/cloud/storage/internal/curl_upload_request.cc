@@ -184,7 +184,7 @@ StatusOr<int> CurlUploadRequest::PerformWork() {
            << ", msg.msg=[" << msg->msg << "]"
            << ", result=[" << msg->data.result
            << "]=" << curl_easy_strerror(msg->data.result);
-        return Status(StatusCode::UNKNOWN, std::move(os).str());
+        return Status(StatusCode::kUnknown, std::move(os).str());
       }
       GCP_LOG(DEBUG) << __func__ << "(): msg.msg=[" << msg->msg << "], "
                      << " result=[" << msg->data.result
@@ -227,7 +227,7 @@ Status CurlUploadRequest::AsStatus(CURLMcode result, char const* where) {
   std::ostringstream os;
   os << where << "(): unexpected error code in curl_multi_perform, [" << result
      << "]=" << curl_multi_strerror(result);
-  return Status(StatusCode::UNKNOWN, std::move(os).str());
+  return Status(StatusCode::kUnknown, std::move(os).str());
 }
 
 Status CurlUploadRequest::ValidateOpen(char const* where) {
@@ -236,7 +236,7 @@ Status CurlUploadRequest::ValidateOpen(char const* where) {
   }
   std::string msg = "Attempting to use closed CurlUploadRequest in ";
   msg += where;
-  return Status(StatusCode::FAILED_PRECONDITION, std::move(msg));
+  return Status(StatusCode::kFailedPrecondition, std::move(msg));
 }
 
 }  // namespace internal

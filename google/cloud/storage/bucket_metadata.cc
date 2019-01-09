@@ -115,7 +115,7 @@ std::ostream& operator<<(std::ostream& os, BucketRetentionPolicy const& rhs) {
 StatusOr<BucketMetadata> BucketMetadata::ParseFromJson(
     internal::nl::json const& json) {
   if (not json.is_object()) {
-    return Status(StatusCode::INVALID_ARGUMENT, __func__);
+    return Status(StatusCode::kInvalidArgument, __func__);
   }
   BucketMetadata result{};
   auto status = CommonMetadata<BucketMetadata>::ParseFromJson(result, json);

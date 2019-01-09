@@ -32,7 +32,7 @@ StatusOr<ListBucketsResponse> ListBucketsResponse::FromHttpResponse(
   auto json =
       storage::internal::nl::json::parse(response.payload, nullptr, false);
   if (not json.is_object()) {
-    return Status(StatusCode::INVALID_ARGUMENT, __func__);
+    return Status(StatusCode::kInvalidArgument, __func__);
   }
 
   ListBucketsResponse result;
@@ -230,7 +230,7 @@ std::ostream& operator<<(std::ostream& os, GetBucketIamPolicyRequest const& r) {
 StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
   auto json = nl::json::parse(payload, nullptr, false);
   if (not json.is_object()) {
-    return Status(StatusCode::INVALID_ARGUMENT, __func__);
+    return Status(StatusCode::kInvalidArgument, __func__);
   }
   IamPolicy policy;
   policy.version = 0;
@@ -314,7 +314,7 @@ TestBucketIamPermissionsResponse::FromHttpResponse(
   TestBucketIamPermissionsResponse result;
   auto json = nl::json::parse(response.payload, nullptr, false);
   if (not json.is_object()) {
-    return Status(StatusCode::INVALID_ARGUMENT, __func__);
+    return Status(StatusCode::kInvalidArgument, __func__);
   }
   for (auto const& kv : json["permissions"].items()) {
     result.permissions.emplace_back(kv.value().get<std::string>());

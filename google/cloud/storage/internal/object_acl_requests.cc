@@ -33,7 +33,7 @@ StatusOr<ListObjectAclResponse> ListObjectAclResponse::FromHttpResponse(
     HttpResponse&& response) {
   auto json = nl::json::parse(response.payload, nullptr, false);
   if (not json.is_object()) {
-    return Status(StatusCode::INVALID_ARGUMENT, __func__);
+    return Status(StatusCode::kInvalidArgument, __func__);
   }
   ListObjectAclResponse result;
   for (auto const& kv : json["items"].items()) {

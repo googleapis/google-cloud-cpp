@@ -22,27 +22,34 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-/// Well-known status codes with `grpc::StatusCode`-compatible values.
-///    https://grpc.io/grpc/cpp/classgrpc_1_1_status.html
+/**
+ * Well-known status codes with `grpc::StatusCode`-compatible values.
+ *
+ * The semantics of these values are documented in:
+ *     https://grpc.io/grpc/cpp/classgrpc_1_1_status.html
+ *
+ */
 enum StatusCode {
-  OK = 0,
-  CANCELLED = 1,
-  UNKNOWN = 2,
-  INVALID_ARGUMENT = 3,
-  DEADLINE_EXCEEDED = 4,
-  NOT_FOUND = 5,
-  ALREADY_EXISTS = 6,
-  PERMISSION_DENIED = 7,
-  UNAUTHENTICATED = 16,
-  RESOURCE_EXHAUSTED = 8,
-  FAILED_PRECONDITION = 9,
-  ABORTED = 10,
-  OUT_OF_RANGE = 11,
-  UNIMPLEMENTED = 12,
-  INTERNAL = 13,
-  UNAVAILABLE = 14,
-  DATA_LOSS = 15,
-  DO_NOT_USE = -1
+  /// Not an error; returned on success.
+  kOk = 0,
+
+  kCancelled = 1,
+  kUnknown = 2,
+  kInvalidArgument = 3,
+  kDeadlineExceeded = 4,
+  kNotFound = 5,
+  kAlreadExists = 6,
+  kPermissionDenied = 7,
+  kUnauthenticated = 16,
+  kResourceExhausted = 8,
+  kFailedPrecondition = 9,
+  kAborted = 10,
+  kOutOfRange = 11,
+  kUnimplemented = 12,
+  kInternal = 13,
+  kUnavailable = 14,
+  kDataLoss = 15,
+  kDoNotUse = -1
 };
 
 /**

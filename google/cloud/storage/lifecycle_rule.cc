@@ -94,7 +94,7 @@ std::ostream& operator<<(std::ostream& os, LifecycleRuleCondition const& rhs) {
 
 StatusOr<LifecycleRule> LifecycleRule::ParseFromJson(internal::nl::json const& json) {
   if (not json.is_object()) {
-    return Status(StatusCode::INVALID_ARGUMENT, __func__);
+    return Status(StatusCode::kInvalidArgument, __func__);
   }
   LifecycleRule result;
   if (json.count("action") != 0) {

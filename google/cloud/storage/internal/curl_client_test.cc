@@ -69,7 +69,7 @@ class CurlClientTest : public ::testing::Test,
       client_ =
           CurlClient::Create(ClientOptions(oauth2::CreateAnonymousCredentials())
                                  .set_endpoint("http://localhost:0"));
-      expected_status_code_ = StatusCode::UNKNOWN;
+      expected_status_code_ = StatusCode::kUnknown;
       expected_status_substr_ = "CURL error";
     } else {
       FAIL() << "Invalid test parameter value: " << error_type

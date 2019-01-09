@@ -59,7 +59,7 @@ CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
     msg += hash_validator_result_.computed;
     msg += ", received=";
     msg += hash_validator_result_.received;
-    status_ = Status(StatusCode::DATA_LOSS, std::move(msg));
+    status_ = Status(StatusCode::kDataLoss, std::move(msg));
     return traits_type::eof();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   };
@@ -206,7 +206,7 @@ Status CurlWriteStreambuf::Validate(char const* where) const {
   }
   std::string msg = "Attempting to use closed CurlStream in ";
   msg += where;
-  return Status(StatusCode::FAILED_PRECONDITION, std::move(msg));
+  return Status(StatusCode::kFailedPrecondition, std::move(msg));
 }
 
 Status CurlWriteStreambuf::SwapBuffers() {

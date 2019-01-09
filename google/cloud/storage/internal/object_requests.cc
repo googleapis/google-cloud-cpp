@@ -35,7 +35,7 @@ StatusOr<ListObjectsResponse> ListObjectsResponse::FromHttpResponse(
   auto json =
       storage::internal::nl::json::parse(response.payload, nullptr, false);
   if (not json.is_object()) {
-    return Status(StatusCode::INVALID_ARGUMENT, __func__);
+    return Status(StatusCode::kInvalidArgument, __func__);
   }
 
   ListObjectsResponse result;
@@ -316,7 +316,7 @@ StatusOr<RewriteObjectResponse> RewriteObjectResponse::FromHttpResponse(
     HttpResponse const& response) {
   nl::json object = nl::json::parse(response.payload, nullptr, false);
   if (not object.is_object()) {
-    return Status(StatusCode::INVALID_ARGUMENT, __func__);
+    return Status(StatusCode::kInvalidArgument, __func__);
   }
 
   RewriteObjectResponse result;

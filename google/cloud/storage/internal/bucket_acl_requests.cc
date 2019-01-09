@@ -32,7 +32,7 @@ StatusOr<ListBucketAclResponse> ListBucketAclResponse::FromHttpResponse(
   ListBucketAclResponse result;
   auto json = nl::json::parse(response.payload, nullptr, false);
   if (not json.is_object()) {
-    return Status(StatusCode::INVALID_ARGUMENT, __func__);
+    return Status(StatusCode::kInvalidArgument, __func__);
   }
   for (auto const& kv : json["items"].items()) {
     auto parsed = BucketAccessControl::ParseFromJson(kv.value());

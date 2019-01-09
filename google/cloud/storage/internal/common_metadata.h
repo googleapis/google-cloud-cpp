@@ -76,7 +76,7 @@ class CommonMetadata {
   static Status ParseFromJson(CommonMetadata<Derived>& result,
                               internal::nl::json const& json) {
     if (not json.is_object()) {
-      return Status(StatusCode::INVALID_ARGUMENT, __func__);
+      return Status(StatusCode::kInvalidArgument, __func__);
     }
     result.etag_ = json.value("etag", "");
     result.id_ = json.value("id", "");

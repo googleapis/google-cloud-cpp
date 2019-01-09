@@ -75,7 +75,7 @@ ListObjectsReader::iterator ListObjectsReader::begin() {
 
 ListObjectsIterator ListObjectsReader::GetNext() {
   static Status const past_the_end_error(
-      StatusCode::FAILED_PRECONDITION,
+      StatusCode::kFailedPrecondition,
       "Cannot iterating past the end of ListObjectReader");
   if (current_objects_.end() == current_) {
     if (on_last_page_) {
