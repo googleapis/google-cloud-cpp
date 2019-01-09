@@ -421,36 +421,46 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
       << "> in its ACL.  This is unexpected because the bucket was just"
       << " created with a predefine ACL which should preclude this result.";
 
-  ObjectAccessControl result =
+  StatusOr<ObjectAccessControl> result =
       client.CreateDefaultObjectAcl(bucket_name, entity_name, "OWNER");
-  EXPECT_EQ("OWNER", result.role());
+  ASSERT_TRUE(result.ok()) << "status=" << result.status();
+  EXPECT_EQ("OWNER", result->role());
+
   auto current_acl = client.ListDefaultObjectAcl(bucket_name);
-  EXPECT_FALSE(current_acl.empty());
+  ASSERT_TRUE(current_acl.ok()) << "status=" << current_acl.status();
+  EXPECT_FALSE(current_acl->empty());
   // Search using the entity name returned by the request, because we use
   // 'project-editors-<project_id>' this different than the original entity
   // name, the server "translates" the project id to a project number.
-  EXPECT_EQ(1, name_counter(result.entity(), current_acl));
+  EXPECT_EQ(1, name_counter(result->entity(), *current_acl));
 
   auto get_result = client.GetDefaultObjectAcl(bucket_name, entity_name);
-  EXPECT_EQ(get_result, result);
+  ASSERT_TRUE(get_result.ok()) << "status=" << get_result.status();
+  EXPECT_EQ(*get_result, *result);
 
-  ObjectAccessControl new_acl = get_result;
+  ObjectAccessControl new_acl = *get_result;
   new_acl.set_role("READER");
   auto updated_result = client.UpdateDefaultObjectAcl(bucket_name, new_acl);
-  EXPECT_EQ(updated_result.role(), "READER");
-  get_result = client.GetDefaultObjectAcl(bucket_name, entity_name);
-  EXPECT_EQ(get_result, updated_result);
+  ASSERT_TRUE(updated_result.ok()) << "status=" << updated_result.status();
 
-  new_acl = get_result;
+  EXPECT_EQ(updated_result->role(), "READER");
+  get_result = client.GetDefaultObjectAcl(bucket_name, entity_name);
+  EXPECT_EQ(*get_result, *updated_result);
+
+  new_acl = *get_result;
   new_acl.set_role("OWNER");
   get_result =
-      client.PatchDefaultObjectAcl(bucket_name, entity_name, get_result,
-                                   new_acl, IfMatchEtag(get_result.etag()));
-  EXPECT_EQ(get_result.role(), new_acl.role());
+      client.PatchDefaultObjectAcl(bucket_name, entity_name, *get_result,
+                                   new_acl, IfMatchEtag(get_result->etag()));
+  ASSERT_TRUE(get_result.ok()) << "status=" << get_result.status();
+  EXPECT_EQ(get_result->role(), new_acl.role());
 
-  client.DeleteDefaultObjectAcl(bucket_name, entity_name);
+  auto delete_status = client.DeleteDefaultObjectAcl(bucket_name, entity_name);
+  EXPECT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
+
   current_acl = client.ListDefaultObjectAcl(bucket_name);
-  EXPECT_EQ(0, name_counter(result.entity(), current_acl));
+  ASSERT_TRUE(current_acl.ok()) << "status=" << current_acl.status();
+  EXPECT_EQ(0, name_counter(result->entity(), *current_acl));
 
   client.DeleteBucket(bucket_name);
 }
@@ -758,8 +768,8 @@ TEST_F(BucketIntegrationTest, ListDefaultAccessControlFailure) {
   std::string bucket_name = MakeRandomBucketName();
 
   // This operation should fail because the target bucket does not exist.
-  TestPermanentFailure(
-      [&client, bucket_name] { client.ListDefaultObjectAcl(bucket_name); });
+  auto status = client.ListDefaultObjectAcl(bucket_name).status();
+  EXPECT_FALSE(status.ok());
 }
 
 TEST_F(BucketIntegrationTest, CreateDefaultAccessControlFailure) {
@@ -768,9 +778,10 @@ TEST_F(BucketIntegrationTest, CreateDefaultAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  TestPermanentFailure([&client, bucket_name, entity_name] {
-    client.CreateDefaultObjectAcl(bucket_name, entity_name, "READER");
-  });
+  auto status =
+      client.CreateDefaultObjectAcl(bucket_name, entity_name, "READER")
+          .status();
+  EXPECT_FALSE(status.ok());
 }
 
 TEST_F(BucketIntegrationTest, GetDefaultAccessControlFailure) {
@@ -779,9 +790,8 @@ TEST_F(BucketIntegrationTest, GetDefaultAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  TestPermanentFailure([&client, bucket_name, entity_name] {
-    client.GetDefaultObjectAcl(bucket_name, entity_name);
-  });
+  auto status = client.GetDefaultObjectAcl(bucket_name, entity_name).status();
+  EXPECT_FALSE(status.ok());
 }
 
 TEST_F(BucketIntegrationTest, UpdateDefaultAccessControlFailure) {
@@ -790,11 +800,13 @@ TEST_F(BucketIntegrationTest, UpdateDefaultAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  TestPermanentFailure([&client, bucket_name, entity_name] {
-    client.UpdateDefaultObjectAcl(
-        bucket_name,
-        ObjectAccessControl().set_entity(entity_name).set_role("READER"));
-  });
+  auto status =
+      client
+          .UpdateDefaultObjectAcl(
+              bucket_name,
+              ObjectAccessControl().set_entity(entity_name).set_role("READER"))
+          .status();
+  EXPECT_FALSE(status.ok());
 }
 
 TEST_F(BucketIntegrationTest, PatchDefaultAccessControlFailure) {
@@ -803,11 +815,13 @@ TEST_F(BucketIntegrationTest, PatchDefaultAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  TestPermanentFailure([&client, bucket_name, entity_name] {
-    client.PatchDefaultObjectAcl(
-        bucket_name, entity_name, ObjectAccessControl(),
-        ObjectAccessControl().set_entity(entity_name).set_role("READER"));
-  });
+  auto status =
+      client
+          .PatchDefaultObjectAcl(
+              bucket_name, entity_name, ObjectAccessControl(),
+              ObjectAccessControl().set_entity(entity_name).set_role("READER"))
+          .status();
+  EXPECT_FALSE(status.ok());
 }
 
 TEST_F(BucketIntegrationTest, DeleteDefaultAccessControlFailure) {
@@ -816,9 +830,9 @@ TEST_F(BucketIntegrationTest, DeleteDefaultAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  TestPermanentFailure([&client, bucket_name, entity_name] {
-    client.DeleteDefaultObjectAcl(bucket_name, entity_name);
-  });
+  auto status =
+      client.DeleteDefaultObjectAcl(bucket_name, entity_name).status();
+  EXPECT_FALSE(status.ok());
 }
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS

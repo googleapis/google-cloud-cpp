@@ -1857,9 +1857,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -1870,11 +1867,15 @@ class Client {
    * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
    */
   template <typename... Options>
-  std::vector<ObjectAccessControl> ListDefaultObjectAcl(
+  StatusOr<std::vector<ObjectAccessControl>> ListDefaultObjectAcl(
       std::string const& bucket_name, Options&&... options) {
     internal::ListDefaultObjectAclRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->ListDefaultObjectAcl(request).value().items;
+    auto response = raw_client_->ListDefaultObjectAcl(request);
+    if (not response.ok()) {
+      return std::move(response).status();
+    }
+    return std::move(response.value().items);
   }
 
   /**
@@ -1889,9 +1890,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions. There
    * are no pre-conditions for this operation that can make it idempotent.
@@ -1903,13 +1901,12 @@ class Client {
    * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
    */
   template <typename... Options>
-  ObjectAccessControl CreateDefaultObjectAcl(std::string const& bucket_name,
-                                             std::string const& entity,
-                                             std::string const& role,
-                                             Options&&... options) {
+  StatusOr<ObjectAccessControl> CreateDefaultObjectAcl(
+      std::string const& bucket_name, std::string const& entity,
+      std::string const& role, Options&&... options) {
     internal::CreateDefaultObjectAclRequest request(bucket_name, entity, role);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateDefaultObjectAcl(request).value();
+    return raw_client_->CreateDefaultObjectAcl(request);
   }
 
   /**
@@ -1923,9 +1920,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions. There
    * are no pre-conditions for this operation that can make it idempotent.
@@ -1937,11 +1931,12 @@ class Client {
    * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
    */
   template <typename... Options>
-  void DeleteDefaultObjectAcl(std::string const& bucket_name,
-                              std::string const& entity, Options&&... options) {
+  StatusOr<void> DeleteDefaultObjectAcl(std::string const& bucket_name,
+                                        std::string const& entity,
+                                        Options&&... options) {
     internal::DeleteDefaultObjectAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->DeleteDefaultObjectAcl(request).value();
+    return raw_client_->DeleteDefaultObjectAcl(request).status();
   }
 
   /**
@@ -1955,9 +1950,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -1968,12 +1960,12 @@ class Client {
    * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
    */
   template <typename... Options>
-  ObjectAccessControl GetDefaultObjectAcl(std::string const& bucket_name,
-                                          std::string const& entity,
-                                          Options&&... options) {
+  StatusOr<ObjectAccessControl> GetDefaultObjectAcl(
+      std::string const& bucket_name, std::string const& entity,
+      Options&&... options) {
     internal::GetDefaultObjectAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetDefaultObjectAcl(request).value();
+    return raw_client_->GetDefaultObjectAcl(request);
   }
 
   /**
@@ -1988,9 +1980,6 @@ class Client {
    * @param options a list of optional query parameters and/or request
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions. There
    * are no pre-conditions for this operation that can make it idempotent.
@@ -2002,13 +1991,13 @@ class Client {
    * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
    */
   template <typename... Options>
-  ObjectAccessControl UpdateDefaultObjectAcl(std::string const& bucket_name,
-                                             ObjectAccessControl const& acl,
-                                             Options&&... options) {
+  StatusOr<ObjectAccessControl> UpdateDefaultObjectAcl(
+      std::string const& bucket_name, ObjectAccessControl const& acl,
+      Options&&... options) {
     internal::UpdateDefaultObjectAclRequest request(bucket_name, acl.entity(),
                                                     acl.role());
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateDefaultObjectAcl(request).value();
+    return raw_client_->UpdateDefaultObjectAcl(request);
   }
 
   /**
@@ -2035,9 +2024,6 @@ class Client {
    *     as the standard parameters, such as `IfMatchEtag`, and
    *     `IfNoneMatchEtag`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions. There
    * are no pre-conditions for this operation that can make it idempotent.
@@ -2049,14 +2035,14 @@ class Client {
    * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
    */
   template <typename... Options>
-  ObjectAccessControl PatchDefaultObjectAcl(
+  StatusOr<ObjectAccessControl> PatchDefaultObjectAcl(
       std::string const& bucket_name, std::string const& entity,
       ObjectAccessControl const& original_acl,
       ObjectAccessControl const& new_acl, Options&&... options) {
     internal::PatchDefaultObjectAclRequest request(bucket_name, entity,
                                                    original_acl, new_acl);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchDefaultObjectAcl(request).value();
+    return raw_client_->PatchDefaultObjectAcl(request);
   }
 
   /**
@@ -2081,9 +2067,6 @@ class Client {
    *     as the standard parameters, such as `IfMatchEtag`, and
    *     `IfNoneMatchEtag`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions. There
    * are no pre-conditions for this operation that can make it idempotent.
@@ -2096,13 +2079,13 @@ class Client {
    * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
    */
   template <typename... Options>
-  ObjectAccessControl PatchDefaultObjectAcl(
+  StatusOr<ObjectAccessControl> PatchDefaultObjectAcl(
       std::string const& bucket_name, std::string const& entity,
       ObjectAccessControlPatchBuilder const& builder, Options&&... options) {
     internal::PatchDefaultObjectAclRequest request(bucket_name, entity,
                                                    builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchDefaultObjectAcl(request).value();
+    return raw_client_->PatchDefaultObjectAcl(request);
   }
   //@}
 

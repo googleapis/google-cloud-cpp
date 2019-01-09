@@ -81,22 +81,27 @@ TEST_F(DefaultObjectAccessControlsTest, ListDefaultObjectAcl) {
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
-  std::vector<ObjectAccessControl> actual =
+  StatusOr<std::vector<ObjectAccessControl>> actual =
       client.ListDefaultObjectAcl("test-bucket");
-  EXPECT_EQ(expected, actual);
+  EXPECT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(DefaultObjectAccessControlsTest, ListDefaultObjectAclTooManyFailures) {
-  testing::TooManyFailuresTest<internal::ListDefaultObjectAclResponse>(
+  testing::TooManyFailuresStatusTest<internal::ListDefaultObjectAclResponse>(
       mock, EXPECT_CALL(*mock, ListDefaultObjectAcl(_)),
-      [](Client& client) { client.ListDefaultObjectAcl("test-bucket-name"); },
+      [](Client& client) {
+        return client.ListDefaultObjectAcl("test-bucket-name").status();
+      },
       "ListDefaultObjectAcl");
 }
 
 TEST_F(DefaultObjectAccessControlsTest, ListDefaultObjectAclPermanentFailure) {
-  testing::PermanentFailureTest<internal::ListDefaultObjectAclResponse>(
+  testing::PermanentFailureStatusTest<internal::ListDefaultObjectAclResponse>(
       *client, EXPECT_CALL(*mock, ListDefaultObjectAcl(_)),
-      [](Client& client) { client.ListDefaultObjectAcl("test-bucket-name"); },
+      [](Client& client) {
+        return client.ListDefaultObjectAcl("test-bucket-name").status();
+      },
       "ListDefaultObjectAcl");
 }
 
@@ -120,36 +125,43 @@ TEST_F(DefaultObjectAccessControlsTest, CreateDefaultObjectAcl) {
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
-  ObjectAccessControl actual = client.CreateDefaultObjectAcl(
+  StatusOr<ObjectAccessControl> actual = client.CreateDefaultObjectAcl(
       "test-bucket", "user-test-user-1", ObjectAccessControl::ROLE_READER());
+  EXPECT_TRUE(actual.ok()) << "status=" << actual.status();
   // Compare just a few fields because the values for most of the fields are
   // hard to predict when testing against the production environment.
-  EXPECT_EQ(expected.bucket(), actual.bucket());
-  EXPECT_EQ(expected.entity(), actual.entity());
-  EXPECT_EQ(expected.role(), actual.role());
+  EXPECT_EQ(expected.bucket(), actual->bucket());
+  EXPECT_EQ(expected.entity(), actual->entity());
+  EXPECT_EQ(expected.role(), actual->role());
 }
 
 TEST_F(DefaultObjectAccessControlsTest, CreateDefaultObjectAclTooManyFailures) {
-  testing::TooManyFailuresTest<ObjectAccessControl>(
+  testing::TooManyFailuresStatusTest<ObjectAccessControl>(
       mock, EXPECT_CALL(*mock, CreateDefaultObjectAcl(_)),
       [](Client& client) {
-        client.CreateDefaultObjectAcl("test-bucket-name", "user-test-user-1",
-                                      "READER");
+        return client
+            .CreateDefaultObjectAcl("test-bucket-name", "user-test-user-1",
+                                    "READER")
+            .status();
       },
       [](Client& client) {
-        client.CreateDefaultObjectAcl("test-bucket-name", "user-test-user-1",
-                                      "READER", IfMatchEtag("ABC="));
+        return client
+            .CreateDefaultObjectAcl("test-bucket-name", "user-test-user-1",
+                                    "READER", IfMatchEtag("ABC="))
+            .status();
       },
       "CreateDefaultObjectAcl");
 }
 
 TEST_F(DefaultObjectAccessControlsTest,
        CreateDefaultObjectAclPermanentFailure) {
-  testing::PermanentFailureTest<ObjectAccessControl>(
+  testing::PermanentFailureStatusTest<ObjectAccessControl>(
       *client, EXPECT_CALL(*mock, CreateDefaultObjectAcl(_)),
       [](Client& client) {
-        client.CreateDefaultObjectAcl("test-bucket-name", "user-test-user",
-                                      "READER");
+        return client
+            .CreateDefaultObjectAcl("test-bucket-name", "user-test-user",
+                                    "READER")
+            .status();
       },
       "CreateDefaultObjectAcl");
 }
@@ -165,29 +177,35 @@ TEST_F(DefaultObjectAccessControlsTest, DeleteDefaultObjectAcl) {
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
-  client.DeleteDefaultObjectAcl("test-bucket", "user-test-user");
-  SUCCEED();
+  auto actual = client.DeleteDefaultObjectAcl("test-bucket", "user-test-user");
+  EXPECT_TRUE(actual.ok()) << "status=" << actual.status();
 }
 
 TEST_F(DefaultObjectAccessControlsTest, DeleteDefaultObjectAclTooManyFailures) {
-  testing::TooManyFailuresTest<internal::EmptyResponse>(
+  testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
       mock, EXPECT_CALL(*mock, DeleteDefaultObjectAcl(_)),
       [](Client& client) {
-        client.DeleteDefaultObjectAcl("test-bucket-name", "user-test-user-1");
+        return client
+            .DeleteDefaultObjectAcl("test-bucket-name", "user-test-user-1")
+            .status();
       },
       [](Client& client) {
-        client.DeleteDefaultObjectAcl("test-bucket-name", "user-test-user-1",
-                                      IfMatchEtag("ABC="));
+        return client
+            .DeleteDefaultObjectAcl("test-bucket-name", "user-test-user-1",
+                                    IfMatchEtag("ABC="))
+            .status();
       },
       "DeleteDefaultObjectAcl");
 }
 
 TEST_F(DefaultObjectAccessControlsTest,
        DeleteDefaultObjectAclPermanentFailure) {
-  testing::PermanentFailureTest<internal::EmptyResponse>(
+  testing::PermanentFailureStatusTest<internal::EmptyResponse>(
       *client, EXPECT_CALL(*mock, DeleteDefaultObjectAcl(_)),
       [](Client& client) {
-        client.DeleteDefaultObjectAcl("test-bucket-name", "user-test-user-1");
+        return client
+            .DeleteDefaultObjectAcl("test-bucket-name", "user-test-user-1")
+            .status();
       },
       "DeleteDefaultObjectAcl");
 }
@@ -211,25 +229,30 @@ TEST_F(DefaultObjectAccessControlsTest, GetDefaultObjectAcl) {
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
-  ObjectAccessControl actual =
+  StatusOr<ObjectAccessControl> actual =
       client.GetDefaultObjectAcl("test-bucket", "user-test-user-1");
-  EXPECT_EQ(expected, actual);
+  EXPECT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(DefaultObjectAccessControlsTest, GetDefaultObjectAclTooManyFailures) {
-  testing::TooManyFailuresTest<ObjectAccessControl>(
+  testing::TooManyFailuresStatusTest<ObjectAccessControl>(
       mock, EXPECT_CALL(*mock, GetDefaultObjectAcl(_)),
       [](Client& client) {
-        client.GetDefaultObjectAcl("test-bucket-name", "user-test-user-1");
+        return client
+            .GetDefaultObjectAcl("test-bucket-name", "user-test-user-1")
+            .status();
       },
       "GetDefaultObjectAcl");
 }
 
 TEST_F(DefaultObjectAccessControlsTest, GetDefaultObjectAclPermanentFailure) {
-  testing::PermanentFailureTest<ObjectAccessControl>(
+  testing::PermanentFailureStatusTest<ObjectAccessControl>(
       *client, EXPECT_CALL(*mock, GetDefaultObjectAcl(_)),
       [](Client& client) {
-        client.GetDefaultObjectAcl("test-bucket-name", "user-test-user-1");
+        return client
+            .GetDefaultObjectAcl("test-bucket-name", "user-test-user-1")
+            .status();
       },
       "GetDefaultObjectAcl");
 }
@@ -254,38 +277,43 @@ TEST_F(DefaultObjectAccessControlsTest, UpdateDefaultObjectAcl) {
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
-  ObjectAccessControl actual = client.UpdateDefaultObjectAcl(
+  StatusOr<ObjectAccessControl> actual = client.UpdateDefaultObjectAcl(
       "test-bucket", ObjectAccessControl()
                          .set_entity("user-test-user-1")
                          .set_role(ObjectAccessControl::ROLE_READER()));
+  EXPECT_TRUE(actual.ok()) << "status=" << actual.status();
   // Compare just a few fields because the values for most of the fields are
   // hard to predict when testing against the production environment.
-  EXPECT_EQ(expected.bucket(), actual.bucket());
-  EXPECT_EQ(expected.entity(), actual.entity());
-  EXPECT_EQ(expected.role(), actual.role());
+  EXPECT_EQ(expected.bucket(), actual->bucket());
+  EXPECT_EQ(expected.entity(), actual->entity());
+  EXPECT_EQ(expected.role(), actual->role());
 }
 
 TEST_F(DefaultObjectAccessControlsTest, UpdateDefaultObjectAclTooManyFailures) {
-  testing::TooManyFailuresTest<ObjectAccessControl>(
+  testing::TooManyFailuresStatusTest<ObjectAccessControl>(
       mock, EXPECT_CALL(*mock, UpdateDefaultObjectAcl(_)),
       [](Client& client) {
-        client.UpdateDefaultObjectAcl("test-bucket-name",
-                                      ObjectAccessControl());
+        return client
+            .UpdateDefaultObjectAcl("test-bucket-name", ObjectAccessControl())
+            .status();
       },
       [](Client& client) {
-        client.UpdateDefaultObjectAcl("test-bucket-name", ObjectAccessControl(),
-                                      IfMatchEtag("ABC="));
+        return client
+            .UpdateDefaultObjectAcl("test-bucket-name", ObjectAccessControl(),
+                                    IfMatchEtag("ABC="))
+            .status();
       },
       "UpdateDefaultObjectAcl");
 }
 
 TEST_F(DefaultObjectAccessControlsTest,
        UpdateDefaultObjectAclPermanentFailure) {
-  testing::PermanentFailureTest<ObjectAccessControl>(
+  testing::PermanentFailureStatusTest<ObjectAccessControl>(
       *client, EXPECT_CALL(*mock, UpdateDefaultObjectAcl(_)),
       [](Client& client) {
-        client.UpdateDefaultObjectAcl("test-bucket-name",
-                                      ObjectAccessControl());
+        return client
+            .UpdateDefaultObjectAcl("test-bucket-name", ObjectAccessControl())
+            .status();
       },
       "UpdateDefaultObjectAcl");
 }
@@ -315,30 +343,37 @@ TEST_F(DefaultObjectAccessControlsTest, PatchDefaultObjectAcl) {
   auto actual = client.PatchDefaultObjectAcl(
       "test-bucket", "user-test-user-1",
       ObjectAccessControlPatchBuilder().set_role("OWNER"));
-  EXPECT_EQ(result, actual);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ(result, *actual);
 }
 
 TEST_F(DefaultObjectAccessControlsTest, PatchDefaultObjectAclTooManyFailures) {
-  testing::TooManyFailuresTest<ObjectAccessControl>(
+  testing::TooManyFailuresStatusTest<ObjectAccessControl>(
       mock, EXPECT_CALL(*mock, PatchDefaultObjectAcl(_)),
       [](Client& client) {
-        client.PatchDefaultObjectAcl("test-bucket-name", "user-test-user-1",
-                                     ObjectAccessControlPatchBuilder());
+        return client
+            .PatchDefaultObjectAcl("test-bucket-name", "user-test-user-1",
+                                   ObjectAccessControlPatchBuilder())
+            .status();
       },
       [](Client& client) {
-        client.PatchDefaultObjectAcl("test-bucket-name", "user-test-user-1",
-                                     ObjectAccessControlPatchBuilder(),
-                                     IfMatchEtag("ABC="));
+        return client
+            .PatchDefaultObjectAcl("test-bucket-name", "user-test-user-1",
+                                   ObjectAccessControlPatchBuilder(),
+                                   IfMatchEtag("ABC="))
+            .status();
       },
       "PatchDefaultObjectAcl");
 }
 
 TEST_F(DefaultObjectAccessControlsTest, PatchDefaultObjectAclPermanentFailure) {
-  testing::PermanentFailureTest<ObjectAccessControl>(
+  testing::PermanentFailureStatusTest<ObjectAccessControl>(
       *client, EXPECT_CALL(*mock, PatchDefaultObjectAcl(_)),
       [](Client& client) {
-        client.PatchDefaultObjectAcl("test-bucket-name", "user-test-user-1",
-                                     ObjectAccessControlPatchBuilder());
+        return client
+            .PatchDefaultObjectAcl("test-bucket-name", "user-test-user-1",
+                                   ObjectAccessControlPatchBuilder())
+            .status();
       },
       "PatchDefaultObjectAcl");
 }

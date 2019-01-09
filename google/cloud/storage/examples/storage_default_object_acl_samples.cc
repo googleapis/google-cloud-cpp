@@ -52,10 +52,17 @@ void ListDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   //! [list default object acl] [START storage_print_bucket_default_acl]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
+    StatusOr<std::vector<gcs::ObjectAccessControl>> items =
+        client.ListDefaultObjectAcl(bucket_name);
+    if (not items.ok()) {
+      std::cerr << "Error getting default object ACL entries for bucket "
+                << bucket_name << ", status=" << items.status() << std::endl;
+      return;
+    }
     std::cout << "ACLs for bucket=" << bucket_name << std::endl;
-    for (gcs::ObjectAccessControl const& acl :
-         client.ListDefaultObjectAcl(bucket_name)) {
+    for (gcs::ObjectAccessControl const& acl : *items) {
       std::cout << acl.role() << ":" << acl.entity() << std::endl;
     }
   }
@@ -73,14 +80,21 @@ void CreateDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
   auto role = ConsumeArg(argc, argv);
   //! [create default object acl] [START storage_add_default_owner]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string entity,
      std::string role) {
-    gcs::ObjectAccessControl result =
+    StatusOr<gcs::ObjectAccessControl> result =
         client.CreateDefaultObjectAcl(bucket_name, entity, role);
-    std::cout << "Role " << result.role() << " will be granted default to "
-              << result.entity() << " on any new object created on bucket "
-              << result.bucket() << "\n"
-              << "Full attributes: " << result << std::endl;
+    if (not result.ok()) {
+      std::cerr << "Failure getting default object ACL for entity " << entity
+                << " in bucket " << bucket_name
+                << ", status=" << result.status() << std::endl;
+      return;
+    }
+    std::cout << "Role " << result->role() << " will be granted default to "
+              << result->entity() << " on any new object created on bucket "
+              << result->bucket() << "\n"
+              << "Full attributes: " << *result << std::endl;
   }
   //! [create default object acl] [END storage_add_default_owner]
   (std::move(client), bucket_name, entity, role);
@@ -95,8 +109,15 @@ void DeleteDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
   auto entity = ConsumeArg(argc, argv);
   //! [delete default object acl] [START storage_remove_bucket_default_owner]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string entity) {
-    client.DeleteDefaultObjectAcl(bucket_name, entity);
+    StatusOr<void> status = client.DeleteDefaultObjectAcl(bucket_name, entity);
+    if (not status.ok()) {
+      std::cerr << "Failure deleting default object ACL for entity " << entity
+                << " in bucket " << bucket_name
+                << ", status=" << status.status() << std::endl;
+      return;
+    }
     std::cout << "Deleted ACL entry for " << entity << " in bucket "
               << bucket_name << std::endl;
   }
@@ -113,11 +134,18 @@ void GetDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
   auto entity = ConsumeArg(argc, argv);
   //! [get default object acl]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string entity) {
-    gcs::ObjectAccessControl acl =
+    StatusOr<gcs::ObjectAccessControl> acl =
         client.GetDefaultObjectAcl(bucket_name, entity);
-    std::cout << "Default Object ACL entry for " << entity << " in bucket "
-              << bucket_name << " is " << acl << std::endl;
+    if (not acl.ok()) {
+      std::cerr << "Failure getting default object ACL for entity " << entity
+                << " in bucket " << bucket_name << ", status=" << acl.status()
+                << std::endl;
+      return;
+    }
+    std::cout << "Default Object ACL entry for " << acl->entity()
+              << " in bucket " << acl->bucket() << " is " << *acl << std::endl;
   }
   //! [get default object acl]
   (std::move(client), bucket_name, entity);
@@ -133,15 +161,29 @@ void UpdateDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
   auto role = ConsumeArg(argc, argv);
   //! [update default object acl]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string entity,
      std::string role) {
-    gcs::ObjectAccessControl current_acl =
+    StatusOr<gcs::ObjectAccessControl> current_acl =
         client.GetDefaultObjectAcl(bucket_name, entity);
-    current_acl.set_role(role);
-    gcs::ObjectAccessControl acl =
-        client.UpdateDefaultObjectAcl(bucket_name, current_acl);
-    std::cout << "Default Object ACL entry for " << entity << " in bucket "
-              << bucket_name << " is now " << acl << std::endl;
+    if (not current_acl.ok()) {
+      std::cerr << "Failure getting default object ACL for entity " << entity
+                << " in bucket " << bucket_name
+                << ", status=" << current_acl.status() << std::endl;
+      return;
+    }
+    current_acl->set_role(role);
+    StatusOr<gcs::ObjectAccessControl> acl =
+        client.UpdateDefaultObjectAcl(bucket_name, *current_acl);
+    if (not acl.ok()) {
+      std::cerr << "Failure updating default object ACL for entity " << entity
+                << " in bucket " << bucket_name << ", status=" << acl.status()
+                << std::endl;
+      return;
+    }
+    std::cout << "Default Object ACL entry for " << acl->entity()
+              << " in bucket " << acl->bucket() << " is now " << *acl
+              << std::endl;
   }
   //! [update default object acl]
   (std::move(client), bucket_name, entity, role);
@@ -157,16 +199,31 @@ void PatchDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
   auto role = ConsumeArg(argc, argv);
   //! [patch default object acl]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string entity,
      std::string role) {
-    gcs::ObjectAccessControl original_acl =
+    StatusOr<gcs::ObjectAccessControl> original_acl =
         client.GetDefaultObjectAcl(bucket_name, entity);
-    auto new_acl = original_acl;
+    if (not original_acl.ok()) {
+      std::cerr << "Failure getting default object ACL for entity " << entity
+                << " in bucket " << bucket_name
+                << ", status=" << original_acl.status() << std::endl;
+      return;
+    }
+    auto new_acl = *original_acl;
     new_acl.set_role(role);
-    gcs::ObjectAccessControl updated_acl = client.PatchDefaultObjectAcl(
-        bucket_name, entity, original_acl, new_acl);
-    std::cout << "Default Object ACL entry for " << entity << " in bucket "
-              << bucket_name << " is now " << updated_acl << std::endl;
+    StatusOr<gcs::ObjectAccessControl> patched_acl =
+        client.PatchDefaultObjectAcl(bucket_name, entity, *original_acl,
+                                     new_acl);
+    if (not patched_acl.ok()) {
+      std::cerr << "Failure patching default object ACL for entity " << entity
+                << " in bucket " << bucket_name
+                << ", status=" << patched_acl.status() << std::endl;
+      return;
+    }
+    std::cout << "Default Object ACL entry for " << patched_acl->entity()
+              << " in bucket " << patched_acl->bucket() << " is now "
+              << *patched_acl << std::endl;
   }
   //! [patch default object acl]
   (std::move(client), bucket_name, entity, role);
@@ -183,13 +240,21 @@ void PatchDefaultObjectAclNoRead(google::cloud::storage::Client client,
   auto role = ConsumeArg(argc, argv);
   //! [patch default object acl no-read]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string entity,
      std::string role) {
-    gcs::ObjectAccessControl acl = client.PatchDefaultObjectAcl(
+    StatusOr<gcs::ObjectAccessControl> acl = client.PatchDefaultObjectAcl(
         bucket_name, entity,
         gcs::ObjectAccessControlPatchBuilder().set_role(role));
-    std::cout << "Default Object ACL entry for " << entity << " in bucket "
-              << bucket_name << " is now " << acl << std::endl;
+    if (not acl.ok()) {
+      std::cerr << "Failure patching default object ACL for entity " << entity
+                << " in bucket " << bucket_name << ", status=" << acl.status()
+                << std::endl;
+      return;
+    }
+    std::cout << "Default Object ACL entry for " << acl->entity()
+              << " in bucket " << acl->bucket() << " is now " << *acl
+              << std::endl;
   }
   //! [patch default object acl no-read]
   (std::move(client), bucket_name, entity, role);
