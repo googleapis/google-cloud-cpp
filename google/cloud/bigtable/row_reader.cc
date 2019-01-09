@@ -292,11 +292,13 @@ void RowReader::Cancel() {
 RowReader::~RowReader() {
   // Make sure we don't leave open streams.
   Cancel();
-  GCP_LOG(ERROR)
-      << "Exceptions are disabled, RowReader has an error,"
-      << " and the error status was not retrieved by the application: {"
-      << "status_code=" << status_.error_code()
-      << "error_message=" << status_.error_message();
+  if (not raise_on_error_ and not error_retrieved_ and not status_.ok()) {
+    GCP_LOG(ERROR)
+        << "Exceptions are disabled, RowReader has an error,"
+        << " and the error status was not retrieved by the application: "
+        << "status_code=" << status_.error_code()
+        << ", error_message=" << status_.error_message();
+  }
 }
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
