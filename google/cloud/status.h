@@ -105,9 +105,8 @@ class Status {
 };
 
 inline std::ostream& operator<<(std::ostream& os, Status const& rhs) {
-  return os << rhs.error_message()
-            << StatusCodeToString(static_cast<StatusCode>(rhs.status_code()))
-            << " [" << rhs.status_code()
+  return os << rhs.error_message() << " ["
+            << static_cast<StatusCode>(rhs.status_code())
             << "], details=" << rhs.error_details();
 }
 

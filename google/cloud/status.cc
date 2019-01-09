@@ -63,7 +63,7 @@ std::string StatusCodeToString(StatusCode code) {
     case StatusCode::kDataLoss:
       return "DATA_LOSS";
     default:
-      return "";
+      return "UNEXPECTED_STATUS_CODE=" + std::to_string(code);
   }
 }
 
