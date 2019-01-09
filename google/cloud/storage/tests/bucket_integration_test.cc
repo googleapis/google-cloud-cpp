@@ -465,7 +465,9 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
       client.CreateBucketForProject(bucket_name, project_id, BucketMetadata());
 
   auto current_notifications = client.ListNotifications(bucket_name);
-  EXPECT_TRUE(current_notifications.empty())
+  ASSERT_TRUE(current_notifications.ok())
+      << "status=" << current_notifications.status();
+  EXPECT_TRUE(current_notifications->empty())
       << "Test aborted. Non-empty notification list returned from newly"
       << " created bucket <" << bucket_name
       << ">. This is unexpected because the bucket name is chosen at random.";
@@ -473,29 +475,37 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
   auto create = client.CreateNotification(
       bucket_name, BucketTestEnvironment::topic(), payload_format::JsonApiV1(),
       NotificationMetadata().append_event_type(event_type::ObjectFinalize()));
+  ASSERT_TRUE(create.ok()) << "status=" << create.status();
 
-  EXPECT_EQ(payload_format::JsonApiV1(), create.payload_format());
-  EXPECT_THAT(create.topic(), HasSubstr(BucketTestEnvironment::topic()));
+  EXPECT_EQ(payload_format::JsonApiV1(), create->payload_format());
+  EXPECT_THAT(create->topic(), HasSubstr(BucketTestEnvironment::topic()));
 
   current_notifications = client.ListNotifications(bucket_name);
-  auto count =
-      std::count_if(current_notifications.begin(), current_notifications.end(),
-                    [create](NotificationMetadata const& x) {
-                      return x.id() == create.id();
-                    });
-  EXPECT_EQ(1U, count) << create;
+  ASSERT_TRUE(current_notifications.ok())
+      << "status=" << current_notifications.status();
+  auto count = std::count_if(current_notifications->begin(),
+                             current_notifications->end(),
+                             [create](NotificationMetadata const& x) {
+                               return x.id() == create->id();
+                             });
+  EXPECT_EQ(1U, count) << "create=" << *create;
 
-  auto get = client.GetNotification(bucket_name, create.id());
-  EXPECT_EQ(create, get);
+  auto get = client.GetNotification(bucket_name, create->id());
+  ASSERT_TRUE(get.ok()) << "status=" << get.status();
+  EXPECT_EQ(*create, *get);
 
-  client.DeleteNotification(bucket_name, create.id());
+  auto delete_status = client.DeleteNotification(bucket_name, create->id());
+  ASSERT_TRUE(delete_status.ok()) << "status=" << get.status();
+
   current_notifications = client.ListNotifications(bucket_name);
-  count =
-      std::count_if(current_notifications.begin(), current_notifications.end(),
-                    [create](NotificationMetadata const& x) {
-                      return x.id() == create.id();
-                    });
-  EXPECT_EQ(0U, count) << create;
+  ASSERT_TRUE(current_notifications.ok())
+      << "status=" << current_notifications.status();
+  count = std::count_if(current_notifications->begin(),
+                        current_notifications->end(),
+                        [create](NotificationMetadata const& x) {
+                          return x.id() == create->id();
+                        });
+  EXPECT_EQ(0U, count) << "create=" << *create;
 
   client.DeleteBucket(bucket_name);
 }

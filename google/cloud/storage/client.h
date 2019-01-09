@@ -79,6 +79,14 @@ inline namespace STORAGE_CLIENT_NS {
  *     gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials()));
  * @endcode
  *
+ * @par Error Handling
+ * This class uses `StatusOr<T>` to report errors. When an operation fails to
+ * perform its work the returned `StatusOr<T>` contains the error details. If
+ * the `ok()` member function in the `StatusOr<T>` returns `true` then it
+ * contains the expected result. Please consult the `StatusOr<T>` documentation
+ * for more details. In addition, the @ref index "main page" contains examples
+ * using `StatusOr<T>` to handle errors.
+ *
  * @see https://cloud.google.com/storage/ for an overview of GCS.
  *
  * @see https://cloud.google.com/storage/docs/key-terms for an introduction of
@@ -2260,9 +2268,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -2270,24 +2275,15 @@ class Client {
    * @snippet storage_notification_samples.cc list notifications
    */
   template <typename... Options>
-  std::vector<NotificationMetadata> ListNotifications(
-      std::string const& bucket_name, Options&&... options) {
-    return ListNotifications(std::nothrow, bucket_name,
-                             std::forward<Options>(options)...)
-        .value();
-  }
-
-  /**
-   * This overload works exactly like `ListNotifications()` without a
-   * `nothrow_t` parameter, except that it returns a `Status` on error, and the
-   * normal return value on success.
-   */
-  template <typename... Options>
   StatusOr<std::vector<NotificationMetadata>> ListNotifications(
-      std::nothrow_t, std::string const& bucket_name, Options&&... options) {
+      std::string const& bucket_name, Options&&... options) {
     internal::ListNotificationsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->ListNotifications(request).value().items;
+    auto result = raw_client_->ListNotifications(request);
+    if (not result.ok()) {
+      return std::move(result).status();
+    }
+    return std::move(result).value().items;
   }
 
   /**
@@ -2310,9 +2306,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions. There
    * are no pre-conditions for this operation that can make it idempotent.
@@ -2327,27 +2320,10 @@ class Client {
    *     Cloud Pub/Sub service.
    */
   template <typename... Options>
-  NotificationMetadata CreateNotification(std::string const& bucket_name,
-                                          std::string const& topic_name,
-                                          std::string const& payload_format,
-                                          NotificationMetadata metadata,
-                                          Options&&... options) {
-    return CreateNotification(std::nothrow, bucket_name, topic_name,
-                              payload_format, std::move(metadata),
-                              std::forward<Options>(options)...)
-        .value();
-  }
-
-  /**
-   * This overload works exactly like `CreateNotifications()` without a
-   * `nothrow_t` parameter, except that it returns a `Status` on error, and the
-   * normal return value on success.
-   */
-  template <typename... Options>
   StatusOr<NotificationMetadata> CreateNotification(
-      std::nothrow_t, std::string const& bucket_name,
-      std::string const& topic_name, std::string const& payload_format,
-      NotificationMetadata metadata, Options&&... options) {
+      std::string const& bucket_name, std::string const& topic_name,
+      std::string const& payload_format, NotificationMetadata metadata,
+      Options&&... options) {
     metadata.set_topic(topic_name).set_payload_format(payload_format);
     internal::CreateNotificationRequest request(bucket_name, metadata);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2367,9 +2343,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -2383,12 +2356,12 @@ class Client {
    *     Cloud Pub/Sub service.
    */
   template <typename... Options>
-  NotificationMetadata GetNotification(std::string const& bucket_name,
-                                       std::string const& notification_id,
-                                       Options&&... options) {
+  StatusOr<NotificationMetadata> GetNotification(
+      std::string const& bucket_name, std::string const& notification_id,
+      Options&&... options) {
     internal::GetNotificationRequest request(bucket_name, notification_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetNotification(request).value();
+    return raw_client_->GetNotification(request);
   }
 
   /**
@@ -2403,9 +2376,6 @@ class Client {
    * @param notification_id the id of the notification config.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
-   *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * This operation is always idempotent because it only acts on a specific
@@ -2422,12 +2392,12 @@ class Client {
    *     Cloud Pub/Sub service.
    */
   template <typename... Options>
-  void DeleteNotification(std::string const& bucket_name,
-                          std::string const& notification_id,
-                          Options&&... options) {
+  StatusOr<void> DeleteNotification(std::string const& bucket_name,
+                                    std::string const& notification_id,
+                                    Options&&... options) {
     internal::DeleteNotificationRequest request(bucket_name, notification_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->DeleteNotification(request).value();
+    return std::move(raw_client_->DeleteNotification(request)).status();
   }
   //@}
 
