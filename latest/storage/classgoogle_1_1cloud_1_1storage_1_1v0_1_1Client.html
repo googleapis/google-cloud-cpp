@@ -360,30 +360,22 @@ When you apply a new ACL to an object, GCS adds <code>OWNER</code> permission to
 <tr><td colspan="2"><div class="groupText"><p>Cloud Pub/Sub Notifications sends information about changes to objects in your buckets to Cloud Pub/Sub, where the information is added to a Cloud Pub/Sub topic of your choice in the form of messages.</p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/pubsub-notifications">https://cloud.google.com/storage/docs/pubsub-notifications</a> for more information about Cloud Pub/Sub in the context of GCS. </dd></dl>
 </div></td></tr>
-<tr class="memitem:aa030befa65aa1cd12a7c6b3cfaac05be"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:aa030befa65aa1cd12a7c6b3cfaac05be"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aa030befa65aa1cd12a7c6b3cfaac05be">ListNotifications</a> (std::string const &amp;bucket_name, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:aa030befa65aa1cd12a7c6b3cfaac05be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the list of Notifications for a Bucket.  <a href="#aa030befa65aa1cd12a7c6b3cfaac05be">More...</a><br /></td></tr>
-<tr class="separator:aa030befa65aa1cd12a7c6b3cfaac05be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af10c95a3f5d7fb60b45597b2119060e6"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:af10c95a3f5d7fb60b45597b2119060e6"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusOr.html">StatusOr</a>&lt; std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#af10c95a3f5d7fb60b45597b2119060e6">ListNotifications</a> (std::nothrow_t, std::string const &amp;bucket_name, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:af10c95a3f5d7fb60b45597b2119060e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This overload works exactly like <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aa030befa65aa1cd12a7c6b3cfaac05be" title="Retrieves the list of Notifications for a Bucket. ">ListNotifications()</a></code> without a <code>nothrow_t</code> parameter, except that it returns a <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html" title="Reports error code and details from a remote request. ">Status</a></code> on error, and the normal return value on success.  <a href="#af10c95a3f5d7fb60b45597b2119060e6">More...</a><br /></td></tr>
-<tr class="separator:af10c95a3f5d7fb60b45597b2119060e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ee88ffcd20360f41ad616606737c279"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:a4ee88ffcd20360f41ad616606737c279"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a4ee88ffcd20360f41ad616606737c279">CreateNotification</a> (std::string const &amp;bucket_name, std::string const &amp;topic_name, std::string const &amp;payload_format, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> metadata, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:a4ee88ffcd20360f41ad616606737c279"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new notification config for a Bucket.  <a href="#a4ee88ffcd20360f41ad616606737c279">More...</a><br /></td></tr>
-<tr class="separator:a4ee88ffcd20360f41ad616606737c279"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad43f1bd1d36a122ad17b804987a66863"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:ad43f1bd1d36a122ad17b804987a66863"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusOr.html">StatusOr</a>&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ad43f1bd1d36a122ad17b804987a66863">CreateNotification</a> (std::nothrow_t, std::string const &amp;bucket_name, std::string const &amp;topic_name, std::string const &amp;payload_format, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> metadata, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:ad43f1bd1d36a122ad17b804987a66863"><td class="mdescLeft">&#160;</td><td class="mdescRight">This overload works exactly like <code>CreateNotifications()</code> without a <code>nothrow_t</code> parameter, except that it returns a <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html" title="Reports error code and details from a remote request. ">Status</a></code> on error, and the normal return value on success.  <a href="#ad43f1bd1d36a122ad17b804987a66863">More...</a><br /></td></tr>
-<tr class="separator:ad43f1bd1d36a122ad17b804987a66863"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4001ae6fa52c38b98d62be2f3f71c949"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:a4001ae6fa52c38b98d62be2f3f71c949"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a4001ae6fa52c38b98d62be2f3f71c949">GetNotification</a> (std::string const &amp;bucket_name, std::string const &amp;notification_id, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:a4001ae6fa52c38b98d62be2f3f71c949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the details about a notification config in a given Bucket.  <a href="#a4001ae6fa52c38b98d62be2f3f71c949">More...</a><br /></td></tr>
-<tr class="separator:a4001ae6fa52c38b98d62be2f3f71c949"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bacd7b8c93b9764bdc4a0da46006c9a"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:a0bacd7b8c93b9764bdc4a0da46006c9a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a0bacd7b8c93b9764bdc4a0da46006c9a">DeleteNotification</a> (std::string const &amp;bucket_name, std::string const &amp;notification_id, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:a0bacd7b8c93b9764bdc4a0da46006c9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete an existing notification config in a given Bucket.  <a href="#a0bacd7b8c93b9764bdc4a0da46006c9a">More...</a><br /></td></tr>
-<tr class="separator:a0bacd7b8c93b9764bdc4a0da46006c9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e224615f5a68af7e8acbf183fd98ddb"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a7e224615f5a68af7e8acbf183fd98ddb"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusOr.html">StatusOr</a>&lt; std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a7e224615f5a68af7e8acbf183fd98ddb">ListNotifications</a> (std::string const &amp;bucket_name, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a7e224615f5a68af7e8acbf183fd98ddb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the list of Notifications for a Bucket.  <a href="#a7e224615f5a68af7e8acbf183fd98ddb">More...</a><br /></td></tr>
+<tr class="separator:a7e224615f5a68af7e8acbf183fd98ddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a7ff9cf88d5e91d27c17e3e0def9e47"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a8a7ff9cf88d5e91d27c17e3e0def9e47"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusOr.html">StatusOr</a>&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a8a7ff9cf88d5e91d27c17e3e0def9e47">CreateNotification</a> (std::string const &amp;bucket_name, std::string const &amp;topic_name, std::string const &amp;payload_format, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> metadata, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a8a7ff9cf88d5e91d27c17e3e0def9e47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new notification config for a Bucket.  <a href="#a8a7ff9cf88d5e91d27c17e3e0def9e47">More...</a><br /></td></tr>
+<tr class="separator:a8a7ff9cf88d5e91d27c17e3e0def9e47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6140dee0cd3f1fe538612bcdb7304f81"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a6140dee0cd3f1fe538612bcdb7304f81"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusOr.html">StatusOr</a>&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a6140dee0cd3f1fe538612bcdb7304f81">GetNotification</a> (std::string const &amp;bucket_name, std::string const &amp;notification_id, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a6140dee0cd3f1fe538612bcdb7304f81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the details about a notification config in a given Bucket.  <a href="#a6140dee0cd3f1fe538612bcdb7304f81">More...</a><br /></td></tr>
+<tr class="separator:a6140dee0cd3f1fe538612bcdb7304f81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e7ec0724e517026fe7dd4d23c7f8084"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a5e7ec0724e517026fe7dd4d23c7f8084"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusOr.html">StatusOr</a>&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a5e7ec0724e517026fe7dd4d23c7f8084">DeleteNotification</a> (std::string const &amp;bucket_name, std::string const &amp;notification_id, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a5e7ec0724e517026fe7dd4d23c7f8084"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete an existing notification config in a given Bucket.  <a href="#a5e7ec0724e517026fe7dd4d23c7f8084">More...</a><br /></td></tr>
+<tr class="separator:a5e7ec0724e517026fe7dd4d23c7f8084"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The Google Cloud Storage (GCS) <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html" title="The Google Cloud Storage (GCS) Client. ">Client</a>. </p>
@@ -391,6 +383,7 @@ When you apply a new ACL to an object, GCS adds <code>OWNER</code> permission to
 <dl class="section user"><dt>Performance</dt><dd>Creating an object of this type is a relatively low-cost operation. Connections to the service are created on demand. Copy-assignment and copy-construction are also relatively low-cost operations, they should be comparable to copying a few shared pointers. The first request (or any request that requires a new connection) incurs the cost of creating the connection and authenticating with the service.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Instances of this class created via copy-construction or copy-assignment share the underlying pool of connections. Access to these copies via multiple threads is guaranteed to work. Two threads operating on the same instance of this class is not guaranteed to work.</dd></dl>
 <dl class="section user"><dt>Credentials</dt><dd>The default constructor for this class will attempt to load Application Default Credentials (ADCs). If you wish to use no credentials or to supply a specific Credentials type, you can use the functions declared in <a class="el" href="google__credentials_8h.html">google_credentials.h</a>: <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line"><span class="comment">// Use ADCs, implicitly or explicitly:</span></div><div class="line">gcs::Client client;</div><div class="line">gcs::Client client(</div><div class="line">    gcs::ClientOptions(<a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#ab53341c1c23948be16477b4950b2581a">gcs::oauth2::GoogleDefaultCredentials</a>));</div><div class="line"><span class="comment">// Use service account credentials from a JSON keyfile:</span></div><div class="line">std::string path = <span class="stringliteral">&quot;/path/to/keyfile.json&quot;</span>;</div><div class="line">gcs::Client client(</div><div class="line">    gcs::ClientOptions(</div><div class="line">        <a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#a1762a659f1b7bfa87db1183b2fc72385">gcs::oauth2::CreateServiceAccountCredentialsFromJsonFilePath</a>(path)));</div><div class="line"><span class="comment">// Use Compute Engine credentials for the instance&#39;s default service account:</span></div><div class="line">gcs::Client client(</div><div class="line">    gcs::ClientOptions(<a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#ac0dea38cb93caac610aa939e291b1812">gcs::oauth2::CreateComputeEngineCredentials</a>()));</div><div class="line"><span class="comment">// Use no credentials:</span></div><div class="line">gcs::Client client(</div><div class="line">    gcs::ClientOptions(<a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#a7e02c68abefd29a0ce3c3e1928ae8ff3">gcs::oauth2::CreateAnonymousCredentials</a>()));</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Error Handling</dt><dd>This class uses <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusOr.html" title="StatusOr&lt;T&gt; is used to return a value or an error status. ">StatusOr</a>&lt;T&gt;</code> to report errors. When an operation fails to perform its work the returned <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusOr.html" title="StatusOr&lt;T&gt; is used to return a value or an error status. ">StatusOr</a>&lt;T&gt;</code> contains the error details. If the <code>ok()</code> member function in the <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusOr.html" title="StatusOr&lt;T&gt; is used to return a value or an error status. ">StatusOr</a>&lt;T&gt;</code> returns <code>true</code> then it contains the expected result. Please consult the <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusOr.html" title="StatusOr&lt;T&gt; is used to return a value or an error status. ">StatusOr</a>&lt;T&gt;</code> documentation for more details. In addition, the <a class="el" href="index.html">main page</a> contains examples using <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusOr.html" title="StatusOr&lt;T&gt; is used to return a value or an error status. ">StatusOr</a>&lt;T&gt;</code> to handle errors.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/">https://cloud.google.com/storage/</a> for an overview of GCS.</dd>
 <dd>
 <a href="https://cloud.google.com/storage/docs/key-terms">https://cloud.google.com/storage/docs/key-terms</a> for an introduction of the key terms used in GCS.</dd>
@@ -1013,8 +1006,8 @@ template&lt;typename... Options&gt; </div>
 
 </div>
 </div>
-<a id="a4ee88ffcd20360f41ad616606737c279"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ee88ffcd20360f41ad616606737c279">&#9670;&nbsp;</a></span>CreateNotification() <span class="overload">[1/2]</span></h2>
+<a id="a8a7ff9cf88d5e91d27c17e3e0def9e47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a7ff9cf88d5e91d27c17e3e0def9e47">&#9670;&nbsp;</a></span>CreateNotification()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1025,7 +1018,7 @@ template&lt;typename... Options&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> google::cloud::storage::v0::Client::CreateNotification </td>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusOr.html">StatusOr</a>&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a>&gt; google::cloud::storage::v0::Client::CreateNotification </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>bucket_name</em>, </td>
@@ -1079,81 +1072,11 @@ template&lt;typename... Options&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if there is a permanent failure, or if there were more transient failures than allowed by the current retry policy.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is only idempotent if restricted by pre-conditions. There are no pre-conditions for this operation that can make it idempotent.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string topic_name) {</div><div class="line">    gcs::NotificationMetadata notification = client.CreateNotification(</div><div class="line">        bucket_name, topic_name, <a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1payload__format.html#acdee1af9140fab11956dd246e1fc9d7f">gcs::payload_format::JsonApiV1</a>(),</div><div class="line">        gcs::NotificationMetadata());</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Successfully created notification &quot;</span> &lt;&lt; notification.id()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; for bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;\nfull details=&quot;</span> &lt;&lt; notification &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string topic_name) {</div><div class="line">    gcs::StatusOr&lt;gcs::NotificationMetadata&gt; notification =</div><div class="line">        client.CreateNotification(bucket_name, topic_name,</div><div class="line">                                  <a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1payload__format.html#acdee1af9140fab11956dd246e1fc9d7f">gcs::payload_format::JsonApiV1</a>(),</div><div class="line">                                  gcs::NotificationMetadata());</div><div class="line">    <span class="keywordflow">if</span> (not notification.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error creating notification for &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; on topic &quot;</span> &lt;&lt; topic_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; notification.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Successfully created notification &quot;</span> &lt;&lt; notification-&gt;id()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; for bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    <span class="keywordflow">if</span> (notification-&gt;object_name_prefix().empty()) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;This notification will be sent for all objects in the&quot;</span></div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; bucket\n&quot;</span>;</div><div class="line">    } <span class="keywordflow">else</span> {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;This notification will be set sent only for objects&quot;</span></div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; starting with the prefix &quot;</span></div><div class="line">                &lt;&lt; notification-&gt;object_name_prefix() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Full details for the notification:\n&quot;</span></div><div class="line">              &lt;&lt; *notification &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/pubsub-notifications">https://cloud.google.com/storage/docs/pubsub-notifications</a> for general information on Cloud Pub/Sub Notifications for Google Cloud Storage.</dd>
 <dd>
 <a href="https://cloud.google.com/pubsub/">https://cloud.google.com/pubsub/</a> for general information on Google Cloud Pub/Sub service. </dd></dl>
-
-</div>
-</div>
-<a id="ad43f1bd1d36a122ad17b804987a66863"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad43f1bd1d36a122ad17b804987a66863">&#9670;&nbsp;</a></span>CreateNotification() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... Options&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusOr.html">StatusOr</a>&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a>&gt; google::cloud::storage::v0::Client::CreateNotification </td>
-          <td>(</td>
-          <td class="paramtype">std::nothrow_t&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>bucket_name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>topic_name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>payload_format</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a>&#160;</td>
-          <td class="paramname"><em>metadata</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Options &amp;&amp;...&#160;</td>
-          <td class="paramname"><em>options</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>This overload works exactly like <code>CreateNotifications()</code> without a <code>nothrow_t</code> parameter, except that it returns a <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html" title="Reports error code and details from a remote request. ">Status</a></code> on error, and the normal return value on success. </p>
 
 </div>
 </div>
@@ -1483,8 +1406,8 @@ template&lt;typename... Options&gt; </div>
 
 </div>
 </div>
-<a id="a0bacd7b8c93b9764bdc4a0da46006c9a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0bacd7b8c93b9764bdc4a0da46006c9a">&#9670;&nbsp;</a></span>DeleteNotification()</h2>
+<a id="a5e7ec0724e517026fe7dd4d23c7f8084"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e7ec0724e517026fe7dd4d23c7f8084">&#9670;&nbsp;</a></span>DeleteNotification()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1495,7 +1418,7 @@ template&lt;typename... Options&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void google::cloud::storage::v0::Client::DeleteNotification </td>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusOr.html">StatusOr</a>&lt;void&gt; google::cloud::storage::v0::Client::DeleteNotification </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>bucket_name</em>, </td>
@@ -1535,14 +1458,8 @@ template&lt;typename... Options&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if there is a permanent failure, or if there were more transient failures than allowed by the current retry policy.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always idempotent because it only acts on a specific <code>notification_id</code>, the state after calling this function multiple times is to delete that notification. New notifications get different ids.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string notification_id) {</div><div class="line">    client.DeleteNotification(bucket_name, notification_id);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Successfully delete notification &quot;</span> &lt;&lt; notification_id</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; on bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string notification_id) {</div><div class="line">    gcs::StatusOr&lt;void&gt; status =</div><div class="line">        client.DeleteNotification(bucket_name, notification_id);</div><div class="line">    <span class="keywordflow">if</span> (not status.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error delete notification id &quot;</span> &lt;&lt; notification_id</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; on bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; status.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Successfully deleted notification &quot;</span> &lt;&lt; notification_id</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; on bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/pubsub-notifications">https://cloud.google.com/storage/docs/pubsub-notifications</a> for general information on Cloud Pub/Sub Notifications for Google Cloud Storage.</dd>
 <dd>
 <a href="https://cloud.google.com/pubsub/">https://cloud.google.com/pubsub/</a> for general information on Google Cloud Pub/Sub service. </dd></dl>
@@ -1986,8 +1903,8 @@ template&lt;typename... Options&gt; </div>
 
 </div>
 </div>
-<a id="a4001ae6fa52c38b98d62be2f3f71c949"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4001ae6fa52c38b98d62be2f3f71c949">&#9670;&nbsp;</a></span>GetNotification()</h2>
+<a id="a6140dee0cd3f1fe538612bcdb7304f81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6140dee0cd3f1fe538612bcdb7304f81">&#9670;&nbsp;</a></span>GetNotification()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1998,7 +1915,7 @@ template&lt;typename... Options&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> google::cloud::storage::v0::Client::GetNotification </td>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusOr.html">StatusOr</a>&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a>&gt; google::cloud::storage::v0::Client::GetNotification </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>bucket_name</em>, </td>
@@ -2038,14 +1955,8 @@ template&lt;typename... Options&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if there is a permanent failure, or if there were more transient failures than allowed by the current retry policy.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and is always idempotent.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string notification_id) {</div><div class="line">    gcs::NotificationMetadata notification =</div><div class="line">        client.GetNotification(bucket_name, notification_id);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Notification &quot;</span> &lt;&lt; notification.id() &lt;&lt; <span class="stringliteral">&quot; for bucket &quot;</span></div><div class="line">              &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot; details=&quot;</span> &lt;&lt; notification &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string notification_id) {</div><div class="line">    gcs::StatusOr&lt;gcs::NotificationMetadata&gt; notification =</div><div class="line">        client.GetNotification(bucket_name, notification_id);</div><div class="line">    <span class="keywordflow">if</span> (not notification.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error getting notification metadata for notification id &quot;</span></div><div class="line">                &lt;&lt; notification_id &lt;&lt; <span class="stringliteral">&quot; on bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; notification.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Notification &quot;</span> &lt;&lt; notification-&gt;id() &lt;&lt; <span class="stringliteral">&quot; for bucket &quot;</span></div><div class="line">              &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    <span class="keywordflow">if</span> (notification-&gt;object_name_prefix().empty()) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;This notification is sent for all objects in the bucket\n&quot;</span>;</div><div class="line">    } <span class="keywordflow">else</span> {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;This notification is sent only for objects starting with&quot;</span></div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; the prefix &quot;</span> &lt;&lt; notification-&gt;object_name_prefix() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Full details for the notification:\n&quot;</span></div><div class="line">              &lt;&lt; *notification &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/pubsub-notifications">https://cloud.google.com/storage/docs/pubsub-notifications</a> for general information on Cloud Pub/Sub Notifications for Google Cloud Storage.</dd>
 <dd>
 <a href="https://cloud.google.com/pubsub/">https://cloud.google.com/pubsub/</a> for general information on Google Cloud Pub/Sub service. </dd></dl>
@@ -2570,8 +2481,8 @@ template&lt;typename... Options&gt; </div>
 
 </div>
 </div>
-<a id="aa030befa65aa1cd12a7c6b3cfaac05be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa030befa65aa1cd12a7c6b3cfaac05be">&#9670;&nbsp;</a></span>ListNotifications() <span class="overload">[1/2]</span></h2>
+<a id="a7e224615f5a68af7e8acbf183fd98ddb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e224615f5a68af7e8acbf183fd98ddb">&#9670;&nbsp;</a></span>ListNotifications()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2582,7 +2493,7 @@ template&lt;typename... Options&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a>&gt; google::cloud::storage::v0::Client::ListNotifications </td>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusOr.html">StatusOr</a>&lt;std::vector&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a>&gt; &gt; google::cloud::storage::v0::Client::ListNotifications </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>bucket_name</em>, </td>
@@ -2615,60 +2526,8 @@ template&lt;typename... Options&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if there is a permanent failure, or if there were more transient failures than allowed by the current retry policy.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and is always idempotent.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name) {</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Notifications for bucket=&quot;</span> &lt;&lt; bucket_name &lt;&lt; std::endl;</div><div class="line">    <span class="keywordflow">for</span> (gcs::NotificationMetadata <span class="keyword">const</span>&amp; notification :</div><div class="line">         client.ListNotifications(bucket_name)) {</div><div class="line">      std::cout &lt;&lt; notification &lt;&lt; std::endl;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
-
-</div>
-</div>
-<a id="af10c95a3f5d7fb60b45597b2119060e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af10c95a3f5d7fb60b45597b2119060e6">&#9670;&nbsp;</a></span>ListNotifications() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... Options&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StatusOr.html">StatusOr</a>&lt;std::vector&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a>&gt; &gt; google::cloud::storage::v0::Client::ListNotifications </td>
-          <td>(</td>
-          <td class="paramtype">std::nothrow_t&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>bucket_name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Options &amp;&amp;...&#160;</td>
-          <td class="paramname"><em>options</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>This overload works exactly like <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aa030befa65aa1cd12a7c6b3cfaac05be" title="Retrieves the list of Notifications for a Bucket. ">ListNotifications()</a></code> without a <code>nothrow_t</code> parameter, except that it returns a <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html" title="Reports error code and details from a remote request. ">Status</a></code> on error, and the normal return value on success. </p>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name) {</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Notifications for bucket=&quot;</span> &lt;&lt; bucket_name &lt;&lt; std::endl;</div><div class="line">    gcs::StatusOr&lt;std::vector&lt;gcs::NotificationMetadata&gt;&gt; items =</div><div class="line">        client.ListNotifications(bucket_name);</div><div class="line">    <span class="keywordflow">if</span> (not items.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error reading notification list for &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; items.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    <span class="keywordflow">for</span> (gcs::NotificationMetadata <span class="keyword">const</span>&amp; notification : *items) {</div><div class="line">      std::cout &lt;&lt; notification &lt;&lt; std::endl;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
