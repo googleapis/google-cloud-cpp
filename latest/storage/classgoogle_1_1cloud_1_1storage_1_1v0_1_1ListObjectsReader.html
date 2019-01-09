@@ -183,15 +183,8 @@ template&lt;typename... Parameters&gt; </div>
 </div><div class="memdoc">
 
 <p>Return an iterator over the list of objects. </p>
-<p>The returned iterator is a single-pass input iterator that reads object metadata from the BucketListReader when incremented.</p>
-<p>Creating, and particularly incrementing, multiple iterators on the same RowReader is unsupported and can produce incorrect results.</p>
-<p>Retry and backoff policies are honored.</p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if the read failed after retries. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>The returned iterator is a single-pass input iterator that reads object metadata from the <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsReader.html" title="Represents the result of listing a set of Objects. ">ListObjectsReader</a> when incremented.</p>
+<p>Creating, and particularly incrementing, multiple iterators on the same <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsReader.html" title="Represents the result of listing a set of Objects. ">ListObjectsReader</a> is unsupported and can produce incorrect results. </p>
 
 </div>
 </div>
