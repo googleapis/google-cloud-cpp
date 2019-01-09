@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['data_5floss',['DATA_LOSS',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a7c6ad160c6632a7277b2b747f9a05f02a68127ba3c228686e98e8408700510760',1,'google::cloud::storage::v0']]],
-  ['deadline_5fexceeded',['DEADLINE_EXCEEDED',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a7c6ad160c6632a7277b2b747f9a05f02ab6d34cdfd5e16871dada28cc972c525f',1,'google::cloud::storage::v0']]],
   ['default_5facl',['default_acl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a243c7eeb31e604009d243b3625ce7727',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['default_5fevent_5fbased_5fhold',['default_event_based_hold',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a33932a5c1779ce505ebd39217b10bc61',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['default_5fkms_5fkey_5fname',['default_kms_key_name',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketEncryption.html#ae48570bebe92509bdb5184f620a8c847',1,'google::cloud::storage::v0::BucketEncryption']]],
@@ -23,7 +21,6 @@ var searchData=
   ['disable_5fversioning',['disable_versioning',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a34b65c5ba1bfad8408aa145f96b78ec0',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['disablecrc32cchecksum',['DisableCrc32cChecksum',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1DisableCrc32cChecksum.html',1,'google::cloud::storage::v0']]],
   ['disablemd5hash',['DisableMD5Hash',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1DisableMD5Hash.html',1,'google::cloud::storage::v0']]],
-  ['do_5fnot_5fuse',['DO_NOT_USE',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a7c6ad160c6632a7277b2b747f9a05f02a1df1937718d92b580a87a94d495583bb',1,'google::cloud::storage::v0']]],
   ['done',['done',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1RewriteProgress.html#adeed7261b94ff34bcbeb04e080883cfa',1,'google::cloud::storage::v0::RewriteProgress']]],
   ['download_5fbuffer_5fsize',['download_buffer_size',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a296af603db8b89499f06568c210790f2',1,'google::cloud::storage::v0::ClientOptions']]],
   ['download_5foptions_2eh',['download_options.h',['../download__options_8h.html',1,'']]],

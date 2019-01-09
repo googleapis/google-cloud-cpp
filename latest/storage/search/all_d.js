@@ -7,7 +7,6 @@ var searchData=
   ['noacl',['NoAcl',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1Projection.html#a27822a9fea81dd08275f00c5f4fb2a4c',1,'google::cloud::storage::v0::Projection']]],
   ['nodecorations',['NoDecorations',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1Client_1_1NoDecorations.html',1,'google::cloud::storage::v0::Client']]],
   ['none',['None',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1payload__format.html#aa74d2bcc3c1b8593f95ab554727426f8',1,'google::cloud::storage::v0::payload_format']]],
-  ['not_5ffound',['NOT_FOUND',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a7c6ad160c6632a7277b2b747f9a05f02abf5e0a004d707037d09f9aa8ba65fde2',1,'google::cloud::storage::v0']]],
   ['not_5ffound_5fpage',['not_found_page',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketWebsite.html#a752dd994f88097b1694f9131b751ca2e',1,'google::cloud::storage::v0::BucketWebsite']]],
   ['notification_5fevent_5ftype_2eh',['notification_event_type.h',['../notification__event__type_8h.html',1,'']]],
   ['notification_5fmetadata_2ecc',['notification_metadata.cc',['../notification__metadata_8cc.html',1,'']]],

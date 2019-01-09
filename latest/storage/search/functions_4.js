@@ -11,8 +11,6 @@ var searchData=
   ['encryptiondatafrombinarykey',['EncryptionDataFromBinaryKey',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a4418a63d224c7b1d893b3983709ab3e0',1,'google::cloud::storage::v0']]],
   ['end',['end',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#aafeb095023c09d6ecfd720e3783f6c4a',1,'google::cloud::storage::v0::ListBucketsReader::end()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsReader.html#ac139d7662a1244591decfacf8159f1b2',1,'google::cloud::storage::v0::ListObjectsReader::end()']]],
   ['endpoint',['endpoint',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a2c1f7f1dd4a7d1bd7168786178ee673c',1,'google::cloud::storage::v0::ClientOptions']]],
-  ['error_5fdetails',['error_details',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html#a34970fcb5fbd560f8f8265e384dd962b',1,'google::cloud::storage::v0::Status']]],
-  ['error_5fmessage',['error_message',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Status.html#a47beef28fe82234204cc8f94c0b84f44',1,'google::cloud::storage::v0::Status']]],
   ['etag',['etag',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a3b4dca33f52e64d0099010db656fb18f',1,'google::cloud::storage::v0::NotificationMetadata']]],
   ['event_5fbased_5fhold',['event_based_hold',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#ac3428b2b222c11cf9681559dd1b2e8b8',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['event_5ftype',['event_type',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a490539df25124d80b6eaff5f57202c91',1,'google::cloud::storage::v0::NotificationMetadata']]],
