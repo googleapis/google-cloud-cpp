@@ -128,6 +128,81 @@ void AsyncGetCluster(cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
   (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
 }
 
+void AsyncListClusters(cbt::InstanceAdmin instance_admin,
+                       cbt::CompletionQueue cq, std::vector<std::string> argv) {
+  if (argv.size() != 2U) {
+    throw Usage{"async-list-clusters: <project-id> <instance-id>"};
+  }
+
+  //! [async list clusters]
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
+     std::string instance_id) {
+    // google::cloud::bigtable::InstanceId instance_id1(instance_id);
+    google::cloud::future<google::cloud::bigtable::v0::ClusterList> future =
+        instance_admin.AsyncListClusters(cq, instance_id);
+
+    auto final = future.then(
+        [](google::cloud::future<google::cloud::bigtable::v0::ClusterList> f) {
+          auto cluster_list = f.get();
+          std::cout << "Cluster Name List" << std::endl;
+          for (const auto& cluster : cluster_list.clusters) {
+            std::cout << cluster.name() << std::endl;
+          }
+          if (not cluster_list.failed_locations.empty()) {
+            std::cout << "The Cloud Bigtable service reports that it could not "
+                         "retrieve data for the following zones:\n";
+            for (const auto& failed_location : cluster_list.failed_locations) {
+              std::cout << failed_location << std::endl;
+            }
+            std::cout
+                << "This is typically a transient condition, try again later."
+                << std::endl;
+          }
+        });
+
+    final.get();
+  }
+  //! [async list clusters]
+  (std::move(instance_admin), std::move(cq), argv[1]);
+}
+
+void AsyncListAllClusters(cbt::InstanceAdmin instance_admin,
+                          cbt::CompletionQueue cq,
+                          std::vector<std::string> argv) {
+  if (argv.size() != 1U) {
+    throw Usage{"async-list-all-clusters: <project-id>"};
+  }
+
+  //! [async list all clusters]
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq) {
+    google::cloud::future<google::cloud::bigtable::v0::ClusterList> future =
+        instance_admin.AsyncListClusters(cq);
+
+    auto final = future.then(
+        [](google::cloud::future<google::cloud::bigtable::v0::ClusterList> f) {
+          auto cluster_list = f.get();
+          std::cout << "Cluster Name List" << std::endl;
+          for (const auto& cluster : cluster_list.clusters) {
+            std::cout << cluster.name() << std::endl;
+          }
+          if (not cluster_list.failed_locations.empty()) {
+            std::cout << "The Cloud Bigtable service reports that it could not "
+                         "retrieve data for the following zones:\n";
+            for (const auto& failed_location : cluster_list.failed_locations) {
+              std::cout << failed_location << std::endl;
+            }
+            std::cout
+                << "This is typically a transient condition, try again later."
+                << std::endl;
+          }
+        });
+
+    final.get();
+  }
+  //! [async list all clusters]
+  (std::move(instance_admin), std::move(cq));
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -138,7 +213,9 @@ int main(int argc, char* argv[]) try {
   std::map<std::string, CommandType> commands = {
       {"async-get-instance", &AsyncGetInstance},
       {"async-get-cluster", &AsyncGetCluster},
-      {"async-list-instances", &AsyncListInstances}};
+      {"async-list-instances", &AsyncListInstances},
+      {"async-list-clusters", &AsyncListClusters},
+      {"async-list-all-clusters", &AsyncListAllClusters}};
 
   google::cloud::bigtable::CompletionQueue cq;
 

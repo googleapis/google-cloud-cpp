@@ -234,6 +234,38 @@ class InstanceAdmin {
       std::string const& instance_id);
 
   /**
+   * Query (asynchronously) the list of clusters in a project.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @return the list of clusters. It is possible that some zones are not
+   * currently available for querying. In that case this function returns the
+   * list of failed locations in the `projects/<project>/locations/<zone_id>`
+   * format.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc list clusters
+   */
+  future<ClusterList> AsyncListClusters(CompletionQueue& cq);
+
+  /**
+   * Query (asynchronously) the list of clusters in an instance.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * 		instance_id the instance in a project.
+   * @return the list of clusters. It is possible that some zones are not
+   * currently available for querying. In that case this function returns the
+   * list of failed locations in the `projects/<project>/locations/<zone_id>`
+   * format.
+   *
+   * @par Example
+   * @snippet bigtable_samples_instance_admin.cc list clusters
+   */
+  future<ClusterList> AsyncListClusters(CompletionQueue& cq,
+                                        std::string const& instance_id);
+
+  /**
    * Update an existing cluster of Cloud Bigtable.
    *
    * @warning Note that this is operation can take seconds or minutes to
