@@ -83,6 +83,16 @@ void RaiseLogicError(std::string const& msg) {
   RaiseException<std::logic_error>(msg.c_str());
 }
 
+[[noreturn]] void ThrowStatus(Status status) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  throw RuntimeStatusError(std::move(status));
+#else
+  std::ostringstream os;
+  os << status;
+  google::cloud::Terminate(os.str().c_str());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

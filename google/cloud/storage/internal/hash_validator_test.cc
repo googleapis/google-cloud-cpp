@@ -15,7 +15,7 @@
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/object_metadata.h"
-#include "google/cloud/storage/status.h"
+#include "google/cloud/status.h"
 #include <gmock/gmock.h>
 
 namespace google {

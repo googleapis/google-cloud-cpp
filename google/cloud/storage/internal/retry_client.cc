@@ -70,7 +70,7 @@ MakeCall(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
          bool is_idempotent, RawClient& client, MemberFunction function,
          typename CheckSignature<MemberFunction>::RequestType const& request,
          char const* error_message) {
-  google::cloud::storage::Status last_status;
+  Status last_status;
   auto error = [&last_status](std::string const& msg) {
     return Status(last_status.status_code(), msg, last_status.error_details());
   };

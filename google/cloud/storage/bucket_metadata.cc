@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/bucket_metadata.h"
+#include "google/cloud/status.h"
 #include "google/cloud/internal/ios_flags_saver.h"
 #include "google/cloud/storage/internal/format_rfc3339.h"
 #include "google/cloud/storage/internal/metadata_parser.h"

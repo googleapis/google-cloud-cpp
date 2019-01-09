@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_THROW_DELEGATE_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_THROW_DELEGATE_H_
 
-#include "google/cloud/version.h"
+#include "google/cloud/status.h"
 #include <system_error>
 
 namespace google {
@@ -50,6 +50,9 @@ namespace internal {
 [[noreturn]] void RaiseLogicError(char const* msg);
 [[noreturn]] void RaiseLogicError(std::string const& msg);
 //@}
+
+/// Throw an exception wrapping @p status.
+[[noreturn]] void ThrowStatus(Status status);
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS

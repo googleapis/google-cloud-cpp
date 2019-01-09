@@ -125,8 +125,7 @@ class ServiceAccountCredentials : public Credentials {
    * @return a Base64-encoded RSA SHA256 digest of @p blob using the current
    *   credentials.
    */
-  std::pair<google::cloud::storage::Status, std::string> SignString(
-      std::string const& text) const {
+  std::pair<Status, std::string> SignString(std::string const& text) const {
     using storage::internal::OpenSslUtils;
     return std::make_pair(
         Status(), OpenSslUtils::Base64Encode(OpenSslUtils::SignStringWithPem(
@@ -194,7 +193,7 @@ class ServiceAccountCredentials : public Credentials {
     return encoded_header + '.' + encoded_payload + '.' + encoded_signature;
   }
 
-  storage::Status Refresh() {
+  Status Refresh() {
     namespace nl = storage::internal::nl;
 
     auto response = request_.MakeRequest(payload_);
@@ -202,8 +201,7 @@ class ServiceAccountCredentials : public Credentials {
       return std::move(response).status();
     }
     if (response->status_code >= 300) {
-      return storage::Status(response->status_code,
-                             std::move(response->payload));
+      return Status(response->status_code, std::move(response->payload));
     }
 
     nl::json access_token = nl::json::parse(response->payload, nullptr, false);
@@ -211,7 +209,7 @@ class ServiceAccountCredentials : public Credentials {
         access_token.count("access_token") == 0U or
         access_token.count("expires_in") == 0U or
         access_token.count("token_type") == 0U) {
-      return storage::Status(
+      return Status(
           response->status_code, std::move(response->payload),
           "Could not find all required fields in response (access_token,"
           " expires_in, token_type).");
@@ -227,7 +225,7 @@ class ServiceAccountCredentials : public Credentials {
     // Do not update any state until all potential exceptions are raised.
     refreshing_creds_.authorization_header = std::move(header);
     refreshing_creds_.expiration_time = new_expiration;
-    return storage::Status();
+    return Status();
   }
 
   typename HttpRequestBuilderType::RequestType request_;

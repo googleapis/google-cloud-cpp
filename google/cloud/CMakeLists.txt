@@ -131,6 +131,9 @@ add_library(google_cloud_cpp_common
             log.h
             log.cc
             optional.h
+            status.h
+            status.cc
+            status_or.h
             terminate_handler.h
             terminate_handler.cc
             version.h)
@@ -191,6 +194,7 @@ if (BUILD_TESTING)
         internal/throw_delegate_test.cc
         log_test.cc
         optional_test.cc
+        status_or_test.cc
         terminate_handler_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.

@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RESUMABLE_UPLOAD_SESSION_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RESUMABLE_UPLOAD_SESSION_H_
 
+#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/object_requests.h"
-#include "google/cloud/storage/status_or.h"
 
 namespace google {
 namespace cloud {

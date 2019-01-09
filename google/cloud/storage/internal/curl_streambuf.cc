@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_streambuf.h"
+#include "google/cloud/storage/object_stream.h"
 
 namespace google {
 namespace cloud {
@@ -118,7 +119,7 @@ CurlReadStreambuf::int_type CurlReadStreambuf::ReportError(Status status) {
   // mechanism to signal errors.
   status_ = std::move(status);
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  internal::ThrowStatus(status_);
+  google::cloud::internal::ThrowStatus(status_);
 #else
   return traits_type::eof();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

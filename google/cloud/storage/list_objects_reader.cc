@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/list_objects_reader.h"
-#include "google/cloud/storage/internal/throw_status_delegate.h"
+#include "google/cloud/internal/throw_delegate.h"
 
 namespace google {
 namespace cloud {

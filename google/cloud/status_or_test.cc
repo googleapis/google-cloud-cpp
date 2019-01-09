@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/status_or.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/expect_exception.h"
 #include "google/cloud/testing_util/testing_types.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 using ::testing::HasSubstr;
 
@@ -510,7 +509,6 @@ TEST(StatusOrObservableTest, MoveValue) {
 }
 
 }  // namespace
-}  // namespace STORAGE_CLIENT_NS
-}  // namespace storage
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

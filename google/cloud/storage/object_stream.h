@@ -26,6 +26,25 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
+ * Report checksum mismatches as exceptions.
+ */
+class HashMismatchError : public std::ios_base::failure {
+ public:
+  explicit HashMismatchError(std::string const& msg, std::string received,
+                             std::string computed)
+      : std::ios_base::failure(msg),
+        received_hash_(std::move(received)),
+        computed_hash_(std::move(computed)) {}
+
+  std::string const& received_hash() const { return received_hash_; }
+  std::string const& computed_hash() const { return computed_hash_; }
+
+ private:
+  std::string received_hash_;
+  std::string computed_hash_;
+};
+
+/**
  * Defines a `std::basic_istream<char>` to read from a GCS Object.
  */
 class ObjectReadStream : public std::basic_istream<char> {

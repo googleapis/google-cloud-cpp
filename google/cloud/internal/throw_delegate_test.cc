@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/testing_util/expect_exception.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -87,6 +88,21 @@ TEST(ThrowDelegateTest, LogicError) {
   EXPECT_DEATH_IF_SUPPORTED(RaiseLogicError(msg), msg);
   EXPECT_DEATH_IF_SUPPORTED(RaiseLogicError(cmsg), cmsg);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST(ThrowDelegateTest, TestThrow) {
+  testing_util::ExpectException<RuntimeStatusError>(
+      [&] {
+        Status status(404, "NOT FOUND", "oh noes!");
+        ThrowStatus(std::move(status));
+      },
+      [&](RuntimeStatusError const& ex) {
+        EXPECT_EQ(404, ex.status().status_code());
+        EXPECT_EQ("NOT FOUND", ex.status().error_message());
+        EXPECT_EQ("oh noes!", ex.status().error_details());
+      },
+      "Aborting because exceptions are disabled: "
+      "NOT FOUND \\[404\\], details=oh noes!");
 }
 
 }  // namespace

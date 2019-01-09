@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_HANDLE_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_HANDLE_H_
 
+#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/curl_wrappers.h"
-#include "google/cloud/storage/status_or.h"
 #include <curl/curl.h>
 
 namespace google {

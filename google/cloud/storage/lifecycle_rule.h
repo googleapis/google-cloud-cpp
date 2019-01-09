@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIFECYCLE_RULE_H_
 
 #include "google/cloud/optional.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/parse_rfc3339.h"
-#include "google/cloud/storage/status_or.h"
 #include "google/cloud/storage/storage_class.h"
 #include <chrono>
 #include <iosfwd>

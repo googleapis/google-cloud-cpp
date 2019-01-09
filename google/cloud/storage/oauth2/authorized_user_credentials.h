@@ -15,12 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_AUTHORIZED_USER_CREDENTIALS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_AUTHORIZED_USER_CREDENTIALS_H_
 
+#include "google/cloud/status.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
-#include "google/cloud/storage/status.h"
 #include <iostream>
 #include <mutex>
 
@@ -94,7 +94,7 @@ class AuthorizedUserCredentials : public Credentials {
   }
 
  private:
-  google::cloud::storage::Status Refresh() {
+  Status Refresh() {
     namespace nl = storage::internal::nl;
 
     auto response = request_.MakeRequest(payload_);
@@ -102,8 +102,7 @@ class AuthorizedUserCredentials : public Credentials {
       return std::move(response).status();
     }
     if (response->status_code >= 300) {
-      return storage::Status(response->status_code,
-                             std::move(response->payload));
+      return Status(response->status_code, std::move(response->payload));
     }
     nl::json access_token = nl::json::parse(response->payload, nullptr, false);
     if (access_token.is_discarded() or
@@ -111,7 +110,7 @@ class AuthorizedUserCredentials : public Credentials {
         access_token.count("expires_in") == 0U or
         access_token.count("id_token") == 0U or
         access_token.count("token_type") == 0U) {
-      return storage::Status(
+      return Status(
           response->status_code, std::move(response->payload),
           "Could not find all required fields in response (access_token,"
           " id_token, expires_in, token_type).");
@@ -127,7 +126,7 @@ class AuthorizedUserCredentials : public Credentials {
     // Do not update any state until all potential exceptions are raised.
     refreshing_creds_.authorization_header = std::move(header);
     refreshing_creds_.expiration_time = new_expiration;
-    return storage::Status();
+    return Status();
   }
 
   typename HttpRequestBuilderType::RequestType request_;

@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_STREAMBUF_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_STREAMBUF_H_
 
+#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/http_response.h"
-#include "google/cloud/storage/status_or.h"
 #include <iostream>
 
 namespace google {
