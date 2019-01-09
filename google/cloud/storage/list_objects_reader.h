@@ -18,7 +18,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/raw_client.h"
-#include "google/cloud/storage/status_or.h"
 #include <iterator>
 
 namespace google {
