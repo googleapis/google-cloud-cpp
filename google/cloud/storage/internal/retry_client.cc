@@ -72,7 +72,7 @@ MakeCall(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
          char const* error_message) {
   Status last_status;
   auto error = [&last_status](std::string const& msg) {
-    return Status(last_status.status_code(), msg, last_status.error_details());
+    return Status(last_status.code(), msg);
   };
 
   while (not retry_policy.IsExhausted()) {

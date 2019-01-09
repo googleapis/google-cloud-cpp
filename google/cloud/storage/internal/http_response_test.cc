@@ -48,7 +48,7 @@ TEST(HttpResponseTest, AsStatus) {
             AsStatus(HttpResponse{299, "success"}).status_code());
   EXPECT_EQ(StatusCode::kUnknown,
             AsStatus(HttpResponse{300, "libcurl should handle this"}).status_code());
-  EXPECT_EQ(StatusCode::kOk,
+  EXPECT_EQ(StatusCode::kFailedPrecondition,
             AsStatus(HttpResponse{308, "pending"}).status_code());
   EXPECT_EQ(StatusCode::kInvalidArgument,
             AsStatus(HttpResponse{400, "invalid something"}).status_code());

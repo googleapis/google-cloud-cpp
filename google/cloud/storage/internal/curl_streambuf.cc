@@ -86,8 +86,7 @@ CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
     headers_.emplace(kv.first, kv.second);
   }
   if (response->status_code >= 300) {
-    return ReportError(
-        Status(response->status_code, std::move(response->payload)));
+    return ReportError(AsStatus(*response));
   }
 
   if (not current_ios_buffer_.empty()) {

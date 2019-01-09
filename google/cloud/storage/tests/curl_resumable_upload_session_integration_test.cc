@@ -82,7 +82,7 @@ TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
   std::string const contents(UploadChunkRequest::kChunkSizeQuantum, '0');
   StatusOr<ResumableUploadResponse> response =
       (*session)->UploadChunk(contents, 2 * contents.size());
-  ASSERT_TRUE(response.status().status_code() == 200 or response.status().status_code() == 308)
+  ASSERT_TRUE(response.status().ok())
       << response.status();
 
   response = (*session)->ResetSession();
@@ -118,8 +118,7 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
 
   StatusOr<ResumableUploadResponse> response =
       (*old_session)->UploadChunk(contents, 3 * contents.size());
-  ASSERT_TRUE(response.status().status_code() == 200 or response.status().status_code() == 308)
-      << response.status();
+  ASSERT_TRUE(response.status().ok()) << response.status();
 
   StatusOr<std::unique_ptr<ResumableUploadSession>> session =
       client->RestoreResumableSession((*old_session)->session_id());

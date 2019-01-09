@@ -35,9 +35,10 @@ class MockCurlClient : public CurlClient {
   MockCurlClient()
       : CurlClient(ClientOptions(oauth2::CreateAnonymousCredentials())) {}
 
-  MOCK_METHOD1(UploadChunk, StatusOr<ResumableUploadResponse>(UploadChunkRequest const&));
-  MOCK_METHOD1(QueryResumableUpload,
-               StatusOr<ResumableUploadResponse>(QueryResumableUploadRequest const&));
+  MOCK_METHOD1(UploadChunk,
+               StatusOr<ResumableUploadResponse>(UploadChunkRequest const&));
+  MOCK_METHOD1(QueryResumableUpload, StatusOr<ResumableUploadResponse>(
+                                         QueryResumableUploadRequest const&));
 };
 
 TEST(CurlResumableUploadSessionTest, Simple) {
@@ -91,7 +92,8 @@ TEST(CurlResumableUploadSessionTest, Reset) {
         return make_status_or(ResumableUploadResponse{"", size - 1, ""});
       }))
       .WillOnce(Invoke([&](UploadChunkRequest const&) {
-        return StatusOr<ResumableUploadResponse>(Status(308, "uh oh"));
+        return StatusOr<ResumableUploadResponse>(
+            AsStatus(HttpResponse{308, "uh oh", {}}));
       }));
   EXPECT_CALL(*mock, QueryResumableUpload(_))
       .WillOnce(Invoke([&](QueryResumableUploadRequest const& request) {

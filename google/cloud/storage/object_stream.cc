@@ -74,14 +74,13 @@ void ObjectWriteStream::Close() {
     setstate(std::ios_base::badbit);
     return;
   }
-  headers_ = std::move(response->headers);
-  payload_ = std::move(response->payload);
   if (response->status_code >= 300) {
-    metadata_ =
-        StatusOr<ObjectMetadata>(Status(response->status_code, payload_));
+    metadata_ = StatusOr<ObjectMetadata>(AsStatus(*response));
     setstate(std::ios_base::badbit);
     return;
   }
+  headers_ = std::move(response->headers);
+  payload_ = std::move(response->payload);
   if (payload_.empty()) {
     // With the XML transport the response includes an empty payload, in that
     // case it cannot be parsed.

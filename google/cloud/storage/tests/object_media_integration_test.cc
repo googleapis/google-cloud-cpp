@@ -309,7 +309,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileUploadFailure) {
         client.UploadFile(file_name, bucket_name, object_name,
                           IfGenerationMatch(0));
       } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("[UNEXPECTED_STATUS_CODE=412]"));
+        EXPECT_THAT(ex.what(), HasSubstr("[FAILED_PRECONDITION]"));
         throw;
       },
       std::runtime_error);

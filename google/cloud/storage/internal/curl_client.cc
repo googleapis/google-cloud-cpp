@@ -109,10 +109,6 @@ std::string UrlEscapeString(std::string const& value) {
   return std::string(handle.MakeEscapedString(value).get());
 }
 
-Status AsStatus(HttpResponse& response) {
-  return Status(response.status_code, response.payload);
-}
-
 template <typename ReturnType>
 StatusOr<ReturnType> ParseFromString(StatusOr<HttpResponse> response) {
   if (not response.ok()) {
@@ -690,9 +686,7 @@ CurlClient::RestoreResumableSession(std::string const& session_id) {
       google::cloud::internal::make_unique<CurlResumableUploadSession>(
           shared_from_this(), session_id);
   auto response = session->ResetSession();
-  if (response.status().status_code() == 308 or
-      response.status().status_code() < 300) {
-    // Error handling is wonky for these calls, 308 is not an error.
+  if (response.status().ok()) {
     return std::unique_ptr<ResumableUploadSession>(std::move(session));
   }
   return std::move(response).status();
