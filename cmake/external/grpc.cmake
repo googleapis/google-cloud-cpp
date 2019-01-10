@@ -36,6 +36,17 @@ if (NOT TARGET gprc_project)
         set(PARALLEL "")
     endif ()
 
+    # When CMake passes the configure command to the shell, the semi-colon will
+    # also be interpreted by the shell so it needs to be escaped. Quoting does
+    # not work, so instead we replace the semi-colon with a different separator
+    # and specify that using LIST_SEPARATOR below. This ensures that our RPATH
+    # will contain both directories.
+    set(GOOGLE_CLOUD_CPP_INSTALL_RPATH "<INSTALL_DIR>/lib;<INSTALL_DIR>/lib64")
+    string(REPLACE ";"
+                   "|"
+                   GOOGLE_CLOUD_CPP_INSTALL_RPATH
+                   "${GOOGLE_CLOUD_CPP_INSTALL_RPATH}")
+
     create_external_project_library_byproduct_list(grpc_byproducts
                                                    "grpc"
                                                    "grpc++"
@@ -50,12 +61,14 @@ if (NOT TARGET gprc_project)
         INSTALL_DIR "external"
         URL ${GOOGLE_CLOUD_CPP_GRPC_URL}
         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GRPC_SHA256}
+        LIST_SEPARATOR |
         CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                    -DCMAKE_BUILD_TYPE=Release
                    -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
                    -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+                   -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
                    -DgRPC_BUILD_TESTS=OFF
                    -DgRPC_ZLIB_PROVIDER=package
                    -DgRPC_SSL_PROVIDER=package

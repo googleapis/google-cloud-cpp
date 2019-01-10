@@ -34,6 +34,17 @@ if (NOT TARGET curl_project)
         set(PARALLEL "")
     endif ()
 
+    # When CMake passes the configure command to the shell, the semi-colon will
+    # also be interpreted by the shell so it needs to be escaped. Quoting does
+    # not work, so instead we replace the semi-colon with a different separator
+    # and specify that using LIST_SEPARATOR below. This ensures that our RPATH
+    # will contain both directories.
+    set(GOOGLE_CLOUD_CPP_INSTALL_RPATH "<INSTALL_DIR>/lib;<INSTALL_DIR>/lib64")
+    string(REPLACE ";"
+                   "|"
+                   GOOGLE_CLOUD_CPP_INSTALL_RPATH
+                   "${GOOGLE_CLOUD_CPP_INSTALL_RPATH}")
+
     create_external_project_library_byproduct_list(curl_byproducts "curl")
 
     include(ExternalProject)
@@ -45,6 +56,7 @@ if (NOT TARGET curl_project)
         INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
         URL ${GOOGLE_CLOUD_CPP_CURL_URL}
         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_CURL_SHA256}
+        LIST_SEPARATOR |
         CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                    # libcurl automatically enables a number of protocols. With
                    # static libraries this is a problem. The indirect
@@ -62,6 +74,7 @@ if (NOT TARGET curl_project)
                    -DCURL_STATICLIB=$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>
                    -DCMAKE_DEBUG_POSTFIX=
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+                   -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
         BUILD_COMMAND ${CMAKE_COMMAND}
                       --build
                       <BINARY_DIR>
