@@ -218,20 +218,21 @@ brew install curl cmake libressl c-ares
 
 #### Windows (using vcpkg)
 
-Probably the easiest way to download and compile `google-cloud-cpp` on Windows
-is to use [vcpkg][vcpkg-link], a package manager from Microsoft that downloads
-the source code for a library (and all its dependencies), compiles it, and adds
-the right configuration for DevStudio and/or CMake.
-
-After downloading and compiling `vcpkg`, run:
+If you are already using [vcpkg][vcpkg-link], a package manager from Microsoft,
+you can download and compile `google-cloud-cpp` in a single step:
 
 ```bash
 .\vcpkg.exe install google-cloud-cpp:x64-windows-static
 ```
 
-and then follow the instructions from `vcpkg`. We try to keep the version of
-`google-cloud-cpp` up-to-date, our practice is to submit a PR to update the
-version in `vcpkg` after each release of `google-cloud-cpp`.
+This command will also print out instructions on how to use the library from
+your MSBuild or CMake-based projects. We try to keep the version of
+`google-cloud-cpp` included with `vcpkg` up-to-date, our practice is to submit a
+PR to update the version in `vcpkg` after each release of `google-cloud-cpp`.
+
+See below for instructions to compile the code yourself.
+
+[vcpkg-link]: https://github.com/Microsoft/vcpkg/
 
 ## Build
 
