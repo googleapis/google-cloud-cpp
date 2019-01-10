@@ -598,7 +598,7 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
   auto table = CreateTable(table_id, table_config);
 
   std::string const row_key = "row-key-1";
-  // cell vector contains 10 cell of 25 MiB
+  // cell vector contains 10 cells of 25 MiB
   auto const MiB = 1024L * 1024L;
 
   std::string value((25 * MiB), 'a');
@@ -616,10 +616,8 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
 
   CreateCells(*table, created);
   auto result = table->ReadRow(row_key, bigtable::Filter::PassAllFilter());
+  EXPECT_TRUE(result.first);
 
-  if (not result.first) {
-    return;
-  }
   int totalrowsize = 0;
   for (auto const& cell : result.second.cells()) {
     totalrowsize += cell.value().size();
