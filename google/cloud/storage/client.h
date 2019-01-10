@@ -15,8 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H_
 
+#include "google/cloud/internal/disjunction.h"
+#include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/storage/internal/retry_client.h"
+#include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/list_buckets_reader.h"
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/notification_event_type.h"
@@ -24,6 +28,8 @@
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/object_rewriter.h"
 #include "google/cloud/storage/object_stream.h"
+#include "google/cloud/storage/retry_policy.h"
+#include "google/cloud/storage/upload_options.h"
 
 namespace google {
 namespace cloud {
@@ -49,6 +55,38 @@ inline namespace STORAGE_CLIENT_NS {
  * threads is guaranteed to work. Two threads operating on the same instance of
  * this class is not guaranteed to work.
  *
+ * @par Credentials
+ * The default constructor for this class will attempt to load Application
+ * Default %Credentials (ADCs). If you wish to use no credentials or to supply a
+ * specific Credentials type, you can use the functions declared in
+ * google_credentials.h:
+ * @code
+ * namespace gcs = google::cloud::storage;
+ * // Use ADCs, implicitly or explicitly:
+ * gcs::Client client;
+ * gcs::Client client(
+ *     gcs::ClientOptions(gcs::oauth2::GoogleDefaultCredentials));
+ * // Use service account credentials from a JSON keyfile:
+ * std::string path = "/path/to/keyfile.json";
+ * gcs::Client client(
+ *     gcs::ClientOptions(
+ *         gcs::oauth2::CreateServiceAccountCredentialsFromJsonFilePath(path)));
+ * // Use Compute Engine credentials for the instance's default service account:
+ * gcs::Client client(
+ *     gcs::ClientOptions(gcs::oauth2::CreateComputeEngineCredentials()));
+ * // Use no credentials:
+ * gcs::Client client(
+ *     gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials()));
+ * @endcode
+ *
+ * @par Error Handling
+ * This class uses `StatusOr<T>` to report errors. When an operation fails to
+ * perform its work the returned `StatusOr<T>` contains the error details. If
+ * the `ok()` member function in the `StatusOr<T>` returns `true` then it
+ * contains the expected result. Please consult the `StatusOr<T>` documentation
+ * for more details. In addition, the @ref index "main page" contains examples
+ * using `StatusOr<T>` to handle errors.
+ *
  * @see https://cloud.google.com/storage/ for an overview of GCS.
  *
  * @see https://cloud.google.com/storage/docs/key-terms for an introduction of
@@ -56,26 +94,49 @@ inline namespace STORAGE_CLIENT_NS {
  *
  * @see https://cloud.google.com/storage/docs/json_api/ for an overview of the
  *     underlying API.
+ *
+ * @see https://cloud.google.com/docs/authentication/production for details
+ *     about Application Default %Credentials.
+ *
  */
 class Client {
  public:
-  /**
-   * Creates the default client type given the options.
-   */
-  explicit Client(ClientOptions options);
-
   /**
    * Creates the default client type with the default configuration.
    */
   explicit Client() : Client(ClientOptions()) {}
 
   /**
-   * Creates the default client type given the credentials.
+   * Creates the default client type given the options.
+   *
+   * @param options the client options, these are used to control credentials,
+   *   buffer sizes, etc.
+   * @param policies the client policies, these control the behavior of the
+   *   client, for example, how to backoff when a operation needs to be retried,
+   *   or what operations cannot be retried because they are not idempotent.
+   *
+   * @par Idempotency Policy Example
+   * @snippet storage_object_samples.cc insert object strict idempotency
+   *
+   * @par Modified Retry Policy Example
+   * @snippet storage_object_samples.cc insert object modified retry
    */
-  explicit Client(std::shared_ptr<oauth2::Credentials> credentials)
-      : Client(ClientOptions(std::move(credentials))) {}
+  template <typename... Policies>
+  explicit Client(ClientOptions options, Policies&&... policies)
+      : Client(CreateDefaultClient(std::move(options)),
+               std::forward<Policies>(policies)...) {}
 
-  /// Builds a client and maybe override the retry and/or backoff policies.
+  /**
+   * Creates the default client type given the credentials and policies.
+   */
+  template <typename... Policies>
+  explicit Client(std::shared_ptr<oauth2::Credentials> credentials,
+                  Policies&&... policies)
+      : Client(ClientOptions(std::move(credentials)),
+               std::forward<Policies>(policies)...) {}
+
+  /// Builds a client and maybe override the retry, idempotency, and/or backoff
+  /// policies.
   template <typename... Policies>
   explicit Client(std::shared_ptr<internal::RawClient> client,
                   Policies&&... policies)
@@ -111,7 +172,11 @@ class Client {
    *     Valid types for this operation include `MaxResults`, `Prefix`,
    *     `UserProject`, and `Projection`.
    *
-   * @throw std::runtime_error if the operation fails.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc list buckets for project
@@ -138,7 +203,12 @@ class Client {
    *
    * @throw std::logic_error if the function is called without a default
    *     project id set.
-   * @throw std::runtime_error if the operation fails.
+   *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc list buckets
@@ -164,7 +234,11 @@ class Client {
    *     Valid types for this operation include `PredefinedAcl`,
    *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if the operation fails.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is always idempotent. It fails if the bucket already exists.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc create bucket
@@ -194,7 +268,11 @@ class Client {
    *     Valid types for this operation include `PredefinedAcl`,
    *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if the operation fails.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is always idempotent. It fails if the bucket already exists.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc create bucket for project
@@ -208,7 +286,7 @@ class Client {
     internal::CreateBucketRequest request(std::move(project_id),
                                           std::move(metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateBucket(request).second;
+    return raw_client_->CreateBucket(request).value();
   }
 
   /**
@@ -219,8 +297,11 @@ class Client {
    *     Valid types for this operation include `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `UserProject`, and `Projection`.
    *
-   * @throw std::runtime_error if the metadata cannot be fetched using the
-   * current policies.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc get bucket metadata
@@ -230,7 +311,7 @@ class Client {
                                    Options&&... options) {
     internal::GetBucketMetadataRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetBucketMetadata(request).second;
+    return raw_client_->GetBucketMetadata(request).value();
   }
 
   /**
@@ -241,8 +322,12 @@ class Client {
    *     Valid types for this operation include `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, and `UserProject`.
    *
-   * @throw std::runtime_error if the metadata cannot be fetched using the
-   * current policies.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc delete bucket
@@ -251,7 +336,7 @@ class Client {
   void DeleteBucket(std::string const& bucket_name, Options&&... options) {
     internal::DeleteBucketRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->DeleteBucket(request);
+    raw_client_->DeleteBucket(request).value();
   }
 
   /**
@@ -265,7 +350,15 @@ class Client {
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if the operation fails.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case,`IfMetagenerationMatch`.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc update bucket
@@ -276,7 +369,7 @@ class Client {
     metadata.set_name(std::move(bucket_name));
     internal::UpdateBucketRequest request(std::move(metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateBucket(request).second;
+    return raw_client_->UpdateBucket(request).value();
   }
 
   /**
@@ -295,8 +388,12 @@ class Client {
    *     Valid types for this operation include `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if the metadata cannot be fetched using the
-   * current policies.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc patch bucket storage class
@@ -309,7 +406,7 @@ class Client {
     internal::PatchBucketRequest request(std::move(bucket_name), original,
                                          updated);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchBucket(request).second;
+    return raw_client_->PatchBucket(request).value();
   }
 
   /**
@@ -323,8 +420,12 @@ class Client {
    *     Valid types for this operation include `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if the metadata cannot be fetched using the
-   * current policies.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc patch bucket storage class with builder
@@ -335,7 +436,7 @@ class Client {
                              Options&&... options) {
     internal::PatchBucketRequest request(std::move(bucket_name), builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchBucket(request).second;
+    return raw_client_->PatchBucket(request).value();
   }
 
   /**
@@ -361,7 +462,11 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if the operation fails.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_iam_samples.cc get bucket iam policy
@@ -372,7 +477,7 @@ class Client {
                                Options&&... options) {
     internal::GetBucketIamPolicyRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetBucketIamPolicy(request).second;
+    return raw_client_->GetBucketIamPolicy(request).value();
   }
 
   /**
@@ -407,12 +512,17 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if the operation fails.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
-   * @par Examples
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
    *
+   * @par Example: adding a new member
    * @snippet storage_bucket_iam_samples.cc add bucket iam member
    *
+   * @par Example: removing a IAM member
    * @snippet storage_bucket_iam_samples.cc remove bucket iam member
    */
   template <typename... Options>
@@ -421,7 +531,7 @@ class Client {
                                Options&&... options) {
     internal::SetBucketIamPolicyRequest request(bucket_name, iam_policy);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->SetBucketIamPolicy(request).second;
+    return raw_client_->SetBucketIamPolicy(request).value();
   }
 
   /**
@@ -445,7 +555,11 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if the operation fails.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_iam_samples.cc test bucket iam permissions
@@ -457,7 +571,7 @@ class Client {
     internal::TestBucketIamPermissionsRequest request(std::move(bucket_name),
                                                       std::move(permissions));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->TestBucketIamPermissions(request).second.permissions;
+    return raw_client_->TestBucketIamPermissions(request).value().permissions;
   }
 
   /**
@@ -490,16 +604,23 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if the operation fails.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
-   * @par Examples
+   * @par Idempotency
+   * This operation is always idempotent because the `metageneration` parameter
+   * is always required, and it acts as a pre-condition on the operation.
    *
+   * @par Example: lock the retention policy
    * @snippet storage_bucket_samples.cc lock retention policy
    *
+   * @par Example: get the current retention policy
    * @snippet storage_bucket_samples.cc get retention policy
    *
+   * @par Example: set the current retention policy
    * @snippet storage_bucket_samples.cc set retention policy
    *
+   * @par Example: remove the retention policy
    * @snippet storage_bucket_samples.cc remove retention policy
    */
   template <typename... Options>
@@ -509,9 +630,8 @@ class Client {
     internal::LockBucketRetentionPolicyRequest request(bucket_name,
                                                        metageneration);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->LockBucketRetentionPolicy(request);
+    raw_client_->LockBucketRetentionPolicy(request).value();
   }
-
   //@}
 
   //@{
@@ -541,8 +661,12 @@ class Client {
    *     `IfMetagenerationNotMatch`, `KmsKeyName`, `MD5HashValue`,
    *     `PredefinedAcl`, `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if the operation cannot be completed using the
-   *   current policies.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc insert object
@@ -554,7 +678,7 @@ class Client {
     internal::InsertObjectMediaRequest request(bucket_name, object_name,
                                                std::move(contents));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->InsertObjectMedia(request).second;
+    return raw_client_->InsertObjectMedia(request).value();
   }
 
   /**
@@ -587,13 +711,17 @@ class Client {
    *     `Projection`, `SourceGeneration`, `UserProject`, and
    *     `WithObjectMetadata`.
    *
-   * @throw std::runtime_error if the operation cannot be completed using the
-   *   current policies.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
-   * @par Examples
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
+   * @par Example
    * @snippet storage_object_samples.cc copy object
    *
+   * @par Example: copy an encrypted object
    * @snippet storage_object_samples.cc copy encrypted object
    */
   template <typename... Options>
@@ -606,7 +734,7 @@ class Client {
         std::move(source_bucket_name), std::move(source_object_name),
         std::move(destination_bucket_name), std::move(destination_object_name));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CopyObject(request).second;
+    return raw_client_->CopyObject(request).value();
   }
 
   /**
@@ -620,8 +748,11 @@ class Client {
    *     `IfMetagenerationNotMatch`, `Projection`, and `UserProject`.
    *
    *
-   * @throw std::runtime_error if the metadata cannot be fetched using the
-   * current policies.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_object_samples.cc get object metadata
@@ -632,7 +763,7 @@ class Client {
                                    Options&&... options) {
     internal::GetObjectMetadataRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetObjectMetadata(request).second;
+    return raw_client_->GetObjectMetadata(request).value();
   }
 
   /**
@@ -644,8 +775,11 @@ class Client {
    *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
    *     `Projection`, `Prefix`, and `Versions`.
    *
-   * @throw std::runtime_error if the operation cannot be completed using the
-   *   current policies.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_object_samples.cc list objects
@@ -660,18 +794,32 @@ class Client {
   /**
    * Reads the contents of an object.
    *
+   * Returns an object derived from `std::istream` which can be used to read the
+   * contents of the GCS blob. The application should check the `badbit` (e.g.
+   * by calling `stream.bad()`) on the returned object to detect if there was
+   * an error reading from the blob. If `badbit` is set, the application can
+   * check the `status()` variable to get details about the failure.
+   * Applications can also set the exception mask on the returned stream, in
+   * which case an exception is thrown if an error is detected.
+   *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `DisableCrc32cChecksum`,
    *     `DisableMD5Hash`, `IfGenerationMatch`, `EncryptionKey`, `Generation`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, and `UserProject`.
+   *     `IfMetagenerationNotMatch`, `ReadRange`, and `UserProject`.
    *
-   * @par Examples
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @par Example
    * @snippet storage_object_samples.cc read object
    *
+   * @par Example: read a object encrypted with a CSEK.
    * @snippet storage_object_samples.cc read encrypted object
    */
   template <typename... Options>
@@ -680,11 +828,39 @@ class Client {
                               Options&&... options) {
     internal::ReadObjectRangeRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return ObjectReadStream(raw_client_->ReadObject(request).second);
+    return ObjectReadStream(raw_client_->ReadObject(request).value());
   }
 
   /**
    * Writes contents into an object.
+   *
+   * This creates a `std::ostream` object to upload contents. The application
+   * can use either the regular `operator<<()`, or `std::ostream::write()` to
+   * upload data.
+   *
+   * The application can explicitly request a new resumable upload using the
+   * result of `NewResumableUploadSession`. To restore a previously created
+   * resumable session use `RestoreResumableUploadSession`.
+   *
+   * @note It is the application's responsibility to query the stream to find
+   *     the latest committed byte and to upload data starting from the next
+   *     byte expected by the upload session.
+   *
+   * @note Using the `WithObjectMetadata` option implicitly creates a resumable
+   *     upload.
+   *
+   * Without resumable uploads an interrupted upload has to be restarted from
+   * the beginning. Therefore, applications streaming large objects should try
+   * to use resumable uploads, and save the session id to restore them if
+   * needed.
+   *
+   * Non-resumable uploads may be more efficient for small and medium sized
+   * uploads, as they require fewer roundtrips to the service.
+   *
+   * For small uploads we recommed using `InsertObject`, consult
+   * [the
+   * documentation](https://cloud.google.com/storage/docs/json_api/v1/how-tos/upload)
+   * for details.
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
@@ -693,13 +869,27 @@ class Client {
    *   `Crc32cChecksumValue`, `DisableCrc32cChecksum`, `DisableMD5Hash`,
    *   `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
    *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
-   *   `MD5HashValue`, `PredefinedAcl`, `Projection`, and `UserProject`.
+   *   `MD5HashValue`, `PredefinedAcl`, `Projection`,
+   *   `UseResumableUploadSession`, `UserProject`, and `WithObjectMetadata`.
    *
-   * @par Examples
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
+   *
+   * @par Example
    * @snippet storage_object_samples.cc write object
    *
+   * @par Example: write an object with a CMEK.
    * @snippet storage_object_samples.cc write object with kms key
+   *
+   * @par Example: starting a resumable upload.
+   * @snippet storage_object_samples.cc start resumable upload
+   *
+   * @par Example: resuming a resumable upload.
+   * @snippet storage_object_samples.cc resume resumable upload
    */
   template <typename... Options>
   ObjectWriteStream WriteObject(std::string const& bucket_name,
@@ -707,7 +897,7 @@ class Client {
                                 Options&&... options) {
     internal::InsertObjectStreamingRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return ObjectWriteStream(raw_client_->WriteObject(request).second);
+    return ObjectWriteStream(raw_client_->WriteObject(request).value());
   }
 
   /**
@@ -727,19 +917,36 @@ class Client {
    *   `Crc32cChecksumValue`, `DisableCrc32cChecksum`, `DisableMD5Hash`,
    *   `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
    *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
-   *   `MD5HashValue`, `PredefinedAcl`, `Projection`, and `UserProject`.
+   *   `MD5HashValue`, `PredefinedAcl`, `Projection`, `UserProject`, and
+   *   `WithObjectMetadata`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
+   *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
    * @par Example
    * @snippet storage_object_samples.cc upload file
+   *
+   * @par Example: manually selecting a resumable upload
+   * @snippet storage_object_samples.cc upload file resumable
    */
   template <typename... Options>
   ObjectMetadata UploadFile(std::string const& file_name,
                             std::string const& bucket_name,
                             std::string const& object_name,
                             Options&&... options) {
-    internal::InsertObjectStreamingRequest request(bucket_name, object_name);
-    request.set_multiple_options(std::forward<Options>(options)...);
-    return UploadFileImpl(file_name, std::move(request));
+    // Determine, at compile time, which version of UploadFileImpl we should
+    // call. This needs to be done at compile time because ObjectInsertMedia
+    // does not support (nor should it support) the UseResumableUploadSession
+    // option.
+    using HasUseResumableUpload = google::cloud::internal::disjunction<
+        std::is_same<UseResumableUploadSession, Options>...>;
+    return UploadFileImpl(file_name, bucket_name, object_name,
+                          HasUseResumableUpload{},
+                          std::forward<Options>(options)...);
   }
 
   /**
@@ -752,7 +959,13 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *   Valid types for this operation include `IfGenerationMatch`,
    *   `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *   `IfMetagenerationNotMatch`, `Generation`, and `UserProject`.
+   *   `IfMetagenerationNotMatch`, `Generation`, `ReadRange`, and `UserProject`.
+   *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_object_samples.cc download file
@@ -763,7 +976,7 @@ class Client {
                       std::string const& file_name, Options&&... options) {
     internal::ReadObjectRangeRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    DownloadFileImpl(std::move(request), file_name);
+    DownloadFileImpl(request, file_name);
   }
 
   /**
@@ -776,6 +989,9 @@ class Client {
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, and `UserProject`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
    * @par Example
    * @snippet storage_object_samples.cc delete object
    */
@@ -784,7 +1000,7 @@ class Client {
                     std::string const& object_name, Options&&... options) {
     internal::DeleteObjectRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->DeleteObject(request);
+    raw_client_->DeleteObject(request).value();
   }
 
   /**
@@ -802,7 +1018,12 @@ class Client {
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if the operation fails.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc update object metadata
@@ -811,9 +1032,9 @@ class Client {
   ObjectMetadata UpdateObject(std::string bucket_name, std::string object_name,
                               ObjectMetadata metadata, Options&&... options) {
     internal::UpdateObjectRequest request(
-        std::move(bucket_name), std::string(object_name), std::move(metadata));
+        std::move(bucket_name), std::move(object_name), std::move(metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateObject(request).second;
+    return raw_client_->UpdateObject(request).value();
   }
 
   /**
@@ -835,8 +1056,12 @@ class Client {
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if the metadata cannot be fetched using the
-   * current policies.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc patch object delete metadata
@@ -849,7 +1074,7 @@ class Client {
     internal::PatchObjectRequest request(
         std::move(bucket_name), std::move(object_name), original, updated);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchObject(request).second;
+    return raw_client_->PatchObject(request).value();
   }
 
   /**
@@ -869,8 +1094,12 @@ class Client {
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if the metadata cannot be fetched using the
-   * current policies.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc patch object content type
@@ -882,7 +1111,7 @@ class Client {
     internal::PatchObjectRequest request(std::move(bucket_name),
                                          std::move(object_name), builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchObject(request).second;
+    return raw_client_->PatchObject(request).value();
   }
 
   /**
@@ -894,16 +1123,21 @@ class Client {
    * @param destination_object_name the composed object name.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include
-   *      `DestinationPredefinedAcl`, `EncryptionKey`, `Generation`,
-   *      `IfGenerationMatch`, `IfMetagenerationMatch`, `KmsKeyName`,
-   *      `UserProject`, and `WithObjectMetadata`.
+   *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
+   *      `IfMetagenerationMatch`, `KmsKeyName`, `UserProject`, and
+   *      `WithObjectMetadata`.
    *
-   * @throw std::runtime_error if the operation fails.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
    * @par Example
-   *
    * @snippet storage_object_samples.cc compose object
    *
+   * @par Example: using encrypted objects with CSEK
    * @snippet storage_object_samples.cc compose object from encrypted objects
    */
   template <typename... Options>
@@ -915,7 +1149,7 @@ class Client {
                                            std::move(source_objects),
                                            std::move(destination_object_name));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->ComposeObject(request).second;
+    return raw_client_->ComposeObject(request).value();
   }
 
   /**
@@ -939,10 +1173,15 @@ class Client {
    *      `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *      `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
    *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
-   *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey,
+   *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey`,
    *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
    *
-   * @throw std::runtime_error if the operation fails.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc rewrite object non blocking
@@ -985,10 +1224,15 @@ class Client {
    *      `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *      `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
    *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
-   *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey,
+   *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey`,
    *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
    *
-   * @throw std::runtime_error if the operation fails.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc rewrite object resume
@@ -1033,17 +1277,23 @@ class Client {
    *      `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *      `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
    *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
-   *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey,
+   *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey`,
    *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
    *
-   * @throw std::runtime_error if the operation fails.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
    *
-   * @par Examples
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
+   * @par Example
    * @snippet storage_object_samples.cc rewrite object
    *
+   * @par Example: using rewrite object to rotate the encryption key
    * @snippet storage_object_samples.cc rotate encryption key
    *
+   * @par Example: using rewrite object to rename an object
    * @snippet storage_object_samples.cc rename object
    *
    */
@@ -1096,6 +1346,12 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc list bucket acl
    */
@@ -1104,7 +1360,7 @@ class Client {
                                                  Options&&... options) {
     internal::ListBucketAclRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->ListBucketAcl(request).second.items;
+    return raw_client_->ListBucketAcl(request).value().items;
   }
 
   /**
@@ -1116,6 +1372,13 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc create bucket acl
    */
@@ -1126,7 +1389,7 @@ class Client {
                                       Options&&... options) {
     internal::CreateBucketAclRequest request(bucket_name, entity, role);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateBucketAcl(request).second;
+    return raw_client_->CreateBucketAcl(request).value();
   }
 
   /**
@@ -1137,6 +1400,13 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc delete bucket acl
    */
@@ -1145,7 +1415,7 @@ class Client {
                        std::string const& entity, Options&&... options) {
     internal::DeleteBucketAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->DeleteBucketAcl(request);
+    raw_client_->DeleteBucketAcl(request).value();
   }
 
   /**
@@ -1156,6 +1426,12 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc get bucket acl
    */
@@ -1165,7 +1441,7 @@ class Client {
                                    Options&&... options) {
     internal::GetBucketAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetBucketAcl(request).second;
+    return raw_client_->GetBucketAcl(request).value();
   }
 
   /**
@@ -1176,6 +1452,13 @@ class Client {
    *   will be modified by the server.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
+   *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc update bucket acl
@@ -1190,7 +1473,7 @@ class Client {
     internal::UpdateBucketAclRequest request(bucket_name, acl.entity(),
                                              acl.role());
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateBucketAcl(request).second;
+    return raw_client_->UpdateBucketAcl(request).value();
   }
 
   /**
@@ -1216,6 +1499,13 @@ class Client {
    *     Valid types for this operation include `UserProject`, and the standard
    *     options available to all operations.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc patch bucket acl
    *
@@ -1231,7 +1521,7 @@ class Client {
     internal::PatchBucketAclRequest request(bucket_name, entity, original_acl,
                                             new_acl);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchBucketAcl(request).second;
+    return raw_client_->PatchBucketAcl(request).value();
   }
 
   /**
@@ -1256,6 +1546,13 @@ class Client {
    *     headers. Valid types for this operation include `Generation`,
    *     `UserProject`, `IfMatchEtag`, and `IfNoneMatchEtag`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc patch bucket acl no-read
    *
@@ -1268,7 +1565,7 @@ class Client {
       BucketAccessControlPatchBuilder const& builder, Options&&... options) {
     internal::PatchBucketAclRequest request(bucket_name, entity, builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchBucketAcl(request).second;
+    return raw_client_->PatchBucketAcl(request).value();
   }
   //@}
 
@@ -1300,6 +1597,12 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`, and `UserProject`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_object_acl_samples.cc list object acl
    */
@@ -1309,7 +1612,7 @@ class Client {
                                                  Options&&... options) {
     internal::ListObjectAclRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->ListObjectAcl(request).second.items;
+    return raw_client_->ListObjectAcl(request).value().items;
   }
 
   /**
@@ -1321,6 +1624,13 @@ class Client {
    * @param role the role of the entity.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`, and `UserProject`.
+   *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc create object acl
@@ -1334,7 +1644,7 @@ class Client {
     internal::CreateObjectAclRequest request(bucket_name, object_name, entity,
                                              role);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateObjectAcl(request).second;
+    return raw_client_->CreateObjectAcl(request).value();
   }
 
   /**
@@ -1347,6 +1657,13 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`, and `UserProject`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_object_acl_samples.cc delete object acl
    */
@@ -1356,7 +1673,7 @@ class Client {
                        std::string const& entity, Options&&... options) {
     internal::DeleteObjectAclRequest request(bucket_name, object_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->DeleteObjectAcl(request);
+    raw_client_->DeleteObjectAcl(request).value();
   }
 
   /**
@@ -1368,6 +1685,12 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`, and `UserProject`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_object_acl_samples.cc get object acl
    */
@@ -1378,7 +1701,7 @@ class Client {
                                    Options&&... options) {
     internal::GetObjectAclRequest request(bucket_name, object_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetObjectAcl(request).second;
+    return raw_client_->GetObjectAcl(request).value();
   }
 
   /**
@@ -1390,6 +1713,13 @@ class Client {
    *   will be modified by the server.
    * @param options a list of optional query parameters and/or request
    *     Valid types for this operation include `Generation`, and `UserProject`.
+   *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc update object acl
@@ -1405,7 +1735,7 @@ class Client {
     internal::UpdateObjectAclRequest request(bucket_name, object_name,
                                              acl.entity(), acl.role());
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateObjectAcl(request).second;
+    return raw_client_->UpdateObjectAcl(request).value();
   }
 
   /**
@@ -1432,6 +1762,13 @@ class Client {
    *     headers. Valid types for this operation include `Generation`,
    *     `UserProject`, `IfMatchEtag`, and `IfNoneMatchEtag`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_object_acl_samples.cc patch object acl
    *
@@ -1448,7 +1785,7 @@ class Client {
     internal::PatchObjectAclRequest request(bucket_name, object_name, entity,
                                             original_acl, new_acl);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchObjectAcl(request).second;
+    return raw_client_->PatchObjectAcl(request).value();
   }
 
   /**
@@ -1473,6 +1810,13 @@ class Client {
    *     headers. Valid types for this operation include `Generation`,
    *     `UserProject`, `IfMatchEtag`, and `IfNoneMatchEtag`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_object_acl_samples.cc patch object acl no-read
    *
@@ -1487,7 +1831,7 @@ class Client {
     internal::PatchObjectAclRequest request(bucket_name, object_name, entity,
                                             builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchObjectAcl(request).second;
+    return raw_client_->PatchObjectAcl(request).value();
   }
   //@}
 
@@ -1513,6 +1857,12 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc list default object acl
    *
@@ -1524,7 +1874,7 @@ class Client {
       std::string const& bucket_name, Options&&... options) {
     internal::ListDefaultObjectAclRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->ListDefaultObjectAcl(request).second.items;
+    return raw_client_->ListDefaultObjectAcl(request).value().items;
   }
 
   /**
@@ -1539,6 +1889,13 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc create default object acl
    *
@@ -1552,7 +1909,7 @@ class Client {
                                              Options&&... options) {
     internal::CreateDefaultObjectAclRequest request(bucket_name, entity, role);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateDefaultObjectAcl(request).second;
+    return raw_client_->CreateDefaultObjectAcl(request).value();
   }
 
   /**
@@ -1566,6 +1923,13 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc delete default object acl
    *
@@ -1577,7 +1941,7 @@ class Client {
                               std::string const& entity, Options&&... options) {
     internal::DeleteDefaultObjectAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->DeleteDefaultObjectAcl(request);
+    raw_client_->DeleteDefaultObjectAcl(request).value();
   }
 
   /**
@@ -1591,6 +1955,12 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc get default object acl
    *
@@ -1603,7 +1973,7 @@ class Client {
                                           Options&&... options) {
     internal::GetDefaultObjectAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetDefaultObjectAcl(request).second;
+    return raw_client_->GetDefaultObjectAcl(request).value();
   }
 
   /**
@@ -1618,6 +1988,13 @@ class Client {
    * @param options a list of optional query parameters and/or request
    *     Valid types for this operation include `UserProject`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc update default object acl
    *
@@ -1631,7 +2008,7 @@ class Client {
     internal::UpdateDefaultObjectAclRequest request(bucket_name, acl.entity(),
                                                     acl.role());
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateDefaultObjectAcl(request).second;
+    return raw_client_->UpdateDefaultObjectAcl(request).value();
   }
 
   /**
@@ -1658,6 +2035,13 @@ class Client {
    *     as the standard parameters, such as `IfMatchEtag`, and
    *     `IfNoneMatchEtag`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc patch default object acl
    *
@@ -1672,7 +2056,7 @@ class Client {
     internal::PatchDefaultObjectAclRequest request(bucket_name, entity,
                                                    original_acl, new_acl);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchDefaultObjectAcl(request).second;
+    return raw_client_->PatchDefaultObjectAcl(request).value();
   }
 
   /**
@@ -1697,6 +2081,13 @@ class Client {
    *     as the standard parameters, such as `IfMatchEtag`, and
    *     `IfNoneMatchEtag`.
    *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc patch default object acl
    * no-read
@@ -1711,7 +2102,7 @@ class Client {
     internal::PatchDefaultObjectAclRequest request(bucket_name, entity,
                                                    builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchDefaultObjectAcl(request).second;
+    return raw_client_->PatchDefaultObjectAcl(request).value();
   }
   //@}
 
@@ -1739,7 +2130,11 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if the operation fails.
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc get service account for project
@@ -1752,7 +2147,7 @@ class Client {
                                              Options&&... options) {
     internal::GetProjectServiceAccountRequest request(project_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetServiceAccount(request).second;
+    return raw_client_->GetServiceAccount(request).value();
   }
 
   /**
@@ -1774,7 +2169,12 @@ class Client {
    *
    * @throw std::logic_error if the function is called without a default
    *     project id set.
-   * @throw std::runtime_error if the operation fails.
+   *
+   * @throw std::runtime_error if there is a permanent failure, or if there were
+   *     more transient failures than allowed by the current retry policy.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc get service account
@@ -1792,6 +2192,58 @@ class Client {
     }
     return GetServiceAccountForProject(project_id,
                                        std::forward<Options>(options)...);
+  }
+  //@}
+
+  //@{
+  /**
+   * Create a signed URL for the given parameters.
+   *
+   * @note By default URLs created with this function expire after 7 days.
+   *
+   * @note The application must ensure that any URL created with this function
+   *     is a valid request via the XML API. For example, the options for
+   *     bucket requests may include a sub-resource (e.g. `WithBilling()`) but
+   *     not all sub-resources are valid for objects.  Likewise, only a single
+   *     sub-resource may be retrieved in each request.
+   *
+   * @see https://cloud.google.com/storage/docs/access-control/signed-urls for
+   *     a general description of signed URLs and how they can be used.
+   *
+   * @see https://cloud.google.com/storage/docs/xml-api/overview for a detailed
+   *     description of the XML API.
+   *
+   * @param verb the operation allowed through this signed URL, `GET`, `POST`,
+   *     `PUT`, 'HEAD', etc. are valid values.
+   * @param bucket_name the name of the bucket.
+   * @param object_name the name of the object, note that the object may not
+   *     exist for signed URLs that upload new objects. Use an empty string for
+   *     requests that only affect a bucket.
+   * @param options a list of optional parameters for the signed URL, this
+   *     include: `ExpirationTime`, `MD5HashValue`, `ContentType`,
+   *     `AddExtensionHeaderOption`, and `AddQueryParameterOption`. The
+   *     `AddExtensionHeader()` function provides a simpler way to create
+   *     extension headers. Note that you can provides multiple values of this
+   *     option. Likewise, the following helper functions can create properly
+   *     formatted query parameters: `WithAcl()`, `WithBilling()`,
+   *     `WithCompose()`, `WithCors()`, `WithEncryption()`,
+   *     `WithEncryptionConfig()`,`WithGeneration()`, `WithGenerationMarker()`,
+   *     `WithLifecycle()`, `WithLocation()`, `WithLogging()`, `WithMarker()`,
+   *     `WithResponseContentDisposition()`, `WithResponseContentType()`,
+   *     `WithStorageClass()`, `WithTagging()`, `WithUserProject()`.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc sign url
+   *
+   * @return the signed URL.
+   */
+  template <typename... Options>
+  std::string CreateV2SignedUrl(std::string verb, std::string bucket_name,
+                                std::string object_name, Options&&... options) {
+    internal::SignUrlRequest request(std::move(verb), std::move(bucket_name),
+                                     std::move(object_name));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return SignUrl(request);
   }
   //@}
 
@@ -1816,15 +2268,22 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_notification_samples.cc list notifications
    */
   template <typename... Options>
-  std::vector<NotificationMetadata> ListNotifications(
+  StatusOr<std::vector<NotificationMetadata>> ListNotifications(
       std::string const& bucket_name, Options&&... options) {
     internal::ListNotificationsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->ListNotifications(request).second.items;
+    auto result = raw_client_->ListNotifications(request);
+    if (not result.ok()) {
+      return std::move(result).status();
+    }
+    return std::move(result).value().items;
   }
 
   /**
@@ -1847,6 +2306,10 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_notification_samples.cc create notification
    *
@@ -1857,15 +2320,14 @@ class Client {
    *     Cloud Pub/Sub service.
    */
   template <typename... Options>
-  NotificationMetadata CreateNotification(std::string const& bucket_name,
-                                          std::string const& topic_name,
-                                          std::string const& payload_format,
-                                          NotificationMetadata metadata,
-                                          Options&&... options) {
+  StatusOr<NotificationMetadata> CreateNotification(
+      std::string const& bucket_name, std::string const& topic_name,
+      std::string const& payload_format, NotificationMetadata metadata,
+      Options&&... options) {
     metadata.set_topic(topic_name).set_payload_format(payload_format);
     internal::CreateNotificationRequest request(bucket_name, metadata);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateNotification(request).second;
+    return raw_client_->CreateNotification(request);
   }
 
   /**
@@ -1881,6 +2343,9 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_notification_samples.cc get notification
    *
@@ -1891,12 +2356,12 @@ class Client {
    *     Cloud Pub/Sub service.
    */
   template <typename... Options>
-  NotificationMetadata GetNotification(std::string const& bucket_name,
-                                       std::string const& notification_id,
-                                       Options&&... options) {
+  StatusOr<NotificationMetadata> GetNotification(
+      std::string const& bucket_name, std::string const& notification_id,
+      Options&&... options) {
     internal::GetNotificationRequest request(bucket_name, notification_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetNotification(request).second;
+    return raw_client_->GetNotification(request);
   }
 
   /**
@@ -1912,6 +2377,11 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Idempotency
+   * This operation is always idempotent because it only acts on a specific
+   * `notification_id`, the state after calling this function multiple times is
+   * to delete that notification.  New notifications get different ids.
+   *
    * @par Example
    * @snippet storage_notification_samples.cc delete notification
    *
@@ -1922,16 +2392,19 @@ class Client {
    *     Cloud Pub/Sub service.
    */
   template <typename... Options>
-  void DeleteNotification(std::string const& bucket_name,
-                          std::string const& notification_id,
-                          Options&&... options) {
+  StatusOr<void> DeleteNotification(std::string const& bucket_name,
+                                    std::string const& notification_id,
+                                    Options&&... options) {
     internal::DeleteNotificationRequest request(bucket_name, notification_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->DeleteNotification(request);
+    return std::move(raw_client_->DeleteNotification(request)).status();
   }
   //@}
 
  private:
+  static std::shared_ptr<internal::RawClient> CreateDefaultClient(
+      ClientOptions options);
+
   template <typename... Policies>
   std::shared_ptr<internal::RawClient> Decorate(
       std::shared_ptr<internal::RawClient> client, Policies&&... policies) {
@@ -1941,11 +2414,56 @@ class Client {
     return retry;
   }
 
+  // The version of UploadFile() where UseResumableUploadSession is one of the
+  // options. Note how this does not use InsertObjectMedia at all.
+  template <typename... Options>
   ObjectMetadata UploadFileImpl(std::string const& file_name,
-                                internal::InsertObjectStreamingRequest request);
+                                std::string const& bucket_name,
+                                std::string const& object_name,
+                                std::true_type has_resumable_option,
+                                Options&&... options) {
+    internal::ResumableUploadRequest request(bucket_name, object_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return UploadFileResumable(file_name, request);
+  }
+
+  // The version of UploadFile() where UseResumableUploadSession is *not* one of
+  // the options. In this case we can use InsertObjectMediaRequest because it
+  // is safe.
+  template <typename... Options>
+  ObjectMetadata UploadFileImpl(std::string const& file_name,
+                                std::string const& bucket_name,
+                                std::string const& object_name,
+                                std::false_type does_not_have_resumable_option,
+                                Options&&... options) {
+    if (UseSimpleUpload(file_name)) {
+      internal::InsertObjectMediaRequest request(bucket_name, object_name,
+                                                 std::string{});
+      request.set_multiple_options(std::forward<Options>(options)...);
+      return UploadFileSimple(file_name, request);
+    }
+    internal::ResumableUploadRequest request(bucket_name, object_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return UploadFileResumable(file_name, request);
+  }
+
+  bool UseSimpleUpload(std::string const& file_name) const;
+
+  ObjectMetadata UploadFileSimple(std::string const& file_name,
+                                  internal::InsertObjectMediaRequest request);
+
+  ObjectMetadata UploadFileResumable(
+      std::string const& file_name,
+      internal::ResumableUploadRequest const& request);
+
+  StatusOr<ObjectMetadata> UploadStreamResumable(
+      std::istream& source, std::uint64_t source_size,
+      internal::ResumableUploadRequest const& request);
 
   void DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
                         std::string const& file_name);
+
+  std::string SignUrl(internal::SignUrlRequest const& request);
 
   std::shared_ptr<internal::RawClient> raw_client_;
 };

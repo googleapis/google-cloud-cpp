@@ -43,7 +43,7 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
 
   auto download = request.BuildDownloadRequest(std::string{});
 
-  HttpResponse response;
+  StatusOr<HttpResponse> response;
   std::string buffer;
   // The type for std::count() is hard to guess, most likely it is
   // std::ptrdiff_t, but could be something else, just use the aliases defined
@@ -51,15 +51,16 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
   std::iterator_traits<std::string::iterator>::difference_type count = 0;
   do {
     response = download.GetMore(buffer);
+    EXPECT_TRUE(response.ok());
     count += std::count(buffer.begin(), buffer.end(), '\n');
-  } while (response.status_code == 100);
+  } while (response->status_code == 100);
 
-  EXPECT_EQ(200, response.status_code)
-      << ", status_code=" << response.status_code
-      << ", payload=" << response.payload << ", headers={" << [&response] {
+  EXPECT_EQ(200, response->status_code)
+      << ", status_code=" << response->status_code
+      << ", payload=" << response->payload << ", headers={" << [&response] {
            std::string result;
            char const* sep = "";
-           for (auto&& kv : response.headers) {
+           for (auto&& kv : response->headers) {
              result += sep;
              result += kv.first;
              result += "=";

@@ -16,15 +16,16 @@
 
 include(ExternalProjectHelper)
 include(external/c-ares)
+include(external/ssl)
 include(external/protobuf)
 
 if (NOT TARGET gprc_project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
     set(GOOGLE_CLOUD_CPP_GRPC_URL
-        "https://github.com/grpc/grpc/archive/v1.16.1.tar.gz")
+        "https://github.com/grpc/grpc/archive/v1.17.2.tar.gz")
     set(GOOGLE_CLOUD_CPP_GRPC_SHA256
-        "a5342629fe1b689eceb3be4d4f167b04c70a84b9d61cf8b555e968bc500bdb5a")
+        "34ed95b727e7c6fcbf85e5eb422e962788e21707b712fdb4caf931553c2c6dbc")
 
     if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
         OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
@@ -40,11 +41,10 @@ if (NOT TARGET gprc_project)
                                                    "grpc++"
                                                    "gpr"
                                                    "address_sorting")
-
     include(ExternalProject)
     externalproject_add(
         grpc_project
-        DEPENDS c_ares_project protobuf_project
+        DEPENDS c_ares_project protobuf_project ssl_project
         EXCLUDE_FROM_ALL ON
         PREFIX "external/grpc"
         INSTALL_DIR "external"
@@ -52,14 +52,19 @@ if (NOT TARGET gprc_project)
         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GRPC_SHA256}
         CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                    -DCMAKE_BUILD_TYPE=Release
+                   -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+                   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-                   -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
                    -DgRPC_BUILD_TESTS=OFF
                    -DgRPC_ZLIB_PROVIDER=package
                    -DgRPC_SSL_PROVIDER=package
                    -DgRPC_CARES_PROVIDER=package
                    -DgRPC_PROTOBUF_PROVIDER=package
+                   $<$<BOOL:${GOOGLE_CLOUD_CPP_USE_LIBCXX}>:
+                   -DCMAKE_CXX_FLAGS=-stdlib=libc++
+                   -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-lc++abi
+                   >
         BUILD_COMMAND ${CMAKE_COMMAND}
                       --build
                       <BINARY_DIR>
@@ -72,7 +77,9 @@ if (NOT TARGET gprc_project)
         LOG_BUILD ON
         LOG_INSTALL ON)
 
-    find_package(OpenSSL REQUIRED)
+    if (TARGET google-cloud-cpp-dependencies)
+        add_dependencies(google-cloud-cpp-dependencies grpc_project)
+    endif ()
 
     add_library(gRPC::address_sorting INTERFACE IMPORTED)
     set_library_properties_for_external_project(gRPC::address_sorting

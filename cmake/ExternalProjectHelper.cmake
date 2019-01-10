@@ -74,6 +74,7 @@ function (set_library_properties_for_external_project _target _lib)
         "gpr"
         "address_sorting"
         "cares"
+        "curl"
         "z")
 
     if (${_lib} IN_LIST _libs_always_install_in_libdir)

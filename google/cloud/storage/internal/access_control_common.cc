@@ -20,8 +20,11 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-void AccessControlCommon::ParseFromJson(AccessControlCommon& result,
+Status AccessControlCommon::ParseFromJson(AccessControlCommon& result,
                                         nl::json const& json) {
+  if (not json.is_object()) {
+    return Status(StatusCode::kInvalidArgument, __func__);
+  }
   result.bucket_ = json.value("bucket", "");
   result.domain_ = json.value("domain", "");
   result.email_ = json.value("email", "");
@@ -39,6 +42,7 @@ void AccessControlCommon::ParseFromJson(AccessControlCommon& result,
     p.team = tmp.value("team", "");
     result.project_team_ = std::move(p);
   }
+  return Status();
 }
 
 }  // namespace internal

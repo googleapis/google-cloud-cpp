@@ -42,12 +42,18 @@ if (NOT TARGET crc32c_project)
                         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_CRC32C_SHA256}
                         CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                                    -DCMAKE_BUILD_TYPE=Release
+                                   -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+                                   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
                                    -DCRC32C_BUILD_TESTS=OFF
                                    -DCRC32C_BUILD_BENCHMARKS=OFF
                                    -DCRC32C_USE_GLOG=OFF
                                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                                    -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
+                                   $<$<BOOL:${GOOGLE_CLOUD_CPP_USE_LIBCXX}>:
+                                   -DCMAKE_CXX_FLAGS=-stdlib=libc++
+                                   -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-lc++abi
+                                   >
                         BUILD_COMMAND ${CMAKE_COMMAND}
                                       --build
                                       <BINARY_DIR>
@@ -57,6 +63,10 @@ if (NOT TARGET crc32c_project)
                         LOG_CONFIGURE ON
                         LOG_BUILD ON
                         LOG_INSTALL ON)
+
+    if (TARGET google-cloud-cpp-dependencies)
+        add_dependencies(google-cloud-cpp-dependencies crc32c_project)
+    endif ()
 
     include(ExternalProjectHelper)
     add_library(Crc32c::crc32c INTERFACE IMPORTED)

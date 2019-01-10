@@ -29,10 +29,9 @@ RUN dnf makecache && dnf install -y \
     doxygen \
     gcc-c++ \
     git \
-    golang \
-    graphviz \
-    lcov \
     libcurl-devel \
+    libcxx-devel \
+    libcxxabi-devel \
     libtool \
     make \
     ncurses-term \

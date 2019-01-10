@@ -26,11 +26,28 @@ namespace {
 namespace nl = internal::nl;
 using internal::ListObjectsRequest;
 using internal::ListObjectsResponse;
+using storage::testing::MockClient;
+using storage::testing::canonical_errors::PermanentError;
 using ::testing::_;
 using ::testing::ContainerEq;
+using ::testing::HasSubstr;
 using ::testing::Invoke;
-using testing::MockClient;
 using ::testing::Return;
+
+ObjectMetadata CreateElement(int index) {
+  std::string id = "object-" + std::to_string(index);
+  std::string name = id;
+  std::string link =
+      "https://www.googleapis.com/storage/v1/b/test-bucket/" + id + "/1";
+  internal::nl::json metadata{
+      {"bucket", "test-bucket"},
+      {"id", id},
+      {"name", name},
+      {"selfLink", link},
+      {"kind", "storage#object"},
+  };
+  return ObjectMetadata::ParseFromJson(metadata).value();
+};
 
 TEST(ListObjectsReaderTest, Basic) {
   // Create a synthetic list of ObjectMetadata elements, each request will
@@ -39,31 +56,20 @@ TEST(ListObjectsReaderTest, Basic) {
 
   int page_count = 3;
   for (int i = 0; i != 2 * page_count; ++i) {
-    std::string id = "object-" + std::to_string(i);
-    std::string name = id;
-    std::string link =
-        "https://www.googleapis.com/storage/v1/b/foo-bar/" + id + "/1";
-    nl::json metadata{
-        {"bucket", "foo-bar"},
-        {"id", id},
-        {"name", name},
-        {"selfLink", link},
-        {"kind", "storage#object"},
-    };
-    expected.emplace_back(ObjectMetadata::ParseFromJson(metadata));
+    expected.emplace_back(CreateElement(i));
   }
 
-  auto create_mock = [&expected, page_count](int i) {
+  auto create_mock = [page_count](int i) {
     ListObjectsResponse response;
     if (i < page_count) {
       if (i != page_count - 1) {
         response.next_page_token = "page-" + std::to_string(i);
       }
-      response.items.push_back(expected[2 * i]);
-      response.items.push_back(expected[2 * i + 1]);
+      response.items.emplace_back(CreateElement(2 * i));
+      response.items.emplace_back(CreateElement(2 * i + 1));
     }
     return [response](ListObjectsRequest const&) {
-      return std::make_pair(Status(), response);
+      return StatusOr<ListObjectsResponse>(response);
     };
   };
 
@@ -76,7 +82,8 @@ TEST(ListObjectsReaderTest, Basic) {
   ListObjectsReader reader(mock, "foo-bar-baz", Prefix("dir/"));
   std::vector<ObjectMetadata> actual;
   for (auto&& object : reader) {
-    actual.push_back(object);
+    ASSERT_TRUE(object.ok());
+    actual.emplace_back(std::move(object).value());
   }
   EXPECT_THAT(actual, ContainerEq(expected));
 }
@@ -84,11 +91,109 @@ TEST(ListObjectsReaderTest, Basic) {
 TEST(ListObjectsReaderTest, Empty) {
   auto mock = std::make_shared<MockClient>();
   EXPECT_CALL(*mock, ListObjects(_))
-      .WillOnce(Return(std::make_pair(Status(), ListObjectsResponse())));
+      .WillOnce(Return(make_status_or(ListObjectsResponse{})));
 
   ListObjectsReader reader(mock, "foo-bar-baz", Prefix("dir/"));
   auto count = std::distance(reader.begin(), reader.end());
   EXPECT_EQ(0U, count);
+}
+
+TEST(ListObjectsReaderTest, PermanentFailure) {
+  // Create a synthetic list of ObjectMetadata elements, each request will
+  // return 2 of them.
+  std::vector<ObjectMetadata> expected;
+
+  int const page_count = 2;
+  for (int i = 0; i != 2 * page_count; ++i) {
+    expected.emplace_back(CreateElement(i));
+  }
+
+  auto create_mock = [&](int i) {
+    ListObjectsResponse response;
+    response.next_page_token = "page-" + std::to_string(i);
+    response.items.emplace_back(CreateElement(2 * i));
+    response.items.emplace_back(CreateElement(2 * i + 1));
+    return [response](ListObjectsRequest const&) {
+      return StatusOr<ListObjectsResponse>(response);
+    };
+  };
+
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, ListObjects(_))
+      .WillOnce(Invoke(create_mock(0)))
+      .WillOnce(Invoke(create_mock(1)))
+      .WillOnce(Invoke([](ListObjectsRequest const&) {
+        return StatusOr<ListObjectsResponse>(PermanentError());
+      }));
+
+  ListObjectsReader reader(mock, "test-bucket");
+  std::vector<ObjectMetadata> actual;
+  bool has_status_or_error = false;
+  for (auto&& object : reader) {
+    if (object.ok()) {
+      actual.emplace_back(*std::move(object));
+      continue;
+    }
+    // The iteration should fail only once, an error should reset the iterator
+    // to `end()`.
+    EXPECT_FALSE(has_status_or_error);
+    has_status_or_error = true;
+    // Verify the error is what we expect.
+    Status status = std::move(object).status();
+    EXPECT_EQ(PermanentError().status_code(), status.status_code());
+    EXPECT_EQ(PermanentError().error_message(), status.error_message());
+  }
+  // The iteration should have returned an error at least once.
+  EXPECT_TRUE(has_status_or_error);
+
+  // The iteration should have returned all the elements prior to the error.
+  EXPECT_THAT(actual, ContainerEq(expected));
+}
+
+TEST(ListObjectsReaderTest, IteratorCompare) {
+  // Create a synthetic list of ObjectMetadata elements, each request will
+  // return 2 of them.
+  int const page_count = 1;
+  auto create_mock = [](int i, int page_count) {
+    ListObjectsResponse response;
+    if (i < page_count) {
+      if (i != page_count - 1) {
+        response.next_page_token = "page-" + std::to_string(i);
+      }
+      response.items.emplace_back(CreateElement(2 * i));
+      response.items.emplace_back(CreateElement(2 * i + 1));
+    }
+    return [response](ListObjectsRequest const&) {
+      return StatusOr<ListObjectsResponse>(response);
+    };
+  };
+
+  auto mock1 = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock1, ListObjects(_))
+      .WillOnce(Invoke(create_mock(0, page_count)));
+
+  auto mock2 = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock2, ListObjects(_))
+      .WillOnce(Invoke(create_mock(0, page_count)));
+
+  ListObjectsReader reader1(mock1, "foo-bar-baz", Prefix("dir/"));
+  ListObjectsIterator a1 = reader1.begin();
+  ListObjectsIterator b1 = a1;
+  ListObjectsIterator e1 = reader1.end();
+  EXPECT_EQ(b1, a1);
+  ++b1;
+  EXPECT_NE(b1, a1);
+  EXPECT_NE(a1, e1);
+  EXPECT_NE(b1, e1);
+  ++b1;
+  EXPECT_EQ(b1, e1);
+
+  ListObjectsReader reader2(mock2, "foo-bar-baz", Prefix("dir/"));
+  ListObjectsIterator a2 = reader2.begin();
+
+  // Verify that iterators from different streams, even when pointing to the
+  // same elements are different.
+  EXPECT_NE(a1, a2);
 }
 
 }  // namespace

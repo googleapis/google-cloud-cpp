@@ -94,13 +94,29 @@ TEST(ListBucketsResponseTest, Parse) {
 )""";
   text += "[" + bucket1 + "," + bucket2 + "]}";
 
-  auto b1 = BucketMetadata::ParseFromString(bucket1);
-  auto b2 = BucketMetadata::ParseFromString(bucket2);
+  auto b1 = BucketMetadata::ParseFromString(bucket1).value();
+  auto b2 = BucketMetadata::ParseFromString(bucket2).value();
+
+  auto actual =
+      ListBucketsResponse::FromHttpResponse(HttpResponse{200, text, {}})
+          .value();
+  EXPECT_EQ("some-token-42", actual.next_page_token);
+  EXPECT_THAT(actual.items, ::testing::ElementsAre(b1, b2));
+}
+
+TEST(ListBucketsResponseTest, ParseFailure) {
+  std::string text("{123");
+  StatusOr<ListBucketsResponse> actual =
+      ListBucketsResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
+}
+
+TEST(ListBucketsResponseTestt, ParseFailureInItems) {
+  std::string text = R"""({"items": [ "invalid-item" ]})""";
 
   auto actual =
       ListBucketsResponse::FromHttpResponse(HttpResponse{200, text, {}});
-  EXPECT_EQ("some-token-42", actual.next_page_token);
-  EXPECT_THAT(actual.items, ::testing::ElementsAre(b1, b2));
+  EXPECT_FALSE(actual.ok());
 }
 
 TEST(CreateBucketsRequestTest, Basic) {
@@ -146,7 +162,8 @@ BucketMetadata CreateBucketMetadataForTest() {
       "location": "US",
       "storageClass": "STANDARD",
       "etag": "XYZ="
-})""");
+})""")
+      .value();
 }
 
 TEST(UpdateBucketRequestTest, Simple) {
@@ -169,23 +186,22 @@ TEST(PatchBucketRequestTest, DiffSetAcl) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.set_acl({});
   BucketMetadata updated = original;
-  updated.set_acl({BucketAccessControl::ParseFromString(R"""({
-    "entity": "user-test-user",
-    "role": "OWNER"})""")});
+  updated.set_acl({BucketAccessControl::ParseFromString(
+                       R"""({"entity": "user-test-user", "role": "OWNER"})""")
+                       .value()});
   PatchBucketRequest request("test-bucket", original, updated);
 
   nl::json patch = nl::json::parse(request.payload());
-  nl::json expected = nl::json::parse(R"""({
-      "acl": [{"entity": "user-test-user", "role": "OWNER"}]
-  })""");
+  nl::json expected = nl::json::parse(
+      R"""({"acl": [{"entity": "user-test-user", "role": "OWNER"}]})""");
   EXPECT_EQ(expected, patch);
 }
 
 TEST(PatchBucketRequestTest, DiffResetAcl) {
   BucketMetadata original = CreateBucketMetadataForTest();
-  original.set_acl({BucketAccessControl::ParseFromString(R"""({
-    "entity": "user-test-user",
-    "role": "OWNER"})""")});
+  original.set_acl({BucketAccessControl::ParseFromString(
+                        R"""({"entity": "user-test-user", "role": "OWNER"})""")
+                        .value()});
   BucketMetadata updated = original;
   updated.set_acl({});
   PatchBucketRequest request("test-bucket", original, updated);
@@ -274,9 +290,10 @@ TEST(PatchBucketRequestTest, DiffSetDefaultAcl) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.set_default_acl({});
   BucketMetadata updated = original;
-  updated.set_default_acl({ObjectAccessControl::ParseFromString(R"""({
-    "entity": "user-test-user",
-    "role": "OWNER"})""")});
+  updated.set_default_acl(
+      {ObjectAccessControl::ParseFromString(
+           R"""({"entity": "user-test-user", "role": "OWNER"})""")
+           .value()});
   PatchBucketRequest request("test-bucket", original, updated);
 
   nl::json patch = nl::json::parse(request.payload());
@@ -288,9 +305,9 @@ TEST(PatchBucketRequestTest, DiffSetDefaultAcl) {
 
 TEST(PatchBucketRequestTest, DiffResetDefaultAcl) {
   BucketMetadata original = CreateBucketMetadataForTest();
-  original.set_default_acl({ObjectAccessControl::ParseFromString(R"""({
-    "entity": "user-test-user",
-    "role": "OWNER"})""")});
+  original.set_default_acl({ObjectAccessControl::ParseFromString(
+      R"""({"entity": "user-test-user", "role": "OWNER"})""")
+      .value()});
   BucketMetadata updated = original;
   updated.set_default_acl({});
   PatchBucketRequest request("test-bucket", original, updated);
@@ -323,6 +340,36 @@ TEST(PatchBucketRequestTest, DiffResetEncryption) {
 
   nl::json patch = nl::json::parse(request.payload());
   nl::json expected = nl::json::parse(R"""({"encryption": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffSetIamConfiguration) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.reset_encryption();
+  BucketMetadata updated = original;
+  BucketIamConfiguration configuration;
+  configuration.bucket_only_policy = BucketOnlyPolicy{true};
+  updated.set_iam_configuration(std::move(configuration));
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({
+      "iamConfiguration": {"bucketOnlyPolicy": {"enabled": true}}
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetIamConfiguration) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  BucketIamConfiguration configuration;
+  configuration.bucket_only_policy = BucketOnlyPolicy{true};
+  original.set_iam_configuration(std::move(configuration));
+  BucketMetadata updated = original;
+  updated.reset_iam_configuration();
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"iamConfiguration": null})""");
   EXPECT_EQ(expected, patch);
 }
 
@@ -613,13 +660,11 @@ TEST(BucketRequestsTest, ParseIamPolicyFromString) {
            // generates them sorted by role. If we ever change that, we will
            // need to change this test, and it will be a bit more difficult to
            // write it.
-           nl::json{
-               {"role", "roles/storage.admin"},
-               {"members", std::vector<std::string>{"test-user-1"}}},
-           nl::json{
-               {"role", "roles/storage.objectViewer"},
-               {"members",
-                std::vector<std::string>{"test-user-2", "test-user-3"}}},
+           nl::json{{"role", "roles/storage.admin"},
+                    {"members", std::vector<std::string>{"test-user-1"}}},
+           nl::json{{"role", "roles/storage.objectViewer"},
+                    {"members",
+                     std::vector<std::string>{"test-user-2", "test-user-3"}}},
        }},
   };
 
@@ -629,8 +674,14 @@ TEST(BucketRequestsTest, ParseIamPolicyFromString) {
   expected_bindings.AddMember("roles/storage.objectViewer", "test-user-3");
   IamPolicy expected{0, expected_bindings, "XYZ="};
 
-  auto actual = ParseIamPolicyFromString(expected_payload.dump());
+  auto actual = ParseIamPolicyFromString(expected_payload.dump()).value();
   EXPECT_EQ(expected, actual);
+}
+
+TEST(ListBucketsResponseTest, ParseIamPolicyFromStringFailure) {
+  std::string text("{123");
+  StatusOr<IamPolicy> actual = ParseIamPolicyFromString(text);
+  EXPECT_FALSE(actual.ok());
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingRole) {
@@ -663,10 +714,9 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingMembers) {
   nl::json expected_payload{
       {"kind", "storage#policy"},
       {"etag", "XYZ="},
-      {"bindings",
-       std::vector<nl::json>{nl::json{
-           {"role", "roles/storage.objectViewer"},
-       }}},
+      {"bindings", std::vector<nl::json>{nl::json{
+                       {"role", "roles/storage.objectViewer"},
+                   }}},
   };
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -688,11 +738,10 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidMembers) {
   nl::json expected_payload{
       {"kind", "storage#policy"},
       {"etag", "XYZ="},
-      {"bindings",
-       std::vector<nl::json>{nl::json{
-           {"role", "roles/storage.objectViewer"},
-           {"members", "invalid"},
-       }}},
+      {"bindings", std::vector<nl::json>{nl::json{
+                       {"role", "roles/storage.objectViewer"},
+                       {"members", "invalid"},
+                   }}},
   };
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -752,13 +801,11 @@ TEST(BucketRequestsTest, SetIamPolicy) {
            // generates them sorted by role. If we ever change that, we will
            // need to change this test, and it will be a bit more difficult to
            // write it.
-           nl::json{
-               {"role", "roles/storage.admin"},
-               {"members", std::vector<std::string>{"test-user-1"}}},
-           nl::json{
-               {"role", "roles/storage.objectViewer"},
-               {"members",
-                std::vector<std::string>{"test-user-2", "test-user-3"}}},
+           nl::json{{"role", "roles/storage.admin"},
+                    {"members", std::vector<std::string>{"test-user-1"}}},
+           nl::json{{"role", "roles/storage.objectViewer"},
+                    {"members",
+                     std::vector<std::string>{"test-user-2", "test-user-3"}}},
        }},
   };
   auto actual_payload = nl::json::parse(request.json_payload());
@@ -798,7 +845,7 @@ TEST(BucketRequestsTest, TestIamPermissionsResponse) {
       ]})""";
 
   auto actual = TestBucketIamPermissionsResponse::FromHttpResponse(
-      HttpResponse{200, text, {}});
+      HttpResponse{200, text, {}}).value();
   EXPECT_THAT(actual.permissions,
               ElementsAre("storage.buckets.get", "storage.buckets.setIamPolicy",
                           "storage.objects.update"));
@@ -811,11 +858,19 @@ TEST(BucketRequestsTest, TestIamPermissionsResponse) {
   EXPECT_THAT(str, HasSubstr("storage.objects.update"));
 }
 
+TEST(ListBucketsResponseTest, TestIamPermissionsResponseParseFailure) {
+  std::string text("{123");
+  StatusOr<TestBucketIamPermissionsResponse> actual =
+      TestBucketIamPermissionsResponse::FromHttpResponse(
+          HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
+}
+
 TEST(BucketRequestsTest, TestIamPermissionsResponseEmpty) {
   std::string text = R"""({})""";
 
   auto actual = TestBucketIamPermissionsResponse::FromHttpResponse(
-      HttpResponse{200, text, {}});
+      HttpResponse{200, text, {}}).value();
   EXPECT_TRUE(actual.permissions.empty());
 }
 

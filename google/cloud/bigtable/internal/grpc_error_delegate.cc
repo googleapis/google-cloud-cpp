@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/grpc_error.h"
+#include "google/cloud/terminate_handler.h"
 #include <sstream>
 
 namespace google {
@@ -28,8 +29,7 @@ void RaiseRpcError(grpc::Status const& status, char const* msg) {
   bigtable::GRpcError ex(msg, status);
   std::cerr << "Aborting because exceptions are disabled: " << ex.what()
             << std::endl;
-  // TODO(#327) - make the call to std::abort() configurable.
-  std::abort();
+  google::cloud::Terminate(ex.what());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 

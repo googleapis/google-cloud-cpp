@@ -169,13 +169,16 @@ run_retention_policy_examples() {
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
+#   None
 # Returns:
 #   None
-################################################
+###############################################
 run_all_bucket_acl_examples() {
-  local bucket_name=$1
-  shift
+  # Use a fresh bucket to avoid flaky tests due to other tests also making
+  # changes on the bucket.
+  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  run_example ./storage_bucket_samples create-bucket-for-project \
+      "${bucket_name}" "${PROJECT_ID}"
 
   run_example ./storage_bucket_acl_samples list-bucket-acl \
       "${bucket_name}"
@@ -192,6 +195,9 @@ run_all_bucket_acl_examples() {
   run_example ./storage_bucket_acl_samples delete-bucket-acl \
       "${bucket_name}" allAuthenticatedUsers
 
+  run_example ./storage_bucket_samples delete-bucket \
+      "${bucket_name}"
+
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
   run_example_usage ./storage_bucket_acl_samples
@@ -203,13 +209,16 @@ run_all_bucket_acl_examples() {
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
+#   None
 # Returns:
 #   None
 ################################################
 run_all_default_object_acl_examples() {
-  local bucket_name=$1
-  shift
+  # Use a fresh bucket to avoid flaky tests due to other tests also making
+  # changes on the bucket.
+  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  run_example ./storage_bucket_samples create-bucket-for-project \
+      "${bucket_name}" "${PROJECT_ID}"
 
   run_example ./storage_default_object_acl_samples list-default-object-acl \
       "${bucket_name}"
@@ -225,6 +234,9 @@ run_all_default_object_acl_examples() {
       "${bucket_name}" allAuthenticatedUsers OWNER
   run_example ./storage_default_object_acl_samples delete-default-object-acl \
       "${bucket_name}" allAuthenticatedUsers
+
+  run_example ./storage_bucket_samples delete-bucket \
+      "${bucket_name}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
@@ -310,6 +322,20 @@ run_all_object_examples() {
 
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${encrypted_object_name}"
+
+  local object_name_strict="object-strict-$(date +%s)-${RANDOM}.txt"
+  run_example ./storage_object_samples insert-object-strict-idempotency \
+      "${bucket_name}" "${object_name_strict}" \
+      "a-string-to-serve-as-object-media"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name_strict}"
+
+  local object_name_retry="object-retry-$(date +%s)-${RANDOM}.txt"
+  run_example ./storage_object_samples insert-object-modified-retry \
+      "${bucket_name}" "${object_name_retry}" \
+      "a-string-to-serve-as-object-media"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name_retry}"
 }
 
 ################################################
@@ -343,6 +369,81 @@ _EOF_
   run_example ./storage_object_samples download-file \
       "${bucket_name}" "${object_name}" "${download_file_name}"
   diff "${upload_file_name}" "${download_file_name}"
+
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name}"
+}
+
+################################################
+# Run resumable file upload examples.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   bucket_name: the name of the bucket to run the examples against.
+# Returns:
+#   None
+################################################
+run_resumable_file_upload_examples() {
+  local bucket_name=$1
+  shift
+
+  local object_name="uploaded-resumable-$(date +%s)-${RANDOM}.txt"
+  local upload_file_name="$(mktemp -t "upload.XXXXXX")"
+  local download_file_name="$(mktemp -t "download.XXXXXX")"
+  cat > "${upload_file_name}" <<_EOF_
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+culpa qui officia deserunt mollit anim id est laborum.
+_EOF_
+
+  run_example ./storage_object_samples upload-file-resumable \
+      "${upload_file_name}" "${bucket_name}" "${object_name}"
+  run_example ./storage_object_samples download-file \
+      "${bucket_name}" "${object_name}" "${download_file_name}"
+  diff "${upload_file_name}" "${download_file_name}"
+
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name}"
+}
+
+################################################
+# Run resumable write object examples.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   bucket_name: the name of the bucket to run the examples against.
+# Returns:
+#   None
+################################################
+run_resumable_write_object_examples() {
+  local bucket_name=$1
+  shift
+
+  local object_name="resumable-upload-$(date +%s)-${RANDOM}.txt"
+
+  # We need to capture the output, so the usual `run_example` helper does not
+  # help here :-)
+  set +e
+  echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
+        " storage_object_samples start-resumable-upload"
+  local session_id
+  session_id=$(./storage_object_samples start-resumable-upload \
+      "${bucket_name}" "${object_name}" | \
+      sed "s/Created resumable upload: //")
+  if [[ $? = 0 ]]; then
+    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
+        " storage_object_samples start-resumable-upload"
+  else
+    echo   "${COLOR_RED}[   FAILED ]${COLOR_RESET}" \
+        " storage_object_samples start-resumable-upload"
+  fi
+  run_example ./storage_object_samples resume-resumable-upload \
+      "${bucket_name}" "${object_name}" "${session_id}"
 
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
@@ -586,6 +687,73 @@ run_all_cmek_examples() {
 }
 
 ################################################
+# Run all Object examples.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   bucket_name: the name of the bucket to run the examples against.
+# Returns:
+#   None
+################################################
+run_all_signed_url_examples() {
+  local bucket_name=$1
+  shift
+
+  local object_name="object-$(date +%s)-${RANDOM}.txt"
+
+  if [[ -n "${CLOUD_STORAGE_TESTBENCH_ENDPOINT:-}" ]]; then
+    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
+        " signed URL examples disabled when using the testbench."
+    return
+  fi
+
+  run_example ./storage_object_samples create-put-signed-url \
+      "${bucket_name}" "${object_name}"
+  run_example ./storage_object_samples create-get-signed-url \
+      "${bucket_name}" "${object_name}"
+
+  local magic_string="${RANDOM}-some-data-to-serve-as-object-media"
+
+  set +e
+  echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
+        " using PUT signed URL"
+  local put_url
+  put_url=$(./storage_object_samples create-put-signed-url \
+      "${bucket_name}" "${object_name}" | head -1 | \
+      sed "s/The signed url is: //")
+  curl --silent -X PUT -H 'Content-Type: application/octet-stream' \
+      "${put_url}" -d "${magic_string}"
+  if [[ $? = 0 ]]; then
+    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
+        " using PUT signed URL"
+  else
+    echo   "${COLOR_RED}[   FAILED ]${COLOR_RESET}" \
+        " using PUT signed URL"
+  fi
+  set -e
+
+  set +e
+  echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
+        " using GET signed URL"
+  local get_url
+  get_url=$(./storage_object_samples create-get-signed-url \
+      "${bucket_name}" "${object_name}" | head -1 | \
+      sed "s/The signed url is: //")
+  if curl --silent "${get_url}" | grep -q "${magic_string}"; then
+    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
+        " using PUT signed URL"
+  else
+    echo   "${COLOR_RED}[   FAILED ]${COLOR_RESET}" \
+        " using PUT signed URL"
+  fi
+  set -e
+
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name}"
+}
+
+################################################
 # Run all Object ACL examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -676,13 +844,16 @@ run_all_notification_examples() {
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
+#   None
 # Returns:
 #   None
 ################################################
 run_all_bucket_iam_examples() {
-  local bucket_name=$1
-  shift
+  # Use a fresh bucket to avoid flaky tests due to other tests also making
+  # changes on the bucket.
+  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  run_example ./storage_bucket_samples create-bucket-for-project \
+      "${bucket_name}" "${PROJECT_ID}"
 
   run_example ./storage_bucket_iam_samples get-bucket-iam-policy \
       "${bucket_name}"
@@ -692,6 +863,9 @@ run_all_bucket_iam_examples() {
       "${bucket_name}" "roles/storage.objectViewer" "allAuthenticatedUsers"
   run_example ./storage_bucket_iam_samples test-bucket-iam-permissions \
       "${bucket_name}" "storage.objects.list" "storage.objects.delete"
+
+  run_example ./storage_bucket_samples delete-bucket \
+      "${bucket_name}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
@@ -735,19 +909,22 @@ run_all_storage_examples() {
   run_all_bucket_examples
   run_default_event_based_hold_examples
   run_retention_policy_examples
-  run_all_bucket_acl_examples "${BUCKET_NAME}"
-  run_all_default_object_acl_examples "${BUCKET_NAME}"
+  run_all_bucket_acl_examples
+  run_all_default_object_acl_examples
   run_all_requester_pays_examples
   run_all_object_examples "${BUCKET_NAME}"
   run_upload_and_download_examples "${BUCKET_NAME}"
+  run_resumable_file_upload_examples "${BUCKET_NAME}"
+  run_resumable_write_object_examples "${BUCKET_NAME}"
   run_all_object_rewrite_examples "${BUCKET_NAME}" "${DESTINATION_BUCKET_NAME}"
   run_all_public_object_examples "${BUCKET_NAME}"
   run_event_based_hold_examples "${BUCKET_NAME}"
   run_temporary_hold_examples "${BUCKET_NAME}"
+  run_all_signed_url_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
   run_all_notification_examples "${TOPIC_NAME}"
   run_all_cmek_examples "${STORAGE_CMEK_KEY}"
-  run_all_bucket_iam_examples "${BUCKET_NAME}"
+  run_all_bucket_iam_examples
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
   if [ "${EXIT_STATUS}" = "0" ]; then

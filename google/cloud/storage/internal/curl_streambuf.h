@@ -36,17 +36,25 @@ class CurlReadStreambuf : public ObjectReadStreambuf {
 
   ~CurlReadStreambuf() override = default;
 
-  HttpResponse Close() override;
+  void Close() override;
   bool IsOpen() const override;
+  Status const& status() const override { return status_; }
   std::string const& received_hash() const override {
     return hash_validator_result_.received;
   }
   std::string const& computed_hash() const override {
     return hash_validator_result_.computed;
   }
+  std::multimap<std::string, std::string> const& headers() const override {
+    return headers_;
+  }
 
  protected:
   int_type underflow() override;
+
+  int_type ReportError(Status status);
+
+  void SetEmptyRegion();
 
  private:
   CurlDownloadRequest download_;
@@ -55,40 +63,46 @@ class CurlReadStreambuf : public ObjectReadStreambuf {
 
   std::unique_ptr<HashValidator> hash_validator_;
   HashValidator::Result hash_validator_result_;
+  Status status_;
+  std::multimap<std::string, std::string> headers_;
 };
 
 /**
  * Implement a wrapper for libcurl-based streaming uploads.
  */
-class CurlStreambuf : public ObjectWriteStreambuf {
+class CurlWriteStreambuf : public ObjectWriteStreambuf {
  public:
-  explicit CurlStreambuf(CurlUploadRequest&& upload,
-                         std::size_t max_buffer_size,
-                         std::unique_ptr<HashValidator> hash_validator);
+  explicit CurlWriteStreambuf(CurlUploadRequest&& upload,
+                              std::size_t max_buffer_size,
+                              std::unique_ptr<HashValidator> hash_validator);
 
-  ~CurlStreambuf() override = default;
+  ~CurlWriteStreambuf() override = default;
 
   bool IsOpen() const override;
-  void ValidateHash(ObjectMetadata const& meta) override;
+  bool ValidateHash(ObjectMetadata const& meta) override;
   std::string const& received_hash() const override {
     return hash_validator_result_.received;
   }
   std::string const& computed_hash() const override {
     return hash_validator_result_.computed;
   }
+  std::string const& resumable_session_id() const override {
+    return session_id_;
+  }
+  std::uint64_t next_expected_byte() const override { return 0; }
 
  protected:
   int sync() override;
   std::streamsize xsputn(char const* s, std::streamsize count) override;
   int_type overflow(int_type ch) override;
-  HttpResponse DoClose() override;
+  StatusOr<HttpResponse> DoClose() override;
 
  private:
   /// Raise an exception if the stream is closed.
-  void Validate(char const* where) const;
+  Status Validate(char const* where) const;
 
   /// Flush the libcurl buffer and swap it with the iostream buffer.
-  void SwapBuffers();
+  Status SwapBuffers();
 
   CurlUploadRequest upload_;
   std::string current_ios_buffer_;
@@ -96,6 +110,7 @@ class CurlStreambuf : public ObjectWriteStreambuf {
 
   std::unique_ptr<HashValidator> hash_validator_;
   HashValidator::Result hash_validator_result_;
+  std::string session_id_;
 };
 
 }  // namespace internal

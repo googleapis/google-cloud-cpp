@@ -24,11 +24,10 @@ RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.
 RUN yum install -y centos-release-scl
 RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
 RUN yum makecache
-RUN yum install -y devtoolset-7 cmake3 curl-devel git openssl-devel
+RUN yum install -y cmake3 gcc gcc-c++ git make openssl-devel
 
-# Install cmake3 + ctest3 as cmake + ctest.
-RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake
-RUN ln -sf /usr/bin/ctest3 /usr/bin/ctest
+# Install cmake3 & ctest3 as cmake & ctest respectively.
+RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 
 ARG CXX=g++
 ARG CC=gcc
@@ -37,7 +36,7 @@ WORKDIR /var/tmp/
 RUN git clone https://github.com/GoogleCloudPlatform/google-cloud-cpp.git
 WORKDIR /var/tmp/google-cloud-cpp
 RUN git submodule update --init
-RUN scl enable devtoolset-7 -- cmake -H. -Bbuild-output
-RUN scl enable devtoolset-7 -- cmake --build build-output -- -j $(nproc)
+RUN cmake -H. -Bbuild-output
+RUN cmake --build build-output -- -j $(nproc)
 WORKDIR /var/tmp/google-cloud-cpp/build-output
-RUN scl enable devtoolset-7 -- ctest --output-on-failure
+RUN ctest --output-on-failure

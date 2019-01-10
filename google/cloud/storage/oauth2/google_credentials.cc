@@ -32,6 +32,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
+/// Parses the JSON file at `path` and creates the appropriate Credentials type.
 std::unique_ptr<Credentials> LoadCredsFromPath(std::string const& path) {
   using google::cloud::internal::RaiseRuntimeError;
   namespace nl = google::cloud::storage::internal::nl;
@@ -86,23 +87,24 @@ std::unique_ptr<Credentials> MaybeLoadCredsFromGcloudAdcFile() {
 }
 
 std::shared_ptr<Credentials> GoogleDefaultCredentials() {
-  // Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable is set.
+  // 1) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable is set.
   auto creds = MaybeLoadCredsFromAdcEnvVar();
   if (creds) {
     return std::move(creds);
   }
 
-  // If no path was specified via environment variable, check if the gcloud
+  // 2) If no path was specified via environment variable, check if the gcloud
   // ADC file exists.
   creds = MaybeLoadCredsFromGcloudAdcFile();
   if (creds) {
     return std::move(creds);
   }
 
-  // Check for implicit environment-based credentials.
-
-  // TODO(#579): Check if running on App Engine flexible environment.
-
+  // 3) Check for implicit environment-based credentials (GCE, GAE Flexible
+  // Environment).
+  // Note: GCE credentials *should* also work when running on a VM instance in
+  // the App Engine Flexible Environment, but this has not been explicitly
+  // tested, as it requires a custom GAEF runtime.
   if (storage::internal::RunningOnComputeEngineVm()) {
     return std::make_shared<ComputeEngineCredentials<>>();
   }

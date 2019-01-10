@@ -16,31 +16,28 @@
 
 set -eu
 
-if [ "${TRAVIS_OS_NAME}" != "linux" ]; then
-  echo "Not a Linux-based build, skipping Linux-specific build steps."
-  exit 0
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../.."; pwd)"
 fi
+source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 
-readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
-if [ "${IMAGE}" = "cached-centos-7" ]; then
-  build_script="scl enable devtoolset-7 /v/ci/travis/build-docker.sh";
-else
-  build_script="/v/ci/travis/build-docker.sh";
-fi
-
-# TEST_INSTALL=yes builds work better as root, but other builds should avoid
-# creating root-owned files in the build directory.
+# The default user for a Docker container has uid 0 (root). To avoid creating
+# root-owned files in the build directory we tell docker to use the current
+# user ID, if known.
 docker_uid="${UID:-0}"
-docker_home=""
-if [ "${TEST_INSTALL:-}" = "yes" -o "${SCAN_BUILD:-}" = "yes" ]; then
-  docker_uid=0
+if [[ "${docker_uid}" == "0" ]]; then
+  # If the UID is 0, then the HOME directory will be set to /root, and we
+  # need to mount the ccache files is /root/.ccache.
   docker_home=/root
+else
+  # If the UID is not zero then HOME is "/", and we need to mount the ccache
+  # files in /.ccache.
+  docker_home=""
 fi
 
 # Use a volume to store the cache files. This exports the cache files from the
 # Docker container, and then we can save them for future Travis builds.
-test -d "${PWD}/build-output/cache" || mkdir -p "${PWD}/build-output/cache"
-test -d "${PWD}/build-output/ccache" || mkdir -p "${PWD}/build-output/ccache"
+mkdir -p "${PWD}/${DOCKER_CCACHE_DIR}"
 
 sudo docker run \
      --cap-add SYS_PTRACE \
@@ -51,19 +48,22 @@ sudo docker run \
      --env CC="${CC}" \
      --env NCPU="${NCPU:-2}" \
      --env BUILD_TYPE="${BUILD_TYPE:-Release}" \
+     --env BUILD_TESTING="${BUILD_TESTING:-}" \
+     --env USE_LIBCXX="${USE_LIBCXX:-}" \
      --env CHECK_ABI="${CHECK_ABI:-}" \
      --env CHECK_STYLE="${CHECK_STYLE:-}" \
      --env SCAN_BUILD="${SCAN_BUILD:-}" \
      --env GENERATE_DOCS="${GENERATE_DOCS:-}" \
      --env TEST_INSTALL="${TEST_INSTALL:-}" \
+     --env CREATE_GRAPHVIZ="${CREATE_GRAPHVIZ:-}" \
      --env CMAKE_FLAGS="${CMAKE_FLAGS:-}" \
      --env CBT=/usr/local/google-cloud-sdk/bin/cbt \
      --env CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
      --env TERM="${TERM:-dumb}" \
+     --env TRAVIS_OS_NAME="${TRAVIS_OS_NAME}" \
      --user "${docker_uid}" \
      --volume "${PWD}":/v \
-     --volume "${PWD}/build-output/cache":${docker_home}/.cache \
-     --volume "${PWD}/build-output/ccache":${docker_home}/.ccache \
+     --volume "${PWD}/${DOCKER_CCACHE_DIR}":${docker_home}/.ccache \
      --workdir /v \
      "${IMAGE}:tip" \
-     ${build_script}
+     "/v/ci/travis/build-docker.sh"

@@ -21,28 +21,42 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-std::pair<Status, ResumableUploadResponse>
+StatusOr<ResumableUploadResponse>
 LoggingResumableUploadSession::UploadChunk(std::string const& buffer,
                                            std::uint64_t upload_size) {
-  GCP_LOG(INFO) << __func__ << " << upload_size=" << upload_size;
+  GCP_LOG(INFO) << __func__ << "() << upload_size=" << upload_size
+                << ", buffer.size=" << buffer.size();
   auto response = session_->UploadChunk(buffer, upload_size);
-  GCP_LOG(INFO) << __func__ << " >> status={" << response.first
-                << "}, payload={" << response.second << "}";
+  if (response.ok()) {
+    GCP_LOG(INFO) << __func__ << " >> payload={" << response.value() << "}";
+  } else {
+    GCP_LOG(INFO) << __func__ << " >> status={" << response.status() << "}";
+  }
   return response;
 }
 
-std::pair<Status, ResumableUploadResponse>
+StatusOr<ResumableUploadResponse>
 LoggingResumableUploadSession::ResetSession() {
   GCP_LOG(INFO) << __func__ << " << ()";
   auto response = session_->ResetSession();
-  GCP_LOG(INFO) << __func__ << " >> status={" << response.first
-                << "}, payload={" << response.second << "}";
+  if (response.ok()) {
+    GCP_LOG(INFO) << __func__ << " >> payload={" << response.value() << "}";
+  } else {
+    GCP_LOG(INFO) << __func__ << " >> status={" << response.status() << "}";
+  }
   return response;
 }
 
 std::uint64_t LoggingResumableUploadSession::next_expected_byte() const {
   GCP_LOG(INFO) << __func__ << " << ()";
   auto response = session_->next_expected_byte();
+  GCP_LOG(INFO) << __func__ << " >> " << response;
+  return response;
+}
+
+std::string const& LoggingResumableUploadSession::session_id() const {
+  GCP_LOG(INFO) << __func__ << " << ()";
+  auto const& response = session_->session_id();
   GCP_LOG(INFO) << __func__ << " >> " << response;
   return response;
 }

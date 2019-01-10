@@ -48,7 +48,8 @@ TEST(DefaultObjectAclRequestTest, ListResponse) {
       }]})""";
 
   auto actual = ListDefaultObjectAclResponse::FromHttpResponse(
-      HttpResponse{200, text, {}});
+                    HttpResponse{200, text, {}})
+                    .value();
   ASSERT_EQ(2UL, actual.items.size());
   EXPECT_EQ("user-test-user-1", actual.items.at(0).entity());
   EXPECT_EQ("OWNER", actual.items.at(0).role());
@@ -62,6 +63,24 @@ TEST(DefaultObjectAclRequestTest, ListResponse) {
   EXPECT_THAT(str, HasSubstr("entity=user-test-user-2"));
   EXPECT_THAT(str, HasSubstr("ListDefaultObjectAclResponse={"));
   EXPECT_THAT(str, HasSubstr("ObjectAccessControl={"));
+}
+
+TEST(DefaultObjectAclRequestTest, ListResponseFailure) {
+  std::string text = R"""({123)""";
+
+  StatusOr<ListDefaultObjectAclResponse> actual =
+      ListDefaultObjectAclResponse::FromHttpResponse(
+          HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
+}
+
+TEST(DefaultObjectAclRequestTest, ListResponseParseFailureElements) {
+  std::string text = R"""({"items": ["invalid-item"]})""";
+
+  StatusOr<ListDefaultObjectAclResponse> actual =
+      ListDefaultObjectAclResponse::FromHttpResponse(
+          HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
 }
 
 TEST(DefaultObjectAclRequestTest, Get) {
@@ -141,7 +160,7 @@ ObjectAccessControl CreateDefaultObjectAccessControlForTest() {
       },
       "role": "OWNER"
 })""";
-  return ObjectAccessControl::ParseFromString(text);
+  return ObjectAccessControl::ParseFromString(text).value();
 }
 
 TEST(DefaultObjectAclRequestTest, PatchDiff) {

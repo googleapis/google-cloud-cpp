@@ -59,17 +59,19 @@ class WriteObjectTest : public ::testing::Test {
 class MockStreambuf : public internal::ObjectWriteStreambuf {
  public:
   MOCK_CONST_METHOD0(IsOpen, bool());
-  MOCK_METHOD0(DoClose, internal::HttpResponse());
-  MOCK_METHOD1(ValidateHash, void(ObjectMetadata const&));
+  MOCK_METHOD0(DoClose, StatusOr<internal::HttpResponse>());
+  MOCK_METHOD1(ValidateHash, bool(ObjectMetadata const&));
   MOCK_CONST_METHOD0(received_hash, std::string const&());
   MOCK_CONST_METHOD0(computed_hash, std::string const&());
+  MOCK_CONST_METHOD0(resumable_session_id, std::string const&());
+  MOCK_CONST_METHOD0(next_expected_byte, std::uint64_t());
 };
 
 TEST_F(WriteObjectTest, WriteObject) {
   std::string text = R"""({
       "name": "test-bucket-name/test-object-name/1"
 })""";
-  auto expected = ObjectMetadata::ParseFromString(text);
+  auto expected = ObjectMetadata::ParseFromString(text).value();
 
   EXPECT_CALL(*mock, WriteObject(_))
       .WillOnce(Invoke(
@@ -81,12 +83,13 @@ TEST_F(WriteObjectTest, WriteObject) {
                 .WillRepeatedly(Return(internal::HttpResponse{200, text, {}}));
             EXPECT_CALL(*mock_result, IsOpen()).WillRepeatedly(Return(true));
             std::unique_ptr<internal::ObjectWriteStreambuf> result(mock_result);
-            return std::make_pair(storage::Status(), std::move(result));
+            return make_status_or(std::move(result));
           }));
 
   auto stream = client->WriteObject("test-bucket-name", "test-object-name");
   stream << "Hello World!";
-  ObjectMetadata actual = stream.Close();
+  stream.Close();
+  ObjectMetadata actual = stream.metadata().value();
   EXPECT_EQ(expected, actual);
 }
 
@@ -95,8 +98,8 @@ TEST_F(WriteObjectTest, WriteObjectTooManyFailures) {
                 LimitedErrorCountRetryPolicy(2)};
 
   auto returner = [](internal::InsertObjectStreamingRequest const&) {
-    return std::make_pair(TransientError(),
-                          std::unique_ptr<internal::ObjectWriteStreambuf>{});
+    return StatusOr<std::unique_ptr<internal::ObjectWriteStreambuf>>(
+        TransientError());
   };
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_CALL(*mock, WriteObject(_))
@@ -124,8 +127,8 @@ TEST_F(WriteObjectTest, WriteObjectTooManyFailures) {
 
 TEST_F(WriteObjectTest, WriteObjectPermanentFailure) {
   auto returner = [](internal::InsertObjectStreamingRequest const&) {
-    return std::make_pair(PermanentError(),
-                          std::unique_ptr<internal::ObjectWriteStreambuf>{});
+    return StatusOr<std::unique_ptr<internal::ObjectWriteStreambuf>>(
+        PermanentError());
   };
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_CALL(*mock, WriteObject(_)).WillOnce(Invoke(returner));

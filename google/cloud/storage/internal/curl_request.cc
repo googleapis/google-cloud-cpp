@@ -22,15 +22,21 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 CurlRequest::CurlRequest() : headers_(nullptr, &curl_slist_free_all) {}
 
-HttpResponse CurlRequest::MakeRequest(std::string const& payload) {
+StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) {
   if (not payload.empty()) {
     handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload.length());
     handle_.SetOption(CURLOPT_POSTFIELDS, payload.c_str());
   }
-  handle_.EasyPerform();
+  auto status = handle_.EasyPerform();
+  if (not status.ok()) {
+    return status;
+  }
   handle_.FlushDebug(__func__);
-  long code = handle_.GetResponseCode();
-  return HttpResponse{code, std::move(response_payload_),
+  auto code = handle_.GetResponseCode();
+  if (not code.ok()) {
+    return std::move(code).status();
+  }
+  return HttpResponse{code.value(), std::move(response_payload_),
                       std::move(received_headers_)};
 }
 

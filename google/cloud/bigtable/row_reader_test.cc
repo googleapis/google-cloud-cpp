@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include <gmock/gmock.h>
 #include <deque>
 #include <initializer_list>
@@ -774,20 +775,44 @@ TEST_F(RowReaderTest, BeginThrowsAfterCancelClosesStreamNoExcept) {
 }
 
 TEST_F(RowReaderTest, BeginThrowsAfterImmediateCancelNoExcept) {
-  bigtable::RowReader reader(
+  auto backend =
+      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
+  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+
+  std::unique_ptr<bigtable::RowReader> reader(new bigtable::RowReader(
       client_, bigtable::TableId(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
-      metadata_update_policy_, std::move(parser_factory_), false);
+      metadata_update_policy_, std::move(parser_factory_), false));
   // Manually cancel the call before a stream was created.
-  reader.Cancel();
+  reader->Cancel();
+  reader->begin();
 
-  reader.begin();
-  grpc::Status status = reader.Finish();
+  grpc::Status status = reader->Finish();
   EXPECT_FALSE(status.ok());
+
+  // Delete the reader and verify no log is produced because we handled the
+  // error.
+  reader.reset();
+
+  google::cloud::LogSink::Instance().RemoveBackend(id);
+
+  std::string const expected_message =
+      "RowReader has an error, and the error status was not retrieved";
+  auto count =
+      std::count_if(backend->log_lines.begin(), backend->log_lines.end(),
+                    [&expected_message](std::string const& line) {
+                      return line.find(expected_message) != std::string::npos;
+                    });
+  EXPECT_EQ(0U, count) << "Unexpected log captured: "
+                       << backend->log_lines.front();
 }
 
-TEST_F(RowReaderTest, NoExceptionDestructorWillRaiseIfErrorNotRetrived) {
+TEST_F(RowReaderTest, NoExceptionDestructorWillLogIfErrorNotRetrived) {
+  auto backend =
+      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
+  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+
   std::unique_ptr<bigtable::RowReader> reader(new bigtable::RowReader(
       client_, bigtable::TableId(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
@@ -795,8 +820,18 @@ TEST_F(RowReaderTest, NoExceptionDestructorWillRaiseIfErrorNotRetrived) {
       metadata_update_policy_, std::move(parser_factory_), false));
   reader->Cancel();
   reader->begin();
-  EXPECT_DEATH_IF_SUPPORTED(reader.reset(), "");
-  reader->Finish();
+  reader.reset();
+
+  google::cloud::LogSink::Instance().RemoveBackend(id);
+
+  std::string const expected_message =
+      "RowReader has an error, and the error status was not retrieved";
+  auto count =
+      std::count_if(backend->log_lines.begin(), backend->log_lines.end(),
+                    [&expected_message](std::string const& line) {
+                      return line.find(expected_message) != std::string::npos;
+                    });
+  EXPECT_NE(0U, count);
 }
 
 TEST_F(RowReaderTest, RowReaderConstructorDoesNotCallRpc) {

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/list_objects_reader.h"
+#include "google/cloud/internal/throw_delegate.h"
 
 namespace google {
 namespace cloud {
@@ -27,15 +28,15 @@ static_assert(
     "ListObjectsReader::iterator should be an InputIterator");
 static_assert(
     std::is_same<std::iterator_traits<ListObjectsReader::iterator>::value_type,
-                 ObjectMetadata>::value,
+                 StatusOr<ObjectMetadata>>::value,
     "ListObjectsReader::iterator should be an InputIterator of ObjectMetadata");
 static_assert(
     std::is_same<std::iterator_traits<ListObjectsReader::iterator>::pointer,
-                 ObjectMetadata*>::value,
+                 StatusOr<ObjectMetadata>*>::value,
     "ListObjectsReader::iterator should be an InputIterator of ObjectMetadata");
 static_assert(
     std::is_same<std::iterator_traits<ListObjectsReader::iterator>::reference,
-                 ObjectMetadata&>::value,
+                 StatusOr<ObjectMetadata>&>::value,
     "ListObjectsReader::iterator should be an InputIterator of ObjectMetadata");
 static_assert(std::is_copy_constructible<ListObjectsReader::iterator>::value,
               "ListObjectsReader::iterator must be CopyConstructible");
@@ -58,50 +59,48 @@ static_assert(
     "++it when it is of ListObjectsReader::iterator type must be a "
     "ListObjectsReader::iterator &>");
 
-ListObjectsIterator::ListObjectsIterator(
-    ListObjectsReader* owner, google::cloud::optional<ObjectMetadata> value)
-    : owner_(owner), value_(std::move(value)) {
-  if (not value_) {
-    // This iterator was initialized by begin() on an empty list, turn it into
-    // an end() iterator.
-    owner_ = nullptr;
-  }
-}
+ListObjectsIterator::ListObjectsIterator(ListObjectsReader* owner,
+                                         value_type value)
+    : owner_(owner), value_(std::move(value)) {}
 
 ListObjectsIterator& ListObjectsIterator::operator++() {
-  value_ = owner_->GetNext();
-  if (not value_) {
-    owner_ = nullptr;
-  }
+  *this = owner_->GetNext();
   return *this;
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 ListObjectsReader::iterator ListObjectsReader::begin() {
-  return iterator(this, GetNext());
+  return GetNext();
 }
 
-google::cloud::optional<ObjectMetadata> ListObjectsReader::GetNext() {
+ListObjectsIterator ListObjectsReader::GetNext() {
+  static Status const past_the_end_error(
+      StatusCode::kFailedPrecondition,
+      "Cannot iterating past the end of ListObjectReader");
   if (current_objects_.end() == current_) {
     if (on_last_page_) {
-      return google::cloud::optional<ObjectMetadata>();
+      return ListObjectsIterator(nullptr, StatusOr<ObjectMetadata>(past_the_end_error));
     }
     request_.set_page_token(std::move(next_page_token_));
     auto response = client_->ListObjects(request_);
-    // TODO(#759) - once the refactoring dust settles, the client either raises
-    // if there was an error, or we get here with a success status, so there
-    // is no need to check response.first.ok().
-    next_page_token_ = std::move(response.second.next_page_token);
-    current_objects_ = std::move(response.second.items);
+    if (not response.ok()) {
+      next_page_token_.clear();
+      current_objects_.clear();
+      on_last_page_ = true;
+      current_ = current_objects_.begin();
+      return ListObjectsIterator(this, std::move(response).status());
+    }
+    next_page_token_ = std::move(response->next_page_token);
+    current_objects_ = std::move(response->items);
     current_ = current_objects_.begin();
     if (next_page_token_.empty()) {
       on_last_page_ = true;
     }
     if (current_objects_.end() == current_) {
-      return google::cloud::optional<ObjectMetadata>();
+      return ListObjectsIterator(nullptr, past_the_end_error);
     }
   }
-  return google::cloud::optional<ObjectMetadata>(std::move(*current_++));
+  return ListObjectsIterator(this, std::move(*current_++));
 }
 
 }  // namespace STORAGE_CLIENT_NS

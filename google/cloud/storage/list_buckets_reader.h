@@ -53,7 +53,9 @@ class ListBucketsIterator {
 
   BucketMetadata const& operator*() const& { return *value_; }
   BucketMetadata& operator*() & { return *value_; }
+#if GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   BucketMetadata const&& operator*() const&& { return *std::move(value_); }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   BucketMetadata&& operator*() && { return *std::move(value_); }
 
   bool operator==(ListBucketsIterator const& rhs) const {

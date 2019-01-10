@@ -14,10 +14,8 @@
 
 #include "google/cloud/firestore/field_path.h"
 #include <array>
-
-namespace {
-std::regex simple_field_name("[_a-zA-Z][_a-zA-Z0-9]*");
-}
+#include <cctype>
+#include <ciso646>
 
 namespace google {
 namespace cloud {
@@ -63,10 +61,22 @@ FieldPath FieldPath::Append(FieldPath const& field_path) const {
 }
 
 std::string FieldPath::ToApiRepr() const {
+  // gcc-4.8 ships with a broken regex library (sigh), so don't use it.
+  auto is_simple_field_name = [](std::string const& part) {
+    if (part.empty()) {
+      return false;
+    }
+    if (part[0] != '_' and std::isalpha(part[0]) == 0) {
+      return false;
+    }
+    return std::all_of(part.begin(), part.end(), [](char c) {
+      return c == '_' or std::isalnum(c) != 0;
+    });
+  };
   std::string s;
   if (valid_) {
     for (auto part : parts_) {
-      auto const match = std::regex_match(part, ::simple_field_name);
+      auto const match = is_simple_field_name(part);
       if (match) {
         s += part + '.';
       } else {
@@ -92,7 +102,7 @@ bool FieldPath::operator<(FieldPath const& other) const {
   auto const this_size = this->parts_.size();
   auto const other_size = other.size();
   auto const min_length = std::min(this_size, other_size);
-  for (auto i = 0; i < min_length; i++) {
+  for (auto i = 0u; i < min_length; i++) {
     if (this->parts_[i] < other.parts_[i]) {
       return true;
     }

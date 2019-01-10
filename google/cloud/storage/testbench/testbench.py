@@ -23,6 +23,7 @@ import gcs_object
 import httpbin
 import json
 import os
+import re
 import testbench_utils
 from werkzeug import serving
 from werkzeug import wsgi
@@ -445,14 +446,27 @@ def objects_get(bucket_name, object_name):
     if media != 'media':
         raise error_response.ErrorResponse('Invalid alt=%s parameter' % media)
     revision.validate_encryption_for_read(flask.request)
+    # Respect the Range: header, if present.
+    range_header = flask.request.headers.get('range')
+    response_payload = revision.media
+    begin = 0
+    end = len(response_payload)
+    if range_header is not None:
+        print("\n\n\nrange_header = %s\n\n" % range_header)
+        m = re.match('bytes=([0-9]+)-([0-9]+)', range_header)
+        if m:
+            print("\n\n\nmatch = %s\n\n" % m)
+            begin = int(m.group(1))
+            end = int(m.group(2))
+            response_payload = response_payload[begin:end + 1]
+    # Process custome headers to test error conditions.
     instructions = flask.request.headers.get('x-goog-testbench-instructions')
     if instructions == 'return-corrupted-data':
-        response_payload = testbench_utils.corrupt_media(revision.media)
-    else:
-        response_payload = revision.media
+        response_payload = testbench_utils.corrupt_media(response_payload)
     response = flask.make_response(response_payload)
     length = len(response_payload)
-    response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1, length)
+    content_range = 'bytes %d-%d/%d' % (begin, end - 1, length)
+    response.headers['Content-Range'] = content_range
     response.headers['x-goog-hash'] = revision.x_goog_hash_header()
     return response
 
@@ -693,14 +707,27 @@ def xmlapi_get_object(bucket_name, object_name):
     blob.check_preconditions_by_value(generation_match, None,
                                       metageneration_match, None)
     revision = blob.get_revision(flask.request)
+    # Respect the Range: header, if present.
+    range_header = flask.request.headers.get('range')
+    response_payload = revision.media
+    begin = 0
+    end = len(response_payload)
+    if range_header is not None:
+        print("\n\n\nrange_header = %s\n\n" % range_header)
+        m = re.match('bytes=([0-9]+)-([0-9]+)', range_header)
+        if m:
+            print("\n\n\nmatch = %s\n\n" % m)
+            begin = int(m.group(1))
+            end = int(m.group(2))
+            response_payload = response_payload[begin:end + 1]
+    # Process custome headers to test error conditions.
     instructions = flask.request.headers.get('x-goog-testbench-instructions')
     if instructions == 'return-corrupted-data':
-        response_payload = testbench_utils.corrupt_media(revision.media)
-    else:
-        response_payload = revision.media
+        response_payload = testbench_utils.corrupt_media(response_payload)
     response = flask.make_response(response_payload)
     length = len(response_payload)
-    response.headers['Content-Range'] = 'bytes 0-%d/%d' % (length - 1, length)
+    content_range = 'bytes %d-%d/%d' % (begin, end - 1, length)
+    response.headers['Content-Range'] = content_range
     response.headers['x-goog-hash'] = revision.x_goog_hash_header()
     return response
 

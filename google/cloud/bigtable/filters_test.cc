@@ -56,6 +56,13 @@ TEST(FiltersTest, ColumnRange) {
   EXPECT_EQ("colF", proto.column_range_filter().end_qualifier_open());
 }
 
+TEST(FiltersTest, ColumnName) {
+  auto proto = bigtable::Filter::ColumnName("fam", "colA").as_proto();
+  EXPECT_EQ("fam", proto.column_range_filter().family_name());
+  EXPECT_EQ("colA", proto.column_range_filter().start_qualifier_closed());
+  EXPECT_EQ("colA", proto.column_range_filter().end_qualifier_closed());
+}
+
 TEST(FiltersTest, TimestampRangeMicros) {
   auto proto = bigtable::Filter::TimestampRangeMicros(0, 10).as_proto();
   EXPECT_EQ(0, proto.timestamp_range_filter().start_timestamp_micros());
@@ -288,14 +295,19 @@ TEST(FiltersTest, Sink) {
   ASSERT_TRUE(proto.sink());
 }
 
-/// @test Verify that `bigtable::Filter::as_proto_move` works as expected.
+/// @test Verify that `bigtable::Filter::as_proto` works as expected.
 TEST(FiltersTest, MoveProto) {
   using F = bigtable::Filter;
   auto filter = F::Chain(F::FamilyRegex("fam"), F::ColumnRegex("col"),
                          F::CellsRowOffset(2), F::Latest(1));
   auto proto_copy = filter.as_proto();
-  auto proto_move = filter.as_proto_move();
+  auto proto_move = std::move(filter).as_proto();
   ASSERT_FALSE(filter.as_proto().has_chain());
+
+  // Verify that as_proto() for rvalue-references returns the right type.
+  static_assert(std::is_rvalue_reference<decltype(
+                    std::move(std::declval<F>()).as_proto())>::value,
+                "Return type from as_proto() must be rvalue-reference");
 
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;

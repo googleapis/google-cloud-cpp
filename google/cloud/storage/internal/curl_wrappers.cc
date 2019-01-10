@@ -38,9 +38,18 @@ namespace {
 //
 std::once_flag ssl_locking_initialized;
 
-#if OPENSSL_VERSION_NUMBER < 0x10100000L  // Older than version 1.1.0
-// OpenSSL before 1.1.0, and LibreSSL require the application to set locks
-// explicitly.  Both report OPENSSL_VERSION_NUMBER.
+#if LIBRESSL_VERSION_NUMBER
+// LibreSSL calls itself OpenSSL > 2.0, but it really is based on SSL 1.0.2
+// and requires locks.
+#define GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS 1
+#elif OPENSSL_VERSION_NUMBER < 0x10100000L  // Older than version 1.1.0
+// Before 1.1.0 OpenSSL requires locks to be used by multiple threads.
+#define GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS 1
+#else
+#define GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS 0
+#endif
+
+#if GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS
 std::vector<std::mutex> ssl_locks;
 
 // A callback to lock and unlock the mutexes needed by the SSL library.
@@ -146,8 +155,8 @@ void InitializeSslLocking(bool enable_ssl_callbacks) {
   // default version.
 }
 #else
-void InitializeSslLocking(bool enable_ssl_callbacks) {}
-#endif  // OPENSSL_VERSION_NUMBER < 0x10100000L
+void InitializeSslLocking(bool) {}
+#endif  // GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS
 
 /// Automatically initialize (and cleanup) the libcurl library.
 class CurlInitializer {
@@ -156,7 +165,6 @@ class CurlInitializer {
   ~CurlInitializer() { curl_global_cleanup(); }
 };
 }  // namespace
-
 
 std::string CurlSslLibraryId() {
   auto vinfo = curl_version_info(CURLVERSION_NOW);
@@ -169,15 +177,15 @@ bool SslLibraryNeedsLocking(std::string const& curl_ssl_id) {
   // Only these library prefixes require special configuration for using safely
   // with multiple threads.
   return (curl_ssl_id.rfind("OpenSSL/1.0", 0) == 0 or
-      curl_ssl_id.rfind("LibreSSL/2", 0) == 0);
+          curl_ssl_id.rfind("LibreSSL/2", 0) == 0);
 }
 
 bool SslLockingCallbacksInstalled() {
-#if OPENSSL_VERSION_NUMBER < 0x10100000L  // Older than version 1.1.0
+#if GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS
   return not ssl_locks.empty();
 #else
   return false;
-#endif  // OPENSSL_VERSION_NUMBER < 0x10100000L
+#endif  // GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS
 }
 
 std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,

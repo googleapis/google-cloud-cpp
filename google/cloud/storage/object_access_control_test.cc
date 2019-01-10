@@ -40,7 +40,7 @@ TEST(ObjectAccessControlTest, Parse) {
       },
       "role": "OWNER"
 })""";
-  auto actual = ObjectAccessControl::ParseFromString(text);
+  auto actual = ObjectAccessControl::ParseFromString(text).value();
 
   EXPECT_EQ("foo-bar", actual.bucket());
   EXPECT_EQ("example.com", actual.domain());
@@ -79,7 +79,7 @@ TEST(ObjectAccessControlTest, IOStream) {
       "role": "OWNER"
 })""";
 
-  auto meta = ObjectAccessControl::ParseFromString(text);
+  auto meta = ObjectAccessControl::ParseFromString(text).value();
   std::ostringstream os;
   os << meta;
   auto actual = os.str();
@@ -127,7 +127,7 @@ TEST(ObjectAccessControlTest, Compare) {
       },
       "role": "OWNER"
 })""";
-  auto original = ObjectAccessControl::ParseFromString(text);
+  auto original = ObjectAccessControl::ParseFromString(text).value();
   EXPECT_EQ(original, original);
 
   auto modified = original;

@@ -64,17 +64,17 @@ TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
         EXPECT_EQ(payload, p);
         EXPECT_EQ(513 * 1024, s);
-        return std::make_pair(Status(503, "uh oh"), ResumableUploadResponse{});
+        return StatusOr<ResumableUploadResponse>(Status(503, "uh oh"));
       }));
 
   LoggingResumableUploadSession session(std::move(mock));
 
   auto result = session.UploadChunk(payload, 513 * 1024);
-  EXPECT_EQ(503, result.first.status_code());
-  EXPECT_EQ("uh oh", result.first.error_message());
+  EXPECT_EQ(503, result.status().status_code());
+  EXPECT_EQ("uh oh", result.status().error_message());
 
   EXPECT_EQ(1U, CountLines("upload_size=" + std::to_string(513 * 1024UL)));
-  EXPECT_EQ(1U, CountLines("[503]"));
+  EXPECT_EQ(1U, CountLines("[UNEXPECTED_STATUS_CODE=503]"));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
@@ -83,16 +83,16 @@ TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
 
   EXPECT_CALL(*mock, ResetSession())
       .WillOnce(Invoke([&]() {
-        return std::make_pair(Status(308, "uh oh"), ResumableUploadResponse{});
+        return StatusOr<ResumableUploadResponse>(Status(308, "uh oh"));
       }));
 
   LoggingResumableUploadSession session(std::move(mock));
 
   auto result = session.ResetSession();
-  EXPECT_EQ(308, result.first.status_code());
-  EXPECT_EQ("uh oh", result.first.error_message());
+  EXPECT_EQ(308, result.status().status_code());
+  EXPECT_EQ("uh oh", result.status().error_message());
 
-  EXPECT_EQ(1U, CountLines("[308]"));
+  EXPECT_EQ(1U, CountLines("[UNEXPECTED_STATUS_CODE=308]"));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, NextExpectedByte) {

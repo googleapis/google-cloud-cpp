@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/optional.h"
 #include <chrono>
 #include <memory>
 
@@ -129,8 +130,7 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
                 2 * initial_delay)),
         maximum_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
             maximum_delay)),
-        scaling_(scaling),
-        generator_(google::cloud::internal::MakeDefaultPRNG()) {
+        scaling_(scaling) {
     if (scaling_ <= 1.0) {
       google::cloud::internal::RaiseInvalidArgument(
           "scaling factor must be > 1.0");
@@ -144,7 +144,7 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   std::chrono::microseconds current_delay_range_;
   std::chrono::microseconds maximum_delay_;
   double scaling_;
-  google::cloud::internal::DefaultPRNG generator_;
+  optional<DefaultPRNG> generator_;
 };
 
 }  // namespace internal

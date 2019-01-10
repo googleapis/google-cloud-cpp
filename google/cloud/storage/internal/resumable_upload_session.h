@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RESUMABLE_UPLOAD_SESSION_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RESUMABLE_UPLOAD_SESSION_H_
 
+#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/object_requests.h"
-#include "google/cloud/storage/status.h"
 
 namespace google {
 namespace cloud {
@@ -38,11 +38,11 @@ class ResumableUploadSession {
    *   known.
    * @return The result of uploading the chunk.
    */
-  virtual std::pair<Status, ResumableUploadResponse> UploadChunk(
+  virtual StatusOr<ResumableUploadResponse> UploadChunk(
       std::string const& buffer, std::uint64_t upload_size) = 0;
 
   /// Resets the session by querying its current state.
-  virtual std::pair<Status, ResumableUploadResponse> ResetSession() = 0;
+  virtual StatusOr<ResumableUploadResponse> ResetSession() = 0;
 
   /**
    * Returns the next expected byte in the server.
@@ -52,6 +52,13 @@ class ResumableUploadSession {
    * using this class) needs to re-send a chunk.
    */
   virtual std::uint64_t next_expected_byte() const = 0;
+
+  /**
+   * Returns the current upload session id.
+   *
+   * Note that the session id might change during an upload.
+   */
+  virtual std::string const& session_id() const = 0;
 };
 
 }  // namespace internal

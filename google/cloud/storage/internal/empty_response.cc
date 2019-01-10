@@ -20,7 +20,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-std::ostream& operator<<(std::ostream& os, EmptyResponse const& r) {
+std::ostream& operator<<(std::ostream& os, EmptyResponse const&) {
   return os << "EmptyResponse={}";
 }
 

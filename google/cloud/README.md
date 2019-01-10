@@ -22,7 +22,22 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.2.x - TBD
+### v0.4.x - TBD
+
+### v0.3.x - 2019-01
+
+* Support compiling with gcc-4.8.
+* Fix `GCP_LOG()` macro so it works on platforms that define a `DEBUG`
+  pre-processor symbol.
+* Use different PRNG sequences for each backoff instance, previously all the
+  clones of a backoff policy shared the same sequence.
+* Workaround build problems with Xcode 7.3.
+
+### v0.2.x - 2018-12
+
+* Implement `google::cloud::future<T>` and `google::cloud::promise<T>` based on
+  ISO/IEC TS 19571:2016, the "C++ Extensions for Concurrency" technical
+  specification, also known as "futures with continuations". 
 
 ### v0.1.x - 2018-11
 

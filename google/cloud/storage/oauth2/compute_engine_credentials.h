@@ -16,19 +16,17 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_COMPUTE_ENGINE_CREDENTIALS_H_
 
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/status.h"
 #include "google/cloud/storage/internal/compute_engine_util.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/credentials.h"
-#include "google/cloud/storage/status.h"
-#include <chrono>
-#include <condition_variable>
+#include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include <ctime>
 #include <mutex>
 #include <set>
-#include <string>
 
 namespace google {
 namespace cloud {
@@ -37,17 +35,25 @@ inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
 /**
- * A C++ wrapper for Google's Compute Engine Service Account Credentials.
+ * Wrapper class for Google OAuth 2.0 GCE instance service account credentials.
  *
- * Takes a service account email address or alias (e.g. "default") and uses
- * the Google Compute Engine VM instance's metadata server to obtain service
- * account metadata and OAuth2 access tokens.
+ * Takes a service account email address or alias (e.g. "default") and uses the
+ * Google Compute Engine instance's metadata server to obtain service account
+ * metadata and OAuth 2.0 access tokens as needed. Instances of this class
+ * should usually be created via the convenience methods declared in
+ * google_credentials.h.
  *
- * @see
- *   https://cloud.google.com/compute/docs/authentication#using
+ * An HTTP Authorization header, with an access token as its value, can be
+ * obtained by calling the AuthorizationHeader() method; if the current access
+ * token is invalid or nearing expiration, this will class will first obtain a
+ * new access token before returning the Authorization header string.
+ *
+ * @see https://cloud.google.com/compute/docs/authentication#using for details
+ * on how to get started with Compute Engine service account credentials.
  *
  * @tparam HttpRequestBuilderType a dependency injection point. It makes it
- *     possible to mock the libcurl wrappers.
+ *     possible to mock internal libcurl wrappers. This should generally not
+ *     be overridden except for testing.
  */
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder>
@@ -56,52 +62,48 @@ class ComputeEngineCredentials : public Credentials {
   explicit ComputeEngineCredentials() : ComputeEngineCredentials("default") {}
 
   explicit ComputeEngineCredentials(std::string const& service_account_email)
-      : expiration_time_(), service_account_email_(service_account_email) {}
-
-  std::pair<google::cloud::storage::Status, std::string> AuthorizationHeader()
-      override {
-    using google::cloud::storage::Status;
+      : service_account_email_(service_account_email) {}
+  StatusOr<std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
-    if (IsValid()) {
-      return std::make_pair(Status(), authorization_header_);
-    }
-    Status status = Refresh();
-    return std::make_pair(
-        status, status.ok() ? authorization_header_ : std::string(""));
+    return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
   }
 
   /**
    * Returns the email or alias of this credential's service account.
    *
-   * Note that this class must query the Compute Engine instance's metadata
-   * server to fetch service account metadata. Because of this, if an alias
-   * (e.g. "default") was supplied in place of an actual email address when
+   * @note This class must query the Compute Engine instance's metadata server
+   * to fetch service account metadata. Because of this, if an alias (e.g.
+   * "default") was supplied in place of an actual email address when
    * initializing this credential, that alias is returned as this credential's
    * email address if the credential has not been refreshed yet.
    */
-  std::string service_account_email() { return service_account_email_; }
+  std::string service_account_email() {
+    std::unique_lock<std::mutex> lock(mu_);
+    return service_account_email_;
+  }
 
   /**
    * Returns the set of scopes granted to this credential's service account.
    *
-   * Note that because this class must query the Compute Engine instance's
-   * metadata server to fetch service account metadata, this method will return
-   * an empty set if the credential has not been refreshed yet.
+   * @note Because this class must query the Compute Engine instance's metadata
+   * server to fetch service account metadata, this method will return an empty
+   * set if the credential has not been refreshed yet.
    */
-  std::set<std::string> scopes() { return scopes_; }
+  std::set<std::string> scopes() {
+    std::unique_lock<std::mutex> lock(mu_);
+    return scopes_;
+  }
 
  private:
-  bool IsExpired() {
-    auto now = std::chrono::system_clock::now();
-    return now > (expiration_time_ - GoogleOAuthAccessTokenExpirationSlack());
-  }
-
-  bool IsValid() {
-    return not authorization_header_.empty() and not IsExpired();
-  }
-
-  storage::internal::HttpResponse DoMetadataServerGetRequest(std::string path,
-                                                             bool recursive) {
+  /**
+   * Sends an HTTP GET request to the GCE metadata server.
+   *
+   * @see https://cloud.google.com/compute/docs/storing-retrieving-metadata for
+   * an overview of retrieving information from the GCE metadata server.
+   */
+  StatusOr<storage::internal::HttpResponse> DoMetadataServerGetRequest(
+      std::string path, bool recursive) {
+    // Allows mocking the metadata server hostname for testing.
     std::string metadata_server_hostname =
         google::cloud::storage::internal::GceMetadataHostname();
 
@@ -112,28 +114,38 @@ class ComputeEngineCredentials : public Credentials {
     if (recursive) {
       request_builder.AddQueryParameter("recursive", "true");
     }
-    return request_builder.BuildRequest().MakeRequest("");
+    return request_builder.BuildRequest().MakeRequest(std::string{});
   }
 
-  storage::Status RetrieveServiceAccountInfo() {
+  /**
+   * Fetches metadata for an instance's service account.
+   *
+   * @see
+   * https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances
+   * for more details.
+   */
+  Status RetrieveServiceAccountInfo() {
     namespace nl = google::cloud::storage::internal::nl;
     auto response = DoMetadataServerGetRequest(
         "/computeMetadata/v1/instance/service-accounts/" +
             service_account_email_ + "/",
         true);
-    if (response.status_code >= 300) {
-      return storage::Status(response.status_code, std::move(response.payload));
+    if (not response.ok()) {
+      return std::move(response).status();
+    }
+    if (response->status_code >= 300) {
+      return Status(response->status_code, std::move(response->payload));
     }
 
-    nl::json response_body = nl::json::parse(response.payload, nullptr, false);
+    nl::json response_body = nl::json::parse(response->payload, nullptr, false);
     // Note that the "scopes" attribute will always be present and contain a
     // JSON array. At minimum, for the request to succeed, the instance must
     // have been granted the scope that allows it to retrieve info from the
     // metadata server.
     if (response_body.is_discarded() or response_body.count("email") == 0U or
         response_body.count("scopes") == 0U) {
-      return storage::Status(
-          response.status_code, std::move(response.payload),
+      return Status(
+          response->status_code, std::move(response->payload),
           "Could not find all required fields in response (email, scopes).");
     }
 
@@ -143,10 +155,10 @@ class ComputeEngineCredentials : public Credentials {
     // Do not update any state until all potential exceptions are raised.
     service_account_email_ = email;
     scopes_ = scopes_set;
-    return storage::Status();
+    return Status();
   }
 
-  storage::Status Refresh() {
+  Status Refresh() {
     namespace nl = storage::internal::nl;
 
     auto status = RetrieveServiceAccountInfo();
@@ -158,19 +170,22 @@ class ComputeEngineCredentials : public Credentials {
         "/computeMetadata/v1/instance/service-accounts/" +
             service_account_email_ + "/token",
         false);
-    if (response.status_code >= 300) {
-      return storage::Status(response.status_code, std::move(response.payload));
+    if (not response.ok()) {
+      return std::move(response).status();
+    }
+    if (response->status_code >= 300) {
+      return Status(response->status_code, std::move(response->payload));
     }
 
     // Response should have the attributes "access_token", "expires_in", and
     // "token_type".
-    nl::json access_token = nl::json::parse(response.payload, nullptr, false);
+    nl::json access_token = nl::json::parse(response->payload, nullptr, false);
     if (access_token.is_discarded() or
         access_token.count("access_token") == 0U or
         access_token.count("expires_in") == 0U or
         access_token.count("token_type") == 0U) {
-      return storage::Status(
-          response.status_code, std::move(response.payload),
+      return Status(
+          response->status_code, std::move(response->payload),
           "Could not find all required fields in response (access_token,"
           " expires_in, token_type).");
     }
@@ -183,16 +198,13 @@ class ComputeEngineCredentials : public Credentials {
     auto new_expiration = std::chrono::system_clock::now() + expires_in;
 
     // Do not update any state until all potential exceptions are raised.
-    authorization_header_ = std::move(header);
-    expiration_time_ = new_expiration;
-    return storage::Status();
+    refreshing_creds_.authorization_header = std::move(header);
+    refreshing_creds_.expiration_time = new_expiration;
+    return Status();
   }
 
-  std::mutex mu_;
-  std::condition_variable cv_;
-  // Credential attributes
-  std::string authorization_header_;
-  std::chrono::system_clock::time_point expiration_time_;
+  mutable std::mutex mu_;
+  RefreshingCredentialsWrapper refreshing_creds_;
   std::set<std::string> scopes_;
   std::string service_account_email_;
 };

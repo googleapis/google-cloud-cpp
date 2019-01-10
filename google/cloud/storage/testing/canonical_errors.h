@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_CANONICAL_ERRORS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_CANONICAL_ERRORS_H_
 
-#include "google/cloud/storage/status.h"
+#include "google/cloud/status.h"
 #include <gmock/gmock.h>
 
 namespace google {

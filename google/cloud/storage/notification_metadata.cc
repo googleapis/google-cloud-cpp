@@ -18,8 +18,11 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-NotificationMetadata NotificationMetadata::ParseFromJson(
+StatusOr<NotificationMetadata> NotificationMetadata::ParseFromJson(
     internal::nl::json const& json) {
+  if (not json.is_object()) {
+    return Status(StatusCode::kInvalidArgument, __func__);
+  }
   NotificationMetadata result{};
 
   if (json.count("custom_attributes") != 0U) {
@@ -46,9 +49,9 @@ NotificationMetadata NotificationMetadata::ParseFromJson(
   return result;
 }
 
-NotificationMetadata NotificationMetadata::ParseFromString(
+StatusOr<NotificationMetadata> NotificationMetadata::ParseFromString(
     std::string const& payload) {
-  internal::nl::json json = internal::nl::json::parse(payload);
+  internal::nl::json json = internal::nl::json::parse(payload, nullptr, false);
   return ParseFromJson(json);
 }
 

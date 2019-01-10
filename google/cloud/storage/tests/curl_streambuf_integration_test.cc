@@ -37,9 +37,10 @@ TEST(CurlStreambufIntegrationTest, WriteManyBytes) {
                                        internal::GetDefaultCurlHandleFactory());
   builder.AddHeader("Content-Type: application/octet-stream");
   builder.SetMethod("POST");
-  std::unique_ptr<internal::CurlStreambuf> buf(new internal::CurlStreambuf(
-      builder.BuildUpload(), 128 * 1024,
-      google::cloud::internal::make_unique<internal::NullHashValidator>()));
+  std::unique_ptr<internal::CurlWriteStreambuf> buf(
+      new internal::CurlWriteStreambuf(
+          builder.BuildUpload(), 128 * 1024,
+          google::cloud::internal::make_unique<internal::NullHashValidator>()));
   ObjectWriteStream writer(std::move(buf));
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
@@ -59,13 +60,14 @@ TEST(CurlStreambufIntegrationTest, WriteManyBytes) {
     writer << random;
     expected += random;
   }
-  auto response = writer.CloseRaw();
-  ASSERT_EQ(200, response.status_code)
-      << ", status_code=" << response.status_code
-      << ", payload=" << response.payload << ", headers={" << [&response] {
+  writer.Close();
+  ASSERT_TRUE(writer.metadata().ok())
+      << ", status=" << writer.metadata().status()
+      << ", payload=" << writer.payload()
+      << ", headers={" << [&writer] {
            std::string result;
            char const* sep = "";
-           for (auto&& kv : response.headers) {
+           for (auto&& kv : writer.headers()) {
              result += sep;
              result += kv.first;
              result += "=";
@@ -76,7 +78,7 @@ TEST(CurlStreambufIntegrationTest, WriteManyBytes) {
            return result;
          }();
 
-  internal::nl::json parsed = internal::nl::json::parse(response.payload);
+  internal::nl::json parsed = internal::nl::json::parse(writer.payload());
 
   // Verify the server received the right data.
   auto actual = parsed.value("data", "");

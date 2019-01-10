@@ -191,6 +191,15 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
   }
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::ListInstancesResponse>>
+  AsyncListInstances(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ListInstancesRequest const& request,
+      grpc::CompletionQueue* cq) override {
+    return impl_.Stub()->AsyncListInstances(context, request, cq);
+  }
+
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::Instance>>
   AsyncGetInstance(
       grpc::ClientContext* context,
@@ -303,6 +312,15 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
       const google::bigtable::admin::v2::UpdateAppProfileRequest& request,
       grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncUpdateAppProfile(context, request, cq);
+  }
+
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::ListAppProfilesResponse>>
+  AsyncListAppProfiles(
+      grpc::ClientContext* context,
+      const google::bigtable::admin::v2::ListAppProfilesRequest& request,
+      grpc::CompletionQueue* cq) override {
+    return impl_.Stub()->AsyncListAppProfiles(context, request, cq);
   }
 
   std::unique_ptr<

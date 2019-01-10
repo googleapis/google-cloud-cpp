@@ -44,6 +44,21 @@
 #  error "Bigtable C++ Client requires C++11, your version of MSVC is too old"
 #endif  // _MSC_VER
 
+// Abort the build if the version of the compiler is too old. With CMake we
+// never start the build, but with Bazel we may start the build only to find
+// that the compiler is too old. This also simplifies some of the testing
+// further down in this file. Because Clang defines both __GNUC__ and __clang__
+// test for the Clang version first (sigh).
+#if defined(__clang__)
+#  if __clang_major__ < 3 || (__clang_major__ == 3 && __clang_minor__ < 8)
+#    error "Only Clang >= 3.8 is supported."
+#  endif  // Clang < 3.8
+#elif defined(__GNUC__)
+#  if __GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ < 8)
+#    error "Only GCC >= 4.8 is supported."
+#  endif  // GCC < 4.8
+#endif  // defined(__clang__)
+
 // Discover if exceptions are enabled and define them as needed.
 #ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 #  error "GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS should not be set directly."
@@ -66,6 +81,28 @@
    // https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations
 #  define GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS 1
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+
+// Define a macro to detect if the compiler supports `const&&`-qualified member
+// functions.
+#ifdef GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
+#  error "GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF should not be set directly."
+#elif defined(__clang__)
+   // Of course this is not true of all Clang versions, but older versions are
+   // rejected earlier in this file.
+#  define GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF 1
+#elif defined(_MSC_VER)
+   // Of course this is not true of all MSVC versions, but older versions are
+   // rejected earlier in this file.
+#  define GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF 1
+#elif defined(__GNUC__)
+#  if __GNUC__ == 4 && __GNUC_MINOR__ == 8
+#    define GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF 0
+#  else
+#    define GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF 1
+#  endif  // __GNUC__ == 4 && __GNUC_MINOR__ = 8
+#else
+#    define GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF 1
+#endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
 // clang-format on
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PORT_PLATFORM_H_

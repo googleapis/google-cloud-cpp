@@ -54,7 +54,8 @@ TEST(ObjectAclRequestTest, ListResponse) {
       }]})""";
 
   auto actual =
-      ListObjectAclResponse::FromHttpResponse(HttpResponse{200, text, {}});
+      ListObjectAclResponse::FromHttpResponse(HttpResponse{200, text, {}})
+          .value();
   ASSERT_EQ(2UL, actual.items.size());
   EXPECT_EQ("user-qux", actual.items.at(0).entity());
   EXPECT_EQ("OWNER", actual.items.at(0).role());
@@ -69,6 +70,22 @@ TEST(ObjectAclRequestTest, ListResponse) {
   EXPECT_THAT(str, HasSubstr("object=baz"));
   EXPECT_THAT(str, HasSubstr("ListObjectAclResponse={"));
   EXPECT_THAT(str, HasSubstr("ObjectAccessControl={"));
+}
+
+TEST(ObjectAclRequestTest, ListResponseParseFailure) {
+  std::string text = R"""({123)""";
+
+  StatusOr<ListObjectAclResponse> actual =
+      ListObjectAclResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
+}
+
+TEST(ObjectAclRequestTest, ListResponseParseFailureElements) {
+  std::string text = R"""({"items": ["invalid-item"]})""";
+
+  StatusOr<ListObjectAclResponse> actual =
+      ListObjectAclResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
 }
 
 TEST(ObjectAclRequestTest, Get) {
@@ -159,7 +176,7 @@ ObjectAccessControl CreateObjectAccessControlForTest() {
       },
       "role": "OWNER"
 })""";
-  return ObjectAccessControl::ParseFromString(text);
+  return ObjectAccessControl::ParseFromString(text).value();
 }
 
 TEST(ObjectAclRequestTest, PatchDiff) {

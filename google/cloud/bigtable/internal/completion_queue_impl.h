@@ -172,7 +172,7 @@ template <typename Request, typename Response, typename Functor,
 class AsyncUnaryRpcFunctor : public AsyncGrpcOperation {
  public:
   explicit AsyncUnaryRpcFunctor(Functor&& functor)
-      : functor_(std::forward<Functor>(functor)) {}
+      : sync_(false), functor_(std::forward<Functor>(functor)) {}
 
   /// Make the RPC request and prepare the response callback.
   template <typename Client, typename MemberFunction>
@@ -242,7 +242,8 @@ class AsyncUnaryStreamRpcFunctor : public AsyncGrpcOperation {
  public:
   explicit AsyncUnaryStreamRpcFunctor(DataFunctor&& data_functor,
                                       FinishedFunctor&& finished_functor)
-      : state_(CREATING),
+      : tag_(nullptr),
+        state_(CREATING),
         data_functor_(std::forward<DataFunctor>(data_functor)),
         finished_functor_(std::forward<FinishedFunctor>(finished_functor)) {}
 

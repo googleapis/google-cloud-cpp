@@ -137,7 +137,7 @@ class TableAdmin {
    * @snippet table_admin_async_snippets.cc async create table
    */
   future<google::bigtable::admin::v2::Table> AsyncCreateTable(
-      std::string table_id, TableConfig config, CompletionQueue& cq);
+      CompletionQueue& cq, std::string table_id, TableConfig config);
 
   /**
    * Return all the tables in the instance.
@@ -207,8 +207,8 @@ class TableAdmin {
    * @snippet table_admin_async_snippets.cc async get table
    */
   future<google::bigtable::admin::v2::Table> AsyncGetTable(
-      std::string const& table_id,
-      google::bigtable::admin::v2::Table::View view, CompletionQueue& cq);
+      CompletionQueue& cq, std::string const& table_id,
+      google::bigtable::admin::v2::Table::View view);
 
   /**
    * Delete a table.

@@ -20,6 +20,9 @@
 #include "google/cloud/bigtable/instance_admin_client.h"
 #include "google/cloud/bigtable/instance_config.h"
 #include "google/cloud/bigtable/instance_update_config.h"
+#include "google/cloud/bigtable/internal/async_list_app_profiles.h"
+#include "google/cloud/bigtable/internal/async_list_clusters.h"
+#include "google/cloud/bigtable/internal/async_list_instances.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc_and_poll.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
@@ -119,6 +122,38 @@ class InstanceAdmin {
       grpc::Status& status);
 
   /**
+   * Makes an asynchronous request to list instances
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, InstanceList&, grpc::Status const&>);
+   * @return a handle to the submitted operation
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<google::cloud::internal::is_invocable<
+                                        Functor, CompletionQueue&,
+                                        InstanceList&, grpc::Status&>::value,
+                                    int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> AsyncListInstances(CompletionQueue& cq,
+                                                     Functor&& callback) {
+    auto op = std::make_shared<internal::AsyncRetryListInstances<Functor>>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        metadata_update_policy_, client_, project_name_,
+        std::forward<Functor>(callback));
+    return op->Start(cq);
+  }
+
+  /**
    * Makes an asynchronous request to create a instance.
    *
    * @warning This is an early version of the asynchronous APIs for Cloud
@@ -149,8 +184,8 @@ class InstanceAdmin {
                                         grpc::Status&>::value,
                                     int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncCreateInstance(
-      bigtable::InstanceConfig instance_config, CompletionQueue& cq,
-      Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback,
+      bigtable::InstanceConfig instance_config) {
     static_assert(internal::ExtractMemberFunctionType<decltype(
                       &InstanceAdminClient::AsyncCreateInstance)>::value,
                   "Cannot extract member function type");
@@ -162,7 +197,7 @@ class InstanceAdmin {
         InstanceAdminClient, google::bigtable::admin::v2::Instance,
         MemberFunction, internal::ConstantIdempotencyPolicy, Functor>;
 
-    auto request = instance_config.as_proto_move();
+    auto request = std::move(instance_config).as_proto();
     request.set_parent(project_name());
     for (auto& kv : *request.mutable_clusters()) {
       kv.second.set_location(project_name() + "/locations/" +
@@ -210,8 +245,8 @@ class InstanceAdmin {
                                         grpc::Status&>::value,
                                     int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncUpdateInstance(
-      InstanceUpdateConfig instance_update_config, CompletionQueue& cq,
-      Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback,
+      InstanceUpdateConfig instance_update_config) {
     static_assert(internal::ExtractMemberFunctionType<decltype(
                       &InstanceAdminClient::AsyncUpdateInstance)>::value,
                   "Cannot extract member function type");
@@ -223,7 +258,7 @@ class InstanceAdmin {
         InstanceAdminClient, google::bigtable::admin::v2::Instance,
         MemberFunction, internal::ConstantIdempotencyPolicy, Functor>;
 
-    auto request = instance_update_config.as_proto_move();
+    auto request = std::move(instance_update_config).as_proto();
     auto op = std::make_shared<Operation>(
         __func__, polling_policy_->clone(), rpc_retry_policy_->clone(),
         rpc_backoff_policy_->clone(), internal::ConstantIdempotencyPolicy(true),
@@ -264,7 +299,7 @@ class InstanceAdmin {
                                         grpc::Status&>::value,
                                     int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncGetInstance(
-      std::string const& instance_id, CompletionQueue& cq, Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback, std::string const& instance_id) {
     google::bigtable::admin::v2::GetInstanceRequest request;
     // Setting instance name.
     request.set_name(project_name_ + "/instances/" + instance_id);
@@ -304,23 +339,19 @@ class InstanceAdmin {
    *     `cq.Run()`.
    * @param callback a functor to be called when the operation completes. It
    *     must satisfy (using C++17 types):
-   *     static_assert(std::is_invocable_v<
-   *         Functor, google::protobuf::Empty&,
-   *         grpc::Status const&>);
+   *     static_assert(std::is_invocable_v<Functor, grpc::Status const&>);
    * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    *
-   * TODO(#1325) - eliminate usage of google::protobuf::Empty from Asysnc APIs.
    */
   template <typename Functor,
             typename std::enable_if<
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                                      google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncDeleteInstance(
-      std::string const& instance_id, CompletionQueue& cq, Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback, std::string const& instance_id) {
     google::bigtable::admin::v2::DeleteInstanceRequest request;
     // Setting instance name.
     request.set_name(InstanceName(instance_id));
@@ -335,18 +366,53 @@ class InstanceAdmin {
     using Retry =
         internal::AsyncRetryUnaryRpc<InstanceAdminClient, MemberFunction,
                                      internal::ConstantIdempotencyPolicy,
-                                     Functor>;
+                                     internal::EmptyResponseAdaptor<Functor>>;
 
     auto retry = std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncDeleteInstance, std::move(request),
-        std::forward<Functor>(callback));
+        internal::EmptyResponseAdaptor<Functor>(
+            std::forward<Functor>(callback)));
     return retry->Start(cq);
   }
 
   std::vector<google::bigtable::admin::v2::Cluster> ListClusters(
       std::string const& instance_id, grpc::Status& status);
+
+  /**
+   * Makes an asynchronous request to list clusters
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param instance_id the id of the instance from which clusters will be
+   *     listed
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, ClusterList&, grpc::Status const&>);
+   * @return a handle to the submitted operation
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<google::cloud::internal::is_invocable<
+                                        Functor, CompletionQueue&, ClusterList&,
+                                        grpc::Status&>::value,
+                                    int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> AsyncListClusters(
+      CompletionQueue& cq, Functor&& callback, std::string const& instance_id) {
+    auto op = std::make_shared<internal::AsyncRetryListClusters<Functor>>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        metadata_update_policy_, client_, InstanceName(instance_id),
+        std::forward<Functor>(callback));
+    return op->Start(cq);
+  }
 
   void DeleteCluster(bigtable::InstanceId const& instance_id,
                      bigtable::ClusterId const& cluster_id,
@@ -366,25 +432,21 @@ class InstanceAdmin {
    *     `cq.Run()`.
    * @param callback a functor to be called when the operation completes. It
    *     must satisfy (using C++17 types):
-   *     static_assert(std::is_invocable_v<
-   *         Functor, google::protobuf::Empty&,
-   *         grpc::Status const&>);
+   *     static_assert(std::is_invocable_v<Functor, grpc::Status const&>);
    * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    *
-   * TODO(#1325) - eliminate usage of google::protobuf::Empty from Asysnc APIs.
    */
   template <typename Functor,
             typename std::enable_if<
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                                      google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncDeleteCluster(
+      CompletionQueue& cq, Functor&& callback,
       bigtable::InstanceId const& instance_id,
-      bigtable::ClusterId const& cluster_id, CompletionQueue& cq,
-      Functor&& callback) {
+      bigtable::ClusterId const& cluster_id) {
     google::bigtable::admin::v2::DeleteClusterRequest request;
     // Setting cluster name.
     request.set_name(ClusterName(instance_id, cluster_id));
@@ -399,13 +461,14 @@ class InstanceAdmin {
     using Retry =
         internal::AsyncRetryUnaryRpc<InstanceAdminClient, MemberFunction,
                                      internal::ConstantIdempotencyPolicy,
-                                     Functor>;
+                                     internal::EmptyResponseAdaptor<Functor>>;
 
     auto retry = std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncDeleteCluster, std::move(request),
-        std::forward<Functor>(callback));
+        internal::EmptyResponseAdaptor<Functor>(
+            std::forward<Functor>(callback)));
     return retry->Start(cq);
   }
 
@@ -443,10 +506,10 @@ class InstanceAdmin {
                                         grpc::Status&>::value,
                                     int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncCreateCluster(
+      CompletionQueue& cq, Functor&& callback,
       bigtable::ClusterConfig cluster_config,
       bigtable::InstanceId const& instance_id,
-      bigtable::ClusterId const& cluster_id, CompletionQueue& cq,
-      Functor&& callback) {
+      bigtable::ClusterId const& cluster_id) {
     static_assert(internal::ExtractMemberFunctionType<decltype(
                       &InstanceAdminClient::AsyncCreateCluster)>::value,
                   "Cannot extract member function type");
@@ -458,7 +521,7 @@ class InstanceAdmin {
         InstanceAdminClient, google::bigtable::admin::v2::Cluster,
         MemberFunction, internal::ConstantIdempotencyPolicy, Functor>;
 
-    auto cluster = cluster_config.as_proto_move();
+    auto cluster = std::move(cluster_config).as_proto();
     cluster.set_location(project_name() + "/locations/" + cluster.location());
 
     google::bigtable::admin::v2::CreateClusterRequest request;
@@ -506,7 +569,7 @@ class InstanceAdmin {
                                         grpc::Status&>::value,
                                     int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncUpdateCluster(
-      ClusterConfig cluster_config, CompletionQueue& cq, Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback, ClusterConfig cluster_config) {
     static_assert(internal::ExtractMemberFunctionType<decltype(
                       &InstanceAdminClient::AsyncUpdateCluster)>::value,
                   "Cannot extract member function type");
@@ -518,7 +581,7 @@ class InstanceAdmin {
         InstanceAdminClient, google::bigtable::admin::v2::Cluster,
         MemberFunction, internal::ConstantIdempotencyPolicy, Functor>;
 
-    auto request = cluster_config.as_proto_move();
+    auto request = std::move(cluster_config).as_proto();
     auto op = std::make_shared<Operation>(
         __func__, polling_policy_->clone(), rpc_retry_policy_->clone(),
         rpc_backoff_policy_->clone(), internal::ConstantIdempotencyPolicy(true),
@@ -562,9 +625,9 @@ class InstanceAdmin {
                                         grpc::Status&>::value,
                                     int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncGetCluster(
+      CompletionQueue& cq, Functor&& callback,
       bigtable::InstanceId const& instance_id,
-      bigtable::ClusterId const& cluster_id, CompletionQueue& cq,
-      Functor&& callback) {
+      bigtable::ClusterId const& cluster_id) {
     google::bigtable::admin::v2::GetClusterRequest request;
     // Setting cluster name.
     request.set_name(ClusterName(instance_id, cluster_id));
@@ -629,9 +692,9 @@ class InstanceAdmin {
               google::bigtable::admin::v2::AppProfile&, grpc::Status&>::value,
           int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncUpdateAppProfile(
+      CompletionQueue& cq, Functor&& callback,
       bigtable::InstanceId const& instance_id,
-      bigtable::AppProfileId profile_id, AppProfileUpdateConfig config,
-      CompletionQueue& cq, Functor&& callback) {
+      bigtable::AppProfileId profile_id, AppProfileUpdateConfig config) {
     static_assert(internal::ExtractMemberFunctionType<decltype(
                       &InstanceAdminClient::AsyncUpdateAppProfile)>::value,
                   "Cannot extract member function type");
@@ -643,7 +706,7 @@ class InstanceAdmin {
         InstanceAdminClient, google::bigtable::admin::v2::AppProfile,
         MemberFunction, internal::ConstantIdempotencyPolicy, Functor>;
 
-    auto request = config.as_proto_move();
+    auto request = std::move(config).as_proto();
     request.mutable_app_profile()->set_name(
         InstanceName(instance_id.get() + "/appProfiles/" + profile_id.get()));
 
@@ -689,9 +752,9 @@ class InstanceAdmin {
               google::bigtable::admin::v2::AppProfile&, grpc::Status&>::value,
           int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncCreateAppProfile(
-      bigtable::InstanceId const& instance_id, AppProfileConfig config,
-      CompletionQueue& cq, Functor&& callback) {
-    auto request = config.as_proto_move();
+      CompletionQueue& cq, Functor&& callback,
+      bigtable::InstanceId const& instance_id, AppProfileConfig config) {
+    auto request = std::move(config).as_proto();
     request.set_parent(InstanceName(instance_id.get()));
 
     static_assert(internal::ExtractMemberFunctionType<decltype(
@@ -749,9 +812,9 @@ class InstanceAdmin {
               google::bigtable::admin::v2::AppProfile&, grpc::Status&>::value,
           int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncGetAppProfile(
+      CompletionQueue& cq, Functor&& callback,
       bigtable::InstanceId const& instance_id,
-      bigtable::AppProfileId const& profile_id, CompletionQueue& cq,
-      Functor&& callback) {
+      bigtable::AppProfileId const& profile_id) {
     google::bigtable::admin::v2::GetAppProfileRequest request;
     // Setting profile name.
     request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
@@ -780,6 +843,43 @@ class InstanceAdmin {
   std::vector<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
       std::string const& instance_id, grpc::Status& status);
 
+  /**
+   * Makes an asynchronous request to list app profiles
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param instance_id the id of the instance from which profiles will be
+   *     listed
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, std::vector<google::bigtable::admin::v2::AppProfile>&,
+   * grpc::Status const&>);
+   * @return a handle to the submitted operation
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<
+                    Functor, CompletionQueue&,
+                    std::vector<google::bigtable::admin::v2::AppProfile>&,
+                    grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> AsyncListAppProfiles(
+      CompletionQueue& cq, Functor&& callback, std::string const& instance_id) {
+    auto op = std::make_shared<internal::AsyncRetryListAppProfiles<Functor>>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        metadata_update_policy_, client_, InstanceName(instance_id),
+        std::forward<Functor>(callback));
+    return op->Start(cq);
+  }
+
   void DeleteAppProfile(bigtable::InstanceId const& instance_id,
                         bigtable::AppProfileId const& profile_id,
                         bool ignore_warnings, grpc::Status& status);
@@ -798,25 +898,21 @@ class InstanceAdmin {
    *     `cq.Run()`.
    * @param callback a functor to be called when the operation completes. It
    *     must satisfy (using C++17 types):
-   *     static_assert(std::is_invocable_v<
-   *         Functor, google::protobuf::Empty&,
-   *         grpc::Status const&>);
+   *     static_assert(std::is_invocable_v<Functor, grpc::Status const&>);
    * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    *
-   * TODO(#1325) - eliminate usage of google::protobuf::Empty from Asysnc APIs.
    */
   template <typename Functor,
             typename std::enable_if<
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                                      google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncDeleteAppProfile(
+      CompletionQueue& cq, Functor&& callback,
       bigtable::InstanceId const& instance_id,
-      bigtable::AppProfileId const& profile_id, CompletionQueue& cq,
-      Functor&& callback) {
+      bigtable::AppProfileId const& profile_id) {
     google::bigtable::admin::v2::DeleteAppProfileRequest request;
     // Setting profile name.
     request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
@@ -832,13 +928,15 @@ class InstanceAdmin {
     using Retry =
         internal::AsyncRetryUnaryRpc<InstanceAdminClient, MemberFunction,
                                      internal::ConstantIdempotencyPolicy,
-                                     Functor>;
+                                     internal::EmptyResponseAdaptor<Functor>>;
 
     auto retry = std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &InstanceAdminClient::AsyncDeleteAppProfile,
-        std::move(request), std::forward<Functor>(callback));
+        std::move(request),
+        internal::EmptyResponseAdaptor<Functor>(
+            std::forward<Functor>(callback)));
     return retry->Start(cq);
   }
 

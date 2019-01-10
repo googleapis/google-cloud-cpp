@@ -45,6 +45,8 @@ if (NOT TARGET c_ares_project)
                         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_C_ARES_SHA256}
                         CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                                    -DCMAKE_BUILD_TYPE=Release
+                                   -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+                                   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
                                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                         BUILD_COMMAND ${CMAKE_COMMAND}
                                       --build
@@ -55,6 +57,10 @@ if (NOT TARGET c_ares_project)
                         LOG_CONFIGURE ON
                         LOG_BUILD ON
                         LOG_INSTALL ON)
+
+    if (TARGET google-cloud-cpp-dependencies)
+        add_dependencies(google-cloud-cpp-dependencies c_ares_project)
+    endif ()
 
     add_library(c-ares::cares INTERFACE IMPORTED)
     set_library_properties_for_external_project(c-ares::cares cares

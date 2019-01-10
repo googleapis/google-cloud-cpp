@@ -44,7 +44,7 @@ add_library(firestore_common_options INTERFACE)
 google_cloud_cpp_add_common_options(firestore_common_options)
 
 # Enable unit tests
-enable_testing()
+include(CTest)
 
 # Generate the version information from the CMake values.
 configure_file(version_info.h.in version_info.h)
@@ -58,7 +58,9 @@ export_variables_to_bazel("firestore_client_version.bzl"
 
 # the client library
 add_library(firestore_client field_path.h field_path.cc)
-target_link_libraries(firestore_client PUBLIC google_cloud_cpp_common)
+target_link_libraries(firestore_client
+                      PUBLIC google_cloud_cpp_common
+                      PRIVATE firestore_common_options)
 target_include_directories(firestore_client
                            PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
                                   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
@@ -77,33 +79,35 @@ add_library(firestore::client ALIAS firestore_client)
 create_bazel_config(firestore_client)
 google_cloud_cpp_add_clang_tidy(firestore_client)
 
-# List the unit tests, then setup the targets and dependencies.
-set(firestore_client_unit_tests field_path_test.cc)
+if (BUILD_TESTING)
+    # List the unit tests, then setup the targets and dependencies.
+    set(firestore_client_unit_tests field_path_test.cc)
 
-# Export the list of unit tests so the Bazel BUILD file can pick it up.
-export_list_to_bazel("firestore_client_unit_tests.bzl"
-                     "firestore_client_unit_tests")
+    # Export the list of unit tests so the Bazel BUILD file can pick it up.
+    export_list_to_bazel("firestore_client_unit_tests.bzl"
+                         "firestore_client_unit_tests")
 
-foreach (fname ${firestore_client_unit_tests})
-    string(REPLACE "/"
-                   "_"
-                   target
-                   ${fname})
-    string(REPLACE ".cc"
-                   ""
-                   target
-                   ${target})
-    add_executable(${target} ${fname})
-    target_link_libraries(${target}
-                          PRIVATE firestore_client
-                                  google_cloud_cpp_testing
-                                  google_cloud_cpp_common
-                                  GTest::gmock_main
-                                  GTest::gmock
-                                  GTest::gtest
-                                  firestore_common_options)
-    add_test(NAME ${target} COMMAND ${target})
-endforeach ()
+    foreach (fname ${firestore_client_unit_tests})
+        string(REPLACE "/"
+                       "_"
+                       target
+                       ${fname})
+        string(REPLACE ".cc"
+                       ""
+                       target
+                       ${target})
+        add_executable(${target} ${fname})
+        target_link_libraries(${target}
+                              PRIVATE firestore_client
+                                      google_cloud_cpp_testing
+                                      google_cloud_cpp_common
+                                      GTest::gmock_main
+                                      GTest::gmock
+                                      GTest::gtest
+                                      firestore_common_options)
+        add_test(NAME ${target} COMMAND ${target})
+    endforeach ()
+endif ()
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
@@ -118,7 +122,7 @@ install(TARGETS
 install(EXPORT firestore-targets
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/firestore_client")
 
-install(TARGETS firestore_client
+install(TARGETS firestore_client firestore_common_options
         EXPORT firestore-targets
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

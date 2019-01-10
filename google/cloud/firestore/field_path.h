@@ -35,7 +35,7 @@ class FieldPath {
    *
    * @param parts A const vector of strings which are field path components.
    */
-  FieldPath(std::vector<std::string> const parts);
+  explicit FieldPath(std::vector<std::string> parts);
 
   /**
    * Construct an invalid FieldPath.

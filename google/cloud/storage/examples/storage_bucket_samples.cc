@@ -477,7 +477,8 @@ void WriteObjectRequesterPays(google::cloud::storage::Client client, int& argc,
       stream << (lineno + 1) << ": I will write better examples\n";
     }
 
-    gcs::ObjectMetadata meta = stream.Close();
+    stream.Close();
+    gcs::ObjectMetadata meta = stream.metadata().value();
     std::cout << "The resulting object size is: " << meta.size() << std::endl;
   }
   //! [write object requester pays]

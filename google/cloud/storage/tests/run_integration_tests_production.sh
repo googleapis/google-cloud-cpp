@@ -25,6 +25,10 @@ set -eu
 #   to the VMs running the integration tests.
 
 echo
+echo "Running storage::internal::CurlResumableUploadSession integration tests."
+./curl_resumable_upload_session_integration_test "${BUCKET_NAME}"
+
+echo
 echo "Running GCS Bucket APIs integration tests."
 ./bucket_integration_test "${PROJECT_ID}" "${BUCKET_NAME}" "${TOPIC_NAME}"
 
@@ -39,6 +43,10 @@ echo "Running GCS Object APIs integration tests."
 echo
 echo "Running GCS Object media integration tests."
 ./object_media_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
+
+echo
+echo "Running GCS Object resumable upload integration tests."
+./object_resumable_write_integration_test "${BUCKET_NAME}"
 
 echo
 echo "Running GCS Projects.serviceAccount integration tests."

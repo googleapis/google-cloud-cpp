@@ -60,22 +60,21 @@ TEST_F(BucketAccessControlsTest, ListBucketAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })"""),
+      })""").value(),
       BucketAccessControl::ParseFromString(R"""({
           "bucket": "test-bucket",
           "entity": "user-test-user-2",
           "role": "READER"
-      })"""),
+      })""").value(),
   };
 
   EXPECT_CALL(*mock, ListBucketAcl(_))
       .WillOnce(Return(
-          std::make_pair(TransientError(), internal::ListBucketAclResponse{})))
+          StatusOr<internal::ListBucketAclResponse>(TransientError())))
       .WillOnce(Invoke([&expected](internal::ListBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
 
-        return std::make_pair(Status(),
-                              internal::ListBucketAclResponse{expected});
+        return make_status_or(internal::ListBucketAclResponse{expected});
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
@@ -102,16 +101,16 @@ TEST_F(BucketAccessControlsTest, CreateBucketAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "READER"
-      })""");
+      })""").value();
 
   EXPECT_CALL(*mock, CreateBucketAcl(_))
-      .WillOnce(Return(std::make_pair(TransientError(), BucketAccessControl{})))
+      .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
       .WillOnce(Invoke([&expected](internal::CreateBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
         EXPECT_EQ("READER", r.role());
 
-        return std::make_pair(Status(), expected);
+        return make_status_or(expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
@@ -150,12 +149,12 @@ TEST_F(BucketAccessControlsTest, CreateBucketAclPermanentFailure) {
 TEST_F(BucketAccessControlsTest, DeleteBucketAcl) {
   EXPECT_CALL(*mock, DeleteBucketAcl(_))
       .WillOnce(
-          Return(std::make_pair(TransientError(), internal::EmptyResponse{})))
+          Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce(Invoke([](internal::DeleteBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
 
-        return std::make_pair(Status(), internal::EmptyResponse{});
+        return make_status_or(internal::EmptyResponse{});
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
@@ -189,15 +188,15 @@ TEST_F(BucketAccessControlsTest, GetBucketAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })""");
+      })""").value();
 
   EXPECT_CALL(*mock, GetBucketAcl(_))
-      .WillOnce(Return(std::make_pair(TransientError(), BucketAccessControl{})))
+      .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
       .WillOnce(Invoke([&expected](internal::GetBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
 
-        return std::make_pair(Status(), expected);
+        return make_status_or(expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
@@ -229,16 +228,16 @@ TEST_F(BucketAccessControlsTest, UpdateBucketAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })""");
+      })""").value();
 
   EXPECT_CALL(*mock, UpdateBucketAcl(_))
-      .WillOnce(Return(std::make_pair(TransientError(), BucketAccessControl{})))
+      .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
       .WillOnce(Invoke([&expected](internal::UpdateBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
         EXPECT_EQ("OWNER", r.role());
 
-        return std::make_pair(Status(), expected);
+        return make_status_or(expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
@@ -284,10 +283,10 @@ TEST_F(BucketAccessControlsTest, PatchBucketAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })""");
+      })""").value();
 
   EXPECT_CALL(*mock, PatchBucketAcl(_))
-      .WillOnce(Return(std::make_pair(TransientError(), BucketAccessControl{})))
+      .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
       .WillOnce(Invoke([&result](internal::PatchBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
@@ -295,7 +294,7 @@ TEST_F(BucketAccessControlsTest, PatchBucketAcl) {
         auto payload = internal::nl::json::parse(r.payload());
         EXPECT_EQ(expected, payload);
 
-        return std::make_pair(Status(), result);
+        return make_status_or(result);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 

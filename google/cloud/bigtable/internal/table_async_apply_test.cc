@@ -84,15 +84,15 @@ TEST_F(NoexTableAsyncApplyTest, SuccessAfterOneRetry) {
   bool op_called = false;
   grpc::Status capture_status;
   table_.AsyncApply(
-      bigtable::SingleRowMutation(
-          "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}),
       cq,
       [&op_called, &capture_status](CompletionQueue& cq,
                                     google::bigtable::v2::MutateRowResponse& r,
                                     grpc::Status const& status) {
         op_called = true;
         capture_status = status;
-      });
+      },
+      bigtable::SingleRowMutation(
+          "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
 
   // At this point r1 is fired, but neither r2, nor the final callback are
   // called, verify that and simulate the first request completing.
@@ -153,15 +153,15 @@ TEST_F(NoexTableAsyncApplyTest, PermanentFailure) {
   bool op_called = false;
   grpc::Status capture_status;
   table_.AsyncApply(
-      bigtable::SingleRowMutation(
-          "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}),
       cq,
       [&op_called, &capture_status](CompletionQueue& cq,
                                     google::bigtable::v2::MutateRowResponse& r,
                                     grpc::Status const& status) {
         op_called = true;
         capture_status = status;
-      });
+      },
+      bigtable::SingleRowMutation(
+          "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
 
   // At this point r1 is fired, but the final callback is not, verify that and
   // simulate the first request completing.
@@ -247,15 +247,15 @@ TEST_F(NoexTableAsyncApplyTest, TooManyTransientFailures) {
   bool op_called = false;
   grpc::Status capture_status;
   tested.AsyncApply(
-      bigtable::SingleRowMutation(
-          "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}),
       cq,
       [&op_called, &capture_status](CompletionQueue& cq,
                                     google::bigtable::v2::MutateRowResponse& r,
                                     grpc::Status const& status) {
         op_called = true;
         capture_status = status;
-      });
+      },
+      bigtable::SingleRowMutation(
+          "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
 
   // We expect call -> timer -> call -> timer -> call -> timer -> call[failed],
   // so simulate the cycle 6 times:
@@ -312,15 +312,15 @@ TEST_F(NoexTableAsyncApplyTest, TransientFailureNonIdempotent) {
   bool op_called = false;
   grpc::Status capture_status;
   table_.AsyncApply(
-      bigtable::SingleRowMutation("bar",
-                                  {bigtable::SetCell("fam", "col", "val")}),
       cq,
       [&op_called, &capture_status](CompletionQueue& cq,
                                     google::bigtable::v2::MutateRowResponse& r,
                                     grpc::Status const& status) {
         op_called = true;
         capture_status = status;
-      });
+      },
+      bigtable::SingleRowMutation("bar",
+                                  {bigtable::SetCell("fam", "col", "val")}));
 
   // At this point r1 is fired, but the final callback is not, verify that and
   // simulate the first request completing.
@@ -361,15 +361,15 @@ TEST_F(NoexTableAsyncApplyTest, StopRetryOnOperationCancel) {
   bool op_called = false;
   grpc::Status capture_status;
   tested.AsyncApply(
-      bigtable::SingleRowMutation(
-          "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}),
       cq,
       [&op_called, &capture_status](CompletionQueue& cq,
                                     google::bigtable::v2::MutateRowResponse& r,
                                     grpc::Status const& status) {
         op_called = true;
         capture_status = status;
-      });
+      },
+      bigtable::SingleRowMutation(
+          "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
 
   // Cancel the pending operation, this should immediately fail.
   EXPECT_FALSE(op_called);
@@ -408,15 +408,15 @@ TEST_F(NoexTableAsyncApplyTest, BuggyGrpcReturningFalseOnFinish) {
   bool op_called = false;
   grpc::Status capture_status;
   tested.AsyncApply(
-      bigtable::SingleRowMutation(
-          "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}),
       cq,
       [&op_called, &capture_status](CompletionQueue& cq,
                                     google::bigtable::v2::MutateRowResponse& r,
                                     grpc::Status const& status) {
         op_called = true;
         capture_status = status;
-      });
+      },
+      bigtable::SingleRowMutation(
+          "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
 
   EXPECT_FALSE(op_called);
   EXPECT_EQ(1U, impl->size());
@@ -453,15 +453,15 @@ TEST_F(NoexTableAsyncApplyTest, StopRetryOnTimerCancel) {
   bool op_called = false;
   grpc::Status capture_status;
   tested.AsyncApply(
-      bigtable::SingleRowMutation(
-          "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}),
       cq,
       [&op_called, &capture_status](CompletionQueue& cq,
                                     google::bigtable::v2::MutateRowResponse& r,
                                     grpc::Status const& status) {
         op_called = true;
         capture_status = status;
-      });
+      },
+      bigtable::SingleRowMutation(
+          "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
 
   // Simulate a failure in the pending operation, that should create a timer.
   EXPECT_FALSE(op_called);
@@ -482,7 +482,7 @@ TEST_F(NoexTableAsyncApplyTest, StopRetryOnTimerCancel) {
   EXPECT_THAT(capture_status.error_message(), HasSubstr("AsyncApply"));
   EXPECT_THAT(capture_status.error_message(), HasSubstr(tested.table_name()));
   EXPECT_THAT(capture_status.error_message(),
-              HasSubstr("pending timer cancelled"));
+              HasSubstr("pending operation cancelled"));
 }
 
 struct Counter : public grpc::ClientAsyncResponseReaderInterface<

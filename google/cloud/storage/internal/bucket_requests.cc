@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/nljson.h"
-#include <iostream>
+#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -27,15 +27,23 @@ std::ostream& operator<<(std::ostream& os, ListBucketsRequest const& r) {
   return os << "}";
 }
 
-ListBucketsResponse ListBucketsResponse::FromHttpResponse(
+StatusOr<ListBucketsResponse> ListBucketsResponse::FromHttpResponse(
     HttpResponse&& response) {
-  auto json = storage::internal::nl::json::parse(response.payload);
+  auto json =
+      storage::internal::nl::json::parse(response.payload, nullptr, false);
+  if (not json.is_object()) {
+    return Status(StatusCode::kInvalidArgument, __func__);
+  }
 
   ListBucketsResponse result;
   result.next_page_token = json.value("nextPageToken", "");
 
   for (auto const& kv : json["items"].items()) {
-    result.items.emplace_back(BucketMetadata::ParseFromJson(kv.value()));
+    auto parsed = BucketMetadata::ParseFromJson(kv.value());
+    if (not parsed) {
+      return std::move(parsed).status();
+    }
+    result.items.emplace_back(std::move(*parsed));
   }
 
   return result;
@@ -111,6 +119,15 @@ PatchBucketRequest::PatchBucketRequest(std::string bucket,
       builder.SetEncryption(updated.encryption());
     } else {
       builder.ResetEncryption();
+    }
+  }
+
+  if (original.iam_configuration_as_optional() !=
+      updated.iam_configuration_as_optional()) {
+    if (updated.has_iam_configuration()) {
+      builder.SetIamConfiguration(updated.iam_configuration());
+    } else {
+      builder.ResetIamConfiguration();
     }
   }
 
@@ -210,8 +227,11 @@ std::ostream& operator<<(std::ostream& os, GetBucketIamPolicyRequest const& r) {
   return os << "}";
 }
 
-IamPolicy ParseIamPolicyFromString(std::string const& payload) {
-  auto json = nl::json::parse(payload);
+StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
+  auto json = nl::json::parse(payload, nullptr, false);
+  if (not json.is_object()) {
+    return Status(StatusCode::kInvalidArgument, __func__);
+  }
   IamPolicy policy;
   policy.version = 0;
   policy.etag = json.value("etag", "");
@@ -288,11 +308,14 @@ std::ostream& operator<<(std::ostream& os,
   return os << "}";
 }
 
-TestBucketIamPermissionsResponse
+StatusOr<TestBucketIamPermissionsResponse>
 TestBucketIamPermissionsResponse::FromHttpResponse(
     HttpResponse const& response) {
   TestBucketIamPermissionsResponse result;
-  auto json = nl::json::parse(response.payload);
+  auto json = nl::json::parse(response.payload, nullptr, false);
+  if (not json.is_object()) {
+    return Status(StatusCode::kInvalidArgument, __func__);
+  }
   for (auto const& kv : json["permissions"].items()) {
     result.permissions.emplace_back(kv.value().get<std::string>());
   }

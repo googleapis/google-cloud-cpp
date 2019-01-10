@@ -18,12 +18,12 @@ set -eu
 
 # Create a Docker image with all the dependencies necessary to build the
 # project.
-if [ "${TRAVIS_OS_NAME}" != "linux" ]; then
-  echo "Not a Linux-based build; skipping Docker image creation."
-  exit 0
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../.."; pwd)"
 fi
+source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 
-readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
+cd ${PROJECT_ROOT}
 sudo docker build -t "${IMAGE}:tip" \
      --build-arg NCPU="${NCPU:-2}" \
      --build-arg DISTRO_VERSION="${DISTRO_VERSION}" \

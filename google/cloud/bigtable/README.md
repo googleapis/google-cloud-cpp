@@ -21,7 +21,33 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.4.x - TBD
+### v0.6.x - TBD
+
+### v0.5.x - 2019-01
+
+* Restore support for gcc-4.8.
+* @remyabel cleaned up some hard-coded zone names in the examples.
+* More experimental asynchronous APIs, including AsyncReadRows. Note that we
+  expect to change all these experimental APIs as described in
+  [#1543](https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues/1543).
+* @remyabel contributed changes to disable the unit and integration tests. This
+  can be useful for package maintainers.
+* New Bigtable filter wrapper that accepts a single column.
+* **Breaking Change**: remove the `as_proto_move()` memnber functions in favor
+  of `as_proto() &&`. With the latter newer compilers will warn if the object
+  is used after the destructive operation.
+
+### v0.4.x - 2018-12
+
+* More experimental asynchronous APIs, note that we expect to change all these
+  experimental APIs as described in
+  [#1543](https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues/1543).
+* Most of the admin operations now have asynchronous APIs.
+* All asynchronous APIs in `noex::*` return an object through which applications
+  can request cancellation of pending requests.
+* Prototype asynchronous APIs returning a `google::cloud::future<T>`,
+  applications can attach callbacks and/or block on a
+  `google::cloud::future<T>`.
 
 ### v0.3.0 - 2018-11
 

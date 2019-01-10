@@ -46,6 +46,10 @@ echo "Running storage::internal::CurlRequestDownload integration test."
 ./curl_download_request_integration_test
 
 echo
+echo "Running storage::internal::CurlResumableUploadSession integration tests."
+./curl_resumable_upload_session_integration_test "${BUCKET_NAME}"
+
+echo
 echo "Running storage::internal::CurlStreambuf integration test."
 ./curl_streambuf_integration_test
 
@@ -64,6 +68,10 @@ echo "Running GCS Object APIs integration tests."
 echo
 echo "Running GCS Object media integration tests."
 ./object_media_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
+
+echo
+echo "Running GCS Object resumable upload integration tests."
+./object_resumable_write_integration_test "${BUCKET_NAME}"
 
 echo
 echo "Running GCS multi-threaded integration test."

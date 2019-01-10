@@ -56,9 +56,14 @@ void ListObjects(google::cloud::storage::Client client, int& argc,
   //! [list objects] [START storage_list_files]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
-    for (gcs::ObjectMetadata const& meta : client.ListObjects(bucket_name)) {
-      std::cout << "bucket_name=" << meta.bucket()
-                << ", object_name=" << meta.name() << std::endl;
+    for (auto&& object_metadata : client.ListObjects(bucket_name)) {
+      if (not object_metadata.ok()) {
+        std::cerr << "Error reading object list for " << bucket_name
+                  << ", status=" << object_metadata.status();
+        return;
+      }
+      std::cout << "bucket_name=" << object_metadata->bucket()
+                << ", object_name=" << object_metadata->name() << std::endl;
     }
   }
   //! [list objects] [END storage_list_files]
@@ -87,6 +92,59 @@ void InsertObject(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name, contents);
 }
 
+void InsertObjectStrictIdempotency(google::cloud::storage::Client unused,
+                                   int& argc, char* argv[]) {
+  if (argc < 3) {
+    throw Usage{
+        "insert-object-strict-idempotency <bucket-name> <object-name> "
+        "<object-contents (string)>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto contents = ConsumeArg(argc, argv);
+  //! [insert object strict idempotency]
+  namespace gcs = google::cloud::storage;
+  [](std::string bucket_name, std::string object_name, std::string contents) {
+    // Create a client that only retries idempotent operations, the default is
+    // to retry all operations.
+    gcs::Client client{gcs::ClientOptions(), gcs::StrictIdempotencyPolicy()};
+    gcs::ObjectMetadata meta =
+        client.InsertObject(bucket_name, object_name, std::move(contents),
+                            gcs::IfGenerationMatch(0));
+    std::cout << "The object was created. The new object metadata is " << meta
+              << std::endl;
+  }
+  //! [insert object strict idempotency]
+  (bucket_name, object_name, contents);
+}
+
+void InsertObjectModifiedRetry(google::cloud::storage::Client unused, int& argc,
+                               char* argv[]) {
+  if (argc < 3) {
+    throw Usage{
+        "insert-object-modified-retry <bucket-name> <object-name> "
+        "<object-contents (string)>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto contents = ConsumeArg(argc, argv);
+  //! [insert object modified retry]
+  namespace gcs = google::cloud::storage;
+  [](std::string bucket_name, std::string object_name, std::string contents) {
+    // Create a client that only gives up on the third error. The default policy
+    // is to retry for several minutes.
+    gcs::Client client{gcs::ClientOptions(),
+                       gcs::LimitedErrorCountRetryPolicy(3)};
+    gcs::ObjectMetadata meta =
+        client.InsertObject(bucket_name, object_name, std::move(contents),
+                            gcs::IfGenerationMatch(0));
+    std::cout << "The object was created. The new object metadata is " << meta
+              << std::endl;
+  }
+  //! [insert object modified retry]
+  (bucket_name, object_name, contents);
+}
+
 void CopyObject(google::cloud::storage::Client client, int& argc,
                 char* argv[]) {
   if (argc != 5) {
@@ -103,9 +161,9 @@ void CopyObject(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string source_bucket_name,
      std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name) {
-    gcs::ObjectMetadata new_copy_meta = client.CopyObject(
-        source_bucket_name, source_object_name, destination_bucket_name,
-        destination_object_name);
+    gcs::ObjectMetadata new_copy_meta =
+        client.CopyObject(source_bucket_name, source_object_name,
+                          destination_bucket_name, destination_object_name);
     std::cout << "Object copied. The full metadata after the copy is: "
               << new_copy_meta << std::endl;
   }
@@ -226,7 +284,8 @@ void WriteObject(google::cloud::storage::Client client, int& argc,
       stream << (lineno + 1) << ": " << text << "\n";
     }
 
-    gcs::ObjectMetadata meta = stream.Close();
+    stream.Close();
+    gcs::ObjectMetadata meta = stream.metadata().value();
     std::cout << "The resulting object size is: " << meta.size() << std::endl;
   }
   //! [write object]
@@ -269,6 +328,75 @@ void WriteLargeObject(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name, object_size_in_MiB);
 }
 
+void StartResumableUpload(google::cloud::storage::Client client, int& argc,
+                          char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"start-resumable-upload <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+
+  //! [start resumable upload]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+    gcs::ObjectWriteStream stream = client.WriteObject(
+        bucket_name, object_name, gcs::NewResumableUploadSession());
+    std::cout << "Created resumable upload: " << stream.resumable_session_id()
+              << std::endl;
+    // As it is customary in C++, the destructor automatically closes the
+    // stream, that would finish the upload and create the object. For this
+    // example we want to restore the session as-if the application had crashed,
+    // where no destructors get called.
+    stream << "This data will not get uploaded, it is too small" << std::endl;
+    std::move(stream).Suspend();
+  }
+  //! [start resumable upload]
+  (std::move(client), bucket_name, object_name);
+}
+
+void ResumeResumableUpload(google::cloud::storage::Client client, int& argc,
+                           char** argv) {
+  if (argc != 4) {
+    throw Usage{
+        "resume-resumable-upload <bucket-name> <object-name> <session-id>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto session_id = ConsumeArg(argc, argv);
+
+  //! [resume resumable upload]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string session_id) {
+    // Restore a resumable upload stream, the library automatically queries the
+    // state of the upload and discovers the next expected byte.
+    gcs::ObjectWriteStream stream =
+        client.WriteObject(bucket_name, object_name,
+                           gcs::RestoreResumableUploadSession(session_id));
+    if (stream.next_expected_byte() == 0) {
+      // In this example we create a small object, smaller than the resumable
+      // upload quantum (256 KiB), so either all the data is there or not.
+      // Applications use `next_expected_byte()` to find the position in their
+      // input where they need to start uploading.
+      stream << R"""(
+Lorem ipsum dolor sit amet, consectetur adipiscing
+elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+)""";
+    }
+
+    stream.Close();
+    gcs::ObjectMetadata metadata = stream.metadata().value();
+    std::cout << "Upload completed, the new object metadata is: " << metadata
+              << std::endl;
+  }
+  //! [resume resumable upload]
+  (std::move(client), bucket_name, object_name, session_id);
+}
+
 void UploadFile(google::cloud::storage::Client client, int& argc,
                 char* argv[]) {
   if (argc != 4) {
@@ -289,6 +417,31 @@ void UploadFile(google::cloud::storage::Client client, int& argc,
     std::cout << "Uploaded " << file_name << " to " << object_name << std::endl;
   }
   //! [upload file] [END storage_upload_file]
+  (std::move(client), file_name, bucket_name, object_name);
+}
+
+void UploadFileResumable(google::cloud::storage::Client client, int& argc,
+                         char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "upload-file-resumable <file-name> <bucket-name> <object-name>"};
+  }
+  auto file_name = ConsumeArg(argc, argv);
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+
+  //! [upload file resumable]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string file_name, std::string bucket_name,
+     std::string object_name) {
+    // Note that the client library automatically computes a hash on the
+    // client-side to verify data integrity during transmission.
+    gcs::ObjectMetadata meta = client.UploadFile(
+        file_name, bucket_name, object_name, gcs::IfGenerationMatch(0),
+        gcs::NewResumableUploadSession());
+    std::cout << "Uploaded " << file_name << " to " << object_name << std::endl;
+  }
+  //! [upload file resumable]
   (std::move(client), file_name, bucket_name, object_name);
 }
 
@@ -332,7 +485,7 @@ void UpdateObjectMetadata(google::cloud::storage::Client client, int& argc,
     gcs::ObjectMetadata desired = meta;
     desired.mutable_metadata().emplace(key, value);
     gcs::ObjectMetadata updated = client.UpdateObject(
-        bucket_name, object_name, desired, gcs::IfMatchEtag(meta.etag()));
+        bucket_name, object_name, desired, gcs::Generation(meta.generation()));
     std::cout << "Object updated. The full metadata after the update is: "
               << updated << std::endl;
   }
@@ -545,9 +698,8 @@ void ComposeObject(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string bucket_name,
      std::string destination_object_name,
      std::vector<gcs::ComposeSourceObject> compose_objects) {
-    gcs::ObjectMetadata composed_object =
-        client.ComposeObject(bucket_name, compose_objects,
-                             destination_object_name);
+    gcs::ObjectMetadata composed_object = client.ComposeObject(
+        bucket_name, compose_objects, destination_object_name);
     std::cout << "Composed new object " << destination_object_name
               << " Metadata: " << composed_object << std::endl;
   }
@@ -610,7 +762,8 @@ void WriteObjectWithKmsKey(google::cloud::storage::Client client, int& argc,
       stream << lineno << ": placeholder text for CMEK example.\n";
     }
 
-    gcs::ObjectMetadata meta = stream.Close();
+    stream.Close();
+    gcs::ObjectMetadata meta = stream.metadata().value();
     std::cout << "The resulting object size is: " << meta.size() << std::endl;
   }
   //! [write object with kms key] [END storage_upload_with_kms_key]
@@ -892,6 +1045,52 @@ void ReleaseObjectTemporaryHold(google::cloud::storage::Client client,
   (std::move(client), bucket_name, object_name);
 }
 
+void CreateGetSignedUrl(google::cloud::storage::Client client, int& argc,
+                        char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"create-get-signed-url <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  //! [sign url] [START storage_sign_url]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+    std::string signed_url = client.CreateV2SignedUrl(
+        "GET", std::move(bucket_name), std::move(object_name),
+        gcs::ExpirationTime(std::chrono::system_clock::now() +
+                            std::chrono::minutes(15)));
+    std::cout << "The signed url is: " << signed_url << "\n\n"
+              << "You can use this URL with any user agent, for example:\n"
+              << "curl '" << signed_url << "'" << std::endl;
+  }
+  //! [sign url] [END storage_sign_url]
+  (std::move(client), bucket_name, object_name);
+}
+
+void CreatePutSignedUrl(google::cloud::storage::Client client, int& argc,
+                        char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"create-put-signed-url <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  //! [create put signed url]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+    std::string signed_url = client.CreateV2SignedUrl(
+        "PUT", std::move(bucket_name), std::move(object_name),
+        gcs::ExpirationTime(std::chrono::system_clock::now() +
+                            std::chrono::minutes(15)),
+        gcs::ContentType("application/octet-stream"));
+    std::cout << "The signed url is: " << signed_url << "\n\n"
+              << "You can use this URL with any user agent, for example:\n"
+              << "curl -X PUT -H 'Content-Type: application/octet-stream'"
+              << " --upload-file my-file '" << signed_url << "'" << std::endl;
+  }
+  //! [create put signed url]
+  (std::move(client), bucket_name, object_name);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -899,10 +1098,12 @@ int main(int argc, char* argv[]) try {
   google::cloud::storage::Client client;
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char* [])>;
+      std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
       {"list-objects", &ListObjects},
       {"insert-object", &InsertObject},
+      {"insert-object-strict-idempotency", &InsertObjectStrictIdempotency},
+      {"insert-object-modified-retry", &InsertObjectModifiedRetry},
       {"copy-object", &CopyObject},
       {"copy-encrypted-object", &CopyEncryptedObject},
       {"get-object-metadata", &GetObjectMetadata},
@@ -910,7 +1111,10 @@ int main(int argc, char* argv[]) try {
       {"delete-object", &DeleteObject},
       {"write-object", &WriteObject},
       {"write-large-object", &WriteLargeObject},
+      {"start-resumable-upload", &StartResumableUpload},
+      {"resume-resumable-upload", &ResumeResumableUpload},
       {"upload-file", &UploadFile},
+      {"upload-file-resumable", &UploadFileResumable},
       {"download-file", &DownloadFile},
       {"update-object-metadata", &UpdateObjectMetadata},
       {"patch-object-delete-metadata", &PatchObjectDeleteMetadata},
@@ -934,6 +1138,8 @@ int main(int argc, char* argv[]) try {
       {"release-event-based-hold", &ReleaseObjectEventBasedHold},
       {"set-temporary-hold", &SetObjectTemporaryHold},
       {"release-temporary-hold", &ReleaseObjectTemporaryHold},
+      {"create-get-signed-url", &CreateGetSignedUrl},
+      {"create-put-signed-url", &CreatePutSignedUrl},
   };
   for (auto&& kv : commands) {
     try {

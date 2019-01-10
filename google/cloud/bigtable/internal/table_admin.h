@@ -142,11 +142,11 @@ class TableAdmin {
                     Functor, CompletionQueue&,
                     google::bigtable::admin::v2::Table&, grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
-  std::shared_ptr<AsyncOperation> AsyncCreateTable(std::string table_id,
-                                                   TableConfig config,
-                                                   CompletionQueue& cq,
-                                                   Functor&& callback) {
-    auto request = config.as_proto_move();
+  std::shared_ptr<AsyncOperation> AsyncCreateTable(CompletionQueue& cq,
+                                                   Functor&& callback,
+                                                   std::string table_id,
+                                                   TableConfig config) {
+    auto request = std::move(config).as_proto();
     request.set_parent(instance_name());
     request.set_table_id(std::move(table_id));
 
@@ -205,9 +205,8 @@ class TableAdmin {
                     google::bigtable::admin::v2::Table&, grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncGetTable(
-      std::string const& table_id,
-      google::bigtable::admin::v2::Table::View view, CompletionQueue& cq,
-      Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback, std::string const& table_id,
+      google::bigtable::admin::v2::Table::View view) {
     google::bigtable::admin::v2::GetTableRequest request;
     request.set_name(TableName(table_id));
     request.set_view(view);
@@ -233,6 +232,55 @@ class TableAdmin {
   }
 
   void DeleteTable(std::string const& table_id, grpc::Status& status);
+
+  /**
+   * Make an asynchronous request to delete the table.
+   *
+   * @param table_id the name of the table relative to the instance managed by
+   *     this object.  The full table name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of this object.
+   * @param config the initial schema of the table.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<Functor, grpc::Status const&>);
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  void AsyncDeleteTable(CompletionQueue& cq, Functor&& callback,
+                        std::string const& table_id, TableConfig config) {
+    google::bigtable::admin::v2::DeleteTableRequest request;
+    request.set_name(TableName(table_id));
+
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &AdminClient::AsyncDeleteTable)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &AdminClient::AsyncDeleteTable)>::MemberFunction;
+
+    using Retry =
+        internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
+                                     internal::ConstantIdempotencyPolicy,
+                                     internal::EmptyResponseAdaptor<Functor>>;
+
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        internal::ConstantIdempotencyPolicy(false), metadata_update_policy_,
+        client_, &AdminClient::AsyncDeleteTable, std::move(request),
+        internal::EmptyResponseAdaptor<Functor>(
+            std::forward<Functor>(callback)));
+    retry->Start(cq);
+  }
 
   google::bigtable::admin::v2::Table ModifyColumnFamilies(
       std::string const& table_id,
@@ -297,8 +345,8 @@ class TableAdmin {
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncAwaitConsistency(
-      bigtable::TableId const& table_id, CompletionQueue& cq,
-      Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback,
+      bigtable::TableId const& table_id) {
     auto op = std::make_shared<internal::AsyncAwaitConsistency>(
         __func__, polling_policy_->clone(), rpc_retry_policy_->clone(),
         rpc_backoff_policy_->clone(),
@@ -358,13 +406,12 @@ class TableAdmin {
                     google::bigtable::admin::v2::Table&, grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncModifyColumnFamilies(
-      std::string const& table_id,
-      std::vector<ColumnFamilyModification> modifications, CompletionQueue& cq,
-      Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback, std::string const& table_id,
+      std::vector<ColumnFamilyModification> modifications) {
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest request;
     request.set_name(TableName(table_id));
     for (auto& m : modifications) {
-      *request.add_modifications() = m.as_proto_move();
+      *request.add_modifications() = std::move(m).as_proto();
     }
     MetadataUpdatePolicy metadata_update_policy(
         instance_name(), MetadataParamTypes::NAME, table_id);
@@ -406,9 +453,7 @@ class TableAdmin {
    *     `cq.Run()`.
    * @param callback a functor to be called when the operation completes. It
    *     must satisfy (using C++17 types):
-   *     static_assert(std::is_invocable_v<
-   *         Functor, google::protobuf::Empty&,
-   *         grpc::Status const&>);
+   *     static_assert(std::is_invocable_v<Functor, grpc::Status const&>);
    * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
@@ -416,12 +461,11 @@ class TableAdmin {
   template <typename Functor,
             typename std::enable_if<
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                                      google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncDropRowsByPrefix(
-      std::string const& table_id, std::string row_key_prefix,
-      CompletionQueue& cq, Functor&& callback) {
+      CompletionQueue& cq, Functor&& callback, std::string const& table_id,
+      std::string row_key_prefix) {
     google::bigtable::admin::v2::DropRowRangeRequest request;
     request.set_name(TableName(table_id));
     request.set_row_key_prefix(std::move(row_key_prefix));
@@ -438,13 +482,14 @@ class TableAdmin {
     using Retry =
         internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
                                      internal::ConstantIdempotencyPolicy,
-                                     Functor>;
+                                     internal::EmptyResponseAdaptor<Functor>>;
 
     auto retry = std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(false), metadata_update_policy,
         client_, &AdminClient::AsyncDropRowRange, std::move(request),
-        std::forward<Functor>(callback));
+        internal::EmptyResponseAdaptor<Functor>(
+            std::forward<Functor>(callback)));
     return retry->Start(cq);
   }
 
@@ -463,9 +508,7 @@ class TableAdmin {
    *     `cq.Run()`.
    * @param callback a functor to be called when the operation completes. It
    *     must satisfy (using C++17 types):
-   *     static_assert(std::is_invocable_v<
-   *         Functor, google::protobuf::Empty&,
-   *         grpc::Status const&>);
+   *     static_assert(std::is_invocable_v<Functor, grpc::Status const&>);
    * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
@@ -473,12 +516,10 @@ class TableAdmin {
   template <typename Functor,
             typename std::enable_if<
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                                      google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
-  std::shared_ptr<AsyncOperation> AsyncDropAllRows(std::string const& table_id,
-                                                   CompletionQueue& cq,
-                                                   Functor&& callback) {
+  std::shared_ptr<AsyncOperation> AsyncDropAllRows(
+      CompletionQueue& cq, Functor&& callback, std::string const& table_id) {
     google::bigtable::admin::v2::DropRowRangeRequest request;
     request.set_name(TableName(table_id));
     request.set_delete_all_data_from_table(true);
@@ -495,13 +536,14 @@ class TableAdmin {
     using Retry =
         internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
                                      internal::ConstantIdempotencyPolicy,
-                                     Functor>;
+                                     internal::EmptyResponseAdaptor<Functor>>;
 
     auto retry = std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(false), metadata_update_policy,
         client_, &AdminClient::AsyncDropRowRange, std::move(request),
-        std::forward<Functor>(callback));
+        internal::EmptyResponseAdaptor<Functor>(
+            std::forward<Functor>(callback)));
     return retry->Start(cq);
   }
 
@@ -539,9 +581,9 @@ class TableAdmin {
                                         grpc::Status&>::value,
                                     int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncGetSnapshot(
+      CompletionQueue& cq, Functor&& callback,
       bigtable::ClusterId const& cluster_id,
-      bigtable::SnapshotId const& snapshot_id, CompletionQueue& cq,
-      Functor&& callback) {
+      bigtable::SnapshotId const& snapshot_id) {
     google::bigtable::admin::v2::GetSnapshotRequest request;
     request.set_name(SnapshotName(cluster_id, snapshot_id));
     MetadataUpdatePolicy metadata_update_policy(
@@ -587,25 +629,21 @@ class TableAdmin {
    *     `cq.Run()`.
    * @param callback a functor to be called when the operation completes. It
    *     must satisfy (using C++17 types):
-   *     static_assert(std::is_invocable_v<
-   *         Functor, google::protobuf::Empty&,
-   *         grpc::Status const&>);
+   *     static_assert(std::is_invocable_v<Functor, grpc::Status const&>);
    * @return a handle to the submitted operation
    *
    * @tparam Functor the type of the callback.
    *
-   * TODO(#1325) - eliminate usage of google::protobuf::Empty in the callback
    */
   template <typename Functor,
             typename std::enable_if<
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                                      google::protobuf::Empty&,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncDeleteSnapshot(
+      CompletionQueue& cq, Functor&& callback,
       bigtable::ClusterId const& cluster_id,
-      bigtable::SnapshotId const& snapshot_id, CompletionQueue& cq,
-      Functor&& callback) {
+      bigtable::SnapshotId const& snapshot_id) {
     google::bigtable::admin::v2::DeleteSnapshotRequest request;
     request.set_name(SnapshotName(cluster_id, snapshot_id));
     MetadataUpdatePolicy metadata_update_policy(
@@ -621,13 +659,14 @@ class TableAdmin {
     using Retry =
         internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
                                      internal::ConstantIdempotencyPolicy,
-                                     Functor>;
+                                     internal::EmptyResponseAdaptor<Functor>>;
 
     auto retry = std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
         internal::ConstantIdempotencyPolicy(false), metadata_update_policy,
         client_, &AdminClient::AsyncDeleteSnapshot, std::move(request),
-        std::forward<Functor>(callback));
+        internal::EmptyResponseAdaptor<Functor>(
+            std::forward<Functor>(callback)));
     return retry->Start(cq);
   }
   //@}

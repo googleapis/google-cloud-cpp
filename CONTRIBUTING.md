@@ -34,18 +34,72 @@ accept your pull requests.
 ### More Information on Forks and Pull Requests
 
 If you are just getting started with `git` and [GitHub](https://github.com),
-we think the following links may help you understand the usual workflow used
-in this project:
+this section might be helpful. In this project we use the (more or less)
+standard [GitHub workflow][workflow-link]:
 
-* [Forking Projects](https://guides.github.com/activities/forking/)
-* [Understanding the GitHub Flow](https://guides.github.com/introduction/flow/)
-* [Syncing a Fork](https://help.github.com/articles/syncing-a-fork/)
-  * A more succinct guide to [Keeping a Fork up to date](https://gist.github.com/CristinaSolana/1885435)
+1. You create a [fork][fork-link] of [google-cloud-cpp][repo-link]. Then
+   [clone][about-clone] that fork into your workstation:
+   ```console
+   git clone git@github.com:YOUR-USER-NAME/google-cloud-cpp.git
+   ```
+1. The cloned repo that you created in the previous step will have its `origin`
+   set to your forked repo. You should now tell git about the the main
+   `upstream` repo, which you'll use to pull commits made by others in order to
+   keep your local repo and fork up to date.
+   ```console
+   git remote add upstream git@github.com:GoogleCloudPlatform/google-cloud-cpp.git
+   git remote -v  # Should show 'origin' (your fork) and 'upstream' (main repo)
+   ```
+1. To pull new commits from `upstream` into your local repo and
+   [sync your fork][syncing-a-fork] you can do the following:
+   ```console
+   git checkout master
+   git pull --ff-only upstream master
+   git push  # Pushes new commits up to your fork on GitHub
+   ```
+   Note: You probably want to do this periodically, and almost certainly before
+   starting your next task.
+1. You pick an existing [GitHub bug][mastering-issues] to work on.
+1. You start a new [branch][about-branches] for each feature (or bug fix).
+   ```console
+   git checkout master
+   git checkout -b my-feature-branch
+   git push -u origin my-feature-branch  # Tells fork on GitHub about new branch
+   # make your changes
+   git push
+   ```
+1. You submit a [pull-request][about-pull-requests] to merge your branch into
+   `GoogleCloudPlatform/google-cloud-cpp`.
+1. Your reviewers may ask questions, suggest improvements or alternatives. You
+   address those by either answering the questions in the review or adding more
+   [commits][about-commits] to your branch and `git push` -ing those commits to
+   your fork.
+1. From time to time your pull request may have conflicts with the destination
+   branch (likely `master`), if so, we request that you [rebase][about-rebase]
+   your branch instead of merging. The reviews can become very confusing if you
+   merge during a pull request. You should first ensure that your `master`
+   branch has all the latest commits by syncing your fork (see above), then do
+   the following:
+   ```console
+   git checkout my-feature-branch
+   git rebase master
+   git push --force-with-lease
+   ```
+1. If one of the CI builds fail please see below, most of the CI builds can
+   be reproduced locally on your workstations using Docker.
+1. Eventually the reviewers accept your changes, and they are merged into the
+   `master` branch.
 
-If your pull request has a conflict with the destination branch we request
-that you [rebase](https://help.github.com/articles/about-git-rebase/) your
-branch against the destination branch. Reviewing PRs that include both existing
-and new changes is a source of error that we would rather eliminate.
+[workflow-link]: https://guides.github.com/introduction/flow/
+[fork-link]: https://guides.github.com/activities/forking/
+[repo-link]: https://github.com/GoogleCloudPlatform/google-cloud-cpp.git
+[mastering-issues]: https://guides.github.com/features/issues/
+[about-clone]: https://help.github.com/articles/cloning-a-repository/
+[about-branches]: https://help.github.com/articles/about-branches/
+[about-pull-requests]: https://help.github.com/articles/about-pull-requests/
+[about-commits]: https://help.github.com/desktop/guides/contributing-to-projects/committing-and-reviewing-changes-to-your-project/#about-commits
+[about-rebase]: https://help.github.com/articles/about-git-rebase/
+[syncing-a-fork]: https://help.github.com/articles/syncing-a-fork/
 
 ## Style
 
@@ -156,13 +210,21 @@ $ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=18.04 ./ci/travis/install-li
 ```
 
 Once you create the image for a given combination of `DISTRO` and
-`DISTRO_VERSION`, you can compile the code multiple times, for example:
+`DISTRO_VERSION`, you can reuse it for many builds, with different options.
+For example, this (rather longish)
+command will verify that your code is formatted correctly, run the
+clang-tidy(1) checks, verify the Doxygen documentation can be generated, and run
+both the unit and integration tests:
 
 ```console
-# Also run from google-cloud-cpp:
-$ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=18.04 \
-      CXX=clang++ CC=clang BUILD_TYPE=Debug ./ci/travis/build-linux.sh
+CHECK_STYLE=yes GENERATE_DOCS=yes \
+    CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes \
+    DISTRO=ubuntu DISTRO_VERSION=18.04 CXX=clang++ CC=clang NCPU=$(nproc) \
+    TRAVIS_OS_NAME=linux ./ci/travis/build-linux.sh
 ```
+
+You may want to add `BUILD_TYPE=Debug` to the list of environment variables,
+as the default (`BUILD_TYPE=Release`) may be slightly slower.
 
 You can set any of the following environment variables to control the build.
 Please consult the build matrix in your [`.travis.yml`](.travis.yml) file to see
@@ -184,6 +246,8 @@ which combinations are tested regularly.
    documentation.
  * `BUILD_TYPE`: if set, override the `CMAKE_BUILD_TYPE` flag when configuring
    the build.
+ * `BUILD_TESTING`: if set to `no`, disable the unit tests. This is sometimes
+   useful for package maintainers that may want to reduce their build times.
  * `SCAN_BUILD`: if set to `yes`, use Clang static analyzer (aka `scan-build`)
    to compile the code.  Remember to also set the compiler to Clang as described
    above.  Builds with this configuration can be substantially slower.
@@ -209,3 +273,6 @@ which combinations are tested regularly.
    for the Google Cloud C++ Libraries.  Check the
    [configuration file](.clang-tidy) for details on what `clang-tidy` options
    we use.
+ * `CREATE_GRAPHVIZ`: if set to `yes`, use `CMake` to generate a dependency
+   graph of each target. This is useful when troubleshooting dependencies, or
+   simply when trying to document them.

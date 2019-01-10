@@ -16,6 +16,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/expect_exception.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #include <regex>
@@ -63,7 +64,10 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
   auto bucket_name = ObjectTestEnvironment::bucket_name();
 
   auto objects = client.ListObjects(bucket_name);
-  std::vector<ObjectMetadata> initial_list(objects.begin(), objects.end());
+  std::vector<ObjectMetadata> initial_list;
+  for (auto&& o : objects) {
+    initial_list.emplace_back(std::move(o).value());
+  }
 
   auto name_counter = [](std::string const& name,
                          std::vector<ObjectMetadata> const& list) {
@@ -83,7 +87,10 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
                           IfGenerationMatch(0), Projection("full"));
   objects = client.ListObjects(bucket_name);
 
-  std::vector<ObjectMetadata> current_list(objects.begin(), objects.end());
+  std::vector<ObjectMetadata> current_list;
+  for (auto&& o : objects) {
+    current_list.emplace_back(std::move(o).value());
+  }
   EXPECT_EQ(1U, name_counter(object_name, current_list));
 
   ObjectMetadata get_meta = client.GetObjectMetadata(
@@ -143,7 +150,10 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
 
   client.DeleteObject(bucket_name, object_name);
   objects = client.ListObjects(bucket_name);
-  current_list.assign(objects.begin(), objects.end());
+  current_list.clear();
+  for (auto&& o : objects) {
+    current_list.emplace_back(std::move(o).value());
+  }
 
   EXPECT_EQ(0U, name_counter(object_name, current_list));
 }
@@ -249,7 +259,7 @@ TEST_F(ObjectIntegrationTest, ListObjectsVersions) {
   ListObjectsReader reader = client.ListObjects(bucket_name, Versions(true));
   std::vector<std::string> actual;
   for (auto it = reader.begin(); it != reader.end(); ++it) {
-    auto const& meta = *it;
+    auto const& meta = it->value();
     EXPECT_EQ(bucket_name, meta.bucket());
     actual.push_back(meta.name());
   }
@@ -327,8 +337,12 @@ TEST_F(ObjectIntegrationTest, ReadNotFound) {
 
   // Create a iostream to read the object back.
   auto stream = client.ReadObject(bucket_name, object_name);
-  EXPECT_TRUE(stream.eof());
+  EXPECT_FALSE(stream.status().ok());
   EXPECT_FALSE(stream.IsOpen());
+  EXPECT_EQ(404, stream.status().status_code()) << "status=" << stream.status();
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_TRUE(stream.bad());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST_F(ObjectIntegrationTest, Copy) {
@@ -366,11 +380,13 @@ TEST_F(ObjectIntegrationTest, StreamingWrite) {
 
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   WriteRandomLines(os, expected);
 
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
   auto expected_str = expected.str();
@@ -417,12 +433,14 @@ TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                Fields(""));
+  os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
 
   WriteRandomLines(os, expected);
 
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   // When asking for an empty list of fields we should not expect any values:
   EXPECT_TRUE(meta.bucket().empty());
   EXPECT_TRUE(meta.name().empty());
@@ -506,9 +524,10 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
 
   new_acl = get_result;
   new_acl.set_role("OWNER");
-  get_result =
-      client.PatchObjectAcl(bucket_name, object_name, entity_name, get_result,
-                            new_acl, IfMatchEtag(get_result.etag()));
+  // Because this is a freshly created object, with a random name, we do not
+  // worry about implementing optimistic concurrency control.
+  get_result = client.PatchObjectAcl(bucket_name, object_name, entity_name,
+                                     get_result, new_acl);
   EXPECT_EQ(get_result.role(), new_acl.role());
 
   // Remove an entity and verify it is no longer in the ACL.
@@ -530,8 +549,10 @@ TEST_F(ObjectIntegrationTest, WriteWithContentType) {
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                ContentType("text/plain"));
+  os.exceptions(std::ios_base::failbit);
   os << LoremIpsum();
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
   EXPECT_EQ("text/plain", meta.content_type());
@@ -548,9 +569,8 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name,
-      IfGenerationMatch(0), DestinationPredefinedAcl::AuthenticatedRead(),
-      Projection::Full());
+      bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
+      DestinationPredefinedAcl::AuthenticatedRead(), Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(meta.acl(),
                                      ObjectAccessControl()
                                          .set_entity("allAuthenticatedUsers")
@@ -575,9 +595,8 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name,
-      IfGenerationMatch(0), DestinationPredefinedAcl::BucketOwnerFullControl(),
-      Projection::Full());
+      bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
+      DestinationPredefinedAcl::BucketOwnerFullControl(), Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(
                    meta.acl(),
                    ObjectAccessControl().set_entity(owner).set_role("OWNER")))
@@ -601,9 +620,8 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name,
-      IfGenerationMatch(0), DestinationPredefinedAcl::BucketOwnerRead(),
-      Projection::Full());
+      bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
+      DestinationPredefinedAcl::BucketOwnerRead(), Projection::Full());
   EXPECT_LT(0, CountMatchingEntities(
                    meta.acl(),
                    ObjectAccessControl().set_entity(owner).set_role("READER")))
@@ -622,9 +640,8 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclPrivate) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name,
-      IfGenerationMatch(0), DestinationPredefinedAcl::Private(),
-      Projection::Full());
+      bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
+      DestinationPredefinedAcl::Private(), Projection::Full());
   ASSERT_TRUE(meta.has_owner());
   EXPECT_LT(
       0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
@@ -645,9 +662,8 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclProjectPrivate) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name,
-      IfGenerationMatch(0), DestinationPredefinedAcl::ProjectPrivate(),
-      Projection::Full());
+      bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
+      DestinationPredefinedAcl::ProjectPrivate(), Projection::Full());
   ASSERT_TRUE(meta.has_owner());
   EXPECT_LT(
       0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
@@ -668,9 +684,8 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclPublicRead) {
   ObjectMetadata original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ObjectMetadata meta = client.CopyObject(
-      bucket_name, object_name, bucket_name, copy_name,
-      IfGenerationMatch(0), DestinationPredefinedAcl::PublicRead(),
-      Projection::Full());
+      bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
+      DestinationPredefinedAcl::PublicRead(), Projection::Full());
   EXPECT_LT(
       0, CountMatchingEntities(
              meta.acl(),
@@ -1046,13 +1061,15 @@ TEST_F(ObjectIntegrationTest, DefaultMD5StreamingWriteXML) {
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                Fields(""));
+  os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   WriteRandomLines(os, expected);
 
   auto expected_md5hash = ComputeMD5Hash(expected.str());
 
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(os.received_hash(), os.computed_hash());
   EXPECT_THAT(os.received_hash(), HasSubstr(expected_md5hash));
 
@@ -1067,13 +1084,15 @@ TEST_F(ObjectIntegrationTest, DefaultMD5StreamingWriteJSON) {
 
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   WriteRandomLines(os, expected);
 
   auto expected_md5hash = ComputeMD5Hash(expected.str());
 
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(os.received_hash(), os.computed_hash());
   EXPECT_THAT(os.received_hash(), HasSubstr(expected_md5hash));
 
@@ -1090,11 +1109,13 @@ TEST_F(ObjectIntegrationTest, DisableHashesStreamingWriteXML) {
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                Fields(""), DisableMD5Hash(true),
                                DisableCrc32cChecksum(true));
+  os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   WriteRandomLines(os, expected);
 
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_TRUE(os.received_hash().empty());
   EXPECT_TRUE(os.computed_hash().empty());
 
@@ -1111,11 +1132,13 @@ TEST_F(ObjectIntegrationTest, DisableHashesStreamingWriteJSON) {
   auto os =
       client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                          DisableMD5Hash(true), DisableCrc32cChecksum(true));
+  os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   WriteRandomLines(os, expected);
 
-  ObjectMetadata meta = os.Close();
+  os.Close();
+  ObjectMetadata meta = os.metadata().value();
   EXPECT_TRUE(os.received_hash().empty());
   EXPECT_TRUE(os.computed_hash().empty());
 
@@ -1159,18 +1182,44 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
   EXPECT_EQ(bucket_name, meta.bucket());
 
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
-  os << "Test message\n";
+  os.exceptions(std::ios_base::badbit | std::ios_base::failbit);
+  os << "Expected failure data:\n" << LoremIpsum();
 
   // This operation should fail because the object already exists.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { os.Close(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("[412]"));
-    throw;
-  },
-               std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(os.Close(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  testing_util::ExpectException<std::ios::failure>(
+      [&] { os.Close(); },
+      [&](std::ios::failure const& ex) {
+        EXPECT_FALSE(os.metadata().ok());
+        EXPECT_EQ(412, os.metadata().status().status_code());
+      },
+      "" /* the message generated by the C++ runtime is unknown */);
+
+  client.DeleteObject(bucket_name, object_name);
+}
+
+TEST_F(ObjectIntegrationTest, StreamingWriteFailureNoex) {
+  Client client;
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  ObjectMetadata meta = client.InsertObject(bucket_name, object_name, expected,
+                                            IfGenerationMatch(0));
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+
+  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  os << "Expected failure data:\n" << LoremIpsum();
+
+  // This operation should fail because the object already exists.
+  os.Close();
+  EXPECT_TRUE(os.bad());
+  EXPECT_FALSE(os.metadata().ok());
+  EXPECT_EQ(412, os.metadata().status().status_code());
+
+  client.DeleteObject(bucket_name, object_name);
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsFailure) {
@@ -1182,7 +1231,9 @@ TEST_F(ObjectIntegrationTest, ListObjectsFailure) {
   // This operation should fail because the bucket does not exist.
   TestPermanentFailure([&] {
     std::vector<ObjectMetadata> actual;
-    actual.assign(reader.begin(), reader.end());
+    for (auto&& o : reader) {
+      actual.emplace_back(std::move(o).value());
+    }
   });
 }
 

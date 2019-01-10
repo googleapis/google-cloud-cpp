@@ -169,9 +169,8 @@ void PatchObjectAcl(gcs::Client client, int& argc, char* argv[]) {
         client.GetObjectAcl(bucket_name, object_name, entity);
     auto new_acl = original_acl;
     new_acl.set_role(role);
-    gcs::ObjectAccessControl updated_acl =
-        client.PatchObjectAcl(bucket_name, object_name, entity, original_acl,
-                              new_acl, gcs::IfMatchEtag(original_acl.etag()));
+    gcs::ObjectAccessControl updated_acl = client.PatchObjectAcl(
+        bucket_name, object_name, entity, original_acl, new_acl);
     std::cout << "ACL entry for " << entity << " in object " << object_name
               << " in bucket " << bucket_name << " is now " << updated_acl
               << std::endl;
@@ -210,7 +209,7 @@ int main(int argc, char* argv[]) try {
   gcs::Client client;
 
   // Build the list of commands and the usage string from that list.
-  using CommandType = std::function<void(gcs::Client, int&, char* [])>;
+  using CommandType = std::function<void(gcs::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
       {"list-object-acl", &ListObjectAcl},
       {"create-object-acl", &CreateObjectAcl},

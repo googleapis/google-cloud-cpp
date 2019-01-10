@@ -20,9 +20,9 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
-std::pair<google::cloud::storage::Status, std::string>
+StatusOr<std::string>
 AnonymousCredentials::AuthorizationHeader() {
-  return std::make_pair(google::cloud::storage::Status(), "");
+  return std::string{};
 }
 
 }  // namespace oauth2

@@ -1,4 +1,4 @@
-# Google Cloud Strorage
+# Google Cloud Storage
 
 [![Documentation][doxygen-shield]][doxygen-link]
 
@@ -20,7 +20,45 @@ the reference guide includes a quick start guide.
 
 ## Release Notes
 
-### v0.2.x - TBD
+### v0.4.x - TBD
+
+### v0.3.x - 2019-01
+
+* Try to use the exception mask in the IOStream classes
+  (`storage::ObjectReadStream` and `storage::ObjectWriteStream`). This allows
+  applications to check errors locally via `rdstate()`. Note that applications
+  that disable exceptions altogether must check the `status()` member function
+  for these IOStream classes. It is impossible to set the `rdstate()` for all
+  failures when exceptions are disabled.
+* Support reading only a portion of a Blob.
+* Support building with gcc-4.8.
+* Many internal changes to better support applications that disable exceptions.
+  A future release will include APIs that do not raise exceptions for error
+  conditions.
+* @remyabel contributed changes to disable the unit and integration tests. This
+  can be useful for package maintainers.
+* Implement a function to create signed URLs (`Client::CreateV2SignedUrl`).
+* Support resumable uploads in any upload operation.
+
+### v0.2.x - 2018-12
+
+* Use resumable uploads for large files in `Client::UploadFile()`.
+* Implement support for the `userIp` optional query parameter.
+* **BREAKING CHANGE** `Client::RewriteObject()`, `Client::CopyObject()`, and
+  `Client::ComposeObject` no longer require the `ObjectMetadata` argument.
+  Instead use `WithObjectMetadata()`, which can be omitted if you do not need
+  to set any metadata attributes in the new object.
+* When using OpenSSL-1.0.2 the client library needs to configure the
+  [locking callbacks](https://www.openssl.org/docs/man1.0.2/crypto/threads.html)
+  for OpenSSL. However, the application may disable this behavior if the
+  application developer is going to use their own locking callbacks.
+* When refreshing OAuth2 access tokens the client library uses the same retry
+  and backoff policies as used for the request itself.
+* Applications can set object metadata attributes via the `WithObjectMetadata`
+  optional argument to `Client::InsertObjectMedia()`.
+* Applications can configure the library to only retry idempotent operations.
+* The client library can use Google Compute Engine credentials to access the
+  service.
 
 ### v0.1.x - 2018-11
 

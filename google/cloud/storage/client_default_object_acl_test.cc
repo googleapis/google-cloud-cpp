@@ -60,24 +60,25 @@ TEST_F(DefaultObjectAccessControlsTest, ListDefaultObjectAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })"""),
+      })""")
+          .value(),
       ObjectAccessControl::ParseFromString(R"""({
           "bucket": "test-bucket",
           "entity": "user-test-user-2",
           "role": "READER"
-      })"""),
+      })""")
+          .value(),
   };
 
   EXPECT_CALL(*mock, ListDefaultObjectAcl(_))
-      .WillOnce(Return(std::make_pair(
-          TransientError(), internal::ListDefaultObjectAclResponse{})))
-      .WillOnce(
-          Invoke([&expected](internal::ListDefaultObjectAclRequest const& r) {
-            EXPECT_EQ("test-bucket", r.bucket_name());
+      .WillOnce(Return(
+          StatusOr<internal::ListDefaultObjectAclResponse>(TransientError())))
+      .WillOnce(Invoke([&expected](
+                           internal::ListDefaultObjectAclRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
 
-            return std::make_pair(
-                Status(), internal::ListDefaultObjectAclResponse{expected});
-          }));
+        return make_status_or(internal::ListDefaultObjectAclResponse{expected});
+      }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
   std::vector<ObjectAccessControl> actual =
@@ -104,17 +105,18 @@ TEST_F(DefaultObjectAccessControlsTest, CreateDefaultObjectAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "READER"
-      })""");
+      })""")
+                      .value();
 
   EXPECT_CALL(*mock, CreateDefaultObjectAcl(_))
-      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
+      .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
       .WillOnce(
           Invoke([&expected](internal::CreateDefaultObjectAclRequest const& r) {
             EXPECT_EQ("test-bucket", r.bucket_name());
             EXPECT_EQ("user-test-user-1", r.entity());
             EXPECT_EQ("READER", r.role());
 
-            return std::make_pair(Status(), expected);
+            return make_status_or(expected);
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
@@ -154,13 +156,12 @@ TEST_F(DefaultObjectAccessControlsTest,
 
 TEST_F(DefaultObjectAccessControlsTest, DeleteDefaultObjectAcl) {
   EXPECT_CALL(*mock, DeleteDefaultObjectAcl(_))
-      .WillOnce(
-          Return(std::make_pair(TransientError(), internal::EmptyResponse{})))
+      .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce(Invoke([](internal::DeleteDefaultObjectAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user", r.entity());
 
-        return std::make_pair(Status(), internal::EmptyResponse{});
+        return make_status_or(internal::EmptyResponse{});
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
@@ -196,16 +197,17 @@ TEST_F(DefaultObjectAccessControlsTest, GetDefaultObjectAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })""");
+      })""")
+                                     .value();
 
   EXPECT_CALL(*mock, GetDefaultObjectAcl(_))
-      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
+      .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
       .WillOnce(
           Invoke([&expected](internal::GetDefaultObjectAclRequest const& r) {
             EXPECT_EQ("test-bucket", r.bucket_name());
             EXPECT_EQ("user-test-user-1", r.entity());
 
-            return std::make_pair(Status(), expected);
+            return make_status_or(expected);
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
@@ -237,17 +239,18 @@ TEST_F(DefaultObjectAccessControlsTest, UpdateDefaultObjectAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "READER"
-      })""");
+      })""")
+                      .value();
 
   EXPECT_CALL(*mock, UpdateDefaultObjectAcl(_))
-      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
+      .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
       .WillOnce(
           Invoke([&expected](internal::UpdateDefaultObjectAclRequest const& r) {
             EXPECT_EQ("test-bucket", r.bucket_name());
             EXPECT_EQ("user-test-user-1", r.entity());
             EXPECT_EQ("READER", r.role());
 
-            return std::make_pair(Status(), expected);
+            return make_status_or(expected);
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
@@ -292,9 +295,11 @@ TEST_F(DefaultObjectAccessControlsTest, PatchDefaultObjectAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })""");
+      })""")
+                    .value();
+
   EXPECT_CALL(*mock, PatchDefaultObjectAcl(_))
-      .WillOnce(Return(std::make_pair(TransientError(), ObjectAccessControl{})))
+      .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
       .WillOnce(
           Invoke([result](internal::PatchDefaultObjectAclRequest const& r) {
             EXPECT_EQ("test-bucket", r.bucket_name());
@@ -303,7 +308,7 @@ TEST_F(DefaultObjectAccessControlsTest, PatchDefaultObjectAcl) {
             auto payload = internal::nl::json::parse(r.payload());
             EXPECT_EQ(expected, payload);
 
-            return std::make_pair(Status(), result);
+            return make_status_or(result);
           }));
 
   Client client{std::shared_ptr<internal::RawClient>(mock)};

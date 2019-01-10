@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/instance_admin.h"
+#include "google/cloud/bigtable/internal/async_future_from_callback.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/poll_longrunning_operation.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
@@ -39,6 +40,16 @@ std::vector<btadmin::Instance> InstanceAdmin::ListInstances() {
   return result;
 }
 
+future<InstanceList> InstanceAdmin::AsyncListInstances(CompletionQueue& cq) {
+  promise<InstanceList> instance_list_promise;
+  future<InstanceList> result = instance_list_promise.get_future();
+
+  impl_.AsyncListInstances(
+      cq, internal::MakeAsyncFutureFromCallback(
+              std::move(instance_list_promise), "AsyncListInstances"));
+  return result;
+}
+
 std::future<google::bigtable::admin::v2::Instance>
 InstanceAdmin::CreateInstance(InstanceConfig instance_config) {
   return std::async(std::launch::async, &InstanceAdmin::CreateInstanceImpl,
@@ -59,7 +70,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
   auto backoff_policy = impl_.rpc_backoff_policy_->clone();
 
   // Build the RPC request, try to minimize copying.
-  auto request = instance_config.as_proto_move();
+  auto request = std::move(instance_config).as_proto();
   request.set_parent(project_name());
   for (auto& kv : *request.mutable_clusters()) {
     kv.second.set_location(project_name() + "/locations/" +
@@ -106,7 +117,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::UpdateInstanceImpl(
   MetadataUpdatePolicy metadata_update_policy(instance_update_config.GetName(),
                                               MetadataParamTypes::NAME);
 
-  auto request = instance_update_config.as_proto_move();
+  auto request = std::move(instance_update_config).as_proto();
 
   using ClientUtils =
       bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;
@@ -142,6 +153,19 @@ btadmin::Instance InstanceAdmin::GetInstance(std::string const& instance_id) {
   return result;
 }
 
+future<btadmin::Instance> InstanceAdmin::AsyncGetInstance(
+    CompletionQueue& cq, std::string const& instance_id) {
+  promise<btadmin::Instance> p;
+  auto result = p.get_future();
+
+  impl_.AsyncGetInstance(
+      cq,
+      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetInstance"),
+      instance_id);
+
+  return result;
+}
+
 void InstanceAdmin::DeleteInstance(std::string const& instance_id) {
   grpc::Status status;
   impl_.DeleteInstance(instance_id, status);
@@ -158,6 +182,19 @@ btadmin::Cluster InstanceAdmin::GetCluster(
   if (not status.ok()) {
     bigtable::internal::RaiseRpcError(status, status.error_message());
   }
+  return result;
+}
+
+future<btadmin::Cluster> InstanceAdmin::AsyncGetCluster(
+    CompletionQueue& cq, bigtable::InstanceId const& instance_id,
+    bigtable::ClusterId const& cluster_id) {
+  promise<btadmin::Cluster> p;
+  auto result = p.get_future();
+
+  impl_.AsyncGetCluster(
+      cq,
+      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetCluster"), instance_id, cluster_id);
+
   return result;
 }
 
@@ -190,7 +227,7 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::UpdateClusterImpl(
   MetadataUpdatePolicy metadata_update_policy(cluster_config.GetName(),
                                               MetadataParamTypes::NAME);
 
-  auto request = cluster_config.as_proto_move();
+  auto request = std::move(cluster_config).as_proto();
 
   using ClientUtils =
       bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;
@@ -283,7 +320,7 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
   auto backoff_policy = impl_.rpc_backoff_policy_->clone();
 
   // Build the RPC request, try to minimize copying.
-  auto cluster = cluster_config.as_proto_move();
+  auto cluster = cluster_config.as_proto();
   cluster.set_location(project_name() + "/locations/" + cluster.location());
 
   btadmin::CreateClusterRequest request;

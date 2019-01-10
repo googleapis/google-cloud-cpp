@@ -20,7 +20,8 @@ cc_binary(
     name = "bigtable_opencensus",
     srcs = ["bigtable_opencensus.cc"],
     deps = [
-        "@com_github_googlecloudplatform_google_cloud_cpp//google/cloud/bigtable:bigtable_client",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/bigtable:bigtable_client",
         "@com_github_grpc_grpc//:grpc++",
         "@com_github_grpc_grpc//:grpc_opencensus_plugin",
         "@io_opencensus_cpp//opencensus/exporters/stats/stackdriver:stackdriver_exporter",

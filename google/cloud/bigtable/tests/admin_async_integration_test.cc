@@ -80,21 +80,23 @@ TEST_F(AdminAsyncIntegrationTest, CreateListGetDeleteTableTest) {
                            {"a1000", "a2000", "b3000", "m5000"});
   std::promise<btadmin::Table> promise_create_table;
   noex_table_admin_->AsyncCreateTable(
-      table_id, table_config, cq,
+      cq,
       [&promise_create_table](CompletionQueue& cq, btadmin::Table& table,
                               grpc::Status const& status) {
         promise_create_table.set_value(std::move(table));
-      });
+      },
+      table_id, table_config);
 
   auto table = promise_create_table.get_future().get();
 
   std::promise<btadmin::Table> promise_get_table;
   noex_table_admin_->AsyncGetTable(
-      table_id, btadmin::Table::FULL, cq,
+      cq,
       [&promise_get_table](CompletionQueue& cq, btadmin::Table& table,
                            grpc::Status const& status) {
         promise_get_table.set_value(std::move(table));
-      });
+      },
+      table_id, btadmin::Table::FULL);
 
   auto table_result = promise_get_table.get_future().get();
 
@@ -128,11 +130,12 @@ TEST_F(AdminAsyncIntegrationTest, CreateListGetDeleteTableTest) {
   std::promise<btadmin::Table> promise_column_family;
 
   noex_table_admin_->AsyncModifyColumnFamilies(
-      table_id, column_modification_list, cq,
+      cq,
       [&promise_column_family](CompletionQueue& cq, btadmin::Table& table,
                                grpc::Status const& status) {
         promise_column_family.set_value(std::move(table));
-      });
+      },
+      table_id, column_modification_list);
 
   auto table_modified = promise_column_family.get_future().get();
 
@@ -143,8 +146,16 @@ TEST_F(AdminAsyncIntegrationTest, CreateListGetDeleteTableTest) {
   EXPECT_TRUE(gc.has_intersection());
   EXPECT_EQ(2, gc.intersection().rules_size());
 
-  // delete table
-  DeleteTable(table_id);
+  // AsyncDeleteTable
+  std::promise<void> promise_delete_table;
+  noex_table_admin_->AsyncDeleteTable(
+      cq,
+      [&promise_delete_table](CompletionQueue& cq, grpc::Status const& status) {
+        promise_delete_table.set_value();
+      },
+      table_id, table_config);
+  promise_delete_table.get_future().get();
+
   // List to verify it is no longer there
   auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   auto table_count = CountMatchingTables(table_id, current_table_list);
@@ -172,11 +183,12 @@ TEST_F(AdminAsyncIntegrationTest, AsyncDropRowsByPrefixTest) {
 
   std::promise<btadmin::Table> promise_create_table;
   noex_table_admin_->AsyncCreateTable(
-      table_id, table_config, cq,
+      cq,
       [&promise_create_table](CompletionQueue& cq, btadmin::Table& table,
                               grpc::Status const& status) {
         promise_create_table.set_value(std::move(table));
-      });
+      },
+      table_id, table_config);
 
   auto table_created = promise_create_table.get_future().get();
 
@@ -205,16 +217,15 @@ TEST_F(AdminAsyncIntegrationTest, AsyncDropRowsByPrefixTest) {
   CreateCells(table, created_cells);
 
   // Delete all the records for a row
-  std::promise<google::protobuf::Empty> promise_drop_row;
+  std::promise<void> promise_drop_row;
   noex_table_admin_->AsyncDropRowsByPrefix(
-      table_id, row_key1_prefix, cq,
-      [&promise_drop_row](CompletionQueue& cq,
-                          google::protobuf::Empty& response,
-                          grpc::Status const& status) {
-        promise_drop_row.set_value(std::move(response));
-      });
+      cq,
+      [&promise_drop_row](CompletionQueue& cq, grpc::Status const& status) {
+        promise_drop_row.set_value();
+      },
+      table_id, row_key1_prefix);
 
-  auto response = promise_drop_row.get_future().get();
+  promise_drop_row.get_future().get();
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_id);
 
@@ -240,11 +251,12 @@ TEST_F(AdminAsyncIntegrationTest, AsyncDropAllRowsTest) {
 
   std::promise<btadmin::Table> promise_create_table;
   noex_table_admin_->AsyncCreateTable(
-      table_id, table_config, cq,
+      cq,
       [&promise_create_table](CompletionQueue& cq, btadmin::Table& table,
                               grpc::Status const& status) {
         promise_create_table.set_value(std::move(table));
-      });
+      },
+      table_id, table_config);
 
   auto table_created = promise_create_table.get_future().get();
 
@@ -265,15 +277,14 @@ TEST_F(AdminAsyncIntegrationTest, AsyncDropAllRowsTest) {
   CreateCells(table, created_cells);
 
   // Delete all the records from a table
-  std::promise<google::protobuf::Empty> promise_drop_row;
+  std::promise<void> promise_drop_row;
   noex_table_admin_->AsyncDropAllRows(
-      table_id, cq,
-      [&promise_drop_row](CompletionQueue& cq,
-                          google::protobuf::Empty& response,
-                          grpc::Status const& status) {
-        promise_drop_row.set_value(std::move(response));
-      });
-  auto response = promise_drop_row.get_future().get();
+      cq,
+      [&promise_drop_row](CompletionQueue& cq, grpc::Status const& status) {
+        promise_drop_row.set_value();
+      },
+      table_id);
+  promise_drop_row.get_future().get();
 
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
   DeleteTable(table_id);
@@ -358,10 +369,11 @@ TEST_F(AdminAsyncIntegrationTest, CheckConsistencyIntegrationTest) {
 
   std::promise<grpc::Status> consistent_promise;
   noex_table_admin->AsyncAwaitConsistency(
-      table_id, cq,
+      cq,
       [&consistent_promise](CompletionQueue& cq, grpc::Status& status) {
         consistent_promise.set_value(status);
-      });
+      },
+      table_id);
 
   EXPECT_TRUE(consistent_promise.get_future().get().ok());
 

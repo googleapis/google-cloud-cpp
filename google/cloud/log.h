@@ -142,14 +142,17 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
        GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER.LogTo(sink))                     \
   GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER.Stream()
 
+// Note that we do not use `GOOGLE_CLOUD_CPP_PP_CONCAT` here: we actually want
+// to concatenate `GCP_LS` with the literal `level`. On some platforms, the
+// level names are used as macros (e.g., on macOS, `DEBUG` is often a macro with
+// value 1 for debug builds). If we were to use `GOOGLE_CLOUD_CPP_PP_CONCAT` and
+// `level` is a a macro, then we would get `GCP_LS_<macro_value>`, i.e.,
+// `GCP_LS_1` (incorrect) instead of `GCP_LS_DEBUG` (correct).
 /**
  * Log a message with the Google Cloud Platform C++ Libraries logging framework.
- *
- *
  */
-#define GCP_LOG(level)                                               \
-  GOOGLE_CLOUD_CPP_LOG_I(GOOGLE_CLOUD_CPP_PP_CONCAT(GCP_LS_, level), \
-                         ::google::cloud::LogSink::Instance())
+#define GCP_LOG(level) \
+  GOOGLE_CLOUD_CPP_LOG_I(GCP_LS_##level, ::google::cloud::LogSink::Instance())
 
 #ifndef GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED
 #define GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED GCP_LS_DEBUG

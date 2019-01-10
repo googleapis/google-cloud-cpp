@@ -173,12 +173,12 @@ TEST(ContinuationVoidTest, SetValueCallsContinuation) {
   SUCCEED();
 }
 
-thread_local int execute_counter;
-
 class TestContinuation : public continuation_base {
  public:
-  TestContinuation() = default;
-  void execute() override { ++execute_counter; }
+  TestContinuation(int* r) : execute_counter(r) {}
+  void execute() override { (*execute_counter)++; }
+
+  int* execute_counter;
 };
 
 TEST(FutureImplVoid, SetValue) {
@@ -244,9 +244,9 @@ TEST(FutureImplVoid, SetContinuation) {
   future_shared_state<void> shared_state;
   EXPECT_FALSE(shared_state.is_ready());
 
-  execute_counter = 0;
+  int execute_counter = 0;
   shared_state.set_continuation(
-      google::cloud::internal::make_unique<TestContinuation>());
+      google::cloud::internal::make_unique<TestContinuation>(&execute_counter));
   EXPECT_EQ(0, execute_counter);
   EXPECT_FALSE(shared_state.is_ready());
   shared_state.set_value();
@@ -260,13 +260,15 @@ TEST(FutureImplVoid, SetContinuationAlreadySet) {
   future_shared_state<void> shared_state;
   EXPECT_FALSE(shared_state.is_ready());
 
+  int execute_counter = 0;
   shared_state.set_continuation(
-      google::cloud::internal::make_unique<TestContinuation>());
+      google::cloud::internal::make_unique<TestContinuation>(&execute_counter));
 
   ExpectFutureError(
       [&] {
         shared_state.set_continuation(
-            google::cloud::internal::make_unique<TestContinuation>());
+            google::cloud::internal::make_unique<TestContinuation>(
+                &execute_counter));
       },
       std::future_errc::future_already_retrieved);
 }
@@ -275,11 +277,11 @@ TEST(FutureImplVoid, SetContinuationAlreadySatisfied) {
   future_shared_state<void> shared_state;
   EXPECT_FALSE(shared_state.is_ready());
 
-  execute_counter = 0;
+  int execute_counter = 0;
   shared_state.set_value();
   EXPECT_EQ(0, execute_counter);
   shared_state.set_continuation(
-      google::cloud::internal::make_unique<TestContinuation>());
+      google::cloud::internal::make_unique<TestContinuation>(&execute_counter));
   EXPECT_EQ(1, execute_counter);
 
   shared_state.get();
@@ -407,9 +409,9 @@ TEST(FutureImplInt, SetContinuation) {
   future_shared_state<int> shared_state;
   EXPECT_FALSE(shared_state.is_ready());
 
-  execute_counter = 0;
+  int execute_counter = 0;
   shared_state.set_continuation(
-      google::cloud::internal::make_unique<TestContinuation>());
+      google::cloud::internal::make_unique<TestContinuation>(&execute_counter));
   EXPECT_EQ(0, execute_counter);
   EXPECT_FALSE(shared_state.is_ready());
   shared_state.set_value(42);
@@ -423,12 +425,14 @@ TEST(FutureImplInt, SetContinuationAlreadySet) {
   future_shared_state<int> shared_state;
   EXPECT_FALSE(shared_state.is_ready());
 
+  int execute_counter = 0;
   shared_state.set_continuation(
-      google::cloud::internal::make_unique<TestContinuation>());
+      google::cloud::internal::make_unique<TestContinuation>(&execute_counter));
   ExpectFutureError(
       [&] {
         shared_state.set_continuation(
-            google::cloud::internal::make_unique<TestContinuation>());
+            google::cloud::internal::make_unique<TestContinuation>(
+                &execute_counter));
       },
       std::future_errc::future_already_retrieved);
 }
@@ -437,11 +441,11 @@ TEST(FutureImplInt, SetContinuationAlreadySatisfied) {
   future_shared_state<int> shared_state;
   EXPECT_FALSE(shared_state.is_ready());
 
-  execute_counter = 0;
+  int execute_counter = 0;
   shared_state.set_value(42);
   EXPECT_EQ(0, execute_counter);
   shared_state.set_continuation(
-      google::cloud::internal::make_unique<TestContinuation>());
+      google::cloud::internal::make_unique<TestContinuation>(&execute_counter));
   EXPECT_EQ(1, execute_counter);
 
   EXPECT_EQ(42, shared_state.get());

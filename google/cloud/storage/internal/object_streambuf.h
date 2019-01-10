@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_STREAMBUF_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_STREAMBUF_H_
 
+#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include <iostream>
 
@@ -41,10 +42,12 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
   ObjectReadStreambuf(ObjectReadStreambuf const&) = delete;
   ObjectReadStreambuf& operator=(ObjectReadStreambuf const&) = delete;
 
-  virtual HttpResponse Close() = 0;
+  virtual void Close() = 0;
   virtual bool IsOpen() const = 0;
+  virtual Status const& status() const = 0;
   virtual std::string const& received_hash() const = 0;
   virtual std::string const& computed_hash() const = 0;
+  virtual std::multimap<std::string, std::string> const& headers() const = 0;
 };
 
 /**
@@ -64,14 +67,20 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   ObjectWriteStreambuf(ObjectWriteStreambuf const&) = delete;
   ObjectWriteStreambuf& operator=(ObjectWriteStreambuf const&) = delete;
 
-  HttpResponse Close();
+  StatusOr<HttpResponse> Close();
   virtual bool IsOpen() const = 0;
-  virtual void ValidateHash(ObjectMetadata const& meta) = 0;
+  virtual bool ValidateHash(ObjectMetadata const& meta) = 0;
   virtual std::string const& received_hash() const = 0;
   virtual std::string const& computed_hash() const = 0;
 
+  /// The session id, if applicable, it is empty for non-resumable uploads.
+  virtual std::string const& resumable_session_id() const = 0;
+
+  /// The next expected byte, if applicable, always 0 for non-resumable uploads.
+  virtual std::uint64_t next_expected_byte() const = 0;
+
  protected:
-  virtual HttpResponse DoClose() = 0;
+  virtual StatusOr<HttpResponse> DoClose() = 0;
 };
 
 }  // namespace internal

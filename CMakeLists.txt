@@ -27,14 +27,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
-    # gcc-4.8 C++11 support has bugs preventing us from using it.
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9)
+    # gcc-4.8 is the first release that claims C++11 support.
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.8)
         message(
             FATAL_ERROR
-                "GCC version must be at least 4.9. Older versions"
-                " either lack C++11 support or have bugs"
-                " (e.g. https://gcc.gnu.org/bugzilla/show_bug.cgi?id=55817)"
-                " that prevent us from using them.")
+                "GCC version must be at least 4.8. Older versions"
+                " either lack C++11 support or have bugs that prevent us from"
+                " using them.")
     endif ()
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 
@@ -73,6 +72,8 @@ cmake -DGOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK=OFF ...
 ]===])
     endif ()
 endif (APPLE)
+
+option(GOOGLE_CLOUD_CPP_USE_LIBCXX "Build with libcxx and libcxxabi" OFF)
 
 # If ccache is installed use it for the build. This makes the Travis
 # configuration agnostic as to wether ccache is installed or not.
@@ -138,23 +139,24 @@ set_property(CACHE GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
+# There are a number of targets that are pure dependencies, i.e., do not contain
+# our own code. These targets can be skipped when using static analysis tools.
+# Can be built earlier in the CI environment (for example to warm up the cache).
+# And in general can receive special treatment. This custom target collects all
+# these special targets with a single name.
+add_custom_target(google-cloud-cpp-dependencies)
+
 # Add gRPC and protobuf targets as submodules or packages, depending on the
 # configuration.  This should happen before enable_testing(), because we are not
 # interested in compiling and running the gRPC tests.
 include(IncludeGrpc)
 
-# Enable testing in this directory so we can do a top-level `make test`.
-enable_testing()
+# Enable testing in this directory so we can do a top-level `make test`. This
+# also includes the BUILD_TESTING option, which is on by default.
+include(CTest)
 
 # Each subproject adds dependencies to this target to have their docs generated.
 add_custom_target(doxygen-docs)
-
-# There are a number of targets we cannot, or do not care to compile with the
-# static analyzer enabled. Either because the build times are too long, or
-# because the code is an external dependency, or generated code, or all of
-# above. These targets are added as dependencies of `skip-scanbuild-targets` and
-# compiled with, obviously, scan-build disabled.
-add_custom_target(skip-scanbuild-targets)
 
 # Add subprojects here.
 add_subdirectory(google/cloud)

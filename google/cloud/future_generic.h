@@ -37,7 +37,9 @@ class future final : private internal::future_base<T> {
   using shared_state_type =
       typename internal::future_base<T>::shared_state_type;
 
-  future() noexcept = default;
+  // workaround Apple Clang-7xx series bug, if we use `= default` here, the
+  // compiler believes there is no default constructor defined. :shrug:
+  future() noexcept {}
 
   /**
    * Creates a new future that unwraps @p rhs.

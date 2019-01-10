@@ -64,7 +64,7 @@ TEST(ParseRfc3339Test, ParseFractional) {
   auto actual_seconds = duration_cast<seconds>(timestamp.time_since_epoch());
   EXPECT_EQ(1526654523L, actual_seconds.count());
 
-  bool system_clock_has_nanos = std::ratio_greater_equal<
+  bool const system_clock_has_nanos = std::ratio_greater_equal<
       std::nano, std::chrono::system_clock::duration::period>::value;
   if (system_clock_has_nanos) {
     auto actual_nanoseconds = duration_cast<nanoseconds>(
@@ -85,7 +85,7 @@ TEST(ParseRfc3339Test, ParseFractionalMoreThanNanos) {
   // Use `date -u +%s --date='2018-05-18T14:42:03'` to get the magic value:
   auto actual_seconds = duration_cast<seconds>(timestamp.time_since_epoch());
   EXPECT_EQ(1526654523L, actual_seconds.count());
-  bool system_clock_has_nanos = std::ratio_greater_equal<
+  bool const system_clock_has_nanos = std::ratio_greater_equal<
       std::nano, std::chrono::system_clock::duration::period>::value;
   if (system_clock_has_nanos) {
     auto actual_nanoseconds = duration_cast<nanoseconds>(

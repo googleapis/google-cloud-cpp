@@ -48,7 +48,8 @@ TEST(BucketAclRequestTest, ListResponse) {
       }]})""";
 
   auto actual =
-      ListBucketAclResponse::FromHttpResponse(HttpResponse{200, text, {}});
+      ListBucketAclResponse::FromHttpResponse(HttpResponse{200, text, {}})
+          .value();
   ASSERT_EQ(2UL, actual.items.size());
   EXPECT_EQ("user-test-user-1", actual.items.at(0).entity());
   EXPECT_EQ("OWNER", actual.items.at(0).role());
@@ -62,6 +63,22 @@ TEST(BucketAclRequestTest, ListResponse) {
   EXPECT_THAT(str, HasSubstr("entity=user-test-user-2"));
   EXPECT_THAT(str, HasSubstr("ListBucketAclResponse={"));
   EXPECT_THAT(str, HasSubstr("BucketAccessControl={"));
+}
+
+TEST(BucketAclRequestTest, ListResponseParseFailure) {
+  std::string text = "{123";
+
+  StatusOr<ListBucketAclResponse> actual =
+      ListBucketAclResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
+}
+
+TEST(BucketAclRequestTest, ListResponseParseFailureElements) {
+  std::string text = R"""({"items": ["invalid-item"]})""";
+
+  StatusOr<ListBucketAclResponse> actual =
+      ListBucketAclResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
 }
 
 TEST(BucketAclRequestTest, Get) {
@@ -140,7 +157,7 @@ BucketAccessControl CreateBucketAccessControlForTest() {
       },
       "role": "OWNER"
 })""";
-  return BucketAccessControl::ParseFromString(text);
+  return BucketAccessControl::ParseFromString(text).value();
 }
 
 TEST(BucketAclRequestTest, PatchDiff) {

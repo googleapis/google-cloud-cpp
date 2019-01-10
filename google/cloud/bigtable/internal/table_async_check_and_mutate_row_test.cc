@@ -67,15 +67,16 @@ TEST_F(NoexTableAsyncCheckAndMutateRowTest, Simple) {
   bool op_called = false;
   grpc::Status capture_status;
   table_.AsyncCheckAndMutateRow(
-      "foo", bt::Filter::PassAllFilter(),
-      {bt::SetCell("fam", "col", 0_ms, "it was true")},
-      {bt::SetCell("fam", "col", 0_ms, "it was false")}, cq,
+      cq,
       [&op_called, &capture_status](CompletionQueue& cq, bool response,
                                     grpc::Status const& status) {
         EXPECT_TRUE(response);
         op_called = true;
         capture_status = status;
-      });
+      },
+      "foo", bt::Filter::PassAllFilter(),
+      {bt::SetCell("fam", "col", 0_ms, "it was true")},
+      {bt::SetCell("fam", "col", 0_ms, "it was false")});
 
   EXPECT_FALSE(op_called);
   EXPECT_EQ(1U, impl->size());
@@ -115,14 +116,15 @@ TEST_F(NoexTableAsyncCheckAndMutateRowTest, Failure) {
   bool op_called = false;
   grpc::Status capture_status;
   table_.AsyncCheckAndMutateRow(
-      "foo", bt::Filter::PassAllFilter(),
-      {bt::SetCell("fam", "col", 0_ms, "it was true")},
-      {bt::SetCell("fam", "col", 0_ms, "it was false")}, cq,
+      cq,
       [&op_called, &capture_status](CompletionQueue& cq, bool response,
                                     grpc::Status const& status) {
         op_called = true;
         capture_status = status;
-      });
+      },
+      "foo", bt::Filter::PassAllFilter(),
+      {bt::SetCell("fam", "col", 0_ms, "it was true")},
+      {bt::SetCell("fam", "col", 0_ms, "it was false")});
 
   EXPECT_FALSE(op_called);
   EXPECT_EQ(1U, impl->size());
@@ -132,7 +134,79 @@ TEST_F(NoexTableAsyncCheckAndMutateRowTest, Failure) {
   EXPECT_TRUE(impl->empty());
 
   EXPECT_FALSE(capture_status.ok());
-  EXPECT_EQ("mocked-status", capture_status.error_message());
+  EXPECT_TRUE(capture_status.error_message().find("mocked-status") !=
+              std::string::npos);
+}
+
+TEST_F(NoexTableAsyncCheckAndMutateRowTest, RetryFailure) {
+  auto impl = std::make_shared<testing::MockCompletionQueue>();
+  bigtable::CompletionQueue cq(impl);
+
+  // Simulate a transient failure first.
+  auto reader_1 =
+      google::cloud::internal::make_unique<MockAsyncCheckAndMutateRowReader>();
+  EXPECT_CALL(*reader_1, Finish(_, _, _))
+      .WillOnce(Invoke([](btproto::CheckAndMutateRowResponse* response,
+                          grpc::Status* status, void*) {
+        *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "mocked-status");
+      }));
+  auto reader_2 =
+      google::cloud::internal::make_unique<MockAsyncCheckAndMutateRowReader>();
+  EXPECT_CALL(*reader_2, Finish(_, _, _))
+      .WillOnce(Invoke([](btproto::CheckAndMutateRowResponse* response,
+                          grpc::Status* status, void*) {
+        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+      }));
+
+  EXPECT_CALL(*client_, AsyncCheckAndMutateRow(_, _, _))
+      .WillOnce(Invoke([&reader_1](grpc::ClientContext*,
+                                   btproto::CheckAndMutateRowRequest const&,
+                                   grpc::CompletionQueue*) {
+        // This is safe, see comments in MockAsyncResponseReader.
+        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+            btproto::CheckAndMutateRowResponse>>(reader_1.get());
+      }))
+      .WillOnce(Invoke([&reader_2](grpc::ClientContext*,
+                                   btproto::CheckAndMutateRowRequest const&,
+                                   grpc::CompletionQueue*) {
+        // This is safe, see comments in MockAsyncResponseReader.
+        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+            btproto::CheckAndMutateRowResponse>>(reader_2.get());
+      }));
+
+  // Make the asynchronous request.
+  bool user_op_called = false;
+  grpc::Status capture_status;
+  bigtable::noex::Table table(client_, kTableId, AlwaysRetryMutationPolicy());
+  table.AsyncCheckAndMutateRow(
+      cq,
+      [&user_op_called, &capture_status](CompletionQueue& cq, bool response,
+                                         grpc::Status const& status) {
+        user_op_called = true;
+        capture_status = status;
+      },
+      "foo", bt::Filter::PassAllFilter(),
+      {bt::SetCell("fam", "col", 0_ms, "it was true")},
+      {bt::SetCell("fam", "col", 0_ms, "it was false")});
+  EXPECT_FALSE(user_op_called);
+  EXPECT_EQ(1U, impl->size());
+  impl->SimulateCompletion(cq, true);
+
+  // After first failure, the timer is scheduled.
+  EXPECT_FALSE(user_op_called);
+  EXPECT_EQ(1U, impl->size());
+  impl->SimulateCompletion(cq, true);
+
+  // After the timer expires, a retry is submitted.
+  EXPECT_FALSE(user_op_called);
+  EXPECT_EQ(1U, impl->size());
+  impl->SimulateCompletion(cq, true);
+
+  EXPECT_TRUE(user_op_called);
+  EXPECT_TRUE(impl->empty());
+
+  EXPECT_TRUE(capture_status.ok());
+  EXPECT_THAT(capture_status.error_message(), HasSubstr("mocked-status"));
 }
 
 }  // namespace

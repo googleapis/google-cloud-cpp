@@ -20,7 +20,7 @@ powershell -exec bypass ci\kokoro\windows\install-dependencies.ps1
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 set CONFIG=Debug
-set PROVIDER=vcpkg
+set PROVIDER=package
 call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
 
 echo %date% %time%

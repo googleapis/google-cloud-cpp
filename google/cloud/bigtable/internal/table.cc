@@ -173,17 +173,19 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
   bigtable::internal::SetCommonTableOperationRequest<
       btproto::CheckAndMutateRowRequest>(request, app_profile_id_.get(),
                                          table_name_.get());
-  *request.mutable_predicate_filter() = filter.as_proto_move();
+  *request.mutable_predicate_filter() = std::move(filter).as_proto();
   for (auto& m : true_mutations) {
     *request.add_true_mutations() = std::move(m.op);
   }
   for (auto& m : false_mutations) {
     *request.add_false_mutations() = std::move(m.op);
   }
-  auto response = ClientUtils::MakeNonIdemponentCall(
-      *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
-      &DataClient::CheckAndMutateRow, request, "Table::CheckAndMutateRow",
-      status);
+  bool const is_idempotent =
+      idempotent_mutation_policy_->is_idempotent(request);
+  auto response = ClientUtils::MakeCall(
+      *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+      metadata_update_policy_, &DataClient::CheckAndMutateRow, request,
+      "Table::CheckAndMutateRow", status, is_idempotent);
 
   return response.predicate_matched();
 }

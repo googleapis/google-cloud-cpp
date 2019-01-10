@@ -59,18 +59,18 @@ automatically compiled when you follow said instructions.
 
 ### Configuring authentication for the C++ Client Library
 
-This library uses the `GOOGLE_APPLICATION_DEFAULT_CREDENTIALS` environment
-variable to find the credentials file. This is the recommended way to configure
-the authentication preferences, though if the environment variable is not set,
-the library searches for a credentials file in the same location as the
-[Cloud SDK](https://cloud.google.com/sdk/).
+This library uses the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to
+find the credentials file. This is the recommended way to configure the
+authentication preferences, though if the environment variable is not set, the
+library searches for a credentials file in the same location as the [Cloud
+SDK](https://cloud.google.com/sdk/).
 
 ### Create a bucket
 
 This is a short example to create a
 [GCS bucket](https://cloud.google.com/storage/docs/key-terms#buckets).
 This example assumes you have configured the authentication using
-`GOOGLE_APPLICATION_DEFAULT_CREDENTIALS`:
+`GOOGLE_APPLICATION_CREDENTIALS`:
 
 @snippet storage_quickstart.cc full quickstart
 
@@ -166,6 +166,57 @@ find_package(storage_client 0.1.0 REQUIRED)
 add_executable(my_program my_program.cc)
 target_link_libraries(my_program storage_client)
 ```
+
+### Error Handling
+
+This library never throws exceptions to signal error. In general, the library
+returns a `StatusOr<T>` if an error is possible. The exception are classes that
+already have an existing error handling mechanism, such as types derived from
+`std::ostream`.
+
+@par Error Handling Example (without exceptions):
+
+Application developers that cannot or prefer not to use exceptions to signal
+errors can check if the `StatusOr<T>` contains an error using `.ok()`. The error
+details are available using the `.status()` member function. If the
+`StatusOr<T>` does not contain an error then the application can use the\
+`StatusOr<T>` as a smart pointer to `T`, that is, `operator->()` and
+`operator*()` work as you would expect. Note that accessing the value of a
+`StatusOr<T>` that contains an error is undefined behavior.
+
+@code {.cpp}
+using namespace google::cloud;
+[](storage::Client client) {
+  StatusOr<storage::BucketMetadata> metadata = client.GetBucketMetadata(
+      "my-bucket");
+  if (not metadata.ok()) {
+    std::cerr << "Error retrieving metadata for my-bucket: "
+              << metadata.status() << std::endl;
+    return;
+  }
+  // here, use `metadata` as a smart pointer to `T`, or `metadata.value()`.
+}
+@endcode
+
+@par Error Handling Example (with exceptions):
+
+Applications that prefer to use
+exceptions to signal errors can simply call `.value()` on the `StatusOr<T>`
+object. This will return a `T` if there was no error, and throw an exception if
+the `StatusOr<T>` object contains an error.
+
+@code {.cpp}
+using namespace google::cloud;
+[](storage::Client client) {
+  try {
+    storage::BucketMetadata metadata = client.GetBucketMetadata(
+        "my-bucket").value(); // throws on error
+    // use `metadata` here.
+  } catch (storage::RuntimeStatusError const& ex) {
+    std::cerr << "Error status: " << ex.what() << std::endl;
+  }
+}
+@endcode
 
 ### Next Steps
 

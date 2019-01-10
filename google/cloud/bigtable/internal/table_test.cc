@@ -627,7 +627,6 @@ TEST_F(NoexTableTest, BulkApplyRetryPartialFailure) {
   SUCCEED();
 }
 
-// TODO(#234) - this test could be enabled when bug is closed.
 /// @test Verify that Table::BulkApply() handles permanent failures.
 TEST_F(NoexTableTest, BulkApplyPermanentFailure) {
   using namespace ::testing;
@@ -895,6 +894,27 @@ TEST_F(NoexTableTest, CheckAndMutateRowFailure) {
       {bigtable::SetCell("fam", "col", 0_ms, "it was false")}, status);
   EXPECT_FALSE(status.ok());
   EXPECT_THAT(status.error_message(), HasSubstr("try-again"));
+}
+
+/** @test Verify that Table::CheckAndMutateRow() retries on failures if
+ *  idempotency policy says so.
+ */
+TEST_F(NoexTableTest, CheckAndMutateRowFailureRetry) {
+  using namespace ::testing;
+
+  EXPECT_CALL(*client_, CheckAndMutateRow(_, _, _))
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
+      .WillOnce(Return(grpc::Status(grpc::StatusCode::OK, "success")));
+  grpc::Status status;
+  bigtable::noex::Table table(client_, kTableId,
+                              bigtable::AlwaysRetryMutationPolicy());
+  table.CheckAndMutateRow(
+      "foo", bigtable::Filter::PassAllFilter(),
+      {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
+      {bigtable::SetCell("fam", "col", 0_ms, "it was false")}, status);
+  EXPECT_TRUE(status.ok());
+  EXPECT_THAT(status.error_message(), HasSubstr("success"));
 }
 
 /// @test Verify that Table::SampleRows<T>() works for default parameter.

@@ -90,7 +90,8 @@ void PooledCurlHandleFactory::CleanupHandle(CurlPtr&& h) {
     curl_easy_cleanup(tmp);
   }
   handles_.push_back(h.get());
-  h.release();
+  // The handles_ vector now has ownership, so release it.
+  (void)h.release();
 }
 
 CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {
@@ -111,7 +112,8 @@ void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti&& m) {
     curl_multi_cleanup(tmp);
   }
   multi_handles_.push_back(m.get());
-  m.release();
+  // The multi_handles_ vector now has ownership, so release it.
+  (void)m.release();
 }
 
 }  // namespace internal

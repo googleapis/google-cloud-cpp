@@ -24,20 +24,15 @@ RUN yum install -y centos-release-scl
 RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
 
 RUN yum makecache && yum install -y \
-    devtoolset-7 \
-    c-ares-devel \
     ccache \
     cmake3 \
-    curl \
     curl-devel \
+    gcc \
+    gcc-c++ \
     git \
-    golang \
-    graphviz \
     openssl-devel \
-    pkgconfig \
     python \
     python-pip \
-    shtool \
     unzip \
     wget \
     which \
@@ -58,3 +53,5 @@ RUN tar x -C /usr/local -f google-cloud-sdk-201.0.0-linux-x86_64.tar.gz
 RUN /usr/local/google-cloud-sdk/bin/gcloud --quiet components install cbt bigtable
 RUN /usr/local/google-cloud-sdk/bin/gcloud --quiet components update || \
     echo "Ignoring update failure for Google Cloud SDK"
+
+RUN yum makecache && yum install -y make

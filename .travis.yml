@@ -20,6 +20,19 @@ language: cpp
 # TODO(#62) - enable a SANITIZE_MEMORY=yes build when we eliminate the false positives
 matrix:
   include:
+    - # This is the only macOS entry in the matrix.  It is disabled on pull
+      # requests because Travis often has long backlogs for macOS.
+      os: osx
+      osx_image: xcode7.3
+      compiler: clang
+      env:
+        OPENSSL_ROOT_DIR=/usr/local/opt/libressl
+      install:
+      - git submodule update --init
+      - ci/install-retry.sh ci/travis/install-macosx.sh
+      script: ci/travis/build-macosx.sh
+      cache: ccache
+      if: type != pull_request
     - # Compile on Travis' native environment with Bazel
       os: linux
       compiler: gcc
@@ -39,7 +52,7 @@ matrix:
       compiler: clang
       env:
         TEST_INSTALL=yes
-        DISTRO=ubuntu
+        DISTRO=ubuntu-install
         DISTRO_VERSION=18.04
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Verify that we can compile shared libraries, and verify that the ABI is
@@ -52,16 +65,15 @@ matrix:
         TEST_INSTALL=yes
         CMAKE_FLAGS=-DBUILD_SHARED_LIBS=yes
         BUILD_TYPE=Debug
-        DISTRO=ubuntu
+        DISTRO=ubuntu-install
         DISTRO_VERSION=18.04
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Run clang-tidy, clang-format, and generate the documentation.
       os: linux
       compiler: clang
       env:
-        CHECK_STYLE=yes
-        GENERATE_DOCS=yes
         CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes
+        BUILD_TYPE=Debug
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
     - # Build with the AddressSanitizer.
@@ -89,6 +101,16 @@ matrix:
         BUILD_TYPE=Coverage
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
+    - # Compile with tests disabled.
+      os: linux
+      compiler: gcc
+      env:
+        BUILD_TESTING=no
+        CHECK_STYLE=yes
+        GENERATE_DOCS=yes
+        CMAKE_FLAGS=-DBUILD_TESTING=OFF
+        DISTRO=ubuntu
+        DISTRO_VERSION=18.04
     - # Compile with exceptions disabled.
       os: linux
       compiler: gcc
@@ -96,12 +118,14 @@ matrix:
         CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=no
         DISTRO=ubuntu
         DISTRO_VERSION=16.04
-    - # Compile on Fedora.
+    - # Compile on Fedora with libc++.
       os: linux
-      compiler: gcc
+      compiler: clang
       env:
+        CMAKE_FLAGS=-DBUILD_SHARED_LIBS=ON
         DISTRO=fedora
-        DISTRO_VERSION=28
+        DISTRO_VERSION=29
+        USE_LIBCXX=yes
       if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
     - # Compile on CentOS.
       os: linux
@@ -120,7 +144,7 @@ matrix:
         TEST_INSTALL=yes
         CMAKE_FLAGS=-DBUILD_SHARED_LIBS=yes
         BUILD_TYPE=Debug
-        DISTRO=ubuntu
+        DISTRO=ubuntu-install
         DISTRO_VERSION=18.04
 
 script:
@@ -151,7 +175,6 @@ cache:
     # Cache the Bazel directories, in builds that do not use Bazel this is
     # empty and trivial to cache.
     - $HOME/.cache/bazel
-    - build-output/cache
     - build-output/ccache
   timeout: 900
 

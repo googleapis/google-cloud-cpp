@@ -15,10 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_REQUESTS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_REQUESTS_H_
 
+#include "google/cloud/storage/download_options.h"
 #include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/internal/generic_object_request.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/well_known_parameters.h"
 
 namespace google {
@@ -52,7 +54,8 @@ class ListObjectsRequest
 std::ostream& operator<<(std::ostream& os, ListObjectsRequest const& r);
 
 struct ListObjectsResponse {
-  static ListObjectsResponse FromHttpResponse(HttpResponse&& response);
+  static StatusOr<ListObjectsResponse> FromHttpResponse(
+      HttpResponse&& response);
 
   std::string next_page_token;
   std::vector<ObjectMetadata> items;
@@ -125,7 +128,8 @@ class InsertObjectStreamingRequest
           Crc32cChecksumValue, DisableCrc32cChecksum, DisableMD5Hash,
           EncryptionKey, IfGenerationMatch, IfGenerationNotMatch,
           IfMetagenerationMatch, IfMetagenerationNotMatch, KmsKeyName,
-          MD5HashValue, PredefinedAcl, Projection, UserProject> {
+          MD5HashValue, PredefinedAcl, Projection, UseResumableUploadSession,
+          UserProject, WithObjectMetadata> {
  public:
   using GenericObjectRequest::GenericObjectRequest;
 };
@@ -175,31 +179,10 @@ class ReadObjectRangeRequest
     : public GenericObjectRequest<
           ReadObjectRangeRequest, DisableCrc32cChecksum, DisableMD5Hash,
           EncryptionKey, Generation, IfGenerationMatch, IfGenerationNotMatch,
-          IfMetagenerationMatch, IfMetagenerationNotMatch, UserProject> {
+          IfMetagenerationMatch, IfMetagenerationNotMatch, ReadRange,
+          UserProject> {
  public:
-  ReadObjectRangeRequest() : GenericObjectRequest(), begin_(0), end_(0) {}
-
-  // TODO(#724) - consider using StrongType<> for arguments with similar types.
-  explicit ReadObjectRangeRequest(std::string bucket_name,
-                                  std::string object_name, std::int64_t begin,
-                                  std::int64_t end)
-      : GenericObjectRequest(std::move(bucket_name), std::move(object_name)),
-        begin_(begin),
-        end_(end) {}
-
-  // TODO(#724) - consider using StrongType<> for arguments with similar types.
-  explicit ReadObjectRangeRequest(std::string bucket_name,
-                                  std::string object_name)
-      : GenericObjectRequest(std::move(bucket_name), std::move(object_name)),
-        begin_(0),
-        end_(0) {}
-
-  std::int64_t begin() const { return begin_; }
-  std::int64_t end() const { return end_; }
-
- private:
-  std::int64_t begin_;
-  std::int64_t end_;
+  using GenericObjectRequest::GenericObjectRequest;
 };
 
 std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r);
@@ -259,10 +242,10 @@ std::ostream& operator<<(std::ostream& os, UpdateObjectRequest const& r);
  * Represents a request to the `Objects: compose` API.
  */
 class ComposeObjectRequest
-    : public GenericObjectRequest<
-          ComposeObjectRequest, EncryptionKey, Generation,
-          DestinationPredefinedAcl, KmsKeyName, IfGenerationMatch,
-          IfMetagenerationMatch, UserProject, WithObjectMetadata> {
+    : public GenericObjectRequest<ComposeObjectRequest, EncryptionKey,
+                                  DestinationPredefinedAcl, KmsKeyName,
+                                  IfGenerationMatch, IfMetagenerationMatch,
+                                  UserProject, WithObjectMetadata> {
  public:
   ComposeObjectRequest() = default;
   explicit ComposeObjectRequest(std::string bucket_name,
@@ -344,7 +327,8 @@ std::ostream& operator<<(std::ostream& os, RewriteObjectRequest const& r);
 
 /// Holds an `Objects: rewrite` response.
 struct RewriteObjectResponse {
-  static RewriteObjectResponse FromHttpResponse(HttpResponse const& response);
+  static StatusOr<RewriteObjectResponse> FromHttpResponse(
+      HttpResponse const& response);
 
   std::uint64_t total_bytes_rewritten;
   std::uint64_t object_size;
@@ -370,8 +354,8 @@ class ResumableUploadRequest
           Crc32cChecksumValue, DisableCrc32cChecksum, DisableMD5Hash,
           EncryptionKey, IfGenerationMatch, IfGenerationNotMatch,
           IfMetagenerationMatch, IfMetagenerationNotMatch, KmsKeyName,
-          MD5HashValue, PredefinedAcl, Projection, UserProject,
-          WithObjectMetadata> {
+          MD5HashValue, PredefinedAcl, Projection, UseResumableUploadSession,
+          UserProject, WithObjectMetadata> {
  public:
   ResumableUploadRequest() = default;
 
@@ -447,7 +431,8 @@ std::ostream& operator<<(std::ostream& os,
                          QueryResumableUploadRequest const& r);
 
 struct ResumableUploadResponse {
-  static ResumableUploadResponse FromHttpResponse(HttpResponse&& response);
+  static StatusOr<ResumableUploadResponse> FromHttpResponse(
+      HttpResponse&& response);
 
   std::string upload_session_url;
   std::uint64_t last_committed_byte;

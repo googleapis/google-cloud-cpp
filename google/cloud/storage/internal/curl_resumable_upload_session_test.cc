@@ -35,13 +35,9 @@ class MockCurlClient : public CurlClient {
   MockCurlClient()
       : CurlClient(ClientOptions(oauth2::CreateAnonymousCredentials())) {}
 
-  // We need an alias because the comma inside std::pair<> does not work with
-  // the MOCK_* macros.
-  using ReturnType = std::pair<Status, ResumableUploadResponse>;
-
-  MOCK_METHOD1(UploadChunk, ReturnType(UploadChunkRequest const&));
+  MOCK_METHOD1(UploadChunk, StatusOr<ResumableUploadResponse>(UploadChunkRequest const&));
   MOCK_METHOD1(QueryResumableUpload,
-               ReturnType(QueryResumableUploadRequest const&));
+               StatusOr<ResumableUploadResponse>(QueryResumableUploadRequest const&));
 };
 
 TEST(CurlResumableUploadSessionTest, Simple) {
@@ -59,26 +55,24 @@ TEST(CurlResumableUploadSessionTest, Simple) {
         EXPECT_EQ(payload, request.payload());
         EXPECT_EQ(0U, request.source_size());
         EXPECT_EQ(0U, request.range_begin());
-        return std::make_pair(Status(),
-                              ResumableUploadResponse{"", size - 1, ""});
+        return make_status_or(ResumableUploadResponse{"", size - 1, ""});
       }))
       .WillOnce(Invoke([&](UploadChunkRequest const& request) {
         EXPECT_EQ(test_url, request.upload_session_url());
         EXPECT_EQ(payload, request.payload());
         EXPECT_EQ(2 * size, request.source_size());
         EXPECT_EQ(size, request.range_begin());
-        return std::make_pair(Status(),
-                              ResumableUploadResponse{"", 2 * size - 1, ""});
+        return make_status_or(ResumableUploadResponse{"", 2 * size - 1, ""});
       }));
 
   auto upload = session.UploadChunk(payload, 0U);
-  EXPECT_TRUE(upload.first.ok());
-  EXPECT_EQ(size - 1, upload.second.last_committed_byte);
+  EXPECT_TRUE(upload.ok());
+  EXPECT_EQ(size - 1, upload->last_committed_byte);
   EXPECT_EQ(size, session.next_expected_byte());
 
   upload = session.UploadChunk(payload, 2 * size);
-  EXPECT_TRUE(upload.first.ok());
-  EXPECT_EQ(2 * size - 1, upload.second.last_committed_byte);
+  EXPECT_TRUE(upload.ok());
+  EXPECT_EQ(2 * size - 1, upload->last_committed_byte);
   EXPECT_EQ(2 * size, session.next_expected_byte());
 }
 
@@ -94,23 +88,21 @@ TEST(CurlResumableUploadSessionTest, Reset) {
   EXPECT_EQ(0U, session.next_expected_byte());
   EXPECT_CALL(*mock, UploadChunk(_))
       .WillOnce(Invoke([&](UploadChunkRequest const&) {
-        return std::make_pair(Status(),
-                              ResumableUploadResponse{"", size - 1, ""});
+        return make_status_or(ResumableUploadResponse{"", size - 1, ""});
       }))
       .WillOnce(Invoke([&](UploadChunkRequest const&) {
-        return std::make_pair(Status(308, "uh oh"), ResumableUploadResponse{});
+        return StatusOr<ResumableUploadResponse>(Status(308, "uh oh"));
       }));
   EXPECT_CALL(*mock, QueryResumableUpload(_))
       .WillOnce(Invoke([&](QueryResumableUploadRequest const& request) {
         EXPECT_EQ(url1, request.upload_session_url());
-        return std::make_pair(Status(),
-                              ResumableUploadResponse{url2, 2 * size - 1, ""});
+        return make_status_or(ResumableUploadResponse{url2, 2 * size - 1, ""});
       }));
 
   auto upload = session.UploadChunk(payload, 0U);
   EXPECT_EQ(size, session.next_expected_byte());
   upload = session.UploadChunk(payload, 0U);
-  EXPECT_FALSE(upload.first.ok());
+  EXPECT_FALSE(upload.ok());
   EXPECT_EQ(size, session.next_expected_byte());
   EXPECT_EQ(url1, session.session_id());
 
@@ -131,18 +123,16 @@ TEST(CurlResumableUploadSessionTest, SessionUpdatedInChunkUpload) {
   EXPECT_EQ(0U, session.next_expected_byte());
   EXPECT_CALL(*mock, UploadChunk(_))
       .WillOnce(Invoke([&](UploadChunkRequest const&) {
-        return std::make_pair(Status(),
-                              ResumableUploadResponse{"", size - 1, ""});
+        return make_status_or(ResumableUploadResponse{"", size - 1, ""});
       }))
       .WillOnce(Invoke([&](UploadChunkRequest const&) {
-        return std::make_pair(Status(),
-                              ResumableUploadResponse{url2, 2 * size - 1, ""});
+        return make_status_or(ResumableUploadResponse{url2, 2 * size - 1, ""});
       }));
 
   auto upload = session.UploadChunk(payload, 0U);
   EXPECT_EQ(size, session.next_expected_byte());
   upload = session.UploadChunk(payload, 0U);
-  EXPECT_TRUE(upload.first.ok());
+  EXPECT_TRUE(upload.ok());
   EXPECT_EQ(2 * size, session.next_expected_byte());
   EXPECT_EQ(url2, session.session_id());
 }

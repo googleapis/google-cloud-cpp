@@ -69,6 +69,13 @@ InProcessDataClient::ReadRows(grpc::ClientContext* context,
   return Stub()->ReadRows(context, request);
 }
 
+std::unique_ptr<::grpc::ClientAsyncReaderInterface<btproto::ReadRowsResponse>>
+InProcessDataClient::AsyncReadRows(::grpc::ClientContext* context,
+                                   btproto::ReadRowsRequest const& request,
+                                   ::grpc::CompletionQueue* cq, void* tag) {
+  return Stub()->AsyncReadRows(context, request, cq, tag);
+}
+
 std::unique_ptr<grpc::ClientReaderInterface<btproto::SampleRowKeysResponse>>
 InProcessDataClient::SampleRowKeys(
     grpc::ClientContext* context,

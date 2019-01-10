@@ -34,7 +34,7 @@ RowSet RowSet::Intersect(bigtable::RowRange const& range) const {
   for (auto const& r : row_set_.row_ranges()) {
     auto i = range.Intersect(RowRange(r));
     if (std::get<0>(i)) {
-      *result.row_set_.add_row_ranges() = std::get<1>(i).as_proto_move();
+      *result.row_set_.add_row_ranges() = std::move(std::get<1>(i)).as_proto();
     }
   }
   // Another special case: a RowSet() with no entries

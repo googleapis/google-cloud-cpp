@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_NOTIFICATION_METADATA_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_NOTIFICATION_METADATA_H_
 
+#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/nljson.h"
-#include "google/cloud/storage/version.h"
 #include <map>
 #include <string>
 
@@ -39,8 +39,10 @@ class NotificationMetadata {
  public:
   NotificationMetadata() = default;
 
-  static NotificationMetadata ParseFromJson(internal::nl::json const& json);
-  static NotificationMetadata ParseFromString(std::string const& payload);
+  static StatusOr<NotificationMetadata> ParseFromJson(
+      internal::nl::json const& json);
+  static StatusOr<NotificationMetadata> ParseFromString(
+      std::string const& payload);
 
   /**
    * Returns the payload for a call to `Notifications: insert`.

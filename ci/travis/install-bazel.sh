@@ -17,23 +17,14 @@
 set -eu
 
 sudo apt-get update
-sudo apt-get install -y software-properties-common
-sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-sudo apt-get update
 sudo apt-get install -y \
-     gcc-4.9 \
-     g++-4.9 \
-     libcurl4-openssl-dev \
-     libssl-dev \
+     gcc \
+     g++ \
      unzip \
      wget \
-     zip \
-     zlib1g-dev
+     zip
 
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
-sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100
-
-readonly BAZEL_VERSION=0.12.0
+readonly BAZEL_VERSION=0.20.0
 readonly GITHUB_DL="https://github.com/bazelbuild/bazel/releases/download"
 wget -q "${GITHUB_DL}/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"
 chmod +x "bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"

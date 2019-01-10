@@ -21,6 +21,7 @@
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/internal/make_unique.h"
+#include <google/protobuf/empty.pb.h>
 
 namespace google {
 namespace cloud {
@@ -144,6 +145,29 @@ class AsyncRetryUnaryRpc
             std::move(metadata_update_policy), std::forward<Functor>(callback),
             AsyncUnaryRpc<Client, MemberFunctionType>(
                 std::move(client), std::move(call), std::move(request))) {}
+};
+
+/**
+ * A wrapper to eliminate `google::protobuf::Empty` response from Async APIs.
+ */
+template <typename Functor,
+          typename std::enable_if<
+              google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                    grpc::Status&>::value,
+              int>::type valid_callback_type = 0>
+class EmptyResponseAdaptor {
+ public:
+  explicit EmptyResponseAdaptor(Functor&& callback)
+      : callback_(std::move(callback)) {}
+
+  const void operator()(CompletionQueue& cq, google::protobuf::Empty& response,
+                        grpc::Status const& status) const {
+    callback_(cq, status);
+    return;
+  }
+
+ private:
+  Functor callback_;
 };
 
 }  // namespace internal

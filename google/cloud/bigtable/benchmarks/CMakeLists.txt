@@ -25,44 +25,47 @@ add_library(bigtable_benchmark_common
             setup.h
             setup.cc)
 target_link_libraries(bigtable_benchmark_common
-                      bigtable_client_testing
                       bigtable_client
                       bigtable_protos
                       gRPC::grpc++
                       gRPC::grpc
-                      protobuf::libprotobuf)
+                      protobuf::libprotobuf
+                      bigtable_common_options)
 
-# List the unit tests, then setup the targets and dependencies.
-set(bigtable_benchmarks_unit_tests
-    bigtable_benchmark_test.cc
-    embedded_server_test.cc
-    format_duration_test.cc
-    setup_test.cc)
-foreach (fname ${bigtable_benchmarks_unit_tests})
-    string(REPLACE "/"
-                   "_"
-                   target
-                   ${fname})
-    string(REPLACE ".cc"
-                   ""
-                   target
-                   ${target})
-    add_executable(${target} ${fname})
-    target_link_libraries(${target}
-                          PRIVATE bigtable_benchmark_common
-                                  bigtable_client
-                                  bigtable_protos
-                                  bigtable_common_options
-                                  google_cloud_cpp_testing
-                                  google_cloud_cpp_common
-                                  GTest::gmock_main
-                                  GTest::gmock
-                                  GTest::gtest
-                                  gRPC::grpc++
-                                  gRPC::grpc
-                                  protobuf::libprotobuf)
-    add_test(NAME ${target} COMMAND ${target})
-endforeach ()
+if (BUILD_TESTING)
+    # List the unit tests, then setup the targets and dependencies.
+    set(bigtable_benchmarks_unit_tests
+        bigtable_benchmark_test.cc
+        embedded_server_test.cc
+        format_duration_test.cc
+        setup_test.cc)
+    foreach (fname ${bigtable_benchmarks_unit_tests})
+        string(REPLACE "/"
+                       "_"
+                       target
+                       ${fname})
+        string(REPLACE ".cc"
+                       ""
+                       target
+                       ${target})
+        add_executable(${target} ${fname})
+        target_link_libraries(${target}
+                              PRIVATE bigtable_benchmark_common
+                                      bigtable_client
+                                      bigtable_client_testing
+                                      bigtable_protos
+                                      bigtable_common_options
+                                      google_cloud_cpp_testing
+                                      google_cloud_cpp_common
+                                      GTest::gmock_main
+                                      GTest::gmock
+                                      GTest::gtest
+                                      gRPC::grpc++
+                                      gRPC::grpc
+                                      protobuf::libprotobuf)
+        add_test(NAME ${target} COMMAND ${target})
+    endforeach ()
+endif ()
 
 # Benchmark Table::ReadRows().
 add_executable(scan_throughput_benchmark scan_throughput_benchmark.cc)

@@ -29,7 +29,11 @@ git log upstream/master -- google/cloud/bigtable
 git log upstream/master -- google/cloud/storage
 ```
 
-Do not forget to update `google/cloud/README.md` too.
+Do not forget to update `google/cloud/README.md` too:
+
+```bash
+git log upstream/master -- google/cloud ":(exclude)google/cloud/storage" ":(exclude)google/cloud/bigtable"
+```
 
 It is not recommended that you create the release branch before this PR is
 ready, but in some circumstances it might be needed, for example, if a large
@@ -74,7 +78,7 @@ and then commit the changes and push the new branch:
 
 ```bash
 git commit -m"Create ${RELEASE}.x release branch" .
-git push --set-upstream ${RELEASE}.x
+git push --set-upstream origin ${RELEASE}.x
 ```
 
 ## Update the documentation links

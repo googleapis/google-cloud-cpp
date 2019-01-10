@@ -207,7 +207,14 @@ TEST(StrictIdempotencyPolicyTest, DeleteObject) {
 TEST(StrictIdempotencyPolicyTest, DeleteObjectIfGenerationMatch) {
   StrictIdempotencyPolicy policy;
   internal::DeleteObjectRequest request("test-bucket-name", "test-object-name");
-  request.set_option(IfGenerationMatch(0));
+  request.set_option(IfGenerationMatch(7));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, DeleteObjectGeneration) {
+  StrictIdempotencyPolicy policy;
+  internal::DeleteObjectRequest request("test-bucket-name", "test-object-name");
+  request.set_option(Generation(7));
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 

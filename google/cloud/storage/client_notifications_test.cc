@@ -62,41 +62,47 @@ TEST_F(NotificationsTest, ListNotifications) {
       NotificationMetadata::ParseFromString(R"""({
           "id": "test-notification-1",
           "topic": "test-topic-1"
-      })"""),
+      })""")
+          .value(),
       NotificationMetadata::ParseFromString(R"""({
           "id": "test-notification-2",
           "topic": "test-topic-2"
-      })"""),
+      })""")
+          .value(),
   };
 
   EXPECT_CALL(*mock_, ListNotifications(_))
-      .WillOnce(Return(std::make_pair(TransientError(),
-                                      internal::ListNotificationsResponse{})))
-      .WillOnce(
-          Invoke([&expected](internal::ListNotificationsRequest const& r) {
-            EXPECT_EQ("test-bucket", r.bucket_name());
+      .WillOnce(Return(
+          StatusOr<internal::ListNotificationsResponse>(TransientError())))
+      .WillOnce(Invoke([&expected](
+                           internal::ListNotificationsRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
 
-            return std::make_pair(
-                Status(), internal::ListNotificationsResponse{expected});
-          }));
+        return make_status_or(internal::ListNotificationsResponse{expected});
+      }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
-  std::vector<NotificationMetadata> actual =
+  StatusOr<std::vector<NotificationMetadata>> actual =
       client.ListNotifications("test-bucket");
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok());
+  EXPECT_EQ(expected, actual.value());
 }
 
 TEST_F(NotificationsTest, ListNotificationsTooManyFailures) {
-  testing::TooManyFailuresTest<internal::ListNotificationsResponse>(
+  testing::TooManyFailuresStatusTest<internal::ListNotificationsResponse>(
       mock_, EXPECT_CALL(*mock_, ListNotifications(_)),
-      [](Client& client) { client.ListNotifications("test-bucket-name"); },
+      [](Client& client) {
+        return client.ListNotifications("test-bucket-name").status();
+      },
       "ListNotifications");
 }
 
 TEST_F(NotificationsTest, ListNotificationsPermanentFailure) {
-  testing::PermanentFailureTest<internal::ListNotificationsResponse>(
+  testing::PermanentFailureStatusTest<internal::ListNotificationsResponse>(
       *client_, EXPECT_CALL(*mock_, ListNotifications(_)),
-      [](Client& client) { client.ListNotifications("test-bucket-name"); },
+      [](Client& client) {
+        return client.ListNotifications("test-bucket-name").status();
+      },
       "ListNotifications");
 }
 
@@ -107,11 +113,11 @@ TEST_F(NotificationsTest, CreateNotification) {
           "payload_format": "JSON_API_V1",
           "object_prefix": "test-object-prefix-",
           "event_type": [ "OBJECT_FINALIZE" ]
-      })""");
+      })""")
+                                      .value();
 
   EXPECT_CALL(*mock_, CreateNotification(_))
-      .WillOnce(
-          Return(std::make_pair(TransientError(), NotificationMetadata{})))
+      .WillOnce(Return(StatusOr<NotificationMetadata>(TransientError())))
       .WillOnce(
           Invoke([&expected](internal::CreateNotificationRequest const& r) {
             EXPECT_EQ("test-bucket", r.bucket_name());
@@ -120,36 +126,37 @@ TEST_F(NotificationsTest, CreateNotification) {
             EXPECT_THAT(r.json_payload(), HasSubstr("test-object-prefix-"));
             EXPECT_THAT(r.json_payload(), HasSubstr("OBJECT_FINALIZE"));
 
-            return std::make_pair(Status(), expected);
+            return make_status_or(expected);
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
-  NotificationMetadata actual = client.CreateNotification(
+  StatusOr<NotificationMetadata> actual = client.CreateNotification(
       "test-bucket", "test-topic-1", payload_format::JsonApiV1(),
       NotificationMetadata()
           .set_object_name_prefix("test-object-prefix-")
           .append_event_type(event_type::ObjectFinalize()));
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok());
+  EXPECT_EQ(expected, actual.value());
 }
 
 TEST_F(NotificationsTest, CreateNotificationTooManyFailures) {
-  testing::TooManyFailuresTest<NotificationMetadata>(
+  testing::TooManyFailuresStatusTest<NotificationMetadata>(
       mock_, EXPECT_CALL(*mock_, CreateNotification(_)),
       [](Client& client) {
-        client.CreateNotification("test-bucket-name", "test-topic-1",
-                                  payload_format::JsonApiV1(),
-                                  NotificationMetadata());
+        return client.CreateNotification("test-bucket-name", "test-topic-1",
+                                         payload_format::JsonApiV1(),
+                                         NotificationMetadata()).status();
       },
       "CreateNotification");
 }
 
 TEST_F(NotificationsTest, CreateNotificationPermanentFailure) {
-  testing::PermanentFailureTest<NotificationMetadata>(
+  testing::PermanentFailureStatusTest<NotificationMetadata>(
       *client_, EXPECT_CALL(*mock_, CreateNotification(_)),
       [](Client& client) {
-        client.CreateNotification("test-bucket-name", "test-topic-1",
-                                  payload_format::JsonApiV1(),
-                                  NotificationMetadata());
+        return client.CreateNotification("test-bucket-name", "test-topic-1",
+                                         payload_format::JsonApiV1(),
+                                         NotificationMetadata()).status();
       },
       "CreateNotification");
 }
@@ -161,71 +168,77 @@ TEST_F(NotificationsTest, GetNotification) {
           "payload_format": "JSON_API_V1",
           "object_prefix": "test-object-prefix-",
           "event_type": [ "OBJECT_FINALIZE" ]
-      })""");
+      })""")
+                                      .value();
 
   EXPECT_CALL(*mock_, GetNotification(_))
-      .WillOnce(
-          Return(std::make_pair(TransientError(), NotificationMetadata{})))
+      .WillOnce(Return(StatusOr<NotificationMetadata>(TransientError())))
       .WillOnce(Invoke([&expected](internal::GetNotificationRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-notification-1", r.notification_id());
 
-        return std::make_pair(Status(), expected);
+        return make_status_or(expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
-  NotificationMetadata actual =
+  StatusOr<NotificationMetadata> actual =
       client.GetNotification("test-bucket", "test-notification-1");
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok());
+  EXPECT_EQ(expected, actual.value());
 }
 
 TEST_F(NotificationsTest, GetNotificationTooManyFailures) {
-  testing::TooManyFailuresTest<NotificationMetadata>(
+  testing::TooManyFailuresStatusTest<NotificationMetadata>(
       mock_, EXPECT_CALL(*mock_, GetNotification(_)),
       [](Client& client) {
-        client.GetNotification("test-bucket-name", "test-notification-1");
+        return client.GetNotification("test-bucket-name",
+                                      "test-notification-1").status();
       },
       "GetNotification");
 }
 
 TEST_F(NotificationsTest, GetNotificationPermanentFailure) {
-  testing::PermanentFailureTest<NotificationMetadata>(
+  testing::PermanentFailureStatusTest<NotificationMetadata>(
       *client_, EXPECT_CALL(*mock_, GetNotification(_)),
       [](Client& client) {
-        client.GetNotification("test-bucket-name", "test-notification-1");
+        return client.GetNotification("test-bucket-name",
+                                      "test-notification-1").status();
       },
       "GetNotification");
 }
 
 TEST_F(NotificationsTest, DeleteNotification) {
   EXPECT_CALL(*mock_, DeleteNotification(_))
-      .WillOnce(
-          Return(std::make_pair(TransientError(), internal::EmptyResponse{})))
+      .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce(Invoke([](internal::DeleteNotificationRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-notification-1", r.notification_id());
 
-        return std::make_pair(Status(), internal::EmptyResponse{});
+        return make_status_or(internal::EmptyResponse{});
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
-  client.DeleteNotification("test-bucket", "test-notification-1");
+  StatusOr<void> status =
+      client.DeleteNotification("test-bucket", "test-notification-1");
+  ASSERT_TRUE(status.ok());
 }
 
 TEST_F(NotificationsTest, DeleteNotificationTooManyFailures) {
-  testing::TooManyFailuresTest<internal::EmptyResponse>(
+  testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
       mock_, EXPECT_CALL(*mock_, DeleteNotification(_)),
       [](Client& client) {
-        client.DeleteNotification("test-bucket-name", "test-notification-1");
+        return client.DeleteNotification("test-bucket-name",
+                                         "test-notification-1").status();
       },
       "DeleteNotification");
 }
 
 TEST_F(NotificationsTest, DeleteNotificationPermanentFailure) {
-  testing::PermanentFailureTest<internal::EmptyResponse>(
+  testing::PermanentFailureStatusTest<internal::EmptyResponse>(
       *client_, EXPECT_CALL(*mock_, DeleteNotification(_)),
       [](Client& client) {
-        client.DeleteNotification("test-bucket-name", "test-notification-1");
+        return client.DeleteNotification("test-bucket-name",
+                                         "test-notification-1").status();
       },
       "DeleteNotification");
 }

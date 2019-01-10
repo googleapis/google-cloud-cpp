@@ -24,8 +24,7 @@ if (NOT TARGET googletest_project)
     set(GOOGLE_CLOUD_CPP_GOOGLETEST_SHA256
         "9bf1fe5182a604b4135edc1a425ae356c9ad15e9b23f9f12a02e80184c3a249c")
 
-    if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
-        OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
+    if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles")
         include(ProcessorCount)
         processorcount(NCPU)
         set(PARALLEL "--" "-j" "${NCPU}")
@@ -48,8 +47,14 @@ if (NOT TARGET googletest_project)
                         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLETEST_SHA256}
                         CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                                    -DCMAKE_BUILD_TYPE=Release
+                                   -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+                                   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
                                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+                                   $<$<BOOL:${GOOGLE_CLOUD_CPP_USE_LIBCXX}>:
+                                   -DCMAKE_CXX_FLAGS=-stdlib=libc++
+                                   -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-lc++abi
+                                   >
                         BUILD_COMMAND ${CMAKE_COMMAND}
                                       --build
                                       <BINARY_DIR>
@@ -59,6 +64,10 @@ if (NOT TARGET googletest_project)
                         LOG_CONFIGURE ON
                         LOG_BUILD ON
                         LOG_INSTALL ON)
+
+    if (TARGET google-cloud-cpp-dependencies)
+        add_dependencies(google-cloud-cpp-dependencies googletest_project)
+    endif ()
 
     # On Windows GTest uses library postfixes for debug versions, that is
     # gtest.lib becomes gtestd.lib when compiled with for debugging.  This ugly
@@ -73,6 +82,7 @@ if (NOT TARGET googletest_project)
     add_dependencies(GTest::gtest googletest_project)
     set_library_properties_for_external_project(GTest::gtest
                                                 gtest${_lib_postfix})
+
     set_property(TARGET GTest::gtest
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES "Threads::Threads")
@@ -103,5 +113,4 @@ if (NOT TARGET googletest_project)
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES
                           "GTest::gmock;GTest::gtest;Threads::Threads")
-
 endif ()

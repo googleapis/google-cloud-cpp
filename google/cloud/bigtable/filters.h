@@ -129,6 +129,19 @@ class Filter {
   }
 
   /**
+   * Return the filter that accepts the named @p column within the @p family
+   * column family.
+   *
+   * This function makes no attempt to validate the column family or column
+   * range before sending them to the server.
+   */
+  static Filter ColumnName(std::string family, std::string column) {
+    std::string end = column;
+    return ColumnRangeClosed(std::move(family), std::move(column),
+                             std::move(end));
+  }
+
+  /**
    * Return a filter that accepts cells with timestamps in the range
    * [@p start, @p end).
    *
@@ -591,10 +604,10 @@ class Filter {
   //@}
 
   /// Return the filter expression as a protobuf.
-  ::google::bigtable::v2::RowFilter as_proto() const { return filter_; }
+  ::google::bigtable::v2::RowFilter const& as_proto() const& { return filter_; }
 
   /// Move out the underlying protobuf value.
-  ::google::bigtable::v2::RowFilter as_proto_move() {
+  ::google::bigtable::v2::RowFilter&& as_proto() && {
     return std::move(filter_);
   }
 

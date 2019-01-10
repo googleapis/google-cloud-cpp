@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 
 #include "google/cloud/bigtable/client_options.h"
+#include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/getenv.h"
 #include <thread>
 
@@ -60,7 +61,7 @@ ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
       data_endpoint_("bigtable.googleapis.com"),
       admin_endpoint_("bigtableadmin.googleapis.com"),
       instance_admin_endpoint_("bigtableadmin.googleapis.com") {
-  static std::string const user_agent_prefix = "cbt-c++/" + version_string();
+  static std::string const user_agent_prefix = UserAgentPrefix();
   channel_arguments_.SetUserAgentPrefix(user_agent_prefix);
   channel_arguments_.SetMaxSendMessageSize(
       BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH);
@@ -80,6 +81,18 @@ ClientOptions::ClientOptions() : ClientOptions(BigtableDefaultCredentials()) {
   if (instance_admin_emulator.has_value()) {
     instance_admin_endpoint_ = *instance_admin_emulator;
   }
+}
+
+std::string ClientOptions::UserAgentPrefix() {
+  std::string agent = "cbt-c++/" + version_string();
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  agent += " ex";
+#else
+  agent += " noex";
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  agent += ' ';
+  agent += google::cloud::internal::compiler();
+  return agent;
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

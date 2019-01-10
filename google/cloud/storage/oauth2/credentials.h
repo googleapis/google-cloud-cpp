@@ -15,7 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_CREDENTIALS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_CREDENTIALS_H_
 
-#include "google/cloud/storage/status.h"
+#include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/storage/version.h"
 #include <chrono>
 
 namespace google {
@@ -24,7 +26,13 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 /**
- * Represents a credential to access Google Cloud Storage.
+ * Interface for OAuth 2.0 credentials used to access Google Cloud services.
+ *
+ * Instantiating a specific kind of Credentials should usually be done via the
+ * convenience methods declared in google_credentials.h.
+ *
+ * @see https://cloud.google.com/docs/authentication/ for an overview of
+ * authenticating to Google Cloud Platform APIs.
  */
 class Credentials {
  public:
@@ -39,8 +47,7 @@ class Credentials {
    * - The value for the Authorization header in HTTP requests, or an empty
    *   string if we were unable to obtain one.
    */
-  virtual std::pair<google::cloud::storage::Status, std::string>
-  AuthorizationHeader() = 0;
+  virtual StatusOr<std::string> AuthorizationHeader() = 0;
 };
 
 }  // namespace oauth2

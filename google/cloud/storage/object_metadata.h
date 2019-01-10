@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_METADATA_H_
 
 #include "google/cloud/optional.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/complex_option.h"
 #include "google/cloud/storage/object_access_control.h"
@@ -81,8 +82,8 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
  public:
   ObjectMetadata() : component_count_(0), generation_(0), size_(0) {}
 
-  static ObjectMetadata ParseFromJson(internal::nl::json const& json);
-  static ObjectMetadata ParseFromString(std::string const& payload);
+  static StatusOr<ObjectMetadata> ParseFromJson(internal::nl::json const& json);
+  static StatusOr<ObjectMetadata> ParseFromString(std::string const& payload);
 
   /**
    * Returns the payload for a call to `Objects: update`.

@@ -66,6 +66,15 @@ grpc::Status InProcessAdminClient::DeleteTable(
   return Stub()->DeleteTable(context, request, response);
 }
 
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+InProcessAdminClient::AsyncDeleteTable(
+    grpc::ClientContext* context,
+    google::bigtable::admin::v2::DeleteTableRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncDeleteTable(context, request, cq);
+}
+
 grpc::Status InProcessAdminClient::ModifyColumnFamilies(
     grpc::ClientContext* context,
     btadmin::ModifyColumnFamiliesRequest const& request,

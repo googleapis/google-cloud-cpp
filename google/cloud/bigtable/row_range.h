@@ -148,10 +148,12 @@ class RowRange {
   bool operator!=(RowRange const& rhs) const { return !(*this == rhs); }
 
   /// Return the filter expression as a protobuf.
-  ::google::bigtable::v2::RowRange as_proto() const { return row_range_; }
+  ::google::bigtable::v2::RowRange const& as_proto() const& {
+    return row_range_;
+  }
 
   /// Move out the underlying protobuf value.
-  ::google::bigtable::v2::RowRange as_proto_move() {
+  ::google::bigtable::v2::RowRange&& as_proto() && {
     return std::move(row_range_);
   }
 

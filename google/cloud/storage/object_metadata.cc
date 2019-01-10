@@ -48,14 +48,24 @@ std::ostream& operator<<(std::ostream& os, ComposeSourceObject const& r) {
   return os << "}";
 }
 
-ObjectMetadata ObjectMetadata::ParseFromJson(internal::nl::json const& json) {
+StatusOr<ObjectMetadata> ObjectMetadata::ParseFromJson(
+    internal::nl::json const& json) {
+  if (not json.is_object()) {
+    return Status(StatusCode::kInvalidArgument, __func__);
+  }
   ObjectMetadata result{};
-  static_cast<CommonMetadata<ObjectMetadata>&>(result) =
-      CommonMetadata<ObjectMetadata>::ParseFromJson(json);
+  auto status = CommonMetadata<ObjectMetadata>::ParseFromJson(result, json);
+  if (not status.ok()) {
+    return status;
+  }
 
   if (json.count("acl") != 0) {
     for (auto const& kv : json["acl"].items()) {
-      result.acl_.emplace_back(ObjectAccessControl::ParseFromJson(kv.value()));
+      auto parsed = ObjectAccessControl::ParseFromJson(kv.value());
+      if (not parsed.ok()) {
+        return std::move(parsed).status();
+      }
+      result.acl_.emplace_back(std::move(*parsed));
     }
   }
 
@@ -94,8 +104,9 @@ ObjectMetadata ObjectMetadata::ParseFromJson(internal::nl::json const& json) {
   return result;
 }
 
-ObjectMetadata ObjectMetadata::ParseFromString(std::string const& payload) {
-  auto json = internal::nl::json::parse(payload);
+StatusOr<ObjectMetadata> ObjectMetadata::ParseFromString(
+    std::string const& payload) {
+  auto json = internal::nl::json::parse(payload, nullptr, false);
   return ParseFromJson(json);
 }
 
@@ -222,10 +233,10 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
        << rhs.customer_encryption().key_sha256;
   }
 
-  os << ", etag=" << rhs.etag()
-     << ", event_based_hold=" << std::boolalpha << rhs.event_based_hold()
-     << ", generation=" << rhs.generation() << ", id=" << rhs.id()
-     << ", kind=" << rhs.kind() << ", kms_key_name=" << rhs.kms_key_name()
+  os << ", etag=" << rhs.etag() << ", event_based_hold=" << std::boolalpha
+     << rhs.event_based_hold() << ", generation=" << rhs.generation()
+     << ", id=" << rhs.id() << ", kind=" << rhs.kind()
+     << ", kms_key_name=" << rhs.kms_key_name()
      << ", md5_hash=" << rhs.md5_hash() << ", media_link=" << rhs.media_link();
   sep = "metadata.";
   for (auto const& kv : rhs.metadata_) {
@@ -357,7 +368,8 @@ ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetContentType() {
   return *this;
 }
 
-ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetEventBasedHold(bool v) {
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetEventBasedHold(
+    bool v) {
   impl_.SetBoolField("eventBasedHold", v);
   return *this;
 }
@@ -387,7 +399,8 @@ ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetMetadata() {
   return *this;
 }
 
-ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetTemporaryHold(bool v) {
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetTemporaryHold(
+    bool v) {
   impl_.SetBoolField("temporaryHold", v);
   return *this;
 }

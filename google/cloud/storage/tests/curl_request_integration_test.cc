@@ -43,8 +43,9 @@ TEST(CurlRequestTest, SimpleGET) {
   request.AddHeader("charsets: utf-8");
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  EXPECT_EQ(200, response.status_code);
-  nl::json parsed = nl::json::parse(response.payload);
+  ASSERT_TRUE(response.ok());
+  EXPECT_EQ(200, response->status_code);
+  nl::json parsed = nl::json::parse(response->payload);
   nl::json args = parsed["args"];
   EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
   EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
@@ -56,13 +57,8 @@ TEST(CurlRequestTest, FailedGET) {
   storage::internal::CurlRequestBuilder request(
       "https://localhost:0/", storage::internal::GetDefaultCurlHandleFactory());
 
-  auto req = request.BuildRequest();
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(req.MakeRequest(std::string{}), std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(req.MakeRequest(std::string{}),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto response = request.BuildRequest().MakeRequest(std::string{});
+  EXPECT_FALSE(response.ok());
 }
 
 TEST(CurlRequestTest, RepeatedGET) {
@@ -76,16 +72,17 @@ TEST(CurlRequestTest, RepeatedGET) {
 
   auto req = request.BuildRequest();
   auto response = req.MakeRequest(std::string{});
+  ASSERT_TRUE(response.ok());
 
-  EXPECT_EQ(200, response.status_code);
-  nl::json parsed = nl::json::parse(response.payload);
+  EXPECT_EQ(200, response->status_code);
+  nl::json parsed = nl::json::parse(response->payload);
   nl::json args = parsed["args"];
   EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
   EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
 
   response = req.MakeRequest(std::string{});
-  EXPECT_EQ(200, response.status_code);
-  parsed = nl::json::parse(response.payload);
+  EXPECT_EQ(200, response->status_code);
+  parsed = nl::json::parse(response->payload);
   args = parsed["args"];
   EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
   EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
@@ -114,8 +111,9 @@ TEST(CurlRequestTest, SimplePOST) {
   request.AddHeader("charsets: utf-8");
 
   auto response = request.BuildRequest().MakeRequest(data);
-  EXPECT_EQ(200, response.status_code);
-  nl::json parsed = nl::json::parse(response.payload);
+  ASSERT_TRUE(response.ok());
+  EXPECT_EQ(200, response->status_code);
+  nl::json parsed = nl::json::parse(response->payload);
   nl::json form = parsed["form"];
   EXPECT_EQ("foo1&foo2 foo3", form["foo"].get<std::string>());
   EXPECT_EQ("bar1-bar2", form["bar"].get<std::string>());
@@ -130,7 +128,8 @@ TEST(CurlRequestTest, Handle404) {
   request.AddHeader("charsets: utf-8");
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  EXPECT_EQ(404, response.status_code);
+  ASSERT_TRUE(response.ok());
+  EXPECT_EQ(404, response->status_code);
 }
 
 /// @test Verify the payload for error status is included in the return value.
@@ -142,8 +141,9 @@ TEST(CurlRequestTest, HandleTeapot) {
   request.AddHeader("charsets: utf-8");
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  EXPECT_EQ(418, response.status_code);
-  EXPECT_THAT(response.payload, HasSubstr("[ teapot ]"));
+  ASSERT_TRUE(response.ok());
+  EXPECT_EQ(418, response->status_code);
+  EXPECT_THAT(response->payload, HasSubstr("[ teapot ]"));
 }
 
 /// @test Verify the response includes the header values.
@@ -162,11 +162,12 @@ TEST(CurlRequestTest, CheckResponseHeaders) {
   request.AddHeader("charsets: utf-8");
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  EXPECT_EQ(200, response.status_code);
-  EXPECT_EQ(1U, response.headers.count("x-test-empty"));
-  EXPECT_EQ("", response.headers.find("x-test-empty")->second);
-  EXPECT_LE(1U, response.headers.count("x-test-foo"));
-  EXPECT_EQ("bar", response.headers.find("x-test-foo")->second);
+  ASSERT_TRUE(response.ok());
+  EXPECT_EQ(200, response->status_code);
+  EXPECT_EQ(1U, response->headers.count("x-test-empty"));
+  EXPECT_EQ("", response->headers.find("x-test-empty")->second);
+  EXPECT_LE(1U, response->headers.count("x-test-foo"));
+  EXPECT_EQ("bar", response->headers.find("x-test-foo")->second);
 }
 
 /// @test Verify the user agent prefix affects the request.
@@ -183,8 +184,9 @@ TEST(CurlRequestTest, UserAgentPrefix) {
   builder.AddHeader("charsets: utf-8");
 
   auto response = builder.BuildRequest().MakeRequest(std::string{});
-  EXPECT_EQ(200, response.status_code);
-  auto payload = nl::json::parse(response.payload);
+  ASSERT_TRUE(response.ok());
+  EXPECT_EQ(200, response->status_code);
+  auto payload = nl::json::parse(response->payload);
   ASSERT_EQ(1U, payload.count("headers"));
   auto headers = payload["headers"];
   EXPECT_THAT(headers.value("User-Agent", ""), HasSubstr("test-program"));
@@ -200,8 +202,9 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Projection) {
   request.AddOption(storage::Projection("full"));
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  EXPECT_EQ(200, response.status_code);
-  nl::json parsed = nl::json::parse(response.payload);
+  ASSERT_TRUE(response.ok());
+  EXPECT_EQ(200, response->status_code);
+  nl::json parsed = nl::json::parse(response->payload);
   nl::json args = parsed["args"];
   EXPECT_EQ("full", args.value("projection", ""));
   // The other well known parameters are not set.
@@ -222,8 +225,9 @@ TEST(CurlRequestTest, WellKnownQueryParameters_UserProject) {
   request.AddOption(storage::UserProject("a-project"));
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  EXPECT_EQ(200, response.status_code);
-  nl::json parsed = nl::json::parse(response.payload);
+  ASSERT_TRUE(response.ok());
+  EXPECT_EQ(200, response->status_code);
+  nl::json parsed = nl::json::parse(response->payload);
   nl::json args = parsed["args"];
   EXPECT_EQ("a-project", args.value("userProject", ""));
   // The other well known parameters are not set.
@@ -244,8 +248,9 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationMatch) {
   request.AddOption(storage::IfGenerationMatch(42));
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  EXPECT_EQ(200, response.status_code);
-  nl::json parsed = nl::json::parse(response.payload);
+  ASSERT_TRUE(response.ok());
+  EXPECT_EQ(200, response->status_code);
+  nl::json parsed = nl::json::parse(response->payload);
   nl::json args = parsed["args"];
   EXPECT_EQ("42", args.value("ifGenerationMatch", ""));
   // The other well known parameters are not set.
@@ -266,8 +271,9 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationNotMatch) {
   request.AddOption(storage::IfGenerationNotMatch(42));
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  EXPECT_EQ(200, response.status_code);
-  nl::json parsed = nl::json::parse(response.payload);
+  ASSERT_TRUE(response.ok());
+  EXPECT_EQ(200, response->status_code);
+  nl::json parsed = nl::json::parse(response->payload);
   nl::json args = parsed["args"];
   EXPECT_EQ("42", args.value("ifGenerationNotMatch", ""));
   // The other well known parameters are not set.
@@ -288,8 +294,9 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetagenerationMatch) {
   request.AddOption(storage::IfMetagenerationMatch(42));
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  EXPECT_EQ(200, response.status_code);
-  nl::json parsed = nl::json::parse(response.payload);
+  ASSERT_TRUE(response.ok());
+  EXPECT_EQ(200, response->status_code);
+  nl::json parsed = nl::json::parse(response->payload);
   nl::json args = parsed["args"];
   EXPECT_EQ("42", args.value("ifMetagenerationMatch", ""));
   // The other well known parameters are not set.
@@ -310,8 +317,9 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetagenerationNotMatch) {
   request.AddOption(storage::IfMetagenerationNotMatch(42));
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  EXPECT_EQ(200, response.status_code);
-  nl::json parsed = nl::json::parse(response.payload);
+  ASSERT_TRUE(response.ok());
+  EXPECT_EQ(200, response->status_code);
+  nl::json parsed = nl::json::parse(response->payload);
   nl::json args = parsed["args"];
   EXPECT_EQ("42", args.value("ifMetagenerationNotMatch", ""));
   // The other well known parameters are not set.
@@ -334,8 +342,9 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Multiple) {
   request.AddOption(storage::IfGenerationNotMatch(42));
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  EXPECT_EQ(200, response.status_code);
-  nl::json parsed = nl::json::parse(response.payload);
+  ASSERT_TRUE(response.ok());
+  EXPECT_EQ(200, response->status_code);
+  nl::json parsed = nl::json::parse(response->payload);
   nl::json args = parsed["args"];
   EXPECT_EQ("user-project-id", args.value("userProject", ""));
   EXPECT_EQ("7", args.value("ifMetagenerationMatch", ""));
@@ -378,7 +387,8 @@ TEST(CurlRequestTest, Logging) {
     request.AddHeader("x-test-header: foo");
 
     auto response = request.BuildRequest().MakeRequest("this is some text");
-    EXPECT_EQ(200, response.status_code);
+    ASSERT_TRUE(response.ok());
+    EXPECT_EQ(200, response->status_code);
   }
 
   google::cloud::LogSink::Instance().ClearBackends();

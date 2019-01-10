@@ -16,7 +16,7 @@
 
 # This should be included from the top level CMakeLists file
 set(STORAGE_CLIENT_VERSION_MAJOR 0)
-set(STORAGE_CLIENT_VERSION_MINOR 2)
+set(STORAGE_CLIENT_VERSION_MINOR 4)
 set(STORAGE_CLIENT_VERSION_PATCH 0)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Storage C++ Client")
@@ -61,41 +61,9 @@ add_library(storage_common_options INTERFACE)
 google_cloud_cpp_add_common_options(storage_common_options)
 
 # Enable unit tests
-enable_testing()
+include(CTest)
 
-# Search for libcurl, in CMake 3.5 this does not define a target, but it will in
-# 3.12 (see https://cmake.org/cmake/help/git-stage/module/FindCURL.html for
-# details).  Until then, define the target ourselves if it is missing.
-find_package(CURL REQUIRED)
-if (NOT TARGET CURL::CURL)
-    add_library(CURL::CURL UNKNOWN IMPORTED)
-    set_property(TARGET CURL::CURL
-                 APPEND
-                 PROPERTY INTERFACE_INCLUDE_DIRECTORIES "${CURL_INCLUDE_DIR}")
-    set_property(TARGET CURL::CURL
-                 APPEND
-                 PROPERTY IMPORTED_LOCATION "${CURL_LIBRARY}")
-endif ()
-# If the library is static, we need to explicitly link its dependencies.
-# However, we should not do so for shared libraries, because the version of
-# OpenSSL (for example) found by find_package() may be newer than the version
-# linked against libcurl.
-if ("${CURL_LIBRARY}" MATCHES "${CMAKE_STATIC_LIBRARY_SUFFIX}$")
-    find_package(OpenSSL REQUIRED)
-    find_package(ZLIB REQUIRED)
-    set_property(TARGET CURL::CURL
-                 APPEND
-                 PROPERTY INTERFACE_LINK_LIBRARIES
-                          OpenSSL::SSL
-                          OpenSSL::Crypto
-                          ZLIB::ZLIB)
-    message(STATUS "CURL linkage will be static")
-else()
-    message(STATUS "CURL linkage will be non-static")
-endif ()
-
-find_package(OpenSSL REQUIRED)
-find_package(ZLIB REQUIRED)
+include(IncludeCurl)
 
 # the client library
 add_library(storage_client
@@ -108,6 +76,7 @@ add_library(storage_client
             client.cc
             client_options.h
             client_options.cc
+            download_options.h
             hashing_options.h
             hashing_options.cc
             idempotency_policy.h
@@ -134,6 +103,8 @@ add_library(storage_client
             internal/curl_request.cc
             internal/curl_request_builder.h
             internal/curl_request_builder.cc
+            internal/curl_resumable_streambuf.h
+            internal/curl_resumable_streambuf.cc
             internal/curl_upload_request.cc
             internal/curl_upload_request.h
             internal/curl_wrappers.h
@@ -186,6 +157,8 @@ add_library(storage_client
             internal/retry_resumable_upload_session.cc
             internal/service_account_requests.h
             internal/service_account_requests.cc
+            internal/signed_url_requests.h
+            internal/signed_url_requests.cc
             lifecycle_rule.h
             lifecycle_rule.cc
             list_buckets_reader.h
@@ -207,6 +180,8 @@ add_library(storage_client
             oauth2/google_application_default_credentials_file.cc
             oauth2/google_credentials.h
             oauth2/google_credentials.cc
+            oauth2/refreshing_credentials_wrapper.h
+            oauth2/refreshing_credentials_wrapper.cc
             oauth2/service_account_credentials.h
             oauth2/service_account_credentials.cc
             object_access_control.h
@@ -220,8 +195,10 @@ add_library(storage_client
             retry_policy.h
             service_account.h
             service_account.cc
-            status.h
+            signed_url_options.h
+            signed_url_options.cc
             storage_class.h
+            upload_options.h
             version.h
             version.cc
             well_known_headers.h
@@ -237,9 +214,6 @@ target_link_libraries(storage_client
                              OpenSSL::Crypto
                              ZLIB::ZLIB
                       PRIVATE storage_common_options)
-if (WIN32)
-    target_link_libraries(storage_client PUBLIC wsock32 ws2_32)
-endif ()
 target_include_directories(storage_client
                            PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
                                   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
@@ -259,6 +233,19 @@ if (MSVC)
                  PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
 endif ()
 
+# GCC-7.3 (the default GCC version on Ubuntu:18.04) issues a warning (a member
+# variable may be used without being initialized), in this file. GCC-8.0 no
+# longers emits that diagnostic, and neither does Clang. On the assumption that
+# this is a spurious warning we disable it for older versions of GCC. I (coryan)
+# did not research in exactly what version was this warning introduced, and when
+# it was fixed. I do not believe we need to be that accurate.
+if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU"
+    AND ${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 8.0)
+    set_property(SOURCE list_objects_reader.cc
+                 APPEND_STRING
+                 PROPERTY COMPILE_FLAGS "-Wno-maybe-uninitialized")
+endif ()
+
 set_target_properties(
     storage_client
     PROPERTIES
@@ -267,123 +254,130 @@ set_target_properties(
         SOVERSION
         ${STORAGE_CLIENT_VERSION_MAJOR})
 
-add_library(storage_client_testing
-            testing/canonical_errors.h
-            testing/mock_client.h
-            testing/mock_http_request.h
-            testing/mock_http_request.cc
-            testing/retry_tests.h
-            testing/storage_integration_test.h
-            testing/storage_integration_test.cc)
-target_link_libraries(storage_client_testing
-                      PUBLIC storage_client
-                             nlohmann_json
-                             GTest::gmock_main
-                             GTest::gmock
-                             GTest::gtest
-                      PRIVATE storage_common_options)
-target_include_directories(storage_client_testing
-                           PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                                  $<INSTALL_INTERFACE:include>)
-target_compile_options(storage_client_testing
-                       PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-
 create_bazel_config(storage_client)
 google_cloud_cpp_add_clang_tidy(storage_client)
-create_bazel_config(storage_client_testing)
 
-# List the unit tests, then setup the targets and dependencies.
-set(storage_client_unit_tests
-    bucket_access_control_test.cc
-    bucket_metadata_test.cc
-    bucket_test.cc
-    client_bucket_acl_test.cc
-    client_default_object_acl_test.cc
-    client_object_acl_test.cc
-    client_object_copy_test.cc
-    client_service_account_test.cc
-    client_notifications_test.cc
-    client_test.cc
-    client_write_object_test.cc
-    hashing_options_test.cc
-    idempotency_policy_test.cc
-    internal/access_control_common_test.cc
-    internal/binary_data_as_debug_string_test.cc
-    internal/bucket_acl_requests_test.cc
-    internal/bucket_requests_test.cc
-    internal/compute_engine_util_test.cc
-    internal/curl_client_test.cc
-    internal/curl_resumable_upload_session_test.cc
-    internal/curl_wrappers_locking_already_present_test.cc
-    internal/curl_wrappers_locking_enabled_test.cc
-    internal/curl_wrappers_locking_disabled_test.cc
-    internal/default_object_acl_requests_test.cc
-    internal/format_rfc3339_test.cc
-    internal/generate_message_boundary_test.cc
-    internal/hash_validator_test.cc
-    internal/http_response_test.cc
-    internal/logging_client_test.cc
-    internal/logging_resumable_upload_session_test.cc
-    internal/metadata_parser_test.cc
-    internal/nljson_test.cc
-    internal/notification_requests_test.cc
-    internal/object_acl_requests_test.cc
-    internal/object_requests_test.cc
-    internal/parse_rfc3339_test.cc
-    internal/patch_builder_test.cc
-    internal/retry_client_test.cc
-    internal/retry_resumable_upload_session_test.cc
-    internal/service_account_requests_test.cc
-    lifecycle_rule_test.cc
-    list_buckets_reader_test.cc
-    list_objects_reader_test.cc
-    oauth2/anonymous_credentials_test.cc
-    oauth2/authorized_user_credentials_test.cc
-    oauth2/compute_engine_credentials_test.cc
-    oauth2/google_application_default_credentials_file_test.cc
-    oauth2/google_credentials_test.cc
-    oauth2/service_account_credentials_test.cc
-    object_access_control_test.cc
-    object_metadata_test.cc
-    object_test.cc
-    notification_metadata_test.cc
-    retry_policy_test.cc
-    service_account_test.cc
-    storage_class_test.cc
-    storage_client_options_test.cc
-    storage_version_test.cc
-    well_known_headers_test.cc)
+if (BUILD_TESTING)
+    add_library(storage_client_testing
+                testing/canonical_errors.h
+                testing/mock_client.h
+                testing/mock_http_request.h
+                testing/mock_http_request.cc
+                testing/retry_tests.h
+                testing/storage_integration_test.h
+                testing/storage_integration_test.cc)
+    target_link_libraries(storage_client_testing
+                          PUBLIC storage_client
+                                 nlohmann_json
+                                 GTest::gmock_main
+                                 GTest::gmock
+                                 GTest::gtest
+                          PRIVATE storage_common_options)
+    target_include_directories(storage_client_testing
+                               PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                      $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+                                      $<INSTALL_INTERFACE:include>)
+    target_compile_options(storage_client_testing
+                           PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-foreach (fname ${storage_client_unit_tests})
-    string(REPLACE "/"
-                   "_"
-                   target
-                   ${fname})
-    string(REPLACE ".cc"
-                   ""
-                   target
-                   ${target})
-    add_executable(${target} ${fname})
-    target_link_libraries(${target}
-                          PRIVATE storage_client_testing
-                                  google_cloud_cpp_testing
-                                  storage_client
-                                  google_cloud_cpp_testing
-                                  GTest::gmock_main
-                                  GTest::gmock
-                                  GTest::gtest
-                                  CURL::CURL
-                                  storage_common_options
-                                  nlohmann_json)
-    add_test(NAME ${target} COMMAND ${target})
-endforeach ()
+    create_bazel_config(storage_client_testing)
 
-# Export the list of unit tests so the Bazel BUILD file can pick it up.
-export_list_to_bazel(
-    "storage_client_unit_tests.bzl" "storage_client_unit_tests")
+    # List the unit tests, then setup the targets and dependencies.
+    set(storage_client_unit_tests
+        bucket_access_control_test.cc
+        bucket_metadata_test.cc
+        bucket_test.cc
+        client_bucket_acl_test.cc
+        client_default_object_acl_test.cc
+        client_object_acl_test.cc
+        client_object_copy_test.cc
+        client_service_account_test.cc
+        client_notifications_test.cc
+        client_sign_url_test.cc
+        client_test.cc
+        client_write_object_test.cc
+        hashing_options_test.cc
+        idempotency_policy_test.cc
+        internal/access_control_common_test.cc
+        internal/binary_data_as_debug_string_test.cc
+        internal/bucket_acl_requests_test.cc
+        internal/bucket_requests_test.cc
+        internal/compute_engine_util_test.cc
+        internal/curl_client_test.cc
+        internal/curl_resumable_upload_session_test.cc
+        internal/curl_wrappers_locking_already_present_test.cc
+        internal/curl_wrappers_locking_enabled_test.cc
+        internal/curl_wrappers_locking_disabled_test.cc
+        internal/default_object_acl_requests_test.cc
+        internal/format_rfc3339_test.cc
+        internal/generate_message_boundary_test.cc
+        internal/hash_validator_test.cc
+        internal/http_response_test.cc
+        internal/logging_client_test.cc
+        internal/logging_resumable_upload_session_test.cc
+        internal/metadata_parser_test.cc
+        internal/nljson_test.cc
+        internal/notification_requests_test.cc
+        internal/object_acl_requests_test.cc
+        internal/object_requests_test.cc
+        internal/parse_rfc3339_test.cc
+        internal/patch_builder_test.cc
+        internal/retry_client_test.cc
+        internal/retry_resumable_upload_session_test.cc
+        internal/service_account_requests_test.cc
+        internal/signed_url_requests_test.cc
+        lifecycle_rule_test.cc
+        list_buckets_reader_test.cc
+        list_objects_reader_test.cc
+        oauth2/anonymous_credentials_test.cc
+        oauth2/authorized_user_credentials_test.cc
+        oauth2/compute_engine_credentials_test.cc
+        oauth2/google_application_default_credentials_file_test.cc
+        oauth2/google_credentials_test.cc
+        oauth2/service_account_credentials_test.cc
+        object_access_control_test.cc
+        object_metadata_test.cc
+        object_test.cc
+        notification_metadata_test.cc
+        retry_policy_test.cc
+        service_account_test.cc
+        signed_url_options_test.cc
+        storage_class_test.cc
+        storage_client_options_test.cc
+        storage_version_test.cc
+        well_known_headers_test.cc)
 
-add_subdirectory(tests)
+    foreach (fname ${storage_client_unit_tests})
+        string(REPLACE "/"
+                       "_"
+                       target
+                       ${fname})
+        string(REPLACE ".cc"
+                       ""
+                       target
+                       ${target})
+        add_executable(${target} ${fname})
+        if (BUILD_TESTING)
+            target_link_libraries(${target}
+                                  PRIVATE storage_client_testing
+                                          google_cloud_cpp_testing
+                                          storage_client
+                                          GTest::gmock_main
+                                          GTest::gmock
+                                          GTest::gtest
+                                          CURL::CURL
+                                          storage_common_options
+                                          nlohmann_json)
+            add_test(NAME ${target} COMMAND ${target})
+        endif ()
+    endforeach ()
+
+    # Export the list of unit tests so the Bazel BUILD file can pick it up.
+    export_list_to_bazel("storage_client_unit_tests.bzl"
+                         "storage_client_unit_tests")
+
+    add_subdirectory(tests)
+endif ()
 
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(benchmarks)
