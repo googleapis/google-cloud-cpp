@@ -253,7 +253,7 @@ class InstanceAdmin {
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
-   * 		instance_id the instance in a project.
+   * @param	instance_id the instance in a project.
    * @return the list of clusters. It is possible that some zones are not
    * currently available for querying. In that case this function returns the
    * list of failed locations in the `projects/<project>/locations/<zone_id>`
