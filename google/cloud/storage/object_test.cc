@@ -76,29 +76,36 @@ TEST_F(ObjectTest, InsertObjectMedia) {
 
   auto actual = client->InsertObject("test-bucket-name", "test-object-name",
                                      "test object contents");
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(ObjectTest, InsertObjectMediaTooManyFailures) {
-  testing::TooManyFailuresTest<ObjectMetadata>(
+  testing::TooManyFailuresStatusTest<ObjectMetadata>(
       mock, EXPECT_CALL(*mock, InsertObjectMedia(_)),
       [](Client& client) {
-        client.InsertObject("test-bucket-name", "test-object-name",
-                            "test object contents");
+        return client
+            .InsertObject("test-bucket-name", "test-object-name",
+                          "test object contents")
+            .status();
       },
       [](Client& client) {
-        client.InsertObject("test-bucket-name", "test-object-name",
-                            "test object contents", IfGenerationMatch(0));
+        return client
+            .InsertObject("test-bucket-name", "test-object-name",
+                          "test object contents", IfGenerationMatch(0))
+            .status();
       },
       "InsertObjectMedia");
 }
 
 TEST_F(ObjectTest, InsertObjectMediaPermanentFailure) {
-  testing::PermanentFailureTest<ObjectMetadata>(
+  testing::PermanentFailureStatusTest<ObjectMetadata>(
       *client, EXPECT_CALL(*mock, InsertObjectMedia(_)),
       [](Client& client) {
-        client.InsertObject("test-bucket-name", "test-object-name",
-                            "test object contents");
+        return client
+            .InsertObject("test-bucket-name", "test-object-name",
+                          "test object contents")
+            .status();
       },
       "InsertObjectMedia");
 }
@@ -164,8 +171,7 @@ TEST_F(ObjectTest, GetObjectMetadataPermanentFailure) {
 
 TEST_F(ObjectTest, DeleteObject) {
   EXPECT_CALL(*mock, DeleteObject(_))
-      .WillOnce(
-          Return(StatusOr<internal::EmptyResponse>(TransientError())))
+      .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
         EXPECT_EQ("test-object-name", r.object_name());
@@ -187,7 +193,7 @@ TEST_F(ObjectTest, DeleteObjectTooManyFailures) {
       },
       [](Client& client) {
         client.DeleteObject("test-bucket-name", "test-object-name",
-            IfGenerationMatch(7));
+                            IfGenerationMatch(7));
       },
       "DeleteObject");
 }

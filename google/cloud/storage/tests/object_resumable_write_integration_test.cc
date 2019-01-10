@@ -167,10 +167,12 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  ObjectMetadata meta = client.InsertObject(bucket_name, object_name, expected,
+  StatusOr<ObjectMetadata> meta = client.InsertObject(bucket_name, object_name, expected,
                                             IfGenerationMatch(0));
-  EXPECT_EQ(object_name, meta.name());
-  EXPECT_EQ(bucket_name, meta.bucket());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name, meta->bucket());
 
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                NewResumableUploadSession());

@@ -81,12 +81,18 @@ void InsertObject(google::cloud::storage::Client client, int& argc,
   auto contents = ConsumeArg(argc, argv);
   //! [insert object]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string contents) {
-    gcs::ObjectMetadata meta =
+    StatusOr<gcs::ObjectMetadata> meta =
         client.InsertObject(bucket_name, object_name, std::move(contents));
-    std::cout << "The object was created. The new object metadata is " << meta
-              << std::endl;
+    if (not meta.ok()) {
+      std::cerr << "Error inserting object " << object_name << " in bucket "
+                << bucket_name << ", status=" << meta.status() << std::endl;
+      return;
+    }
+    std::cout << "The object " << meta->name() << " was created in bucket "
+              << meta->bucket() << "\nFull metadata: " << *meta << std::endl;
   }
   //! [insert object]
   (std::move(client), bucket_name, object_name, contents);
@@ -104,15 +110,21 @@ void InsertObjectStrictIdempotency(google::cloud::storage::Client unused,
   auto contents = ConsumeArg(argc, argv);
   //! [insert object strict idempotency]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](std::string bucket_name, std::string object_name, std::string contents) {
     // Create a client that only retries idempotent operations, the default is
     // to retry all operations.
     gcs::Client client{gcs::ClientOptions(), gcs::StrictIdempotencyPolicy()};
-    gcs::ObjectMetadata meta =
+    StatusOr<gcs::ObjectMetadata> meta =
         client.InsertObject(bucket_name, object_name, std::move(contents),
                             gcs::IfGenerationMatch(0));
-    std::cout << "The object was created. The new object metadata is " << meta
-              << std::endl;
+    if (not meta.ok()) {
+      std::cerr << "Error inserting object " << object_name << " in bucket "
+                << bucket_name << ", status=" << meta.status() << std::endl;
+      return;
+    }
+    std::cout << "The object " << meta->name() << " was created in bucket "
+              << meta->bucket() << "\nFull metadata: " << *meta << std::endl;
   }
   //! [insert object strict idempotency]
   (bucket_name, object_name, contents);
@@ -130,16 +142,22 @@ void InsertObjectModifiedRetry(google::cloud::storage::Client unused, int& argc,
   auto contents = ConsumeArg(argc, argv);
   //! [insert object modified retry]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](std::string bucket_name, std::string object_name, std::string contents) {
     // Create a client that only gives up on the third error. The default policy
     // is to retry for several minutes.
     gcs::Client client{gcs::ClientOptions(),
                        gcs::LimitedErrorCountRetryPolicy(3)};
-    gcs::ObjectMetadata meta =
+    StatusOr<gcs::ObjectMetadata> meta =
         client.InsertObject(bucket_name, object_name, std::move(contents),
                             gcs::IfGenerationMatch(0));
-    std::cout << "The object was created. The new object metadata is " << meta
-              << std::endl;
+    if (not meta.ok()) {
+      std::cerr << "Error inserting object " << object_name << " in bucket "
+                << bucket_name << ", status=" << meta.status() << std::endl;
+      return;
+    }
+    std::cout << "The object " << meta->name() << " was created in bucket "
+              << meta->bucket() << "\nFull metadata: " << *meta << std::endl;
   }
   //! [insert object modified retry]
   (bucket_name, object_name, contents);
@@ -644,13 +662,19 @@ void WriteEncryptedObject(google::cloud::storage::Client client, int& argc,
   auto base64_aes256_key = ConsumeArg(argc, argv);
   //! [insert encrypted object] [START storage_upload_encrypted_file]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string base64_aes256_key) {
-    gcs::ObjectMetadata meta = client.InsertObject(
+    StatusOr<gcs::ObjectMetadata> meta = client.InsertObject(
         bucket_name, object_name, "top secret",
         gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
-    std::cout << "The object was created. The new object metadata is " << meta
-              << std::endl;
+    if (not meta.ok()) {
+      std::cerr << "Error inserting object " << object_name << " in bucket "
+                << bucket_name << ", status=" << meta.status() << std::endl;
+      return;
+    }
+    std::cout << "The object " << meta->name() << " was created in bucket "
+              << meta->bucket() << "\nFull metadata: " << *meta << std::endl;
   }
   //! [insert encrypted object] [END storage_upload_encrypted_file]
   (std::move(client), bucket_name, object_name, base64_aes256_key);
