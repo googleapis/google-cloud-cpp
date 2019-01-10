@@ -74,7 +74,7 @@ TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
   EXPECT_EQ("uh oh", result.status().error_message());
 
   EXPECT_EQ(1U, CountLines("upload_size=" + std::to_string(513 * 1024UL)));
-  EXPECT_EQ(1U, CountLines("[503]"));
+  EXPECT_EQ(1U, CountLines("[UNEXPECTED_STATUS_CODE=503]"));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
@@ -92,7 +92,7 @@ TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
   EXPECT_EQ(308, result.status().status_code());
   EXPECT_EQ("uh oh", result.status().error_message());
 
-  EXPECT_EQ(1U, CountLines("[308]"));
+  EXPECT_EQ(1U, CountLines("[UNEXPECTED_STATUS_CODE=308]"));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, NextExpectedByte) {

@@ -73,7 +73,7 @@ TEST(StatusOrTest, ValueAccessorNonConstThrows) {
         EXPECT_EQ(500, ex.status().status_code());
         EXPECT_EQ("BAD", ex.status().error_message());
       },
-      "exceptions are disabled: BAD \\[500\\]"
+      "exceptions are disabled: BAD \\[UNEXPECTED_STATUS_CODE=500\\]"
   );
 
   testing_util::ExpectException<RuntimeStatusError>(
@@ -82,7 +82,7 @@ TEST(StatusOrTest, ValueAccessorNonConstThrows) {
         EXPECT_EQ(500, ex.status().status_code());
         EXPECT_EQ("BAD", ex.status().error_message());
       },
-      "exceptions are disabled: BAD \\[500\\]"
+      "exceptions are disabled: BAD \\[UNEXPECTED_STATUS_CODE=500\\]"
   );
 }
 
@@ -95,7 +95,7 @@ TEST(StatusOrTest, ValueAccessorConstThrows) {
         EXPECT_EQ(500, ex.status().status_code());
         EXPECT_EQ("BAD", ex.status().error_message());
       },
-      "exceptions are disabled: BAD \\[500\\]"
+      "exceptions are disabled: BAD \\[UNEXPECTED_STATUS_CODE=500\\]"
   );
 
   testing_util::ExpectException<RuntimeStatusError>(
@@ -104,7 +104,7 @@ TEST(StatusOrTest, ValueAccessorConstThrows) {
         EXPECT_EQ(500, ex.status().status_code());
         EXPECT_EQ("BAD", ex.status().error_message());
       },
-      "exceptions are disabled: BAD \\[500\\]"
+      "exceptions are disabled: BAD \\[UNEXPECTED_STATUS_CODE=500\\]"
   );
 }
 
@@ -177,7 +177,7 @@ TEST(StatusOrVoidTest, ValueAccessorNonConstThrows) {
         EXPECT_EQ(500, ex.status().status_code());
         EXPECT_EQ("BAD", ex.status().error_message());
       },
-      "exceptions are disabled: BAD \\[500\\]"
+      "exceptions are disabled: BAD \\[UNEXPECTED_STATUS_CODE=500\\]"
   );
 
   testing_util::ExpectException<RuntimeStatusError>(
@@ -186,7 +186,7 @@ TEST(StatusOrVoidTest, ValueAccessorNonConstThrows) {
         EXPECT_EQ(500, ex.status().status_code());
         EXPECT_EQ("BAD", ex.status().error_message());
       },
-      "exceptions are disabled: BAD \\[500\\]"
+      "exceptions are disabled: BAD \\[UNEXPECTED_STATUS_CODE=500\\]"
   );
 }
 
@@ -199,7 +199,7 @@ TEST(StatusOrVoidTest, ValueAccessorConstThrows) {
         EXPECT_EQ(500, ex.status().status_code());
         EXPECT_EQ("BAD", ex.status().error_message());
       },
-      "exceptions are disabled: BAD \\[500\\]"
+      "exceptions are disabled: BAD \\[UNEXPECTED_STATUS_CODE=500\\]"
   );
 
   testing_util::ExpectException<RuntimeStatusError>(
@@ -208,7 +208,7 @@ TEST(StatusOrVoidTest, ValueAccessorConstThrows) {
         EXPECT_EQ(500, ex.status().status_code());
         EXPECT_EQ("BAD", ex.status().error_message());
       },
-      "exceptions are disabled: BAD \\[500\\]"
+      "exceptions are disabled: BAD \\[UNEXPECTED_STATUS_CODE=500\\]"
   );
 }
 

@@ -102,7 +102,7 @@ TEST(ThrowDelegateTest, TestThrow) {
         EXPECT_EQ("oh noes!", ex.status().error_details());
       },
       "Aborting because exceptions are disabled: "
-      "NOT FOUND \\[404\\], details=oh noes!");
+      "NOT FOUND \\[UNEXPECTED_STATUS_CODE=404\\], details=oh noes!");
 }
 
 }  // namespace
