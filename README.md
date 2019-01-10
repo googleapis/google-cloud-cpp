@@ -223,7 +223,7 @@ is to use [vcpkg][vcpkg-link], a package manager from Microsoft that downloads
 the source code for a library (and all its dependencies), compiles it, and adds
 the right configuration for DevStudio and/or CMake.
 
-After downloading and compiling `vcpkg`, simply run:
+After downloading and compiling `vcpkg`, run:
 
 ```bash
 .\vcpkg.exe install google-cloud-cpp:x64-windows-static
@@ -300,7 +300,7 @@ Then clone and compile `vcpkg`:
 
 ```console
 set SOURCE="%cd%"
-git clone https://github.com/Microsoft/vcpkg
+git clone https://github.com/Microsoft/vcpkg.git
 cd vcpkg
 .\bootstrap-vcpkg.bat
 ```
@@ -320,7 +320,7 @@ Now clone `google-cloud-cpp`:
 
 ```console
 cd ..
-git clone https://github.com/GoogleCloudPlatform/google-cloud-cpp
+git clone https://github.com/GoogleCloudPlatform/google-cloud-cpp.git
 git submodule update --init
 cd google-cloud-cpp
 ```
@@ -340,7 +340,7 @@ cmake -H. -Bbuild-output -GNinja ^
     -DVCPKG_TARGET_TRIPLET=x64-windows-static ^
     -DCMAKE_C_COMPILER=cl.exe ^
     -DCMAKE_CXX_COMPILER=cl.exe ^
-    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package
+    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package ^
     -DCMAKE_MAKE_PROGRAM=ninja
 ```
 
