@@ -59,7 +59,12 @@ class ObjectRewriter {
   StatusOr<RewriteProgress> Iterate();
 
   /// The current progress on the rewrite operation.
-  StatusOr<RewriteProgress> CurrentProgress() const { return progress_; }
+  StatusOr<RewriteProgress> CurrentProgress() const {
+    if (not last_error_.ok()) {
+      return last_error_;
+    }
+    return progress_;
+  }
 
   /**
    * Iterate until the operation completes using a callback to report progress.
@@ -96,10 +101,12 @@ class ObjectRewriter {
                                   Functor, StatusOr<RewriteProgress>>::value,
                               int>::type = 0>
   StatusOr<ObjectMetadata> ResultWithProgressCallback(Functor cb) {
-    do {
-      Iterate();
-      cb(progress_);
-    } while (progress_.ok() and not progress_->done);
+    while (not progress_.done) {
+      cb(Iterate());
+    }
+    if (not last_error_.ok()) {
+      return last_error_;
+    }
     return result_;
   }
 
@@ -122,8 +129,9 @@ class ObjectRewriter {
  private:
   std::shared_ptr<internal::RawClient> client_;
   internal::RewriteObjectRequest request_;
-  StatusOr<RewriteProgress> progress_;
-  StatusOr<ObjectMetadata> result_;
+  RewriteProgress progress_;
+  ObjectMetadata result_;
+  Status last_error_;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
