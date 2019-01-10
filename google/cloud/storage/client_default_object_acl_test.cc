@@ -231,7 +231,7 @@ TEST_F(DefaultObjectAccessControlsTest, GetDefaultObjectAcl) {
 
   StatusOr<ObjectAccessControl> actual =
       client.GetDefaultObjectAcl("test-bucket", "user-test-user-1");
-  EXPECT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
   EXPECT_EQ(expected, *actual);
 }
 
@@ -281,7 +281,7 @@ TEST_F(DefaultObjectAccessControlsTest, UpdateDefaultObjectAcl) {
       "test-bucket", ObjectAccessControl()
                          .set_entity("user-test-user-1")
                          .set_role(ObjectAccessControl::ROLE_READER()));
-  EXPECT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
   // Compare just a few fields because the values for most of the fields are
   // hard to predict when testing against the production environment.
   EXPECT_EQ(expected.bucket(), actual->bucket());
