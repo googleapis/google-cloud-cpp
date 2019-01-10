@@ -197,10 +197,12 @@ bool RowRange::operator==(RowRange const& rhs) const {
       if (row_range_.start_key_closed() != rhs.row_range_.start_key_closed()) {
         return false;
       }
+      break;
     case btproto::RowRange::kStartKeyOpen:
       if (row_range_.start_key_open() != rhs.row_range_.start_key_open()) {
         return false;
       }
+      break;
   }
 
   if (row_range_.end_key_case() != rhs.row_range_.end_key_case()) {
@@ -213,10 +215,12 @@ bool RowRange::operator==(RowRange const& rhs) const {
       if (row_range_.end_key_closed() != rhs.row_range_.end_key_closed()) {
         return false;
       }
+      break;
     case btproto::RowRange::kEndKeyOpen:
       if (row_range_.end_key_open() != rhs.row_range_.end_key_open()) {
         return false;
       }
+      break;
   }
 
   return true;
