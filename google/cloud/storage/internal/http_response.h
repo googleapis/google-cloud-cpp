@@ -37,7 +37,7 @@ struct HttpResponse {
 };
 
 /**
- * Maps a HTTP response to a error `Status`.
+ * Maps a HTTP response to a `Status`.
  *
  * HTTP responses have a wide range of status codes (100 to 599), and we have
  * a much more limited number of `StatusCode` values. This function performs
