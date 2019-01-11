@@ -35,11 +35,14 @@ if (NOT TARGET protobuf_project)
         set(PARALLEL "")
     endif ()
 
-    # When CMake passes the configure command to the shell, the semi-colon will
-    # also be interpreted by the shell so it needs to be escaped. Quoting does
-    # not work, so instead we replace the semi-colon with a different separator
-    # and specify that using LIST_SEPARATOR below. This ensures that our RPATH
-    # will contain both directories.
+    # When passing a semi-colon delimited list to ExternalProject_Add, we need
+    # to escape the semi-colon. Quoting does not work and escaping the semi-
+    # colon does not seem to work (see https://reviews.llvm.org/D40257). A
+    # workaround is to use LIST_SEPARATOR to change the delimiter, which will
+    # then be replaced by an escaped semi-colon by CMake. This allows us to use
+    # multiple directories for our RPATH. Normally, it'd make sense to use : as
+    # a delimiter since it is a typical path-list separator, but it is a special
+    # character in CMake.
     set(GOOGLE_CLOUD_CPP_INSTALL_RPATH "<INSTALL_DIR>/lib;<INSTALL_DIR>/lib64")
     string(REPLACE ";"
                    "|"
