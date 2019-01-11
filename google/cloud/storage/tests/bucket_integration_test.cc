@@ -354,39 +354,51 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
       << "> in its ACL.  This is unexpected because the bucket was just"
       << " created with a predefine ACL which should preclude this result.";
 
-  BucketAccessControl result =
+  StatusOr<BucketAccessControl> result =
       client.CreateBucketAcl(bucket_name, entity_name, "OWNER");
-  EXPECT_EQ("OWNER", result.role());
-  auto current_acl = client.ListBucketAcl(bucket_name);
-  EXPECT_FALSE(current_acl.empty());
+  ASSERT_TRUE(result.ok()) << "status=" << result.status();
+  EXPECT_EQ("OWNER", result->role());
+
+  StatusOr<std::vector<BucketAccessControl>> current_acl =
+      client.ListBucketAcl(bucket_name);
+  ASSERT_TRUE(current_acl.ok()) << "status=" << current_acl.status();
+  EXPECT_FALSE(current_acl->empty());
   // Search using the entity name returned by the request, because we use
   // 'project-editors-<project_id>' this different than the original entity
   // name, the server "translates" the project id to a project number.
-  EXPECT_EQ(1, name_counter(result.entity(), current_acl));
+  EXPECT_EQ(1, name_counter(result->entity(), *current_acl));
 
-  BucketAccessControl get_result =
+  StatusOr<BucketAccessControl> get_result =
       client.GetBucketAcl(bucket_name, entity_name);
-  EXPECT_EQ(get_result, result);
+  ASSERT_TRUE(get_result.ok()) << "status=" << get_result.status();
+  EXPECT_EQ(*get_result, *result);
 
-  BucketAccessControl new_acl = get_result;
+  BucketAccessControl new_acl = *get_result;
   new_acl.set_role("READER");
   auto updated_result = client.UpdateBucketAcl(bucket_name, new_acl);
-  EXPECT_EQ(updated_result.role(), "READER");
+  ASSERT_TRUE(updated_result.ok()) << "status=" << updated_result.status();
+  EXPECT_EQ("READER", updated_result->role());
 
   get_result = client.GetBucketAcl(bucket_name, entity_name);
-  EXPECT_EQ(get_result, updated_result);
+  ASSERT_TRUE(get_result.ok()) << "status=" << get_result.status();
+  EXPECT_EQ(*get_result, *updated_result);
 
-  new_acl = get_result;
+  new_acl = *get_result;
   new_acl.set_role("OWNER");
   // Because this is a freshly created bucket, with a random name, we do not
   // worry about implementing optimistic concurrency control.
   get_result =
-      client.PatchBucketAcl(bucket_name, entity_name, get_result, new_acl);
-  EXPECT_EQ(get_result.role(), new_acl.role());
+      client.PatchBucketAcl(bucket_name, entity_name, *get_result, new_acl);
+  ASSERT_TRUE(get_result.ok()) << "status=" << get_result.status();
+  EXPECT_EQ(get_result->role(), new_acl.role());
 
-  client.DeleteBucketAcl(bucket_name, entity_name);
+  StatusOr<void> delete_result =
+      client.DeleteBucketAcl(bucket_name, entity_name);
+  ASSERT_TRUE(delete_result.ok()) << "status=" << delete_result.status();
+
   current_acl = client.ListBucketAcl(bucket_name);
-  EXPECT_EQ(0, name_counter(result.entity(), current_acl));
+  ASSERT_TRUE(current_acl.ok()) << "status=" << current_acl.status();
+  EXPECT_EQ(0, name_counter(result->entity(), *current_acl));
 
   client.DeleteBucket(bucket_name);
 }
@@ -535,13 +547,15 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
   ASSERT_FALSE(bindings.end() ==
                bindings.find("roles/storage.legacyBucketOwner"));
 
-  std::vector<BucketAccessControl> acl = client.ListBucketAcl(bucket_name);
+  StatusOr<std::vector<BucketAccessControl>> acl =
+      client.ListBucketAcl(bucket_name);
+  ASSERT_TRUE(acl.ok()) << "status=" << acl.status();
   // Unfortunately we cannot compare the values in the ACL to the values in the
   // IamPolicy directly. The ids for entities have different formats, for
   // example: in ACL 'project-editors-123456789' and in IAM
   // 'projectEditors:my-project'. We can compare the counts though:
   std::set<std::string> expected_owners;
-  for (auto const& entry : acl) {
+  for (auto const& entry : *acl) {
     if (entry.role() == "OWNER") {
       expected_owners.insert(entry.entity());
     }
@@ -700,8 +714,8 @@ TEST_F(BucketIntegrationTest, ListAccessControlFailure) {
   std::string bucket_name = MakeRandomBucketName();
 
   // This operation should fail because the target bucket does not exist.
-  TestPermanentFailure(
-      [&client, bucket_name] { client.ListBucketAcl(bucket_name); });
+  auto list = client.ListBucketAcl(bucket_name);
+  EXPECT_FALSE(list.ok()) << "list[0]=" << list.value().front();
 }
 
 TEST_F(BucketIntegrationTest, CreateAccessControlFailure) {
@@ -710,9 +724,8 @@ TEST_F(BucketIntegrationTest, CreateAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  TestPermanentFailure([&client, bucket_name, entity_name] {
-    client.CreateBucketAcl(bucket_name, entity_name, "READER");
-  });
+  auto acl = client.CreateBucketAcl(bucket_name, entity_name, "READER");
+  EXPECT_FALSE(acl.ok()) << "value=" << acl.value();
 }
 
 TEST_F(BucketIntegrationTest, GetAccessControlFailure) {
@@ -721,9 +734,8 @@ TEST_F(BucketIntegrationTest, GetAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  TestPermanentFailure([&client, bucket_name, entity_name] {
-    client.GetBucketAcl(bucket_name, entity_name);
-  });
+  auto acl = client.GetBucketAcl(bucket_name, entity_name);
+  EXPECT_FALSE(acl.ok()) << "value=" << acl.value();
 }
 
 TEST_F(BucketIntegrationTest, UpdateAccessControlFailure) {
@@ -732,11 +744,10 @@ TEST_F(BucketIntegrationTest, UpdateAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  TestPermanentFailure([&client, bucket_name, entity_name] {
-    client.UpdateBucketAcl(
-        bucket_name,
-        BucketAccessControl().set_entity(entity_name).set_role("READER"));
-  });
+  auto acl = client.UpdateBucketAcl(
+      bucket_name,
+      BucketAccessControl().set_entity(entity_name).set_role("READER"));
+  EXPECT_FALSE(acl.ok()) << "value=" << acl.value();
 }
 
 TEST_F(BucketIntegrationTest, PatchAccessControlFailure) {
@@ -745,11 +756,10 @@ TEST_F(BucketIntegrationTest, PatchAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  TestPermanentFailure([&client, bucket_name, entity_name] {
-    client.PatchBucketAcl(
-        bucket_name, entity_name, BucketAccessControl(),
-        BucketAccessControl().set_entity(entity_name).set_role("READER"));
-  });
+  auto acl = client.PatchBucketAcl(
+      bucket_name, entity_name, BucketAccessControl(),
+      BucketAccessControl().set_entity(entity_name).set_role("READER"));
+  EXPECT_FALSE(acl.ok()) << "value=" << acl.value();
 }
 
 TEST_F(BucketIntegrationTest, DeleteAccessControlFailure) {
@@ -758,9 +768,8 @@ TEST_F(BucketIntegrationTest, DeleteAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  TestPermanentFailure([&client, bucket_name, entity_name] {
-    client.DeleteBucketAcl(bucket_name, entity_name);
-  });
+  StatusOr<void> status = client.DeleteBucketAcl(bucket_name, entity_name);
+  EXPECT_FALSE(status.ok());
 }
 
 TEST_F(BucketIntegrationTest, ListDefaultAccessControlFailure) {

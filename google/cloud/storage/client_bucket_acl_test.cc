@@ -60,17 +60,19 @@ TEST_F(BucketAccessControlsTest, ListBucketAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })""").value(),
+      })""")
+          .value(),
       BucketAccessControl::ParseFromString(R"""({
           "bucket": "test-bucket",
           "entity": "user-test-user-2",
           "role": "READER"
-      })""").value(),
+      })""")
+          .value(),
   };
 
   EXPECT_CALL(*mock, ListBucketAcl(_))
-      .WillOnce(Return(
-          StatusOr<internal::ListBucketAclResponse>(TransientError())))
+      .WillOnce(
+          Return(StatusOr<internal::ListBucketAclResponse>(TransientError())))
       .WillOnce(Invoke([&expected](internal::ListBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
 
@@ -78,21 +80,27 @@ TEST_F(BucketAccessControlsTest, ListBucketAcl) {
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
-  std::vector<BucketAccessControl> actual = client.ListBucketAcl("test-bucket");
-  EXPECT_EQ(expected, actual);
+  StatusOr<std::vector<BucketAccessControl>> actual =
+      client.ListBucketAcl("test-bucket");
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(BucketAccessControlsTest, ListBucketAclTooManyFailures) {
-  testing::TooManyFailuresTest<internal::ListBucketAclResponse>(
+  testing::TooManyFailuresStatusTest<internal::ListBucketAclResponse>(
       mock, EXPECT_CALL(*mock, ListBucketAcl(_)),
-      [](Client& client) { client.ListBucketAcl("test-bucket-name"); },
+      [](Client& client) {
+        return client.ListBucketAcl("test-bucket-name").status();
+      },
       "ListBucketAcl");
 }
 
 TEST_F(BucketAccessControlsTest, ListBucketAclPermanentFailure) {
-  testing::PermanentFailureTest<internal::ListBucketAclResponse>(
+  testing::PermanentFailureStatusTest<internal::ListBucketAclResponse>(
       *client, EXPECT_CALL(*mock, ListBucketAcl(_)),
-      [](Client& client) { client.ListBucketAcl("test-bucket-name"); },
+      [](Client& client) {
+        return client.ListBucketAcl("test-bucket-name").status();
+      },
       "ListBucketAcl");
 }
 
@@ -101,7 +109,8 @@ TEST_F(BucketAccessControlsTest, CreateBucketAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "READER"
-      })""").value();
+      })""")
+                      .value();
 
   EXPECT_CALL(*mock, CreateBucketAcl(_))
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
@@ -114,42 +123,48 @@ TEST_F(BucketAccessControlsTest, CreateBucketAcl) {
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
-  BucketAccessControl actual = client.CreateBucketAcl(
+  StatusOr<BucketAccessControl> actual = client.CreateBucketAcl(
       "test-bucket", "user-test-user-1", BucketAccessControl::ROLE_READER());
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+
   // Compare just a few fields because the values for most of the fields are
   // hard to predict when testing against the production environment.
-  EXPECT_EQ(expected.bucket(), actual.bucket());
-  EXPECT_EQ(expected.entity(), actual.entity());
-  EXPECT_EQ(expected.role(), actual.role());
+  EXPECT_EQ(expected.bucket(), actual->bucket());
+  EXPECT_EQ(expected.entity(), actual->entity());
+  EXPECT_EQ(expected.role(), actual->role());
 }
 
 TEST_F(BucketAccessControlsTest, CreateBucketAclTooManyFailures) {
-  testing::TooManyFailuresTest<BucketAccessControl>(
+  testing::TooManyFailuresStatusTest<BucketAccessControl>(
       mock, EXPECT_CALL(*mock, CreateBucketAcl(_)),
       [](Client& client) {
-        client.CreateBucketAcl("test-bucket-name", "user-test-user-1",
-                               "READER");
+        return client
+            .CreateBucketAcl("test-bucket-name", "user-test-user-1", "READER")
+            .status();
       },
       [](Client& client) {
-        client.CreateBucketAcl("test-bucket-name", "user-test-user-1", "READER",
-                               IfMatchEtag("ABC="));
+        return client
+            .CreateBucketAcl("test-bucket-name", "user-test-user-1", "READER",
+                             IfMatchEtag("ABC="))
+            .status();
       },
       "CreateBucketAcl");
 }
 
 TEST_F(BucketAccessControlsTest, CreateBucketAclPermanentFailure) {
-  testing::PermanentFailureTest<BucketAccessControl>(
+  testing::PermanentFailureStatusTest<BucketAccessControl>(
       *client, EXPECT_CALL(*mock, CreateBucketAcl(_)),
       [](Client& client) {
-        client.CreateBucketAcl("test-bucket-name", "user-test-user", "READER");
+        return client
+            .CreateBucketAcl("test-bucket-name", "user-test-user", "READER")
+            .status();
       },
       "CreateBucketAcl");
 }
 
 TEST_F(BucketAccessControlsTest, DeleteBucketAcl) {
   EXPECT_CALL(*mock, DeleteBucketAcl(_))
-      .WillOnce(
-          Return(StatusOr<internal::EmptyResponse>(TransientError())))
+      .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce(Invoke([](internal::DeleteBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
@@ -158,27 +173,33 @@ TEST_F(BucketAccessControlsTest, DeleteBucketAcl) {
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
-  client.DeleteBucketAcl("test-bucket", "user-test-user-1");
+  StatusOr<void> actual =
+      client.DeleteBucketAcl("test-bucket", "user-test-user-1");
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
 }
 
 TEST_F(BucketAccessControlsTest, DeleteBucketAclTooManyFailures) {
-  testing::TooManyFailuresTest<internal::EmptyResponse>(
+  testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
       mock, EXPECT_CALL(*mock, DeleteBucketAcl(_)),
       [](Client& client) {
-        client.DeleteBucketAcl("test-bucket-name", "user-test-user-1");
+        return client.DeleteBucketAcl("test-bucket-name", "user-test-user-1")
+            .status();
       },
       [](Client& client) {
-        client.DeleteBucketAcl("test-bucket-name", "user-test-user-1",
-                               IfMatchEtag("ABC="));
+        return client
+            .DeleteBucketAcl("test-bucket-name", "user-test-user-1",
+                             IfMatchEtag("ABC="))
+            .status();
       },
       "DeleteBucketAcl");
 }
 
 TEST_F(BucketAccessControlsTest, DeleteBucketAclPermanentFailure) {
-  testing::PermanentFailureTest<internal::EmptyResponse>(
+  testing::PermanentFailureStatusTest<internal::EmptyResponse>(
       *client, EXPECT_CALL(*mock, DeleteBucketAcl(_)),
       [](Client& client) {
-        client.DeleteBucketAcl("test-bucket-name", "user-test-user");
+        return client.DeleteBucketAcl("test-bucket-name", "user-test-user")
+            .status();
       },
       "DeleteBucketAcl");
 }
@@ -188,7 +209,8 @@ TEST_F(BucketAccessControlsTest, GetBucketAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })""").value();
+      })""")
+                                     .value();
 
   EXPECT_CALL(*mock, GetBucketAcl(_))
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
@@ -200,25 +222,29 @@ TEST_F(BucketAccessControlsTest, GetBucketAcl) {
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
-  BucketAccessControl actual =
+  StatusOr<BucketAccessControl> actual =
       client.GetBucketAcl("test-bucket", "user-test-user-1");
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(BucketAccessControlsTest, GetBucketAclTooManyFailures) {
-  testing::TooManyFailuresTest<BucketAccessControl>(
+  testing::TooManyFailuresStatusTest<BucketAccessControl>(
       mock, EXPECT_CALL(*mock, GetBucketAcl(_)),
       [](Client& client) {
-        client.GetBucketAcl("test-bucket-name", "user-test-user-1");
+        return client.GetBucketAcl("test-bucket-name", "user-test-user-1")
+            .status();
       },
       "GetBucketAcl");
 }
 
 TEST_F(BucketAccessControlsTest, GetBucketAclPermanentFailure) {
-  testing::PermanentFailureTest<BucketAccessControl>(
+  testing::PermanentFailureStatusTest<BucketAccessControl>(
       *client, EXPECT_CALL(*mock, GetBucketAcl(_)),
       [](Client& client) {
-        client.GetBucketAcl("test-bucket-name", "user-test-user-1");
+        return client.GetBucketAcl("test-bucket-name", "user-test-user-1")
+            .status();
       },
       "GetBucketAcl");
 }
@@ -228,7 +254,8 @@ TEST_F(BucketAccessControlsTest, UpdateBucketAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })""").value();
+      })""")
+                                     .value();
 
   EXPECT_CALL(*mock, UpdateBucketAcl(_))
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
@@ -241,39 +268,45 @@ TEST_F(BucketAccessControlsTest, UpdateBucketAcl) {
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
-  BucketAccessControl actual = client.UpdateBucketAcl(
+  StatusOr<BucketAccessControl> actual = client.UpdateBucketAcl(
       "test-bucket",
       BucketAccessControl().set_entity("user-test-user-1").set_role("OWNER"));
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(BucketAccessControlsTest, UpdateBucketAclTooManyFailures) {
-  testing::TooManyFailuresTest<BucketAccessControl>(
+  testing::TooManyFailuresStatusTest<BucketAccessControl>(
       mock, EXPECT_CALL(*mock, UpdateBucketAcl(_)),
       [](Client& client) {
-        client.UpdateBucketAcl("test-bucket",
-                               BucketAccessControl()
-                                   .set_entity("user-test-user-1")
-                                   .set_role("OWNER"));
+        return client
+            .UpdateBucketAcl("test-bucket", BucketAccessControl()
+                                                .set_entity("user-test-user-1")
+                                                .set_role("OWNER"))
+            .status();
       },
       [](Client& client) {
-        client.UpdateBucketAcl("test-bucket",
-                               BucketAccessControl()
-                                   .set_entity("user-test-user-1")
-                                   .set_role("OWNER"),
-                               IfMatchEtag("ABC="));
+        return client
+            .UpdateBucketAcl("test-bucket",
+                             BucketAccessControl()
+                                 .set_entity("user-test-user-1")
+                                 .set_role("OWNER"),
+                             IfMatchEtag("ABC="))
+            .status();
       },
       "UpdateBucketAcl");
 }
 
 TEST_F(BucketAccessControlsTest, UpdateBucketAclPermanentFailure) {
-  testing::PermanentFailureTest<BucketAccessControl>(
+  testing::PermanentFailureStatusTest<BucketAccessControl>(
       *client, EXPECT_CALL(*mock, UpdateBucketAcl(_)),
       [](Client& client) {
-        client.UpdateBucketAcl("test-bucket",
-                               BucketAccessControl()
-                                   .set_entity("user-test-user-1")
-                                   .set_role("OWNER"));
+        return client
+            .UpdateBucketAcl("test-bucket", BucketAccessControl()
+                                                .set_entity("user-test-user-1")
+                                                .set_role("OWNER"))
+            .status();
       },
       "UpdateBucketAcl");
 }
@@ -283,7 +316,8 @@ TEST_F(BucketAccessControlsTest, PatchBucketAcl) {
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
-      })""").value();
+      })""")
+                                   .value();
 
   EXPECT_CALL(*mock, PatchBucketAcl(_))
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
@@ -298,33 +332,41 @@ TEST_F(BucketAccessControlsTest, PatchBucketAcl) {
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
-  BucketAccessControl actual = client.PatchBucketAcl(
+  StatusOr<BucketAccessControl> actual = client.PatchBucketAcl(
       "test-bucket", "user-test-user-1",
       BucketAccessControlPatchBuilder().set_role("OWNER"));
-  EXPECT_EQ(result, actual);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+
+  EXPECT_EQ(result, *actual);
 }
 
 TEST_F(BucketAccessControlsTest, PatchBucketAclTooManyFailures) {
-  testing::TooManyFailuresTest<BucketAccessControl>(
+  testing::TooManyFailuresStatusTest<BucketAccessControl>(
       mock, EXPECT_CALL(*mock, PatchBucketAcl(_)),
       [](Client& client) {
-        client.PatchBucketAcl("test-bucket", "user-test-user-1",
-                              BucketAccessControlPatchBuilder());
+        return client
+            .PatchBucketAcl("test-bucket", "user-test-user-1",
+                            BucketAccessControlPatchBuilder())
+            .status();
       },
       [](Client& client) {
-        client.PatchBucketAcl("test-bucket", "user-test-user-1",
-                              BucketAccessControlPatchBuilder(),
-                              IfMatchEtag("ABC="));
+        return client
+            .PatchBucketAcl("test-bucket", "user-test-user-1",
+                            BucketAccessControlPatchBuilder(),
+                            IfMatchEtag("ABC="))
+            .status();
       },
       "PatchBucketAcl");
 }
 
 TEST_F(BucketAccessControlsTest, PatchBucketAclPermanentFailure) {
-  testing::PermanentFailureTest<BucketAccessControl>(
+  testing::PermanentFailureStatusTest<BucketAccessControl>(
       *client, EXPECT_CALL(*mock, PatchBucketAcl(_)),
       [](Client& client) {
-        client.PatchBucketAcl("test-bucket", "user-test-user-1",
-                              BucketAccessControlPatchBuilder());
+        return client
+            .PatchBucketAcl("test-bucket", "user-test-user-1",
+                            BucketAccessControlPatchBuilder())
+            .status();
       },
       "PatchBucketAcl");
 }

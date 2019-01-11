@@ -145,9 +145,10 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotOpenFile) {
   Client client;
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.InsertObject(bucket_name, object_name, LoremIpsum(),
                           IfGenerationMatch(0), Projection::Full());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
   // Create an invalid path for the destination object.
   auto file_name = MakeRandomObjectName() + "/" + MakeRandomObjectName();
@@ -174,9 +175,10 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotWriteToFile) {
   Client client;
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.InsertObject(bucket_name, object_name, LoremIpsum(),
                           IfGenerationMatch(0), Projection::Full());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
   // We want to test that the code handles write errors *after* the file is
   // successfully opened for writing. Such errors are hard to get, typically
@@ -298,8 +300,9 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileUploadFailure) {
   std::ofstream(file_name) << LoremIpsum();
 
   // Create the object.
-  ObjectMetadata meta = client.InsertObject(bucket_name, object_name,
-                                            LoremIpsum(), IfGenerationMatch(0));
+  StatusOr<ObjectMetadata> meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
   // Trying to upload the file to the same object with the IfGenerationMatch(0)
   // condition should fail because the object already exists.
@@ -600,8 +603,9 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
     large_text += line + "\n";
   }
   // Create an object with the contents to download.
-  ObjectMetadata source_meta = client.InsertObject(
+  StatusOr<ObjectMetadata> source_meta = client.InsertObject(
       bucket_name, object_name, large_text, IfGenerationMatch(0));
+  ASSERT_TRUE(source_meta.ok()) << "status=" << source_meta.status();
 
   // Create a iostream to read the object back.
   auto stream = client.ReadObject(bucket_name, object_name);
@@ -628,9 +632,11 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingReadXML) {
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.InsertObject(bucket_name, object_name, LoremIpsum(),
                           IfGenerationMatch(0), Projection::Full());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+
   auto stream = client.ReadObject(
       bucket_name, object_name, DisableCrc32cChecksum(true),
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
@@ -649,7 +655,8 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingReadXML) {
 #else
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
-  EXPECT_EQ(stream.received_hash(), meta.md5_hash());
+  EXPECT_EQ(stream.received_hash(), meta->md5_hash());
+  EXPECT_FALSE(stream.status().ok());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
   client.DeleteObject(bucket_name, object_name);
@@ -667,9 +674,11 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingReadJSON) {
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.InsertObject(bucket_name, object_name, LoremIpsum(),
                           IfGenerationMatch(0), Projection::Full());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+
   auto stream = client.ReadObject(
       bucket_name, object_name, DisableCrc32cChecksum(true),
       IfMetagenerationNotMatch(0),
@@ -760,11 +769,13 @@ TEST_F(ObjectMediaIntegrationTest, InsertWithCrc32c) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  ObjectMetadata meta = client.InsertObject(bucket_name, object_name, expected,
-                                            IfGenerationMatch(0),
-                                            Crc32cChecksumValue("6Y46Mg=="));
-  EXPECT_EQ(object_name, meta.name());
-  EXPECT_EQ(bucket_name, meta.bucket());
+  StatusOr<ObjectMetadata> meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0),
+      Crc32cChecksumValue("6Y46Mg=="));
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name, meta->bucket());
 
   // Create a iostream to read the object back.
   auto stream = client.ReadObject(bucket_name, object_name);
@@ -782,11 +793,13 @@ TEST_F(ObjectMediaIntegrationTest, XmlInsertWithCrc32c) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  ObjectMetadata meta = client.InsertObject(bucket_name, object_name, expected,
-                                            IfGenerationMatch(0), Fields(""),
-                                            Crc32cChecksumValue("6Y46Mg=="));
-  EXPECT_EQ(object_name, meta.name());
-  EXPECT_EQ(bucket_name, meta.bucket());
+  StatusOr<ObjectMetadata> meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0), Fields(""),
+      Crc32cChecksumValue("6Y46Mg=="));
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name, meta->bucket());
 
   // Create a iostream to read the object back.
   auto stream = client.ReadObject(bucket_name, object_name);
@@ -804,10 +817,10 @@ TEST_F(ObjectMediaIntegrationTest, InsertWithCrc32cFailure) {
   std::string expected = LoremIpsum();
 
   // This should fail because the CRC32C value is incorrect.
-  TestPermanentFailure([&] {
-    client.InsertObject(bucket_name, object_name, expected,
-                        IfGenerationMatch(0), Crc32cChecksumValue("4UedKg=="));
-  });
+  StatusOr<ObjectMetadata> failure = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0),
+      Crc32cChecksumValue("4UedKg=="));
+  ASSERT_FALSE(failure.ok()) << "status=" << failure.status();
 }
 
 TEST_F(ObjectMediaIntegrationTest, XmlInsertWithCrc32cFailure) {
@@ -818,11 +831,10 @@ TEST_F(ObjectMediaIntegrationTest, XmlInsertWithCrc32cFailure) {
   std::string expected = LoremIpsum();
 
   // This should fail because the CRC32C value is incorrect.
-  TestPermanentFailure([&] {
-    client.InsertObject(bucket_name, object_name, expected,
-                        IfGenerationMatch(0), Fields(""),
-                        Crc32cChecksumValue("4UedKg=="));
-  });
+  StatusOr<ObjectMetadata> failure = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0), Fields(""),
+      Crc32cChecksumValue("4UedKg=="));
+  ASSERT_FALSE(failure.ok()) << "status=" << failure.status();
 }
 
 TEST_F(ObjectMediaIntegrationTest, InsertWithComputedCrc32c) {
@@ -833,11 +845,13 @@ TEST_F(ObjectMediaIntegrationTest, InsertWithComputedCrc32c) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  ObjectMetadata meta = client.InsertObject(
+  StatusOr<ObjectMetadata> meta = client.InsertObject(
       bucket_name, object_name, expected, IfGenerationMatch(0),
       Crc32cChecksumValue(ComputeCrc32cChecksum(expected)));
-  EXPECT_EQ(object_name, meta.name());
-  EXPECT_EQ(bucket_name, meta.bucket());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name, meta->bucket());
 
   // Create a iostream to read the object back.
   auto stream = client.ReadObject(bucket_name, object_name);
@@ -857,8 +871,10 @@ TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cInsertXML) {
 
   auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
-  ObjectMetadata insert_meta = client.InsertObject(
+  StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0), Fields(""));
+  ASSERT_TRUE(insert_meta.ok()) << "status=" << insert_meta.status();
+
   LogSink::Instance().RemoveBackend(id);
 
   auto count =
@@ -881,8 +897,10 @@ TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cInsertJSON) {
 
   auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
-  ObjectMetadata insert_meta = client.InsertObject(
+  StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
+  ASSERT_TRUE(insert_meta.ok()) << "status=" << insert_meta.status();
+
   LogSink::Instance().RemoveBackend(id);
 
   auto count = std::count_if(
@@ -896,13 +914,13 @@ TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cInsertJSON) {
       });
   EXPECT_EQ(1, count);
 
-  if (insert_meta.has_metadata("x_testbench_upload")) {
+  if (insert_meta->has_metadata("x_testbench_upload")) {
     // When running against the testbench, we have some more information to
     // verify the right upload type and contents were sent.
-    EXPECT_EQ("multipart", insert_meta.metadata("x_testbench_upload"));
-    ASSERT_TRUE(insert_meta.has_metadata("x_testbench_crc32c"));
+    EXPECT_EQ("multipart", insert_meta->metadata("x_testbench_upload"));
+    ASSERT_TRUE(insert_meta->has_metadata("x_testbench_crc32c"));
     auto expected_crc32c = ComputeCrc32cChecksum(LoremIpsum());
-    EXPECT_EQ(expected_crc32c, insert_meta.metadata("x_testbench_crc32c"));
+    EXPECT_EQ(expected_crc32c, insert_meta->metadata("x_testbench_crc32c"));
   }
 
   client.DeleteObject(bucket_name, object_name);
@@ -915,16 +933,18 @@ TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cStreamingReadXML) {
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.InsertObject(bucket_name, object_name, LoremIpsum(),
                           IfGenerationMatch(0), Projection::Full());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+
   auto stream = client.ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(stream.IsOpen());
   ASSERT_FALSE(actual.empty());
 
   EXPECT_EQ(stream.received_hash(), stream.computed_hash());
-  EXPECT_THAT(stream.received_hash(), HasSubstr(meta.crc32c()));
+  EXPECT_THAT(stream.received_hash(), HasSubstr(meta->crc32c()));
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -936,9 +956,11 @@ TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cStreamingReadJSON) {
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.InsertObject(bucket_name, object_name, LoremIpsum(),
                           IfGenerationMatch(0), Projection::Full());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+
   auto stream =
       client.ReadObject(bucket_name, object_name, IfMetagenerationNotMatch(0));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
@@ -946,7 +968,7 @@ TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cStreamingReadJSON) {
   ASSERT_FALSE(actual.empty());
 
   EXPECT_EQ(stream.received_hash(), stream.computed_hash());
-  EXPECT_THAT(stream.received_hash(), HasSubstr(meta.crc32c()));
+  EXPECT_THAT(stream.received_hash(), HasSubstr(meta->crc32c()));
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -1011,9 +1033,11 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingReadXML) {
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.InsertObject(bucket_name, object_name, LoremIpsum(),
                           IfGenerationMatch(0), Projection::Full());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+
   auto stream = client.ReadObject(
       bucket_name, object_name,
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
@@ -1025,7 +1049,7 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingReadXML) {
                            std::istreambuf_iterator<char>{});
       } catch (HashMismatchError const& ex) {
         EXPECT_NE(ex.received_hash(), ex.computed_hash());
-        EXPECT_THAT(ex.received_hash(), HasSubstr(meta.crc32c()));
+        EXPECT_THAT(ex.received_hash(), HasSubstr(meta->crc32c()));
         EXPECT_THAT(ex.what(), HasSubstr("mismatched hashes"));
         throw;
       },
@@ -1033,7 +1057,8 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingReadXML) {
 #else
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
-  EXPECT_THAT(stream.received_hash(), HasSubstr(meta.crc32c()));
+  EXPECT_THAT(stream.received_hash(), HasSubstr(meta->crc32c()));
+  EXPECT_FALSE(stream.status().ok());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
   client.DeleteObject(bucket_name, object_name);
@@ -1052,9 +1077,11 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.InsertObject(bucket_name, object_name, LoremIpsum(),
                           IfGenerationMatch(0), Projection::Full());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+
   auto stream = client.ReadObject(
       bucket_name, object_name, DisableMD5Hash(true),
       IfMetagenerationNotMatch(0),
@@ -1159,10 +1186,12 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
     large_text += line + "\n";
   }
 
-  ObjectMetadata source_meta = client.InsertObject(
+  StatusOr<ObjectMetadata> source_meta = client.InsertObject(
       bucket_name, object_name, large_text, IfGenerationMatch(0));
-  EXPECT_EQ(object_name, source_meta.name());
-  EXPECT_EQ(bucket_name, source_meta.bucket());
+  ASSERT_TRUE(source_meta.ok()) << "status=" << source_meta.status();
+
+  EXPECT_EQ(object_name, source_meta->name());
+  EXPECT_EQ(bucket_name, source_meta->bucket());
 
   // Create a iostream to read the object back.
   auto stream = client.ReadObject(bucket_name, object_name,
@@ -1196,10 +1225,12 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
     large_text += line + "\n";
   }
 
-  ObjectMetadata source_meta = client.InsertObject(
+  StatusOr<ObjectMetadata> source_meta = client.InsertObject(
       bucket_name, object_name, large_text, IfGenerationMatch(0));
-  EXPECT_EQ(object_name, source_meta.name());
-  EXPECT_EQ(bucket_name, source_meta.bucket());
+  ASSERT_TRUE(source_meta.ok()) << "status=" << source_meta.status();
+
+  EXPECT_EQ(object_name, source_meta->name());
+  EXPECT_EQ(bucket_name, source_meta->bucket());
 
   // Create a iostream to read the object back.
   auto stream = client.ReadObject(bucket_name, object_name,

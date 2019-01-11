@@ -91,8 +91,9 @@ void CreateObjects(std::string const& bucket_name, ObjectNameList group,
   // Create our own client so no state is shared with the other threads.
   Client client;
   for (auto const& object_name : group) {
-    (void)client.InsertObject(bucket_name, object_name, contents,
-                              IfGenerationMatch(0));
+    StatusOr<ObjectMetadata> meta = client.InsertObject(
+        bucket_name, object_name, contents, IfGenerationMatch(0));
+    ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
   }
 }
 
@@ -204,8 +205,9 @@ TEST_F(ThreadIntegrationTest, ReuseConnections) {
   std::vector<std::chrono::steady_clock::duration> delete_elapsed;
   for (auto const& name : objects) {
     auto start = std::chrono::steady_clock::now();
-    (void)client.InsertObject(bucket_name, name, LoremIpsum(),
-                              IfGenerationMatch(0));
+    StatusOr<ObjectMetadata> meta = client.InsertObject(
+        bucket_name, name, LoremIpsum(), IfGenerationMatch(0));
+    ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
     create_elapsed.emplace_back(std::chrono::steady_clock::now() - start);
   }
   for (auto const& name : objects) {
