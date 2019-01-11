@@ -137,14 +137,14 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
     auto old_os =
         client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                            NewResumableUploadSession());
-    old_os.exceptions(std::ios_base::failbit);
+    ASSERT_TRUE(old_os.good()) << "status=" << old_os.metadata().status();
     session_id = old_os.resumable_session_id();
     std::move(old_os).Suspend();
   }
 
   auto os = client.WriteObject(bucket_name, object_name,
                                RestoreResumableUploadSession(session_id));
-  os.exceptions(std::ios_base::failbit);
+  ASSERT_TRUE(os.good()) << "status=" << os.metadata().status();
   EXPECT_EQ(session_id, os.resumable_session_id());
   os << LoremIpsum();
   os.Close();

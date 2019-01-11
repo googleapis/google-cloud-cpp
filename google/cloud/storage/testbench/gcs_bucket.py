@@ -588,8 +588,9 @@ class GcsBucket(object):
                 # This is just a query to resume an upload, if it is done, return
                 # an empty
                 response = flask.make_response('')
-                response.headers['Range'] = 'bytes=0-%d' % (next_byte - 1)
-                response.status_code = 200
+                if next_byte > 1:
+                    response.headers['Range'] = 'bytes=0-%d' % (next_byte - 1)
+                response.status_code = 308
                 return response
             match = re.match('bytes ([0-9]+)-([0-9]+)/(\*|[0-9]+)', content_range)
             if not match:

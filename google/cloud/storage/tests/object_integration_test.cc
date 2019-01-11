@@ -763,11 +763,12 @@ TEST_F(ObjectIntegrationTest, RewriteSimple) {
 
   // Rewrite object into a new object.
   auto object_name = MakeRandomObjectName();
-  ObjectMetadata rewritten_meta = client.RewriteObjectBlocking(
+  StatusOr<ObjectMetadata> rewritten_meta = client.RewriteObjectBlocking(
       bucket_name, source_name, bucket_name, object_name);
+  ASSERT_TRUE(rewritten_meta.ok()) << "status=" << rewritten_meta.status();
 
-  EXPECT_EQ(bucket_name, rewritten_meta.bucket());
-  EXPECT_EQ(object_name, rewritten_meta.name());
+  EXPECT_EQ(bucket_name, rewritten_meta->bucket());
+  EXPECT_EQ(object_name, rewritten_meta->name());
 
   client.DeleteObject(bucket_name, object_name);
   client.DeleteObject(bucket_name, source_name);
@@ -793,9 +794,11 @@ TEST_F(ObjectIntegrationTest, RewriteEncrypted) {
       bucket_name, source_name, bucket_name, object_name,
       SourceEncryptionKey(source_key), EncryptionKey(dest_key));
 
-  ObjectMetadata rewritten_meta = rewriter.Result();
-  EXPECT_EQ(bucket_name, rewritten_meta.bucket());
-  EXPECT_EQ(object_name, rewritten_meta.name());
+  StatusOr<ObjectMetadata> rewritten_meta = rewriter.Result();
+  ASSERT_TRUE(rewritten_meta.ok()) << "status=" << rewritten_meta.status();
+
+  EXPECT_EQ(bucket_name, rewritten_meta->bucket());
+  EXPECT_EQ(object_name, rewritten_meta->name());
 
   client.DeleteObject(bucket_name, object_name);
   client.DeleteObject(bucket_name, source_name);
@@ -827,15 +830,17 @@ TEST_F(ObjectIntegrationTest, RewriteLarge) {
   ObjectRewriter writer =
       client.RewriteObject(bucket_name, source_name, bucket_name, object_name);
 
-  ObjectMetadata rewritten_meta =
-      writer.ResultWithProgressCallback([](RewriteProgress const& p) {
-        EXPECT_TRUE((p.total_bytes_rewritten < p.object_size) xor p.done)
-            << "p.done=" << p.done << ", p.object_size=" << p.object_size
-            << ", p.total_bytes_rewritten=" << p.total_bytes_rewritten;
+  StatusOr<ObjectMetadata> rewritten_meta =
+      writer.ResultWithProgressCallback([](StatusOr<RewriteProgress> const& p) {
+        ASSERT_TRUE(p.ok()) << "progress status=" << p.status();
+        EXPECT_TRUE((p->total_bytes_rewritten < p->object_size) xor p->done)
+            << "p.done=" << p->done << ", p.object_size=" << p->object_size
+            << ", p.total_bytes_rewritten=" << p->total_bytes_rewritten;
       });
+  ASSERT_TRUE(rewritten_meta.ok()) << "status=" << rewritten_meta.status();
 
-  EXPECT_EQ(bucket_name, rewritten_meta.bucket());
-  EXPECT_EQ(object_name, rewritten_meta.name());
+  EXPECT_EQ(bucket_name, rewritten_meta->bucket());
+  EXPECT_EQ(object_name, rewritten_meta->name());
 
   client.DeleteObject(bucket_name, object_name);
   client.DeleteObject(bucket_name, source_name);
@@ -1288,10 +1293,10 @@ TEST_F(ObjectIntegrationTest, RewriteFailure) {
   auto destination_object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
-  TestPermanentFailure([&] {
-    client.RewriteObjectBlocking(bucket_name, source_object_name, bucket_name,
+  StatusOr<ObjectMetadata> metadata =
+      client.RewriteObjectBlocking(bucket_name, source_object_name, bucket_name,
                                  destination_object_name);
-  });
+  EXPECT_FALSE(metadata.ok());
 }
 
 TEST_F(ObjectIntegrationTest, ListAccessControlFailure) {

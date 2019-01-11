@@ -31,9 +31,6 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 
 (cd "${PROJECT_ROOT}" ; ./ci/check-style.sh)
 
-# TODO (#1797): this is a workaround for the shared library error.
-export LD_LIBRARY_PATH="${PWD}/${BUILD_OUTPUT}/external/lib:${PWD}/${BUILD_OUTPUT}/external/lib64"
-
 CMAKE_COMMAND="cmake"
 if [ "${SCAN_BUILD}" = "yes" ]; then
   CMAKE_COMMAND="scan-build --use-cc=${CC} --use-c++=${CXX} cmake"
