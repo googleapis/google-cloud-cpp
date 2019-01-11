@@ -589,11 +589,6 @@ TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
 }
 
 TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
-  if (UsingCloudBigtableEmulator()) {
-    // TODO(#151) - remove workarounds for emulator bug(s).
-    return;
-  }
-
   std::string const table_id = RandomTableId();
   auto table = CreateTable(table_id, table_config);
 
