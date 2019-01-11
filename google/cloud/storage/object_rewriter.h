@@ -91,7 +91,7 @@ class ObjectRewriter {
    * @param cb the callback object.
    *
    * @tparam Functor the type of the callback object. It must satisfy:
-   *   `std:is_invocable<Functor, RewriteProgress>:: value == true`.
+   *   `std:is_invocable<Functor, StatusOr<RewriteProgress>>:: value == true`.
    *
    * @return the object metadata once the copy completes.
    */
