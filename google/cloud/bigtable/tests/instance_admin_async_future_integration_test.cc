@@ -190,11 +190,6 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
       << " generated at random.";
 
   // create cluster
-  auto clusters_before = instance_admin_->ListClusters(id);
-  ASSERT_FALSE(IsClusterPresent(clusters_before, cluster_id_str))
-      << "Cluster (" << cluster_id_str << ") already exists."
-      << " This is unexpected, as the cluster ids are"
-      << " generated at random.";
   bigtable::ClusterId cluster_id(cluster_id_str);
   auto cluster_config =
       bigtable::ClusterConfig("us-central1-b", 3, bigtable::ClusterConfig::HDD);
@@ -210,10 +205,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
       << "Cluster (" << cluster_id_str << ") already exists."
       << " This is unexpected, as the cluster ids are"
       << " generated at random.";
-  auto clusters_after = instance_admin_->ListClusters(id);
   EXPECT_FALSE(IsClusterPresent(clusters_list_before.clusters, cluster.name()));
-  EXPECT_FALSE(IsClusterPresent(clusters_before, cluster.name()));
-  EXPECT_TRUE(IsClusterPresent(clusters_after, cluster.name()));
 
   // Get cluster
   google::cloud::future<btadmin::Cluster> fut =
@@ -242,18 +234,12 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   instance_admin_->DeleteCluster(std::move(instance_id), std::move(cluster_id));
   auto clusters_list_after_delete =
       instance_admin_->AsyncListClusters(cq, id).get();
-  auto clusters_after_delete = instance_admin_->ListClusters(id);
   instance_admin_->DeleteInstance(id);
   EXPECT_TRUE(
       IsClusterPresent(clusters_list_after.clusters,
                        instance_details.name() + "/clusters/" + id + "-cl2"));
   EXPECT_FALSE(
       IsClusterPresent(clusters_list_after_delete.clusters,
-                       instance_details.name() + "/clusters/" + id + "-cl2"));
-  EXPECT_TRUE(IsClusterPresent(
-      clusters_after, instance_details.name() + "/clusters/" + id + "-cl2"));
-  EXPECT_FALSE(
-      IsClusterPresent(clusters_after_delete,
                        instance_details.name() + "/clusters/" + id + "-cl2"));
   cq.Shutdown();
   pool.join();

@@ -240,9 +240,9 @@ class InstanceAdmin {
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
    * @return the list of clusters. It is possible that some zones are not
-   * currently available for querying. In that case this function returns the
-   * list of failed locations in the `projects/<project>/locations/<zone_id>`
-   * format.
+   *     currently available for querying. In that case this function returns
+   *     the list of failed locations in the
+   *     `projects/<project>/locations/<zone_id>` format.
    *
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc list clusters
@@ -257,9 +257,9 @@ class InstanceAdmin {
    *     `cq.Run()`.
    * @param instance_id the instance in a project.
    * @return the list of clusters. It is possible that some zones are not
-   * currently available for querying. In that case this function returns the
-   * list of failed locations in the `projects/<project>/locations/<zone_id>`
-   * format.
+   *     currently available for querying. In that case this function returns
+   *     the list of failed locations in the
+   *     `projects/<project>/locations/<zone_id>` format.
    *
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc list clusters
