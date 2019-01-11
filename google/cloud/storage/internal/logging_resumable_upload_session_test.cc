@@ -44,11 +44,11 @@ class LoggingResumableUploadSessionTest : public ::testing::Test {
   }
 
   std::size_t CountLines(std::string const& substr) {
-    return std::count_if(
-        log_backend->log_lines.begin(), log_backend->log_lines.end(),
-        [substr](std::string const& line) {
-          return std::string::npos != line.find(substr);
-        });
+    return std::count_if(log_backend->log_lines.begin(),
+                         log_backend->log_lines.end(),
+                         [substr](std::string const& line) {
+                           return std::string::npos != line.find(substr);
+                         });
   }
 
   std::shared_ptr<CaptureLogLinesBackend> log_backend = nullptr;
@@ -64,45 +64,45 @@ TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
         EXPECT_EQ(payload, p);
         EXPECT_EQ(513 * 1024, s);
-        return StatusOr<ResumableUploadResponse>(Status(503, "uh oh"));
+        return StatusOr<ResumableUploadResponse>(
+            AsStatus(HttpResponse{503, "uh oh", {}}));
       }));
 
   LoggingResumableUploadSession session(std::move(mock));
 
   auto result = session.UploadChunk(payload, 513 * 1024);
-  EXPECT_EQ(503, result.status().status_code());
+  EXPECT_EQ(StatusCode::kUnavailable, result.status().status_code());
   EXPECT_EQ("uh oh", result.status().error_message());
 
   EXPECT_EQ(1U, CountLines("upload_size=" + std::to_string(513 * 1024UL)));
-  EXPECT_EQ(1U, CountLines("[UNEXPECTED_STATUS_CODE=503]"));
+  EXPECT_EQ(1U, CountLines("[UNAVAILABLE]"));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
   auto mock = google::cloud::internal::make_unique<
       testing::MockResumableUploadSession>();
 
-  EXPECT_CALL(*mock, ResetSession())
-      .WillOnce(Invoke([&]() {
-        return StatusOr<ResumableUploadResponse>(Status(308, "uh oh"));
-      }));
+  EXPECT_CALL(*mock, ResetSession()).WillOnce(Invoke([&]() {
+    return StatusOr<ResumableUploadResponse>(
+        Status(AsStatus(HttpResponse{308, "uh oh", {}})));
+  }));
 
   LoggingResumableUploadSession session(std::move(mock));
 
   auto result = session.ResetSession();
-  EXPECT_EQ(308, result.status().status_code());
+  EXPECT_EQ(StatusCode::kFailedPrecondition, result.status().status_code());
   EXPECT_EQ("uh oh", result.status().error_message());
 
-  EXPECT_EQ(1U, CountLines("[UNEXPECTED_STATUS_CODE=308]"));
+  EXPECT_EQ(1U, CountLines("[FAILED_PRECONDITION]"));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, NextExpectedByte) {
   auto mock = google::cloud::internal::make_unique<
       testing::MockResumableUploadSession>();
 
-  EXPECT_CALL(*mock, next_expected_byte())
-      .WillOnce(Invoke([&]() {
-        return 512 * 1024U;
-      }));
+  EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Invoke([&]() {
+    return 512 * 1024U;
+  }));
 
   LoggingResumableUploadSession session(std::move(mock));
 

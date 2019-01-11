@@ -91,18 +91,19 @@ TEST(ThrowDelegateTest, LogicError) {
 }
 
 TEST(ThrowDelegateTest, TestThrow) {
+  // We hard-code "5" below, so check it.
+  EXPECT_EQ(StatusCode::kNotFound, 5);
   testing_util::ExpectException<RuntimeStatusError>(
       [&] {
-        Status status(404, "NOT FOUND", "oh noes!");
+        Status status(StatusCode::kNotFound, "NOT FOUND");
         ThrowStatus(std::move(status));
       },
       [&](RuntimeStatusError const& ex) {
-        EXPECT_EQ(404, ex.status().status_code());
+        EXPECT_EQ(StatusCode::kNotFound, ex.status().status_code());
         EXPECT_EQ("NOT FOUND", ex.status().error_message());
-        EXPECT_EQ("oh noes!", ex.status().error_details());
       },
       "Aborting because exceptions are disabled: "
-      "NOT FOUND \\[UNEXPECTED_STATUS_CODE=404\\], details=oh noes!");
+      "NOT FOUND \\[NOT_FOUND\\]");
 }
 
 }  // namespace

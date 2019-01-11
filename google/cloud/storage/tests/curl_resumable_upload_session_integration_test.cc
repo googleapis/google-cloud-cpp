@@ -50,12 +50,14 @@ TEST_F(CurlResumableUploadIntegrationTest, Simple) {
   ResumableUploadRequest request(bucket_name, object_name);
   request.set_multiple_options(IfGenerationMatch(0));
 
-  StatusOr<std::unique_ptr<ResumableUploadSession>> session = client->CreateResumableSession(request);
+  StatusOr<std::unique_ptr<ResumableUploadSession>> session =
+      client->CreateResumableSession(request);
 
   ASSERT_TRUE(session.ok());
 
   std::string const contents = LoremIpsum();
-  StatusOr<ResumableUploadResponse> response = (*session)->UploadChunk(contents, contents.size());
+  StatusOr<ResumableUploadResponse> response =
+      (*session)->UploadChunk(contents, contents.size());
 
   ASSERT_TRUE(response.ok());
   EXPECT_FALSE(response->payload.empty());
@@ -75,21 +77,20 @@ TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
   ResumableUploadRequest request(bucket_name, object_name);
   request.set_multiple_options(IfGenerationMatch(0));
 
-  StatusOr<std::unique_ptr<ResumableUploadSession>> session = client->CreateResumableSession(request);
+  StatusOr<std::unique_ptr<ResumableUploadSession>> session =
+      client->CreateResumableSession(request);
 
   ASSERT_TRUE(session.ok());
 
   std::string const contents(UploadChunkRequest::kChunkSizeQuantum, '0');
   StatusOr<ResumableUploadResponse> response =
       (*session)->UploadChunk(contents, 2 * contents.size());
-  ASSERT_TRUE(response.status().status_code() == 200 or response.status().status_code() == 308)
-      << response.status();
+  ASSERT_TRUE(response.status().ok()) << response.status();
 
   response = (*session)->ResetSession();
   ASSERT_TRUE(response.ok()) << response.status();
 
-  response =
-      (*session)->UploadChunk(contents, 2 * contents.size());
+  response = (*session)->UploadChunk(contents, 2 * contents.size());
   ASSERT_TRUE(response.ok()) << response.status();
 
   EXPECT_FALSE(response->payload.empty());
@@ -118,20 +119,17 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
 
   StatusOr<ResumableUploadResponse> response =
       (*old_session)->UploadChunk(contents, 3 * contents.size());
-  ASSERT_TRUE(response.status().status_code() == 200 or response.status().status_code() == 308)
-      << response.status();
+  ASSERT_TRUE(response.status().ok()) << response.status();
 
   StatusOr<std::unique_ptr<ResumableUploadSession>> session =
       client->RestoreResumableSession((*old_session)->session_id());
   EXPECT_EQ(contents.size(), (*session)->next_expected_byte());
   old_session->reset();
 
-  response =
-      (*session)->UploadChunk(contents, 3 * contents.size());
+  response = (*session)->UploadChunk(contents, 3 * contents.size());
   ASSERT_TRUE(response.ok()) << response.status();
 
-  response =
-      (*session)->UploadChunk(contents, 3 * contents.size());
+  response = (*session)->UploadChunk(contents, 3 * contents.size());
   ASSERT_TRUE(response.ok()) << response.status();
 
   EXPECT_FALSE(response->payload.empty());

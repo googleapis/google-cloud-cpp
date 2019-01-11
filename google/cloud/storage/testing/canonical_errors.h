@@ -24,8 +24,13 @@ namespace storage {
 namespace testing {
 /// Some helper functions to generate canonical errors in the tests.
 namespace canonical_errors {
-inline Status TransientError() { return Status{503, std::string{"try-again"}}; }
-inline Status PermanentError() { return Status{404, std::string{"not found"}}; }
+inline Status TransientError() {
+  return Status(StatusCode::kUnavailable, std::string{"try-again"});
+}
+
+inline Status PermanentError() {
+  return Status(StatusCode::kNotFound, std::string{"not found"});
+}
 }  // namespace canonical_errors
 }  // namespace testing
 }  // namespace storage
