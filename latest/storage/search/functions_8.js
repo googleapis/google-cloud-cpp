@@ -10,5 +10,5 @@ var searchData=
   ['isopen',['IsOpen',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectReadStream.html#acd290c5d85766311f8fecef517518d7c',1,'google::cloud::storage::v0::ObjectReadStream::IsOpen()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectWriteStream.html#a6824145923a10e5ac814bf3ad3678662',1,'google::cloud::storage::v0::ObjectWriteStream::IsOpen()']]],
   ['ispermanentfailure',['IsPermanentFailure',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1StatusTraits.html#aac62be0c681aa0ca1d349dde05fca984',1,'google::cloud::storage::v0::internal::StatusTraits']]],
   ['isvalid',['IsValid',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1RefreshingCredentialsWrapper.html#a8f3551b3b5264d6b666bd568ab569e39',1,'google::cloud::storage::v0::oauth2::RefreshingCredentialsWrapper']]],
-  ['iterate',['Iterate',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html#a309e46a562b9eda84ff1352628c57efd',1,'google::cloud::storage::v0::ObjectRewriter']]]
+  ['iterate',['Iterate',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html#acbe3b00868463055a21d754148235e83',1,'google::cloud::storage::v0::ObjectRewriter']]]
 ];

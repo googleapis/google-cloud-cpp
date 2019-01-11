@@ -38,13 +38,13 @@ var searchData=
   ['resetversioning',['ResetVersioning',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a2133291b34f854e66c1828877aeea8ac',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['resetwebsite',['ResetWebsite',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html#a99d364a0ca372cc5bcca3e9c146a079d',1,'google::cloud::storage::v0::BucketMetadataPatchBuilder']]],
   ['restoreresumableuploadsession',['RestoreResumableUploadSession',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a4011e191a6a3b96add28f23b04db3957',1,'google::cloud::storage::v0']]],
-  ['result',['Result',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html#a70135d91f3936fa1fb6c76467f0d3844',1,'google::cloud::storage::v0::ObjectRewriter']]],
-  ['resultwithprogresscallback',['ResultWithProgressCallback',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html#ab14a1ad23c742f13611c2277fdac64ae',1,'google::cloud::storage::v0::ObjectRewriter']]],
+  ['result',['Result',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html#ad155772d5d9fcf5e48c4c18d44efbdce',1,'google::cloud::storage::v0::ObjectRewriter']]],
+  ['resultwithprogresscallback',['ResultWithProgressCallback',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html#a48dfc07d5401384229e7e5b1fa888b6b',1,'google::cloud::storage::v0::ObjectRewriter']]],
   ['resumable_5fsession_5fid',['resumable_session_id',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectWriteStream.html#a2ec1829e41e662dd91d3dc277f637c5b',1,'google::cloud::storage::v0::ObjectWriteStream']]],
   ['resumerewriteobject',['ResumeRewriteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ada8f04abb2ebbceae9272fd3d6a3d2c4',1,'google::cloud::storage::v0::Client']]],
   ['retention_5fexpiration_5ftime',['retention_expiration_time',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a371cea70f882b5e46c0f84da32a84f0a',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['retention_5fpolicy',['retention_policy',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a14dc1ca650289da4065f65e8dcec78f7',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['retention_5fpolicy_5fas_5foptional',['retention_policy_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a86c1537dcb29d8a1ea8fb49d5d091023',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['rewriteobject',['RewriteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a16f1e39a3259246f296cb38627426b6e',1,'google::cloud::storage::v0::Client']]],
-  ['rewriteobjectblocking',['RewriteObjectBlocking',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ac2b4c5610080c6b672f3d644e9bfd1cb',1,'google::cloud::storage::v0::Client']]]
+  ['rewriteobjectblocking',['RewriteObjectBlocking',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a670b4499a7a4993f8a22f04ffe158235',1,'google::cloud::storage::v0::Client']]]
 ];
