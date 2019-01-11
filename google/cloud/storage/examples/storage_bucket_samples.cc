@@ -96,10 +96,16 @@ void CreateBucket(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   //! [create bucket] [START storage_create_bucket]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
-    gcs::BucketMetadata meta =
+    StatusOr<gcs::BucketMetadata> meta =
         client.CreateBucket(bucket_name, gcs::BucketMetadata());
-    std::cout << "Bucket created.  The metadata is " << meta << std::endl;
+    if (not meta.ok()) {
+      std::cerr << "Could not create bucket " << bucket_name << std::endl;
+      return;
+    }
+    std::cout << "Bucket " << meta->name() << " created."
+              << "\nFull Metadata: " << *meta << std::endl;
   }
   //! [create bucket] [END storage_create_bucket]
   (std::move(client), bucket_name);
@@ -114,11 +120,18 @@ void CreateBucketForProject(google::cloud::storage::Client client, int& argc,
   auto project_id = ConsumeArg(argc, argv);
   //! [create bucket for project]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string project_id) {
-    gcs::BucketMetadata meta = client.CreateBucketForProject(
+    StatusOr<gcs::BucketMetadata> meta = client.CreateBucketForProject(
         bucket_name, project_id, gcs::BucketMetadata());
-    std::cout << "Bucket created for project " << project_id << "."
-              << " The metadata is " << meta << std::endl;
+    if (not meta.ok()) {
+      std::cerr << "Could not create bucket " << bucket_name << " in project "
+                << project_id << std::endl;
+      return;
+    }
+    std::cout << "Bucket " << meta->name() << " created for project "
+              << project_id << " [" << meta->project_number() << "]"
+              << "\nFull Metadata: " << *meta << std::endl;
   }
   //! [create bucket for project]
   (std::move(client), bucket_name, project_id);
@@ -704,7 +717,7 @@ void RemoveRetentionPolicy(google::cloud::storage::Client client, int& argc,
 }
 
 void LockRetentionPolicy(google::cloud::storage::Client client, int& argc,
-                           char* argv[]) {
+                         char* argv[]) {
   if (argc != 2) {
     throw Usage{"lock-retention-policy <bucket-name>"};
   }
@@ -714,9 +727,9 @@ void LockRetentionPolicy(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
     gcs::BucketMetadata original = client.GetBucketMetadata(bucket_name);
-    client.LockBucketRetentionPolicy(
-        bucket_name, original.metageneration());
-    std::cout << "Retention policy successfully locked for bucket " << bucket_name << std::endl;
+    client.LockBucketRetentionPolicy(bucket_name, original.metageneration());
+    std::cout << "Retention policy successfully locked for bucket "
+              << bucket_name << std::endl;
   }
   // [END storage_lock_retention_policy]
   //! [lock retention policy]
@@ -731,7 +744,7 @@ int main(int argc, char* argv[]) try {
   //! [create client]
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char* [])>;
+      std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
       {"list-buckets", &ListBuckets},
       {"list-buckets-for-project", &ListBucketsForProject},

@@ -26,18 +26,21 @@ int main(int argc, char* argv[]) try {
   std::string bucket_name = argv[1];
   std::string project_id = argv[2];
 
-  // Create an alias to make the code easier to read.
+  // Create aliases to make the code easier to read.
   namespace gcs = google::cloud::storage;
 
   // Create a client to communicate with Google Cloud Storage. This client
   // uses the default configuration for authentication and project id.
   gcs::Client client;
 
-  gcs::BucketMetadata metadata = client.CreateBucketForProject(
-      bucket_name, project_id,
-      gcs::BucketMetadata()
-          .set_location("us-east1")
-          .set_storage_class(gcs::storage_class::Regional()));
+  gcs::BucketMetadata metadata =
+      client
+          .CreateBucketForProject(
+              bucket_name, project_id,
+              gcs::BucketMetadata()
+                  .set_location("us-east1")
+                  .set_storage_class(gcs::storage_class::Regional()))
+          .value();
 
   std::cout << "Created bucket " << metadata.name() << std::endl;
 

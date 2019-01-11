@@ -141,13 +141,15 @@ int main(int argc, char* argv[]) try {
 
   auto bucket_name = MakeRandomBucketName(generator);
   auto meta =
-      client.CreateBucket(bucket_name,
-                          gcs::BucketMetadata()
-                              .set_storage_class(gcs::storage_class::Regional())
-                              .set_location(options.region),
-                          gcs::PredefinedAcl("private"),
-                          gcs::PredefinedDefaultObjectAcl("projectPrivate"),
-                          gcs::Projection("full"));
+      client
+          .CreateBucket(bucket_name,
+                        gcs::BucketMetadata()
+                            .set_storage_class(gcs::storage_class::Regional())
+                            .set_location(options.region),
+                        gcs::PredefinedAcl("private"),
+                        gcs::PredefinedDefaultObjectAcl("projectPrivate"),
+                        gcs::Projection("full"))
+          .value();
   std::cout << "# Running test on bucket: " << meta.name() << std::endl;
   std::string notes = google::cloud::storage::version_string() + ";" +
                       google::cloud::internal::compiler() + ";" +
@@ -268,7 +270,7 @@ TestResult WriteCommon(gcs::Client client, std::string const& bucket_name,
     if (i != 0 and i % kThroughputReportIntervalInChunks == 0) {
       auto elapsed = std::chrono::steady_clock::now() - start;
       result.emplace_back(
-	  IterationResult{op_type, i * data_chunk.size(),
+          IterationResult{op_type, i * data_chunk.size(),
                           std::chrono::duration_cast<milliseconds>(elapsed)});
     }
   }
@@ -276,7 +278,7 @@ TestResult WriteCommon(gcs::Client client, std::string const& bucket_name,
     stream.Close();
     auto elapsed = std::chrono::steady_clock::now() - start;
     result.emplace_back(
-	IterationResult{op_type, options.object_chunk_count * data_chunk.size(),
+        IterationResult{op_type, options.object_chunk_count * data_chunk.size(),
                         std::chrono::duration_cast<milliseconds>(elapsed)});
   } catch (std::exception const& ex) {
     std::cerr << ex.what() << std::endl;
@@ -332,9 +334,8 @@ TestResult ReadOnce(gcs::Client client, std::string const& bucket_name,
     }
   }
   auto elapsed = std::chrono::steady_clock::now() - start;
-  result.emplace_back(
-      IterationResult{OP_READ, total_size,
-                     std::chrono::duration_cast<milliseconds>(elapsed)});
+  result.emplace_back(IterationResult{
+      OP_READ, total_size, std::chrono::duration_cast<milliseconds>(elapsed)});
   return result;
 }
 

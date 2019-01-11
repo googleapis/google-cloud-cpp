@@ -234,9 +234,6 @@ class Client {
    *     Valid types for this operation include `PredefinedAcl`,
    *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is always idempotent. It fails if the bucket already exists.
    *
@@ -244,13 +241,14 @@ class Client {
    * @snippet storage_bucket_samples.cc create bucket
    */
   template <typename... Options>
-  BucketMetadata CreateBucket(std::string bucket_name, BucketMetadata metadata,
-                              Options&&... options) {
+  StatusOr<BucketMetadata> CreateBucket(std::string bucket_name,
+                                        BucketMetadata metadata,
+                                        Options&&... options) {
     auto const& project_id = raw_client_->client_options().project_id();
     if (project_id.empty()) {
       std::string msg = "Default project id not set in ";
       msg += __func__;
-      google::cloud::internal::RaiseLogicError(msg);
+      return Status(StatusCode::kFailedPrecondition, msg);
     }
     return CreateBucketForProject(std::move(bucket_name), project_id,
                                   std::move(metadata),
@@ -268,9 +266,6 @@ class Client {
    *     Valid types for this operation include `PredefinedAcl`,
    *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is always idempotent. It fails if the bucket already exists.
    *
@@ -278,15 +273,15 @@ class Client {
    * @snippet storage_bucket_samples.cc create bucket for project
    */
   template <typename... Options>
-  BucketMetadata CreateBucketForProject(std::string bucket_name,
-                                        std::string project_id,
-                                        BucketMetadata metadata,
-                                        Options&&... options) {
+  StatusOr<BucketMetadata> CreateBucketForProject(std::string bucket_name,
+                                                  std::string project_id,
+                                                  BucketMetadata metadata,
+                                                  Options&&... options) {
     metadata.set_name(std::move(bucket_name));
     internal::CreateBucketRequest request(std::move(project_id),
                                           std::move(metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateBucket(request).value();
+    return raw_client_->CreateBucket(request);
   }
 
   /**
