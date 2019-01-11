@@ -33,7 +33,7 @@ namespace {
 using ::google::cloud::storage::oauth2::Credentials;
 using ::testing::HasSubstr;
 
-StatusCode STATUS_ERROR_CODE = StatusCode::kUnavailable;
+StatusCode const STATUS_ERROR_CODE = StatusCode::kUnavailable;
 std::string const STATUS_ERROR_MSG =
     "FailingCredentials doing its job, failing";
 
