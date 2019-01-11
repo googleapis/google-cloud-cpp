@@ -15,7 +15,7 @@ var searchData=
   ['list_5fbuckets_5freader_2eh',['list_buckets_reader.h',['../list__buckets__reader_8h.html',1,'']]],
   ['list_5fobjects_5freader_2ecc',['list_objects_reader.cc',['../list__objects__reader_8cc.html',1,'']]],
   ['list_5fobjects_5freader_2eh',['list_objects_reader.h',['../list__objects__reader_8h.html',1,'']]],
-  ['listbucketacl',['ListBucketAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ab0030af74c45749f6178f160728d8ef6',1,'google::cloud::storage::v0::Client']]],
+  ['listbucketacl',['ListBucketAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a9c6b0882aefaba2c7d7b04e93e507c7a',1,'google::cloud::storage::v0::Client']]],
   ['listbuckets',['ListBuckets',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ad2b12e1262905f3c66e910bb944b237c',1,'google::cloud::storage::v0::Client']]],
   ['listbucketsforproject',['ListBucketsForProject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a2e084a0359a2ebac0000fe41b7f4ea56',1,'google::cloud::storage::v0::Client']]],
   ['listbucketsiterator',['ListBucketsIterator',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html',1,'google::cloud::storage::v0::ListBucketsIterator'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#ae06e1a4082cb3a1b5538a39c1f4e5b24',1,'google::cloud::storage::v0::ListBucketsReader::ListBucketsIterator()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html#a177d68ada24c43cc52775d7603abd207',1,'google::cloud::storage::v0::ListBucketsIterator::ListBucketsIterator()']]],
