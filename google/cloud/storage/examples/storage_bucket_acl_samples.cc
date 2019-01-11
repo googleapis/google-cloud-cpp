@@ -52,10 +52,17 @@ void ListBucketAcl(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   //! [list bucket acl] [START storage_print_bucket_acl]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
+    StatusOr<std::vector<gcs::BucketAccessControl>> items =
+        client.ListBucketAcl(bucket_name);
+    if (not items.ok()) {
+      std::cerr << "Error getting ACL entries for bucket " << bucket_name
+                << ", status=" << items.status() << std::endl;
+      return;
+    }
     std::cout << "ACLs for bucket=" << bucket_name << std::endl;
-    for (gcs::BucketAccessControl const& acl :
-         client.ListBucketAcl(bucket_name)) {
+    for (gcs::BucketAccessControl const& acl : *items) {
       std::cout << acl.role() << ":" << acl.entity() << std::endl;
     }
   }
@@ -73,13 +80,21 @@ void CreateBucketAcl(google::cloud::storage::Client client, int& argc,
   auto role = ConsumeArg(argc, argv);
   //! [create bucket acl] [START storage_create_bucket_acl]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string entity,
      std::string role) {
-    gcs::BucketAccessControl result =
+    StatusOr<gcs::BucketAccessControl> bucket_acl =
         client.CreateBucketAcl(bucket_name, entity, role);
-    std::cout << "Role " << result.role() << " granted to " << result.entity()
-              << " on bucket " << result.bucket() << "\n"
-              << "Full attributes: " << result << std::endl;
+    if (not bucket_acl.ok()) {
+      std::cerr << "Failure getting bucket ACL for entity " << entity
+                << " in bucket " << bucket_name
+                << ", status=" << bucket_acl.status() << std::endl;
+      return;
+    }
+    std::cout << "Role " << bucket_acl->role() << " granted to "
+              << bucket_acl->entity() << " on bucket " << bucket_acl->bucket()
+              << "\n"
+              << "Full attributes: " << *bucket_acl << std::endl;
   }
   //! [create bucket acl] [END storage_create_bucket_acl]
   (std::move(client), bucket_name, entity, role);
@@ -94,8 +109,14 @@ void DeleteBucketAcl(google::cloud::storage::Client client, int& argc,
   auto entity = ConsumeArg(argc, argv);
   //! [delete bucket acl] [START storage_delete_bucket_acl]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string entity) {
-    client.DeleteBucketAcl(bucket_name, entity);
+    StatusOr<void> status = client.DeleteBucketAcl(bucket_name, entity);
+    if (not status.ok()) {
+      std::cerr << "Failure deleting ACL for entity " << entity << " in bucket "
+                << bucket_name << ", status=" << status.status() << std::endl;
+      return;
+    }
     std::cout << "Deleted ACL entry for " << entity << " in bucket "
               << bucket_name << std::endl;
   }
@@ -112,10 +133,17 @@ void GetBucketAcl(google::cloud::storage::Client client, int& argc,
   auto entity = ConsumeArg(argc, argv);
   //! [get bucket acl] [START storage_print_bucket_acl_for_user]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string entity) {
-    gcs::BucketAccessControl acl = client.GetBucketAcl(bucket_name, entity);
-    std::cout << "ACL entry for " << entity << " in bucket " << bucket_name
-              << " is " << acl << std::endl;
+    StatusOr<gcs::BucketAccessControl> acl =
+        client.GetBucketAcl(bucket_name, entity);
+    if (not acl.ok()) {
+      std::cerr << "Failure getting ACL for entity " << entity << " in bucket "
+                << bucket_name << ", status=" << acl.status() << std::endl;
+      return;
+    }
+    std::cout << "ACL entry for " << acl->entity() << " in bucket "
+              << acl->bucket() << " is " << *acl << std::endl;
   }
   //! [get bucket acl] [END storage_print_bucket_acl_for_user]
   (std::move(client), bucket_name, entity);
@@ -131,13 +159,22 @@ void UpdateBucketAcl(google::cloud::storage::Client client, int& argc,
   auto role = ConsumeArg(argc, argv);
   //! [update bucket acl]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string entity,
      std::string role) {
-    gcs::BucketAccessControl acl =
+    gcs::BucketAccessControl desired_acl =
         gcs::BucketAccessControl().set_entity(entity).set_role(role);
-    gcs::BucketAccessControl updated = client.UpdateBucketAcl(bucket_name, acl);
-    std::cout << "Bucket ACL updated. The ACL entry for " << entity
-              << " in bucket " << bucket_name << " is " << updated << std::endl;
+    StatusOr<gcs::BucketAccessControl> updated_acl =
+        client.UpdateBucketAcl(bucket_name, desired_acl);
+    if (not updated_acl.ok()) {
+      std::cerr << "Error updating ACL for entity " << entity << " in bucket "
+                << bucket_name << ", status=" << updated_acl.status()
+                << std::endl;
+      return;
+    }
+    std::cout << "Bucket ACL updated. The ACL entry for "
+              << updated_acl->entity() << " in bucket " << updated_acl->bucket()
+              << " is " << *updated_acl << std::endl;
   }
   //! [update bucket acl]
   (std::move(client), bucket_name, entity, role);
@@ -153,16 +190,30 @@ void PatchBucketAcl(google::cloud::storage::Client client, int& argc,
   auto role = ConsumeArg(argc, argv);
   //! [patch bucket acl]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string entity,
      std::string role) {
-    gcs::BucketAccessControl original_acl =
+    StatusOr<gcs::BucketAccessControl> original_acl =
         client.GetBucketAcl(bucket_name, entity);
-    auto new_acl = original_acl;
+    if (not original_acl.ok()) {
+      std::cerr << "Failure getting ACL for entity " << entity << " in bucket "
+                << bucket_name << ", status=" << original_acl.status()
+                << std::endl;
+      return;
+    }
+    auto new_acl = *original_acl;
     new_acl.set_role(role);
-    gcs::BucketAccessControl updated_acl = client.PatchBucketAcl(
-        bucket_name, entity, original_acl, new_acl);
-    std::cout << "ACL entry for " << entity << " in bucket " << bucket_name
-              << " is now " << updated_acl << std::endl;
+    StatusOr<gcs::BucketAccessControl> patched_acl =
+        client.PatchBucketAcl(bucket_name, entity, *original_acl, new_acl);
+    if (not patched_acl.ok()) {
+      std::cerr << "Failure patching ACL for entity " << entity << " in bucket "
+                << bucket_name << ", status=" << patched_acl.status()
+                << std::endl;
+      return;
+    }
+    std::cout << "ACL entry for " << patched_acl->entity() << " in bucket "
+              << patched_acl->bucket() << " is now " << *patched_acl
+              << std::endl;
   }
   //! [patch bucket acl]
   (std::move(client), bucket_name, entity, role);
@@ -178,13 +229,21 @@ void PatchBucketAclNoRead(google::cloud::storage::Client client, int& argc,
   auto role = ConsumeArg(argc, argv);
   //! [patch bucket acl no-read]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string entity,
      std::string role) {
-    gcs::BucketAccessControl acl = client.PatchBucketAcl(
+    StatusOr<gcs::BucketAccessControl> patched_acl = client.PatchBucketAcl(
         bucket_name, entity,
         gcs::BucketAccessControlPatchBuilder().set_role(role));
-    std::cout << "ACL entry for " << entity << " in bucket " << bucket_name
-              << " is now " << acl << std::endl;
+    if (not patched_acl.ok()) {
+      std::cerr << "Failure patching ACL for entity " << entity << " in bucket "
+                << bucket_name << ", status=" << patched_acl.status()
+                << std::endl;
+      return;
+    }
+    std::cout << "ACL entry for " << patched_acl->entity() << " in bucket "
+              << patched_acl->bucket() << " is now " << *patched_acl
+              << std::endl;
   }
   //! [patch bucket acl no-read]
   (std::move(client), bucket_name, entity, role);
