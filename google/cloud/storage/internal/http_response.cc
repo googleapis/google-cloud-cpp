@@ -39,9 +39,15 @@ Status AsStatus(HttpResponse const& http_response) {
     return Status(StatusCode::kOk, std::string{});
   }
   if (http_response.status_code == 308) {
-    // 308 - Resume Incomplete: is received when performing resumable uploads
-    // and should be treated as an OK.
-    return Status(StatusCode::kOk, std::string{});
+    // 308 - Resume Incomplete: this one is terrible. When performing a PUT
+    // for a resumable upload this means "The client and server are out of sync
+    // in this resumable upload, please reset". Unfortunately, during a
+    // "reset" this means "The reset worked, here is the next committed byte,
+    // keep in mind that the server is still doing work".  The second is more
+    // like a kOk, the first is more like a kFailedPrecondition.
+    // This level of complexity / detail is something that the caller should
+    // handle, i.e., the mapping depends on the operation.
+    return Status(StatusCode::kFailedPrecondition, http_response.payload);
   }
   if (http_response.status_code < 400) {
     // The 300s should be handled by libcurl, we should not get them, according

@@ -65,49 +65,31 @@ std::ostream& operator<<(std::ostream& os, StatusCode code);
  */
 class Status {
  public:
-  Status() : status_code_(200) {}
+  Status() : status_code_(StatusCode::kOk) {}
 
-  explicit Status(long status_code, std::string error_message)
-      : status_code_(status_code),
-        error_message_(std::move(error_message)),
-        error_details_() {}
+  explicit Status(StatusCode status_code, std::string error_message)
+      : status_code_(status_code), error_message_(std::move(error_message)) {}
 
-  explicit Status(long status_code, std::string error_message,
-                  std::string error_details)
-      : status_code_(status_code),
-        error_message_(std::move(error_message)),
-        error_details_(std::move(error_details)) {}
-
-  bool ok() const { return 200 == status_code() or 0 == status_code(); }
+  bool ok() const { return status_code_ == StatusCode::kOk; }
 
   bool operator==(Status const& rhs) const {
     return status_code() == rhs.status_code() and
-           error_message() == rhs.error_message() and
-           error_details() == rhs.error_details();
+           error_message() == rhs.error_message();
   }
   bool operator!=(Status const& rhs) const { return not(*this == rhs); }
-  bool operator<(Status const& rhs) const {
-    return std::tie(status_code_, error_message_, error_details_) <
-           std::tie(rhs.status_code_, rhs.error_message_, rhs.error_details_);
-  }
-  bool operator>=(Status const& rhs) const { return not(*this < rhs); }
-  bool operator>(Status const& rhs) const { return rhs < *this; }
-  bool operator<=(Status const& rhs) const { return rhs >= *this; }
 
+  StatusCode code() const { return status_code_; }
   long status_code() const { return status_code_; }
   std::string const& error_message() const { return error_message_; }
-  std::string const& error_details() const { return error_details_; }
 
  private:
-  long status_code_;
+  StatusCode status_code_;
   std::string error_message_;
-  std::string error_details_;
 };
 
 inline std::ostream& operator<<(std::ostream& os, Status const& rhs) {
-  return os << rhs.error_message() << " ["
-            << static_cast<StatusCode>(rhs.status_code())
-            << "], details=" << rhs.error_details();
+  return os << rhs.error_message() << " [" << StatusCodeToString(rhs.code())
+            << "]";
 }
 
 class RuntimeStatusError : public std::runtime_error {

@@ -32,7 +32,7 @@ StatusOr<ResumableUploadResponse> ReturnError(
   } else {
     os << "Permanent error in " << error_message << ": " << last_status;
   }
-  return Status(last_status.status_code(), os.str(), last_status.error_details());
+  return Status(last_status.code(), os.str());
 }
 }  // namespace
 
@@ -59,7 +59,7 @@ RetryResumableUploadSession::UploadChunk(std::string const& buffer,
   }
   std::ostringstream os;
   os << "Retry policy exhausted in " << __func__ << ": " << last_status;
-  return Status(last_status.status_code(), os.str(), last_status.error_details());
+  return Status(last_status.code(), os.str());
 }
 
 StatusOr<ResumableUploadResponse>
@@ -79,7 +79,7 @@ RetryResumableUploadSession::ResetSession() {
   }
   std::ostringstream os;
   os << "Retry policy exhausted in " << __func__ << ": " << last_status;
-  return Status(last_status.status_code(), os.str(), last_status.error_details());
+  return Status(last_status.code(), os.str());
 }
 
 std::uint64_t RetryResumableUploadSession::next_expected_byte() const {

@@ -180,7 +180,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
   os.Close();
   EXPECT_TRUE(os.bad());
   EXPECT_FALSE(os.metadata().ok());
-  EXPECT_EQ(412, os.metadata().status().status_code());
+  EXPECT_EQ(StatusCode::kFailedPrecondition, os.metadata().status().code());
 
   client.DeleteObject(bucket_name, object_name);
 }

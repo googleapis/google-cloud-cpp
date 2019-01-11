@@ -201,7 +201,7 @@ class ServiceAccountCredentials : public Credentials {
       return std::move(response).status();
     }
     if (response->status_code >= 300) {
-      return Status(response->status_code, std::move(response->payload));
+      return AsStatus(*response);
     }
 
     nl::json access_token = nl::json::parse(response->payload, nullptr, false);
@@ -209,10 +209,10 @@ class ServiceAccountCredentials : public Credentials {
         access_token.count("access_token") == 0U or
         access_token.count("expires_in") == 0U or
         access_token.count("token_type") == 0U) {
-      return Status(
-          response->status_code, std::move(response->payload),
+      response->payload +=
           "Could not find all required fields in response (access_token,"
-          " expires_in, token_type).");
+          " expires_in, token_type).";
+      return AsStatus(*response);
     }
     // Response should have the attributes "access_token", "expires_in", and
     // "token_type".
