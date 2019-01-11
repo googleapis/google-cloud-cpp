@@ -147,7 +147,7 @@ int main(int argc, char* argv[]) try {
                               .set_location(options.region),
                           gcs::PredefinedAcl("private"),
                           gcs::PredefinedDefaultObjectAcl("projectPrivate"),
-                          gcs::Projection("full"));
+                          gcs::Projection("full")).value();
   std::cout << "# Running test on bucket: " << meta.name() << std::endl;
   std::string notes = google::cloud::storage::version_string() + ";" +
                       google::cloud::internal::compiler() + ";" +

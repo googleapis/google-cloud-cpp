@@ -111,7 +111,7 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   std::string bucket_name = MakeRandomBucketName();
   Client client;
 
-  auto bucket = client.CreateBucketForProject(
+  StatusOr<BucketMetadata> meta = client.CreateBucketForProject(
       bucket_name, project_id,
       BucketMetadata()
           .set_storage_class(storage_class::Regional())
@@ -119,7 +119,8 @@ TEST_F(ThreadIntegrationTest, Unshared) {
           .disable_versioning(),
       PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
       Projection("full"));
-  EXPECT_EQ(bucket_name, bucket.name());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  EXPECT_EQ(bucket_name, meta->name());
 
   constexpr int kObjectCount = 2000;
   std::vector<std::string> objects;
@@ -185,7 +186,7 @@ TEST_F(ThreadIntegrationTest, ReuseConnections) {
   std::string bucket_name = MakeRandomBucketName();
 
   auto id = LogSink::Instance().AddBackend(log_backend);
-  auto bucket = client.CreateBucketForProject(
+  StatusOr<BucketMetadata> meta = client.CreateBucketForProject(
       bucket_name, project_id,
       BucketMetadata()
           .set_storage_class(storage_class::Regional())
@@ -193,7 +194,8 @@ TEST_F(ThreadIntegrationTest, ReuseConnections) {
           .disable_versioning(),
       PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
       Projection("full"));
-  EXPECT_EQ(bucket_name, bucket.name());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  EXPECT_EQ(bucket_name, meta->name());
 
   constexpr int kObjectCount = 100;
   std::vector<std::string> objects;
