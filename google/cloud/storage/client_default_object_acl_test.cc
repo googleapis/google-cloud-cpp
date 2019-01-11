@@ -83,7 +83,7 @@ TEST_F(DefaultObjectAccessControlsTest, ListDefaultObjectAcl) {
 
   StatusOr<std::vector<ObjectAccessControl>> actual =
       client.ListDefaultObjectAcl("test-bucket");
-  EXPECT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
   EXPECT_EQ(expected, *actual);
 }
 
@@ -127,7 +127,7 @@ TEST_F(DefaultObjectAccessControlsTest, CreateDefaultObjectAcl) {
 
   StatusOr<ObjectAccessControl> actual = client.CreateDefaultObjectAcl(
       "test-bucket", "user-test-user-1", ObjectAccessControl::ROLE_READER());
-  EXPECT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
   // Compare just a few fields because the values for most of the fields are
   // hard to predict when testing against the production environment.
   EXPECT_EQ(expected.bucket(), actual->bucket());
@@ -178,7 +178,7 @@ TEST_F(DefaultObjectAccessControlsTest, DeleteDefaultObjectAcl) {
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
   auto actual = client.DeleteDefaultObjectAcl("test-bucket", "user-test-user");
-  EXPECT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
 }
 
 TEST_F(DefaultObjectAccessControlsTest, DeleteDefaultObjectAclTooManyFailures) {
