@@ -11,7 +11,7 @@ var searchData=
   ['delete_5frole',['delete_role',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControlPatchBuilder.html#a27ab1ea1f5fe98cd19f8728b958026e2',1,'google::cloud::storage::v0::BucketAccessControlPatchBuilder::delete_role()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControlPatchBuilder.html#a6431defd9dc92918ad8d673c95af18cf',1,'google::cloud::storage::v0::ObjectAccessControlPatchBuilder::delete_role()']]],
   ['deletebucket',['DeleteBucket',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a04ad0755e38a8b02538d719d0b2cd2ef',1,'google::cloud::storage::v0::Client']]],
   ['deletebucketacl',['DeleteBucketAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a0b22b96b696393ad27a913b1c374afc0',1,'google::cloud::storage::v0::Client']]],
-  ['deletedefaultobjectacl',['DeleteDefaultObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a7bc4c14d5528031b0bca69fe15b7b99b',1,'google::cloud::storage::v0::Client']]],
+  ['deletedefaultobjectacl',['DeleteDefaultObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#af38d4a9a1b56fd05ef1fa0387bf97bb7',1,'google::cloud::storage::v0::Client']]],
   ['deletenotification',['DeleteNotification',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a5e7ec0724e517026fe7dd4d23c7f8084',1,'google::cloud::storage::v0::Client']]],
   ['deleteobject',['DeleteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a0c9ed0e219ba99dce6024e326d7c9708',1,'google::cloud::storage::v0::Client']]],
   ['deleteobjectacl',['DeleteObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#adc39fbc4df076ec9f321a61bd0102371',1,'google::cloud::storage::v0::Client']]],
