@@ -140,7 +140,6 @@ TEST_F(BucketIntegrationTest, FullPatch) {
       logging_name, project_id, BucketMetadata(), PredefinedAcl("private"),
       PredefinedDefaultObjectAcl("projectPrivate"), Projection("noAcl"));
   ASSERT_TRUE(logging_meta.ok()) << "status=" << logging_meta.status();
-
   EXPECT_EQ(logging_name, logging_meta->name());
 
   // Create a Bucket, use the default settings for most fields, except the
