@@ -137,7 +137,6 @@ void AsyncListClusters(cbt::InstanceAdmin instance_admin,
   //! [async list clusters]
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id) {
-    // google::cloud::bigtable::InstanceId instance_id1(instance_id);
     google::cloud::future<google::cloud::bigtable::v0::ClusterList> future =
         instance_admin.AsyncListClusters(cq, instance_id);
 

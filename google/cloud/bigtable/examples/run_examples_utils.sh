@@ -180,7 +180,7 @@ function run_all_instance_admin_async_examples {
   run_example ./bigtable_samples_instance_admin list-clusters \
       "${project_id}" "${INSTANCE}"
   run_example ./bigtable_samples_instance_admin list-all-clusters \
-      "${project_id}"      
+      "${project_id}"
   run_example ./bigtable_samples_instance_admin create-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${replication_zone_id}"
   run_example ./instance_admin_async_snippets async-get-cluster \
