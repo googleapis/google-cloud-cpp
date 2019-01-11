@@ -56,10 +56,15 @@ class ObjectRewriter {
    *   application can use `Result()` to examine the metadata for the newly
    *   created object.
    */
-  RewriteProgress Iterate();
+  StatusOr<RewriteProgress> Iterate();
 
   /// The current progress on the rewrite operation.
-  RewriteProgress CurrentProgress() const { return progress_; }
+  StatusOr<RewriteProgress> CurrentProgress() const {
+    if (not last_error_.ok()) {
+      return last_error_;
+    }
+    return progress_;
+  }
 
   /**
    * Iterate until the operation completes using a callback to report progress.
@@ -71,8 +76,8 @@ class ObjectRewriter {
    *
    * @return the object metadata once the copy completes.
    */
-  ObjectMetadata Result() {
-    return ResultWithProgressCallback([](RewriteProgress const&) {});
+  StatusOr<ObjectMetadata> Result() {
+    return ResultWithProgressCallback([](StatusOr<RewriteProgress> const&) {});
   }
 
   /**
@@ -86,18 +91,21 @@ class ObjectRewriter {
    * @param cb the callback object.
    *
    * @tparam Functor the type of the callback object. It must satisfy:
-   *   `std:is_invocable<Functor, RewriteProgress>:: value == true`.
+   *   `std:is_invocable<Functor, StatusOr<RewriteProgress>>:: value == true`.
    *
    * @return the object metadata once the copy completes.
    */
-  template <typename Functor,
-            typename std::enable_if<google::cloud::internal::is_invocable<
-                                        Functor, RewriteProgress>::value,
-                                    int>::type = 0>
-  ObjectMetadata ResultWithProgressCallback(Functor cb) {
+  template <
+      typename Functor,
+      typename std::enable_if<google::cloud::internal::is_invocable<
+                                  Functor, StatusOr<RewriteProgress>>::value,
+                              int>::type = 0>
+  StatusOr<ObjectMetadata> ResultWithProgressCallback(Functor cb) {
     while (not progress_.done) {
-      Iterate();
-      cb(progress_);
+      cb(Iterate());
+    }
+    if (not last_error_.ok()) {
+      return last_error_;
     }
     return result_;
   }
@@ -123,6 +131,7 @@ class ObjectRewriter {
   internal::RewriteObjectRequest request_;
   RewriteProgress progress_;
   ObjectMetadata result_;
+  Status last_error_;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

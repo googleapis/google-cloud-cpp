@@ -35,6 +35,20 @@ if (NOT TARGET protobuf_project)
         set(PARALLEL "")
     endif ()
 
+    # When passing a semi-colon delimited list to ExternalProject_Add, we need
+    # to escape the semi-colon. Quoting does not work and escaping the semi-
+    # colon does not seem to work (see https://reviews.llvm.org/D40257). A
+    # workaround is to use LIST_SEPARATOR to change the delimiter, which will
+    # then be replaced by an escaped semi-colon by CMake. This allows us to use
+    # multiple directories for our RPATH. Normally, it'd make sense to use : as
+    # a delimiter since it is a typical path-list separator, but it is a special
+    # character in CMake.
+    set(GOOGLE_CLOUD_CPP_INSTALL_RPATH "<INSTALL_DIR>/lib;<INSTALL_DIR>/lib64")
+    string(REPLACE ";"
+                   "|"
+                   GOOGLE_CLOUD_CPP_INSTALL_RPATH
+                   "${GOOGLE_CLOUD_CPP_INSTALL_RPATH}")
+
     create_external_project_library_byproduct_list(protobuf_byproducts
                                                    "protobuf")
 
@@ -47,24 +61,27 @@ if (NOT TARGET protobuf_project)
         INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
         URL ${GOOGLE_CLOUD_CPP_PROTOBUF_URL}
         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_PROTOBUF_SHA256}
-        CONFIGURE_COMMAND ${CMAKE_COMMAND}
-                          -G${CMAKE_GENERATOR}
-                          ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
-                          -DCMAKE_BUILD_TYPE=Debug
-                          -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
-                          -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
-                          -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
-                          -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-                          -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
-                          -Dprotobuf_BUILD_TESTS=OFF
-                          -Dprotobuf_DEBUG_POSTFIX=
-                          -H<SOURCE_DIR>/cmake
-                          -B<BINARY_DIR>
-                          $<$<BOOL:${GOOGLE_CLOUD_CPP_USE_LIBCXX}>:
-                          -DCMAKE_CXX_FLAGS=-stdlib=libc++
-                          # This is needed for protoc
-                          -DCMAKE_EXE_LINKER_FLAGS=-Wl,-lc++abi
-                          -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-lc++abi >
+        LIST_SEPARATOR |
+        CONFIGURE_COMMAND
+            ${CMAKE_COMMAND}
+            -G${CMAKE_GENERATOR}
+            ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
+            -DCMAKE_BUILD_TYPE=Debug
+            -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+            -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+            -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+            -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+            -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
+            -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
+            -Dprotobuf_BUILD_TESTS=OFF
+            -Dprotobuf_DEBUG_POSTFIX=
+            -H<SOURCE_DIR>/cmake
+            -B<BINARY_DIR>
+            $<$<BOOL:${GOOGLE_CLOUD_CPP_USE_LIBCXX}>:
+            -DCMAKE_CXX_FLAGS=-stdlib=libc++
+            # This is needed for protoc
+            -DCMAKE_EXE_LINKER_FLAGS=-Wl,-lc++abi
+            -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-lc++abi >
         BUILD_COMMAND ${CMAKE_COMMAND}
                       --build
                       <BINARY_DIR>

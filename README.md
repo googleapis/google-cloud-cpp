@@ -218,11 +218,22 @@ brew install curl cmake libressl c-ares
 
 #### Windows (using vcpkg)
 
+If you are already using [vcpkg][vcpkg-link], a package manager from Microsoft,
+you can download and compile `google-cloud-cpp` in a single step:
+
 ```bash
-set PROVIDER=vcpkg
-set GENERATOR="Visual Studio 15 2017 Win64"
-powershell -exec bypass .\ci\install-windows.ps1
+.\vcpkg.exe install google-cloud-cpp:x64-windows-static
 ```
+
+This command will also print out instructions on how to use the library from
+your MSBuild or CMake-based projects. We try to keep the version of
+`google-cloud-cpp` included with `vcpkg` up-to-date, our practice is to submit a
+PR to update the version in `vcpkg` after each release of `google-cloud-cpp`.
+
+See below for instructions to compile the code yourself.
+
+[vcpkg-link]: https://github.com/Microsoft/vcpkg/
+
 ## Build
 
 To build all available libraries and run the tests, run the following commands
@@ -263,12 +274,86 @@ You will find compiled binaries in `build-output/` respective to their source pa
 
 #### Windows
 
-On Windows with MSVC use:
+<!-- Last updated 2018-01-09 -->
 
-```bash
-cmake --build build-output -- /m
+If you prefer to manually compile on Windows the following instructions should
+work, though there is a lot more variability on this platform. We welcome
+suggestions to make this an easier process.
 
-# Verify build by running tests
+We will assume that you have installed CMake, Ninja, and "Microsoft Visual
+Studio 2017". If you have not, install [Chocolatey](https://www.chocolatey.com)
+using this command as the administrator:
+
+```console
+@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -Command "iex (
+(New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+```
+
+Then you can easily install the necessary development tools.
+
+```console
+choco install -y cmake cmake.portable ninja visualstudio2017community
+choco install -y visualstudio2017-workload-nativedesktop
+choco install -y microsoft-build-tools
+```
+
+Then clone and compile `vcpkg`:
+
+```console
+set SOURCE="%cd%"
+git clone https://github.com/Microsoft/vcpkg.git
+cd vcpkg
+.\bootstrap-vcpkg.bat
+```
+
+Use `vcpkg` to download and install `google-cloud-cpp`'s dependencies:
+
+```console
+.\vcpkg.exe install openssl:x64-windows-static ^
+    grpc:x64-windows-static ^ 
+    curl:x64-windows-static ^
+    gtest:x64-windows-static ^
+    crc32c:x64-windows-static
+.\vcpkg.exe integrate install
+```
+
+Now clone `google-cloud-cpp`:
+
+```console
+cd ..
+git clone https://github.com/GoogleCloudPlatform/google-cloud-cpp.git
+git submodule update --init
+cd google-cloud-cpp
+```
+
+Load the environment variables needed to use Microsoft Visual Studio:
+
+```console
+call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+```
+
+Use CMake to create the build files:
+
+```console
+cmake -H. -Bbuild-output -GNinja ^
+    -DCMAKE_BUILD_TYPE=Release ^
+    -DCMAKE_TOOLCHAIN_FILE="%SOURCE%\vcpkg\scripts\buildsystems\vcpkg.cmake" ^
+    -DVCPKG_TARGET_TRIPLET=x64-windows-static ^
+    -DCMAKE_C_COMPILER=cl.exe ^
+    -DCMAKE_CXX_COMPILER=cl.exe ^
+    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package ^
+    -DCMAKE_MAKE_PROGRAM=ninja
+```
+
+And compile the code:
+
+```console
+cmake --build build-output
+```
+
+Finally verify the unit tests pass:
+
+```console
 cd build-output
 ctest --output-on-failure
 ```

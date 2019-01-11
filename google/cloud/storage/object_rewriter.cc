@@ -26,15 +26,20 @@ ObjectRewriter::ObjectRewriter(std::shared_ptr<internal::RawClient> client,
       request_(std::move(request)),
       progress_{0, 0, false} {}
 
-RewriteProgress ObjectRewriter::Iterate() {
-  internal::RewriteObjectResponse response =
-      client_->RewriteObject(request_).value();
-  progress_ = RewriteProgress{response.total_bytes_rewritten,
-                              response.object_size, response.done};
-  if (response.done) {
-    result_ = std::move(response.resource);
+StatusOr<RewriteProgress> ObjectRewriter::Iterate() {
+  StatusOr<internal::RewriteObjectResponse> response =
+      client_->RewriteObject(request_);
+  if (not response.ok()) {
+    progress_.done = true;
+    last_error_ = std::move(response).status();
+    return last_error_;
   }
-  request_.set_rewrite_token(std::move(response.rewrite_token));
+  progress_ = RewriteProgress{response->total_bytes_rewritten,
+                              response->object_size, response->done};
+  if (response->done) {
+    result_ = std::move(response->resource);
+  }
+  request_.set_rewrite_token(std::move(response->rewrite_token));
   return progress_;
 }
 
