@@ -661,9 +661,6 @@ class Client {
    *     `IfMetagenerationNotMatch`, `KmsKeyName`, `MD5HashValue`,
    *     `PredefinedAcl`, `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
    * case, `IfGenerationMatch`.
@@ -672,13 +669,14 @@ class Client {
    * @snippet storage_object_samples.cc insert object
    */
   template <typename... Options>
-  ObjectMetadata InsertObject(std::string const& bucket_name,
-                              std::string const& object_name,
-                              std::string contents, Options&&... options) {
+  StatusOr<ObjectMetadata> InsertObject(std::string const& bucket_name,
+                                        std::string const& object_name,
+                                        std::string contents,
+                                        Options&&... options) {
     internal::InsertObjectMediaRequest request(bucket_name, object_name,
                                                std::move(contents));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->InsertObjectMedia(request).value();
+    return raw_client_->InsertObjectMedia(request);
   }
 
   /**
