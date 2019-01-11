@@ -244,50 +244,57 @@ TEST_F(ObjectCopyTest, RewriteObject) {
       WithObjectMetadata(
           ObjectMetadata().upsert_metadata("test-key", "test-value")));
   auto actual = copier.Iterate();
-  EXPECT_FALSE(actual.done);
-  EXPECT_EQ(1048576UL, actual.total_bytes_rewritten);
-  EXPECT_EQ(10485760UL, actual.object_size);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_FALSE(actual->done);
+  EXPECT_EQ(1048576UL, actual->total_bytes_rewritten);
+  EXPECT_EQ(10485760UL, actual->object_size);
 
   auto current = copier.CurrentProgress();
-  EXPECT_FALSE(current.done);
-  EXPECT_EQ(1048576UL, current.total_bytes_rewritten);
-  EXPECT_EQ(10485760UL, current.object_size);
+  ASSERT_TRUE(current.ok()) << "status=" << current.status();
+  EXPECT_FALSE(current->done);
+  EXPECT_EQ(1048576UL, current->total_bytes_rewritten);
+  EXPECT_EQ(10485760UL, current->object_size);
 
   actual = copier.Iterate();
-  EXPECT_FALSE(actual.done);
-  EXPECT_EQ(2097152UL, actual.total_bytes_rewritten);
-  EXPECT_EQ(10485760UL, actual.object_size);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_FALSE(actual->done);
+  EXPECT_EQ(2097152UL, actual->total_bytes_rewritten);
+  EXPECT_EQ(10485760UL, actual->object_size);
 
   auto metadata = copier.Result();
-  EXPECT_EQ("test-destination-bucket-name", metadata.bucket());
-  EXPECT_EQ("test-destination-object-name", metadata.name());
+  ASSERT_TRUE(metadata.ok()) << "status=" << metadata.status();
+  EXPECT_EQ("test-destination-bucket-name", metadata->bucket());
+  EXPECT_EQ("test-destination-object-name", metadata->name());
 }
 
 TEST_F(ObjectCopyTest, RewriteObjectTooManyFailures) {
-  testing::TooManyFailuresTest<internal::RewriteObjectResponse>(
+  testing::TooManyFailuresStatusTest<internal::RewriteObjectResponse>(
       mock, EXPECT_CALL(*mock, RewriteObject(_)),
       [](Client& client) {
         auto rewrite = client.RewriteObject(
             "test-source-bucket-name", "test-source-object",
             "test-dest-bucket-name", "test-dest-object");
-        rewrite.Result();
+        return rewrite.Result().status();
       },
       [](Client& client) {
-        client.RewriteObjectBlocking(
-            "test-source-bucket-name", "test-source-object",
-            "test-dest-bucket-name", "test-dest-object", IfGenerationMatch(7));
+        return client
+            .RewriteObjectBlocking("test-source-bucket-name",
+                                   "test-source-object",
+                                   "test-dest-bucket-name", "test-dest-object",
+                                   IfGenerationMatch(7))
+            .status();
       },
       "RewriteObject");
 }
 
 TEST_F(ObjectCopyTest, RewriteObjectPermanentFailure) {
-  testing::PermanentFailureTest<internal::RewriteObjectResponse>(
+  testing::PermanentFailureStatusTest<internal::RewriteObjectResponse>(
       *client, EXPECT_CALL(*mock, RewriteObject(_)),
       [](Client& client) {
         auto rewrite = client.RewriteObject(
             "test-source-bucket-name", "test-source-object",
             "test-dest-bucket-name", "test-dest-object");
-        rewrite.Result();
+        return rewrite.Result().status();
       },
       "RewriteObject");
 }

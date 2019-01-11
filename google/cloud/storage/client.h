@@ -1176,9 +1176,6 @@ class Client {
    *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey`,
    *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
    * case, `IfGenerationMatch`.
@@ -1226,9 +1223,6 @@ class Client {
    *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
    *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey`,
    *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
-   *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
@@ -1280,8 +1274,7 @@ class Client {
    *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey`,
    *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
+   * @return The metadata of the newly created object.
    *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
@@ -1298,11 +1291,10 @@ class Client {
    *
    */
   template <typename... Options>
-  ObjectMetadata RewriteObjectBlocking(std::string source_bucket_name,
-                                       std::string source_object_name,
-                                       std::string destination_bucket_name,
-                                       std::string destination_object_name,
-                                       Options&&... options) {
+  StatusOr<ObjectMetadata> RewriteObjectBlocking(
+      std::string source_bucket_name, std::string source_object_name,
+      std::string destination_bucket_name, std::string destination_object_name,
+      Options&&... options) {
     return ResumeRewriteObject(std::move(source_bucket_name),
                                std::move(source_object_name),
                                std::move(destination_bucket_name),

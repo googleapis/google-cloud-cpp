@@ -783,14 +783,15 @@ void RewriteObject(google::cloud::storage::Client client, int& argc,
   auto destination_object_name = ConsumeArg(argc, argv);
   //! [rewrite object]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string source_bucket_name,
      std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name) {
-    gcs::ObjectMetadata meta = client.RewriteObjectBlocking(
+    StatusOr<gcs::ObjectMetadata> meta = client.RewriteObjectBlocking(
         source_bucket_name, source_object_name, destination_bucket_name,
         destination_object_name);
     std::cout << "Rewrote object " << destination_object_name
-              << " Metadata: " << meta << std::endl;
+              << " Metadata: " << *meta << std::endl;
   }
   //! [rewrite object]
   (std::move(client), source_bucket_name, source_object_name,
@@ -810,19 +811,25 @@ void RewriteObjectNonBlocking(google::cloud::storage::Client client, int& argc,
   auto destination_object_name = ConsumeArg(argc, argv);
   //! [rewrite object non blocking]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string source_bucket_name,
      std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name) {
     gcs::ObjectRewriter rewriter =
         client.RewriteObject(source_bucket_name, source_object_name,
                              destination_bucket_name, destination_object_name);
-    gcs::ObjectMetadata meta = rewriter.ResultWithProgressCallback(
-        [](gcs::RewriteProgress const& progress) {
-          std::cout << "Rewrote " << progress.total_bytes_rewritten << "/"
-                    << progress.object_size << std::endl;
+    StatusOr<gcs::ObjectMetadata> meta = rewriter.ResultWithProgressCallback(
+        [](StatusOr<gcs::RewriteProgress> const& progress) {
+          if (not progress.ok()) {
+            std::cerr << "Error during rewrite: " << progress.status()
+                      << std::endl;
+            return;
+          }
+          std::cout << "Rewrote " << progress->total_bytes_rewritten << "/"
+                    << progress->object_size << std::endl;
         });
-    std::cout << "Rewrote object " << destination_object_name
-              << " Metadata: " << meta << std::endl;
+    std::cout << "Rewrote object " << meta->name() << " in bucket "
+              << meta->bucket() << "\nFull Metadata: " << *meta << std::endl;
   }
   //! [rewrite object non blocking]
   (std::move(client), source_bucket_name, source_object_name,
@@ -843,14 +850,19 @@ void RewriteObjectToken(google::cloud::storage::Client client, int& argc,
 
   //! [rewrite object token]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string source_bucket_name,
      std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name) {
     gcs::ObjectRewriter rewriter = client.RewriteObject(
         source_bucket_name, source_object_name, destination_bucket_name,
         destination_object_name, gcs::MaxBytesRewrittenPerCall(1024 * 1024));
-    auto progress = rewriter.Iterate();
-    if (progress.done) {
+    StatusOr<gcs::RewriteProgress> progress = rewriter.Iterate();
+    if (not progress.ok()) {
+      std::cerr << "Error during rewrite: " << progress.status() << std::endl;
+      return;
+    }
+    if (progress->done) {
       std::cout << "The rewrite completed immediately, no token to resume later"
                 << std::endl;
       return;
@@ -874,8 +886,10 @@ void RewriteObjectResume(google::cloud::storage::Client client, int& argc,
   auto destination_bucket_name = ConsumeArg(argc, argv);
   auto destination_object_name = ConsumeArg(argc, argv);
   auto rewrite_token = ConsumeArg(argc, argv);
+
   //! [rewrite object resume]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string source_bucket_name,
      std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name, std::string rewrite_token) {
@@ -883,13 +897,18 @@ void RewriteObjectResume(google::cloud::storage::Client client, int& argc,
         source_bucket_name, source_object_name, destination_bucket_name,
         destination_object_name, rewrite_token,
         gcs::MaxBytesRewrittenPerCall(1024 * 1024));
-    gcs::ObjectMetadata meta = rewriter.ResultWithProgressCallback(
-        [](gcs::RewriteProgress const& progress) {
-          std::cout << "Rewrote " << progress.total_bytes_rewritten << "/"
-                    << progress.object_size << std::endl;
+    StatusOr<gcs::ObjectMetadata> meta = rewriter.ResultWithProgressCallback(
+        [](StatusOr<gcs::RewriteProgress> const& progress) {
+          if (not progress.ok()) {
+            std::cerr << "Error during rewrite: " << progress.status()
+                      << std::endl;
+            return;
+          }
+          std::cout << "Rewrote " << progress->total_bytes_rewritten << "/"
+                    << progress->object_size << std::endl;
         });
-    std::cout << "Rewrote object " << destination_object_name
-              << " Metadata: " << meta << std::endl;
+    std::cout << "Rewrote object " << meta->name() << " in bucket "
+              << meta->bucket() << "\nFull Metadata: " << *meta << std::endl;
   }
   //! [rewrite object resume]
   (std::move(client), source_bucket_name, source_object_name,
@@ -907,16 +926,22 @@ void RotateEncryptionKey(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   auto old_key_base64 = ConsumeArg(argc, argv);
   auto new_key_base64 = ConsumeArg(argc, argv);
+
   //! [rotate encryption key] [START storage_rotate_encryption_key]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string old_key_base64, std::string new_key_base64) {
-    gcs::ObjectMetadata meta = client.RewriteObjectBlocking(
+    StatusOr<gcs::ObjectMetadata> meta = client.RewriteObjectBlocking(
         bucket_name, object_name, bucket_name, object_name,
         gcs::SourceEncryptionKey::FromBase64Key(old_key_base64),
         gcs::EncryptionKey::FromBase64Key(new_key_base64));
-    std::cout << "Rotated key on object " << object_name
-              << " Metadata: " << meta << std::endl;
+    if (not meta.ok()) {
+      std::cerr << "Error rotating key on object " << object_name
+                << ", status=" << meta.status() << std::endl;
+    }
+    std::cout << "Rotated key on object " << meta->name() << " in bucket "
+              << meta->bucket() << "\nFull Metadata: " << *meta << std::endl;
   }
   //! [rotate encryption key] [END storage_rotate_encryption_key]
   (std::move(client), bucket_name, object_name, old_key_base64, new_key_base64);
@@ -931,12 +956,19 @@ void RenameObject(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   auto old_object_name = ConsumeArg(argc, argv);
   auto new_object_name = ConsumeArg(argc, argv);
+
   //! [rename object] [START storage_move_file]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string old_object_name,
      std::string new_object_name) {
-    gcs::ObjectMetadata meta = client.RewriteObjectBlocking(
+    StatusOr<gcs::ObjectMetadata> meta = client.RewriteObjectBlocking(
         bucket_name, old_object_name, bucket_name, new_object_name);
+    if (not meta.ok()) {
+      std::cerr << "Error renaming object " << old_object_name
+                << ", status=" << meta.status() << std::endl;
+      return;
+    }
     client.DeleteObject(bucket_name, old_object_name);
     std::cout << "Renamed " << old_object_name << " to " << new_object_name
               << " in bucket " << bucket_name << std::endl;
