@@ -150,20 +150,25 @@ TEST_F(BucketTest, GetBucketMetadata) {
                 LimitedErrorCountRetryPolicy(2)};
 
   auto actual = client.GetBucketMetadata("foo-bar-baz");
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(BucketTest, GetMetadataTooManyFailures) {
-  testing::TooManyFailuresTest<BucketMetadata>(
+  testing::TooManyFailuresStatusTest<BucketMetadata>(
       mock, EXPECT_CALL(*mock, GetBucketMetadata(_)),
-      [](Client& client) { client.GetBucketMetadata("test-bucket-name"); },
+      [](Client& client) {
+        return client.GetBucketMetadata("test-bucket-name").status();
+      },
       "GetBucketMetadata");
 }
 
 TEST_F(BucketTest, GetMetadataPermanentFailure) {
-  testing::PermanentFailureTest<BucketMetadata>(
+  testing::PermanentFailureStatusTest<BucketMetadata>(
       *client, EXPECT_CALL(*mock, GetBucketMetadata(_)),
-      [](Client& client) { client.GetBucketMetadata("test-bucket-name"); },
+      [](Client& client) {
+        return client.GetBucketMetadata("test-bucket-name").status();
+      },
       "GetBucketMetadata");
 }
 
@@ -177,24 +182,30 @@ TEST_F(BucketTest, DeleteBucket) {
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
 
-  client.DeleteBucket("foo-bar-baz");
-  SUCCEED();
+  auto actual = client.DeleteBucket("foo-bar-baz");
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
 }
 
 TEST_F(BucketTest, DeleteBucketTooManyFailures) {
-  testing::TooManyFailuresTest<internal::EmptyResponse>(
+  testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
       mock, EXPECT_CALL(*mock, DeleteBucket(_)),
-      [](Client& client) { client.DeleteBucket("test-bucket-name"); },
       [](Client& client) {
-        client.DeleteBucket("test-bucket-name", IfMetagenerationMatch(42));
+        return client.DeleteBucket("test-bucket-name").status();
+      },
+      [](Client& client) {
+        return client
+            .DeleteBucket("test-bucket-name", IfMetagenerationMatch(42))
+            .status();
       },
       "DeleteBucket");
 }
 
 TEST_F(BucketTest, DeleteBucketPermanentFailure) {
-  testing::PermanentFailureTest<internal::EmptyResponse>(
+  testing::PermanentFailureStatusTest<internal::EmptyResponse>(
       *client, EXPECT_CALL(*mock, DeleteBucket(_)),
-      [](Client& client) { client.DeleteBucket("test-bucket-name"); },
+      [](Client& client) {
+        return client.DeleteBucket("test-bucket-name").status();
+      },
       "DeleteBucket");
 }
 
@@ -228,27 +239,32 @@ TEST_F(BucketTest, UpdateBucket) {
   auto actual = client.UpdateBucket(
       "test-bucket-name",
       BucketMetadata().set_location("US").set_storage_class("STANDARD"));
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(BucketTest, UpdateBucketTooManyFailures) {
-  testing::TooManyFailuresTest<BucketMetadata>(
+  testing::TooManyFailuresStatusTest<BucketMetadata>(
       mock, EXPECT_CALL(*mock, UpdateBucket(_)),
       [](Client& client) {
-        client.UpdateBucket("test-bucket-name", BucketMetadata());
+        return client.UpdateBucket("test-bucket-name", BucketMetadata())
+            .status();
       },
       [](Client& client) {
-        client.UpdateBucket("test-bucket-name", BucketMetadata(),
-                            IfMetagenerationMatch(42));
+        return client
+            .UpdateBucket("test-bucket-name", BucketMetadata(),
+                          IfMetagenerationMatch(42))
+            .status();
       },
       "UpdateBucket");
 }
 
 TEST_F(BucketTest, UpdateBucketPermanentFailure) {
-  testing::PermanentFailureTest<BucketMetadata>(
+  testing::PermanentFailureStatusTest<BucketMetadata>(
       *client, EXPECT_CALL(*mock, UpdateBucket(_)),
       [](Client& client) {
-        client.UpdateBucket("test-bucket-name", BucketMetadata());
+        return client.UpdateBucket("test-bucket-name", BucketMetadata())
+            .status();
       },
       "UpdateBucket");
 }
@@ -282,27 +298,34 @@ TEST_F(BucketTest, PatchBucket) {
   auto actual = client.PatchBucket(
       "test-bucket-name",
       BucketMetadataPatchBuilder().SetStorageClass("STANDARD"));
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(BucketTest, PatchBucketTooManyFailures) {
-  testing::TooManyFailuresTest<BucketMetadata>(
+  testing::TooManyFailuresStatusTest<BucketMetadata>(
       mock, EXPECT_CALL(*mock, PatchBucket(_)),
       [](Client& client) {
-        client.PatchBucket("test-bucket-name", BucketMetadataPatchBuilder());
+        return client
+            .PatchBucket("test-bucket-name", BucketMetadataPatchBuilder())
+            .status();
       },
       [](Client& client) {
-        client.PatchBucket("test-bucket-name", BucketMetadataPatchBuilder(),
-                           IfMetagenerationMatch(42));
+        return client
+            .PatchBucket("test-bucket-name", BucketMetadataPatchBuilder(),
+                         IfMetagenerationMatch(42))
+            .status();
       },
       "PatchBucket");
 }
 
 TEST_F(BucketTest, PatchBucketPermanentFailure) {
-  testing::PermanentFailureTest<BucketMetadata>(
+  testing::PermanentFailureStatusTest<BucketMetadata>(
       *client, EXPECT_CALL(*mock, PatchBucket(_)),
       [](Client& client) {
-        client.PatchBucket("test-bucket-name", BucketMetadataPatchBuilder());
+        return client
+            .PatchBucket("test-bucket-name", BucketMetadataPatchBuilder())
+            .status();
       },
       "PatchBucket");
 }
