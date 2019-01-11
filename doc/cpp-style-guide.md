@@ -14,14 +14,14 @@ out-param is appropriate, prefer a non-const reference.
 
 As of this writing, this rule violates the GSG.
 
-[link to GSG](https://google.github.io/styleguide/cppguide.html#Reference_Arguments)
+[link to GSG's section on reference arguments](https://google.github.io/styleguide/cppguide.html#Reference_Arguments)
 
 ## Preincrement and Predecrement
 
 Always use the prefix forms (`++i`) of increment and decrement unless the
 post-increment *semantics* are needed.
 
-[link to GSG](https://google.github.io/styleguide/cppguide.html#Preincrement_and_Predecrement)
+[link to GSG's section on prefix increment/decrement](https://google.github.io/styleguide/cppguide.html#Preincrement_and_Predecrement)
 
 ## Where to put `const`
 
@@ -29,7 +29,7 @@ Put the const on the right of what it modifies, as in `std::string const&`.
 This simplifies the rules for const making it *always* modify what is on its
 left. This is sometimes referred to as ["east const"][east-const-link].
 
-[link to GSG](https://google.github.io/styleguide/cppguide.html#Use_of_const)
+[link to GSG's section on using const](https://google.github.io/styleguide/cppguide.html#Use_of_const)
 
 [east-const-link]: https://google.com/search?q=c%2B%2B+"east+const"
 
@@ -47,13 +47,13 @@ string const &str;   // BAD
 string const & str;  // BAD
 ```
 
-[link to GSG](https://google.github.io/styleguide/cppguide.html#Pointer_and_Reference_Expressions)
+[link to GSG's section on pointer and reference expressions](https://google.github.io/styleguide/cppguide.html#Pointer_and_Reference_Expressions)
 
 ## Enumerator Names
 
 Enumerators (for both scoped and unscoped enums) should be named like: `ENUM_NAME`.
 
-[link to GSG](https://google.github.io/styleguide/cppguide.html#Enumerator_Names)
+[link to GSG's section on enumerator names](https://google.github.io/styleguide/cppguide.html#Enumerator_Names)
 
 ## Legal Notice and Author Line
 
