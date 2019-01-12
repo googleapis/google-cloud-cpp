@@ -35,8 +35,8 @@ namespace internal {
  * We copied this technique from Abseil.  Unfortunately we cannot use it
  * directly because it is not a public interface for Abseil.
  */
-[[noreturn]] void RaiseRpcError(grpc::Status const& status, char const* msg);
-[[noreturn]] void RaiseRpcError(grpc::Status const& status,
+[[noreturn]] void ThrowRpcError(grpc::Status const& status, char const* msg);
+[[noreturn]] void ThrowRpcError(grpc::Status const& status,
                                 std::string const& msg);
 //@}
 

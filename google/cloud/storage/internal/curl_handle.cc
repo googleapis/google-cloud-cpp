@@ -84,7 +84,7 @@ extern "C" std::size_t CurlHandleHeaderCallback(char* contents,
 
 CurlHandle::CurlHandle() : handle_(curl_easy_init(), &curl_easy_cleanup) {
   if (handle_.get() == nullptr) {
-    google::cloud::internal::RaiseRuntimeError("Cannot initialize CURL handle");
+    google::cloud::internal::ThrowRuntimeError("Cannot initialize CURL handle");
   }
 }
 
@@ -154,26 +154,26 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
   return Status(StatusCode::kUnknown, std::move(os).str());
 }
 
-void CurlHandle::RaiseSetOptionError(CURLcode e, CURLoption opt, long param) {
+void CurlHandle::ThrowSetOptionError(CURLcode e, CURLoption opt, long param) {
   std::ostringstream os;
   os << "Error [" << e << "]=" << curl_easy_strerror(e)
      << " while setting curl option [" << opt << "] to " << param;
-  google::cloud::internal::RaiseRuntimeError(os.str());
+  google::cloud::internal::ThrowRuntimeError(os.str());
 }
 
-void CurlHandle::RaiseSetOptionError(CURLcode e, CURLoption opt,
+void CurlHandle::ThrowSetOptionError(CURLcode e, CURLoption opt,
                                      char const* param) {
   std::ostringstream os;
   os << "Error [" << e << "]=" << curl_easy_strerror(e)
      << " while setting curl option [" << opt << "] to " << param;
-  google::cloud::internal::RaiseRuntimeError(os.str());
+  google::cloud::internal::ThrowRuntimeError(os.str());
 }
 
-void CurlHandle::RaiseSetOptionError(CURLcode e, CURLoption opt, void* param) {
+void CurlHandle::ThrowSetOptionError(CURLcode e, CURLoption opt, void* param) {
   std::ostringstream os;
   os << "Error [" << e << "]=" << curl_easy_strerror(e)
      << " while setting curl option [" << opt << "] to " << param;
-  google::cloud::internal::RaiseRuntimeError(os.str());
+  google::cloud::internal::ThrowRuntimeError(os.str());
 }
 
 }  // namespace internal

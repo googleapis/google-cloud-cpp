@@ -53,7 +53,7 @@ ObjectMetadata Client::UploadFileSimple(
     std::string msg = __func__;
     msg += ": cannot open source file ";
     msg += file_name;
-    google::cloud::internal::RaiseRuntimeError(msg);
+    google::cloud::internal::ThrowRuntimeError(msg);
   }
 
   std::string payload(std::istreambuf_iterator<char>{is}, {});
@@ -86,7 +86,7 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
     std::string msg = __func__;
     msg += ": cannot open source file ";
     msg += file_name;
-    google::cloud::internal::RaiseRuntimeError(msg);
+    google::cloud::internal::ThrowRuntimeError(msg);
   }
   // This function only works for regular files, and the `storage::Client()`
   // class checks before calling it.
@@ -157,7 +157,7 @@ void Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
     std::ostringstream msg;
     msg << func << "(" << request << ", " << file_name
         << "): " << what << " - status=" << stream.status();
-    google::cloud::internal::RaiseRuntimeError(std::move(msg).str());
+    google::cloud::internal::ThrowRuntimeError(std::move(msg).str());
   };
   if (not stream.status().ok()) {
     report_error(__func__, "cannot open download stream");
@@ -190,7 +190,7 @@ std::string Client::SignUrl(internal::SignUrlRequest const& request) {
       base_credentials.get());
 
   if (credentials == nullptr) {
-    google::cloud::internal::RaiseRuntimeError(
+    google::cloud::internal::ThrowRuntimeError(
         R"""(The current credentials cannot be used to sign URLs.
 Please configure your google::cloud::storage::Client to use service account
 credentials, as described in:
@@ -200,7 +200,7 @@ https://cloud.google.com/storage/docs/authentication
 
   auto result = credentials->SignString(request.StringToSign());
   if (not result.first.ok()) {
-    google::cloud::internal::RaiseRuntimeError(result.first.error_message());
+    google::cloud::internal::ThrowRuntimeError(result.first.error_message());
   }
 
   internal::CurlHandle curl;

@@ -39,7 +39,7 @@ void CompletionQueueImpl::Run(CompletionQueue& cq) {
       continue;
     }
     if (status != grpc::CompletionQueue::GOT_EVENT) {
-      google::cloud::internal::RaiseRuntimeError(
+      google::cloud::internal::ThrowRuntimeError(
           "unexpected status from AsyncNext()");
     }
     auto op = FindOperation(tag);
@@ -69,7 +69,7 @@ void* CompletionQueueImpl::RegisterOperation(
   if (ins.second) {
     return tag;
   }
-  google::cloud::internal::RaiseRuntimeError(
+  google::cloud::internal::ThrowRuntimeError(
       "assertion failure: insertion should succeed");
 }
 
@@ -78,7 +78,7 @@ std::shared_ptr<AsyncGrpcOperation> CompletionQueueImpl::FindOperation(
   std::lock_guard<std::mutex> lk(mu_);
   auto loc = pending_ops_.find(reinterpret_cast<std::intptr_t>(tag));
   if (pending_ops_.end() == loc) {
-    google::cloud::internal::RaiseRuntimeError(
+    google::cloud::internal::ThrowRuntimeError(
         "assertion failure: searching for async op tag");
   }
   return loc->second;
@@ -89,7 +89,7 @@ void CompletionQueueImpl::ForgetOperation(void* tag) {
   auto const num_erased =
       pending_ops_.erase(reinterpret_cast<std::intptr_t>(tag));
   if (1U != num_erased) {
-    google::cloud::internal::RaiseRuntimeError(
+    google::cloud::internal::ThrowRuntimeError(
         "assertion failure: searching for async op tag when trying to "
         "unregister");
   }

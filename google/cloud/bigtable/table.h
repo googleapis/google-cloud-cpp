@@ -308,7 +308,7 @@ class Table {
     grpc::Status status;
     auto result = impl_.SampleRows<Collection>(status);
     if (not status.ok()) {
-      bigtable::internal::RaiseRpcError(status, status.error_message());
+      bigtable::internal::ThrowRpcError(status, status.error_message());
     }
 
     return result;
@@ -340,7 +340,7 @@ class Table {
         impl_.ReadModifyWriteRow(std::move(row_key), status, std::move(rule),
                                  std::forward<Args>(rules)...);
     if (not status.ok()) {
-      internal::RaiseRpcError(status, status.error_message());
+      internal::ThrowRpcError(status, status.error_message());
     }
     return row;
   }

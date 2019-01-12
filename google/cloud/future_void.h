@@ -176,7 +176,7 @@ class promise<void> final : private internal::promise_base<void> {
    */
   void set_value() {
     if (not shared_state_) {
-      internal::RaiseFutureError(std::future_errc::no_state, __func__);
+      internal::ThrowFutureError(std::future_errc::no_state, __func__);
     }
     shared_state_->set_value();
   }

@@ -243,7 +243,7 @@ class optional {
     if (has_value_) {
       return;
     }
-    google::cloud::internal::RaiseLogicError("access unset optional");
+    google::cloud::internal::ThrowLogicError("access unset optional");
   }
 
   // We use std::aligned_storage<T> because T may not have a default

@@ -26,7 +26,7 @@ namespace {
   os << "Error parsing RFC 3339 timestamp: " << msg
      << " Valid format is YYYY-MM-DD[Tt]HH:MM:SS[.s+](Z|[+-]HH:MM), got="
      << timestamp;
-  google::cloud::internal::RaiseInvalidArgument(os.str());
+  google::cloud::internal::ThrowInvalidArgument(os.str());
 }
 
 bool IsLeapYear(int year) {

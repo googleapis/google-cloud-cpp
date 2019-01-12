@@ -83,7 +83,7 @@ class StatusOr final {
   // NOLINTNEXTLINE(google-explicit-constructor)
   StatusOr(Status rhs) : status_(std::move(rhs)) {
     if (status_.ok()) {
-      google::cloud::internal::RaiseInvalidArgument(__func__);
+      google::cloud::internal::ThrowInvalidArgument(__func__);
     }
   }
 

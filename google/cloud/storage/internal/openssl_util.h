@@ -81,7 +81,7 @@ struct OpenSslUtils {
       err_builder << "Permanent error in " << func_name
                   << " (failed to sign string with PEM key): " << std::endl
                   << error_msg;
-      google::cloud::internal::RaiseRuntimeError(err_builder.str());
+      google::cloud::internal::ThrowRuntimeError(err_builder.str());
     };
 
     auto digest_ctx = GetDigestCtx();
@@ -183,7 +183,7 @@ struct OpenSslUtils {
       std::ostringstream err_builder;
       err_builder << "Permanent error in " << __func__ << ": "
                   << "Could not allocate BIO* for Base64 encoding.";
-      google::cloud::internal::RaiseRuntimeError(err_builder.str());
+      google::cloud::internal::ThrowRuntimeError(err_builder.str());
     }
     auto bio_chain = std::unique_ptr<BIO, decltype(&BIO_free_all)>(
         // Output from a b64 encoder should go to an in-memory sink.

@@ -24,7 +24,7 @@ AuthorizedUserCredentialsInfo ParseAuthorizedUserCredentials(
   auto credentials =
       storage::internal::nl::json::parse(content, nullptr, false);
   if (credentials.is_discarded()) {
-    google::cloud::internal::RaiseInvalidArgument(
+    google::cloud::internal::ThrowInvalidArgument(
         "Invalid AuthorizedUserCredentials, parsing failed on data from " +
         source);
   }
@@ -35,12 +35,12 @@ AuthorizedUserCredentialsInfo ParseAuthorizedUserCredentials(
   for (auto const& key :
        {client_id_key, client_secret_key, refresh_token_key}) {
     if (credentials.count(key) == 0U) {
-      google::cloud::internal::RaiseInvalidArgument(
+      google::cloud::internal::ThrowInvalidArgument(
           "Invalid AuthorizedUserCredentials, the " + std::string(key) +
           " field is missing on data loaded from " + source);
     }
     if (credentials.value(key, "").empty()) {
-      google::cloud::internal::RaiseInvalidArgument(
+      google::cloud::internal::ThrowInvalidArgument(
           "Invalid AuthorizedUserCredentials, the " + std::string(key) +
           " field is empty on data loaded from " + source);
     }

@@ -34,17 +34,17 @@ namespace oauth2 {
 
 /// Parses the JSON file at `path` and creates the appropriate Credentials type.
 std::unique_ptr<Credentials> LoadCredsFromPath(std::string const& path) {
-  using google::cloud::internal::RaiseRuntimeError;
+  using google::cloud::internal::ThrowRuntimeError;
   namespace nl = google::cloud::storage::internal::nl;
 
   std::ifstream ifs(path);
   if (not ifs.is_open()) {
-    RaiseRuntimeError("Cannot open credentials file " + path);
+    ThrowRuntimeError("Cannot open credentials file " + path);
   }
   std::string contents(std::istreambuf_iterator<char>{ifs}, {});
   auto cred_json = nl::json::parse(contents, nullptr, false);
   if (cred_json.is_discarded()) {
-    RaiseRuntimeError("Invalid contents in credentials file " + path);
+    ThrowRuntimeError("Invalid contents in credentials file " + path);
   }
   std::string cred_type = cred_json.value("type", "no type given");
   if (cred_type == "authorized_user") {
@@ -55,7 +55,7 @@ std::unique_ptr<Credentials> LoadCredsFromPath(std::string const& path) {
     return google::cloud::internal::make_unique<ServiceAccountCredentials<>>(
         contents, path);
   }
-  RaiseRuntimeError(
+  ThrowRuntimeError(
       "Unsupported credential type (" + cred_type +
       ") when reading Application Default Credentials file from " + path + ".");
 }
@@ -113,7 +113,7 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials() {
   std::string adc_link =
       "https://developers.google.com/identity/protocols"
       "/application-default-credentials";
-  google::cloud::internal::RaiseRuntimeError(
+  google::cloud::internal::ThrowRuntimeError(
       "Could not automatically determine credentials. For more information,"
       " please see " +
       adc_link);

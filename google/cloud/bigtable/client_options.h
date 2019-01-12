@@ -106,7 +106,7 @@ class ClientOptions {
   /// Set the size of the connection pool.
   ClientOptions& set_connection_pool_size(std::size_t size) {
     if (size == 0) {
-      google::cloud::internal::RaiseRangeError(
+      google::cloud::internal::ThrowRangeError(
           "ClientOptions::set_connection_pool_size requires size > 0");
     }
     connection_pool_size_ = size;
@@ -193,7 +193,7 @@ class ClientOptions {
         std::chrono::duration_cast<std::chrono::milliseconds>(fallback_timeout);
 
     if (ft_ms.count() > std::numeric_limits<int>::max()) {
-      google::cloud::internal::RaiseRangeError(
+      google::cloud::internal::ThrowRangeError(
           "Duration Exceeds Range for int");
     }
     auto fallback_timeout_ms = static_cast<int>(ft_ms.count());

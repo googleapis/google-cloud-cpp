@@ -25,7 +25,7 @@ google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(
     std::string const& repr) {
   google::bigtable::v2::ReadRowsResponse response;
   if (!google::protobuf::TextFormat::ParseFromString(repr, &response)) {
-    google::cloud::internal::RaiseRuntimeError("Failed to parse " + repr);
+    google::cloud::internal::ThrowRuntimeError("Failed to parse " + repr);
   }
   return response;
 }

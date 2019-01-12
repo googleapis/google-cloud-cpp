@@ -52,13 +52,13 @@ std::string OpenSslUtils::Base64Decode(std::string const& str) {
   if (not source) {
     std::ostringstream os;
     os << __func__ << ": cannot create BIO for source string=<" << str << ">";
-    google::cloud::internal::RaiseRuntimeError(os.str());
+    google::cloud::internal::ThrowRuntimeError(os.str());
   }
   UniqueBioPtr filter(BIO_new(BIO_f_base64()), &BIO_free);
   if (not filter) {
     std::ostringstream os;
     os << __func__ << ": cannot create BIO for Base64 decoding";
-    google::cloud::internal::RaiseRuntimeError(os.str());
+    google::cloud::internal::ThrowRuntimeError(os.str());
   }
 
   // Based on the documentation this never fails, so we can transfer ownership
@@ -74,7 +74,7 @@ std::string OpenSslUtils::Base64Decode(std::string const& str) {
   if (len < 0) {
     std::ostringstream os;
     os << "Error parsing Base64 string [" << len << "], string=<" << str << ">";
-    google::cloud::internal::RaiseRuntimeError(os.str());
+    google::cloud::internal::ThrowRuntimeError(os.str());
   }
 
   result.resize(static_cast<std::size_t>(len));
@@ -106,7 +106,7 @@ std::string OpenSslUtils::Base64Encode(std::string const& str) {
       std::ostringstream err_builder;
       err_builder << "Permanent error in " << __func__ << ": "
                   << "BIO_write returned non-retryable value of " << retval;
-      google::cloud::internal::RaiseRuntimeError(err_builder.str());
+      google::cloud::internal::ThrowRuntimeError(err_builder.str());
     }
   }
   // Tell the b64 encoder that we're done writing data, thus prompting it to
@@ -120,7 +120,7 @@ std::string OpenSslUtils::Base64Encode(std::string const& str) {
       std::ostringstream err_builder;
       err_builder << "Permanent error in " << __func__ << ": "
                   << "BIO_flush returned non-retryable value of " << retval;
-      google::cloud::internal::RaiseRuntimeError(err_builder.str());
+      google::cloud::internal::ThrowRuntimeError(err_builder.str());
     }
   }
 
