@@ -51,7 +51,7 @@ bigtable::bigendian64_t Encoder<bigtable::bigendian64_t>::Decode(
     std::string const& value) {
   // Check if value is BigEndian 64-bit integer
   if (value.size() != sizeof(bigtable::bigendian64_t)) {
-    google::cloud::internal::RaiseRangeError(
+    google::cloud::internal::ThrowRangeError(
         "Value is not convertible to uint64");
   }
   bigtable::bigendian64_t big_endian_value(0);

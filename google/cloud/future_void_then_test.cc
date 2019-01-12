@@ -56,7 +56,7 @@ TEST(FutureTestVoid, ThenException) {
   bool called = false;
   future<void> next = fut.then([&called](future<void> r) {
     called = true;
-    internal::RaiseRuntimeError("test message");
+    internal::ThrowRuntimeError("test message");
   });
   EXPECT_FALSE(fut.valid());
   EXPECT_TRUE(next.valid());
@@ -348,7 +348,7 @@ TEST(FutureTestVoid, conform_2_3_8_e) {
   future<void> f = p.get_future();
 
   future<void> next = f.then([&](future<void> r) {
-    internal::RaiseRuntimeError("test exception in functor");
+    internal::ThrowRuntimeError("test exception in functor");
   });
   EXPECT_TRUE(next.valid());
 

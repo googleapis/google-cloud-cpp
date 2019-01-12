@@ -98,7 +98,7 @@ class CurlWriteStreambuf : public ObjectWriteStreambuf {
   StatusOr<HttpResponse> DoClose() override;
 
  private:
-  /// Raise an exception if the stream is closed.
+  /// Throw an exception if the stream is closed.
   Status Validate(char const* where) const;
 
   /// Flush the libcurl buffer and swap it with the iostream buffer.

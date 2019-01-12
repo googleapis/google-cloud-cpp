@@ -32,7 +32,7 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
-[[noreturn]] void RaiseFutureError(std::future_errc ec, char const* msg);
+[[noreturn]] void ThrowFutureError(std::future_errc ec, char const* msg);
 
 /**
  * Define an interface to type-erased continuations.
@@ -180,7 +180,7 @@ class future_shared_state_base {
   void set_continuation(std::unique_ptr<continuation_base> c) {
     std::unique_lock<std::mutex> lk(mu_);
     if (continuation_) {
-      RaiseFutureError(std::future_errc::future_already_retrieved, __func__);
+      ThrowFutureError(std::future_errc::future_already_retrieved, __func__);
     }
     // If the future is already satisfied, invoke the continuation immediately.
     if (is_ready_unlocked()) {
@@ -199,7 +199,7 @@ class future_shared_state_base {
   /// Satisfy the shared state using an exception.
   void set_exception(std::exception_ptr ex, std::unique_lock<std::mutex>& lk) {
     if (is_ready_unlocked()) {
-      RaiseFutureError(std::future_errc::promise_already_satisfied, __func__);
+      ThrowFutureError(std::future_errc::promise_already_satisfied, __func__);
     }
     exception_ = std::move(ex);
     current_state_ = state::has_exception;
@@ -240,10 +240,10 @@ class future_shared_state_base {
    */
   static void mark_retrieved(future_shared_state_base* sh) {
     if (not sh) {
-      RaiseFutureError(std::future_errc::no_state, __func__);
+      ThrowFutureError(std::future_errc::no_state, __func__);
     }
     if (sh->retrieved_.test_and_set()) {
-      RaiseFutureError(std::future_errc::future_already_retrieved, __func__);
+      ThrowFutureError(std::future_errc::future_already_retrieved, __func__);
     }
   }
 
@@ -355,7 +355,7 @@ class future_shared_state final : private future_shared_state_base {
   void set_value(T&& value) {
     std::unique_lock<std::mutex> lk(mu_);
     if (is_ready_unlocked()) {
-      RaiseFutureError(std::future_errc::promise_already_satisfied, __func__);
+      ThrowFutureError(std::future_errc::promise_already_satisfied, __func__);
     }
     // We can only reach this point once, all other states are terminal.
     // Therefore we know that `buffer_` has not been initialized and calling
@@ -535,7 +535,7 @@ class future_shared_state<void> final : private future_shared_state_base {
  private:
   void set_value(std::unique_lock<std::mutex> const& lk) {
     if (is_ready_unlocked()) {
-      RaiseFutureError(std::future_errc::promise_already_satisfied, __func__);
+      ThrowFutureError(std::future_errc::promise_already_satisfied, __func__);
     }
     current_state_ = state::has_value;
   }

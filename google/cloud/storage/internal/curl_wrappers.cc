@@ -117,7 +117,7 @@ void InitializeSslLocking(bool enable_ssl_callbacks) {
     // the library initialization, nothing else may get reported to the
     // application developer.
     std::cerr << os.str() << std::endl;
-    google::cloud::internal::RaiseRuntimeError(os.str());
+    google::cloud::internal::ThrowRuntimeError(os.str());
   }
 
   // If we get to this point, we need to initialize the OpenSSL library to have

@@ -161,7 +161,7 @@ StatusOr<int> CurlUploadRequest::PerformWork() {
                    << ", result=" << result;
   } while (result == CURLM_CALL_MULTI_PERFORM);
 
-  // Raise an exception if the result is unexpected, otherwise return.
+  // Throw an exception if the result is unexpected, otherwise return.
   if (result != CURLM_OK) {
     return AsStatus(result, __func__);
   }
@@ -177,7 +177,7 @@ StatusOr<int> CurlUploadRequest::PerformWork() {
         break;
       }
       if (msg->easy_handle != handle_.handle_.get()) {
-        // Raise an exception if the handle is not the right one. This should
+        // Throw an exception if the handle is not the right one. This should
         // never happen, but better to give some meaningful error in this case.
         std::ostringstream os;
         os << __func__ << "() unknown handle returned by curl_multi_info_read()"

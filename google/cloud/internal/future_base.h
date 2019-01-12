@@ -131,10 +131,10 @@ class future_base {
   explicit future_base(std::shared_ptr<shared_state_type> state)
       : shared_state_(std::move(state)) {}
 
-  /// Raises an exception if the shared state is not valid.
+  /// Throws an exception if the shared state is not valid.
   void check_valid() const {
     if (not shared_state_) {
-      RaiseFutureError(std::future_errc::no_state, __func__);
+      ThrowFutureError(std::future_errc::no_state, __func__);
     }
   }
 
@@ -170,7 +170,7 @@ class promise_base {
    */
   void set_exception(std::exception_ptr ex) {
     if (not shared_state_) {
-      RaiseFutureError(std::future_errc::no_state, __func__);
+      ThrowFutureError(std::future_errc::no_state, __func__);
     }
     shared_state_->set_exception(std::move(ex));
   }

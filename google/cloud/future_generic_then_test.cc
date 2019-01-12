@@ -60,7 +60,7 @@ TEST(FutureTestInt, ThenException) {
     called = true;
     int value = r.get();
     if (value == 42) {
-      internal::RaiseRuntimeError("test message");
+      internal::ThrowRuntimeError("test message");
     }
     return 2 * value;
   });
@@ -351,7 +351,7 @@ TEST(FutureTestInt, conform_2_3_8_e) {
   future<int> f = p.get_future();
 
   future<void> next = f.then([&](future<int> r) {
-    internal::RaiseRuntimeError("test exception in functor");
+    internal::ThrowRuntimeError("test exception in functor");
   });
   EXPECT_TRUE(next.valid());
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

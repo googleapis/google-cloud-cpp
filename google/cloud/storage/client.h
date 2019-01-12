@@ -219,7 +219,7 @@ class Client {
     if (project_id.empty()) {
       std::string msg = "Default project id not set in ";
       msg += __func__;
-      google::cloud::internal::RaiseLogicError(msg);
+      google::cloud::internal::ThrowLogicError(msg);
     }
     return ListBucketsForProject(project_id, std::forward<Options>(options)...);
   }
@@ -2139,7 +2139,7 @@ class Client {
     if (project_id.empty()) {
       std::string msg = "Default project id not set in ";
       msg += __func__;
-      google::cloud::internal::RaiseLogicError(msg);
+      google::cloud::internal::ThrowLogicError(msg);
     }
     return GetServiceAccountForProject(project_id,
                                        std::forward<Options>(options)...);

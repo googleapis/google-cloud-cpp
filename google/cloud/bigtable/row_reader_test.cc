@@ -104,7 +104,7 @@ class RetryPolicyMock : public bigtable::RPCRetryPolicy {
  public:
   RetryPolicyMock() {}
   std::unique_ptr<RPCRetryPolicy> clone() const override {
-    google::cloud::internal::RaiseRuntimeError("Mocks cannot be copied.");
+    google::cloud::internal::ThrowRuntimeError("Mocks cannot be copied.");
   }
 
   MOCK_CONST_METHOD1(SetupHook, void(grpc::ClientContext&));
@@ -122,7 +122,7 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
  public:
   BackoffPolicyMock() {}
   std::unique_ptr<RPCBackoffPolicy> clone() const override {
-    google::cloud::internal::RaiseRuntimeError("Mocks cannot be copied.");
+    google::cloud::internal::ThrowRuntimeError("Mocks cannot be copied.");
   }
   void Setup(grpc::ClientContext& context) const override {}
   MOCK_METHOD1(OnCompletionHook,

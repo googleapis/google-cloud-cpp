@@ -305,7 +305,7 @@ class AsyncUnaryStreamRpcFunctor : public AsyncGrpcOperation {
         finished_functor_(cq, *context_, status_);
         return true;
     }
-    google::cloud::internal::RaiseRuntimeError(
+    google::cloud::internal::ThrowRuntimeError(
         "unexpected state in AsyncUnaryStreamRpcFunctor: " +
         std::to_string(state_));
   }

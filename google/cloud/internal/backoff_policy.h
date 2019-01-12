@@ -132,7 +132,7 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
             maximum_delay)),
         scaling_(scaling) {
     if (scaling_ <= 1.0) {
-      google::cloud::internal::RaiseInvalidArgument(
+      google::cloud::internal::ThrowInvalidArgument(
           "scaling factor must be > 1.0");
     }
   }
