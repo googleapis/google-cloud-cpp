@@ -88,7 +88,7 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
 
   StatusOr<BucketMetadata> get_meta = client.GetBucketMetadata(bucket_name);
   ASSERT_TRUE(get_meta.ok()) << "status=" << get_meta.status();
-  EXPECT_EQ(insert_meta, *get_meta);
+  EXPECT_EQ(*insert_meta, *get_meta);
 
   // Create a request to update the metadata, change the storage class because
   // it is easy. And use either COLDLINE or NEARLINE depending on the existing
@@ -227,7 +227,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   }
 
   StatusOr<BucketMetadata> patched =
-      client.PatchBucket(bucket_name, insert_meta, desired_state);
+      client.PatchBucket(bucket_name, *insert_meta, desired_state);
   ASSERT_TRUE(patched.ok()) << "status=" << patched.status();
   // acl() - cannot compare for equality because many fields are updated with
   // unknown values (entity_id, etag, etc)
@@ -612,7 +612,7 @@ TEST_F(BucketIntegrationTest, BucketLock) {
   auto after_setting_retention_policy = client.PatchBucket(
       bucket_name,
       BucketMetadataPatchBuilder().SetRetentionPolicy(std::chrono::seconds(30)),
-      IfMetagenerationMatch(meta.metageneration()));
+      IfMetagenerationMatch(meta->metageneration()));
   ASSERT_TRUE(after_setting_retention_policy.ok())
       << "status=" << after_setting_retention_policy.status();
 
