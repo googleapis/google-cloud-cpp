@@ -248,13 +248,19 @@ TEST_F(ObjectIntegrationTest, ListObjectsVersions) {
     // ASSERT_TRUE does not work inside this lambda because the return type is
     // not `void`, use `.value()` instead to throw (or crash) on the unexpected
     // error.
-    auto meta = client.InsertObject(bucket_name, object_name,
-                                    "contents for the first revision",
-                                    storage::IfGenerationMatch(0)).value();
-    client.InsertObject(bucket_name, object_name,
-                        "contents for the second revision").value();
-    client.InsertObject(bucket_name, object_name,
-                        "contents for the final revision").value();
+    auto meta = client
+                    .InsertObject(bucket_name, object_name,
+                                  "contents for the first revision",
+                                  storage::IfGenerationMatch(0))
+                    .value();
+    client
+        .InsertObject(bucket_name, object_name,
+                      "contents for the second revision")
+        .value();
+    client
+        .InsertObject(bucket_name, object_name,
+                      "contents for the final revision")
+        .value();
     return meta.name();
   };
 
@@ -297,8 +303,8 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client.InsertObject(bucket_name, object_name, expected,
-                                            IfGenerationMatch(0));
+  StatusOr<ObjectMetadata> meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0));
   ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
   EXPECT_EQ(object_name, meta->name());
@@ -477,8 +483,8 @@ TEST_F(ObjectIntegrationTest, XmlReadWrite) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client.InsertObject(bucket_name, object_name, expected,
-                                            IfGenerationMatch(0), Fields(""));
+  StatusOr<ObjectMetadata> meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0), Fields(""));
   ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
   EXPECT_EQ(object_name, meta->name());
@@ -499,12 +505,13 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
 
   // Create the object, but only if it does not exist already.
   auto insert = client.InsertObject(bucket_name, object_name, LoremIpsum(),
-                            IfGenerationMatch(0));
+                                    IfGenerationMatch(0));
   ASSERT_TRUE(insert.ok()) << "status=" << insert.status();
 
   auto entity_name = MakeEntityName();
-  std::vector<ObjectAccessControl> initial_acl =
+  StatusOr<std::vector<ObjectAccessControl>> initial_acl =
       client.ListObjectAcl(bucket_name, object_name);
+  ASSERT_TRUE(initial_acl.ok()) << "status=" << initial_acl.status();
 
   auto name_counter = [](std::string const& name,
                          std::vector<ObjectAccessControl> const& list) {
@@ -514,42 +521,50 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
     };
     return std::count_if(list.begin(), list.end(), name_matcher(name));
   };
-  ASSERT_EQ(0, name_counter(entity_name, initial_acl))
+  ASSERT_EQ(0, name_counter(entity_name, *initial_acl))
       << "Test aborted. The entity <" << entity_name << "> already exists."
       << "This is unexpected as the test generates a random object name.";
 
-  ObjectAccessControl result =
+  StatusOr<ObjectAccessControl> result =
       client.CreateObjectAcl(bucket_name, object_name, entity_name, "OWNER");
-  EXPECT_EQ("OWNER", result.role());
+  ASSERT_TRUE(result.ok()) << "status=" << result.status();
+  EXPECT_EQ("OWNER", result->role());
   auto current_acl = client.ListObjectAcl(bucket_name, object_name);
+  ASSERT_TRUE(current_acl.ok()) << "status=" << current_acl.status();
   // Search using the entity name returned by the request, because we use
   // 'project-editors-<project_id>' this different than the original entity
   // name, the server "translates" the project id to a project number.
-  EXPECT_EQ(1, name_counter(result.entity(), current_acl));
+  EXPECT_EQ(1, name_counter(result->entity(), *current_acl));
 
   auto get_result = client.GetObjectAcl(bucket_name, object_name, entity_name);
-  EXPECT_EQ(get_result, result);
+  ASSERT_TRUE(get_result.ok()) << "status=" << get_result.status();
+  EXPECT_EQ(*get_result, *result);
 
-  ObjectAccessControl new_acl = get_result;
+  ObjectAccessControl new_acl = *get_result;
   new_acl.set_role("READER");
   auto updated_result =
       client.UpdateObjectAcl(bucket_name, object_name, new_acl);
-  EXPECT_EQ(updated_result.role(), "READER");
+  ASSERT_TRUE(updated_result.ok()) << "status=" << updated_result.status();
+  EXPECT_EQ("READER", updated_result->role());
   get_result = client.GetObjectAcl(bucket_name, object_name, entity_name);
-  EXPECT_EQ(get_result, updated_result);
+  EXPECT_EQ(*get_result, *updated_result);
 
-  new_acl = get_result;
+  new_acl = *get_result;
   new_acl.set_role("OWNER");
   // Because this is a freshly created object, with a random name, we do not
   // worry about implementing optimistic concurrency control.
   get_result = client.PatchObjectAcl(bucket_name, object_name, entity_name,
-                                     get_result, new_acl);
-  EXPECT_EQ(get_result.role(), new_acl.role());
+                                     *get_result, new_acl);
+  ASSERT_TRUE(get_result.ok()) << "status=" << get_result.status();
+  EXPECT_EQ(get_result->role(), new_acl.role());
 
   // Remove an entity and verify it is no longer in the ACL.
-  client.DeleteObjectAcl(bucket_name, object_name, entity_name);
+  StatusOr<void> status =
+      client.DeleteObjectAcl(bucket_name, object_name, entity_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
   current_acl = client.ListObjectAcl(bucket_name, object_name);
-  EXPECT_EQ(0, name_counter(result.entity(), current_acl));
+  ASSERT_TRUE(current_acl.ok()) << "status=" << current_acl.status();
+  EXPECT_EQ(0, name_counter(result->entity(), *current_acl));
 
   client.DeleteObject(bucket_name, object_name);
 }
@@ -730,8 +745,8 @@ TEST_F(ObjectIntegrationTest, ComposeSimple) {
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client.InsertObject(bucket_name, object_name,
-                                            LoremIpsum(), IfGenerationMatch(0));
+  StatusOr<ObjectMetadata> meta = client.InsertObject(
+      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
   EXPECT_EQ(object_name, meta->name());
@@ -1235,8 +1250,8 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client.InsertObject(bucket_name, object_name, expected,
-                                            IfGenerationMatch(0));
+  StatusOr<ObjectMetadata> meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0));
   ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
   EXPECT_EQ(object_name, meta->name());
@@ -1251,7 +1266,8 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
       [&] { os.Close(); },
       [&](std::ios::failure const& ex) {
         EXPECT_FALSE(os.metadata().ok());
-        EXPECT_EQ(StatusCode::kFailedPrecondition, os.metadata().status().code());
+        EXPECT_EQ(StatusCode::kFailedPrecondition,
+                  os.metadata().status().code());
       },
       "" /* the message generated by the C++ runtime is unknown */);
 
@@ -1266,8 +1282,8 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailureNoex) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client.InsertObject(bucket_name, object_name, expected,
-                                            IfGenerationMatch(0));
+  StatusOr<ObjectMetadata> meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0));
   ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
   EXPECT_EQ(object_name, meta->name());
@@ -1351,9 +1367,8 @@ TEST_F(ObjectIntegrationTest, RewriteFailure) {
   auto destination_object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
-  StatusOr<ObjectMetadata> metadata =
-      client.RewriteObjectBlocking(bucket_name, source_object_name, bucket_name,
-                                 destination_object_name);
+  StatusOr<ObjectMetadata> metadata = client.RewriteObjectBlocking(
+      bucket_name, source_object_name, bucket_name, destination_object_name);
   EXPECT_FALSE(metadata.ok());
 }
 
@@ -1363,7 +1378,8 @@ TEST_F(ObjectIntegrationTest, ListAccessControlFailure) {
   auto object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
-  TestPermanentFailure([&] { client.ListObjectAcl(bucket_name, object_name); });
+  auto list = client.ListObjectAcl(bucket_name, object_name);
+  ASSERT_FALSE(list.ok()) << "list[0]=" << list.value().front();
 }
 
 TEST_F(ObjectIntegrationTest, CreateAccessControlFailure) {
@@ -1373,9 +1389,9 @@ TEST_F(ObjectIntegrationTest, CreateAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the source object does not exist.
-  TestPermanentFailure([&] {
-    client.CreateObjectAcl(bucket_name, object_name, entity_name, "READER");
-  });
+  auto acl =
+      client.CreateObjectAcl(bucket_name, object_name, entity_name, "READER");
+  ASSERT_FALSE(acl.ok()) << "value=" << acl.value();
 }
 
 TEST_F(ObjectIntegrationTest, GetAccessControlFailure) {
@@ -1385,8 +1401,8 @@ TEST_F(ObjectIntegrationTest, GetAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the source object does not exist.
-  TestPermanentFailure(
-      [&] { client.GetObjectAcl(bucket_name, object_name, entity_name); });
+  auto acl = client.GetObjectAcl(bucket_name, object_name, entity_name);
+  ASSERT_FALSE(acl.ok()) << "value=" << acl.value();
 }
 
 TEST_F(ObjectIntegrationTest, UpdateAccessControlFailure) {
@@ -1396,11 +1412,10 @@ TEST_F(ObjectIntegrationTest, UpdateAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the source object does not exist.
-  TestPermanentFailure([&] {
-    client.UpdateObjectAcl(
-        bucket_name, object_name,
-        ObjectAccessControl().set_entity(entity_name).set_role("READER"));
-  });
+  auto acl = client.UpdateObjectAcl(
+      bucket_name, object_name,
+      ObjectAccessControl().set_entity(entity_name).set_role("READER"));
+  ASSERT_FALSE(acl.ok()) << "value=" << acl.value();
 }
 
 TEST_F(ObjectIntegrationTest, PatchAccessControlFailure) {
@@ -1410,11 +1425,10 @@ TEST_F(ObjectIntegrationTest, PatchAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the source object does not exist.
-  TestPermanentFailure([&] {
-    client.PatchObjectAcl(
-        bucket_name, object_name, entity_name, ObjectAccessControl(),
-        ObjectAccessControl().set_entity(entity_name).set_role("READER"));
-  });
+  auto acl = client.PatchObjectAcl(
+      bucket_name, object_name, entity_name, ObjectAccessControl(),
+      ObjectAccessControl().set_entity(entity_name).set_role("READER"));
+  ASSERT_FALSE(acl.ok()) << "value=" << acl.value();
 }
 
 TEST_F(ObjectIntegrationTest, DeleteAccessControlFailure) {
@@ -1424,8 +1438,8 @@ TEST_F(ObjectIntegrationTest, DeleteAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the source object does not exist.
-  TestPermanentFailure(
-      [&] { client.DeleteObjectAcl(bucket_name, object_name, entity_name); });
+  auto status = client.DeleteObjectAcl(bucket_name, object_name, entity_name);
+  ASSERT_FALSE(status.ok());
 }
 
 }  // anonymous namespace
