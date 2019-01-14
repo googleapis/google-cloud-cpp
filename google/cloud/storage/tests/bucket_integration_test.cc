@@ -86,24 +86,27 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   std::vector<BucketMetadata> current_buckets(buckets.begin(), buckets.end());
   EXPECT_EQ(1U, name_counter(bucket_name, current_buckets));
 
-  BucketMetadata get_meta = client.GetBucketMetadata(bucket_name);
-  EXPECT_EQ(*insert_meta, get_meta);
+  StatusOr<BucketMetadata> get_meta = client.GetBucketMetadata(bucket_name);
+  ASSERT_TRUE(get_meta.ok()) << "status=" << get_meta.status();
+  EXPECT_EQ(*insert_meta, *get_meta);
 
   // Create a request to update the metadata, change the storage class because
   // it is easy. And use either COLDLINE or NEARLINE depending on the existing
   // value.
   std::string desired_storage_class = storage_class::Coldline();
-  if (get_meta.storage_class() == storage_class::Coldline()) {
+  if (get_meta->storage_class() == storage_class::Coldline()) {
     desired_storage_class = storage_class::Nearline();
   }
-  BucketMetadata update = get_meta;
+  BucketMetadata update = *get_meta;
   update.set_storage_class(desired_storage_class);
-  BucketMetadata updated_meta = client.UpdateBucket(bucket_name, update);
-  EXPECT_EQ(desired_storage_class, updated_meta.storage_class());
+  StatusOr<BucketMetadata> updated_meta =
+      client.UpdateBucket(bucket_name, update);
+  ASSERT_TRUE(updated_meta.ok()) << "status=" << updated_meta.status();
+  EXPECT_EQ(desired_storage_class, updated_meta->storage_class());
 
   // Patch the metadata to change the storage class, add some lifecycle
   // rules, and the website settings.
-  BucketMetadata desired_state = updated_meta;
+  BucketMetadata desired_state = *updated_meta;
   LifecycleRule rule(LifecycleRule::ConditionConjunction(
                          LifecycleRule::MaxAge(30),
                          LifecycleRule::MatchesStorageClassStandard()),
@@ -112,18 +115,21 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
       .set_lifecycle(BucketLifecycle{{rule}})
       .set_website(BucketWebsite{"index.html", "404.html"});
 
-  BucketMetadata patched =
-      client.PatchBucket(bucket_name, updated_meta, desired_state);
-  EXPECT_EQ(storage_class::Standard(), patched.storage_class());
-  EXPECT_EQ(1U, patched.lifecycle().rule.size());
+  StatusOr<BucketMetadata> patched =
+      client.PatchBucket(bucket_name, *updated_meta, desired_state);
+  ASSERT_TRUE(patched.ok()) << "status=" << patched.status();
+  EXPECT_EQ(storage_class::Standard(), patched->storage_class());
+  EXPECT_EQ(1U, patched->lifecycle().rule.size());
 
   // Patch the metadata again, this time remove billing and website settings.
   patched = client.PatchBucket(
       bucket_name, BucketMetadataPatchBuilder().ResetWebsite().ResetBilling());
-  EXPECT_FALSE(patched.has_billing());
-  EXPECT_FALSE(patched.has_website());
+  ASSERT_TRUE(patched.ok()) << "status=" << patched.status();
+  EXPECT_FALSE(patched->has_billing());
+  EXPECT_FALSE(patched->has_website());
 
-  client.DeleteBucket(bucket_name);
+  StatusOr<void> status = client.DeleteBucket(bucket_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
   buckets = client.ListBucketsForProject(project_id);
   current_buckets.assign(buckets.begin(), buckets.end());
   EXPECT_EQ(0U, name_counter(bucket_name, current_buckets));
@@ -220,25 +226,27 @@ TEST_F(BucketIntegrationTest, FullPatch) {
     desired_state.set_website(BucketWebsite{"index.html", "404.html"});
   }
 
-  BucketMetadata patched =
+  StatusOr<BucketMetadata> patched =
       client.PatchBucket(bucket_name, *insert_meta, desired_state);
+  ASSERT_TRUE(patched.ok()) << "status=" << patched.status();
   // acl() - cannot compare for equality because many fields are updated with
   // unknown values (entity_id, etag, etc)
-  EXPECT_EQ(1U, std::count_if(patched.acl().begin(), patched.acl().end(),
+  EXPECT_EQ(1U, std::count_if(patched->acl().begin(), patched->acl().end(),
                               [](BucketAccessControl const& x) {
                                 return x.entity() == "allAuthenticatedUsers";
                               }));
 
   // billing()
-  EXPECT_EQ(desired_state.billing_as_optional(), patched.billing_as_optional());
+  EXPECT_EQ(desired_state.billing_as_optional(),
+            patched->billing_as_optional());
 
   // cors()
-  EXPECT_EQ(desired_state.cors(), patched.cors());
+  EXPECT_EQ(desired_state.cors(), patched->cors());
 
   // default_acl() - cannot compare for equality because many fields are updated
   // with unknown values (entity_id, etag, etc)
-  EXPECT_EQ(1U, std::count_if(patched.default_acl().begin(),
-                              patched.default_acl().end(),
+  EXPECT_EQ(1U, std::count_if(patched->default_acl().begin(),
+                              patched->default_acl().end(),
                               [](ObjectAccessControl const& x) {
                                 return x.entity() == "allAuthenticatedUsers";
                               }));
@@ -247,26 +255,29 @@ TEST_F(BucketIntegrationTest, FullPatch) {
 
   // lifecycle()
   EXPECT_EQ(desired_state.lifecycle_as_optional(),
-            patched.lifecycle_as_optional());
+            patched->lifecycle_as_optional());
 
   // location()
-  EXPECT_EQ(desired_state.location(), patched.location());
+  EXPECT_EQ(desired_state.location(), patched->location());
 
   // logging()
-  EXPECT_EQ(desired_state.logging_as_optional(), patched.logging_as_optional())
-      << patched;
+  EXPECT_EQ(desired_state.logging_as_optional(),
+            patched->logging_as_optional());
 
   // storage_class()
-  EXPECT_EQ(desired_state.storage_class(), patched.storage_class());
+  EXPECT_EQ(desired_state.storage_class(), patched->storage_class());
 
   // versioning()
-  EXPECT_EQ(desired_state.versioning(), patched.versioning());
+  EXPECT_EQ(desired_state.versioning(), patched->versioning());
 
   // website()
-  EXPECT_EQ(desired_state.website_as_optional(), patched.website_as_optional());
+  EXPECT_EQ(desired_state.website_as_optional(),
+            patched->website_as_optional());
 
-  client.DeleteBucket(bucket_name);
-  client.DeleteBucket(logging_name);
+  auto delete_status = client.DeleteBucket(bucket_name);
+  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
+  delete_status = client.DeleteBucket(logging_name);
+  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
 }
 
 TEST_F(BucketIntegrationTest, GetMetadata) {
@@ -274,9 +285,10 @@ TEST_F(BucketIntegrationTest, GetMetadata) {
   Client client;
 
   auto metadata = client.GetBucketMetadata(bucket_name);
-  EXPECT_EQ(bucket_name, metadata.name());
-  EXPECT_EQ(bucket_name, metadata.id());
-  EXPECT_EQ("storage#bucket", metadata.kind());
+  ASSERT_TRUE(metadata.ok()) << "status=" << metadata.status();
+  EXPECT_EQ(bucket_name, metadata->name());
+  EXPECT_EQ(bucket_name, metadata->id());
+  EXPECT_EQ("storage#bucket", metadata->kind());
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataFields) {
@@ -284,9 +296,10 @@ TEST_F(BucketIntegrationTest, GetMetadataFields) {
   Client client;
 
   auto metadata = client.GetBucketMetadata(bucket_name, Fields("name"));
-  EXPECT_EQ(bucket_name, metadata.name());
-  EXPECT_TRUE(metadata.id().empty());
-  EXPECT_TRUE(metadata.kind().empty());
+  ASSERT_TRUE(metadata.ok()) << "status=" << metadata.status();
+  EXPECT_EQ(bucket_name, metadata->name());
+  EXPECT_TRUE(metadata->id().empty());
+  EXPECT_TRUE(metadata->kind().empty());
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatch_Success) {
@@ -294,14 +307,16 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatch_Success) {
   Client client;
 
   auto metadata = client.GetBucketMetadata(bucket_name);
-  EXPECT_EQ(bucket_name, metadata.name());
-  EXPECT_EQ(bucket_name, metadata.id());
-  EXPECT_EQ("storage#bucket", metadata.kind());
+  ASSERT_TRUE(metadata.ok()) << "status=" << metadata.status();
+  EXPECT_EQ(bucket_name, metadata->name());
+  EXPECT_EQ(bucket_name, metadata->id());
+  EXPECT_EQ("storage#bucket", metadata->kind());
 
   auto metadata2 = client.GetBucketMetadata(
       bucket_name, storage::Projection("noAcl"),
-      storage::IfMetagenerationMatch(metadata.metageneration()));
-  EXPECT_EQ(metadata2, metadata);
+      storage::IfMetagenerationMatch(metadata->metageneration()));
+  ASSERT_TRUE(metadata2.ok()) << "status=" << metadata2.status();
+  EXPECT_EQ(*metadata2, *metadata);
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatch_Failure) {
@@ -309,23 +324,15 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatch_Failure) {
   Client client;
 
   auto metadata = client.GetBucketMetadata(bucket_name);
-  EXPECT_EQ(bucket_name, metadata.name());
-  EXPECT_EQ(bucket_name, metadata.id());
-  EXPECT_EQ("storage#bucket", metadata.kind());
+  ASSERT_TRUE(metadata.ok()) << "status=" << metadata.status();
+  EXPECT_EQ(bucket_name, metadata->name());
+  EXPECT_EQ(bucket_name, metadata->id());
+  EXPECT_EQ("storage#bucket", metadata->kind());
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      client.GetBucketMetadata(
-          bucket_name, storage::Projection("noAcl"),
-          storage::IfMetagenerationNotMatch(metadata.metageneration())),
-      std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      client.GetBucketMetadata(
-          bucket_name, storage::Projection("noAcl"),
-          storage::IfMetagenerationNotMatch(metadata.metageneration())),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto metadata2 = client.GetBucketMetadata(
+      bucket_name, storage::Projection("noAcl"),
+      storage::IfMetagenerationNotMatch(metadata->metageneration()));
+  EXPECT_FALSE(metadata2.ok()) << "metadata=" << *metadata2;
 }
 
 TEST_F(BucketIntegrationTest, AccessControlCRUD) {
@@ -404,7 +411,8 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   ASSERT_TRUE(current_acl.ok()) << "status=" << current_acl.status();
   EXPECT_EQ(0, name_counter(result->entity(), *current_acl));
 
-  client.DeleteBucket(bucket_name);
+  auto delete_status = client.DeleteBucket(bucket_name);
+  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
 }
 
 TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
@@ -479,7 +487,8 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
   ASSERT_TRUE(current_acl.ok()) << "status=" << current_acl.status();
   EXPECT_EQ(0, name_counter(result->entity(), *current_acl));
 
-  client.DeleteBucket(bucket_name);
+  delete_status = client.DeleteBucket(bucket_name);
+  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
 }
 
 TEST_F(BucketIntegrationTest, NotificationsCRUD) {
@@ -535,7 +544,8 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
                         });
   EXPECT_EQ(0U, count) << "create=" << *create;
 
-  client.DeleteBucket(bucket_name);
+  delete_status = client.DeleteBucket(bucket_name);
+  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
 }
 
 TEST_F(BucketIntegrationTest, IamCRUD) {
@@ -585,7 +595,8 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
       client.TestBucketIamPermissions(bucket_name, expected_permissions);
   EXPECT_THAT(actual_permissions, ElementsAreArray(expected_permissions));
 
-  client.DeleteBucket(bucket_name);
+  auto delete_status = client.DeleteBucket(bucket_name);
+  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
 }
 
 TEST_F(BucketIntegrationTest, BucketLock) {
@@ -602,11 +613,14 @@ TEST_F(BucketIntegrationTest, BucketLock) {
       bucket_name,
       BucketMetadataPatchBuilder().SetRetentionPolicy(std::chrono::seconds(30)),
       IfMetagenerationMatch(meta->metageneration()));
+  ASSERT_TRUE(after_setting_retention_policy.ok())
+      << "status=" << after_setting_retention_policy.status();
 
   client.LockBucketRetentionPolicy(
-      bucket_name, after_setting_retention_policy.metageneration());
+      bucket_name, after_setting_retention_policy->metageneration());
 
-  client.DeleteBucket(bucket_name);
+  auto status = client.DeleteBucket(bucket_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(BucketIntegrationTest, BucketLockFailure) {
@@ -648,8 +662,8 @@ TEST_F(BucketIntegrationTest, GetFailure) {
 
   // Try to get information about a bucket that does not exist, or at least
   // it is very unlikely to exist, the name is random.
-  TestPermanentFailure(
-      [&client, bucket_name] { client.GetBucketMetadata(bucket_name); });
+  auto status = client.GetBucketMetadata(bucket_name);
+  ASSERT_FALSE(status.ok()) << "value=" << status.value();
 }
 
 TEST_F(BucketIntegrationTest, DeleteFailure) {
@@ -658,8 +672,8 @@ TEST_F(BucketIntegrationTest, DeleteFailure) {
 
   // Try to delete a bucket that does not exist, or at least it is very unlikely
   // to exist, the name is random.
-  TestPermanentFailure(
-      [&client, bucket_name] { client.DeleteBucket(bucket_name); });
+  auto status = client.DeleteBucket(bucket_name);
+  ASSERT_FALSE(status.ok());
 }
 
 TEST_F(BucketIntegrationTest, UpdateFailure) {
@@ -668,9 +682,8 @@ TEST_F(BucketIntegrationTest, UpdateFailure) {
 
   // Try to update a bucket that does not exist, or at least it is very unlikely
   // to exist, the name is random.
-  TestPermanentFailure([&client, bucket_name] {
-    client.UpdateBucket(bucket_name, BucketMetadata());
-  });
+  auto status = client.UpdateBucket(bucket_name, BucketMetadata());
+  ASSERT_FALSE(status.ok()) << "value=" << status.value();
 }
 
 TEST_F(BucketIntegrationTest, PatchFailure) {
@@ -679,9 +692,8 @@ TEST_F(BucketIntegrationTest, PatchFailure) {
 
   // Try to update a bucket that does not exist, or at least it is very unlikely
   // to exist, the name is random.
-  TestPermanentFailure([&client, bucket_name] {
-    client.PatchBucket(bucket_name, BucketMetadataPatchBuilder());
-  });
+  auto status = client.PatchBucket(bucket_name, BucketMetadataPatchBuilder());
+  ASSERT_FALSE(status.ok()) << "value=" << status.value();
 }
 
 TEST_F(BucketIntegrationTest, GetBucketIamPolicyFailure) {

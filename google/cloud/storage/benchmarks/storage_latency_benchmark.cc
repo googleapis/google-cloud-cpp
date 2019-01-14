@@ -168,7 +168,7 @@ int main(int argc, char* argv[]) try {
   RunTest(client, bucket_name, options, object_names);
   DeleteAllObjects(client, bucket_name, options, object_names);
   std::cout << "# Deleting " << bucket_name << std::endl;
-  client.DeleteBucket(bucket_name);
+  client.DeleteBucket(bucket_name).value();
 
   return 0;
 } catch (std::exception const& ex) {

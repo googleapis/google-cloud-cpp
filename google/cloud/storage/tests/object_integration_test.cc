@@ -240,8 +240,9 @@ TEST_F(ObjectIntegrationTest, ListObjectsVersions) {
   // first to produce a better error message if there is a configuration
   // problem.
   auto bucket_meta = client.GetBucketMetadata(bucket_name);
-  ASSERT_TRUE(bucket_meta.versioning().has_value());
-  ASSERT_TRUE(bucket_meta.versioning().value().enabled);
+  ASSERT_TRUE(bucket_meta.ok()) << "status=" << bucket_meta.status();
+  ASSERT_TRUE(bucket_meta->versioning().has_value());
+  ASSERT_TRUE(bucket_meta->versioning().value().enabled);
 
   auto create_object_with_3_versions = [&client, &bucket_name, this] {
     auto object_name = MakeRandomObjectName();
@@ -605,10 +606,11 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
   auto object_name = MakeRandomObjectName();
   auto copy_name = MakeRandomObjectName();
 
-  BucketMetadata bucket =
+  StatusOr<BucketMetadata> bucket =
       client.GetBucketMetadata(bucket_name, Projection::Full());
-  ASSERT_TRUE(bucket.has_owner());
-  std::string owner = bucket.owner().entity;
+  ASSERT_TRUE(bucket.ok()) << "status=" << bucket.status();
+  ASSERT_TRUE(bucket->has_owner());
+  std::string owner = bucket->owner().entity;
 
   StatusOr<ObjectMetadata> original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
@@ -632,10 +634,11 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
   auto object_name = MakeRandomObjectName();
   auto copy_name = MakeRandomObjectName();
 
-  BucketMetadata bucket =
+  StatusOr<BucketMetadata> bucket =
       client.GetBucketMetadata(bucket_name, Projection::Full());
-  ASSERT_TRUE(bucket.has_owner());
-  std::string owner = bucket.owner().entity;
+  ASSERT_TRUE(bucket.ok()) << "status=" << bucket.status();
+  ASSERT_TRUE(bucket->has_owner());
+  std::string owner = bucket->owner().entity;
 
   StatusOr<ObjectMetadata> original = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
