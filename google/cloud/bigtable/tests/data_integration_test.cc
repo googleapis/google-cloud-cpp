@@ -587,3 +587,48 @@ TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
   auto last = samples.back();
   EXPECT_LT(0, last.offset_bytes);
 }
+
+TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
+  if (UsingCloudBigtableEmulator()) {
+    // TODO(#151) - remove workarounds for emulator bug(s).
+    return;
+  }
+
+  std::string const table_id = RandomTableId();
+  auto table = CreateTable(table_id, table_config);
+
+  std::string const row_key = "row-key-1";
+  // cell vector contains 10 cells of 25 MiB
+  auto const MiB = 1024L * 1024L;
+
+  std::string value((25 * MiB), 'a');
+  std::vector<bigtable::Cell> created;
+  std::vector<bigtable::Cell> expected;
+
+  std::string col_qualifier;
+  for (int i = 0; i < 10; i++) {
+    col_qualifier = "c" + std::to_string(i);
+    created.push_back(
+        bigtable::Cell(row_key, family, col_qualifier, 0, value, {}));
+    expected.push_back(
+        bigtable::Cell(row_key, family, col_qualifier, 0, value, {}));
+  }
+
+  CreateCells(*table, created);
+  auto result = table->ReadRow(row_key, bigtable::Filter::PassAllFilter());
+  EXPECT_TRUE(result.first);
+
+  int totalrowsize = 0;
+  for (auto const& cell : result.second.cells()) {
+    totalrowsize += cell.value().size();
+  }
+  EXPECT_LE(totalrowsize, (256 * MiB));
+
+  // Ignore the server set timestamp on the returned cells because it is not
+  // predictable.
+  auto expected_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
+  auto actual_ignore_timestamp =
+      GetCellsIgnoringTimestamp(result.second.cells());
+  DeleteTable(table_id);
+  CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
+}
