@@ -23,8 +23,8 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-using ::testing::HasSubstr;
 using google::cloud::storage::testing::TestPermanentFailure;
+using ::testing::HasSubstr;
 
 /// Store the project and instance captured from the command-line arguments.
 class ObjectResumableWriteTestEnvironment : public ::testing::Environment {
@@ -74,7 +74,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
@@ -120,7 +121,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
@@ -156,7 +158,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
@@ -167,8 +170,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client.InsertObject(bucket_name, object_name, expected,
-                                            IfGenerationMatch(0));
+  StatusOr<ObjectMetadata> meta = client.InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0));
   ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
   EXPECT_EQ(object_name, meta->name());
@@ -184,7 +187,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
   EXPECT_FALSE(os.metadata().ok());
   EXPECT_EQ(StatusCode::kFailedPrecondition, os.metadata().status().code());
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 }  // anonymous namespace
