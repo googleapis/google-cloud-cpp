@@ -277,34 +277,34 @@ When you apply a new ACL to a bucket, GCS adds <code>OWNER</code> permission to 
 When you apply a new ACL to an object, GCS adds <code>OWNER</code> permission to the object if you omit the grants.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/access-control/">https://cloud.google.com/storage/docs/access-control/</a> for more information about access control in GCS. </dd></dl>
 </div></td></tr>
-<tr class="memitem:aa2015fd18d270745e52133f36c4a4364"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:aa2015fd18d270745e52133f36c4a4364"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aa2015fd18d270745e52133f36c4a4364">ListObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:aa2015fd18d270745e52133f36c4a4364"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the list of ObjectAccessControls for an object.  <a href="#aa2015fd18d270745e52133f36c4a4364">More...</a><br /></td></tr>
-<tr class="separator:aa2015fd18d270745e52133f36c4a4364"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac904a4ac065a12f7cab583457b3bb636"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:ac904a4ac065a12f7cab583457b3bb636"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ac904a4ac065a12f7cab583457b3bb636">CreateObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, std::string const &amp;entity, std::string const &amp;role, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:ac904a4ac065a12f7cab583457b3bb636"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new entry in the object ACL.  <a href="#ac904a4ac065a12f7cab583457b3bb636">More...</a><br /></td></tr>
-<tr class="separator:ac904a4ac065a12f7cab583457b3bb636"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc39fbc4df076ec9f321a61bd0102371"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:adc39fbc4df076ec9f321a61bd0102371"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#adc39fbc4df076ec9f321a61bd0102371">DeleteObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, std::string const &amp;entity, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:adc39fbc4df076ec9f321a61bd0102371"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes one access control entry in one object.  <a href="#adc39fbc4df076ec9f321a61bd0102371">More...</a><br /></td></tr>
-<tr class="separator:adc39fbc4df076ec9f321a61bd0102371"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc4ed4cf90ae7d99abec5acaaf8795cb"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:afc4ed4cf90ae7d99abec5acaaf8795cb"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#afc4ed4cf90ae7d99abec5acaaf8795cb">GetObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, std::string const &amp;entity, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:afc4ed4cf90ae7d99abec5acaaf8795cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the value of an existing object ACL.  <a href="#afc4ed4cf90ae7d99abec5acaaf8795cb">More...</a><br /></td></tr>
-<tr class="separator:afc4ed4cf90ae7d99abec5acaaf8795cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab620fb3cd2c62c990f8191449e1478b0"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:ab620fb3cd2c62c990f8191449e1478b0"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ab620fb3cd2c62c990f8191449e1478b0">UpdateObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> const &amp;acl, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:ab620fb3cd2c62c990f8191449e1478b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the value of an existing object ACL.  <a href="#ab620fb3cd2c62c990f8191449e1478b0">More...</a><br /></td></tr>
-<tr class="separator:ab620fb3cd2c62c990f8191449e1478b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a666ec44c8fc12e7eb86873ef737e7ed9"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:a666ec44c8fc12e7eb86873ef737e7ed9"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a666ec44c8fc12e7eb86873ef737e7ed9">PatchObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, std::string const &amp;entity, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> const &amp;original_acl, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> const &amp;new_acl, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:a666ec44c8fc12e7eb86873ef737e7ed9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Patches the value of an existing object ACL.  <a href="#a666ec44c8fc12e7eb86873ef737e7ed9">More...</a><br /></td></tr>
-<tr class="separator:a666ec44c8fc12e7eb86873ef737e7ed9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa491055cd90f7925967ed0722dfef8e8"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:aa491055cd90f7925967ed0722dfef8e8"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aa491055cd90f7925967ed0722dfef8e8">PatchObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, std::string const &amp;entity, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControlPatchBuilder.html">ObjectAccessControlPatchBuilder</a> const &amp;builder, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:aa491055cd90f7925967ed0722dfef8e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Patches the value of an existing object ACL.  <a href="#aa491055cd90f7925967ed0722dfef8e8">More...</a><br /></td></tr>
-<tr class="separator:aa491055cd90f7925967ed0722dfef8e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b8b97aedf09200a73d21e1b8b816cf8"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a6b8b97aedf09200a73d21e1b8b816cf8"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a6b8b97aedf09200a73d21e1b8b816cf8">ListObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a6b8b97aedf09200a73d21e1b8b816cf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the list of ObjectAccessControls for an object.  <a href="#a6b8b97aedf09200a73d21e1b8b816cf8">More...</a><br /></td></tr>
+<tr class="separator:a6b8b97aedf09200a73d21e1b8b816cf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af40ca462c1c93310c96f35ebf20e9fe7"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:af40ca462c1c93310c96f35ebf20e9fe7"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#af40ca462c1c93310c96f35ebf20e9fe7">CreateObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, std::string const &amp;entity, std::string const &amp;role, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:af40ca462c1c93310c96f35ebf20e9fe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new entry in the object ACL.  <a href="#af40ca462c1c93310c96f35ebf20e9fe7">More...</a><br /></td></tr>
+<tr class="separator:af40ca462c1c93310c96f35ebf20e9fe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66831edbb3149b00757d042f1dad4def"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a66831edbb3149b00757d042f1dad4def"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a66831edbb3149b00757d042f1dad4def">DeleteObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, std::string const &amp;entity, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a66831edbb3149b00757d042f1dad4def"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes one access control entry in one object.  <a href="#a66831edbb3149b00757d042f1dad4def">More...</a><br /></td></tr>
+<tr class="separator:a66831edbb3149b00757d042f1dad4def"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a8b32a2b001851d8bd7956a826f05f9"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a8a8b32a2b001851d8bd7956a826f05f9"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a8a8b32a2b001851d8bd7956a826f05f9">GetObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, std::string const &amp;entity, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a8a8b32a2b001851d8bd7956a826f05f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the value of an existing object ACL.  <a href="#a8a8b32a2b001851d8bd7956a826f05f9">More...</a><br /></td></tr>
+<tr class="separator:a8a8b32a2b001851d8bd7956a826f05f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f7d5ee8958d7912552af525c1be3574"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a3f7d5ee8958d7912552af525c1be3574"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a3f7d5ee8958d7912552af525c1be3574">UpdateObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> const &amp;acl, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a3f7d5ee8958d7912552af525c1be3574"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the value of an existing object ACL.  <a href="#a3f7d5ee8958d7912552af525c1be3574">More...</a><br /></td></tr>
+<tr class="separator:a3f7d5ee8958d7912552af525c1be3574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c67c5dda66cbc99a4f4c0ac37e2ea8c"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a1c67c5dda66cbc99a4f4c0ac37e2ea8c"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a1c67c5dda66cbc99a4f4c0ac37e2ea8c">PatchObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, std::string const &amp;entity, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> const &amp;original_acl, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> const &amp;new_acl, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a1c67c5dda66cbc99a4f4c0ac37e2ea8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Patches the value of an existing object ACL.  <a href="#a1c67c5dda66cbc99a4f4c0ac37e2ea8c">More...</a><br /></td></tr>
+<tr class="separator:a1c67c5dda66cbc99a4f4c0ac37e2ea8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11269bcd0eb25f9c6bbe3d59b20e5ce8"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a11269bcd0eb25f9c6bbe3d59b20e5ce8"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a11269bcd0eb25f9c6bbe3d59b20e5ce8">PatchObjectAcl</a> (std::string const &amp;bucket_name, std::string const &amp;object_name, std::string const &amp;entity, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControlPatchBuilder.html">ObjectAccessControlPatchBuilder</a> const &amp;builder, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a11269bcd0eb25f9c6bbe3d59b20e5ce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Patches the value of an existing object ACL.  <a href="#a11269bcd0eb25f9c6bbe3d59b20e5ce8">More...</a><br /></td></tr>
+<tr class="separator:a11269bcd0eb25f9c6bbe3d59b20e5ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Bucket Default Object Access Control List operations.</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>When you upload an object to GCS without specifying an ACL, the object is created with the Default Object ACL for its bucket.</p>
 <p>These operations are used to query and modify the Default Object ACL of a bucket.</p>
@@ -1056,8 +1056,8 @@ template&lt;typename... Options&gt; </div>
 
 </div>
 </div>
-<a id="ac904a4ac065a12f7cab583457b3bb636"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac904a4ac065a12f7cab583457b3bb636">&#9670;&nbsp;</a></span>CreateObjectAcl()</h2>
+<a id="af40ca462c1c93310c96f35ebf20e9fe7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af40ca462c1c93310c96f35ebf20e9fe7">&#9670;&nbsp;</a></span>CreateObjectAcl()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1068,7 +1068,7 @@ template&lt;typename... Options&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> google::cloud::storage::v0::Client::CreateObjectAcl </td>
+          <td class="memname">StatusOr&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a>&gt; google::cloud::storage::v0::Client::CreateObjectAcl </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>bucket_name</em>, </td>
@@ -1121,14 +1121,8 @@ template&lt;typename... Options&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if there is a permanent failure, or if there were more transient failures than allowed by the current retry policy.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is only idempotent if restricted by pre-conditions. There are no pre-conditions for this operation that can make it idempotent.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name,</div><div class="line">     std::string entity, std::string role) {</div><div class="line">    gcs::ObjectAccessControl result =</div><div class="line">        client.CreateObjectAcl(bucket_name, object_name, entity, role);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Role &quot;</span> &lt;&lt; result.role() &lt;&lt; <span class="stringliteral">&quot; granted to &quot;</span> &lt;&lt; result.entity()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; on &quot;</span> &lt;&lt; result.object() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;Full attributes: &quot;</span> &lt;&lt; result &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name,</div><div class="line">     std::string entity, std::string role) {</div><div class="line">    StatusOr&lt;gcs::ObjectAccessControl&gt; object_acl =</div><div class="line">        client.CreateObjectAcl(bucket_name, object_name, entity, role);</div><div class="line">    <span class="keywordflow">if</span> (not object_acl.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error creating object ACL entry for entity &quot;</span> &lt;&lt; entity</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span> &lt;&lt; object_name &lt;&lt; <span class="stringliteral">&quot; and bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; object_acl.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Role &quot;</span> &lt;&lt; object_acl-&gt;role() &lt;&lt; <span class="stringliteral">&quot; granted to &quot;</span></div><div class="line">              &lt;&lt; object_acl-&gt;entity() &lt;&lt; <span class="stringliteral">&quot; on &quot;</span> &lt;&lt; object_acl-&gt;object()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;\nFull attributes: &quot;</span> &lt;&lt; *object_acl &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
@@ -1485,8 +1479,8 @@ template&lt;typename... Options&gt; </div>
 
 </div>
 </div>
-<a id="adc39fbc4df076ec9f321a61bd0102371"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc39fbc4df076ec9f321a61bd0102371">&#9670;&nbsp;</a></span>DeleteObjectAcl()</h2>
+<a id="a66831edbb3149b00757d042f1dad4def"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66831edbb3149b00757d042f1dad4def">&#9670;&nbsp;</a></span>DeleteObjectAcl()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1497,7 +1491,7 @@ template&lt;typename... Options&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void google::cloud::storage::v0::Client::DeleteObjectAcl </td>
+          <td class="memname">StatusOr&lt;void&gt; google::cloud::storage::v0::Client::DeleteObjectAcl </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>bucket_name</em>, </td>
@@ -1543,14 +1537,8 @@ template&lt;typename... Options&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if there is a permanent failure, or if there were more transient failures than allowed by the current retry policy.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is only idempotent if restricted by pre-conditions. There are no pre-conditions for this operation that can make it idempotent.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name,</div><div class="line">     std::string entity) {</div><div class="line">    client.DeleteObjectAcl(bucket_name, object_name, entity);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Deleted ACL entry for &quot;</span> &lt;&lt; entity &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span></div><div class="line">              &lt;&lt; object_name &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name,</div><div class="line">     std::string entity) {</div><div class="line">    StatusOr&lt;void&gt; status =</div><div class="line">        client.DeleteObjectAcl(bucket_name, object_name, entity);</div><div class="line">    <span class="keywordflow">if</span> (not status.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error deleting object ACL entry for entity &quot;</span> &lt;&lt; entity</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span> &lt;&lt; object_name &lt;&lt; <span class="stringliteral">&quot; and bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; status.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Deleted ACL entry for &quot;</span> &lt;&lt; entity &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span></div><div class="line">              &lt;&lt; object_name &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
@@ -1903,8 +1891,8 @@ template&lt;typename... Options&gt; </div>
 
 </div>
 </div>
-<a id="afc4ed4cf90ae7d99abec5acaaf8795cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc4ed4cf90ae7d99abec5acaaf8795cb">&#9670;&nbsp;</a></span>GetObjectAcl()</h2>
+<a id="a8a8b32a2b001851d8bd7956a826f05f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a8b32a2b001851d8bd7956a826f05f9">&#9670;&nbsp;</a></span>GetObjectAcl()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1915,7 +1903,7 @@ template&lt;typename... Options&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> google::cloud::storage::v0::Client::GetObjectAcl </td>
+          <td class="memname">StatusOr&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a>&gt; google::cloud::storage::v0::Client::GetObjectAcl </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>bucket_name</em>, </td>
@@ -1961,14 +1949,8 @@ template&lt;typename... Options&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if there is a permanent failure, or if there were more transient failures than allowed by the current retry policy.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and is always idempotent.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name,</div><div class="line">     std::string entity) {</div><div class="line">    gcs::ObjectAccessControl acl =</div><div class="line">        client.GetObjectAcl(bucket_name, object_name, entity);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;ACL entry for &quot;</span> &lt;&lt; entity &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span> &lt;&lt; object_name</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot; is &quot;</span> &lt;&lt; acl &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name,</div><div class="line">     std::string entity) {</div><div class="line">    StatusOr&lt;gcs::ObjectAccessControl&gt; acl =</div><div class="line">        client.GetObjectAcl(bucket_name, object_name, entity);</div><div class="line">    <span class="keywordflow">if</span> (not acl.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error getting object ACL entry for entity &quot;</span> &lt;&lt; entity</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span> &lt;&lt; object_name &lt;&lt; <span class="stringliteral">&quot; and bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; acl.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;ACL entry for &quot;</span> &lt;&lt; acl-&gt;entity() &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span></div><div class="line">              &lt;&lt; acl-&gt;object() &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span> &lt;&lt; acl-&gt;bucket() &lt;&lt; <span class="stringliteral">&quot; is &quot;</span></div><div class="line">              &lt;&lt; *acl &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
@@ -2453,8 +2435,8 @@ template&lt;typename... Options&gt; </div>
 
 </div>
 </div>
-<a id="aa2015fd18d270745e52133f36c4a4364"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2015fd18d270745e52133f36c4a4364">&#9670;&nbsp;</a></span>ListObjectAcl()</h2>
+<a id="a6b8b97aedf09200a73d21e1b8b816cf8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b8b97aedf09200a73d21e1b8b816cf8">&#9670;&nbsp;</a></span>ListObjectAcl()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2465,7 +2447,7 @@ template&lt;typename... Options&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a>&gt; google::cloud::storage::v0::Client::ListObjectAcl </td>
+          <td class="memname">StatusOr&lt;std::vector&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a>&gt; &gt; google::cloud::storage::v0::Client::ListObjectAcl </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>bucket_name</em>, </td>
@@ -2504,14 +2486,8 @@ template&lt;typename... Options&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if there is a permanent failure, or if there were more transient failures than allowed by the current retry policy.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and is always idempotent.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name) {</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;ACLs for object=&quot;</span> &lt;&lt; object_name &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span></div><div class="line">              &lt;&lt; bucket_name &lt;&lt; std::endl;</div><div class="line">    <span class="keywordflow">for</span> (gcs::ObjectAccessControl <span class="keyword">const</span>&amp; acl :</div><div class="line">         client.ListObjectAcl(bucket_name, object_name)) {</div><div class="line">      std::cout &lt;&lt; acl.role() &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; acl.entity() &lt;&lt; std::endl;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name) {</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;ACLs for object=&quot;</span> &lt;&lt; object_name &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span></div><div class="line">              &lt;&lt; bucket_name &lt;&lt; std::endl;</div><div class="line">    StatusOr&lt;std::vector&lt;gcs::ObjectAccessControl&gt;&gt; items =</div><div class="line">        client.ListObjectAcl(bucket_name, object_name);</div><div class="line">    <span class="keywordflow">if</span> (not items.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error reading ACL for object &quot;</span> &lt;&lt; object_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; items.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    <span class="keywordflow">for</span> (gcs::ObjectAccessControl <span class="keyword">const</span>&amp; acl : *items) {</div><div class="line">      std::cout &lt;&lt; acl.role() &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; acl.entity() &lt;&lt; std::endl;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
@@ -3187,8 +3163,8 @@ template&lt;typename... Options&gt; </div>
 
 </div>
 </div>
-<a id="a666ec44c8fc12e7eb86873ef737e7ed9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a666ec44c8fc12e7eb86873ef737e7ed9">&#9670;&nbsp;</a></span>PatchObjectAcl() <span class="overload">[1/2]</span></h2>
+<a id="a1c67c5dda66cbc99a4f4c0ac37e2ea8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c67c5dda66cbc99a4f4c0ac37e2ea8c">&#9670;&nbsp;</a></span>PatchObjectAcl() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3199,7 +3175,7 @@ template&lt;typename... Options&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> google::cloud::storage::v0::Client::PatchObjectAcl </td>
+          <td class="memname">StatusOr&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a>&gt; google::cloud::storage::v0::Client::PatchObjectAcl </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>bucket_name</em>, </td>
@@ -3261,20 +3237,14 @@ template&lt;typename... Options&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if there is a permanent failure, or if there were more transient failures than allowed by the current retry policy.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is only idempotent if restricted by pre-conditions. There are no pre-conditions for this operation that can make it idempotent.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name,</div><div class="line">     std::string entity, std::string role) {</div><div class="line">    gcs::ObjectAccessControl original_acl =</div><div class="line">        client.GetObjectAcl(bucket_name, object_name, entity);</div><div class="line">    <span class="keyword">auto</span> new_acl = original_acl;</div><div class="line">    new_acl.set_role(role);</div><div class="line">    gcs::ObjectAccessControl updated_acl = client.PatchObjectAcl(</div><div class="line">        bucket_name, object_name, entity, original_acl, new_acl);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;ACL entry for &quot;</span> &lt;&lt; entity &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span> &lt;&lt; object_name</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot; is now &quot;</span> &lt;&lt; updated_acl</div><div class="line">              &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name,</div><div class="line">     std::string entity, std::string role) {</div><div class="line">    StatusOr&lt;gcs::ObjectAccessControl&gt; original_acl =</div><div class="line">        client.GetObjectAcl(bucket_name, object_name, entity);</div><div class="line">    <span class="keywordflow">if</span> (not original_acl.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error getting object ACL entry for entity &quot;</span> &lt;&lt; entity</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span> &lt;&lt; object_name &lt;&lt; <span class="stringliteral">&quot; and bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; original_acl.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">auto</span> new_acl = *original_acl;</div><div class="line">    new_acl.set_role(role);</div><div class="line">    StatusOr&lt;gcs::ObjectAccessControl&gt; patched_acl = client.PatchObjectAcl(</div><div class="line">        bucket_name, object_name, entity, *original_acl, new_acl);</div><div class="line">    <span class="keywordflow">if</span> (not patched_acl.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error patching object ACL entry for entity &quot;</span> &lt;&lt; entity</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span> &lt;&lt; object_name &lt;&lt; <span class="stringliteral">&quot; and bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; patched_acl.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;ACL entry for &quot;</span> &lt;&lt; patched_acl-&gt;entity() &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span></div><div class="line">              &lt;&lt; patched_acl-&gt;object() &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span> &lt;&lt; patched_acl-&gt;bucket()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; is now &quot;</span> &lt;&lt; *patched_acl &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls">https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls</a> for additional details on what fields are writeable. </dd></dl>
 
 </div>
 </div>
-<a id="aa491055cd90f7925967ed0722dfef8e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa491055cd90f7925967ed0722dfef8e8">&#9670;&nbsp;</a></span>PatchObjectAcl() <span class="overload">[2/2]</span></h2>
+<a id="a11269bcd0eb25f9c6bbe3d59b20e5ce8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11269bcd0eb25f9c6bbe3d59b20e5ce8">&#9670;&nbsp;</a></span>PatchObjectAcl() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3285,7 +3255,7 @@ template&lt;typename... Options&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> google::cloud::storage::v0::Client::PatchObjectAcl </td>
+          <td class="memname">StatusOr&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a>&gt; google::cloud::storage::v0::Client::PatchObjectAcl </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>bucket_name</em>, </td>
@@ -3340,14 +3310,8 @@ template&lt;typename... Options&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if there is a permanent failure, or if there were more transient failures than allowed by the current retry policy.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is only idempotent if restricted by pre-conditions. There are no pre-conditions for this operation that can make it idempotent.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name,</div><div class="line">     std::string entity, std::string role) {</div><div class="line">    gcs::ObjectAccessControl acl = client.PatchObjectAcl(</div><div class="line">        bucket_name, object_name, entity,</div><div class="line">        gcs::ObjectAccessControlPatchBuilder().set_role(role));</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;ACL entry for &quot;</span> &lt;&lt; entity &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span> &lt;&lt; object_name</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot; is now &quot;</span> &lt;&lt; acl &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name,</div><div class="line">     std::string entity, std::string role) {</div><div class="line">    StatusOr&lt;gcs::ObjectAccessControl&gt; patched_acl = client.PatchObjectAcl(</div><div class="line">        bucket_name, object_name, entity,</div><div class="line">        gcs::ObjectAccessControlPatchBuilder().set_role(role));</div><div class="line">    <span class="keywordflow">if</span> (not patched_acl.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error patching object ACL entry for entity &quot;</span> &lt;&lt; entity</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span> &lt;&lt; object_name &lt;&lt; <span class="stringliteral">&quot; and bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; patched_acl.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;ACL entry for &quot;</span> &lt;&lt; patched_acl-&gt;entity() &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span></div><div class="line">              &lt;&lt; patched_acl-&gt;object() &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span> &lt;&lt; patched_acl-&gt;bucket()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; is now &quot;</span> &lt;&lt; *patched_acl &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls">https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls</a> for additional details on what fields are writeable. </dd></dl>
 
 </div>
@@ -4036,8 +4000,8 @@ template&lt;typename... Options&gt; </div>
 
 </div>
 </div>
-<a id="ab620fb3cd2c62c990f8191449e1478b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab620fb3cd2c62c990f8191449e1478b0">&#9670;&nbsp;</a></span>UpdateObjectAcl()</h2>
+<a id="a3f7d5ee8958d7912552af525c1be3574"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f7d5ee8958d7912552af525c1be3574">&#9670;&nbsp;</a></span>UpdateObjectAcl()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -4048,7 +4012,7 @@ template&lt;typename... Options&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a> google::cloud::storage::v0::Client::UpdateObjectAcl </td>
+          <td class="memname">StatusOr&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html">ObjectAccessControl</a>&gt; google::cloud::storage::v0::Client::UpdateObjectAcl </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>bucket_name</em>, </td>
@@ -4094,14 +4058,8 @@ template&lt;typename... Options&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if there is a permanent failure, or if there were more transient failures than allowed by the current retry policy.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is only idempotent if restricted by pre-conditions. There are no pre-conditions for this operation that can make it idempotent.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name,</div><div class="line">     std::string entity, std::string role) {</div><div class="line">    gcs::ObjectAccessControl current_acl =</div><div class="line">        client.GetObjectAcl(bucket_name, object_name, entity);</div><div class="line">    current_acl.set_role(role);</div><div class="line">    gcs::ObjectAccessControl acl =</div><div class="line">        client.UpdateObjectAcl(bucket_name, object_name, current_acl);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;ACL entry for &quot;</span> &lt;&lt; entity &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span> &lt;&lt; object_name</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot; is now &quot;</span> &lt;&lt; acl &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name,</div><div class="line">     std::string entity, std::string role) {</div><div class="line">    StatusOr&lt;gcs::ObjectAccessControl&gt; current_acl =</div><div class="line">        client.GetObjectAcl(bucket_name, object_name, entity);</div><div class="line">    <span class="keywordflow">if</span> (not current_acl.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error getting object ACL entry for entity &quot;</span> &lt;&lt; entity</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span> &lt;&lt; object_name &lt;&lt; <span class="stringliteral">&quot; and bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; current_acl.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    current_acl-&gt;set_role(role);</div><div class="line">    StatusOr&lt;gcs::ObjectAccessControl&gt; updated_acl =</div><div class="line">        client.UpdateObjectAcl(bucket_name, object_name, *current_acl);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;ACL entry for &quot;</span> &lt;&lt; updated_acl-&gt;entity() &lt;&lt; <span class="stringliteral">&quot; in object &quot;</span></div><div class="line">              &lt;&lt; updated_acl-&gt;object() &lt;&lt; <span class="stringliteral">&quot; in bucket &quot;</span> &lt;&lt; updated_acl-&gt;bucket()</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; is now &quot;</span> &lt;&lt; *updated_acl &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls">https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls</a> for additional details on what fields are writeable. </dd></dl>
 
 </div>
