@@ -42,7 +42,7 @@ bool ParseBoolField(nl::json const& json, char const* field_name) {
   std::ostringstream os;
   os << "Error parsing field <" << field_name
      << "> as a boolean, json=" << json;
-  google::cloud::internal::RaiseInvalidArgument(os.str());
+  google::cloud::internal::ThrowInvalidArgument(os.str());
 }
 
 std::int32_t ParseIntField(nl::json const& json, char const* field_name) {
@@ -59,7 +59,7 @@ std::int32_t ParseIntField(nl::json const& json, char const* field_name) {
   std::ostringstream os;
   os << "Error parsing field <" << field_name
      << "> as an std::int32_t, json=" << json;
-  google::cloud::internal::RaiseInvalidArgument(os.str());
+  google::cloud::internal::ThrowInvalidArgument(os.str());
 }
 
 std::uint32_t ParseUnsignedIntField(nl::json const& json,
@@ -77,7 +77,7 @@ std::uint32_t ParseUnsignedIntField(nl::json const& json,
   std::ostringstream os;
   os << "Error parsing field <" << field_name
      << "> as an std::uint32_t, json=" << json;
-  google::cloud::internal::RaiseInvalidArgument(os.str());
+  google::cloud::internal::ThrowInvalidArgument(os.str());
 }
 
 std::int64_t ParseLongField(nl::json const& json, char const* field_name) {
@@ -94,7 +94,7 @@ std::int64_t ParseLongField(nl::json const& json, char const* field_name) {
   std::ostringstream os;
   os << "Error parsing field <" << field_name
      << "> as an std::int64_t, json=" << json;
-  google::cloud::internal::RaiseInvalidArgument(os.str());
+  google::cloud::internal::ThrowInvalidArgument(os.str());
 }
 
 std::uint64_t ParseUnsignedLongField(nl::json const& json,
@@ -112,7 +112,7 @@ std::uint64_t ParseUnsignedLongField(nl::json const& json,
   std::ostringstream os;
   os << "Error parsing field <" << field_name
      << "> as an std::uint64_t, json=" << json;
-  google::cloud::internal::RaiseInvalidArgument(os.str());
+  google::cloud::internal::ThrowInvalidArgument(os.str());
 }
 
 std::chrono::system_clock::time_point ParseTimestampField(

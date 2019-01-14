@@ -147,7 +147,7 @@ class CurlUploadRequest {
   /// Simplifies handling of errors in the curl_multi_* API.
   Status AsStatus(CURLMcode result, char const* where);
 
-  /// Raises an exception if the application tries to use a closed request.
+  /// Throws an exception if the application tries to use a closed request.
   Status ValidateOpen(char const* where);
 
   std::string url_;

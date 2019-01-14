@@ -157,7 +157,7 @@ void LifecycleRule::MergeConditions(LifecycleRuleCondition& result,
   if (rhs.is_live.has_value()) {
     if (result.is_live.has_value()) {
       if (result.is_live.value() != rhs.is_live.value()) {
-        google::cloud::internal::RaiseInvalidArgument(
+        google::cloud::internal::ThrowInvalidArgument(
             "Cannot set is_live to both true and false in LifecycleRule "
             "condition");
       }

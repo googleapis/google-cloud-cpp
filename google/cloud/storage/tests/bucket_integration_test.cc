@@ -79,14 +79,15 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
 
   auto insert_meta =
       client.CreateBucketForProject(bucket_name, project_id, BucketMetadata());
-  EXPECT_EQ(bucket_name, insert_meta.name());
+  ASSERT_TRUE(insert_meta.ok()) << "status=" << insert_meta.status();
+  EXPECT_EQ(bucket_name, insert_meta->name());
 
   buckets = client.ListBucketsForProject(project_id);
   std::vector<BucketMetadata> current_buckets(buckets.begin(), buckets.end());
   EXPECT_EQ(1U, name_counter(bucket_name, current_buckets));
 
   BucketMetadata get_meta = client.GetBucketMetadata(bucket_name);
-  EXPECT_EQ(insert_meta, get_meta);
+  EXPECT_EQ(*insert_meta, get_meta);
 
   // Create a request to update the metadata, change the storage class because
   // it is easy. And use either COLDLINE or NEARLINE depending on the existing
@@ -135,23 +136,25 @@ TEST_F(BucketIntegrationTest, FullPatch) {
 
   // We need to have an available bucket for logging ...
   std::string logging_name = MakeRandomBucketName();
-  BucketMetadata const logging_meta = client.CreateBucketForProject(
+  StatusOr<BucketMetadata> const logging_meta = client.CreateBucketForProject(
       logging_name, project_id, BucketMetadata(), PredefinedAcl("private"),
       PredefinedDefaultObjectAcl("projectPrivate"), Projection("noAcl"));
-  EXPECT_EQ(logging_name, logging_meta.name());
+  ASSERT_TRUE(logging_meta.ok()) << "status=" << logging_meta.status();
+  EXPECT_EQ(logging_name, logging_meta->name());
 
   // Create a Bucket, use the default settings for most fields, except the
   // storage class and location. Fetch the full attributes of the bucket.
-  BucketMetadata const insert_meta = client.CreateBucketForProject(
+  StatusOr<BucketMetadata> const insert_meta = client.CreateBucketForProject(
       bucket_name, project_id,
       BucketMetadata().set_location("US").set_storage_class(
           storage_class::MultiRegional()),
       PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
       Projection("full"));
-  EXPECT_EQ(bucket_name, insert_meta.name());
+  ASSERT_TRUE(insert_meta.ok()) << "status=" << insert_meta.status();
+  EXPECT_EQ(bucket_name, insert_meta->name());
 
   // Patch every possible field in the metadata, to verify they work.
-  BucketMetadata desired_state = insert_meta;
+  BucketMetadata desired_state = *insert_meta;
   // acl()
   desired_state.mutable_acl().push_back(BucketAccessControl()
                                             .set_entity("allAuthenticatedUsers")
@@ -218,7 +221,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   }
 
   BucketMetadata patched =
-      client.PatchBucket(bucket_name, insert_meta, desired_state);
+      client.PatchBucket(bucket_name, *insert_meta, desired_state);
   // acl() - cannot compare for equality because many fields are updated with
   // unknown values (entity_id, etag, etc)
   EXPECT_EQ(1U, std::count_if(patched.acl().begin(), patched.acl().end(),
@@ -335,6 +338,7 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   auto meta = client.CreateBucketForProject(
       bucket_name, project_id, BucketMetadata(), PredefinedAcl("private"),
       Projection("full"));
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
   auto entity_name = MakeEntityName();
 
@@ -346,10 +350,10 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
     };
     return std::count_if(list.begin(), list.end(), name_matcher(name));
   };
-  ASSERT_FALSE(meta.acl().empty())
+  ASSERT_FALSE(meta->acl().empty())
       << "Test aborted. Empty ACL returned from newly created bucket <"
       << bucket_name << "> even though we requested the <full> projection.";
-  ASSERT_EQ(0, name_counter(entity_name, meta.acl()))
+  ASSERT_EQ(0, name_counter(entity_name, meta->acl()))
       << "Test aborted. The bucket <" << bucket_name << "> has <" << entity_name
       << "> in its ACL.  This is unexpected because the bucket was just"
       << " created with a predefine ACL which should preclude this result.";
@@ -414,6 +418,7 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
   auto meta = client.CreateBucketForProject(
       bucket_name, project_id, BucketMetadata(),
       PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"));
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
   auto entity_name = MakeEntityName();
 
@@ -425,10 +430,10 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
     };
     return std::count_if(list.begin(), list.end(), name_matcher(name));
   };
-  ASSERT_FALSE(meta.default_acl().empty())
+  ASSERT_FALSE(meta->default_acl().empty())
       << "Test aborted. Empty ACL returned from newly created bucket <"
       << bucket_name << "> even though we requested the <full> projection.";
-  ASSERT_EQ(0, name_counter(entity_name, meta.default_acl()))
+  ASSERT_EQ(0, name_counter(entity_name, meta->default_acl()))
       << "Test aborted. The bucket <" << bucket_name << "> has <" << entity_name
       << "> in its ACL.  This is unexpected because the bucket was just"
       << " created with a predefine ACL which should preclude this result.";
@@ -485,6 +490,7 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
   // Create a new bucket to run the test.
   auto meta =
       client.CreateBucketForProject(bucket_name, project_id, BucketMetadata());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
   auto current_notifications = client.ListNotifications(bucket_name);
   ASSERT_TRUE(current_notifications.ok())
@@ -540,6 +546,7 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
   // Create a new bucket to run the test.
   auto meta =
       client.CreateBucketForProject(bucket_name, project_id, BucketMetadata());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
   IamPolicy policy = client.GetBucketIamPolicy(bucket_name);
   auto const& bindings = policy.bindings;
@@ -589,11 +596,12 @@ TEST_F(BucketIntegrationTest, BucketLock) {
   // Create a new bucket to run the test.
   auto meta =
       client.CreateBucketForProject(bucket_name, project_id, BucketMetadata());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
   auto after_setting_retention_policy = client.PatchBucket(
       bucket_name,
       BucketMetadataPatchBuilder().SetRetentionPolicy(std::chrono::seconds(30)),
-      IfMetagenerationMatch(meta.metageneration()));
+      IfMetagenerationMatch(meta->metageneration()));
 
   client.LockBucketRetentionPolicy(
       bucket_name, after_setting_retention_policy.metageneration());
@@ -629,10 +637,9 @@ TEST_F(BucketIntegrationTest, CreateFailure) {
   // uppercase letter), the service (or testbench) will reject the request and
   // we should report that error correctly. For good measure, make the project
   // id invalid too.
-  TestPermanentFailure([&client] {
-    client.CreateBucketForProject("Invalid_Bucket_Name", "Invalid-project-id-",
+  StatusOr<BucketMetadata> meta = client.CreateBucketForProject("Invalid_Bucket_Name", "Invalid-project-id-",
                                   BucketMetadata());
-  });
+  ASSERT_FALSE(meta.ok()) << "metadata=" << meta.value();
 }
 
 TEST_F(BucketIntegrationTest, GetFailure) {

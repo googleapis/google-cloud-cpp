@@ -35,7 +35,7 @@ file_status status(std::string const& path) {
     std::string msg = __func__;
     msg += ": getting status of file=";
     msg += path;
-    RaiseSystemError(ec, msg);
+    ThrowSystemError(ec, msg);
   }
   return s;
 }
@@ -141,7 +141,7 @@ std::uintmax_t file_size(std::string const& path) {
     std::string msg = __func__;
     msg += ": getting size of file=";
     msg += path;
-    RaiseSystemError(ec, msg);
+    ThrowSystemError(ec, msg);
   }
   return s;
 }

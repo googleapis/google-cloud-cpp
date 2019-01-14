@@ -26,10 +26,10 @@ char const* msg = "testing with char const*";
 TEST(ThrowDelegateTest, RpcError) {
   grpc::Status status(grpc::StatusCode::UNAVAILABLE, "try-again");
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(RaiseRpcError(status, msg), google::cloud::bigtable::GRpcError);
-  EXPECT_THROW(RaiseRpcError(status, cmsg), google::cloud::bigtable::GRpcError);
+  EXPECT_THROW(ThrowRpcError(status, msg), google::cloud::bigtable::GRpcError);
+  EXPECT_THROW(ThrowRpcError(status, cmsg), google::cloud::bigtable::GRpcError);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(RaiseRpcError(status, msg), msg);
-  EXPECT_DEATH_IF_SUPPORTED(RaiseRpcError(status, cmsg), cmsg);
+  EXPECT_DEATH_IF_SUPPORTED(ThrowRpcError(status, msg), msg);
+  EXPECT_DEATH_IF_SUPPORTED(ThrowRpcError(status, cmsg), cmsg);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }

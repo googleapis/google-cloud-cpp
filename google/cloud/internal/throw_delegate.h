@@ -35,20 +35,20 @@ namespace internal {
  * We copied this technique from Abseil.  Unfortunately we cannot use it
  * directly because it is not a public interface for Abseil.
  */
-[[noreturn]] void RaiseInvalidArgument(char const* msg);
-[[noreturn]] void RaiseInvalidArgument(std::string const& msg);
+[[noreturn]] void ThrowInvalidArgument(char const* msg);
+[[noreturn]] void ThrowInvalidArgument(std::string const& msg);
 
-[[noreturn]] void RaiseRangeError(char const* msg);
-[[noreturn]] void RaiseRangeError(std::string const& msg);
+[[noreturn]] void ThrowRangeError(char const* msg);
+[[noreturn]] void ThrowRangeError(std::string const& msg);
 
-[[noreturn]] void RaiseRuntimeError(char const* msg);
-[[noreturn]] void RaiseRuntimeError(std::string const& msg);
+[[noreturn]] void ThrowRuntimeError(char const* msg);
+[[noreturn]] void ThrowRuntimeError(std::string const& msg);
 
-[[noreturn]] void RaiseSystemError(std::error_code ec, char const* msg);
-[[noreturn]] void RaiseSystemError(std::error_code ec, std::string const& msg);
+[[noreturn]] void ThrowSystemError(std::error_code ec, char const* msg);
+[[noreturn]] void ThrowSystemError(std::error_code ec, std::string const& msg);
 
-[[noreturn]] void RaiseLogicError(char const* msg);
-[[noreturn]] void RaiseLogicError(std::string const& msg);
+[[noreturn]] void ThrowLogicError(char const* msg);
+[[noreturn]] void ThrowLogicError(std::string const& msg);
 //@}
 
 /// Throw an exception wrapping @p status.

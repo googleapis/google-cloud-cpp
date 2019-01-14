@@ -240,7 +240,7 @@ StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
       std::ostringstream os;
       os << "Invalid IamPolicy payload, expected array for 'bindings' field."
          << "  payload=" << payload;
-      google::cloud::internal::RaiseInvalidArgument(os.str());
+      google::cloud::internal::ThrowInvalidArgument(os.str());
     }
     for (auto const& kv : json["bindings"].items()) {
       auto binding = kv.value();
@@ -248,13 +248,13 @@ StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
         std::ostringstream os;
         os << "Invalid IamPolicy payload, expected 'role' and 'members'"
            << " fields for element #" << kv.key() << ". payload=" << payload;
-        google::cloud::internal::RaiseInvalidArgument(os.str());
+        google::cloud::internal::ThrowInvalidArgument(os.str());
       }
       if (not binding["members"].is_array()) {
         std::ostringstream os;
         os << "Invalid IamPolicy payload, expected array for 'members'"
            << " fields for element #" << kv.key() << ". payload=" << payload;
-        google::cloud::internal::RaiseInvalidArgument(os.str());
+        google::cloud::internal::ThrowInvalidArgument(os.str());
       }
       std::string role = binding.value("role", "");
       for (auto const& member : binding["members"].items()) {

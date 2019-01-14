@@ -79,7 +79,7 @@ std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter) {
   grpc::Status status;
   auto result = impl_.ReadRow(std::move(row_key), std::move(filter), status);
   if (not status.ok()) {
-    google::cloud::internal::RaiseRuntimeError(status.error_message());
+    google::cloud::internal::ThrowRuntimeError(status.error_message());
   }
   return result;
 }
@@ -92,7 +92,7 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
                                        std::move(true_mutations),
                                        std::move(false_mutations), status);
   if (not status.ok()) {
-    bigtable::internal::RaiseRpcError(status, status.error_message());
+    bigtable::internal::ThrowRpcError(status, status.error_message());
   }
   return value;
 }

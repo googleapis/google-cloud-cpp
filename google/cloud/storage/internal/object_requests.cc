@@ -104,7 +104,7 @@ ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
     HttpResponse&& response) {
   auto loc = response.headers.find(std::string("content-range"));
   if (response.headers.end() == loc) {
-    google::cloud::internal::RaiseInvalidArgument(
+    google::cloud::internal::ThrowInvalidArgument(
         "invalid http response for ReadObjectRange");
   }
 
@@ -115,7 +115,7 @@ ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
     os << static_cast<char const*>(function)
        << " invalid format for content-range header <" << content_range_value
        << ">";
-    google::cloud::internal::RaiseInvalidArgument(os.str());
+    google::cloud::internal::ThrowInvalidArgument(os.str());
   };
   char unit_descriptor[] = "bytes";
   if (0 != content_range_value.find(unit_descriptor)) {

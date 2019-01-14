@@ -28,31 +28,31 @@ using ::testing::HasSubstr;
 
 TEST(ThrowDelegateTest, InvalidArgument) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(RaiseInvalidArgument(msg), std::invalid_argument);
-  EXPECT_THROW(RaiseInvalidArgument(cmsg), std::invalid_argument);
+  EXPECT_THROW(ThrowInvalidArgument(msg), std::invalid_argument);
+  EXPECT_THROW(ThrowInvalidArgument(cmsg), std::invalid_argument);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(RaiseInvalidArgument(msg), msg);
-  EXPECT_DEATH_IF_SUPPORTED(RaiseInvalidArgument(cmsg), cmsg);
+  EXPECT_DEATH_IF_SUPPORTED(ThrowInvalidArgument(msg), msg);
+  EXPECT_DEATH_IF_SUPPORTED(ThrowInvalidArgument(cmsg), cmsg);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST(ThrowDelegateTest, RangeError) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(RaiseRangeError(msg), std::range_error);
-  EXPECT_THROW(RaiseRangeError(cmsg), std::range_error);
+  EXPECT_THROW(ThrowRangeError(msg), std::range_error);
+  EXPECT_THROW(ThrowRangeError(cmsg), std::range_error);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(RaiseRangeError(msg), msg);
-  EXPECT_DEATH_IF_SUPPORTED(RaiseRangeError(cmsg), cmsg);
+  EXPECT_DEATH_IF_SUPPORTED(ThrowRangeError(msg), msg);
+  EXPECT_DEATH_IF_SUPPORTED(ThrowRangeError(cmsg), cmsg);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST(ThrowDelegateTest, RuntimeError) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(RaiseRuntimeError(msg), std::runtime_error);
-  EXPECT_THROW(RaiseRuntimeError(cmsg), std::runtime_error);
+  EXPECT_THROW(ThrowRuntimeError(msg), std::runtime_error);
+  EXPECT_THROW(ThrowRuntimeError(cmsg), std::runtime_error);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(RaiseRuntimeError(msg), msg);
-  EXPECT_DEATH_IF_SUPPORTED(RaiseRuntimeError(cmsg), cmsg);
+  EXPECT_DEATH_IF_SUPPORTED(ThrowRuntimeError(msg), msg);
+  EXPECT_DEATH_IF_SUPPORTED(ThrowRuntimeError(cmsg), cmsg);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -60,7 +60,7 @@ TEST(ThrowDelegateTest, SystemError) {
   auto ec = std::make_error_code(std::errc::bad_message);
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
-      try { RaiseSystemError(ec, msg); } catch (std::system_error const& ex) {
+      try { ThrowSystemError(ec, msg); } catch (std::system_error const& ex) {
         EXPECT_EQ(ec, ex.code());
         EXPECT_THAT(ex.what(), HasSubstr(msg));
         throw;
@@ -68,25 +68,25 @@ TEST(ThrowDelegateTest, SystemError) {
       std::system_error);
 
   EXPECT_THROW(
-      try { RaiseSystemError(ec, cmsg); } catch (std::system_error const& ex) {
+      try { ThrowSystemError(ec, cmsg); } catch (std::system_error const& ex) {
         EXPECT_EQ(ec, ex.code());
         EXPECT_THAT(ex.what(), HasSubstr(cmsg));
         throw;
       },
       std::system_error);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(RaiseSystemError(ec, msg), msg);
-  EXPECT_DEATH_IF_SUPPORTED(RaiseSystemError(ec, cmsg), cmsg);
+  EXPECT_DEATH_IF_SUPPORTED(ThrowSystemError(ec, msg), msg);
+  EXPECT_DEATH_IF_SUPPORTED(ThrowSystemError(ec, cmsg), cmsg);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST(ThrowDelegateTest, LogicError) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(RaiseLogicError(msg), std::logic_error);
-  EXPECT_THROW(RaiseLogicError(cmsg), std::logic_error);
+  EXPECT_THROW(ThrowLogicError(msg), std::logic_error);
+  EXPECT_THROW(ThrowLogicError(cmsg), std::logic_error);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(RaiseLogicError(msg), msg);
-  EXPECT_DEATH_IF_SUPPORTED(RaiseLogicError(cmsg), cmsg);
+  EXPECT_DEATH_IF_SUPPORTED(ThrowLogicError(msg), msg);
+  EXPECT_DEATH_IF_SUPPORTED(ThrowLogicError(cmsg), cmsg);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 

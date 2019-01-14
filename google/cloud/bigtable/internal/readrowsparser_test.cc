@@ -227,18 +227,18 @@ class AcceptanceTest : public ::testing::Test {
     for (auto const& chunk : chunks) {
       parser_.HandleChunk(chunk, status);
       if (not status.ok()) {
-        google::cloud::internal::RaiseRuntimeError(status.error_message());
+        google::cloud::internal::ThrowRuntimeError(status.error_message());
       }
       if (parser_.HasNext()) {
         rows_.emplace_back(parser_.Next(status));
         if (not status.ok()) {
-          google::cloud::internal::RaiseRuntimeError(status.error_message());
+          google::cloud::internal::ThrowRuntimeError(status.error_message());
         }
       }
     }
     parser_.HandleEndOfStream(status);
     if (not status.ok()) {
-      google::cloud::internal::RaiseRuntimeError(status.error_message());
+      google::cloud::internal::ThrowRuntimeError(status.error_message());
     }
   }
 

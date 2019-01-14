@@ -129,7 +129,7 @@ RowReader::RowReader(
 RowReader::iterator RowReader::begin() {
   if (operation_cancelled_) {
     if (raise_on_error_) {
-      google::cloud::internal::RaiseRuntimeError(
+      google::cloud::internal::ThrowRuntimeError(
           "Operation already cancelled.");
     } else {
       status_ = grpc::Status::CANCELLED;
@@ -220,7 +220,7 @@ void RowReader::Advance(internal::OptionalRow& row) {
 
     if (not status.ok() and not retry_policy_->OnFailure(status)) {
       if (raise_on_error_) {
-        google::cloud::internal::RaiseRuntimeError("Unretriable error: " +
+        google::cloud::internal::ThrowRuntimeError("Unretriable error: " +
                                                    status.error_message());
         /*NOTREACHED*/
       }

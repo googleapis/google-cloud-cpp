@@ -139,7 +139,7 @@ class CurlHandle {
     if (e == CURLE_OK) {
       return;
     }
-    RaiseSetOptionError(e, option, std::forward<T>(param));
+    ThrowSetOptionError(e, option, std::forward<T>(param));
   }
 
   Status EasyPerform() {
@@ -175,17 +175,17 @@ class CurlHandle {
   friend class CurlRequestBuilder;
 
   Status AsStatus(CURLcode e, char const* where);
-  [[noreturn]] void RaiseSetOptionError(CURLcode e, CURLoption opt, long param);
-  [[noreturn]] void RaiseSetOptionError(CURLcode e, CURLoption opt,
+  [[noreturn]] void ThrowSetOptionError(CURLcode e, CURLoption opt, long param);
+  [[noreturn]] void ThrowSetOptionError(CURLcode e, CURLoption opt,
                                         char const* param);
-  [[noreturn]] void RaiseSetOptionError(CURLcode e, CURLoption opt,
+  [[noreturn]] void ThrowSetOptionError(CURLcode e, CURLoption opt,
                                         void* param);
   template <typename T>
-  [[noreturn]] void RaiseSetOptionError(CURLcode e, CURLoption opt, T unused) {
+  [[noreturn]] void ThrowSetOptionError(CURLcode e, CURLoption opt, T unused) {
     std::string param = "complex-type=<";
     param += typeid(T).name();
     param += ">";
-    RaiseSetOptionError(e, opt, param.c_str());
+    ThrowSetOptionError(e, opt, param.c_str());
   }
 
   CurlPtr handle_;

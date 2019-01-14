@@ -152,7 +152,7 @@ void CurlRequestBuilder::ValidateBuilderState(char const* where) const {
   if (handle_.handle_.get() == nullptr) {
     std::string msg = "Attempt to use invalidated CurlRequest in ";
     msg += where;
-    google::cloud::internal::RaiseRuntimeError(msg);
+    google::cloud::internal::ThrowRuntimeError(msg);
   }
 }
 }  // namespace internal
