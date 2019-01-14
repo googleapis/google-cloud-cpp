@@ -63,7 +63,7 @@ void ListObjectAcl(gcs::Client client, int& argc, char* argv[]) {
     if (not items.ok()) {
       std::cerr << "Error reading ACL for object " << object_name
                 << " in bucket " << bucket_name
-                << ", status=" << items.status();
+                << ", status=" << items.status() << std::endl;
       return;
     }
     for (gcs::ObjectAccessControl const& acl : *items) {
