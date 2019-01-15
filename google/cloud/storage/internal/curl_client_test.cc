@@ -85,7 +85,7 @@ class CurlClientTest : public ::testing::Test,
   }
 
   std::shared_ptr<CurlClient> client_;
-  long expected_status_code_;
+  StatusCode expected_status_code_;
   std::string expected_status_substr_;
   testing_util::EnvironmentVariableRestore endpoint_;
 };

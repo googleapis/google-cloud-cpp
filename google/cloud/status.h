@@ -29,7 +29,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  *     https://grpc.io/grpc/cpp/classgrpc_1_1_status.html
  *
  */
-enum StatusCode {
+enum class StatusCode {
   /// Not an error; returned on success.
   kOk = 0,
 
