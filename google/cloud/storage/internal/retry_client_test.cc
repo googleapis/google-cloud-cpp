@@ -53,7 +53,7 @@ TEST_F(RetryClientTest, NonIdempotentErrorHandling) {
   // the IfGenerationMatch() and/or Generation() option set.
   StatusOr<EmptyResponse> result =
       client.DeleteObject(DeleteObjectRequest("test-bucket", "test-object"));
-  EXPECT_EQ(TransientError().status_code(), result.status().status_code());
+  EXPECT_EQ(TransientError().code(), result.status().code());
 }
 
 /// @test Verify that the retry loop returns on the first permanent failure.
@@ -70,7 +70,7 @@ TEST_F(RetryClientTest, PermanentErrorHandling) {
 
   StatusOr<ObjectMetadata> result = client.GetObjectMetadata(
       GetObjectMetadataRequest("test-bucket", "test-object"));
-  EXPECT_EQ(PermanentError().status_code(), result.status().status_code());
+  EXPECT_EQ(PermanentError().code(), result.status().code());
 }
 
 /// @test Verify that the retry loop returns on the first permanent failure.
@@ -87,7 +87,7 @@ TEST_F(RetryClientTest, TooManyTransientsHandling) {
 
   StatusOr<ObjectMetadata> result = client.GetObjectMetadata(
       GetObjectMetadataRequest("test-bucket", "test-object"));
-  EXPECT_EQ(TransientError().status_code(), result.status().status_code());
+  EXPECT_EQ(TransientError().code(), result.status().code());
 }
 
 }  // namespace

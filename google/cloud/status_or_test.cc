@@ -34,8 +34,8 @@ TEST(StatusOrTest, StatusConstructorNormal) {
   StatusOr<int> actual(Status(StatusCode::kNotFound, "NOT FOUND"));
   EXPECT_FALSE(actual.ok());
   EXPECT_TRUE(not actual);
-  EXPECT_EQ(StatusCode::kNotFound, actual.status().status_code());
-  EXPECT_EQ("NOT FOUND", actual.status().error_message());
+  EXPECT_EQ(StatusCode::kNotFound, actual.status().code());
+  EXPECT_EQ("NOT FOUND", actual.status().message());
 }
 
 TEST(StatusOrTest, StatusConstructorInvalid) {
@@ -69,8 +69,8 @@ TEST(StatusOrTest, ValueAccessorNonConstThrows) {
   testing_util::ExpectException<RuntimeStatusError>(
       [&] { actual.value(); },
       [&](RuntimeStatusError const& ex) {
-        EXPECT_EQ(StatusCode::kInternal, ex.status().status_code());
-        EXPECT_EQ("BAD", ex.status().error_message());
+        EXPECT_EQ(StatusCode::kInternal, ex.status().code());
+        EXPECT_EQ("BAD", ex.status().message());
       },
       "exceptions are disabled: BAD \\[INTERNAL\\]"
   );
@@ -78,8 +78,8 @@ TEST(StatusOrTest, ValueAccessorNonConstThrows) {
   testing_util::ExpectException<RuntimeStatusError>(
       [&] { std::move(actual).value(); },
       [&](RuntimeStatusError const& ex) {
-        EXPECT_EQ(StatusCode::kInternal, ex.status().status_code());
-        EXPECT_EQ("BAD", ex.status().error_message());
+        EXPECT_EQ(StatusCode::kInternal, ex.status().code());
+        EXPECT_EQ("BAD", ex.status().message());
       },
       "exceptions are disabled: BAD \\[INTERNAL\\]"
   );
@@ -91,8 +91,8 @@ TEST(StatusOrTest, ValueAccessorConstThrows) {
   testing_util::ExpectException<RuntimeStatusError>(
       [&] { actual.value(); },
       [&](RuntimeStatusError const& ex) {
-        EXPECT_EQ(StatusCode::kInternal, ex.status().status_code());
-        EXPECT_EQ("BAD", ex.status().error_message());
+        EXPECT_EQ(StatusCode::kInternal, ex.status().code());
+        EXPECT_EQ("BAD", ex.status().message());
       },
       "exceptions are disabled: BAD \\[INTERNAL\\]"
   );
@@ -100,8 +100,8 @@ TEST(StatusOrTest, ValueAccessorConstThrows) {
   testing_util::ExpectException<RuntimeStatusError>(
       [&] { std::move(actual).value(); },
       [&](RuntimeStatusError const& ex) {
-        EXPECT_EQ(StatusCode::kInternal, ex.status().status_code());
-        EXPECT_EQ("BAD", ex.status().error_message());
+        EXPECT_EQ(StatusCode::kInternal, ex.status().code());
+        EXPECT_EQ("BAD", ex.status().message());
       },
       "exceptions are disabled: BAD \\[INTERNAL\\]"
   );
@@ -109,8 +109,8 @@ TEST(StatusOrTest, ValueAccessorConstThrows) {
 
 TEST(StatusOrTest, StatusConstAccessors) {
   StatusOr<int> const actual(Status(StatusCode::kInternal, "BAD"));
-  EXPECT_EQ(StatusCode::kInternal, actual.status().status_code());
-  EXPECT_EQ(StatusCode::kInternal, std::move(actual).status().status_code());
+  EXPECT_EQ(StatusCode::kInternal, actual.status().code());
+  EXPECT_EQ(StatusCode::kInternal, std::move(actual).status().code());
 }
 
 TEST(StatusOrTest, ValueDeference) {
@@ -148,8 +148,8 @@ TEST(StatusOrVoidTest, DefaultConstructor) {
 TEST(StatusOrVoidTest, StatusConstructorNormal) {
   StatusOr<void> actual(Status(StatusCode::kNotFound, "NOT FOUND"));
   EXPECT_FALSE(actual.ok());
-  EXPECT_EQ(StatusCode::kNotFound, actual.status().status_code());
-  EXPECT_EQ("NOT FOUND", actual.status().error_message());
+  EXPECT_EQ(StatusCode::kNotFound, actual.status().code());
+  EXPECT_EQ("NOT FOUND", actual.status().message());
 }
 
 TEST(StatusOrVoidTest, ValueConstructor) {
@@ -172,8 +172,8 @@ TEST(StatusOrVoidTest, ValueAccessorNonConstThrows) {
   testing_util::ExpectException<RuntimeStatusError>(
       [&] { actual.value(); },
       [&](RuntimeStatusError const& ex) {
-        EXPECT_EQ(StatusCode::kInternal, ex.status().status_code());
-        EXPECT_EQ("BAD", ex.status().error_message());
+        EXPECT_EQ(StatusCode::kInternal, ex.status().code());
+        EXPECT_EQ("BAD", ex.status().message());
       },
       "exceptions are disabled: BAD \\[INTERNAL\\]"
   );
@@ -181,8 +181,8 @@ TEST(StatusOrVoidTest, ValueAccessorNonConstThrows) {
   testing_util::ExpectException<RuntimeStatusError>(
       [&] { std::move(actual).value(); },
       [&](RuntimeStatusError const& ex) {
-        EXPECT_EQ(StatusCode::kInternal, ex.status().status_code());
-        EXPECT_EQ("BAD", ex.status().error_message());
+        EXPECT_EQ(StatusCode::kInternal, ex.status().code());
+        EXPECT_EQ("BAD", ex.status().message());
       },
       "exceptions are disabled: BAD \\[INTERNAL\\]"
   );
@@ -194,8 +194,8 @@ TEST(StatusOrVoidTest, ValueAccessorConstThrows) {
   testing_util::ExpectException<RuntimeStatusError>(
       [&] { actual.value(); },
       [&](RuntimeStatusError const& ex) {
-        EXPECT_EQ(StatusCode::kInternal, ex.status().status_code());
-        EXPECT_EQ("BAD", ex.status().error_message());
+        EXPECT_EQ(StatusCode::kInternal, ex.status().code());
+        EXPECT_EQ("BAD", ex.status().message());
       },
       "exceptions are disabled: BAD \\[INTERNAL\\]"
   );
@@ -203,8 +203,8 @@ TEST(StatusOrVoidTest, ValueAccessorConstThrows) {
   testing_util::ExpectException<RuntimeStatusError>(
       [&] { std::move(actual).value(); },
       [&](RuntimeStatusError const& ex) {
-        EXPECT_EQ(StatusCode::kInternal, ex.status().status_code());
-        EXPECT_EQ("BAD", ex.status().error_message());
+        EXPECT_EQ(StatusCode::kInternal, ex.status().code());
+        EXPECT_EQ("BAD", ex.status().message());
       },
       "exceptions are disabled: BAD \\[INTERNAL\\]"
   );
@@ -212,8 +212,8 @@ TEST(StatusOrVoidTest, ValueAccessorConstThrows) {
 
 TEST(StatusOrVoidTest, StatusConstAccessors) {
   StatusOr<void> const actual(Status(StatusCode::kInternal, "BAD"));
-  EXPECT_EQ(StatusCode::kInternal, actual.status().status_code());
-  EXPECT_EQ(StatusCode::kInternal, std::move(actual).status().status_code());
+  EXPECT_EQ(StatusCode::kInternal, actual.status().code());
+  EXPECT_EQ(StatusCode::kInternal, std::move(actual).status().code());
 }
 
 using testing_util::NoDefaultConstructor;

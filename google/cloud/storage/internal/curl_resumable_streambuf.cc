@@ -125,7 +125,7 @@ StatusOr<HttpResponse> CurlResumableStreambuf::Flush(bool final_chunk) {
   }
 
   last_response_ = HttpResponse{
-      result.status().status_code(), std::move(result).value().payload, {}};
+      result.status().code(), std::move(result).value().payload, {}};
   return last_response_;
 }
 

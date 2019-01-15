@@ -71,8 +71,8 @@ TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
   LoggingResumableUploadSession session(std::move(mock));
 
   auto result = session.UploadChunk(payload, 513 * 1024);
-  EXPECT_EQ(StatusCode::kUnavailable, result.status().status_code());
-  EXPECT_EQ("uh oh", result.status().error_message());
+  EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
+  EXPECT_EQ("uh oh", result.status().message());
 
   EXPECT_EQ(1U, CountLines("upload_size=" + std::to_string(513 * 1024UL)));
   EXPECT_EQ(1U, CountLines("[UNAVAILABLE]"));
@@ -90,8 +90,8 @@ TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
   LoggingResumableUploadSession session(std::move(mock));
 
   auto result = session.ResetSession();
-  EXPECT_EQ(StatusCode::kFailedPrecondition, result.status().status_code());
-  EXPECT_EQ("uh oh", result.status().error_message());
+  EXPECT_EQ(StatusCode::kFailedPrecondition, result.status().code());
+  EXPECT_EQ("uh oh", result.status().message());
 
   EXPECT_EQ(1U, CountLines("[FAILED_PRECONDITION]"));
 }

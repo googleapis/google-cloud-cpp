@@ -140,8 +140,8 @@ TEST(ListObjectsReaderTest, PermanentFailure) {
     has_status_or_error = true;
     // Verify the error is what we expect.
     Status status = std::move(object).status();
-    EXPECT_EQ(PermanentError().status_code(), status.status_code());
-    EXPECT_EQ(PermanentError().error_message(), status.error_message());
+    EXPECT_EQ(PermanentError().code(), status.code());
+    EXPECT_EQ(PermanentError().message(), status.message());
   }
   // The iteration should have returned an error at least once.
   EXPECT_TRUE(has_status_or_error);
