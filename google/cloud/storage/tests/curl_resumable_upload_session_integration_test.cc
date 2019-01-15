@@ -53,7 +53,7 @@ TEST_F(CurlResumableUploadIntegrationTest, Simple) {
   StatusOr<std::unique_ptr<ResumableUploadSession>> session =
       client->CreateResumableSession(request);
 
-  ASSERT_TRUE(session.ok());
+  ASSERT_TRUE(session.ok()) << "status=" << session.status();
 
   std::string const contents = LoremIpsum();
   StatusOr<ResumableUploadResponse> response =
@@ -80,7 +80,7 @@ TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
   StatusOr<std::unique_ptr<ResumableUploadSession>> session =
       client->CreateResumableSession(request);
 
-  ASSERT_TRUE(session.ok());
+  ASSERT_TRUE(session.ok()) << "status=" << session.status();
 
   std::string const contents(UploadChunkRequest::kChunkSizeQuantum, '0');
   StatusOr<ResumableUploadResponse> response =

@@ -357,9 +357,9 @@ void TooManyFailuresStatusTest(
       .WillOnce(Return(StatusOr<ReturnType>(TransientError())));
 
   Status status = tested_operation(client);
-  EXPECT_EQ(TransientError().status_code(), status.status_code());
-  EXPECT_THAT(status.error_message(), HasSubstr("Retry policy exhausted"));
-  EXPECT_THAT(status.error_message(), HasSubstr(api_name));
+  EXPECT_EQ(TransientError().code(), status.code());
+  EXPECT_THAT(status.message(), HasSubstr("Retry policy exhausted"));
+  EXPECT_THAT(status.message(), HasSubstr(api_name));
 }
 
 /**
@@ -406,9 +406,9 @@ void NonIdempotentFailuresStatusTest(
   // Verify the right error status, with the right content, is returned when
   // calling the operation.
   Status status = tested_operation(client);
-  EXPECT_EQ(status.status_code(), TransientError().status_code());
-  EXPECT_THAT(status.error_message(), HasSubstr("Error in non-idempotent"));
-  EXPECT_THAT(status.error_message(), HasSubstr(api_name));
+  EXPECT_EQ(status.code(), TransientError().code());
+  EXPECT_THAT(status.message(), HasSubstr("Error in non-idempotent"));
+  EXPECT_THAT(status.message(), HasSubstr(api_name));
 }
 
 /**
@@ -456,9 +456,9 @@ void IdempotentFailuresStatusTest(
   // Verify the right error status, with the right content, is returned when
   // calling the operation.
   Status status = tested_operation(client);
-  EXPECT_EQ(TransientError().status_code(), status.status_code());
-  EXPECT_THAT(status.error_message(), HasSubstr("Retry policy exhausted"));
-  EXPECT_THAT(status.error_message(), HasSubstr(api_name));
+  EXPECT_EQ(TransientError().code(), status.code());
+  EXPECT_THAT(status.message(), HasSubstr("Retry policy exhausted"));
+  EXPECT_THAT(status.message(), HasSubstr(api_name));
 }
 
 /**
@@ -536,9 +536,9 @@ void PermanentFailureStatusTest(
   // Verify the right exception type, with the right content, is raised when
   // calling the operation.
   Status status = tested_operation(client);
-  EXPECT_EQ(PermanentError().status_code(), status.status_code());
-  EXPECT_THAT(status.error_message(), HasSubstr("Permanent error"));
-  EXPECT_THAT(status.error_message(), HasSubstr(api_name));
+  EXPECT_EQ(PermanentError().code(), status.code());
+  EXPECT_THAT(status.message(), HasSubstr("Permanent error"));
+  EXPECT_THAT(status.message(), HasSubstr(api_name));
 }
 
 }  // namespace testing
