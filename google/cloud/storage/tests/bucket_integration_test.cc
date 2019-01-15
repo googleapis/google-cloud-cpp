@@ -189,7 +189,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
 
   // iam_configuration()
   BucketIamConfiguration iam_configuration;
-  iam_configuration.bucket_only_policy = BucketOnlyPolicy{true};
+  iam_configuration.bucket_policy_only = BucketPolicyOnly{true};
   desired_state.set_iam_configuration(std::move(iam_configuration));
 
   // labels()
