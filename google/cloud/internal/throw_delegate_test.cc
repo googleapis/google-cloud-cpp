@@ -91,8 +91,6 @@ TEST(ThrowDelegateTest, LogicError) {
 }
 
 TEST(ThrowDelegateTest, TestThrow) {
-  // We hard-code "5" below, so check it.
-  EXPECT_EQ(StatusCode::kNotFound, 5);
   testing_util::ExpectException<RuntimeStatusError>(
       [&] {
         Status status(StatusCode::kNotFound, "NOT FOUND");
