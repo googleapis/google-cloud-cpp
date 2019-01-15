@@ -54,11 +54,19 @@ void ListObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto object_name = ConsumeArg(argc, argv);
   //! [list object acl]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
     std::cout << "ACLs for object=" << object_name << " in bucket "
               << bucket_name << std::endl;
-    for (gcs::ObjectAccessControl const& acl :
-         client.ListObjectAcl(bucket_name, object_name)) {
+    StatusOr<std::vector<gcs::ObjectAccessControl>> items =
+        client.ListObjectAcl(bucket_name, object_name);
+    if (not items.ok()) {
+      std::cerr << "Error reading ACL for object " << object_name
+                << " in bucket " << bucket_name
+                << ", status=" << items.status() << std::endl;
+      return;
+    }
+    for (gcs::ObjectAccessControl const& acl : *items) {
       std::cout << acl.role() << ":" << acl.entity() << std::endl;
     }
   }
@@ -77,13 +85,20 @@ void CreateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto role = ConsumeArg(argc, argv);
   //! [create object acl] [START storage_create_file_acl]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string entity, std::string role) {
-    gcs::ObjectAccessControl result =
+    StatusOr<gcs::ObjectAccessControl> object_acl =
         client.CreateObjectAcl(bucket_name, object_name, entity, role);
-    std::cout << "Role " << result.role() << " granted to " << result.entity()
-              << " on " << result.object() << "\n"
-              << "Full attributes: " << result << std::endl;
+    if (not object_acl.ok()) {
+      std::cerr << "Error creating object ACL entry for entity " << entity
+                << " in object " << object_name << " and bucket " << bucket_name
+                << ", status=" << object_acl.status() << std::endl;
+      return;
+    }
+    std::cout << "Role " << object_acl->role() << " granted to "
+              << object_acl->entity() << " on " << object_acl->object()
+              << "\nFull attributes: " << *object_acl << std::endl;
   }
   //! [create object acl] [END storage_create_file_acl]
   (std::move(client), bucket_name, object_name, entity, role);
@@ -98,9 +113,17 @@ void DeleteObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto entity = ConsumeArg(argc, argv);
   //! [delete object acl] [START storage_delete_file_acl]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string entity) {
-    client.DeleteObjectAcl(bucket_name, object_name, entity);
+    StatusOr<void> status =
+        client.DeleteObjectAcl(bucket_name, object_name, entity);
+    if (not status.ok()) {
+      std::cerr << "Error deleting object ACL entry for entity " << entity
+                << " in object " << object_name << " and bucket " << bucket_name
+                << ", status=" << status.status() << std::endl;
+      return;
+    }
     std::cout << "Deleted ACL entry for " << entity << " in object "
               << object_name << " in bucket " << bucket_name << std::endl;
   }
@@ -117,12 +140,20 @@ void GetObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto entity = ConsumeArg(argc, argv);
   //! [get object acl] [START storage_print_file_acl]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string entity) {
-    gcs::ObjectAccessControl acl =
+    StatusOr<gcs::ObjectAccessControl> acl =
         client.GetObjectAcl(bucket_name, object_name, entity);
-    std::cout << "ACL entry for " << entity << " in object " << object_name
-              << " in bucket " << bucket_name << " is " << acl << std::endl;
+    if (not acl.ok()) {
+      std::cerr << "Error getting object ACL entry for entity " << entity
+                << " in object " << object_name << " and bucket " << bucket_name
+                << ", status=" << acl.status() << std::endl;
+      return;
+    }
+    std::cout << "ACL entry for " << acl->entity() << " in object "
+              << acl->object() << " in bucket " << acl->bucket() << " is "
+              << *acl << std::endl;
   }
   //! [get object acl] [END storage_print_file_acl]
   (std::move(client), bucket_name, object_name, entity);
@@ -139,15 +170,23 @@ void UpdateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto role = ConsumeArg(argc, argv);
   //! [update object acl] [START storage_update_file_acl]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string entity, std::string role) {
-    gcs::ObjectAccessControl current_acl =
+    StatusOr<gcs::ObjectAccessControl> current_acl =
         client.GetObjectAcl(bucket_name, object_name, entity);
-    current_acl.set_role(role);
-    gcs::ObjectAccessControl acl =
-        client.UpdateObjectAcl(bucket_name, object_name, current_acl);
-    std::cout << "ACL entry for " << entity << " in object " << object_name
-              << " in bucket " << bucket_name << " is now " << acl << std::endl;
+    if (not current_acl.ok()) {
+      std::cerr << "Error getting object ACL entry for entity " << entity
+                << " in object " << object_name << " and bucket " << bucket_name
+                << ", status=" << current_acl.status() << std::endl;
+      return;
+    }
+    current_acl->set_role(role);
+    StatusOr<gcs::ObjectAccessControl> updated_acl =
+        client.UpdateObjectAcl(bucket_name, object_name, *current_acl);
+    std::cout << "ACL entry for " << updated_acl->entity() << " in object "
+              << updated_acl->object() << " in bucket " << updated_acl->bucket()
+              << " is now " << *updated_acl << std::endl;
   }
   //! [update object acl] [END storage_update_file_acl]
   (std::move(client), bucket_name, object_name, entity, role);
@@ -163,17 +202,30 @@ void PatchObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto role = ConsumeArg(argc, argv);
   //! [patch object acl]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string entity, std::string role) {
-    gcs::ObjectAccessControl original_acl =
+    StatusOr<gcs::ObjectAccessControl> original_acl =
         client.GetObjectAcl(bucket_name, object_name, entity);
-    auto new_acl = original_acl;
+    if (not original_acl.ok()) {
+      std::cerr << "Error getting object ACL entry for entity " << entity
+                << " in object " << object_name << " and bucket " << bucket_name
+                << ", status=" << original_acl.status() << std::endl;
+      return;
+    }
+    auto new_acl = *original_acl;
     new_acl.set_role(role);
-    gcs::ObjectAccessControl updated_acl = client.PatchObjectAcl(
-        bucket_name, object_name, entity, original_acl, new_acl);
-    std::cout << "ACL entry for " << entity << " in object " << object_name
-              << " in bucket " << bucket_name << " is now " << updated_acl
-              << std::endl;
+    StatusOr<gcs::ObjectAccessControl> patched_acl = client.PatchObjectAcl(
+        bucket_name, object_name, entity, *original_acl, new_acl);
+    if (not patched_acl.ok()) {
+      std::cerr << "Error patching object ACL entry for entity " << entity
+                << " in object " << object_name << " and bucket " << bucket_name
+                << ", status=" << patched_acl.status() << std::endl;
+      return;
+    }
+    std::cout << "ACL entry for " << patched_acl->entity() << " in object "
+              << patched_acl->object() << " in bucket " << patched_acl->bucket()
+              << " is now " << *patched_acl << std::endl;
   }
   //! [patch object acl]
   (std::move(client), bucket_name, object_name, entity, role);
@@ -190,13 +242,21 @@ void PatchObjectAclNoRead(gcs::Client client, int& argc, char* argv[]) {
   auto role = ConsumeArg(argc, argv);
   //! [patch object acl no-read]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string entity, std::string role) {
-    gcs::ObjectAccessControl acl = client.PatchObjectAcl(
+    StatusOr<gcs::ObjectAccessControl> patched_acl = client.PatchObjectAcl(
         bucket_name, object_name, entity,
         gcs::ObjectAccessControlPatchBuilder().set_role(role));
-    std::cout << "ACL entry for " << entity << " in object " << object_name
-              << " in bucket " << bucket_name << " is now " << acl << std::endl;
+    if (not patched_acl.ok()) {
+      std::cerr << "Error patching object ACL entry for entity " << entity
+                << " in object " << object_name << " and bucket " << bucket_name
+                << ", status=" << patched_acl.status() << std::endl;
+      return;
+    }
+    std::cout << "ACL entry for " << patched_acl->entity() << " in object "
+              << patched_acl->object() << " in bucket " << patched_acl->bucket()
+              << " is now " << *patched_acl << std::endl;
   }
   //! [patch object acl no-read]
   (std::move(client), bucket_name, object_name, entity, role);
@@ -209,7 +269,7 @@ int main(int argc, char* argv[]) try {
   gcs::Client client;
 
   // Build the list of commands and the usage string from that list.
-  using CommandType = std::function<void(gcs::Client, int&, char*[])>;
+  using CommandType = std::function<void(gcs::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"list-object-acl", &ListObjectAcl},
       {"create-object-acl", &CreateObjectAcl},

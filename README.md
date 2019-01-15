@@ -86,7 +86,7 @@ of these tools we test with are:
 
 #### Libraries
 
-The libraries also depends on gRPC, libcurl, and the dependencies of those
+The libraries also depend on gRPC, libcurl, and the dependencies of those
 libraries. The Google Cloud C++ Client libraries are tested with the following
 versions of these dependencies:
 
@@ -351,7 +351,7 @@ And compile the code:
 cmake --build build-output
 ```
 
-Finally verify the unit tests pass:
+Finally, verify the unit tests pass:
 
 ```console
 cd build-output
@@ -365,7 +365,7 @@ source directories.
 
 This library follows [Semantic Versioning](http://semver.org/). Please note it
 is currently under active development. Any release versioned 0.x.y is subject to
-backwards incompatible changes at any time.
+backwards-incompatible changes at any time.
 
 **GA**: Libraries defined at a GA quality level are expected to be stable and
 all updates in the libraries are guaranteed to be backwards-compatible. Any
