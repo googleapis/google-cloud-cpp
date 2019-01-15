@@ -63,23 +63,23 @@ std::ostream& operator<<(std::ostream& os, StatusCode code);
  */
 class Status {
  public:
-  Status() : status_code_(StatusCode::kOk) {}
+  Status() : code_(StatusCode::kOk) {}
 
-  explicit Status(StatusCode status_code, std::string error_message)
-      : status_code_(status_code), message_(std::move(error_message)) {}
+  explicit Status(StatusCode status_code, std::string message)
+      : code_(status_code), message_(std::move(message)) {}
 
-  bool ok() const { return status_code_ == StatusCode::kOk; }
+  bool ok() const { return code_ == StatusCode::kOk; }
 
   bool operator==(Status const& rhs) const {
     return code() == rhs.code() and message() == rhs.message();
   }
   bool operator!=(Status const& rhs) const { return not(*this == rhs); }
 
-  StatusCode code() const { return status_code_; }
+  StatusCode code() const { return code_; }
   std::string const& message() const { return message_; }
 
  private:
-  StatusCode status_code_;
+  StatusCode code_;
   std::string message_;
 };
 
