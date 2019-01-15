@@ -943,6 +943,56 @@ class InstanceAdmin {
   google::cloud::IamPolicy GetIamPolicy(std::string const& instance_id,
                                         grpc::Status& status);
 
+  /**
+   * Makes an asynchronous request to get the policy of an instance.
+   *
+   * @param instance_id the Cloud Bigtable instance that hold the policy.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, google::cloud::IamPolicy&,
+   *         grpc::Status const&>);
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      google::cloud::IamPolicy&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> AsyncGetIamPolicy(
+      std::string const& instance_id, CompletionQueue& cq, Functor&& callback) {
+    ::google::iam::v1::GetIamPolicyRequest request;
+    request.set_resource(InstanceName(instance_id));
+
+    MetadataUpdatePolicy metadata_update_policy(project_name(),
+                                                MetadataParamTypes::RESOURCE);
+
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &InstanceAdminClient::AsyncGetIamPolicy)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &InstanceAdminClient::AsyncGetIamPolicy)>::MemberFunction;
+
+    using Retry = internal::AsyncRetryUnaryRpc<
+        InstanceAdminClient, MemberFunction,
+        internal::ConstantIdempotencyPolicy,
+        TransformResponseHelper<Functor, google::iam::v1::Policy>>;
+
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
+        client_, &InstanceAdminClient::AsyncGetIamPolicy, std::move(request),
+        TransformResponseHelper<Functor, google::iam::v1::Policy>(
+            std::forward<Functor>(callback)));
+    return retry->Start(cq);
+  }
+
   google::cloud::IamPolicy SetIamPolicy(
       std::string const& instance_id,
       google::cloud::IamBindings const& iam_bindings, std::string const& etag,
@@ -954,6 +1004,39 @@ class InstanceAdmin {
   //@}
 
  private:
+  static inline google::cloud::IamPolicy ProtoToWrapper(
+      google::iam::v1::Policy proto) {
+    google::cloud::IamPolicy result;
+    result.version = proto.version();
+    result.etag = std::move(*proto.mutable_etag());
+    for (auto& binding : *proto.mutable_bindings()) {
+      for (auto& member : *binding.mutable_members()) {
+        result.bindings.AddMember(binding.role(), std::move(member));
+      }
+    }
+
+    return result;
+  }
+
+  template <typename Functor, typename Response,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
+                                                      google::cloud::IamPolicy&,
+                                                      grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  struct TransformResponseHelper {
+    TransformResponseHelper(Functor&& callback)
+        : application_callback_(std::move(callback)) {}
+
+    void operator()(CompletionQueue& cq, Response& response,
+                    grpc::Status& status) {
+      google::cloud::IamPolicy policy = ProtoToWrapper(response);
+      application_callback_(cq, policy, status);
+    }
+
+    Functor application_callback_;
+  };
+
   //@{
   /// @name Helper functions to implement constructors with changed policies.
   void ChangePolicy(RPCRetryPolicy& policy) {
