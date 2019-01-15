@@ -177,9 +177,9 @@ function run_all_instance_admin_async_examples {
       "${project_id}" "${INSTANCE}"
   run_example ./instance_admin_async_snippets async-list-instances \
       "${project_id}"
-  run_example ./bigtable_samples_instance_admin list-clusters \
+  run_example ./instance_admin_async_snippets async-list-clusters \
       "${project_id}" "${INSTANCE}"
-  run_example ./bigtable_samples_instance_admin list-all-clusters \
+  run_example ./instance_admin_async_snippets async-list-all-clusters \
       "${project_id}"
   run_example ./bigtable_samples_instance_admin create-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${replication_zone_id}"

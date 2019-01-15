@@ -74,6 +74,16 @@ bool IsClusterPresent(std::vector<btadmin::Cluster> const& clusters,
                       });
 }
 
+bool IsInstanceNamePresentInClusterList(
+    std::vector<btadmin::Cluster> const& clusters,
+    std::string const& instance_name) {
+  return clusters.end() !=
+         std::find_if(clusters.begin(), clusters.end(),
+                      [&instance_name](btadmin::Cluster const& i) {
+                        return i.name().find(instance_name);
+                      });
+}
+
 bigtable::InstanceConfig IntegrationTestConfig(
     std::string const& id, std::string const& zone = "us-central1-f",
     bigtable::InstanceConfig::InstanceType instance_type =
@@ -196,6 +206,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   auto cluster =
       instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
           .get();
+  ASSERT_GT(cluster.name().size(), 0);
   auto clusters_list_after = instance_admin_->AsyncListClusters(cq, id).get();
   EXPECT_TRUE(clusters_list_after.failed_locations.empty())
       << "The Cloud Bigtable service (or emulator) reports that it could not"
@@ -206,6 +217,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
       << " This is unexpected, as the cluster ids are"
       << " generated at random.";
   EXPECT_FALSE(IsClusterPresent(clusters_list_before.clusters, cluster.name()));
+  EXPECT_TRUE(IsClusterPresent(clusters_list_after.clusters, cluster.name()));
 
   // Get cluster
   google::cloud::future<btadmin::Cluster> fut =
@@ -241,6 +253,8 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   EXPECT_FALSE(
       IsClusterPresent(clusters_list_after_delete.clusters,
                        instance_details.name() + "/clusters/" + id + "-cl2"));
+  EXPECT_FALSE(
+      IsClusterPresent(clusters_list_after_delete.clusters, cluster.name()));
   cq.Shutdown();
   pool.join();
 }
@@ -264,8 +278,11 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAllClustersTest) {
   auto instance1 = instance_admin_->CreateInstance(instance_config1);
   auto instance2 = instance_admin_->CreateInstance(instance_config2);
   // Wait for instance creation
-  ASSERT_THAT(instance1.get().name(), HasSubstr(id1));
-  ASSERT_THAT(instance2.get().name(), HasSubstr(id2));
+
+  auto instance1_name = instance1.get().name();
+  auto instance2_name = instance2.get().name();
+  ASSERT_THAT(instance1_name, HasSubstr(id1));
+  ASSERT_THAT(instance2_name, HasSubstr(id2));
 
   // Make an asynchronous request, but immediately block because this is just a
   // test.
@@ -275,6 +292,11 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAllClustersTest) {
               cluster.name().find(instance_admin_->project_name()));
   }
   EXPECT_FALSE(clusters_list.clusters.empty());
+
+  EXPECT_TRUE(IsInstanceNamePresentInClusterList(clusters_list.clusters,
+                                                 instance1_name));
+  EXPECT_TRUE(IsInstanceNamePresentInClusterList(clusters_list.clusters,
+                                                 instance2_name));
 
   instance_admin_->DeleteInstance(id1);
   instance_admin_->DeleteInstance(id2);
