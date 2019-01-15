@@ -269,8 +269,14 @@ void DeleteObject(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   //! [delete object] [START storage_delete_file]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    client.DeleteObject(bucket_name, object_name);
+    StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+    if (not status.ok()) {
+      std::cerr << "Error deleting object " << object_name << " in bucket "
+                << bucket_name << ", status=" << status.status() << std::endl;
+      return;
+    }
     std::cout << "Deleted " << object_name << " in bucket " << bucket_name
               << std::endl;
   }
@@ -993,7 +999,13 @@ void RenameObject(google::cloud::storage::Client client, int& argc,
                 << ", status=" << meta.status() << std::endl;
       return;
     }
-    client.DeleteObject(bucket_name, old_object_name);
+    StatusOr<void> status = client.DeleteObject(bucket_name, old_object_name);
+    if (not status.ok()) {
+      std::cerr << "Error deleting original object " << old_object_name
+                << " in bucket " << bucket_name
+                << ", status=" << status.status() << std::endl;
+      return;
+    }
     std::cout << "Renamed " << old_object_name << " to " << new_object_name
               << " in bucket " << bucket_name << std::endl;
   }

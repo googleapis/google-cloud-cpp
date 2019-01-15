@@ -86,7 +86,8 @@ TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
   ASSERT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
   EXPECT_EQ(expected_str, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -115,7 +116,8 @@ TEST_F(ObjectMediaIntegrationTest, JsonDownloadFile) {
   ASSERT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
   EXPECT_EQ(expected_str, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -167,7 +169,9 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotOpenFile) {
       client.DownloadToFile(bucket_name, object_name, file_name),
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  client.DeleteObject(bucket_name, object_name);
+
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotWriteToFile) {
@@ -205,7 +209,8 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotWriteToFile) {
       client.DownloadToFile(bucket_name, object_name, file_name),
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 #endif  // GTEST_OS_LINUX
 }
 
@@ -236,7 +241,8 @@ TEST_F(ObjectMediaIntegrationTest, UploadFile) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
   EXPECT_EQ(expected_str, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -262,7 +268,8 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileEmpty) {
   EXPECT_EQ(0U, actual.size());
   EXPECT_EQ("", actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -323,7 +330,8 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileUploadFailure) {
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -363,7 +371,8 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileNonRegularWarning) {
   EXPECT_NE(0U, count);
 
   t.join();
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 #endif  // GTEST_OS_LINUX
 }
@@ -406,7 +415,8 @@ TEST_F(ObjectMediaIntegrationTest, XmlUploadFile) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
   EXPECT_EQ(expected_str, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -443,7 +453,8 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableBySize) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
   EXPECT_EQ(expected_str, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -480,7 +491,8 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableByOption) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
   EXPECT_EQ(expected_str, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -517,7 +529,8 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableQuantum) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
   EXPECT_EQ(expected_str, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -553,7 +566,8 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableNonQuantum) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
   EXPECT_EQ(expected_str, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -617,7 +631,8 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
   stream.Close();
   EXPECT_TRUE(stream.status().ok()) << "status=" << stream.status();
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
@@ -659,7 +674,8 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingReadXML) {
   EXPECT_FALSE(stream.status().ok());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
@@ -702,7 +718,8 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingReadJSON) {
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
@@ -730,7 +747,8 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingWriteXML) {
   EXPECT_TRUE(stream.metadata().ok());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
@@ -758,7 +776,8 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedMD5StreamingWriteJSON) {
   EXPECT_TRUE(stream.metadata().ok());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectMediaIntegrationTest, InsertWithCrc32c) {
@@ -782,7 +801,8 @@ TEST_F(ObjectMediaIntegrationTest, InsertWithCrc32c) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectMediaIntegrationTest, XmlInsertWithCrc32c) {
@@ -806,7 +826,8 @@ TEST_F(ObjectMediaIntegrationTest, XmlInsertWithCrc32c) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectMediaIntegrationTest, InsertWithCrc32cFailure) {
@@ -858,7 +879,8 @@ TEST_F(ObjectMediaIntegrationTest, InsertWithComputedCrc32c) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Verify that CRC32C checksums are computed by default.
@@ -884,7 +906,8 @@ TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cInsertXML) {
                     });
   EXPECT_EQ(1, count);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Verify that CRC32C checksums are computed by default.
@@ -923,7 +946,8 @@ TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cInsertJSON) {
     EXPECT_EQ(expected_crc32c, insert_meta->metadata("x_testbench_crc32c"));
   }
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Verify that CRC32C checksums are computed by default on downloads.
@@ -946,7 +970,8 @@ TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cStreamingReadXML) {
   EXPECT_EQ(stream.received_hash(), stream.computed_hash());
   EXPECT_THAT(stream.received_hash(), HasSubstr(meta->crc32c()));
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Verify that CRC32C checksums are computed by default on downloads.
@@ -970,7 +995,8 @@ TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cStreamingReadJSON) {
   EXPECT_EQ(stream.received_hash(), stream.computed_hash());
   EXPECT_THAT(stream.received_hash(), HasSubstr(meta->crc32c()));
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Verify that CRC32C checksums are computed by default on uploads.
@@ -994,7 +1020,8 @@ TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cStreamingWriteXML) {
   EXPECT_EQ(os.received_hash(), os.computed_hash());
   EXPECT_THAT(os.received_hash(), HasSubstr(expected_crc32c));
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Verify that CRC32C checksums are computed by default on uploads.
@@ -1017,7 +1044,8 @@ TEST_F(ObjectMediaIntegrationTest, DefaultCrc32cStreamingWriteJSON) {
   EXPECT_EQ(os.received_hash(), os.computed_hash());
   EXPECT_THAT(os.received_hash(), HasSubstr(expected_crc32c));
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Verify that CRC32C checksum mismatches are reported by default on
@@ -1061,7 +1089,8 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingReadXML) {
   EXPECT_FALSE(stream.status().ok());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Verify that CRC32C checksum mismatches are reported by default on
@@ -1105,7 +1134,8 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Verify that CRC32C checksum mismatches are reported by default on
@@ -1134,7 +1164,8 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingWriteXML) {
   EXPECT_TRUE(stream.metadata().ok());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Verify that CRC32C checksum mismatches are reported by default on
@@ -1162,7 +1193,8 @@ TEST_F(ObjectMediaIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
   EXPECT_TRUE(stream.metadata().ok());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Read a portion of a relatively large object using the JSON API.
@@ -1201,7 +1233,8 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
   EXPECT_EQ(1 * chunk, actual.size());
   EXPECT_EQ(large_text.substr(1 * chunk, 1 * chunk), actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Read a portion of a relatively large object using the XML API.
@@ -1239,7 +1272,8 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
   EXPECT_EQ(1 * chunk, actual.size());
   EXPECT_EQ(large_text.substr(1 * chunk, 1 * chunk), actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 }  // anonymous namespace

@@ -141,13 +141,15 @@ int main(int argc, char* argv[]) try {
 
   auto bucket_name = MakeRandomBucketName(generator);
   auto meta =
-      client.CreateBucket(bucket_name,
-                          gcs::BucketMetadata()
-                              .set_storage_class(gcs::storage_class::Regional())
-                              .set_location(options.region),
-                          gcs::PredefinedAcl("private"),
-                          gcs::PredefinedDefaultObjectAcl("projectPrivate"),
-                          gcs::Projection("full")).value();
+      client
+          .CreateBucket(bucket_name,
+                        gcs::BucketMetadata()
+                            .set_storage_class(gcs::storage_class::Regional())
+                            .set_location(options.region),
+                        gcs::PredefinedAcl("private"),
+                        gcs::PredefinedDefaultObjectAcl("projectPrivate"),
+                        gcs::Projection("full"))
+          .value();
   std::cout << "# Running test on bucket: " << meta.name() << std::endl;
   std::string notes = google::cloud::storage::version_string() + ";" +
                       google::cloud::internal::compiler() + ";" +
@@ -413,7 +415,8 @@ TestResult DeleteGroup(gcs::Client client,
   TestResult result;
   for (auto const& o : group) {
     auto start = std::chrono::steady_clock::now();
-    client.DeleteObject(o.bucket(), o.name(), gcs::Generation(o.generation()));
+    client.DeleteObject(o.bucket(), o.name(), gcs::Generation(o.generation()))
+        .value();
     auto elapsed = std::chrono::steady_clock::now() - start;
     using std::chrono::milliseconds;
     auto ms = std::chrono::duration_cast<milliseconds>(elapsed);

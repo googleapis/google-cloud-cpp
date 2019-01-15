@@ -969,18 +969,16 @@ class Client {
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Example
    * @snippet storage_object_samples.cc delete object
    */
   template <typename... Options>
-  void DeleteObject(std::string const& bucket_name,
-                    std::string const& object_name, Options&&... options) {
+  StatusOr<void> DeleteObject(std::string const& bucket_name,
+                              std::string const& object_name,
+                              Options&&... options) {
     internal::DeleteObjectRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->DeleteObject(request).value();
+    return raw_client_->DeleteObject(request).status();
   }
 
   /**

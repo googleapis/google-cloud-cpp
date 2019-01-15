@@ -66,7 +66,9 @@ TEST_F(CurlResumableUploadIntegrationTest, Simple) {
   EXPECT_EQ(bucket_name, metadata.bucket());
   EXPECT_EQ(contents.size(), metadata.size());
 
-  client->DeleteObject(DeleteObjectRequest(bucket_name, object_name));
+  auto status =
+      client->DeleteObject(DeleteObjectRequest(bucket_name, object_name));
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
@@ -99,7 +101,9 @@ TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
   EXPECT_EQ(bucket_name, metadata.bucket());
   EXPECT_EQ(2 * contents.size(), metadata.size());
 
-  client->DeleteObject(DeleteObjectRequest(bucket_name, object_name));
+  auto status =
+      client->DeleteObject(DeleteObjectRequest(bucket_name, object_name));
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(CurlResumableUploadIntegrationTest, Restore) {
@@ -138,7 +142,9 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
   EXPECT_EQ(bucket_name, metadata.bucket());
   EXPECT_EQ(3 * contents.size(), metadata.size());
 
-  client->DeleteObject(DeleteObjectRequest(bucket_name, object_name));
+  auto status =
+      client->DeleteObject(DeleteObjectRequest(bucket_name, object_name));
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 }  // namespace
