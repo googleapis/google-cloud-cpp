@@ -13,7 +13,7 @@ var searchData=
   ['deletebucketacl',['DeleteBucketAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a75002ae448c5aee7f7e4390a3034e4d2',1,'google::cloud::storage::v0::Client']]],
   ['deletedefaultobjectacl',['DeleteDefaultObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#af38d4a9a1b56fd05ef1fa0387bf97bb7',1,'google::cloud::storage::v0::Client']]],
   ['deletenotification',['DeleteNotification',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a5e7ec0724e517026fe7dd4d23c7f8084',1,'google::cloud::storage::v0::Client']]],
-  ['deleteobject',['DeleteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a0c9ed0e219ba99dce6024e326d7c9708',1,'google::cloud::storage::v0::Client']]],
+  ['deleteobject',['DeleteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ae4349961b2182865d4bbad2d4eaf762c',1,'google::cloud::storage::v0::Client']]],
   ['deleteobjectacl',['DeleteObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a66831edbb3149b00757d042f1dad4def',1,'google::cloud::storage::v0::Client']]],
   ['destinationkmskeyname',['DestinationKmsKeyName',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1DestinationKmsKeyName.html',1,'google::cloud::storage::v0']]],
   ['destinationpredefinedacl',['DestinationPredefinedAcl',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1DestinationPredefinedAcl.html',1,'google::cloud::storage::v0']]],
