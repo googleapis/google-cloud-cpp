@@ -468,24 +468,26 @@ TEST_F(BucketTest, LockBucketRetentionPolicy) {
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
 
-  client.LockBucketRetentionPolicy("test-bucket-name", 42U);
-  SUCCEED();
+  auto status = client.LockBucketRetentionPolicy("test-bucket-name", 42U);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(BucketTest, LockBucketRetentionPolicyTooManyFailures) {
-  testing::TooManyFailuresTest<internal::EmptyResponse>(
+  testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
       mock, EXPECT_CALL(*mock, LockBucketRetentionPolicy(_)),
       [](Client& client) {
-        client.LockBucketRetentionPolicy("test-bucket-name", 1U);
+        return client.LockBucketRetentionPolicy("test-bucket-name", 1U)
+            .status();
       },
       "LockBucketRetentionPolicy");
 }
 
 TEST_F(BucketTest, LockBucketRetentionPolicyPermanentFailure) {
-  testing::PermanentFailureTest<internal::EmptyResponse>(
+  testing::PermanentFailureStatusTest<internal::EmptyResponse>(
       *client, EXPECT_CALL(*mock, LockBucketRetentionPolicy(_)),
       [](Client& client) {
-        client.LockBucketRetentionPolicy("test-bucket-name", 1U);
+        return client.LockBucketRetentionPolicy("test-bucket-name", 1U)
+            .status();
       },
       "LockBucketRetentionPolicy");
 }
