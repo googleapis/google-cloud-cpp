@@ -146,18 +146,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae93ac15bc1f0a4b394995a01af0472eb"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ae93ac15bc1f0a4b394995a01af0472eb">PatchBucket</a> (std::string bucket_name, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadataPatchBuilder.html">BucketMetadataPatchBuilder</a> const &amp;builder, Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:ae93ac15bc1f0a4b394995a01af0472eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Patches the metadata in a Google Cloud Storage Bucket.  <a href="#ae93ac15bc1f0a4b394995a01af0472eb">More...</a><br /></td></tr>
 <tr class="separator:ae93ac15bc1f0a4b394995a01af0472eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8bf1dcf1cd6050b5b587baaf31ef2e4"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:aa8bf1dcf1cd6050b5b587baaf31ef2e4"><td class="memTemplItemLeft" align="right" valign="top">IamPolicy&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aa8bf1dcf1cd6050b5b587baaf31ef2e4">GetBucketIamPolicy</a> (std::string const &amp;bucket_name, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:aa8bf1dcf1cd6050b5b587baaf31ef2e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches the IamPolicy for a Bucket.  <a href="#aa8bf1dcf1cd6050b5b587baaf31ef2e4">More...</a><br /></td></tr>
-<tr class="separator:aa8bf1dcf1cd6050b5b587baaf31ef2e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0f81cc67c77b081b34bdad1e6e73ed5"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:af0f81cc67c77b081b34bdad1e6e73ed5"><td class="memTemplItemLeft" align="right" valign="top">IamPolicy&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#af0f81cc67c77b081b34bdad1e6e73ed5">SetBucketIamPolicy</a> (std::string const &amp;bucket_name, IamPolicy const &amp;iam_policy, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:af0f81cc67c77b081b34bdad1e6e73ed5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the IamPolicy for a Bucket.  <a href="#af0f81cc67c77b081b34bdad1e6e73ed5">More...</a><br /></td></tr>
-<tr class="separator:af0f81cc67c77b081b34bdad1e6e73ed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8559215b6e6e9e8e1a0fb40c53a47142"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:a8559215b6e6e9e8e1a0fb40c53a47142"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a8559215b6e6e9e8e1a0fb40c53a47142">TestBucketIamPermissions</a> (std::string bucket_name, std::vector&lt; std::string &gt; permissions, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:a8559215b6e6e9e8e1a0fb40c53a47142"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests the IAM permissions of the caller against a Bucket.  <a href="#a8559215b6e6e9e8e1a0fb40c53a47142">More...</a><br /></td></tr>
-<tr class="separator:a8559215b6e6e9e8e1a0fb40c53a47142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d0a35e550d682a750dd3a4f24fd054f"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a8d0a35e550d682a750dd3a4f24fd054f"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; IamPolicy &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a8d0a35e550d682a750dd3a4f24fd054f">GetBucketIamPolicy</a> (std::string const &amp;bucket_name, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a8d0a35e550d682a750dd3a4f24fd054f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches the IamPolicy for a Bucket.  <a href="#a8d0a35e550d682a750dd3a4f24fd054f">More...</a><br /></td></tr>
+<tr class="separator:a8d0a35e550d682a750dd3a4f24fd054f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a802329cdf98fca30947c72939a2db238"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a802329cdf98fca30947c72939a2db238"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; IamPolicy &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a802329cdf98fca30947c72939a2db238">SetBucketIamPolicy</a> (std::string const &amp;bucket_name, IamPolicy const &amp;iam_policy, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a802329cdf98fca30947c72939a2db238"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the IamPolicy for a Bucket.  <a href="#a802329cdf98fca30947c72939a2db238">More...</a><br /></td></tr>
+<tr class="separator:a802329cdf98fca30947c72939a2db238"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a261604a6537149c9ded66d46b5cd4768"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a261604a6537149c9ded66d46b5cd4768"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; std::vector&lt; std::string &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a261604a6537149c9ded66d46b5cd4768">TestBucketIamPermissions</a> (std::string bucket_name, std::vector&lt; std::string &gt; permissions, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a261604a6537149c9ded66d46b5cd4768"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests the IAM permissions of the caller against a Bucket.  <a href="#a261604a6537149c9ded66d46b5cd4768">More...</a><br /></td></tr>
+<tr class="separator:a261604a6537149c9ded66d46b5cd4768"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace3c3e0df3c211a6e4807b6444d8c811"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
 <tr class="memitem:ace3c3e0df3c211a6e4807b6444d8c811"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ace3c3e0df3c211a6e4807b6444d8c811">LockBucketRetentionPolicy</a> (std::string const &amp;bucket_name, std::uint64_t metageneration, Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:ace3c3e0df3c211a6e4807b6444d8c811"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks the retention policy for a bucket.  <a href="#ace3c3e0df3c211a6e4807b6444d8c811">More...</a><br /></td></tr>
@@ -1661,8 +1661,8 @@ template&lt;typename... Options&gt; </div>
 
 </div>
 </div>
-<a id="aa8bf1dcf1cd6050b5b587baaf31ef2e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa8bf1dcf1cd6050b5b587baaf31ef2e4">&#9670;&nbsp;</a></span>GetBucketIamPolicy()</h2>
+<a id="a8d0a35e550d682a750dd3a4f24fd054f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d0a35e550d682a750dd3a4f24fd054f">&#9670;&nbsp;</a></span>GetBucketIamPolicy()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1673,7 +1673,7 @@ template&lt;typename... Options&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">IamPolicy google::cloud::storage::v0::Client::GetBucketIamPolicy </td>
+          <td class="memname">StatusOr&lt;IamPolicy&gt; google::cloud::storage::v0::Client::GetBucketIamPolicy </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>bucket_name</em>, </td>
@@ -1707,14 +1707,8 @@ template&lt;typename... Options&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if there is a permanent failure, or if there were more transient failures than allowed by the current retry policy.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and is always idempotent.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name) {</div><div class="line">    google::cloud::IamPolicy policy = client.GetBucketIamPolicy(bucket_name);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The IAM policy for bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot; is &quot;</span> &lt;&lt; policy</div><div class="line">              &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string bucket_name) {</div><div class="line">    StatusOr&lt;google::cloud::IamPolicy&gt; policy =</div><div class="line">        client.GetBucketIamPolicy(bucket_name);</div><div class="line">    <span class="keywordflow">if</span> (not policy.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error getting IAM policy for bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; policy.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The IAM policy for bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot; is &quot;</span></div><div class="line">              &lt;&lt; *policy &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
@@ -3623,8 +3617,8 @@ template&lt;typename... Options&gt; </div>
 
 </div>
 </div>
-<a id="af0f81cc67c77b081b34bdad1e6e73ed5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0f81cc67c77b081b34bdad1e6e73ed5">&#9670;&nbsp;</a></span>SetBucketIamPolicy()</h2>
+<a id="a802329cdf98fca30947c72939a2db238"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a802329cdf98fca30947c72939a2db238">&#9670;&nbsp;</a></span>SetBucketIamPolicy()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3635,7 +3629,7 @@ template&lt;typename... Options&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">IamPolicy google::cloud::storage::v0::Client::SetBucketIamPolicy </td>
+          <td class="memname">StatusOr&lt;IamPolicy&gt; google::cloud::storage::v0::Client::SetBucketIamPolicy </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>bucket_name</em>, </td>
@@ -3668,7 +3662,7 @@ template&lt;typename... Options&gt; </div>
 <p>Sets the IamPolicy for a Bucket. </p>
 <p>Google Cloud Identity &amp; Access Management (IAM) lets administrators authorize who can take action on specific resources, including Google Cloud Storage Buckets. This operation allows you to set the IAM policies for a Bucket. IAM policies are a superset of the Bucket ACL, changes to the Bucket ACL are reflected in the IAM policy, and vice-versa. The documentation describes <a href="https://cloud.google.com/storage/docs/access-control/iam#acls">the mapping</a> between legacy Bucket ACLs and IAM policies.</p>
 <p>Consult <a href="https://cloud.google.com/storage/docs/access-control/iam">the documentation</a> for a more detailed description of IAM policies their use in Google Cloud Storage.</p>
-<dl class="section note"><dt>Note</dt><dd>The server rejects requests where the ETag value of the policy does not match the current ETag. Effectively this means that applications must use <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aa8bf1dcf1cd6050b5b587baaf31ef2e4" title="Fetches the IamPolicy for a Bucket. ">GetBucketIamPolicy()</a></code> to fetch the current value and ETag before calling <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#af0f81cc67c77b081b34bdad1e6e73ed5" title="Sets the IamPolicy for a Bucket. ">SetBucketIamPolicy()</a></code>. Applications should use optimistic concurrency control techniques to retry changes in case some other application modified the IAM policy between the <code>GetBucketIamPolicy</code> and <code>SetBucketIamPolicy</code> calls.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The server rejects requests where the ETag value of the policy does not match the current ETag. Effectively this means that applications must use <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a8d0a35e550d682a750dd3a4f24fd054f" title="Fetches the IamPolicy for a Bucket. ">GetBucketIamPolicy()</a></code> to fetch the current value and ETag before calling <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a802329cdf98fca30947c72939a2db238" title="Sets the IamPolicy for a Bucket. ">SetBucketIamPolicy()</a></code>. Applications should use optimistic concurrency control techniques to retry changes in case some other application modified the IAM policy between the <code>GetBucketIamPolicy</code> and <code>SetBucketIamPolicy</code> calls.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">bucket_name</td><td>query metadata information about this bucket. </td></tr>
@@ -3677,20 +3671,14 @@ template&lt;typename... Options&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if there is a permanent failure, or if there were more transient failures than allowed by the current retry policy.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is only idempotent if restricted by pre-conditions, in this case, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfMetagenerationMatch.html" title="A pre-condition: the request succeeds if the metadata generation matches. ">IfMetagenerationMatch</a></code>.</dd></dl>
-<dl class="section user"><dt>Example: adding a new member</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string role,</div><div class="line">     std::string member) {</div><div class="line">    google::cloud::IamPolicy policy = client.GetBucketIamPolicy(bucket_name);</div><div class="line">    policy.bindings.AddMember(role, member);</div><div class="line">    google::cloud::IamPolicy updated_policy =</div><div class="line">        client.SetBucketIamPolicy(bucket_name, policy);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Updated IAM policy bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;. The new policy is &quot;</span> &lt;&lt; updated_policy &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
-<dl class="section user"><dt>Example: removing a IAM member</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string role,</div><div class="line">     std::string member) {</div><div class="line">    google::cloud::IamPolicy policy = client.GetBucketIamPolicy(bucket_name);</div><div class="line">    policy.bindings.RemoveMember(role, member);</div><div class="line">    google::cloud::IamPolicy updated_policy =</div><div class="line">        client.SetBucketIamPolicy(bucket_name, policy);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Updated IAM policy bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;. The new policy is &quot;</span> &lt;&lt; updated_policy &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example: adding a new member</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string role,</div><div class="line">     std::string member) {</div><div class="line">    StatusOr&lt;google::cloud::IamPolicy&gt; policy =</div><div class="line">        client.GetBucketIamPolicy(bucket_name);</div><div class="line">    <span class="keywordflow">if</span> (not policy.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error getting current IAM policy for bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; policy.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    policy-&gt;bindings.AddMember(role, member);</div><div class="line">    StatusOr&lt;google::cloud::IamPolicy&gt; updated_policy =</div><div class="line">        client.SetBucketIamPolicy(bucket_name, *policy);</div><div class="line">    <span class="keywordflow">if</span> (not updated_policy.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error setting IAM policy for bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; updated_policy.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Updated IAM policy bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;. The new policy is &quot;</span> &lt;&lt; *updated_policy &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section user"><dt>Example: removing a IAM member</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string role,</div><div class="line">     std::string member) {</div><div class="line">    StatusOr&lt;google::cloud::IamPolicy&gt; policy = client.GetBucketIamPolicy(bucket_name);</div><div class="line">    <span class="keywordflow">if</span> (not policy.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error getting current IAM policy for bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; policy.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    policy-&gt;bindings.RemoveMember(role, member);</div><div class="line">    StatusOr&lt;google::cloud::IamPolicy&gt; updated_policy =</div><div class="line">        client.SetBucketIamPolicy(bucket_name, *policy);</div><div class="line">    <span class="keywordflow">if</span> (not updated_policy.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error setting IAM policy for bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; updated_policy.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Updated IAM policy bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;. The new policy is &quot;</span> &lt;&lt; *updated_policy &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
-<a id="a8559215b6e6e9e8e1a0fb40c53a47142"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8559215b6e6e9e8e1a0fb40c53a47142">&#9670;&nbsp;</a></span>TestBucketIamPermissions()</h2>
+<a id="a261604a6537149c9ded66d46b5cd4768"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a261604a6537149c9ded66d46b5cd4768">&#9670;&nbsp;</a></span>TestBucketIamPermissions()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3701,7 +3689,7 @@ template&lt;typename... Options&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;std::string&gt; google::cloud::storage::v0::Client::TestBucketIamPermissions </td>
+          <td class="memname">StatusOr&lt;std::vector&lt;std::string&gt; &gt; google::cloud::storage::v0::Client::TestBucketIamPermissions </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>bucket_name</em>, </td>
@@ -3742,14 +3730,8 @@ template&lt;typename... Options&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if there is a permanent failure, or if there were more transient failures than allowed by the current retry policy.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and is always idempotent.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string bucket_name,</div><div class="line">     std::vector&lt;std::string&gt; permissions) {</div><div class="line">    std::vector&lt;std::string&gt; actual_permissions =</div><div class="line">        client.TestBucketIamPermissions(bucket_name, permissions);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (actual_permissions.empty()) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;The caller does not hold any of the tested permissions the&quot;</span></div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The caller is authorized for the following permissions on &quot;</span></div><div class="line">              &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot;: &quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; p : actual_permissions) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;\n    &quot;</span> &lt;&lt; p;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string bucket_name,</div><div class="line">     std::vector&lt;std::string&gt; permissions) {</div><div class="line">    StatusOr&lt;std::vector&lt;std::string&gt;&gt; actual_permissions =</div><div class="line">        client.TestBucketIamPermissions(bucket_name, permissions);</div><div class="line">    <span class="keywordflow">if</span> (not actual_permissions.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error checking IAM permissions for bucket &quot;</span> &lt;&lt; bucket_name</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;, status=&quot;</span> &lt;&lt; actual_permissions.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (actual_permissions-&gt;empty()) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;The caller does not hold any of the tested permissions the&quot;</span></div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; bucket &quot;</span> &lt;&lt; bucket_name &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The caller is authorized for the following permissions on &quot;</span></div><div class="line">              &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot;: &quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; p : *actual_permissions) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;\n    &quot;</span> &lt;&lt; p;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 </div>
 </div>
