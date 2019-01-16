@@ -70,24 +70,25 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccount) {
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
-  ServiceAccount actual = client.GetServiceAccountForProject("test-project");
-  EXPECT_EQ(expected, actual);
+  StatusOr<ServiceAccount> actual = client.GetServiceAccountForProject("test-project");
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(ServiceAccountTest, GetProjectServiceAccountTooManyFailures) {
-  testing::TooManyFailuresTest<ServiceAccount>(
+  testing::TooManyFailuresStatusTest<ServiceAccount>(
       mock, EXPECT_CALL(*mock, GetServiceAccount(_)),
       [](Client& client) {
-        client.GetServiceAccountForProject("test-project");
+        return client.GetServiceAccountForProject("test-project").status();
       },
       "GetServiceAccount");
 }
 
 TEST_F(ServiceAccountTest, GetProjectServiceAccountPermanentFailure) {
-  testing::PermanentFailureTest<ServiceAccount>(
+  testing::PermanentFailureStatusTest<ServiceAccount>(
       *client, EXPECT_CALL(*mock, GetServiceAccount(_)),
       [](Client& client) {
-        client.GetServiceAccountForProject("test-project");
+        return client.GetServiceAccountForProject("test-project").status();
       },
       "GetServiceAccount");
 }

@@ -2033,9 +2033,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -2046,11 +2043,11 @@ class Client {
    *     information on Google Cloud Platform service accounts.
    */
   template <typename... Options>
-  ServiceAccount GetServiceAccountForProject(std::string const& project_id,
-                                             Options&&... options) {
+  StatusOr<ServiceAccount> GetServiceAccountForProject(
+      std::string const& project_id, Options&&... options) {
     internal::GetProjectServiceAccountRequest request(project_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetServiceAccount(request).value();
+    return raw_client_->GetServiceAccount(request);
   }
 
   /**
@@ -2070,12 +2067,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::logic_error if the function is called without a default
-   *     project id set.
-   *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -2086,12 +2077,12 @@ class Client {
    *     information on Google Cloud Platform service accounts.
    */
   template <typename... Options>
-  ServiceAccount GetServiceAccount(Options&&... options) {
+  StatusOr<ServiceAccount> GetServiceAccount(Options&&... options) {
     auto const& project_id = raw_client_->client_options().project_id();
     if (project_id.empty()) {
       std::string msg = "Default project id not set in ";
       msg += __func__;
-      google::cloud::internal::ThrowLogicError(msg);
+      return Status(StatusCode::kFailedPrecondition, std::move(msg));
     }
     return GetServiceAccountForProject(project_id,
                                        std::forward<Options>(options)...);
