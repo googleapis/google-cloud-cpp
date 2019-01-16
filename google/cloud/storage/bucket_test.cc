@@ -346,20 +346,25 @@ TEST_F(BucketTest, GetBucketIamPolicy) {
                 LimitedErrorCountRetryPolicy(2)};
 
   auto actual = client.GetBucketIamPolicy("test-bucket-name");
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(BucketTest, GetBucketIamPolicyTooManyFailures) {
-  testing::TooManyFailuresTest<IamPolicy>(
+  testing::TooManyFailuresStatusTest<IamPolicy>(
       mock, EXPECT_CALL(*mock, GetBucketIamPolicy(_)),
-      [](Client& client) { client.GetBucketIamPolicy("test-bucket-name"); },
+      [](Client& client) {
+        return client.GetBucketIamPolicy("test-bucket-name").status();
+      },
       "GetBucketIamPolicy");
 }
 
 TEST_F(BucketTest, GetBucketIamPolicyPermanentFailure) {
-  testing::PermanentFailureTest<IamPolicy>(
+  testing::PermanentFailureStatusTest<IamPolicy>(
       *client, EXPECT_CALL(*mock, GetBucketIamPolicy(_)),
-      [](Client& client) { client.GetBucketIamPolicy("test-bucket-name"); },
+      [](Client& client) {
+        return client.GetBucketIamPolicy("test-bucket-name").status();
+      },
       "GetBucketIamPolicy");
 }
 
@@ -380,27 +385,32 @@ TEST_F(BucketTest, SetBucketIamPolicy) {
                 LimitedErrorCountRetryPolicy(2)};
 
   auto actual = client.SetBucketIamPolicy("test-bucket-name", expected);
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(BucketTest, SetBucketIamPolicyTooManyFailures) {
-  testing::TooManyFailuresTest<IamPolicy>(
+  testing::TooManyFailuresStatusTest<IamPolicy>(
       mock, EXPECT_CALL(*mock, SetBucketIamPolicy(_)),
       [](Client& client) {
-        client.SetBucketIamPolicy("test-bucket-name", IamPolicy{});
+        return client.SetBucketIamPolicy("test-bucket-name", IamPolicy{})
+            .status();
       },
       [](Client& client) {
-        client.SetBucketIamPolicy("test-bucket-name", IamPolicy{},
-                                  IfMatchEtag("ABC="));
+        return client
+            .SetBucketIamPolicy("test-bucket-name", IamPolicy{},
+                                IfMatchEtag("ABC="))
+            .status();
       },
       "SetBucketIamPolicy");
 }
 
 TEST_F(BucketTest, SetBucketIamPolicyPermanentFailure) {
-  testing::PermanentFailureTest<IamPolicy>(
+  testing::PermanentFailureStatusTest<IamPolicy>(
       *client, EXPECT_CALL(*mock, SetBucketIamPolicy(_)),
       [](Client& client) {
-        client.SetBucketIamPolicy("test-bucket-name", IamPolicy{});
+        return client.SetBucketIamPolicy("test-bucket-name", IamPolicy{})
+            .status();
       },
       "SetBucketIamPolicy");
 }
@@ -423,23 +433,26 @@ TEST_F(BucketTest, TestBucketIamPermissions) {
 
   auto actual = client.TestBucketIamPermissions("test-bucket-name",
                                                 {"storage.buckets.delete"});
-  EXPECT_THAT(actual, ElementsAreArray(expected.permissions));
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_THAT(*actual, ElementsAreArray(expected.permissions));
 }
 
 TEST_F(BucketTest, TestBucketIamPermissionsTooManyFailures) {
-  testing::TooManyFailuresTest<internal::TestBucketIamPermissionsResponse>(
+  testing::TooManyFailuresStatusTest<
+      internal::TestBucketIamPermissionsResponse>(
       mock, EXPECT_CALL(*mock, TestBucketIamPermissions(_)),
       [](Client& client) {
-        client.TestBucketIamPermissions("test-bucket-name", {});
+        return client.TestBucketIamPermissions("test-bucket-name", {}).status();
       },
       "TestBucketIamPermissions");
 }
 
 TEST_F(BucketTest, TestBucketIamPermissionsPermanentFailure) {
-  testing::PermanentFailureTest<internal::TestBucketIamPermissionsResponse>(
+  testing::PermanentFailureStatusTest<
+      internal::TestBucketIamPermissionsResponse>(
       *client, EXPECT_CALL(*mock, TestBucketIamPermissions(_)),
       [](Client& client) {
-        client.TestBucketIamPermissions("test-bucket-name", {});
+        return client.TestBucketIamPermissions("test-bucket-name", {}).status();
       },
       "TestBucketIamPermissions");
 }

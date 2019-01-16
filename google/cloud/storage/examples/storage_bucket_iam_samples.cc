@@ -52,10 +52,17 @@ void GetBucketIamPolicy(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   //! [get bucket iam policy] [START storage_view_bucket_iam_members]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
-    google::cloud::IamPolicy policy = client.GetBucketIamPolicy(bucket_name);
-    std::cout << "The IAM policy for bucket " << bucket_name << " is " << policy
-              << std::endl;
+    StatusOr<google::cloud::IamPolicy> policy =
+        client.GetBucketIamPolicy(bucket_name);
+    if (not policy.ok()) {
+      std::cerr << "Error getting IAM policy for bucket " << bucket_name
+                << ", status=" << policy.status() << std::endl;
+      return;
+    }
+    std::cout << "The IAM policy for bucket " << bucket_name << " is "
+              << *policy << std::endl;
   }
   //! [get bucket iam policy] [END storage_view_bucket_iam_members]
   (std::move(client), bucket_name);
@@ -71,14 +78,26 @@ void AddBucketIamMember(google::cloud::storage::Client client, int& argc,
   auto member = ConsumeArg(argc, argv);
   //! [add bucket iam member] [START storage_add_bucket_iam_member]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string role,
      std::string member) {
-    google::cloud::IamPolicy policy = client.GetBucketIamPolicy(bucket_name);
-    policy.bindings.AddMember(role, member);
-    google::cloud::IamPolicy updated_policy =
-        client.SetBucketIamPolicy(bucket_name, policy);
+    StatusOr<google::cloud::IamPolicy> policy =
+        client.GetBucketIamPolicy(bucket_name);
+    if (not policy.ok()) {
+      std::cerr << "Error getting current IAM policy for bucket " << bucket_name
+                << ", status=" << policy.status() << std::endl;
+      return;
+    }
+    policy->bindings.AddMember(role, member);
+    StatusOr<google::cloud::IamPolicy> updated_policy =
+        client.SetBucketIamPolicy(bucket_name, *policy);
+    if (not updated_policy.ok()) {
+      std::cerr << "Error setting IAM policy for bucket " << bucket_name
+                << ", status=" << updated_policy.status() << std::endl;
+      return;
+    }
     std::cout << "Updated IAM policy bucket " << bucket_name
-              << ". The new policy is " << updated_policy << std::endl;
+              << ". The new policy is " << *updated_policy << std::endl;
   }
   //! [add bucket iam member] [END storage_add_bucket_iam_member]
   (std::move(client), bucket_name, role, member);
@@ -94,14 +113,25 @@ void RemoveBucketIamMember(google::cloud::storage::Client client, int& argc,
   auto member = ConsumeArg(argc, argv);
   //! [remove bucket iam member] [START storage_remove_bucket_iam_member]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string role,
      std::string member) {
-    google::cloud::IamPolicy policy = client.GetBucketIamPolicy(bucket_name);
-    policy.bindings.RemoveMember(role, member);
-    google::cloud::IamPolicy updated_policy =
-        client.SetBucketIamPolicy(bucket_name, policy);
+    StatusOr<google::cloud::IamPolicy> policy = client.GetBucketIamPolicy(bucket_name);
+    if (not policy.ok()) {
+      std::cerr << "Error getting current IAM policy for bucket " << bucket_name
+                << ", status=" << policy.status() << std::endl;
+      return;
+    }
+    policy->bindings.RemoveMember(role, member);
+    StatusOr<google::cloud::IamPolicy> updated_policy =
+        client.SetBucketIamPolicy(bucket_name, *policy);
+    if (not updated_policy.ok()) {
+      std::cerr << "Error setting IAM policy for bucket " << bucket_name
+                << ", status=" << updated_policy.status() << std::endl;
+      return;
+    }
     std::cout << "Updated IAM policy bucket " << bucket_name
-              << ". The new policy is " << updated_policy << std::endl;
+              << ". The new policy is " << *updated_policy << std::endl;
   }
   //! [remove bucket iam member] [END storage_remove_bucket_iam_member]
   (std::move(client), bucket_name, role, member);
@@ -121,19 +151,25 @@ void TestBucketIamPermissions(google::cloud::storage::Client client, int& argc,
   }
   //! [test bucket iam permissions]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name,
      std::vector<std::string> permissions) {
-    std::vector<std::string> actual_permissions =
+    StatusOr<std::vector<std::string>> actual_permissions =
         client.TestBucketIamPermissions(bucket_name, permissions);
+    if (not actual_permissions.ok()) {
+      std::cerr << "Error checking IAM permissions for bucket " << bucket_name
+                << ", status=" << actual_permissions.status() << std::endl;
+      return;
+    }
 
-    if (actual_permissions.empty()) {
+    if (actual_permissions->empty()) {
       std::cout << "The caller does not hold any of the tested permissions the"
                 << " bucket " << bucket_name << std::endl;
       return;
     }
     std::cout << "The caller is authorized for the following permissions on "
               << bucket_name << ": ";
-    for (auto const& p : actual_permissions) {
+    for (auto const& p : *actual_permissions) {
       std::cout << "\n    " << p;
     }
     std::cout << std::endl;

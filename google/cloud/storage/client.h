@@ -444,9 +444,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -455,11 +452,11 @@ class Client {
    *
    */
   template <typename... Options>
-  IamPolicy GetBucketIamPolicy(std::string const& bucket_name,
-                               Options&&... options) {
+  StatusOr<IamPolicy> GetBucketIamPolicy(std::string const& bucket_name,
+                                         Options&&... options) {
     internal::GetBucketIamPolicyRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetBucketIamPolicy(request).value();
+    return raw_client_->GetBucketIamPolicy(request);
   }
 
   /**
@@ -494,9 +491,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
    * case, `IfMetagenerationMatch`.
@@ -508,12 +502,12 @@ class Client {
    * @snippet storage_bucket_iam_samples.cc remove bucket iam member
    */
   template <typename... Options>
-  IamPolicy SetBucketIamPolicy(std::string const& bucket_name,
-                               IamPolicy const& iam_policy,
-                               Options&&... options) {
+  StatusOr<IamPolicy> SetBucketIamPolicy(std::string const& bucket_name,
+                                         IamPolicy const& iam_policy,
+                                         Options&&... options) {
     internal::SetBucketIamPolicyRequest request(bucket_name, iam_policy);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->SetBucketIamPolicy(request).value();
+    return raw_client_->SetBucketIamPolicy(request);
   }
 
   /**
@@ -537,9 +531,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -547,13 +538,17 @@ class Client {
    * @snippet storage_bucket_iam_samples.cc test bucket iam permissions
    */
   template <typename... Options>
-  std::vector<std::string> TestBucketIamPermissions(
+  StatusOr<std::vector<std::string>> TestBucketIamPermissions(
       std::string bucket_name, std::vector<std::string> permissions,
       Options&&... options) {
     internal::TestBucketIamPermissionsRequest request(std::move(bucket_name),
                                                       std::move(permissions));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->TestBucketIamPermissions(request).value().permissions;
+    auto result = raw_client_->TestBucketIamPermissions(request);
+    if (not result.ok()) {
+      return std::move(result).status();
+    }
+    return std::move(result.value().permissions);
   }
 
   /**
