@@ -343,14 +343,14 @@ When you apply a new ACL to an object, GCS adds <code>OWNER</code> permission to
 <p>When acting on your behalf, GCS uses such a service account. GCS creates one service account per project. These operations allow you to query the GCS service account for a project.</p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/projects#service-accounts">https://cloud.google.com/storage/docs/projects#service-accounts</a> for more information on service accounts. </dd></dl>
 </div></td></tr>
-<tr class="memitem:afd8129fecaf20d72ccd078c77dae6d39"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:afd8129fecaf20d72ccd078c77dae6d39"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html">ServiceAccount</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#afd8129fecaf20d72ccd078c77dae6d39">GetServiceAccountForProject</a> (std::string const &amp;project_id, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:afd8129fecaf20d72ccd078c77dae6d39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the GCS service account for a given project.  <a href="#afd8129fecaf20d72ccd078c77dae6d39">More...</a><br /></td></tr>
-<tr class="separator:afd8129fecaf20d72ccd078c77dae6d39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60b75719e0b7d19eea3cdaa97796d35e"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:a60b75719e0b7d19eea3cdaa97796d35e"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html">ServiceAccount</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a60b75719e0b7d19eea3cdaa97796d35e">GetServiceAccount</a> (Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:a60b75719e0b7d19eea3cdaa97796d35e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the GCS service account for the default project.  <a href="#a60b75719e0b7d19eea3cdaa97796d35e">More...</a><br /></td></tr>
-<tr class="separator:a60b75719e0b7d19eea3cdaa97796d35e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbe09ec4ecc8f697615dd720831cd11f"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:adbe09ec4ecc8f697615dd720831cd11f"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html">ServiceAccount</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#adbe09ec4ecc8f697615dd720831cd11f">GetServiceAccountForProject</a> (std::string const &amp;project_id, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:adbe09ec4ecc8f697615dd720831cd11f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the GCS service account for a given project.  <a href="#adbe09ec4ecc8f697615dd720831cd11f">More...</a><br /></td></tr>
+<tr class="separator:adbe09ec4ecc8f697615dd720831cd11f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8efe362cc08396f24eb52f7e1fb79419"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a8efe362cc08396f24eb52f7e1fb79419"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html">ServiceAccount</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a8efe362cc08396f24eb52f7e1fb79419">GetServiceAccount</a> (Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a8efe362cc08396f24eb52f7e1fb79419"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the GCS service account for the default project.  <a href="#a8efe362cc08396f24eb52f7e1fb79419">More...</a><br /></td></tr>
+<tr class="separator:a8efe362cc08396f24eb52f7e1fb79419"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
 <tr class="memitem:a77260fb12c54b8f6db447241ba809d29"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
 <tr class="memitem:a77260fb12c54b8f6db447241ba809d29"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a77260fb12c54b8f6db447241ba809d29">CreateV2SignedUrl</a> (std::string verb, std::string bucket_name, std::string object_name, Options &amp;&amp;... options)</td></tr>
@@ -1998,8 +1998,8 @@ template&lt;typename... Options&gt; </div>
 
 </div>
 </div>
-<a id="a60b75719e0b7d19eea3cdaa97796d35e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60b75719e0b7d19eea3cdaa97796d35e">&#9670;&nbsp;</a></span>GetServiceAccount()</h2>
+<a id="a8efe362cc08396f24eb52f7e1fb79419"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8efe362cc08396f24eb52f7e1fb79419">&#9670;&nbsp;</a></span>GetServiceAccount()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2010,7 +2010,7 @@ template&lt;typename... Options&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html">ServiceAccount</a> google::cloud::storage::v0::Client::GetServiceAccount </td>
+          <td class="memname">StatusOr&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html">ServiceAccount</a>&gt; google::cloud::storage::v0::Client::GetServiceAccount </td>
           <td>(</td>
           <td class="paramtype">Options &amp;&amp;...&#160;</td>
           <td class="paramname"><em>options</em></td><td>)</td>
@@ -2033,21 +2033,14 @@ template&lt;typename... Options&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::logic_error</td><td>if the function is called without a default project id set.</td></tr>
-    <tr><td class="paramname">std::runtime_error</td><td>if there is a permanent failure, or if there were more transient failures than allowed by the current retry policy.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and is always idempotent.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client) {</div><div class="line">    gcs::ServiceAccount details = client.GetServiceAccount();</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The service account details are &quot;</span> &lt;&lt; details &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client) {</div><div class="line">    StatusOr&lt;gcs::ServiceAccount&gt; details = client.GetServiceAccount();</div><div class="line">    <span class="keywordflow">if</span> (not details.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error getting service account details, status=&quot;</span></div><div class="line">                &lt;&lt; details.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The service account details are &quot;</span> &lt;&lt; *details &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/iam/docs/service-accounts">https://cloud.google.com/iam/docs/service-accounts</a> for general information on Google Cloud Platform service accounts. </dd></dl>
 
 </div>
 </div>
-<a id="afd8129fecaf20d72ccd078c77dae6d39"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd8129fecaf20d72ccd078c77dae6d39">&#9670;&nbsp;</a></span>GetServiceAccountForProject()</h2>
+<a id="adbe09ec4ecc8f697615dd720831cd11f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbe09ec4ecc8f697615dd720831cd11f">&#9670;&nbsp;</a></span>GetServiceAccountForProject()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2058,7 +2051,7 @@ template&lt;typename... Options&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html">ServiceAccount</a> google::cloud::storage::v0::Client::GetServiceAccountForProject </td>
+          <td class="memname">StatusOr&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html">ServiceAccount</a>&gt; google::cloud::storage::v0::Client::GetServiceAccountForProject </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>project_id</em>, </td>
@@ -2091,14 +2084,8 @@ template&lt;typename... Options&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if there is a permanent failure, or if there were more transient failures than allowed by the current retry policy.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and is always idempotent.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="comment">// [START storage_get_service_account_for_project]</span></div><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  [](gcs::Client client, std::string project_id) {</div><div class="line">    gcs::ServiceAccount details =</div><div class="line">        client.GetServiceAccountForProject(project_id);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The service account details for project &quot;</span> &lt;&lt; project_id</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; are &quot;</span> &lt;&lt; details &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">  <span class="comment">// [END storage_get_service_account_for_project]</span></div></div><!-- fragment --> </dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="comment">// [START storage_get_service_account_for_project]</span></div><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string project_id) {</div><div class="line">    StatusOr&lt;gcs::ServiceAccount&gt; details =</div><div class="line">        client.GetServiceAccountForProject(project_id);</div><div class="line">    <span class="keywordflow">if</span> (not details.ok()) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;Error getting service account details, status=&quot;</span></div><div class="line">                &lt;&lt; details.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The service account details for project &quot;</span> &lt;&lt; project_id</div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; are &quot;</span> &lt;&lt; *details &lt;&lt; std::endl;</div><div class="line">  }</div><div class="line">  <span class="comment">// [END storage_get_service_account_for_project]</span></div></div><!-- fragment --> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/iam/docs/service-accounts">https://cloud.google.com/iam/docs/service-accounts</a> for general information on Google Cloud Platform service accounts. </dd></dl>
 
 </div>
