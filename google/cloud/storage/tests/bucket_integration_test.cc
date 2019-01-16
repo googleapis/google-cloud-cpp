@@ -187,10 +187,8 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   // encryption()
   // TODO(#1003) - need a valid KMS entry to set the encryption.
 
-  // iam_configuration()
-  BucketIamConfiguration iam_configuration;
-  iam_configuration.bucket_policy_only = BucketPolicyOnly{true};
-  desired_state.set_iam_configuration(std::move(iam_configuration));
+  // iam_configuration() - skipped, cannot set both ACL and iam_configuration in
+  // the same bucket.
 
   // labels()
   desired_state.mutable_labels().emplace("test-label", "testing-full-patch");
@@ -277,6 +275,38 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   auto delete_status = client.DeleteBucket(bucket_name);
   ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
   delete_status = client.DeleteBucket(logging_name);
+  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
+}
+
+// @test Verify that we can set the iam_configuration() in a Bucket.
+TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
+  auto project_id = BucketTestEnvironment::project_id();
+  std::string bucket_name = MakeRandomBucketName();
+  Client client;
+
+  // Create a Bucket, use the default settings for all fields. Fetch the full
+  // attributes of the bucket.
+  StatusOr<BucketMetadata> const insert_meta = client.CreateBucketForProject(
+      bucket_name, project_id, BucketMetadata(), PredefinedAcl("private"),
+      PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"));
+  ASSERT_TRUE(insert_meta.ok()) << "status=" << insert_meta.status();
+  EXPECT_EQ(bucket_name, insert_meta->name());
+
+  // Patch the iam_configuration().
+  BucketMetadata desired_state = *insert_meta;
+  BucketIamConfiguration iam_configuration;
+  iam_configuration.bucket_policy_only = BucketPolicyOnly{true};
+  desired_state.set_iam_configuration(std::move(iam_configuration));
+
+  StatusOr<BucketMetadata> patched =
+      client.PatchBucket(bucket_name, *insert_meta, desired_state);
+  ASSERT_TRUE(patched.ok()) << "status=" << patched.status();
+
+  ASSERT_TRUE(patched->has_iam_configuration()) << "patched=" << *patched;
+  ASSERT_TRUE(patched->iam_configuration().bucket_policy_only)
+      << "patched=" << *patched;
+
+  auto delete_status = client.DeleteBucket(bucket_name);
   ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
 }
 
@@ -651,8 +681,8 @@ TEST_F(BucketIntegrationTest, CreateFailure) {
   // uppercase letter), the service (or testbench) will reject the request and
   // we should report that error correctly. For good measure, make the project
   // id invalid too.
-  StatusOr<BucketMetadata> meta = client.CreateBucketForProject("Invalid_Bucket_Name", "Invalid-project-id-",
-                                  BucketMetadata());
+  StatusOr<BucketMetadata> meta = client.CreateBucketForProject(
+      "Invalid_Bucket_Name", "Invalid-project-id-", BucketMetadata());
   ASSERT_FALSE(meta.ok()) << "metadata=" << meta.value();
 }
 

@@ -95,12 +95,35 @@ class GcsBucket(object):
         writeable_keys = {
             'acl', 'billing', 'cors', 'defaultObjectAcl', 'encryption',
             'labels', 'lifecycle', 'location', 'logging', 'retentionPolicy',
-            'storageClass', 'versioning', 'website'
+            'storageClass', 'versioning', 'website', 'iamConfiguration'
         }
         for key in metadata.keys():
             if key not in writeable_keys:
                 metadata.pop(key, None)
         return metadata
+
+    def _adjust_bpo_patch(self, patch):
+        """Add missing fields (such as lockedTme) to a BucketPolicyOnly patch.
+
+        :param patch:dict a dictionary of metadata values.
+        """
+        bpo_was_enabled = False
+        if self.metadata.get('iamConfiguration'):
+            bpo = self.metadata.get('iamConfiguration').get('bucketPolicyOnly')
+            if bpo:
+                bpo_was_enabled = bpo.get('enabled')
+        config = patch.get('iamConfiguration')
+        if config is not None:
+            if config.get('bucketPolicyOnly'):
+                bpo_enabled = config.get('bucketPolicyOnly').get('enabled')
+                if not bpo_was_enabled and bpo_enabled:
+                    # Set the locked time (arbitrarily) to 7 days from now.
+                    locked_time = time.gmtime(time.time() + 7 * 24 * 3600)
+                    bpo = {
+                        'lockedTime': time.strftime('%Y-%m-%dT%H:%M:%SZ', locked_time),
+                        'enabled': bpo_enabled
+                    }
+                    config['bucketPolicyOnly'] = bpo
 
     def update_from_metadata(self, metadata):
         """Update from a metadata dictionary.
@@ -115,6 +138,7 @@ class GcsBucket(object):
             timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
             retention_policy['effectiveTime'] = timestamp
             metadata['retentionPolicy'] = retention_policy
+        self._adjust_bpo_patch(metadata)
         tmp = self.metadata.copy()
         metadata = GcsBucket._remove_non_writable_keys(metadata)
         tmp.update(metadata)
@@ -127,21 +151,6 @@ class GcsBucket(object):
             'timeCreated': '2018-05-19T19:31:14Z',
             'updated': '2018-05-19T19:31:24Z',
         })
-        bop_was_enabled = False
-        if metadata.get('iamConfiguration'):
-            bop = metadata.get('iamConfiguration').get('bucketPolicyOnly')
-            if bop:
-                bop_was_enabled = bop.get('enabled')
-        config = tmp.get('iamConfiguration')
-        if config is not None:
-            if config.get('bucketPolicyOnly'):
-                bop_enabled = config.get('bucketPolicyOnly').get('enabled')
-                if not bop_was_enabled and bop_enabled:
-                    # Set the locked time (arbitrarily) to 7 days from now.
-                    locked_time = time.gmtime(time.time() + 7 * 24 * 3600)
-                    config.get('bucketPolicyOnly').set(
-                        'lockedTime', time.strftime(
-                            '%Y-%m-%dT%H:%M:%SZ', locked_time))
         self.metadata = tmp
         self.increase_metageneration()
 
@@ -159,6 +168,7 @@ class GcsBucket(object):
             timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
             retention_policy['effectiveTime'] = timestamp
             patch['retentionPolicy'] = retention_policy
+        self._adjust_bpo_patch(patch)
         patched = testbench_utils.json_api_patch(self.metadata, patch, recurse_on={'labels'})
         self.metadata = patched
         self.increase_metageneration()
