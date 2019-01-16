@@ -9,7 +9,7 @@ var searchData=
   ['getdefaultobjectacl',['GetDefaultObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#afc9f8e449de697b13f83ee1d4e08d808',1,'google::cloud::storage::v0::Client']]],
   ['getnotification',['GetNotification',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a6140dee0cd3f1fe538612bcdb7304f81',1,'google::cloud::storage::v0::Client']]],
   ['getobjectacl',['GetObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a8a8b32a2b001851d8bd7956a826f05f9',1,'google::cloud::storage::v0::Client']]],
-  ['getobjectmetadata',['GetObjectMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ae7451d0183db3656e2b1f0f4106e6996',1,'google::cloud::storage::v0::Client']]],
+  ['getobjectmetadata',['GetObjectMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ae7a1d66157dbb09777466b0e35d8dc33',1,'google::cloud::storage::v0::Client']]],
   ['getserviceaccount',['GetServiceAccount',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a60b75719e0b7d19eea3cdaa97796d35e',1,'google::cloud::storage::v0::Client']]],
   ['getserviceaccountforproject',['GetServiceAccountForProject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#afd8129fecaf20d72ccd078c77dae6d39',1,'google::cloud::storage::v0::Client']]],
   ['google',['google',['../namespacegoogle.html',1,'']]],
