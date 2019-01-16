@@ -132,47 +132,47 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
  * @warning this is an Alpha feature of Google Cloud Storage, it is not subject
  *     to the deprecation policy and subject to change without notice.
  */
-struct BucketOnlyPolicy {
+struct BucketPolicyOnly {
   bool enabled;
   std::chrono::system_clock::time_point locked_time;
 };
 
 //@{
 /// @name Comparison operators For BucketOnlyPolicy.
-inline bool operator==(BucketOnlyPolicy const& lhs,
-                       BucketOnlyPolicy const& rhs) {
+inline bool operator==(BucketPolicyOnly const& lhs,
+                       BucketPolicyOnly const& rhs) {
   return std::tie(lhs.enabled, lhs.locked_time) ==
          std::tie(rhs.enabled, rhs.locked_time);
 }
 
-inline bool operator<(BucketOnlyPolicy const& lhs,
-                      BucketOnlyPolicy const& rhs) {
+inline bool operator<(BucketPolicyOnly const& lhs,
+                      BucketPolicyOnly const& rhs) {
   return std::tie(lhs.enabled, lhs.locked_time) <
          std::tie(rhs.enabled, rhs.locked_time);
 }
 
-inline bool operator!=(BucketOnlyPolicy const& lhs,
-                       BucketOnlyPolicy const& rhs) {
+inline bool operator!=(BucketPolicyOnly const& lhs,
+                       BucketPolicyOnly const& rhs) {
   return std::rel_ops::operator!=(lhs, rhs);
 }
 
-inline bool operator>(BucketOnlyPolicy const& lhs,
-                      BucketOnlyPolicy const& rhs) {
+inline bool operator>(BucketPolicyOnly const& lhs,
+                      BucketPolicyOnly const& rhs) {
   return std::rel_ops::operator>(lhs, rhs);
 }
 
-inline bool operator<=(BucketOnlyPolicy const& lhs,
-                       BucketOnlyPolicy const& rhs) {
+inline bool operator<=(BucketPolicyOnly const& lhs,
+                       BucketPolicyOnly const& rhs) {
   return std::rel_ops::operator<=(lhs, rhs);
 }
 
-inline bool operator>=(BucketOnlyPolicy const& lhs,
-                       BucketOnlyPolicy const& rhs) {
+inline bool operator>=(BucketPolicyOnly const& lhs,
+                       BucketPolicyOnly const& rhs) {
   return std::rel_ops::operator>=(lhs, rhs);
 }
 //@}
 
-std::ostream& operator<<(std::ostream& os, BucketOnlyPolicy const& rhs);
+std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs);
 
 /**
  * The IAM configuration for a Bucket.
@@ -184,19 +184,19 @@ std::ostream& operator<<(std::ostream& os, BucketOnlyPolicy const& rhs);
  *     to the deprecation policy and subject to change without notice.
  */
 struct BucketIamConfiguration {
-  google::cloud::optional<BucketOnlyPolicy> bucket_only_policy;
+  google::cloud::optional<BucketPolicyOnly> bucket_policy_only;
 };
 
 //@{
 /// @name Comparison operators for BucketIamConfiguration.
 inline bool operator==(BucketIamConfiguration const& lhs,
                        BucketIamConfiguration const& rhs) {
-  return lhs.bucket_only_policy == rhs.bucket_only_policy;
+  return lhs.bucket_policy_only == rhs.bucket_policy_only;
 }
 
 inline bool operator<(BucketIamConfiguration const& lhs,
                       BucketIamConfiguration const& rhs) {
-  return lhs.bucket_only_policy < rhs.bucket_only_policy;
+  return lhs.bucket_policy_only < rhs.bucket_policy_only;
 }
 
 inline bool operator!=(BucketIamConfiguration const& lhs,
