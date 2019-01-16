@@ -648,9 +648,15 @@ void GetServiceAccount(google::cloud::storage::Client client, int& argc,
   }
   //! [get service account] [START storage_get_service_account]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client) {
-    gcs::ServiceAccount details = client.GetServiceAccount();
-    std::cout << "The service account details are " << details << std::endl;
+    StatusOr<gcs::ServiceAccount> details = client.GetServiceAccount();
+    if (not details.ok()) {
+      std::cerr << "Error getting service account details, status="
+                << details.status() << std::endl;
+      return;
+    }
+    std::cout << "The service account details are " << *details << std::endl;
   }
   //! [get service account] [END storage_get_service_account]
   (std::move(client));
@@ -665,11 +671,17 @@ void GetServiceAccountForProject(google::cloud::storage::Client client,
   //! [get service account for project]
   // [START storage_get_service_account_for_project]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string project_id) {
-    gcs::ServiceAccount details =
+    StatusOr<gcs::ServiceAccount> details =
         client.GetServiceAccountForProject(project_id);
+    if (not details.ok()) {
+      std::cerr << "Error getting service account details, status="
+                << details.status() << std::endl;
+      return;
+    }
     std::cout << "The service account details for project " << project_id
-              << " are " << details << std::endl;
+              << " are " << *details << std::endl;
   }
   // [END storage_get_service_account_for_project]
   //! [get service account for project]
@@ -932,7 +944,7 @@ int main(int argc, char* argv[]) try {
   //! [create client]
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char* [])>;
+      std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
       {"list-buckets", &ListBuckets},
       {"list-buckets-for-project", &ListBucketsForProject},
