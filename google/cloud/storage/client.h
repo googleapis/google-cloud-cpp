@@ -722,10 +722,6 @@ class Client {
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `Projection`, and `UserProject`.
    *
-   *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -733,12 +729,12 @@ class Client {
    * @snippet storage_object_samples.cc get object metadata
    */
   template <typename... Options>
-  ObjectMetadata GetObjectMetadata(std::string const& bucket_name,
-                                   std::string const& object_name,
-                                   Options&&... options) {
+  StatusOr<ObjectMetadata> GetObjectMetadata(std::string const& bucket_name,
+                                             std::string const& object_name,
+                                             Options&&... options) {
     internal::GetObjectMetadataRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetObjectMetadata(request).value();
+    return raw_client_->GetObjectMetadata(request);
   }
 
   /**
@@ -991,9 +987,6 @@ class Client {
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
    * case, `IfMetagenerationMatch`.
@@ -1002,12 +995,14 @@ class Client {
    * @snippet storage_object_samples.cc update object metadata
    */
   template <typename... Options>
-  ObjectMetadata UpdateObject(std::string bucket_name, std::string object_name,
-                              ObjectMetadata metadata, Options&&... options) {
+  StatusOr<ObjectMetadata> UpdateObject(std::string bucket_name,
+                                        std::string object_name,
+                                        ObjectMetadata metadata,
+                                        Options&&... options) {
     internal::UpdateObjectRequest request(
         std::move(bucket_name), std::move(object_name), std::move(metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateObject(request).value();
+    return raw_client_->UpdateObject(request);
   }
 
   /**
@@ -1029,9 +1024,6 @@ class Client {
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
    * case, `IfMetagenerationMatch`.
@@ -1040,14 +1032,15 @@ class Client {
    * @snippet storage_object_samples.cc patch object delete metadata
    */
   template <typename... Options>
-  ObjectMetadata PatchObject(std::string bucket_name, std::string object_name,
-                             ObjectMetadata const& original,
-                             ObjectMetadata const& updated,
-                             Options&&... options) {
+  StatusOr<ObjectMetadata> PatchObject(std::string bucket_name,
+                                       std::string object_name,
+                                       ObjectMetadata const& original,
+                                       ObjectMetadata const& updated,
+                                       Options&&... options) {
     internal::PatchObjectRequest request(
         std::move(bucket_name), std::move(object_name), original, updated);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchObject(request).value();
+    return raw_client_->PatchObject(request);
   }
 
   /**
@@ -1067,9 +1060,6 @@ class Client {
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
    * case, `IfMetagenerationMatch`.
@@ -1078,13 +1068,13 @@ class Client {
    * @snippet storage_object_samples.cc patch object content type
    */
   template <typename... Options>
-  ObjectMetadata PatchObject(std::string bucket_name, std::string object_name,
-                             ObjectMetadataPatchBuilder const& builder,
-                             Options&&... options) {
+  StatusOr<ObjectMetadata> PatchObject(
+      std::string bucket_name, std::string object_name,
+      ObjectMetadataPatchBuilder const& builder, Options&&... options) {
     internal::PatchObjectRequest request(std::move(bucket_name),
                                          std::move(object_name), builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchObject(request).value();
+    return raw_client_->PatchObject(request);
   }
 
   /**

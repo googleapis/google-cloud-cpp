@@ -148,23 +148,26 @@ TEST_F(ObjectTest, GetObjectMetadata) {
 
   auto actual =
       client.GetObjectMetadata("test-bucket-name", "test-object-name");
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(ObjectTest, GetObjectMetadataTooManyFailures) {
-  testing::TooManyFailuresTest<ObjectMetadata>(
+  testing::TooManyFailuresStatusTest<ObjectMetadata>(
       mock, EXPECT_CALL(*mock, GetObjectMetadata(_)),
       [](Client& client) {
-        client.GetObjectMetadata("test-bucket-name", "test-object-name");
+        return client.GetObjectMetadata("test-bucket-name", "test-object-name")
+            .status();
       },
       "GetObjectMetadata");
 }
 
 TEST_F(ObjectTest, GetObjectMetadataPermanentFailure) {
-  testing::PermanentFailureTest<ObjectMetadata>(
+  testing::PermanentFailureStatusTest<ObjectMetadata>(
       *client, EXPECT_CALL(*mock, GetObjectMetadata(_)),
       [](Client& client) {
-        client.GetObjectMetadata("test-bucket-name", "test-object-name");
+        return client.GetObjectMetadata("test-bucket-name", "test-object-name")
+            .status();
       },
       "GetObjectMetadata");
 }
@@ -277,33 +280,37 @@ TEST_F(ObjectTest, UpdateObject) {
   update.mutable_metadata().emplace("test-label", "test-value");
   auto actual =
       client.UpdateObject("test-bucket-name", "test-object-name", update);
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(ObjectTest, UpdateObjectTooManyFailures) {
-  testing::TooManyFailuresTest<ObjectMetadata>(
+  testing::TooManyFailuresStatusTest<ObjectMetadata>(
       mock, EXPECT_CALL(*mock, UpdateObject(_)),
       [](Client& client) {
-        client.UpdateObject(
-            "test-bucket-name", "test-object-name",
-            ObjectMetadata().set_content_language("new-language"));
+        return client
+            .UpdateObject("test-bucket-name", "test-object-name",
+                          ObjectMetadata().set_content_language("new-language"))
+            .status();
       },
       [](Client& client) {
-        client.UpdateObject(
-            "test-bucket-name", "test-object-name",
-            ObjectMetadata().set_content_language("new-language"),
-            IfMetagenerationMatch(42));
+        return client
+            .UpdateObject("test-bucket-name", "test-object-name",
+                          ObjectMetadata().set_content_language("new-language"),
+                          IfMetagenerationMatch(42))
+            .status();
       },
       "UpdateObject");
 }
 
 TEST_F(ObjectTest, UpdateObjectPermanentFailure) {
-  testing::PermanentFailureTest<ObjectMetadata>(
+  testing::PermanentFailureStatusTest<ObjectMetadata>(
       *client, EXPECT_CALL(*mock, UpdateObject(_)),
       [](Client& client) {
-        client.UpdateObject(
-            "test-bucket-name", "test-object-name",
-            ObjectMetadata().set_content_language("new-language"));
+        return client
+            .UpdateObject("test-bucket-name", "test-object-name",
+                          ObjectMetadata().set_content_language("new-language"))
+            .status();
       },
       "UpdateObject");
 }
@@ -349,33 +356,40 @@ TEST_F(ObjectTest, PatchObject) {
                                    ObjectMetadataPatchBuilder()
                                        .SetContentDisposition("new-disposition")
                                        .SetContentLanguage("x-made-up-lang"));
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(ObjectTest, PatchObjectTooManyFailures) {
-  testing::TooManyFailuresTest<ObjectMetadata>(
+  testing::TooManyFailuresStatusTest<ObjectMetadata>(
       mock, EXPECT_CALL(*mock, PatchObject(_)),
       [](Client& client) {
-        client.PatchObject(
-            "test-bucket-name", "test-object-name",
-            ObjectMetadataPatchBuilder().SetContentLanguage("x-pig-latin"));
+        return client
+            .PatchObject(
+                "test-bucket-name", "test-object-name",
+                ObjectMetadataPatchBuilder().SetContentLanguage("x-pig-latin"))
+            .status();
       },
       [](Client& client) {
-        client.PatchObject(
-            "test-bucket-name", "test-object-name",
-            ObjectMetadataPatchBuilder().SetContentLanguage("x-pig-latin"),
-            IfMetagenerationMatch(42));
+        return client
+            .PatchObject(
+                "test-bucket-name", "test-object-name",
+                ObjectMetadataPatchBuilder().SetContentLanguage("x-pig-latin"),
+                IfMetagenerationMatch(42))
+            .status();
       },
       "PatchObject");
 }
 
 TEST_F(ObjectTest, PatchObjectPermanentFailure) {
-  testing::PermanentFailureTest<ObjectMetadata>(
+  testing::PermanentFailureStatusTest<ObjectMetadata>(
       *client, EXPECT_CALL(*mock, PatchObject(_)),
       [](Client& client) {
-        client.PatchObject(
-            "test-bucket-name", "test-object-name",
-            ObjectMetadataPatchBuilder().SetContentLanguage("x-pig-latin"));
+        return client
+            .PatchObject(
+                "test-bucket-name", "test-object-name",
+                ObjectMetadataPatchBuilder().SetContentLanguage("x-pig-latin"))
+            .status();
       },
       "PatchObject");
 }

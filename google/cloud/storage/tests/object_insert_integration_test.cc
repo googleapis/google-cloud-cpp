@@ -360,13 +360,14 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclAuthenticatedRead) {
       PredefinedAcl::AuthenticatedRead(), Fields(""));
   ASSERT_TRUE(insert.ok()) << "status=" << insert.status();
 
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
-  EXPECT_LT(0, CountMatchingEntities(meta.acl(),
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  EXPECT_LT(0, CountMatchingEntities(meta->acl(),
                                      ObjectAccessControl()
                                          .set_entity("allAuthenticatedUsers")
                                          .set_role("READER")))
-      << meta;
+      << *meta;
 
   StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();
@@ -389,12 +390,13 @@ TEST_F(ObjectInsertIntegrationTest,
       PredefinedAcl::BucketOwnerFullControl(), Fields(""));
   ASSERT_TRUE(insert.ok()) << "status=" << insert.status();
 
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
   EXPECT_LT(0, CountMatchingEntities(
-                   meta.acl(),
+                   meta->acl(),
                    ObjectAccessControl().set_entity(owner).set_role("OWNER")))
-      << meta;
+      << *meta;
 
   StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();
@@ -416,12 +418,13 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerRead) {
       PredefinedAcl::BucketOwnerRead(), Fields(""));
   ASSERT_TRUE(insert.ok()) << "status=" << insert.status();
 
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
   EXPECT_LT(0, CountMatchingEntities(
-                   meta.acl(),
+                   meta->acl(),
                    ObjectAccessControl().set_entity(owner).set_role("READER")))
-      << meta;
+      << *meta;
 
   StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();
@@ -437,14 +440,15 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPrivate) {
       PredefinedAcl::Private(), Fields(""));
   ASSERT_TRUE(insert.ok()) << "status=" << insert.status();
 
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
-  ASSERT_TRUE(meta.has_owner());
-  EXPECT_LT(
-      0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
-                                               .set_entity(meta.owner().entity)
-                                               .set_role("OWNER")))
-      << meta;
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_TRUE(meta->has_owner());
+  EXPECT_LT(0, CountMatchingEntities(meta->acl(),
+                                     ObjectAccessControl()
+                                         .set_entity(meta->owner().entity)
+                                         .set_role("OWNER")))
+      << *meta;
 
   StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();
@@ -460,14 +464,15 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclProjectPrivate) {
       PredefinedAcl::ProjectPrivate(), Fields(""));
   ASSERT_TRUE(insert.ok()) << "status=" << insert.status();
 
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
-  ASSERT_TRUE(meta.has_owner());
-  EXPECT_LT(
-      0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
-                                               .set_entity(meta.owner().entity)
-                                               .set_role("OWNER")))
-      << meta;
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_TRUE(meta->has_owner());
+  EXPECT_LT(0, CountMatchingEntities(meta->acl(),
+                                     ObjectAccessControl()
+                                         .set_entity(meta->owner().entity)
+                                         .set_role("OWNER")))
+      << *meta;
 
   StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();
@@ -483,13 +488,14 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPublicRead) {
       PredefinedAcl::PublicRead(), Fields(""));
   ASSERT_TRUE(insert.ok()) << "status=" << insert.status();
 
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
   EXPECT_LT(
       0, CountMatchingEntities(
-             meta.acl(),
+             meta->acl(),
              ObjectAccessControl().set_entity("allUsers").set_role("READER")))
-      << meta;
+      << *meta;
 
   StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();

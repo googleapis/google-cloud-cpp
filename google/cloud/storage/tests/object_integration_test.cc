@@ -95,12 +95,13 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
   }
   EXPECT_EQ(1U, name_counter(object_name, current_list));
 
-  ObjectMetadata get_meta = client.GetObjectMetadata(
+  StatusOr<ObjectMetadata> get_meta = client.GetObjectMetadata(
       bucket_name, object_name, Generation(insert_meta->generation()),
       Projection("full"));
-  EXPECT_EQ(get_meta, *insert_meta);
+  ASSERT_TRUE(get_meta.ok()) << "status=" << get_meta.status();
+  EXPECT_EQ(*get_meta, *insert_meta);
 
-  ObjectMetadata update = get_meta;
+  ObjectMetadata update = *get_meta;
   update.mutable_acl().emplace_back(
       ObjectAccessControl().set_role("READER").set_entity(
           "allAuthenticatedUsers"));
@@ -110,8 +111,9 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
       .set_content_language("en")
       .set_content_type("plain/text");
   update.mutable_metadata().emplace("updated", "true");
-  ObjectMetadata updated_meta =
+  StatusOr<ObjectMetadata> updated_meta =
       client.UpdateObject(bucket_name, object_name, update, Projection("full"));
+  ASSERT_TRUE(updated_meta.ok()) << "status=" << updated_meta.status();
 
   // Because some of the ACL values are not predictable we convert the values we
   // care about to strings and compare that.
@@ -126,29 +128,33 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
           return v;
         };
     auto expected = acl_to_string_vector(update.acl());
-    auto actual = acl_to_string_vector(updated_meta.acl());
+    auto actual = acl_to_string_vector(updated_meta->acl());
     EXPECT_THAT(expected, ::testing::UnorderedElementsAreArray(actual));
   }
-  EXPECT_EQ(update.cache_control(), updated_meta.cache_control())
-      << updated_meta;
-  EXPECT_EQ(update.content_disposition(), updated_meta.content_disposition())
-      << updated_meta;
-  EXPECT_EQ(update.content_encoding(), updated_meta.content_encoding())
-      << updated_meta;
-  EXPECT_EQ(update.content_language(), updated_meta.content_language())
-      << updated_meta;
-  EXPECT_EQ(update.content_type(), updated_meta.content_type()) << updated_meta;
-  EXPECT_EQ(update.metadata(), updated_meta.metadata()) << updated_meta;
+  EXPECT_EQ(update.cache_control(), updated_meta->cache_control())
+      << *updated_meta;
+  EXPECT_EQ(update.content_disposition(), updated_meta->content_disposition())
+      << *updated_meta;
+  EXPECT_EQ(update.content_encoding(), updated_meta->content_encoding())
+      << *updated_meta;
+  EXPECT_EQ(update.content_language(), updated_meta->content_language())
+      << *updated_meta;
+  EXPECT_EQ(update.content_type(), updated_meta->content_type())
+      << *updated_meta;
+  EXPECT_EQ(update.metadata(), updated_meta->metadata()) << *updated_meta;
 
-  ObjectMetadata desired_patch = updated_meta;
+  ObjectMetadata desired_patch = *updated_meta;
   desired_patch.set_content_language("en");
   desired_patch.mutable_metadata().erase("updated");
   desired_patch.mutable_metadata().emplace("patched", "true");
-  ObjectMetadata patched_meta =
-      client.PatchObject(bucket_name, object_name, updated_meta, desired_patch);
-  EXPECT_EQ(desired_patch.metadata(), patched_meta.metadata()) << patched_meta;
-  EXPECT_EQ(desired_patch.content_language(), patched_meta.content_language())
-      << patched_meta;
+  StatusOr<ObjectMetadata> patched_meta = client.PatchObject(
+      bucket_name, object_name, *updated_meta, desired_patch);
+  ASSERT_TRUE(patched_meta.ok()) << "status=" << patched_meta.status();
+
+  EXPECT_EQ(desired_patch.metadata(), patched_meta->metadata())
+      << *patched_meta;
+  EXPECT_EQ(desired_patch.content_language(), patched_meta->content_language())
+      << *patched_meta;
 
   StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();
@@ -212,22 +218,23 @@ TEST_F(ObjectIntegrationTest, FullPatch) {
     desired.mutable_metadata().emplace("test-label", "test-value");
   }
 
-  ObjectMetadata patched =
+  StatusOr<ObjectMetadata> patched =
       client.PatchObject(bucket_name, object_name, *original, desired);
+  ASSERT_TRUE(patched.ok()) << "status=" << patched.status();
 
   // acl() - cannot compare for equality because many fields are updated with
   // unknown values (entity_id, etag, etc)
-  EXPECT_EQ(1U, std::count_if(patched.acl().begin(), patched.acl().end(),
+  EXPECT_EQ(1U, std::count_if(patched->acl().begin(), patched->acl().end(),
                               [](ObjectAccessControl const& x) {
                                 return x.entity() == "allAuthenticatedUsers";
                               }));
 
-  EXPECT_EQ(desired.cache_control(), patched.cache_control());
-  EXPECT_EQ(desired.content_disposition(), patched.content_disposition());
-  EXPECT_EQ(desired.content_encoding(), patched.content_encoding());
-  EXPECT_EQ(desired.content_language(), patched.content_language());
-  EXPECT_EQ(desired.content_type(), patched.content_type());
-  EXPECT_EQ(desired.metadata(), patched.metadata());
+  EXPECT_EQ(desired.cache_control(), patched->cache_control());
+  EXPECT_EQ(desired.content_disposition(), patched->content_disposition());
+  EXPECT_EQ(desired.content_encoding(), patched->content_encoding());
+  EXPECT_EQ(desired.content_language(), patched->content_language());
+  EXPECT_EQ(desired.content_type(), patched->content_type());
+  EXPECT_EQ(desired.metadata(), patched->metadata());
 
   StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();
@@ -1292,8 +1299,8 @@ TEST_F(ObjectIntegrationTest, GetObjectMetadataFailure) {
   auto object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
-  TestPermanentFailure(
-      [&] { client.GetObjectMetadata(bucket_name, object_name); });
+  auto meta = client.GetObjectMetadata(bucket_name, object_name);
+  EXPECT_FALSE(meta.ok()) << "value=" << meta.value();
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
@@ -1387,8 +1394,8 @@ TEST_F(ObjectIntegrationTest, UpdateObjectFailure) {
   auto object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
-  TestPermanentFailure(
-      [&] { client.UpdateObject(bucket_name, object_name, ObjectMetadata()); });
+  auto update = client.UpdateObject(bucket_name, object_name, ObjectMetadata());
+  EXPECT_FALSE(update.ok()) << "value=" << update.value();
 }
 
 TEST_F(ObjectIntegrationTest, PatchObjectFailure) {
@@ -1397,9 +1404,8 @@ TEST_F(ObjectIntegrationTest, PatchObjectFailure) {
   auto object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
-  TestPermanentFailure([&] {
-    client.PatchObject(bucket_name, object_name, ObjectMetadataPatchBuilder());
-  });
+  auto patch = client.PatchObject(bucket_name, object_name, ObjectMetadataPatchBuilder());
+  EXPECT_FALSE(patch.ok()) << "value=" << patch.value();
 }
 
 TEST_F(ObjectIntegrationTest, ComposeFailure) {
