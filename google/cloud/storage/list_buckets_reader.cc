@@ -28,15 +28,15 @@ static_assert(
     "ListBucketsReader::iterator should be an InputIterator");
 static_assert(
     std::is_same<std::iterator_traits<ListBucketsReader::iterator>::value_type,
-                 BucketMetadata>::value,
+                 StatusOr<BucketMetadata>>::value,
     "ListBucketsReader::iterator should be an InputIterator of BucketMetadata");
 static_assert(
     std::is_same<std::iterator_traits<ListBucketsReader::iterator>::pointer,
-                 BucketMetadata*>::value,
+                 StatusOr<BucketMetadata>*>::value,
     "ListBucketsReader::iterator should be an InputIterator of BucketMetadata");
 static_assert(
     std::is_same<std::iterator_traits<ListBucketsReader::iterator>::reference,
-                 BucketMetadata&>::value,
+                 StatusOr<BucketMetadata>&>::value,
     "ListBucketsReader::iterator should be an InputIterator of BucketMetadata");
 static_assert(std::is_copy_constructible<ListBucketsReader::iterator>::value,
               "ListBucketsReader::iterator must be CopyConstructible");
@@ -59,47 +59,47 @@ static_assert(
     "++it when it is of ListBucketsReader::iterator type must be a "
     "ListBucketsReader::iterator &>");
 
-ListBucketsIterator::ListBucketsIterator(
-    ListBucketsReader* owner, google::cloud::optional<BucketMetadata> value)
-    : owner_(owner), value_(std::move(value)) {
-  if (not value_) {
-    // This iterator was initialized by begin() on an empty list, turn it into
-    // an end() iterator.
-    owner_ = nullptr;
-  }
-}
+ListBucketsIterator::ListBucketsIterator(ListBucketsReader* owner,
+                                         value_type value)
+    : owner_(owner), value_(std::move(value)) {}
 
 ListBucketsIterator& ListBucketsIterator::operator++() {
-  value_ = owner_->GetNext();
-  if (not value_) {
-    owner_ = nullptr;
-  }
+  *this = owner_->GetNext();
   return *this;
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
-ListBucketsReader::iterator ListBucketsReader::begin() {
-  return iterator(this, GetNext());
-}
+ListBucketsReader::iterator ListBucketsReader::begin() { return GetNext(); }
 
-google::cloud::optional<BucketMetadata> ListBucketsReader::GetNext() {
+ListBucketsReader::iterator ListBucketsReader::GetNext() {
+  static Status const past_the_end_error(
+      StatusCode::kFailedPrecondition,
+      "Cannot iterating past the end of ListObjectReader");
   if (current_buckets_.end() == current_) {
     if (on_last_page_) {
-      return google::cloud::optional<BucketMetadata>();
+      return ListBucketsIterator(nullptr,
+                                 StatusOr<BucketMetadata>(past_the_end_error));
     }
     request_.set_page_token(std::move(next_page_token_));
-    auto response = client_->ListBuckets(request_).value();
-    next_page_token_ = std::move(response.next_page_token);
-    current_buckets_ = std::move(response.items);
+    auto response = client_->ListBuckets(request_);
+    if (not response.ok()) {
+      next_page_token_.clear();
+      current_buckets_.clear();
+      on_last_page_ = true;
+      current_ = current_buckets_.begin();
+      return ListBucketsIterator(this, std::move(response).status());
+    }
+    next_page_token_ = std::move(response->next_page_token);
+    current_buckets_ = std::move(response->items);
     current_ = current_buckets_.begin();
     if (next_page_token_.empty()) {
       on_last_page_ = true;
     }
     if (current_buckets_.end() == current_) {
-      return google::cloud::optional<BucketMetadata>();
+      return ListBucketsIterator(nullptr, past_the_end_error);
     }
   }
-  return google::cloud::optional<BucketMetadata>(std::move(*current_++));
+  return ListBucketsIterator(this, std::move(*current_++));
 }
 
 }  // namespace STORAGE_CLIENT_NS

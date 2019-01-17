@@ -53,8 +53,13 @@ void ListBuckets(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   [](gcs::Client client) {
     int count = 0;
-    for (gcs::BucketMetadata const& meta : client.ListBuckets()) {
-      std::cout << meta.name() << std::endl;
+    for (auto&& meta : client.ListBuckets()) {
+      if (not meta.ok()) {
+        std::cerr << "Error reading bucket list for default project"
+                  << ", status=" << meta.status() << std::endl;
+        return;
+      }
+      std::cout << meta->name() << std::endl;
       ++count;
     }
     if (count == 0) {
@@ -75,9 +80,13 @@ void ListBucketsForProject(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string project_id) {
     int count = 0;
-    for (gcs::BucketMetadata const& meta :
-         client.ListBucketsForProject(project_id)) {
-      std::cout << meta.name() << std::endl;
+    for (auto&& meta : client.ListBucketsForProject(project_id)) {
+      if (not meta.ok()) {
+        std::cerr << "Error reading bucket list for project " << project_id
+                  << ", status=" << meta.status() << std::endl;
+        return;
+      }
+      std::cout << meta->name() << std::endl;
       ++count;
     }
     if (count == 0) {
