@@ -453,8 +453,9 @@ void UploadFile(google::cloud::storage::Client client, int& argc,
                 << ", status=" << meta.status() << std::endl;
       return;
     }
-    std::cout << "Uploaded " << file_name << " to " << meta->name()
-              << "\nFull metadata: " << *meta << std::endl;
+    std::cout << "Uploaded " << file_name << " to object " << meta->name()
+              << " in bucket " << meta->bucket() << "\nFull metadata: " << *meta
+              << std::endl;
   }
   //! [upload file] [END storage_upload_file]
   (std::move(client), file_name, bucket_name, object_name);
@@ -486,8 +487,9 @@ void UploadFileResumable(google::cloud::storage::Client client, int& argc,
                 << ", status=" << meta.status() << std::endl;
       return;
     }
-    std::cout << "Uploaded " << file_name << " to " << meta->name()
-              << "\nFull metadata: " << *meta << std::endl;
+    std::cout << "Uploaded " << file_name << " to object " << meta->name()
+              << " in bucket " << meta->bucket() << "\nFull metadata: " << *meta
+              << std::endl;
   }
   //! [upload file resumable]
   (std::move(client), file_name, bucket_name, object_name);
