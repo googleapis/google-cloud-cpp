@@ -80,7 +80,8 @@ bool IsInstanceNamePresentInClusterList(
   return clusters.end() !=
          std::find_if(clusters.begin(), clusters.end(),
                       [&instance_name](btadmin::Cluster const& i) {
-                        return i.name().find(instance_name);
+                        return i.name().find(instance_name) !=
+                               std::string::npos;
                       });
 }
 
@@ -194,10 +195,6 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
       << "The Cloud Bigtable service (or emulator) reports that it could not"
       << " retrieve the information for some locations. This is typically due"
       << " to an outage or some other transient condition.";
-  ASSERT_FALSE(IsClusterPresent(clusters_list_before.clusters, cluster_id_str))
-      << "Cluster (" << cluster_id_str << ") already exists."
-      << " This is unexpected, as the cluster ids are"
-      << " generated at random.";
 
   // create cluster
   bigtable::ClusterId cluster_id(cluster_id_str);
@@ -206,16 +203,12 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   auto cluster =
       instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
           .get();
-  ASSERT_GT(cluster.name().size(), 0);
+  ASSERT_FALSE(cluster.name().empty());
   auto clusters_list_after = instance_admin_->AsyncListClusters(cq, id).get();
   EXPECT_TRUE(clusters_list_after.failed_locations.empty())
       << "The Cloud Bigtable service (or emulator) reports that it could not"
       << " retrieve the information for some locations. This is typically due"
       << " to an outage or some other transient condition.";
-  ASSERT_FALSE(IsClusterPresent(clusters_list_after.clusters, cluster_id_str))
-      << "Cluster (" << cluster_id_str << ") already exists."
-      << " This is unexpected, as the cluster ids are"
-      << " generated at random.";
   EXPECT_FALSE(IsClusterPresent(clusters_list_before.clusters, cluster.name()));
   EXPECT_TRUE(IsClusterPresent(clusters_list_after.clusters, cluster.name()));
 
