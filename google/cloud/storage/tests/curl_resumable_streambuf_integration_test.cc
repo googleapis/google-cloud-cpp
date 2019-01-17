@@ -78,15 +78,13 @@ class CurlResumableStreambufIntegrationTest
     ASSERT_EQ(expected.size(), actual.size());
     EXPECT_EQ(expected, actual);
 
-    client.DeleteObject(bucket_name, object_name,
-                        Generation(metadata.generation()));
+    StatusOr<void> status = client.DeleteObject(
+        bucket_name, object_name, Generation(metadata.generation()));
+    ASSERT_TRUE(status.ok()) << "status=" << status.status();
   }
 };
 
-
-TEST_F(CurlResumableStreambufIntegrationTest, Simple) {
-  CheckUpload(20, 128);
-}
+TEST_F(CurlResumableStreambufIntegrationTest, Simple) { CheckUpload(20, 128); }
 
 TEST_F(CurlResumableStreambufIntegrationTest, MultipleOfUploadQuantum) {
   CheckUpload(3 * 2 * 1024, 128);

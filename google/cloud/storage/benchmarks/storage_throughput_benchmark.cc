@@ -448,7 +448,8 @@ TestResult DeleteGroup(gcs::Client client,
   TestResult result;
   for (auto const& o : group) {
     auto start = std::chrono::steady_clock::now();
-    client.DeleteObject(o.bucket(), o.name(), gcs::Generation(o.generation()));
+    client.DeleteObject(o.bucket(), o.name(), gcs::Generation(o.generation()))
+        .value();
     auto elapsed = std::chrono::steady_clock::now() - start;
     using std::chrono::milliseconds;
     auto ms = std::chrono::duration_cast<milliseconds>(elapsed);

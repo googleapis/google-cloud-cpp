@@ -53,8 +53,8 @@ void SetIfNotEmpty(internal::nl::json& json, char const* key,
   json[key] = value;
 }
 
-BucketOnlyPolicy ParseBucketOnlyPolicy(internal::nl::json const& json) {
-  BucketOnlyPolicy result;
+BucketPolicyOnly ParseBucketOnlyPolicy(internal::nl::json const& json) {
+  BucketPolicyOnly result;
   result.enabled = internal::ParseBoolField(json, "enabled");
   result.locked_time = internal::ParseTimestampField(json, "lockedTime");
   return result;
@@ -85,17 +85,17 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
             << join(", ", rhs.response_header) << "]}";
 }
 
-std::ostream& operator<<(std::ostream& os, BucketOnlyPolicy const& rhs) {
+std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs) {
   google::cloud::internal::IosFlagsSaver save_format(os);
-  return os << "BucketOnlyPolicy={enabled=" << std::boolalpha << rhs.enabled
+  return os << "BucketPolicyOnly={enabled=" << std::boolalpha << rhs.enabled
             << ", locked_time=" << internal::FormatRfc3339(rhs.locked_time)
             << "}";
 }
 
 std::ostream& operator<<(std::ostream& os, BucketIamConfiguration const& rhs) {
   os << "BucketIamConfiguration={";
-  if (rhs.bucket_only_policy.has_value()) {
-    os << "bucket_only_policy=" << *rhs.bucket_only_policy;
+  if (rhs.bucket_policy_only.has_value()) {
+    os << "bucket_policy_only=" << *rhs.bucket_policy_only;
   }
   return os << "}";
 }
@@ -165,8 +165,8 @@ StatusOr<BucketMetadata> BucketMetadata::ParseFromJson(
   if (json.count("iamConfiguration") != 0) {
     BucketIamConfiguration c;
     auto config = json["iamConfiguration"];
-    if (config.count("bucketOnlyPolicy") != 0) {
-      c.bucket_only_policy = ParseBucketOnlyPolicy(config["bucketOnlyPolicy"]);
+    if (config.count("bucketPolicyOnly") != 0) {
+      c.bucket_policy_only = ParseBucketOnlyPolicy(config["bucketPolicyOnly"]);
     }
     result.iam_configuration_ = c;
   }
@@ -294,12 +294,12 @@ std::string BucketMetadata::ToJsonString() const {
 
   if (has_iam_configuration()) {
     json c;
-    if (iam_configuration().bucket_only_policy.has_value()) {
-      json bop;
-      bop["enabled"] = iam_configuration().bucket_only_policy->enabled;
+    if (iam_configuration().bucket_policy_only.has_value()) {
+      json bpo;
+      bpo["enabled"] = iam_configuration().bucket_policy_only->enabled;
       // The lockedTime field is not mutable and should not be set by the client
       // the server will provide a value.
-      c["bucketOnlyPolicy"] = std::move(bop);
+      c["bucketPolicyOnly"] = std::move(bpo);
     }
     metadata_as_json["iamConfiguration"] = std::move(c);
   }
@@ -625,12 +625,12 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetEncryption() {
 BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetIamConfiguration(
     BucketIamConfiguration const& v) {
   internal::PatchBuilder iam_configuration;
-  if (v.bucket_only_policy.has_value()) {
-    internal::PatchBuilder bucket_only_policy;
-    bucket_only_policy.SetBoolField("enabled", v.bucket_only_policy->enabled);
+  if (v.bucket_policy_only.has_value()) {
+    internal::PatchBuilder bucket_policy_only;
+    bucket_policy_only.SetBoolField("enabled", v.bucket_policy_only->enabled);
     // The lockedTime field should not be set, this is not a mutable field, it
     // is set by the server when the policy is enabled.
-    iam_configuration.AddSubPatch("bucketOnlyPolicy", bucket_only_policy);
+    iam_configuration.AddSubPatch("bucketPolicyOnly", bucket_policy_only);
   }
   impl_.AddSubPatch("iamConfiguration", iam_configuration);
   return *this;

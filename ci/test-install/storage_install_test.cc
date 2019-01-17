@@ -47,8 +47,10 @@ int main(int argc, char* argv[]) try {
   while (std::getline(stream, line, '\n')) {
     ++count;
   }
-  client.DeleteObject(bucket_name, object_name,
-                      gcs::Generation(meta.generation()));
+  client
+      .DeleteObject(bucket_name, object_name,
+                    gcs::Generation(meta.generation()))
+      .value();
 
   return 0;
 } catch (std::exception const& ex) {

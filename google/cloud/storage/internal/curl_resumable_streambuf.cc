@@ -124,8 +124,9 @@ StatusOr<HttpResponse> CurlResumableStreambuf::Flush(bool final_chunk) {
     upload_session_.reset();
   }
 
-  last_response_ = HttpResponse{
-      result.status().status_code(), std::move(result).value().payload, {}};
+  // If `result.ok() == false` we never get to this point, so the last response
+  // was actually successful, represent that by a HTTP 200 status code.
+  last_response_ = HttpResponse{200, std::move(result).value().payload, {}};
   return last_response_;
 }
 

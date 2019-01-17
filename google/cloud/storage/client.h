@@ -444,9 +444,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -455,11 +452,11 @@ class Client {
    *
    */
   template <typename... Options>
-  IamPolicy GetBucketIamPolicy(std::string const& bucket_name,
-                               Options&&... options) {
+  StatusOr<IamPolicy> GetBucketIamPolicy(std::string const& bucket_name,
+                                         Options&&... options) {
     internal::GetBucketIamPolicyRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetBucketIamPolicy(request).value();
+    return raw_client_->GetBucketIamPolicy(request);
   }
 
   /**
@@ -494,9 +491,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
    * case, `IfMetagenerationMatch`.
@@ -508,12 +502,12 @@ class Client {
    * @snippet storage_bucket_iam_samples.cc remove bucket iam member
    */
   template <typename... Options>
-  IamPolicy SetBucketIamPolicy(std::string const& bucket_name,
-                               IamPolicy const& iam_policy,
-                               Options&&... options) {
+  StatusOr<IamPolicy> SetBucketIamPolicy(std::string const& bucket_name,
+                                         IamPolicy const& iam_policy,
+                                         Options&&... options) {
     internal::SetBucketIamPolicyRequest request(bucket_name, iam_policy);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->SetBucketIamPolicy(request).value();
+    return raw_client_->SetBucketIamPolicy(request);
   }
 
   /**
@@ -537,9 +531,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -547,13 +538,17 @@ class Client {
    * @snippet storage_bucket_iam_samples.cc test bucket iam permissions
    */
   template <typename... Options>
-  std::vector<std::string> TestBucketIamPermissions(
+  StatusOr<std::vector<std::string>> TestBucketIamPermissions(
       std::string bucket_name, std::vector<std::string> permissions,
       Options&&... options) {
     internal::TestBucketIamPermissionsRequest request(std::move(bucket_name),
                                                       std::move(permissions));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->TestBucketIamPermissions(request).value().permissions;
+    auto result = raw_client_->TestBucketIamPermissions(request);
+    if (not result.ok()) {
+      return std::move(result).status();
+    }
+    return std::move(result.value().permissions);
   }
 
   /**
@@ -727,10 +722,6 @@ class Client {
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `Projection`, and `UserProject`.
    *
-   *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -738,12 +729,12 @@ class Client {
    * @snippet storage_object_samples.cc get object metadata
    */
   template <typename... Options>
-  ObjectMetadata GetObjectMetadata(std::string const& bucket_name,
-                                   std::string const& object_name,
-                                   Options&&... options) {
+  StatusOr<ObjectMetadata> GetObjectMetadata(std::string const& bucket_name,
+                                             std::string const& object_name,
+                                             Options&&... options) {
     internal::GetObjectMetadataRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetObjectMetadata(request).value();
+    return raw_client_->GetObjectMetadata(request);
   }
 
   /**
@@ -969,18 +960,16 @@ class Client {
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Example
    * @snippet storage_object_samples.cc delete object
    */
   template <typename... Options>
-  void DeleteObject(std::string const& bucket_name,
-                    std::string const& object_name, Options&&... options) {
+  StatusOr<void> DeleteObject(std::string const& bucket_name,
+                              std::string const& object_name,
+                              Options&&... options) {
     internal::DeleteObjectRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->DeleteObject(request).value();
+    return raw_client_->DeleteObject(request).status();
   }
 
   /**
@@ -998,9 +987,6 @@ class Client {
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
    * case, `IfMetagenerationMatch`.
@@ -1009,12 +995,14 @@ class Client {
    * @snippet storage_object_samples.cc update object metadata
    */
   template <typename... Options>
-  ObjectMetadata UpdateObject(std::string bucket_name, std::string object_name,
-                              ObjectMetadata metadata, Options&&... options) {
+  StatusOr<ObjectMetadata> UpdateObject(std::string bucket_name,
+                                        std::string object_name,
+                                        ObjectMetadata metadata,
+                                        Options&&... options) {
     internal::UpdateObjectRequest request(
         std::move(bucket_name), std::move(object_name), std::move(metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateObject(request).value();
+    return raw_client_->UpdateObject(request);
   }
 
   /**
@@ -1036,9 +1024,6 @@ class Client {
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
    * case, `IfMetagenerationMatch`.
@@ -1047,14 +1032,15 @@ class Client {
    * @snippet storage_object_samples.cc patch object delete metadata
    */
   template <typename... Options>
-  ObjectMetadata PatchObject(std::string bucket_name, std::string object_name,
-                             ObjectMetadata const& original,
-                             ObjectMetadata const& updated,
-                             Options&&... options) {
+  StatusOr<ObjectMetadata> PatchObject(std::string bucket_name,
+                                       std::string object_name,
+                                       ObjectMetadata const& original,
+                                       ObjectMetadata const& updated,
+                                       Options&&... options) {
     internal::PatchObjectRequest request(
         std::move(bucket_name), std::move(object_name), original, updated);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchObject(request).value();
+    return raw_client_->PatchObject(request);
   }
 
   /**
@@ -1074,9 +1060,6 @@ class Client {
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
    * case, `IfMetagenerationMatch`.
@@ -1085,13 +1068,13 @@ class Client {
    * @snippet storage_object_samples.cc patch object content type
    */
   template <typename... Options>
-  ObjectMetadata PatchObject(std::string bucket_name, std::string object_name,
-                             ObjectMetadataPatchBuilder const& builder,
-                             Options&&... options) {
+  StatusOr<ObjectMetadata> PatchObject(
+      std::string bucket_name, std::string object_name,
+      ObjectMetadataPatchBuilder const& builder, Options&&... options) {
     internal::PatchObjectRequest request(std::move(bucket_name),
                                          std::move(object_name), builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchObject(request).value();
+    return raw_client_->PatchObject(request);
   }
 
   /**
@@ -2050,9 +2033,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -2063,11 +2043,11 @@ class Client {
    *     information on Google Cloud Platform service accounts.
    */
   template <typename... Options>
-  ServiceAccount GetServiceAccountForProject(std::string const& project_id,
-                                             Options&&... options) {
+  StatusOr<ServiceAccount> GetServiceAccountForProject(
+      std::string const& project_id, Options&&... options) {
     internal::GetProjectServiceAccountRequest request(project_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetServiceAccount(request).value();
+    return raw_client_->GetServiceAccount(request);
   }
 
   /**
@@ -2087,12 +2067,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::logic_error if the function is called without a default
-   *     project id set.
-   *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -2103,12 +2077,12 @@ class Client {
    *     information on Google Cloud Platform service accounts.
    */
   template <typename... Options>
-  ServiceAccount GetServiceAccount(Options&&... options) {
+  StatusOr<ServiceAccount> GetServiceAccount(Options&&... options) {
     auto const& project_id = raw_client_->client_options().project_id();
     if (project_id.empty()) {
       std::string msg = "Default project id not set in ";
       msg += __func__;
-      google::cloud::internal::ThrowLogicError(msg);
+      return Status(StatusCode::kFailedPrecondition, std::move(msg));
     }
     return GetServiceAccountForProject(project_id,
                                        std::forward<Options>(options)...);

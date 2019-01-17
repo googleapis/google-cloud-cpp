@@ -71,7 +71,8 @@ TEST_F(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertWithNonUrlSafeName) {
@@ -93,7 +94,8 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertWithNonUrlSafeName) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
@@ -115,7 +117,8 @@ TEST_F(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertWithMD5) {
@@ -138,7 +141,8 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithMD5) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
@@ -161,7 +165,8 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
@@ -184,7 +189,8 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertWithMetadata) {
@@ -212,7 +218,8 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithMetadata) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
@@ -230,7 +237,8 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
                                          .set_role("READER")))
       << *meta;
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
@@ -253,7 +261,8 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
                    ObjectAccessControl().set_entity(owner).set_role("OWNER")))
       << *meta;
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
@@ -277,7 +286,8 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
                    ObjectAccessControl().set_entity(owner).set_role("READER")))
       << *meta;
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
@@ -297,7 +307,8 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
                                          .set_role("OWNER")))
       << *meta;
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclProjectPrivate) {
@@ -316,7 +327,8 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclProjectPrivate) {
                                          .set_role("OWNER")))
       << *meta;
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
@@ -334,7 +346,8 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
              ObjectAccessControl().set_entity("allUsers").set_role("READER")))
       << *meta;
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclAuthenticatedRead) {
@@ -347,15 +360,17 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclAuthenticatedRead) {
       PredefinedAcl::AuthenticatedRead(), Fields(""));
   ASSERT_TRUE(insert.ok()) << "status=" << insert.status();
 
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
-  EXPECT_LT(0, CountMatchingEntities(meta.acl(),
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  EXPECT_LT(0, CountMatchingEntities(meta->acl(),
                                      ObjectAccessControl()
                                          .set_entity("allAuthenticatedUsers")
                                          .set_role("READER")))
-      << meta;
+      << *meta;
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest,
@@ -375,14 +390,16 @@ TEST_F(ObjectInsertIntegrationTest,
       PredefinedAcl::BucketOwnerFullControl(), Fields(""));
   ASSERT_TRUE(insert.ok()) << "status=" << insert.status();
 
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
   EXPECT_LT(0, CountMatchingEntities(
-                   meta.acl(),
+                   meta->acl(),
                    ObjectAccessControl().set_entity(owner).set_role("OWNER")))
-      << meta;
+      << *meta;
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerRead) {
@@ -401,14 +418,16 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerRead) {
       PredefinedAcl::BucketOwnerRead(), Fields(""));
   ASSERT_TRUE(insert.ok()) << "status=" << insert.status();
 
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
   EXPECT_LT(0, CountMatchingEntities(
-                   meta.acl(),
+                   meta->acl(),
                    ObjectAccessControl().set_entity(owner).set_role("READER")))
-      << meta;
+      << *meta;
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPrivate) {
@@ -421,16 +440,18 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPrivate) {
       PredefinedAcl::Private(), Fields(""));
   ASSERT_TRUE(insert.ok()) << "status=" << insert.status();
 
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
-  ASSERT_TRUE(meta.has_owner());
-  EXPECT_LT(
-      0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
-                                               .set_entity(meta.owner().entity)
-                                               .set_role("OWNER")))
-      << meta;
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_TRUE(meta->has_owner());
+  EXPECT_LT(0, CountMatchingEntities(meta->acl(),
+                                     ObjectAccessControl()
+                                         .set_entity(meta->owner().entity)
+                                         .set_role("OWNER")))
+      << *meta;
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclProjectPrivate) {
@@ -443,16 +464,18 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclProjectPrivate) {
       PredefinedAcl::ProjectPrivate(), Fields(""));
   ASSERT_TRUE(insert.ok()) << "status=" << insert.status();
 
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
-  ASSERT_TRUE(meta.has_owner());
-  EXPECT_LT(
-      0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
-                                               .set_entity(meta.owner().entity)
-                                               .set_role("OWNER")))
-      << meta;
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_TRUE(meta->has_owner());
+  EXPECT_LT(0, CountMatchingEntities(meta->acl(),
+                                     ObjectAccessControl()
+                                         .set_entity(meta->owner().entity)
+                                         .set_role("OWNER")))
+      << *meta;
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPublicRead) {
@@ -465,15 +488,17 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPublicRead) {
       PredefinedAcl::PublicRead(), Fields(""));
   ASSERT_TRUE(insert.ok()) << "status=" << insert.status();
 
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.GetObjectMetadata(bucket_name, object_name, Projection::Full());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
   EXPECT_LT(
       0, CountMatchingEntities(
-             meta.acl(),
+             meta->acl(),
              ObjectAccessControl().set_entity("allUsers").set_role("READER")))
-      << meta;
+      << *meta;
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /**
@@ -514,7 +539,8 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
       [&re](std::string const& line) { return std::regex_match(line, re); });
   EXPECT_LT(0, count);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /**
@@ -555,7 +581,8 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithUserIp) {
       [&re](std::string const& line) { return std::regex_match(line, re); });
   EXPECT_LT(0, count);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /**
@@ -582,7 +609,8 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
     auto insert =
         client.InsertObject(bucket_name, seed_object_name, LoremIpsum());
     ASSERT_TRUE(insert.ok()) << "status=" << insert.status();
-    client.DeleteObject(bucket_name, seed_object_name);
+    StatusOr<void> status = client.DeleteObject(bucket_name, seed_object_name);
+    ASSERT_TRUE(status.ok()) << "status=" << status.status();
   }
 
   auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
@@ -606,7 +634,8 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
       [&re](std::string const& line) { return std::regex_match(line, re); });
   EXPECT_LT(0, count);
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertWithContentType) {
@@ -622,7 +651,8 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithContentType) {
 
   EXPECT_EQ("text/plain", meta->content_type());
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertFailure) {
@@ -644,7 +674,8 @@ TEST_F(ObjectInsertIntegrationTest, InsertFailure) {
       bucket_name, object_name, expected, IfGenerationMatch(0));
   EXPECT_FALSE(failure.ok()) << "metadata=" << *failure;
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertXmlFailure) {
@@ -667,7 +698,8 @@ TEST_F(ObjectInsertIntegrationTest, InsertXmlFailure) {
       bucket_name, object_name, expected, Fields(""), IfGenerationMatch(0));
   EXPECT_FALSE(failure.ok()) << "metadata=" << *failure;
 
-  client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 }  // anonymous namespace

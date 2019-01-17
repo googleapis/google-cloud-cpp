@@ -42,14 +42,14 @@ TEST(ServiceAccountIntegrationTest, Get) {
   auto project_id = ServiceAccountTestEnvironment::project_id();
   Client client;
 
-  ServiceAccount a1 = client.GetServiceAccountForProject(project_id);
-  EXPECT_FALSE(a1.email_address().empty());
+  StatusOr<ServiceAccount> a1 = client.GetServiceAccountForProject(project_id);
+  EXPECT_FALSE(a1->email_address().empty());
 
   Client client_with_default(ClientOptions().set_project_id(project_id));
-  ServiceAccount a2 = client_with_default.GetServiceAccount();
-  EXPECT_FALSE(a2.email_address().empty());
+  StatusOr<ServiceAccount> a2 = client_with_default.GetServiceAccount();
+  EXPECT_FALSE(a2->email_address().empty());
 
-  EXPECT_EQ(a1, a2);
+  EXPECT_EQ(*a1, *a2);
 }
 
 }  // namespace

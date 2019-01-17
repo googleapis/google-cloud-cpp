@@ -200,7 +200,7 @@ https://cloud.google.com/storage/docs/authentication
 
   auto result = credentials->SignString(request.StringToSign());
   if (not result.first.ok()) {
-    google::cloud::internal::ThrowRuntimeError(result.first.error_message());
+    google::cloud::internal::ThrowRuntimeError(result.first.message());
   }
 
   internal::CurlHandle curl;

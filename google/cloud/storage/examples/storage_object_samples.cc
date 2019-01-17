@@ -228,10 +228,18 @@ void GetObjectMetadata(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   //! [get object metadata] [START storage_get_metadata]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    gcs::ObjectMetadata meta =
+    StatusOr<gcs::ObjectMetadata> meta =
         client.GetObjectMetadata(bucket_name, object_name);
-    std::cout << "The metadata is " << meta << std::endl;
+    if (not meta.ok()) {
+      std::cerr << "Error getting object metadata for object " << object_name
+                << " in bucket " << bucket_name << ", status=" << meta.status()
+                << std::endl;
+      return;
+    }
+    std::cout << "The metadata for object " << meta->name() << " in bucket "
+              << meta->bucket() << " is " << *meta << std::endl;
   }
   //! [get object metadata] [END storage_get_metadata]
   (std::move(client), bucket_name, object_name);
@@ -269,8 +277,14 @@ void DeleteObject(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   //! [delete object] [START storage_delete_file]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    client.DeleteObject(bucket_name, object_name);
+    StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+    if (not status.ok()) {
+      std::cerr << "Error deleting object " << object_name << " in bucket "
+                << bucket_name << ", status=" << status.status() << std::endl;
+      return;
+    }
     std::cout << "Deleted " << object_name << " in bucket " << bucket_name
               << std::endl;
   }
@@ -496,16 +510,29 @@ void UpdateObjectMetadata(google::cloud::storage::Client client, int& argc,
   auto value = ConsumeArg(argc, argv);
   //! [update object metadata] [START storage_set_metadata]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string key, std::string value) {
-    gcs::ObjectMetadata meta =
+    StatusOr<gcs::ObjectMetadata> meta =
         client.GetObjectMetadata(bucket_name, object_name);
-    gcs::ObjectMetadata desired = meta;
+    if (not meta.ok()) {
+      std::cerr << "Error getting object metadata for object " << object_name
+                << " in bucket " << bucket_name << ", status=" << meta.status()
+                << std::endl;
+      return;
+    }
+    gcs::ObjectMetadata desired = *meta;
     desired.mutable_metadata().emplace(key, value);
-    gcs::ObjectMetadata updated = client.UpdateObject(
-        bucket_name, object_name, desired, gcs::Generation(meta.generation()));
+    StatusOr<gcs::ObjectMetadata> updated = client.UpdateObject(
+        bucket_name, object_name, desired, gcs::Generation(meta->generation()));
+    if (not updated.ok()) {
+      std::cerr << "Error updating object metadata for object " << meta->name()
+                << " in bucket " << meta->bucket()
+                << ", status=" << updated.status() << std::endl;
+      return;
+    }
     std::cout << "Object updated. The full metadata after the update is: "
-              << updated << std::endl;
+              << *updated << std::endl;
   }
   //! [update object metadata] [END storage_set_metadata]
   (std::move(client), bucket_name, object_name, key, value);
@@ -521,16 +548,29 @@ void PatchObjectDeleteMetadata(google::cloud::storage::Client client, int& argc,
   auto key = ConsumeArg(argc, argv);
   //! [patch object delete metadata]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string key) {
-    gcs::ObjectMetadata original =
+    StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
-    gcs::ObjectMetadata updated = original;
-    updated.mutable_metadata().erase(key);
-    gcs::ObjectMetadata result =
-        client.PatchObject(bucket_name, object_name, original, updated);
+    if (not original.ok()) {
+      std::cerr << "Error getting object metadata for object " << object_name
+                << " in bucket " << bucket_name
+                << ", status=" << original.status() << std::endl;
+      return;
+    }
+    gcs::ObjectMetadata desired = *original;
+    desired.mutable_metadata().erase(key);
+    StatusOr<gcs::ObjectMetadata> updated =
+        client.PatchObject(bucket_name, object_name, *original, desired);
+    if (not updated.ok()) {
+      std::cerr << "Error updating object metadata for object "
+                << original->name() << " in bucket " << original->bucket()
+                << ", status=" << updated.status() << std::endl;
+      return;
+    }
     std::cout << "Object updated. The full metadata after the update is: "
-              << result << std::endl;
+              << *updated << std::endl;
   }
   //! [patch object delete metadata]
   (std::move(client), bucket_name, object_name, key);
@@ -547,13 +587,20 @@ void PatchObjectContentType(google::cloud::storage::Client client, int& argc,
   auto content_type = ConsumeArg(argc, argv);
   //! [patch object content type]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string content_type) {
-    gcs::ObjectMetadata updated = client.PatchObject(
+    StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetContentType(content_type));
+    if (not updated.ok()) {
+      std::cerr << "Error patching object metadata for object " << object_name
+                << " in bucket " << bucket_name
+                << ", status=" << updated.status() << std::endl;
+      return;
+    }
     std::cout << "Object updated. The full metadata after the update is: "
-              << updated << std::endl;
+              << *updated << std::endl;
   }
   //! [patch object content type]
   (std::move(client), bucket_name, object_name, content_type);
@@ -568,12 +615,19 @@ void MakeObjectPublic(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   //! [make object public] [START storage_make_public]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    gcs::ObjectMetadata updated = client.PatchObject(
+    StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name, gcs::ObjectMetadataPatchBuilder(),
         gcs::PredefinedAcl::PublicRead());
+    if (not updated.ok()) {
+      std::cerr << "Error patching object metadata for object " << object_name
+                << " in bucket " << bucket_name
+                << ", status=" << updated.status() << std::endl;
+      return;
+    }
     std::cout << "Object updated. The full metadata after the update is: "
-              << updated << std::endl;
+              << *updated << std::endl;
   }
   //! [make object public] [END storage_make_public]
   (std::move(client), bucket_name, object_name);
@@ -993,7 +1047,13 @@ void RenameObject(google::cloud::storage::Client client, int& argc,
                 << ", status=" << meta.status() << std::endl;
       return;
     }
-    client.DeleteObject(bucket_name, old_object_name);
+    StatusOr<void> status = client.DeleteObject(bucket_name, old_object_name);
+    if (not status.ok()) {
+      std::cerr << "Error deleting original object " << old_object_name
+                << " in bucket " << bucket_name
+                << ", status=" << status.status() << std::endl;
+      return;
+    }
     std::cout << "Renamed " << old_object_name << " to " << new_object_name
               << " in bucket " << bucket_name << std::endl;
   }
@@ -1010,16 +1070,30 @@ void SetObjectEventBasedHold(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   //! [set event based hold] [START storage_set_event_based_hold]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    gcs::ObjectMetadata original =
+    StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
-    gcs::ObjectMetadata metadata = client.PatchObject(
+    if (not original.ok()) {
+      std::cerr << "Error getting object metadata for object " << object_name
+                << " in bucket " << bucket_name
+                << ", status=" << original.status() << std::endl;
+      return;
+    }
+    StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetEventBasedHold(true),
-        gcs::IfMetagenerationMatch(original.metageneration()));
-    std::cout << "The event hold for object " << metadata.name()
-              << " in bucket " << metadata.bucket() << " is "
-              << (metadata.event_based_hold() ? "enabled" : "disabled")
+        gcs::IfMetagenerationMatch(original->metageneration()));
+    if (not updated.ok()) {
+      std::cerr << "Error patching object metadata for object " << object_name
+                << " in bucket " << bucket_name
+                << ", status=" << updated.status() << std::endl;
+      return;
+    }
+
+    std::cout << "The event hold for object " << updated->name() << " in bucket "
+              << updated->bucket() << " is "
+              << (updated->event_based_hold() ? "enabled" : "disabled")
               << std::endl;
   }
   //! [set event based hold] [END storage_set_event_based_hold]
@@ -1035,16 +1109,30 @@ void ReleaseObjectEventBasedHold(google::cloud::storage::Client client,
   auto object_name = ConsumeArg(argc, argv);
   //! [release event based hold] [START storage_release_event_based_hold]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    gcs::ObjectMetadata original =
+    StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
-    gcs::ObjectMetadata updated_metadata = client.PatchObject(
+    if (not original.ok()) {
+      std::cerr << "Error getting object metadata for object " << object_name
+                << " in bucket " << bucket_name
+                << ", status=" << original.status() << std::endl;
+      return;
+    }
+    StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetEventBasedHold(false),
-        gcs::IfMetagenerationMatch(original.metageneration()));
-    std::cout << "The event hold for object " << updated_metadata.name()
-              << " in bucket " << updated_metadata.bucket() << " is "
-              << (updated_metadata.event_based_hold() ? "enabled" : "disabled")
+        gcs::IfMetagenerationMatch(original->metageneration()));
+    if (not updated.ok()) {
+      std::cerr << "Error patching object metadata for object " << object_name
+                << " in bucket " << bucket_name
+                << ", status=" << updated.status() << std::endl;
+      return;
+    }
+
+    std::cout << "The event hold for object " << updated->name()
+              << " in bucket " << updated->bucket() << " is "
+              << (updated->event_based_hold() ? "enabled" : "disabled")
               << std::endl;
   }
   //! [release event based hold] [END storage_release_event_based_hold]
@@ -1060,16 +1148,30 @@ void SetObjectTemporaryHold(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   //! [set temporary hold] [START storage_set_temporary_hold]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    gcs::ObjectMetadata original =
+    StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
-    gcs::ObjectMetadata metadata = client.PatchObject(
+    if (not original.ok()) {
+      std::cerr << "Error getting object metadata for object " << object_name
+                << " in bucket " << bucket_name
+                << ", status=" << original.status() << std::endl;
+      return;
+    }
+    StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetTemporaryHold(true),
-        gcs::IfMetagenerationMatch(original.metageneration()));
-    std::cout << "The temporary hold for object " << metadata.name()
-              << " in bucket " << metadata.bucket() << " is "
-              << (metadata.temporary_hold() ? "enabled" : "disabled")
+        gcs::IfMetagenerationMatch(original->metageneration()));
+    if (not updated.ok()) {
+      std::cerr << "Error patching object metadata for object " << object_name
+                << " in bucket " << bucket_name
+                << ", status=" << updated.status() << std::endl;
+      return;
+    }
+
+    std::cout << "The temporary hold for object " << updated->name()
+              << " in bucket " << updated->bucket() << " is "
+              << (updated->temporary_hold() ? "enabled" : "disabled")
               << std::endl;
   }
   //! [set temporary hold] [END storage_set_temporary_hold]
@@ -1085,16 +1187,29 @@ void ReleaseObjectTemporaryHold(google::cloud::storage::Client client,
   auto object_name = ConsumeArg(argc, argv);
   //! [release temporary hold] [START storage_release_temporary_hold]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    gcs::ObjectMetadata original =
+    StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
-    gcs::ObjectMetadata metadata = client.PatchObject(
+    if (not original.ok()) {
+      std::cerr << "Error getting object metadata for object " << object_name
+                << " in bucket " << bucket_name
+                << ", status=" << original.status() << std::endl;
+      return;
+    }
+    StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetTemporaryHold(false),
-        gcs::IfMetagenerationMatch(original.metageneration()));
-    std::cout << "The temporary hold for object " << metadata.name()
-              << " in bucket " << metadata.bucket() << " is "
-              << (metadata.temporary_hold() ? "enabled" : "disabled")
+        gcs::IfMetagenerationMatch(original->metageneration()));
+    if (not updated.ok()) {
+      std::cerr << "Error patching object metadata for object " << object_name
+                << " in bucket " << bucket_name
+                << ", status=" << updated.status() << std::endl;
+      return;
+    }
+    std::cout << "The temporary hold for object " << updated->name()
+              << " in bucket " << updated->bucket() << " is "
+              << (updated->temporary_hold() ? "enabled" : "disabled")
               << std::endl;
   }
   //! [release temporary hold] [END storage_release_temporary_hold]

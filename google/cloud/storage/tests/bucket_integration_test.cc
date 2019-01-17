@@ -187,10 +187,8 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   // encryption()
   // TODO(#1003) - need a valid KMS entry to set the encryption.
 
-  // iam_configuration()
-  BucketIamConfiguration iam_configuration;
-  iam_configuration.bucket_only_policy = BucketOnlyPolicy{true};
-  desired_state.set_iam_configuration(std::move(iam_configuration));
+  // iam_configuration() - skipped, cannot set both ACL and iam_configuration in
+  // the same bucket.
 
   // labels()
   desired_state.mutable_labels().emplace("test-label", "testing-full-patch");
@@ -277,6 +275,38 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   auto delete_status = client.DeleteBucket(bucket_name);
   ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
   delete_status = client.DeleteBucket(logging_name);
+  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
+}
+
+// @test Verify that we can set the iam_configuration() in a Bucket.
+TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
+  auto project_id = BucketTestEnvironment::project_id();
+  std::string bucket_name = MakeRandomBucketName();
+  Client client;
+
+  // Create a Bucket, use the default settings for all fields. Fetch the full
+  // attributes of the bucket.
+  StatusOr<BucketMetadata> const insert_meta = client.CreateBucketForProject(
+      bucket_name, project_id, BucketMetadata(), PredefinedAcl("private"),
+      PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"));
+  ASSERT_TRUE(insert_meta.ok()) << "status=" << insert_meta.status();
+  EXPECT_EQ(bucket_name, insert_meta->name());
+
+  // Patch the iam_configuration().
+  BucketMetadata desired_state = *insert_meta;
+  BucketIamConfiguration iam_configuration;
+  iam_configuration.bucket_policy_only = BucketPolicyOnly{true};
+  desired_state.set_iam_configuration(std::move(iam_configuration));
+
+  StatusOr<BucketMetadata> patched =
+      client.PatchBucket(bucket_name, *insert_meta, desired_state);
+  ASSERT_TRUE(patched.ok()) << "status=" << patched.status();
+
+  ASSERT_TRUE(patched->has_iam_configuration()) << "patched=" << *patched;
+  ASSERT_TRUE(patched->iam_configuration().bucket_policy_only)
+      << "patched=" << *patched;
+
+  auto delete_status = client.DeleteBucket(bucket_name);
   ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
 }
 
@@ -558,8 +588,9 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
       client.CreateBucketForProject(bucket_name, project_id, BucketMetadata());
   ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
-  IamPolicy policy = client.GetBucketIamPolicy(bucket_name);
-  auto const& bindings = policy.bindings;
+  StatusOr<IamPolicy> policy = client.GetBucketIamPolicy(bucket_name);
+  ASSERT_TRUE(policy.ok()) << "status=" << policy.status();
+  auto const& bindings = policy->bindings;
   // There must always be at least an OWNER for the Bucket.
   ASSERT_FALSE(bindings.end() ==
                bindings.find("roles/storage.legacyBucketOwner"));
@@ -581,19 +612,23 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
       bindings.at("roles/storage.legacyBucketOwner");
   EXPECT_EQ(expected_owners.size(), actual_owners.size());
 
-  IamPolicy update = policy;
+  IamPolicy update = *policy;
   update.bindings.AddMember("roles/storage.objectViewer",
                             "allAuthenticatedUsers");
 
-  IamPolicy updated_policy = client.SetBucketIamPolicy(bucket_name, update);
-  EXPECT_EQ(update.bindings, updated_policy.bindings);
-  EXPECT_NE(update.etag, updated_policy.etag);
+  StatusOr<IamPolicy> updated_policy =
+      client.SetBucketIamPolicy(bucket_name, update);
+  ASSERT_TRUE(updated_policy.ok()) << "status=" << updated_policy.status();
+  EXPECT_EQ(update.bindings, updated_policy->bindings);
+  EXPECT_NE(update.etag, updated_policy->etag);
 
   std::vector<std::string> expected_permissions{
       "storage.objects.list", "storage.objects.get", "storage.objects.delete"};
-  std::vector<std::string> actual_permissions =
+  StatusOr<std::vector<std::string>> actual_permissions =
       client.TestBucketIamPermissions(bucket_name, expected_permissions);
-  EXPECT_THAT(actual_permissions, ElementsAreArray(expected_permissions));
+  ASSERT_TRUE(actual_permissions.ok())
+      << "status=" << actual_permissions.status();
+  EXPECT_THAT(*actual_permissions, ElementsAreArray(expected_permissions));
 
   auto delete_status = client.DeleteBucket(bucket_name);
   ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
@@ -651,8 +686,8 @@ TEST_F(BucketIntegrationTest, CreateFailure) {
   // uppercase letter), the service (or testbench) will reject the request and
   // we should report that error correctly. For good measure, make the project
   // id invalid too.
-  StatusOr<BucketMetadata> meta = client.CreateBucketForProject("Invalid_Bucket_Name", "Invalid-project-id-",
-                                  BucketMetadata());
+  StatusOr<BucketMetadata> meta = client.CreateBucketForProject(
+      "Invalid_Bucket_Name", "Invalid-project-id-", BucketMetadata());
   ASSERT_FALSE(meta.ok()) << "metadata=" << meta.value();
 }
 
@@ -702,8 +737,8 @@ TEST_F(BucketIntegrationTest, GetBucketIamPolicyFailure) {
 
   // Try to get information about a bucket that does not exist, or at least it
   // is very unlikely to exist, the name is random.
-  TestPermanentFailure(
-      [&client, bucket_name] { client.GetBucketIamPolicy(bucket_name); });
+  auto policy = client.GetBucketIamPolicy(bucket_name);
+  EXPECT_FALSE(policy.ok()) << "value=" << policy.value();
 }
 
 TEST_F(BucketIntegrationTest, SetBucketIamPolicyFailure) {
@@ -712,9 +747,8 @@ TEST_F(BucketIntegrationTest, SetBucketIamPolicyFailure) {
 
   // Try to set the IAM policy on a bucket that does not exist, or at least it
   // is very unlikely to exist, the name is random.
-  TestPermanentFailure([&client, bucket_name] {
-    client.SetBucketIamPolicy(bucket_name, IamPolicy{});
-  });
+  auto policy = client.SetBucketIamPolicy(bucket_name, IamPolicy{});
+  EXPECT_FALSE(policy.ok()) << "value=" << policy.value();
 }
 
 TEST_F(BucketIntegrationTest, TestBucketIamPermissionsFailure) {
@@ -723,9 +757,8 @@ TEST_F(BucketIntegrationTest, TestBucketIamPermissionsFailure) {
 
   // Try to set the IAM policy on a bucket that does not exist, or at least it
   // is very unlikely to exist, the name is random.
-  TestPermanentFailure([&client, bucket_name] {
-    client.TestBucketIamPermissions(bucket_name, {});
-  });
+  auto items = client.TestBucketIamPermissions(bucket_name, {});
+  EXPECT_FALSE(items.ok()) << "items[0]=" << items.value().front();
 }
 
 TEST_F(BucketIntegrationTest, ListAccessControlFailure) {

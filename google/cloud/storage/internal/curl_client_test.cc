@@ -80,12 +80,12 @@ class CurlClientTest : public ::testing::Test,
   void TearDown() override { client_.reset(); }
 
   void TestCorrectFailureStatus(Status const& status) {
-    EXPECT_EQ(expected_status_code_, status.status_code());
-    EXPECT_THAT(status.error_message(), HasSubstr(expected_status_substr_));
+    EXPECT_EQ(expected_status_code_, status.code());
+    EXPECT_THAT(status.message(), HasSubstr(expected_status_substr_));
   }
 
   std::shared_ptr<CurlClient> client_;
-  long expected_status_code_;
+  StatusCode expected_status_code_;
   std::string expected_status_substr_;
   testing_util::EnvironmentVariableRestore endpoint_;
 };
