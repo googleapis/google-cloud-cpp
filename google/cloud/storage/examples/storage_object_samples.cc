@@ -1091,8 +1091,8 @@ void SetObjectEventBasedHold(google::cloud::storage::Client client, int& argc,
       return;
     }
 
-    std::cout << "The event hold for object " << updated->name() << " in bucket "
-              << updated->bucket() << " is "
+    std::cout << "The event hold for object " << updated->name()
+              << " in bucket " << updated->bucket() << " is "
               << (updated->event_based_hold() ? "enabled" : "disabled")
               << std::endl;
   }
@@ -1225,14 +1225,20 @@ void CreateGetSignedUrl(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   //! [sign url] [START storage_sign_url]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    std::string signed_url = client.CreateV2SignedUrl(
+    StatusOr<std::string> signed_url = client.CreateV2SignedUrl(
         "GET", std::move(bucket_name), std::move(object_name),
         gcs::ExpirationTime(std::chrono::system_clock::now() +
                             std::chrono::minutes(15)));
-    std::cout << "The signed url is: " << signed_url << "\n\n"
+    if (not signed_url.ok()) {
+      std::cerr << "Error creating signed URL, status=" << signed_url.status()
+                << std::endl;
+      return;
+    }
+    std::cout << "The signed url is: " << *signed_url << "\n\n"
               << "You can use this URL with any user agent, for example:\n"
-              << "curl '" << signed_url << "'" << std::endl;
+              << "curl '" << *signed_url << "'" << std::endl;
   }
   //! [sign url] [END storage_sign_url]
   (std::move(client), bucket_name, object_name);
@@ -1247,16 +1253,22 @@ void CreatePutSignedUrl(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   //! [create put signed url]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    std::string signed_url = client.CreateV2SignedUrl(
+    StatusOr<std::string> signed_url = client.CreateV2SignedUrl(
         "PUT", std::move(bucket_name), std::move(object_name),
         gcs::ExpirationTime(std::chrono::system_clock::now() +
                             std::chrono::minutes(15)),
         gcs::ContentType("application/octet-stream"));
-    std::cout << "The signed url is: " << signed_url << "\n\n"
+    if (not signed_url.ok()) {
+      std::cerr << "Error creating signed URL, status=" << signed_url.status()
+                << std::endl;
+      return;
+    }
+    std::cout << "The signed url is: " << *signed_url << "\n\n"
               << "You can use this URL with any user agent, for example:\n"
               << "curl -X PUT -H 'Content-Type: application/octet-stream'"
-              << " --upload-file my-file '" << signed_url << "'" << std::endl;
+              << " --upload-file my-file '" << *signed_url << "'" << std::endl;
   }
   //! [create put signed url]
   (std::move(client), bucket_name, object_name);

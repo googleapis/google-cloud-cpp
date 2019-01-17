@@ -155,8 +155,8 @@ void Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
 
   auto report_error = [&](char const* func, char const* what) {
     std::ostringstream msg;
-    msg << func << "(" << request << ", " << file_name
-        << "): " << what << " - status=" << stream.status();
+    msg << func << "(" << request << ", " << file_name << "): " << what
+        << " - status=" << stream.status();
     google::cloud::internal::ThrowRuntimeError(std::move(msg).str());
   };
   if (not stream.status().ok()) {
@@ -184,14 +184,14 @@ void Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
   }
 }
 
-std::string Client::SignUrl(internal::SignUrlRequest const& request) {
+StatusOr<std::string> Client::SignUrl(internal::SignUrlRequest const& request) {
   auto base_credentials = raw_client()->client_options().credentials();
   auto credentials = dynamic_cast<oauth2::ServiceAccountCredentials<>*>(
       base_credentials.get());
 
   if (credentials == nullptr) {
-    google::cloud::internal::ThrowRuntimeError(
-        R"""(The current credentials cannot be used to sign URLs.
+    return Status(StatusCode::kInvalidArgument,
+                  R"""(The current credentials cannot be used to sign URLs.
 Please configure your google::cloud::storage::Client to use service account
 credentials, as described in:
 https://cloud.google.com/storage/docs/authentication
@@ -200,7 +200,7 @@ https://cloud.google.com/storage/docs/authentication
 
   auto result = credentials->SignString(request.StringToSign());
   if (not result.first.ok()) {
-    google::cloud::internal::ThrowRuntimeError(result.first.message());
+    return result.first;
   }
 
   internal::CurlHandle curl;
