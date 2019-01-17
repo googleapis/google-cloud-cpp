@@ -46,7 +46,7 @@ bool Client::UseSimpleUpload(std::string const& file_name) const {
   return size <= raw_client()->client_options().maximum_simple_upload_size();
 }
 
-ObjectMetadata Client::UploadFileSimple(
+StatusOr<ObjectMetadata> Client::UploadFileSimple(
     std::string const& file_name, internal::InsertObjectMediaRequest request) {
   std::ifstream is(file_name);
   if (not is.is_open()) {
@@ -59,10 +59,10 @@ ObjectMetadata Client::UploadFileSimple(
   std::string payload(std::istreambuf_iterator<char>{is}, {});
   request.set_contents(std::move(payload));
 
-  return raw_client_->InsertObjectMedia(request).value();
+  return raw_client_->InsertObjectMedia(request);
 }
 
-ObjectMetadata Client::UploadFileResumable(
+StatusOr<ObjectMetadata> Client::UploadFileResumable(
     std::string const& file_name,
     google::cloud::storage::internal::ResumableUploadRequest const& request) {
   auto status = google::cloud::internal::status(file_name);
@@ -86,13 +86,13 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
     std::string msg = __func__;
     msg += ": cannot open source file ";
     msg += file_name;
-    google::cloud::internal::ThrowRuntimeError(msg);
+    return Status(StatusCode::kNotFound, std::move(msg));
   }
   // This function only works for regular files, and the `storage::Client()`
   // class checks before calling it.
   std::uint64_t source_size = google::cloud::internal::file_size(file_name);
 
-  return UploadStreamResumable(source, source_size, request).value();
+  return UploadStreamResumable(source, source_size, request);
 }
 
 StatusOr<ObjectMetadata> Client::UploadStreamResumable(

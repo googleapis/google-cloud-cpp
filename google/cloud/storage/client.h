@@ -889,9 +889,6 @@ class Client {
    * This operation is only idempotent if restricted by pre-conditions, in this
    * case, `IfGenerationMatch`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Example
    * @snippet storage_object_samples.cc upload file
    *
@@ -899,10 +896,10 @@ class Client {
    * @snippet storage_object_samples.cc upload file resumable
    */
   template <typename... Options>
-  ObjectMetadata UploadFile(std::string const& file_name,
-                            std::string const& bucket_name,
-                            std::string const& object_name,
-                            Options&&... options) {
+  StatusOr<ObjectMetadata> UploadFile(std::string const& file_name,
+                                      std::string const& bucket_name,
+                                      std::string const& object_name,
+                                      Options&&... options) {
     // Determine, at compile time, which version of UploadFileImpl we should
     // call. This needs to be done at compile time because ObjectInsertMedia
     // does not support (nor should it support) the UseResumableUploadSession
@@ -2303,11 +2300,11 @@ class Client {
   // The version of UploadFile() where UseResumableUploadSession is one of the
   // options. Note how this does not use InsertObjectMedia at all.
   template <typename... Options>
-  ObjectMetadata UploadFileImpl(std::string const& file_name,
-                                std::string const& bucket_name,
-                                std::string const& object_name,
-                                std::true_type has_resumable_option,
-                                Options&&... options) {
+  StatusOr<ObjectMetadata> UploadFileImpl(std::string const& file_name,
+                                          std::string const& bucket_name,
+                                          std::string const& object_name,
+                                          std::true_type has_resumable_option,
+                                          Options&&... options) {
     internal::ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return UploadFileResumable(file_name, request);
@@ -2317,11 +2314,10 @@ class Client {
   // the options. In this case we can use InsertObjectMediaRequest because it
   // is safe.
   template <typename... Options>
-  ObjectMetadata UploadFileImpl(std::string const& file_name,
-                                std::string const& bucket_name,
-                                std::string const& object_name,
-                                std::false_type does_not_have_resumable_option,
-                                Options&&... options) {
+  StatusOr<ObjectMetadata> UploadFileImpl(
+      std::string const& file_name, std::string const& bucket_name,
+      std::string const& object_name,
+      std::false_type does_not_have_resumable_option, Options&&... options) {
     if (UseSimpleUpload(file_name)) {
       internal::InsertObjectMediaRequest request(bucket_name, object_name,
                                                  std::string{});
@@ -2335,10 +2331,10 @@ class Client {
 
   bool UseSimpleUpload(std::string const& file_name) const;
 
-  ObjectMetadata UploadFileSimple(std::string const& file_name,
-                                  internal::InsertObjectMediaRequest request);
+  StatusOr<ObjectMetadata> UploadFileSimple(
+      std::string const& file_name, internal::InsertObjectMediaRequest request);
 
-  ObjectMetadata UploadFileResumable(
+  StatusOr<ObjectMetadata> UploadFileResumable(
       std::string const& file_name,
       internal::ResumableUploadRequest const& request);
 
