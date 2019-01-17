@@ -176,14 +176,26 @@ void CopyObject(google::cloud::storage::Client client, int& argc,
   auto destination_object_name = ConsumeArg(argc, argv);
   //! [copy object]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string source_bucket_name,
      std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name) {
-    gcs::ObjectMetadata new_copy_meta =
+    StatusOr<gcs::ObjectMetadata> new_copy_meta =
         client.CopyObject(source_bucket_name, source_object_name,
                           destination_bucket_name, destination_object_name);
-    std::cout << "Object copied. The full metadata after the copy is: "
-              << new_copy_meta << std::endl;
+    if (not new_copy_meta.ok()) {
+      std::cerr << "Error copying object " << source_bucket_name
+                << " in bucket " << source_bucket_name << " to bucket "
+                << destination_bucket_name << " with name "
+                << destination_object_name
+                << ", status=" << new_copy_meta.status() << std::endl;
+      return;
+    }
+    std::cout << "Successfully copied " << source_object_name << " in bucket "
+              << source_bucket_name << " to bucket " << new_copy_meta->bucket()
+              << " with name " << new_copy_meta->name()
+              << ".\nThe full metadata after the copy is: " << *new_copy_meta
+              << std::endl;
   }
   //! [copy object]
   (std::move(client), source_bucket_name, source_object_name,
@@ -205,14 +217,26 @@ void CopyEncryptedObject(google::cloud::storage::Client client, int& argc,
   auto key = ConsumeArg(argc, argv);
   //! [copy encrypted object]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string source_bucket_name,
      std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name, std::string key_base64) {
-    gcs::ObjectMetadata new_copy_meta = client.CopyObject(
+    StatusOr<gcs::ObjectMetadata> new_copy_meta = client.CopyObject(
         source_bucket_name, source_object_name, destination_bucket_name,
         destination_object_name, gcs::EncryptionKey::FromBase64Key(key_base64));
-    std::cout << "Object copied. The full metadata after the copy is: "
-              << new_copy_meta << std::endl;
+    if (not new_copy_meta.ok()) {
+      std::cerr << "Error copying object " << source_bucket_name
+                << " in bucket " << source_bucket_name << " to bucket "
+                << destination_bucket_name << " with name "
+                << destination_object_name
+                << ", status=" << new_copy_meta.status() << std::endl;
+      return;
+    }
+    std::cout << "Successfully copied " << source_object_name << " in bucket "
+              << source_bucket_name << " to bucket " << new_copy_meta->bucket()
+              << " with name " << new_copy_meta->name()
+              << ".\nThe full metadata after the copy is: " << *new_copy_meta
+              << std::endl;
   }
   //! [copy encrypted object]
   (std::move(client), source_bucket_name, source_object_name,
@@ -1091,8 +1115,8 @@ void SetObjectEventBasedHold(google::cloud::storage::Client client, int& argc,
       return;
     }
 
-    std::cout << "The event hold for object " << updated->name() << " in bucket "
-              << updated->bucket() << " is "
+    std::cout << "The event hold for object " << updated->name()
+              << " in bucket " << updated->bucket() << " is "
               << (updated->event_based_hold() ? "enabled" : "disabled")
               << std::endl;
   }
