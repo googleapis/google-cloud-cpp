@@ -797,13 +797,20 @@ void ComposeObject(google::cloud::storage::Client client, int& argc,
   }
   //! [compose object] [START storage_compose_file]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name,
      std::string destination_object_name,
      std::vector<gcs::ComposeSourceObject> compose_objects) {
-    gcs::ObjectMetadata composed_object = client.ComposeObject(
+    StatusOr<gcs::ObjectMetadata> composed_object = client.ComposeObject(
         bucket_name, compose_objects, destination_object_name);
-    std::cout << "Composed new object " << destination_object_name
-              << " Metadata: " << composed_object << std::endl;
+    if (not composed_object.ok()) {
+      std::cerr << "Error composing objects in bucket " << bucket_name
+                << ", status=" << composed_object.status() << std::endl;
+      return;
+    }
+    std::cout << "Composed new object " << composed_object->name()
+              << " in bucket " << composed_object->bucket()
+              << "\nFull metadata: " << *composed_object << std::endl;
   }
   //! [compose object] [END storage_compose_file]
   (std::move(client), bucket_name, destination_object_name,
@@ -827,14 +834,21 @@ void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
   }
   //! [compose object from encrypted objects]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name,
      std::string destination_object_name, std::string base64_aes256_key,
      std::vector<gcs::ComposeSourceObject> compose_objects) {
-    gcs::ObjectMetadata composed_object = client.ComposeObject(
+    StatusOr<gcs::ObjectMetadata> composed_object = client.ComposeObject(
         bucket_name, compose_objects, destination_object_name,
         gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
-    std::cout << "Composed new object " << destination_object_name
-              << " Metadata: " << composed_object << std::endl;
+    if (not composed_object.ok()) {
+      std::cerr << "Error composing objects in bucket " << bucket_name
+                << ", status=" << composed_object.status() << std::endl;
+      return;
+    }
+    std::cout << "Composed new object " << composed_object->name()
+              << " in bucket " << composed_object->bucket()
+              << "\nFull metadata: " << *composed_object << std::endl;
   }
   //! [compose object from encrypted objects]
   (std::move(client), bucket_name, destination_object_name, base64_aes256_key,
@@ -1249,14 +1263,20 @@ void CreateGetSignedUrl(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   //! [sign url] [START storage_sign_url]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    std::string signed_url = client.CreateV2SignedUrl(
+    StatusOr<std::string> signed_url = client.CreateV2SignedUrl(
         "GET", std::move(bucket_name), std::move(object_name),
         gcs::ExpirationTime(std::chrono::system_clock::now() +
                             std::chrono::minutes(15)));
-    std::cout << "The signed url is: " << signed_url << "\n\n"
+    if (not signed_url.ok()) {
+      std::cerr << "Error creating signed URL, status=" << signed_url.status()
+                << std::endl;
+      return;
+    }
+    std::cout << "The signed url is: " << *signed_url << "\n\n"
               << "You can use this URL with any user agent, for example:\n"
-              << "curl '" << signed_url << "'" << std::endl;
+              << "curl '" << *signed_url << "'" << std::endl;
   }
   //! [sign url] [END storage_sign_url]
   (std::move(client), bucket_name, object_name);
@@ -1271,16 +1291,22 @@ void CreatePutSignedUrl(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   //! [create put signed url]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    std::string signed_url = client.CreateV2SignedUrl(
+    StatusOr<std::string> signed_url = client.CreateV2SignedUrl(
         "PUT", std::move(bucket_name), std::move(object_name),
         gcs::ExpirationTime(std::chrono::system_clock::now() +
                             std::chrono::minutes(15)),
         gcs::ContentType("application/octet-stream"));
-    std::cout << "The signed url is: " << signed_url << "\n\n"
+    if (not signed_url.ok()) {
+      std::cerr << "Error creating signed URL, status=" << signed_url.status()
+                << std::endl;
+      return;
+    }
+    std::cout << "The signed url is: " << *signed_url << "\n\n"
               << "You can use this URL with any user agent, for example:\n"
               << "curl -X PUT -H 'Content-Type: application/octet-stream'"
-              << " --upload-file my-file '" << signed_url << "'" << std::endl;
+              << " --upload-file my-file '" << *signed_url << "'" << std::endl;
   }
   //! [create put signed url]
   (std::move(client), bucket_name, object_name);
