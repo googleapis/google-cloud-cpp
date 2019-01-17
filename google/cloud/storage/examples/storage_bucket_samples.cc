@@ -56,7 +56,7 @@ void ListBuckets(google::cloud::storage::Client client, int& argc,
     for (auto&& meta : client.ListBuckets()) {
       if (not meta.ok()) {
         std::cerr << "Error reading bucket list for default project"
-                  << ", status=" << meta.status();
+                  << ", status=" << meta.status() << std::endl;
         return;
       }
       std::cout << meta->name() << std::endl;
@@ -83,7 +83,7 @@ void ListBucketsForProject(google::cloud::storage::Client client, int& argc,
     for (auto&& meta : client.ListBucketsForProject(project_id)) {
       if (not meta.ok()) {
         std::cerr << "Error reading bucket list for project " << project_id
-                  << ", status=" << meta.status();
+                  << ", status=" << meta.status() << std::endl;
         return;
       }
       std::cout << meta->name() << std::endl;
