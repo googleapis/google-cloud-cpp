@@ -227,18 +227,19 @@ TEST_F(ObjectMediaIntegrationTest, UploadFile) {
   WriteRandomLines(os, expected);
   os.close();
 
-  ObjectMetadata meta = client.UploadFile(file_name, bucket_name, object_name,
-                                          IfGenerationMatch(0));
-  EXPECT_EQ(object_name, meta.name());
-  EXPECT_EQ(bucket_name, meta.bucket());
+  StatusOr<ObjectMetadata> meta = client.UploadFile(
+      file_name, bucket_name, object_name, IfGenerationMatch(0));
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name, meta->bucket());
   auto expected_str = expected.str();
-  ASSERT_EQ(expected_str.size(), meta.size());
+  ASSERT_EQ(expected_str.size(), meta->size());
 
   // Create a iostream to read the object back.
   auto stream = client.ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(actual.empty());
-  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
+  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
   StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
@@ -255,11 +256,12 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileEmpty) {
   // Create a file with the contents to upload.
   std::ofstream(file_name).close();
 
-  ObjectMetadata meta = client.UploadFile(file_name, bucket_name, object_name,
-                                          IfGenerationMatch(0));
-  EXPECT_EQ(object_name, meta.name());
-  EXPECT_EQ(bucket_name, meta.bucket());
-  EXPECT_EQ(0U, meta.size());
+  StatusOr<ObjectMetadata> meta = client.UploadFile(
+      file_name, bucket_name, object_name, IfGenerationMatch(0));
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name, meta->bucket());
+  EXPECT_EQ(0U, meta->size());
 
   // Create a iostream to read the object back.
   auto stream = client.ReadObject(bucket_name, object_name);
@@ -279,22 +281,11 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileMissingFileFailure) {
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        client.UploadFile(file_name, bucket_name, object_name,
-                          IfGenerationMatch(0));
-      } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr(file_name));
-        throw;
-      },
-      std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      client.UploadFile(file_name, bucket_name, object_name,
-                        IfGenerationMatch(0)),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  StatusOr<ObjectMetadata> meta = client.UploadFile(
+      file_name, bucket_name, object_name, IfGenerationMatch(0));
+  EXPECT_FALSE(meta.ok());
+  EXPECT_EQ(StatusCode::kNotFound, meta.status().code());
+  EXPECT_THAT(meta.status().message(), HasSubstr(file_name));
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileUploadFailure) {
@@ -313,22 +304,10 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileUploadFailure) {
 
   // Trying to upload the file to the same object with the IfGenerationMatch(0)
   // condition should fail because the object already exists.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        client.UploadFile(file_name, bucket_name, object_name,
-                          IfGenerationMatch(0));
-      } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("[FAILED_PRECONDITION]"));
-        throw;
-      },
-      std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      client.UploadFile(file_name, bucket_name, object_name,
-                        IfGenerationMatch(0)),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  StatusOr<ObjectMetadata> upload = client.UploadFile(
+      file_name, bucket_name, object_name, IfGenerationMatch(0));
+  EXPECT_FALSE(upload.ok());
+  EXPECT_EQ(StatusCode::kFailedPrecondition, upload.status().code());
 
   StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status.status();
@@ -339,7 +318,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileNonRegularWarning) {
   // We need to create a non-regular file that is also readable, this is easy to
   // do on Linux, and hard to do on the other platforms we support, so just run
   // the test there.
-#if GTEST_OS_LINUX
+#if GTEST_OS_LINUX || GTEST_OS_MAC
   Client client;
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
@@ -356,10 +335,10 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileNonRegularWarning) {
   auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
 
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.UploadFile(file_name, bucket_name, object_name,
                         IfGenerationMatch(0), DisableMD5Hash(true));
-
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
   LogSink::Instance().RemoveBackend(id);
 
   auto count = std::count_if(
@@ -404,15 +383,16 @@ TEST_F(ObjectMediaIntegrationTest, XmlUploadFile) {
   }
   os.close();
 
-  ObjectMetadata meta = client.UploadFile(file_name, bucket_name, object_name,
-                                          IfGenerationMatch(0), Fields(""));
+  StatusOr<ObjectMetadata> meta = client.UploadFile(
+      file_name, bucket_name, object_name, IfGenerationMatch(0), Fields(""));
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
   auto expected_str = expected.str();
 
   // Create a iostream to read the object back.
   auto stream = client.ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(actual.empty());
-  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
+  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
   StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
@@ -434,23 +414,24 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableBySize) {
   WriteRandomLines(os, expected);
   os.close();
 
-  ObjectMetadata meta = client.UploadFile(file_name, bucket_name, object_name,
-                                          IfGenerationMatch(0));
-  EXPECT_EQ(object_name, meta.name());
-  EXPECT_EQ(bucket_name, meta.bucket());
+  StatusOr<ObjectMetadata> meta = client.UploadFile(
+      file_name, bucket_name, object_name, IfGenerationMatch(0));
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name, meta->bucket());
   auto expected_str = expected.str();
-  ASSERT_EQ(expected_str.size(), meta.size());
+  ASSERT_EQ(expected_str.size(), meta->size());
 
   if (UsingTestbench()) {
-    ASSERT_TRUE(meta.has_metadata("x_testbench_upload"));
-    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+    ASSERT_TRUE(meta->has_metadata("x_testbench_upload"));
+    EXPECT_EQ("resumable", meta->metadata("x_testbench_upload"));
   }
 
   // Create a iostream to read the object back.
   auto stream = client.ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(actual.empty());
-  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
+  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
   StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
@@ -471,24 +452,25 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableByOption) {
   WriteRandomLines(os, expected);
   os.close();
 
-  ObjectMetadata meta =
+  StatusOr<ObjectMetadata> meta =
       client.UploadFile(file_name, bucket_name, object_name,
                         IfGenerationMatch(0), NewResumableUploadSession());
-  EXPECT_EQ(object_name, meta.name());
-  EXPECT_EQ(bucket_name, meta.bucket());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name, meta->bucket());
   auto expected_str = expected.str();
-  ASSERT_EQ(expected_str.size(), meta.size());
+  ASSERT_EQ(expected_str.size(), meta->size());
 
   if (UsingTestbench()) {
-    ASSERT_TRUE(meta.has_metadata("x_testbench_upload"));
-    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+    ASSERT_TRUE(meta->has_metadata("x_testbench_upload"));
+    EXPECT_EQ("resumable", meta->metadata("x_testbench_upload"));
   }
 
   // Create a iostream to read the object back.
   auto stream = client.ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(actual.empty());
-  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
+  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
   StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
@@ -515,18 +497,19 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableQuantum) {
                    128);
   os.close();
 
-  ObjectMetadata meta = client.UploadFile(file_name, bucket_name, object_name,
-                                          IfGenerationMatch(0));
-  EXPECT_EQ(object_name, meta.name());
-  EXPECT_EQ(bucket_name, meta.bucket());
+  StatusOr<ObjectMetadata> meta = client.UploadFile(
+      file_name, bucket_name, object_name, IfGenerationMatch(0));
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name, meta->bucket());
   auto expected_str = expected.str();
-  ASSERT_EQ(expected_str.size(), meta.size());
+  ASSERT_EQ(expected_str.size(), meta->size());
 
   // Create a iostream to read the object back.
   auto stream = client.ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(actual.empty());
-  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
+  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
   StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
@@ -552,18 +535,19 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableNonQuantum) {
   WriteRandomLines(os, expected, desired_size / 128, 128);
   os.close();
 
-  ObjectMetadata meta = client.UploadFile(file_name, bucket_name, object_name,
-                                          IfGenerationMatch(0));
-  EXPECT_EQ(object_name, meta.name());
-  EXPECT_EQ(bucket_name, meta.bucket());
+  StatusOr<ObjectMetadata> meta = client.UploadFile(
+      file_name, bucket_name, object_name, IfGenerationMatch(0));
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name, meta->bucket());
   auto expected_str = expected.str();
-  ASSERT_EQ(expected_str.size(), meta.size());
+  ASSERT_EQ(expected_str.size(), meta->size());
 
   // Create a iostream to read the object back.
   auto stream = client.ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(actual.empty());
-  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
+  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
   StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
@@ -582,19 +566,9 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableUploadFailure) {
   std::ofstream(file_name) << LoremIpsum();
 
   // Trying to upload the file to a non-existing bucket should fail.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        client.UploadFile(file_name, bucket_name, object_name,
-                          IfGenerationMatch(0));
-      } catch (std::runtime_error const& ex) { throw; },
-      std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      client.UploadFile(file_name, bucket_name, object_name,
-                        IfGenerationMatch(0)),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  StatusOr<ObjectMetadata> meta = client.UploadFile(
+      file_name, bucket_name, object_name, IfGenerationMatch(0));
+  EXPECT_FALSE(meta.ok()) << "value=" << meta.value();
 
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }

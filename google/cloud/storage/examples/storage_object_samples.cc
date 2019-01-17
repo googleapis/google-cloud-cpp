@@ -440,13 +440,21 @@ void UploadFile(google::cloud::storage::Client client, int& argc,
 
   //! [upload file] [START storage_upload_file]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string file_name, std::string bucket_name,
      std::string object_name) {
     // Note that the client library automatically computes a hash on the
     // client-side to verify data integrity during transmission.
-    gcs::ObjectMetadata meta = client.UploadFile(
+    StatusOr<gcs::ObjectMetadata> meta = client.UploadFile(
         file_name, bucket_name, object_name, gcs::IfGenerationMatch(0));
-    std::cout << "Uploaded " << file_name << " to " << object_name << std::endl;
+    if (not meta.ok()) {
+      std::cerr << "Error uploading file " << file_name << " to bucket "
+                << bucket_name << " as object " << object_name
+                << ", status=" << meta.status() << std::endl;
+      return;
+    }
+    std::cout << "Uploaded " << file_name << " to " << meta->name()
+              << "\nFull metadata: " << *meta << std::endl;
   }
   //! [upload file] [END storage_upload_file]
   (std::move(client), file_name, bucket_name, object_name);
@@ -464,14 +472,22 @@ void UploadFileResumable(google::cloud::storage::Client client, int& argc,
 
   //! [upload file resumable]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string file_name, std::string bucket_name,
      std::string object_name) {
     // Note that the client library automatically computes a hash on the
     // client-side to verify data integrity during transmission.
-    gcs::ObjectMetadata meta = client.UploadFile(
+    StatusOr<gcs::ObjectMetadata> meta = client.UploadFile(
         file_name, bucket_name, object_name, gcs::IfGenerationMatch(0),
         gcs::NewResumableUploadSession());
-    std::cout << "Uploaded " << file_name << " to " << object_name << std::endl;
+    if (not meta.ok()) {
+      std::cerr << "Error uploading file " << file_name << " to bucket "
+                << bucket_name << " as object " << object_name
+                << ", status=" << meta.status() << std::endl;
+      return;
+    }
+    std::cout << "Uploaded " << file_name << " to " << meta->name()
+              << "\nFull metadata: " << *meta << std::endl;
   }
   //! [upload file resumable]
   (std::move(client), file_name, bucket_name, object_name);
@@ -1091,8 +1107,8 @@ void SetObjectEventBasedHold(google::cloud::storage::Client client, int& argc,
       return;
     }
 
-    std::cout << "The event hold for object " << updated->name() << " in bucket "
-              << updated->bucket() << " is "
+    std::cout << "The event hold for object " << updated->name()
+              << " in bucket " << updated->bucket() << " is "
               << (updated->event_based_hold() ? "enabled" : "disabled")
               << std::endl;
   }
