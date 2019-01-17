@@ -792,11 +792,11 @@ TEST_F(ObjectIntegrationTest, ComposeSimple) {
   auto composed_object_name = MakeRandomObjectName();
   std::vector<ComposeSourceObject> source_objects = {{object_name},
                                                      {object_name}};
-  ObjectMetadata composed_meta = client.ComposeObject(
+  StatusOr<ObjectMetadata> composed_meta = client.ComposeObject(
       bucket_name, source_objects, composed_object_name,
       WithObjectMetadata(ObjectMetadata().set_content_type("plain/text")));
-
-  EXPECT_EQ(meta->size() * 2, composed_meta.size());
+  ASSERT_TRUE(composed_meta.ok()) << "status=" << composed_meta.status();
+  EXPECT_EQ(meta->size() * 2, composed_meta->size());
 
   StatusOr<void> status =
       client.DeleteObject(bucket_name, composed_object_name);
@@ -829,10 +829,11 @@ TEST_F(ObjectIntegrationTest, ComposedUsingEncryptedObject) {
   auto composed_object_name = MakeRandomObjectName();
   std::vector<ComposeSourceObject> source_objects = {{object_name},
                                                      {object_name}};
-  ObjectMetadata composed_meta = client.ComposeObject(
+  StatusOr<ObjectMetadata> composed_meta = client.ComposeObject(
       bucket_name, source_objects, composed_object_name, EncryptionKey(key));
+  ASSERT_TRUE(composed_meta.ok()) << "status=" << composed_meta.status();
 
-  EXPECT_EQ(meta->size() * 2, composed_meta.size());
+  EXPECT_EQ(meta->size() * 2, composed_meta->size());
   StatusOr<void> status =
       client.DeleteObject(bucket_name, composed_object_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();
@@ -1404,7 +1405,8 @@ TEST_F(ObjectIntegrationTest, PatchObjectFailure) {
   auto object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
-  auto patch = client.PatchObject(bucket_name, object_name, ObjectMetadataPatchBuilder());
+  auto patch = client.PatchObject(bucket_name, object_name,
+                                  ObjectMetadataPatchBuilder());
   EXPECT_FALSE(patch.ok()) << "value=" << patch.value();
 }
 
@@ -1417,9 +1419,9 @@ TEST_F(ObjectIntegrationTest, ComposeFailure) {
                                                      {object_name}};
 
   // This operation should fail because the source object does not exist.
-  TestPermanentFailure([&] {
-    client.ComposeObject(bucket_name, source_objects, composed_object_name);
-  });
+  auto meta =
+      client.ComposeObject(bucket_name, source_objects, composed_object_name);
+  EXPECT_FALSE(meta.ok()) << "value=" << meta.value();
 }
 
 TEST_F(ObjectIntegrationTest, RewriteFailure) {

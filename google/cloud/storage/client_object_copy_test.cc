@@ -149,29 +149,36 @@ TEST_F(ObjectCopyTest, ComposeObject) {
 
   auto actual = client.ComposeObject(
       "test-bucket-name", {{"object1"}, {"object2"}}, "test-object-name");
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(ObjectCopyTest, ComposeObjectTooManyFailures) {
-  testing::TooManyFailuresTest<ObjectMetadata>(
+  testing::TooManyFailuresStatusTest<ObjectMetadata>(
       mock, EXPECT_CALL(*mock, ComposeObject(_)),
       [](Client& client) {
-        client.ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
-                             "test-object-name");
+        return client
+            .ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
+                           "test-object-name")
+            .status();
       },
       [](Client& client) {
-        client.ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
-                             "test-object-name", IfGenerationMatch(7));
+        return client
+            .ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
+                           "test-object-name", IfGenerationMatch(7))
+            .status();
       },
       "ComposeObject");
 }
 
 TEST_F(ObjectCopyTest, ComposeObjectPermanentFailure) {
-  testing::PermanentFailureTest<ObjectMetadata>(
+  testing::PermanentFailureStatusTest<ObjectMetadata>(
       *client, EXPECT_CALL(*mock, ComposeObject(_)),
       [](Client& client) {
-        client.ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
-                             "test-object-name");
+        return client
+            .ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
+                           "test-object-name")
+            .status();
       },
       "ComposeObject");
 }

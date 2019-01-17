@@ -773,13 +773,20 @@ void ComposeObject(google::cloud::storage::Client client, int& argc,
   }
   //! [compose object] [START storage_compose_file]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name,
      std::string destination_object_name,
      std::vector<gcs::ComposeSourceObject> compose_objects) {
-    gcs::ObjectMetadata composed_object = client.ComposeObject(
+    StatusOr<gcs::ObjectMetadata> composed_object = client.ComposeObject(
         bucket_name, compose_objects, destination_object_name);
-    std::cout << "Composed new object " << destination_object_name
-              << " Metadata: " << composed_object << std::endl;
+    if (not composed_object.ok()) {
+      std::cerr << "Error composing objects in bucket " << bucket_name
+                << ", status=" << composed_object.status() << std::endl;
+      return;
+    }
+    std::cout << "Composed new object " << composed_object->name()
+              << " in bucket " << composed_object->bucket()
+              << "\nFull metadata: " << *composed_object << std::endl;
   }
   //! [compose object] [END storage_compose_file]
   (std::move(client), bucket_name, destination_object_name,
@@ -803,14 +810,21 @@ void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
   }
   //! [compose object from encrypted objects]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name,
      std::string destination_object_name, std::string base64_aes256_key,
      std::vector<gcs::ComposeSourceObject> compose_objects) {
-    gcs::ObjectMetadata composed_object = client.ComposeObject(
+    StatusOr<gcs::ObjectMetadata> composed_object = client.ComposeObject(
         bucket_name, compose_objects, destination_object_name,
         gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
-    std::cout << "Composed new object " << destination_object_name
-              << " Metadata: " << composed_object << std::endl;
+    if (not composed_object.ok()) {
+      std::cerr << "Error composing objects in bucket " << bucket_name
+                << ", status=" << composed_object.status() << std::endl;
+      return;
+    }
+    std::cout << "Composed new object " << composed_object->name()
+              << " in bucket " << composed_object->bucket()
+              << "\nFull metadata: " << *composed_object << std::endl;
   }
   //! [compose object from encrypted objects]
   (std::move(client), bucket_name, destination_object_name, base64_aes256_key,
@@ -1091,8 +1105,8 @@ void SetObjectEventBasedHold(google::cloud::storage::Client client, int& argc,
       return;
     }
 
-    std::cout << "The event hold for object " << updated->name() << " in bucket "
-              << updated->bucket() << " is "
+    std::cout << "The event hold for object " << updated->name()
+              << " in bucket " << updated->bucket() << " is "
               << (updated->event_based_hold() ? "enabled" : "disabled")
               << std::endl;
   }
