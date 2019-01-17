@@ -74,33 +74,40 @@ TEST_F(ObjectCopyTest, CopyObject) {
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
 
-  ObjectMetadata actual =
+  StatusOr<ObjectMetadata> actual =
       client.CopyObject("source-bucket-name", "source-object-name",
                         "test-bucket-name", "test-object-name");
-  EXPECT_EQ(expected, actual);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(ObjectCopyTest, CopyObjectTooManyFailures) {
-  testing::TooManyFailuresTest<ObjectMetadata>(
+  testing::TooManyFailuresStatusTest<ObjectMetadata>(
       mock, EXPECT_CALL(*mock, CopyObject(_)),
       [](Client& client) {
-        client.CopyObject("source-bucket-name", "source-object-name",
-                          "test-bucket-name", "test-object-name");
+        return client
+            .CopyObject("source-bucket-name", "source-object-name",
+                        "test-bucket-name", "test-object-name")
+            .status();
       },
       [](Client& client) {
-        client.CopyObject("source-bucket-name", "source-object-name",
-                          "test-bucket-name", "test-object-name",
-                          IfGenerationMatch(0));
+        return client
+            .CopyObject("source-bucket-name", "source-object-name",
+                        "test-bucket-name", "test-object-name",
+                        IfGenerationMatch(0))
+            .status();
       },
       "CopyObject");
 }
 
 TEST_F(ObjectCopyTest, CopyObjectPermanentFailure) {
-  testing::PermanentFailureTest<ObjectMetadata>(
+  testing::PermanentFailureStatusTest<ObjectMetadata>(
       *client, EXPECT_CALL(*mock, CopyObject(_)),
       [](Client& client) {
-        client.CopyObject("source-bucket-name", "source-object-name",
-                          "test-bucket-name", "test-object-name");
+        return client
+            .CopyObject("source-bucket-name", "source-object-name",
+                        "test-bucket-name", "test-object-name")
+            .status();
       },
       "CopyObject");
 }
