@@ -145,8 +145,9 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
   return ObjectMetadata::ParseFromString(upload_response->payload);
 }
 
-void Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
-                              std::string const& file_name) {
+StatusOr<void> Client::DownloadFileImpl(
+    internal::ReadObjectRangeRequest const& request,
+    std::string const& file_name) {
   // TODO(#1665) - use Status to report errors.
   std::unique_ptr<internal::ObjectReadStreambuf> streambuf =
       raw_client_->ReadObject(request).value();
@@ -156,17 +157,20 @@ void Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
   auto report_error = [&](char const* func, char const* what) {
     std::ostringstream msg;
     msg << func << "(" << request << ", " << file_name << "): " << what
-        << " - status=" << stream.status();
-    google::cloud::internal::ThrowRuntimeError(std::move(msg).str());
+        << " - status.message=" << stream.status().message();
+    return Status(stream.status().code(), std::move(msg).str());
   };
   if (not stream.status().ok()) {
-    report_error(__func__, "cannot open download stream");
+    return report_error(__func__, "cannot open destination file");
   }
 
   // Open the destination file, and immediate raise an exception on failure.
   std::ofstream os(file_name);
   if (not os.is_open()) {
-    report_error(__func__, "cannot open destination file");
+    std::ostringstream msg;
+    msg << __func__ << "(" << request << ", " << file_name << "): "
+        << "cannot open destination file";
+    return Status(StatusCode::kInvalidArgument, std::move(msg).str());
   }
 
   std::string buffer;
@@ -177,11 +181,15 @@ void Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
   } while (os.good() and stream.good());
   os.close();
   if (not os.good()) {
-    report_error(__func__, "error closing destination file");
+    std::ostringstream msg;
+    msg << __func__ << "(" << request << ", " << file_name << "): "
+        << "cannot close destination file";
+    return Status(StatusCode::kUnknown, std::move(msg).str());
   }
   if (not stream.status().ok()) {
-    report_error(__func__, "error in download stream");
+    return report_error(__func__, "error in download stream");
   }
+  return Status();
 }
 
 StatusOr<std::string> Client::SignUrl(internal::SignUrlRequest const& request) {

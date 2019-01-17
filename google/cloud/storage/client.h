@@ -923,9 +923,6 @@ class Client {
    *   `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *   `IfMetagenerationNotMatch`, `Generation`, `ReadRange`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -933,12 +930,13 @@ class Client {
    * @snippet storage_object_samples.cc download file
    */
   template <typename... Options>
-  void DownloadToFile(std::string const& bucket_name,
-                      std::string const& object_name,
-                      std::string const& file_name, Options&&... options) {
+  StatusOr<void> DownloadToFile(std::string const& bucket_name,
+                                std::string const& object_name,
+                                std::string const& file_name,
+                                Options&&... options) {
     internal::ReadObjectRangeRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    DownloadFileImpl(request, file_name);
+    return DownloadFileImpl(request, file_name);
   }
 
   /**
@@ -2342,8 +2340,9 @@ class Client {
       std::istream& source, std::uint64_t source_size,
       internal::ResumableUploadRequest const& request);
 
-  void DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
-                        std::string const& file_name);
+  StatusOr<void> DownloadFileImpl(
+      internal::ReadObjectRangeRequest const& request,
+      std::string const& file_name);
 
   StatusOr<std::string> SignUrl(internal::SignUrlRequest const& request);
 
