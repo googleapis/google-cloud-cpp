@@ -936,7 +936,12 @@ void LockRetentionPolicy(google::cloud::storage::Client client, int& argc,
                 << ", status=" << original.status() << std::endl;
       return;
     }
-    client.LockBucketRetentionPolicy(bucket_name, original->metageneration());
+    StatusOr<void> status = client.LockBucketRetentionPolicy(
+        bucket_name, original->metageneration());
+    if (not status.ok()) {
+      std::cerr << "Error locking bucket retention policy for bucket "
+                << bucket_name << ", status=" << status.status() << std::endl;
+    }
     std::cout << "Retention policy successfully locked for bucket "
               << bucket_name << std::endl;
   }
