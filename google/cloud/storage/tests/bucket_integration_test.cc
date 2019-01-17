@@ -66,7 +66,10 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   Client client;
 
   auto buckets = client.ListBucketsForProject(project_id);
-  std::vector<BucketMetadata> initial_buckets(buckets.begin(), buckets.end());
+  std::vector<BucketMetadata> initial_buckets;
+  for (auto&& b : buckets) {
+    initial_buckets.emplace_back(std::move(b).value());
+  }
   auto name_counter = [](std::string const& name,
                          std::vector<BucketMetadata> const& list) {
     return std::count_if(
@@ -83,7 +86,10 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   EXPECT_EQ(bucket_name, insert_meta->name());
 
   buckets = client.ListBucketsForProject(project_id);
-  std::vector<BucketMetadata> current_buckets(buckets.begin(), buckets.end());
+  std::vector<BucketMetadata> current_buckets;
+  for (auto&& b : buckets) {
+    current_buckets.emplace_back(std::move(b).value());
+  }
   EXPECT_EQ(1U, name_counter(bucket_name, current_buckets));
 
   StatusOr<BucketMetadata> get_meta = client.GetBucketMetadata(bucket_name);
@@ -131,7 +137,10 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   StatusOr<void> status = client.DeleteBucket(bucket_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();
   buckets = client.ListBucketsForProject(project_id);
-  current_buckets.assign(buckets.begin(), buckets.end());
+  current_buckets.clear();
+  for (auto&& b : buckets) {
+    current_buckets.emplace_back(std::move(b).value());
+  }
   EXPECT_EQ(0U, name_counter(bucket_name, current_buckets));
 }
 
@@ -651,8 +660,9 @@ TEST_F(BucketIntegrationTest, BucketLock) {
   ASSERT_TRUE(after_setting_retention_policy.ok())
       << "status=" << after_setting_retention_policy.status();
 
-  client.LockBucketRetentionPolicy(
+  auto lock_status = client.LockBucketRetentionPolicy(
       bucket_name, after_setting_retention_policy->metageneration());
+  ASSERT_TRUE(lock_status.ok()) << "status=" << lock_status.status();
 
   auto status = client.DeleteBucket(bucket_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();
@@ -664,8 +674,8 @@ TEST_F(BucketIntegrationTest, BucketLockFailure) {
   Client client;
 
   // This should fail because the bucket does not exist.
-  TestPermanentFailure(
-      [&] { client.LockBucketRetentionPolicy(bucket_name, 42U); });
+  StatusOr<void> status = client.LockBucketRetentionPolicy(bucket_name, 42U);
+  EXPECT_FALSE(status.ok());
 }
 
 TEST_F(BucketIntegrationTest, ListFailure) {
@@ -673,10 +683,9 @@ TEST_F(BucketIntegrationTest, ListFailure) {
 
   // Project IDs must end with a letter or number, test with an invalid ID.
   auto stream = client.ListBucketsForProject("Invalid-project-id-");
-  TestPermanentFailure([&stream] {
-    std::vector<BucketMetadata> results;
-    results.assign(stream.begin(), stream.end());
-  });
+  auto it = stream.begin();
+  StatusOr<BucketMetadata> metadata = *it;
+  EXPECT_FALSE(metadata.ok()) << "value=" << metadata.value();
 }
 
 TEST_F(BucketIntegrationTest, CreateFailure) {

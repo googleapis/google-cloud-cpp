@@ -33,10 +33,10 @@ class ListBucketsIterator {
   //@{
   /// @name Iterator traits
   using iterator_category = std::input_iterator_tag;
-  using value_type = BucketMetadata;
+  using value_type = StatusOr<BucketMetadata>;
   using difference_type = std::ptrdiff_t;
-  using pointer = BucketMetadata*;
-  using reference = BucketMetadata&;
+  using pointer = value_type*;
+  using reference = value_type&;
   //@}
 
   ListBucketsIterator() : owner_(nullptr) {}
@@ -48,23 +48,30 @@ class ListBucketsIterator {
     return tmp;
   }
 
-  BucketMetadata const* operator->() const { return value_.operator->(); }
-  BucketMetadata* operator->() { return value_.operator->(); }
+  value_type const* operator->() const { return &value_; }
+  value_type* operator->() { return &value_; }
 
-  BucketMetadata const& operator*() const& { return *value_; }
-  BucketMetadata& operator*() & { return *value_; }
+  value_type const& operator*() const& { return value_; }
+  value_type& operator*() & { return value_; }
 #if GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
-  BucketMetadata const&& operator*() const&& { return *std::move(value_); }
+  value_type const&& operator*() const&& { return std::move(value_); }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
-  BucketMetadata&& operator*() && { return *std::move(value_); }
+  value_type&& operator*() && { return std::move(value_); }
 
   bool operator==(ListBucketsIterator const& rhs) const {
     // All end iterators are equal.
     if (owner_ == nullptr) {
       return rhs.owner_ == nullptr;
     }
-    // All non-end iterators in the same reader are equal.
-    return owner_ == rhs.owner_;
+    // Iterators on different streams are always different.
+    if (owner_ != rhs.owner_) {
+      return false;
+    }
+    // Iterators on the same stream are equal if they point to the same object.
+    if (value_.ok() and rhs.value_.ok()) {
+      return value_.value() == rhs.value_.value();
+    }
+    return value_.status() == rhs.value_.status();
   }
 
   bool operator!=(ListBucketsIterator const& rhs) const {
@@ -73,12 +80,11 @@ class ListBucketsIterator {
 
  private:
   friend class ListBucketsReader;
-  explicit ListBucketsIterator(ListBucketsReader* owner,
-                               google::cloud::optional<BucketMetadata> value);
+  explicit ListBucketsIterator(ListBucketsReader* owner, value_type value);
 
  private:
   ListBucketsReader* owner_;
-  google::cloud::optional<BucketMetadata> value_;
+  value_type value_;
 };
 
 /**
@@ -126,7 +132,7 @@ class ListBucketsReader {
    *
    * @return an unset optional if there are no more buckets in the stream.
    */
-  google::cloud::optional<BucketMetadata> GetNext();
+  ListBucketsIterator GetNext();
 
  private:
   std::shared_ptr<internal::RawClient> client_;

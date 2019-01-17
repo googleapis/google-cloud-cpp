@@ -390,12 +390,13 @@ TEST_F(ObjectIntegrationTest, Copy) {
   EXPECT_EQ(source_object_name, source_meta->name());
   EXPECT_EQ(bucket_name, source_meta->bucket());
 
-  ObjectMetadata meta = client.CopyObject(
+  StatusOr<ObjectMetadata> meta = client.CopyObject(
       bucket_name, source_object_name, bucket_name, destination_object_name,
       WithObjectMetadata(ObjectMetadata().set_content_type("text/plain")));
-  EXPECT_EQ(destination_object_name, meta.name());
-  EXPECT_EQ(bucket_name, meta.bucket());
-  EXPECT_EQ("text/plain", meta.content_type());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  EXPECT_EQ(destination_object_name, meta->name());
+  EXPECT_EQ(bucket_name, meta->bucket());
+  EXPECT_EQ("text/plain", meta->content_type());
 
   auto stream = client.ReadObject(bucket_name, destination_object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
@@ -623,14 +624,15 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ASSERT_TRUE(original.ok()) << "status=" << original.status();
 
-  ObjectMetadata meta = client.CopyObject(
+  StatusOr<ObjectMetadata> meta = client.CopyObject(
       bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
       DestinationPredefinedAcl::AuthenticatedRead(), Projection::Full());
-  EXPECT_LT(0, CountMatchingEntities(meta.acl(),
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  EXPECT_LT(0, CountMatchingEntities(meta->acl(),
                                      ObjectAccessControl()
                                          .set_entity("allAuthenticatedUsers")
                                          .set_role("READER")))
-      << meta;
+      << *meta;
 
   StatusOr<void> status = client.DeleteObject(bucket_name, copy_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();
@@ -654,13 +656,14 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ASSERT_TRUE(original.ok()) << "status=" << original.status();
 
-  ObjectMetadata meta = client.CopyObject(
+  StatusOr<ObjectMetadata> meta = client.CopyObject(
       bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
       DestinationPredefinedAcl::BucketOwnerFullControl(), Projection::Full());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
   EXPECT_LT(0, CountMatchingEntities(
-                   meta.acl(),
+                   meta->acl(),
                    ObjectAccessControl().set_entity(owner).set_role("OWNER")))
-      << meta;
+      << *meta;
 
   StatusOr<void> status = client.DeleteObject(bucket_name, copy_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();
@@ -684,13 +687,14 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ASSERT_TRUE(original.ok()) << "status=" << original.status();
 
-  ObjectMetadata meta = client.CopyObject(
+  StatusOr<ObjectMetadata> meta = client.CopyObject(
       bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
       DestinationPredefinedAcl::BucketOwnerRead(), Projection::Full());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
   EXPECT_LT(0, CountMatchingEntities(
-                   meta.acl(),
+                   meta->acl(),
                    ObjectAccessControl().set_entity(owner).set_role("READER")))
-      << meta;
+      << *meta;
 
   StatusOr<void> status = client.DeleteObject(bucket_name, copy_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();
@@ -708,15 +712,16 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclPrivate) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ASSERT_TRUE(original.ok()) << "status=" << original.status();
 
-  ObjectMetadata meta = client.CopyObject(
+  StatusOr<ObjectMetadata> meta = client.CopyObject(
       bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
       DestinationPredefinedAcl::Private(), Projection::Full());
-  ASSERT_TRUE(meta.has_owner());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_TRUE(meta->has_owner());
   EXPECT_LT(
-      0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
-                                               .set_entity(meta.owner().entity)
+      0, CountMatchingEntities(meta->acl(), ObjectAccessControl()
+                                               .set_entity(meta->owner().entity)
                                                .set_role("OWNER")))
-      << meta;
+      << *meta;
 
   StatusOr<void> status = client.DeleteObject(bucket_name, copy_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();
@@ -734,15 +739,16 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclProjectPrivate) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ASSERT_TRUE(original.ok()) << "status=" << original.status();
 
-  ObjectMetadata meta = client.CopyObject(
+  StatusOr<ObjectMetadata> meta = client.CopyObject(
       bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
       DestinationPredefinedAcl::ProjectPrivate(), Projection::Full());
-  ASSERT_TRUE(meta.has_owner());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_TRUE(meta->has_owner());
   EXPECT_LT(
-      0, CountMatchingEntities(meta.acl(), ObjectAccessControl()
-                                               .set_entity(meta.owner().entity)
+      0, CountMatchingEntities(meta->acl(), ObjectAccessControl()
+                                               .set_entity(meta->owner().entity)
                                                .set_role("OWNER")))
-      << meta;
+      << *meta;
 
   StatusOr<void> status = client.DeleteObject(bucket_name, copy_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();
@@ -760,14 +766,15 @@ TEST_F(ObjectIntegrationTest, CopyPredefinedAclPublicRead) {
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ASSERT_TRUE(original.ok()) << "status=" << original.status();
 
-  ObjectMetadata meta = client.CopyObject(
+  StatusOr<ObjectMetadata> meta = client.CopyObject(
       bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
       DestinationPredefinedAcl::PublicRead(), Projection::Full());
+  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
   EXPECT_LT(
       0, CountMatchingEntities(
-             meta.acl(),
+             meta->acl(),
              ObjectAccessControl().set_entity("allUsers").set_role("READER")))
-      << meta;
+      << *meta;
 
   StatusOr<void> status = client.DeleteObject(bucket_name, copy_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();
@@ -1287,10 +1294,9 @@ TEST_F(ObjectIntegrationTest, CopyFailure) {
   auto destination_object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
-  TestPermanentFailure([&] {
-    client.CopyObject(bucket_name, source_object_name, bucket_name,
+  auto meta = client.CopyObject(bucket_name, source_object_name, bucket_name,
                       destination_object_name);
-  });
+  EXPECT_FALSE(meta.ok()) << "value=" << meta.value();
 }
 
 TEST_F(ObjectIntegrationTest, GetObjectMetadataFailure) {

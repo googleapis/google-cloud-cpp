@@ -581,9 +581,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is always idempotent because the `metageneration` parameter
    * is always required, and it acts as a pre-condition on the operation.
@@ -601,13 +598,13 @@ class Client {
    * @snippet storage_bucket_samples.cc remove retention policy
    */
   template <typename... Options>
-  void LockBucketRetentionPolicy(std::string const& bucket_name,
-                                 std::uint64_t metageneration,
-                                 Options&&... options) {
+  StatusOr<void> LockBucketRetentionPolicy(std::string const& bucket_name,
+                                           std::uint64_t metageneration,
+                                           Options&&... options) {
     internal::LockBucketRetentionPolicyRequest request(bucket_name,
                                                        metageneration);
     request.set_multiple_options(std::forward<Options>(options)...);
-    raw_client_->LockBucketRetentionPolicy(request).value();
+    return raw_client_->LockBucketRetentionPolicy(request).status();
   }
   //@}
 
@@ -686,9 +683,6 @@ class Client {
    *     `Projection`, `SourceGeneration`, `UserProject`, and
    *     `WithObjectMetadata`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
    * case, `IfGenerationMatch`.
@@ -700,16 +694,16 @@ class Client {
    * @snippet storage_object_samples.cc copy encrypted object
    */
   template <typename... Options>
-  ObjectMetadata CopyObject(std::string source_bucket_name,
-                            std::string source_object_name,
-                            std::string destination_bucket_name,
-                            std::string destination_object_name,
-                            Options&&... options) {
+  StatusOr<ObjectMetadata> CopyObject(std::string source_bucket_name,
+                                      std::string source_object_name,
+                                      std::string destination_bucket_name,
+                                      std::string destination_object_name,
+                                      Options&&... options) {
     internal::CopyObjectRequest request(
         std::move(source_bucket_name), std::move(source_object_name),
         std::move(destination_bucket_name), std::move(destination_object_name));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CopyObject(request).value();
+    return raw_client_->CopyObject(request);
   }
 
   /**
