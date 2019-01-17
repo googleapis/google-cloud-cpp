@@ -45,9 +45,10 @@ TEST(SignedUrlIntegrationTest, Sign) {
       kJsonKeyfileContents));
 
   auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "test-object");
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
 
-  EXPECT_THAT(actual, HasSubstr("test-bucket"));
-  EXPECT_THAT(actual, HasSubstr("test-object"));
+  EXPECT_THAT(*actual, HasSubstr("test-bucket"));
+  EXPECT_THAT(*actual, HasSubstr("test-object"));
 }
 
 TEST(SignedUrlIntegrationTest, BucketOnly) {
@@ -55,8 +56,9 @@ TEST(SignedUrlIntegrationTest, BucketOnly) {
       kJsonKeyfileContents));
 
   auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "", WithAcl());
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
 
-  EXPECT_THAT(actual, HasSubstr("test-bucket?GoogleAccessId="));
+  EXPECT_THAT(*actual, HasSubstr("test-bucket?GoogleAccessId="));
 }
 
 TEST(SignedUrlIntegrationTest, SignEscape) {
@@ -64,22 +66,18 @@ TEST(SignedUrlIntegrationTest, SignEscape) {
       kJsonKeyfileContents));
 
   auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "test+object");
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
 
-  EXPECT_THAT(actual, HasSubstr("test-bucket"));
-  EXPECT_THAT(actual, HasSubstr("test%2Bobject"));
+  EXPECT_THAT(*actual, HasSubstr("test-bucket"));
+  EXPECT_THAT(*actual, HasSubstr("test%2Bobject"));
 }
 
 TEST(SignedUrlIntegrationTest, SignFailure) {
   Client client(google::cloud::storage::oauth2::CreateAnonymousCredentials());
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(client.CreateV2SignedUrl("GET", "test-bucket", "test-object"),
-               std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      client.CreateV2SignedUrl("GET", "test-bucket", "test-object"),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "test-object");
+  EXPECT_FALSE(actual.ok()) << "value=" << actual.value();
+  EXPECT_EQ(StatusCode::kInvalidArgument, actual.status().code());
 }
 
 }  // namespace
