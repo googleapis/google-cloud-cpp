@@ -1,7 +1,7 @@
 var searchData=
 [
   ['value',['value',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1WellKnownHeader.html#af6bb32431aa4d9b3cd6afd63e2d96af9',1,'google::cloud::storage::v0::internal::WellKnownHeader::value()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1WellKnownParameter.html#a8731d9e6774cfa069477aa5ffdd283aa',1,'google::cloud::storage::v0::internal::WellKnownParameter::value()']]],
-  ['value_5ftype',['value_type',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html#a982118097eeaa42b2f0beaeaddd63b65',1,'google::cloud::storage::v0::ListBucketsIterator::value_type()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsIterator.html#a2a325393b7493f6ab4b1f23187836071',1,'google::cloud::storage::v0::ListObjectsIterator::value_type()']]],
+  ['value_5ftype',['value_type',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html#a9829aec98d8a38d6ea63d5d7776bf55b',1,'google::cloud::storage::v0::ListBucketsIterator::value_type()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsIterator.html#a2a325393b7493f6ab4b1f23187836071',1,'google::cloud::storage::v0::ListObjectsIterator::value_type()']]],
   ['version',['version',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#af378152dc3205064601d548d7582cae1',1,'google::cloud::storage::v0::ClientOptions::version()'],['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a618c9e6a59ba784108f824501f9493c3',1,'google::cloud::storage::v0::version()']]],
   ['version_2ecc',['version.cc',['../version_8cc.html',1,'']]],
   ['version_2eh',['version.h',['../version_8h.html',1,'']]],
