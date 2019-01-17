@@ -37,7 +37,7 @@ var searchData=
   ['createobjectacl',['CreateObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#af40ca462c1c93310c96f35ebf20e9fe7',1,'google::cloud::storage::v0::Client']]],
   ['createserviceaccountcredentialsfromjsoncontents',['CreateServiceAccountCredentialsFromJsonContents',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#a28797e9f185d577df8c017d918dfc06b',1,'google::cloud::storage::v0::oauth2']]],
   ['createserviceaccountcredentialsfromjsonfilepath',['CreateServiceAccountCredentialsFromJsonFilePath',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#a1762a659f1b7bfa87db1183b2fc72385',1,'google::cloud::storage::v0::oauth2']]],
-  ['createv2signedurl',['CreateV2SignedUrl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a77260fb12c54b8f6db447241ba809d29',1,'google::cloud::storage::v0::Client']]],
+  ['createv2signedurl',['CreateV2SignedUrl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ae15d05c54c2e9094719514a5856e1cc6',1,'google::cloud::storage::v0::Client']]],
   ['credentials',['credentials',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a0542df8164fd3ba5a8efcf858b60c923',1,'google::cloud::storage::v0::ClientOptions']]],
   ['currentprogress',['CurrentProgress',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html#ad27282da10ac0f3c45c7a8aa5aafbe68',1,'google::cloud::storage::v0::ObjectRewriter']]],
   ['custom_5fattribute',['custom_attribute',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a28968d2fc6a042b8c752c5806172db1a',1,'google::cloud::storage::v0::NotificationMetadata']]],
