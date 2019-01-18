@@ -147,7 +147,7 @@ void AsyncListClusters(cbt::InstanceAdmin instance_admin,
           for (const auto& cluster : cluster_list.clusters) {
             std::cout << cluster.name() << std::endl;
           }
-          if (not cluster_list.failed_locations.empty()) {
+          if ( !cluster_list.failed_locations.empty()) {
             std::cout << "The Cloud Bigtable service reports that it could not "
                          "retrieve data for the following zones:\n";
             for (const auto& failed_location : cluster_list.failed_locations) {
@@ -184,7 +184,7 @@ void AsyncListAllClusters(cbt::InstanceAdmin instance_admin,
           for (const auto& cluster : cluster_list.clusters) {
             std::cout << cluster.name() << std::endl;
           }
-          if (not cluster_list.failed_locations.empty()) {
+          if ( !cluster_list.failed_locations.empty()) {
             std::cout << "The Cloud Bigtable service reports that it could not "
                          "retrieve data for the following zones:\n";
             for (const auto& failed_location : cluster_list.failed_locations) {
