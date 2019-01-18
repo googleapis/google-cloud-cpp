@@ -27,8 +27,8 @@ namespace internal {
 /// Defines what error codes are permanent errors.
 struct StatusTraits {
   static bool IsPermanentFailure(Status const& status) {
-    return status.code() != StatusCode::kDeadlineExceeded and
-           status.code() != StatusCode::kInternal and
+    return status.code() != StatusCode::kDeadlineExceeded &&
+           status.code() != StatusCode::kInternal &&
            status.code() != StatusCode::kUnavailable;
   }
 };

@@ -62,7 +62,7 @@ void CheckPredicateBecomesFalse(Predicate&& predicate,
       }
     } else if (must_be_false_after < iteration_start) {
       EXPECT_FALSE(actual);
-      if (not actual) {
+      if (!actual) {
         // Terminate the loop early if we can.
         ++false_count;
         break;

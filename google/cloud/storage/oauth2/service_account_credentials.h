@@ -197,7 +197,7 @@ class ServiceAccountCredentials : public Credentials {
     namespace nl = storage::internal::nl;
 
     auto response = request_.MakeRequest(payload_);
-    if (not response.ok()) {
+    if (!response.ok()) {
       return std::move(response).status();
     }
     if (response->status_code >= 300) {
@@ -205,7 +205,7 @@ class ServiceAccountCredentials : public Credentials {
     }
 
     nl::json access_token = nl::json::parse(response->payload, nullptr, false);
-    if (access_token.is_discarded() or
+    if (access_token.is_discarded() ||
         access_token.count("access_token") == 0U or
         access_token.count("expires_in") == 0U or
         access_token.count("token_type") == 0U) {

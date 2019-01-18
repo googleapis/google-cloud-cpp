@@ -234,7 +234,7 @@ class AsyncAwaitConsistency
                     grpc::Status const& status) {
       std::unique_lock<std::mutex> lk(parent_->mu_);
       parent_->current_op_.reset();
-      if (status.ok() && not response) {
+      if (status.ok() && !response) {
         // I don't think it could happen, TBH.
         grpc::Status res_status(grpc::StatusCode::UNKNOWN,
                                 "The state is not consistent and for some "
@@ -285,7 +285,7 @@ class AsyncAwaitConsistency
         callback_(cq, res_status);
         return;
       }
-      if (not status.ok()) {
+      if (!status.ok()) {
         lk.unlock();
         grpc::Status res_status(status);
         callback_(cq, res_status);

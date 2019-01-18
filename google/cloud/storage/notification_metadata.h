@@ -73,7 +73,7 @@ class NotificationMetadata {
   NotificationMetadata& upsert_custom_attributes(std::string key,
                                                  std::string value) {
     auto i = custom_attributes_.lower_bound(key);
-    if (i == custom_attributes_.end() or i->first != key) {
+    if (i == custom_attributes_.end() || i->first != key) {
       custom_attributes_.emplace_hint(i, std::move(key), std::move(value));
     } else {
       i->second = std::move(value);

@@ -20,7 +20,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 RowSet RowSet::Intersect(bigtable::RowRange const& range) const {
   // Special case: "all rows", return the argument range.
-  if (row_set_.row_keys().empty() and row_set_.row_ranges().empty()) {
+  if (row_set_.row_keys().empty() && row_set_.row_ranges().empty()) {
     return RowSet(range);
   }
   // Normal case: find the intersection with
@@ -39,7 +39,7 @@ RowSet RowSet::Intersect(bigtable::RowRange const& range) const {
   }
   // Another special case: a RowSet() with no entries
   // means "all rows", but we want "no rows".
-  if (result.row_set_.row_keys().empty() and
+  if (result.row_set_.row_keys().empty() &&
       result.row_set_.row_ranges().empty()) {
     return RowSet(bigtable::RowRange::Empty());
   }
@@ -51,7 +51,7 @@ bool RowSet::IsEmpty() const {
     return false;
   }
   for (auto const& r : row_set_.row_ranges()) {
-    if (not RowRange(r).IsEmpty()) {
+    if (!RowRange(r).IsEmpty()) {
       return false;
     }
   }

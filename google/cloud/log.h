@@ -349,14 +349,14 @@ class Logger {
         function_(function),
         filename_(filename),
         lineno_(lineno) {
-    enabled_ = not sink.empty() and sink.is_enabled(severity);
+    enabled_ = !sink.empty() && sink.is_enabled(severity);
   }
 
   bool enabled() const { return enabled_; }
 
   /// Send the log record captured by this object to @p sink.
   void LogTo(LogSink& sink) {
-    if (not stream_ or not enabled_) {
+    if (!stream_ || !enabled_) {
       return;
     }
     enabled_ = false;
@@ -372,7 +372,7 @@ class Logger {
 
   /// Return the iostream that captures the log message.
   std::ostream& Stream() {
-    if (not stream_) {
+    if (!stream_) {
       stream_.reset(new std::ostringstream);
     }
     return *stream_;

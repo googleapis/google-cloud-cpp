@@ -41,7 +41,7 @@ std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {
   //
   // So we delay the initialization of the PRNG until the first call that needs
   // to, that is here:
-  if (not generator_) {
+  if (!generator_) {
     generator_ = google::cloud::internal::MakeDefaultPRNG();
   }
   using namespace std::chrono;

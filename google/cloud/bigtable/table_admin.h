@@ -434,7 +434,7 @@ class TableAdmin {
       bigtable::ClusterId cluster_id = bigtable::ClusterId("-")) {
     grpc::Status status;
     auto result = impl_.ListSnapshots<Collection>(status, cluster_id);
-    if (not status.ok()) {
+    if (!status.ok()) {
       bigtable::internal::ThrowRpcError(status, status.error_message());
     }
     return result;

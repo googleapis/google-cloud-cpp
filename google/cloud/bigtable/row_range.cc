@@ -72,20 +72,20 @@ bool RowRange::IsEmpty() const {
   }
 
   // Special case of an open interval of two consecutive strings.
-  if (start_open and end_open and Consecutive(*start, *end)) {
+  if (start_open && end_open && Consecutive(*start, *end)) {
     return true;
   }
 
   // Compare the strings as byte vectors (careful with unsigned chars).
   int cmp = start->compare(*end);
   if (cmp == 0) {
-    return start_open or end_open;
+    return start_open || end_open;
   }
   return cmp > 0;
 }
 
 bool RowRange::Contains(std::string const& key) const {
-  return not BelowStart(key) and not AboveEnd(key);
+  return !BelowStart(key) && !AboveEnd(key);
 }
 
 bool RowRange::BelowStart(std::string const& key) const {
@@ -183,7 +183,7 @@ std::pair<bool, RowRange> RowRange::Intersect(RowRange const& range) const {
   }
 
   bool is_empty = intersection.IsEmpty();
-  return std::make_pair(not is_empty, std::move(intersection));
+  return std::make_pair(!is_empty, std::move(intersection));
 }
 
 bool RowRange::operator==(RowRange const& rhs) const {

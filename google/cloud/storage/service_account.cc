@@ -20,7 +20,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 StatusOr<ServiceAccount> ServiceAccount::ParseFromJson(
     internal::nl::json const& json) {
-  if (not json.is_object()) {
+  if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
   ServiceAccount result{};

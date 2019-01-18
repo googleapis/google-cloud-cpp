@@ -60,7 +60,7 @@ class ObjectRewriter {
 
   /// The current progress on the rewrite operation.
   StatusOr<RewriteProgress> CurrentProgress() const {
-    if (not last_error_.ok()) {
+    if (!last_error_.ok()) {
       return last_error_;
     }
     return progress_;
@@ -101,10 +101,10 @@ class ObjectRewriter {
                                   Functor, StatusOr<RewriteProgress>>::value,
                               int>::type = 0>
   StatusOr<ObjectMetadata> ResultWithProgressCallback(Functor cb) {
-    while (not progress_.done) {
+    while (!progress_.done) {
       cb(Iterate());
     }
-    if (not last_error_.ok()) {
+    if (!last_error_.ok()) {
       return last_error_;
     }
     return result_;

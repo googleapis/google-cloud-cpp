@@ -534,7 +534,7 @@ TEST(BucketMetadataTest, SetBilling) {
   auto expected = CreateBucketMetadataForTest();
   auto copy = expected;
   auto billing = copy.billing();
-  billing.requester_pays = not billing.requester_pays;
+  billing.requester_pays = !billing.requester_pays;
   copy.set_billing(billing);
   EXPECT_NE(expected, copy);
 }
@@ -579,7 +579,7 @@ TEST(BucketMetadataTest, SetDefaultEventBasedHold) {
   auto expected = CreateBucketMetadataForTest();
   auto copy = expected;
   EXPECT_TRUE(copy.default_event_based_hold());
-  copy.set_default_event_based_hold(not copy.default_event_based_hold());
+  copy.set_default_event_based_hold(!copy.default_event_based_hold());
   EXPECT_NE(expected, copy);
   std::ostringstream os;
   os << copy;

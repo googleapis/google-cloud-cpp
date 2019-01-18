@@ -124,14 +124,14 @@ int main(int argc, char* argv[]) try {
   Options options;
   options.ParseArgs(argc, argv);
 
-  if (not google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").has_value()) {
+  if (!google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").has_value()) {
     std::cerr << "GOOGLE_CLOUD_PROJECT environment variable must be set"
               << std::endl;
     return 1;
   }
 
   gcs::ClientOptions client_options;
-  if (not options.enable_connection_pool) {
+  if (!options.enable_connection_pool) {
     client_options.set_connection_pool_size(0);
   }
   gcs::Client client(client_options);
@@ -294,7 +294,7 @@ IterationResult ReadOnce(gcs::Client client, std::string const& bucket_name,
                                gcs::IfGenerationNotMatch(0));
   }
   std::size_t total_size = 0;
-  while (not stream.eof()) {
+  while (!stream.eof()) {
     char buf[4096];
     stream.read(buf, sizeof(buf));
     total_size += stream.gcount();
@@ -351,7 +351,7 @@ std::vector<std::string> CreateAllObjects(
       group = {};  // after a move, must assign to guarantee it is valid.
     }
   }
-  if (not group.empty()) {
+  if (!group.empty()) {
     tasks.emplace_back(std::async(std::launch::async, &CreateGroup, client,
                                   bucket_name, options, std::move(group)));
     group = {};  // after a move, must assign to guarantee it is valid.
@@ -447,7 +447,7 @@ void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
       group = {};  // after a move, must assign to guarantee it is valid.
     }
   }
-  if (not group.empty()) {
+  if (!group.empty()) {
     tasks.emplace_back(
         std::async(std::launch::async, &DeleteGroup, client, std::move(group)));
   }

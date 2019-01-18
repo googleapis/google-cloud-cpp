@@ -31,7 +31,7 @@ StatusOr<ListBucketsResponse> ListBucketsResponse::FromHttpResponse(
     HttpResponse&& response) {
   auto json =
       storage::internal::nl::json::parse(response.payload, nullptr, false);
-  if (not json.is_object()) {
+  if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
 
@@ -40,7 +40,7 @@ StatusOr<ListBucketsResponse> ListBucketsResponse::FromHttpResponse(
 
   for (auto const& kv : json["items"].items()) {
     auto parsed = BucketMetadata::ParseFromJson(kv.value());
-    if (not parsed) {
+    if (!parsed) {
       return std::move(parsed).status();
     }
     result.items.emplace_back(std::move(*parsed));
@@ -229,14 +229,14 @@ std::ostream& operator<<(std::ostream& os, GetBucketIamPolicyRequest const& r) {
 
 StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
   auto json = nl::json::parse(payload, nullptr, false);
-  if (not json.is_object()) {
+  if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
   IamPolicy policy;
   policy.version = 0;
   policy.etag = json.value("etag", "");
   if (json.count("bindings") != 0U) {
-    if (not json["bindings"].is_array()) {
+    if (!json["bindings"].is_array()) {
       std::ostringstream os;
       os << "Invalid IamPolicy payload, expected array for 'bindings' field."
          << "  payload=" << payload;
@@ -250,7 +250,7 @@ StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
            << " fields for element #" << kv.key() << ". payload=" << payload;
         google::cloud::internal::ThrowInvalidArgument(os.str());
       }
-      if (not binding["members"].is_array()) {
+      if (!binding["members"].is_array()) {
         std::ostringstream os;
         os << "Invalid IamPolicy payload, expected array for 'members'"
            << " fields for element #" << kv.key() << ". payload=" << payload;
@@ -313,7 +313,7 @@ TestBucketIamPermissionsResponse::FromHttpResponse(
     HttpResponse const& response) {
   TestBucketIamPermissionsResponse result;
   auto json = nl::json::parse(response.payload, nullptr, false);
-  if (not json.is_object()) {
+  if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
   for (auto const& kv : json["permissions"].items()) {

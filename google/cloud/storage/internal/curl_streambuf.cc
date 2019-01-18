@@ -38,7 +38,7 @@ bool CurlReadStreambuf::IsOpen() const { return download_.IsOpen(); }
 
 void CurlReadStreambuf::Close() {
   auto response = download_.Close();
-  if (not response.ok()) {
+  if (!response.ok()) {
     status_ = std::move(response).status();
     ReportError(status_);
   }
@@ -64,7 +64,7 @@ CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   };
 
-  if (not IsOpen()) {
+  if (!IsOpen()) {
     // The stream is closed, reading from a closed stream can happen if there is
     // no object to read from, or the object is empty. In that case just setup
     // an empty (but valid) region and verify the checksums.
@@ -78,7 +78,7 @@ CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
 
   current_ios_buffer_.reserve(target_buffer_size_);
   StatusOr<HttpResponse> response = download_.GetMore(current_ios_buffer_);
-  if (not response.ok()) {
+  if (!response.ok()) {
     return ReportError(std::move(response).status());
   }
   for (auto const& kv : response->headers) {
@@ -89,7 +89,7 @@ CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
     return ReportError(AsStatus(*response));
   }
 
-  if (not current_ios_buffer_.empty()) {
+  if (!current_ios_buffer_.empty()) {
     hash_validator_->Update(current_ios_buffer_);
     char* data = &current_ios_buffer_[0];
     setg(data, data, data + current_ios_buffer_.size());
@@ -145,13 +145,13 @@ bool CurlWriteStreambuf::IsOpen() const { return upload_.IsOpen(); }
 bool CurlWriteStreambuf::ValidateHash(ObjectMetadata const& meta) {
   hash_validator_->ProcessMetadata(meta);
   hash_validator_result_ = std::move(*hash_validator_).Finish();
-  return not hash_validator_result_.is_mismatch;
+  return !hash_validator_result_.is_mismatch;
 }
 
 CurlWriteStreambuf::int_type CurlWriteStreambuf::overflow(int_type ch) {
   Validate(__func__);
   SwapBuffers();
-  if (not traits_type::eq_int_type(ch, traits_type::eof())) {
+  if (!traits_type::eq_int_type(ch, traits_type::eof())) {
     current_ios_buffer_.push_back(traits_type::to_char_type(ch));
     pbump(1);
   }
@@ -161,7 +161,7 @@ CurlWriteStreambuf::int_type CurlWriteStreambuf::overflow(int_type ch) {
 int CurlWriteStreambuf::sync() {
   // The default destructor calls sync(), for already closed streams this should
   // be a no-op.
-  if (not IsOpen()) {
+  if (!IsOpen()) {
     return 0;
   }
   SwapBuffers();
@@ -183,11 +183,11 @@ std::streamsize CurlWriteStreambuf::xsputn(char const* s,
 StatusOr<HttpResponse> CurlWriteStreambuf::DoClose() {
   GCP_LOG(DEBUG) << __func__ << "()";
   Status status = Validate(__func__);
-  if (not status.ok()) {
+  if (!status.ok()) {
     return status;
   }
   status = SwapBuffers();
-  if (not status.ok()) {
+  if (!status.ok()) {
     return status;
   }
   auto response = upload_.Close();
@@ -214,7 +214,7 @@ Status CurlWriteStreambuf::SwapBuffers() {
   // Push the buffer to the libcurl wrapper to be written as needed
   hash_validator_->Update(current_ios_buffer_);
   auto status = upload_.NextBuffer(current_ios_buffer_);
-  if (not status.ok()) {
+  if (!status.ok()) {
     return status;
   }
   // Make the buffer big enough to receive more data before needing a flush.

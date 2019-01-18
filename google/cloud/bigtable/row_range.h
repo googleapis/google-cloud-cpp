@@ -86,7 +86,7 @@ class RowRange {
   static RowRange RightOpen(std::string begin, std::string end) {
     RowRange result;
     result.row_range_.set_start_key_closed(std::move(begin));
-    if (not end.empty()) {
+    if (!end.empty()) {
       result.row_range_.set_end_key_open(std::move(end));
     }
     return result;
@@ -96,7 +96,7 @@ class RowRange {
   static RowRange LeftOpen(std::string begin, std::string end) {
     RowRange result;
     result.row_range_.set_start_key_open(std::move(begin));
-    if (not end.empty()) {
+    if (!end.empty()) {
       result.row_range_.set_end_key_closed(std::move(end));
     }
     return result;
@@ -106,7 +106,7 @@ class RowRange {
   static RowRange Open(std::string begin, std::string end) {
     RowRange result;
     result.row_range_.set_start_key_open(std::move(begin));
-    if (not end.empty()) {
+    if (!end.empty()) {
       result.row_range_.set_end_key_open(std::move(end));
     }
     return result;
@@ -116,7 +116,7 @@ class RowRange {
   static RowRange Closed(std::string begin, std::string end) {
     RowRange result;
     result.row_range_.set_start_key_closed(std::move(begin));
-    if (not end.empty()) {
+    if (!end.empty()) {
       result.row_range_.set_end_key_closed(std::move(end));
     }
     return result;

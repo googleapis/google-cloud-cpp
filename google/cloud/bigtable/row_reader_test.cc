@@ -56,7 +56,7 @@ class ReadRowsParserMock : public bigtable::internal::ReadRowsParser {
     HandleEndOfStreamHook(status);
   }
 
-  bool HasNext() const override { return not rows_.empty(); }
+  bool HasNext() const override { return !rows_.empty(); }
 
   Row Next(grpc::Status& status) override {
     Row row = rows_.front();

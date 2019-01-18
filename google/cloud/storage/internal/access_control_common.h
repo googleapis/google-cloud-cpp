@@ -126,13 +126,13 @@ class AccessControlCommon {
   bool operator==(AccessControlCommon const& rhs) const {
     // Start with id, bucket, etag because they should fail early, then
     // alphabetical for readability.
-    return id_ == rhs.id_ and bucket_ == rhs.bucket_ and etag_ == rhs.etag_ and
-           domain_ == rhs.domain_ and email_ == rhs.email_ and
-           entity_ == rhs.entity_ and entity_id_ == rhs.entity_id_ and
-           kind_ == rhs.kind_ and project_team_ == rhs.project_team_ and
-           role_ == rhs.role_ and self_link_ == rhs.self_link_;
+    return id_ == rhs.id_ && bucket_ == rhs.bucket_ && etag_ == rhs.etag_ &&
+           domain_ == rhs.domain_ && email_ == rhs.email_ &&
+           entity_ == rhs.entity_ && entity_id_ == rhs.entity_id_ &&
+           kind_ == rhs.kind_ && project_team_ == rhs.project_team_ &&
+           role_ == rhs.role_ && self_link_ == rhs.self_link_;
   }
-  bool operator!=(AccessControlCommon const& rhs) { return not(*this == rhs); }
+  bool operator!=(AccessControlCommon const& rhs) { return !(*this == rhs); }
 
  protected:
   static Status ParseFromJson(AccessControlCommon& result,

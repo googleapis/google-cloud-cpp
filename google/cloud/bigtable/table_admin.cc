@@ -38,7 +38,7 @@ btadmin::Table TableAdmin::CreateTable(std::string table_id,
   grpc::Status status;
   auto result =
       impl_.CreateTable(std::move(table_id), std::move(config), status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
   return result;
@@ -73,7 +73,7 @@ future<google::bigtable::admin::v2::Table> TableAdmin::AsyncGetTable(
 std::vector<btadmin::Table> TableAdmin::ListTables(btadmin::Table::View view) {
   grpc::Status status;
   auto result = impl_.ListTables(view, status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
   return result;
@@ -83,7 +83,7 @@ btadmin::Table TableAdmin::GetTable(std::string const& table_id,
                                     btadmin::Table::View view) {
   grpc::Status status;
   auto result = impl_.GetTable(table_id, status, view);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
   return result;
@@ -92,7 +92,7 @@ btadmin::Table TableAdmin::GetTable(std::string const& table_id,
 void TableAdmin::DeleteTable(std::string const& table_id) {
   grpc::Status status;
   impl_.DeleteTable(table_id, status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
 }
@@ -103,7 +103,7 @@ btadmin::Table TableAdmin::ModifyColumnFamilies(
   grpc::Status status;
   auto result =
       impl_.ModifyColumnFamilies(table_id, std::move(modifications), status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
   return result;
@@ -113,7 +113,7 @@ void TableAdmin::DropRowsByPrefix(std::string const& table_id,
                                   std::string row_key_prefix) {
   grpc::Status status;
   impl_.DropRowsByPrefix(table_id, std::move(row_key_prefix), status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
 }
@@ -121,7 +121,7 @@ void TableAdmin::DropRowsByPrefix(std::string const& table_id,
 void TableAdmin::DropAllRows(std::string const& table_id) {
   grpc::Status status;
   impl_.DropAllRows(table_id, status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
 }
@@ -155,7 +155,7 @@ btadmin::Snapshot TableAdmin::SnapshotTableImpl(
       impl_.rpc_backoff_policy_->clone(), metadata_update_policy,
       &AdminClient::SnapshotTable, request, "SnapshotTable", status, true);
 
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(status,
                                       "unrecoverable error in MakeCall()");
   }
@@ -165,7 +165,7 @@ btadmin::Snapshot TableAdmin::SnapshotTableImpl(
           impl_.client_, impl_.polling_policy_->clone(),
           impl_.metadata_update_policy_, operation, "TableAdmin::SnapshotTable",
           status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(
         status, "while polling operation in TableAdmin::SnapshotTable");
   }
@@ -178,7 +178,7 @@ btadmin::Snapshot TableAdmin::GetSnapshot(
     bigtable::SnapshotId const& snapshot_id) {
   grpc::Status status;
   auto result = impl_.GetSnapshot(cluster_id, snapshot_id, status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
   return result;
@@ -187,7 +187,7 @@ btadmin::Snapshot TableAdmin::GetSnapshot(
 std::string TableAdmin::GenerateConsistencyToken(std::string const& table_id) {
   grpc::Status status;
   std::string token = impl_.GenerateConsistencyToken(table_id, status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
   return token;
@@ -198,7 +198,7 @@ bool TableAdmin::CheckConsistency(
     bigtable::ConsistencyToken const& consistency_token) {
   grpc::Status status;
   bool consistent = impl_.CheckConsistency(table_id, consistency_token, status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
   return consistent;
@@ -210,7 +210,7 @@ bool TableAdmin::WaitForConsistencyCheckImpl(
   grpc::Status status;
   bool consistent =
       impl_.WaitForConsistencyCheckHelper(table_id, consistency_token, status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
   return consistent;
@@ -220,7 +220,7 @@ void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                                 bigtable::SnapshotId const& snapshot_id) {
   grpc::Status status;
   impl_.DeleteSnapshot(cluster_id, snapshot_id, status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
 }
@@ -253,7 +253,7 @@ btadmin::Table TableAdmin::CreateTableFromSnapshotImpl(
       *impl_.client_, *rpc_policy, *backoff_policy,
       impl_.metadata_update_policy_, &AdminClient::CreateTableFromSnapshot,
       request, "TableAdmin", status, true);
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(status,
                                       "unrecoverable error in MakeCall()");
   }
@@ -262,7 +262,7 @@ btadmin::Table TableAdmin::CreateTableFromSnapshotImpl(
       impl_.client_, impl_.polling_policy_->clone(),
       impl_.metadata_update_policy_, operation,
       "TableAdmin::CreateTableFromSnapshot", status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(
         status,
         "while polling operation in TableAdmin::CreateTableFromSnapshot");

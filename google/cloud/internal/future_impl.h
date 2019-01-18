@@ -137,7 +137,7 @@ class future_shared_state_base {
   template <typename Clock>
   std::future_status wait_until(std::chrono::time_point<Clock> deadline) {
     std::unique_lock<std::mutex> lk(mu_);
-    if (not lk.owns_lock()) {
+    if (!lk.owns_lock()) {
       return std::future_status::timeout;
     }
     bool result =
@@ -239,7 +239,7 @@ class future_shared_state_base {
    * @throws std::future_error if the operation fails.
    */
   static void mark_retrieved(future_shared_state_base* sh) {
-    if (not sh) {
+    if (!sh) {
       ThrowFutureError(std::future_errc::no_state, __func__);
     }
     if (sh->retrieved_.test_and_set()) {
@@ -643,7 +643,7 @@ struct continuation : public continuation_base {
 
   void execute() override {
     auto tmp = input.lock();
-    if (not tmp) {
+    if (!tmp) {
       output->set_exception(std::make_exception_ptr(
           std::future_error(std::future_errc::no_state)));
       return;
@@ -694,7 +694,7 @@ struct unwrapping_continuation : public continuation_base {
 
   void execute() override {
     auto tmp = input.lock();
-    if (not tmp) {
+    if (!tmp) {
       output->set_exception(std::make_exception_ptr(
           std::future_error(std::future_errc::no_state)));
       return;
@@ -712,7 +712,7 @@ struct unwrapping_continuation : public continuation_base {
     intermediate = functor(std::move(tmp));
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
-    if (not intermediate) {
+    if (!intermediate) {
       output->set_exception(std::make_exception_ptr(
           std::future_error(std::future_errc::broken_promise)));
       return;

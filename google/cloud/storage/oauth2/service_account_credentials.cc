@@ -49,7 +49,7 @@ ServiceAccountCredentialsInfo ParseServiceAccountCredentials(
     }
   }
   // The token_uri field may be missing, but may not be empty:
-  if (credentials.count(token_uri_key) != 0U and
+  if (credentials.count(token_uri_key) != 0U &&
       credentials.value(token_uri_key, "").empty()) {
     google::cloud::internal::ThrowInvalidArgument(
         "Invalid ServiceAccountCredentials, the " + std::string(token_uri_key) +

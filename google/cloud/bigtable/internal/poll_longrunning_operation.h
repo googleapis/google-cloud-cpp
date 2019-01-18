@@ -40,7 +40,7 @@ ResultType PollLongRunningOperation(
     if (operation.done()) {
       if (operation.has_response()) {
         auto const& any = operation.response();
-        if (not any.Is<ResultType>()) {
+        if (!any.Is<ResultType>()) {
           std::ostringstream os;
           os << error_message << "(" << metadata_update_policy.value() << ") - "
              << "invalid result type in operation=" << operation.name();
@@ -67,10 +67,10 @@ ResultType PollLongRunningOperation(
     op.set_name(operation.name());
     grpc::ClientContext context;
     status = client->GetOperation(&context, op, &operation);
-    if (not status.ok() and not polling_policy->OnFailure(status)) {
+    if (!status.ok() && !polling_policy->OnFailure(status)) {
       return ResultType{};
     }
-  } while (not polling_policy->Exhausted());
+  } while (!polling_policy->Exhausted());
   std::ostringstream os;
   os << error_message << "(" << metadata_update_policy.value() << ") - "
      << "polling policy exhausted in operation=" << operation.name();

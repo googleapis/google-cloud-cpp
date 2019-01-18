@@ -86,7 +86,7 @@ class AsyncRowReader {
       parser_->HandleChunk(
           std::move(*(response.mutable_chunks(processed_chunks_count_))),
           status_);
-      if (not status_.ok()) {
+      if (!status_.ok()) {
         // An error must result in a retry, so we return without calling the
         // callback function and check for status before finishing the call
         return;
@@ -95,7 +95,7 @@ class AsyncRowReader {
       if (parser_->HasNext()) {
         // We have a complete row in the parser.
         Row parsed_row = parser_->Next(status_);
-        if (not status_.ok()) {
+        if (!status_.ok()) {
           return;
         }
         ++rows_count_;
@@ -118,7 +118,7 @@ class AsyncRowReader {
     request.set_app_profile_id(app_profile_id_.get());
     request.set_table_name(table_name_.get());
 
-    if (not last_read_row_key_.empty()) {
+    if (!last_read_row_key_.empty()) {
       // We've returned some rows and need to make sure we don't
       // request them again.
       row_set_ = row_set_.Intersect(RowRange::Open(last_read_row_key_, ""));
@@ -162,7 +162,7 @@ class AsyncRowReader {
         parent_.parser_->HandleEndOfStream(status);
       }
 
-      if (not parent_.status_.ok() && status.ok()) {
+      if (!parent_.status_.ok() && status.ok()) {
         status = grpc::Status(grpc::StatusCode::UNAVAILABLE,
                               "Some rows were not returned");
       }

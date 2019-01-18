@@ -77,7 +77,7 @@ class BucketAccessControl : private internal::AccessControlCommon {
 
   bool operator==(BucketAccessControl const& rhs) const;
   bool operator!=(BucketAccessControl const& rhs) const {
-    return not(*this == rhs);
+    return !(*this == rhs);
   }
 };
 

@@ -30,7 +30,7 @@ namespace {
 }
 
 bool IsLeapYear(int year) {
-  return (year % 4 == 0 and (year % 100 != 0 or year % 400 == 0));
+  return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 }
 
 std::chrono::system_clock::time_point ParseDateTime(
@@ -49,15 +49,15 @@ std::chrono::system_clock::time_point ParseDateTime(
   // All the fields up to this point have fixed width, so total width must be:
   constexpr int EXPECTED_WIDTH = 19;
   constexpr int EXPECTED_FIELDS = 7;
-  if (count != EXPECTED_FIELDS or pos != EXPECTED_WIDTH) {
+  if (count != EXPECTED_FIELDS || pos != EXPECTED_WIDTH) {
     ReportError(timestamp,
                 "Invalid format for RFC 3339 timestamp detected while parsing"
                 " the base date and time portion.");
   }
-  if (date_time_separator != 'T' and date_time_separator != 't') {
+  if (date_time_separator != 'T' && date_time_separator != 't') {
     ReportError(timestamp, "Invalid date-time separator, expected 'T' or 't'.");
   }
-  if (month < 1 or month > 12) {
+  if (month < 1 || month > 12) {
     ReportError(timestamp, "Out of range month.");
   }
   constexpr int MAX_DAYS_IN_MONTH[] = {
@@ -74,16 +74,16 @@ std::chrono::system_clock::time_point ParseDateTime(
       30,  // November
       31,  // December
   };
-  if (day < 1 or day > MAX_DAYS_IN_MONTH[month - 1]) {
+  if (day < 1 || day > MAX_DAYS_IN_MONTH[month - 1]) {
     ReportError(timestamp, "Out of range day for given month.");
   }
-  if (2 == month and day > 28 and not IsLeapYear(year)) {
+  if (2 == month && day > 28 && !IsLeapYear(year)) {
     ReportError(timestamp, "Out of range day for given month.");
   }
-  if (hours < 0 or hours > 23) {
+  if (hours < 0 || hours > 23) {
     ReportError(timestamp, "Out of range hour.");
   }
-  if (minutes < 0 or minutes > 59) {
+  if (minutes < 0 || minutes > 59) {
     ReportError(timestamp, "Out of range minute.");
   }
   // RFC-3339 points out that the seconds field can only assume value '60' for
@@ -91,7 +91,7 @@ std::chrono::system_clock::time_point ParseDateTime(
   // should valid that `seconds` is smaller than 59 for negative leap seconds).
   // This would require loading a table, and adds too much complexity for little
   // value.
-  if (seconds < 0 or seconds > 60) {
+  if (seconds < 0 || seconds > 60) {
     ReportError(timestamp, "Out of range second.");
   }
   // Advance the pointer for all the characters read.
@@ -136,7 +136,7 @@ std::chrono::system_clock::duration ParseFractionalSeconds(
 
 std::chrono::seconds ParseOffset(char const*& buffer,
                                  std::string const& timestamp) {
-  if (buffer[0] == '+' or buffer[0] == '-') {
+  if (buffer[0] == '+' || buffer[0] == '-') {
     bool positive = (buffer[0] == '+');
     ++buffer;
     // Parse the HH:MM offset.
@@ -144,13 +144,13 @@ std::chrono::seconds ParseOffset(char const*& buffer,
     auto count = std::sscanf(buffer, "%2d:%2d%n", &hours, &minutes, &pos);
     constexpr int EXPECTED_OFFSET_WIDTH = 5;
     constexpr int EXPECTED_OFFSET_FIELDS = 2;
-    if (count != EXPECTED_OFFSET_FIELDS or pos != EXPECTED_OFFSET_WIDTH) {
+    if (count != EXPECTED_OFFSET_FIELDS || pos != EXPECTED_OFFSET_WIDTH) {
       ReportError(timestamp, "Invalid timezone offset, expected [+-]HH:MM.");
     }
-    if (hours < 0 or hours > 23) {
+    if (hours < 0 || hours > 23) {
       ReportError(timestamp, "Out of range offset hour.");
     }
-    if (minutes < 0 or minutes > 59) {
+    if (minutes < 0 || minutes > 59) {
       ReportError(timestamp, "Out of range offset minute.");
     }
     buffer += pos;
@@ -162,7 +162,7 @@ std::chrono::seconds ParseOffset(char const*& buffer,
     return duration_cast<std::chrono::seconds>(-std::chrono::hours(hours) -
                                                std::chrono::minutes(minutes));
   }
-  if (buffer[0] != 'Z' and buffer[0] != 'z') {
+  if (buffer[0] != 'Z' && buffer[0] != 'z') {
     ReportError(timestamp, "Invalid timezone offset, expected 'Z' or 'z'.");
   }
   ++buffer;

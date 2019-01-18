@@ -55,7 +55,7 @@ std::string GRpcError::CreateWhatString(char const* what,
   os << what << ": " << status.error_message() << " [" << status.error_code()
      << "=";
   int const index = status.error_code();
-  if (0 <= index and index < KNOWN_STATUS_CODES_SIZE) {
+  if (0 <= index && index < KNOWN_STATUS_CODES_SIZE) {
     os << KNOWN_STATUS_CODES[status.error_code()];
   } else {
     os << "(UNKNOWN CODE)";

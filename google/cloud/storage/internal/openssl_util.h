@@ -85,7 +85,7 @@ struct OpenSslUtils {
     };
 
     auto digest_ctx = GetDigestCtx();
-    if (not digest_ctx) {
+    if (!digest_ctx) {
       handle_openssl_failure("Could not create context for OpenSSL digest.");
     }
 
@@ -103,7 +103,7 @@ struct OpenSslUtils {
         BIO_new_mem_buf(const_cast<char*>(pem_contents.c_str()),
                         static_cast<int>(pem_contents.length())),
         &BIO_free);
-    if (not pem_buffer) handle_openssl_failure("Could not create PEM buffer.");
+    if (!pem_buffer) handle_openssl_failure("Could not create PEM buffer.");
 
     auto private_key = std::unique_ptr<EVP_PKEY, decltype(&EVP_PKEY_free)>(
         PEM_read_bio_PrivateKey(
@@ -115,7 +115,7 @@ struct OpenSslUtils {
             // a password, which we don't currently support.
             nullptr),
         &EVP_PKEY_free);
-    if (not private_key) {
+    if (!private_key) {
       handle_openssl_failure("Could not parse PEM to get private key.");
     }
 
@@ -179,7 +179,7 @@ struct OpenSslUtils {
         BIO_new(BIO_f_base64()), &BIO_free);
     auto mem_io = std::unique_ptr<BIO, decltype(&BIO_free)>(
         BIO_new(BIO_s_mem()), &BIO_free);
-    if (not(base64_io and mem_io)) {
+    if (!(base64_io && mem_io)) {
       std::ostringstream err_builder;
       err_builder << "Permanent error in " << __func__ << ": "
                   << "Could not allocate BIO* for Base64 encoding.";

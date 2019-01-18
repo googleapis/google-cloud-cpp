@@ -130,7 +130,7 @@ class ComputeEngineCredentials : public Credentials {
         "/computeMetadata/v1/instance/service-accounts/" +
             service_account_email_ + "/",
         true);
-    if (not response.ok()) {
+    if (!response.ok()) {
       return std::move(response).status();
     }
     if (response->status_code >= 300) {
@@ -170,7 +170,7 @@ class ComputeEngineCredentials : public Credentials {
         "/computeMetadata/v1/instance/service-accounts/" +
             service_account_email_ + "/token",
         false);
-    if (not response.ok()) {
+    if (!response.ok()) {
       return std::move(response).status();
     }
     if (response->status_code >= 300) {
@@ -180,7 +180,7 @@ class ComputeEngineCredentials : public Credentials {
     // Response should have the attributes "access_token", "expires_in", and
     // "token_type".
     nl::json access_token = nl::json::parse(response->payload, nullptr, false);
-    if (access_token.is_discarded() or
+    if (access_token.is_discarded() ||
         access_token.count("access_token") == 0U or
         access_token.count("expires_in") == 0U or
         access_token.count("token_type") == 0U) {

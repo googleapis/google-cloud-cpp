@@ -141,8 +141,8 @@ class GenericRequestBase : public GenericRequestBase<Derived, Options...> {
     return option_;
   }
 
-  template <typename O, typename std::enable_if<
-                            not std::is_same<O, Option>::value, int>::type = 0>
+  template <typename O, typename std::enable_if<!std::is_same<O, Option>::value,
+                                                int>::type = 0>
   O GetOption() const {
     return GenericRequestBase<Derived, Options...>::template GetOption<O>();
   }

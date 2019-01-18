@@ -49,13 +49,13 @@ std::string OpenSslUtils::Base64Decode(std::string const& str) {
   UniqueBioPtr source(BIO_new_mem_buf(const_cast<char*>(str.data()),
                                       static_cast<int>(str.size())),
                       &BIO_free);
-  if (not source) {
+  if (!source) {
     std::ostringstream os;
     os << __func__ << ": cannot create BIO for source string=<" << str << ">";
     google::cloud::internal::ThrowRuntimeError(os.str());
   }
   UniqueBioPtr filter(BIO_new(BIO_f_base64()), &BIO_free);
-  if (not filter) {
+  if (!filter) {
     std::ostringstream os;
     os << __func__ << ": cannot create BIO for Base64 decoding";
     google::cloud::internal::ThrowRuntimeError(os.str());
@@ -102,7 +102,7 @@ std::string OpenSslUtils::Base64Encode(std::string const& str) {
     if (retval > 0) {
       break;  // Positive value == successful write.
     }
-    if (not BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
+    if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
       std::ostringstream err_builder;
       err_builder << "Permanent error in " << __func__ << ": "
                   << "BIO_write returned non-retryable value of " << retval;
@@ -116,7 +116,7 @@ std::string OpenSslUtils::Base64Encode(std::string const& str) {
     if (retval > 0) {
       break;  // Positive value == successful flush.
     }
-    if (not BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
+    if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
       std::ostringstream err_builder;
       err_builder << "Permanent error in " << __func__ << ": "
                   << "BIO_flush returned non-retryable value of " << retval;

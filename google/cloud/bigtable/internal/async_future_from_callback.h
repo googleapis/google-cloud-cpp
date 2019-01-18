@@ -46,7 +46,7 @@ class AsyncFutureFromCallback {
       : promise_(std::move(p)), where_(w) {}
 
   void operator()(CompletionQueue& cq, R& result, grpc::Status& status) {
-    if (not status.ok()) {
+    if (!status.ok()) {
       promise_.set_exception(
           std::make_exception_ptr(GRpcError(where_, status)));
       return;
@@ -75,7 +75,7 @@ class AsyncFutureFromCallback<void> {
 
   void operator()(CompletionQueue& cq, google::protobuf::Empty& result,
                   grpc::Status& status) {
-    if (not status.ok()) {
+    if (!status.ok()) {
       promise_.set_exception(
           std::make_exception_ptr(GRpcError(where_, status)));
       return;

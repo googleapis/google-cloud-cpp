@@ -47,7 +47,7 @@ std::vector<btadmin::Instance> InstanceAdmin::ListInstances(
         *client_, *rpc_policy, *backoff_policy, metadata_update_policy_,
         &InstanceAdminClient::ListInstances, request,
         "InstanceAdmin::ListInstances", status, true);
-    if (not status.ok()) {
+    if (!status.ok()) {
       return result;
     }
 
@@ -55,7 +55,7 @@ std::vector<btadmin::Instance> InstanceAdmin::ListInstances(
       result.emplace_back(std::move(x));
     }
     page_token = std::move(*response.mutable_next_page_token());
-  } while (not page_token.empty());
+  } while (!page_token.empty());
   return result;
 }
 
@@ -121,7 +121,7 @@ std::vector<btadmin::Cluster> InstanceAdmin::ListClusters(
         *client_, *rpc_policy, *backoff_policy, metadata_update_policy_,
         &InstanceAdminClient::ListClusters, request,
         "InstanceAdmin::ListClusters", status, true);
-    if (not status.ok()) {
+    if (!status.ok()) {
       return result;
     }
 
@@ -129,7 +129,7 @@ std::vector<btadmin::Cluster> InstanceAdmin::ListClusters(
       result.emplace_back(std::move(x));
     }
     page_token = std::move(*response.mutable_next_page_token());
-  } while (not page_token.empty());
+  } while (!page_token.empty());
   return result;
 }
 
@@ -207,7 +207,7 @@ std::vector<btadmin::AppProfile> InstanceAdmin::ListAppProfiles(
         *client_, *rpc_policy, *backoff_policy, metadata_update_policy_,
         &InstanceAdminClient::ListAppProfiles, request,
         "InstanceAdmin::ListAppProfiles", status, true);
-    if (not status.ok()) {
+    if (!status.ok()) {
       return result;
     }
 
@@ -215,7 +215,7 @@ std::vector<btadmin::AppProfile> InstanceAdmin::ListAppProfiles(
       result.emplace_back(std::move(x));
     }
     page_token = std::move(*response.mutable_next_page_token());
-  } while (not page_token.empty());
+  } while (!page_token.empty());
   return result;
 }
 

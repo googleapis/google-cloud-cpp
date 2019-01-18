@@ -131,7 +131,7 @@ class InstanceAdminEmulator final
     for (int index = 0; index != request->update_mask().paths_size(); ++index) {
       if ("display_name" == request->update_mask().paths(index)) {
         auto size = request->instance().display_name().size();
-        if (size < 4 or size > 30) {
+        if (size < 4 || size > 30) {
           return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
                               "display name size must be in range [4,30]");
         }

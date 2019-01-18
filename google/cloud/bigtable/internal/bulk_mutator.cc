@@ -85,7 +85,7 @@ void BulkMutator::ProcessResponse(
     google::bigtable::v2::MutateRowsResponse& response) {
   for (auto& entry : *response.mutable_entries()) {
     auto index = entry.index();
-    if (index < 0 or annotations_.size() <= std::size_t(index)) {
+    if (index < 0 || annotations_.size() <= std::size_t(index)) {
       // TODO(#72) - decide how this is logged.
       continue;
     }
@@ -101,7 +101,7 @@ void BulkMutator::ProcessResponse(
     }
     auto& original = *mutations_.mutable_entries(index);
     // Failed responses are handled according to the current policies.
-    if (SafeGrpcRetry::IsTransientFailure(code) and annotation.is_idempotent) {
+    if (SafeGrpcRetry::IsTransientFailure(code) && annotation.is_idempotent) {
       // Retryable requests are saved in the pending mutations, along with the
       // mapping from their index in pending_mutations_ to the original
       // vector and other miscellanea.

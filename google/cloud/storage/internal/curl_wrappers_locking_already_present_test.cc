@@ -27,7 +27,7 @@ extern "C" void test_cb(int mode, int type, char const* file, int line) {}
 
 /// @test Verify that installing the libraries
 TEST(CurlWrappers, LockingDisabledTest) {
-  if (not SslLibraryNeedsLocking(CurlSslLibraryId())) {
+  if (!SslLibraryNeedsLocking(CurlSslLibraryId())) {
     // The test cannot execute in this case.
     return;
   }

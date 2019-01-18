@@ -43,7 +43,7 @@ std::uint64_t CurlResumableUploadSession::next_expected_byte() const {
 
 void CurlResumableUploadSession::Update(
     StatusOr<ResumableUploadResponse> const& result) {
-  if (not result.ok()) {
+  if (!result.ok()) {
     return;
   }
   if (result->last_committed_byte == 0) {
@@ -51,7 +51,7 @@ void CurlResumableUploadSession::Update(
   } else {
     next_expected_ = result->last_committed_byte + 1;
   }
-  if (not result->upload_session_url.empty()) {
+  if (!result->upload_session_url.empty()) {
     session_id_ = result->upload_session_url;
   }
 }

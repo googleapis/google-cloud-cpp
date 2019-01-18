@@ -43,7 +43,7 @@ TEST(StorageVersionTest, Format) {
 
 /// @test Verify the version does not contain build info for release builds.
 TEST(StorageVersionTest, NoBuildInfoInRelease) {
-  if (not google::cloud::internal::is_release()) {
+  if (!google::cloud::internal::is_release()) {
     return;
   }
   EXPECT_THAT(version_string(),

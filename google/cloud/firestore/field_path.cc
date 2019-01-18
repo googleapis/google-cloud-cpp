@@ -66,11 +66,11 @@ std::string FieldPath::ToApiRepr() const {
     if (part.empty()) {
       return false;
     }
-    if (part[0] != '_' and std::isalpha(part[0]) == 0) {
+    if (part[0] != '_' && std::isalpha(part[0]) == 0) {
       return false;
     }
     return std::all_of(part.begin(), part.end(), [](char c) {
-      return c == '_' or std::isalnum(c) != 0;
+      return c == '_' || std::isalnum(c) != 0;
     });
   };
   std::string s;

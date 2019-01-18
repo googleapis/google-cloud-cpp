@@ -77,7 +77,7 @@ int main(int argc, char* argv[]) try {
 
   auto result =
       read.ReadRow("key-0", cbt::Filter::ColumnRangeClosed("fam", "c0", "c0"));
-  if (not result.first) {
+  if (!result.first) {
     std::cout << "Cannot find row 'key-0' in the table: " << table_id
               << std::endl;
     return 1;

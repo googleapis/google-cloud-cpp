@@ -20,7 +20,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 StatusOr<NotificationMetadata> NotificationMetadata::ParseFromJson(
     internal::nl::json const& json) {
-  if (not json.is_object()) {
+  if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
   NotificationMetadata result{};
@@ -63,7 +63,7 @@ std::string NotificationMetadata::JsonPayloadForInsert() const {
   };
 
   // custom_attributes()
-  if (not custom_attributes().empty()) {
+  if (!custom_attributes().empty()) {
     internal::nl::json ca;
     for (auto const& kv : custom_attributes()) {
       ca[kv.first] = kv.second;
@@ -72,7 +72,7 @@ std::string NotificationMetadata::JsonPayloadForInsert() const {
   }
 
   // event_types()
-  if (not event_types().empty()) {
+  if (!event_types().empty()) {
     internal::nl::json events;
     for (auto const& v : event_types()) {
       events.push_back(v);
@@ -80,7 +80,7 @@ std::string NotificationMetadata::JsonPayloadForInsert() const {
     json["event_types"] = events;
   }
 
-  if (not object_name_prefix().empty()) {
+  if (!object_name_prefix().empty()) {
     json["object_name_prefix"] = object_name_prefix();
   }
 

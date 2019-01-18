@@ -79,7 +79,7 @@ CountMatchingEntities(std::vector<AccessControlResource> const& acl,
                       AccessControlResource const& expected) {
   return std::count_if(
       acl.begin(), acl.end(), [&expected](AccessControlResource const& x) {
-        return x.entity() == expected.entity() and x.role() == expected.role();
+        return x.entity() == expected.entity() && x.role() == expected.role();
       });
 }
 

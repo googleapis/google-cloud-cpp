@@ -180,7 +180,7 @@ struct UnaryClientUtils {
       if (status.ok()) {
         break;
       }
-      if (not rpc_policy.OnFailure(status)) {
+      if (!rpc_policy.OnFailure(status)) {
         std::string full_message = error_message;
         full_message += "(" + metadata_update_policy.value() + ") ";
         full_message += status.error_message();
@@ -237,7 +237,7 @@ struct UnaryClientUtils {
     // Call the pointer to member function.
     status = (client.*function)(&client_context, request, &response);
 
-    if (not status.ok()) {
+    if (!status.ok()) {
       std::string full_message = error_message;
       full_message += "(" + metadata_update_policy.value() + ") ";
       full_message += status.error_message();

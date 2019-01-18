@@ -42,7 +42,7 @@ class RetryPolicy {
       return false;
     }
     OnFailureImpl();
-    return not IsExhausted();
+    return !IsExhausted();
   }
   virtual bool IsExhausted() const = 0;
 
