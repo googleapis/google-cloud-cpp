@@ -83,7 +83,7 @@ class CurlRequestBuilder {
   /// Adds one of the well-known parameters as a query parameter
   template <typename P>
   CurlRequestBuilder& AddOption(WellKnownParameter<P, bool> const& p) {
-    if (not p.has_value()) {
+    if (!p.has_value()) {
       return *this;
     }
     AddQueryParameter(p.parameter_name(), p.value() ? "true" : "false");

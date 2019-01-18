@@ -201,7 +201,7 @@ StatusOr<std::unique_ptr<ResumableUploadSession>>
 LoggingClient::CreateResumableSession(ResumableUploadRequest const& request) {
   auto result = MakeCallNoResponseLogging(
       *client_, &RawClient::CreateResumableSession, request, __func__);
-  if (not result.ok()) {
+  if (!result.ok()) {
     return std::move(result).status();
   }
   return std::unique_ptr<ResumableUploadSession>(

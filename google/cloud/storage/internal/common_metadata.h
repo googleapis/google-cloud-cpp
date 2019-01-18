@@ -75,7 +75,7 @@ class CommonMetadata {
 
   static Status ParseFromJson(CommonMetadata<Derived>& result,
                               internal::nl::json const& json) {
-    if (not json.is_object()) {
+    if (!json.is_object()) {
       return Status(StatusCode::kInvalidArgument, __func__);
     }
     result.etag_ = json.value("etag", "");
@@ -128,13 +128,13 @@ class CommonMetadata {
     // to short-circuit this comparison.  The check the name, project number,
     // and metadata generation, which have the next best chance to
     // short-circuit.  The rest just put in alphabetical order.
-    return name_ == rhs.name_ and metageneration_ == rhs.metageneration_ and
-           id_ == rhs.id_ and etag_ == rhs.etag_ and kind_ == rhs.kind_ and
-           self_link_ == rhs.self_link_ and
-           storage_class_ == rhs.storage_class_ and
-           time_created_ == rhs.time_created_ and updated_ == rhs.updated_;
+    return name_ == rhs.name_ && metageneration_ == rhs.metageneration_ &&
+           id_ == rhs.id_ && etag_ == rhs.etag_ && kind_ == rhs.kind_ &&
+           self_link_ == rhs.self_link_ &&
+           storage_class_ == rhs.storage_class_ &&
+           time_created_ == rhs.time_created_ && updated_ == rhs.updated_;
   }
-  bool operator!=(CommonMetadata const& rhs) const { return not(*this == rhs); }
+  bool operator!=(CommonMetadata const& rhs) const { return !(*this == rhs); }
 
  private:
   // Keep the fields in alphabetical order.

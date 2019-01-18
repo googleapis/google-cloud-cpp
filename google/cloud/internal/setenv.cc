@@ -47,7 +47,7 @@ void SetEnv(char const* variable, char const* value) {
 }
 
 void SetEnv(char const* variable, optional<std::string> value) {
-  if (not value.has_value()) {
+  if (!value.has_value()) {
     UnsetEnv(variable);
     return;
   }

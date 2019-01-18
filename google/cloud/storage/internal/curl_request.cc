@@ -23,17 +23,17 @@ namespace internal {
 CurlRequest::CurlRequest() : headers_(nullptr, &curl_slist_free_all) {}
 
 StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) {
-  if (not payload.empty()) {
+  if (!payload.empty()) {
     handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload.length());
     handle_.SetOption(CURLOPT_POSTFIELDS, payload.c_str());
   }
   auto status = handle_.EasyPerform();
-  if (not status.ok()) {
+  if (!status.ok()) {
     return status;
   }
   handle_.FlushDebug(__func__);
   auto code = handle_.GetResponseCode();
-  if (not code.ok()) {
+  if (!code.ok()) {
     return std::move(code).status();
   }
   return HttpResponse{code.value(), std::move(response_payload_),

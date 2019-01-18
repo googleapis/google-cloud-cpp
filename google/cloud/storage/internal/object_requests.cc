@@ -34,7 +34,7 @@ StatusOr<ListObjectsResponse> ListObjectsResponse::FromHttpResponse(
     HttpResponse&& response) {
   auto json =
       storage::internal::nl::json::parse(response.payload, nullptr, false);
-  if (not json.is_object()) {
+  if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
 
@@ -43,7 +43,7 @@ StatusOr<ListObjectsResponse> ListObjectsResponse::FromHttpResponse(
 
   for (auto const& kv : json["items"].items()) {
     auto parsed = ObjectMetadata::ParseFromJson(kv.value());
-    if (not parsed.ok()) {
+    if (!parsed.ok()) {
       return std::move(parsed).status();
     }
     result.items.emplace_back(std::move(*parsed));
@@ -130,7 +130,7 @@ ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
     raise_error();
   }
 
-  if (buffer[0] == '*' and buffer[1] == '/') {
+  if (buffer[0] == '*' && buffer[1] == '/') {
     // The header is just the indication of size ('bytes */<size>'), parse that.
     buffer += 2;
     long long object_size;
@@ -315,7 +315,7 @@ std::ostream& operator<<(std::ostream& os, RewriteObjectRequest const& r) {
 StatusOr<RewriteObjectResponse> RewriteObjectResponse::FromHttpResponse(
     HttpResponse const& response) {
   nl::json object = nl::json::parse(response.payload, nullptr, false);
-  if (not object.is_object()) {
+  if (!object.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
 
@@ -327,7 +327,7 @@ StatusOr<RewriteObjectResponse> RewriteObjectResponse::FromHttpResponse(
   result.rewrite_token = object.value("rewriteToken", "");
   if (object.count("resource") != 0U) {
     auto parsed = ObjectMetadata::ParseFromJson(object["resource"]);
-    if (not parsed.ok()) {
+    if (!parsed.ok()) {
       return std::move(parsed).status();
     }
     result.resource = std::move(*parsed);
@@ -410,7 +410,7 @@ StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
   char const* buffer = range.data() + 8;
   char* endptr;
   auto last = std::strtoll(buffer, &endptr, 10);
-  if (*endptr == '\0' and 0 <= last) {
+  if (*endptr == '\0' && 0 <= last) {
     result.last_committed_byte = static_cast<std::uint64_t>(last);
   }
 

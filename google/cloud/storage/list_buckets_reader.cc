@@ -82,7 +82,7 @@ ListBucketsReader::iterator ListBucketsReader::GetNext() {
     }
     request_.set_page_token(std::move(next_page_token_));
     auto response = client_->ListBuckets(request_);
-    if (not response.ok()) {
+    if (!response.ok()) {
       next_page_token_.clear();
       current_buckets_.clear();
       on_last_page_ = true;

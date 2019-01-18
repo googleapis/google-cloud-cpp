@@ -31,8 +31,8 @@ struct SafeGrpcRetry {
   // Sometimes we need to use google::protobuf::rpc::Status, in which case this
   // is a easier function
   static inline bool IsTransientFailure(grpc::StatusCode code) {
-    return code == grpc::StatusCode::ABORTED or
-           code == grpc::StatusCode::UNAVAILABLE or
+    return code == grpc::StatusCode::ABORTED ||
+           code == grpc::StatusCode::UNAVAILABLE ||
            code == grpc::StatusCode::DEADLINE_EXCEEDED;
   }
 
@@ -41,7 +41,7 @@ struct SafeGrpcRetry {
     return IsTransientFailure(status.error_code());
   }
   static inline bool IsPermanentFailure(grpc::Status const& status) {
-    return not IsOk(status) and not IsTransientFailure(status);
+    return !IsOk(status) && !IsTransientFailure(status);
   }
 };
 

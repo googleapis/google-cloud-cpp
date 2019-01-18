@@ -210,7 +210,7 @@ class AsyncLoopOp : public std::enable_shared_from_this<AsyncLoopOp<Operation>>,
   void OnTimer(CompletionQueue& cq, bool cancelled) {
     std::unique_lock<std::mutex> lk(mu_);
     current_op_.reset();
-    if (cancelled or cancelled_) {
+    if (cancelled || cancelled_) {
       // Cancelled, no more action to take.
       // The operation couldn't have noticed this cancellation, because it came
       // while we were waiting.

@@ -38,7 +38,7 @@ std::string BinaryDataAsDebugString(char const* data, std::size_t size,
 
   // Limit the output to the first `max_output_bytes`.
   std::size_t n = size;
-  if (max_output_bytes > 0 and max_output_bytes < size) {
+  if (max_output_bytes > 0 && max_output_bytes < size) {
     n = max_output_bytes;
   }
 

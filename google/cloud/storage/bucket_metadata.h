@@ -673,7 +673,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   /// Insert or update the label entry.
   BucketMetadata& upsert_label(std::string key, std::string value) {
     auto i = labels_.lower_bound(key);
-    if (i == labels_.end() or i->first != key) {
+    if (i == labels_.end() || i->first != key) {
       labels_.emplace_hint(i, std::move(key), std::move(value));
     } else {
       i->second = std::move(value);
@@ -828,7 +828,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   //@}
 
   bool operator==(BucketMetadata const& rhs) const;
-  bool operator!=(BucketMetadata const& rhs) const { return not(*this == rhs); }
+  bool operator!=(BucketMetadata const& rhs) const { return !(*this == rhs); }
 
  private:
   friend std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);

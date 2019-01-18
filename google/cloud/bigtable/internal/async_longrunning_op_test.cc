@@ -125,7 +125,7 @@ TEST_P(NoexAsyncLongrunningImmediatelyFinished, ImmeditalyFinished) {
   google::longrunning::Operation longrunning_op;
   longrunning_op.set_name("qwerty");
   longrunning_op.set_done(true);
-  if (not has_error) {
+  if (!has_error) {
     // This might be confusing, but we're using a GetOperationRequest as
     // response. This could have been any other message for the purpose of
     // this test, but this is simple, so it's handy.
@@ -150,7 +150,7 @@ TEST_P(NoexAsyncLongrunningImmediatelyFinished, ImmeditalyFinished) {
                            CompletionQueue& cq,
                            google::longrunning::GetOperationRequest& response,
                            grpc::Status const& status) {
-    EXPECT_EQ(status.ok(), not has_error);
+    EXPECT_EQ(status.ok(), !has_error);
     if (has_error) {
       EXPECT_EQ(grpc::StatusCode::FAILED_PRECONDITION, status.error_code());
     } else {

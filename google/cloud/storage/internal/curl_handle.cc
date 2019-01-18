@@ -139,7 +139,7 @@ void CurlHandle::EnableLogging(bool enabled) {
 }
 
 void CurlHandle::FlushDebug(char const* where) {
-  if (not debug_buffer_.empty()) {
+  if (!debug_buffer_.empty()) {
     GCP_LOG(DEBUG) << where << ' ' << debug_buffer_;
     debug_buffer_.clear();
   }

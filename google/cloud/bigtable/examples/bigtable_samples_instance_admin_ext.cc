@@ -75,7 +75,7 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
   // [END bigtable_check_instance_exists]
 
   // Create instance if does not exists
-  if (not instance_exists) {
+  if (!instance_exists) {
     // [START bigtable_create_prod_instance]
     std::cout << "\nCreating a PRODUCTION Instance: ";
     google::cloud::bigtable::DisplayName display_name("Sample Instance");
@@ -149,7 +149,7 @@ void CreateDevInstance(std::string project_id, int argc, char* argv[]) {
             return i.name() == instance_name;
           });
   // Create instance if does not exists
-  if (not instance_exists) {
+  if (!instance_exists) {
     // [START bigtable_create_dev_instance]
     std::cout << "\nCreating a DEVELOPMENT Instance: ";
     google::cloud::bigtable::DisplayName display_name("Put description here");

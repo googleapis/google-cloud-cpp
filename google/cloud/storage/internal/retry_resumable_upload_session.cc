@@ -40,20 +40,20 @@ StatusOr<ResumableUploadResponse>
 RetryResumableUploadSession::UploadChunk(std::string const& buffer,
                                          std::uint64_t upload_size) {
   Status last_status;
-  while (not retry_policy_->IsExhausted()) {
+  while (!retry_policy_->IsExhausted()) {
     auto result = session_->UploadChunk(buffer, upload_size);
     if (result.ok()) {
       return result;
     }
     last_status = std::move(result).status();
-    if (not retry_policy_->OnFailure(last_status)) {
+    if (!retry_policy_->OnFailure(last_status)) {
       return ReturnError(std::move(last_status), *retry_policy_, __func__);
     }
     auto delay = backoff_policy_->OnCompletion();
     std::this_thread::sleep_for(delay);
 
     result = ResetSession();
-    if (not result.ok()) {
+    if (!result.ok()) {
       return result;
     }
   }
@@ -65,13 +65,13 @@ RetryResumableUploadSession::UploadChunk(std::string const& buffer,
 StatusOr<ResumableUploadResponse>
 RetryResumableUploadSession::ResetSession() {
   Status last_status;
-  while (not retry_policy_->IsExhausted()) {
+  while (!retry_policy_->IsExhausted()) {
     auto result = session_->ResetSession();
     if (result.ok()) {
       return result;
     }
     last_status = std::move(result).status();
-    if (not retry_policy_->OnFailure(last_status)) {
+    if (!retry_policy_->OnFailure(last_status)) {
       return ReturnError(std::move(last_status), *retry_policy_, __func__);
     }
     auto delay = backoff_policy_->OnCompletion();

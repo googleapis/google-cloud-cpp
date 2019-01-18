@@ -27,7 +27,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 void CompletionQueueImpl::Run(CompletionQueue& cq) {
-  while (not shutdown_.load()) {
+  while (!shutdown_.load()) {
     void* tag;
     bool ok;
     auto deadline = std::chrono::system_clock::now() + LOOP_TIMEOUT;

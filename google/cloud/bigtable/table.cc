@@ -50,7 +50,7 @@ static_assert(std::is_copy_assignable<bigtable::Table>::value,
 
 void Table::Apply(SingleRowMutation&& mut) {
   std::vector<FailedMutation> failures = impl_.Apply(std::move(mut));
-  if (not failures.empty()) {
+  if (!failures.empty()) {
     grpc::Status status = failures.front().status();
     ReportPermanentFailures(status.error_message().c_str(), status, failures);
   }
@@ -60,7 +60,7 @@ void Table::BulkApply(BulkMutation&& mut) {
   grpc::Status status;
   std::vector<FailedMutation> failures =
       impl_.BulkApply(std::move(mut), status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     ReportPermanentFailures(status.error_message().c_str(), status, failures);
   }
 }
@@ -78,7 +78,7 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
 std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter) {
   grpc::Status status;
   auto result = impl_.ReadRow(std::move(row_key), std::move(filter), status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     google::cloud::internal::ThrowRuntimeError(status.error_message());
   }
   return result;
@@ -91,7 +91,7 @@ bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
   bool value = impl_.CheckAndMutateRow(std::move(row_key), std::move(filter),
                                        std::move(true_mutations),
                                        std::move(false_mutations), status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(status, status.error_message());
   }
   return value;

@@ -79,9 +79,9 @@ struct LifecycleRuleCondition {
 
 inline bool operator==(LifecycleRuleCondition const& lhs,
                        LifecycleRuleCondition const& rhs) {
-  return lhs.age == rhs.age and lhs.created_before == rhs.created_before and
-         lhs.is_live == rhs.is_live and
-         lhs.matches_storage_class == rhs.matches_storage_class and
+  return lhs.age == rhs.age && lhs.created_before == rhs.created_before &&
+         lhs.is_live == rhs.is_live &&
+         lhs.matches_storage_class == rhs.matches_storage_class &&
          lhs.num_newer_versions == rhs.num_newer_versions;
 }
 

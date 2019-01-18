@@ -23,7 +23,7 @@ namespace internal {
 namespace {
 /// @test Verify that installing the libraries
 TEST(CurlWrappers, LockingEnabledTest) {
-  if (not SslLibraryNeedsLocking(CurlSslLibraryId())) {
+  if (!SslLibraryNeedsLocking(CurlSslLibraryId())) {
     // The test cannot execute in this case.
     return;
   }

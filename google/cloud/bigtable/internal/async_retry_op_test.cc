@@ -399,7 +399,7 @@ TEST_P(NoexTableAsyncRetryOpCancelInTimerTest, TestCancelInTimer) {
   EXPECT_EQ(1U, cq_impl->size());
 
   // Sometime the timer might return timeout despite having been cancelled.
-  cq_impl->SimulateCompletion(cq, not notice_cancel);
+  cq_impl->SimulateCompletion(cq, !notice_cancel);
 
   EXPECT_TRUE(cq_impl->empty());
   EXPECT_TRUE(user_op_completed);

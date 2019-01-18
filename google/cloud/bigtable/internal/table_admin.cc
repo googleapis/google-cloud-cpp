@@ -62,7 +62,7 @@ std::vector<btadmin::Table> TableAdmin::ListTables(btadmin::Table::View view,
     auto response = ClientUtils::MakeCall(
         *client_, *rpc_policy, *backoff_policy, metadata_update_policy_,
         &AdminClient::ListTables, request, "TableAdmin", status, true);
-    if (not status.ok()) {
+    if (!status.ok()) {
       return result;
     }
 
@@ -70,7 +70,7 @@ std::vector<btadmin::Table> TableAdmin::ListTables(btadmin::Table::View view,
       result.emplace_back(std::move(x));
     }
     page_token = std::move(*response.mutable_next_page_token());
-  } while (not page_token.empty());
+  } while (!page_token.empty());
   return result;
 }
 
@@ -215,7 +215,7 @@ bool TableAdmin::WaitForConsistencyCheckHelper(
     } else if (polling_policy->IsPermanentError(status)) {
       return false;
     }
-  } while (not polling_policy->Exhausted());
+  } while (!polling_policy->Exhausted());
 
   return false;
 }
@@ -255,7 +255,7 @@ void TableAdmin::ListSnapshotsImpl(
         *client_, *rpc_policy, *backoff_policy, metadata_update_policy,
         &AdminClient::ListSnapshots, request, "ListSnapshotsImpl", status,
         true);
-    if (not status.ok()) {
+    if (!status.ok()) {
       break;
     }
 
@@ -263,7 +263,7 @@ void TableAdmin::ListSnapshotsImpl(
       inserter(x);
     }
     page_token = std::move(*response.mutable_next_page_token());
-  } while (not page_token.empty());
+  } while (!page_token.empty());
 }
 
 }  // namespace noex

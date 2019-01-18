@@ -129,7 +129,7 @@ int main(int argc, char* argv[]) try {
   auto result = table.ReadRow(
       "key-0",
       google::cloud::bigtable::Filter::ColumnRangeClosed("family", "c0", "c0"));
-  if (not result.first) {
+  if (!result.first) {
     std::cout << "Cannot find row 'key-0' in the table: " << table.table_name()
               << std::endl;
     return 0;

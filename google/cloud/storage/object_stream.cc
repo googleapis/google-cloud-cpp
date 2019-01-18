@@ -27,7 +27,7 @@ static_assert(std::is_move_constructible<ObjectReadStream>::value,
               "storage::ObjectReadStream must be move constructible.");
 
 ObjectReadStream::~ObjectReadStream() {
-  if (not IsOpen()) {
+  if (!IsOpen()) {
     return;
   }
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -45,17 +45,17 @@ ObjectReadStream::~ObjectReadStream() {
 }
 
 void ObjectReadStream::Close() {
-  if (not IsOpen()) {
+  if (!IsOpen()) {
     return;
   }
   buf_->Close();
-  if (not status().ok()) {
+  if (!status().ok()) {
     setstate(std::ios_base::badbit);
   }
 }
 
 ObjectWriteStream::~ObjectWriteStream() {
-  if (not IsOpen()) {
+  if (!IsOpen()) {
     return;
   }
   // Disable exceptions, even if the application had enabled exceptions the
@@ -65,11 +65,11 @@ ObjectWriteStream::~ObjectWriteStream() {
 }
 
 void ObjectWriteStream::Close() {
-  if (not IsOpen()) {
+  if (!IsOpen()) {
     return;
   }
   StatusOr<internal::HttpResponse> response = buf_->Close();
-  if (not response.ok()) {
+  if (!response.ok()) {
     metadata_ = StatusOr<ObjectMetadata>(std::move(response).status());
     setstate(std::ios_base::badbit);
     return;
@@ -87,13 +87,13 @@ void ObjectWriteStream::Close() {
     metadata_ = ObjectMetadata{};
   } else {
     metadata_ = ObjectMetadata::ParseFromString(payload_);
-    if (not metadata_.ok()) {
+    if (!metadata_.ok()) {
       setstate(std::ios_base::badbit);
       return;
     }
   }
 
-  if (not buf_->ValidateHash(*metadata_)) {
+  if (!buf_->ValidateHash(*metadata_)) {
     setstate(std::ios_base::badbit);
   }
 }

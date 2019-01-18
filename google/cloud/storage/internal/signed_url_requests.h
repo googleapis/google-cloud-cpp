@@ -57,32 +57,32 @@ class SignUrlRequest {
 
  private:
   void set_option(MD5HashValue const& o) {
-    if (not o.has_value()) {
+    if (!o.has_value()) {
       return;
     }
     md5_hash_value_ = o.value();
   }
 
   void set_option(ContentType const& o) {
-    if (not o.has_value()) {
+    if (!o.has_value()) {
       return;
     }
     content_type_ = o.value();
   }
 
   void set_option(ExpirationTime const& o) {
-    if (not o.has_value()) {
+    if (!o.has_value()) {
       return;
     }
     expiration_time_ = o.value();
   }
 
   void set_option(AddExtensionHeaderOption const& o) {
-    if (not o.has_value()) {
+    if (!o.has_value()) {
       return;
     }
     auto res = extension_headers_.insert(o.value());
-    if (not res.second) {
+    if (!res.second) {
       // The element already exists, we need to append:
       res.first->second.push_back(',');
       res.first->second.append(o.value().second);
@@ -90,7 +90,7 @@ class SignUrlRequest {
   }
 
   void set_option(AddQueryParameterOption const& o) {
-    if (not o.has_value()) {
+    if (!o.has_value()) {
       return;
     }
     query_parameters_.push_back(o.value());

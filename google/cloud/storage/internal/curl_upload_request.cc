@@ -50,12 +50,12 @@ Status CurlUploadRequest::Flush() {
 
 StatusOr<HttpResponse> CurlUploadRequest::Close() {
   Status status = ValidateOpen(__func__);
-  if (not status.ok()) {
+  if (!status.ok()) {
     return status;
   }
   handle_.FlushDebug(__func__);
   status = Flush();
-  if (not status.ok()) {
+  if (!status.ok()) {
     return status;
   }
   // Set the the closing_ flag to trigger a return 0 from the next read
@@ -63,7 +63,7 @@ StatusOr<HttpResponse> CurlUploadRequest::Close() {
   closing_ = true;
   // Block until that callback is made.
   status = Wait([this] { return curl_closed_; });
-  if (not status.ok()) {
+  if (!status.ok()) {
     return status;
   }
 
@@ -74,7 +74,7 @@ StatusOr<HttpResponse> CurlUploadRequest::Close() {
   }
 
   StatusOr<long> http_code = handle_.GetResponseCode();
-  if (not http_code.ok()) {
+  if (!http_code.ok()) {
     return std::move(http_code).status();
   }
   return HttpResponse{http_code.value(), std::move(response_payload_),
@@ -83,7 +83,7 @@ StatusOr<HttpResponse> CurlUploadRequest::Close() {
 
 Status CurlUploadRequest::NextBuffer(std::string& next_buffer) {
   Status status = ValidateOpen(__func__);
-  if (not status.ok()) {
+  if (!status.ok()) {
     return status;
   }
   status = Flush();
@@ -231,7 +231,7 @@ Status CurlUploadRequest::AsStatus(CURLMcode result, char const* where) {
 }
 
 Status CurlUploadRequest::ValidateOpen(char const* where) {
-  if (not closing_) {
+  if (!closing_) {
     return Status();
   }
   std::string msg = "Attempting to use closed CurlUploadRequest in ";

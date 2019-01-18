@@ -23,7 +23,7 @@ struct Status {
 };
 struct IsRetryablePolicy {
   static bool IsPermanentFailure(Status const& s) {
-    return s.is_ok or not s.is_retryable;
+    return s.is_ok || !s.is_retryable;
   }
 };
 

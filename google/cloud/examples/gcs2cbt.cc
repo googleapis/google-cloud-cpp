@@ -47,8 +47,8 @@ class GenericCircularBuffer {
 
   bool Pop(T& next) {
     std::unique_lock<std::mutex> lk(mu_);
-    cv_.wait(lk, [this]() { return not Empty() or is_shutdown_; });
-    if (not Empty()) {
+    cv_.wait(lk, [this]() { return !Empty() || is_shutdown_; });
+    if (!Empty()) {
       next = std::move(buffer_[head_]);
       ++head_;
       if (head_ >= buffer_.size()) {
@@ -59,12 +59,12 @@ class GenericCircularBuffer {
       cv_.notify_all();
       return true;
     }
-    return not is_shutdown_;
+    return !is_shutdown_;
   }
 
   void Push(T data) {
     std::unique_lock<std::mutex> lk(mu_);
-    cv_.wait(lk, [this]() { return not Full(); });
+    cv_.wait(lk, [this]() { return !Full(); });
     buffer_[tail_] = std::move(data);
     ++tail_;
     if (tail_ >= buffer_.size()) {
@@ -76,8 +76,8 @@ class GenericCircularBuffer {
   }
 
  private:
-  bool Empty() { return head_ == tail_ and empty_; }
-  bool Full() { return head_ == tail_ and not empty_; }
+  bool Empty() { return head_ == tail_ && empty_; }
+  bool Full() { return head_ == tail_ && !empty_; }
 
  private:
   std::mutex mu_;
@@ -242,7 +242,7 @@ int main(int argc, char* argv[]) try {
   auto bulk_apply_size = static_cast<int>(100000 / headers.size());
   cbt::BulkMutation bulk;
   int count = 0;
-  while (not is.eof()) {
+  while (!is.eof()) {
     ++lineno;
     std::getline(is, line, '\n');
     if (line.empty()) {
@@ -328,7 +328,7 @@ std::vector<std::string> ParseLine(long lineno, std::string const& line,
 
   // Extract the fields one at a time using a std::istringstream.
   std::istringstream tokens(line);
-  while (not tokens.eof()) {
+  while (!tokens.eof()) {
     std::string tk;
     std::getline(tokens, tk, separator);
     result.emplace_back(std::move(tk));

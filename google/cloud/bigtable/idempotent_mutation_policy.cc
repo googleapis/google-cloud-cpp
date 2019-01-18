@@ -31,7 +31,7 @@ std::unique_ptr<IdempotentMutationPolicy> SafeIdempotentMutationPolicy::clone()
 
 bool SafeIdempotentMutationPolicy::is_idempotent(
     google::bigtable::v2::Mutation const& m) {
-  if (not m.has_set_cell()) {
+  if (!m.has_set_cell()) {
     return true;
   }
   return m.set_cell().timestamp_micros() != ServerSetTimestamp();

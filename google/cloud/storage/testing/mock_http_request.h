@@ -86,7 +86,7 @@ class MockHttpRequestBuilder {
 
   template <typename P>
   void AddWellKnownParameter(internal::WellKnownParameter<P, bool> const& p) {
-    if (not p.has_value()) {
+    if (!p.has_value()) {
       return;
     }
     mock->AddQueryParameter(p.parameter_name(), p.value() ? "true" : "false");

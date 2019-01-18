@@ -43,7 +43,7 @@ void AppProfileUpdateConfig::AddPathIfNotPresent(std::string field_name) {
   auto const& paths = proto_.update_mask().paths();
   auto is_present =
       paths.end() != std::find(paths.begin(), paths.end(), field_name);
-  if (not is_present) {
+  if (!is_present) {
     proto_.mutable_update_mask()->add_paths(std::move(field_name));
   }
 }

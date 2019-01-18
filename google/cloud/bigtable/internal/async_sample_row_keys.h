@@ -99,7 +99,7 @@ class AsyncSampleRowKeys {
 
     void operator()(CompletionQueue& cq, grpc::ClientContext& context,
                     grpc::Status& status) {
-      if (not status.ok()) {
+      if (!status.ok()) {
         // The sample must be a consistent sample of the rows in the table. On
         // failure we must forget the previous responses and accumulate only
         // new values.

@@ -112,12 +112,12 @@ class AsyncLongrunningOp {
         [this, callback](CompletionQueue& cq,
                          google::longrunning::Operation& operation,
                          grpc::Status& status) {
-          if (not status.ok()) {
+          if (!status.ok()) {
             callback(cq, false, status);
             return;
           }
           operation_.Swap(&operation);
-          if (not operation_.done()) {
+          if (!operation_.done()) {
             callback(cq, false, status);
             return;
           }

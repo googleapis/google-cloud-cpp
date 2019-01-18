@@ -136,7 +136,7 @@ RowReader::iterator RowReader::begin() {
       return internal::RowReaderIterator(this, true);
     }
   }
-  if (not stream_) {
+  if (!stream_) {
     MakeRequest();
   }
   // Increment the iterator to read a row.
@@ -183,7 +183,7 @@ bool RowReader::NextChunk() {
   while (processed_chunks_count_ >= response_.chunks_size()) {
     processed_chunks_count_ = 0;
     bool response_is_valid = stream_->Read(&response_);
-    if (not response_is_valid) {
+    if (!response_is_valid) {
       response_ = {};
       return false;
     }
@@ -203,11 +203,11 @@ void RowReader::Advance(internal::OptionalRow& row) {
     // number of rows and still receive an error (the parser can throw
     // an error at end of stream for example), there is no need to
     // retry and we have no good value for rows_limit anyway.
-    if (rows_limit_ != NO_ROWS_LIMIT and rows_limit_ <= rows_count_) {
+    if (rows_limit_ != NO_ROWS_LIMIT && rows_limit_ <= rows_count_) {
       return;
     }
 
-    if (not last_read_row_key_.empty()) {
+    if (!last_read_row_key_.empty()) {
       // We've returned some rows and need to make sure we don't
       // request them again.
       row_set_ = row_set_.Intersect(RowRange::Open(last_read_row_key_, ""));
@@ -218,7 +218,7 @@ void RowReader::Advance(internal::OptionalRow& row) {
       return;
     }
 
-    if (not status.ok() and not retry_policy_->OnFailure(status)) {
+    if (!status.ok() && !retry_policy_->OnFailure(status)) {
       if (raise_on_error_) {
         google::cloud::internal::ThrowRuntimeError("Unretriable error: " +
                                                    status.error_message());
@@ -238,12 +238,12 @@ void RowReader::Advance(internal::OptionalRow& row) {
 grpc::Status RowReader::AdvanceOrFail(internal::OptionalRow& row) {
   grpc::Status status;
   row.reset();
-  while (not parser_->HasNext()) {
+  while (!parser_->HasNext()) {
     if (NextChunk()) {
       parser_->HandleChunk(
           std::move(*(response_.mutable_chunks(processed_chunks_count_))),
           status);
-      if (not status.ok()) {
+      if (!status.ok()) {
         return status;
       }
       continue;
@@ -254,7 +254,7 @@ grpc::Status RowReader::AdvanceOrFail(internal::OptionalRow& row) {
     // fails during cleanup.
     stream_is_open_ = false;
     status = stream_->Finish();
-    if (not status.ok()) {
+    if (!status.ok()) {
       return status;
     }
     parser_->HandleEndOfStream(status);
@@ -263,7 +263,7 @@ grpc::Status RowReader::AdvanceOrFail(internal::OptionalRow& row) {
 
   // We have a complete row in the parser.
   Row parsed_row = parser_->Next(status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     return status;
   }
   row.emplace(std::move(parsed_row));
@@ -275,7 +275,7 @@ grpc::Status RowReader::AdvanceOrFail(internal::OptionalRow& row) {
 
 void RowReader::Cancel() {
   operation_cancelled_ = true;
-  if (not stream_is_open_) {
+  if (!stream_is_open_) {
     return;
   }
   context_->TryCancel();
@@ -292,7 +292,7 @@ void RowReader::Cancel() {
 RowReader::~RowReader() {
   // Make sure we don't leave open streams.
   Cancel();
-  if (not raise_on_error_ and not error_retrieved_ and not status_.ok()) {
+  if (!raise_on_error_ && !error_retrieved_ && !status_.ok()) {
     GCP_LOG(ERROR)
         << "Exceptions are disabled, RowReader has an error,"
         << " and the error status was not retrieved by the application: "

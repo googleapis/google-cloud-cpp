@@ -82,7 +82,7 @@ void AsyncListInstances(cbt::InstanceAdmin instance_admin,
           for (const auto& instance : instance_list.instances) {
             std::cout << instance.name() << std::endl;
           }
-          if (not instance_list.failed_locations.empty()) {
+          if (!instance_list.failed_locations.empty()) {
             std::cout << "The Cloud Bigtable service reports that it could not "
                          "retrieve data for the following zones:\n";
             for (const auto& failed_location : instance_list.failed_locations) {

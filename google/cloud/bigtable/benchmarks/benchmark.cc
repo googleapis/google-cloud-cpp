@@ -48,11 +48,11 @@ Benchmark::Benchmark(BenchmarkSetup const& setup)
 }
 
 Benchmark::~Benchmark() {
-  if (not server_) {
+  if (!server_) {
     return;
   }
   server_->Shutdown();
-  if (not server_thread_.joinable()) {
+  if (!server_thread_.joinable()) {
     return;
   }
   server_thread_.join();
@@ -209,35 +209,35 @@ void Benchmark::PrintResultCsv(std::ostream& os, std::string const& test_name,
 }
 
 int Benchmark::create_table_count() const {
-  if (not server_) {
+  if (!server_) {
     return 0;
   }
   return server_->create_table_count();
 }
 
 int Benchmark::delete_table_count() const {
-  if (not server_) {
+  if (!server_) {
     return 0;
   }
   return server_->delete_table_count();
 }
 
 int Benchmark::mutate_row_count() const {
-  if (not server_) {
+  if (!server_) {
     return 0;
   }
   return server_->mutate_row_count();
 }
 
 int Benchmark::mutate_rows_count() const {
-  if (not server_) {
+  if (!server_) {
     return 0;
   }
   return server_->mutate_rows_count();
 }
 
 int Benchmark::read_rows_count() const {
-  if (not server_) {
+  if (!server_) {
     return 0;
   }
   return server_->read_rows_count();

@@ -66,12 +66,12 @@ void InitializeSslLocking(bool enable_ssl_callbacks) {
   // Only enable the lock callbacks if needed. We need to look at what SSL
   // library is used by libcurl.  Many of them work fine without any additional
   // setup.
-  if (not SslLibraryNeedsLocking(curl_ssl)) {
+  if (!SslLibraryNeedsLocking(curl_ssl)) {
     GCP_LOG(INFO) << "SSL locking callbacks not installed because the"
                   << " SSL library does not need them.";
     return;
   }
-  if (not enable_ssl_callbacks) {
+  if (!enable_ssl_callbacks) {
     GCP_LOG(INFO) << "SSL locking callbacks not installed because the"
                   << " application disabled them.";
     return;
@@ -182,7 +182,7 @@ bool SslLibraryNeedsLocking(std::string const& curl_ssl_id) {
 
 bool SslLockingCallbacksInstalled() {
 #if GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS
-  return not ssl_locks.empty();
+  return !ssl_locks.empty();
 #else
   return false;
 #endif  // GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS
@@ -194,7 +194,7 @@ std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
     // Empty header (including the \r\n), ignore.
     return size;
   }
-  if ('\r' != data[size - 2] or '\n' != data[size - 1]) {
+  if ('\r' != data[size - 2] || '\n' != data[size - 1]) {
     // Invalid header (should end in \r\n), ignore.
     return size;
   }

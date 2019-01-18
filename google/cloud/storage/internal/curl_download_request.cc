@@ -43,19 +43,19 @@ StatusOr<HttpResponse> CurlDownloadRequest::Close() {
   closing_ = true;
   // Block until that callback is made.
   auto status = Wait([this] { return curl_closed_; });
-  if (not status.ok()) {
+  if (!status.ok()) {
     return status;
   }
 
   // Now remove the handle from the CURLM* interface and wait for the response.
   auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
   status = AsStatus(error, __func__);
-  if (not status.ok()) {
+  if (!status.ok()) {
     return status;
   }
 
   StatusOr<long> http_code = handle_.GetResponseCode();
-  if (not http_code.ok()) {
+  if (!http_code.ok()) {
     return http_code.status();
   }
   return HttpResponse{http_code.value(), std::string{},
@@ -65,9 +65,9 @@ StatusOr<HttpResponse> CurlDownloadRequest::Close() {
 StatusOr<HttpResponse> CurlDownloadRequest::GetMore(std::string& buffer) {
   handle_.FlushDebug(__func__);
   auto status = Wait([this] {
-    return curl_closed_ or buffer_.size() >= initial_buffer_size_;
+    return curl_closed_ || buffer_.size() >= initial_buffer_size_;
   });
-  if (not status.ok()) {
+  if (!status.ok()) {
     return status;
   }
   GCP_LOG(DEBUG) << __func__ << "(), curl.size=" << buffer_.size()
@@ -76,14 +76,14 @@ StatusOr<HttpResponse> CurlDownloadRequest::GetMore(std::string& buffer) {
     // Remove the handle from the CURLM* interface and wait for the response.
     auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
     status = AsStatus(error, __func__);
-    if (not status.ok()) {
+    if (!status.ok()) {
       return status;
     }
 
     buffer_.swap(buffer);
     buffer_.clear();
     StatusOr<long> http_code = handle_.GetResponseCode();
-    if (not http_code.ok()) {
+    if (!http_code.ok()) {
       return std::move(http_code).status();
     }
     GCP_LOG(DEBUG) << __func__ << "(), size=" << buffer.size()
@@ -96,7 +96,7 @@ StatusOr<HttpResponse> CurlDownloadRequest::GetMore(std::string& buffer) {
   buffer_.clear();
   buffer_.reserve(initial_buffer_size_);
   status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
-  if (not status.ok()) {
+  if (!status.ok()) {
     return status;
   }
   GCP_LOG(DEBUG) << __func__ << "(), size=" << buffer.size()
@@ -119,7 +119,7 @@ void CurlDownloadRequest::ResetOptions() {
   handle_.SetOption(CURLOPT_URL, url_.c_str());
   handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
   handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
-  if (not payload_.empty()) {
+  if (!payload_.empty()) {
     handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload_.length());
     handle_.SetOption(CURLOPT_POSTFIELDS, payload_.c_str());
   }
@@ -167,7 +167,7 @@ StatusOr<int> CurlDownloadRequest::PerformWork() {
 
   // Throw an exception if the result is unexpected, otherwise return.
   auto status = AsStatus(result, __func__);
-  if (not status.ok()) {
+  if (!status.ok()) {
     return status;
   }
   if (running_handles == 0) {
@@ -206,7 +206,7 @@ Status CurlDownloadRequest::WaitForHandles(int& repeats) {
   GCP_LOG(DEBUG) << __func__ << "(): numfds=" << numfds << ", result=" << result
                  << ", repeats=" << repeats;
   Status status = AsStatus(result, __func__);
-  if (not status.ok()) {
+  if (!status.ok()) {
     return status;
   }
   // The documentation for curl_multi_wait() recommends sleeping if it returns

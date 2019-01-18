@@ -34,7 +34,7 @@ static_assert(std::is_copy_assignable<bigtable::InstanceAdmin>::value,
 std::vector<btadmin::Instance> InstanceAdmin::ListInstances() {
   grpc::Status status;
   auto result = impl_.ListInstances(status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(status, status.error_message());
   }
   return result;
@@ -85,7 +85,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
       *impl_.client_, *rpc_policy, *backoff_policy,
       impl_.metadata_update_policy_, &InstanceAdminClient::CreateInstance,
       request, "InstanceAdmin::CreateInstance", status, false);
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(status,
                                       "unrecoverable error in MakeCall()");
   }
@@ -95,7 +95,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::CreateInstanceImpl(
       impl_.client_, impl_.polling_policy_->clone(),
       impl_.metadata_update_policy_, operation, "InstanceAdmin::CreateInstance",
       status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(
         status, "while polling operation in InstanceAdmin::CreateInstance");
   }
@@ -127,7 +127,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::UpdateInstanceImpl(
       *impl_.client_, *rpc_policy, *backoff_policy,
       impl_.metadata_update_policy_, &InstanceAdminClient::UpdateInstance,
       request, "InstanceAdmin::UpdateInstance", status, false);
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(status,
                                       "unrecoverable error in MakeCall()");
   }
@@ -137,7 +137,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::UpdateInstanceImpl(
       impl_.client_, impl_.polling_policy_->clone(),
       impl_.metadata_update_policy_, operation, "InstanceAdmin::UpdateInstance",
       status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(
         status, "while polling operation in InstanceAdmin::UpdateInstance");
   }
@@ -147,7 +147,7 @@ google::bigtable::admin::v2::Instance InstanceAdmin::UpdateInstanceImpl(
 btadmin::Instance InstanceAdmin::GetInstance(std::string const& instance_id) {
   grpc::Status status;
   auto result = impl_.GetInstance(instance_id, status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(status, status.error_message());
   }
   return result;
@@ -169,7 +169,7 @@ future<btadmin::Instance> InstanceAdmin::AsyncGetInstance(
 void InstanceAdmin::DeleteInstance(std::string const& instance_id) {
   grpc::Status status;
   impl_.DeleteInstance(instance_id, status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(status, status.error_message());
   }
 }
@@ -179,7 +179,7 @@ btadmin::Cluster InstanceAdmin::GetCluster(
     bigtable::ClusterId const& cluster_id) {
   grpc::Status status;
   auto result = impl_.GetCluster(instance_id, cluster_id, status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(status, status.error_message());
   }
   return result;
@@ -207,7 +207,7 @@ std::vector<btadmin::Cluster> InstanceAdmin::ListClusters(
     std::string const& instance_id) {
   grpc::Status status;
   auto result = impl_.ListClusters(instance_id, status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(status, status.error_message());
   }
   return result;
@@ -254,7 +254,7 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::UpdateClusterImpl(
       *impl_.client_, *rpc_policy, *backoff_policy,
       impl_.metadata_update_policy_, &InstanceAdminClient::UpdateCluster,
       request, "InstanceAdmin::UpdateCluster", status, false);
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(status,
                                       "unrecoverable error in MakeCall()");
   }
@@ -264,7 +264,7 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::UpdateClusterImpl(
           impl_.client_, impl_.polling_policy_->clone(),
           impl_.metadata_update_policy_, operation,
           "InstanceAdmin::UpdateCluster", status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(
         status, "while polling operation in InstanceAdmin::UpdateCluster");
   }
@@ -274,7 +274,7 @@ void InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
                                   bigtable::ClusterId const& cluster_id) {
   grpc::Status status;
   impl_.DeleteCluster(instance_id, cluster_id, status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
 }
@@ -283,7 +283,7 @@ btadmin::AppProfile InstanceAdmin::CreateAppProfile(
     bigtable::InstanceId const& instance_id, AppProfileConfig config) {
   grpc::Status status;
   auto result = impl_.CreateAppProfile(instance_id, std::move(config), status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
   return result;
@@ -294,7 +294,7 @@ btadmin::AppProfile InstanceAdmin::GetAppProfile(
     bigtable::AppProfileId const& profile_id) {
   grpc::Status status;
   auto result = impl_.GetAppProfile(instance_id, profile_id, status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
   return result;
@@ -312,7 +312,7 @@ std::vector<btadmin::AppProfile> InstanceAdmin::ListAppProfiles(
     std::string const& instance_id) {
   grpc::Status status;
   auto result = impl_.ListAppProfiles(instance_id, status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
   return result;
@@ -323,7 +323,7 @@ void InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
                                      bool ignore_warnings) {
   grpc::Status status;
   impl_.DeleteAppProfile(instance_id, profile_id, ignore_warnings, status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
 }
@@ -353,7 +353,7 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
       *impl_.client_, *rpc_policy, *backoff_policy,
       impl_.metadata_update_policy_, &InstanceAdminClient::CreateCluster,
       request, "InstanceAdmin::CreateCluster", status, false);
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(status,
                                       "unrecoverable error in MakeCall()");
   }
@@ -363,7 +363,7 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
           impl_.client_, impl_.polling_policy_->clone(),
           impl_.metadata_update_policy_, operation,
           "InstanceAdmin::CreateCluster", status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(
         status, "while polling operation in InstanceAdmin::CreateCluster");
   }
@@ -376,7 +376,7 @@ btadmin::AppProfile InstanceAdmin::UpdateAppProfileImpl(
   grpc::Status status;
   auto operation = impl_.UpdateAppProfile(
       std::move(instance_id), std::move(profile_id), std::move(config), status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
 
@@ -385,7 +385,7 @@ btadmin::AppProfile InstanceAdmin::UpdateAppProfileImpl(
       impl_.client_, impl_.polling_policy_->clone(),
       impl_.metadata_update_policy_, operation,
       "InstanceAdmin::UpdateAppProfileImpl", status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     internal::ThrowRpcError(status, status.error_message());
   }
   return result;
@@ -396,7 +396,7 @@ google::cloud::IamPolicy InstanceAdmin::GetIamPolicy(
   grpc::Status status;
   auto result = impl_.GetIamPolicy(instance_id, status);
 
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(status, status.error_message());
   }
   return result;
@@ -408,7 +408,7 @@ google::cloud::IamPolicy InstanceAdmin::SetIamPolicy(
   grpc::Status status;
   auto result = impl_.SetIamPolicy(instance_id, iam_bindings, etag, status);
 
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(status, status.error_message());
   }
   return result;
@@ -420,7 +420,7 @@ std::vector<std::string> InstanceAdmin::TestIamPermissions(
   grpc::Status status;
   auto result = impl_.TestIamPermissions(instance_id, permissions, status);
 
-  if (not status.ok()) {
+  if (!status.ok()) {
     bigtable::internal::ThrowRpcError(status, status.error_message());
   }
 

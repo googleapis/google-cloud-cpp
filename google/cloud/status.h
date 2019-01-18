@@ -71,9 +71,9 @@ class Status {
   bool ok() const { return code_ == StatusCode::kOk; }
 
   bool operator==(Status const& rhs) const {
-    return code() == rhs.code() and message() == rhs.message();
+    return code() == rhs.code() && message() == rhs.message();
   }
-  bool operator!=(Status const& rhs) const { return not(*this == rhs); }
+  bool operator!=(Status const& rhs) const { return !(*this == rhs); }
 
   StatusCode code() const { return code_; }
   std::string const& message() const { return message_; }

@@ -114,19 +114,19 @@ std::ostream& operator<<(std::ostream& os, BucketRetentionPolicy const& rhs) {
 
 StatusOr<BucketMetadata> BucketMetadata::ParseFromJson(
     internal::nl::json const& json) {
-  if (not json.is_object()) {
+  if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
   BucketMetadata result{};
   auto status = CommonMetadata<BucketMetadata>::ParseFromJson(result, json);
-  if (not status.ok()) {
+  if (!status.ok()) {
     return status;
   }
 
   if (json.count("acl") != 0) {
     for (auto const& kv : json["acl"].items()) {
       auto parsed = BucketAccessControl::ParseFromJson(kv.value());
-      if (not parsed.ok()) {
+      if (!parsed.ok()) {
         return std::move(parsed).status();
       }
       result.acl_.emplace_back(std::move(*parsed));
@@ -150,7 +150,7 @@ StatusOr<BucketMetadata> BucketMetadata::ParseFromJson(
   if (json.count("defaultObjectAcl") != 0) {
     for (auto const& kv : json["defaultObjectAcl"].items()) {
       auto parsed = ObjectAccessControl::ParseFromJson(kv.value());
-      if (not parsed.ok()) {
+      if (!parsed.ok()) {
         return std::move(parsed).status();
       }
       result.default_acl_.emplace_back(std::move(*parsed));
@@ -177,7 +177,7 @@ StatusOr<BucketMetadata> BucketMetadata::ParseFromJson(
     if (lifecycle.count("rule") != 0) {
       for (auto const& kv : lifecycle["rule"].items()) {
         auto parsed = LifecycleRule::ParseFromJson(kv.value());
-        if (not parsed.ok()) {
+        if (!parsed.ok()) {
           return std::move(parsed).status();
         }
         value.rule.emplace_back(std::move(*parsed));
@@ -240,7 +240,7 @@ StatusOr<BucketMetadata> BucketMetadata::ParseFromString(
 std::string BucketMetadata::ToJsonString() const {
   using internal::nl::json;
   json metadata_as_json;
-  if (not acl().empty()) {
+  if (!acl().empty()) {
     for (BucketAccessControl const& a : acl()) {
       json entry;
       SetIfNotEmpty(entry, "entity", a.entity());
@@ -249,19 +249,19 @@ std::string BucketMetadata::ToJsonString() const {
     }
   }
 
-  if (not cors().empty()) {
+  if (!cors().empty()) {
     for (CorsEntry const& v : cors()) {
       json cors_as_json;
       if (v.max_age_seconds.has_value()) {
         cors_as_json["maxAgeSeconds"] = *v.max_age_seconds;
       }
-      if (not v.method.empty()) {
+      if (!v.method.empty()) {
         cors_as_json["method"] = v.method;
       }
-      if (not v.origin.empty()) {
+      if (!v.origin.empty()) {
         cors_as_json["origin"] = v.origin;
       }
-      if (not v.response_header.empty()) {
+      if (!v.response_header.empty()) {
         cors_as_json["responseHeader"] = v.response_header;
       }
       metadata_as_json["cors"].emplace_back(std::move(cors_as_json));
@@ -277,7 +277,7 @@ std::string BucketMetadata::ToJsonString() const {
 
   metadata_as_json["defaultEventBasedHold"] = default_event_based_hold();
 
-  if (not default_acl().empty()) {
+  if (!default_acl().empty()) {
     for (ObjectAccessControl const& a : default_acl()) {
       json entry;
       SetIfNotEmpty(entry, "entity", a.entity());
@@ -304,7 +304,7 @@ std::string BucketMetadata::ToJsonString() const {
     metadata_as_json["iamConfiguration"] = std::move(c);
   }
 
-  if (not labels_.empty()) {
+  if (!labels_.empty()) {
     json labels_as_json;
     for (auto const& kv : labels_) {
       labels_as_json[kv.first] = kv.second;
@@ -333,7 +333,7 @@ std::string BucketMetadata::ToJsonString() const {
         condition["numNewerVersions"] = *c.num_newer_versions;
       }
       json action{{"type", v.action().type}};
-      if (not v.action().storage_class.empty()) {
+      if (!v.action().storage_class.empty()) {
         action["storageClass"] = v.action().storage_class;
       }
       rule.emplace_back(json{{"condition", std::move(condition)},
@@ -377,16 +377,15 @@ std::string BucketMetadata::ToJsonString() const {
 bool BucketMetadata::operator==(BucketMetadata const& rhs) const {
   return static_cast<internal::CommonMetadata<BucketMetadata> const&>(*this) ==
              rhs and
-         acl_ == rhs.acl_ and billing_ == rhs.billing_ and
-         cors_ == rhs.cors_ and
-         default_event_based_hold_ == rhs.default_event_based_hold_ and
-         default_acl_ == rhs.default_acl_ and encryption_ == rhs.encryption_ and
-         iam_configuration_ == rhs.iam_configuration_ and
-         project_number_ == rhs.project_number_ and
-         lifecycle_ == rhs.lifecycle_ and location_ == rhs.location_ and
-         logging_ == rhs.logging_ and labels_ == rhs.labels_ and
-         retention_policy_ == rhs.retention_policy_ and
-         versioning_ == rhs.versioning_ and website_ == rhs.website_;
+         acl_ == rhs.acl_ && billing_ == rhs.billing_ && cors_ == rhs.cors_ &&
+         default_event_based_hold_ == rhs.default_event_based_hold_ &&
+         default_acl_ == rhs.default_acl_ && encryption_ == rhs.encryption_ &&
+         iam_configuration_ == rhs.iam_configuration_ &&
+         project_number_ == rhs.project_number_ &&
+         lifecycle_ == rhs.lifecycle_ && location_ == rhs.location_ &&
+         logging_ == rhs.logging_ && labels_ == rhs.labels_ &&
+         retention_policy_ == rhs.retention_policy_ &&
+         versioning_ == rhs.versioning_ && website_ == rhs.website_;
 }
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
@@ -555,13 +554,13 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetCors(
     if (a.max_age_seconds.has_value()) {
       entry["maxAgeSeconds"] = *a.max_age_seconds;
     }
-    if (not a.method.empty()) {
+    if (!a.method.empty()) {
       entry["method"] = a.method;
     }
-    if (not a.origin.empty()) {
+    if (!a.origin.empty()) {
       entry["origin"] = a.origin;
     }
-    if (not a.response_header.empty()) {
+    if (!a.response_header.empty()) {
       entry["responseHeader"] = a.response_header;
     }
     array.emplace_back(std::move(entry));
@@ -689,10 +688,10 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLifecycle(
       condition["numNewerVersions"] = *c.num_newer_versions;
     }
     internal::nl::json action;
-    if (not a.action().type.empty()) {
+    if (!a.action().type.empty()) {
       action["type"] = a.action().type;
     }
-    if (not a.action().storage_class.empty()) {
+    if (!a.action().storage_class.empty()) {
       action["storageClass"] = a.action().storage_class;
     }
     array.emplace_back(internal::nl::json{

@@ -29,7 +29,7 @@ ObjectRewriter::ObjectRewriter(std::shared_ptr<internal::RawClient> client,
 StatusOr<RewriteProgress> ObjectRewriter::Iterate() {
   StatusOr<internal::RewriteObjectResponse> response =
       client_->RewriteObject(request_);
-  if (not response.ok()) {
+  if (!response.ok()) {
     progress_.done = true;
     last_error_ = std::move(response).status();
     return last_error_;

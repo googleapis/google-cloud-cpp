@@ -38,7 +38,7 @@ std::unique_ptr<Credentials> LoadCredsFromPath(std::string const& path) {
   namespace nl = google::cloud::storage::internal::nl;
 
   std::ifstream ifs(path);
-  if (not ifs.is_open()) {
+  if (!ifs.is_open()) {
     ThrowRuntimeError("Cannot open credentials file " + path);
   }
   std::string contents(std::istreambuf_iterator<char>{ifs}, {});
@@ -62,7 +62,7 @@ std::unique_ptr<Credentials> LoadCredsFromPath(std::string const& path) {
 
 std::unique_ptr<Credentials> MaybeLoadCredsFromAdcEnvVar() {
   auto path = GoogleAdcFilePathFromEnvVarOrEmpty();
-  if (not path.empty()) {
+  if (!path.empty()) {
     // If the path was specified, try to load that file; explicitly fail if it
     // doesn't exist or can't be read and parsed.
     return LoadCredsFromPath(path);
@@ -72,7 +72,7 @@ std::unique_ptr<Credentials> MaybeLoadCredsFromAdcEnvVar() {
 
 std::unique_ptr<Credentials> MaybeLoadCredsFromGcloudAdcFile() {
   auto path = GoogleAdcFilePathFromWellKnownPathOrEmpty();
-  if (not path.empty()) {
+  if (!path.empty()) {
     // Just because we had the necessary information to build the path doesn't
     // mean that a file exists there.
     std::error_code ec;

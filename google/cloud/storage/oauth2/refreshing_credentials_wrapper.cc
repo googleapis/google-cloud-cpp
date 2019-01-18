@@ -27,7 +27,7 @@ bool RefreshingCredentialsWrapper::IsExpired() {
 }
 
 bool RefreshingCredentialsWrapper::IsValid() {
-  return not authorization_header.empty() and not IsExpired();
+  return !authorization_header.empty() && !IsExpired();
 }
 
 }  // namespace oauth2

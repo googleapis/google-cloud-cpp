@@ -69,7 +69,7 @@ class ListObjectsIterator {
       return false;
     }
     // Iterators on the same stream are equal if they point to the same object.
-    if (value_.ok() and rhs.value_.ok()) {
+    if (value_.ok() && rhs.value_.ok()) {
       return value_.value() == rhs.value_.value();
     }
     return value_.status() == rhs.value_.status();

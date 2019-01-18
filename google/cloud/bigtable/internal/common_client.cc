@@ -24,7 +24,7 @@ std::vector<std::shared_ptr<grpc::Channel>> CreateChannelPool(
   std::vector<std::shared_ptr<grpc::Channel>> result;
   for (std::size_t i = 0; i != options.connection_pool_size(); ++i) {
     auto args = options.channel_arguments();
-    if (not options.connection_pool_name().empty()) {
+    if (!options.connection_pool_name().empty()) {
       args.SetString("cbt-c++/connection-pool-name",
                      options.connection_pool_name());
     }

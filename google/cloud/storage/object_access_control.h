@@ -81,7 +81,7 @@ class ObjectAccessControl : private internal::AccessControlCommon {
 
   bool operator==(ObjectAccessControl const& rhs) const;
   bool operator!=(ObjectAccessControl const& rhs) const {
-    return not(*this == rhs);
+    return !(*this == rhs);
   }
 
  private:

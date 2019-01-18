@@ -39,17 +39,17 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultClient(
 
 bool Client::UseSimpleUpload(std::string const& file_name) const {
   auto status = google::cloud::internal::status(file_name);
-  if (not is_regular(status)) {
+  if (!is_regular(status)) {
     return false;
   }
   auto size = google::cloud::internal::file_size(file_name);
   return size <= raw_client()->client_options().maximum_simple_upload_size();
 }
 
-ObjectMetadata Client::UploadFileSimple(
+StatusOr<ObjectMetadata> Client::UploadFileSimple(
     std::string const& file_name, internal::InsertObjectMediaRequest request) {
   std::ifstream is(file_name);
-  if (not is.is_open()) {
+  if (!is.is_open()) {
     std::string msg = __func__;
     msg += ": cannot open source file ";
     msg += file_name;
@@ -59,14 +59,14 @@ ObjectMetadata Client::UploadFileSimple(
   std::string payload(std::istreambuf_iterator<char>{is}, {});
   request.set_contents(std::move(payload));
 
-  return raw_client_->InsertObjectMedia(request).value();
+  return raw_client_->InsertObjectMedia(request);
 }
 
-ObjectMetadata Client::UploadFileResumable(
+StatusOr<ObjectMetadata> Client::UploadFileResumable(
     std::string const& file_name,
     google::cloud::storage::internal::ResumableUploadRequest const& request) {
   auto status = google::cloud::internal::status(file_name);
-  if (not is_regular(status)) {
+  if (!is_regular(status)) {
     GCP_LOG(WARNING) << "Trying to upload " << file_name
                      << R"""( which is not a regular file.
 This is often a problem because:
@@ -82,17 +82,17 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
   }
 
   std::ifstream source(file_name);
-  if (not source.is_open()) {
+  if (!source.is_open()) {
     std::string msg = __func__;
     msg += ": cannot open source file ";
     msg += file_name;
-    google::cloud::internal::ThrowRuntimeError(msg);
+    return Status(StatusCode::kNotFound, std::move(msg));
   }
   // This function only works for regular files, and the `storage::Client()`
   // class checks before calling it.
   std::uint64_t source_size = google::cloud::internal::file_size(file_name);
 
-  return UploadStreamResumable(source, source_size, request).value();
+  return UploadStreamResumable(source, source_size, request);
 }
 
 StatusOr<ObjectMetadata> Client::UploadStreamResumable(
@@ -100,7 +100,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     internal::ResumableUploadRequest const& request) {
   StatusOr<std::unique_ptr<internal::ResumableUploadSession>> session_status =
       raw_client()->CreateResumableSession(request);
-  if (not session_status.ok()) {
+  if (!session_status.ok()) {
     return std::move(session_status).status();
   }
 
@@ -114,7 +114,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
       internal::ResumableUploadResponse{});
   // We iterate while `source` is good and the retry policy has not been
   // exhausted.
-  while (not source.eof() and upload_response.ok() and
+  while (!source.eof() && upload_response.ok() &&
          upload_response->payload.empty()) {
     // Read a chunk of data from the source file.
     std::string buffer(chunk_size, '\0');
@@ -127,7 +127,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
 
     auto expected = session->next_expected_byte() + gcount - 1;
     upload_response = session->UploadChunk(buffer, source_size);
-    if (not upload_response.ok()) {
+    if (!upload_response.ok()) {
       return std::move(upload_response).status();
     }
     if (session->next_expected_byte() != expected) {
@@ -138,15 +138,16 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     }
   }
 
-  if (not upload_response.ok()) {
+  if (!upload_response.ok()) {
     return std::move(upload_response).status();
   }
 
   return ObjectMetadata::ParseFromString(upload_response->payload);
 }
 
-void Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
-                              std::string const& file_name) {
+StatusOr<void> Client::DownloadFileImpl(
+    internal::ReadObjectRangeRequest const& request,
+    std::string const& file_name) {
   // TODO(#1665) - use Status to report errors.
   std::unique_ptr<internal::ObjectReadStreambuf> streambuf =
       raw_client_->ReadObject(request).value();
@@ -156,17 +157,20 @@ void Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
   auto report_error = [&](char const* func, char const* what) {
     std::ostringstream msg;
     msg << func << "(" << request << ", " << file_name << "): " << what
-        << " - status=" << stream.status();
-    google::cloud::internal::ThrowRuntimeError(std::move(msg).str());
+        << " - status.message=" << stream.status().message();
+    return Status(stream.status().code(), std::move(msg).str());
   };
-  if (not stream.status().ok()) {
-    report_error(__func__, "cannot open download stream");
+  if (!stream.status().ok()) {
+    return report_error(__func__, "cannot open destination file");
   }
 
   // Open the destination file, and immediate raise an exception on failure.
   std::ofstream os(file_name);
-  if (not os.is_open()) {
-    report_error(__func__, "cannot open destination file");
+  if (!os.is_open()) {
+    std::ostringstream msg;
+    msg << __func__ << "(" << request << ", " << file_name << "): "
+        << "cannot open destination file";
+    return Status(StatusCode::kInvalidArgument, std::move(msg).str());
   }
 
   std::string buffer;
@@ -174,14 +178,18 @@ void Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
   do {
     stream.read(&buffer[0], buffer.size());
     os.write(buffer.data(), stream.gcount());
-  } while (os.good() and stream.good());
+  } while (os.good() && stream.good());
   os.close();
-  if (not os.good()) {
-    report_error(__func__, "error closing destination file");
+  if (!os.good()) {
+    std::ostringstream msg;
+    msg << __func__ << "(" << request << ", " << file_name << "): "
+        << "cannot close destination file";
+    return Status(StatusCode::kUnknown, std::move(msg).str());
   }
-  if (not stream.status().ok()) {
-    report_error(__func__, "error in download stream");
+  if (!stream.status().ok()) {
+    return report_error(__func__, "error in download stream");
   }
+  return Status();
 }
 
 StatusOr<std::string> Client::SignUrl(internal::SignUrlRequest const& request) {
@@ -199,7 +207,7 @@ https://cloud.google.com/storage/docs/authentication
   }
 
   auto result = credentials->SignString(request.StringToSign());
-  if (not result.first.ok()) {
+  if (!result.first.ok()) {
     return result.first;
   }
 
@@ -208,7 +216,7 @@ https://cloud.google.com/storage/docs/authentication
 
   std::ostringstream os;
   os << "https://storage.googleapis.com/" << request.bucket_name();
-  if (not request.object_name().empty()) {
+  if (!request.object_name().empty()) {
     os << '/' << curl.MakeEscapedString(request.object_name()).get();
   }
   os << "?GoogleAccessId=" << credentials->client_id()

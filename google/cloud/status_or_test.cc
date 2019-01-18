@@ -27,13 +27,13 @@ TEST(StatusOrTest, DefaultConstructor) {
   StatusOr<int> actual;
   EXPECT_FALSE(actual.ok());
   EXPECT_FALSE(actual.status().ok());
-  EXPECT_TRUE(not actual);
+  EXPECT_FALSE(actual);
 }
 
 TEST(StatusOrTest, StatusConstructorNormal) {
   StatusOr<int> actual(Status(StatusCode::kNotFound, "NOT FOUND"));
   EXPECT_FALSE(actual.ok());
-  EXPECT_TRUE(not actual);
+  EXPECT_FALSE(actual);
   EXPECT_EQ(StatusCode::kNotFound, actual.status().code());
   EXPECT_EQ("NOT FOUND", actual.status().message());
 }
@@ -51,7 +51,7 @@ TEST(StatusOrTest, StatusConstructorInvalid) {
 TEST(StatusOrTest, ValueConstructor) {
   StatusOr<int> actual(42);
   EXPECT_TRUE(actual.ok());
-  EXPECT_FALSE(not actual);
+  EXPECT_TRUE(actual);
   EXPECT_EQ(42, actual.value());
   EXPECT_EQ(42, std::move(actual).value());
 }

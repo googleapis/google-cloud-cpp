@@ -167,7 +167,7 @@ class PollableLoopAdapter {
     // that a call to OnFailure() always preceeds a call to WaitPeriod(). That
     // way the policy can react differently to successful requests.
     bool const allowed_to_retry = polling_policy_->OnFailure(status);
-    if (not status.ok() and not allowed_to_retry) {
+    if (!status.ok() && !allowed_to_retry) {
       std::string full_message =
           FullErrorMessageUnlocked(polling_policy_->IsPermanentError(status)
                                        ? "permanent error"

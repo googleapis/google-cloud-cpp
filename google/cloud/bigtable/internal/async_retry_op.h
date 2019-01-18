@@ -171,7 +171,7 @@ class RetriableLoopAdapter {
       attempt_completed_callback(cq, true);
       return;
     }
-    if (not idempotent_policy_.is_idempotent()) {
+    if (!idempotent_policy_.is_idempotent()) {
       grpc::Status res_status(
           status.error_code(),
           FullErrorMessageUnlocked("non-idempotent operation failed", status),
@@ -181,7 +181,7 @@ class RetriableLoopAdapter {
       attempt_completed_callback(cq, true);
       return;
     }
-    if (not rpc_retry_policy_->OnFailure(status)) {
+    if (!rpc_retry_policy_->OnFailure(status)) {
       std::string full_message =
           FullErrorMessageUnlocked(RPCRetryPolicy::IsPermanentFailure(status)
                                        ? "permanent error"

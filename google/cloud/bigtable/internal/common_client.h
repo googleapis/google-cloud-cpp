@@ -86,7 +86,7 @@ class CommonClient {
  private:
   /// Make sure the connections exit, and create them if needed.
   void CheckConnections(std::unique_lock<std::mutex>& lk) {
-    if (not stubs_.empty()) {
+    if (!stubs_.empty()) {
       return;
     }
     // Release the lock while making remote calls.  gRPC uses the current

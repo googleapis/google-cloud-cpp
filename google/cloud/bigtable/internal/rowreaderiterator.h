@@ -69,7 +69,7 @@ class RowReaderIterator {
   Row&& operator*() && { return *std::move(row_); }
   bool operator==(RowReaderIterator const& that) const {
     // All non-end iterators are equal.
-    return owner_ == that.owner_ and row_.has_value() == that.row_.has_value();
+    return owner_ == that.owner_ && row_.has_value() == that.row_.has_value();
   }
 
   bool operator!=(RowReaderIterator const& that) const {
