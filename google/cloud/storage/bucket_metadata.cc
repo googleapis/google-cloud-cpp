@@ -17,6 +17,7 @@
 #include "google/cloud/internal/ios_flags_saver.h"
 #include "google/cloud/storage/internal/format_rfc3339.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
+#include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
@@ -178,7 +179,7 @@ StatusOr<BucketMetadata> BucketMetadata::ParseFromJson(
     BucketLifecycle value;
     if (lifecycle.count("rule") != 0) {
       for (auto const& kv : lifecycle["rule"].items()) {
-        auto parsed = LifecycleRule::ParseFromJson(kv.value());
+        auto parsed = internal::LifecycleRuleParser::FromJson(kv.value());
         if (!parsed.ok()) {
           return std::move(parsed).status();
         }

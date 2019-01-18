@@ -27,6 +27,11 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+struct LifecycleRuleParser {
+  static StatusOr<LifecycleRule> FromJson(internal::nl::json const& json);
+  static StatusOr<LifecycleRule> FromString(std::string const& text);
+};
+
 /**
  * Requests the list of buckets for a project.
  */

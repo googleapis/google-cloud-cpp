@@ -27,6 +27,12 @@ using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
+/// @test Verify that we parse JSON objects into LifecycleRule objects.
+TEST(LifecycleRuleParserTest, ParseFailure) {
+  auto actual = LifecycleRuleParser::FromString("{123");
+  EXPECT_FALSE(actual.ok());
+}
+
 TEST(GetBucketMetadataRequestTest, OStreamBasic) {
   GetBucketMetadataRequest request("my-bucket");
   std::ostringstream os;

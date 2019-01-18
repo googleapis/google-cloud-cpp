@@ -21,6 +21,48 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(internal::nl::json const& json) {
+  if (!json.is_object()) {
+    return Status(StatusCode::kInvalidArgument, __func__);
+  }
+  LifecycleRule result;
+  if (json.count("action") != 0) {
+    result.action_.type = json["action"].value("type", "");
+    result.action_.storage_class = json["action"].value("storageClass", "");
+  }
+  if (json.count("condition") != 0) {
+    auto condition = json["condition"];
+    if (condition.count("age") != 0) {
+      result.condition_.age.emplace(internal::ParseIntField(condition, "age"));
+    }
+    if (condition.count("createdBefore") != 0) {
+      result.condition_.created_before.emplace(
+          internal::ParseRfc3339(condition.value("createdBefore", "")));
+    }
+    if (condition.count("isLive") != 0) {
+      result.condition_.is_live.emplace(
+          internal::ParseBoolField(condition, "isLive"));
+    }
+    if (condition.count("matchesStorageClass") != 0) {
+      std::vector<std::string> matches;
+      for (auto const& kv : condition["matchesStorageClass"].items()) {
+        matches.emplace_back(kv.value().get<std::string>());
+      }
+      result.condition_.matches_storage_class.emplace(std::move(matches));
+    }
+    if (condition.count("numNewerVersions") != 0) {
+      result.condition_.num_newer_versions.emplace(
+          internal::ParseIntField(condition, "numNewerVersions"));
+    }
+  }
+  return result;
+}
+
+StatusOr<LifecycleRule> LifecycleRuleParser::FromString(std::string const& text) {
+  auto json = internal::nl::json::parse(text, nullptr, false);
+  return FromJson(json);
+}
+
 std::ostream& operator<<(std::ostream& os, ListBucketsRequest const& r) {
   os << "ListBucketsRequest={project_id=" << r.project_id();
   r.DumpOptions(os, ", ");
