@@ -58,6 +58,14 @@ echo "Running GCS Bucket APIs integration tests."
 ./bucket_integration_test "${PROJECT_ID}" "${BUCKET_NAME}" "${TOPIC_NAME}"
 
 echo
+echo "Running GCS Object Checksum integration tests."
+./object_checksum_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
+
+echo
+echo "Running GCS Object Hash integration tests."
+./object_hash_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
+
+echo
 echo "Running GCS Object Insert API integration tests."
 ./object_insert_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
 
@@ -72,6 +80,10 @@ echo "Running GCS Object media integration tests."
 echo
 echo "Running GCS Object resumable upload integration tests."
 ./object_resumable_write_integration_test "${BUCKET_NAME}"
+
+echo
+echo "Running GCS Object Rewrite integration tests."
+./object_rewrite_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
 
 echo
 echo "Running GCS multi-threaded integration test."
