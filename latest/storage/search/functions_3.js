@@ -16,6 +16,6 @@ var searchData=
   ['deleteobjectacl',['DeleteObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a66831edbb3149b00757d042f1dad4def',1,'google::cloud::storage::v0::Client']]],
   ['disable_5fversioning',['disable_versioning',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a34b65c5ba1bfad8408aa145f96b78ec0',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['download_5fbuffer_5fsize',['download_buffer_size',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a296af603db8b89499f06568c210790f2',1,'google::cloud::storage::v0::ClientOptions']]],
-  ['downloadtofile',['DownloadToFile',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a9912e594f369136c1a75e76894757aad',1,'google::cloud::storage::v0::Client']]],
+  ['downloadtofile',['DownloadToFile',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a46ed4e0c75dc0e9e37233db2404aba33',1,'google::cloud::storage::v0::Client']]],
   ['durablereducedavailability',['DurableReducedAvailability',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1storage__class.html#a93c7f9d3633f88611eb5fe97477bcedf',1,'google::cloud::storage::v0::storage_class']]]
 ];
