@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/table.h"
+#include "google/cloud/bigtable/internal/async_future_from_callback.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include <thread>
@@ -63,6 +64,41 @@ void Table::BulkApply(BulkMutation&& mut) {
   if (!status.ok()) {
     ReportPermanentFailures(status.error_message().c_str(), status, failures);
   }
+}
+
+future<void> Table::AsyncBulkApply(BulkMutation&& mut,
+                                        CompletionQueue& cq) {
+  promise<std::vector<FailedMutation>> pfm;
+  future<std::vector<FailedMutation>> resultfm = pfm.get_future();
+
+  impl_.AsyncBulkApply(
+      cq,
+      internal::MakeAsyncFutureFromCallback(std::move(pfm), "AsyncBulkApply"),
+      std::move(mut));
+
+  promise<void> p;
+  future<void> result = p.get_future();
+
+  [](future<std::vector<FailedMutation>> resultfmNew, promise<void> pp) {
+    promise<void> ppp = std::move(pp);
+
+    future<std::vector<FailedMutation>> fut = std::move(resultfmNew);
+    auto final = fut.then([&](future<std::vector<FailedMutation>> f) {
+      auto finalVector = f.get();
+      if(finalVector.size() == 0){
+		  std::cout << "No failed mutations" << std::endl;
+	  }
+	  else{
+		  ppp.set_exception(std::current_exception());
+	  }
+	  
+    });
+
+    final.get();
+    ppp.set_value();
+  }(std::move(resultfm), std::move(p));
+
+  return result;
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {

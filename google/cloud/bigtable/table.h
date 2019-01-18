@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/table.h"
+#include "google/cloud/future.h"
 
 namespace google {
 namespace cloud {
@@ -222,6 +223,8 @@ class Table {
    * @snippet data_snippets.cc bulk apply
    */
   void BulkApply(BulkMutation&& mut);
+  
+  future<void>AsyncBulkApply(BulkMutation&& mut, CompletionQueue& cq);
 
   /**
    * Reads a set of rows from the table.
