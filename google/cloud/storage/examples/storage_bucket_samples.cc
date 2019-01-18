@@ -232,7 +232,7 @@ void PatchBucketStorageClass(google::cloud::storage::Client client, int& argc,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto storage_class = ConsumeArg(argc, argv);
-  //! [patch bucket storage class]
+  //! [patch bucket storage class] [START storage_change_default_storage_class]
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string storage_class) {
@@ -256,7 +256,7 @@ void PatchBucketStorageClass(google::cloud::storage::Client client, int& argc,
               << " has been patched to " << patched->storage_class() << "."
               << "\nFull metadata: " << *patched << std::endl;
   }
-  //! [patch bucket storage class]
+  //! [patch bucket storage class] [END storage_change_default_storage_class]
   (std::move(client), bucket_name, storage_class);
 }
 
