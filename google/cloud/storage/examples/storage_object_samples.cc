@@ -530,9 +530,17 @@ void DownloadFile(google::cloud::storage::Client client, int& argc,
 
   //! [download file]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string file_name) {
-    client.DownloadToFile(bucket_name, object_name, file_name);
+    StatusOr<void> status =
+        client.DownloadToFile(bucket_name, object_name, file_name);
+    if (not status.ok()) {
+      std::cerr << "Error downloading object " << object_name << " in bucket "
+                << bucket_name << " to file " << file_name
+                << ", status=" << status.status() << std::endl;
+      return;
+    }
     std::cout << "Downloaded " << object_name << " to " << file_name
               << std::endl;
   }

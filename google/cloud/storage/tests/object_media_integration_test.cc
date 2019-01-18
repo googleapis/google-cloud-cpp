@@ -77,7 +77,9 @@ TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
   upload.Close();
   ObjectMetadata meta = upload.metadata().value();
 
-  client.DownloadToFile(bucket_name, object_name, file_name);
+  StatusOr<void> download =
+      client.DownloadToFile(bucket_name, object_name, file_name);
+  ASSERT_TRUE(download.ok()) << "status=" << download.status();
   // Create a iostream to read the object back.
   std::ifstream stream(file_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
@@ -106,8 +108,9 @@ TEST_F(ObjectMediaIntegrationTest, JsonDownloadFile) {
   upload.Close();
   ObjectMetadata meta = upload.metadata().value();
 
-  client.DownloadToFile(bucket_name, object_name, file_name,
-                        IfMetagenerationNotMatch(0));
+  StatusOr<void> download = client.DownloadToFile(
+      bucket_name, object_name, file_name, IfMetagenerationNotMatch(0));
+  ASSERT_TRUE(download.ok()) << "status=" << download.status();
   // Create a iostream to read the object back.
   std::ifstream stream(file_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
@@ -127,20 +130,10 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileFailure) {
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomObjectName();
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        client.DownloadToFile(bucket_name, object_name, file_name);
-      } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr(object_name));
-        throw;
-      },
-      std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      client.DownloadToFile(bucket_name, object_name, file_name),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  StatusOr<void> download =
+      client.DownloadToFile(bucket_name, object_name, file_name);
+  EXPECT_FALSE(download.ok());
+  EXPECT_THAT(download.status().message(), HasSubstr(object_name));
 }
 
 TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotOpenFile) {
@@ -155,20 +148,10 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotOpenFile) {
   // Create an invalid path for the destination object.
   auto file_name = MakeRandomObjectName() + "/" + MakeRandomObjectName();
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        client.DownloadToFile(bucket_name, object_name, file_name);
-      } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr(file_name));
-        throw;
-      },
-      std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      client.DownloadToFile(bucket_name, object_name, file_name),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  StatusOr<void> download =
+      client.DownloadToFile(bucket_name, object_name, file_name);
+  EXPECT_FALSE(download.ok());
+  EXPECT_THAT(download.status().message(), HasSubstr(object_name));
 
   StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status.status();
@@ -195,20 +178,11 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotWriteToFile) {
   // order.
   auto file_name = "/dev/full";
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        client.DownloadToFile(bucket_name, object_name, file_name);
-      } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr(file_name));
-        throw;
-      },
-      std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      client.DownloadToFile(bucket_name, object_name, file_name),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  StatusOr<void> download =
+      client.DownloadToFile(bucket_name, object_name, file_name);
+  EXPECT_FALSE(download.ok());
+  EXPECT_THAT(download.status().message(), HasSubstr(object_name));
+
   StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status.status();
 #endif  // GTEST_OS_LINUX
