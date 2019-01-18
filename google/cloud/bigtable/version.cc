@@ -26,7 +26,7 @@ std::string version_string() {
     std::ostringstream os;
     os << "v" << version_major() << "." << version_minor() << "."
        << version_patch();
-    if (not google::cloud::internal::is_release()) {
+    if (!google::cloud::internal::is_release()) {
       os << "+" << google::cloud::internal::gitrev();
     }
     return os.str();

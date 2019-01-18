@@ -50,19 +50,19 @@ std::ostream& operator<<(std::ostream& os, ComposeSourceObject const& r) {
 
 StatusOr<ObjectMetadata> ObjectMetadata::ParseFromJson(
     internal::nl::json const& json) {
-  if (not json.is_object()) {
+  if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
   ObjectMetadata result{};
   auto status = CommonMetadata<ObjectMetadata>::ParseFromJson(result, json);
-  if (not status.ok()) {
+  if (!status.ok()) {
     return status;
   }
 
   if (json.count("acl") != 0) {
     for (auto const& kv : json["acl"].items()) {
       auto parsed = ObjectAccessControl::ParseFromJson(kv.value());
-      if (not parsed.ok()) {
+      if (!parsed.ok()) {
         return std::move(parsed).status();
       }
       result.acl_.emplace_back(std::move(*parsed));
@@ -128,7 +128,7 @@ std::string ObjectMetadata::JsonPayloadForCopy() const {
 internal::nl::json ObjectMetadata::JsonForUpdate() const {
   using internal::nl::json;
   json metadata_as_json;
-  if (not acl().empty()) {
+  if (!acl().empty()) {
     for (ObjectAccessControl const& a : acl()) {
       json entry;
       SetIfNotEmpty(entry, "entity", a.entity());
@@ -145,7 +145,7 @@ internal::nl::json ObjectMetadata::JsonForUpdate() const {
 
   metadata_as_json["eventBasedHold"] = event_based_hold();
 
-  if (not metadata().empty()) {
+  if (!metadata().empty()) {
     json meta_as_json;
     for (auto const& kv : metadata()) {
       meta_as_json[kv.first] = kv.second;
@@ -159,7 +159,7 @@ internal::nl::json ObjectMetadata::JsonForUpdate() const {
 internal::nl::json ObjectMetadata::JsonPayloadForCompose() const {
   using internal::nl::json;
   json metadata_as_json;
-  if (not acl().empty()) {
+  if (!acl().empty()) {
     for (ObjectAccessControl const& a : acl()) {
       json entry;
       SetIfNotEmpty(entry, "entity", a.entity());
@@ -178,7 +178,7 @@ internal::nl::json ObjectMetadata::JsonPayloadForCompose() const {
   SetIfNotEmpty(metadata_as_json, "name", name());
   SetIfNotEmpty(metadata_as_json, "storageClass", storage_class());
 
-  if (not metadata().empty()) {
+  if (!metadata().empty()) {
     json meta_as_json;
     for (auto const& kv : metadata()) {
       meta_as_json[kv.first] = kv.second;
@@ -192,22 +192,22 @@ internal::nl::json ObjectMetadata::JsonPayloadForCompose() const {
 bool ObjectMetadata::operator==(ObjectMetadata const& rhs) const {
   return static_cast<internal::CommonMetadata<ObjectMetadata> const&>(*this) ==
              rhs and
-         acl_ == rhs.acl_ and bucket_ == rhs.bucket_ and
-         cache_control_ == rhs.cache_control_ and
-         component_count_ == rhs.component_count_ and
-         content_disposition_ == rhs.content_disposition_ and
-         content_encoding_ == rhs.content_encoding_ and
-         content_language_ == rhs.content_language_ and
-         content_type_ == rhs.content_type_ and crc32c_ == rhs.crc32c_ and
-         customer_encryption_ == customer_encryption_ and
-         event_based_hold_ == rhs.event_based_hold_ and
-         generation_ == rhs.generation_ and
-         kms_key_name_ == rhs.kms_key_name_ and md5_hash_ == rhs.md5_hash_ and
-         media_link_ == rhs.media_link_ and metadata_ == rhs.metadata_ and
-         retention_expiration_time_ == rhs.retention_expiration_time_ and
-         temporary_hold_ == rhs.temporary_hold_ and
-         time_deleted_ == rhs.time_deleted_ and
-         time_storage_class_updated_ == rhs.time_storage_class_updated_ and
+         acl_ == rhs.acl_ && bucket_ == rhs.bucket_ &&
+         cache_control_ == rhs.cache_control_ &&
+         component_count_ == rhs.component_count_ &&
+         content_disposition_ == rhs.content_disposition_ &&
+         content_encoding_ == rhs.content_encoding_ &&
+         content_language_ == rhs.content_language_ &&
+         content_type_ == rhs.content_type_ && crc32c_ == rhs.crc32c_ &&
+         customer_encryption_ == customer_encryption_ &&
+         event_based_hold_ == rhs.event_based_hold_ &&
+         generation_ == rhs.generation_ && kms_key_name_ == rhs.kms_key_name_ &&
+         md5_hash_ == rhs.md5_hash_ && media_link_ == rhs.media_link_ &&
+         metadata_ == rhs.metadata_ &&
+         retention_expiration_time_ == rhs.retention_expiration_time_ &&
+         temporary_hold_ == rhs.temporary_hold_ &&
+         time_deleted_ == rhs.time_deleted_ &&
+         time_storage_class_updated_ == rhs.time_storage_class_updated_ &&
          size_ == rhs.size_;
 }
 

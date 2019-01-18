@@ -156,12 +156,11 @@ inline bool is_symlink(file_status s) noexcept {
 }
 
 inline bool exists(file_status s) noexcept {
-  return status_known(s) and s.type() != file_type::not_found;
+  return status_known(s) && s.type() != file_type::not_found;
 }
 
 inline bool is_other(file_status s) noexcept {
-  return exists(s) and not is_regular(s) and not is_directory(s) and
-         not is_symlink(s);
+  return exists(s) && !is_regular(s) && !is_directory(s) && !is_symlink(s);
 }
 
 std::uintmax_t file_size(std::string const& path);

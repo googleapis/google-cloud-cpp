@@ -56,7 +56,7 @@ void ListBucketAcl(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<std::vector<gcs::BucketAccessControl>> items =
         client.ListBucketAcl(bucket_name);
-    if (not items.ok()) {
+    if (!items.ok()) {
       std::cerr << "Error getting ACL entries for bucket " << bucket_name
                 << ", status=" << items.status() << std::endl;
       return;
@@ -85,7 +85,7 @@ void CreateBucketAcl(google::cloud::storage::Client client, int& argc,
      std::string role) {
     StatusOr<gcs::BucketAccessControl> bucket_acl =
         client.CreateBucketAcl(bucket_name, entity, role);
-    if (not bucket_acl.ok()) {
+    if (!bucket_acl.ok()) {
       std::cerr << "Failure getting bucket ACL for entity " << entity
                 << " in bucket " << bucket_name
                 << ", status=" << bucket_acl.status() << std::endl;
@@ -112,7 +112,7 @@ void DeleteBucketAcl(google::cloud::storage::Client client, int& argc,
   using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string entity) {
     StatusOr<void> status = client.DeleteBucketAcl(bucket_name, entity);
-    if (not status.ok()) {
+    if (!status.ok()) {
       std::cerr << "Failure deleting ACL for entity " << entity << " in bucket "
                 << bucket_name << ", status=" << status.status() << std::endl;
       return;
@@ -137,7 +137,7 @@ void GetBucketAcl(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string bucket_name, std::string entity) {
     StatusOr<gcs::BucketAccessControl> acl =
         client.GetBucketAcl(bucket_name, entity);
-    if (not acl.ok()) {
+    if (!acl.ok()) {
       std::cerr << "Failure getting ACL for entity " << entity << " in bucket "
                 << bucket_name << ", status=" << acl.status() << std::endl;
       return;
@@ -166,7 +166,7 @@ void UpdateBucketAcl(google::cloud::storage::Client client, int& argc,
         gcs::BucketAccessControl().set_entity(entity).set_role(role);
     StatusOr<gcs::BucketAccessControl> updated_acl =
         client.UpdateBucketAcl(bucket_name, desired_acl);
-    if (not updated_acl.ok()) {
+    if (!updated_acl.ok()) {
       std::cerr << "Error updating ACL for entity " << entity << " in bucket "
                 << bucket_name << ", status=" << updated_acl.status()
                 << std::endl;
@@ -195,7 +195,7 @@ void PatchBucketAcl(google::cloud::storage::Client client, int& argc,
      std::string role) {
     StatusOr<gcs::BucketAccessControl> original_acl =
         client.GetBucketAcl(bucket_name, entity);
-    if (not original_acl.ok()) {
+    if (!original_acl.ok()) {
       std::cerr << "Failure getting ACL for entity " << entity << " in bucket "
                 << bucket_name << ", status=" << original_acl.status()
                 << std::endl;
@@ -205,7 +205,7 @@ void PatchBucketAcl(google::cloud::storage::Client client, int& argc,
     new_acl.set_role(role);
     StatusOr<gcs::BucketAccessControl> patched_acl =
         client.PatchBucketAcl(bucket_name, entity, *original_acl, new_acl);
-    if (not patched_acl.ok()) {
+    if (!patched_acl.ok()) {
       std::cerr << "Failure patching ACL for entity " << entity << " in bucket "
                 << bucket_name << ", status=" << patched_acl.status()
                 << std::endl;
@@ -235,7 +235,7 @@ void PatchBucketAclNoRead(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::BucketAccessControl> patched_acl = client.PatchBucketAcl(
         bucket_name, entity,
         gcs::BucketAccessControlPatchBuilder().set_role(role));
-    if (not patched_acl.ok()) {
+    if (!patched_acl.ok()) {
       std::cerr << "Failure patching ACL for entity " << entity << " in bucket "
                 << bucket_name << ", status=" << patched_acl.status()
                 << std::endl;

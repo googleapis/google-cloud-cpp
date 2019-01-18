@@ -115,7 +115,7 @@ class PatchBuilder {
                                  google::cloud::optional<T> const& lhs,
                                  google::cloud::optional<T> const& rhs) {
     if (lhs == rhs) return *this;
-    if (not rhs.has_value()) {
+    if (!rhs.has_value()) {
       patch_[field_name] = nullptr;
       return *this;
     }

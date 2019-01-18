@@ -67,7 +67,7 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut) {
     }
     // It is up to the policy to terminate this loop, it could run
     // forever, but that would be a bad policy (pun intended).
-    if (not rpc_policy->OnFailure(status) or not is_idempotent) {
+    if (!rpc_policy->OnFailure(status) || !is_idempotent) {
       google::rpc::Status rpc_status;
       rpc_status.set_code(status.error_code());
       rpc_status.set_message(status.error_message());
@@ -105,17 +105,17 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
     retry_policy->Setup(client_context);
     metadata_update_policy_.Setup(client_context);
     status = mutator.MakeOneRequest(*client_, client_context);
-    if (not status.ok() and not retry_policy->OnFailure(status)) {
+    if (!status.ok() && !retry_policy->OnFailure(status)) {
       break;
     }
     auto delay = backoff_policy->OnCompletion(status);
     std::this_thread::sleep_for(delay);
   }
   auto failures = mutator.ExtractFinalFailures();
-  if (not status.ok()) {
+  if (!status.ok()) {
     return failures;
   }
-  if (not failures.empty()) {
+  if (!failures.empty()) {
     status = grpc::Status(
         grpc::StatusCode::INTERNAL,
         "Permanent (or too many transient) errors in Table::BulkApply()");
@@ -196,7 +196,7 @@ Row Table::CallReadModifyWriteRowRequest(
       *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
       &DataClient::ReadModifyWriteRow, request, "ReadModifyWriteRowRequest",
       status);
-  if (not status.ok()) {
+  if (!status.ok()) {
     return Row("", {});
   }
 
@@ -257,7 +257,7 @@ void Table::SampleRowsImpl(
     if (status.ok()) {
       break;
     }
-    if (not retry_policy->OnFailure(status)) {
+    if (!retry_policy->OnFailure(status)) {
       status = grpc::Status(grpc::StatusCode::INTERNAL,
                             "No more retries allowed as per policy.");
       return;

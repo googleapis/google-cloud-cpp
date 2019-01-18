@@ -126,7 +126,7 @@ class MultipageRetriableAdapter {
       // failure happens, we start from small wait periods.
       rpc_backoff_policy_ = rpc_backoff_policy_prototype_->clone();
     }
-    if (not rpc_retry_policy_->OnFailure(status)) {
+    if (!rpc_retry_policy_->OnFailure(status)) {
       std::string full_message =
           FullErrorMessageUnlocked(RPCRetryPolicy::IsPermanentFailure(status)
                                        ? "permanent error"

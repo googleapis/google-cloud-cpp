@@ -97,7 +97,7 @@ class ClientOptions {
   std::string const& user_agent_prefix() const { return user_agent_prefix_; }
   ClientOptions& add_user_agent_prefx(std::string const& v) {
     std::string prefix = v;
-    if (not user_agent_prefix_.empty()) {
+    if (!user_agent_prefix_.empty()) {
       prefix += '/';
       prefix += user_agent_prefix_;
     }

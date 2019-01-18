@@ -213,7 +213,7 @@ class AcceptanceTest : public ::testing::Test {
     std::vector<ReadRowsResponse_CellChunk> chunks;
     for (std::string const& chunk_string : chunk_strings) {
       ReadRowsResponse_CellChunk chunk;
-      if (not TextFormat::ParseFromString(chunk_string, &chunk)) {
+      if (!TextFormat::ParseFromString(chunk_string, &chunk)) {
         return {};
       }
       chunks.emplace_back(std::move(chunk));
@@ -226,18 +226,18 @@ class AcceptanceTest : public ::testing::Test {
     grpc::Status status;
     for (auto const& chunk : chunks) {
       parser_.HandleChunk(chunk, status);
-      if (not status.ok()) {
+      if (!status.ok()) {
         google::cloud::internal::ThrowRuntimeError(status.error_message());
       }
       if (parser_.HasNext()) {
         rows_.emplace_back(parser_.Next(status));
-        if (not status.ok()) {
+        if (!status.ok()) {
           google::cloud::internal::ThrowRuntimeError(status.error_message());
         }
       }
     }
     parser_.HandleEndOfStream(status);
-    if (not status.ok()) {
+    if (!status.ok()) {
       google::cloud::internal::ThrowRuntimeError(status.error_message());
     }
   }

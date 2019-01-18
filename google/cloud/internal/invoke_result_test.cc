@@ -71,10 +71,10 @@ TEST(ResultOfTest, Function) {
   static_assert(is_invocable<F, int, std::string&>::value,
                 "expected `is_invocable<F, int, std::string&>` to be true");
 
-  static_assert(not is_invocable<F, std::string>::value,
+  static_assert(!is_invocable<F, std::string>::value,
                 "expected `is_invocable<F, std::string>` to be false");
 
-  static_assert(not is_invocable<F>::value,
+  static_assert(!is_invocable<F>::value,
                 "expected `is_invocable<F>` to be false");
 
   // Some compilers create warnings/errors if the function is not used, even
@@ -101,13 +101,13 @@ TEST(ResultOfTest, TestMemberFn) {
                 "expected `is_invocable<DoSomethingTemplatedType, TestStruct&, "
                 "std::string const&, int>` to be true");
   using DoSomethingType = decltype(&TestStruct::DoSomething);
-  static_assert(not is_invocable<DoSomethingType, TestStruct&, int, int>::value,
+  static_assert(!is_invocable<DoSomethingType, TestStruct&, int, int>::value,
                 "expected `is_invocable<DoSomethingType, TestStruct&, "
                 "std::string const&, int>` to be true");
   using DoSomethingTemplatedType =
       decltype(&TestStruct::DoSomethingTemplated<std::string>);
-  static_assert(not is_invocable<DoSomethingTemplatedType, TestStruct&, int,
-                                 std::string&&>::value,
+  static_assert(!is_invocable<DoSomethingTemplatedType, TestStruct&, int,
+                              std::string&&>::value,
                 "expected `is_invocable<DoSomethingTemplatedType, TestStruct&, "
                 "std::string const&, int>` to be true");
 }

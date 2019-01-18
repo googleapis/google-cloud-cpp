@@ -38,18 +38,18 @@ bool CurlResumableStreambuf::IsOpen() const {
 bool CurlResumableStreambuf::ValidateHash(ObjectMetadata const& meta) {
   hash_validator_->ProcessMetadata(meta);
   hash_validator_result_ = std::move(*hash_validator_).Finish();
-  return not hash_validator_result_.is_mismatch;
+  return !hash_validator_result_.is_mismatch;
 }
 
 CurlResumableStreambuf::int_type CurlResumableStreambuf::overflow(int_type ch) {
-  if (not IsOpen()) {
+  if (!IsOpen()) {
     return traits_type::eof();
   }
   auto status = Flush(false);
-  if (not status.ok()) {
+  if (!status.ok()) {
     return traits_type::eof();
   }
-  if (not traits_type::eq_int_type(ch, traits_type::eof())) {
+  if (!traits_type::eq_int_type(ch, traits_type::eof())) {
     current_ios_buffer_.push_back(traits_type::to_char_type(ch));
     pbump(1);
   }
@@ -58,7 +58,7 @@ CurlResumableStreambuf::int_type CurlResumableStreambuf::overflow(int_type ch) {
 
 int CurlResumableStreambuf::sync() {
   auto status = Flush(false);
-  if (not status.ok()) {
+  if (!status.ok()) {
     return traits_type::eof();
   }
   return 0;
@@ -66,11 +66,11 @@ int CurlResumableStreambuf::sync() {
 
 std::streamsize CurlResumableStreambuf::xsputn(char const* s,
                                                std::streamsize count) {
-  if (not IsOpen()) {
+  if (!IsOpen()) {
     return traits_type::eof();
   }
   auto status = Flush(false);
-  if (not status.ok()) {
+  if (!status.ok()) {
     return traits_type::eof();
   }
 
@@ -85,7 +85,7 @@ StatusOr<HttpResponse> CurlResumableStreambuf::DoClose() {
 }
 
 StatusOr<HttpResponse> CurlResumableStreambuf::Flush(bool final_chunk) {
-  if (not IsOpen()) {
+  if (!IsOpen()) {
     return last_response_;
   }
   // Shorten the buffer to the actual used size.
@@ -93,7 +93,7 @@ StatusOr<HttpResponse> CurlResumableStreambuf::Flush(bool final_chunk) {
   if (actual_size == 0) {
     return last_response_;
   }
-  if (actual_size <= max_buffer_size_ and not final_chunk) {
+  if (actual_size <= max_buffer_size_ && !final_chunk) {
     return last_response_;
   }
 
@@ -110,7 +110,7 @@ StatusOr<HttpResponse> CurlResumableStreambuf::Flush(bool final_chunk) {
   hash_validator_->Update(current_ios_buffer_);
 
   auto result = upload_session_->UploadChunk(current_ios_buffer_, upload_size);
-  if (not result.ok()) {
+  if (!result.ok()) {
     // This was an unrecoverable error, time to signal an error.
     return std::move(result).status();
   }

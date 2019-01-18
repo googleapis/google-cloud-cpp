@@ -39,7 +39,7 @@ class CurlDownloadRequest {
   explicit CurlDownloadRequest(std::size_t initial_buffer_size);
 
   ~CurlDownloadRequest() {
-    if (not factory_) {
+    if (!factory_) {
       return;
     }
     factory_->CleanupHandle(std::move(handle_.handle_));
@@ -77,7 +77,7 @@ class CurlDownloadRequest {
     return *this;
   }
 
-  bool IsOpen() const { return not curl_closed_; }
+  bool IsOpen() const { return !curl_closed_; }
   StatusOr<HttpResponse> Close();
 
   /**
@@ -110,23 +110,23 @@ class CurlDownloadRequest {
     // We can assert that the current thread is the leader, because the
     // predicate is satisfied, and the condition variable exited. Therefore,
     // this thread must run the I/O event loop.
-    while (not predicate()) {
+    while (!predicate()) {
       handle_.FlushDebug(__func__);
       GCP_LOG(DEBUG) << __func__ << "() predicate is false"
                      << ", curl.size=" << buffer_.size();
       auto running_handles = PerformWork();
-      if (not running_handles.ok()) {
+      if (!running_handles.ok()) {
         return std::move(running_handles).status();
       }
       // Only wait if there are CURL handles with pending work *and* the
       // predicate is not satisfied. Note that if the predicate is ill-defined
       // it might continue to be unsatisfied even though the handles have
       // completed their work.
-      if (*running_handles == 0 or predicate()) {
+      if (*running_handles == 0 || predicate()) {
         return Status();
       }
       auto status = WaitForHandles(repeats);
-      if (not status.ok()) {
+      if (!status.ok()) {
         return status;
       }
     }

@@ -88,7 +88,7 @@ TEST(FilesystemTest, StatusBlock) {
   std::error_code ec;
   auto file_status = status("/dev/loop0", ec);
   EXPECT_FALSE(static_cast<bool>(ec));
-  if (not exists(file_status)) {
+  if (!exists(file_status)) {
     // In some CI builds there is no /dev/loop0, and no other well-known
     // block device comes to mind, simply stop the test when that happens.
     return;

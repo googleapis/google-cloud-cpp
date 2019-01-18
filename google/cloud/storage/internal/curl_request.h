@@ -36,7 +36,7 @@ class CurlRequest {
   CurlRequest();
 
   ~CurlRequest() {
-    if (not factory_) {
+    if (!factory_) {
       return;
     }
     factory_->CleanupHandle(std::move(handle_.handle_));

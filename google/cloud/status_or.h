@@ -38,7 +38,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  * void AppCode(gcs::noex::Client client) {
  *   gcs::StatusOr<gcs::BucketMetadata> meta_err = client.GetBucketMetadata(
  *       "my-bucket-name");
- *   if (not meta_err) {
+ *   if (!meta_err) {
  *       std::cerr << "Error in GetBucketMetadata: " << meta_err.status()
  *                 << std::endl;
  *       return;
@@ -97,8 +97,8 @@ class StatusOr final {
     // There may be shorter ways to express this, but this is fairly readable,
     // and should be reasonably efficient. Note that we must avoid destructing
     // the destination and/or default initializing it unless really needed.
-    if (not ok()) {
-      if (not rhs.ok()) {
+    if (!ok()) {
+      if (!rhs.ok()) {
         status_ = std::move(rhs.status_);
         return *this;
       }
@@ -106,7 +106,7 @@ class StatusOr final {
       status_ = Status();
       return *this;
     }
-    if (not rhs.ok()) {
+    if (!rhs.ok()) {
       value_.~T();
       status_ = std::move(rhs.status_);
       return *this;
@@ -126,8 +126,8 @@ class StatusOr final {
     // There may be shorter ways to express this, but this is fairly readable,
     // and should be reasonably efficient. Note that we must avoid destructing
     // the destination and/or default initializing it unless really needed.
-    if (not ok()) {
-      if (not rhs.ok()) {
+    if (!ok()) {
+      if (!rhs.ok()) {
         status_ = rhs.status_;
         return *this;
       }
@@ -135,7 +135,7 @@ class StatusOr final {
       status_ = rhs.status_;
       return *this;
     }
-    if (not rhs.ok()) {
+    if (!rhs.ok()) {
       value_.~T();
       status_ = rhs.status_;
       return *this;
@@ -165,7 +165,7 @@ class StatusOr final {
     // There may be shorter ways to express this, but this is fairly readable,
     // and should be reasonably efficient. Note that we must avoid destructing
     // the destination and/or default initializing it unless really needed.
-    if (not ok()) {
+    if (!ok()) {
       new (&value_) T(std::forward<U>(rhs));
       status_ = Status();
       return *this;
@@ -281,14 +281,14 @@ class StatusOr final {
 
  private:
   void CheckHasValue() const& {
-    if (not ok()) {
+    if (!ok()) {
       internal::ThrowStatus(status_);
     }
   }
 
   // When possible, do not copy the status.
   void CheckHasValue() && {
-    if (not ok()) {
+    if (!ok()) {
       internal::ThrowStatus(std::move(status_));
     }
   }
@@ -313,7 +313,7 @@ class StatusOr final {
  * namespace gcs = google::cloud::storage;
  * void AppCode(gcs::noex::Client client) {
  *   gcs::StatusOr<void> delete_err = client.DeleteBucket("my-bucket-name");
- *   if (not delete_err.ok()) {
+ *   if (!delete_err.ok()) {
  *       std::cerr << "Error in DeleteBucket: " << meta_err.status()
  *                 << std::endl;
  *       return;
@@ -416,14 +416,14 @@ class StatusOr<void> final {
 
  private:
   void CheckHasValue() const& {
-    if (not ok()) {
+    if (!ok()) {
       internal::ThrowStatus(Status(status_));
     }
   }
 
   // When possible, do not copy the status.
   void CheckHasValue() && {
-    if (not ok()) {
+    if (!ok()) {
       internal::ThrowStatus(std::move(status_));
     }
   }

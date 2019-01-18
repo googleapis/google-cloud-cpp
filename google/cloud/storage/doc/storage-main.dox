@@ -189,7 +189,7 @@ using namespace google::cloud;
 [](storage::Client client) {
   StatusOr<storage::BucketMetadata> metadata = client.GetBucketMetadata(
       "my-bucket");
-  if (not metadata.ok()) {
+  if (!metadata.ok()) {
     std::cerr << "Error retrieving metadata for my-bucket: "
               << metadata.status() << std::endl;
     return;

@@ -92,7 +92,7 @@ bool RunningOnComputeEngineVm() {
   std::string const gce_product_name = "Google Compute Engine";
   std::string const product_name_file = "/sys/class/dmi/id/product_name";
   std::ifstream is(product_name_file);
-  if (not is.is_open()) {
+  if (!is.is_open()) {
     GCP_LOG(WARNING) << "Could not find file '" << product_name_file
                      << "' when checking if running on GCE, returning false";
     return false;

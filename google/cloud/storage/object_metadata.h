@@ -200,7 +200,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   /// Insert or update the metadata entry.
   ObjectMetadata& upsert_metadata(std::string key, std::string value) {
     auto i = metadata_.lower_bound(key);
-    if (i == metadata_.end() or i->first != key) {
+    if (i == metadata_.end() || i->first != key) {
       metadata_.emplace_hint(i, std::move(key), std::move(value));
     } else {
       i->second = std::move(value);
@@ -247,7 +247,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   using CommonMetadata::updated;
 
   bool operator==(ObjectMetadata const& rhs) const;
-  bool operator!=(ObjectMetadata const& rhs) const { return not(*this == rhs); }
+  bool operator!=(ObjectMetadata const& rhs) const { return !(*this == rhs); }
 
   internal::nl::json JsonForUpdate() const;
 

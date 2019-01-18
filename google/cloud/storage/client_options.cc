@@ -96,7 +96,7 @@ void ClientOptions::SetupFromEnvironment() {
   if (tracing.has_value()) {
     std::set<std::string> enabled;
     std::istringstream is{*tracing};
-    while (not is.eof()) {
+    while (!is.eof()) {
       std::string token;
       std::getline(is, token, ',');
       enabled.emplace(std::move(token));

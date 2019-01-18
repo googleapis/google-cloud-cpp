@@ -50,7 +50,7 @@ HashValidator::Result CompositeValidator::Finish() && {
   received += "," + right_->Name() + "=" + right_result.received;
   auto computed = left_->Name() + "=" + left_result.computed;
   computed += "," + right_->Name() + "=" + right_result.computed;
-  bool is_mismatch = left_result.is_mismatch or right_result.is_mismatch;
+  bool is_mismatch = left_result.is_mismatch || right_result.is_mismatch;
   return Result{std::move(received), std::move(computed), is_mismatch};
 }
 
@@ -91,8 +91,7 @@ HashValidator::Result MD5HashValidator::Finish() && {
   std::string hash(MD5_DIGEST_LENGTH, ' ');
   MD5_Final(reinterpret_cast<unsigned char*>(&hash[0]), &context_);
   auto computed = OpenSslUtils::Base64Encode(hash);
-  bool is_mismatch =
-      not received_hash_.empty() and (received_hash_ != computed);
+  bool is_mismatch = !received_hash_.empty() && (received_hash_ != computed);
   return Result{std::move(received_hash_), std::move(computed), is_mismatch};
 }
 
@@ -137,8 +136,7 @@ HashValidator::Result Crc32cHashValidator::Finish() && {
   hash.resize(sizeof(big_endian));
   std::memcpy(&hash[0], &big_endian, sizeof(big_endian));
   auto computed = OpenSslUtils::Base64Encode(hash);
-  bool is_mismatch =
-      not received_hash_.empty() and (received_hash_ != computed);
+  bool is_mismatch = !received_hash_.empty() && (received_hash_ != computed);
   return Result{std::move(received_hash_), std::move(computed), is_mismatch};
 }
 

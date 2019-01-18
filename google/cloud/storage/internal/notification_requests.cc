@@ -29,13 +29,13 @@ std::ostream& operator<<(std::ostream& os, ListNotificationsRequest const& r) {
 StatusOr<ListNotificationsResponse> ListNotificationsResponse::FromHttpResponse(
     HttpResponse&& response) {
   auto json = nl::json::parse(response.payload, nullptr, false);
-  if (not json.is_object()) {
+  if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
   ListNotificationsResponse result;
   for (auto const& kv : json["items"].items()) {
     auto parsed = NotificationMetadata::ParseFromJson(kv.value());
-    if (not parsed.ok()) {
+    if (!parsed.ok()) {
       return std::move(parsed).status();
     }
     result.items.emplace_back(std::move(*parsed));

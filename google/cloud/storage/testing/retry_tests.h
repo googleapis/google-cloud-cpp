@@ -146,7 +146,7 @@ void NonIdempotentFailuresTest(
   // With EXPECT_DEATH*() the mocking framework cannot detect how many times
   // the operation is called, so we cannot set an exact number of calls to
   // expect.
-  if (not has_will_repeatedly) {
+  if (!has_will_repeatedly) {
     oncall.WillRepeatedly(Return(StatusOr<ReturnType>(TransientError())));
   }
   EXPECT_DEATH_IF_SUPPORTED(tested_operation(client),
@@ -215,7 +215,7 @@ void IdempotentFailuresTest(
   // With EXPECT_DEATH*() the mocking framework cannot detect how many times
   // the operation is called, so we cannot set an exact number of calls to
   // expect.
-  if (not has_will_repeatedly) {
+  if (!has_will_repeatedly) {
     oncall.WillRepeatedly(Return(StatusOr<ReturnType>(TransientError())));
   }
   EXPECT_DEATH_IF_SUPPORTED(tested_operation(client),

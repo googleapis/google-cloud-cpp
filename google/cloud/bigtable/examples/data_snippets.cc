@@ -143,7 +143,7 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     // Read a row, this returns a tuple (bool, row)
     std::pair<bool, google::cloud::bigtable::Row> tuple =
         table.ReadRow(MAGIC_ROW_KEY, std::move(filter));
-    if (not tuple.first) {
+    if (!tuple.first) {
       std::cout << "Row " << MAGIC_ROW_KEY << " not found" << std::endl;
       return;
     }

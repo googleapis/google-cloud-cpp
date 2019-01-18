@@ -191,7 +191,7 @@ class MultipageRetriableAdapterTest
     local_copy(cq_, finished, status);
   }
 
-  bool AttemptWasMade() { return not not attempt_cb_; }
+  bool AttemptWasMade() { return !!attempt_cb_; }
 
   void OnUserCompleted(CompletionQueue&, int res, grpc::Status& status) {
     user_op_called_ = true;

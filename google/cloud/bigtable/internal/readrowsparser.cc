@@ -35,7 +35,7 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
     return;
   }
 
-  if (not chunk.row_key().empty()) {
+  if (!chunk.row_key().empty()) {
     if (last_seen_row_key_.compare(chunk.row_key()) >= 0) {
       status = grpc::Status(grpc::StatusCode::INTERNAL,
                             "Row keys are expected in increasing order");
@@ -45,7 +45,7 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
   }
 
   if (chunk.has_family_name()) {
-    if (not chunk.has_qualifier()) {
+    if (!chunk.has_qualifier()) {
       status = grpc::Status(grpc::StatusCode::INTERNAL,
                             "New column family must specify qualifier");
       return;
@@ -101,13 +101,13 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
   if (chunk.reset_row()) {
     cells_.clear();
     cell_ = {};
-    if (not cell_first_chunk_) {
+    if (!cell_first_chunk_) {
       status = grpc::Status(grpc::StatusCode::INTERNAL,
                             "Reset row with an unfinished cell");
       return;
     }
   } else if (chunk.commit_row()) {
-    if (not cell_first_chunk_) {
+    if (!cell_first_chunk_) {
       status = grpc::Status(grpc::StatusCode::INTERNAL,
                             "Commit row with an unfinished cell");
       return;
@@ -131,13 +131,13 @@ void ReadRowsParser::HandleEndOfStream(grpc::Status& status) {
   }
   end_of_stream_ = true;
 
-  if (not cell_first_chunk_) {
+  if (!cell_first_chunk_) {
     status = grpc::Status(grpc::StatusCode::INTERNAL,
                           "end of stream with unfinished cell");
     return;
   }
 
-  if (cells_.begin() != cells_.end() and not row_ready_) {
+  if (cells_.begin() != cells_.end() && !row_ready_) {
     status = grpc::Status(grpc::StatusCode::INTERNAL,
                           "end of stream with unfinished row");
     return;
@@ -147,7 +147,7 @@ void ReadRowsParser::HandleEndOfStream(grpc::Status& status) {
 bool ReadRowsParser::HasNext() const { return row_ready_; }
 
 Row ReadRowsParser::Next(grpc::Status& status) {
-  if (not row_ready_) {
+  if (!row_ready_) {
     status =
         grpc::Status(grpc::StatusCode::INTERNAL, "Next with row not ready");
     return Row("", {});

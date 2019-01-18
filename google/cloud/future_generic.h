@@ -179,7 +179,7 @@ class promise final : private internal::promise_base<T> {
    *   a shared state.
    */
   void set_value(T&& value) {
-    if (not this->shared_state_) {
+    if (!this->shared_state_) {
       internal::ThrowFutureError(std::future_errc::no_state, __func__);
     }
     this->shared_state_->set_value(std::forward<T>(value));

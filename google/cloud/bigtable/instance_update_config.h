@@ -113,7 +113,7 @@ class InstanceUpdateConfig {
     auto is_present = proto_.update_mask().paths().end() !=
                       std::find(proto_.update_mask().paths().begin(),
                                 proto_.update_mask().paths().end(), field_name);
-    if (not is_present) {
+    if (!is_present) {
       proto_.mutable_update_mask()->add_paths(field_name);
     }
   }

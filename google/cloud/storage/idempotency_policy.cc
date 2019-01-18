@@ -241,19 +241,19 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::DeleteBucketRequest const& request) const {
-  return (request.HasOption<IfMatchEtag>() or
+  return (request.HasOption<IfMatchEtag>() ||
           request.HasOption<IfMetagenerationMatch>());
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::UpdateBucketRequest const& request) const {
-  return (request.HasOption<IfMatchEtag>() or
+  return (request.HasOption<IfMatchEtag>() ||
           request.HasOption<IfMetagenerationMatch>());
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::PatchBucketRequest const& request) const {
-  return (request.HasOption<IfMatchEtag>() or
+  return (request.HasOption<IfMatchEtag>() ||
           request.HasOption<IfMetagenerationMatch>());
 }
 
@@ -314,19 +314,19 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::DeleteObjectRequest const& request) const {
-  return request.HasOption<Generation>() or
+  return request.HasOption<Generation>() ||
          request.HasOption<IfGenerationMatch>();
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::UpdateObjectRequest const& request) const {
-  return request.HasOption<IfMatchEtag>() or
+  return request.HasOption<IfMatchEtag>() ||
          request.HasOption<IfMetagenerationMatch>();
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::PatchObjectRequest const& request) const {
-  return request.HasOption<IfMatchEtag>() or
+  return request.HasOption<IfMatchEtag>() ||
          request.HasOption<IfMetagenerationMatch>();
 }
 

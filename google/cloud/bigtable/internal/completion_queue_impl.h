@@ -113,7 +113,7 @@ class AsyncTimerFunctor : public AsyncGrpcOperation {
   bool Notify(CompletionQueue& cq, bool ok) override {
     std::unique_lock<std::mutex> lk(mu_);
     alarm_.reset();
-    timer_.cancelled = not ok;
+    timer_.cancelled = !ok;
     lk.unlock();
     // At this point timer_ is not going to be used by any other thread, so we
     // might use it without a lock.
@@ -196,7 +196,7 @@ class AsyncUnaryRpcFunctor : public AsyncGrpcOperation {
   bool Notify(CompletionQueue& cq, bool ok) override {
     // Make sure members are visible.
     static_cast<void>(sync_.load(std::memory_order_acquire));
-    if (not ok) {
+    if (!ok) {
       // This would mean a bug in grpc. Documentation states that Finish()
       // always returns true.
       status_ =

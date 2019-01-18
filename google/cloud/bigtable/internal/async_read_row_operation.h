@@ -123,7 +123,7 @@ class ReadRowCallbackAdapter {
 
   const void operator()(CompletionQueue& cq, bool& response,
                         grpc::Status const& status) const {
-    if (not status.ok()) {
+    if (!status.ok()) {
       callback_(cq, std::make_pair(false, Row("", {})), status);
       return;
     }

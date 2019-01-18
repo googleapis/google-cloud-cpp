@@ -75,15 +75,15 @@ class optional {
     // There may be shorter ways to express this, but this is fairly readable,
     // and should be reasonably efficient. Note that we must avoid destructing
     // the destination and/or default initializing it unless really needed.
-    if (not has_value_) {
-      if (not rhs.has_value_) {
+    if (!has_value_) {
+      if (!rhs.has_value_) {
         return *this;
       }
       new (reinterpret_cast<T*>(&buffer_)) T(*rhs);
       has_value_ = true;
       return *this;
     }
-    if (not rhs.has_value_) {
+    if (!rhs.has_value_) {
       reset();
       return *this;
     }
@@ -96,15 +96,15 @@ class optional {
     // There may be shorter ways to express this, but this is fairly readable,
     // and should be reasonably efficient. Note that we must avoid destructing
     // the destination and/or default initializing it unless really needed.
-    if (not has_value_) {
-      if (not rhs.has_value_) {
+    if (!has_value_) {
+      if (!rhs.has_value_) {
         return *this;
       }
       new (reinterpret_cast<T*>(&buffer_)) T(std::move(*rhs));
       has_value_ = true;
       return *this;
     }
-    if (not rhs.has_value_) {
+    if (!rhs.has_value_) {
       reset();
       return *this;
     }
@@ -124,7 +124,7 @@ class optional {
     // There may be shorter ways to express this, but this is fairly readable,
     // and should be reasonably efficient. Note that we must avoid destructing
     // the destination and/or default initializing it unless really needed.
-    if (not has_value_) {
+    if (!has_value_) {
       new (reinterpret_cast<T*>(&buffer_)) T(std::forward<U>(rhs));
       has_value_ = true;
       return *this;
@@ -202,7 +202,7 @@ class optional {
     if (has_value() != rhs.has_value()) {
       return false;
     }
-    if (not has_value()) {
+    if (!has_value()) {
       return true;
     }
     return **this == *rhs;
@@ -214,7 +214,7 @@ class optional {
 
   bool operator<(optional const& rhs) const {
     if (has_value()) {
-      if (not rhs.has_value()) {
+      if (!rhs.has_value()) {
         return false;
       }
       // Both have a value, compare them

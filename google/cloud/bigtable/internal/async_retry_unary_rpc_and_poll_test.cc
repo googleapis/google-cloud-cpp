@@ -99,7 +99,7 @@ TEST_P(AsyncRetryUnaryRpcAndPollResEndToEnd, EndToEnd) {
     EXPECT_CALL(*get_operation_reader, Finish(_, _, _))
         .WillOnce(Invoke([config](longrunning::Operation* response,
                                   grpc::Status* status, void*) {
-          if (not config.polling_finished) {
+          if (!config.polling_finished) {
             *status = grpc::Status(config.polling_error_code, "mocked-status");
             return;
           }

@@ -75,20 +75,20 @@ MakeCall(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
     return Status(last_status.code(), msg);
   };
 
-  while (not retry_policy.IsExhausted()) {
+  while (!retry_policy.IsExhausted()) {
     auto result = (client.*function)(request);
     if (result.ok()) {
       return result;
     }
     last_status = std::move(result).status();
-    if (not is_idempotent) {
+    if (!is_idempotent) {
       std::ostringstream os;
       os << "Error in non-idempotent operation " << error_message << ": "
          << last_status;
       return error(std::move(os).str());
     }
-    if (not retry_policy.OnFailure(last_status)) {
-      if (not retry_policy.IsExhausted()) {
+    if (!retry_policy.OnFailure(last_status)) {
+      if (!retry_policy.IsExhausted()) {
         // The last error cannot be retried, but it is not because the retry
         // policy is exhausted, we call these "permanent errors", and they
         // get a special message.
@@ -345,7 +345,7 @@ RetryClient::CreateResumableSession(ResumableUploadRequest const& request) {
   auto result = MakeCall(*retry_policy, *backoff_policy, is_idempotent,
                          *client_, &RawClient::CreateResumableSession, request,
                          __func__);
-  if (not result.ok()) {
+  if (!result.ok()) {
     return result;
   }
 

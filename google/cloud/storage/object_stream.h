@@ -82,7 +82,7 @@ class ObjectReadStream : public std::basic_istream<char> {
   /// Closes the stream (if necessary).
   ~ObjectReadStream() override;
 
-  bool IsOpen() const { return (bool)buf_ and buf_->IsOpen(); }
+  bool IsOpen() const { return (bool)buf_ && buf_->IsOpen(); }
 
   /**
    * Terminate the download, possibly before completing it.
@@ -184,7 +184,7 @@ class ObjectWriteStream : public std::basic_ostream<char> {
   ~ObjectWriteStream() override;
 
   /// Return true while the stream is open.
-  bool IsOpen() const { return buf_ != nullptr and buf_->IsOpen(); }
+  bool IsOpen() const { return buf_ != nullptr && buf_->IsOpen(); }
 
   /**
    * Close the stream, finalizing the upload.

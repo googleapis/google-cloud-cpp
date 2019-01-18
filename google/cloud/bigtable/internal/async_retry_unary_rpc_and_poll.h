@@ -149,7 +149,7 @@ class AsyncRetryAndPollUnaryRpc
       callback_(cq, response, res_status);
       return;
     }
-    if (not status.ok()) {
+    if (!status.ok()) {
       lk.unlock();
       grpc::Status res_status(status);
       Response response;

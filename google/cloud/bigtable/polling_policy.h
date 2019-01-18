@@ -89,7 +89,7 @@ class GenericPollingPolicy : public PollingPolicy {
     return rpc_retry_policy_.OnFailure(status);
   }
 
-  bool Exhausted() override { return not OnFailure(grpc::Status::OK); }
+  bool Exhausted() override { return !OnFailure(grpc::Status::OK); }
 
   std::chrono::milliseconds WaitPeriod() override {
     return rpc_backoff_policy_.OnCompletion(grpc::Status::OK);
