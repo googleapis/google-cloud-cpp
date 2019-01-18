@@ -74,7 +74,7 @@ TEST_F(BucketTest, CreateBucket) {
       "storageClass": "STANDARD",
       "etag": "XYZ="
 })""";
-  auto expected = BucketMetadata::ParseFromString(text).value();
+  auto expected = internal::BucketMetadataParser::FromString(text).value();
 
   ClientOptions mock_options(oauth2::CreateAnonymousCredentials());
   mock_options.set_project_id("test-project-name");
@@ -137,7 +137,7 @@ TEST_F(BucketTest, GetBucketMetadata) {
       "storageClass": "STANDARD",
       "etag": "XYZ="
 })""";
-  auto expected = BucketMetadata::ParseFromString(text).value();
+  auto expected = internal::BucketMetadataParser::FromString(text).value();
 
   EXPECT_CALL(*mock, GetBucketMetadata(_))
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
@@ -223,7 +223,7 @@ TEST_F(BucketTest, UpdateBucket) {
       "storageClass": "STANDARD",
       "etag": "XYZ="
 })""";
-  auto expected = BucketMetadata::ParseFromString(text).value();
+  auto expected = internal::BucketMetadataParser::FromString(text).value();
 
   EXPECT_CALL(*mock, UpdateBucket(_))
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
@@ -283,7 +283,7 @@ TEST_F(BucketTest, PatchBucket) {
       "storageClass": "STANDARD",
       "etag": "XYZ="
 })""";
-  auto expected = BucketMetadata::ParseFromString(text).value();
+  auto expected = internal::BucketMetadataParser::FromString(text).value();
 
   EXPECT_CALL(*mock, PatchBucket(_))
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
