@@ -74,14 +74,13 @@ bool IsClusterPresent(std::vector<btadmin::Cluster> const& clusters,
                       });
 }
 
-bool IsInstanceNamePresentInClusterList(
+bool IsIdOrNamePresentInClusterList(
     std::vector<btadmin::Cluster> const& clusters,
-    std::string const& instance_name) {
+    std::string const& cluster_id) {
   return clusters.end() !=
          std::find_if(clusters.begin(), clusters.end(),
-                      [&instance_name](btadmin::Cluster const& i) {
-                        return i.name().find(instance_name) !=
-                               std::string::npos;
+                      [&cluster_id](btadmin::Cluster const& i) {
+                        return i.name().find(cluster_id) != std::string::npos;
                       });
 }
 
@@ -195,7 +194,8 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
       << "The Cloud Bigtable service (or emulator) reports that it could not"
       << " retrieve the information for some locations. This is typically due"
       << " to an outage or some other transient condition.";
-
+  ASSERT_FALSE(IsIdOrNamePresentInClusterList(clusters_list_before.clusters,
+                                              cluster_id_str));
   // create cluster
   bigtable::ClusterId cluster_id(cluster_id_str);
   auto cluster_config =
@@ -211,6 +211,8 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
       << " to an outage or some other transient condition.";
   EXPECT_FALSE(IsClusterPresent(clusters_list_before.clusters, cluster.name()));
   EXPECT_TRUE(IsClusterPresent(clusters_list_after.clusters, cluster.name()));
+  EXPECT_TRUE(IsIdOrNamePresentInClusterList(clusters_list_after.clusters,
+                                             cluster_id_str));
 
   // Get cluster
   google::cloud::future<btadmin::Cluster> fut =
@@ -286,10 +288,10 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAllClustersTest) {
   }
   EXPECT_FALSE(clusters_list.clusters.empty());
 
-  EXPECT_TRUE(IsInstanceNamePresentInClusterList(clusters_list.clusters,
-                                                 instance1_name));
-  EXPECT_TRUE(IsInstanceNamePresentInClusterList(clusters_list.clusters,
-                                                 instance2_name));
+  EXPECT_TRUE(
+      IsIdOrNamePresentInClusterList(clusters_list.clusters, instance1_name));
+  EXPECT_TRUE(
+      IsIdOrNamePresentInClusterList(clusters_list.clusters, instance2_name));
 
   instance_admin_->DeleteInstance(id1);
   instance_admin_->DeleteInstance(id2);
