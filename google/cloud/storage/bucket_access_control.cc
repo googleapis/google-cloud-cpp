@@ -19,25 +19,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-StatusOr<BucketAccessControl> BucketAccessControl::ParseFromJson(
-    internal::nl::json const& json) {
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
-  BucketAccessControl result{};
-  auto status = AccessControlCommon::ParseFromJson(result, json);
-  if (!status.ok()) {
-    return status;
-  }
-  return result;
-}
-
-StatusOr<BucketAccessControl> BucketAccessControl::ParseFromString(
-    std::string const& payload) {
-  auto json = internal::nl::json::parse(payload, nullptr, false);
-  return BucketAccessControl::ParseFromJson(json);
-}
-
 bool BucketAccessControl::operator==(BucketAccessControl const& rhs) const {
   return *static_cast<internal::AccessControlCommon const*>(this) == rhs;
 }

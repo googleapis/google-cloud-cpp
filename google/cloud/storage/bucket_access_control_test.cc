@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/bucket_access_control.h"
+#include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -20,44 +21,6 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-
-/// @test Verify that we parse JSON objects into BucketAccessControl objects.
-TEST(BucketAccessControlTest, Parse) {
-  std::string text = R"""({
-      "bucket": "foo-bar",
-      "domain": "example.com",
-      "email": "foobar@example.com",
-      "entity": "user-foobar",
-      "entityId": "user-foobar-id-123",
-      "etag": "XYZ=",
-      "id": "bucket-foo-bar-acl-234",
-      "kind": "storage#bucketAccessControl",
-      "projectTeam": {
-        "projectNumber": "3456789",
-        "team": "a-team"
-      },
-      "role": "OWNER"
-})""";
-  auto actual = BucketAccessControl::ParseFromString(text).value();
-
-  EXPECT_EQ("foo-bar", actual.bucket());
-  EXPECT_EQ("example.com", actual.domain());
-  EXPECT_EQ("foobar@example.com", actual.email());
-  EXPECT_EQ("user-foobar", actual.entity());
-  EXPECT_EQ("user-foobar-id-123", actual.entity_id());
-  EXPECT_EQ("XYZ=", actual.etag());
-  EXPECT_EQ("bucket-foo-bar-acl-234", actual.id());
-  EXPECT_EQ("storage#bucketAccessControl", actual.kind());
-  EXPECT_EQ("3456789", actual.project_team().project_number);
-  EXPECT_EQ("a-team", actual.project_team().team);
-  EXPECT_EQ("OWNER", actual.role());
-}
-
-/// @test Verify that we parse JSON objects into BucketAccessControl objects.
-TEST(BucketAccessControlTest, ParseFailure) {
-  auto actual = BucketAccessControl::ParseFromString("{123");
-  EXPECT_FALSE(actual.ok());
-}
 
 /// @test Verify that the IOStream operator works as expected.
 TEST(BucketAccessControlTest, IOStream) {
@@ -79,7 +42,7 @@ TEST(BucketAccessControlTest, IOStream) {
       "role": "OWNER"
 })""";
 
-  auto meta = BucketAccessControl::ParseFromString(text).value();
+  auto meta = internal::BucketAccessControlParser::FromString(text).value();
   std::ostringstream os;
   os << meta;
   auto actual = os.str();
@@ -124,7 +87,7 @@ TEST(BucketAccessControlTest, Compare) {
       },
       "role": "OWNER"
 })""";
-  auto original = BucketAccessControl::ParseFromString(text).value();
+  auto original = internal::BucketAccessControlParser::FromString(text).value();
   EXPECT_EQ(original, original);
 
   auto modified = original;

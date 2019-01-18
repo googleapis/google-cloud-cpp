@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/bucket_metadata.h"
+#include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/format_rfc3339.h"
 #include "google/cloud/storage/storage_class.h"
 #include <gmock/gmock.h>
@@ -818,7 +819,7 @@ TEST(BucketMetadataTest, ResetWebsite) {
 
 TEST(BucketMetadataPatchBuilder, SetAcl) {
   BucketMetadataPatchBuilder builder;
-  builder.SetAcl({BucketAccessControl::ParseFromString(
+  builder.SetAcl({internal::BucketAccessControlParser::FromString(
                       R"""({"entity": "user-test-user", "role": "OWNER"})""")
                       .value()});
 
