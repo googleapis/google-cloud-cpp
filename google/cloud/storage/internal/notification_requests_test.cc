@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/notification_requests.h"
 #include "google/cloud/storage/notification_payload_format.h"
+#include "google/cloud/storage/notification_event_type.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -23,6 +24,57 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 using ::testing::HasSubstr;
+
+/// @test Verify that we parse JSON objects into NotificationMetadata objects.
+TEST(NotificationRequestTest, Parse) {
+  auto actual = NotificationMetadataParser::FromString(R"""({
+      "custom_attributes": {
+          "test-ca-1": "value1",
+          "test-ca-2": "value2"
+      },
+      "etag": "XYZ=",
+      "event_types": [
+          "OBJECT_FINALIZE",
+          "OBJECT_METADATA_UPDATE",
+          "OBJECT_DELETE",
+          "OBJECT_ARCHIVE"
+      ],
+      "id": "test-id-123",
+      "kind": "storage#notification",
+      "object_name_prefix": "test-prefix-",
+      "payload_format": "JSON_API_V1",
+      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket/notificationConfigs/test-id-123",
+      "topic": "test-topic"
+  })""").value();
+  EXPECT_EQ(2U, actual.custom_attributes().size());
+  EXPECT_TRUE(actual.has_custom_attribute("test-ca-1"));
+  EXPECT_EQ("value1", actual.custom_attribute("test-ca-1"));
+  EXPECT_TRUE(actual.has_custom_attribute("test-ca-2"));
+  EXPECT_EQ("value2", actual.custom_attribute("test-ca-2"));
+
+  EXPECT_EQ("XYZ=", actual.etag());
+  EXPECT_EQ(4U, actual.event_type_size());
+  EXPECT_EQ(4U, actual.event_types().size());
+  EXPECT_EQ(event_type::ObjectFinalize(), actual.event_type(0));
+  EXPECT_EQ(event_type::ObjectMetadataUpdate(), actual.event_type(1));
+  EXPECT_EQ(event_type::ObjectDelete(), actual.event_type(2));
+  EXPECT_EQ(event_type::ObjectArchive(), actual.event_type(3));
+
+  EXPECT_EQ("test-id-123", actual.id());
+  EXPECT_EQ("storage#notification", actual.kind());
+  EXPECT_EQ(payload_format::JsonApiV1(), actual.payload_format());
+  EXPECT_EQ(
+      "https://www.googleapis.com/storage/v1/b/test-bucket/"
+      "notificationConfigs/test-id-123",
+      actual.self_link());
+  EXPECT_EQ("test-topic", actual.topic());
+}
+
+/// @test Verify that we parse JSON objects into NotificationMetadata objects.
+TEST(NotificationRequestTest, ParseFailure) {
+  auto actual = internal::NotificationMetadataParser::FromString("{123");
+  EXPECT_FALSE(actual.ok());
+}
 
 TEST(NotificationRequestTest, List) {
   ListNotificationsRequest request("my-bucket");
