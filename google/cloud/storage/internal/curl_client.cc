@@ -121,7 +121,8 @@ StatusOr<ReturnType> ParseFromString(StatusOr<HttpResponse> response) {
 }
 
 template <typename Parser>
-auto CheckedFromString(StatusOr<HttpResponse> response) -> decltype(Parser::FromString(response->payload)) {
+auto CheckedFromString(StatusOr<HttpResponse> response)
+    -> decltype(Parser::FromString(response->payload)) {
   if (!response.ok()) {
     return std::move(response).status();
   }
@@ -210,9 +211,8 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
   builder.AddHeader("Content-Type: application/json; charset=UTF-8");
   std::string request_payload;
   if (request.template HasOption<WithObjectMetadata>()) {
-    request_payload = request.template GetOption<WithObjectMetadata>()
-                          .value()
-                          .JsonPayloadForUpdate();
+    request_payload = ObjectMetadataJsonPayloadForUpdate(
+        request.template GetOption<WithObjectMetadata>().value());
   }
   builder.AddHeader("Content-Length: " +
                     std::to_string(request_payload.size()));
@@ -509,10 +509,10 @@ StatusOr<ObjectMetadata> CurlClient::CopyObject(
   builder.AddHeader("Content-Type: application/json");
   std::string json_payload("{}");
   if (request.HasOption<WithObjectMetadata>()) {
-    json_payload =
-        request.GetOption<WithObjectMetadata>().value().JsonPayloadForCopy();
+    json_payload = ObjectMetadataJsonPayloadForCopy(
+        request.GetOption<WithObjectMetadata>().value());
   }
-  return ParseFromString<ObjectMetadata>(
+  return CheckedFromString<ObjectMetadataParser>(
       builder.BuildRequest().MakeRequest(json_payload));
 }
 
@@ -525,7 +525,7 @@ StatusOr<ObjectMetadata> CurlClient::GetObjectMetadata(
   if (!status.ok()) {
     return status;
   }
-  return ParseFromString<ObjectMetadata>(
+  return CheckedFromString<ObjectMetadataParser>(
       builder.BuildRequest().MakeRequest(std::string{}));
 }
 
@@ -620,7 +620,7 @@ StatusOr<ObjectMetadata> CurlClient::UpdateObject(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<ObjectMetadata>(
+  return CheckedFromString<ObjectMetadataParser>(
       builder.BuildRequest().MakeRequest(request.json_payload()));
 }
 
@@ -634,7 +634,7 @@ StatusOr<ObjectMetadata> CurlClient::PatchObject(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<ObjectMetadata>(
+  return CheckedFromString<ObjectMetadataParser>(
       builder.BuildRequest().MakeRequest(request.payload()));
 }
 
@@ -649,7 +649,7 @@ StatusOr<ObjectMetadata> CurlClient::ComposeObject(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<ObjectMetadata>(
+  return CheckedFromString<ObjectMetadataParser>(
       builder.BuildRequest().MakeRequest(request.JsonPayload()));
 }
 
@@ -671,8 +671,8 @@ StatusOr<RewriteObjectResponse> CurlClient::RewriteObject(
   builder.AddHeader("Content-Type: application/json");
   std::string json_payload("{}");
   if (request.HasOption<WithObjectMetadata>()) {
-    json_payload =
-        request.GetOption<WithObjectMetadata>().value().JsonPayloadForCopy();
+    json_payload = ObjectMetadataJsonPayloadForCopy(
+        request.GetOption<WithObjectMetadata>().value());
   }
   auto response = builder.BuildRequest().MakeRequest(json_payload);
   if (!response.ok()) {
@@ -1137,7 +1137,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
   if (response->status_code >= 300) {
     return AsStatus(*response);
   }
-  return ObjectMetadata::ParseFromJson(internal::nl::json{
+  return internal::ObjectMetadataParser::FromJson(internal::nl::json{
       {"name", request.object_name()},
       {"bucket", request.bucket_name()},
   });
@@ -1299,7 +1299,8 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
 
   nl::json metadata = nl::json::object();
   if (request.HasOption<WithObjectMetadata>()) {
-    metadata = request.GetOption<WithObjectMetadata>().value().JsonForUpdate();
+    metadata = ObjectMetadataJsonForUpdate(
+        request.GetOption<WithObjectMetadata>().value());
   }
   if (request.HasOption<MD5HashValue>()) {
     metadata["md5Hash"] = request.GetOption<MD5HashValue>().value();
@@ -1374,7 +1375,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaSimple(
   builder.AddQueryParameter("name", request.object_name());
   builder.AddHeader("Content-Length: " +
                     std::to_string(request.contents().size()));
-  return ParseFromString<ObjectMetadata>(
+  return CheckedFromString<ObjectMetadataParser>(
       builder.BuildRequest().MakeRequest(request.contents()));
 }
 

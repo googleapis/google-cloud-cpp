@@ -61,7 +61,7 @@ class ObjectCopyTest : public ::testing::Test {
 
 TEST_F(ObjectCopyTest, CopyObject) {
   std::string text = R"""({"name": "test-bucket-name/test-object-name/1"})""";
-  auto expected = storage::ObjectMetadata::ParseFromString(text).value();
+  auto expected = storage::internal::ObjectMetadataParser::FromString(text).value();
 
   EXPECT_CALL(*mock, CopyObject(_))
       .WillOnce(Invoke([&expected](internal::CopyObjectRequest const& request) {
@@ -136,7 +136,7 @@ TEST_F(ObjectCopyTest, ComposeObject) {
       "updated": "2018-05-19T19:31:24Z",
       "componentCount": 2
   })""";
-  auto expected = ObjectMetadata::ParseFromString(response).value();
+  auto expected = internal::ObjectMetadataParser::FromString(response).value();
 
   EXPECT_CALL(*mock, ComposeObject(_))
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))

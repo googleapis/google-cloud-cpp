@@ -119,7 +119,7 @@ TEST_F(LoggingClientTest, InsertObjectMedia) {
 
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, InsertObjectMedia(_))
-      .WillOnce(Return(ObjectMetadata::ParseFromString(text).value()));
+      .WillOnce(Return(internal::ObjectMetadataParser::FromString(text).value()));
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
@@ -145,9 +145,9 @@ TEST_F(LoggingClientTest, InsertObjectMedia) {
 
 TEST_F(LoggingClientTest, ListObjects) {
   std::vector<ObjectMetadata> items = {
-      ObjectMetadata::ParseFromString(R""({"name": "response-object-o1"})"")
+      internal::ObjectMetadataParser::FromString(R""({"name": "response-object-o1"})"")
           .value(),
-      ObjectMetadata::ParseFromString(R""({"name": "response-object-o2"})"")
+      internal::ObjectMetadataParser::FromString(R""({"name": "response-object-o2"})"")
           .value(),
   };
   auto mock = std::make_shared<testing::MockClient>();

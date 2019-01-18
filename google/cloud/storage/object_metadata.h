@@ -26,6 +26,10 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+struct ObjectMetadataParser;
+}  // namespace internal
+
 /// A simple representation for the customerEncryption field.
 struct CustomerEncryption {
   // The encryption algorithm name.
@@ -81,33 +85,6 @@ inline bool operator>=(CustomerEncryption const& lhs,
 class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
  public:
   ObjectMetadata() : component_count_(0), generation_(0), size_(0) {}
-
-  static StatusOr<ObjectMetadata> ParseFromJson(internal::nl::json const& json);
-  static StatusOr<ObjectMetadata> ParseFromString(std::string const& payload);
-
-  /**
-   * Returns the payload for a call to `Objects: update`.
-   *
-   * The `Objects: update` API only accepts a subset of the writeable fields in
-   * the object resource. This function selects the relevant fields and formats
-   * them as a JSON string.
-   */
-  std::string JsonPayloadForUpdate() const;
-
-  /**
-   * Return the payload for a call to `Objects: copy`.
-   *
-   * The `Objects: copy` API only accepts a subset of the writeable fields in
-   * the object resource. This function selects the relevant fields and formats
-   * them as a JSON string.
-   */
-
-  std::string JsonPayloadForCopy() const;
-
-  /**
-   * Return the payload for a call to `Objects: compose`.
-   */
-  internal::nl::json JsonPayloadForCompose() const;
 
   // Please keep these in alphabetical order, that make it easier to verify we
   // have actually implemented all of them.
@@ -249,9 +226,9 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   bool operator==(ObjectMetadata const& rhs) const;
   bool operator!=(ObjectMetadata const& rhs) const { return !(*this == rhs); }
 
-  internal::nl::json JsonForUpdate() const;
-
  private:
+  friend struct internal::ObjectMetadataParser;
+
   friend std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs);
   // Keep the fields in alphabetical order.
   std::vector<ObjectAccessControl> acl_;

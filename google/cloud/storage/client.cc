@@ -142,7 +142,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     return std::move(upload_response).status();
   }
 
-  return ObjectMetadata::ParseFromString(upload_response->payload);
+  return internal::ObjectMetadataParser::FromString(upload_response->payload);
 }
 
 StatusOr<void> Client::DownloadFileImpl(

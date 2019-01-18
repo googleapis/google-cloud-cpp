@@ -46,7 +46,7 @@ ObjectMetadata CreateElement(int index) {
       {"selfLink", link},
       {"kind", "storage#object"},
   };
-  return ObjectMetadata::ParseFromJson(metadata).value();
+  return internal::ObjectMetadataParser::FromJson(metadata).value();
 };
 
 TEST(ListObjectsReaderTest, Basic) {

@@ -71,7 +71,7 @@ TEST_F(WriteObjectTest, WriteObject) {
   std::string text = R"""({
       "name": "test-bucket-name/test-object-name/1"
 })""";
-  auto expected = ObjectMetadata::ParseFromString(text).value();
+  auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
   EXPECT_CALL(*mock, WriteObject(_))
       .WillOnce(Invoke(
