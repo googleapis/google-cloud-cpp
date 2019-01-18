@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/format_rfc3339.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/internal/object_acl_requests.h"
 
 namespace google {
 namespace cloud {

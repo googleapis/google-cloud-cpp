@@ -20,27 +20,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-StatusOr<ObjectAccessControl> ObjectAccessControl::ParseFromJson(
-    internal::nl::json const& json) {
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
-  ObjectAccessControl result{};
-  auto status = AccessControlCommon::ParseFromJson(result, json);
-  if (!status.ok()) {
-    return status;
-  }
-  result.generation_ = internal::ParseLongField(json, "generation");
-  result.object_ = json.value("object", "");
-  return result;
-}
-
-StatusOr<ObjectAccessControl> ObjectAccessControl::ParseFromString(
-    std::string const& payload) {
-  auto json = internal::nl::json::parse(payload, nullptr, false);
-  return ParseFromJson(json);
-}
-
 bool ObjectAccessControl::operator==(ObjectAccessControl const& rhs) const {
   // Start with id, generation, object, bucket, etag because they should fail
   // early, then alphabetical for readability.

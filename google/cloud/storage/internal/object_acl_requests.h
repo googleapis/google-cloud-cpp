@@ -27,6 +27,11 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+struct ObjectAccessControlParser {
+  static StatusOr<ObjectAccessControl> FromJson(internal::nl::json const& json);
+  static StatusOr<ObjectAccessControl> FromString(std::string const& payload);
+};
+
 /**
  * Represents a request for the `ObjectAccessControls: list` API.
  */

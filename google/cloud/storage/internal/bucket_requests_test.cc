@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
+#include "google/cloud/storage/internal/object_acl_requests.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -292,7 +293,7 @@ TEST(PatchBucketRequestTest, DiffSetDefaultAcl) {
   original.set_default_acl({});
   BucketMetadata updated = original;
   updated.set_default_acl(
-      {ObjectAccessControl::ParseFromString(
+      {internal::ObjectAccessControlParser::FromString(
            R"""({"entity": "user-test-user", "role": "OWNER"})""")
            .value()});
   PatchBucketRequest request("test-bucket", original, updated);
@@ -306,7 +307,7 @@ TEST(PatchBucketRequestTest, DiffSetDefaultAcl) {
 
 TEST(PatchBucketRequestTest, DiffResetDefaultAcl) {
   BucketMetadata original = CreateBucketMetadataForTest();
-  original.set_default_acl({ObjectAccessControl::ParseFromString(
+  original.set_default_acl({internal::ObjectAccessControlParser::FromString(
       R"""({"entity": "user-test-user", "role": "OWNER"})""")
       .value()});
   BucketMetadata updated = original;
