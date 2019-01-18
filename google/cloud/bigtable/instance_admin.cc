@@ -193,7 +193,8 @@ future<btadmin::Cluster> InstanceAdmin::AsyncGetCluster(
 
   impl_.AsyncGetCluster(
       cq,
-      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetCluster"), instance_id, cluster_id);
+      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetCluster"),
+      instance_id, cluster_id);
 
   return result;
 }
@@ -209,6 +210,22 @@ std::vector<btadmin::Cluster> InstanceAdmin::ListClusters(
   if (!status.ok()) {
     bigtable::internal::ThrowRpcError(status, status.error_message());
   }
+  return result;
+}
+
+future<ClusterList> InstanceAdmin::AsyncListClusters(CompletionQueue& cq) {
+  return AsyncListClusters(cq, "-");
+}
+
+future<ClusterList> InstanceAdmin::AsyncListClusters(
+    CompletionQueue& cq, std::string const& instance_id) {
+  promise<ClusterList> p;
+  auto result = p.get_future();
+
+  impl_.AsyncListClusters(
+      cq,
+      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncListClusters"),
+      instance_id);
   return result;
 }
 
