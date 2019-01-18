@@ -83,15 +83,11 @@ future<void> Table::AsyncBulkApply(BulkMutation&& mut,
     promise<void> ppp = std::move(pp);
 
     future<std::vector<FailedMutation>> fut = std::move(resultfmNew);
-    auto final = fut.then([&](future<std::vector<FailedMutation>> f) {
+    auto final = fut.then([](future<std::vector<FailedMutation>> f) {
       auto finalVector = f.get();
       if(finalVector.size() == 0){
 		  std::cout << "No failed mutations" << std::endl;
-	  }
-	  else{
-		  ppp.set_exception(std::current_exception());
-	  }
-	  
+	  }	  
     });
 
     final.get();
