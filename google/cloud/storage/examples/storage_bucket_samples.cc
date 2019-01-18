@@ -295,7 +295,7 @@ void AddBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto key_name = ConsumeArg(argc, argv);
-  //! [add bucket kms key] [START storage_bucket_set_default_kms_key]
+  //! [add bucket kms key] [START storage_set_bucket_default_kms_key]
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string key_name) {
@@ -320,7 +320,7 @@ void AddBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
               << updated_metadata->encryption().default_kms_key_name << "."
               << "\nFull metadata: " << *updated_metadata << std::endl;
   }
-  //! [add bucket label] [END storage_bucket_set_default_kms_key]
+  //! [add bucket label] [END storage_set_bucket_default_kms_key]
   (std::move(client), bucket_name, key_name);
 }
 
