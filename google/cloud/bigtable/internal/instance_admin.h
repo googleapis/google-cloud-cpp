@@ -944,16 +944,16 @@ class InstanceAdmin {
                                         grpc::Status& status);
 
   /**
-   * Makes an asynchronous request to get the policy of an instance.
+   * Makes an asynchronous request to get the IAM policy of an instance.
    *
-   * @param instance_id the Cloud Bigtable instance that hold the policy.
+   * @param instance_id the Cloud Bigtable instance that hold the IAM policy.
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
    * @param callback a functor to be called when the operation completes. It
    *     must satisfy (using C++17 types):
    *     static_assert(std::is_invocable_v<
-   *         Functor, google::cloud::IamPolicy&,
+   *         Functor, google::cloud::IamPolicy,
    *         grpc::Status const&>);
    *
    * @tparam Functor the type of the callback.
@@ -961,7 +961,7 @@ class InstanceAdmin {
   template <typename Functor,
             typename std::enable_if<
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                                      google::cloud::IamPolicy&,
+                                                      google::cloud::IamPolicy,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncGetIamPolicy(
@@ -979,17 +979,16 @@ class InstanceAdmin {
         typename internal::ExtractMemberFunctionType<decltype(
             &InstanceAdminClient::AsyncGetIamPolicy)>::MemberFunction;
 
-    using Retry = internal::AsyncRetryUnaryRpc<
-        InstanceAdminClient, MemberFunction,
-        internal::ConstantIdempotencyPolicy,
-        TransformResponseHelper<Functor, google::iam::v1::Policy>>;
+    using Retry =
+        internal::AsyncRetryUnaryRpc<InstanceAdminClient, MemberFunction,
+                                     internal::ConstantIdempotencyPolicy,
+                                     TransformResponseHelper<Functor>>;
 
     auto retry = std::make_shared<Retry>(
         __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
-        internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
+        internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
         client_, &InstanceAdminClient::AsyncGetIamPolicy, std::move(request),
-        TransformResponseHelper<Functor, google::iam::v1::Policy>(
-            std::forward<Functor>(callback)));
+        TransformResponseHelper<Functor>(std::forward<Functor>(callback)));
     return retry->Start(cq);
   }
 
@@ -1018,20 +1017,19 @@ class InstanceAdmin {
     return result;
   }
 
-  template <typename Functor, typename Response,
+  template <typename Functor,
             typename std::enable_if<
                 google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                                      google::cloud::IamPolicy&,
+                                                      google::cloud::IamPolicy,
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   struct TransformResponseHelper {
     TransformResponseHelper(Functor&& callback)
         : application_callback_(std::move(callback)) {}
 
-    void operator()(CompletionQueue& cq, Response& response,
+    void operator()(CompletionQueue& cq, google::iam::v1::Policy& response,
                     grpc::Status& status) {
-      google::cloud::IamPolicy policy = ProtoToWrapper(response);
-      application_callback_(cq, policy, status);
+      application_callback_(cq, ProtoToWrapper(response), status);
     }
 
     Functor application_callback_;

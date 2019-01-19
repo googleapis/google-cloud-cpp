@@ -522,7 +522,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncSetGetTestIamAPIsTest) {
   admin.AsyncGetIamPolicy(
       id, cq,
       [&promise_get_policy](google::cloud::bigtable::CompletionQueue& cq,
-                            google::cloud::IamPolicy& policy,
+                            google::cloud::IamPolicy policy,
                             grpc::Status const& status) {
         ASSERT_TRUE(status.ok());
         promise_get_policy.set_value(std::move(policy));
