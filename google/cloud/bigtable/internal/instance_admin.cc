@@ -234,21 +234,6 @@ void InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
       "InstanceAdmin::DeleteAppProfile", status);
 }
 
-namespace {
-google::cloud::IamPolicy ProtoToWrapper(google::iam::v1::Policy proto) {
-  google::cloud::IamPolicy result;
-  result.version = proto.version();
-  result.etag = std::move(*proto.mutable_etag());
-  for (auto& binding : *proto.mutable_bindings()) {
-    for (auto& member : *binding.mutable_members()) {
-      result.bindings.AddMember(binding.role(), std::move(member));
-    }
-  }
-
-  return result;
-}
-}  // namespace
-
 google::cloud::IamPolicy InstanceAdmin::GetIamPolicy(
     std::string const& instance_id, grpc::Status& status) {
   auto rpc_policy = rpc_retry_policy_->clone();
