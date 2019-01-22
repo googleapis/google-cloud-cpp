@@ -320,7 +320,7 @@ void AddBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
               << updated_metadata->encryption().default_kms_key_name << "."
               << "\nFull metadata: " << *updated_metadata << std::endl;
   }
-  //! [add bucket label] [END storage_set_bucket_default_kms_key]
+  //! [add bucket kms key] [END storage_set_bucket_default_kms_key]
   (std::move(client), bucket_name, key_name);
 }
 
