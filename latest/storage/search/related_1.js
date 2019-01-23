@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['operator_3c_3c',['operator&lt;&lt;',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a62761f1abd6e11510ac74d60c7ef3532',1,'google::cloud::storage::v0::BucketMetadata::operator&lt;&lt;()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#aeaf8ddc45874f8d609b01764836f23c8',1,'google::cloud::storage::v0::NotificationMetadata::operator&lt;&lt;()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a4d65ad17192085650f535671a3c65f97',1,'google::cloud::storage::v0::ObjectMetadata::operator&lt;&lt;()']]]
+  ['listbucketsiterator',['ListBucketsIterator',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#ae06e1a4082cb3a1b5538a39c1f4e5b24',1,'google::cloud::storage::v0::ListBucketsReader']]],
+  ['listbucketsreader',['ListBucketsReader',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html#acfadae85d40a5b9073532aca6828359c',1,'google::cloud::storage::v0::ListBucketsIterator']]],
+  ['listobjectsiterator',['ListObjectsIterator',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsReader.html#a13ebe8d065b63e1e289b734de551763e',1,'google::cloud::storage::v0::ListObjectsReader']]],
+  ['listobjectsreader',['ListObjectsReader',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsIterator.html#a923e9a38a0457578746afb7fd85659b2',1,'google::cloud::storage::v0::ListObjectsIterator']]]
 ];

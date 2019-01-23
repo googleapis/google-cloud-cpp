@@ -66,7 +66,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">google::cloud::storage::v0::BucketAccessControl Class Reference</div>  </div>
@@ -91,13 +91,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a76a7848b0f38caf83bbec9cef779f526"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html#a76a7848b0f38caf83bbec9cef779f526">operator!=</a> (<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a> const &amp;rhs) const</td></tr>
 <tr class="separator:a76a7848b0f38caf83bbec9cef779f526"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a7b83efbea60fec1e21376c38e0bf3ba2"><td class="memItemLeft" align="right" valign="top">static StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html#a7b83efbea60fec1e21376c38e0bf3ba2">ParseFromJson</a> (internal::nl::json const &amp;json)</td></tr>
-<tr class="separator:a7b83efbea60fec1e21376c38e0bf3ba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fe9fdc34e20de07c46f564a3b7ff932"><td class="memItemLeft" align="right" valign="top">static StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html#a1fe9fdc34e20de07c46f564a3b7ff932">ParseFromString</a> (std::string const &amp;payload)</td></tr>
-<tr class="memdesc:a1fe9fdc34e20de07c46f564a3b7ff932"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse from a string in JSON format.  <a href="#a1fe9fdc34e20de07c46f564a3b7ff932">More...</a><br /></td></tr>
-<tr class="separator:a1fe9fdc34e20de07c46f564a3b7ff932"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a4c4d435dcf5bf90eb3b3b0be5b32d508"><td class="memItemLeft" align="right" valign="top">struct&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html#a4c4d435dcf5bf90eb3b3b0be5b32d508">internal::BucketAccessControlParser</a></td></tr>
+<tr class="separator:a4c4d435dcf5bf90eb3b3b0be5b32d508"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Wraps the bucketAccessControl resource in Google Cloud Storage. </p>
@@ -174,60 +171,6 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a7b83efbea60fec1e21376c38e0bf3ba2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b83efbea60fec1e21376c38e0bf3ba2">&#9670;&nbsp;</a></span>ParseFromJson()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a> &gt; google::cloud::storage::v0::BucketAccessControl::ParseFromJson </td>
-          <td>(</td>
-          <td class="paramtype">internal::nl::json const &amp;&#160;</td>
-          <td class="paramname"><em>json</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1fe9fdc34e20de07c46f564a3b7ff932"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1fe9fdc34e20de07c46f564a3b7ff932">&#9670;&nbsp;</a></span>ParseFromString()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html">BucketAccessControl</a> &gt; google::cloud::storage::v0::BucketAccessControl::ParseFromString </td>
-          <td>(</td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>payload</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Parse from a string in JSON format. </p>
-
-</div>
-</div>
 <a id="a3286ecc5fd0eb2ef7e0cc87cfd7f998e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3286ecc5fd0eb2ef7e0cc87cfd7f998e">&#9670;&nbsp;</a></span>set_entity()</h2>
 
@@ -274,6 +217,29 @@ Static Public Member Functions</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="a4c4d435dcf5bf90eb3b3b0be5b32d508"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c4d435dcf5bf90eb3b3b0be5b32d508">&#9670;&nbsp;</a></span>internal::BucketAccessControlParser</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend struct internal::BucketAccessControlParser</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
