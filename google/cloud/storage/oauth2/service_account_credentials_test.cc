@@ -209,8 +209,8 @@ TEST_F(ServiceAccountCredentialsTest, ParseSimple) {
       "token_uri": "https://oauth2.googleapis.com/test_endpoint"
 })""";
 
-  auto actual = ParseServiceAccountCredentials(
-      contents, "test-data", "unused-uri");
+  auto actual =
+      ParseServiceAccountCredentials(contents, "test-data", "unused-uri");
   EXPECT_EQ("not-a-key-id-just-for-testing", actual.private_key_id);
   EXPECT_EQ("not-a-valid-key-just-for-testing", actual.private_key);
   EXPECT_EQ("test-only@test-group.example.com", actual.client_email);
@@ -268,9 +268,9 @@ TEST_F(ServiceAccountCredentialsTest, ParseInvalidContentsFails) {
       },
       std::invalid_argument);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(ParseServiceAccountCredentials(
-                                config, "test-as-a-source"),
-                            "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      ParseServiceAccountCredentials(config, "test-as-a-source"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 

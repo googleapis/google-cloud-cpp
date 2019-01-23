@@ -158,8 +158,8 @@ TEST_F(AuthorizedUserCredentialsTest, ParseSimple) {
       "type": "magic_type"
 })""";
 
-  auto actual = ParseAuthorizedUserCredentials(
-      config, "test-data", "unused-uri");
+  auto actual =
+      ParseAuthorizedUserCredentials(config, "test-data", "unused-uri");
   EXPECT_EQ("a-client-id.example.com", actual.client_id);
   EXPECT_EQ("a-123456ABCDEF", actual.client_secret);
   EXPECT_EQ("1/THETOKEN", actual.refresh_token);
@@ -218,9 +218,9 @@ TEST_F(AuthorizedUserCredentialsTest, ParseInvalidContentsFails) {
       },
       std::invalid_argument);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(ParseAuthorizedUserCredentials(
-                                config, "test-as-a-source"),
-                            "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      ParseAuthorizedUserCredentials(config, "test-as-a-source"),
+      "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
