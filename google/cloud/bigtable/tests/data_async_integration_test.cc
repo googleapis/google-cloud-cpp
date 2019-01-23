@@ -151,8 +151,6 @@ TEST_F(DataAsyncIntegrationTest, TableAsyncBulkApply) {
   std::string const table_id = RandomTableId();
   auto sync_table = CreateTable(table_id, table_config);
 
-  std::cout << table_id << std::endl;
-
   std::string const row_key1 = "key-000010";
   std::string const row_key2 = "key-000020";
   std::map<std::string, std::vector<bigtable::Cell>> created{
