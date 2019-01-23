@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/bucket_requests.h"
+#include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -186,7 +187,7 @@ TEST(PatchBucketRequestTest, DiffSetAcl) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.set_acl({});
   BucketMetadata updated = original;
-  updated.set_acl({BucketAccessControl::ParseFromString(
+  updated.set_acl({internal::BucketAccessControlParser::FromString(
                        R"""({"entity": "user-test-user", "role": "OWNER"})""")
                        .value()});
   PatchBucketRequest request("test-bucket", original, updated);
@@ -199,7 +200,7 @@ TEST(PatchBucketRequestTest, DiffSetAcl) {
 
 TEST(PatchBucketRequestTest, DiffResetAcl) {
   BucketMetadata original = CreateBucketMetadataForTest();
-  original.set_acl({BucketAccessControl::ParseFromString(
+  original.set_acl({internal::BucketAccessControlParser::FromString(
                         R"""({"entity": "user-test-user", "role": "OWNER"})""")
                         .value()});
   BucketMetadata updated = original;

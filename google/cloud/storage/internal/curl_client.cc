@@ -120,6 +120,17 @@ StatusOr<ReturnType> ParseFromString(StatusOr<HttpResponse> response) {
   return ReturnType::ParseFromString(response->payload);
 }
 
+template <typename Parser>
+auto CheckedFromString(StatusOr<HttpResponse> response) -> decltype(Parser::FromString(response->payload)) {
+  if (!response.ok()) {
+    return std::move(response).status();
+  }
+  if (response->status_code >= 300) {
+    return AsStatus(*response);
+  }
+  return Parser::FromString(response->payload);
+}
+
 StatusOr<EmptyResponse> ReturnEmptyResponse(StatusOr<HttpResponse> response) {
   if (!response.ok()) {
     return std::move(response).status();
@@ -721,7 +732,7 @@ StatusOr<BucketAccessControl> CurlClient::GetBucketAcl(
   if (!status.ok()) {
     return status;
   }
-  return ParseFromString<BucketAccessControl>(
+  return CheckedFromString<internal::BucketAccessControlParser>(
       builder.BuildRequest().MakeRequest(std::string{}));
 }
 
@@ -738,7 +749,7 @@ StatusOr<BucketAccessControl> CurlClient::CreateBucketAcl(
   nl::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
-  return ParseFromString<BucketAccessControl>(
+  return CheckedFromString<internal::BucketAccessControlParser>(
       builder.BuildRequest().MakeRequest(object.dump()));
 }
 
@@ -767,7 +778,7 @@ StatusOr<BucketAccessControl> CurlClient::UpdateBucketAcl(
   nl::json patch;
   patch["entity"] = request.entity();
   patch["role"] = request.role();
-  return ParseFromString<BucketAccessControl>(
+  return CheckedFromString<internal::BucketAccessControlParser>(
       builder.BuildRequest().MakeRequest(patch.dump()));
 }
 
@@ -781,7 +792,7 @@ StatusOr<BucketAccessControl> CurlClient::PatchBucketAcl(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<BucketAccessControl>(
+  return CheckedFromString<internal::BucketAccessControlParser>(
       builder.BuildRequest().MakeRequest(request.payload()));
 }
 

@@ -134,7 +134,6 @@ class AccessControlCommon {
   }
   bool operator!=(AccessControlCommon const& rhs) { return !(*this == rhs); }
 
- protected:
   static Status ParseFromJson(AccessControlCommon& result,
                               nl::json const& json);
 
