@@ -31,18 +31,18 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
-/// Object to hold the result of parsing a service account JSON keyfile.
+/// Object to hold information used to instantiate an ServiceAccountCredentials.
 struct ServiceAccountCredentialsInfo {
+  std::string client_email;
   std::string private_key_id;
   std::string private_key;
   std::string token_uri;
-  std::string client_email;
 };
 
 /// Parses the contents of a JSON keyfile into a ServiceAccountCredentialsInfo.
 ServiceAccountCredentialsInfo ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
-    std::string const& default_token_uri);
+    std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 
 /**
  * Wrapper class for Google OAuth 2.0 service account credentials.
@@ -74,24 +74,13 @@ template <typename HttpRequestBuilderType =
           typename ClockType = std::chrono::system_clock>
 class ServiceAccountCredentials : public Credentials {
  public:
-  explicit ServiceAccountCredentials(std::string const& content,
-                                     std::string const& source)
-      : ServiceAccountCredentials(content, source,
-                                  GoogleOAuthRefreshEndpoint()) {}
-
-  explicit ServiceAccountCredentials(std::string const& content,
-                                     std::string const& source,
-                                     std::string const& default_token_uri)
+  explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo const& info)
       : clock_() {
     namespace nl = storage::internal::nl;
 
-    auto info =
-        ParseServiceAccountCredentials(content, source, default_token_uri);
-    auto assertion_components = std::move(AssertionComponentsFromInfo(info));
-
     HttpRequestBuilderType request_builder(
-        std::move(info.token_uri),
-        storage::internal::GetDefaultCurlHandleFactory());
+        info.token_uri, storage::internal::GetDefaultCurlHandleFactory());
+    auto assertion_components = std::move(AssertionComponentsFromInfo(info));
     // This is the value of grant_type for JSON-formatted service account
     // keyfiles downloaded from Cloud Console.
     std::string payload("grant_type=");

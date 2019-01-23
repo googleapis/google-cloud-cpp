@@ -56,13 +56,13 @@ ServiceAccountCredentialsInfo ParseServiceAccountCredentials(
         " field is empty on data loaded from " + source);
   }
   return ServiceAccountCredentialsInfo{
+      credentials.value(client_email_key, ""),
       credentials.value(private_key_id_key, ""),
       credentials.value(private_key_key, ""),
       // Some credential formats (e.g. gcloud's ADC file) don't contain a
       // "token_uri" attribute in the JSON object.  In this case, we try using
       // the default value.
       credentials.value(token_uri_key, default_token_uri),
-      credentials.value(client_email_key, ""),
   };
 }
 
