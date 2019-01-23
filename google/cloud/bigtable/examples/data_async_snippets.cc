@@ -37,15 +37,13 @@ void PrintUsage(std::string const& cmd, std::string const& msg) {
             << command_usage << std::endl;
 }
 
-
-
 void AsyncBulkApply(cbt::Table table, cbt::CompletionQueue cq,
                     std::vector<std::string> argv) {
   if (argv.size() != 2U) {
     throw Usage{"async-bulk-apply: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [async bulk apply]
+  //! [bulk async-bulk-apply]
   [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id) {
     // Write several rows in a single operation, each row has some trivial data.
     google::cloud::bigtable::BulkMutation bulk;
@@ -80,7 +78,7 @@ void AsyncBulkApply(cbt::Table table, cbt::CompletionQueue cq,
 
     final.get();
   }
-  //! [async bulk apply]
+  //! [bulk async-bulk-apply]
   (std::move(table), std::move(cq), argv[1]);
 }
 
@@ -91,7 +89,7 @@ int main(int argc, char* argv[]) try {
       google::cloud::bigtable::Table, google::cloud::bigtable::CompletionQueue,
       std::vector<std::string>)>;
 
-  std::map<std::string, CommandType> commands = {     
+  std::map<std::string, CommandType> commands = {
       {"async-bulk-apply", &AsyncBulkApply}};
 
   google::cloud::bigtable::CompletionQueue cq;
@@ -148,9 +146,9 @@ int main(int argc, char* argv[]) try {
           project_id, instance_id, google::cloud::bigtable::ClientOptions()),
       table_id);
   //! [connect data]
-  
+
   command->second(table, cq, args);
-  
+
   // Shutdown the completion queue event loop and join the thread.
   cq.Shutdown();
   runner.join();
