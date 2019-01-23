@@ -57,3 +57,7 @@ target_link_libraries(table_admin_snippets bigtable_client
 
 add_executable(data_snippets data_snippets.cc)
 target_link_libraries(data_snippets bigtable_client bigtable_common_options)
+
+add_executable(data_async_snippets data_async_snippets.cc)
+target_link_libraries(data_async_snippets bigtable_client
+                      bigtable_common_options)
