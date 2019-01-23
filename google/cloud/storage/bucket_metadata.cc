@@ -16,6 +16,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/internal/ios_flags_saver.h"
 #include "google/cloud/storage/internal/format_rfc3339.h"
+#include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
 
@@ -125,7 +126,7 @@ StatusOr<BucketMetadata> BucketMetadata::ParseFromJson(
 
   if (json.count("acl") != 0) {
     for (auto const& kv : json["acl"].items()) {
-      auto parsed = BucketAccessControl::ParseFromJson(kv.value());
+      auto parsed = internal::BucketAccessControlParser::FromJson(kv.value());
       if (!parsed.ok()) {
         return std::move(parsed).status();
       }

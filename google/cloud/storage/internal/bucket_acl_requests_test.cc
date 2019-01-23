@@ -157,7 +157,7 @@ BucketAccessControl CreateBucketAccessControlForTest() {
       },
       "role": "OWNER"
 })""";
-  return BucketAccessControl::ParseFromString(text).value();
+  return internal::BucketAccessControlParser::FromString(text).value();
 }
 
 TEST(BucketAclRequestTest, PatchDiff) {

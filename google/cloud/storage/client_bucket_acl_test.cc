@@ -54,15 +54,53 @@ class BucketAccessControlsTest : public ::testing::Test {
       ClientOptions(oauth2::CreateAnonymousCredentials());
 };
 
+/// @test Verify that we parse JSON objects into BucketAccessControl objects.
+TEST_F(BucketAccessControlsTest, Parse) {
+  std::string text = R"""({
+      "bucket": "foo-bar",
+      "domain": "example.com",
+      "email": "foobar@example.com",
+      "entity": "user-foobar",
+      "entityId": "user-foobar-id-123",
+      "etag": "XYZ=",
+      "id": "bucket-foo-bar-acl-234",
+      "kind": "storage#bucketAccessControl",
+      "projectTeam": {
+        "projectNumber": "3456789",
+        "team": "a-team"
+      },
+      "role": "OWNER"
+})""";
+  auto actual = internal::BucketAccessControlParser::FromString(text).value();
+
+  EXPECT_EQ("foo-bar", actual.bucket());
+  EXPECT_EQ("example.com", actual.domain());
+  EXPECT_EQ("foobar@example.com", actual.email());
+  EXPECT_EQ("user-foobar", actual.entity());
+  EXPECT_EQ("user-foobar-id-123", actual.entity_id());
+  EXPECT_EQ("XYZ=", actual.etag());
+  EXPECT_EQ("bucket-foo-bar-acl-234", actual.id());
+  EXPECT_EQ("storage#bucketAccessControl", actual.kind());
+  EXPECT_EQ("3456789", actual.project_team().project_number);
+  EXPECT_EQ("a-team", actual.project_team().team);
+  EXPECT_EQ("OWNER", actual.role());
+}
+
+/// @test Verify that we parse JSON objects into BucketAccessControl objects.
+TEST_F(BucketAccessControlsTest, ParseFailure) {
+  auto actual = internal::BucketAccessControlParser::FromString("{123");
+  EXPECT_FALSE(actual.ok());
+}
+
 TEST_F(BucketAccessControlsTest, ListBucketAcl) {
   std::vector<BucketAccessControl> expected{
-      BucketAccessControl::ParseFromString(R"""({
+      internal::BucketAccessControlParser::FromString(R"""({
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
       })""")
           .value(),
-      BucketAccessControl::ParseFromString(R"""({
+      internal::BucketAccessControlParser::FromString(R"""({
           "bucket": "test-bucket",
           "entity": "user-test-user-2",
           "role": "READER"
@@ -105,7 +143,7 @@ TEST_F(BucketAccessControlsTest, ListBucketAclPermanentFailure) {
 }
 
 TEST_F(BucketAccessControlsTest, CreateBucketAcl) {
-  auto expected = BucketAccessControl::ParseFromString(R"""({
+  auto expected = internal::BucketAccessControlParser::FromString(R"""({
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "READER"
@@ -205,12 +243,13 @@ TEST_F(BucketAccessControlsTest, DeleteBucketAclPermanentFailure) {
 }
 
 TEST_F(BucketAccessControlsTest, GetBucketAcl) {
-  BucketAccessControl expected = BucketAccessControl::ParseFromString(R"""({
+  BucketAccessControl expected =
+      internal::BucketAccessControlParser::FromString(R"""({
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
       })""")
-                                     .value();
+          .value();
 
   EXPECT_CALL(*mock, GetBucketAcl(_))
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
@@ -250,12 +289,13 @@ TEST_F(BucketAccessControlsTest, GetBucketAclPermanentFailure) {
 }
 
 TEST_F(BucketAccessControlsTest, UpdateBucketAcl) {
-  BucketAccessControl expected = BucketAccessControl::ParseFromString(R"""({
+  BucketAccessControl expected =
+      internal::BucketAccessControlParser::FromString(R"""({
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
       })""")
-                                     .value();
+          .value();
 
   EXPECT_CALL(*mock, UpdateBucketAcl(_))
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
@@ -312,12 +352,13 @@ TEST_F(BucketAccessControlsTest, UpdateBucketAclPermanentFailure) {
 }
 
 TEST_F(BucketAccessControlsTest, PatchBucketAcl) {
-  BucketAccessControl result = BucketAccessControl::ParseFromString(R"""({
+  BucketAccessControl result =
+      internal::BucketAccessControlParser::FromString(R"""({
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
       })""")
-                                   .value();
+          .value();
 
   EXPECT_CALL(*mock, PatchBucketAcl(_))
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
