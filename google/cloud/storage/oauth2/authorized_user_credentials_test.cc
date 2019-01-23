@@ -173,7 +173,6 @@ TEST_F(AuthorizedUserCredentialsTest, ParseUsesExplicitDefaultTokenUri) {
       "client_id": "a-client-id.example.com",
       "client_secret": "a-123456ABCDEF",
       "refresh_token": "1/THETOKEN",
-      "token_uri": "https://oauth2.googleapis.com/test_endpoint",
       "type": "magic_type"
 })""";
 
