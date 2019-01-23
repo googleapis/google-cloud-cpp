@@ -169,7 +169,6 @@ TEST_F(DataAsyncIntegrationTest, TableAsyncBulkApply) {
     auto const& cells = row_cells.second;
     SingleRowMutation row_mut(row_key);
     for (auto const& c : cells) {
-      std::cout << c.family_name() << " " << c.column_qualifier() << std::endl;
       row_mut.emplace_back(SetCell(
           c.family_name(), c.column_qualifier(),
           std::chrono::duration_cast<std::chrono::milliseconds>(c.timestamp()),

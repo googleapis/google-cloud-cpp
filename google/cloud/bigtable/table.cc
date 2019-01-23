@@ -66,8 +66,7 @@ void Table::BulkApply(BulkMutation&& mut) {
   }
 }
 
-future<void> Table::AsyncBulkApply(BulkMutation&& mut,
-                                        CompletionQueue& cq) {
+future<void> Table::AsyncBulkApply(BulkMutation&& mut, CompletionQueue& cq) {
   promise<std::vector<FailedMutation>> pfm;
   future<std::vector<FailedMutation>> resultfm = pfm.get_future();
 
@@ -79,22 +78,30 @@ future<void> Table::AsyncBulkApply(BulkMutation&& mut,
   promise<void> p;
   future<void> result = p.get_future();
 
-  [](future<std::vector<FailedMutation>> resultfmNew, promise<void> pp) {
-    promise<void> ppp = std::move(pp);
+  auto final = resultfm.then([&](future<std::vector<FailedMutation>> f) {
+    auto failures = f.get();
 
-    future<std::vector<FailedMutation>> fut = std::move(resultfmNew);
-    auto final = fut.then([](future<std::vector<FailedMutation>> f) {
-      auto finalVector = f.get();
-      if(finalVector.size() == 0){
-		  std::cout << "No failed mutations" << std::endl;
-	  }	  
-    });
+    if (!failures.empty()) {
 
-    final.get();
-    ppp.set_value();
-  }(std::move(resultfm), std::move(p));
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+      char const* msg = "Failed Mutation";
+      p.set_exception(std::make_exception_ptr(
+          google::cloud::bigtable::PermanentMutationFailure(
+              msg, std::move(failures))));
+#else
+      for (auto const& failed : failures) {
+        std::cerr << "Mutation " << failed.original_index() << " failed with"
+                  << failed.status().error_message() << " ["
+                  << failed.status().error_code() << "]" << std::endl;
+      }
+      std::cerr << "Aborting because exceptions are disabled." << std::endl;
+      std::abort();
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    }
+  });
+  p.set_value();
 
-  return result;
+  return final;
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {
