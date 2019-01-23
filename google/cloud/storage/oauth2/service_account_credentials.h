@@ -47,10 +47,10 @@ ServiceAccountCredentialsInfo ParseServiceAccountCredentials(
 /**
  * Wrapper class for Google OAuth 2.0 service account credentials.
  *
- * Takes a string representing the JSON contents of a service account keyfile
- * and obtains access tokens from the Google Authorization Service as needed.
- * Instances of this class should usually be created via the convenience methods
- * declared in google_credentials.h.
+ * Takes a ServiceAccountCredentialsInfo and obtains access tokens from the
+ * Google Authorization Service as needed.  Instances of this class should
+ * usually be created via the convenience methods declared in
+ * google_credentials.h.
  *
  * An HTTP Authorization header, with an access token as its value,
  * can be obtained by calling the AuthorizationHeader() method; if the current

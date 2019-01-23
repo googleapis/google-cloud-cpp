@@ -45,8 +45,7 @@ AuthorizedUserCredentialsInfo ParseAuthorizedUserCredentials(
 /**
  * Wrapper class for Google OAuth 2.0 user account credentials.
  *
- * Takes a string representing JSON contents including a client id, client
- * secret, and the user's refresh token, and obtains access tokens from the
+ * Takes a AuthorizedUserCredentialsInfo and obtains access tokens from the
  * Google Authorization Service as needed. Instances of this class should
  * usually be created via the convenience methods declared in
  * google_credentials.h.
