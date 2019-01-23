@@ -48,12 +48,14 @@ std::unique_ptr<Credentials> LoadCredsFromPath(std::string const& path) {
   }
   std::string cred_type = cred_json.value("type", "no type given");
   if (cred_type == "authorized_user") {
+    auto info = ParseAuthorizedUserCredentials(contents, path);
     return google::cloud::internal::make_unique<AuthorizedUserCredentials<>>(
-        contents, path);
+        info);
   }
   if (cred_type == "service_account") {
+    auto info = ParseServiceAccountCredentials(contents, path);
     return google::cloud::internal::make_unique<ServiceAccountCredentials<>>(
-        contents, path);
+        info);
   }
   ThrowRuntimeError(
       "Unsupported credential type (" + cred_type +
@@ -127,24 +129,28 @@ std::shared_ptr<Credentials> CreateAuthorizedUserCredentialsFromJsonFilePath(
     std::string const& path) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
-  return std::make_shared<AuthorizedUserCredentials<>>(contents, path);
+  auto info = ParseAuthorizedUserCredentials(contents, path);
+  return std::make_shared<AuthorizedUserCredentials<>>(info);
 }
 
 std::shared_ptr<Credentials> CreateAuthorizedUserCredentialsFromJsonContents(
     std::string const& contents) {
-  return std::make_shared<AuthorizedUserCredentials<>>(contents, "memory");
+  auto info = ParseAuthorizedUserCredentials(contents, "memory");
+  return std::make_shared<AuthorizedUserCredentials<>>(info);
 }
 
 std::shared_ptr<Credentials> CreateServiceAccountCredentialsFromJsonFilePath(
     std::string const& path) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
-  return std::make_shared<ServiceAccountCredentials<>>(contents, path);
+  auto info = ParseServiceAccountCredentials(contents, path);
+  return std::make_shared<ServiceAccountCredentials<>>(info);
 }
 
 std::shared_ptr<Credentials> CreateServiceAccountCredentialsFromJsonContents(
     std::string const& contents) {
-  return std::make_shared<ServiceAccountCredentials<>>(contents, "memory");
+  auto info = ParseServiceAccountCredentials(contents, "memory");
+  return std::make_shared<ServiceAccountCredentials<>>(info);
 }
 
 std::shared_ptr<Credentials> CreateComputeEngineCredentials() {

@@ -20,7 +20,8 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 AuthorizedUserCredentialsInfo ParseAuthorizedUserCredentials(
-    std::string const& content, std::string const& source) {
+    std::string const& content, std::string const& source,
+    std::string const& default_token_uri) {
   auto credentials =
       storage::internal::nl::json::parse(content, nullptr, false);
   if (credentials.is_discarded()) {
@@ -32,6 +33,7 @@ AuthorizedUserCredentialsInfo ParseAuthorizedUserCredentials(
   char const client_id_key[] = "client_id";
   char const client_secret_key[] = "client_secret";
   char const refresh_token_key[] = "refresh_token";
+  char const token_uri_key[] = "token_uri";  // Not required; often not present.
   for (auto const& key :
        {client_id_key, client_secret_key, refresh_token_key}) {
     if (credentials.count(key) == 0U) {
@@ -48,7 +50,11 @@ AuthorizedUserCredentialsInfo ParseAuthorizedUserCredentials(
   return AuthorizedUserCredentialsInfo{
       credentials.value(client_id_key, ""),
       credentials.value(client_secret_key, ""),
-      credentials.value(refresh_token_key, "")};
+      credentials.value(refresh_token_key, ""),
+      // Some credential formats (e.g. gcloud's ADC file) don't contain a
+      // "token_uri" attribute in the JSON object.  In this case, we try using
+      // the default value.
+      credentials.value(token_uri_key, default_token_uri)};
 }
 }  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
