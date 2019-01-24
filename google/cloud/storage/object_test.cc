@@ -63,7 +63,7 @@ TEST_F(ObjectTest, InsertObjectMedia) {
   std::string text = R"""({
       "name": "test-bucket-name/test-object-name/1"
 })""";
-  auto expected = storage::ObjectMetadata::ParseFromString(text).value();
+  auto expected = storage::internal::ObjectMetadataParser::FromString(text).value();
 
   EXPECT_CALL(*mock, InsertObjectMedia(_))
       .WillOnce(Invoke(
@@ -133,7 +133,7 @@ TEST_F(ObjectTest, GetObjectMetadata) {
       "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
       "updated": "2018-05-19T19:31:24Z"
 })""";
-  auto expected = ObjectMetadata::ParseFromString(text).value();
+  auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
   EXPECT_CALL(*mock, GetObjectMetadata(_))
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
@@ -238,7 +238,7 @@ TEST_F(ObjectTest, UpdateObject) {
       "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
       "updated": "2018-05-19T19:31:24Z"
 })""";
-  auto expected = ObjectMetadata::ParseFromString(text).value();
+  auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
   EXPECT_CALL(*mock, UpdateObject(_))
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
@@ -338,7 +338,7 @@ TEST_F(ObjectTest, PatchObject) {
       "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
       "updated": "2018-05-19T19:31:24Z"
 })""";
-  auto expected = ObjectMetadata::ParseFromString(text).value();
+  auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
   EXPECT_CALL(*mock, PatchObject(_))
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))

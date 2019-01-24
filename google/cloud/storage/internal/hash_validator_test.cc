@@ -14,8 +14,9 @@
 
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/internal/make_unique.h"
-#include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/status.h"
+#include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/object_metadata.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -183,10 +184,12 @@ TEST(CompositeHashValidator, ProcessMetadata) {
   validator.Update("The quick");
   validator.Update(" brown");
   validator.Update(" fox jumps over the lazy dog");
-  auto object_metadata = ObjectMetadata::ParseFromJson(internal::nl::json{
-      {"crc32c", QUICK_FOX_CRC32C_CHECKSUM},
-      {"md5Hash", QUICK_FOX_MD5_HASH},
-  }).value();
+  auto object_metadata = internal::ObjectMetadataParser::FromJson(
+                             internal::nl::json{
+                                 {"crc32c", QUICK_FOX_CRC32C_CHECKSUM},
+                                 {"md5Hash", QUICK_FOX_MD5_HASH},
+                             })
+                             .value();
   validator.ProcessMetadata(object_metadata);
   auto result = std::move(validator).Finish();
   EXPECT_EQ(
@@ -207,8 +210,7 @@ TEST(CompositeHashValidator, Missing) {
   validator.Update(" fox jumps over the lazy dog");
   validator.ProcessHeader("x-goog-hash", "crc32c=" + QUICK_FOX_CRC32C_CHECKSUM);
   auto result = std::move(validator).Finish();
-  EXPECT_EQ("crc32c=" + QUICK_FOX_CRC32C_CHECKSUM + ",md5=",
-            result.received);
+  EXPECT_EQ("crc32c=" + QUICK_FOX_CRC32C_CHECKSUM + ",md5=", result.received);
   EXPECT_EQ(
       "crc32c=" + QUICK_FOX_CRC32C_CHECKSUM + ",md5=" + QUICK_FOX_MD5_HASH,
       result.computed);

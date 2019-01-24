@@ -86,7 +86,7 @@ void ObjectWriteStream::Close() {
     // case it cannot be parsed.
     metadata_ = ObjectMetadata{};
   } else {
-    metadata_ = ObjectMetadata::ParseFromString(payload_);
+    metadata_ = internal::ObjectMetadataParser::FromString(payload_);
     if (!metadata_.ok()) {
       setstate(std::ios_base::badbit);
       return;

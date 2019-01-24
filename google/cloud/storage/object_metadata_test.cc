@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/parse_rfc3339.h"
 #include <gmock/gmock.h>
 
@@ -102,7 +103,7 @@ ObjectMetadata CreateObjectMetadataForTest() {
       "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
       "updated": "2018-05-19T19:31:24Z"
 })""";
-  return ObjectMetadata::ParseFromString(text).value();
+  return internal::ObjectMetadataParser::FromString(text).value();
 }
 
 /// @test Verify that we parse JSON objects into ObjectMetadata objects.
@@ -163,32 +164,6 @@ TEST(ObjectMetadataTest, Parse) {
                                       .count());
 }
 
-/// @test Verify that we parse JSON objects into ObjectMetadata objects.
-TEST(ObjectMetadataTest, ParseFailure) {
-  auto actual = ObjectMetadata::ParseFromString("{123");
-  EXPECT_FALSE(actual.ok());
-}
-
-/// @test Verify that we parse JSON objects into ObjectMetadata objects.
-TEST(ObjectMetadataTest, ParseAclListFailure) {
-  std::string text = R"""({
-      "acl": [{
-        "kind": "storage#objectAccessControl",
-        "id": "acl-id-0",
-        "entity": "user-qux"
-      },
-      "not-a-valid-acl"
-      ],
-      "bucket": "foo-bar",
-      "generation": "12345",
-      "id": "foo-bar/baz/12345",
-      "kind": "storage#object",
-      "name": "baz"
-})""";
-  auto actual = ObjectMetadata::ParseFromString(text);
-  EXPECT_FALSE(actual.ok());
-}
-
 /// @test Verify that the IOStream operator works as expected.
 TEST(ObjectMetadataTest, IOStream) {
   auto meta = CreateObjectMetadataForTest();
@@ -210,7 +185,7 @@ TEST(ObjectMetadataTest, IOStream) {
 /// @test Verify we can convert a ObjectMetadata object to a JSON string.
 TEST(ObjectMetadataTest, UpdatePayload) {
   auto tested = CreateObjectMetadataForTest();
-  auto actual_string = tested.JsonPayloadForUpdate();
+  auto actual_string = ObjectMetadataJsonPayloadForUpdate(tested);
   // Verify that the produced string can be parsed as a JSON object.
   internal::nl::json actual = internal::nl::json::parse(actual_string);
 

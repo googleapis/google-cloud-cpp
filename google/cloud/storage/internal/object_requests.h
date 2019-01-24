@@ -28,6 +28,17 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+struct ObjectMetadataParser {
+  static StatusOr<ObjectMetadata> FromJson(internal::nl::json const& json);
+  static StatusOr<ObjectMetadata> FromString(std::string const& payload);
+};
+
+internal::nl::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta);
+std::string ObjectMetadataJsonPayloadForUpdate(ObjectMetadata const& meta);
+internal::nl::json ObjectMetadataJsonPayloadForCompose(
+    ObjectMetadata const& meta);
+std::string ObjectMetadataJsonPayloadForCopy(ObjectMetadata const& meta);
+
 /**
  * Represents a request to the `Objects: list` API.
  */
@@ -228,7 +239,9 @@ class UpdateObjectRequest
         metadata_(std::move(metadata)) {}
 
   /// Returns the request as the JSON API payload.
-  std::string json_payload() const { return metadata_.JsonPayloadForUpdate(); }
+  std::string json_payload() const {
+    return ObjectMetadataJsonPayloadForUpdate(metadata_);
+  }
 
   ObjectMetadata const& metadata() const { return metadata_; }
 

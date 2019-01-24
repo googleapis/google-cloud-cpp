@@ -24,6 +24,166 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+namespace {
+/**
+ * Sets a string field in @p json when @p value is not empty.
+ *
+ * This simplifies the implementation of ToJsonString() because we repeat this
+ * check for many attributes.
+ */
+void SetIfNotEmpty(internal::nl::json& json, char const* key,
+                   std::string const& value) {
+  if (value.empty()) {
+    return;
+  }
+  json[key] = value;
+}
+}  // namespace
+
+StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
+    internal::nl::json const& json) {
+  if (!json.is_object()) {
+    return Status(StatusCode::kInvalidArgument, __func__);
+  }
+  ObjectMetadata result{};
+  auto status = CommonMetadata<ObjectMetadata>::ParseFromJson(result, json);
+  if (!status.ok()) {
+    return status;
+  }
+
+  if (json.count("acl") != 0) {
+    for (auto const& kv : json["acl"].items()) {
+      auto parsed = ObjectAccessControl::ParseFromJson(kv.value());
+      if (!parsed.ok()) {
+        return std::move(parsed).status();
+      }
+      result.acl_.emplace_back(std::move(*parsed));
+    }
+  }
+
+  result.bucket_ = json.value("bucket", "");
+  result.cache_control_ = json.value("cacheControl", "");
+  result.component_count_ = internal::ParseIntField(json, "componentCount");
+  result.content_disposition_ = json.value("contentDisposition", "");
+  result.content_encoding_ = json.value("contentEncoding", "");
+  result.content_language_ = json.value("contentLanguage", "");
+  result.content_type_ = json.value("contentType", "");
+  result.crc32c_ = json.value("crc32c", "");
+  if (json.count("customerEncryption") != 0) {
+    auto field = json["customerEncryption"];
+    CustomerEncryption e;
+    e.encryption_algorithm = field.value("encryptionAlgorithm", "");
+    e.key_sha256 = field.value("keySha256", "");
+    result.customer_encryption_ = std::move(e);
+  }
+  result.event_based_hold_ = internal::ParseBoolField(json, "eventBasedHold");
+  result.generation_ = internal::ParseLongField(json, "generation");
+  result.kms_key_name_ = json.value("kmsKeyName", "");
+  result.md5_hash_ = json.value("md5Hash", "");
+  result.media_link_ = json.value("mediaLink", "");
+  if (json.count("metadata") > 0) {
+    for (auto const& kv : json["metadata"].items()) {
+      result.metadata_.emplace(kv.key(), kv.value().get<std::string>());
+    }
+  }
+  result.retention_expiration_time_ =
+      internal::ParseTimestampField(json, "retentionExpirationTime");
+  result.size_ = internal::ParseUnsignedLongField(json, "size");
+  result.temporary_hold_ = internal::ParseBoolField(json, "temporaryHold");
+  result.time_deleted_ = internal::ParseTimestampField(json, "timeDeleted");
+  result.time_storage_class_updated_ =
+      internal::ParseTimestampField(json, "timeStorageClassUpdated");
+  return result;
+}
+
+StatusOr<ObjectMetadata> ObjectMetadataParser::FromString(
+    std::string const& payload) {
+  auto json = internal::nl::json::parse(payload, nullptr, false);
+  return FromJson(json);
+}
+
+internal::nl::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta) {
+  using internal::nl::json;
+  json metadata_as_json;
+  if (!meta.acl().empty()) {
+    for (ObjectAccessControl const& a : meta.acl()) {
+      json entry;
+      SetIfNotEmpty(entry, "entity", a.entity());
+      SetIfNotEmpty(entry, "role", a.role());
+      metadata_as_json["acl"].emplace_back(std::move(entry));
+    }
+  }
+
+  SetIfNotEmpty(metadata_as_json, "cacheControl", meta.cache_control());
+  SetIfNotEmpty(metadata_as_json, "contentDisposition",
+                meta.content_disposition());
+  SetIfNotEmpty(metadata_as_json, "contentEncoding", meta.content_encoding());
+  SetIfNotEmpty(metadata_as_json, "contentLanguage", meta.content_language());
+  SetIfNotEmpty(metadata_as_json, "contentType", meta.content_type());
+
+  metadata_as_json["eventBasedHold"] = meta.event_based_hold();
+
+  if (!meta.metadata().empty()) {
+    json meta_as_json;
+    for (auto const& kv : meta.metadata()) {
+      meta_as_json[kv.first] = kv.second;
+    }
+    metadata_as_json["metadata"] = std::move(meta_as_json);
+  }
+
+  return metadata_as_json;
+}
+
+std::string ObjectMetadataJsonPayloadForUpdate(ObjectMetadata const& meta) {
+  auto json = ObjectMetadataJsonForUpdate(meta);
+  return json.empty() ? "{}" : json.dump();
+}
+
+internal::nl::json ObjectMetadataJsonPayloadForCompose(
+    ObjectMetadata const& meta) {
+  using internal::nl::json;
+  json metadata_as_json;
+  if (!meta.acl().empty()) {
+    for (ObjectAccessControl const& a : meta.acl()) {
+      json entry;
+      SetIfNotEmpty(entry, "entity", a.entity());
+      SetIfNotEmpty(entry, "role", a.role());
+      metadata_as_json["acl"].emplace_back(std::move(entry));
+    }
+  }
+
+  SetIfNotEmpty(metadata_as_json, "cacheControl", meta.cache_control());
+  SetIfNotEmpty(metadata_as_json, "contentDisposition",
+                meta.content_disposition());
+  SetIfNotEmpty(metadata_as_json, "contentEncoding", meta.content_encoding());
+  SetIfNotEmpty(metadata_as_json, "contentLanguage", meta.content_language());
+  SetIfNotEmpty(metadata_as_json, "contentType", meta.content_type());
+  SetIfNotEmpty(metadata_as_json, "crc32c", meta.crc32c());
+  SetIfNotEmpty(metadata_as_json, "md5Hash", meta.md5_hash());
+  SetIfNotEmpty(metadata_as_json, "name", meta.name());
+  SetIfNotEmpty(metadata_as_json, "storageClass", meta.storage_class());
+
+  if (!meta.metadata().empty()) {
+    json meta_as_json;
+    for (auto const& kv : meta.metadata()) {
+      meta_as_json[kv.first] = kv.second;
+    }
+    metadata_as_json["metadata"] = std::move(meta_as_json);
+  }
+
+  return metadata_as_json;
+}
+
+std::string ObjectMetadataJsonPayloadForCopy(ObjectMetadata const& meta) {
+  auto json = ObjectMetadataJsonForUpdate(meta);
+  // TODO(#564) - add checksums if applicable.
+  // Only crc32c and md5Hash are writeable fields that could be included in a
+  // copy but are not included in an update.  The server has the checksums for
+  // a copy though, so it does not seem necessary to send them. When we
+  // implement #564 we should revisit this decision.
+  return json.empty() ? "{}" : json.dump();
+}
+
 std::ostream& operator<<(std::ostream& os, ListObjectsRequest const& r) {
   os << "ListObjectsRequest={bucket_name=" << r.bucket_name();
   r.DumpOptions(os, ", ");
@@ -42,7 +202,7 @@ StatusOr<ListObjectsResponse> ListObjectsResponse::FromHttpResponse(
   result.next_page_token = json.value("nextPageToken", "");
 
   for (auto const& kv : json["items"].items()) {
-    auto parsed = ObjectMetadata::ParseFromJson(kv.value());
+    auto parsed = internal::ObjectMetadataParser::FromJson(kv.value());
     if (!parsed.ok()) {
       return std::move(parsed).status();
     }
@@ -189,8 +349,8 @@ std::string ComposeObjectRequest::JsonPayload() const {
   compose_object_payload_json["kind"] = "storage#composeRequest";
   json destination_metadata_payload;
   if (HasOption<WithObjectMetadata>()) {
-    destination_metadata_payload =
-        GetOption<WithObjectMetadata>().value().JsonPayloadForCompose();
+    destination_metadata_payload = ObjectMetadataJsonPayloadForCompose(
+        GetOption<WithObjectMetadata>().value());
   }
   if (!destination_metadata_payload.is_null()) {
     compose_object_payload_json["destination"] = destination_metadata_payload;
@@ -326,7 +486,7 @@ StatusOr<RewriteObjectResponse> RewriteObjectResponse::FromHttpResponse(
   result.done = object.value("done", false);
   result.rewrite_token = object.value("rewriteToken", "");
   if (object.count("resource") != 0U) {
-    auto parsed = ObjectMetadata::ParseFromJson(object["resource"]);
+    auto parsed = internal::ObjectMetadataParser::FromJson(object["resource"]);
     if (!parsed.ok()) {
       return std::move(parsed).status();
     }
