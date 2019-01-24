@@ -66,7 +66,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -149,15 +148,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abe805574c62979dfe90bf0c9c0ca5374"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#abe805574c62979dfe90bf0c9c0ca5374">mutable_event_types</a> ()</td></tr>
 <tr class="separator:abe805574c62979dfe90bf0c9c0ca5374"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:abc1ebf04ac36a94f528e327c26da830c"><td class="memItemLeft" align="right" valign="top">static StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#abc1ebf04ac36a94f528e327c26da830c">ParseFromJson</a> (internal::nl::json const &amp;json)</td></tr>
-<tr class="separator:abc1ebf04ac36a94f528e327c26da830c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4be10beb0df76a34c7d80a903fb5e526"><td class="memItemLeft" align="right" valign="top">static StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a4be10beb0df76a34c7d80a903fb5e526">ParseFromString</a> (std::string const &amp;payload)</td></tr>
-<tr class="separator:a4be10beb0df76a34c7d80a903fb5e526"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
+<tr class="memitem:a2f10a1418d7d726bccdf8b1ed628075e"><td class="memItemLeft" align="right" valign="top">struct&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a2f10a1418d7d726bccdf8b1ed628075e">internal::NotificationMetadataParser</a></td></tr>
+<tr class="separator:a2f10a1418d7d726bccdf8b1ed628075e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeaf8ddc45874f8d609b01764836f23c8"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#aeaf8ddc45874f8d609b01764836f23c8">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> const &amp;rhs)</td></tr>
 <tr class="separator:aeaf8ddc45874f8d609b01764836f23c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -728,58 +722,6 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="abc1ebf04ac36a94f528e327c26da830c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc1ebf04ac36a94f528e327c26da830c">&#9670;&nbsp;</a></span>ParseFromJson()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> &gt; google::cloud::storage::v0::NotificationMetadata::ParseFromJson </td>
-          <td>(</td>
-          <td class="paramtype">internal::nl::json const &amp;&#160;</td>
-          <td class="paramname"><em>json</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a4be10beb0df76a34c7d80a903fb5e526"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4be10beb0df76a34c7d80a903fb5e526">&#9670;&nbsp;</a></span>ParseFromString()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html">NotificationMetadata</a> &gt; google::cloud::storage::v0::NotificationMetadata::ParseFromString </td>
-          <td>(</td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>payload</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a1e3fc3c4ce0432d2a5d9709b8b8fc787"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1e3fc3c4ce0432d2a5d9709b8b8fc787">&#9670;&nbsp;</a></span>payload_format()</h2>
 
@@ -972,6 +914,28 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="a2f10a1418d7d726bccdf8b1ed628075e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f10a1418d7d726bccdf8b1ed628075e">&#9670;&nbsp;</a></span>internal::NotificationMetadataParser</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend struct internal::NotificationMetadataParser</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="aeaf8ddc45874f8d609b01764836f23c8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aeaf8ddc45874f8d609b01764836f23c8">&#9670;&nbsp;</a></span>operator<<</h2>
 
