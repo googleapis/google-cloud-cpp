@@ -23,6 +23,30 @@ namespace internal {
 namespace {
 using ::testing::HasSubstr;
 
+TEST(ObjectRequestsTest, ParseFailure) {
+  auto actual = internal::ObjectMetadataParser::FromString("{123");
+  EXPECT_FALSE(actual.ok());
+}
+
+TEST(ObjectRequestsTest, ParseAclListFailure) {
+  std::string text = R"""({
+      "acl": [{
+        "kind": "storage#objectAccessControl",
+        "id": "acl-id-0",
+        "entity": "user-qux"
+      },
+      "not-a-valid-acl"
+      ],
+      "bucket": "foo-bar",
+      "generation": "12345",
+      "id": "foo-bar/baz/12345",
+      "kind": "storage#object",
+      "name": "baz"
+})""";
+  auto actual = internal::ObjectMetadataParser::FromString(text);
+  EXPECT_FALSE(actual.ok());
+}
+
 TEST(ObjectRequestsTest, List) {
   ListObjectsRequest request("my-bucket");
   EXPECT_EQ("my-bucket", request.bucket_name());
@@ -82,8 +106,8 @@ TEST(ObjectRequestsTest, ParseListResponse) {
 )""";
   text += "[" + object1 + "," + object2 + "]}";
 
-  auto o1 = ObjectMetadata::ParseFromString(object1).value();
-  auto o2 = ObjectMetadata::ParseFromString(object2).value();
+  auto o1 = internal::ObjectMetadataParser::FromString(object1).value();
+  auto o2 = internal::ObjectMetadataParser::FromString(object2).value();
 
   auto actual =
       ListObjectsResponse::FromHttpResponse(HttpResponse{200, text, {}})
@@ -366,7 +390,7 @@ TEST(ObjectRequestsTest, RewriteObjectResponse) {
 
   text += object1 + "\n}";
 
-  auto expected_resource = ObjectMetadata::ParseFromString(object1).value();
+  auto expected_resource = internal::ObjectMetadataParser::FromString(object1).value();
 
   auto actual =
       RewriteObjectResponse::FromHttpResponse(HttpResponse{200, text, {}})
@@ -646,7 +670,7 @@ ObjectMetadata CreateObjectMetadataForTest() {
       "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
       "updated": "2018-05-19T19:31:24Z"
 })""";
-  return ObjectMetadata::ParseFromString(text).value();
+  return internal::ObjectMetadataParser::FromString(text).value();
 }
 
 TEST(PatchObjectRequestTest, DiffSetAcl) {

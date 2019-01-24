@@ -24,6 +24,10 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+struct NotificationMetadataParser;
+}  // namespace internal
+
 /**
  * Represents the metadata for a Google Cloud Storage Notification resource.
  *
@@ -38,11 +42,6 @@ inline namespace STORAGE_CLIENT_NS {
 class NotificationMetadata {
  public:
   NotificationMetadata() = default;
-
-  static StatusOr<NotificationMetadata> ParseFromJson(
-      internal::nl::json const& json);
-  static StatusOr<NotificationMetadata> ParseFromString(
-      std::string const& payload);
 
   /**
    * Returns the payload for a call to `Notifications: insert`.
@@ -171,6 +170,7 @@ class NotificationMetadata {
   }
 
  private:
+  friend struct internal::NotificationMetadataParser;
   friend std::ostream& operator<<(std::ostream& os,
                                   NotificationMetadata const& rhs);
 

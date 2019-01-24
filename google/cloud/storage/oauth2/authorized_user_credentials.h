@@ -29,22 +29,23 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
-/// Object to hold the result of parsing a user credentials JSON file.
+/// Object to hold information used to instantiate an AuthorizedUserCredentials.
 struct AuthorizedUserCredentialsInfo {
   std::string client_id;
   std::string client_secret;
   std::string refresh_token;
+  std::string token_uri;
 };
 
 /// Parses a user credentials JSON string into an AuthorizedUserCredentialsInfo.
 AuthorizedUserCredentialsInfo ParseAuthorizedUserCredentials(
-    std::string const& content, std::string const& source);
+    std::string const& content, std::string const& source,
+    std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 
 /**
  * Wrapper class for Google OAuth 2.0 user account credentials.
  *
- * Takes a string representing JSON contents including a client id, client
- * secret, and the user's refresh token, and obtains access tokens from the
+ * Takes a AuthorizedUserCredentialsInfo and obtains access tokens from the
  * Google Authorization Service as needed. Instances of this class should
  * usually be created via the convenience methods declared in
  * google_credentials.h.
@@ -65,18 +66,10 @@ template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder>
 class AuthorizedUserCredentials : public Credentials {
  public:
-  explicit AuthorizedUserCredentials(std::string const& contents,
-                                     std::string const& source)
-      : AuthorizedUserCredentials(contents, source,
-                                  GoogleOAuthRefreshEndpoint()) {}
-
-  explicit AuthorizedUserCredentials(std::string const& content,
-                                     std::string const& source,
-                                     std::string oauth_server) {
+  explicit AuthorizedUserCredentials(
+      AuthorizedUserCredentialsInfo const& info) {
     HttpRequestBuilderType request_builder(
-        std::move(oauth_server),
-        storage::internal::GetDefaultCurlHandleFactory());
-    auto info = ParseAuthorizedUserCredentials(content, source);
+        info.token_uri, storage::internal::GetDefaultCurlHandleFactory());
     std::string payload("grant_type=refresh_token");
     payload += "&client_id=";
     payload += request_builder.MakeEscapedString(info.client_id).get();

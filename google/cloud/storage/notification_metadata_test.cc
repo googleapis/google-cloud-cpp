@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/notification_metadata.h"
+#include "google/cloud/storage/internal/notification_requests.h"
 #include "google/cloud/storage/notification_event_type.h"
 #include "google/cloud/storage/notification_payload_format.h"
 #include <gmock/gmock.h>
@@ -44,40 +45,7 @@ NotificationMetadata CreateNotificationMetadataForTest() {
       "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket/notificationConfigs/test-id-123",
       "topic": "test-topic"
 })""";
-  return NotificationMetadata::ParseFromString(text).value();
-}
-
-/// @test Verify that we parse JSON objects into NotificationMetadata objects.
-TEST(NotificationMetadataTest, Parse) {
-  auto actual = CreateNotificationMetadataForTest();
-  EXPECT_EQ(2U, actual.custom_attributes().size());
-  EXPECT_TRUE(actual.has_custom_attribute("test-ca-1"));
-  EXPECT_EQ("value1", actual.custom_attribute("test-ca-1"));
-  EXPECT_TRUE(actual.has_custom_attribute("test-ca-2"));
-  EXPECT_EQ("value2", actual.custom_attribute("test-ca-2"));
-
-  EXPECT_EQ("XYZ=", actual.etag());
-  EXPECT_EQ(4U, actual.event_type_size());
-  EXPECT_EQ(4U, actual.event_types().size());
-  EXPECT_EQ(event_type::ObjectFinalize(), actual.event_type(0));
-  EXPECT_EQ(event_type::ObjectMetadataUpdate(), actual.event_type(1));
-  EXPECT_EQ(event_type::ObjectDelete(), actual.event_type(2));
-  EXPECT_EQ(event_type::ObjectArchive(), actual.event_type(3));
-
-  EXPECT_EQ("test-id-123", actual.id());
-  EXPECT_EQ("storage#notification", actual.kind());
-  EXPECT_EQ(payload_format::JsonApiV1(), actual.payload_format());
-  EXPECT_EQ(
-      "https://www.googleapis.com/storage/v1/b/test-bucket/"
-      "notificationConfigs/test-id-123",
-      actual.self_link());
-  EXPECT_EQ("test-topic", actual.topic());
-}
-
-/// @test Verify that we parse JSON objects into NotificationMetadata objects.
-TEST(NotificationMetadataTest, ParseFailure) {
-  auto actual = NotificationMetadata::ParseFromString("{123");
-  EXPECT_FALSE(actual.ok());
+  return internal::NotificationMetadataParser::FromString(text).value();
 }
 
 /// @test Verifies NotificationMetadata iostream operator.
