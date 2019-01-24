@@ -199,6 +199,8 @@ add_library(bigtable_client
             internal/grpc_error_delegate.cc
             internal/instance_admin.h
             internal/instance_admin.cc
+            internal/mutation_batcher.h
+            internal/mutation_batcher.cc
             internal/poll_longrunning_operation.h
             internal/prefix_range_end.h
             internal/prefix_range_end.cc
@@ -335,6 +337,7 @@ if (BUILD_TESTING)
         internal/async_retry_op_test.cc
         internal/async_retry_unary_rpc_and_poll_test.cc
         internal/bulk_mutator_test.cc
+        internal/mutation_batcher_test.cc
         internal/table_async_check_and_mutate_row_test.cc
         internal/instance_admin_test.cc
         internal/grpc_error_delegate_test.cc
