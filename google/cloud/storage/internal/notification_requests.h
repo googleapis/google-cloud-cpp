@@ -26,6 +26,12 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+struct NotificationMetadataParser {
+  static StatusOr<NotificationMetadata> FromJson(
+      internal::nl::json const& json);
+  static StatusOr<NotificationMetadata> FromString(std::string const& payload);
+};
+
 /// Represents a request to call the `BucketAccessControls: list` API.
 class ListNotificationsRequest
     : public GenericRequest<ListNotificationsRequest, UserProject> {

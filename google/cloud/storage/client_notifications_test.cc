@@ -59,12 +59,12 @@ class NotificationsTest : public ::testing::Test {
 
 TEST_F(NotificationsTest, ListNotifications) {
   std::vector<NotificationMetadata> expected{
-      NotificationMetadata::ParseFromString(R"""({
+      internal::NotificationMetadataParser::FromString(R"""({
           "id": "test-notification-1",
           "topic": "test-topic-1"
       })""")
           .value(),
-      NotificationMetadata::ParseFromString(R"""({
+      internal::NotificationMetadataParser::FromString(R"""({
           "id": "test-notification-2",
           "topic": "test-topic-2"
       })""")
@@ -107,7 +107,7 @@ TEST_F(NotificationsTest, ListNotificationsPermanentFailure) {
 }
 
 TEST_F(NotificationsTest, CreateNotification) {
-  NotificationMetadata expected = NotificationMetadata::ParseFromString(R"""({
+  NotificationMetadata expected = internal::NotificationMetadataParser::FromString(R"""({
           "id": "test-notification-1",
           "topic": "test-topic-1",
           "payload_format": "JSON_API_V1",
@@ -162,7 +162,7 @@ TEST_F(NotificationsTest, CreateNotificationPermanentFailure) {
 }
 
 TEST_F(NotificationsTest, GetNotification) {
-  NotificationMetadata expected = NotificationMetadata::ParseFromString(R"""({
+  NotificationMetadata expected = internal::NotificationMetadataParser::FromString(R"""({
           "id": "test-notification-1",
           "topic": "test-topic-1",
           "payload_format": "JSON_API_V1",

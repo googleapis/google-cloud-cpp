@@ -1021,7 +1021,7 @@ StatusOr<NotificationMetadata> CurlClient::CreateNotification(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<NotificationMetadata>(
+  return CheckedFromString<NotificationMetadataParser>(
       builder.BuildRequest().MakeRequest(request.json_payload()));
 }
 
@@ -1035,7 +1035,7 @@ StatusOr<NotificationMetadata> CurlClient::GetNotification(
   if (!status.ok()) {
     return status;
   }
-  return ParseFromString<NotificationMetadata>(
+  return CheckedFromString<NotificationMetadataParser>(
       builder.BuildRequest().MakeRequest(std::string{}));
 }
 

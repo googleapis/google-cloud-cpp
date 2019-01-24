@@ -18,43 +18,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-StatusOr<NotificationMetadata> NotificationMetadata::ParseFromJson(
-    internal::nl::json const& json) {
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
-  NotificationMetadata result{};
-
-  if (json.count("custom_attributes") != 0U) {
-    for (auto const& kv : json["custom_attributes"].items()) {
-      result.custom_attributes_.emplace(kv.key(),
-                                        kv.value().get<std::string>());
-    }
-  }
-  result.etag_ = json.value("etag", "");
-
-  if (json.count("event_types") != 0U) {
-    for (auto const& kv : json["event_types"].items()) {
-      result.event_types_.emplace_back(kv.value().get<std::string>());
-    }
-  }
-
-  result.id_ = json.value("id", "");
-  result.kind_ = json.value("kind", "");
-  result.object_name_prefix_ = json.value("object_name_prefix", "");
-  result.payload_format_ = json.value("payload_format", "");
-  result.self_link_ = json.value("selfLink", "");
-  result.topic_ = json.value("topic", "");
-
-  return result;
-}
-
-StatusOr<NotificationMetadata> NotificationMetadata::ParseFromString(
-    std::string const& payload) {
-  internal::nl::json json = internal::nl::json::parse(payload, nullptr, false);
-  return ParseFromJson(json);
-}
-
 std::string NotificationMetadata::JsonPayloadForInsert() const {
   // Required fields, always include them, even if empty.
   internal::nl::json json{
