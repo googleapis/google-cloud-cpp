@@ -55,14 +55,14 @@ class ObjectAccessControlsTest : public ::testing::Test {
 
 TEST_F(ObjectAccessControlsTest, ListObjectAcl) {
   std::vector<ObjectAccessControl> expected{
-      ObjectAccessControl::ParseFromString(R"""({
+      internal::ObjectAccessControlParser::FromString(R"""({
           "bucket": "test-bucket",
           "object": "test-object",
           "entity": "user-test-user-1",
           "role": "OWNER"
       })""")
           .value(),
-      ObjectAccessControl::ParseFromString(R"""({
+      internal::ObjectAccessControlParser::FromString(R"""({
           "bucket": "test-bucket",
           "object": "test-object",
           "entity": "user-test-user-2",
@@ -109,7 +109,7 @@ TEST_F(ObjectAccessControlsTest, ListObjectAclPermanentFailure) {
 }
 
 TEST_F(ObjectAccessControlsTest, CreateObjectAcl) {
-  auto expected = ObjectAccessControl::ParseFromString(R"""({
+  auto expected = internal::ObjectAccessControlParser::FromString(R"""({
           "bucket": "test-bucket",
           "object": "test-object",
           "entity": "user-test-user-1",
@@ -218,7 +218,7 @@ TEST_F(ObjectAccessControlsTest, DeleteObjectAclPermanentFailure) {
 }
 
 TEST_F(ObjectAccessControlsTest, GetObjectAcl) {
-  auto expected = ObjectAccessControl::ParseFromString(R"""({
+  auto expected = internal::ObjectAccessControlParser::FromString(R"""({
           "bucket": "test-bucket",
           "object": "test-object",
           "entity": "user-test-user-1",
@@ -268,7 +268,7 @@ TEST_F(ObjectAccessControlsTest, GetObjectAclPermanentFailure) {
 }
 
 TEST_F(ObjectAccessControlsTest, UpdateObjectAcl) {
-  auto expected = ObjectAccessControl::ParseFromString(R"""({
+  auto expected = internal::ObjectAccessControlParser::FromString(R"""({
           "bucket": "test-bucket",
           "object": "test-object",
           "entity": "user-test-user-1",
@@ -325,7 +325,7 @@ TEST_F(ObjectAccessControlsTest, UpdateObjectAclPermanentFailure) {
 }
 
 TEST_F(ObjectAccessControlsTest, PatchObjectAcl) {
-  auto result = ObjectAccessControl::ParseFromString(R"""({
+  auto result = internal::ObjectAccessControlParser::FromString(R"""({
           "bucket": "test-bucket",
           "object": "test-object",
           "entity": "user-test-user-1",
