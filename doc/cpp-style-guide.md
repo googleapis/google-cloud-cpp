@@ -67,8 +67,8 @@ headers. For example:
 ```C++
 // Within file google/cloud/x/foo.cc
 #include "google/cloud/x/foo.h"
-#include "google/cloud/x/bar.h
-#include "google/cloud/y/baz.h
+#include "google/cloud/x/bar.h"
+#include "google/cloud/y/baz.h"
 #include <grpcpp/blorg.h>
 #include <google/bigtable/blah.h>
 #include <map>
