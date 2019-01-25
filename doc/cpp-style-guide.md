@@ -70,7 +70,7 @@ headers. For example:
 #include "google/cloud/x/bar.h
 #include "google/cloud/y/baz.h
 #include <grpcpp/blorg.h>
-#include <google/bigtable/blah.h"
+#include <google/bigtable/blah.h>
 #include <map>
 #include <vector>
 #include <unitstd.h>
