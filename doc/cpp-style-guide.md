@@ -79,6 +79,7 @@ headers. For example:
 This differs substantially from the corresponding section in the GSG, but we
 feel the rule presented here is both simpler and better minimizes the implicit
 dependencies exposed to each header.
+
 [link to GSG's section on include order](https://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes)
 
 ## Legal Notice and Author Line
