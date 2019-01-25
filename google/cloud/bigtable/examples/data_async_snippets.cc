@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -71,12 +71,9 @@ void AsyncBulkApply(cbt::Table table, cbt::CompletionQueue cq,
       bulk.emplace_back(std::move(mutation));
     }
 
-    google::cloud::future<void> future =
-        table.AsyncBulkApply(std::move(bulk), cq);
+    google::cloud::future<void> fut = table.AsyncBulkApply(std::move(bulk), cq);
 
-    auto final = future.then([](google::cloud::future<void> f) { f.get(); });
-
-    final.get();
+    fut.get();
   }
   //! [bulk async-bulk-apply]
   (std::move(table), std::move(cq), argv[1]);
