@@ -65,7 +65,7 @@ projects, followed by C++ standard library headers, followed by C system
 headers. For example:
 
 ```C++
-// Within file google/cloud/x/foo.cc
+// Within the file google/cloud/x/foo.cc
 #include "google/cloud/x/foo.h"
 #include "google/cloud/x/bar.h"
 #include "google/cloud/y/baz.h"
