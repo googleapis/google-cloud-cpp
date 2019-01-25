@@ -825,7 +825,7 @@ StatusOr<ObjectAccessControl> CurlClient::CreateObjectAcl(
   nl::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
-  return ParseFromString<ObjectAccessControl>(
+  return CheckedFromString<ObjectAccessControlParser>(
       builder.BuildRequest().MakeRequest(object.dump()));
 }
 
@@ -854,7 +854,7 @@ StatusOr<ObjectAccessControl> CurlClient::GetObjectAcl(
   if (!status.ok()) {
     return status;
   }
-  return ParseFromString<ObjectAccessControl>(
+  return CheckedFromString<ObjectAccessControlParser>(
       builder.BuildRequest().MakeRequest(std::string{}));
 }
 
@@ -873,7 +873,7 @@ StatusOr<ObjectAccessControl> CurlClient::UpdateObjectAcl(
   nl::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
-  return ParseFromString<ObjectAccessControl>(
+  return CheckedFromString<ObjectAccessControlParser>(
       builder.BuildRequest().MakeRequest(object.dump()));
 }
 
@@ -889,7 +889,7 @@ StatusOr<ObjectAccessControl> CurlClient::PatchObjectAcl(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<ObjectAccessControl>(
+  return CheckedFromString<ObjectAccessControlParser>(
       builder.BuildRequest().MakeRequest(request.payload()));
 }
 
@@ -920,7 +920,7 @@ StatusOr<ObjectAccessControl> CurlClient::CreateDefaultObjectAcl(
   object["entity"] = request.entity();
   object["role"] = request.role();
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<ObjectAccessControl>(
+  return CheckedFromString<ObjectAccessControlParser>(
       builder.BuildRequest().MakeRequest(object.dump()));
 }
 
@@ -947,7 +947,7 @@ StatusOr<ObjectAccessControl> CurlClient::GetDefaultObjectAcl(
   if (!status.ok()) {
     return status;
   }
-  return ParseFromString<ObjectAccessControl>(
+  return CheckedFromString<ObjectAccessControlParser>(
       builder.BuildRequest().MakeRequest(std::string{}));
 }
 
@@ -965,7 +965,7 @@ StatusOr<ObjectAccessControl> CurlClient::UpdateDefaultObjectAcl(
   nl::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
-  return ParseFromString<ObjectAccessControl>(
+  return CheckedFromString<ObjectAccessControlParser>(
       builder.BuildRequest().MakeRequest(object.dump()));
 }
 
@@ -980,7 +980,7 @@ StatusOr<ObjectAccessControl> CurlClient::PatchDefaultObjectAcl(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<ObjectAccessControl>(
+  return CheckedFromString<ObjectAccessControlParser>(
       builder.BuildRequest().MakeRequest(request.payload()));
 }
 

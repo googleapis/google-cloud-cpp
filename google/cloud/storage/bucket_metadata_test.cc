@@ -15,6 +15,7 @@
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/format_rfc3339.h"
+#include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/storage_class.h"
 #include <gmock/gmock.h>
 
@@ -920,7 +921,7 @@ TEST(BucketMetadataPatchBuilder, ResetDefaultEventBasedHold) {
 
 TEST(BucketMetadataPatchBuilder, SetDefaultAcl) {
   BucketMetadataPatchBuilder builder;
-  builder.SetDefaultAcl({ObjectAccessControl::ParseFromString(
+  builder.SetDefaultAcl({internal::ObjectAccessControlParser::FromString(
       R"""({"entity": "user-test-user", "role": "OWNER"})""").value()});
 
   auto actual = builder.BuildPatch();

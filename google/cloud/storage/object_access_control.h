@@ -25,6 +25,10 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+struct ObjectAccessControlParser;
+}  // namespace internal
+
 /**
  * Wraps the objectAccessControl resource in Google Cloud Storage.
  *
@@ -38,11 +42,6 @@ inline namespace STORAGE_CLIENT_NS {
 class ObjectAccessControl : private internal::AccessControlCommon {
  public:
   ObjectAccessControl() : generation_(0) {}
-
-  static StatusOr<ObjectAccessControl> ParseFromJson(
-      internal::nl::json const& json);
-  static StatusOr<ObjectAccessControl> ParseFromString(
-      std::string const& payload);
 
   using AccessControlCommon::ROLE_OWNER;
   using AccessControlCommon::ROLE_READER;
@@ -85,6 +84,8 @@ class ObjectAccessControl : private internal::AccessControlCommon {
   }
 
  private:
+  friend struct internal::ObjectAccessControlParser;
+
   std::int64_t generation_;
   std::string object_;
 };

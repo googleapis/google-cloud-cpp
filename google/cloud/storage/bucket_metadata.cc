@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/internal/object_acl_requests.h"
 
 namespace google {
 namespace cloud {
@@ -150,7 +151,7 @@ StatusOr<BucketMetadata> BucketMetadata::ParseFromJson(
   }
   if (json.count("defaultObjectAcl") != 0) {
     for (auto const& kv : json["defaultObjectAcl"].items()) {
-      auto parsed = ObjectAccessControl::ParseFromJson(kv.value());
+      auto parsed = internal::ObjectAccessControlParser::FromJson(kv.value());
       if (!parsed.ok()) {
         return std::move(parsed).status();
       }

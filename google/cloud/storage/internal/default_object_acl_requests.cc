@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/default_object_acl_requests.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/internal/object_acl_requests.h"
 #include <iostream>
 
 namespace google {
@@ -36,7 +37,7 @@ ListDefaultObjectAclResponse::FromHttpResponse(HttpResponse&& response) {
   }
   ListDefaultObjectAclResponse result;
   for (auto const& kv : json["items"].items()) {
-    auto parsed = ObjectAccessControl::ParseFromJson(kv.value());
+    auto parsed = internal::ObjectAccessControlParser::FromJson(kv.value());
     if (!parsed.ok()) {
       return std::move(parsed).status();
     }

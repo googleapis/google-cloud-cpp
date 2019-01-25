@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/object_metadata.h"
 #include <sstream>
 
@@ -53,7 +54,7 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
 
   if (json.count("acl") != 0) {
     for (auto const& kv : json["acl"].items()) {
-      auto parsed = ObjectAccessControl::ParseFromJson(kv.value());
+      auto parsed = ObjectAccessControlParser::FromJson(kv.value());
       if (!parsed.ok()) {
         return std::move(parsed).status();
       }

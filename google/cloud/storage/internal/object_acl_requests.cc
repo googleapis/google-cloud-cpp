@@ -22,6 +22,27 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+StatusOr<ObjectAccessControl> ObjectAccessControlParser::FromJson(
+    internal::nl::json const& json) {
+  if (!json.is_object()) {
+    return Status(StatusCode::kInvalidArgument, __func__);
+  }
+  ObjectAccessControl result{};
+  auto status = AccessControlCommon::ParseFromJson(result, json);
+  if (!status.ok()) {
+    return status;
+  }
+  result.generation_ = internal::ParseLongField(json, "generation");
+  result.object_ = json.value("object", "");
+  return result;
+}
+
+StatusOr<ObjectAccessControl> ObjectAccessControlParser::FromString(
+    std::string const& payload) {
+  auto json = internal::nl::json::parse(payload, nullptr, false);
+  return FromJson(json);
+}
+
 std::ostream& operator<<(std::ostream& os, ListObjectAclRequest const& r) {
   os << "ListObjectAclRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name();
@@ -37,7 +58,7 @@ StatusOr<ListObjectAclResponse> ListObjectAclResponse::FromHttpResponse(
   }
   ListObjectAclResponse result;
   for (auto const& kv : json["items"].items()) {
-    auto parsed = ObjectAccessControl::ParseFromJson(kv.value());
+    auto parsed = ObjectAccessControlParser::FromJson(kv.value());
     if (!parsed.ok()) {
       return std::move(parsed).status();
     }

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/internal/object_acl_requests.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -677,7 +678,7 @@ TEST(PatchObjectRequestTest, DiffSetAcl) {
   ObjectMetadata original = CreateObjectMetadataForTest();
   original.set_acl({});
   ObjectMetadata updated = original;
-  updated.set_acl({ObjectAccessControl::ParseFromString(
+  updated.set_acl({internal::ObjectAccessControlParser::FromString(
       R"""({"entity": "user-test-user", "role": "OWNER"})""")
       .value()});
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
@@ -691,7 +692,7 @@ TEST(PatchObjectRequestTest, DiffSetAcl) {
 
 TEST(PatchObjectRequestTest, DiffResetAcl) {
   ObjectMetadata original = CreateObjectMetadataForTest();
-  original.set_acl({ObjectAccessControl::ParseFromString(
+  original.set_acl({internal::ObjectAccessControlParser::FromString(
       R"""({"entity": "user-test-user", "role": "OWNER"})""")
       .value()});
   ObjectMetadata updated = original;

@@ -24,6 +24,75 @@ namespace internal {
 namespace {
 using ::testing::HasSubstr;
 
+/// @test Verify that we parse JSON objects into ObjectAccessControl objects.
+TEST(ObjectAccessControlTest, Parse) {
+  std::string text = R"""({
+      "bucket": "foo-bar",
+      "domain": "example.com",
+      "email": "foobar@example.com",
+      "entity": "user-foobar",
+      "entityId": "user-foobar-id-123",
+      "etag": "XYZ=",
+      "generation": 42,
+      "id": "object-foo-bar-baz-acl-234",
+      "kind": "storage#objectAccessControl",
+      "object": "baz",
+      "projectTeam": {
+        "projectNumber": "3456789",
+        "team": "a-team"
+      },
+      "role": "OWNER"
+})""";
+  auto actual = internal::ObjectAccessControlParser::FromString(text).value();
+
+  EXPECT_EQ("foo-bar", actual.bucket());
+  EXPECT_EQ("example.com", actual.domain());
+  EXPECT_EQ("foobar@example.com", actual.email());
+  EXPECT_EQ("user-foobar", actual.entity());
+  EXPECT_EQ("user-foobar-id-123", actual.entity_id());
+  EXPECT_EQ("XYZ=", actual.etag());
+  EXPECT_EQ(42, actual.generation());
+  EXPECT_EQ("object-foo-bar-baz-acl-234", actual.id());
+  EXPECT_EQ("storage#objectAccessControl", actual.kind());
+  EXPECT_EQ("baz", actual.object());
+  EXPECT_EQ("3456789", actual.project_team().project_number);
+  EXPECT_EQ("a-team", actual.project_team().team);
+  EXPECT_EQ("OWNER", actual.role());
+}
+
+/// @test Verify that the IOStream operator works as expected.
+TEST(ObjectAccessControlTest, IOStream) {
+  // The iostream operator is mostly there to support EXPECT_EQ() so it is
+  // rarely called, and that breaks our code coverage metrics.
+  std::string text = R"""({
+      "bucket": "foo-bar",
+      "domain": "example.com",
+      "email": "foobar@example.com",
+      "entity": "user-foobar",
+      "entityId": "user-foobar-id-123",
+      "etag": "XYZ=",
+      "generation": 42,
+      "id": "object-foo-bar-baz-acl-234",
+      "kind": "storage#objectAccessControl",
+      "object": "baz",
+      "projectTeam": {
+        "projectNumber": "3456789",
+        "team": "a-team"
+      },
+      "role": "OWNER"
+})""";
+
+  auto meta = internal::ObjectAccessControlParser::FromString(text).value();
+  std::ostringstream os;
+  os << meta;
+  auto actual = os.str();
+  using ::testing::HasSubstr;
+  EXPECT_THAT(actual, HasSubstr("ObjectAccessControl"));
+  EXPECT_THAT(actual, HasSubstr("bucket=foo-bar"));
+  EXPECT_THAT(actual, HasSubstr("object=baz"));
+  EXPECT_THAT(actual, HasSubstr("id=object-foo-bar-baz-acl-234"));
+}
+
 TEST(ObjectAclRequestTest, List) {
   ListObjectAclRequest request("my-bucket", "my-object");
   request.set_multiple_options(UserProject("my-project"), Generation(7));
@@ -176,7 +245,7 @@ ObjectAccessControl CreateObjectAccessControlForTest() {
       },
       "role": "OWNER"
 })""";
-  return ObjectAccessControl::ParseFromString(text).value();
+  return internal::ObjectAccessControlParser::FromString(text).value();
 }
 
 TEST(ObjectAclRequestTest, PatchDiff) {
