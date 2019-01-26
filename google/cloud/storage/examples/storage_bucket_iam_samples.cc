@@ -50,7 +50,7 @@ void GetBucketIamPolicy(google::cloud::storage::Client client, int& argc,
     throw Usage{"get-bucket-iam-policy <bucket_name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
-  //! [get bucket iam policy] [START storage_get_bucket_iam_members]
+  //! [get bucket iam policy] [START storage_view_bucket_iam_members]
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
@@ -64,7 +64,7 @@ void GetBucketIamPolicy(google::cloud::storage::Client client, int& argc,
     std::cout << "The IAM policy for bucket " << bucket_name << " is "
               << *policy << std::endl;
   }
-  //! [get bucket iam policy] [END storage_get_bucket_iam_members]
+  //! [get bucket iam policy] [END storage_view_bucket_iam_members]
   (std::move(client), bucket_name);
 }
 
