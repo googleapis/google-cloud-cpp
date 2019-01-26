@@ -32,6 +32,7 @@ readonly ZONE_ID="fake-zone"
 readonly REPLICATION_ZONE_ID="fake-zone-2"
 
 run_all_data_examples "${PROJECT_ID}" "${INSTANCE_ID}"
+run_all_data_async_examples "${PROJECT_ID}" "${INSTANCE_ID}"
 run_quickstart_example "${PROJECT_ID}" "${INSTANCE_ID}"
 run_hello_world_example "${PROJECT_ID}" "${INSTANCE_ID}"
 run_hello_app_profile_example "${PROJECT_ID}" "${INSTANCE_ID}"

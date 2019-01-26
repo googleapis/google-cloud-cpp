@@ -296,7 +296,7 @@ run_all_data_examples() {
   # Use the same table in all the tests.
   local -r TABLE="data-ex-tbl-$(date +%s)-${RANDOM}"
   run_example ./table_admin_snippets create-table "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets apply "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets apply "${project_id}" "${instance_id}" "${TABLE}"  
   run_example ./data_snippets bulk-apply "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets read-rows-with-limit "${project_id}" "${instance_id}" "${TABLE}"
@@ -318,6 +318,23 @@ run_all_data_examples() {
   run_example ./table_admin_snippets delete-table "${project_id}" "${instance_id}" "${TABLE}"
 }
 
+function run_all_data_async_examples {
+  local project_id=$1
+  local instance_id=$2
+  shift 2
+
+  EMULATOR_LOG="instance-admin-emulator.log"
+
+  # Use the same table in all the tests.
+  local -r TABLE="data-ex-tbl-$(date +%s)-${RANDOM}"
+  run_example ./table_admin_snippets create-table "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_async_snippets async-bulk-apply "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./table_admin_snippets delete-table "${project_id}" "${instance_id}" "${TABLE}" 
+
+  # Verify that calling without a command produces the right exit status and
+  # some kind of Usage message.
+  run_example_usage ./data_async_snippets
+}
 ################################################
 # Run the Bigtable quick start example.
 # Globals:
