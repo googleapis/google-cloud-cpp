@@ -111,7 +111,7 @@ void RemoveBucketIamMember(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   auto role = ConsumeArg(argc, argv);
   auto member = ConsumeArg(argc, argv);
-  //! [remove bucket iam member] [START storage_delete_bucket_iam_member]
+  //! [remove bucket iam member] [START storage_remove_bucket_iam_member]
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string role,
@@ -133,7 +133,7 @@ void RemoveBucketIamMember(google::cloud::storage::Client client, int& argc,
     std::cout << "Updated IAM policy bucket " << bucket_name
               << ". The new policy is " << *updated_policy << std::endl;
   }
-  //! [remove bucket iam member] [END storage_delete_bucket_iam_member]
+  //! [remove bucket iam member] [END storage_remove_bucket_iam_member]
   (std::move(client), bucket_name, role, member);
 }
 
