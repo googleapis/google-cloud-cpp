@@ -149,9 +149,11 @@ std::vector<FailedMutation> BulkMutator::ExtractFinalFailures() {
   std::vector<FailedMutation> result(std::move(failures_));
   google::rpc::Status ok_status;
   ok_status.set_code(grpc::StatusCode::OK);
+  int idx = 0;
   for (auto& mutation : *pending_mutations_.mutable_entries()) {
-    result.emplace_back(
-        FailedMutation(SingleRowMutation(std::move(mutation)), ok_status));
+    auto &annotation = pending_annotations_[idx++];
+    result.emplace_back(FailedMutation(SingleRowMutation(std::move(mutation)),
+                                       ok_status, annotation.original_index));
   }
   return result;
 }
