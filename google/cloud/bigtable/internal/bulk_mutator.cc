@@ -81,8 +81,9 @@ void BulkMutator::PrepareForRequest() {
   pending_annotations_ = {};
 }
 
-void BulkMutator::ProcessResponse(
+std::vector<int> BulkMutator::ProcessResponse(
     google::bigtable::v2::MutateRowsResponse& response) {
+  std::vector<int> res;
   for (auto& entry : *response.mutable_entries()) {
     auto index = entry.index();
     if (index < 0 || annotations_.size() <= std::size_t(index)) {
@@ -97,6 +98,7 @@ void BulkMutator::ProcessResponse(
     // the failures.  The data for successful responses is discarded, because
     // this class takes ownership in the constructor.
     if (grpc::StatusCode::OK == code) {
+      res.push_back(annotation.original_index);
       continue;
     }
     auto& original = *mutations_.mutable_entries(index);
@@ -116,6 +118,7 @@ void BulkMutator::ProcessResponse(
                              annotation.original_index);
     }
   }
+  return res;
 }
 
 void BulkMutator::FinishRequest() {
@@ -148,6 +151,12 @@ void BulkMutator::FinishRequest() {
     }
     ++index;
   }
+}
+
+std::vector<FailedMutation> BulkMutator::ConsumeAccumulatedFailures() {
+  std::vector<FailedMutation> res;
+  res.swap(failures_);
+  return res;
 }
 
 std::vector<FailedMutation> BulkMutator::ExtractFinalFailures() {
