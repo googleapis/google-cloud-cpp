@@ -133,12 +133,17 @@ void BulkMutator::FinishRequest() {
       pending_mutations_.add_entries()->Swap(&original);
       pending_annotations_.push_back(annotation);
     } else {
-      // These are weird failures.  We do not know their error code, and we
-      // cannot retry them.  Report them as OK in the failure list.
-      google::rpc::Status ok_status;
-      ok_status.set_code(grpc::StatusCode::OK);
+      // These are most likely an effect of a broken stream. We do not know
+      // their error code, and we cannot retry them. Report them as UNKNOWN in
+      // the failure list.
+      google::rpc::Status status;
+      status.set_code(grpc::StatusCode::UNKNOWN);
+      status.set_message(
+          "Never got a confirmation for this mutation. Most likely stream was "
+          "broken before its status was sent. It's not idempotent, so we can't "
+          "retry it.");
       failures_.emplace_back(
-          FailedMutation(SingleRowMutation(std::move(original)), ok_status,
+          FailedMutation(SingleRowMutation(std::move(original)), status,
                          annotation.original_index));
     }
     ++index;
@@ -147,13 +152,19 @@ void BulkMutator::FinishRequest() {
 
 std::vector<FailedMutation> BulkMutator::ExtractFinalFailures() {
   std::vector<FailedMutation> result(std::move(failures_));
-  google::rpc::Status ok_status;
-  ok_status.set_code(grpc::StatusCode::OK);
+  // These are most likely an effect of a broken stream. We do not know
+  // their error code and there are not going to be any more retries. Report
+  // them as UNKNOWN in the failure list.
+  google::rpc::Status status;
+  status.set_code(grpc::StatusCode::UNKNOWN);
+  status.set_message(
+      "Never got a confirmation for this mutation. Most likely stream was "
+      "broken before its status was sent.");
   int idx = 0;
   for (auto& mutation : *pending_mutations_.mutable_entries()) {
     auto &annotation = pending_annotations_[idx++];
     result.emplace_back(FailedMutation(SingleRowMutation(std::move(mutation)),
-                                       ok_status, annotation.original_index));
+                                       status, annotation.original_index));
   }
   return result;
 }

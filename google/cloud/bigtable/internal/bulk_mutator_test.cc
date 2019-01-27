@@ -415,7 +415,61 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
 
   EXPECT_EQ(2, failures[1].original_index());
   EXPECT_EQ("baz", failures[1].mutation().row_key());
-  EXPECT_EQ(grpc::StatusCode::OK, failures[1].status().error_code());
+  EXPECT_EQ(grpc::StatusCode::UNKNOWN, failures[1].status().error_code());
+}
+
+TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
+  // Make sure that mutations which are not confirmed are reported as UNKNOWN
+  // with the proper index.
+  bt::BulkMutation mut(
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", "baz")}),
+      // this one will be unconfirmed
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", "qux")}),
+      bt::SingleRowMutation("baz", {bt::SetCell("fam", "col", "v")}));
+
+  // We will setup the mock to return recoverable failures for idempotent
+  // mutations.
+  auto r1 = google::cloud::internal::make_unique<MockMutateRowsReader>();
+  EXPECT_CALL(*r1, Read(_))
+      .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
+        auto& e0 = *r->add_entries();
+        e0.set_index(0);
+        e0.mutable_status()->set_code(grpc::StatusCode::OK);
+        auto& e1 = *r->add_entries();
+        e1.set_index(2);
+        e1.mutable_status()->set_code(grpc::StatusCode::OK);
+        return true;
+      }))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*r1, Finish())
+      .WillOnce(Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "")));
+
+  // The BulkMutator should not issue a second request because the error is
+  // PERMISSION_DENIED (not retriable).
+
+  bigtable::testing::MockDataClient client;
+  EXPECT_CALL(client, MutateRows(_, _))
+      .WillOnce(Invoke(
+          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const& r) {
+            EXPECT_EQ(3, r.entries_size());
+            return r1.release()->AsUniqueMocked();
+          }));
+
+  auto policy = bt::DefaultIdempotentMutationPolicy();
+  bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
+                                    bigtable::TableId("foo/bar/baz/table"),
+                                    *policy, std::move(mut));
+
+  EXPECT_TRUE(mutator.HasPendingMutations());
+  grpc::ClientContext context;
+  auto status = mutator.MakeOneRequest(client, context);
+  EXPECT_FALSE(status.ok());
+
+  auto failures = mutator.ExtractFinalFailures();
+  ASSERT_EQ(1UL, failures.size());
+  EXPECT_EQ(1, failures[0].original_index());
+  EXPECT_EQ("bar", failures[0].mutation().row_key());
+  EXPECT_EQ(grpc::StatusCode::UNKNOWN, failures[0].status().error_code());
 }
 
 TEST(MultipleRowsMutatorTest, SimpleAsync) {
