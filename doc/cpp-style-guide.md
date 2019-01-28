@@ -55,6 +55,33 @@ Enumerators (for both scoped and unscoped enums) should be named like: `ENUM_NAM
 
 [link to GSG's section on enumerator names](https://google.github.io/styleguide/cppguide.html#Enumerator_Names)
 
+## Order of Includes
+
+Order includes from local to global to minimize implicit dependencies between
+headers. That is, start with the `.h` file that corresponds to the current
+`.cc` file (also do this for the corresonding unit test file), followed by
+other `.h` files from the same project, followed by includes from external
+projects, followed by C++ standard library headers, followed by C system
+headers. For example:
+
+```C++
+// Within the file google/cloud/x/foo.cc
+#include "google/cloud/x/foo.h"
+#include "google/cloud/x/bar.h"
+#include "google/cloud/y/baz.h"
+#include <grpcpp/blorg.h>
+#include <google/bigtable/blah.h>
+#include <map>
+#include <vector>
+#include <unistd.h>
+```
+
+This differs substantially from the corresponding section in the GSG, but we
+feel the rule presented here is both simpler and better minimizes the implicit
+dependencies exposed to each header.
+
+[link to GSG's section on include order](https://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes)
+
 ## Legal Notice and Author Line
 
 Every file should contain license boilerplate, for new files use:
