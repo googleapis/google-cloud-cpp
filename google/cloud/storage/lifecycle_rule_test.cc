@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/lifecycle_rule.h"
+#include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/storage_class.h"
 #include <gmock/gmock.h>
 
@@ -35,13 +36,7 @@ LifecycleRule CreateLifecycleRuleForTest() {
         "storageClass": "NEARLINE"
       }
     })""";
-  return LifecycleRule::ParseFromString(text).value();
-}
-
-/// @test Verify that we parse JSON objects into LifecycleRule objects.
-TEST(LifecycleRuleTest, ParseFailure) {
-  auto actual = LifecycleRule::ParseFromString("{123");
-  EXPECT_FALSE(actual.ok());
+  return internal::LifecycleRuleParser::FromString(text).value();
 }
 
 /// @test Verify that LifecycleRuleAction streaming works as expected.

@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
+#include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/format_rfc3339.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/storage_class.h"
@@ -157,7 +158,7 @@ BucketMetadata CreateBucketMetadataForTest() {
         "notFoundPage": "404.html"
       }
 })""";
-  return BucketMetadata::ParseFromString(text).value();
+  return internal::BucketMetadataParser::FromString(text).value();
 }
 
 /// @test Verify that we parse JSON objects into BucketMetadata objects.
@@ -268,33 +269,6 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ("404.html", actual.website().not_found_page);
 }
 
-/// @test Verify that we parse JSON objects into BucketMetadata objects.
-TEST(BucketMetadataTest, ParseFailure) {
-  auto actual = BucketMetadata::ParseFromString("{123");
-  EXPECT_FALSE(actual.ok());
-}
-
-/// @test Verify that we parse JSON objects into BucketMetadata objects.
-TEST(BucketMetadataTest, ParseAclFailure) {
-  auto actual = BucketMetadata::ParseFromString(
-      R"""({"acl: ["invalid-item"]})""");
-  EXPECT_FALSE(actual.ok());
-}
-
-/// @test Verify that we parse JSON objects into BucketMetadata objects.
-TEST(BucketMetadataTest, ParseDefaultObjecAclFailure) {
-  auto actual = BucketMetadata::ParseFromString(
-      R"""({"defaultObjectAcl: ["invalid-item"]})""");
-  EXPECT_FALSE(actual.ok());
-}
-
-/// @test Verify that we parse JSON objects into BucketMetadata objects.
-TEST(BucketMetadataTest, ParseLifecycleFailure) {
-  auto actual = BucketMetadata::ParseFromString(
-      R"""({"lifecycle: {"rule": [ "invalid-item" ]}})""");
-  EXPECT_FALSE(actual.ok());
-}
-
 /// @test Verify that the IOStream operator works as expected.
 TEST(BucketMetadataTest, IOStream) {
   auto meta = CreateBucketMetadataForTest();
@@ -365,7 +339,7 @@ TEST(BucketMetadataTest, IOStream) {
 /// @test Verify we can convert a BucketMetadata object to a JSON string.
 TEST(BucketMetadataTest, ToJsonString) {
   auto tested = CreateBucketMetadataForTest();
-  auto actual_string = tested.ToJsonString();
+  auto actual_string = internal::BucketMetadataToJsonString(tested);
   // Verify that the produced string can be parsed as a JSON object.
   internal::nl::json actual = internal::nl::json::parse(actual_string);
 

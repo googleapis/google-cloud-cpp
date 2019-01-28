@@ -14,6 +14,9 @@
 
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/internal/bucket_acl_requests.h"
+#include "google/cloud/storage/internal/format_rfc3339.h"
+#include "google/cloud/storage/internal/object_acl_requests.h"
 #include <sstream>
 
 namespace google {
@@ -21,6 +24,349 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+namespace {
+CorsEntry ParseCors(internal::nl::json const& json) {
+  auto parse_string_list = [](internal::nl::json const& json,
+                              char const* field_name) {
+    std::vector<std::string> list;
+    if (json.count(field_name) != 0) {
+      for (auto const& kv : json[field_name].items()) {
+        list.emplace_back(kv.value().get<std::string>());
+      }
+    }
+    return list;
+  };
+  CorsEntry result;
+  if (json.count("maxAgeSeconds") != 0) {
+    result.max_age_seconds = internal::ParseLongField(json, "maxAgeSeconds");
+  }
+  result.method = parse_string_list(json, "method");
+  result.origin = parse_string_list(json, "origin");
+  result.response_header = parse_string_list(json, "responseHeader");
+  return result;
+}
+
+void SetIfNotEmpty(internal::nl::json& json, char const* key,
+                   std::string const& value) {
+  if (value.empty()) {
+    return;
+  }
+  json[key] = value;
+}
+
+BucketPolicyOnly ParseBucketOnlyPolicy(internal::nl::json const& json) {
+  BucketPolicyOnly result;
+  result.enabled = internal::ParseBoolField(json, "enabled");
+  result.locked_time = internal::ParseTimestampField(json, "lockedTime");
+  return result;
+}
+
+}  // namespace
+
+StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(internal::nl::json const& json) {
+  if (!json.is_object()) {
+    return Status(StatusCode::kInvalidArgument, __func__);
+  }
+  LifecycleRule result;
+  if (json.count("action") != 0) {
+    result.action_.type = json["action"].value("type", "");
+    result.action_.storage_class = json["action"].value("storageClass", "");
+  }
+  if (json.count("condition") != 0) {
+    auto condition = json["condition"];
+    if (condition.count("age") != 0) {
+      result.condition_.age.emplace(internal::ParseIntField(condition, "age"));
+    }
+    if (condition.count("createdBefore") != 0) {
+      result.condition_.created_before.emplace(
+          internal::ParseRfc3339(condition.value("createdBefore", "")));
+    }
+    if (condition.count("isLive") != 0) {
+      result.condition_.is_live.emplace(
+          internal::ParseBoolField(condition, "isLive"));
+    }
+    if (condition.count("matchesStorageClass") != 0) {
+      std::vector<std::string> matches;
+      for (auto const& kv : condition["matchesStorageClass"].items()) {
+        matches.emplace_back(kv.value().get<std::string>());
+      }
+      result.condition_.matches_storage_class.emplace(std::move(matches));
+    }
+    if (condition.count("numNewerVersions") != 0) {
+      result.condition_.num_newer_versions.emplace(
+          internal::ParseIntField(condition, "numNewerVersions"));
+    }
+  }
+  return result;
+}
+
+StatusOr<LifecycleRule> LifecycleRuleParser::FromString(std::string const& text) {
+  auto json = internal::nl::json::parse(text, nullptr, false);
+  return FromJson(json);
+}
+
+StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
+    internal::nl::json const& json) {
+  if (!json.is_object()) {
+    return Status(StatusCode::kInvalidArgument, __func__);
+  }
+  BucketMetadata result{};
+  auto status = CommonMetadata<BucketMetadata>::ParseFromJson(result, json);
+  if (!status.ok()) {
+    return status;
+  }
+
+  if (json.count("acl") != 0) {
+    for (auto const& kv : json["acl"].items()) {
+      auto parsed = internal::BucketAccessControlParser::FromJson(kv.value());
+      if (!parsed.ok()) {
+        return std::move(parsed).status();
+      }
+      result.acl_.emplace_back(std::move(*parsed));
+    }
+  }
+  if (json.count("billing") != 0) {
+    auto billing = json["billing"];
+    BucketBilling b;
+    b.requester_pays = internal::ParseBoolField(billing, "requesterPays");
+    result.billing_ = b;
+  }
+  if (json.count("cors") != 0) {
+    for (auto const& kv : json["cors"].items()) {
+      result.cors_.emplace_back(ParseCors(kv.value()));
+    }
+  }
+  if (json.count("defaultEventBasedHold") != 0) {
+    result.default_event_based_hold_ =
+        json.value("defaultEventBasedHold", false);
+  }
+  if (json.count("defaultObjectAcl") != 0) {
+    for (auto const& kv : json["defaultObjectAcl"].items()) {
+      auto parsed = ObjectAccessControlParser::FromJson(kv.value());
+      if (!parsed.ok()) {
+        return std::move(parsed).status();
+      }
+      result.default_acl_.emplace_back(std::move(*parsed));
+    }
+  }
+  if (json.count("encryption") != 0) {
+    BucketEncryption e;
+    e.default_kms_key_name = json["encryption"].value("defaultKmsKeyName", "");
+    result.encryption_ = std::move(e);
+  }
+
+  if (json.count("iamConfiguration") != 0) {
+    BucketIamConfiguration c;
+    auto config = json["iamConfiguration"];
+    if (config.count("bucketPolicyOnly") != 0) {
+      c.bucket_policy_only = ParseBucketOnlyPolicy(config["bucketPolicyOnly"]);
+    }
+    result.iam_configuration_ = c;
+  }
+
+  if (json.count("lifecycle") != 0) {
+    auto lifecycle = json["lifecycle"];
+    BucketLifecycle value;
+    if (lifecycle.count("rule") != 0) {
+      for (auto const& kv : lifecycle["rule"].items()) {
+        auto parsed = internal::LifecycleRuleParser::FromJson(kv.value());
+        if (!parsed.ok()) {
+          return std::move(parsed).status();
+        }
+        value.rule.emplace_back(std::move(*parsed));
+      }
+    }
+    result.lifecycle_ = std::move(value);
+  }
+
+  result.location_ = json.value("location", "");
+
+  if (json.count("logging") != 0) {
+    auto logging = json["logging"];
+    BucketLogging l;
+    l.log_bucket = logging.value("logBucket", "");
+    l.log_object_prefix = logging.value("logObjectPrefix", "");
+    result.logging_ = std::move(l);
+  }
+  result.project_number_ = internal::ParseLongField(json, "projectNumber");
+  if (json.count("labels") > 0) {
+    for (auto const& kv : json["labels"].items()) {
+      result.labels_.emplace(kv.key(), kv.value().get<std::string>());
+    }
+  }
+
+  if (json.count("retentionPolicy") != 0) {
+    auto retention_policy = json["retentionPolicy"];
+    BucketRetentionPolicy r;
+    r.retention_period = std::chrono::seconds(
+        internal::ParseLongField(retention_policy, "retentionPeriod"));
+    r.effective_time =
+        internal::ParseTimestampField(retention_policy, "effectiveTime");
+    r.is_locked = internal::ParseBoolField(retention_policy, "isLocked");
+    result.retention_policy_ = r;
+  }
+
+  if (json.count("versioning") != 0) {
+    auto versioning = json["versioning"];
+    if (versioning.count("enabled") != 0) {
+      BucketVersioning v{internal::ParseBoolField(versioning, "enabled")};
+      result.versioning_ = v;
+    }
+  }
+
+  if (json.count("website") != 0) {
+    auto website = json["website"];
+    BucketWebsite w;
+    w.main_page_suffix = website.value("mainPageSuffix", "");
+    w.not_found_page = website.value("notFoundPage", "");
+    result.website_ = std::move(w);
+  }
+  return result;
+}
+
+StatusOr<BucketMetadata> BucketMetadataParser::FromString(
+    std::string const& payload) {
+  auto json = storage::internal::nl::json::parse(payload, nullptr, false);
+  return FromJson(json);
+}
+
+std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
+  using internal::nl::json;
+  json metadata_as_json;
+  if (!meta.acl().empty()) {
+    for (BucketAccessControl const& a : meta.acl()) {
+      json entry;
+      SetIfNotEmpty(entry, "entity", a.entity());
+      SetIfNotEmpty(entry, "role", a.role());
+      metadata_as_json["acl"].emplace_back(std::move(entry));
+    }
+  }
+
+  if (!meta.cors().empty()) {
+    for (CorsEntry const& v : meta.cors()) {
+      json cors_as_json;
+      if (v.max_age_seconds.has_value()) {
+        cors_as_json["maxAgeSeconds"] = *v.max_age_seconds;
+      }
+      if (!v.method.empty()) {
+        cors_as_json["method"] = v.method;
+      }
+      if (!v.origin.empty()) {
+        cors_as_json["origin"] = v.origin;
+      }
+      if (!v.response_header.empty()) {
+        cors_as_json["responseHeader"] = v.response_header;
+      }
+      metadata_as_json["cors"].emplace_back(std::move(cors_as_json));
+    }
+  }
+
+  if (meta.has_billing()) {
+    json b{
+        {"requesterPays", meta.billing().requester_pays},
+    };
+    metadata_as_json["billing"] = std::move(b);
+  }
+
+  metadata_as_json["defaultEventBasedHold"] = meta.default_event_based_hold();
+
+  if (!meta.default_acl().empty()) {
+    for (ObjectAccessControl const& a : meta.default_acl()) {
+      json entry;
+      SetIfNotEmpty(entry, "entity", a.entity());
+      SetIfNotEmpty(entry, "role", a.role());
+      metadata_as_json["defaultObjectAcl"].emplace_back(std::move(entry));
+    }
+  }
+
+  if (meta.has_encryption()) {
+    json e;
+    SetIfNotEmpty(e, "defaultKmsKeyName", meta.encryption().default_kms_key_name);
+    metadata_as_json["encryption"] = std::move(e);
+  }
+
+  if (meta.has_iam_configuration()) {
+    json c;
+    if (meta.iam_configuration().bucket_policy_only.has_value()) {
+      json bpo;
+      bpo["enabled"] = meta.iam_configuration().bucket_policy_only->enabled;
+      // The lockedTime field is not mutable and should not be set by the client
+      // the server will provide a value.
+      c["bucketPolicyOnly"] = std::move(bpo);
+    }
+    metadata_as_json["iamConfiguration"] = std::move(c);
+  }
+
+  if (!meta.labels().empty()) {
+    json labels_as_json;
+    for (auto const& kv : meta.labels()) {
+      labels_as_json[kv.first] = kv.second;
+    }
+    metadata_as_json["labels"] = std::move(labels_as_json);
+  }
+
+  if (meta.has_lifecycle()) {
+    json rule;
+    for (LifecycleRule const& v : meta.lifecycle().rule) {
+      json condition;
+      auto const& c = v.condition();
+      if (c.age) {
+        condition["age"] = *c.age;
+      }
+      if (c.created_before.has_value()) {
+        condition["createdBefore"] = internal::FormatRfc3339(*c.created_before);
+      }
+      if (c.is_live) {
+        condition["isLive"] = *c.is_live;
+      }
+      if (c.matches_storage_class) {
+        condition["matchesStorageClass"] = *c.matches_storage_class;
+      }
+      if (c.num_newer_versions) {
+        condition["numNewerVersions"] = *c.num_newer_versions;
+      }
+      json action{{"type", v.action().type}};
+      if (!v.action().storage_class.empty()) {
+        action["storageClass"] = v.action().storage_class;
+      }
+      rule.emplace_back(json{{"condition", std::move(condition)},
+                             {"action", std::move(action)}});
+    }
+    metadata_as_json["lifecycle"] = json{{"rule", std::move(rule)}};
+  }
+
+  SetIfNotEmpty(metadata_as_json, "location", meta.location());
+
+  if (meta.has_logging()) {
+    json l;
+    SetIfNotEmpty(l, "logBucket", meta.logging().log_bucket);
+    SetIfNotEmpty(l, "logObjectPrefix", meta.logging().log_object_prefix);
+    metadata_as_json["logging"] = std::move(l);
+  }
+
+  SetIfNotEmpty(metadata_as_json, "name", meta.name());
+
+  if (meta.has_retention_policy()) {
+    json r{{"retentionPeriod", meta.retention_policy().retention_period.count()}};
+    metadata_as_json["retentionPolicy"] = std::move(r);
+  }
+
+  SetIfNotEmpty(metadata_as_json, "storageClass", meta.storage_class());
+
+  if (meta.versioning().has_value()) {
+    metadata_as_json["versioning"] = json{{"enabled", meta.versioning()->enabled}};
+  }
+
+  if (meta.has_website()) {
+    json w;
+    SetIfNotEmpty(w, "mainPageSuffix", meta.website().main_page_suffix);
+    SetIfNotEmpty(w, "notFoundPage", meta.website().not_found_page);
+    metadata_as_json["website"] = std::move(w);
+  }
+
+  return metadata_as_json.dump();
+}
+
 std::ostream& operator<<(std::ostream& os, ListBucketsRequest const& r) {
   os << "ListBucketsRequest={project_id=" << r.project_id();
   r.DumpOptions(os, ", ");
@@ -39,7 +385,7 @@ StatusOr<ListBucketsResponse> ListBucketsResponse::FromHttpResponse(
   result.next_page_token = json.value("nextPageToken", "");
 
   for (auto const& kv : json["items"].items()) {
-    auto parsed = BucketMetadata::ParseFromJson(kv.value());
+    auto parsed = internal::BucketMetadataParser::FromJson(kv.value());
     if (!parsed) {
       return std::move(parsed).status();
     }

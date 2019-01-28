@@ -27,6 +27,39 @@ using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
+/// @test Verify that we parse JSON objects into LifecycleRule objects.
+TEST(LifecycleRuleParserTest, ParseFailure) {
+  auto actual = LifecycleRuleParser::FromString("{123");
+  EXPECT_FALSE(actual.ok());
+}
+
+/// @test Verify that we parse JSON objects into BucketMetadata objects.
+TEST(BucketMetadataParserTest, ParseFailure) {
+  auto actual = internal::BucketMetadataParser::FromString("{123");
+  EXPECT_FALSE(actual.ok());
+}
+
+/// @test Verify that we parse JSON objects into BucketMetadata objects.
+TEST(BucketMetadataParserTest, ParseAclFailure) {
+  auto actual = internal::BucketMetadataParser::FromString(
+      R"""({"acl: ["invalid-item"]})""");
+  EXPECT_FALSE(actual.ok());
+}
+
+/// @test Verify that we parse JSON objects into BucketMetadata objects.
+TEST(BucketMetadataParserTest, ParseDefaultObjecAclFailure) {
+  auto actual = internal::BucketMetadataParser::FromString(
+      R"""({"defaultObjectAcl: ["invalid-item"]})""");
+  EXPECT_FALSE(actual.ok());
+}
+
+/// @test Verify that we parse JSON objects into BucketMetadata objects.
+TEST(BucketMetadataParserTest, ParseLifecycleFailure) {
+  auto actual = internal::BucketMetadataParser::FromString(
+      R"""({"lifecycle: {"rule": [ "invalid-item" ]}})""");
+  EXPECT_FALSE(actual.ok());
+}
+
 TEST(GetBucketMetadataRequestTest, OStreamBasic) {
   GetBucketMetadataRequest request("my-bucket");
   std::ostringstream os;
@@ -96,8 +129,8 @@ TEST(ListBucketsResponseTest, Parse) {
 )""";
   text += "[" + bucket1 + "," + bucket2 + "]}";
 
-  auto b1 = BucketMetadata::ParseFromString(bucket1).value();
-  auto b2 = BucketMetadata::ParseFromString(bucket2).value();
+  auto b1 = internal::BucketMetadataParser::FromString(bucket1).value();
+  auto b2 = internal::BucketMetadataParser::FromString(bucket2).value();
 
   auto actual =
       ListBucketsResponse::FromHttpResponse(HttpResponse{200, text, {}})
@@ -152,7 +185,7 @@ TEST(DeleteBucketRequestTest, OStream) {
 }
 
 BucketMetadata CreateBucketMetadataForTest() {
-  return BucketMetadata::ParseFromString(R"""({
+  return internal::BucketMetadataParser::FromString(R"""({
       "kind": "storage#bucket",
       "id": "test-bucket",
       "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket",
