@@ -78,11 +78,8 @@ future<void> Table::AsyncBulkApply(BulkMutation&& mut, CompletionQueue& cq) {
     auto failures = f.get();
 
     if (!failures.empty()) {
-      for (auto const& failed : failures) {
-        std::cerr << "Mutation " << failed.original_index() << " failed with"
-                  << failed.status().error_message() << " ["
-                  << failed.status().error_code() << "]" << std::endl;
-      }
+      grpc::Status status = failures.front().status();
+      ReportPermanentFailures(status.error_message().c_str(), status, failures);
     }
   });
 
