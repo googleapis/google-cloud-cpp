@@ -124,6 +124,7 @@ class UnwrapReadModifyWriteRowResponse {
  private:
   Functor callback_;
 };
+class MutationBatcher;
 
 }  // namespace internal
 
@@ -636,6 +637,7 @@ class Table {
 
  private:
   friend class NoexTableStreamingAsyncBulkApplyTest_SimpleTest_Test;
+  friend class internal::MutationBatcher;
   /**
    * Make an asynchronous request to mutate a multiple rows and stream results.
    *

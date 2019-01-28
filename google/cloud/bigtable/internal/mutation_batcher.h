@@ -96,7 +96,7 @@ class MutationBatcher {
         options_(options),
         num_outstanding_batches_(),
         oustanding_size_(),
-        cur_batch_(cloud::internal::make_unique<Batch>()) {}
+        cur_batch_(std::make_shared<Batch>()) {}
 
   std::shared_ptr<AsyncOperation> AsyncApply(
       CompletionQueue& cq, AsyncApplyCompletionCallback&& completion_callback,
@@ -105,7 +105,6 @@ class MutationBatcher {
 
  private:
   class Batch;
-  friend class BatchFinishedCallback;
 
   /**
    * This structure represents a single mutation before it is admitted.
@@ -142,26 +141,47 @@ class MutationBatcher {
    */
   class Batch {
    public:
-    Batch() : num_mutations_(), requests_size_() {}
+    Batch()
+        : num_mutations_(),
+          requests_size_(),
+          last_idx_(),
+          attempt_finished_() {}
     size_t requests_size() { return requests_size_; }
     size_t num_mutations() { return num_mutations_; }
     BulkMutation TransferRequest() { return std::move(requests_); }
 
     void Add(PendingSingleRowMutation&& mut);
-    void FireCallbacks(CompletionQueue& cq,
-                       std::vector<FailedMutation> const& failed);
+    // Returns the size of the completed mutations.
+    size_t FireFailedCallbacks(CompletionQueue& cq,
+                               std::vector<FailedMutation> failed);
+    // Returns the size of the completed mutations.
+    size_t FireSuccessfulCallbacks(CompletionQueue& cq,
+                                   std::vector<int> indices);
+    // Returns if this was the first attempt on this batch.
+    bool AttemptFinished();
 
    private:
+    struct MutationData {
+      MutationData(PendingSingleRowMutation&& pending)
+          : callback(std::move(pending.completion_callback)),
+            num_mutations(pending.num_mutations),
+            request_size(pending.request_size) {}
+      AsyncApplyCompletionCallback callback;
+      int num_mutations;
+      int request_size;
+    };
+
+    std::mutex mu_;
     size_t num_mutations_;
     size_t requests_size_;
     BulkMutation requests_;
-    // The reason why it's not simple std::vector is that whenever the vector
-    // grows, it will copy the callbacks. The callbacks might be large, so we
-    // want to avoid that.
-    //
-    // In order for std::vector to move rather than copy, std::function's move
-    // ctor would have to be noexcept (it is not until C++20).
-    std::deque<AsyncApplyCompletionCallback> callbacks_;
+    int last_idx_;
+    // Whether at least one AsyncBulkApply finished.
+    bool attempt_finished_;
+    // The reason why it's not simple std::vector is that we want this structure
+    // to shrink as individual mutations complete, so that the user can have a
+    // bound on the amount of overhead per outstanding Apply.
+    std::unordered_map<int, std::unique_ptr<MutationData>> mutation_data_;
   };
 
   grpc::Status IsValid(PendingSingleRowMutation& mut) const;
@@ -173,11 +193,15 @@ class MutationBatcher {
     return pending_mutations_.empty() && HasSpaceFor(mut);
   }
 
-  void FlushIfPossible(CompletionQueue& cq);
-  void BatchFinished(CompletionQueue& cq, std::unique_ptr<Batch> batch,
-                     std::vector<FailedMutation> const& failed);
-  std::vector<AsyncApplyAdmissionCallback> FlushOnBatchFinished(
-      CompletionQueue& cq, std::unique_ptr<MutationBatcher::Batch> batch);
+  // Returns if it flushed.
+  bool FlushIfPossible(CompletionQueue& cq);
+  void MutationsSucceeded(CompletionQueue& cq, MutationBatcher::Batch& batch,
+                          std::vector<int> indices);
+  void MutationsFailed(CompletionQueue& cq, MutationBatcher::Batch& batch,
+                       std::vector<FailedMutation> failed);
+  void BatchAttemptFinished(CompletionQueue& cq, MutationBatcher::Batch& batch);
+  void TryAdmit(CompletionQueue& cq, std::unique_lock<std::mutex>& lk);
+  void Admit(PendingSingleRowMutation&& mut);
 
   std::mutex mu_;
   noex::Table& table_;
@@ -186,7 +210,7 @@ class MutationBatcher {
   size_t num_outstanding_batches_;
   size_t oustanding_size_;
 
-  std::unique_ptr<Batch> cur_batch_;
+  std::shared_ptr<Batch> cur_batch_;
 
   // These are the mutations which have not been admission yet. If the user is
   // properly reacting to `admission_callback`s, there should be very few of
