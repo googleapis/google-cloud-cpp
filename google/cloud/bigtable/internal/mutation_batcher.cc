@@ -128,10 +128,10 @@ void MutationBatcher::Batch::FireCallbacks(
   for (auto const& f : failed) {
     int const idx = f.original_index();
     failed_indices.insert(idx);
-    grpc::Status status(f.status());
     // For some reason clang-tidy thinks that callbacks_[idx] would be fine with
     // a const reference to status.
     // NOLINTNEXTLINE (performance-unnecessary-copy-initialization)
+    grpc::Status status(f.status());
     callbacks_[idx](cq, status);
   }
   for (size_t i = 0; i < callbacks_.size(); ++i) {
