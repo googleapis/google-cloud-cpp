@@ -294,6 +294,7 @@ inline bool operator==(LifecycleRule const& lhs, LifecycleRule const& rhs) {
   return std::tie(lhs.condition(), lhs.action()) ==
          std::tie(rhs.condition(), rhs.action());
 }
+
 inline bool operator<(LifecycleRule const& lhs, LifecycleRule const& rhs) {
   return std::tie(lhs.action(), lhs.condition()) <
          std::tie(rhs.action(), rhs.condition());
