@@ -424,25 +424,27 @@ endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
 if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "external"
     OR "${GOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER}" STREQUAL "external")
-    set(GOOGLE_CLOUD_CPP_BIGTABLE_ENABLE_INSTALL "ON")
-else()
     set(GOOGLE_CLOUD_CPP_BIGTABLE_ENABLE_INSTALL "OFF")
-    message(WARNING [===[
-The install target has been disabled for the bigtable_client library because
-one of the dependencies is set to use external projects. When building against
-external projects the resulting libraries are not installable. The necessary
-dependencies may not installed in your system, or the versions installed in your
-system may not match the version used to compile the google-cloud-cpp libraries.
-Please consult the README.md file for details on how to compile against
-pre-installed versions of the google-cloud-cpp dependencies.
-
+    message(
+        WARNING
+            "The install target has been disabled for the bigtable_client"
+            " library because one of the dependencies is set to use external"
+            " projects. When building against external projects the resulting"
+            " libraries are not installable. The necessary dependencies may"
+            " not installed in your system, or the versions installed in your"
+            " system may not match the version used to compile the"
+            " google-cloud-cpp libraries. "
+            ""
+            "Please consult the README.md file for details on how to compile "
+            "against pre-installed versions of the google-cloud-cpp "
+            "dependencies.
 GPRC     PROVIDER = ${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}
-PROTOBUF PROVIDER = ${GOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER}
-
-]===])
+PROTOBUF PROVIDER = ${GOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER}")
+else()
+    set(GOOGLE_CLOUD_CPP_BIGTABLE_ENABLE_INSTALL "ON")
 endif ()
 
-if ($"{GOOGLE_CLOUD_CPP_BIGTABLE_DISABLE_INSTALL}")
+if ("${GOOGLE_CLOUD_CPP_BIGTABLE_ENABLE_INSTALL}")
     # Install the libraries and headers in the locations determined by
     # GNUInstallDirs
     install(TARGETS bigtable_protos bigtable_common_options
