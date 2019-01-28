@@ -56,7 +56,7 @@ MutationBatcher::Options& MutationBatcher::Options::SetMaxOustandingSize(
 
 MutationBatcher::MutationBatcher(noex::Table& table, Options options)
     : table_(table),
-      options_(std::move(options)),
+      options_(options),
       num_outstanding_batches_(),
       oustanding_size_(),
       cur_batch_(cloud::internal::make_unique<Batch>()) {}
@@ -129,6 +129,9 @@ void MutationBatcher::Batch::FireCallbacks(
     int const idx = f.original_index();
     failed_indices.insert(idx);
     grpc::Status status(f.status());
+    // For some reason clang-tidy thinks that callbacks_[idx] would be fine with
+    // a const reference to status.
+    // NOLINTNEXTLINE (performance-unnecessary-copy-initialization)
     callbacks_[idx](cq, status);
   }
   for (size_t i = 0; i < callbacks_.size(); ++i) {
@@ -201,7 +204,7 @@ void MutationBatcher::FlushIfPossible(CompletionQueue& cq) {
     table_.AsyncBulkApply(cq,
                           BatchFinishedCallback(*this, std::move(cur_batch_)),
                           std::move(req));
-    cur_batch_.reset(new Batch);
+    cur_batch_ = cloud::internal::make_unique<Batch>();
   }
 }
 
