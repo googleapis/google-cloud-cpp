@@ -137,31 +137,6 @@ class LifecycleRule {
   LifecycleRuleAction const& action() const { return action_; }
   LifecycleRuleCondition const& condition() const { return condition_; }
 
-  bool operator==(LifecycleRule const& rhs) const {
-    return std::tie(condition_, action_) ==
-           std::tie(rhs.condition_, rhs.action_);
-  }
-  bool operator<(LifecycleRule const& rhs) const {
-    return std::tie(action_, condition_) <
-           std::tie(rhs.action_, rhs.condition_);
-  }
-
-  bool operator!=(LifecycleRule const& rhs) const {
-    return std::rel_ops::operator!=(*this, rhs);
-  }
-
-  bool operator>(LifecycleRule const& rhs) const {
-    return std::rel_ops::operator>(*this, rhs);
-  }
-
-  bool operator<=(LifecycleRule const& rhs) const {
-    return std::rel_ops::operator<=(*this, rhs);
-  }
-
-  bool operator>=(LifecycleRule const& rhs) const {
-    return std::rel_ops::operator>=(*this, rhs);
-  }
-
   //@{
   /**
    * @name Creates different types of LifecycleRule actions.
@@ -314,6 +289,32 @@ class LifecycleRule {
   LifecycleRuleAction action_;
   LifecycleRuleCondition condition_;
 };
+
+inline bool operator==(LifecycleRule const& lhs, LifecycleRule const& rhs) {
+  return std::tie(lhs.condition(), lhs.action()) ==
+         std::tie(rhs.condition(), rhs.action());
+}
+
+inline bool operator<(LifecycleRule const& lhs, LifecycleRule const& rhs) {
+  return std::tie(lhs.action(), lhs.condition()) <
+         std::tie(rhs.action(), rhs.condition());
+}
+
+inline bool operator!=(LifecycleRule const& lhs, LifecycleRule const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(LifecycleRule const& lhs, LifecycleRule const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(LifecycleRule const& lhs, LifecycleRule const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(LifecycleRule const& lhs, LifecycleRule const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
 
 std::ostream& operator<<(std::ostream& os, LifecycleRule const& rhs);
 }  // namespace STORAGE_CLIENT_NS

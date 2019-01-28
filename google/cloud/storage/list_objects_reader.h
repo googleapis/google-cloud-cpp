@@ -59,24 +59,26 @@ class ListObjectsIterator {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   value_type&& operator*() && { return std::move(value_); }
 
-  bool operator==(ListObjectsIterator const& rhs) const {
+  friend bool operator==(ListObjectsIterator const& lhs,
+                         ListObjectsIterator const& rhs) {
     // All end iterators are equal.
-    if (owner_ == nullptr) {
+    if (lhs.owner_ == nullptr) {
       return rhs.owner_ == nullptr;
     }
     // Iterators on different streams are always different.
-    if (owner_ != rhs.owner_) {
+    if (lhs.owner_ != rhs.owner_) {
       return false;
     }
     // Iterators on the same stream are equal if they point to the same object.
-    if (value_.ok() && rhs.value_.ok()) {
-      return value_.value() == rhs.value_.value();
+    if (lhs.value_.ok() && rhs.value_.ok()) {
+      return lhs.value_.value() == rhs.value_.value();
     }
-    return value_.status() == rhs.value_.status();
+    return lhs.value_.status() == rhs.value_.status();
   }
 
-  bool operator!=(ListObjectsIterator const& rhs) const {
-    return !(*this == rhs);
+  friend bool operator!=(ListObjectsIterator const& lhs,
+                         ListObjectsIterator const& rhs) {
+    return !(lhs == rhs);
   }
 
  private:
