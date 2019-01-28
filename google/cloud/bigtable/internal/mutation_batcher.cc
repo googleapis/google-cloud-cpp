@@ -197,9 +197,10 @@ void MutationBatcher::FlushIfPossible(CompletionQueue& cq) {
       num_outstanding_batches_ < options_.max_batches) {
     oustanding_size_ += cur_batch_->requests_size();
     ++num_outstanding_batches_;
+    auto req = cur_batch_->TransferRequest();
     table_.AsyncBulkApply(cq,
                           BatchFinishedCallback(*this, std::move(cur_batch_)),
-                          cur_batch_->TransferRequest());
+                          std::move(req));
     cur_batch_.reset(new Batch);
   }
 }
