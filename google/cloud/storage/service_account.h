@@ -35,36 +35,36 @@ class ServiceAccount {
   std::string const& email_address() const { return email_address_; }
   std::string const& kind() const { return kind_; }
 
-  bool operator==(ServiceAccount const& rhs) const {
-    return std::tie(email_address_, kind_) ==
-           std::tie(rhs.email_address_, rhs.kind_);
-  }
-
-  bool operator<(ServiceAccount const& rhs) const {
-    return std::tie(email_address_, kind_) <
-           std::tie(rhs.email_address_, rhs.kind_);
-  }
-
-  bool operator!=(ServiceAccount const& rhs) const {
-    return std::rel_ops::operator!=(*this, rhs);
-  }
-
-  bool operator>(ServiceAccount const& rhs) const {
-    return std::rel_ops::operator>(*this, rhs);
-  }
-
-  bool operator<=(ServiceAccount const& rhs) const {
-    return std::rel_ops::operator<=(*this, rhs);
-  }
-
-  bool operator>=(ServiceAccount const& rhs) const {
-    return std::rel_ops::operator>=(*this, rhs);
-  }
-
  private:
   std::string email_address_;
   std::string kind_;
 };
+
+inline bool operator==(ServiceAccount const& lhs, ServiceAccount const& rhs) {
+  return std::tie(lhs.email_address(), lhs.kind()) ==
+         std::tie(rhs.email_address(), rhs.kind());
+}
+
+inline bool operator<(ServiceAccount const& lhs, ServiceAccount const& rhs) {
+  return std::tie(lhs.email_address(), lhs.kind()) <
+         std::tie(rhs.email_address(), rhs.kind());
+}
+
+inline bool operator!=(ServiceAccount const& lhs, ServiceAccount const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(ServiceAccount const& lhs, ServiceAccount const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(ServiceAccount const& lhs, ServiceAccount const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(ServiceAccount const& lhs, ServiceAccount const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
 
 std::ostream& operator<<(std::ostream& os, ServiceAccount const& rhs);
 

@@ -77,18 +77,20 @@ std::ostream& operator<<(std::ostream& os, BucketRetentionPolicy const& rhs) {
             << ", locked=" << rhs.is_locked << "}";
 }
 
-bool BucketMetadata::operator==(BucketMetadata const& rhs) const {
-  return static_cast<internal::CommonMetadata<BucketMetadata> const&>(*this) ==
-             rhs and
-         acl_ == rhs.acl_ && billing_ == rhs.billing_ && cors_ == rhs.cors_ &&
-         default_event_based_hold_ == rhs.default_event_based_hold_ &&
-         default_acl_ == rhs.default_acl_ && encryption_ == rhs.encryption_ &&
-         iam_configuration_ == rhs.iam_configuration_ &&
-         project_number_ == rhs.project_number_ &&
-         lifecycle_ == rhs.lifecycle_ && location_ == rhs.location_ &&
-         logging_ == rhs.logging_ && labels_ == rhs.labels_ &&
-         retention_policy_ == rhs.retention_policy_ &&
-         versioning_ == rhs.versioning_ && website_ == rhs.website_;
+bool operator==(BucketMetadata const& lhs, BucketMetadata const& rhs) {
+  return static_cast<internal::CommonMetadata<BucketMetadata> const&>(lhs) ==
+             rhs &&
+         lhs.acl_ == rhs.acl_ && lhs.billing_ == rhs.billing_ &&
+         lhs.cors_ == rhs.cors_ &&
+         lhs.default_event_based_hold_ == rhs.default_event_based_hold_ &&
+         lhs.default_acl_ == rhs.default_acl_ &&
+         lhs.encryption_ == rhs.encryption_ &&
+         lhs.iam_configuration_ == rhs.iam_configuration_ &&
+         lhs.project_number_ == rhs.project_number_ &&
+         lhs.lifecycle_ == rhs.lifecycle_ && lhs.location_ == rhs.location_ &&
+         lhs.logging_ == rhs.logging_ && lhs.labels_ == rhs.labels_ &&
+         lhs.retention_policy_ == rhs.retention_policy_ &&
+         lhs.versioning_ == rhs.versioning_ && lhs.website_ == rhs.website_;
 }
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {

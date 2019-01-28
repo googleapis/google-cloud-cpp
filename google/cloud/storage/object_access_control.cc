@@ -20,11 +20,12 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-bool ObjectAccessControl::operator==(ObjectAccessControl const& rhs) const {
+bool operator==(ObjectAccessControl const& lhs,
+                ObjectAccessControl const& rhs) {
   // Start with id, generation, object, bucket, etag because they should fail
   // early, then alphabetical for readability.
-  return object_ == rhs.object_ && generation_ == rhs.generation_ &&
-         *static_cast<internal::AccessControlCommon const*>(this) == rhs;
+  return lhs.object_ == rhs.object_ && lhs.generation_ == rhs.generation_ &&
+         *static_cast<internal::AccessControlCommon const*>(&lhs) == rhs;
 }
 
 std::ostream& operator<<(std::ostream& os, ObjectAccessControl const& rhs) {

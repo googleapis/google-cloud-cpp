@@ -23,26 +23,26 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 
-bool ObjectMetadata::operator==(ObjectMetadata const& rhs) const {
-  return static_cast<internal::CommonMetadata<ObjectMetadata> const&>(*this) ==
-             rhs and
-         acl_ == rhs.acl_ && bucket_ == rhs.bucket_ &&
-         cache_control_ == rhs.cache_control_ &&
-         component_count_ == rhs.component_count_ &&
-         content_disposition_ == rhs.content_disposition_ &&
-         content_encoding_ == rhs.content_encoding_ &&
-         content_language_ == rhs.content_language_ &&
-         content_type_ == rhs.content_type_ && crc32c_ == rhs.crc32c_ &&
-         customer_encryption_ == customer_encryption_ &&
-         event_based_hold_ == rhs.event_based_hold_ &&
-         generation_ == rhs.generation_ && kms_key_name_ == rhs.kms_key_name_ &&
-         md5_hash_ == rhs.md5_hash_ && media_link_ == rhs.media_link_ &&
-         metadata_ == rhs.metadata_ &&
-         retention_expiration_time_ == rhs.retention_expiration_time_ &&
-         temporary_hold_ == rhs.temporary_hold_ &&
-         time_deleted_ == rhs.time_deleted_ &&
-         time_storage_class_updated_ == rhs.time_storage_class_updated_ &&
-         size_ == rhs.size_;
+bool operator==(ObjectMetadata const& lhs, ObjectMetadata const& rhs) {
+  return static_cast<internal::CommonMetadata<ObjectMetadata> const&>(lhs) ==
+             rhs &&
+         lhs.acl_ == rhs.acl_ && lhs.bucket_ == rhs.bucket_ &&
+         lhs.cache_control_ == rhs.cache_control_ &&
+         lhs.component_count_ == rhs.component_count_ &&
+         lhs.content_disposition_ == rhs.content_disposition_ &&
+         lhs.content_encoding_ == rhs.content_encoding_ &&
+         lhs.content_language_ == rhs.content_language_ &&
+         lhs.content_type_ == rhs.content_type_ && lhs.crc32c_ == rhs.crc32c_ &&
+         lhs.customer_encryption_ == rhs.customer_encryption_ &&
+         lhs.event_based_hold_ == rhs.event_based_hold_ &&
+         lhs.generation_ == rhs.generation_ && lhs.kms_key_name_ == rhs.kms_key_name_ &&
+         lhs.md5_hash_ == rhs.md5_hash_ && lhs.media_link_ == rhs.media_link_ &&
+         lhs.metadata_ == rhs.metadata_ &&
+         lhs.retention_expiration_time_ == rhs.retention_expiration_time_ &&
+         lhs.temporary_hold_ == rhs.temporary_hold_ &&
+         lhs.time_deleted_ == rhs.time_deleted_ &&
+         lhs.time_storage_class_updated_ == rhs.time_storage_class_updated_ &&
+         lhs.size_ == rhs.size_;
 }
 
 std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {

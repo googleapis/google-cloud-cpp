@@ -30,7 +30,7 @@ struct BucketAccessControlParser;
 /**
  * Wraps the bucketAccessControl resource in Google Cloud Storage.
  *
- * bucketAccessControl describes the access to a bucket for a single entity,
+ * BucketAccessControl describes the access to a bucket for a single entity,
  * where the entity might be a user, group, or other role.
  *
  * @see
@@ -72,9 +72,11 @@ class BucketAccessControl : private internal::AccessControlCommon {
 
   using AccessControlCommon::self_link;
 
-  bool operator==(BucketAccessControl const& rhs) const;
-  bool operator!=(BucketAccessControl const& rhs) const {
-    return !(*this == rhs);
+  friend bool operator==(BucketAccessControl const& lhs,
+                         BucketAccessControl const& rhs);
+  friend bool operator!=(BucketAccessControl const& lhs,
+                         BucketAccessControl const& rhs) {
+    return !(lhs == rhs);
   }
 
   friend struct internal::BucketAccessControlParser;
