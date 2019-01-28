@@ -67,6 +67,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">google::cloud::storage::v0::LifecycleRule Class Reference</div>  </div>
@@ -101,10 +102,6 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:af5a537e2e8ae1d284fe8ea324d84bad3"><td class="memItemLeft" align="right" valign="top">static StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html">LifecycleRule</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#af5a537e2e8ae1d284fe8ea324d84bad3">ParseFromJson</a> (internal::nl::json const &amp;json)</td></tr>
-<tr class="separator:af5a537e2e8ae1d284fe8ea324d84bad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e979e3874c5a001c0c63680f121a2b1"><td class="memItemLeft" align="right" valign="top">static StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html">LifecycleRule</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a7e979e3874c5a001c0c63680f121a2b1">ParseFromString</a> (std::string const &amp;text)</td></tr>
-<tr class="separator:a7e979e3874c5a001c0c63680f121a2b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a304a74b58658f9c5b8ac77cff82495"><td class="memTemplParams" colspan="2">template&lt;typename... Condition&gt; </td></tr>
 <tr class="memitem:a5a304a74b58658f9c5b8ac77cff82495"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html">LifecycleRuleCondition</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a5a304a74b58658f9c5b8ac77cff82495">ConditionConjunction</a> (Condition &amp;&amp;... <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#ace63280af791b10ee1fe4cc745925b0f">condition</a>)</td></tr>
 <tr class="memdesc:a5a304a74b58658f9c5b8ac77cff82495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Combines multiple <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html" title="Defines objects to read, create, and modify Object Lifecycle Rules. ">LifecycleRule</a> conditions using conjunction.  <a href="#a5a304a74b58658f9c5b8ac77cff82495">More...</a><br /></td></tr>
@@ -156,6 +153,11 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:ac62aaf2f913bc6e345ea6723ec44f169"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7aef17f40367ef52de7f3fc52f2efa19"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html">LifecycleRuleCondition</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#a7aef17f40367ef52de7f3fc52f2efa19">NumNewerVersions</a> (std::int32_t days)</td></tr>
 <tr class="separator:a7aef17f40367ef52de7f3fc52f2efa19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:ac2542e2f2d1fb3719cb5ebe139969d0d"><td class="memItemLeft" align="right" valign="top">struct&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#ac2542e2f2d1fb3719cb5ebe139969d0d">internal::LifecycleRuleParser</a></td></tr>
+<tr class="separator:ac2542e2f2d1fb3719cb5ebe139969d0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Defines objects to read, create, and modify Object Lifecycle Rules. </p>
@@ -851,58 +853,6 @@ template&lt;typename Iterator &gt; </div>
 
 </div>
 </div>
-<a id="af5a537e2e8ae1d284fe8ea324d84bad3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af5a537e2e8ae1d284fe8ea324d84bad3">&#9670;&nbsp;</a></span>ParseFromJson()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html">LifecycleRule</a> &gt; google::cloud::storage::v0::LifecycleRule::ParseFromJson </td>
-          <td>(</td>
-          <td class="paramtype">internal::nl::json const &amp;&#160;</td>
-          <td class="paramname"><em>json</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7e979e3874c5a001c0c63680f121a2b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e979e3874c5a001c0c63680f121a2b1">&#9670;&nbsp;</a></span>ParseFromString()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html">LifecycleRule</a> &gt; google::cloud::storage::v0::LifecycleRule::ParseFromString </td>
-          <td>(</td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>text</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="ac9325344a3f1887f4c2e0442612b81d5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac9325344a3f1887f4c2e0442612b81d5">&#9670;&nbsp;</a></span>SetStorageClass()</h2>
 
@@ -1073,6 +1023,29 @@ template&lt;typename Iterator &gt; </div>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="ac2542e2f2d1fb3719cb5ebe139969d0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2542e2f2d1fb3719cb5ebe139969d0d">&#9670;&nbsp;</a></span>internal::LifecycleRuleParser</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend struct internal::LifecycleRuleParser</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

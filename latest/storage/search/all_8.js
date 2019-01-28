@@ -1,6 +1,7 @@
 var searchData=
 [
   ['bucketaccesscontrolparser',['BucketAccessControlParser',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html#a4c4d435dcf5bf90eb3b3b0be5b32d508',1,'google::cloud::storage::v0::BucketAccessControl']]],
+  ['bucketmetadataparser',['BucketMetadataParser',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a38710c39b6f97fa11ec2ee0bce43317d',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['iam_5fconfiguration',['iam_configuration',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a2f4f6a1b97cb52e4869c3756a38f7d86',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['iam_5fconfiguration_5fas_5foptional',['iam_configuration_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#aa64b0e9f59786025dc68e96b4702eafb',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['id',['id',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#aa92a5069c76822c1f65eac63b60e7113',1,'google::cloud::storage::v0::NotificationMetadata']]],
@@ -30,6 +31,7 @@ var searchData=
   ['iterate',['Iterate',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectRewriter.html#acbe3b00868463055a21d754148235e83',1,'google::cloud::storage::v0::ObjectRewriter']]],
   ['iterator',['iterator',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#ab31328af451b194cb24b08844579daac',1,'google::cloud::storage::v0::ListBucketsReader::iterator()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsReader.html#acebd53d13f76ad782c4c76a34ff0f369',1,'google::cloud::storage::v0::ListObjectsReader::iterator()']]],
   ['iterator_5fcategory',['iterator_category',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html#a313d4a988acdf819bf3f98cd057bc86d',1,'google::cloud::storage::v0::ListBucketsIterator::iterator_category()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsIterator.html#a0afd613517e9e8821e655f730184c800',1,'google::cloud::storage::v0::ListObjectsIterator::iterator_category()']]],
+  ['lifecycleruleparser',['LifecycleRuleParser',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#ac2542e2f2d1fb3719cb5ebe139969d0d',1,'google::cloud::storage::v0::LifecycleRule']]],
   ['notificationmetadataparser',['NotificationMetadataParser',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a2f10a1418d7d726bccdf8b1ed628075e',1,'google::cloud::storage::v0::NotificationMetadata']]],
   ['objectaccesscontrolparser',['ObjectAccessControlParser',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectAccessControl.html#a1d88d3c38320afcedc762c11a7b7cd0e',1,'google::cloud::storage::v0::ObjectAccessControl']]],
   ['objectmetadataparser',['ObjectMetadataParser',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#ab88ef8c136081907705d9063118d470d',1,'google::cloud::storage::v0::ObjectMetadata']]]
