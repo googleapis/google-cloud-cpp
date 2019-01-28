@@ -43,7 +43,7 @@ BucketMetadata CreateElement(int index) {
       {"selfLink", link},
       {"kind", "storage#bucket"},
   };
-  return BucketMetadata::ParseFromJson(metadata).value();
+  return internal::BucketMetadataParser::FromJson(metadata).value();
 }
 
 TEST(ListBucketsReaderTest, Basic) {

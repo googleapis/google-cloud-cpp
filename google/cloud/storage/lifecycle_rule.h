@@ -28,6 +28,10 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+struct LifecycleRuleParser;
+}  // namespace internal
+
 /// Implement a wrapper for Lifecycle Rules actions.
 struct LifecycleRuleAction {
   std::string type;
@@ -129,9 +133,6 @@ class LifecycleRule {
   explicit LifecycleRule(LifecycleRuleCondition condition,
                          LifecycleRuleAction action)
       : action_(std::move(action)), condition_(std::move(condition)) {}
-
-  static StatusOr<LifecycleRule> ParseFromJson(internal::nl::json const& json);
-  static StatusOr<LifecycleRule> ParseFromString(std::string const& text);
 
   LifecycleRuleAction const& action() const { return action_; }
   LifecycleRuleCondition const& condition() const { return condition_; }
@@ -295,6 +296,8 @@ class LifecycleRule {
   }
 
  private:
+  friend struct internal::LifecycleRuleParser;
+
   LifecycleRule() = default;
 
   static void MergeConditions(LifecycleRuleCondition& result,

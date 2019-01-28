@@ -67,7 +67,8 @@ TEST_F(LoggingClientTest, GetBucketMetadata) {
 
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, GetBucketMetadata(_))
-      .WillOnce(Return(BucketMetadata::ParseFromString(text).value()));
+      .WillOnce(
+          Return(internal::BucketMetadataParser::FromString(text).value()));
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.

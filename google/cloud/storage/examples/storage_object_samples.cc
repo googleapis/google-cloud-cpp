@@ -174,7 +174,7 @@ void CopyObject(google::cloud::storage::Client client, int& argc,
   auto source_object_name = ConsumeArg(argc, argv);
   auto destination_bucket_name = ConsumeArg(argc, argv);
   auto destination_object_name = ConsumeArg(argc, argv);
-  //! [copy object]
+  //! [copy object] [START storage_copy_file]
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
   [](gcs::Client client, std::string source_bucket_name,
@@ -197,7 +197,7 @@ void CopyObject(google::cloud::storage::Client client, int& argc,
               << ".\nThe full metadata after the copy is: " << *new_copy_meta
               << std::endl;
   }
-  //! [copy object]
+  //! [copy object] [END storage_copy_file]
   (std::move(client), source_bucket_name, source_object_name,
    destination_bucket_name, destination_object_name);
 }
@@ -1287,7 +1287,7 @@ void CreateGetSignedUrl(google::cloud::storage::Client client, int& argc,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
-  //! [sign url] [START storage_sign_url]
+  //! [sign url] [START storage_generate_signed_url]
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
@@ -1304,7 +1304,7 @@ void CreateGetSignedUrl(google::cloud::storage::Client client, int& argc,
               << "You can use this URL with any user agent, for example:\n"
               << "curl '" << *signed_url << "'" << std::endl;
   }
-  //! [sign url] [END storage_sign_url]
+  //! [sign url] [END storage_generate_signed_url]
   (std::move(client), bucket_name, object_name);
 }
 

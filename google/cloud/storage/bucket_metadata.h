@@ -30,6 +30,10 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+struct BucketMetadataParser;
+}  // namespace internal
+
 /**
  * The billing configuration for a Bucket.
  *
@@ -487,11 +491,6 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
  public:
   BucketMetadata() : project_number_(0) {}
 
-  static StatusOr<BucketMetadata> ParseFromJson(internal::nl::json const& json);
-  static StatusOr<BucketMetadata> ParseFromString(std::string const& payload);
-
-  std::string ToJsonString() const;
-
   // Please keep these in alphabetical order, that make it easier to verify we
   // have actually implemented all of them.
   //@{
@@ -831,6 +830,8 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   bool operator!=(BucketMetadata const& rhs) const { return !(*this == rhs); }
 
  private:
+  friend struct internal::BucketMetadataParser;
+
   friend std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);
   // Keep the fields in alphabetical order.
   std::vector<BucketAccessControl> acl_;

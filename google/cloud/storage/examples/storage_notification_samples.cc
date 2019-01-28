@@ -77,7 +77,7 @@ void CreateNotification(google::cloud::storage::Client client, int& argc,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto topic_name = ConsumeArg(argc, argv);
-  //! [create notification] [START storage_create_pubsub_bucket_notification]
+  //! [create notification] [START storage_create_bucket_notifications]
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string topic_name) {
@@ -104,7 +104,7 @@ void CreateNotification(google::cloud::storage::Client client, int& argc,
     std::cout << "Full details for the notification:\n"
               << *notification << std::endl;
   }
-  //! [create notification] [END storage_create_pubsub_bucket_notification]
+  //! [create notification] [END storage_create_bucket_notifications]
   (std::move(client), bucket_name, topic_name);
 }
 
@@ -149,7 +149,7 @@ void DeleteNotification(google::cloud::storage::Client client, int& argc,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto notification_id = ConsumeArg(argc, argv);
-  //! [delete notification] [START storage_delete_pubsub_bucket_notification]
+  //! [delete notification] [START storage_delete_bucket_notification]
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string notification_id) {
@@ -164,7 +164,7 @@ void DeleteNotification(google::cloud::storage::Client client, int& argc,
     std::cout << "Successfully deleted notification " << notification_id
               << " on bucket " << bucket_name << std::endl;
   }
-  //! [delete notification] [END storage_delete_pubsub_bucket_notification]
+  //! [delete notification] [END storage_delete_bucket_notification]
   (std::move(client), bucket_name, notification_id);
 }
 

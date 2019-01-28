@@ -232,7 +232,7 @@ void PatchBucketStorageClass(google::cloud::storage::Client client, int& argc,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto storage_class = ConsumeArg(argc, argv);
-  //! [patch bucket storage class]
+  //! [patch bucket storage class] [START storage_change_default_storage_class]
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string storage_class) {
@@ -256,7 +256,7 @@ void PatchBucketStorageClass(google::cloud::storage::Client client, int& argc,
               << " has been patched to " << patched->storage_class() << "."
               << "\nFull metadata: " << *patched << std::endl;
   }
-  //! [patch bucket storage class]
+  //! [patch bucket storage class] [END storage_change_default_storage_class]
   (std::move(client), bucket_name, storage_class);
 }
 
@@ -295,7 +295,7 @@ void AddBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto key_name = ConsumeArg(argc, argv);
-  //! [add bucket kms key] [START storage_bucket_set_default_kms_key]
+  //! [add bucket kms key] [START storage_set_bucket_default_kms_key]
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string key_name) {
@@ -320,7 +320,7 @@ void AddBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
               << updated_metadata->encryption().default_kms_key_name << "."
               << "\nFull metadata: " << *updated_metadata << std::endl;
   }
-  //! [add bucket label] [END storage_bucket_set_default_kms_key]
+  //! [add bucket kms key] [END storage_set_bucket_default_kms_key]
   (std::move(client), bucket_name, key_name);
 }
 

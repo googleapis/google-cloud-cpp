@@ -334,7 +334,7 @@ StatusOr<BucketMetadata> CurlClient::CreateBucket(
   }
   builder.AddQueryParameter("project", request.project_id());
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<BucketMetadata>(
+  return CheckedFromString<BucketMetadataParser>(
       builder.BuildRequest().MakeRequest(request.json_payload()));
 }
 
@@ -347,7 +347,7 @@ StatusOr<BucketMetadata> CurlClient::GetBucketMetadata(
   if (!status.ok()) {
     return status;
   }
-  return ParseFromString<BucketMetadata>(
+  return CheckedFromString<BucketMetadataParser>(
       builder.BuildRequest().MakeRequest(std::string{}));
 }
 
@@ -373,7 +373,7 @@ StatusOr<BucketMetadata> CurlClient::UpdateBucket(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<BucketMetadata>(
+  return CheckedFromString<BucketMetadataParser>(
       builder.BuildRequest().MakeRequest(request.json_payload()));
 }
 
@@ -387,7 +387,7 @@ StatusOr<BucketMetadata> CurlClient::PatchBucket(
     return status;
   }
   builder.AddHeader("Content-Type: application/json");
-  return ParseFromString<BucketMetadata>(
+  return CheckedFromString<BucketMetadataParser>(
       builder.BuildRequest().MakeRequest(request.payload()));
 }
 
