@@ -223,8 +223,10 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
 
   using CommonMetadata::updated;
 
-  bool operator==(ObjectMetadata const& rhs) const;
-  bool operator!=(ObjectMetadata const& rhs) const { return !(*this == rhs); }
+  friend bool operator==(ObjectMetadata const& lhs, ObjectMetadata const& rhs);
+  friend bool operator!=(ObjectMetadata const& lhs, ObjectMetadata const& rhs) {
+    return !(lhs == rhs);
+  }
 
  private:
   friend struct internal::ObjectMetadataParser;

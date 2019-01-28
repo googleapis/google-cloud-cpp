@@ -78,9 +78,11 @@ class ObjectAccessControl : private internal::AccessControlCommon {
   std::int64_t generation() const { return generation_; }
   std::string const& object() const { return object_; }
 
-  bool operator==(ObjectAccessControl const& rhs) const;
-  bool operator!=(ObjectAccessControl const& rhs) const {
-    return !(*this == rhs);
+  friend bool operator==(ObjectAccessControl const& lhs,
+                         ObjectAccessControl const& rhs);
+  friend bool operator!=(ObjectAccessControl const& lhs,
+                         ObjectAccessControl const& rhs) {
+    return !(lhs == rhs);
   }
 
  private:

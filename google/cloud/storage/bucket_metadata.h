@@ -826,8 +826,10 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   }
   //@}
 
-  bool operator==(BucketMetadata const& rhs) const;
-  bool operator!=(BucketMetadata const& rhs) const { return !(*this == rhs); }
+  friend bool operator==(BucketMetadata const& lhs, BucketMetadata const& rhs);
+  friend bool operator!=(BucketMetadata const& lhs, BucketMetadata const& rhs) {
+    return !(lhs == rhs);
+  }
 
  private:
   friend struct internal::BucketMetadataParser;

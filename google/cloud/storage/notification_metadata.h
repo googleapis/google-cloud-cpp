@@ -137,38 +137,6 @@ class NotificationMetadata {
     return *this;
   }
 
-  bool operator==(NotificationMetadata const& rhs) const {
-    return std::tie(id_, custom_attributes_, etag_, event_types_, kind_,
-                    object_name_prefix_, payload_format_, self_link_, topic_) ==
-           std::tie(rhs.id_, rhs.custom_attributes_, rhs.etag_,
-                    rhs.event_types_, rhs.kind_, rhs.object_name_prefix_,
-                    rhs.payload_format_, rhs.self_link_, rhs.topic_);
-  }
-
-  bool operator<(NotificationMetadata const& rhs) const {
-    return std::tie(id_, custom_attributes_, etag_, event_types_, kind_,
-                    object_name_prefix_, payload_format_, self_link_, topic_) <
-           std::tie(rhs.id_, rhs.custom_attributes_, rhs.etag_,
-                    rhs.event_types_, rhs.kind_, rhs.object_name_prefix_,
-                    rhs.payload_format_, rhs.self_link_, rhs.topic_);
-  }
-
-  bool operator!=(NotificationMetadata const& rhs) const {
-    return std::rel_ops::operator!=(*this, rhs);
-  }
-
-  bool operator>(NotificationMetadata const& rhs) const {
-    return std::rel_ops::operator>(*this, rhs);
-  }
-
-  bool operator<=(NotificationMetadata const& rhs) const {
-    return std::rel_ops::operator<=(*this, rhs);
-  }
-
-  bool operator>=(NotificationMetadata const& rhs) const {
-    return std::rel_ops::operator>=(*this, rhs);
-  }
-
  private:
   friend struct internal::NotificationMetadataParser;
   friend std::ostream& operator<<(std::ostream& os,
@@ -185,6 +153,46 @@ class NotificationMetadata {
   std::string self_link_;
   std::string topic_;
 };
+
+inline bool operator==(NotificationMetadata const& lhs,
+                       NotificationMetadata const& rhs) {
+  return std::tie(lhs.id(), lhs.custom_attributes(), lhs.etag(),
+                  lhs.event_types(), lhs.kind(), lhs.object_name_prefix(),
+                  lhs.payload_format(), lhs.self_link(), lhs.topic()) ==
+         std::tie(rhs.id(), rhs.custom_attributes(), rhs.etag(),
+                  rhs.event_types(), rhs.kind(), rhs.object_name_prefix(),
+                  rhs.payload_format(), rhs.self_link(), rhs.topic());
+}
+
+inline bool operator<(NotificationMetadata const& lhs,
+                      NotificationMetadata const& rhs) {
+  return std::tie(lhs.id(), lhs.custom_attributes(), lhs.etag(),
+                  lhs.event_types(), lhs.kind(), lhs.object_name_prefix(),
+                  lhs.payload_format(), lhs.self_link(), lhs.topic()) <
+         std::tie(rhs.id(), rhs.custom_attributes(), rhs.etag(),
+                  rhs.event_types(), rhs.kind(), rhs.object_name_prefix(),
+                  rhs.payload_format(), rhs.self_link(), rhs.topic());
+}
+
+inline bool operator!=(NotificationMetadata const& lhs,
+                       NotificationMetadata const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(NotificationMetadata const& lhs,
+                      NotificationMetadata const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(NotificationMetadata const& lhs,
+                       NotificationMetadata const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(NotificationMetadata const& lhs,
+                       NotificationMetadata const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
 
 std::ostream& operator<<(std::ostream& os, NotificationMetadata const& rhs);
 

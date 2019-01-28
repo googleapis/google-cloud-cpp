@@ -19,8 +19,9 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-bool BucketAccessControl::operator==(BucketAccessControl const& rhs) const {
-  return *static_cast<internal::AccessControlCommon const*>(this) == rhs;
+bool operator==(BucketAccessControl const& lhs,
+                BucketAccessControl const& rhs) {
+  return *static_cast<internal::AccessControlCommon const*>(&lhs) == rhs;
 }
 
 std::ostream& operator<<(std::ostream& os, BucketAccessControl const& rhs) {
