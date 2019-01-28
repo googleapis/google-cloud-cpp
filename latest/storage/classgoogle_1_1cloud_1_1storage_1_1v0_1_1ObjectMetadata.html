@@ -142,10 +142,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a6941888b59bab3ba8ba476bba4bfebdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4191088c6f9a5704bc13d54c2fc6a8e"><td class="memItemLeft" align="right" valign="top">std::chrono::system_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#ab4191088c6f9a5704bc13d54c2fc6a8e">time_storage_class_updated</a> () const</td></tr>
 <tr class="separator:ab4191088c6f9a5704bc13d54c2fc6a8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37624ef992040cb954e1fa7fd245b3d1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a37624ef992040cb954e1fa7fd245b3d1">operator==</a> (<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> const &amp;rhs) const</td></tr>
-<tr class="separator:a37624ef992040cb954e1fa7fd245b3d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4fb4bffa7513e061a7fb111a6a5c396"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#ac4fb4bffa7513e061a7fb111a6a5c396">operator!=</a> (<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> const &amp;rhs) const</td></tr>
-<tr class="separator:ac4fb4bffa7513e061a7fb111a6a5c396"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Accessors and modifiers to the `metadata` labels.</div></td></tr>
 <tr class="memitem:a41fcb258ecc7e898420fcdaf5cdd3a80"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a41fcb258ecc7e898420fcdaf5cdd3a80">has_metadata</a> (std::string const &amp;key) const</td></tr>
 <tr class="separator:a41fcb258ecc7e898420fcdaf5cdd3a80"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,6 +162,10 @@ Public Member Functions</h2></td></tr>
 Friends</h2></td></tr>
 <tr class="memitem:ab88ef8c136081907705d9063118d470d"><td class="memItemLeft" align="right" valign="top">struct&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#ab88ef8c136081907705d9063118d470d">internal::ObjectMetadataParser</a></td></tr>
 <tr class="separator:ab88ef8c136081907705d9063118d470d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0290518fa8f21c46558939db2c6ca642"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a0290518fa8f21c46558939db2c6ca642">operator==</a> (<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> const &amp;lhs, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> const &amp;rhs)</td></tr>
+<tr class="separator:a0290518fa8f21c46558939db2c6ca642"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00603d1d91b836e939eba781e9a135e4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a00603d1d91b836e939eba781e9a135e4">operator!=</a> (<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> const &amp;lhs, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> const &amp;rhs)</td></tr>
+<tr class="separator:a00603d1d91b836e939eba781e9a135e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d65ad17192085650f535671a3c65f97"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#a4d65ad17192085650f535671a3c65f97">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> const &amp;rhs)</td></tr>
 <tr class="separator:a4d65ad17192085650f535671a3c65f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -753,50 +753,6 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="ac4fb4bffa7513e061a7fb111a6a5c396"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4fb4bffa7513e061a7fb111a6a5c396">&#9670;&nbsp;</a></span>operator!=()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool google::cloud::storage::v0::ObjectMetadata::operator!= </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> const &amp;&#160;</td>
-          <td class="paramname"><em>rhs</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a37624ef992040cb954e1fa7fd245b3d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37624ef992040cb954e1fa7fd245b3d1">&#9670;&nbsp;</a></span>operator==()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool google::cloud::storage::v0::ObjectMetadata::operator== </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> const &amp;&#160;</td>
-          <td class="paramname"><em>rhs</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a371cea70f882b5e46c0f84da32a84f0a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a371cea70f882b5e46c0f84da32a84f0a">&#9670;&nbsp;</a></span>retention_expiration_time()</h2>
 
@@ -1191,6 +1147,42 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a00603d1d91b836e939eba781e9a135e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00603d1d91b836e939eba781e9a135e4">&#9670;&nbsp;</a></span>operator!=</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool operator!= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lhs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> const &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a4d65ad17192085650f535671a3c65f97"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4d65ad17192085650f535671a3c65f97">&#9670;&nbsp;</a></span>operator<<</h2>
 
@@ -1227,9 +1219,44 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<a id="a0290518fa8f21c46558939db2c6ca642"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0290518fa8f21c46558939db2c6ca642">&#9670;&nbsp;</a></span>operator==</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool operator== </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lhs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a> const &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="object__metadata_8h_source.html">object_metadata.h</a></li>
-<li><a class="el" href="object__metadata_8cc.html">object_metadata.cc</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
