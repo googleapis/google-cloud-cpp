@@ -193,7 +193,7 @@ TEST_P(AsyncRetryUnaryRpcAndPollResEndToEnd, EndToEnd) {
   EXPECT_TRUE(cq_impl->empty());
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     EndToEnd, AsyncRetryUnaryRpcAndPollResEndToEnd,
     ::testing::Values(
         // Everything succeeds immediately.
@@ -412,7 +412,7 @@ TEST_P(AsyncRetryUnaryRpcAndPollResCancel, Cancellations) {
   EXPECT_TRUE(cq_impl->empty());
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     CancelTest, AsyncRetryUnaryRpcAndPollResCancel,
     ::testing::Values(
         // Cancel during AsyncCreateCluster yields the request returning

@@ -178,7 +178,7 @@ TEST_P(NoexAsyncLongrunningImmediatelyFinished, ImmeditalyFinished) {
   EXPECT_TRUE(cq_impl->empty());
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     ImmediateFinished, NoexAsyncLongrunningImmediatelyFinished,
     ::testing::Values(
         // The long running operation was successful.
@@ -302,7 +302,7 @@ TEST_P(NoexAsyncLongrunningOpRetryTest, OneRetry) {
   EXPECT_TRUE(cq_impl->empty());
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     OneRetry, NoexAsyncLongrunningOpRetryTest,
     ::testing::Values(
         // First RPC returns an OK status but indicates

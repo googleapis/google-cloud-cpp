@@ -215,7 +215,7 @@ TEST_P(NoexTableAsyncRetryOpCancelInOpTest, CancelInOperation) {
   EXPECT_TRUE(user_op_completed);
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     CancelInOperation, NoexTableAsyncRetryOpCancelInOpTest,
     ::testing::Values(
         // Simulate Cancel being called when an underlying operation is ongoing.
@@ -405,7 +405,7 @@ TEST_P(NoexTableAsyncRetryOpCancelInTimerTest, TestCancelInTimer) {
   EXPECT_TRUE(user_op_completed);
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     CancelInTimer, NoexTableAsyncRetryOpCancelInTimerTest,
     ::testing::Values(
         // Simulate Cancel being called when sleeping in a timer.
