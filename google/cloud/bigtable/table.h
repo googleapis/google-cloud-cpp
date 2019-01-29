@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/table.h"
+#include "google/cloud/future.h"
 
 namespace google {
 namespace cloud {
@@ -222,6 +223,23 @@ class Table {
    * @snippet data_snippets.cc bulk apply
    */
   void BulkApply(BulkMutation&& mut);
+
+  /**
+   * Makes asyncronous attempts to apply mutations to multiple rows.
+   *
+   * @param mut the mutations, note that this function takes
+   *     ownership (and then discards) the data in the mutation. In general, a
+   *     `BulkMutation` can modify multiple rows, and the modifications for each
+   *     row can change (or create) multiple cells, across different columns and
+   *     column families.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   *
+   * @par Example
+   * @snippet data_async_snippets.cc bulk async-bulk-apply
+   */
+  future<void> AsyncBulkApply(BulkMutation&& mut, CompletionQueue& cq);
 
   /**
    * Reads a set of rows from the table.

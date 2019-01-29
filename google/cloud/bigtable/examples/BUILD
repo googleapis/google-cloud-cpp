@@ -75,3 +75,9 @@ cc_binary(
     srcs = ["data_snippets.cc"],
     deps = ["//google/cloud/bigtable:bigtable_client"],
 )
+
+cc_binary(
+    name = "data_async_snippets",
+    srcs = ["data_async_snippets.cc"],
+    deps = ["//google/cloud/bigtable:bigtable_client"],
+)

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/table.h"
+#include "google/cloud/bigtable/internal/async_future_from_callback.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include <thread>
@@ -63,6 +64,26 @@ void Table::BulkApply(BulkMutation&& mut) {
   if (!status.ok()) {
     ReportPermanentFailures(status.error_message().c_str(), status, failures);
   }
+}
+
+future<void> Table::AsyncBulkApply(BulkMutation&& mut, CompletionQueue& cq) {
+  promise<std::vector<FailedMutation>> pfm;
+  future<std::vector<FailedMutation>> resultfm = pfm.get_future();
+  impl_.AsyncBulkApply(
+      cq,
+      internal::MakeAsyncFutureFromCallback(std::move(pfm), "AsyncBulkApply"),
+      std::move(mut));
+
+  auto final = resultfm.then([](future<std::vector<FailedMutation>> f) {
+    auto failures = f.get();
+
+    if (!failures.empty()) {
+      grpc::Status status = failures.front().status();
+      ReportPermanentFailures(status.error_message().c_str(), status, failures);
+    }
+  });
+
+  return final;
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {
