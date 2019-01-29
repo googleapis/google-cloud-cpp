@@ -1154,6 +1154,10 @@ class Client {
    * `ObjectRewriter`, which the application can use to initiate the copy and to
    * iterate if the copy requires more than one call to complete.
    *
+   * @note Application developers should be aware that rewriting large objects
+   *     may take multiple hours. Multiple calls to `ObjectRewriter::Iterate()`
+   *     may be required to completely rewrite an object.
+   *
    * @param source_bucket_name the name of the bucket containing the source
    *     object.
    * @param source_object_name the name of the source object.
@@ -1198,6 +1202,10 @@ class Client {
    * applications should consider checkpointing the rewrite token (accessible in
    * the `ObjectRewriter`) and restarting the operation in the event the program
    * is terminated.
+   *
+   * @note Application developers should be aware that rewriting large objects
+   *     may take multiple hours. Multiple calls to `ObjectRewriter::Iterate()`
+   *     may be required to completely rewrite an object.
    *
    * @param source_bucket_name the name of the bucket containing the source
    *     object.
@@ -1281,7 +1289,6 @@ class Client {
    *
    * @par Example: using rewrite object to rename an object
    * @snippet storage_object_samples.cc rename object
-   *
    */
   template <typename... Options>
   StatusOr<ObjectMetadata> RewriteObjectBlocking(
@@ -1323,9 +1330,13 @@ class Client {
    * @see
    * https://cloud.google.com/storage/docs/access-control/lists#defaultbuckets
    *     for more details about the default owners for a bucket.
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameters.
+   * @see https://cloud.google.com/storage/docs/access-control/lists#permissions
+   *     for the format of the @p role parameters.
    */
   /**
-   * Retrieves the list of BucketAccessControls for a bucket.
+   * Retrieves the list of `BucketAccessControl` items for a bucket.
    *
    * @param bucket_name the name of the bucket.
    * @param options a list of optional query parameters and/or request headers.
@@ -1364,6 +1375,11 @@ class Client {
    *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc create bucket acl
+   *
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameter.
+   * @see https://cloud.google.com/storage/docs/access-control/lists#permissions
+   *     for the format of the @p role parameter.
    */
   template <typename... Options>
   StatusOr<BucketAccessControl> CreateBucketAcl(std::string const& bucket_name,
@@ -1389,6 +1405,9 @@ class Client {
    *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc delete bucket acl
+   *
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameter.
    */
   template <typename... Options>
   StatusOr<void> DeleteBucketAcl(std::string const& bucket_name,
@@ -1412,6 +1431,9 @@ class Client {
    *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc get bucket acl
+   *
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameter.
    */
   template <typename... Options>
   StatusOr<BucketAccessControl> GetBucketAcl(std::string const& bucket_name,
@@ -1424,6 +1446,13 @@ class Client {
 
   /**
    * Updates the value of an existing bucket ACL.
+   *
+   * @note
+   * For changing BucketAccessControl the Patch and Update APIs basically offer
+   * the same functionality. The only field that can be modified by either API
+   * is `role`, and it may only be set to a new value (it cannot be removed).
+   * The API is offered for consistency with the other resource types where
+   * Patch and Update APIs have different semantics.
    *
    * @param bucket_name the name of the bucket.
    * @param acl the new ACL value. Note that only the writable values of the ACL
@@ -1440,6 +1469,10 @@ class Client {
    *
    * @see https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls
    *     for additional details on what fields are writeable.
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameter.
+   * @see https://cloud.google.com/storage/docs/access-control/lists#permissions
+   *     for the format of the @p role parameter.
    */
   template <typename... Options>
   StatusOr<BucketAccessControl> UpdateBucketAcl(std::string const& bucket_name,
@@ -1457,7 +1490,7 @@ class Client {
    * Computes the delta between a previous value for an BucketAccessControl and
    * the new value for an BucketAccessControl and apply that delta.
    *
-   * @par Notes
+   * @note
    * For changing BucketAccessControl the Patch and Update APIs basically offer
    * the same functionality. The only field that can be modified by either API
    * is `role`, and it may only be set to a new value (it cannot be removed).
@@ -1483,6 +1516,8 @@ class Client {
    *
    * @see https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls
    *     for additional details on what fields are writeable.
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameters.
    */
   template <typename... Options>
   StatusOr<BucketAccessControl> PatchBucketAcl(
@@ -1501,7 +1536,7 @@ class Client {
    * This API allows the application to patch an BucketAccessControl without
    * having to read the current value.
    *
-   * @par Notes
+   * @note
    * For changing BucketAccessControl the Patch and Update APIs basically offer
    * the same functionality. The only field that can be modified by either API
    * is `role`, and it may only be set to a new value (it cannot be removed).
@@ -1526,6 +1561,8 @@ class Client {
    *
    * @see https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls
    *     for additional details on what fields are writeable.
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameters.
    */
   template <typename... Options>
   StatusOr<BucketAccessControl> PatchBucketAcl(
@@ -1556,9 +1593,13 @@ class Client {
    *
    * @see https://cloud.google.com/storage/docs/access-control/ for more
    *     information about access control in GCS.
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameters.
+   * @see https://cloud.google.com/storage/docs/access-control/lists#permissions
+   *     for the format of the @p role parameters.
    */
   /**
-   * Retrieves the list of ObjectAccessControls for an object.
+   * Retrieves the list of ObjectAccessControl items for an object.
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be deleted.
@@ -1600,6 +1641,11 @@ class Client {
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc create object acl
+   *
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameter.
+   * @see https://cloud.google.com/storage/docs/access-control/lists#permissions
+   *     for the format of the @p role parameter.
    */
   template <typename... Options>
   StatusOr<ObjectAccessControl> CreateObjectAcl(std::string const& bucket_name,
@@ -1629,6 +1675,9 @@ class Client {
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc delete object acl
+   *
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameters.
    */
   template <typename... Options>
   StatusOr<void> DeleteObjectAcl(std::string const& bucket_name,
@@ -1654,6 +1703,9 @@ class Client {
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc get object acl
+   *
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameters.
    */
   template <typename... Options>
   StatusOr<ObjectAccessControl> GetObjectAcl(std::string const& bucket_name,
@@ -1667,6 +1719,13 @@ class Client {
 
   /**
    * Updates the value of an existing object ACL.
+   *
+   * @note
+   * For changing ObjectAccessControl the Patch and Update APIs basically offer
+   * the same functionality. The only field that can be modified by either API
+   * is `role`, and it may only be set to a new value (it cannot be removed).
+   * The API is offered for consistency with the other resource types where
+   * Patch and Update APIs have different semantics.
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object.
@@ -1682,6 +1741,8 @@ class Client {
    * @par Example
    * @snippet storage_object_acl_samples.cc update object acl
    *
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameters.
    * @see https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls
    *     for additional details on what fields are writeable.
    */
@@ -1702,7 +1763,7 @@ class Client {
    * Compute the delta between a previous value for an ObjectAccessControl and
    * the new value for an ObjectAccessControl and apply that delta.
    *
-   * @par Notes
+   * @note
    * For changing ObjectAccessControl the Patch and Update APIs basically offer
    * the same functionality. The only field that can be modified by either API
    * is `role`, and it may only be set to a new value (it cannot be removed).
@@ -1727,6 +1788,8 @@ class Client {
    * @par Example
    * @snippet storage_object_acl_samples.cc patch object acl
    *
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameters.
    * @see https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls
    *     for additional details on what fields are writeable.
    */
@@ -1747,7 +1810,7 @@ class Client {
    * This API allows the application to patch an ObjectAccessControl without
    * having to read the current value.
    *
-   * @par Notes
+   * @note
    * For changing ObjectAccessControl the Patch and Update APIs basically offer
    * the same functionality. The only field that can be modified by either API
    * is `role`, and it may only be set to a new value (it cannot be removed).
@@ -1770,6 +1833,8 @@ class Client {
    * @par Example
    * @snippet storage_object_acl_samples.cc patch object acl no-read
    *
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameters.
    * @see https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls
    *     for additional details on what fields are writeable.
    */
@@ -1796,9 +1861,14 @@ class Client {
    * @see
    * https://cloud.google.com/storage/docs/access-control/lists#defaultobjects
    *     for more information on default object ACLs.
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameters.
+   * @see https://cloud.google.com/storage/docs/access-control/lists#permissions
+   *     for the format of the @p role parameters.
    */
   /**
-   * Retrieves the default object ACL for a bucket.
+   * Retrieves the default object ACL for a bucket as a vector of
+   * `ObjectAccessControl` items.
    *
    * The default object ACL sets the ACL for any object created in the bucket,
    * unless a different ACL is specified when the object is created.
@@ -1849,6 +1919,10 @@ class Client {
    *
    * @see
    * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameter.
+   * @see https://cloud.google.com/storage/docs/access-control/lists#permissions
+   *     for the format of the @p role parameter.
    */
   template <typename... Options>
   StatusOr<ObjectAccessControl> CreateDefaultObjectAcl(
@@ -1879,6 +1953,8 @@ class Client {
    *
    * @see
    * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameter.
    */
   template <typename... Options>
   StatusOr<void> DeleteDefaultObjectAcl(std::string const& bucket_name,
@@ -1908,6 +1984,8 @@ class Client {
    *
    * @see
    * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameter.
    */
   template <typename... Options>
   StatusOr<ObjectAccessControl> GetDefaultObjectAcl(
@@ -1924,6 +2002,13 @@ class Client {
    * The default object ACL sets the ACL for any object created in the bucket,
    * unless a different ACL is specified when the object is created.
    *
+   * @note
+   * For changing default object access controls the Patch and Update APIs
+   * basically offer the same functionality. The only field that can be modified
+   * by either API is `role`, and it may only be set to a new value (it cannot
+   * be removed). The API is offered for consistency with the other resource
+   * types where Patch and Update APIs have different semantics.
+   *
    * @param bucket_name the name of the bucket.
    * @param acl the new ACL value. Note that only the writable values of the ACL
    *   will be modified by the server.
@@ -1939,6 +2024,10 @@ class Client {
    *
    * @see
    * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameter.
+   * @see https://cloud.google.com/storage/docs/access-control/lists#permissions
+   *     for the format of the @p role parameter.
    */
   template <typename... Options>
   StatusOr<ObjectAccessControl> UpdateDefaultObjectAcl(
@@ -1956,7 +2045,7 @@ class Client {
    * Compute the delta between a previous and new values for a default object
    * access control, and apply that delta.
    *
-   * @par Notes
+   * @note
    * For changing default object access controls the Patch and Update APIs
    * basically offer the same functionality. The only field that can be modified
    * by either API is `role`, and it may only be set to a new value (it cannot
@@ -1983,6 +2072,10 @@ class Client {
    *
    * @see
    * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameter.
+   * @see https://cloud.google.com/storage/docs/access-control/lists#permissions
+   *     for the format of the @p role parameter.
    */
   template <typename... Options>
   StatusOr<ObjectAccessControl> PatchDefaultObjectAcl(
@@ -2001,7 +2094,7 @@ class Client {
    * This API allows the application to patch an ObjectAccessControl without
    * having to read the current value.
    *
-   * @par Notes
+   * @note
    * For changing default object access controls the Patch and Update APIs
    * basically offer the same functionality. The only field that can be modified
    * by either API is `role`, and it may only be set to a new value (it cannot
@@ -2027,6 +2120,10 @@ class Client {
    *
    * @see
    * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
+   * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
+   *     the format of the @p entity parameter.
+   * @see https://cloud.google.com/storage/docs/access-control/lists#permissions
+   *     for the format of the @p role parameter.
    */
   template <typename... Options>
   StatusOr<ObjectAccessControl> PatchDefaultObjectAcl(
