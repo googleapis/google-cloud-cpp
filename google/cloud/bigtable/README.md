@@ -3,8 +3,8 @@
 [![Documentation][doxygen-shield]][doxygen-link]
 
 [doxygen-shield]: https://img.shields.io/badge/documentation-master-brightgreen.svg
-[doxygen-link]: http://GoogleCloudPlatform.github.io/google-cloud-cpp/
-[quickstart-link]: http://GoogleCloudPlatform.github.io/google-cloud-cpp/
+[doxygen-link]: http://googleapis.github.io/google-cloud-cpp/
+[quickstart-link]: http://googleapis.github.io/google-cloud-cpp/
 
 This directory contains the implementation of the Google Cloud Bigtable C++
 client.
@@ -29,7 +29,7 @@ is available [online][doxygen-link].
 * @remyabel cleaned up some hard-coded zone names in the examples.
 * More experimental asynchronous APIs, including AsyncReadRows. Note that we
   expect to change all these experimental APIs as described in
-  [#1543](https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues/1543).
+  [#1543](https://github.com/googleapis/google-cloud-cpp/issues/1543).
 * @remyabel contributed changes to disable the unit and integration tests. This
   can be useful for package maintainers.
 * New Bigtable filter wrapper that accepts a single column.
@@ -41,7 +41,7 @@ is available [online][doxygen-link].
 
 * More experimental asynchronous APIs, note that we expect to change all these
   experimental APIs as described in
-  [#1543](https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues/1543).
+  [#1543](https://github.com/googleapis/google-cloud-cpp/issues/1543).
 * Most of the admin operations now have asynchronous APIs.
 * All asynchronous APIs in `noex::*` return an object through which applications
   can request cancellation of pending requests.

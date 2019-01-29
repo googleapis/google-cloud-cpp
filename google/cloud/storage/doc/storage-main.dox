@@ -110,8 +110,8 @@ and install the library, for example:
 @code {.py}
 # Change the version and SHA256 hash as needed.
 http_archive(
-    name = "com_github_googlecloudplatform_google_cloud_cpp",
-    url = "http://github.com/googlecloudplatform/google-cloud-cpp/archive/v0.2.0.tar.gz",
+    name = "com_github_googleapis_google_cloud_cpp",
+    url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.2.0.tar.gz",
     sha256 = "5fa6577828e5f949178b13ed0411dd634527c9d2d8f00e433edbd6ef9e42a281"
 )
 @endcode
@@ -119,7 +119,7 @@ http_archive(
 Then load the dependencies of the library:
 
 ```{.py}
-load("@com_github_googlecloudplatform_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
 google_cloud_cpp_deps()
 # Have to manually call the corresponding function for gRPC:
 #   https://github.com/bazelbuild/bazel/issues/1550
@@ -136,7 +136,7 @@ cc_binary(
         "my_program.cc",
     ],
     deps = [
-        "@com_github_googlecloudplatform_google_cloud_cpp//google/cloud/storage:storage_client",
+        "@com_github_googleapis_google_cloud_cpp//google/cloud/storage:storage_client",
     ],
 )
 ```
@@ -242,6 +242,6 @@ good places to continue learning about the library.
 [bucket-definition-link]: https://cloud.google.com/storage/docs/key-terms#buckets
 [object-definition-link]: https://cloud.google.com/storage/docs/key-terms#objects
 [project-definition-link]: https://cloud.google.com/storage/docs/projects 'Project Definition in GCS'
-[github-link]: https://github.com/GoogleCloudPlatform/google-cloud-cpp 'Top-level README'
+[github-link]: https://github.com/googleapis/google-cloud-cpp 'Top-level README'
 
 */

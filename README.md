@@ -11,19 +11,19 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 - [Google Cloud Platform Documentation][cloud-platform-docs]
 - [Client Library Documentation][client-library-docs]
 
-[travis-shield]: https://img.shields.io/travis/GoogleCloudPlatform/google-cloud-cpp/master.svg?label=travis
-[travis-link]: https://travis-ci.org/GoogleCloudPlatform/google-cloud-cpp/builds
+[travis-shield]: https://img.shields.io/travis/googleapis/google-cloud-cpp/master.svg?label=travis
+[travis-link]: https://travis-ci.org/googleapis/google-cloud-cpp/builds
 [kokoro-ubuntu-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-ubuntu.svg
 [kokoro-ubuntu-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-ubuntu-link.html
 [kokoro-windows-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows.svg
 [kokoro-windows-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-link.html
 [kokoro-macos-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-macos.svg
 [kokoro-macos-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-macos-link.html
-[codecov-shield]: https://codecov.io/gh/GoogleCloudPlatform/google-cloud-cpp/branch/master/graph/badge.svg
-[codecov-link]: https://codecov.io/gh/GoogleCloudPlatform/google-cloud-cpp
+[codecov-shield]: https://codecov.io/gh/googleapis/google-cloud-cpp/branch/master/graph/badge.svg
+[codecov-link]: https://codecov.io/gh/googleapis/google-cloud-cpp
 [cloud-platform]: https://cloud.google.com/
 [cloud-platform-docs]: https://cloud.google.com/docs/
-[client-library-docs]: http://GoogleCloudPlatform.github.io/google-cloud-cpp/
+[client-library-docs]: http://googleapis.github.io/google-cloud-cpp/
 
 This library supports the following Google Cloud Platform services with clients
 at the [Beta](#versioning) quality level:
@@ -181,7 +181,7 @@ It is possible to work around these limitations on a *new* installation of
 Ubuntu-14.04, but there are [known issues][issue-913] working on a system where
 these libraries are already installed.
 
-[issue-913]: https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues/913
+[issue-913]: https://github.com/googleapis/google-cloud-cpp/issues/913
 
 Nevertheless, the following steps are known to work:
 
@@ -321,7 +321,7 @@ Now clone `google-cloud-cpp`:
 
 ```console
 cd ..
-git clone https://github.com/GoogleCloudPlatform/google-cloud-cpp.git
+git clone https://github.com/googleapis/google-cloud-cpp.git
 git submodule update --init
 cd google-cloud-cpp
 ```

@@ -60,8 +60,8 @@ and install the library, for example:
 @code {.py}
 # Change the version and SHA256 hash as needed.
 http_archive(
-    name = "com_github_googlecloudplatform_google_cloud_cpp",
-    url = "http://github.com/googlecloudplatform/google-cloud-cpp/archive/v0.2.0.tar.gz",
+    name = "com_github_googleapis_google_cloud_cpp",
+    url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.2.0.tar.gz",
     sha256 = "5fa6577828e5f949178b13ed0411dd634527c9d2d8f00e433edbd6ef9e42a281"
 )
 @endcode
@@ -69,7 +69,7 @@ http_archive(
 Then load the dependencies of the library:
 
 ```{.py}
-load("@com_github_googlecloudplatform_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
 google_cloud_cpp_deps()
 # Have to manually call the corresponding function for gRPC:
 #   https://github.com/bazelbuild/bazel/issues/1550
@@ -86,7 +86,7 @@ cc_binary(
         "my_program.cc",
     ],
     deps = [
-        "@com_github_googlecloudplatform_google_cloud_cpp//google/cloud/bigtable:bigtable_client",
+        "@com_github_googleapis_google_cloud_cpp//google/cloud/bigtable:bigtable_client",
     ],
 )
 ```
@@ -137,7 +137,7 @@ target_link_libraries(my_program bigtable_client)
 [authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
 [user-account]: https://cloud.google.com/docs/authentication/
 
-[github-link]: https://github.com/GoogleCloudPlatform/google-cloud-cpp 'Top-level README'
+[github-link]: https://github.com/googleapis/google-cloud-cpp 'Top-level README'
 [workspace-definition-link]: https://docs.bazel.build/versions/master/build-ref.html#packages_targets
 
 */

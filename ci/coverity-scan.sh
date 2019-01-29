@@ -63,4 +63,4 @@ curl --form "token=${COVERITY_SCAN_TOKEN}" \
   --form file=@google-cloud-cpp.tar.xz \
   --form version="master" \
   --form description="Automatically Compiled Coverity Scan" \
-  https://scan.coverity.com/builds?project=GoogleCloudPlatform%2Fgoogle-cloud-cpp
+  https://scan.coverity.com/builds?project=googleapis%2Fgoogle-cloud-cpp

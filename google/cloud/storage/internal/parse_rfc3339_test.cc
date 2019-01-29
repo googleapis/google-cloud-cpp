@@ -39,7 +39,7 @@ TEST(ParseRfc3339Test, ParseEpoch) {
       << "not use the Unix epoch (1970-01-01T00:00:00Z) as its epoch.\n"
       << "The Google Cloud C++ Libraries have not been ported to\n"
       << "environments where this is the case.  Please contact us at\n"
-      << "   https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues\n"
+      << "   https://github.com/googleapis/google-cloud-cpp/issues\n"
       << "and provide as many details as possible about your build\n"
       << "environment.";
 }

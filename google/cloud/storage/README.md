@@ -3,7 +3,7 @@
 [![Documentation][doxygen-shield]][doxygen-link]
 
 [doxygen-shield]: https://img.shields.io/badge/documentation-master-brightgreen.svg
-[doxygen-link]: http://GoogleCloudPlatform.github.io/google-cloud-cpp/latest/storage
+[doxygen-link]: http://googleapis.github.io/google-cloud-cpp/latest/storage
 
 This directory contains the implementation of the Google Cloud Storage C++
 client.
@@ -96,4 +96,4 @@ the reference guide includes a quick start guide.
 * The library does not (yet) have a GitHub release, it is only available from
   the [default branch][github-link] on GitHub
 
-[github-link]: https://github.com/GoogleCloudPlatform/google-cloud-cpp
+[github-link]: https://github.com/googleapis/google-cloud-cpp

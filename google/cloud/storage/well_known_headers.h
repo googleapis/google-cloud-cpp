@@ -265,7 +265,7 @@ static EncryptionKeyData CreateKeyFromGenerator(Generator& gen) {
       std::numeric_limits<unsigned char>::digits == 8,
       "The Google Cloud Storage C++ library is only supported on platforms\n"
       "with 8-bit chars.  Please file a bug on\n"
-      "    https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues\n"
+      "    https://github.com/googleapis/google-cloud-cpp/issues\n"
       "describing your platform details to request support for it.");
   constexpr int kKeySize = 256 / std::numeric_limits<unsigned char>::digits;
 

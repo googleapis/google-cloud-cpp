@@ -242,7 +242,7 @@ class AsyncAwaitConsistency
                                 "that either a consistent state is reached or "
                                 "a polling error is reported. That's a bug, "
                                 "please report it to "
-                                "https://github.com/GoogleCloudPlatform/"
+                                "https://github.com/googleapis/"
                                 "google-cloud-cpp/issues/new");
         lk.unlock();
         callback_(cq, res_status);
