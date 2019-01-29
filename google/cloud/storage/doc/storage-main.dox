@@ -37,10 +37,8 @@ guide.
 2. Make sure that [billing is enabled][billing-link] for your project.
 3. Learn about [key terms and concepts][concepts-link] for Cloud Storage.
 4. Setup the authentication for the examples:
-
-   * [Configure a service account][authentication-quickstart],
-
-   * or [login with your personal account][gcloud-quickstart]
+   - [Configure a service account][authentication-quickstart],
+   - or [login with your personal account][gcloud-quickstart]
 
 ### Downloading and Compiling the C++ Client Library
 
