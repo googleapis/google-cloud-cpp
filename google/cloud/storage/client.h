@@ -48,8 +48,8 @@ inline namespace STORAGE_CLIENT_NS {
  * comparable to copying a few shared pointers. The first request (or any
  * request that requires a new connection) incurs the cost of creating the
  * connection and authenticating with the service. Note that access tokens need
- * to be refreshed before they expire, , the library
- * may need to refresh access tokens, which would also make
+ * to be refreshed before they expire, the library automatically refreshes
+ * access tokens, and this may impact the performance of some operations.
  *
  * @par Thread-safety
  * Instances of this class created via copy-construction or copy-assignment
@@ -132,8 +132,9 @@ class Client {
    * @param options the client options, these are used to control credentials,
    *   buffer sizes, etc.
    * @param policies the client policies, these control the behavior of the
-   *   client, for example, how to backoff when a operation needs to be retried,
-   *   or what operations cannot be retried because they are not idempotent.
+   *   client, for example, how to backoff when an operation needs to be
+   *   retried, or what operations cannot be retried because they are not
+   *   idempotent.
    *
    * @par Idempotency Policy Example
    * @snippet storage_object_samples.cc insert object strict idempotency
@@ -151,8 +152,9 @@ class Client {
    *
    * @param credentials a set of credentials to initialize the `ClientOptions`.
    * @param policies the client policies, these control the behavior of the
-   *   client, for example, how to backoff when a operation needs to be retried,
-   *   or what operations cannot be retried because they are not idempotent.
+   *   client, for example, how to backoff when an operation needs to be
+   *   retried, or what operations cannot be retried because they are not
+   *   idempotent.
    *
    * @par Idempotency Policy Example
    * @snippet storage_object_samples.cc insert object strict idempotency
