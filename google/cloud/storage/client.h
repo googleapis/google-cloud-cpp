@@ -1179,6 +1179,9 @@ class Client {
    *
    * @par Example
    * @snippet storage_object_samples.cc rewrite object non blocking
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc rewrite object resume
    */
   template <typename... Options>
   ObjectRewriter RewriteObject(std::string source_bucket_name,
