@@ -647,13 +647,13 @@ class Client {
    *     of how to use the Bucket Lock and retention policy features.
    */
   template <typename... Options>
-  StatusOr<void> LockBucketRetentionPolicy(std::string const& bucket_name,
-                                           std::uint64_t metageneration,
-                                           Options&&... options) {
+  StatusOr<BucketMetadata> LockBucketRetentionPolicy(
+      std::string const& bucket_name, std::uint64_t metageneration,
+      Options&&... options) {
     internal::LockBucketRetentionPolicyRequest request(bucket_name,
                                                        metageneration);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->LockBucketRetentionPolicy(request).status();
+    return raw_client_->LockBucketRetentionPolicy(request);
   }
   //@}
 

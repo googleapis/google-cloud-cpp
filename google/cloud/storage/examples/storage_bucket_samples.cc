@@ -1028,16 +1028,18 @@ void LockRetentionPolicy(google::cloud::storage::Client client, int& argc,
       return;
     }
 
-    StatusOr<void> status = client.LockBucketRetentionPolicy(
+    StatusOr<gcs::BucketMetadata> updated = client.LockBucketRetentionPolicy(
         bucket_name, original->metageneration());
 
-    if (!status) {
+    if (!updated) {
       std::cerr << "Error locking bucket retention policy for bucket "
-                << bucket_name << ", status=" << status.status() << std::endl;
+                << bucket_name << ", status=" << updated.status() << std::endl;
+      return;
     }
 
     std::cout << "Retention policy successfully locked for bucket "
-              << bucket_name << std::endl;
+              << updated->name() << "\nFull metadata: " << *updated
+              << std::endl;
   }
   // [END storage_lock_retention_policy]
   //! [lock retention policy]

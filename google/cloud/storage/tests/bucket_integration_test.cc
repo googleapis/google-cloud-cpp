@@ -660,9 +660,12 @@ TEST_F(BucketIntegrationTest, BucketLock) {
   ASSERT_TRUE(after_setting_retention_policy.ok())
       << "status=" << after_setting_retention_policy.status();
 
-  auto lock_status = client.LockBucketRetentionPolicy(
+  auto after_locking = client.LockBucketRetentionPolicy(
       bucket_name, after_setting_retention_policy->metageneration());
-  ASSERT_TRUE(lock_status.ok()) << "status=" << lock_status.status();
+  ASSERT_TRUE(after_locking.ok()) << "status=" << after_locking.status();
+
+  ASSERT_TRUE(after_locking->has_retention_policy());
+  ASSERT_TRUE(after_locking->retention_policy().is_locked);
 
   auto status = client.DeleteBucket(bucket_name);
   ASSERT_TRUE(status.ok()) << "status=" << status.status();
@@ -674,7 +677,7 @@ TEST_F(BucketIntegrationTest, BucketLockFailure) {
   Client client;
 
   // This should fail because the bucket does not exist.
-  StatusOr<void> status = client.LockBucketRetentionPolicy(bucket_name, 42U);
+  StatusOr<BucketMetadata> status = client.LockBucketRetentionPolicy(bucket_name, 42U);
   EXPECT_FALSE(status.ok());
 }
 

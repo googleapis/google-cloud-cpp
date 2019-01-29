@@ -49,7 +49,7 @@ class LoggingClient : public RawClient {
       SetBucketIamPolicyRequest const& request) override;
   StatusOr<TestBucketIamPermissionsResponse> TestBucketIamPermissions(
       TestBucketIamPermissionsRequest const& request) override;
-  StatusOr<EmptyResponse> LockBucketRetentionPolicy(
+  StatusOr<BucketMetadata> LockBucketRetentionPolicy(
       LockBucketRetentionPolicyRequest const& request) override;
 
   StatusOr<ObjectMetadata> InsertObjectMedia(

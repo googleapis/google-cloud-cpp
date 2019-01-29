@@ -452,7 +452,7 @@ StatusOr<TestBucketIamPermissionsResponse> CurlClient::TestBucketIamPermissions(
   return TestBucketIamPermissionsResponse::FromHttpResponse(*response);
 }
 
-StatusOr<EmptyResponse> CurlClient::LockBucketRetentionPolicy(
+StatusOr<BucketMetadata> CurlClient::LockBucketRetentionPolicy(
     LockBucketRetentionPolicyRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/lockRetentionPolicy",
@@ -464,7 +464,8 @@ StatusOr<EmptyResponse> CurlClient::LockBucketRetentionPolicy(
   builder.AddHeader("content-type: application/json");
   builder.AddHeader("content-length: 0");
   builder.AddOption(IfMetagenerationMatch(request.metageneration()));
-  return ReturnEmptyResponse(builder.BuildRequest().MakeRequest(std::string{}));
+  return CheckedFromString<BucketMetadataParser>(
+      builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMedia(
