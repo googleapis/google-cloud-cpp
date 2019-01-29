@@ -162,9 +162,9 @@ std::vector<FailedMutation> BulkMutator::ExtractFinalFailures() {
       "broken before its status was sent.");
   int idx = 0;
   for (auto& mutation : *pending_mutations_.mutable_entries()) {
-    auto &annotation = pending_annotations_[idx++];
+    int original_index = pending_annotations_[idx++].original_index;
     result.emplace_back(FailedMutation(SingleRowMutation(std::move(mutation)),
-                                       status, annotation.original_index));
+                                       status, original_index));
   }
   return result;
 }
