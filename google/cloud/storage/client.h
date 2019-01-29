@@ -47,7 +47,9 @@ inline namespace STORAGE_CLIENT_NS {
  * copy-construction are also relatively low-cost operations, they should be
  * comparable to copying a few shared pointers. The first request (or any
  * request that requires a new connection) incurs the cost of creating the
- * connection and authenticating with the service.
+ * connection and authenticating with the service. Note that access tokens need
+ * to be refreshed before they expire, , the library
+ * may need to refresh access tokens, which would also make
  *
  * @par Thread-safety
  * Instances of this class created via copy-construction or copy-assignment
@@ -83,9 +85,27 @@ inline namespace STORAGE_CLIENT_NS {
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
- * contains the expected result. Please consult the `StatusOr<T>` documentation
- * for more details. In addition, the @ref index "main page" contains examples
- * using `StatusOr<T>` to handle errors.
+ * contains the expected result. Please consult the `StatusOr<T>`
+ * [documentation](https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/status_or.h)
+ * for more details.
+ *
+ * @code
+ * namespace gcs = google::cloud::storage;
+ * gcs::Client client = ...;
+ * google::cloud::StatusOr<gcs::BucketMetadata> bucket_metadata =
+ *     client.GetBucketMetadata("my-bucket");
+ * if (!bucket_metadata.ok()) {
+ *   std::cerr << "Error getting metadata for my-bucket: "
+ *             << bucket_metadata.status() << std::endl;
+ *   return;
+ * }
+ * // Use bucket_metadata as a smart pointer here, e.g.:
+ * std::cout << "The generation for " << bucket_metadata->name() " is "
+ *           << bucket_metadata->generation() << "\n";
+ * @endcode
+ *
+ * In addition, the @ref index "main page" contains examples using `StatusOr<T>`
+ * to handle errors.
  *
  * @see https://cloud.google.com/storage/ for an overview of GCS.
  *
@@ -128,6 +148,17 @@ class Client {
 
   /**
    * Creates the default client type given the credentials and policies.
+   *
+   * @param credentials a set of credentials to initialize the `ClientOptions`.
+   * @param policies the client policies, these control the behavior of the
+   *   client, for example, how to backoff when a operation needs to be retried,
+   *   or what operations cannot be retried because they are not idempotent.
+   *
+   * @par Idempotency Policy Example
+   * @snippet storage_object_samples.cc insert object strict idempotency
+   *
+   * @par Modified Retry Policy Example
+   * @snippet storage_object_samples.cc insert object modified retry
    */
   template <typename... Policies>
   explicit Client(std::shared_ptr<oauth2::Credentials> credentials,
@@ -143,11 +174,14 @@ class Client {
       : raw_client_(
             Decorate(std::move(client), std::forward<Policies>(policies)...)) {}
 
-  /// Builds a client with an specific RawClient, without decorations.
+  /// Define a tag to disable automatic decorations of the RawClient.
   struct NoDecorations {};
+
+  /// Builds a client with a specific RawClient, without decorations.
   explicit Client(std::shared_ptr<internal::RawClient> client, NoDecorations)
       : raw_client_(std::move(client)) {}
 
+  /// Access the underlying `RawClient`.
   std::shared_ptr<internal::RawClient> raw_client() const {
     return raw_client_;
   }
@@ -171,9 +205,6 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `MaxResults`, `Prefix`,
    *     `UserProject`, and `Projection`.
-   *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
@@ -204,9 +235,6 @@ class Client {
    * @throw std::logic_error if the function is called without a default
    *     project id set.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -225,7 +253,7 @@ class Client {
   }
 
   /**
-   * Creates a new Google Cloud Storage Bucket.
+   * Creates a new Google Cloud Storage Bucket using the default project.
    *
    * @param bucket_name the name of the new bucket.
    * @param metadata the metadata for the new Bucket.  The `name` field is
@@ -332,6 +360,12 @@ class Client {
   /**
    * Updates the metadata in a Google Cloud Storage Bucket.
    *
+   * A `Buckets: update` request changes *all* the writeable attributes of a
+   * bucket, in contrast, a `Buckets: patch` request only changes the subset of
+   * the attributes included in the request. This function creates a
+   * `Buckets: update` request to change the writable attributes in
+   * `BucketMetadata`.
+   *
    * @param bucket_name the name of the new bucket.
    * @param metadata the new metadata for the Bucket.  The `name` field is
    *     ignored in favor of @p bucket_name.
@@ -361,7 +395,12 @@ class Client {
   }
 
   /**
-   * Patches the metadata in a Google Cloud Storage Bucket.
+   * Computes the difference between two BucketMetadata objects and patches a
+   * bucket based on that difference.
+   *
+   * A `Buckets: update` request changes *all* the writeable attributes of a
+   * bucket, in contrast, a `Buckets: patch` request only changes the subset of
+   * the attributes included in the request.
    *
    * This function creates a patch request to change the writeable attributes in
    * @p original to the values in @p updated.  Non-writeable attributes are
@@ -395,9 +434,14 @@ class Client {
   }
 
   /**
-   * Patches the metadata in a Google Cloud Storage Bucket.
+   * Patches the metadata in a Google Cloud Storage Bucket given a desired set
+   * changes.
    *
-   * This function creates a patch request based on the given @p builder.
+   * A `Buckets: update` request changes *all* the writeable attributes of a
+   * bucket, in contrast, a `Buckets: patch` request only changes the subset of
+   * the attributes included in the request. This function creates a patch
+   * request based on the given `BucketMetadataPatchBuilder` which represents
+   * the desired set of changes.
    *
    * @param bucket_name the bucket to be updated.
    * @param builder the set of updates to perform in the Bucket.
@@ -422,7 +466,7 @@ class Client {
   }
 
   /**
-   * Fetches the IamPolicy for a Bucket.
+   * Fetches the IAM policy for a Bucket.
    *
    * Google Cloud Identity & Access Management (IAM) lets administrators
    * authorize who can take action on specific resources, including Google
@@ -437,7 +481,7 @@ class Client {
    * Consult
    * [the
    * documentation](https://cloud.google.com/storage/docs/access-control/iam)
-   * for a more detailed description of IAM policies their use in
+   * for a more detailed description of IAM policies and their use in
    * Google Cloud Storage.
    *
    * @param bucket_name query metadata information about this bucket.
@@ -622,7 +666,7 @@ class Client {
    * information about GCS objects.
    */
   /**
-   * Creates an object given its name and media (contents).
+   * Creates an object given its name and contents.
    *
    * @param bucket_name the name of the bucket that will contain the object.
    * @param object_name the name of the object to be created.
@@ -740,9 +784,6 @@ class Client {
    *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
    *     `Projection`, `Prefix`, and `Versions`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -775,9 +816,6 @@ class Client {
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `ReadRange`, and `UserProject`.
    *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
-   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -804,8 +842,8 @@ class Client {
    * upload data.
    *
    * The application can explicitly request a new resumable upload using the
-   * result of `NewResumableUploadSession`. To restore a previously created
-   * resumable session use `RestoreResumableUploadSession`.
+   * result of `#NewResumableUploadSession()`. To restore a previously created
+   * resumable session use `#RestoreResumableUploadSession()`.
    *
    * @note It is the application's responsibility to query the stream to find
    *     the latest committed byte and to upload data starting from the next
@@ -822,7 +860,7 @@ class Client {
    * Non-resumable uploads may be more efficient for small and medium sized
    * uploads, as they require fewer roundtrips to the service.
    *
-   * For small uploads we recommed using `InsertObject`, consult
+   * For small uploads we recommend using `InsertObject`, consult
    * [the
    * documentation](https://cloud.google.com/storage/docs/json_api/v1/how-tos/upload)
    * for details.
@@ -836,9 +874,6 @@ class Client {
    *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
    *   `MD5HashValue`, `PredefinedAcl`, `Projection`,
    *   `UseResumableUploadSession`, `UserProject`, and `WithObjectMetadata`.
-   *
-   * @throw std::runtime_error if there is a permanent failure, or if there were
-   *     more transient failures than allowed by the current retry policy.
    *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
@@ -948,6 +983,11 @@ class Client {
    *     Valid types for this operation include `Generation`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, and `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if:
+   * - restricted by pre-conditions, in this case, `IfGenerationMatch`
+   * - or, if it applies to only one object version via `Generation`.
    *
    * @par Example
    * @snippet storage_object_samples.cc delete object
@@ -1103,11 +1143,11 @@ class Client {
   /**
    * Creates an `ObjectRewriter` to copy the source object.
    *
-   * Applications use this function to reliably copy objects across location
-   * boundaries, and to rewrite objects with different encryption keys. The
-   * operation returns a `ObjectRewriter`, which the application can use to
-   * initiate the copy and to iterate if the copy requires more than one call
-   * to complete.
+   * Applications use this function to reliably copy objects across [location
+   * boundaries](https://cloud.google.com/storage/docs/locations), and to
+   * rewrite objects with different encryption keys. The operation returns a
+   * `ObjectRewriter`, which the application can use to initiate the copy and to
+   * iterate if the copy requires more than one call to complete.
    *
    * @param source_bucket_name the name of the bucket containing the source
    *     object.
@@ -1198,10 +1238,10 @@ class Client {
    * Rewrites the object, blocking until the rewrite completes, and returns the
    * resulting `ObjectMetadata`.
    *
-   * Applications use this function to reliably copy objects across location
-   * boundaries and to rewrite objects with different encryption keys. The
-   * operation blocks until the rewrite completes, and returns the resulting
-   * `ObjectMetadata`.
+   * Applications use this function to reliably copy objects across [location
+   * boundaries](https://cloud.google.com/storage/docs/locations), and to
+   * rewrite objects with different encryption keys. The operation blocks until
+   * the rewrite completes, and returns the resulting `ObjectMetadata`.
    *
    * @note Application developers should be aware that rewriting large objects
    *     may take multiple hours. In such cases the application should consider
@@ -2075,6 +2115,7 @@ class Client {
   //@}
 
   //@{
+  /// @name Signed URL support operations.
   /**
    * Create a signed URL for the given parameters.
    *
