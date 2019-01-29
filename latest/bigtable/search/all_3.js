@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['data_5fasync_5fsnippets_2ecc',['data_async_snippets.cc',['../data__async__snippets_8cc.html',1,'']]],
   ['data_5fclient_2ecc',['data_client.cc',['../data__client_8cc.html',1,'']]],
   ['data_5fclient_2eh',['data_client.h',['../data__client_8h.html',1,'']]],
   ['data_5fendpoint',['data_endpoint',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#aa1a311d31f38f642baf942345bf4394c',1,'google::cloud::bigtable::v0::ClientOptions']]],
