@@ -47,9 +47,10 @@ inline namespace STORAGE_CLIENT_NS {
  * copy-construction are also relatively low-cost operations, they should be
  * comparable to copying a few shared pointers. The first request (or any
  * request that requires a new connection) incurs the cost of creating the
- * connection and authenticating with the service. Note that access tokens need
- * to be refreshed before they expire, the library automatically refreshes
- * access tokens, and this may impact the performance of some operations.
+ * connection and authenticating with the service. Note that the library may
+ * need to perform other bookeeping operations that may impact performance.
+ * For example, access tokens need to be refreshed from time to time, and this
+ * may impact the performance of some operations.
  *
  * @par Thread-safety
  * Instances of this class created via copy-construction or copy-assignment
@@ -94,11 +95,13 @@ inline namespace STORAGE_CLIENT_NS {
  * gcs::Client client = ...;
  * google::cloud::StatusOr<gcs::BucketMetadata> bucket_metadata =
  *     client.GetBucketMetadata("my-bucket");
+ *
  * if (!bucket_metadata.ok()) {
  *   std::cerr << "Error getting metadata for my-bucket: "
  *             << bucket_metadata.status() << std::endl;
  *   return;
  * }
+ *
  * // Use bucket_metadata as a smart pointer here, e.g.:
  * std::cout << "The generation for " << bucket_metadata->name() " is "
  *           << bucket_metadata->generation() << "\n";
@@ -2136,7 +2139,7 @@ class Client {
    *     description of the XML API.
    *
    * @param verb the operation allowed through this signed URL, `GET`, `POST`,
-   *     `PUT`, 'HEAD', etc. are valid values.
+   *     `PUT`, `HEAD`, etc. are valid values.
    * @param bucket_name the name of the bucket.
    * @param object_name the name of the object, note that the object may not
    *     exist for signed URLs that upload new objects. Use an empty string for
