@@ -38,8 +38,9 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  * StatusOr<Foo> foo = FetchFoo();
  * if (!foo) {  // Same as !foo.ok()
  *   // handle error and probably look at foo.status()
+ * } else {
+ *   foo->DoSomethingFooey();  // UB if !foo
  * }
- * foo->DoSomethingFooey();  // UB if !foo
  * @endcode
  *
  * Alternatively, you may call the `StatusOr<T>::value()` member function,
