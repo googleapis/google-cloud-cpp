@@ -45,7 +45,7 @@ matrix:
         TEST_BAZEL_AS_DEPENDENCY=yes
       install: ci/install-retry.sh ci/travis/install-bazel.sh
       script: ci/travis/build-bazel.sh
-      if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
+      if: repo =~ ^googleapis/ or head_repo =~ ^googleapis/
     - # Install the google-cloud-cpp libraries and test that one can use the
       # installed versions.
       os: linux
@@ -54,7 +54,7 @@ matrix:
         TEST_INSTALL=yes
         DISTRO=ubuntu-install
         DISTRO_VERSION=18.04
-      if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
+      if: repo =~ ^googleapis/ or head_repo =~ ^googleapis/
     - # Verify that we can compile shared libraries, and verify that the ABI is
       # not changing, or rather, that if there are changes the changes are
       # intentional.
@@ -67,7 +67,7 @@ matrix:
         BUILD_TYPE=Debug
         DISTRO=ubuntu-install
         DISTRO_VERSION=18.04
-      if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
+      if: repo =~ ^googleapis/ or head_repo =~ ^googleapis/
     - # Run clang-tidy, clang-format, and generate the documentation.
       os: linux
       compiler: clang
@@ -84,7 +84,7 @@ matrix:
         BUILD_TYPE=Debug
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
-      if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
+      if: repo =~ ^googleapis/ or head_repo =~ ^googleapis/
     - # Build with the UndefinedBehaviorSanitizer.
       os: linux
       compiler: clang
@@ -93,7 +93,7 @@ matrix:
         BUILD_TYPE=Debug
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
-      if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
+      if: repo =~ ^googleapis/ or head_repo =~ ^googleapis/
     - # Generate code coverage information and upload to codecov.io.
       os: linux
       compiler: gcc
@@ -126,14 +126,14 @@ matrix:
         DISTRO=fedora
         DISTRO_VERSION=29
         USE_LIBCXX=yes
-      if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
+      if: repo =~ ^googleapis/ or head_repo =~ ^googleapis/
     - # Compile on CentOS.
       os: linux
       compiler: gcc
       env:
         DISTRO=centos
         DISTRO_VERSION=7
-      if: repo =~ ^GoogleCloudPlatform/ or head_repo =~ ^GoogleCloudPlatform/
+      if: repo =~ ^googleapis/ or head_repo =~ ^googleapis/
   allow_failures:
     - # For the moment, allow failures in the ABI check builds.
       # TODO(#694) - remove this when the ABI is declared stable.

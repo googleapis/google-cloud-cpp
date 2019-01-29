@@ -3,8 +3,8 @@
 [![Documentation][doxygen-shield]][doxygen-link]
 
 [doxygen-shield]: https://img.shields.io/badge/documentation-master-brightgreen.svg
-[doxygen-link]: http://GoogleCloudPlatform.github.io/google-cloud-cpp/
-[quickstart-link]: http://GoogleCloudPlatform.github.io/google-cloud-cpp/
+[doxygen-link]: http://googleapis.github.io/google-cloud-cpp/
+[quickstart-link]: http://googleapis.github.io/google-cloud-cpp/
 
 This directory contains the following C++ client libraries:
  

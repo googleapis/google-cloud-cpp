@@ -17,8 +17,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 # Define the project name and where to report bugs.
-set(PACKAGE_BUGREPORT
-    "https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues")
+set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
 project(google-cloud-cpp CXX C)
 
 # Configure the Compiler options, we will be using C++11 features.
