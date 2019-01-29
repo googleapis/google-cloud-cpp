@@ -65,12 +65,14 @@ fi
 # recover any unmodified files in a second.
 cd github-io-staging
 git rm -qfr --ignore-unmatch ${subdir}/google/cloud/bigtable
+git rm -qfr --ignore-unmatch ${subdir}/google/cloud/common
 git rm -qfr --ignore-unmatch ${subdir}/google/cloud/firestore
 git rm -qfr --ignore-unmatch ${subdir}/google/cloud/storage
 
 # Copy the build results into the gh-pages clone.
 mkdir -p "${subdir}" || echo "${subdir} already exists"
 cp -r "../${BUILD_OUTPUT}/google/cloud/bigtable/html/." "${subdir}/bigtable"
+cp -r "../${BUILD_OUTPUT}/google/cloud/html/." "${subdir}/common"
 cp -r "../${BUILD_OUTPUT}/google/cloud/firestore/html/." "${subdir}/firestore"
 cp -r "../${BUILD_OUTPUT}/google/cloud/storage/html/." "${subdir}/storage"
 if [ "${subdir}" != "latest" ]; then
