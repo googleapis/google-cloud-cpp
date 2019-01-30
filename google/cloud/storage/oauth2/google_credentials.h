@@ -53,7 +53,7 @@ std::shared_ptr<Credentials> CreateAnonymousCredentials();
  * with Cloud Storage client libraries.
  */
 StatusOr<std::shared_ptr<Credentials>>
-    CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const&);
+CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const&);
 
 /**
  * Creates an AuthorizedUserCredentials from a JSON string.
@@ -62,15 +62,15 @@ StatusOr<std::shared_ptr<Credentials>>
  * with Cloud Storage client libraries.
  */
 StatusOr<std::shared_ptr<Credentials>>
-    CreateAuthorizedUserCredentialsFromJsonContents(std::string const&);
+CreateAuthorizedUserCredentialsFromJsonContents(std::string const&);
 
 /// Creates a ServiceAccountCredentials rom a JSON file at the specified path.
 StatusOr<std::shared_ptr<Credentials>>
-    CreateServiceAccountCredentialsFromJsonFilePath(std::string const&);
+CreateServiceAccountCredentialsFromJsonFilePath(std::string const&);
 
 /// Creates a ServiceAccountCredentials from a JSON string.
 StatusOr<std::shared_ptr<Credentials>>
-    CreateServiceAccountCredentialsFromJsonContents(std::string const&);
+CreateServiceAccountCredentialsFromJsonContents(std::string const&);
 
 /// Creates a ComputeEngineCredentials for the VM's default service account.
 std::shared_ptr<Credentials> CreateComputeEngineCredentials();

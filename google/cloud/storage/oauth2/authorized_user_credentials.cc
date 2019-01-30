@@ -38,16 +38,16 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
   for (auto const& key :
        {client_id_key, client_secret_key, refresh_token_key}) {
     if (credentials.count(key) == 0U) {
-      return Status(
-          StatusCode::kInvalidArgument,
-          "Invalid AuthorizedUserCredentials, the " + std::string(key) +
-              " field is missing on data loaded from " + source);
+      return Status(StatusCode::kInvalidArgument,
+                    "Invalid AuthorizedUserCredentials, the " +
+                        std::string(key) +
+                        " field is missing on data loaded from " + source);
     }
     if (credentials.value(key, "").empty()) {
-      return Status(
-          StatusCode::kInvalidArgument,
-          "Invalid AuthorizedUserCredentials, the " + std::string(key) +
-              " field is empty on data loaded from " + source);
+      return Status(StatusCode::kInvalidArgument,
+                    "Invalid AuthorizedUserCredentials, the " +
+                        std::string(key) +
+                        " field is empty on data loaded from " + source);
     }
   }
   return AuthorizedUserCredentialsInfo{

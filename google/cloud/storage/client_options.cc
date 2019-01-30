@@ -26,7 +26,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-
 namespace {
 StatusOr<std::shared_ptr<oauth2::Credentials>> StorageDefaultCredentials() {
   auto emulator = cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");

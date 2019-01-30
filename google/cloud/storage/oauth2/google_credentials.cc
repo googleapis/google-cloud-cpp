@@ -46,9 +46,8 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
   std::string contents(std::istreambuf_iterator<char>{ifs}, {});
   auto cred_json = nl::json::parse(contents, nullptr, false);
   if (cred_json.is_discarded()) {
-    return Status(
-        StatusCode::kInvalidArgument,
-        "Invalid contents in credentials file " + path);
+    return Status(StatusCode::kInvalidArgument,
+                  "Invalid contents in credentials file " + path);
   }
   std::string cred_type = cred_json.value("type", "no type given");
   if (cred_type == "authorized_user") {
@@ -72,11 +71,10 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     return StatusOr<std::unique_ptr<Credentials>>(std::move(ptr));
   }
   return StatusOr<std::unique_ptr<Credentials>>(
-      Status(
-          StatusCode::kInvalidArgument,
-          "Unsupported credential type (" + cred_type +
-              ") when reading Application Default Credentials file from " +
-          path +"."));
+      Status(StatusCode::kInvalidArgument,
+             "Unsupported credential type (" + cred_type +
+                 ") when reading Application Default Credentials file from " +
+                 path + "."));
 }
 
 StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcEnvVar() {
@@ -141,10 +139,10 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials() {
       "https://developers.google.com/identity/protocols"
       "/application-default-credentials";
   return StatusOr<std::shared_ptr<Credentials>>(
-      Status(
-          StatusCode::kUnknown,
-          "Could not automatically determine credentials. For more "
-          "information, please see " + adc_link));
+      Status(StatusCode::kUnknown,
+             "Could not automatically determine credentials. For more "
+             "information, please see " +
+                 adc_link));
 }
 
 std::shared_ptr<Credentials> CreateAnonymousCredentials() {
@@ -152,7 +150,7 @@ std::shared_ptr<Credentials> CreateAnonymousCredentials() {
 }
 
 StatusOr<std::shared_ptr<Credentials>>
-    CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path) {
+CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   auto info = ParseAuthorizedUserCredentials(contents, path);
@@ -164,8 +162,7 @@ StatusOr<std::shared_ptr<Credentials>>
 }
 
 StatusOr<std::shared_ptr<Credentials>>
-    CreateAuthorizedUserCredentialsFromJsonContents(
-        std::string const& contents) {
+CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents) {
   auto info = ParseAuthorizedUserCredentials(contents, "memory");
   if (!info.ok()) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());
@@ -175,7 +172,7 @@ StatusOr<std::shared_ptr<Credentials>>
 }
 
 StatusOr<std::shared_ptr<Credentials>>
-    CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path) {
+CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   auto info = ParseServiceAccountCredentials(contents, path);
@@ -187,8 +184,7 @@ StatusOr<std::shared_ptr<Credentials>>
 }
 
 StatusOr<std::shared_ptr<Credentials>>
-    CreateServiceAccountCredentialsFromJsonContents(
-        std::string const& contents) {
+CreateServiceAccountCredentialsFromJsonContents(std::string const& contents) {
   auto info = ParseServiceAccountCredentials(contents, "memory");
   if (!info.ok()) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());

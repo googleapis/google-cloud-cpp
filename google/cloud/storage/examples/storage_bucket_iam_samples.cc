@@ -125,7 +125,6 @@ void RemoveBucketIamMember(google::cloud::storage::Client client, int& argc,
      std::string member) {
     StatusOr<google::cloud::IamPolicy> policy =
         client.GetBucketIamPolicy(bucket_name);
-
     if (!policy) {
       std::cerr << "Error getting current IAM policy for bucket " << bucket_name
                 << ", status=" << policy.status() << std::endl;
@@ -208,7 +207,7 @@ int main(int argc, char* argv[]) try {
   //! [create client]
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char*[])>;
+      std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"get-bucket-iam-policy", &GetBucketIamPolicy},
       {"add-bucket-iam-member", &AddBucketIamMember},

@@ -570,10 +570,9 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPublicRead) {
 TEST_F(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
   auto creds = oauth2::GoogleDefaultCredentials();
   ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
-  Client client(
-      ClientOptions(*creds)
-          .set_enable_raw_client_tracing(true)
-          .set_enable_http_tracing(true));
+  Client client(ClientOptions(*creds)
+                    .set_enable_raw_client_tracing(true)
+                    .set_enable_http_tracing(true));
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -615,10 +614,9 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
 TEST_F(ObjectInsertIntegrationTest, InsertWithUserIp) {
   auto creds = oauth2::GoogleDefaultCredentials();
   ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
-  Client client(
-      ClientOptions(*creds)
-          .set_enable_raw_client_tracing(true)
-          .set_enable_http_tracing(true));
+  Client client(ClientOptions(*creds)
+                    .set_enable_raw_client_tracing(true)
+                    .set_enable_http_tracing(true));
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -660,10 +658,9 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithUserIp) {
 TEST_F(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
   auto creds = oauth2::GoogleDefaultCredentials();
   ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
-  Client client(
-      ClientOptions(*creds)
-          .set_enable_raw_client_tracing(true)
-          .set_enable_http_tracing(true));
+  Client client(ClientOptions(*creds)
+                    .set_enable_raw_client_tracing(true)
+                    .set_enable_http_tracing(true));
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
