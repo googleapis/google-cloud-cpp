@@ -76,9 +76,9 @@ TEST(HttpResponseTest, AsStatus) {
             AsStatus(HttpResponse{429, "too many requests"}).code());
   EXPECT_EQ(StatusCode::kInvalidArgument,
             AsStatus(HttpResponse{499, "some 4XX error"}).code());
-  EXPECT_EQ(StatusCode::kInternal,
+  EXPECT_EQ(StatusCode::kUnavailable,
             AsStatus(HttpResponse{500, "internal server error"}).code());
-  EXPECT_EQ(StatusCode::kInternal,
+  EXPECT_EQ(StatusCode::kUnavailable,
             AsStatus(HttpResponse{502, "bad gateway"}).code());
   EXPECT_EQ(StatusCode::kUnavailable,
             AsStatus(HttpResponse{503, "service unavailable"}).code());
