@@ -17,7 +17,7 @@
 The Bigtable Client ReadRows acceptance tests are specified in the
 file `read-rows-acceptance-test.json` from
 
-  https://github.com/GoogleCloudPlatform/cloud-bigtable-client
+  https://github.com/googleapis/cloud-bigtable-client
 
 This script reads the JSON test cases and writes out C++ source code
 in googletest style to run as unit tests for the ReadRows response
@@ -25,7 +25,7 @@ parser.
 
 Usage:
 
-    curl -L 'https://raw.githubusercontent.com/GoogleCloudPlatform/cloud-bigtable-client/master/bigtable-client-core-parent/bigtable-client-core/src/test/resources/com/google/cloud/bigtable/grpc/scanner/read-rows-acceptance-test.json' \
+    curl -L 'https://raw.githubusercontent.com/googleapis/cloud-bigtable-client/master/bigtable-client-core-parent/bigtable-client-core/src/test/resources/com/google/cloud/bigtable/grpc/scanner/read-rows-acceptance-test.json' \
       | python ../../tools/convert_acceptance_tests.py \
       | clang-format >readrowsparser_acceptance_tests.inc
 """

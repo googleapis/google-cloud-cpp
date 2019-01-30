@@ -47,7 +47,7 @@ standard [GitHub workflow][workflow-link]:
    `upstream` repo, which you'll use to pull commits made by others in order to
    keep your local repo and fork up to date.
    ```console
-   git remote add upstream git@github.com:GoogleCloudPlatform/google-cloud-cpp.git
+   git remote add upstream git@github.com:googleapis/google-cloud-cpp.git
    git remote -v  # Should show 'origin' (your fork) and 'upstream' (main repo)
    ```
 1. To pull new commits from `upstream` into your local repo and
@@ -69,7 +69,7 @@ standard [GitHub workflow][workflow-link]:
    git push
    ```
 1. You submit a [pull-request][about-pull-requests] to merge your branch into
-   `GoogleCloudPlatform/google-cloud-cpp`.
+   `googleapis/google-cloud-cpp`.
 1. Your reviewers may ask questions, suggest improvements or alternatives. You
    address those by either answering the questions in the review or adding more
    [commits][about-commits] to your branch and `git push` -ing those commits to
@@ -92,7 +92,7 @@ standard [GitHub workflow][workflow-link]:
 
 [workflow-link]: https://guides.github.com/introduction/flow/
 [fork-link]: https://guides.github.com/activities/forking/
-[repo-link]: https://github.com/GoogleCloudPlatform/google-cloud-cpp.git
+[repo-link]: https://github.com/googleapis/google-cloud-cpp.git
 [mastering-issues]: https://guides.github.com/features/issues/
 [about-clone]: https://help.github.com/articles/cloning-a-repository/
 [about-branches]: https://help.github.com/articles/about-branches/

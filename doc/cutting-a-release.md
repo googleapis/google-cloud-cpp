@@ -16,7 +16,7 @@ a pull request (PR) with the necessary changes to the README files in each
 project.
 
 Assuming you are working on your own fork of the `google-cloud-cpp` project,
-and `upstream` points to the `GoogleCloudPlatform/google-cloud-cpp` remote,
+and `upstream` points to the `googleapis/google-cloud-cpp` remote,
 these commands should be useful in identifying important changes:
 
 ```bash
@@ -55,7 +55,7 @@ actual release value, e.g. `v0.5` or `v0.7`, and not the generic `N`.
 Clone the main repository to create the branch:
 
 ```sh
-git clone git@github.com:GoogleCloudPlatform/google-cloud-cpp.git releases
+git clone git@github.com:googleapis/google-cloud-cpp.git releases
 cd releases
 git checkout -b "${RELEASE}.x"
 ```
@@ -100,12 +100,12 @@ git push
 
 Working in your fork of `gooogle-cloud-cpp`: bump the version numbers, and send
 the PR for review against `master`. For an example, look at
-[#1375](https://github.com/GoogleCloudPlatform/google-cloud-cpp/pull/1375).
+[#1375](https://github.com/googleapis/google-cloud-cpp/pull/1375).
 
 ## Create a pre-release tag
 
 Create a pre-release using
-[GitHub](https://github.com/GoogleCloudPlatform/google-cloud-cpp/releases/new).
+[GitHub](https://github.com/googleapis/google-cloud-cpp/releases/new).
 Make sure your reference the `v0.N.x` branch, and you check the `pre-release`
 checkbox.
 
@@ -149,4 +149,4 @@ Please note that we use more strict settings for release branches than for
 
 [git-docs]: https://git-scm.com/doc
 [github-guides]: https://guides.github.com/
-[github-branch-settings]: https://github.com/GoogleCloudPlatform/google-cloud-cpp/settings/branches
+[github-branch-settings]: https://github.com/googleapis/google-cloud-cpp/settings/branches

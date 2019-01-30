@@ -63,7 +63,7 @@ to use most of the time. The disadvantage of this approach include:
 **Reference**
 
 This was originally discussed in
-[#934](https://github.com/GoogleCloudPlatform/google-cloud-cpp/issues/934).
+[#934](https://github.com/googleapis/google-cloud-cpp/issues/934).
 
-The original [PR](https://github.com/GoogleCloudPlatform/google-cloud-cpp/pull/1358)
+The original [PR](https://github.com/googleapis/google-cloud-cpp/pull/1358)
 also has some interesting discussions.

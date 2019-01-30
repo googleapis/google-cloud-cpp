@@ -359,8 +359,7 @@ class Table {
 
     auto read_row_callback = [rows](CompletionQueue& cq, Row row,
                                     grpc::Status& status) {
-      // TODO(#1746) - remove const& accessors from Row for efficient move
-      rows->emplace_back(Row(std::move(row.row_key()), std::move(row.cells())));
+      rows->emplace_back(std::move(row));
     };
 
     return AsyncReadRows(cq, std::move(read_row_callback),

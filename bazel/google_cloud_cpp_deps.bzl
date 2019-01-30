@@ -30,11 +30,11 @@ def google_cloud_cpp_deps():
     if "com_google_googletest" not in native.existing_rules():
         http_archive(
             name = "com_google_googletest",
-            strip_prefix = "googletest-release-1.8.1",
+            strip_prefix = "googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb",
             urls = [
-                "https://github.com/google/googletest/archive/release-1.8.1.tar.gz",
+                "https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz",
             ],
-            sha256 = "9bf1fe5182a604b4135edc1a425ae356c9ad15e9b23f9f12a02e80184c3a249c",
+            sha256 = "8d9aa381a6885fe480b7d0ce8ef747a0b8c6ee92f99d74ab07e3503434007cb0",
         )
 
     # Load the googleapis dependency.
@@ -46,7 +46,7 @@ def google_cloud_cpp_deps():
             ],
             strip_prefix = "googleapis-6a3277c0656219174ff7c345f31fb20a90b30b97",
             sha256 = "82ba91a41fb01305de4e8805c0a9270ed2035007161aa5a4ec60f887a499f5e9",
-            build_file = "@com_github_googlecloudplatform_google_cloud_cpp//bazel:googleapis.BUILD",
+            build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
         )
 
     # Load gRPC and its dependencies, using a similar pattern to this function.
@@ -84,7 +84,7 @@ def google_cloud_cpp_deps():
             ],
             strip_prefix = "curl-7.60.0",
             sha256 = "e9c37986337743f37fd14fe8737f246e97aec94b39d1b71e8a5973f72a9fc4f5",
-            build_file = "@com_github_googlecloudplatform_google_cloud_cpp//bazel:curl.BUILD",
+            build_file = "@com_github_googleapis_google_cloud_cpp//bazel:curl.BUILD",
         )
 
     # We need the nlohmann_json library
@@ -106,7 +106,7 @@ def google_cloud_cpp_deps():
                 "https://github.com/google/crc32c/archive/1.0.6.tar.gz",
             ],
             sha256 = "6b3b1d861bb8307658b2407bc7a4c59e566855ef5368a60b35c893551e4788e9",
-            build_file = "@com_github_googlecloudplatform_google_cloud_cpp//bazel:crc32c.BUILD",
+            build_file = "@com_github_googleapis_google_cloud_cpp//bazel:crc32c.BUILD",
         )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
