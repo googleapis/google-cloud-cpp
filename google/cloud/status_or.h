@@ -24,33 +24,55 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
- * `StatusOr<T>` is used to return a value or an error status.
+ * Holds a value or a `Status` indicating why there is no value.
  *
- * If the library is compiled with exceptions disabled there is no standard C++
- * mechanism to report errors. In that case we use this class to wrap the values
- * returned to the application.
- *
- * The application typically calls an API in the library and must check the
- * returned error status:
+ * `StatusOr<T>` represents either a usable `T` value or a `Status` object
+ * explaining why a `T` value is not present. Typical usage of `StatusOr<T>`
+ * looks like usage of a smart pointer, or even a std::optional<T>, in that you
+ * first check its validity using a conversion to bool (or by calling
+ * `StatusOr<T>::ok()`), then you may dereference the object to access the
+ * contained value. It is undefined behavior (UB) to dereference a
+ * `StatusOr<T>` that is not "ok". For example:
  *
  * @code
- * namespace gcs = google::cloud::storage;
- * void AppCode(gcs::noex::Client client) {
- *   gcs::StatusOr<gcs::BucketMetadata> meta_err = client.GetBucketMetadata(
- *       "my-bucket-name");
- *   if (!meta_err) {
- *       std::cerr << "Error in GetBucketMetadata: " << meta_err.status()
- *                 << std::endl;
- *       return;
- *   }
- *   gcs::BucketMetadata meta = *meta_err;
- *   // Do useful work here.
+ * StatusOr<Foo> foo = FetchFoo();
+ * if (!foo) {  // Same as !foo.ok()
+ *   // handle error and probably look at foo.status()
+ * } else {
+ *   foo->DoSomethingFooey();  // UB if !foo
  * }
  * @endcode
  *
- * Note that the storage client retries most requests for you, resending the
- * request after an error is probably not useful. You should consider changing
- * the retry policies instead.
+ * Alternatively, you may call the `StatusOr<T>::value()` member function,
+ * which is defined to throw an exception if there is no `T` value, or crash
+ * the program if exceptions are disabled. It is never UB to call
+ * `.value()`.
+ *
+ * @code
+ * StatusOr<Foo> foo = FetchFoo();
+ * foo.value().DoSomethingFooey();  // May throw/crash if there is no value
+ * @endcode
+ *
+ * Functions that can fail will often return a `StatusOr<T>` instead of
+ * returning an error code and taking a `T` out-param, or rather than directly
+ * returning the `T` and throwing an exception on error. StatusOr is used so
+ * that callers can choose whether they want to explicitly check for errors,
+ * crash the program, or throw exceptions. Since constructors do not have a
+ * return value, they should be designed in such a way that they cannot fail by
+ * moving the object's complex initialization logic into a separate factory
+ * function that itself can return a `StatusOr<T>`. For example:
+ *
+ * @code
+ * class Bar {
+ *  public:
+ *   Bar(Arg arg);
+ *   ...
+ * };
+ * StatusOr<Bar> MakeBar() {
+ *   ... complicated logic that might fail
+ *   return Bar(std::move(arg));
+ * }
+ * @endcode
  *
  * TODO(...) - the current implementation is fairly naive with respect to `T`,
  *   it is unlikely to work correctly for reference types, types without default

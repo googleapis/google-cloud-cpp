@@ -247,12 +247,12 @@ class Client {
    * @snippet storage_bucket_samples.cc list buckets
    */
   template <typename... Options>
-  ListBucketsReader ListBuckets(Options&&... options) {
+  StatusOr<ListBucketsReader> ListBuckets(Options&&... options) {
     auto const& project_id = raw_client_->client_options().project_id();
     if (project_id.empty()) {
       std::string msg = "Default project id not set in ";
       msg += __func__;
-      google::cloud::internal::ThrowLogicError(msg);
+      return Status(StatusCode::kFailedPrecondition, msg);
     }
     return ListBucketsForProject(project_id, std::forward<Options>(options)...);
   }

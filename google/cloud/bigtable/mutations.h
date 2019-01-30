@@ -300,8 +300,6 @@ class SingleRowMutation {
  */
 class FailedMutation {
  public:
-  FailedMutation(SingleRowMutation mut, google::rpc::Status status)
-      : FailedMutation(std::move(mut), std::move(status), -1) {}
   FailedMutation(SingleRowMutation mut, google::rpc::Status status, int index)
       : mutation_(std::move(mut)),
         status_(ToGrpcStatus(status)),

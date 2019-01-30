@@ -163,11 +163,12 @@ TEST(MutationsTest, FailedMutation) {
   status.add_details()->PackFrom(retry);
   status.add_details()->PackFrom(debug_info);
 
-  bigtable::FailedMutation fm(std::move(mut), std::move(status));
+  bigtable::FailedMutation fm(std::move(mut), std::move(status), 27);
   EXPECT_EQ(grpc::StatusCode::FAILED_PRECONDITION, fm.status().error_code());
   EXPECT_EQ("something failed", fm.status().error_message());
   EXPECT_FALSE(fm.status().error_details().empty());
   EXPECT_EQ("foo", fm.mutation().row_key());
+  EXPECT_EQ(27, fm.original_index());
 }
 
 /// @test Verify that MultipleRowMutations works as expected.

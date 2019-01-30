@@ -51,9 +51,16 @@ void ListBuckets(google::cloud::storage::Client client, int& argc,
   }
   //! [list buckets] [START storage_list_buckets]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client) {
     int count = 0;
-    for (auto&& meta : client.ListBuckets()) {
+    StatusOr<gcs::ListBucketsReader> bucket_list = client.ListBuckets();
+    if (!bucket_list) {
+        std::cerr << "Error reading bucket list for default project"
+                  << ", status=" << bucket_list.status() << std::endl;
+        return;
+    }
+    for (auto&& meta : *bucket_list) {
       if (!meta.ok()) {
         std::cerr << "Error reading bucket list for default project"
                   << ", status=" << meta.status() << std::endl;
