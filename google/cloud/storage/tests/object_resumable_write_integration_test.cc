@@ -50,7 +50,10 @@ bool UsingTestbench() {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -79,7 +82,10 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 
@@ -99,7 +105,10 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -126,7 +135,10 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -163,7 +175,10 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 

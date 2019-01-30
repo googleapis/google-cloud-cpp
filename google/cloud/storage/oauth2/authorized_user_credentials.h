@@ -38,7 +38,7 @@ struct AuthorizedUserCredentialsInfo {
 };
 
 /// Parses a user credentials JSON string into an AuthorizedUserCredentialsInfo.
-AuthorizedUserCredentialsInfo ParseAuthorizedUserCredentials(
+StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 

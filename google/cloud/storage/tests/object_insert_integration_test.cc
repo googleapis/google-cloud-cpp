@@ -52,7 +52,10 @@ class ObjectInsertIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = "name-+-&-=- -%-" + MakeRandomObjectName();
 
@@ -76,7 +79,10 @@ TEST_F(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertWithNonUrlSafeName) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = "name-+-&-=- -%-" + MakeRandomObjectName();
 
@@ -99,7 +105,10 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertWithNonUrlSafeName) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = "name-+-&-=- -%-" + MakeRandomObjectName();
 
@@ -122,7 +131,10 @@ TEST_F(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertWithMD5) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -146,7 +158,10 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithMD5) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -170,7 +185,10 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -194,7 +212,10 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertWithMetadata) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -223,7 +244,10 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithMetadata) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -242,7 +266,10 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -266,7 +293,10 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -291,7 +321,10 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -312,7 +345,10 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclProjectPrivate) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -332,7 +368,10 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclProjectPrivate) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -351,7 +390,10 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclAuthenticatedRead) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -375,7 +417,10 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclAuthenticatedRead) {
 
 TEST_F(ObjectInsertIntegrationTest,
        XmlInsertPredefinedAclBucketOwnerFullControl) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -403,7 +448,10 @@ TEST_F(ObjectInsertIntegrationTest,
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerRead) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -431,7 +479,10 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerRead) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPrivate) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -455,7 +506,10 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPrivate) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclProjectPrivate) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -479,7 +533,10 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclProjectPrivate) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPublicRead) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -511,9 +568,12 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPublicRead) {
  * on the logging facilities in the library, which is ugly to do.
  */
 TEST_F(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
-  Client client(ClientOptions()
-                    .set_enable_raw_client_tracing(true)
-                    .set_enable_http_tracing(true));
+  auto creds = oauth2::GoogleDefaultCredentials();
+  ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
+  Client client(
+      ClientOptions(*creds)
+          .set_enable_raw_client_tracing(true)
+          .set_enable_http_tracing(true));
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -553,9 +613,12 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
  * on the logging facilities in the library, which is ugly to do.
  */
 TEST_F(ObjectInsertIntegrationTest, InsertWithUserIp) {
-  Client client(ClientOptions()
-                    .set_enable_raw_client_tracing(true)
-                    .set_enable_http_tracing(true));
+  auto creds = oauth2::GoogleDefaultCredentials();
+  ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
+  Client client(
+      ClientOptions(*creds)
+          .set_enable_raw_client_tracing(true)
+          .set_enable_http_tracing(true));
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -595,9 +658,12 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithUserIp) {
  * on the logging facilities in the library, which is ugly to do.
  */
 TEST_F(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
-  Client client(ClientOptions()
-                    .set_enable_raw_client_tracing(true)
-                    .set_enable_http_tracing(true));
+  auto creds = oauth2::GoogleDefaultCredentials();
+  ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
+  Client client(
+      ClientOptions(*creds)
+          .set_enable_raw_client_tracing(true)
+          .set_enable_http_tracing(true));
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -639,7 +705,10 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertWithContentType) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -656,7 +725,10 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithContentType) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -679,7 +751,10 @@ TEST_F(ObjectInsertIntegrationTest, InsertFailure) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertXmlFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 

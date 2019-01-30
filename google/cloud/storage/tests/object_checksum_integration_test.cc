@@ -57,7 +57,10 @@ bool UsingTestbench() {
 }
 
 TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32c) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -82,7 +85,10 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32c) {
 }
 
 TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32c) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -107,7 +113,10 @@ TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32c) {
 }
 
 TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32cFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -121,7 +130,10 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32cFailure) {
 }
 
 TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32cFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -135,7 +147,10 @@ TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32cFailure) {
 }
 
 TEST_F(ObjectChecksumIntegrationTest, InsertWithComputedCrc32c) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -161,7 +176,9 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithComputedCrc32c) {
 
 /// @test Verify that CRC32C checksums are computed by default.
 TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertXML) {
-  Client client(ClientOptions()
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
@@ -188,7 +205,9 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertXML) {
 
 /// @test Verify that CRC32C checksums are computed by default.
 TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertJSON) {
-  Client client(ClientOptions()
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
@@ -228,7 +247,10 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertJSON) {
 
 /// @test Verify that CRC32C checksums are computed by default on downloads.
 TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadXML) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -252,7 +274,10 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadXML) {
 
 /// @test Verify that CRC32C checksums are computed by default on downloads.
 TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadJSON) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -277,7 +302,10 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadJSON) {
 
 /// @test Verify that CRC32C checksums are computed by default on uploads.
 TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteXML) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -302,7 +330,10 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteXML) {
 
 /// @test Verify that CRC32C checksums are computed by default on uploads.
 TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteJSON) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -332,7 +363,10 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
     // testbench to inject faults.
     return;
   }
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -377,7 +411,10 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
     // testbench to inject faults.
     return;
   }
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -422,7 +459,10 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteXML) {
     // testbench to inject faults.
     return;
   }
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -452,7 +492,10 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
     // testbench to inject faults.
     return;
   }
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 

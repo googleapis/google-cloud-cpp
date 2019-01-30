@@ -60,7 +60,9 @@ bool UsingTestbench() {
 
 /// @test Verify that MD5 hashes are computed by default.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5HashXML) {
-  Client client(ClientOptions()
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
   auto bucket_name = ObjectHashTestEnvironment::bucket_name();
@@ -87,7 +89,9 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashXML) {
 
 /// @test Verify that MD5 hashes are computed by default.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
-  Client client(ClientOptions()
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
   auto bucket_name = ObjectHashTestEnvironment::bucket_name();
@@ -127,7 +131,9 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
 
 /// @test Verify that `DisableMD5Hash` actually disables the header.
 TEST_F(ObjectHashIntegrationTest, DisableMD5HashXML) {
-  Client client(ClientOptions()
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
   auto bucket_name = ObjectHashTestEnvironment::bucket_name();
@@ -155,7 +161,9 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashXML) {
 
 /// @test Verify that `DisableMD5Hash` actually disables the payload.
 TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
-  Client client(ClientOptions()
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
   auto bucket_name = ObjectHashTestEnvironment::bucket_name();
@@ -194,7 +202,10 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
 
 /// @test Verify that MD5 hashes are computed by default on downloads.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadXML) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectHashTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -218,7 +229,10 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadXML) {
 
 /// @test Verify that MD5 hashes are computed by default on downloads.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadJSON) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectHashTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -243,7 +257,10 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadJSON) {
 
 /// @test Verify that hashes and checksums can be disabled on downloads.
 TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadXML) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectHashTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -269,7 +286,10 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadXML) {
 
 /// @test Verify that hashes and checksums can be disabled on downloads.
 TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadJSON) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectHashTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -295,7 +315,10 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadJSON) {
 
 /// @test Verify that MD5 hashes are computed by default on uploads.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteXML) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectHashTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -320,7 +343,10 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteXML) {
 
 /// @test Verify that MD5 hashes are computed by default on uploads.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteJSON) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectHashTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -344,7 +370,10 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteJSON) {
 
 /// @test Verify that hashes and checksums can be disabled in uploads.
 TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingWriteXML) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectHashTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -368,7 +397,10 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingWriteXML) {
 
 /// @test Verify that hashes and checksums can be disabled in uploads.
 TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingWriteJSON) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectHashTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -397,7 +429,10 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
     // testbench to inject faults.
     return;
   }
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectHashTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -440,7 +475,10 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
     // testbench to inject faults.
     return;
   }
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectHashTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -484,7 +522,10 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteXML) {
     // testbench to inject faults.
     return;
   }
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectHashTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -513,7 +554,10 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
     // testbench to inject faults.
     return;
   }
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectHashTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 

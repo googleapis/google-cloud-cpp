@@ -46,7 +46,10 @@ class CurlResumableStreambufIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   void CheckUpload(int line_count, int line_size) {
-    Client client;
+    StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+    ASSERT_TRUE(status_or_client.ok())
+        << "status=" << status_or_client.status();
+    Client client = std::move(*status_or_client);
     auto bucket_name = ResumableStreambufTestEnvironment::bucket_name();
     auto object_name = MakeRandomObjectName();
 

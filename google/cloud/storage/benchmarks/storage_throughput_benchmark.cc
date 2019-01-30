@@ -130,11 +130,17 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  gcs::ClientOptions client_options;
-  if (!options.enable_connection_pool) {
-    client_options.set_connection_pool_size(0);
+  google::cloud::StatusOr<gcs::ClientOptions> client_options =
+      gcs::ClientOptions::CreateDefaultClientOptions();
+  if (!client_options.ok()) {
+    std::cerr << "Could not create ClientOptions, status="
+              << client_options.status() << std::endl;
+    return 1;
   }
-  gcs::Client client(client_options);
+  if (!options.enable_connection_pool) {
+    client_options->set_connection_pool_size(0);
+  }
+  gcs::Client client(*client_options);
 
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();

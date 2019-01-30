@@ -41,8 +41,11 @@ constexpr char kJsonKeyfileContents[] = R"""({
 })""";
 
 TEST(SignedUrlIntegrationTest, Sign) {
-  Client client(oauth2::CreateServiceAccountCredentialsFromJsonContents(
-      kJsonKeyfileContents));
+  auto status_or_creds =
+      oauth2::CreateServiceAccountCredentialsFromJsonContents(
+          kJsonKeyfileContents);
+  ASSERT_TRUE(status_or_creds.ok()) << "status=" << status_or_creds.status();
+  Client client(*status_or_creds);
 
   auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "test-object");
   ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
@@ -52,8 +55,11 @@ TEST(SignedUrlIntegrationTest, Sign) {
 }
 
 TEST(SignedUrlIntegrationTest, BucketOnly) {
-  Client client(oauth2::CreateServiceAccountCredentialsFromJsonContents(
-      kJsonKeyfileContents));
+  auto status_or_creds =
+      oauth2::CreateServiceAccountCredentialsFromJsonContents(
+          kJsonKeyfileContents);
+  ASSERT_TRUE(status_or_creds.ok()) << "status=" << status_or_creds.status();
+  Client client(*status_or_creds);
 
   auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "", WithAcl());
   ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
@@ -62,8 +68,11 @@ TEST(SignedUrlIntegrationTest, BucketOnly) {
 }
 
 TEST(SignedUrlIntegrationTest, SignEscape) {
-  Client client(oauth2::CreateServiceAccountCredentialsFromJsonContents(
-      kJsonKeyfileContents));
+  auto status_or_creds =
+      oauth2::CreateServiceAccountCredentialsFromJsonContents(
+          kJsonKeyfileContents);
+  ASSERT_TRUE(status_or_creds.ok()) << "status=" << status_or_creds.status();
+  Client client(*status_or_creds);
 
   auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "test+object");
   ASSERT_TRUE(actual.ok()) << "status=" << actual.status();

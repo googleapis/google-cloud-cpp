@@ -62,7 +62,10 @@ bool UsingTestbench() {
 }
 
 TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomObjectName();
@@ -94,7 +97,10 @@ TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, JsonDownloadFile) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomObjectName();
@@ -125,7 +131,10 @@ TEST_F(ObjectMediaIntegrationTest, JsonDownloadFile) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, DownloadFileFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomObjectName();
@@ -137,7 +146,10 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileFailure) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotOpenFile) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   StatusOr<ObjectMetadata> meta =
@@ -159,7 +171,10 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotOpenFile) {
 
 TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotWriteToFile) {
 #if GTEST_OS_LINUX
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   StatusOr<ObjectMetadata> meta =
@@ -189,7 +204,10 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotWriteToFile) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFile) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -222,7 +240,10 @@ TEST_F(ObjectMediaIntegrationTest, UploadFile) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileEmpty) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -250,7 +271,10 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileEmpty) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileMissingFileFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto file_name = MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -263,7 +287,10 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileMissingFileFailure) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileUploadFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -293,7 +320,10 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileNonRegularWarning) {
   // do on Linux, and hard to do on the other platforms we support, so just run
   // the test there.
 #if GTEST_OS_LINUX || GTEST_OS_MAC
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -331,7 +361,10 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileNonRegularWarning) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, XmlUploadFile) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -376,7 +409,9 @@ TEST_F(ObjectMediaIntegrationTest, XmlUploadFile) {
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileResumableBySize) {
   // Create a client that always uses resumable uploads.
-  Client client(ClientOptions().set_maximum_simple_upload_size(0));
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  Client client(client_options->set_maximum_simple_upload_size(0));
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -414,7 +449,10 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableBySize) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileResumableByOption) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -454,7 +492,9 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableByOption) {
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileResumableQuantum) {
   // Create a client that always uses resumable uploads.
-  Client client(ClientOptions().set_maximum_simple_upload_size(0));
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  Client client(client_options->set_maximum_simple_upload_size(0));
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -493,7 +533,9 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableQuantum) {
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileResumableNonQuantum) {
   // Create a client that always uses resumable uploads.
-  Client client(ClientOptions().set_maximum_simple_upload_size(0));
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  Client client(client_options->set_maximum_simple_upload_size(0));
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -531,7 +573,9 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableNonQuantum) {
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileResumableUploadFailure) {
   // Create a client that always uses resumable uploads.
-  Client client(ClientOptions().set_maximum_simple_upload_size(0));
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  Client client(client_options->set_maximum_simple_upload_size(0));
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
@@ -548,7 +592,10 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableUploadFailure) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomObjectName();
@@ -586,7 +633,10 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
 /// @test Read a portion of a relatively large object using the JSON API.
 TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
   // The testbench always requires multiple iterations to copy this object.
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -626,7 +676,10 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
 /// @test Read a portion of a relatively large object using the XML API.
 TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
   // The testbench always requires multiple iterations to copy this object.
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 

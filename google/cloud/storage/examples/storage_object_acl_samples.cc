@@ -292,7 +292,13 @@ void PatchObjectAclNoRead(gcs::Client client, int& argc, char* argv[]) {
 
 int main(int argc, char* argv[]) try {
   // Create a client to communicate with Google Cloud Storage.
-  gcs::Client client;
+  google::cloud::StatusOr<google::cloud::storage::Client> client =
+      google::cloud::storage::Client::CreateDefaultClient();
+  if (!client.ok()) {
+    std::cerr << "Failed to create Storage Client, status=" << client.status()
+              << std::endl;
+    return 1;
+  }
 
   // Build the list of commands and the usage string from that list.
   using CommandType = std::function<void(gcs::Client, int&, char*[])>;
@@ -308,7 +314,7 @@ int main(int argc, char* argv[]) try {
   for (auto&& kv : commands) {
     try {
       int fake_argc = 1;
-      kv.second(client, fake_argc, argv);
+      kv.second(*client, fake_argc, argv);
     } catch (Usage const& u) {
       command_usage += "    ";
       command_usage += u.msg;
@@ -329,7 +335,7 @@ int main(int argc, char* argv[]) try {
   }
 
   // Call the command with that client.
-  it->second(client, argc, argv);
+  it->second(*client, argc, argv);
 
   return 0;
 } catch (Usage const& ex) {

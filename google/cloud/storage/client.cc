@@ -32,9 +32,17 @@ static_assert(std::is_copy_constructible<storage::Client>::value,
 static_assert(std::is_copy_assignable<storage::Client>::value,
               "storage::Client must be assignable");
 
-std::shared_ptr<internal::RawClient> Client::CreateDefaultClient(
+std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
     ClientOptions options) {
   return internal::CurlClient::Create(std::move(options));
+}
+
+StatusOr<Client> Client::CreateDefaultClient() {
+  auto status_or_creds = oauth2::GoogleDefaultCredentials();
+  if (!status_or_creds.ok()) {
+    return StatusOr<Client>(status_or_creds.status());
+  }
+  return StatusOr<Client>(std::move(Client(*status_or_creds)));
 }
 
 bool Client::UseSimpleUpload(std::string const& file_name) const {
@@ -88,7 +96,7 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
     msg += file_name;
     return Status(StatusCode::kNotFound, std::move(msg));
   }
-  // This function only works for regular files, and the `storage::Client()`
+  // This function only works for regular files, and the `storage::Client`
   // class checks before calling it.
   std::uint64_t source_size = google::cloud::internal::file_size(file_name);
 

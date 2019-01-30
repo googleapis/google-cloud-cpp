@@ -89,7 +89,9 @@ std::vector<ObjectNameList> DivideIntoEqualSizedGroups(
 void CreateObjects(std::string const& bucket_name, ObjectNameList group,
                    std::string contents) {
   // Create our own client so no state is shared with the other threads.
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
   for (auto const& object_name : group) {
     StatusOr<ObjectMetadata> meta = client.InsertObject(
         bucket_name, object_name, contents, IfGenerationMatch(0));
@@ -99,7 +101,9 @@ void CreateObjects(std::string const& bucket_name, ObjectNameList group,
 
 void DeleteObjects(std::string const& bucket_name, ObjectNameList group) {
   // Create our own client so no state is shared with the other threads.
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
   for (auto const& object_name : group) {
     (void)client.DeleteObject(bucket_name, object_name);
   }
@@ -109,7 +113,9 @@ void DeleteObjects(std::string const& bucket_name, ObjectNameList group) {
 TEST_F(ThreadIntegrationTest, Unshared) {
   auto project_id = ThreadTestEnvironment::project_id();
   std::string bucket_name = MakeRandomBucketName();
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
 
   StatusOr<BucketMetadata> meta = client.CreateBucketForProject(
       bucket_name, project_id,
@@ -178,7 +184,9 @@ class CaptureSendHeaderBackend : public LogBackend {
 TEST_F(ThreadIntegrationTest, ReuseConnections) {
   auto log_backend = std::make_shared<CaptureSendHeaderBackend>();
 
-  Client client(ClientOptions()
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
 

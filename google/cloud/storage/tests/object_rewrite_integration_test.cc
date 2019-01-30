@@ -53,7 +53,10 @@ class ObjectRewriteIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(ObjectRewriteIntegrationTest, Copy) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto source_object_name = MakeRandomObjectName();
   auto destination_object_name = MakeRandomObjectName();
@@ -87,7 +90,10 @@ TEST_F(ObjectRewriteIntegrationTest, Copy) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   auto copy_name = MakeRandomObjectName();
@@ -113,7 +119,10 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   auto copy_name = MakeRandomObjectName();
@@ -144,7 +153,10 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   auto copy_name = MakeRandomObjectName();
@@ -175,7 +187,10 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPrivate) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   auto copy_name = MakeRandomObjectName();
@@ -202,7 +217,10 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPrivate) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclProjectPrivate) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   auto copy_name = MakeRandomObjectName();
@@ -229,7 +247,10 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclProjectPrivate) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPublicRead) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   auto copy_name = MakeRandomObjectName();
@@ -255,7 +276,10 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPublicRead) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, ComposeSimple) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -285,7 +309,10 @@ TEST_F(ObjectRewriteIntegrationTest, ComposeSimple) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, ComposedUsingEncryptedObject) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -321,7 +348,10 @@ TEST_F(ObjectRewriteIntegrationTest, ComposedUsingEncryptedObject) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteSimple) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto source_name = MakeRandomObjectName();
 
@@ -349,7 +379,10 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteSimple) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteEncrypted) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto source_name = MakeRandomObjectName();
 
@@ -384,7 +417,10 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteEncrypted) {
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteLarge) {
   // The testbench always requires multiple iterations to copy this object.
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto source_name = MakeRandomObjectName();
 
@@ -429,7 +465,10 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteLarge) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto source_object_name = MakeRandomObjectName();
   auto destination_object_name = MakeRandomObjectName();
@@ -441,7 +480,10 @@ TEST_F(ObjectRewriteIntegrationTest, CopyFailure) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, ComposeFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   auto composed_object_name = MakeRandomObjectName();
@@ -455,7 +497,10 @@ TEST_F(ObjectRewriteIntegrationTest, ComposeFailure) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto source_object_name = MakeRandomObjectName();
   auto destination_object_name = MakeRandomObjectName();

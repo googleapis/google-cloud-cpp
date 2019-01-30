@@ -126,9 +126,9 @@ TEST_F(ServiceAccountCredentialsTest,
           }));
 
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  ASSERT_TRUE(info.ok()) << "status=" << info.status();
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
-      info);
-
+      *info);
   // Calls Refresh to obtain the access token for our authorization header.
   EXPECT_EQ("Authorization: Type access-token-value",
             credentials.AuthorizationHeader().value());
@@ -177,7 +177,8 @@ TEST_F(ServiceAccountCredentialsTest,
           }));
 
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
-  ServiceAccountCredentials<MockHttpRequestBuilder> credentials(info);
+  ASSERT_TRUE(info.ok()) << "status=" << info.status();
+  ServiceAccountCredentials<MockHttpRequestBuilder> credentials(*info);
   // Calls Refresh to obtain the access token for our authorization header.
   EXPECT_EQ("Authorization: Type access-token-r1",
             credentials.AuthorizationHeader().value());
@@ -211,10 +212,11 @@ TEST_F(ServiceAccountCredentialsTest, ParseSimple) {
 
   auto actual =
       ParseServiceAccountCredentials(contents, "test-data", "unused-uri");
-  EXPECT_EQ("not-a-key-id-just-for-testing", actual.private_key_id);
-  EXPECT_EQ("not-a-valid-key-just-for-testing", actual.private_key);
-  EXPECT_EQ("test-only@test-group.example.com", actual.client_email);
-  EXPECT_EQ("https://oauth2.googleapis.com/test_endpoint", actual.token_uri);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ("not-a-key-id-just-for-testing", actual->private_key_id);
+  EXPECT_EQ("not-a-valid-key-just-for-testing", actual->private_key);
+  EXPECT_EQ("test-only@test-group.example.com", actual->client_email);
+  EXPECT_EQ("https://oauth2.googleapis.com/test_endpoint", actual->token_uri);
 }
 
 /// @test Verify that parsing a service account JSON string works.
@@ -229,10 +231,11 @@ TEST_F(ServiceAccountCredentialsTest, ParseUsesExplicitDefaultTokenUri) {
 
   auto actual = ParseServiceAccountCredentials(
       contents, "test-data", "https://oauth2.googleapis.com/test_endpoint");
-  EXPECT_EQ("not-a-key-id-just-for-testing", actual.private_key_id);
-  EXPECT_EQ("not-a-valid-key-just-for-testing", actual.private_key);
-  EXPECT_EQ("test-only@test-group.example.com", actual.client_email);
-  EXPECT_EQ("https://oauth2.googleapis.com/test_endpoint", actual.token_uri);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ("not-a-key-id-just-for-testing", actual->private_key_id);
+  EXPECT_EQ("not-a-valid-key-just-for-testing", actual->private_key);
+  EXPECT_EQ("test-only@test-group.example.com", actual->client_email);
+  EXPECT_EQ("https://oauth2.googleapis.com/test_endpoint", actual->token_uri);
 }
 
 /// @test Verify that parsing a service account JSON string works.
@@ -247,31 +250,22 @@ TEST_F(ServiceAccountCredentialsTest, ParseUsesImplicitDefaultTokenUri) {
 
   // No token_uri passed in here, either.
   auto actual = ParseServiceAccountCredentials(contents, "test-data");
-  EXPECT_EQ("not-a-key-id-just-for-testing", actual.private_key_id);
-  EXPECT_EQ("not-a-valid-key-just-for-testing", actual.private_key);
-  EXPECT_EQ("test-only@test-group.example.com", actual.client_email);
-  EXPECT_EQ(std::string(GoogleOAuthRefreshEndpoint()), actual.token_uri);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ("not-a-key-id-just-for-testing", actual->private_key_id);
+  EXPECT_EQ("not-a-valid-key-just-for-testing", actual->private_key);
+  EXPECT_EQ("test-only@test-group.example.com", actual->client_email);
+  EXPECT_EQ(std::string(GoogleOAuthRefreshEndpoint()), actual->token_uri);
 }
 
 /// @test Verify that invalid contents result in a readable error.
 TEST_F(ServiceAccountCredentialsTest, ParseInvalidContentsFails) {
   std::string config = R"""( not-a-valid-json-string )""";
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        auto info = ParseServiceAccountCredentials(config, "test-as-a-source");
-      } catch (std::invalid_argument const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("Invalid ServiceAccountCredentials"));
-        EXPECT_THAT(ex.what(), HasSubstr("test-as-a-source"));
-        throw;
-      },
-      std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      ParseServiceAccountCredentials(config, "test-as-a-source"),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto actual = ParseServiceAccountCredentials(config, "test-as-a-source");
+  ASSERT_FALSE(actual.ok()) << "status=" << actual.status();
+  EXPECT_THAT(actual.status().message(),
+              HasSubstr("Invalid ServiceAccountCredentials"));
+  EXPECT_THAT(actual.status().message(), HasSubstr("test-as-a-source"));
 }
 
 /// @test Parsing a service account JSON string should detect empty fields.
@@ -288,24 +282,11 @@ TEST_F(ServiceAccountCredentialsTest, ParseEmptyFieldFails) {
        {"private_key_id", "private_key", "client_email", "token_uri"}) {
     internal::nl::json json = internal::nl::json::parse(contents);
     json[field] = "";
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    EXPECT_THROW(
-        try {
-          ParseServiceAccountCredentials(json.dump(), "test-data", "");
-        } catch (std::invalid_argument const& ex) {
-          EXPECT_THAT(ex.what(), HasSubstr(field));
-          EXPECT_THAT(ex.what(), HasSubstr(" field is empty"));
-          EXPECT_THAT(ex.what(), HasSubstr("test-data"));
-          throw;
-        },
-        std::invalid_argument)
-        << "field=" << field;
-#else
-    EXPECT_DEATH_IF_SUPPORTED(
-        ParseServiceAccountCredentials(json.dump(), "test-data", "unused"),
-        "exceptions are disabled")
-        << "field=" << field;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    auto actual = ParseServiceAccountCredentials(json.dump(), "test-data", "");
+    ASSERT_FALSE(actual.ok()) << "status=" << actual.status();
+    EXPECT_THAT(actual.status().message(), HasSubstr(field));
+    EXPECT_THAT(actual.status().message(), HasSubstr(" field is empty"));
+    EXPECT_THAT(actual.status().message(), HasSubstr("test-data"));
   }
 }
 
@@ -322,24 +303,11 @@ TEST_F(ServiceAccountCredentialsTest, ParseMissingFieldFails) {
   for (auto const& field : {"private_key_id", "private_key", "client_email"}) {
     internal::nl::json json = internal::nl::json::parse(contents);
     json.erase(field);
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    EXPECT_THROW(
-        try {
-          ParseServiceAccountCredentials(json.dump(), "test-data", "");
-        } catch (std::invalid_argument const& ex) {
-          EXPECT_THAT(ex.what(), HasSubstr(field));
-          EXPECT_THAT(ex.what(), HasSubstr(" field is missing"));
-          EXPECT_THAT(ex.what(), HasSubstr("test-data"));
-          throw;
-        },
-        std::invalid_argument)
-        << "field=" << field;
-#else
-    EXPECT_DEATH_IF_SUPPORTED(
-        ParseServiceAccountCredentials(json.dump(), "test-data", "unused"),
-        "exceptions are disabled")
-        << "field=" << field;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    auto actual = ParseServiceAccountCredentials(json.dump(), "test-data", "");
+    ASSERT_FALSE(actual.ok()) << "status=" << actual.status();
+    EXPECT_THAT(actual.status().message(), HasSubstr(field));
+    EXPECT_THAT(actual.status().message(), HasSubstr(" field is missing"));
+    EXPECT_THAT(actual.status().message(), HasSubstr("test-data"));
   }
 }
 
@@ -366,8 +334,9 @@ TEST_F(ServiceAccountCredentialsTest, SignBlob) {
   }));
 
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  ASSERT_TRUE(info.ok()) << "status=" << info.status();
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
-      info);
+      *info);
 
   std::string blob = R"""(GET
 rmYdCNHKFXam78uCt7xQLw==
@@ -419,8 +388,9 @@ TEST_F(ServiceAccountCredentialsTest, ClientId) {
   }));
 
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  ASSERT_TRUE(info.ok()) << "status=" << info.status();
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
-      info);
+      *info);
 
   EXPECT_EQ("foo-email@foo-project.iam.gserviceaccount.com",
             credentials.client_id());

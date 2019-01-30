@@ -60,7 +60,10 @@ class ObjectIntegrationTest
 
 /// @test Verify the Object CRUD (Create, Get, Update, Delete, List) operations.
 TEST_F(ObjectIntegrationTest, BasicCRUD) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
 
   auto objects = client.ListObjects(bucket_name);
@@ -169,7 +172,10 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
 }
 
 TEST_F(ObjectIntegrationTest, FullPatch) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   // Create the object, but only if it does not exist already.
@@ -241,9 +247,11 @@ TEST_F(ObjectIntegrationTest, FullPatch) {
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsVersions) {
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
 
+  auto bucket_name = ObjectTestEnvironment::bucket_name();
   // This test requires the bucket to be configured with versioning. The buckets
   // used by the CI build are already configured with versioning enabled. The
   // bucket created in the testbench also has versioning. Regardless, check here
@@ -307,7 +315,10 @@ TEST_F(ObjectIntegrationTest, ListObjectsVersions) {
 }
 
 TEST_F(ObjectIntegrationTest, BasicReadWrite) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -331,7 +342,10 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
 }
 
 TEST_F(ObjectIntegrationTest, EncryptedReadWrite) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -360,7 +374,10 @@ TEST_F(ObjectIntegrationTest, EncryptedReadWrite) {
 }
 
 TEST_F(ObjectIntegrationTest, ReadNotFound) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -376,7 +393,10 @@ TEST_F(ObjectIntegrationTest, ReadNotFound) {
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWrite) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -406,7 +426,10 @@ TEST_F(ObjectIntegrationTest, StreamingWrite) {
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWriteAutoClose) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -430,7 +453,10 @@ TEST_F(ObjectIntegrationTest, StreamingWriteAutoClose) {
 }
 
 TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -462,7 +488,10 @@ TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
 }
 
 TEST_F(ObjectIntegrationTest, XmlReadWrite) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -486,7 +515,10 @@ TEST_F(ObjectIntegrationTest, XmlReadWrite) {
 }
 
 TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -558,7 +590,10 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
 }
 
 TEST_F(ObjectIntegrationTest, WriteWithContentType) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -581,7 +616,10 @@ TEST_F(ObjectIntegrationTest, WriteWithContentType) {
 }
 
 TEST_F(ObjectIntegrationTest, GetObjectMetadataFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -591,7 +629,10 @@ TEST_F(ObjectIntegrationTest, GetObjectMetadataFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -624,7 +665,10 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWriteFailureNoex) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -652,7 +696,9 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailureNoex) {
 
 TEST_F(ObjectIntegrationTest, ListObjectsFailure) {
   auto bucket_name = MakeRandomBucketName();
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
 
   ListObjectsReader reader = client.ListObjects(bucket_name, Versions(true));
 
@@ -666,7 +712,10 @@ TEST_F(ObjectIntegrationTest, ListObjectsFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, DeleteObjectFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -676,7 +725,10 @@ TEST_F(ObjectIntegrationTest, DeleteObjectFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, UpdateObjectFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -686,7 +738,10 @@ TEST_F(ObjectIntegrationTest, UpdateObjectFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, PatchObjectFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -697,7 +752,10 @@ TEST_F(ObjectIntegrationTest, PatchObjectFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, ListAccessControlFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -707,7 +765,10 @@ TEST_F(ObjectIntegrationTest, ListAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, CreateAccessControlFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   auto entity_name = MakeEntityName();
@@ -719,7 +780,10 @@ TEST_F(ObjectIntegrationTest, CreateAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, GetAccessControlFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   auto entity_name = MakeEntityName();
@@ -730,7 +794,10 @@ TEST_F(ObjectIntegrationTest, GetAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, UpdateAccessControlFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   auto entity_name = MakeEntityName();
@@ -743,7 +810,10 @@ TEST_F(ObjectIntegrationTest, UpdateAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, PatchAccessControlFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   auto entity_name = MakeEntityName();
@@ -756,7 +826,10 @@ TEST_F(ObjectIntegrationTest, PatchAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, DeleteAccessControlFailure) {
-  Client client;
+  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
+  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
+  Client client = std::move(*status_or_client);
+
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   auto entity_name = MakeEntityName();

@@ -25,7 +25,7 @@
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/notification_event_type.h"
 #include "google/cloud/storage/notification_payload_format.h"
-#include "google/cloud/storage/oauth2/credentials.h"
+#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/object_rewriter.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/retry_policy.h"
@@ -59,24 +59,43 @@ inline namespace STORAGE_CLIENT_NS {
  * this class is not guaranteed to work.
  *
  * @par Credentials
- * The default constructor for this class will attempt to load Application
- * Default %Credentials (ADCs). If you wish to use no credentials or to supply a
- * specific Credentials type, you can use the functions declared in
- * google_credentials.h:
+ * The default approach for creating a Client uses Google Application Default
+ * %Credentials. Because finding or loading ADCs can fail, the returned
+ * StatusOr<Client> from CreateDefaultClient() should be verified before using
+ * it. However, explicitly passing Credentials when creating a Client does not
+ * have the same potential to fail, so the resulting client is not wrapped in a
+ * StatusOr.  If you wish to use AnonymousCredentials or to supply a specific
+ * Credentials type, you can use the functions declared in google_credentials.h:
  * @code
  * namespace gcs = google::cloud::storage;
- * // Use ADCs, implicitly or explicitly:
- * gcs::Client client;
- * gcs::Client client(
- *     gcs::ClientOptions(gcs::oauth2::GoogleDefaultCredentials));
+ *
+ * // Implicitly use ADCs:
+ * StatusOr<gcs::Client> client = gcs::Client::CreateDefaultClient();
+ * if (!client.ok()) {
+ *   // Handle failure and return.
+ * }
+ *
+ * // Or explicitly use ADCs:
+ * auto status_or_creds = gcs::oauth2::GoogleDefaultCredentials();
+ * if (!status_or_creds.ok()) {
+ *   // Handle failure and return.
+ * }
+ * // Status was OK, so create a Client with the given Credentials.
+ * gcs::Client client(gcs::ClientOptions(*status_or_creds));
+ *
  * // Use service account credentials from a JSON keyfile:
  * std::string path = "/path/to/keyfile.json";
- * gcs::Client client(
- *     gcs::ClientOptions(
- *         gcs::oauth2::CreateServiceAccountCredentialsFromJsonFilePath(path)));
- * // Use Compute Engine credentials for the instance's default service account:
+ * auto status_or_creds =
+ *     gcs::oauth2::CreateServiceAccountCredentialsFromJsonFilePath(path);
+ * if (!status_or_creds.ok()) {
+ *   // Handle failure and return.
+ * }
+ * gcs::Client client(gcs::ClientOptions(*status_or_creds));
+ *
+ * // Use Compute Engine credentials for the instance's default service account.
  * gcs::Client client(
  *     gcs::ClientOptions(gcs::oauth2::CreateComputeEngineCredentials()));
+ *
  * // Use no credentials:
  * gcs::Client client(
  *     gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials()));
@@ -125,11 +144,6 @@ inline namespace STORAGE_CLIENT_NS {
 class Client {
  public:
   /**
-   * Creates the default client type with the default configuration.
-   */
-  explicit Client() : Client(ClientOptions()) {}
-
-  /**
    * Creates the default client type given the options.
    *
    * @param options the client options, these are used to control credentials,
@@ -147,7 +161,7 @@ class Client {
    */
   template <typename... Policies>
   explicit Client(ClientOptions options, Policies&&... policies)
-      : Client(CreateDefaultClient(std::move(options)),
+      : Client(CreateDefaultInternalClient(std::move(options)),
                std::forward<Policies>(policies)...) {}
 
   /**
@@ -185,6 +199,8 @@ class Client {
   /// Builds a client with a specific RawClient, without decorations.
   explicit Client(std::shared_ptr<internal::RawClient> client, NoDecorations)
       : raw_client_(std::move(client)) {}
+
+  static StatusOr<Client> CreateDefaultClient();
 
   /// Access the underlying `RawClient`.
   std::shared_ptr<internal::RawClient> raw_client() const {
@@ -2429,7 +2445,8 @@ class Client {
   //@}
 
  private:
-  static std::shared_ptr<internal::RawClient> CreateDefaultClient(
+  Client() = default;
+  static std::shared_ptr<internal::RawClient> CreateDefaultInternalClient(
       ClientOptions options);
 
   template <typename... Policies>

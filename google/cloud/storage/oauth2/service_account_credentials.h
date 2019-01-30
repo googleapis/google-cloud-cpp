@@ -40,7 +40,7 @@ struct ServiceAccountCredentialsInfo {
 };
 
 /// Parses the contents of a JSON keyfile into a ServiceAccountCredentialsInfo.
-ServiceAccountCredentialsInfo ParseServiceAccountCredentials(
+StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 
