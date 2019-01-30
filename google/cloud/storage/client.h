@@ -617,12 +617,6 @@ class Client {
    * you to lock the data retention policy, permanently preventing the policy
    * from being reduced or removed.
    *
-   * @see https://cloud.google.com/storage/docs/bucket-lock for a description of
-   *     the Bucket Lock feature.
-   *
-   * @see https://cloud.google.com/storage/docs/using-bucket-lock for examples
-   *     of how to use the Bucket Lock and retention policy features.
-   *
    * @param bucket_name the name of the bucket.
    * @param metageneration the expected value of the metageneration on the
    *     bucket. The request will fail if the metageneration does not match the
@@ -645,6 +639,12 @@ class Client {
    *
    * @par Example: remove the retention policy
    * @snippet storage_bucket_samples.cc remove retention policy
+   *
+   * @see https://cloud.google.com/storage/docs/bucket-lock for a description of
+   *     the Bucket Lock feature.
+   *
+   * @see https://cloud.google.com/storage/docs/using-bucket-lock for examples
+   *     of how to use the Bucket Lock and retention policy features.
    */
   template <typename... Options>
   StatusOr<void> LockBucketRetentionPolicy(std::string const& bucket_name,
@@ -713,10 +713,6 @@ class Client {
    *     copy objects to different locations, with different storage class,
    *     and/or with different encryption keys.
    *
-   * @see https://cloud.google.com/storage/docs/json_api/v1/objects/copy for
-   *   a full description of the advantages of `Objects: rewrite` over
-   *   `Objects: copy`.
-   *
    * @param source_bucket_name the name of the bucket that contains the object
    *     to be copied.
    * @param source_object_name the name of the object to copy.
@@ -741,6 +737,10 @@ class Client {
    *
    * @par Example: copy an encrypted object
    * @snippet storage_object_samples.cc copy encrypted object
+   *
+   * @see https://cloud.google.com/storage/docs/json_api/v1/objects/copy for
+   *   a full description of the advantages of `Objects: rewrite` over
+   *   `Objects: copy`.
    */
   template <typename... Options>
   StatusOr<ObjectMetadata> CopyObject(std::string source_bucket_name,
@@ -1451,7 +1451,7 @@ class Client {
    * Updates the value of an existing bucket ACL.
    *
    * @note
-   * For changing BucketAccessControl the Patch and Update APIs basically offer
+   * For changing BucketAccessControl, the Patch and Update APIs basically offer
    * the same functionality. The only field that can be modified by either API
    * is `role`, and it may only be set to a new value (it cannot be removed).
    * The API is offered for consistency with the other resource types where
@@ -1494,7 +1494,7 @@ class Client {
    * the new value for an BucketAccessControl and apply that delta.
    *
    * @note
-   * For changing BucketAccessControl the Patch and Update APIs basically offer
+   * For changing BucketAccessControl, the Patch and Update APIs basically offer
    * the same functionality. The only field that can be modified by either API
    * is `role`, and it may only be set to a new value (it cannot be removed).
    * The API is offered for consistency with the other resource types where
@@ -1540,7 +1540,7 @@ class Client {
    * having to read the current value.
    *
    * @note
-   * For changing BucketAccessControl the Patch and Update APIs basically offer
+   * For changing BucketAccessControl, the Patch and Update APIs basically offer
    * the same functionality. The only field that can be modified by either API
    * is `role`, and it may only be set to a new value (it cannot be removed).
    * The API is offered for consistency with the other resource types where
@@ -1724,7 +1724,7 @@ class Client {
    * Updates the value of an existing object ACL.
    *
    * @note
-   * For changing ObjectAccessControl the Patch and Update APIs basically offer
+   * For changing ObjectAccessControl, the Patch and Update APIs basically offer
    * the same functionality. The only field that can be modified by either API
    * is `role`, and it may only be set to a new value (it cannot be removed).
    * The API is offered for consistency with the other resource types where
@@ -1767,7 +1767,7 @@ class Client {
    * the new value for an ObjectAccessControl and apply that delta.
    *
    * @note
-   * For changing ObjectAccessControl the Patch and Update APIs basically offer
+   * For changing ObjectAccessControl, the Patch and Update APIs basically offer
    * the same functionality. The only field that can be modified by either API
    * is `role`, and it may only be set to a new value (it cannot be removed).
    * The API is offered for consistency with the other resource types where
@@ -1814,7 +1814,7 @@ class Client {
    * having to read the current value.
    *
    * @note
-   * For changing ObjectAccessControl the Patch and Update APIs basically offer
+   * For changing ObjectAccessControl, the Patch and Update APIs basically offer
    * the same functionality. The only field that can be modified by either API
    * is `role`, and it may only be set to a new value (it cannot be removed).
    * The API is offered for consistency with the other resource types where
@@ -2006,7 +2006,7 @@ class Client {
    * unless a different ACL is specified when the object is created.
    *
    * @note
-   * For changing default object access controls the Patch and Update APIs
+   * For changing default object access controls, the Patch and Update APIs
    * basically offer the same functionality. The only field that can be modified
    * by either API is `role`, and it may only be set to a new value (it cannot
    * be removed). The API is offered for consistency with the other resource
@@ -2049,7 +2049,7 @@ class Client {
    * access control, and apply that delta.
    *
    * @note
-   * For changing default object access controls the Patch and Update APIs
+   * For changing default object access controls, the Patch and Update APIs
    * basically offer the same functionality. The only field that can be modified
    * by either API is `role`, and it may only be set to a new value (it cannot
    * be removed). The API is offered for consistency with the other resource
@@ -2098,7 +2098,7 @@ class Client {
    * having to read the current value.
    *
    * @note
-   * For changing default object access controls the Patch and Update APIs
+   * For changing default object access controls, the Patch and Update APIs
    * basically offer the same functionality. The only field that can be modified
    * by either API is `role`, and it may only be set to a new value (it cannot
    * be removed). The API is offered for consistency with the other resource
@@ -2232,12 +2232,6 @@ class Client {
    *     not all sub-resources are valid for objects.  Likewise, only a single
    *     sub-resource may be retrieved in each request.
    *
-   * @see https://cloud.google.com/storage/docs/access-control/signed-urls for
-   *     a general description of signed URLs and how they can be used.
-   *
-   * @see https://cloud.google.com/storage/docs/xml-api/overview for a detailed
-   *     description of the XML API.
-   *
    * @param verb the operation allowed through this signed URL, `GET`, `POST`,
    *     `PUT`, `HEAD`, etc. are valid values.
    * @param bucket_name the name of the bucket.
@@ -2257,10 +2251,16 @@ class Client {
    *     `WithResponseContentDisposition()`, `WithResponseContentType()`,
    *     `WithStorageClass()`, `WithTagging()`, `WithUserProject()`.
    *
+   * @return the signed URL.
+   *
    * @par Example
    * @snippet storage_object_samples.cc sign url
    *
-   * @return the signed URL.
+   * @see https://cloud.google.com/storage/docs/access-control/signed-urls for
+   *     a general description of signed URLs and how they can be used.
+   *
+   * @see https://cloud.google.com/storage/docs/xml-api/overview for a detailed
+   *     description of the XML API.
    */
   template <typename... Options>
   StatusOr<std::string> CreateV2SignedUrl(std::string verb,
