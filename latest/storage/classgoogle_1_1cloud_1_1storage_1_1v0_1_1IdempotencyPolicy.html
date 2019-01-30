@@ -187,6 +187,8 @@ Public Member Functions</h2></td></tr>
 <p>The idempotency policy controls which requests are treated as idempotent and therefore safe to retry on a transient failure. Non-idempotent operations can result in data loss. For example, consider <code>DeleteObject()</code>, if this operation is called without pre-conditions retrying this operation may delete more than one version of an object, which may not have the desired effect. Even operations that "add" data can result in data loss, consider <code>InsertObjectMedia()</code>, if called without pre-conditions retrying this operation will insert multiple new versions, possibly deleting old data if the bucket is configured to keep only N versions of each object.</p>
 <p>Some applications are designed to handle duplicate requests without data loss, or the library may be used in an environment where the risk of data loss due to duplicate requests is negligible or zero.</p>
 <p>This policy allows application developers to control the behavior of the library with respect to retrying non-idempotent operations. Application developers can configure the library to only retry operations that are known to be idempotent (that is, they will succeed only once). Application may also configure the library to retry all operations, regardless of whether the operations are idempotent or not. </p>
+
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8h_source.html#l00048">48</a> of file <a class="el" href="idempotency__policy_8h_source.html">idempotency_policy.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3bc9272e28d3e7f3d99c9ce0afc6325d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3bc9272e28d3e7f3d99c9ce0afc6325d">&#9670;&nbsp;</a></span>~IdempotencyPolicy()</h2>
@@ -1531,9 +1533,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li><a class="el" href="idempotency__policy_8h_source.html">idempotency_policy.h</a></li>
-</ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

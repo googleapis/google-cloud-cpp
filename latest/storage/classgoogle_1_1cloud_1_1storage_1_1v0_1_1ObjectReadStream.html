@@ -117,6 +117,8 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Defines a <code>std::basic_istream&lt;char&gt;</code> to read from a GCS Object. </p>
+
+<p class="definition">Definition at line <a class="el" href="object__stream_8h_source.html#l00050">50</a> of file <a class="el" href="object__stream_8h_source.html">object_stream.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="acb7bd9ffa7f6748d79274cd6ed3f10f2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acb7bd9ffa7f6748d79274cd6ed3f10f2">&#9670;&nbsp;</a></span>ObjectReadStream() <span class="overload">[1/4]</span></h2>
@@ -143,6 +145,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Creates a stream not associated with any buffer. </p>
 <p>Attempts to use this stream will result in failures. </p>
+
+<p class="definition">Definition at line <a class="el" href="object__stream_8h_source.html#l00057">57</a> of file <a class="el" href="object__stream_8h_source.html">object_stream.h</a>.</p>
 
 </div>
 </div>
@@ -172,6 +176,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Creates a stream associated with the given <code>streambuf</code>. </p>
 
+<p class="definition">Definition at line <a class="el" href="object__stream_8h_source.html#l00062">62</a> of file <a class="el" href="object__stream_8h_source.html">object_stream.h</a>.</p>
+
 </div>
 </div>
 <a id="ae4a9d9b711c69cc0c7ff70743e2a417d"></a>
@@ -197,6 +203,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="object__stream_8h_source.html#l00070">70</a> of file <a class="el" href="object__stream_8h_source.html">object_stream.h</a>.</p>
 
 </div>
 </div>
@@ -251,6 +259,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Closes the stream (if necessary). </p>
 
+<p class="definition">Definition at line <a class="el" href="object__stream_8cc_source.html#l00029">29</a> of file <a class="el" href="object__stream_8cc_source.html">object_stream.cc</a>.</p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -270,6 +280,8 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Terminate the download, possibly before completing it. </p>
+
+<p class="definition">Definition at line <a class="el" href="object__stream_8cc_source.html#l00047">47</a> of file <a class="el" href="object__stream_8cc_source.html">object_stream.cc</a>.</p>
 
 </div>
 </div>
@@ -304,6 +316,8 @@ Public Member Functions</h2></td></tr>
 <p>The string has the same format as the value returned by <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectReadStream.html#a95d10e8e3faa855e300178a528cae500" title="The received CRC32C checksum and the MD5 hash values as reported by GCS. ">received_hash()</a></code>. Note that the format of this string is also subject to change without notice.</p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/hashes-etags">https://cloud.google.com/storage/docs/hashes-etags</a> for more information on checksums and hashes in GCS. </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="object__stream_8h_source.html#l00135">135</a> of file <a class="el" href="object__stream_8h_source.html">object_stream.h</a>.</p>
+
 </div>
 </div>
 <a id="a0e7485d669a351c3e42a4b2af5264af3"></a>
@@ -331,6 +345,8 @@ Public Member Functions</h2></td></tr>
 
 <p>The headers returned by the service, for debugging only. </p>
 
+<p class="definition">Definition at line <a class="el" href="object__stream_8h_source.html#l00138">138</a> of file <a class="el" href="object__stream_8h_source.html">object_stream.h</a>.</p>
+
 </div>
 </div>
 <a id="acd290c5d85766311f8fecef517518d7c"></a>
@@ -355,6 +371,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="object__stream_8h_source.html#l00085">85</a> of file <a class="el" href="object__stream_8h_source.html">object_stream.h</a>.</p>
 
 </div>
 </div>
@@ -381,6 +399,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="object__stream_8h_source.html#l00073">73</a> of file <a class="el" href="object__stream_8h_source.html">object_stream.h</a>.</p>
 
 </div>
 </div>
@@ -438,6 +458,8 @@ Public Member Functions</h2></td></tr>
 <p>The values are reported as comma separated <code>tag=value</code> pairs, e.g. <code>crc32c=AAAAAA==,md5=1B2M2Y8AsgTpgAmY7PhCfg==</code>. The format of this string is subject to change without notice, they are provided for informational purposes only.</p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/hashes-etags">https://cloud.google.com/storage/docs/hashes-etags</a> for more information on checksums and hashes in GCS. </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="object__stream_8h_source.html#l00116">116</a> of file <a class="el" href="object__stream_8h_source.html">object_stream.h</a>.</p>
+
 </div>
 </div>
 <a id="a4280dba6e2567a0889762ec35dd70d88"></a>
@@ -466,12 +488,10 @@ Public Member Functions</h2></td></tr>
 <p>Report any download errors. </p>
 <p>Note that errors may go undetected until the download completes. </p>
 
+<p class="definition">Definition at line <a class="el" href="object__stream_8h_source.html#l00098">98</a> of file <a class="el" href="object__stream_8h_source.html">object_stream.h</a>.</p>
+
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="object__stream_8h_source.html">object_stream.h</a></li>
-<li><a class="el" href="object__stream_8cc.html">object_stream.cc</a></li>
-</ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

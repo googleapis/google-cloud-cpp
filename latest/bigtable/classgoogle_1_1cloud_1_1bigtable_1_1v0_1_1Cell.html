@@ -112,6 +112,8 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>The in-memory representation of a Bigtable cell. </p>
 <p>Bigtable stores data in rows, indexes by row keys. Each row may contain multiple column families, each column family might contain multiple columns, and each column has multiple cells indexed by timestamp. Notice that the storage is sparse, column families, columns, and timestamps might contain zero cells.</p>
 <p>The <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Cell.html" title="The in-memory representation of a Bigtable cell. ">Cell</a> class owns all its data. </p>
+
+<p class="definition">Definition at line <a class="el" href="cell_8h_source.html#l00039">39</a> of file <a class="el" href="cell_8h_source.html">cell.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab0c97330011260c79c3dc04ecb2e8add"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab0c97330011260c79c3dc04ecb2e8add">&#9670;&nbsp;</a></span>Cell() <span class="overload">[1/2]</span></h2>
@@ -172,6 +174,8 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Create a <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Cell.html" title="The in-memory representation of a Bigtable cell. ">Cell</a> and fill it with data. </p>
+
+<p class="definition">Definition at line <a class="el" href="cell_8h_source.html#l00042">42</a> of file <a class="el" href="cell_8h_source.html">cell.h</a>.</p>
 
 </div>
 </div>
@@ -235,6 +239,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Create a <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Cell.html" title="The in-memory representation of a Bigtable cell. ">Cell</a> and fill it with bigendian 64 bit value. </p>
 
+<p class="definition">Definition at line <a class="el" href="cell_8h_source.html#l00053">53</a> of file <a class="el" href="cell_8h_source.html">cell.h</a>.</p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -264,6 +270,8 @@ Public Member Functions</h2></td></tr>
 <p>Return the column this cell belongs to. </p>
 <p>The returned value is not valid after this object is deleted. </p>
 
+<p class="definition">Definition at line <a class="el" href="cell_8h_source.html#l00073">73</a> of file <a class="el" href="cell_8h_source.html">cell.h</a>.</p>
+
 </div>
 </div>
 <a id="a042bbe3bd50525dd9f3ac1db7b53ebf4"></a>
@@ -292,6 +300,8 @@ Public Member Functions</h2></td></tr>
 <p>Return the family this cell belongs to. </p>
 <p>The returned value is not valid after this object is deleted. </p>
 
+<p class="definition">Definition at line <a class="el" href="cell_8h_source.html#l00069">69</a> of file <a class="el" href="cell_8h_source.html">cell.h</a>.</p>
+
 </div>
 </div>
 <a id="a231751519edbfa4736a46b421a5a1504"></a>
@@ -318,6 +328,8 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return the labels applied to this cell by label transformer read filters. </p>
+
+<p class="definition">Definition at line <a class="el" href="cell_8h_source.html#l00099">99</a> of file <a class="el" href="cell_8h_source.html">cell.h</a>.</p>
 
 </div>
 </div>
@@ -347,6 +359,8 @@ Public Member Functions</h2></td></tr>
 <p>Return the row key this cell belongs to. </p>
 <p>The returned value is not valid after this object is deleted. </p>
 
+<p class="definition">Definition at line <a class="el" href="cell_8h_source.html#l00065">65</a> of file <a class="el" href="cell_8h_source.html">cell.h</a>.</p>
+
 </div>
 </div>
 <a id="a6aa02ba67fc7d6e55b4b5df3ed4b61e1"></a>
@@ -373,6 +387,8 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return the timestamp of this cell. </p>
+
+<p class="definition">Definition at line <a class="el" href="cell_8h_source.html#l00076">76</a> of file <a class="el" href="cell_8h_source.html">cell.h</a>.</p>
 
 </div>
 </div>
@@ -401,6 +417,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Return the contents of this cell. </p>
 <p>The returned value is not valid after this object is deleted. </p>
+
+<p class="definition">Definition at line <a class="el" href="cell_8h_source.html#l00082">82</a> of file <a class="el" href="cell_8h_source.html">cell.h</a>.</p>
 
 </div>
 </div>
@@ -432,11 +450,10 @@ template&lt;typename T &gt; </div>
 <p>Interpret the value as an encoded <code>T</code> and return it. </p>
 <p>Google Cloud Bigtable stores arbitrary blobs in each cell. Some applications interpret these blobs as strings, other as encoded protos, and sometimes as BigEndian or LittleEndian integers. This is a helper function to convert the blob into a T value. It uses <code>bigtable::internal::encoder&lt;&gt;</code> to decode the value. </p>
 
+<p class="definition">Definition at line <a class="el" href="cell_8h_source.html#l00094">94</a> of file <a class="el" href="cell_8h_source.html">cell.h</a>.</p>
+
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li><a class="el" href="cell_8h_source.html">cell.h</a></li>
-</ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
