@@ -131,13 +131,8 @@ GCS C++ Client library should be easy if you use either.
 #### Integrating with Bazel
 
 Select the [google-cloud-cpp release](https://github.com/googleapis/google-cloud-cpp/releases)
-you want to use. Download the tarball from that page and make a note of the
-SHA256 checksum of this release:
-
-```{.sh}
-curl -s https://github.com/google-cloud-cpp/archive/v0.5.0.tar.gz | sha256sum
-0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5  -
-```
+you want to use. The release notes should include the expected SHA256 checksum
+of the tarball (and zip) files, make a note of them.
 
 In your [WORKSPACE][workspace-definition-link] file add a dependency to download
 and install the library, for example:
@@ -149,7 +144,7 @@ and install the library, for example:
 http_archive(
     name = "com_github_googleapis_google_cloud_cpp",
     url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.5.0.tar.gz",
-    sha256 = "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
+    sha256 = "886bcba3616d5f362838a2d86ae0198dd3670a84a84c82291cda6c30e14779fc"
 )
 @endcode
 
