@@ -111,6 +111,16 @@ checkbox.
 
 Copy the relevant release notes into the description of the release.
 
+After you create the release, capture the SHA256 checksums of the
+tarball and zip files, and edit the notes to include them. These
+commands might be handy:
+
+```sh
+TAG=v0.6.0-pre1 # change this to the actual pre-release tag
+wget -q -O - https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.tar.gz | sha256sum
+wget -q -O - https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.zip | sha256sum
+```
+
 ## Have the pre-release tag reviewed
 
 Talk to your colleagues, make sure the pre-release tag looks Okay. There are
@@ -123,6 +133,15 @@ pre-release, and iterate until you are satisfied with the code.
 
 Edit the pre-release, change the name, uncheck the pre-release checkbox and
 publish.
+
+After you publish, remember to update the SHA256 sums, they change, as
+the tarball and zip files include the tag as part of the file paths.
+
+```sh
+TAG=v0.6.0 # change this to the actual release tag
+wget -q -O - https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.tar.gz | sha256sum
+wget -q -O - https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.zip | sha256sum
+```
 
 ## Review the branch protections
 
