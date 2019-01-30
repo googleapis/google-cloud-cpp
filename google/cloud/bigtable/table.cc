@@ -57,6 +57,22 @@ void Table::Apply(SingleRowMutation&& mut) {
   }
 }
 
+future<void> Table::AsyncApply(SingleRowMutation&& mut, CompletionQueue& cq) {
+  promise<google::bigtable::v2::MutateRowResponse> p;
+  future<google::bigtable::v2::MutateRowResponse> result = p.get_future();
+
+  impl_.AsyncApply(
+      cq, internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncApply"),
+      std::move(mut));
+
+  auto final =
+      result.then([](future<google::bigtable::v2::MutateRowResponse> f) {
+        auto mutate_row_response = f.get();
+      });
+
+  return final;
+}
+
 void Table::BulkApply(BulkMutation&& mut) {
   grpc::Status status;
   std::vector<FailedMutation> failures =
