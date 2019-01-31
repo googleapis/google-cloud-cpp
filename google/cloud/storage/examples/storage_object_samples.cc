@@ -507,7 +507,7 @@ void UploadFile(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::ObjectMetadata> object_metadata = client.UploadFile(
         file_name, bucket_name, object_name, gcs::IfGenerationMatch(0));
 
-    if (!object_metadata.ok()) {
+    if (!object_metadata) {
       std::cerr << "Error uploading file " << file_name << " to bucket "
                 << bucket_name << " as object " << object_name
                 << ", status=" << object_metadata.status() << std::endl;
@@ -544,7 +544,7 @@ void UploadFileResumable(google::cloud::storage::Client client, int& argc,
         file_name, bucket_name, object_name, gcs::IfGenerationMatch(0),
         gcs::NewResumableUploadSession());
 
-    if (!object_metadata.ok()) {
+    if (!object_metadata) {
       std::cerr << "Error uploading file " << file_name << " to bucket "
                 << bucket_name << " as object " << object_name
                 << ", status=" << object_metadata.status() << std::endl;
@@ -1042,7 +1042,7 @@ void RewriteObjectNonBlocking(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::ObjectMetadata> object_metadata =
         rewriter.ResultWithProgressCallback(
             [](StatusOr<gcs::RewriteProgress> const& progress) {
-              if (!progress.ok()) {
+              if (!progress) {
                 std::cerr << "Error during rewrite: " << progress.status()
                           << std::endl;
                 return;
@@ -1133,7 +1133,7 @@ void RewriteObjectResume(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::ObjectMetadata> object_metadata =
         rewriter.ResultWithProgressCallback(
             [](StatusOr<gcs::RewriteProgress> const& progress) {
-              if (!progress.ok()) {
+              if (!progress) {
                 std::cerr << "Error during rewrite: " << progress.status()
                           << std::endl;
                 return;
@@ -1468,7 +1468,7 @@ int main(int argc, char* argv[]) try {
   google::cloud::storage::Client client;
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char*[])>;
+      std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"list-objects", &ListObjects},
       {"insert-object", &InsertObject},

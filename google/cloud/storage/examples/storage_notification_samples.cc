@@ -161,12 +161,14 @@ void DeleteNotification(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string bucket_name, std::string notification_id) {
     StatusOr<void> status =
         client.DeleteNotification(bucket_name, notification_id);
-    if (!status.ok()) {
+
+    if (!status) {
       std::cerr << "Error delete notification id " << notification_id
                 << " on bucket " << bucket_name
                 << ", status=" << status.status() << std::endl;
       return;
     }
+
     std::cout << "Successfully deleted notification " << notification_id
               << " on bucket " << bucket_name << std::endl;
   }
@@ -182,7 +184,7 @@ int main(int argc, char* argv[]) try {
 
   // Build the list of commands and the usage string from that list.
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char*[])>;
+      std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"list-notifications", &ListNotifications},
       {"create-notification", &CreateNotification},

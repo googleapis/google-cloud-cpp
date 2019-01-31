@@ -57,13 +57,13 @@ void ListBuckets(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::ListBucketsReader> bucket_list = client.ListBuckets();
 
     if (!bucket_list) {
-        std::cerr << "Error reading bucket list for default project"
-                  << ", status=" << bucket_list.status() << std::endl;
-        return;
+      std::cerr << "Error reading bucket list for default project"
+                << ", status=" << bucket_list.status() << std::endl;
+      return;
     }
 
     for (auto&& bucket_metadata : *bucket_list) {
-      if (!bucket_metadata.ok()) {
+      if (!bucket_metadata) {
         std::cerr << "Error reading bucket list for default project"
                   << ", status=" << bucket_metadata.status() << std::endl;
         return;
@@ -92,7 +92,7 @@ void ListBucketsForProject(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string project_id) {
     int count = 0;
     for (auto&& bucket_metadata : client.ListBucketsForProject(project_id)) {
-      if (!bucket_metadata.ok()) {
+      if (!bucket_metadata) {
         std::cerr << "Error reading bucket list for project " << project_id
                   << ", status=" << bucket_metadata.status() << std::endl;
         return;
@@ -201,7 +201,7 @@ void DeleteBucket(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<void> status = client.DeleteBucket(bucket_name);
 
-    if (!status.ok()) {
+    if (!status) {
       std::cerr << "Error while deleting bucket " << bucket_name
                 << ", status=" << status.status() << std::endl;
       return;
@@ -541,7 +541,7 @@ void GetBilling(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name);
 
-    if (!bucket_metadata.ok()) {
+    if (!bucket_metadata) {
       std::cerr << "Error reading metadata for bucket " << bucket_name
                 << ", status=" << bucket_metadata.status() << std::endl;
       return;
@@ -859,7 +859,7 @@ void DisableDefaultEventBasedHold(google::cloud::storage::Client client,
         gcs::BucketMetadataPatchBuilder().SetDefaultEventBasedHold(false),
         gcs::IfMetagenerationMatch(original->metageneration()));
 
-    if (!patched_metadata.ok()) {
+    if (!patched_metadata) {
       std::cerr << "Error disabling default event based hold in bucket "
                 << original->name() << ", status=" << original.status()
                 << std::endl;
@@ -1052,7 +1052,7 @@ int main(int argc, char* argv[]) try {
   //! [create client]
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char*[])>;
+      std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"list-buckets", &ListBuckets},
       {"list-buckets-for-project", &ListBucketsForProject},
