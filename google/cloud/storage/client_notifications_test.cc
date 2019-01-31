@@ -218,8 +218,7 @@ TEST_F(NotificationsTest, DeleteNotification) {
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
-  StatusOr<void> status =
-      client.DeleteNotification("test-bucket", "test-notification-1");
+  auto status = client.DeleteNotification("test-bucket", "test-notification-1");
   ASSERT_TRUE(status.ok());
 }
 
@@ -228,7 +227,7 @@ TEST_F(NotificationsTest, DeleteNotificationTooManyFailures) {
       mock_, EXPECT_CALL(*mock_, DeleteNotification(_)),
       [](Client& client) {
         return client.DeleteNotification("test-bucket-name",
-                                         "test-notification-1").status();
+                                         "test-notification-1");
       },
       "DeleteNotification");
 }
@@ -238,7 +237,7 @@ TEST_F(NotificationsTest, DeleteNotificationPermanentFailure) {
       *client_, EXPECT_CALL(*mock_, DeleteNotification(_)),
       [](Client& client) {
         return client.DeleteNotification("test-bucket-name",
-                                         "test-notification-1").status();
+                                         "test-notification-1");
       },
       "DeleteNotification");
 }

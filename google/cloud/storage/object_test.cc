@@ -184,23 +184,19 @@ TEST_F(ObjectTest, DeleteObject) {
                 LimitedErrorCountRetryPolicy(2),
                 ExponentialBackoffPolicy(ms(100), ms(500), 2)};
 
-  StatusOr<void> status =
-      client.DeleteObject("test-bucket-name", "test-object-name");
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject("test-bucket-name", "test-object-name");
+  EXPECT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectTest, DeleteObjectTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
       mock, EXPECT_CALL(*mock, DeleteObject(_)),
       [](Client& client) {
-        return client.DeleteObject("test-bucket-name", "test-object-name")
-            .status();
+        return client.DeleteObject("test-bucket-name", "test-object-name");
       },
       [](Client& client) {
-        return client
-            .DeleteObject("test-bucket-name", "test-object-name",
-                          IfGenerationMatch(7))
-            .status();
+        return client.DeleteObject("test-bucket-name", "test-object-name",
+                                   IfGenerationMatch(7));
       },
       "DeleteObject");
 }
@@ -209,8 +205,7 @@ TEST_F(ObjectTest, DeleteObjectPermanentFailure) {
   testing::PermanentFailureStatusTest<internal::EmptyResponse>(
       *client, EXPECT_CALL(*mock, DeleteObject(_)),
       [](Client& client) {
-        return client.DeleteObject("test-bucket-name", "test-object-name")
-            .status();
+        return client.DeleteObject("test-bucket-name", "test-object-name");
       },
       "DeleteObject");
 }

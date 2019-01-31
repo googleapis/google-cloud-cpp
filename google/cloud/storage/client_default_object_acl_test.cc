@@ -177,23 +177,20 @@ TEST_F(DefaultObjectAccessControlsTest, DeleteDefaultObjectAcl) {
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
-  auto actual = client.DeleteDefaultObjectAcl("test-bucket", "user-test-user");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  auto status = client.DeleteDefaultObjectAcl("test-bucket", "user-test-user");
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(DefaultObjectAccessControlsTest, DeleteDefaultObjectAclTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
       mock, EXPECT_CALL(*mock, DeleteDefaultObjectAcl(_)),
       [](Client& client) {
-        return client
-            .DeleteDefaultObjectAcl("test-bucket-name", "user-test-user-1")
-            .status();
+        return client.DeleteDefaultObjectAcl("test-bucket-name",
+                                             "user-test-user-1");
       },
       [](Client& client) {
-        return client
-            .DeleteDefaultObjectAcl("test-bucket-name", "user-test-user-1",
-                                    IfMatchEtag("ABC="))
-            .status();
+        return client.DeleteDefaultObjectAcl(
+            "test-bucket-name", "user-test-user-1", IfMatchEtag("ABC="));
       },
       "DeleteDefaultObjectAcl");
 }
@@ -203,9 +200,8 @@ TEST_F(DefaultObjectAccessControlsTest,
   testing::PermanentFailureStatusTest<internal::EmptyResponse>(
       *client, EXPECT_CALL(*mock, DeleteDefaultObjectAcl(_)),
       [](Client& client) {
-        return client
-            .DeleteDefaultObjectAcl("test-bucket-name", "user-test-user-1")
-            .status();
+        return client.DeleteDefaultObjectAcl("test-bucket-name",
+                                             "user-test-user-1");
       },
       "DeleteDefaultObjectAcl");
 }

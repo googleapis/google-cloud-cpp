@@ -153,7 +153,7 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   }
 
   auto delete_status = client.DeleteBucket(bucket_name);
-  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
+  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status;
   // This is basically a smoke test, if the test does not crash it was
   // successful.
 }
@@ -219,7 +219,7 @@ TEST_F(ThreadIntegrationTest, ReuseConnections) {
   }
   LogSink::Instance().RemoveBackend(id);
   auto delete_status = client.DeleteBucket(bucket_name);
-  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
+  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status;
 
   std::set<std::string> connected;
   std::copy_if(

@@ -134,8 +134,8 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   EXPECT_FALSE(patched->has_billing());
   EXPECT_FALSE(patched->has_website());
 
-  StatusOr<void> status = client.DeleteBucket(bucket_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteBucket(bucket_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
   buckets = client.ListBucketsForProject(project_id);
   current_buckets.clear();
   for (auto&& b : buckets) {
@@ -281,10 +281,10 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   EXPECT_EQ(desired_state.website_as_optional(),
             patched->website_as_optional());
 
-  auto delete_status = client.DeleteBucket(bucket_name);
-  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
-  delete_status = client.DeleteBucket(logging_name);
-  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
+  auto status = client.DeleteBucket(bucket_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
+  status = client.DeleteBucket(logging_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 // @test Verify that we can set the iam_configuration() in a Bucket.
@@ -315,8 +315,8 @@ TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
   ASSERT_TRUE(patched->iam_configuration().bucket_policy_only)
       << "patched=" << *patched;
 
-  auto delete_status = client.DeleteBucket(bucket_name);
-  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
+  auto status = client.DeleteBucket(bucket_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(BucketIntegrationTest, GetMetadata) {
@@ -442,16 +442,15 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   ASSERT_TRUE(get_result.ok()) << "status=" << get_result.status();
   EXPECT_EQ(get_result->role(), new_acl.role());
 
-  StatusOr<void> delete_result =
-      client.DeleteBucketAcl(bucket_name, entity_name);
-  ASSERT_TRUE(delete_result.ok()) << "status=" << delete_result.status();
+  auto status = client.DeleteBucketAcl(bucket_name, entity_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 
   current_acl = client.ListBucketAcl(bucket_name);
   ASSERT_TRUE(current_acl.ok()) << "status=" << current_acl.status();
   EXPECT_EQ(0, name_counter(result->entity(), *current_acl));
 
-  auto delete_status = client.DeleteBucket(bucket_name);
-  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
+  status = client.DeleteBucket(bucket_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
@@ -519,15 +518,15 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
   ASSERT_TRUE(get_result.ok()) << "status=" << get_result.status();
   EXPECT_EQ(get_result->role(), new_acl.role());
 
-  auto delete_status = client.DeleteDefaultObjectAcl(bucket_name, entity_name);
-  EXPECT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
+  auto status = client.DeleteDefaultObjectAcl(bucket_name, entity_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
 
   current_acl = client.ListDefaultObjectAcl(bucket_name);
   ASSERT_TRUE(current_acl.ok()) << "status=" << current_acl.status();
   EXPECT_EQ(0, name_counter(result->entity(), *current_acl));
 
-  delete_status = client.DeleteBucket(bucket_name);
-  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
+  status = client.DeleteBucket(bucket_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(BucketIntegrationTest, NotificationsCRUD) {
@@ -570,8 +569,8 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
   ASSERT_TRUE(get.ok()) << "status=" << get.status();
   EXPECT_EQ(*create, *get);
 
-  auto delete_status = client.DeleteNotification(bucket_name, create->id());
-  ASSERT_TRUE(delete_status.ok()) << "status=" << get.status();
+  auto status = client.DeleteNotification(bucket_name, create->id());
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 
   current_notifications = client.ListNotifications(bucket_name);
   ASSERT_TRUE(current_notifications.ok())
@@ -583,8 +582,8 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
                         });
   EXPECT_EQ(0U, count) << "create=" << *create;
 
-  delete_status = client.DeleteBucket(bucket_name);
-  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
+  status = client.DeleteBucket(bucket_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(BucketIntegrationTest, IamCRUD) {
@@ -639,8 +638,8 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
       << "status=" << actual_permissions.status();
   EXPECT_THAT(*actual_permissions, ElementsAreArray(expected_permissions));
 
-  auto delete_status = client.DeleteBucket(bucket_name);
-  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
+  auto status = client.DeleteBucket(bucket_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(BucketIntegrationTest, BucketLock) {
@@ -668,7 +667,7 @@ TEST_F(BucketIntegrationTest, BucketLock) {
   ASSERT_TRUE(after_locking->retention_policy().is_locked);
 
   auto status = client.DeleteBucket(bucket_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(BucketIntegrationTest, BucketLockFailure) {
@@ -832,7 +831,7 @@ TEST_F(BucketIntegrationTest, DeleteAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  StatusOr<void> status = client.DeleteBucketAcl(bucket_name, entity_name);
+  auto status = client.DeleteBucketAcl(bucket_name, entity_name);
   EXPECT_FALSE(status.ok());
 }
 
@@ -903,8 +902,7 @@ TEST_F(BucketIntegrationTest, DeleteDefaultAccessControlFailure) {
   auto entity_name = MakeEntityName();
 
   // This operation should fail because the target bucket does not exist.
-  auto status =
-      client.DeleteDefaultObjectAcl(bucket_name, entity_name).status();
+  auto status = client.DeleteDefaultObjectAcl(bucket_name, entity_name);
   EXPECT_FALSE(status.ok());
 }
 }  // namespace

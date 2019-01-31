@@ -156,8 +156,8 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
   EXPECT_EQ(desired_patch.content_language(), patched_meta->content_language())
       << *patched_meta;
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 
   objects = client.ListObjects(bucket_name);
   current_list.clear();
@@ -236,8 +236,8 @@ TEST_F(ObjectIntegrationTest, FullPatch) {
   EXPECT_EQ(desired.content_type(), patched->content_type());
   EXPECT_EQ(desired.metadata(), patched->metadata());
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsVersions) {
@@ -326,8 +326,8 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectIntegrationTest, EncryptedReadWrite) {
@@ -355,8 +355,8 @@ TEST_F(ObjectIntegrationTest, EncryptedReadWrite) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectIntegrationTest, ReadNotFound) {
@@ -401,8 +401,8 @@ TEST_F(ObjectIntegrationTest, StreamingWrite) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
   EXPECT_EQ(expected_str, actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWriteAutoClose) {
@@ -425,8 +425,8 @@ TEST_F(ObjectIntegrationTest, StreamingWriteAutoClose) {
   ASSERT_FALSE(actual.empty());
   EXPECT_EQ(expected, actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
@@ -457,8 +457,8 @@ TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
   EXPECT_EQ(expected_str, actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectIntegrationTest, XmlReadWrite) {
@@ -481,8 +481,8 @@ TEST_F(ObjectIntegrationTest, XmlReadWrite) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
@@ -546,15 +546,14 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
   EXPECT_EQ(get_result->role(), new_acl.role());
 
   // Remove an entity and verify it is no longer in the ACL.
-  StatusOr<void> status =
-      client.DeleteObjectAcl(bucket_name, object_name, entity_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObjectAcl(bucket_name, object_name, entity_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
   current_acl = client.ListObjectAcl(bucket_name, object_name);
   ASSERT_TRUE(current_acl.ok()) << "status=" << current_acl.status();
   EXPECT_EQ(0, name_counter(result->entity(), *current_acl));
 
   status = client.DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectIntegrationTest, WriteWithContentType) {
@@ -576,8 +575,8 @@ TEST_F(ObjectIntegrationTest, WriteWithContentType) {
   EXPECT_EQ(bucket_name, meta.bucket());
   EXPECT_EQ("text/plain", meta.content_type());
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectIntegrationTest, GetObjectMetadataFailure) {
@@ -619,8 +618,8 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
       },
       "" /* the message generated by the C++ runtime is unknown */);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWriteFailureNoex) {
@@ -671,7 +670,7 @@ TEST_F(ObjectIntegrationTest, DeleteObjectFailure) {
   auto object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  auto status = client.DeleteObject(bucket_name, object_name);
   ASSERT_FALSE(status.ok());
 }
 

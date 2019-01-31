@@ -182,20 +182,17 @@ TEST_F(BucketTest, DeleteBucket) {
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
 
-  auto actual = client.DeleteBucket("foo-bar-baz");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  auto status = client.DeleteBucket("foo-bar-baz");
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(BucketTest, DeleteBucketTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
       mock, EXPECT_CALL(*mock, DeleteBucket(_)),
+      [](Client& client) { return client.DeleteBucket("test-bucket-name"); },
       [](Client& client) {
-        return client.DeleteBucket("test-bucket-name").status();
-      },
-      [](Client& client) {
-        return client
-            .DeleteBucket("test-bucket-name", IfMetagenerationMatch(42))
-            .status();
+        return client.DeleteBucket("test-bucket-name",
+                                   IfMetagenerationMatch(42));
       },
       "DeleteBucket");
 }
@@ -203,9 +200,7 @@ TEST_F(BucketTest, DeleteBucketTooManyFailures) {
 TEST_F(BucketTest, DeleteBucketPermanentFailure) {
   testing::PermanentFailureStatusTest<internal::EmptyResponse>(
       *client, EXPECT_CALL(*mock, DeleteBucket(_)),
-      [](Client& client) {
-        return client.DeleteBucket("test-bucket-name").status();
-      },
+      [](Client& client) { return client.DeleteBucket("test-bucket-name"); },
       "DeleteBucket");
 }
 
