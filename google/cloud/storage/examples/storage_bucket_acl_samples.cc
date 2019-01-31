@@ -114,7 +114,7 @@ void DeleteBucketAcl(google::cloud::storage::Client client, int& argc,
   //! [delete bucket acl] [START storage_delete_bucket_acl]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string entity) {
-    auto status = client.DeleteBucketAcl(bucket_name, entity);
+    google::cloud::Status status = client.DeleteBucketAcl(bucket_name, entity);
 
     if (!status.ok()) {
       std::cerr << "Failure deleting ACL for entity " << entity << " in bucket "

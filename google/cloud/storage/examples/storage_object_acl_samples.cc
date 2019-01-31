@@ -119,7 +119,8 @@ void DeleteObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string entity) {
-    auto status = client.DeleteObjectAcl(bucket_name, object_name, entity);
+    google::cloud::Status status =
+        client.DeleteObjectAcl(bucket_name, object_name, entity);
 
     if (!status.ok()) {
       std::cerr << "Error deleting object ACL entry for entity " << entity

@@ -198,7 +198,7 @@ void DeleteBucket(google::cloud::storage::Client client, int& argc,
   //! [delete bucket] [START storage_delete_bucket]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
-    auto status = client.DeleteBucket(bucket_name);
+    google::cloud::Status status = client.DeleteBucket(bucket_name);
 
     if (!status.ok()) {
       std::cerr << "Error while deleting bucket " << bucket_name

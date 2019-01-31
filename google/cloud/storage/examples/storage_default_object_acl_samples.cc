@@ -115,7 +115,8 @@ void DeleteDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
   //! [delete default object acl] [START storage_remove_bucket_default_owner]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string entity) {
-    auto status = client.DeleteDefaultObjectAcl(bucket_name, entity);
+    google::cloud::Status status =
+        client.DeleteDefaultObjectAcl(bucket_name, entity);
 
     if (!status.ok()) {
       std::cerr << "Failure deleting default object ACL for entity " << entity
