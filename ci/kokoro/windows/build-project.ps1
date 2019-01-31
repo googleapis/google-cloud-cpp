@@ -54,6 +54,10 @@ $cmake_flags += "-DCMAKE_TOOLCHAIN_FILE=`"$dir\vcpkg\scripts\buildsystems\vcpkg.
 $cmake_flags += "-DVCPKG_TARGET_TRIPLET=x64-windows-static"
 $cmake_flags += "-DCMAKE_C_COMPILER=cl.exe"
 $cmake_flags += "-DCMAKE_CXX_COMPILER=cl.exe"
+# TODO (#1861): We set this to external so that we can download a newer version
+# of gtest via CMake.  Once a newer version of gtest is released (and vcpkg is
+# updated accordingly), this can be removed.
+$cmake_flags += "-DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external"
 
 # Configure CMake and create the build directory.
 Write-Host

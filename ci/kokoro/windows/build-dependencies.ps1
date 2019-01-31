@@ -92,10 +92,13 @@ if ($LastExitCode) {
 
 Write-Host "Building vcpkg package versions."
 Get-Date -Format o
+# TODO (#1861): We don't list gtest here because we need a newer version than
+# what vcpkg has, so it's listed as an external dependency elsewhere. Once
+# gtest has a new release, we can add it back here.
 $packages = @("zlib:x64-windows-static", "openssl:x64-windows-static",
               "protobuf:x64-windows-static", "c-ares:x64-windows-static",
               "grpc:x64-windows-static", "curl:x64-windows-static",
-              "gtest:x64-windows-static", "crc32c:x64-windows-static")
+              "crc32c:x64-windows-static")
 foreach ($pkg in $packages) {
     .\vcpkg.exe install $pkg
     if ($LastExitCode) {
