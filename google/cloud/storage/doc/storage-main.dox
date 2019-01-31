@@ -60,33 +60,33 @@ find the credentials file. For example:
 
 #### Linux/macOS with Bash/zsh/ksh/etc.
 
-```{.sh}
+@code
 export GOOGLE_APPLICATION_CREDENTIALS=[PATH]
-```
+@endcode
 
 #### Linux/macOS with sh
 
-```{.sh}
+@code
 GOOGLE_APPLICATION_CREDENTIALS=[PATH]; export GOOGLE_APPLICATION_CREDENTIALS
-```
+@endcode
 
 #### Linux/macOS with csh/tcsh
 
-```
+@code
 setenv GOOGLE_APPLICATION_CREDENTIALS [PATH]
-```
+@endcode
 
 #### Windows Powershell
 
-```
+@code
 $env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]
-```
+@endcode
 
 #### Windows with Command Prompt
 
-```
+@code
 set GOOGLE_APPLICATION_CREDENTIALS=[PATH]
-```
+@endcode
 
 This is the recommended way to configure the
 authentication preferences, though if the environment variable is not set, the
@@ -107,9 +107,9 @@ region. You must provide the project id and bucket name in the command-line when
 you run the quickstart program. Assuming you followed the build instructions
 referenced above this would be:
 
-```{.sh}
+@code
 ./build-output/google/cloud/storage/examples/quick_start [BUCKET_NAME] [PROJECT_ID]
-```
+@endcode
 
 ### Using GOOGLE_CLOUD_PROJECT to set the default project
 
