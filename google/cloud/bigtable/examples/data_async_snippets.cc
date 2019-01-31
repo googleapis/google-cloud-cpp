@@ -43,7 +43,7 @@ void AsyncApply(cbt::Table table, cbt::CompletionQueue cq,
     throw Usage{"async-apply: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [bulk async-apply]
+  //! [async-apply]
   [&](cbt::Table table, cbt::CompletionQueue cq, std::string table_id) {
     // Write several rows with some trivial data.
     for (int i = 0; i != 20; ++i) {
@@ -74,7 +74,7 @@ void AsyncApply(cbt::Table table, cbt::CompletionQueue cq,
       fut.get();
     }
   }
-  //! [bulk async-apply]
+  //! [async-apply]
   (std::move(table), std::move(cq), argv[1]);
 }
 
