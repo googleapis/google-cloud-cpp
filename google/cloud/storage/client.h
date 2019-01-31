@@ -200,6 +200,7 @@ class Client {
   explicit Client(std::shared_ptr<internal::RawClient> client, NoDecorations)
       : raw_client_(std::move(client)) {}
 
+  /// Create a Client using ClientOptions::CreateDefaultClientOptions().
   static StatusOr<Client> CreateDefaultClient();
 
   /// Access the underlying `RawClient`.

@@ -38,11 +38,11 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
 }
 
 StatusOr<Client> Client::CreateDefaultClient() {
-  auto status_or_creds = oauth2::GoogleDefaultCredentials();
-  if (!status_or_creds.ok()) {
-    return StatusOr<Client>(status_or_creds.status());
+  auto status_or_opts = ClientOptions::CreateDefaultClientOptions();
+  if (!status_or_opts.ok()) {
+    return StatusOr<Client>(status_or_opts.status());
   }
-  return StatusOr<Client>(std::move(Client(*status_or_creds)));
+  return StatusOr<Client>(Client(*status_or_opts));
 }
 
 bool Client::UseSimpleUpload(std::string const& file_name) const {
