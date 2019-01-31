@@ -5,16 +5,17 @@
 The Google Cloud Storage (GCS) C++ Client library offers types and functions
 access GCS from C++11 applications. It offers full access to the GCS API,
 including operations to list, read, write, and delete
-[GCS objects][objects-definition-link] and [buckets][bucket-definition-link].
+[GCS objects][object-definition-link] and [buckets][bucket-definition-link].
 The library also provides functions to modify the IAM permissions on buckets,
 read and modify the metadata associated with objects and buckets, configure
 encryption keys, configure notifications via Cloud Pub/Sub, and change the
 access control list of object or buckets.
 
 This library requires a C++11 compiler, it is supported (and tested) on multiple
-Linux distributions, as well as Windows and macOS. The top-level README
-on [GitHub][github-link] provides detailed instructions to install the necessary
-dependencies, and how to compile the client library.
+Linux distributions, as well as Windows and macOS. The
+[top-level README][github-readme] on [GitHub][github-link] provides detailed
+instructions to install the necessary dependencies, as well as how to compile
+the client library.
 
 ## Quickstart
 
@@ -30,37 +31,64 @@ guide.
 
 ### Before you begin
 
-1. Select or create a Google Cloud Platform (GCP) project.
-
-    [GO TO THE MANAGE RESOURCES PAGE][resource-link]
-
-    Make a note of the project id, you will need to use it later.
-
-2. Make sure that billing is enabled for your project
-
-    [LEARN HOW TO ENABLE BILLING][billing-link]
-
+1. Select or create a Google Cloud Platform (GCP) project using the
+   [manage resource page][resource-link]. Make a note of the project id, you
+   will need to use it later.
+2. Make sure that [billing is enabled][billing-link] for your project.
 3. Learn about [key terms and concepts][concepts-link] for Cloud Storage.
-
-
-4. Setup the authentication for the examples.
-
-    [LEARN HOW TO CONFIGURE A SERVICE ACCOUNT][authentication-quickstart]
-
-    [LEARN HOW TO LOGIN WITH YOUR PERSONAL ACCOUNT][gcloud-quickstart]
+4. Setup the authentication for the examples:
+   - [Configure a service account][authentication-quickstart],
+   - or [login with your personal account][gcloud-quickstart]
 
 ### Downloading and Compiling the C++ Client Library
 
 The source code for the Cloud Storage C++ Client Library can be found on
-[GitHub][github-link]. Download or clone this repository as usual. The
-top-level README file in this repository includes detailed instructions on
+[GitHub][github-link]. Download or clone this repository as usual:
+
+```
+git clone https://github.com/googleapis/google-cloud-cpp.git
+```
+
+The top-level README file in this repository includes detailed instructions on
 how to compile the library. The examples used in this guide should be
 automatically compiled when you follow said instructions.
 
 ### Configuring authentication for the C++ Client Library
 
 This library uses the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to
-find the credentials file. This is the recommended way to configure the
+find the credentials file. For example:
+
+#### Linux/macOS with Bash/zsh/ksh/etc.
+
+@code
+export GOOGLE_APPLICATION_CREDENTIALS=[PATH]
+@endcode
+
+#### Linux/macOS with sh
+
+@code
+GOOGLE_APPLICATION_CREDENTIALS=[PATH]; export GOOGLE_APPLICATION_CREDENTIALS
+@endcode
+
+#### Linux/macOS with csh/tcsh
+
+@code
+setenv GOOGLE_APPLICATION_CREDENTIALS [PATH]
+@endcode
+
+#### Windows Powershell
+
+@code
+$env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]
+@endcode
+
+#### Windows with Command Prompt
+
+@code
+set GOOGLE_APPLICATION_CREDENTIALS=[PATH]
+@endcode
+
+This is the recommended way to configure the
 authentication preferences, though if the environment variable is not set, the
 library searches for a credentials file in the same location as the [Cloud
 SDK](https://cloud.google.com/sdk/).
@@ -79,9 +107,9 @@ region. You must provide the project id and bucket name in the command-line when
 you run the quickstart program. Assuming you followed the build instructions
 referenced above this would be:
 
-```
+@code
 ./build-output/google/cloud/storage/examples/quick_start [BUCKET_NAME] [PROJECT_ID]
-```
+@endcode
 
 ### Using GOOGLE_CLOUD_PROJECT to set the default project
 
@@ -102,6 +130,10 @@ GCS C++ Client library should be easy if you use either.
 
 #### Integrating with Bazel
 
+Select the [google-cloud-cpp release](https://github.com/googleapis/google-cloud-cpp/releases)
+you want to use. The release notes should include the expected SHA256 checksum
+of the tarball (and zip) files, make a note of them.
+
 In your [WORKSPACE][workspace-definition-link] file add a dependency to download
 and install the library, for example:
 
@@ -111,8 +143,8 @@ and install the library, for example:
 # Change the version and SHA256 hash as needed.
 http_archive(
     name = "com_github_googleapis_google_cloud_cpp",
-    url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.2.0.tar.gz",
-    sha256 = "5fa6577828e5f949178b13ed0411dd634527c9d2d8f00e433edbd6ef9e42a281"
+    url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.5.0.tar.gz",
+    sha256 = "886bcba3616d5f362838a2d86ae0198dd3670a84a84c82291cda6c30e14779fc"
 )
 @endcode
 
@@ -161,7 +193,7 @@ Now that the library is installed, you can use it in your CMake list files:
 ```
 find_package(Threads REQUIRED)
 find_package(CURL REQUIRED)
-find_package(storage_client 0.1.0 REQUIRED)
+find_package(storage_client 0.4.0 REQUIRED)
 
 add_executable(my_program my_program.cc)
 target_link_libraries(my_program storage_client)
@@ -170,16 +202,22 @@ target_link_libraries(my_program storage_client)
 ### Error Handling
 
 This library never throws exceptions to signal error. In general, the library
-returns a `StatusOr<T>` if an error is possible. The exception are classes that
+returns a
+[`StatusOr<T>`](https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/status_or.h)
+if an error is possible.
+Some functions return objects that
 already have an existing error handling mechanism, such as types derived from
-`std::ostream`.
+`std::ostream` where the application can check the
+[state flags](https://en.cppreference.com/w/cpp/io/basic_ios/rdstate)
+to determine if there was an error.
+In these cases no `StatusOr` wrapper is used.
 
 @par Error Handling Example (without exceptions):
 
 Application developers that cannot or prefer not to use exceptions to signal
 errors can check if the `StatusOr<T>` contains an error using `.ok()`. The error
 details are available using the `.status()` member function. If the
-`StatusOr<T>` does not contain an error then the application can use the\
+`StatusOr<T>` does not contain an error then the application can use the
 `StatusOr<T>` as a smart pointer to `T`, that is, `operator->()` and
 `operator*()` work as you would expect. Note that accessing the value of a
 `StatusOr<T>` that contains an error is undefined behavior.
@@ -189,12 +227,21 @@ using namespace google::cloud;
 [](storage::Client client) {
   StatusOr<storage::BucketMetadata> metadata = client.GetBucketMetadata(
       "my-bucket");
+
   if (!metadata.ok()) {
     std::cerr << "Error retrieving metadata for my-bucket: "
               << metadata.status() << std::endl;
     return;
   }
-  // here, use `metadata` as a smart pointer to `T`, or `metadata.value()`.
+
+  // here, use `metadata` as a smart pointer to `T`, for example:
+  std::cout << "The bucket " << metadata->name()
+            << " default storage class is " << metadata->storage_class()
+            << "\n";
+
+  // alternatively capture as a local variable and use normally:
+  storage::BucketMetadata bucket_metadata = *metadata;
+  std::cout << "Full metadata: " << bucket_metadata << "\n";
 }
 @endcode
 
@@ -208,13 +255,8 @@ the `StatusOr<T>` object contains an error.
 @code {.cpp}
 using namespace google::cloud;
 [](storage::Client client) {
-  try {
-    storage::BucketMetadata metadata = client.GetBucketMetadata(
+  storage::BucketMetadata metadata = client.GetBucketMetadata(
         "my-bucket").value(); // throws on error
-    // use `metadata` here.
-  } catch (storage::RuntimeStatusError const& ex) {
-    std::cerr << "Error status: " << ex.what() << std::endl;
-  }
 }
 @endcode
 
@@ -242,6 +284,8 @@ good places to continue learning about the library.
 [bucket-definition-link]: https://cloud.google.com/storage/docs/key-terms#buckets
 [object-definition-link]: https://cloud.google.com/storage/docs/key-terms#objects
 [project-definition-link]: https://cloud.google.com/storage/docs/projects 'Project Definition in GCS'
-[github-link]: https://github.com/googleapis/google-cloud-cpp 'Top-level README'
+[github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
+<!-- The ugly %2E disables auto-linking in Doxygen -->
+[github-readme]: http://github.com/googleapis/google-cloud-cpp/blob/master/README%2Emd
 
 */
