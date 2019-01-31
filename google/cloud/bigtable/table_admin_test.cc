@@ -202,10 +202,12 @@ TEST_F(TableAdminTest, ListTables) {
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListTables(btadmin::Table::FULL);
+  ASSERT_TRUE(actual);
+  auto const& v = *actual;
   std::string instance_name = tested.instance_name();
-  ASSERT_EQ(2UL, actual.size());
-  EXPECT_EQ(instance_name + "/tables/t0", actual[0].name());
-  EXPECT_EQ(instance_name + "/tables/t1", actual[1].name());
+  ASSERT_EQ(2UL, v.size());
+  EXPECT_EQ(instance_name + "/tables/t0", v[0].name());
+  EXPECT_EQ(instance_name + "/tables/t1", v[1].name());
 }
 
 /// @test Verify that `bigtable::TableAdmin::ListTables` handles failures.
@@ -229,12 +231,14 @@ TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListTables(btadmin::Table::FULL);
+  ASSERT_TRUE(actual);
+  auto const& v = *actual;
   std::string instance_name = tested.instance_name();
-  ASSERT_EQ(4UL, actual.size());
-  EXPECT_EQ(instance_name + "/tables/t0", actual[0].name());
-  EXPECT_EQ(instance_name + "/tables/t1", actual[1].name());
-  EXPECT_EQ(instance_name + "/tables/t2", actual[2].name());
-  EXPECT_EQ(instance_name + "/tables/t3", actual[3].name());
+  ASSERT_EQ(4UL, v.size());
+  EXPECT_EQ(instance_name + "/tables/t0", v[0].name());
+  EXPECT_EQ(instance_name + "/tables/t1", v[1].name());
+  EXPECT_EQ(instance_name + "/tables/t2", v[2].name());
+  EXPECT_EQ(instance_name + "/tables/t3", v[3].name());
 }
 
 /**
@@ -249,13 +253,7 @@ TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
-// After all the setup, make the actual call we want to test.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(tested.ListTables(btadmin::Table::FULL), std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(tested.ListTables(btadmin::Table::FULL),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_FALSE(tested.ListTables(btadmin::Table::FULL));
 }
 
 /**
@@ -277,13 +275,7 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
   EXPECT_CALL(*client_, ListTables(_, _, _))
       .WillRepeatedly(Invoke(mock_recoverable_failure));
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  // After all the setup, make the actual call we want to test.
-  EXPECT_THROW(tested.ListTables(btadmin::Table::FULL), std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(tested.ListTables(btadmin::Table::FULL),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_FALSE(tested.ListTables(btadmin::Table::FULL));
 }
 
 /// @test Verify that `bigtable::TableAdmin::Create` works in the easy case.
@@ -322,7 +314,8 @@ initial_splits { key: 'p' }
   bigtable::TableConfig config(
       {{"f1", GC::MaxNumVersions(1)}, {"f2", GC::MaxAge(1_s)}},
       {"a", "c", "p"});
-  tested.CreateTable("new-table", std::move(config));
+  auto table = tested.CreateTable("new-table", std::move(config));
+  EXPECT_TRUE(table);
 }
 
 /**
@@ -337,15 +330,7 @@ TEST_F(TableAdminTest, CreateTableFailure) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  // After all the setup, make the actual call we want to test.
-  EXPECT_THROW(tested.CreateTable("other-table", bigtable::TableConfig()),
-               bigtable::GRpcError);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      tested.CreateTable("other-table", bigtable::TableConfig()),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_FALSE(tested.CreateTable("other-table", bigtable::TableConfig()));
 }
 
 /**

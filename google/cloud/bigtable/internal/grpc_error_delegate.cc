@@ -22,6 +22,58 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
+
+namespace {
+StatusCode MapStatusCode(grpc::StatusCode const& code) {
+  switch (code) {
+    case grpc::StatusCode::OK:
+      return StatusCode::kOk;
+    case grpc::StatusCode::CANCELLED:
+      return StatusCode::kCancelled;
+    case grpc::StatusCode::UNKNOWN:
+      return StatusCode::kUnknown;
+    case grpc::StatusCode::INVALID_ARGUMENT:
+      return StatusCode::kInvalidArgument;
+    case grpc::StatusCode::DEADLINE_EXCEEDED:
+      return StatusCode::kDeadlineExceeded;
+    case grpc::StatusCode::NOT_FOUND:
+      return StatusCode::kNotFound;
+    case grpc::StatusCode::ALREADY_EXISTS:
+      return StatusCode::kAlreadyExists;
+    case grpc::StatusCode::PERMISSION_DENIED:
+      return StatusCode::kPermissionDenied;
+    case grpc::StatusCode::UNAUTHENTICATED:
+      return StatusCode::kUnauthenticated;
+    case grpc::StatusCode::RESOURCE_EXHAUSTED:
+      return StatusCode::kResourceExhausted;
+    case grpc::StatusCode::FAILED_PRECONDITION:
+      return StatusCode::kFailedPrecondition;
+    case grpc::StatusCode::ABORTED:
+      return StatusCode::kAborted;
+    case grpc::StatusCode::OUT_OF_RANGE:
+      return StatusCode::kOutOfRange;
+    case grpc::StatusCode::UNIMPLEMENTED:
+      return StatusCode::kUnimplemented;
+    case grpc::StatusCode::INTERNAL:
+      return StatusCode::kInternal;
+    case grpc::StatusCode::UNAVAILABLE:
+      return StatusCode::kUnavailable;
+    case grpc::StatusCode::DATA_LOSS:
+      return StatusCode::kDataLoss;
+    case grpc::StatusCode::DO_NOT_USE:
+    default:
+      return StatusCode::kDoNotUse;
+  }
+}
+}  // namespace
+
+google::cloud::Status MakeStatusFromRpcError(grpc::Status const& status) {
+  StatusCode code = MapStatusCode(status.error_code());
+  // TODO(devjgm): Pass along status.error_details() once we have absl::Status
+  // or some version that supports binary blobs of data.
+  return google::cloud::Status(code, status.error_message());
+}
+
 void ThrowRpcError(grpc::Status const& status, char const* msg) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   throw bigtable::GRpcError(msg, status);

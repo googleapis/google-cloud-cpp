@@ -74,14 +74,19 @@ void CreateTable(google::cloud::bigtable::TableAdmin admin, int argc,
 void ListTables(google::cloud::bigtable::TableAdmin admin, int argc,
                 char* argv[]) {
   if (argc != 1) {
-    throw Usage{"list-tables: <project-id> <instance-id>"};
+    std::cerr << "list-tables: <project-id> <instance-id>\n";
+    return;
   }
 
   //! [list tables]
   [](google::cloud::bigtable::TableAdmin admin) {
     auto tables =
         admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
-    for (auto const& table : tables) {
+    if (!tables) {
+      std::cerr << "ListTables failed: " << tables.status() << std::endl;
+      return;
+    }
+    for (auto const& table : *tables) {
       std::cout << table.name() << std::endl;
     }
   }
