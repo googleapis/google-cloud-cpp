@@ -16,11 +16,6 @@
 
 set -eu
 
-if [[ "${TRAVIS_OS_NAME}" != "linux" ]]; then
-  echo "Not a Linux-based build, skipping Linux-specific build steps."
-  exit 0
-fi
-
 if [[ -n "${IMAGE+x}" ]]; then
   echo "IMAGE is already defined."
 else
