@@ -65,7 +65,7 @@ class RawClient {
       SetBucketIamPolicyRequest const& request) = 0;
   virtual StatusOr<TestBucketIamPermissionsResponse> TestBucketIamPermissions(
       TestBucketIamPermissionsRequest const& request) = 0;
-  virtual StatusOr<EmptyResponse> LockBucketRetentionPolicy(
+  virtual StatusOr<BucketMetadata> LockBucketRetentionPolicy(
       LockBucketRetentionPolicyRequest const& request) = 0;
   //@}
 

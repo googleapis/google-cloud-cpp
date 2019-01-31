@@ -356,7 +356,7 @@ def bucket_lock_retention_policy(bucket_name):
     """Implement the 'Buckets: lockRetentionPolicy' API."""
     bucket = testbench_utils.lookup_bucket(bucket_name)
     bucket.lock_retention_policy(flask.request)
-    return testbench_utils.filtered_response(flask.request, {})
+    return testbench_utils.filtered_response(flask.request, bucket.metadata)
 
 
 @gcs.route('/b/<bucket_name>/o')

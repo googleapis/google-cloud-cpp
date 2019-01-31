@@ -458,22 +458,38 @@ TEST_F(BucketTest, TestBucketIamPermissionsPermanentFailure) {
 }
 
 TEST_F(BucketTest, LockBucketRetentionPolicy) {
+  std::string text = R"""({
+      "kind": "storage#bucket",
+      "id": "test-bucket-name",
+      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket-name",
+      "projectNumber": "123456789",
+      "name": "test-bucket-name",
+      "timeCreated": "2018-05-19T19:31:14Z",
+      "updated": "2018-05-19T19:31:24Z",
+      "metageneration": 7,
+      "location": "US",
+      "storageClass": "STANDARD",
+      "etag": "XYZ="
+})""";
+  auto expected = internal::BucketMetadataParser::FromString(text).value();
+
   EXPECT_CALL(*mock, LockBucketRetentionPolicy(_))
-      .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
-      .WillOnce(Invoke([](internal::LockBucketRetentionPolicyRequest const& r) {
+      .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
+      .WillOnce(Invoke([expected](internal::LockBucketRetentionPolicyRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
         EXPECT_EQ(42U, r.metageneration());
-        return make_status_or(internal::EmptyResponse{});
+        return make_status_or(expected);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
 
-  auto status = client.LockBucketRetentionPolicy("test-bucket-name", 42U);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto metadata = client.LockBucketRetentionPolicy("test-bucket-name", 42U);
+  ASSERT_TRUE(metadata.ok()) << "status=" << metadata.status();
+  EXPECT_EQ(expected, *metadata);
 }
 
 TEST_F(BucketTest, LockBucketRetentionPolicyTooManyFailures) {
-  testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
+  testing::TooManyFailuresStatusTest<BucketMetadata>(
       mock, EXPECT_CALL(*mock, LockBucketRetentionPolicy(_)),
       [](Client& client) {
         return client.LockBucketRetentionPolicy("test-bucket-name", 1U)
@@ -483,7 +499,7 @@ TEST_F(BucketTest, LockBucketRetentionPolicyTooManyFailures) {
 }
 
 TEST_F(BucketTest, LockBucketRetentionPolicyPermanentFailure) {
-  testing::PermanentFailureStatusTest<internal::EmptyResponse>(
+  testing::PermanentFailureStatusTest<BucketMetadata>(
       *client, EXPECT_CALL(*mock, LockBucketRetentionPolicy(_)),
       [](Client& client) {
         return client.LockBucketRetentionPolicy("test-bucket-name", 1U)

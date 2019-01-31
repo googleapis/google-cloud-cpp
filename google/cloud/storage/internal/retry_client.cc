@@ -216,7 +216,7 @@ RetryClient::TestBucketIamPermissions(
                    __func__);
 }
 
-StatusOr<EmptyResponse> RetryClient::LockBucketRetentionPolicy(
+StatusOr<BucketMetadata> RetryClient::LockBucketRetentionPolicy(
     LockBucketRetentionPolicyRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
