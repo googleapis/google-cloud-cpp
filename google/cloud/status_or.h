@@ -30,7 +30,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  * explaining why a `T` value is not present. Typical usage of `StatusOr<T>`
  * looks like usage of a smart pointer, or even a std::optional<T>, in that you
  * first check its validity using a conversion to bool (or by calling
- * `StatusOr<T>::ok()`), then you may dereference the object to access the
+ * `StatusOr::ok()`), then you may dereference the object to access the
  * contained value. It is undefined behavior (UB) to dereference a
  * `StatusOr<T>` that is not "ok". For example:
  *
@@ -43,7 +43,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  * }
  * @endcode
  *
- * Alternatively, you may call the `StatusOr<T>::value()` member function,
+ * Alternatively, you may call the `StatusOr::value()` member function,
  * which is defined to throw an exception if there is no `T` value, or crash
  * the program if exceptions are disabled. It is never UB to call
  * `.value()`.
