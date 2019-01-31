@@ -35,8 +35,13 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/storage/testing/*"
     "*/google/cloud/storage/tests/*"
     "*/google/cloud/storage/*_test.cc")
+set(DOXYGEN_TAGFILES "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../common")
 
 include(GoogleCloudCppCommon)
+if (TARGET storage-docs AND TARGET cloud-docs)
+    add_dependencies(storage-docs cloud-docs)
+endif ()
+
 include(IncludeNlohmannJson)
 include(IncludeCrc32c)
 
