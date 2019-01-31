@@ -202,7 +202,7 @@ TEST_F(TableAdminTest, ListTables) {
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListTables(btadmin::Table::FULL);
-  ASSERT_TRUE(actual);
+  ASSERT_TRUE(actual) << actual.status();
   auto const& v = *actual;
   std::string instance_name = tested.instance_name();
   ASSERT_EQ(2UL, v.size());
@@ -231,7 +231,7 @@ TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListTables(btadmin::Table::FULL);
-  ASSERT_TRUE(actual);
+  ASSERT_TRUE(actual) << actual.status();
   auto const& v = *actual;
   std::string instance_name = tested.instance_name();
   ASSERT_EQ(4UL, v.size());
@@ -315,7 +315,7 @@ initial_splits { key: 'p' }
       {{"f1", GC::MaxNumVersions(1)}, {"f2", GC::MaxAge(1_s)}},
       {"a", "c", "p"});
   auto table = tested.CreateTable("new-table", std::move(config));
-  EXPECT_TRUE(table);
+  EXPECT_TRUE(table) << table.status();
 }
 
 /**

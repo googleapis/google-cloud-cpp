@@ -177,6 +177,7 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
   // verify new table id in current table list
   auto previous_table_list =
       table_admin_->ListTables(btadmin::Table::NAME_ONLY);
+  ASSERT_TRUE(previous_table_list);
   auto previous_count = CountMatchingTables(table_id, *previous_table_list);
   ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
                                << " This is unexpected, as the table ids are"

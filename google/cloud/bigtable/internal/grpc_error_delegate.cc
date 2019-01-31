@@ -69,7 +69,7 @@ StatusCode MapStatusCode(grpc::StatusCode const& code) {
 
 google::cloud::Status MakeStatusFromRpcError(grpc::Status const& status) {
   StatusCode code = MapStatusCode(status.error_code());
-  // TODO(devjgm): Pass along status.error_details() once we have absl::Status
+  // TODO(#1912): Pass along status.error_details() once we have absl::Status
   // or some version that supports binary blobs of data.
   return google::cloud::Status(code, status.error_message());
 }
