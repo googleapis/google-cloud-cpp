@@ -56,16 +56,18 @@ void ListObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    std::cout << "ACLs for object=" << object_name << " in bucket "
-              << bucket_name << std::endl;
     StatusOr<std::vector<gcs::ObjectAccessControl>> items =
         client.ListObjectAcl(bucket_name, object_name);
-    if (!items.ok()) {
+
+    if (!items) {
       std::cerr << "Error reading ACL for object " << object_name
-                << " in bucket " << bucket_name
-                << ", status=" << items.status() << std::endl;
+                << " in bucket " << bucket_name << ", status=" << items.status()
+                << std::endl;
       return;
     }
+
+    std::cout << "ACLs for object=" << object_name << " in bucket "
+              << bucket_name << std::endl;
     for (gcs::ObjectAccessControl const& acl : *items) {
       std::cout << acl.role() << ":" << acl.entity() << std::endl;
     }
@@ -90,12 +92,14 @@ void CreateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
      std::string entity, std::string role) {
     StatusOr<gcs::ObjectAccessControl> object_acl =
         client.CreateObjectAcl(bucket_name, object_name, entity, role);
-    if (!object_acl.ok()) {
+
+    if (!object_acl) {
       std::cerr << "Error creating object ACL entry for entity " << entity
                 << " in object " << object_name << " and bucket " << bucket_name
                 << ", status=" << object_acl.status() << std::endl;
       return;
     }
+
     std::cout << "Role " << object_acl->role() << " granted to "
               << object_acl->entity() << " on " << object_acl->object()
               << "\nFull attributes: " << *object_acl << std::endl;
@@ -118,12 +122,14 @@ void DeleteObjectAcl(gcs::Client client, int& argc, char* argv[]) {
      std::string entity) {
     StatusOr<void> status =
         client.DeleteObjectAcl(bucket_name, object_name, entity);
-    if (!status.ok()) {
+
+    if (!status) {
       std::cerr << "Error deleting object ACL entry for entity " << entity
                 << " in object " << object_name << " and bucket " << bucket_name
                 << ", status=" << status.status() << std::endl;
       return;
     }
+
     std::cout << "Deleted ACL entry for " << entity << " in object "
               << object_name << " in bucket " << bucket_name << std::endl;
   }
@@ -145,12 +151,14 @@ void GetObjectAcl(gcs::Client client, int& argc, char* argv[]) {
      std::string entity) {
     StatusOr<gcs::ObjectAccessControl> acl =
         client.GetObjectAcl(bucket_name, object_name, entity);
-    if (!acl.ok()) {
+
+    if (!acl) {
       std::cerr << "Error getting object ACL entry for entity " << entity
                 << " in object " << object_name << " and bucket " << bucket_name
                 << ", status=" << acl.status() << std::endl;
       return;
     }
+
     std::cout << "ACL entry for " << acl->entity() << " in object "
               << acl->object() << " in bucket " << acl->bucket() << " is "
               << *acl << std::endl;
@@ -175,15 +183,26 @@ void UpdateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
      std::string entity, std::string role) {
     StatusOr<gcs::ObjectAccessControl> current_acl =
         client.GetObjectAcl(bucket_name, object_name, entity);
-    if (!current_acl.ok()) {
+
+    if (!current_acl) {
       std::cerr << "Error getting object ACL entry for entity " << entity
                 << " in object " << object_name << " and bucket " << bucket_name
                 << ", status=" << current_acl.status() << std::endl;
       return;
     }
+
     current_acl->set_role(role);
+
     StatusOr<gcs::ObjectAccessControl> updated_acl =
         client.UpdateObjectAcl(bucket_name, object_name, *current_acl);
+
+    if (!updated_acl) {
+      std::cerr << "Error updating object ACL for entity " << entity
+                << " in object " << object_name << " and bucket " << bucket_name
+                << ", status=" << updated_acl.status() << std::endl;
+      return;
+    }
+
     std::cout << "ACL entry for " << updated_acl->entity() << " in object "
               << updated_acl->object() << " in bucket " << updated_acl->bucket()
               << " is now " << *updated_acl << std::endl;
@@ -207,22 +226,27 @@ void PatchObjectAcl(gcs::Client client, int& argc, char* argv[]) {
      std::string entity, std::string role) {
     StatusOr<gcs::ObjectAccessControl> original_acl =
         client.GetObjectAcl(bucket_name, object_name, entity);
-    if (!original_acl.ok()) {
+
+    if (!original_acl) {
       std::cerr << "Error getting object ACL entry for entity " << entity
                 << " in object " << object_name << " and bucket " << bucket_name
                 << ", status=" << original_acl.status() << std::endl;
       return;
     }
-    auto new_acl = *original_acl;
+
+    gcs::ObjectAccessControl new_acl = *original_acl;
     new_acl.set_role(role);
+
     StatusOr<gcs::ObjectAccessControl> patched_acl = client.PatchObjectAcl(
         bucket_name, object_name, entity, *original_acl, new_acl);
-    if (!patched_acl.ok()) {
+
+    if (!patched_acl) {
       std::cerr << "Error patching object ACL entry for entity " << entity
                 << " in object " << object_name << " and bucket " << bucket_name
                 << ", status=" << patched_acl.status() << std::endl;
       return;
     }
+
     std::cout << "ACL entry for " << patched_acl->entity() << " in object "
               << patched_acl->object() << " in bucket " << patched_acl->bucket()
               << " is now " << *patched_acl << std::endl;
@@ -248,12 +272,14 @@ void PatchObjectAclNoRead(gcs::Client client, int& argc, char* argv[]) {
     StatusOr<gcs::ObjectAccessControl> patched_acl = client.PatchObjectAcl(
         bucket_name, object_name, entity,
         gcs::ObjectAccessControlPatchBuilder().set_role(role));
-    if (!patched_acl.ok()) {
+
+    if (!patched_acl) {
       std::cerr << "Error patching object ACL entry for entity " << entity
                 << " in object " << object_name << " and bucket " << bucket_name
                 << ", status=" << patched_acl.status() << std::endl;
       return;
     }
+
     std::cout << "ACL entry for " << patched_acl->entity() << " in object "
               << patched_acl->object() << " in bucket " << patched_acl->bucket()
               << " is now " << *patched_acl << std::endl;
@@ -269,7 +295,7 @@ int main(int argc, char* argv[]) try {
   gcs::Client client;
 
   // Build the list of commands and the usage string from that list.
-  using CommandType = std::function<void(gcs::Client, int&, char* [])>;
+  using CommandType = std::function<void(gcs::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
       {"list-object-acl", &ListObjectAcl},
       {"create-object-acl", &CreateObjectAcl},
