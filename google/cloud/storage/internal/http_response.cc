@@ -112,11 +112,11 @@ Status AsStatus(HttpResponse const& http_response) {
   }
   if (http_response.status_code == 500) {
     // 500 - Internal Server Error
-    return Status(StatusCode::kInternal, http_response.payload);
+    return Status(StatusCode::kUnavailable, http_response.payload);
   }
   if (http_response.status_code == 502) {
     // 502 - Bad Gateway
-    return Status(StatusCode::kInternal, http_response.payload);
+    return Status(StatusCode::kUnavailable, http_response.payload);
   }
   if (http_response.status_code == 503) {
     // 503 - Service Unavailable

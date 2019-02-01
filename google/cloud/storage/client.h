@@ -105,9 +105,8 @@ inline namespace STORAGE_CLIENT_NS {
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
- * contains the expected result. Please consult the `StatusOr<T>`
- * [documentation](https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/status_or.h)
- * for more details.
+ * contains the expected result. Please consult the
+ * [`StatusOr<T>` documentation](#google::cloud::v0::StatusOr) for more details.
  *
  * @code
  * namespace gcs = google::cloud::storage;
@@ -140,6 +139,7 @@ inline namespace STORAGE_CLIENT_NS {
  * @see https://cloud.google.com/docs/authentication/production for details
  *     about Application Default %Credentials.
  *
+ * @see #google::cloud::v0::StatusOr.
  */
 class Client {
  public:
@@ -488,7 +488,7 @@ class Client {
   }
 
   /**
-   * Fetches the IAM policy for a Bucket.
+   * Fetches the [IAM policy](@ref google::cloud::v0::IamPolicy) for a Bucket.
    *
    * Google Cloud Identity & Access Management (IAM) lets administrators
    * authorize who can take action on specific resources, including Google
@@ -516,6 +516,7 @@ class Client {
    * @par Example
    * @snippet storage_bucket_iam_samples.cc get bucket iam policy
    *
+   * @see #google::cloud::v0::IamPolicy for details about the `IamPolicy` class.
    */
   template <typename... Options>
   StatusOr<IamPolicy> GetBucketIamPolicy(std::string const& bucket_name,
@@ -526,7 +527,7 @@ class Client {
   }
 
   /**
-   * Sets the IamPolicy for a Bucket.
+   * Sets the [IAM Policy](@ref google::cloud::v0::IamPolicy) for a Bucket.
    *
    * Google Cloud Identity & Access Management (IAM) lets administrators
    * authorize who can take action on specific resources, including Google
@@ -566,6 +567,8 @@ class Client {
    *
    * @par Example: removing a IAM member
    * @snippet storage_bucket_iam_samples.cc remove bucket iam member
+   *
+   * @see #google::cloud::v0::IamPolicy for details about the `IamPolicy` class.
    */
   template <typename... Options>
   StatusOr<IamPolicy> SetBucketIamPolicy(std::string const& bucket_name,
@@ -664,13 +667,13 @@ class Client {
    *     of how to use the Bucket Lock and retention policy features.
    */
   template <typename... Options>
-  StatusOr<void> LockBucketRetentionPolicy(std::string const& bucket_name,
-                                           std::uint64_t metageneration,
-                                           Options&&... options) {
+  StatusOr<BucketMetadata> LockBucketRetentionPolicy(
+      std::string const& bucket_name, std::uint64_t metageneration,
+      Options&&... options) {
     internal::LockBucketRetentionPolicyRequest request(bucket_name,
                                                        metageneration);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->LockBucketRetentionPolicy(request).status();
+    return raw_client_->LockBucketRetentionPolicy(request);
   }
   //@}
 

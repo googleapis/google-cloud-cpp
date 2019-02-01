@@ -16,7 +16,7 @@
 #include "google/cloud/storage/client.h"
 #include <iostream>
 
-int main(int argc, char* argv[]) try {
+int main(int argc, char* argv[]) {
   if (argc != 3) {
     std::cerr << "Missing project id and/or bucket name." << std::endl;
     std::cerr << "Usage: storage_quickstart <bucket-name> <project-id>"
@@ -46,13 +46,15 @@ int main(int argc, char* argv[]) try {
               gcs::BucketMetadata()
                   .set_location("us-east1")
                   .set_storage_class(gcs::storage_class::Regional()))
-          .value();
 
-  std::cout << "Created bucket " << metadata.name() << std::endl;
+  if (!bucket_metadata) {
+    std::cerr << "Error creating bucket " << bucket_name
+              << ", status=" << bucket_metadata.status() << std::endl;
+    return 1;
+  }
+
+  std::cout << "Created bucket " << bucket_metadata->name() << std::endl;
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
-  return 1;
 }
 //! [full quickstart] [END storage_quickstart]

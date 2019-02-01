@@ -134,7 +134,7 @@ LoggingClient::TestBucketIamPermissions(
                   __func__);
 }
 
-StatusOr<EmptyResponse> LoggingClient::LockBucketRetentionPolicy(
+StatusOr<BucketMetadata> LoggingClient::LockBucketRetentionPolicy(
     LockBucketRetentionPolicyRequest const& request) {
   return MakeCall(*client_, &RawClient::LockBucketRetentionPolicy, request,
                   __func__);
