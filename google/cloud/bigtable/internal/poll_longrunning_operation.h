@@ -65,7 +65,10 @@ ResultType PollLongRunningOperation(
     std::this_thread::sleep_for(delay);
     google::longrunning::GetOperationRequest op;
     op.set_name(operation.name());
+
     grpc::ClientContext context;
+    polling_policy->Setup(context);
+
     status = client->GetOperation(&context, op, &operation);
     if (!status.ok() && !polling_policy->OnFailure(status)) {
       return ResultType{};
