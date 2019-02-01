@@ -421,7 +421,7 @@ TestResult DeleteGroup(gcs::Client client,
     auto start = std::chrono::steady_clock::now();
     auto status = client.DeleteObject(o.bucket(), o.name(),
                                       gcs::Generation(o.generation()));
-    if (status.ok()) {
+    if (!status.ok()) {
       google::cloud::internal::ThrowStatus(status);
     }
     auto elapsed = std::chrono::steady_clock::now() - start;
