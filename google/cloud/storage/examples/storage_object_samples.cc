@@ -178,6 +178,44 @@ void InsertObjectModifiedRetry(google::cloud::storage::Client unused, int& argc,
   (bucket_name, object_name, contents);
 }
 
+void InsertObjectMultipart(google::cloud::storage::Client client, int& argc,
+                           char* argv[]) {
+  if (argc != 5) {
+    throw Usage{
+        "insert-object-multipart <bucket-name> <object-name>"
+        " <content-type> <object-contents (string)>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto content_type = ConsumeArg(argc, argv);
+  auto contents = ConsumeArg(argc, argv);
+  //! [insert object multipart]
+  namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string content_type, std::string contents) {
+    StatusOr<gcs::ObjectMetadata> object_metadata = client.InsertObject(
+        bucket_name, object_name, std::move(contents),
+        gcs::WithObjectMetadata(
+            gcs::ObjectMetadata().set_content_type(content_type)));
+
+    if (!object_metadata) {
+      std::cerr << "Error inserting object " << object_name << " in bucket "
+                << bucket_name << ", status=" << object_metadata.status()
+                << std::endl;
+      return;
+    }
+
+    std::cout << "The object " << object_metadata->name()
+              << " was created in bucket " << object_metadata->bucket()
+              << "\nThe contentType was set to "
+              << object_metadata->content_type()
+              << "\nFull metadata: " << *object_metadata << std::endl;
+  }
+  //! [insert object multipart]
+  (std::move(client), bucket_name, object_name, content_type, contents);
+}
+
 void CopyObject(google::cloud::storage::Client client, int& argc,
                 char* argv[]) {
   if (argc != 5) {
@@ -1468,12 +1506,13 @@ int main(int argc, char* argv[]) try {
   google::cloud::storage::Client client;
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char* [])>;
+      std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
       {"list-objects", &ListObjects},
       {"insert-object", &InsertObject},
       {"insert-object-strict-idempotency", &InsertObjectStrictIdempotency},
       {"insert-object-modified-retry", &InsertObjectModifiedRetry},
+      {"insert-object-multipart", &InsertObjectMultipart},
       {"copy-object", &CopyObject},
       {"copy-encrypted-object", &CopyEncryptedObject},
       {"get-object-metadata", &GetObjectMetadata},
