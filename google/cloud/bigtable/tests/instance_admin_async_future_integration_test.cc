@@ -110,7 +110,8 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
 
   // verify new instance id in list of instances
   auto instances_before = instance_admin_->ListInstances();
-  ASSERT_FALSE(IsInstancePresent(instances_before, instance_id))
+  ASSERT_TRUE(instances_before.failed_locations.empty());
+  ASSERT_FALSE(IsInstancePresent(instances_before.instances, instance_id))
       << "Instance (" << instance_id << ") already exists."
       << " This is unexpected, as the instance ids are"
       << " generated at random.";

@@ -17,8 +17,10 @@
 
 #include "google/cloud/bigtable/app_profile_config.h"
 #include "google/cloud/bigtable/cluster_config.h"
+#include "google/cloud/bigtable/cluster_list_responses.h"
 #include "google/cloud/bigtable/instance_admin_client.h"
 #include "google/cloud/bigtable/instance_config.h"
+#include "google/cloud/bigtable/instance_list_responses.h"
 #include "google/cloud/bigtable/instance_update_config.h"
 #include "google/cloud/bigtable/internal/async_list_app_profiles.h"
 #include "google/cloud/bigtable/internal/async_list_clusters.h"
@@ -118,8 +120,7 @@ class InstanceAdmin {
    * `bigtable::InstanceAdmin` class, but do not raise exceptions on errors,
    * instead they return the error on the status parameter.
    */
-  std::vector<google::bigtable::admin::v2::Instance> ListInstances(
-      grpc::Status& status);
+  InstanceList ListInstances(grpc::Status& status);
 
   /**
    * Makes an asynchronous request to list instances
@@ -377,8 +378,8 @@ class InstanceAdmin {
     return retry->Start(cq);
   }
 
-  std::vector<google::bigtable::admin::v2::Cluster> ListClusters(
-      std::string const& instance_id, grpc::Status& status);
+  ClusterList ListClusters(std::string const& instance_id,
+                           grpc::Status& status);
 
   /**
    * Makes an asynchronous request to list clusters

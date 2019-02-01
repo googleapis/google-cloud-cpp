@@ -109,7 +109,7 @@ TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
   ASSERT_THAT(instance1.get().name(), HasSubstr(id1));
   ASSERT_THAT(instance2.get().name(), HasSubstr(id2));
 
-  auto clusters = instance_admin_->ListClusters();
+  auto clusters = instance_admin_->ListClusters().clusters;
   for (auto const& cluster : clusters) {
     EXPECT_NE(std::string::npos,
               cluster.name().find(instance_admin_->project_name()));
@@ -212,7 +212,8 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
 
   // verify new instance id in list of instances
   auto instances_before = instance_admin_->ListInstances();
-  ASSERT_FALSE(IsInstancePresent(instances_before, instance_id))
+  ASSERT_TRUE(instances_before.failed_locations.empty());
+  ASSERT_FALSE(IsInstancePresent(instances_before.instances, instance_id))
       << "Instance (" << instance_id << ") already exists."
       << " This is unexpected, as the instance ids are"
       << " generated at random.";
@@ -221,7 +222,8 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
   auto config = IntegrationTestConfig(instance_id);
   auto instance = instance_admin_->CreateInstance(config).get();
   auto instances_current = instance_admin_->ListInstances();
-  EXPECT_TRUE(IsInstancePresent(instances_current, instance.name()));
+  ASSERT_TRUE(instances_current.failed_locations.empty());
+  EXPECT_TRUE(IsInstancePresent(instances_current.instances, instance.name()));
 
   // Get instance
   auto instance_check = instance_admin_->GetInstance(instance_id);
@@ -243,8 +245,11 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
   // Delete instance
   instance_admin_->DeleteInstance(instance_id);
   auto instances_after_delete = instance_admin_->ListInstances();
-  EXPECT_TRUE(IsInstancePresent(instances_current, instance_copy.name()));
-  EXPECT_FALSE(IsInstancePresent(instances_after_delete, instance.name()));
+  ASSERT_TRUE(instances_after_delete.failed_locations.empty());
+  EXPECT_TRUE(
+      IsInstancePresent(instances_current.instances, instance_copy.name()));
+  EXPECT_FALSE(
+      IsInstancePresent(instances_after_delete.instances, instance.name()));
 }
 
 /// @test Verify that cluster CRUD operations work as expected.
@@ -262,7 +267,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
       instance_admin_->CreateInstance(instance_config).get();
 
   // create cluster
-  auto clusters_before = instance_admin_->ListClusters(id);
+  auto clusters_before = instance_admin_->ListClusters(id).clusters;
   ASSERT_FALSE(IsClusterPresent(clusters_before, cluster_id_str))
       << "Cluster (" << cluster_id_str << ") already exists."
       << " This is unexpected, as the cluster ids are"
@@ -273,7 +278,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   auto cluster =
       instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
           .get();
-  auto clusters_after = instance_admin_->ListClusters(id);
+  auto clusters_after = instance_admin_->ListClusters(id).clusters;
   EXPECT_FALSE(IsClusterPresent(clusters_before, cluster.name()));
   EXPECT_TRUE(IsClusterPresent(clusters_after, cluster.name()));
 
@@ -300,7 +305,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
 
   // Delete cluster
   instance_admin_->DeleteCluster(std::move(instance_id), std::move(cluster_id));
-  auto clusters_after_delete = instance_admin_->ListClusters(id);
+  auto clusters_after_delete = instance_admin_->ListClusters(id).clusters;
   instance_admin_->DeleteInstance(id);
   EXPECT_TRUE(IsClusterPresent(
       clusters_after, instance_details.name() + "/clusters/" + id + "-cl2"));

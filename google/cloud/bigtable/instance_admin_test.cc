@@ -222,7 +222,7 @@ TEST_F(InstanceAdminTest, ListInstances) {
       .WillOnce(Invoke(mock_list_instances));
 
   // After all the setup, make the actual call we want to test.
-  auto actual = tested.ListInstances();
+  auto actual = tested.ListInstances().instances;
   std::string instance_name = tested.project_name();
   ASSERT_EQ(2UL, actual.size());
   EXPECT_EQ(instance_name + "/instances/t0", actual[0].name());
@@ -249,7 +249,7 @@ TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
       .WillOnce(Invoke(batch1));
 
   // After all the setup, make the actual call we want to test.
-  auto actual = tested.ListInstances();
+  auto actual = tested.ListInstances().instances;
   std::string project_name = tested.project_name();
   ASSERT_EQ(4UL, actual.size());
   EXPECT_EQ(project_name + "/instances/t0", actual[0].name());
@@ -942,7 +942,7 @@ TEST_F(InstanceAdminTest, ListClusters) {
       .WillOnce(Invoke(mock_list_clusters));
 
   // After all the setup, make the actual call we want to test.
-  auto actual = tested.ListClusters(instance_id);
+  auto actual = tested.ListClusters(instance_id).clusters;
   std::string instance_name = tested.InstanceName(instance_id);
   ASSERT_EQ(2UL, actual.size());
   EXPECT_EQ(instance_name + "/clusters/t0", actual[0].name());
@@ -972,7 +972,7 @@ TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
       .WillOnce(Invoke(batch1));
 
   // After all the setup, make the actual call we want to test.
-  auto actual = tested.ListClusters(instance_id);
+  auto actual = tested.ListClusters(instance_id).clusters;
   std::string instance_name = tested.InstanceName(instance_id);
   ASSERT_EQ(4UL, actual.size());
   EXPECT_EQ(instance_name + "/clusters/t0", actual[0].name());

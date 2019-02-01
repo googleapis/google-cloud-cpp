@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_ADMIN_H_
 
 #include "google/cloud/bigtable/bigtable_strong_types.h"
+#include "google/cloud/bigtable/cluster_list_responses.h"
 #include "google/cloud/bigtable/instance_admin_client.h"
 #include "google/cloud/bigtable/instance_config.h"
 #include "google/cloud/bigtable/instance_update_config.h"
@@ -152,7 +153,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc list instances
    */
-  std::vector<google::bigtable::admin::v2::Instance> ListInstances();
+  InstanceList ListInstances();
 
   /**
    * Query (asynchronously) the list of instances in the project.
@@ -222,7 +223,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc list clusters
    */
-  std::vector<google::bigtable::admin::v2::Cluster> ListClusters();
+  ClusterList ListClusters();
 
   /**
    * Return the list of clusters in an instance.
@@ -230,8 +231,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc list clusters
    */
-  std::vector<google::bigtable::admin::v2::Cluster> ListClusters(
-      std::string const& instance_id);
+  ClusterList ListClusters(std::string const& instance_id);
 
   /**
    * Query (asynchronously) the list of clusters in a project.
