@@ -66,7 +66,8 @@ TEST_F(AdminAsyncIntegrationTest, CreateListGetDeleteTableTest) {
   std::string const table_id = RandomTableId();
   auto previous_table_list =
       table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  auto previous_count = CountMatchingTables(table_id, previous_table_list);
+  ASSERT_TRUE(previous_table_list);
+  auto previous_count = CountMatchingTables(table_id, *previous_table_list);
   ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
                                << " This is unexpected, as the table ids are"
                                << " generated at random.";
@@ -158,7 +159,8 @@ TEST_F(AdminAsyncIntegrationTest, CreateListGetDeleteTableTest) {
 
   // List to verify it is no longer there
   auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  auto table_count = CountMatchingTables(table_id, current_table_list);
+  ASSERT_TRUE(current_table_list);
+  auto table_count = CountMatchingTables(table_id, *current_table_list);
   EXPECT_EQ(0, table_count);
 
   cq.Shutdown();

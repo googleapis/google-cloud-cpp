@@ -23,6 +23,41 @@ std::string const cmsg("testing with std::string const&");
 char const* msg = "testing with char const*";
 }  // anonymous namespace
 
+TEST(MakeStatusFromRpcError, AllCodes) {
+  using google::cloud::StatusCode;
+
+  struct {
+    grpc::StatusCode grpc;
+    StatusCode expected;
+  } expected_codes[]{
+      {grpc::StatusCode::OK, StatusCode::kOk},
+      {grpc::StatusCode::CANCELLED, StatusCode::kCancelled},
+      {grpc::StatusCode::UNKNOWN, StatusCode::kUnknown},
+      {grpc::StatusCode::INVALID_ARGUMENT, StatusCode::kInvalidArgument},
+      {grpc::StatusCode::DEADLINE_EXCEEDED, StatusCode::kDeadlineExceeded},
+      {grpc::StatusCode::NOT_FOUND, StatusCode::kNotFound},
+      {grpc::StatusCode::ALREADY_EXISTS, StatusCode::kAlreadyExists},
+      {grpc::StatusCode::PERMISSION_DENIED, StatusCode::kPermissionDenied},
+      {grpc::StatusCode::UNAUTHENTICATED, StatusCode::kUnauthenticated},
+      {grpc::StatusCode::RESOURCE_EXHAUSTED, StatusCode::kResourceExhausted},
+      {grpc::StatusCode::FAILED_PRECONDITION, StatusCode::kFailedPrecondition},
+      {grpc::StatusCode::ABORTED, StatusCode::kAborted},
+      {grpc::StatusCode::OUT_OF_RANGE, StatusCode::kOutOfRange},
+      {grpc::StatusCode::UNIMPLEMENTED, StatusCode::kUnimplemented},
+      {grpc::StatusCode::INTERNAL, StatusCode::kInternal},
+      {grpc::StatusCode::UNAVAILABLE, StatusCode::kUnavailable},
+      {grpc::StatusCode::DATA_LOSS, StatusCode::kDataLoss},
+  };
+
+  for (auto const& codes : expected_codes) {
+    std::string const message = "test message";
+    auto const original = grpc::Status(codes.grpc, message);
+    auto const expected = google::cloud::Status(codes.expected, message);
+    auto const actual = MakeStatusFromRpcError(original);
+    EXPECT_EQ(expected, actual);
+  }
+}
+
 TEST(ThrowDelegateTest, RpcError) {
   grpc::Status status(grpc::StatusCode::UNAVAILABLE, "try-again");
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

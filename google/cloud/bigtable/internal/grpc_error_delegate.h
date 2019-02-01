@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_GRPC_ERROR_DELEGATE_H_
 
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/status.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {
@@ -23,6 +24,10 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
+/**
+ * Creates a google::cloud::Status from a grpc::Status.
+ */
+google::cloud::Status MakeStatusFromRpcError(grpc::Status const& status);
 
 //@{
 /**

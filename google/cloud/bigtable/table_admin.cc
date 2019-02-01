@@ -33,13 +33,13 @@ static_assert(std::is_copy_constructible<bigtable::TableAdmin>::value,
 static_assert(std::is_copy_assignable<bigtable::TableAdmin>::value,
               "bigtable::TableAdmin must be assignable");
 
-btadmin::Table TableAdmin::CreateTable(std::string table_id,
-                                       TableConfig config) {
+StatusOr<btadmin::Table> TableAdmin::CreateTable(std::string table_id,
+                                                 TableConfig config) {
   grpc::Status status;
   auto result =
       impl_.CreateTable(std::move(table_id), std::move(config), status);
   if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
   return result;
 }
@@ -70,11 +70,12 @@ future<google::bigtable::admin::v2::Table> TableAdmin::AsyncGetTable(
   return result;
 }
 
-std::vector<btadmin::Table> TableAdmin::ListTables(btadmin::Table::View view) {
+StatusOr<std::vector<btadmin::Table>> TableAdmin::ListTables(
+    btadmin::Table::View view) {
   grpc::Status status;
   auto result = impl_.ListTables(view, status);
   if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
   return result;
 }

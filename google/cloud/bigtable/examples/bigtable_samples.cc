@@ -41,7 +41,12 @@ void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
   std::cout << "Listing tables: " << std::endl;
   auto tables =
       admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
-  for (auto const& table : tables) {
+
+  if (!tables) {
+    std::cerr << "ListTables failed: " << tables.status() << std::endl;
+    return;
+  }
+  for (auto const& table : *tables) {
     std::cout << table.name() << std::endl;
   }
 
@@ -105,7 +110,12 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
   std::cout << "Listing tables: " << std::endl;
   auto tables =
       admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
-  for (auto const& table : tables) {
+
+  if (!tables) {
+    std::cerr << "ListTables failed: " << tables.status() << std::endl;
+    return;
+  }
+  for (auto const& table : *tables) {
     std::cout << table.name() << std::endl;
   }
   // [END bigtable_list_table]
