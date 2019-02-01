@@ -76,15 +76,6 @@ matrix:
         BUILD_TYPE=Debug
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
-    - # Build with the AddressSanitizer.
-      os: linux
-      compiler: clang
-      env:
-        CMAKE_FLAGS=-DSANITIZE_ADDRESS=yes
-        BUILD_TYPE=Debug
-        DISTRO=ubuntu
-        DISTRO_VERSION=18.04
-      if: repo =~ ^googleapis/ or head_repo =~ ^googleapis/
     - # Build with the UndefinedBehaviorSanitizer.
       os: linux
       compiler: clang
