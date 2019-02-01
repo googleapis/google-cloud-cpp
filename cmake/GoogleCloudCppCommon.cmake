@@ -93,6 +93,8 @@ else()
         set(DOXYGEN_SHOW_USED_FILES NO)
         set(DOXYGEN_REFERENCES_LINK_SOURCE NO)
         set(DOXYGEN_SOURCE_BROWSER YES)
+        set(DOXYGEN_GENERATE_TAGFILE
+            "${CMAKE_CURRENT_BINARY_DIR}/${GOOGLE_CLOUD_CPP_SUBPROJECT}.tag")
 
         doxygen_add_docs(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs
                          ${CMAKE_CURRENT_SOURCE_DIR}
