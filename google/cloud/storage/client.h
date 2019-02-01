@@ -232,7 +232,8 @@ class Client {
    * used to construct this object. If the application does not set the project
    * id in the `ClientOptions`, the value of the `GOOGLE_CLOUD_PROJECT` is
    * used. If neither the environment variable is set, nor a value is set
-   * explicitly by the application this function raises an exception.
+   * explicitly by the application, the returned `ListBucketsReader` will
+   * return an error status when used.
    *
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `MaxResults`, `Prefix`,
@@ -251,9 +252,9 @@ class Client {
   }
 
   /**
-   * Creates a new Google Cloud Storage Bucket using the default project. The
-   * default project is required to be configured in the `ClientOptions` used
-   * to construct this object.
+   * Creates a new Google Cloud Storage bucket using the default project. If
+   * the default project is not configured the server will reject the request,
+   * and this function returns the error status.
    *
    * @param bucket_name the name of the new bucket.
    * @param metadata the metadata for the new Bucket.  The `name` field is
@@ -2180,7 +2181,8 @@ class Client {
    * used to construct this object. If the application does not set the project
    * id in the `ClientOptions`, the value of the `GOOGLE_CLOUD_PROJECT` is
    * used. If neither the environment variable is set, nor a value is set
-   * explicitly by the application this function raises an exception.
+   * explicitly by the application, the server will reject the request and this
+   * function will return the error status.
    *
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
