@@ -194,6 +194,9 @@ void InsertObjectMultipart(google::cloud::storage::Client client, int& argc,
   using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string content_type, std::string contents) {
+    // Setting the object metadata (via the `gcs::WithObjectMadata` option)
+    // requires a multipart upload, the library prefers simple uploads unless
+    // required as in this case.
     StatusOr<gcs::ObjectMetadata> object_metadata = client.InsertObject(
         bucket_name, object_name, std::move(contents),
         gcs::WithObjectMetadata(
