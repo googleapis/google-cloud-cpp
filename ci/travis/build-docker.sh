@@ -44,7 +44,9 @@ if [[ -z "${ccache_command}" ]]; then
 fi
 
 bootstrap_ccache="no"
-if ${ccache_command} --show-stats | grep '^cache size' | grep -q '0.0 kB'; then
+if [[ "${NEEDS_CCACHE:-}" = "no" ]]; then
+  bootstrap_ccache="no"
+elif ${ccache_command} --show-stats | grep '^cache size' | grep -q '0.0 kB'; then
   echo "${COLOR_RED}"
   echo "The ccache is empty. The builds cannot finish in the time allocated by"
   echo "Travis without a warm cache. As a workaround, until #1800 is fixed,"
@@ -233,8 +235,8 @@ scan-build detected errors.  Please read the log for details. To
 run scan-build locally and examine the HTML output install and configure Docker,
 then run:
 
-DISTRO=ubuntu DISTRO_VERSION=18.04 SCAN_BUILD=yes NCPU=8 TRAVIS_OS_NAME=linux \
-    CXX=clang++ CC=clang ./ci/travis/build-linux.sh
+DISTRO=ubuntu DISTRO_VERSION=18.04 SCAN_BUILD=yes NCPU=8 CXX=clang++ CC=clang \
+    ./ci/travis/build-linux.sh
 
 The HTML output will be copied into the scan-build-output subdirectory.
 ${COLOR_RESET}

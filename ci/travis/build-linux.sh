@@ -39,14 +39,23 @@ fi
 # Docker container, and then we can save them for future Travis builds.
 mkdir -p "${PWD}/${DOCKER_CCACHE_DIR}"
 
+# When running on Travis the build gets a tty, and docker can produce nicer
+# output in that case, but on Kokoro the script does not get a tty, and Docker
+# terminates the program if we pass the `-it` flag in that case.
+interactive_flag=""
+if [[ -t 0 ]]; then
+  interactive_flag="-it"
+fi
+
 sudo docker run \
      --cap-add SYS_PTRACE \
-     -it \
+     ${interactive_flag} \
      --env DISTRO="${DISTRO}" \
      --env DISTRO_VERSION="${DISTRO_VERSION}" \
      --env CXX="${CXX}" \
      --env CC="${CC}" \
      --env NCPU="${NCPU:-2}" \
+     --env NEEDS_CCACHE="${NEEDS_CCACHE:=yes}" \
      --env BUILD_TYPE="${BUILD_TYPE:-Release}" \
      --env BUILD_TESTING="${BUILD_TESTING:-}" \
      --env USE_LIBCXX="${USE_LIBCXX:-}" \
@@ -60,7 +69,6 @@ sudo docker run \
      --env CBT=/usr/local/google-cloud-sdk/bin/cbt \
      --env CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
      --env TERM="${TERM:-dumb}" \
-     --env TRAVIS_OS_NAME="${TRAVIS_OS_NAME}" \
      --user "${docker_uid}" \
      --volume "${PWD}":/v \
      --volume "${PWD}/${DOCKER_CCACHE_DIR}":${docker_home}/.ccache \
