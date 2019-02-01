@@ -59,6 +59,7 @@ APIs.
 - [Build](#build)
   - [Linux and macOS](#linux-and-macos)
   - [Windows](#windows-1)
+- [Install](#install)
 
 ## Requirements
 
@@ -68,7 +69,7 @@ The Google Cloud C++ libraries are tested with the following compilers:
 
 | Compiler    | Minimum Version |
 | ----------- | --------------- |
-| GCC         | 4.9 |
+| GCC         | 4.8 |
 | Clang       | 3.8 |
 | MSVC++      | 14.1 |
 | Apple Clang | 8.1 |
@@ -92,7 +93,7 @@ versions of these dependencies:
 
 | Library | Minimum version |
 | ------- | --------------- |
-| gRPC    | v1.10.x |
+| gRPC    | v1.17.x |
 | libcurl | 7.47.0  |
 
 #### Tests
@@ -360,6 +361,43 @@ ctest --output-on-failure
 
 You will find compiled binaries in `build-output\` respective to their
 source directories.
+
+### Install
+
+By default `google-cloud-cpp` downloads and compiles all its dependencies.
+The default configuration disables the `install` target, because the version of
+the dependencies downloaded by `google-cloud-cpp` may conflict with the versions
+already installed in your system, or with the versions you want to use for
+development.
+
+To install `google-cloud-cpp` you must first install all its dependencies. Then
+you must configure `google-cloud-cpp` to find these dependencies, and install
+it.
+
+For example, if all the dependencies have installed the corresponding CMake
+support files, these commands will install `google-cloud-cpp` using:
+
+```bash
+cmake -H. -Bbuild-output-for-install \
+    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package
+cmake --build build-output-for-install --target install
+```
+
+Unfortunately many distributions do not install said CMake support files, in
+this case you can configure `google-cloud-cpp` to find these dependencies using
+`pkg-config`, for example:
+
+```bash
+cmake -H. -Bbuild-output-for-install \
+    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
+    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config
+cmake --build build-output-for-install --target install
+```
+
+Installing the dependencies themselves may be as simple as using the package
+manager for your platform, or may require manually downloading, compiling, and
+installing said dependency.  The [INSTALL.md](INSTALL.md) file describes how to
+compile all these dependencies for the most common platforms.
 
 ## Versioning
 

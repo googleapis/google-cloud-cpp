@@ -1,0 +1,84 @@
+# Copyright 2019 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+ARG DISTRO_VERSION=bionic
+FROM ubuntu:${DISTRO_VERSION}
+MAINTAINER "Carlos O'Ryan <coryan@google.com>"
+
+# Please keep the formatting in these commands, it is optimized to cut & paste
+# into the README.md file.
+RUN apt update && \
+    apt install -y build-essential cmake git gcc g++ cmake \
+        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
+        pkg-config tar wget zlib1g-dev
+
+ARG CXX=g++
+ARG CC=gcc
+
+# Install Crc32c library.
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
+RUN tar -xf 1.0.6.tar.gz
+WORKDIR /var/tmp/build/crc32c-1.0.6
+RUN cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DCRC32C_BUILD_TESTS=OFF \
+      -DCRC32C_BUILD_BENCHMARKS=OFF \
+      -DCRC32C_USE_GLOG=OFF \
+      -H. -B.build/crc32c
+RUN cmake --build .build/crc32c --target install -- -j $(nproc)
+RUN ldconfig
+
+# Ubuntu has pre-packaged versions of protobuf (3.0) and gRPC (1.3), but those
+# versions are too old for the the proto files published to access the Google
+# Cloud Platform services, including the Bigtable protos. We need to manually
+# install these libraries.
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
+RUN tar -xf v3.6.1.tar.gz
+WORKDIR /var/tmp/build/protobuf-3.6.1/cmake
+RUN cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -H. -B.build
+RUN cmake --build .build --target install -- -j $(nproc)
+RUN ldconfig
+
+# Install gRPC. Note that we use the system's zlib and ssl libraries.
+# For similar reasons to c-ares (see above), we need two install steps.
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/grpc/grpc/archive/v1.17.2.tar.gz
+RUN tar -xf v1.17.2.tar.gz
+WORKDIR /var/tmp/build/grpc-1.17.2
+RUN make && make install
+RUN ldconfig
+
+# Verify that we can compile google-cloud-cpp using the pre-installed
+# dependencies. Note how this assumes that `docker build` is running at the top
+# level directory of google-cloud-cpp, e.g.:
+#    cd google-cloud-cpp
+#    docker build -f ci/test-reader/Dockerfile.ubuntu-install .
+WORKDIR /var/tmp/build/google-cloud-cpp
+COPY . /var/tmp/build/google-cloud-cpp
+RUN cmake -H. -Bbuild-output-with-tests \
+    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
+    -DGOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER=pkg-config \
+    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
+    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
+RUN cmake --build build-output-with-tests -- -j $(nproc)
+WORKDIR /var/tmp/build/google-cloud-cpp/build-output-with-tests
+RUN ctest --output-on-failure
+RUN cmake --build . --target install

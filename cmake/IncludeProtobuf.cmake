@@ -48,7 +48,7 @@ endfunction ()
 if ("${GOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER}" STREQUAL "external")
     include(external/protobuf)
 elseif("${GOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER}" STREQUAL "package")
-    find_package(protobuf REQUIRED protobuf>=3.5.2)
+    find_package(protobuf REQUIRED protobuf>=3.6)
 
     # Older versions of CMake (<= 3.9) do not define the protobuf::protoc
     # target, in this case we define it ourselves to simplify how the rest of
@@ -62,7 +62,7 @@ elseif("${GOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER}" STREQUAL "pkg-config")
     # properties.
     include(${CMAKE_CURRENT_LIST_DIR}/PkgConfigHelper.cmake)
 
-    pkg_check_modules(Protobuf REQUIRED protobuf>=3.5)
+    pkg_check_modules(Protobuf REQUIRED protobuf>=3.6)
     add_library(protobuf::libprotobuf INTERFACE IMPORTED)
     set_library_properties_from_pkg_config(protobuf::libprotobuf Protobuf)
     set_property(TARGET protobuf::libprotobuf
