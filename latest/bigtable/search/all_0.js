@@ -2,6 +2,9 @@ var searchData=
 [
   ['add_5fcolumn_5ffamily',['add_column_family',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableConfig.html#a8841aa641a99e65d4780d8925ec8429c',1,'google::cloud::bigtable::v0::TableConfig']]],
   ['add_5finitial_5fsplit',['add_initial_split',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableConfig.html#a6e81b3b7c49b339482cafe0f41fe4d98',1,'google::cloud::bigtable::v0::TableConfig']]],
+  ['addbackend',['AddBackend',['../../common/classgoogle_1_1cloud_1_1v0_1_1LogSink.html#aec72ffccc90b09325dd35089075b4c19',1,'google::cloud::v0::LogSink']]],
+  ['addmember',['AddMember',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a2273b8603228416a6e0779581861808a',1,'google::cloud::v0::IamBindings']]],
+  ['addmembers',['AddMembers',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a004d6df7fdf5e116be5390d0ba12ae20',1,'google::cloud::v0::IamBindings::AddMembers(google::cloud::IamBinding const &amp;iam_binding)'],['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#abe8fda9df69b9841b0b30a69aea2eb06',1,'google::cloud::v0::IamBindings::AddMembers(std::string const &amp;role, std::set&lt; std::string &gt; const &amp;members)']]],
   ['admin_5fclient_2ecc',['admin_client.cc',['../admin__client_8cc.html',1,'']]],
   ['admin_5fclient_2eh',['admin_client.h',['../admin__client_8h.html',1,'']]],
   ['admin_5fendpoint',['admin_endpoint',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#a9df76745e6dfb35a7632f9857c09091c',1,'google::cloud::bigtable::v0::ClientOptions']]],
@@ -57,5 +60,6 @@ var searchData=
   ['asynctimerresult',['AsyncTimerResult',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncTimerResult.html',1,'google::cloud::bigtable::v0']]],
   ['asyncupdateappprofile',['AsyncUpdateAppProfile',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a1dce371a401ff3c846ac2930018ae0de',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
   ['asyncupdatecluster',['AsyncUpdateCluster',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ac77cd4c285aa00de8f43e38482cb4c28',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
-  ['asyncupdateinstance',['AsyncUpdateInstance',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a4e6474974b076a2c940d42b2780d18df',1,'google::cloud::bigtable::v0::InstanceAdminClient']]]
+  ['asyncupdateinstance',['AsyncUpdateInstance',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a4e6474974b076a2c940d42b2780d18df',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
+  ['at',['at',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#aa87dbd1a3d2de367332be14d46aeab26',1,'google::cloud::v0::IamBindings']]]
 ];

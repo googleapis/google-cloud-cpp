@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['idempotency_5fpolicy_2ecc',['idempotency_policy.cc',['../idempotency__policy_8cc.html',1,'']]],
-  ['idempotency_5fpolicy_2eh',['idempotency_policy.h',['../idempotency__policy_8h.html',1,'']]]
+  ['hashing_5foptions_2ecc',['hashing_options.cc',['../hashing__options_8cc.html',1,'']]],
+  ['hashing_5foptions_2eh',['hashing_options.h',['../hashing__options_8h.html',1,'']]]
 ];

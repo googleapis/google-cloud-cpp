@@ -1,18 +1,9 @@
 var searchData=
 [
-  ['value',['value',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MetadataUpdatePolicy.html#af32e499d6a6b3f6f47959e8dd9f2f26e',1,'google::cloud::bigtable::v0::MetadataUpdatePolicy::value()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Cell.html#a50a89f9169c580da2502a58edaada7b2',1,'google::cloud::bigtable::v0::Cell::value()']]],
-  ['value_5fas',['value_as',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Cell.html#ab4baf2faf9087f8e41c1aedd6e443ca6',1,'google::cloud::bigtable::v0::Cell']]],
-  ['valuerange',['ValueRange',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#aafbfae7a5b65433b29ff1e7bd37aa981',1,'google::cloud::bigtable::v0::Filter']]],
-  ['valuerangeclosed',['ValueRangeClosed',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#a4bd2ad7fbd0b353ae22de4be87515aae',1,'google::cloud::bigtable::v0::Filter']]],
-  ['valuerangeleftopen',['ValueRangeLeftOpen',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#ae2cf2a6318c0ede495408cd58262d892',1,'google::cloud::bigtable::v0::Filter']]],
-  ['valuerangeopen',['ValueRangeOpen',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#a3a8e3d552aabe0f7ceee5125961d904f',1,'google::cloud::bigtable::v0::Filter']]],
-  ['valuerangerightopen',['ValueRangeRightOpen',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#a1890b2160e118266d7bf7db7ca72428d',1,'google::cloud::bigtable::v0::Filter']]],
-  ['valueregex',['ValueRegex',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#af44a8974b23f4abe05c24c005989d5e3',1,'google::cloud::bigtable::v0::Filter']]],
-  ['version',['version',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#aa2da4afcc2ccb4d08ca243c17b7b20f9',1,'google::cloud::bigtable::v0']]],
-  ['version_2ecc',['version.cc',['../version_8cc.html',1,'']]],
-  ['version_2eh',['version.h',['../version_8h.html',1,'']]],
-  ['version_5fmajor',['version_major',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a5a2c1c7810a25e6177ed611c6f59bf99',1,'google::cloud::bigtable::v0']]],
-  ['version_5fminor',['version_minor',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a4230a131a722eed387c246efdd0e42e6',1,'google::cloud::bigtable::v0']]],
-  ['version_5fpatch',['version_patch',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a5c15a6b960671c60446f13c3447a2b76',1,'google::cloud::bigtable::v0']]],
-  ['version_5fstring',['version_string',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#aaac4a3e195d79efc7b78e00a5d3f3e50',1,'google::cloud::bigtable::v0']]]
+  ['union',['Union',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1GcRule.html#a5b99b95630eecb7864c545719ee2b103',1,'google::cloud::bigtable::v0::GcRule']]],
+  ['update',['Update',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ColumnFamilyModification.html#a2bf9a3c478ebab04c24cd1b585cde45d',1,'google::cloud::bigtable::v0::ColumnFamilyModification']]],
+  ['updateappprofile',['UpdateAppProfile',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#af1f6f20d3c79c9195cbf1f2e4cbfffb9',1,'google::cloud::bigtable::v0::InstanceAdmin::UpdateAppProfile()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a948454d0b835bdd2c7746d071d35bd95',1,'google::cloud::bigtable::v0::InstanceAdminClient::UpdateAppProfile()']]],
+  ['updatecluster',['UpdateCluster',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#a3db1525bb930c13031a1758f89b98cb1',1,'google::cloud::bigtable::v0::InstanceAdmin::UpdateCluster()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a0f2bb326609f9e98afa4df8fc4545e53',1,'google::cloud::bigtable::v0::InstanceAdminClient::UpdateCluster()']]],
+  ['updateinstance',['UpdateInstance',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#ab76cbd41282ed59670d2baa859101fd5',1,'google::cloud::bigtable::v0::InstanceAdmin::UpdateInstance()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a84b768b716652303f438572c8b724fd8',1,'google::cloud::bigtable::v0::InstanceAdminClient::UpdateInstance()']]],
+  ['useragentprefix',['UserAgentPrefix',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#a553e5fc90fc8b2097b262725d30bfbe7',1,'google::cloud::bigtable::v0::ClientOptions']]]
 ];

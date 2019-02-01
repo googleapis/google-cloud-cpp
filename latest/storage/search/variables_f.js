@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['token_5furi',['token_uri',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1ServiceAccountCredentialsInfo.html#aa1624a97b4257198b0871f6b22290776',1,'google::cloud::storage::v0::oauth2::ServiceAccountCredentialsInfo::token_uri()'],['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1AuthorizedUserCredentialsInfo.html#a40e764f9bbcf6f6801d65da398b2df19',1,'google::cloud::storage::v0::oauth2::AuthorizedUserCredentialsInfo::token_uri()']]],
-  ['total_5fbytes_5frewritten',['total_bytes_rewritten',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1RewriteProgress.html#a8a887fa8547565d7a36e3a5311f0312d',1,'google::cloud::storage::v0::RewriteProgress']]],
-  ['type',['type',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleAction.html#ac10447994761d1e0460a9d1c7e75a606',1,'google::cloud::storage::v0::LifecycleRuleAction']]]
+  ['severity',['severity',['../../common/structgoogle_1_1cloud_1_1v0_1_1LogRecord.html#afb528a645766c4c4955a5d06c9ee20d8',1,'google::cloud::v0::LogRecord']]],
+  ['sha256',['sha256',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKeyData.html#a6151c273153473b834590873b9afcf6a',1,'google::cloud::storage::v0::EncryptionKeyData']]],
+  ['storage_5fclass',['storage_class',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleAction.html#ac88d973c159493c6b421f7669698b53c',1,'google::cloud::storage::v0::LifecycleRuleAction']]]
 ];

@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['lifecycle_5frule_2ecc',['lifecycle_rule.cc',['../lifecycle__rule_8cc.html',1,'']]],
-  ['lifecycle_5frule_2eh',['lifecycle_rule.h',['../lifecycle__rule_8h.html',1,'']]],
-  ['list_5fbuckets_5freader_2ecc',['list_buckets_reader.cc',['../list__buckets__reader_8cc.html',1,'']]],
-  ['list_5fbuckets_5freader_2eh',['list_buckets_reader.h',['../list__buckets__reader_8h.html',1,'']]],
-  ['list_5fobjects_5freader_2ecc',['list_objects_reader.cc',['../list__objects__reader_8cc.html',1,'']]],
-  ['list_5fobjects_5freader_2eh',['list_objects_reader.h',['../list__objects__reader_8h.html',1,'']]]
+  ['iam_5fbinding_2eh',['iam_binding.h',['../../common/iam__binding_8h.html',1,'']]],
+  ['iam_5fbindings_2ecc',['iam_bindings.cc',['../../common/iam__bindings_8cc.html',1,'']]],
+  ['iam_5fbindings_2eh',['iam_bindings.h',['../../common/iam__bindings_8h.html',1,'']]],
+  ['iam_5fpolicy_2ecc',['iam_policy.cc',['../../common/iam__policy_8cc.html',1,'']]],
+  ['iam_5fpolicy_2eh',['iam_policy.h',['../../common/iam__policy_8h.html',1,'']]],
+  ['idempotency_5fpolicy_2ecc',['idempotency_policy.cc',['../idempotency__policy_8cc.html',1,'']]],
+  ['idempotency_5fpolicy_2eh',['idempotency_policy.h',['../idempotency__policy_8h.html',1,'']]]
 ];

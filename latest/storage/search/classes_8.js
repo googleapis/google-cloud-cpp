@@ -1,5 +1,8 @@
 var searchData=
 [
+  ['iambinding',['IamBinding',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBinding.html',1,'google::cloud::v0']]],
+  ['iambindings',['IamBindings',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html',1,'google::cloud::v0']]],
+  ['iampolicy',['IamPolicy',['../../common/structgoogle_1_1cloud_1_1v0_1_1IamPolicy.html',1,'google::cloud::v0']]],
   ['idempotencypolicy',['IdempotencyPolicy',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html',1,'google::cloud::storage::v0']]],
   ['ifgenerationmatch',['IfGenerationMatch',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfGenerationMatch.html',1,'google::cloud::storage::v0']]],
   ['ifgenerationnotmatch',['IfGenerationNotMatch',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1IfGenerationNotMatch.html',1,'google::cloud::storage::v0']]],

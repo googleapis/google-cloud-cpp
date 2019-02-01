@@ -11,6 +11,7 @@ var searchData=
   ['lifecyclerulecondition',['LifecycleRuleCondition',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html',1,'google::cloud::storage::v0']]],
   ['limitederrorcountretrypolicy',['LimitedErrorCountRetryPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a0162c1f831f7b500df5a1d2da0d23be4',1,'google::cloud::storage::v0']]],
   ['limitedtimeretrypolicy',['LimitedTimeRetryPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a06fcac3a7cae1a4c981f6d1a3d0caf42',1,'google::cloud::storage::v0']]],
+  ['lineno',['lineno',['../../common/structgoogle_1_1cloud_1_1v0_1_1LogRecord.html#af67d759204d5e289cb70d14ba93268d5',1,'google::cloud::v0::LogRecord']]],
   ['list_5fbuckets_5freader_2ecc',['list_buckets_reader.cc',['../list__buckets__reader_8cc.html',1,'']]],
   ['list_5fbuckets_5freader_2eh',['list_buckets_reader.h',['../list__buckets__reader_8h.html',1,'']]],
   ['list_5fobjects_5freader_2ecc',['list_objects_reader.cc',['../list__objects__reader_8cc.html',1,'']]],
@@ -30,8 +31,17 @@ var searchData=
   ['location',['location',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#af185cafdcd77fb4fe7b0fec350985551',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['lockbucketretentionpolicy',['LockBucketRetentionPolicy',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a2651b18bf08dddf6a21ca66ed8067ab9',1,'google::cloud::storage::v0::Client']]],
   ['locked_5ftime',['locked_time',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketPolicyOnly.html#a5838202e1b8e0642835615c51c129938',1,'google::cloud::storage::v0::BucketPolicyOnly']]],
+  ['log',['Log',['../../common/classgoogle_1_1cloud_1_1v0_1_1LogSink.html#a048aefabcaf25c79f4297b85afbd09e0',1,'google::cloud::v0::LogSink']]],
+  ['log_2ecc',['log.cc',['../../common/log_8cc.html',1,'']]],
+  ['log_2eh',['log.h',['../../common/log_8h.html',1,'']]],
   ['log_5fbucket',['log_bucket',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLogging.html#ac430b19d6b6a21f8884c4409fb514ede',1,'google::cloud::storage::v0::BucketLogging']]],
   ['log_5fobject_5fprefix',['log_object_prefix',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLogging.html#a37c67af58b00d6338a090a5e86007aa6',1,'google::cloud::storage::v0::BucketLogging']]],
+  ['logbackend',['LogBackend',['../../common/classgoogle_1_1cloud_1_1v0_1_1LogBackend.html',1,'google::cloud::v0']]],
+  ['logger',['Logger',['../../common/classgoogle_1_1cloud_1_1v0_1_1Logger.html',1,'google::cloud::v0::Logger&lt; compile_time_enabled &gt;'],['../../common/classgoogle_1_1cloud_1_1v0_1_1Logger.html#a8d71f274093706cca30ea13c44784539',1,'google::cloud::v0::Logger::Logger()'],['../../common/classgoogle_1_1cloud_1_1v0_1_1Logger_3_01false_01_4.html#a1de3fd747ecc6beb487aec05e03d57c0',1,'google::cloud::v0::Logger&lt; false &gt;::Logger()=default'],['../../common/classgoogle_1_1cloud_1_1v0_1_1Logger_3_01false_01_4.html#a28feb26a9d04b4cc3348b7bffd1deec4',1,'google::cloud::v0::Logger&lt; false &gt;::Logger(Severity, char const *, char const *, int, LogSink &amp;)']]],
+  ['logger_3c_20false_20_3e',['Logger&lt; false &gt;',['../../common/classgoogle_1_1cloud_1_1v0_1_1Logger_3_01false_01_4.html',1,'google::cloud::v0']]],
   ['logging',['logging',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#ac1b4b44777173d93ddb86d0039341172',1,'google::cloud::storage::v0::BucketMetadata']]],
-  ['logging_5fas_5foptional',['logging_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a4b9fb1d3cf4e78b8bdcba4213182af2b',1,'google::cloud::storage::v0::BucketMetadata']]]
+  ['logging_5fas_5foptional',['logging_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a4b9fb1d3cf4e78b8bdcba4213182af2b',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['logrecord',['LogRecord',['../../common/structgoogle_1_1cloud_1_1v0_1_1LogRecord.html',1,'google::cloud::v0']]],
+  ['logsink',['LogSink',['../../common/classgoogle_1_1cloud_1_1v0_1_1LogSink.html',1,'google::cloud::v0::LogSink'],['../../common/classgoogle_1_1cloud_1_1v0_1_1LogSink.html#acdc453383ff0307bb9bd48aa80a40960',1,'google::cloud::v0::LogSink::LogSink()']]],
+  ['logto',['LogTo',['../../common/classgoogle_1_1cloud_1_1v0_1_1Logger.html#a15f7a068149166aa8ba3e3e45a0b1fa7',1,'google::cloud::v0::Logger::LogTo()'],['../../common/classgoogle_1_1cloud_1_1v0_1_1Logger_3_01false_01_4.html#a10ba781ca3b10bbf174b18ac6dcb7206',1,'google::cloud::v0::Logger&lt; false &gt;::LogTo(LogSink &amp;)'],['../../common/classgoogle_1_1cloud_1_1v0_1_1Logger_3_01false_01_4.html#a10ba781ca3b10bbf174b18ac6dcb7206',1,'google::cloud::v0::Logger&lt; false &gt;::LogTo(LogSink &amp;)']]]
 ];

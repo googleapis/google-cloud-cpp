@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['chrono_5fliterals',['chrono_literals',['../namespacegoogle_1_1cloud_1_1v0_1_1testing__util_1_1chrono__literals.html',1,'google::cloud::v0::testing_util']]],
   ['cloud',['cloud',['../namespacegoogle_1_1cloud.html',1,'google']]],
   ['gcp_5flog',['GCP_LOG',['../log_8h.html#af60b860676e7fa25e1e2e36579dae6f9',1,'log.h']]],
   ['gcp_5fls_5falert',['GCP_LS_ALERT',['../namespacegoogle_1_1cloud_1_1v0.html#a3668412f87c3e8e0c056860840b950e5abbc803db504b24b377a2abcf5f6f6fbb',1,'google::cloud::v0']]],
@@ -27,6 +26,5 @@ var searchData=
   ['google_5fcloud_5fcpp_5fpp_5fconcat',['GOOGLE_CLOUD_CPP_PP_CONCAT',['../log_8h.html#a47ed26c7e3e9a1b67b56050f260d1e9e',1,'log.h']]],
   ['google_5fcloud_5fcpp_5fvconcat',['GOOGLE_CLOUD_CPP_VCONCAT',['../version_8h.html#a12cb015c90e80137216e681db52ecd24',1,'version.h']]],
   ['google_5fcloud_5fcpp_5fveval',['GOOGLE_CLOUD_CPP_VEVAL',['../version_8h.html#aa36612ca0072a1e0e9b8cef5b11a5e45',1,'version.h']]],
-  ['testing_5futil',['testing_util',['../namespacegoogle_1_1cloud_1_1v0_1_1testing__util.html',1,'google::cloud::v0']]],
   ['v0',['v0',['../namespacegoogle_1_1cloud_1_1v0.html',1,'google::cloud']]]
 ];

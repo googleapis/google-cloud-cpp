@@ -1,6 +1,12 @@
 var searchData=
 [
-  ['refreshing_5fcredentials_5fwrapper_2ecc',['refreshing_credentials_wrapper.cc',['../refreshing__credentials__wrapper_8cc.html',1,'']]],
-  ['refreshing_5fcredentials_5fwrapper_2eh',['refreshing_credentials_wrapper.h',['../refreshing__credentials__wrapper_8h.html',1,'']]],
-  ['retry_5fpolicy_2eh',['retry_policy.h',['../retry__policy_8h.html',1,'']]]
+  ['object_5faccess_5fcontrol_2ecc',['object_access_control.cc',['../object__access__control_8cc.html',1,'']]],
+  ['object_5faccess_5fcontrol_2eh',['object_access_control.h',['../object__access__control_8h.html',1,'']]],
+  ['object_5fmetadata_2ecc',['object_metadata.cc',['../object__metadata_8cc.html',1,'']]],
+  ['object_5fmetadata_2eh',['object_metadata.h',['../object__metadata_8h.html',1,'']]],
+  ['object_5frewriter_2ecc',['object_rewriter.cc',['../object__rewriter_8cc.html',1,'']]],
+  ['object_5frewriter_2eh',['object_rewriter.h',['../object__rewriter_8h.html',1,'']]],
+  ['object_5fstream_2ecc',['object_stream.cc',['../object__stream_8cc.html',1,'']]],
+  ['object_5fstream_2eh',['object_stream.h',['../object__stream_8h.html',1,'']]],
+  ['optional_2eh',['optional.h',['../../common/optional_8h.html',1,'']]]
 ];

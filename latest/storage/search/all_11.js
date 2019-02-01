@@ -11,7 +11,11 @@ var searchData=
   ['refreshing_5fcredentials_5fwrapper_2eh',['refreshing_credentials_wrapper.h',['../refreshing__credentials__wrapper_8h.html',1,'']]],
   ['refreshingcredentialswrapper',['RefreshingCredentialsWrapper',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1RefreshingCredentialsWrapper.html',1,'google::cloud::storage::v0::oauth2']]],
   ['regional',['Regional',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1storage__class.html#a9109a55c653f9da886e4756b1025c31f',1,'google::cloud::storage::v0::storage_class']]],
+  ['removebackend',['RemoveBackend',['../../common/classgoogle_1_1cloud_1_1v0_1_1LogSink.html#a3063bc447d387afe061a12dd1e515f1a',1,'google::cloud::v0::LogSink']]],
+  ['removemember',['RemoveMember',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a96e5a4e1472285758eaca6207e46e337',1,'google::cloud::v0::IamBindings']]],
+  ['removemembers',['RemoveMembers',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a6cc9094eaf557b8c794689b918ab636b',1,'google::cloud::v0::IamBindings::RemoveMembers(google::cloud::IamBinding const &amp;iam_binding)'],['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a4df2f9b793ef5baa93dc73cad57951e9',1,'google::cloud::v0::IamBindings::RemoveMembers(std::string const &amp;role, std::set&lt; std::string &gt; const &amp;members)']]],
   ['requester_5fpays',['requester_pays',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketBilling.html#ac118ae6b3b540d0eaafa1a46b37c875c',1,'google::cloud::storage::v0::BucketBilling']]],
+  ['reset',['reset',['../../common/classgoogle_1_1cloud_1_1v0_1_1optional.html#a202eec41e2896363c6acef05323f4dba',1,'google::cloud::v0::optional']]],
   ['reset_5fbilling',['reset_billing',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a2379213ce368144b4a2fa65412d1fa1e',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['reset_5fencryption',['reset_encryption',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a96fe7df007dc0ed3dbcddd1e50f8bcb6',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['reset_5fiam_5fconfiguration',['reset_iam_configuration',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a3d7f55b5492d64ab2abf3d6497513543',1,'google::cloud::storage::v0::BucketMetadata']]],
@@ -59,6 +63,8 @@ var searchData=
   ['rewriteobject',['RewriteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a16f1e39a3259246f296cb38627426b6e',1,'google::cloud::storage::v0::Client']]],
   ['rewriteobjectblocking',['RewriteObjectBlocking',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a670b4499a7a4993f8a22f04ffe158235',1,'google::cloud::storage::v0::Client']]],
   ['rewriteprogress',['RewriteProgress',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1RewriteProgress.html',1,'google::cloud::storage::v0']]],
+  ['role',['role',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBinding.html#a08ec903b646b4b4cb4e4fedeaf3a3fee',1,'google::cloud::v0::IamBinding']]],
   ['rs256',['RS256',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2.html#adf56d5c10f381e0e82e9a2e421ead186ab774c36caa844a2b0e94f9c04c3ccacc',1,'google::cloud::storage::v0::oauth2']]],
-  ['rule',['rule',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLifecycle.html#aeab8470eaeb634e17f7e854f99c9af31',1,'google::cloud::storage::v0::BucketLifecycle']]]
+  ['rule',['rule',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketLifecycle.html#aeab8470eaeb634e17f7e854f99c9af31',1,'google::cloud::storage::v0::BucketLifecycle']]],
+  ['runtimestatuserror',['RuntimeStatusError',['../../common/classgoogle_1_1cloud_1_1v0_1_1RuntimeStatusError.html',1,'google::cloud::v0::RuntimeStatusError'],['../../common/classgoogle_1_1cloud_1_1v0_1_1RuntimeStatusError.html#a0530e8de1a2eb8d6b37dc4b570d2f669',1,'google::cloud::v0::RuntimeStatusError::RuntimeStatusError()']]]
 ];

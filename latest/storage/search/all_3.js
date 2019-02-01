@@ -21,6 +21,7 @@ var searchData=
   ['disable_5fversioning',['disable_versioning',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a34b65c5ba1bfad8408aa145f96b78ec0',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['disablecrc32cchecksum',['DisableCrc32cChecksum',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1DisableCrc32cChecksum.html',1,'google::cloud::storage::v0']]],
   ['disablemd5hash',['DisableMD5Hash',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1DisableMD5Hash.html',1,'google::cloud::storage::v0']]],
+  ['disablestdclog',['DisableStdClog',['../../common/classgoogle_1_1cloud_1_1v0_1_1LogSink.html#a94a8734df87a9a4a554cde0f2cac1415',1,'google::cloud::v0::LogSink']]],
   ['done',['done',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1RewriteProgress.html#adeed7261b94ff34bcbeb04e080883cfa',1,'google::cloud::storage::v0::RewriteProgress']]],
   ['download_5fbuffer_5fsize',['download_buffer_size',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a296af603db8b89499f06568c210790f2',1,'google::cloud::storage::v0::ClientOptions']]],
   ['download_5foptions_2eh',['download_options.h',['../download__options_8h.html',1,'']]],

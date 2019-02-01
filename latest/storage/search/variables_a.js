@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['not_5ffound_5fpage',['not_found_page',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketWebsite.html#a752dd994f88097b1694f9131b751ca2e',1,'google::cloud::storage::v0::BucketWebsite']]],
-  ['num_5fnewer_5fversions',['num_newer_versions',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html#a6b09d7c24ed12ede8011c5f1b58b28b6',1,'google::cloud::storage::v0::LifecycleRuleCondition']]]
+  ['main_5fpage_5fsuffix',['main_page_suffix',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketWebsite.html#adfc8484ea2cc1b576b9341655725a88d',1,'google::cloud::storage::v0::BucketWebsite']]],
+  ['matches_5fstorage_5fclass',['matches_storage_class',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html#ab4514ccdc4b2072fc44238b80c05cdce',1,'google::cloud::storage::v0::LifecycleRuleCondition']]],
+  ['max_5fage_5fseconds',['max_age_seconds',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html#af48b23ba58bd9b15a3e95b935861c86a',1,'google::cloud::storage::v0::CorsEntry']]],
+  ['message',['message',['../../common/structgoogle_1_1cloud_1_1v0_1_1LogRecord.html#a92f4603a2c40d5df9bf01850713a2495',1,'google::cloud::v0::LogRecord']]],
+  ['method',['method',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html#a8bd60e2054c927bb4828c76bf64cf0a1',1,'google::cloud::storage::v0::CorsEntry']]]
 ];

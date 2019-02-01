@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['default_5fconstructor',['default_constructor',['../classgoogle_1_1cloud_1_1v0_1_1testing__util_1_1Observable.html#a3bf58460cd1bffaa8950ae36e8e58406',1,'google::cloud::v0::testing_util::Observable']]],
-  ['destructor',['destructor',['../classgoogle_1_1cloud_1_1v0_1_1testing__util_1_1Observable.html#a481423a6aaa956b26875a13a65818e0d',1,'google::cloud::v0::testing_util::Observable']]]
+  ['filename',['filename',['../structgoogle_1_1cloud_1_1v0_1_1LogRecord.html#a068578b84f29cb69b21e3bc107497d02',1,'google::cloud::v0::LogRecord']]],
+  ['function',['function',['../structgoogle_1_1cloud_1_1v0_1_1LogRecord.html#aacd9711507d2906b0d302e9a75cf459a',1,'google::cloud::v0::LogRecord']]]
 ];

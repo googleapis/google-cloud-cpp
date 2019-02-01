@@ -2,6 +2,9 @@ var searchData=
 [
   ['add_5fcolumn_5ffamily',['add_column_family',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableConfig.html#a8841aa641a99e65d4780d8925ec8429c',1,'google::cloud::bigtable::v0::TableConfig']]],
   ['add_5finitial_5fsplit',['add_initial_split',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableConfig.html#a6e81b3b7c49b339482cafe0f41fe4d98',1,'google::cloud::bigtable::v0::TableConfig']]],
+  ['addbackend',['AddBackend',['../../common/classgoogle_1_1cloud_1_1v0_1_1LogSink.html#aec72ffccc90b09325dd35089075b4c19',1,'google::cloud::v0::LogSink']]],
+  ['addmember',['AddMember',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a2273b8603228416a6e0779581861808a',1,'google::cloud::v0::IamBindings']]],
+  ['addmembers',['AddMembers',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a004d6df7fdf5e116be5390d0ba12ae20',1,'google::cloud::v0::IamBindings::AddMembers(google::cloud::IamBinding const &amp;iam_binding)'],['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#abe8fda9df69b9841b0b30a69aea2eb06',1,'google::cloud::v0::IamBindings::AddMembers(std::string const &amp;role, std::set&lt; std::string &gt; const &amp;members)']]],
   ['admin_5fendpoint',['admin_endpoint',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#a9df76745e6dfb35a7632f9857c09091c',1,'google::cloud::bigtable::v0::ClientOptions']]],
   ['alwaysretrymutationpolicy',['AlwaysRetryMutationPolicy',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AlwaysRetryMutationPolicy.html#a3d20ed799c7801c78289d5a354bb3cb8',1,'google::cloud::bigtable::v0::AlwaysRetryMutationPolicy']]],
   ['app_5fprofile_5fid',['app_profile_id',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a1a7cd66e835b39b90bd0009ccffd3add',1,'google::cloud::bigtable::v0::Table']]],
@@ -43,5 +46,6 @@ var searchData=
   ['asyncsamplerowkeys',['AsyncSampleRowKeys',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DefaultDataClient.html#a20b72b4e08c9ea65d749796a188c95c7',1,'google::cloud::bigtable::v0::DefaultDataClient::AsyncSampleRowKeys()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#a43352e9c26888b01fc71942b42f0a3ee',1,'google::cloud::bigtable::v0::DataClient::AsyncSampleRowKeys()']]],
   ['asyncupdateappprofile',['AsyncUpdateAppProfile',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a1dce371a401ff3c846ac2930018ae0de',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
   ['asyncupdatecluster',['AsyncUpdateCluster',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ac77cd4c285aa00de8f43e38482cb4c28',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
-  ['asyncupdateinstance',['AsyncUpdateInstance',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a4e6474974b076a2c940d42b2780d18df',1,'google::cloud::bigtable::v0::InstanceAdminClient']]]
+  ['asyncupdateinstance',['AsyncUpdateInstance',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a4e6474974b076a2c940d42b2780d18df',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
+  ['at',['at',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#aa87dbd1a3d2de367332be14d46aeab26',1,'google::cloud::v0::IamBindings']]]
 ];

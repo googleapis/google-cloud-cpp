@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['object_5fname',['object_name',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1ComposeSourceObject.html#acf827ba20ae4bd7f7d8b3068c312a3ec',1,'google::cloud::storage::v0::ComposeSourceObject']]],
-  ['object_5fsize',['object_size',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1RewriteProgress.html#a6c740e4040f746c06e5f6a5315fb5cc5',1,'google::cloud::storage::v0::RewriteProgress']]],
-  ['origin',['origin',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html#a273c000566ea819ed81e09b0b33791a4',1,'google::cloud::storage::v0::CorsEntry']]]
+  ['not_5ffound_5fpage',['not_found_page',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketWebsite.html#a752dd994f88097b1694f9131b751ca2e',1,'google::cloud::storage::v0::BucketWebsite']]],
+  ['num_5fnewer_5fversions',['num_newer_versions',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html#a6b09d7c24ed12ede8011c5f1b58b28b6',1,'google::cloud::storage::v0::LifecycleRuleCondition']]]
 ];
