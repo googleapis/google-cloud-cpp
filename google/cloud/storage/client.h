@@ -62,11 +62,12 @@ inline namespace STORAGE_CLIENT_NS {
  * @par Credentials
  * The default approach for creating a Client uses Google Application Default
  * %Credentials (ADCs). Because finding or loading ADCs can fail, the returned
- * StatusOr<Client> from CreateDefaultClient() should be verified before using
- * it. However, explicitly passing Credentials when creating a Client does not
- * have the same potential to fail, so the resulting client is not wrapped in a
- * StatusOr.  If you wish to use AnonymousCredentials or to supply a specific
- * Credentials type, you can use the functions declared in google_credentials.h:
+ * `StatusOr<Client>` from `CreateDefaultClient()` should be verified before
+ * using it. However, explicitly passing `Credentials` when creating a Client
+ * does not have the same potential to fail, so the resulting `Client` is not
+ * wrapped in a `StatusOr`.  If you wish to use `AnonymousCredentials` or to
+ * supply a specific `Credentials` type, you can use the functions declared in
+ * google_credentials.h:
  * @code
  * namespace gcs = google::cloud::storage;
  *

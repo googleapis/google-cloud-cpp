@@ -53,11 +53,8 @@ int main(int argc, char* argv[]) try {
   while (std::getline(stream, line, '\n')) {
     ++count;
   }
-  google::cloud::Status status =
-      client
-          ->DeleteObject(bucket_name, object_name,
-                         gcs::Generation(meta.generation()))
-          .value();
+  google::cloud::Status status = client->DeleteObject(
+      bucket_name, object_name, gcs::Generation(meta.generation()));
   if (!status.ok()) {
     throw std::runtime_error(status.message());
 
