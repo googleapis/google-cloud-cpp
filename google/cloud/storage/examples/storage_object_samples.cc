@@ -342,13 +342,13 @@ void DeleteObject(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   //! [delete object] [START storage_delete_file]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+    google::cloud::Status status =
+        client.DeleteObject(bucket_name, object_name);
 
-    if (!status) {
+    if (!status.ok()) {
       std::cerr << "Error deleting object " << object_name << " in bucket "
-                << bucket_name << ", status=" << status.status() << std::endl;
+                << bucket_name << ", status=" << status << std::endl;
       return;
     }
 
@@ -589,16 +589,15 @@ void DownloadFile(google::cloud::storage::Client client, int& argc,
 
   //! [download file]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string file_name) {
-    StatusOr<void> status =
+    google::cloud::Status status =
         client.DownloadToFile(bucket_name, object_name, file_name);
 
-    if (!status) {
+    if (!status.ok()) {
       std::cerr << "Error downloading object " << object_name << " in bucket "
                 << bucket_name << " to file " << file_name
-                << ", status=" << status.status() << std::endl;
+                << ", status=" << status << std::endl;
       return;
     }
 
@@ -1234,12 +1233,13 @@ void RenameObject(google::cloud::storage::Client client, int& argc,
       return;
     }
 
-    StatusOr<void> status = client.DeleteObject(bucket_name, old_object_name);
+    google::cloud::Status status =
+        client.DeleteObject(bucket_name, old_object_name);
 
-    if (!status) {
+    if (!status.ok()) {
       std::cerr << "Error deleting original object " << old_object_name
-                << " in bucket " << bucket_name
-                << ", status=" << status.status() << std::endl;
+                << " in bucket " << bucket_name << ", status=" << status
+                << std::endl;
       return;
     }
     std::cout << "Renamed " << old_object_name << " to " << new_object_name

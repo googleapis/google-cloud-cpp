@@ -81,11 +81,10 @@ TEST_F(ObjectRewriteIntegrationTest, Copy) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  StatusOr<void> status =
-      client->DeleteObject(bucket_name, destination_object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client->DeleteObject(bucket_name, destination_object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
   status = client->DeleteObject(bucket_name, source_object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
@@ -110,10 +109,10 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
                                          .set_role("READER")))
       << *meta;
 
-  StatusOr<void> status = client->DeleteObject(bucket_name, copy_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client->DeleteObject(bucket_name, copy_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
   status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
@@ -143,10 +142,10 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
                    ObjectAccessControl().set_entity(owner).set_role("OWNER")))
       << *meta;
 
-  StatusOr<void> status = client->DeleteObject(bucket_name, copy_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client->DeleteObject(bucket_name, copy_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
   status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
@@ -176,10 +175,10 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
                    ObjectAccessControl().set_entity(owner).set_role("READER")))
       << *meta;
 
-  StatusOr<void> status = client->DeleteObject(bucket_name, copy_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client->DeleteObject(bucket_name, copy_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
   status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPrivate) {
@@ -205,10 +204,10 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPrivate) {
                                          .set_role("OWNER")))
       << *meta;
 
-  StatusOr<void> status = client->DeleteObject(bucket_name, copy_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client->DeleteObject(bucket_name, copy_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
   status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclProjectPrivate) {
@@ -234,10 +233,10 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclProjectPrivate) {
                                          .set_role("OWNER")))
       << *meta;
 
-  StatusOr<void> status = client->DeleteObject(bucket_name, copy_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client->DeleteObject(bucket_name, copy_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
   status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPublicRead) {
@@ -262,10 +261,10 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPublicRead) {
              ObjectAccessControl().set_entity("allUsers").set_role("READER")))
       << *meta;
 
-  StatusOr<void> status = client->DeleteObject(bucket_name, copy_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client->DeleteObject(bucket_name, copy_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
   status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectRewriteIntegrationTest, ComposeSimple) {
@@ -293,11 +292,10 @@ TEST_F(ObjectRewriteIntegrationTest, ComposeSimple) {
   ASSERT_TRUE(composed_meta.ok()) << "status=" << composed_meta.status();
   EXPECT_EQ(meta->size() * 2, composed_meta->size());
 
-  StatusOr<void> status =
-      client->DeleteObject(bucket_name, composed_object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client->DeleteObject(bucket_name, composed_object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
   status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectRewriteIntegrationTest, ComposedUsingEncryptedObject) {
@@ -331,11 +329,10 @@ TEST_F(ObjectRewriteIntegrationTest, ComposedUsingEncryptedObject) {
   ASSERT_TRUE(composed_meta.ok()) << "status=" << composed_meta.status();
 
   EXPECT_EQ(meta->size() * 2, composed_meta->size());
-  StatusOr<void> status =
-      client->DeleteObject(bucket_name, composed_object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client->DeleteObject(bucket_name, composed_object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
   status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteSimple) {
@@ -362,10 +359,10 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteSimple) {
   EXPECT_EQ(bucket_name, rewritten_meta->bucket());
   EXPECT_EQ(object_name, rewritten_meta->name());
 
-  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client->DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
   status = client->DeleteObject(bucket_name, source_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteEncrypted) {
@@ -398,10 +395,10 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteEncrypted) {
   EXPECT_EQ(bucket_name, rewritten_meta->bucket());
   EXPECT_EQ(object_name, rewritten_meta->name());
 
-  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client->DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
   status = client->DeleteObject(bucket_name, source_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteLarge) {
@@ -446,10 +443,10 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteLarge) {
   EXPECT_EQ(bucket_name, rewritten_meta->bucket());
   EXPECT_EQ(object_name, rewritten_meta->name());
 
-  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client->DeleteObject(bucket_name, object_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
   status = client->DeleteObject(bucket_name, source_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status.status();
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyFailure) {

@@ -15,6 +15,7 @@
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/format_rfc3339.h"
 #include <future>
@@ -176,7 +177,10 @@ int main(int argc, char* argv[]) try {
   RunTest(client, bucket_name, options, object_names);
   DeleteAllObjects(client, bucket_name, options, object_names);
   std::cout << "# Deleting " << bucket_name << std::endl;
-  client.DeleteBucket(bucket_name).value();
+  auto status = client.DeleteBucket(bucket_name);
+  if (!status.ok()) {
+    google::cloud::internal::ThrowStatus(status);
+  }
 
   return 0;
 } catch (std::exception const& ex) {
@@ -421,8 +425,11 @@ TestResult DeleteGroup(gcs::Client client,
   TestResult result;
   for (auto const& o : group) {
     auto start = std::chrono::steady_clock::now();
-    client.DeleteObject(o.bucket(), o.name(), gcs::Generation(o.generation()))
-        .value();
+    auto status = client.DeleteObject(o.bucket(), o.name(),
+                                      gcs::Generation(o.generation()));
+    if (!status.ok()) {
+      google::cloud::internal::ThrowStatus(status);
+    }
     auto elapsed = std::chrono::steady_clock::now() - start;
     using std::chrono::milliseconds;
     auto ms = std::chrono::duration_cast<milliseconds>(elapsed);

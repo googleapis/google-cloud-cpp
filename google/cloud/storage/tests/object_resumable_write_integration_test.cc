@@ -76,8 +76,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
 
-  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
@@ -127,8 +127,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
 
-  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
@@ -166,8 +166,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
 
-  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
@@ -197,8 +197,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
   EXPECT_FALSE(os.metadata().ok());
   EXPECT_EQ(StatusCode::kFailedPrecondition, os.metadata().status().code());
 
-  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
 }
 
 }  // anonymous namespace

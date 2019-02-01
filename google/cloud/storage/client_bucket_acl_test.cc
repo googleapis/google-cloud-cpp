@@ -211,23 +211,19 @@ TEST_F(BucketAccessControlsTest, DeleteBucketAcl) {
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
-  StatusOr<void> actual =
-      client.DeleteBucketAcl("test-bucket", "user-test-user-1");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  auto status = client.DeleteBucketAcl("test-bucket", "user-test-user-1");
+  ASSERT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(BucketAccessControlsTest, DeleteBucketAclTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
       mock, EXPECT_CALL(*mock, DeleteBucketAcl(_)),
       [](Client& client) {
-        return client.DeleteBucketAcl("test-bucket-name", "user-test-user-1")
-            .status();
+        return client.DeleteBucketAcl("test-bucket-name", "user-test-user-1");
       },
       [](Client& client) {
-        return client
-            .DeleteBucketAcl("test-bucket-name", "user-test-user-1",
-                             IfMatchEtag("ABC="))
-            .status();
+        return client.DeleteBucketAcl("test-bucket-name", "user-test-user-1",
+                                      IfMatchEtag("ABC="));
       },
       "DeleteBucketAcl");
 }
@@ -236,8 +232,7 @@ TEST_F(BucketAccessControlsTest, DeleteBucketAclPermanentFailure) {
   testing::PermanentFailureStatusTest<internal::EmptyResponse>(
       *client, EXPECT_CALL(*mock, DeleteBucketAcl(_)),
       [](Client& client) {
-        return client.DeleteBucketAcl("test-bucket-name", "user-test-user")
-            .status();
+        return client.DeleteBucketAcl("test-bucket-name", "user-test-user");
       },
       "DeleteBucketAcl");
 }

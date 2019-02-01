@@ -79,9 +79,9 @@ class CurlResumableStreambufIntegrationTest
     ASSERT_EQ(expected.size(), actual.size());
     EXPECT_EQ(expected, actual);
 
-    StatusOr<void> status = client->DeleteObject(
-        bucket_name, object_name, Generation(metadata.generation()));
-    ASSERT_TRUE(status.ok()) << "status=" << status.status();
+    auto status = client->DeleteObject(bucket_name, object_name,
+                                       Generation(metadata.generation()));
+    ASSERT_TRUE(status.ok()) << "status=" << status;
   }
 };
 
