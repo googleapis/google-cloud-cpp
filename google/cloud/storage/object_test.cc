@@ -63,7 +63,8 @@ TEST_F(ObjectTest, InsertObjectMedia) {
   std::string text = R"""({
       "name": "test-bucket-name/test-object-name/1"
 })""";
-  auto expected = storage::internal::ObjectMetadataParser::FromString(text).value();
+  auto expected =
+      storage::internal::ObjectMetadataParser::FromString(text).value();
 
   EXPECT_CALL(*mock, InsertObjectMedia(_))
       .WillOnce(Invoke(

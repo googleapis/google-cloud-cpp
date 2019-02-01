@@ -163,8 +163,8 @@ void DeleteNotification(google::cloud::storage::Client client, int& argc,
 
     if (!status.ok()) {
       std::cerr << "Error delete notification id " << notification_id
-                << " on bucket " << bucket_name
-                << ", status=" << status << std::endl;
+                << " on bucket " << bucket_name << ", status=" << status
+                << std::endl;
       return;
     }
 

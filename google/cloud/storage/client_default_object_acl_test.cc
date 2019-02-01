@@ -207,12 +207,13 @@ TEST_F(DefaultObjectAccessControlsTest,
 }
 
 TEST_F(DefaultObjectAccessControlsTest, GetDefaultObjectAcl) {
-  ObjectAccessControl expected = internal::ObjectAccessControlParser::FromString(R"""({
+  ObjectAccessControl expected =
+      internal::ObjectAccessControlParser::FromString(R"""({
           "bucket": "test-bucket",
           "entity": "user-test-user-1",
           "role": "OWNER"
       })""")
-                                     .value();
+          .value();
 
   EXPECT_CALL(*mock, GetDefaultObjectAcl(_))
       .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
