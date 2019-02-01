@@ -91,7 +91,7 @@ class AuthorizedUserCredentials : public Credentials {
     namespace nl = storage::internal::nl;
 
     auto response = request_.MakeRequest(payload_);
-    if (!response.ok()) {
+    if (!response) {
       return std::move(response).status();
     }
     if (response->status_code >= 300) {

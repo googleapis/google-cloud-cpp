@@ -57,9 +57,8 @@ bool UsingTestbench() {
 }
 
 TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32c) {
-  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
-  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
-  Client client = std::move(*status_or_client);
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
 
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -67,7 +66,7 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32c) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client.InsertObject(
+  StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name, object_name, expected, IfGenerationMatch(0),
       Crc32cChecksumValue("6Y46Mg=="));
   ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
@@ -76,18 +75,17 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32c) {
   EXPECT_EQ(bucket_name, meta->bucket());
 
   // Create a iostream to read the object back.
-  auto stream = client.ReadObject(bucket_name, object_name);
+  auto stream = client->ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32c) {
-  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
-  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
-  Client client = std::move(*status_or_client);
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
 
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -95,7 +93,7 @@ TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32c) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client.InsertObject(
+  StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name, object_name, expected, IfGenerationMatch(0), Fields(""),
       Crc32cChecksumValue("6Y46Mg=="));
   ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
@@ -104,18 +102,17 @@ TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32c) {
   EXPECT_EQ(bucket_name, meta->bucket());
 
   // Create a iostream to read the object back.
-  auto stream = client.ReadObject(bucket_name, object_name);
+  auto stream = client->ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32cFailure) {
-  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
-  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
-  Client client = std::move(*status_or_client);
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
 
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -123,16 +120,15 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32cFailure) {
   std::string expected = LoremIpsum();
 
   // This should fail because the CRC32C value is incorrect.
-  StatusOr<ObjectMetadata> failure = client.InsertObject(
+  StatusOr<ObjectMetadata> failure = client->InsertObject(
       bucket_name, object_name, expected, IfGenerationMatch(0),
       Crc32cChecksumValue("4UedKg=="));
   ASSERT_FALSE(failure.ok()) << "status=" << failure.status();
 }
 
 TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32cFailure) {
-  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
-  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
-  Client client = std::move(*status_or_client);
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
 
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -140,16 +136,15 @@ TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32cFailure) {
   std::string expected = LoremIpsum();
 
   // This should fail because the CRC32C value is incorrect.
-  StatusOr<ObjectMetadata> failure = client.InsertObject(
+  StatusOr<ObjectMetadata> failure = client->InsertObject(
       bucket_name, object_name, expected, IfGenerationMatch(0), Fields(""),
       Crc32cChecksumValue("4UedKg=="));
   ASSERT_FALSE(failure.ok()) << "status=" << failure.status();
 }
 
 TEST_F(ObjectChecksumIntegrationTest, InsertWithComputedCrc32c) {
-  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
-  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
-  Client client = std::move(*status_or_client);
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
 
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -157,7 +152,7 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithComputedCrc32c) {
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client.InsertObject(
+  StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name, object_name, expected, IfGenerationMatch(0),
       Crc32cChecksumValue(ComputeCrc32cChecksum(expected)));
   ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
@@ -166,11 +161,11 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithComputedCrc32c) {
   EXPECT_EQ(bucket_name, meta->bucket());
 
   // Create a iostream to read the object back.
-  auto stream = client.ReadObject(bucket_name, object_name);
+  auto stream = client->ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
@@ -247,20 +242,19 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertJSON) {
 
 /// @test Verify that CRC32C checksums are computed by default on downloads.
 TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadXML) {
-  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
-  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
-  Client client = std::move(*status_or_client);
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
 
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
   StatusOr<ObjectMetadata> meta =
-      client.InsertObject(bucket_name, object_name, LoremIpsum(),
-                          IfGenerationMatch(0), Projection::Full());
+      client->InsertObject(bucket_name, object_name, LoremIpsum(),
+                           IfGenerationMatch(0), Projection::Full());
   ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
-  auto stream = client.ReadObject(bucket_name, object_name);
+  auto stream = client->ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(stream.IsOpen());
   ASSERT_FALSE(actual.empty());
@@ -268,27 +262,26 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadXML) {
   EXPECT_EQ(stream.received_hash(), stream.computed_hash());
   EXPECT_THAT(stream.received_hash(), HasSubstr(meta->crc32c()));
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Verify that CRC32C checksums are computed by default on downloads.
 TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadJSON) {
-  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
-  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
-  Client client = std::move(*status_or_client);
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
 
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
   StatusOr<ObjectMetadata> meta =
-      client.InsertObject(bucket_name, object_name, LoremIpsum(),
-                          IfGenerationMatch(0), Projection::Full());
+      client->InsertObject(bucket_name, object_name, LoremIpsum(),
+                           IfGenerationMatch(0), Projection::Full());
   ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
   auto stream =
-      client.ReadObject(bucket_name, object_name, IfMetagenerationNotMatch(0));
+      client->ReadObject(bucket_name, object_name, IfMetagenerationNotMatch(0));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(stream.IsOpen());
   ASSERT_FALSE(actual.empty());
@@ -296,22 +289,21 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadJSON) {
   EXPECT_EQ(stream.received_hash(), stream.computed_hash());
   EXPECT_THAT(stream.received_hash(), HasSubstr(meta->crc32c()));
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Verify that CRC32C checksums are computed by default on uploads.
 TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteXML) {
-  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
-  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
-  Client client = std::move(*status_or_client);
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
 
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
-  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
-                               Fields(""));
+  auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                                Fields(""));
   os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
@@ -324,21 +316,20 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteXML) {
   EXPECT_EQ(os.received_hash(), os.computed_hash());
   EXPECT_THAT(os.received_hash(), HasSubstr(expected_crc32c));
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
 /// @test Verify that CRC32C checksums are computed by default on uploads.
 TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteJSON) {
-  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
-  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
-  Client client = std::move(*status_or_client);
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
 
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
-  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0));
   os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
@@ -351,7 +342,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteJSON) {
   EXPECT_EQ(os.received_hash(), os.computed_hash());
   EXPECT_THAT(os.received_hash(), HasSubstr(expected_crc32c));
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
@@ -363,20 +354,19 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
     // testbench to inject faults.
     return;
   }
-  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
-  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
-  Client client = std::move(*status_or_client);
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
 
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
   StatusOr<ObjectMetadata> meta =
-      client.InsertObject(bucket_name, object_name, LoremIpsum(),
-                          IfGenerationMatch(0), Projection::Full());
+      client->InsertObject(bucket_name, object_name, LoremIpsum(),
+                           IfGenerationMatch(0), Projection::Full());
   ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
-  auto stream = client.ReadObject(
+  auto stream = client->ReadObject(
       bucket_name, object_name,
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
 
@@ -399,7 +389,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
   EXPECT_FALSE(stream.status().ok());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
@@ -411,20 +401,19 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
     // testbench to inject faults.
     return;
   }
-  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
-  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
-  Client client = std::move(*status_or_client);
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
 
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
   StatusOr<ObjectMetadata> meta =
-      client.InsertObject(bucket_name, object_name, LoremIpsum(),
-                          IfGenerationMatch(0), Projection::Full());
+      client->InsertObject(bucket_name, object_name, LoremIpsum(),
+                           IfGenerationMatch(0), Projection::Full());
   ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
-  auto stream = client.ReadObject(
+  auto stream = client->ReadObject(
       bucket_name, object_name, DisableMD5Hash(true),
       IfMetagenerationNotMatch(0),
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
@@ -447,7 +436,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
@@ -459,19 +448,18 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteXML) {
     // testbench to inject faults.
     return;
   }
-  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
-  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
-  Client client = std::move(*status_or_client);
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
 
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
   // Create a stream to upload an object.
   ObjectWriteStream stream =
-      client.WriteObject(bucket_name, object_name, DisableMD5Hash(true),
-                         IfGenerationMatch(0), Fields(""),
-                         CustomHeader("x-goog-testbench-instructions",
-                                      "inject-upload-data-error"));
+      client->WriteObject(bucket_name, object_name, DisableMD5Hash(true),
+                          IfGenerationMatch(0), Fields(""),
+                          CustomHeader("x-goog-testbench-instructions",
+                                       "inject-upload-data-error"));
   stream << LoremIpsum() << "\n";
   stream << LoremIpsum();
 
@@ -480,7 +468,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteXML) {
   EXPECT_TRUE(stream.metadata().ok());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 
@@ -492,15 +480,14 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
     // testbench to inject faults.
     return;
   }
-  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
-  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
-  Client client = std::move(*status_or_client);
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
 
   auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
   // Create a stream to upload an object.
-  ObjectWriteStream stream = client.WriteObject(
+  ObjectWriteStream stream = client->WriteObject(
       bucket_name, object_name, DisableMD5Hash(true), IfGenerationMatch(0),
       CustomHeader("x-goog-testbench-instructions",
                    "inject-upload-data-error"));
@@ -512,7 +499,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
   EXPECT_TRUE(stream.metadata().ok());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
+  StatusOr<void> status = client->DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status.status();
 }
 

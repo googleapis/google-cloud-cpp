@@ -182,7 +182,7 @@ int main(int argc, char* argv[]) try {
   // Create a client to communicate with Google Cloud Storage.
   google::cloud::StatusOr<google::cloud::storage::Client> client =
       google::cloud::storage::Client::CreateDefaultClient();
-  if (!client.ok()) {
+  if (!client) {
     std::cerr << "Failed to create Storage Client, status=" << client.status()
               << std::endl;
     return 1;

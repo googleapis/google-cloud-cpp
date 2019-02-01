@@ -52,7 +52,7 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
   std::string cred_type = cred_json.value("type", "no type given");
   if (cred_type == "authorized_user") {
     auto info = ParseAuthorizedUserCredentials(contents, path);
-    if (!info.ok()) {
+    if (!info) {
       return info.status();
     }
     std::unique_ptr<Credentials> ptr =
@@ -62,7 +62,7 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
   }
   if (cred_type == "service_account") {
     auto info = ParseServiceAccountCredentials(contents, path);
-    if (!info.ok()) {
+    if (!info) {
       return info.status();
     }
     std::unique_ptr<Credentials> ptr =
@@ -107,7 +107,7 @@ StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromGcloudAdcFile() {
 StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials() {
   // 1) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable is set.
   auto creds = MaybeLoadCredsFromAdcEnvVar();
-  if (!creds.ok()) {
+  if (!creds) {
     return StatusOr<std::shared_ptr<Credentials>>(creds.status());
   }
   if (*creds) {
@@ -117,7 +117,7 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials() {
   // 2) If no path was specified via environment variable, check if the gcloud
   // ADC file exists.
   creds = MaybeLoadCredsFromGcloudAdcFile();
-  if (!creds.ok()) {
+  if (!creds) {
     return StatusOr<std::shared_ptr<Credentials>>(creds.status());
   }
   if (*creds) {
@@ -154,7 +154,7 @@ CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   auto info = ParseAuthorizedUserCredentials(contents, path);
-  if (!info.ok()) {
+  if (!info) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());
   }
   return StatusOr<std::shared_ptr<Credentials>>(
@@ -164,7 +164,7 @@ CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path) {
 StatusOr<std::shared_ptr<Credentials>>
 CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents) {
   auto info = ParseAuthorizedUserCredentials(contents, "memory");
-  if (!info.ok()) {
+  if (!info) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());
   }
   return StatusOr<std::shared_ptr<Credentials>>(
@@ -176,7 +176,7 @@ CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   auto info = ParseServiceAccountCredentials(contents, path);
-  if (!info.ok()) {
+  if (!info) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());
   }
   return StatusOr<std::shared_ptr<Credentials>>(
@@ -186,7 +186,7 @@ CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path) {
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(std::string const& contents) {
   auto info = ParseServiceAccountCredentials(contents, "memory");
-  if (!info.ok()) {
+  if (!info) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());
   }
   return StatusOr<std::shared_ptr<Credentials>>(

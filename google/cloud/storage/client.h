@@ -60,7 +60,7 @@ inline namespace STORAGE_CLIENT_NS {
  *
  * @par Credentials
  * The default approach for creating a Client uses Google Application Default
- * %Credentials. Because finding or loading ADCs can fail, the returned
+ * %Credentials (ADCs). Because finding or loading ADCs can fail, the returned
  * StatusOr<Client> from CreateDefaultClient() should be verified before using
  * it. However, explicitly passing Credentials when creating a Client does not
  * have the same potential to fail, so the resulting client is not wrapped in a
@@ -71,26 +71,26 @@ inline namespace STORAGE_CLIENT_NS {
  *
  * // Implicitly use ADCs:
  * StatusOr<gcs::Client> client = gcs::Client::CreateDefaultClient();
- * if (!client.ok()) {
+ * if (!client) {
  *   // Handle failure and return.
  * }
  *
  * // Or explicitly use ADCs:
- * auto status_or_creds = gcs::oauth2::GoogleDefaultCredentials();
- * if (!status_or_creds.ok()) {
+ * auto creds = gcs::oauth2::GoogleDefaultCredentials();
+ * if (!creds) {
  *   // Handle failure and return.
  * }
  * // Status was OK, so create a Client with the given Credentials.
- * gcs::Client client(gcs::ClientOptions(*status_or_creds));
+ * gcs::Client client(gcs::ClientOptions(*creds));
  *
  * // Use service account credentials from a JSON keyfile:
  * std::string path = "/path/to/keyfile.json";
- * auto status_or_creds =
+ * auto creds =
  *     gcs::oauth2::CreateServiceAccountCredentialsFromJsonFilePath(path);
- * if (!status_or_creds.ok()) {
+ * if (!creds) {
  *   // Handle failure and return.
  * }
- * gcs::Client client(gcs::ClientOptions(*status_or_creds));
+ * gcs::Client client(gcs::ClientOptions(*creds));
  *
  * // Use Compute Engine credentials for the instance's default service account.
  * gcs::Client client(
@@ -115,7 +115,7 @@ inline namespace STORAGE_CLIENT_NS {
  * google::cloud::StatusOr<gcs::BucketMetadata> bucket_metadata =
  *     client.GetBucketMetadata("my-bucket");
  *
- * if (!bucket_metadata.ok()) {
+ * if (!bucket_metadata) {
  *   std::cerr << "Error getting metadata for my-bucket: "
  *             << bucket_metadata.status() << std::endl;
  *   return;
@@ -611,7 +611,7 @@ class Client {
                                                       std::move(permissions));
     request.set_multiple_options(std::forward<Options>(options)...);
     auto result = raw_client_->TestBucketIamPermissions(request);
-    if (!result.ok()) {
+    if (!result) {
       return std::move(result).status();
     }
     return std::move(result.value().permissions);
@@ -1374,7 +1374,7 @@ class Client {
     internal::ListBucketAclRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto items = raw_client_->ListBucketAcl(request);
-    if (!items.ok()) {
+    if (!items) {
       return std::move(items).status();
     }
     return std::move(items.value().items);
@@ -1639,7 +1639,7 @@ class Client {
     internal::ListObjectAclRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto result = raw_client_->ListObjectAcl(request);
-    if (!result.ok()) {
+    if (!result) {
       return std::move(result).status();
     }
     return std::move(result.value().items);
@@ -1912,7 +1912,7 @@ class Client {
     internal::ListDefaultObjectAclRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto response = raw_client_->ListDefaultObjectAcl(request);
-    if (!response.ok()) {
+    if (!response) {
       return std::move(response).status();
     }
     return std::move(response.value().items);
@@ -2324,7 +2324,7 @@ class Client {
     internal::ListNotificationsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto result = raw_client_->ListNotifications(request);
-    if (!result.ok()) {
+    if (!result) {
       return std::move(result).status();
     }
     return std::move(result).value().items;

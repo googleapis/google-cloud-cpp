@@ -89,11 +89,10 @@ std::vector<ObjectNameList> DivideIntoEqualSizedGroups(
 void CreateObjects(std::string const& bucket_name, ObjectNameList group,
                    std::string contents) {
   // Create our own client so no state is shared with the other threads.
-  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
-  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
-  Client client = std::move(*status_or_client);
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
   for (auto const& object_name : group) {
-    StatusOr<ObjectMetadata> meta = client.InsertObject(
+    StatusOr<ObjectMetadata> meta = client->InsertObject(
         bucket_name, object_name, contents, IfGenerationMatch(0));
     ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
   }
@@ -101,11 +100,10 @@ void CreateObjects(std::string const& bucket_name, ObjectNameList group,
 
 void DeleteObjects(std::string const& bucket_name, ObjectNameList group) {
   // Create our own client so no state is shared with the other threads.
-  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
-  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
-  Client client = std::move(*status_or_client);
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
   for (auto const& object_name : group) {
-    (void)client.DeleteObject(bucket_name, object_name);
+    (void)client->DeleteObject(bucket_name, object_name);
   }
 }
 }  // anonymous namespace
@@ -113,11 +111,10 @@ void DeleteObjects(std::string const& bucket_name, ObjectNameList group) {
 TEST_F(ThreadIntegrationTest, Unshared) {
   auto project_id = ThreadTestEnvironment::project_id();
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
-  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
-  Client client = std::move(*status_or_client);
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
 
-  StatusOr<BucketMetadata> meta = client.CreateBucketForProject(
+  StatusOr<BucketMetadata> meta = client->CreateBucketForProject(
       bucket_name, project_id,
       BucketMetadata()
           .set_storage_class(storage_class::Regional())
@@ -158,7 +155,7 @@ TEST_F(ThreadIntegrationTest, Unshared) {
     t.get();
   }
 
-  auto delete_status = client.DeleteBucket(bucket_name);
+  auto delete_status = client->DeleteBucket(bucket_name);
   ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status.status();
   // This is basically a smoke test, if the test does not crash it was
   // successful.

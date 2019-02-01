@@ -40,11 +40,10 @@ std::string ServiceAccountTestEnvironment::project_id_;
 
 TEST(ServiceAccountIntegrationTest, Get) {
   auto project_id = ServiceAccountTestEnvironment::project_id();
-  StatusOr<Client> status_or_client = Client::CreateDefaultClient();
-  ASSERT_TRUE(status_or_client.ok()) << "status=" << status_or_client.status();
-  Client client = std::move(*status_or_client);
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
 
-  StatusOr<ServiceAccount> a1 = client.GetServiceAccountForProject(project_id);
+  StatusOr<ServiceAccount> a1 = client->GetServiceAccountForProject(project_id);
   EXPECT_FALSE(a1->email_address().empty());
 
   auto client_options = ClientOptions::CreateDefaultClientOptions();

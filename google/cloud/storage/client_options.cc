@@ -63,7 +63,7 @@ std::size_t DefaultConnectionPoolSize() {
 
 StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions() {
   auto creds = StorageDefaultCredentials();
-  if (!creds.ok()) {
+  if (!creds) {
     return creds.status();
   }
   return ClientOptions(*creds);

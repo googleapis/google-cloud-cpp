@@ -38,11 +38,11 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
 }
 
 StatusOr<Client> Client::CreateDefaultClient() {
-  auto status_or_opts = ClientOptions::CreateDefaultClientOptions();
-  if (!status_or_opts.ok()) {
-    return StatusOr<Client>(status_or_opts.status());
+  auto opts = ClientOptions::CreateDefaultClientOptions();
+  if (!opts) {
+    return StatusOr<Client>(opts.status());
   }
-  return StatusOr<Client>(Client(*status_or_opts));
+  return StatusOr<Client>(Client(*opts));
 }
 
 bool Client::UseSimpleUpload(std::string const& file_name) const {
@@ -108,7 +108,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     internal::ResumableUploadRequest const& request) {
   StatusOr<std::unique_ptr<internal::ResumableUploadSession>> session_status =
       raw_client()->CreateResumableSession(request);
-  if (!session_status.ok()) {
+  if (!session_status) {
     return std::move(session_status).status();
   }
 
@@ -122,8 +122,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
       internal::ResumableUploadResponse{});
   // We iterate while `source` is good and the retry policy has not been
   // exhausted.
-  while (!source.eof() && upload_response.ok() &&
-         upload_response->payload.empty()) {
+  while (!source.eof() && upload_response && upload_response->payload.empty()) {
     // Read a chunk of data from the source file.
     std::string buffer(chunk_size, '\0');
     source.read(&buffer[0], buffer.size());
@@ -135,7 +134,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
 
     auto expected = session->next_expected_byte() + gcount - 1;
     upload_response = session->UploadChunk(buffer, source_size);
-    if (!upload_response.ok()) {
+    if (!upload_response) {
       return std::move(upload_response).status();
     }
     if (session->next_expected_byte() != expected) {
@@ -146,7 +145,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     }
   }
 
-  if (!upload_response.ok()) {
+  if (!upload_response) {
     return std::move(upload_response).status();
   }
 

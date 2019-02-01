@@ -294,14 +294,14 @@ int main(int argc, char* argv[]) try {
   // Create a client to communicate with Google Cloud Storage.
   google::cloud::StatusOr<google::cloud::storage::Client> client =
       google::cloud::storage::Client::CreateDefaultClient();
-  if (!client.ok()) {
+  if (!client) {
     std::cerr << "Failed to create Storage Client, status=" << client.status()
               << std::endl;
     return 1;
   }
 
   // Build the list of commands and the usage string from that list.
-  using CommandType = std::function<void(gcs::Client, int&, char*[])>;
+  using CommandType = std::function<void(gcs::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"list-object-acl", &ListObjectAcl},
       {"create-object-acl", &CreateObjectAcl},
