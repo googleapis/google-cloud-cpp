@@ -570,7 +570,7 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
   // Remove an entity and verify it is no longer in the ACL.
   auto status = client->DeleteObjectAcl(bucket_name, object_name, entity_name);
   ASSERT_TRUE(status.ok()) << "status=" << status;
-  current_acl = client.ListObjectAcl(bucket_name, object_name);
+  current_acl = client->ListObjectAcl(bucket_name, object_name);
   ASSERT_TRUE(current_acl.ok()) << "status=" << current_acl.status();
   EXPECT_EQ(0, name_counter(result->entity(), *current_acl));
 
