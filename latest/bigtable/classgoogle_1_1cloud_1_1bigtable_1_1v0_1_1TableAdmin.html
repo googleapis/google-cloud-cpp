@@ -72,7 +72,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Implements the API to administer tables instance a Cloud Bigtable instance.  
+<p>Implements the API to administer tables in a Cloud Bigtable instance.  
  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="table__admin_8h_source.html">google/cloud/bigtable/table_admin.h</a>&gt;</code></p>
@@ -83,7 +83,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1e758341d50e848f545667a5714f4a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b9c1faf6ab366f683fe955a27ac3b3b"><td class="memTemplParams" colspan="2">template&lt;typename... Policies&gt; </td></tr>
 <tr class="memitem:a3b9c1faf6ab366f683fe955a27ac3b3b"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a3b9c1faf6ab366f683fe955a27ac3b3b">TableAdmin</a> (std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html">AdminClient</a> &gt; client, std::string <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a9f5a3424f6ae7f71c458dd892d807820">instance_id</a>, Policies &amp;&amp;... policies)</td></tr>
-<tr class="memdesc:a3b9c1faf6ab366f683fe955a27ac3b3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html" title="Implements the API to administer tables instance a Cloud Bigtable instance. ">TableAdmin</a> using explicit policies to handle RPC errors.  <a href="#a3b9c1faf6ab366f683fe955a27ac3b3b">More...</a><br /></td></tr>
+<tr class="memdesc:a3b9c1faf6ab366f683fe955a27ac3b3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html" title="Implements the API to administer tables in a Cloud Bigtable instance. ">TableAdmin</a> using explicit policies to handle RPC errors.  <a href="#a3b9c1faf6ab366f683fe955a27ac3b3b">More...</a><br /></td></tr>
 <tr class="separator:a3b9c1faf6ab366f683fe955a27ac3b3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada3d11ad035116b4d83ae1327e21654f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#ada3d11ad035116b4d83ae1327e21654f">TableAdmin</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html">TableAdmin</a> const &amp;table_admin)=default</td></tr>
 <tr class="separator:ada3d11ad035116b4d83ae1327e21654f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -95,15 +95,15 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a9f5a3424f6ae7f71c458dd892d807820"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe13c89a8088b7a4119df6f3891e02b6"><td class="memItemLeft" align="right" valign="top">std::string const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#afe13c89a8088b7a4119df6f3891e02b6">instance_name</a> () const</td></tr>
 <tr class="separator:afe13c89a8088b7a4119df6f3891e02b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4437cea54fbcb2a9b4b83f2301a8c6e"><td class="memItemLeft" align="right" valign="top">::google::bigtable::admin::v2::Table&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#aa4437cea54fbcb2a9b4b83f2301a8c6e">CreateTable</a> (std::string table_id, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableConfig.html">TableConfig</a> config)</td></tr>
-<tr class="memdesc:aa4437cea54fbcb2a9b4b83f2301a8c6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new table in the instance.  <a href="#aa4437cea54fbcb2a9b4b83f2301a8c6e">More...</a><br /></td></tr>
-<tr class="separator:aa4437cea54fbcb2a9b4b83f2301a8c6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a509201812b3786d2ce887454f76f141d"><td class="memItemLeft" align="right" valign="top">StatusOr&lt;::google::bigtable::admin::v2::Table &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a509201812b3786d2ce887454f76f141d">CreateTable</a> (std::string table_id, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableConfig.html">TableConfig</a> config)</td></tr>
+<tr class="memdesc:a509201812b3786d2ce887454f76f141d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new table in the instance.  <a href="#a509201812b3786d2ce887454f76f141d">More...</a><br /></td></tr>
+<tr class="separator:a509201812b3786d2ce887454f76f141d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a139fd93f825df12b1c7759629ef3669b"><td class="memItemLeft" align="right" valign="top">future&lt; google::bigtable::admin::v2::Table &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a139fd93f825df12b1c7759629ef3669b">AsyncCreateTable</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;cq, std::string table_id, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableConfig.html">TableConfig</a> config)</td></tr>
 <tr class="memdesc:a139fd93f825df12b1c7759629ef3669b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an asynchronous request to create a new table in the instance.  <a href="#a139fd93f825df12b1c7759629ef3669b">More...</a><br /></td></tr>
 <tr class="separator:a139fd93f825df12b1c7759629ef3669b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a256d191e33db16d822d4e74a3b7f23c4"><td class="memItemLeft" align="right" valign="top">std::vector&lt;::google::bigtable::admin::v2::Table &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a256d191e33db16d822d4e74a3b7f23c4">ListTables</a> (::google::bigtable::admin::v2::Table::View view)</td></tr>
-<tr class="memdesc:a256d191e33db16d822d4e74a3b7f23c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return all the tables in the instance.  <a href="#a256d191e33db16d822d4e74a3b7f23c4">More...</a><br /></td></tr>
-<tr class="separator:a256d191e33db16d822d4e74a3b7f23c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0de49b7e6e85483782fb5a17071f6a64"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::vector&lt;::google::bigtable::admin::v2::Table &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a0de49b7e6e85483782fb5a17071f6a64">ListTables</a> (::google::bigtable::admin::v2::Table::View view)</td></tr>
+<tr class="memdesc:a0de49b7e6e85483782fb5a17071f6a64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return all the tables in the instance.  <a href="#a0de49b7e6e85483782fb5a17071f6a64">More...</a><br /></td></tr>
+<tr class="separator:a0de49b7e6e85483782fb5a17071f6a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07ffada7098773091cbe3c809173e71e"><td class="memItemLeft" align="right" valign="top">::google::bigtable::admin::v2::Table&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a07ffada7098773091cbe3c809173e71e">GetTable</a> (std::string const &amp;table_id, ::google::bigtable::admin::v2::Table::View view=::google::bigtable::admin::v2::Table::SCHEMA_VIEW)</td></tr>
 <tr class="memdesc:a07ffada7098773091cbe3c809173e71e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get information about a single table.  <a href="#a07ffada7098773091cbe3c809173e71e">More...</a><br /></td></tr>
 <tr class="separator:a07ffada7098773091cbe3c809173e71e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,9 +152,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad2dcf28d547643156730e8fb38f35977"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Implements the API to administer tables instance a Cloud Bigtable instance. </p>
+<div class="textblock"><p>Implements the API to administer tables in a Cloud Bigtable instance. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00036">36</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00037">37</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a1e758341d50e848f545667a5714f4a3c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1e758341d50e848f545667a5714f4a3c">&#9670;&nbsp;</a></span>TableAdmin() <span class="overload">[1/3]</span></h2>
@@ -196,9 +196,9 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Cost</dt><dd>Creating a new object of type <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html" title="Implements the API to administer tables instance a Cloud Bigtable instance. ">TableAdmin</a></code> is comparable to creating a few objects of type <code>std::string</code> or a few objects of type <code>std::shared_ptr&lt;int&gt;</code>. The class represents a shallow handle to a remote object. </dd></dl>
+<dl class="section user"><dt>Cost</dt><dd>Creating a new object of type <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html" title="Implements the API to administer tables in a Cloud Bigtable instance. ">TableAdmin</a></code> is comparable to creating a few objects of type <code>std::string</code> or a few objects of type <code>std::shared_ptr&lt;int&gt;</code>. The class represents a shallow handle to a remote object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00050">50</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00051">51</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -244,7 +244,7 @@ template&lt;typename... Policies&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Create a new <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html" title="Implements the API to administer tables instance a Cloud Bigtable instance. ">TableAdmin</a> using explicit policies to handle RPC errors. </p>
+<p>Create a new <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html" title="Implements the API to administer tables in a Cloud Bigtable instance. ">TableAdmin</a> using explicit policies to handle RPC errors. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">client</td><td>the interface to create grpc stubs, report errors, etc. </td></tr>
@@ -266,7 +266,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1GenericPollingPolicy.html">GenericPollingPolicy</a>, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ExponentialBackoffPolicy.html" title="Implement a simple exponential backoff policy. ">ExponentialBackoffPolicy</a>, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedErrorCountRetryPolicy.html" title="Implement a simple &quot;count errors and then stop&quot; retry policy. ">LimitedErrorCountRetryPolicy</a>, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1LimitedTimeRetryPolicy.html" title="Implement a simple &quot;keep trying for this time&quot; retry policy. ">LimitedTimeRetryPolicy</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00080">80</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00081">81</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -456,18 +456,18 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string table_id_param,</div><div class="line">     std::string consistency_token_param) {</div><div class="line"></div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#ac33187c954cf3e096931b5e805c5e24a">google::cloud::bigtable::TableId</a> table_id(table_id_param);</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a61a54b74718a8210ac873ab7ad813f88">google::cloud::bigtable::ConsistencyToken</a> consistency_token(</div><div class="line">        consistency_token_param);</div><div class="line">    <span class="keyword">auto</span> result = admin.CheckConsistency(table_id, consistency_token);</div><div class="line">    <span class="keywordflow">if</span> (result) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Table is consistent&quot;</span> &lt;&lt; std::endl;</div><div class="line">    } <span class="keywordflow">else</span> {</div><div class="line">      std::cout</div><div class="line">          &lt;&lt; <span class="stringliteral">&quot;Table is not yet consistent, Please Try again Later with the &quot;</span></div><div class="line">             <span class="stringliteral">&quot;same Token!&quot;</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; std::flush;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00196">196</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00197">197</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
-<a id="aa4437cea54fbcb2a9b4b83f2301a8c6e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4437cea54fbcb2a9b4b83f2301a8c6e">&#9670;&nbsp;</a></span>CreateTable()</h2>
+<a id="a509201812b3786d2ce887454f76f141d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a509201812b3786d2ce887454f76f141d">&#9670;&nbsp;</a></span>CreateTable()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">btadmin::Table google::cloud::bigtable::v0::TableAdmin::CreateTable </td>
+          <td class="memname">StatusOr&lt; btadmin::Table &gt; google::cloud::bigtable::v0::TableAdmin::CreateTable </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>table_id</em>, </td>
@@ -494,13 +494,7 @@ template&lt;typename... Policies&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the attributes of the newly created table. Notice that the server only populates the table_name() field at this time. </dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed.</td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>the attributes of the newly created table. Notice that the server only populates the table_name() field at this time.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {</div><div class="line">    <span class="keyword">auto</span> schema = admin.CreateTable(</div><div class="line">        table_id,</div><div class="line">        google::cloud::bigtable::TableConfig(</div><div class="line">            {{<span class="stringliteral">&quot;fam&quot;</span>, google::cloud::bigtable::GcRule::MaxNumVersions(10)},</div><div class="line">             {<span class="stringliteral">&quot;foo&quot;</span>,</div><div class="line">              google::cloud::bigtable::GcRule::MaxAge(std::chrono::hours(72))}},</div><div class="line">            {}));</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00036">36</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
@@ -557,7 +551,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str,</div><div class="line">     std::string snapshot_id_str, std::string table_id) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a73d20496d86761052e55848775b1e30b">google::cloud::bigtable::ClusterId</a> cluster_id(cluster_id_str);</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#abe486b71e585f7c014633813866b9c18">google::cloud::bigtable::SnapshotId</a> snapshot_id(snapshot_id_str);</div><div class="line">    <span class="keyword">auto</span> future =</div><div class="line">        admin.CreateTableFromSnapshot(cluster_id, snapshot_id, table_id);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Table created :&quot;</span> &lt;&lt; future.get().name() &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00228">228</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00229">229</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -604,7 +598,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str,</div><div class="line">     std::string snapshot_id_str) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a73d20496d86761052e55848775b1e30b">google::cloud::bigtable::ClusterId</a> cluster_id(cluster_id_str);</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#abe486b71e585f7c014633813866b9c18">google::cloud::bigtable::SnapshotId</a> snapshot_id(snapshot_id_str);</div><div class="line">    admin.DeleteSnapshot(cluster_id, snapshot_id);</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00219">219</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00220">220</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -639,7 +633,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {</div><div class="line">    admin.DeleteTable(table_id);</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00092">92</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00093">93</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -674,7 +668,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {</div><div class="line">    admin.DropAllRows(table_id);</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00121">121</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00122">122</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -720,7 +714,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {</div><div class="line">    admin.DropRowsByPrefix(table_id, <span class="stringliteral">&quot;key-00004&quot;</span>);</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00112">112</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00113">113</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -756,7 +750,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {</div><div class="line">    std::string token = admin.GenerateConsistencyToken(table_id);</div><div class="line">    std::cout &lt;&lt; std::endl &lt;&lt; <span class="stringliteral">&quot;generated token is : &quot;</span> &lt;&lt; token &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00187">187</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00188">188</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -804,7 +798,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str,</div><div class="line">     std::string snapshot_id_str) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a73d20496d86761052e55848775b1e30b">google::cloud::bigtable::ClusterId</a> cluster_id(cluster_id_str);</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#abe486b71e585f7c014633813866b9c18">google::cloud::bigtable::SnapshotId</a> snapshot_id(snapshot_id_str);</div><div class="line">    <span class="keyword">auto</span> snapshot = admin.GetSnapshot(cluster_id, snapshot_id);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;GetSnapshot name : &quot;</span> &lt;&lt; snapshot.name() &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00176">176</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00177">177</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -857,7 +851,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {</div><div class="line">    <span class="keyword">auto</span> table =</div><div class="line">        admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);</div><div class="line">    std::cout &lt;&lt; table.name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; family : table.column_families()) {</div><div class="line">      std::string <span class="keyword">const</span>&amp; family_name = family.first;</div><div class="line">      std::string gc_rule;</div><div class="line">      google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),</div><div class="line">                                                  &amp;gc_rule);</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; family_name &lt;&lt; <span class="stringliteral">&quot;\t\t&quot;</span> &lt;&lt; gc_rule &lt;&lt; std::endl;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00082">82</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00083">83</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -884,7 +878,7 @@ template&lt;typename... Policies&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00089">89</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00090">90</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -911,7 +905,7 @@ template&lt;typename... Policies&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00090">90</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00091">91</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -961,14 +955,14 @@ template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </d
 
 </div>
 </div>
-<a id="a256d191e33db16d822d4e74a3b7f23c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a256d191e33db16d822d4e74a3b7f23c4">&#9670;&nbsp;</a></span>ListTables()</h2>
+<a id="a0de49b7e6e85483782fb5a17071f6a64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0de49b7e6e85483782fb5a17071f6a64">&#9670;&nbsp;</a></span>ListTables()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt; btadmin::Table &gt; google::cloud::bigtable::v0::TableAdmin::ListTables </td>
+          <td class="memname">StatusOr&lt; std::vector&lt; btadmin::Table &gt; &gt; google::cloud::bigtable::v0::TableAdmin::ListTables </td>
           <td>(</td>
           <td class="paramtype">::google::bigtable::admin::v2::Table::View&#160;</td>
           <td class="paramname"><em>view</em></td><td>)</td>
@@ -990,7 +984,7 @@ template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </d
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin) {</div><div class="line">    <span class="keyword">auto</span> tables =</div><div class="line">        admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; table : tables) {</div><div class="line">      std::cout &lt;&lt; table.name() &lt;&lt; std::endl;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin) {</div><div class="line">    <span class="keyword">auto</span> tables =</div><div class="line">        admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (!tables) {</div><div class="line">      std::cerr &lt;&lt; <span class="stringliteral">&quot;ListTables failed: &quot;</span> &lt;&lt; tables.status() &lt;&lt; std::endl;</div><div class="line">      <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; table : *tables) {</div><div class="line">      std::cout &lt;&lt; table.name() &lt;&lt; std::endl;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00073">73</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -1039,7 +1033,7 @@ template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </d
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {</div><div class="line">    <span class="keyword">auto</span> schema = admin.ModifyColumnFamilies(</div><div class="line">        table_id,</div><div class="line">        {google::cloud::bigtable::ColumnFamilyModification::Drop(<span class="stringliteral">&quot;foo&quot;</span>),</div><div class="line">         google::cloud::bigtable::ColumnFamilyModification::Update(</div><div class="line">             <span class="stringliteral">&quot;fam&quot;</span>, google::cloud::bigtable::GcRule::Union(</div><div class="line">                        google::cloud::bigtable::GcRule::MaxNumVersions(5),</div><div class="line">                        google::cloud::bigtable::GcRule::MaxAge(</div><div class="line">                            std::chrono::hours(24 * 7)))),</div><div class="line">         google::cloud::bigtable::ColumnFamilyModification::Create(</div><div class="line">             <span class="stringliteral">&quot;bar&quot;</span>, google::cloud::bigtable::GcRule::Intersection(</div><div class="line">                        google::cloud::bigtable::GcRule::MaxNumVersions(3),</div><div class="line">                        google::cloud::bigtable::GcRule::MaxAge(</div><div class="line">                            std::chrono::hours(72))))});</div><div class="line"></div><div class="line">    std::string formatted;</div><div class="line">    google::protobuf::TextFormat::PrintToString(schema, &amp;formatted);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Schema modified to: &quot;</span> &lt;&lt; formatted &lt;&lt; std::endl;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00100">100</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00101">101</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -1092,7 +1086,7 @@ template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </d
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00088">88</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00089">89</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -1147,7 +1141,7 @@ template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </d
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future that becomes satisfied when (a) the operation has completed successfully, in which case it returns a proto with the Snapshot details, (b) the operation has failed, in which case the future contains an exception (typically <code>bigtable::GrpcError</code>) with the details of the failure, or (c) the state of the operation is unknown after the time allocated by the retry policies has expired, in which case the future contains an exception of type <code>bigtable::PollTimeout</code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00129">129</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00130">130</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
