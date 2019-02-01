@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/disjunction.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/storage/internal/retry_client.h"
@@ -355,8 +356,7 @@ class Client {
    * @snippet storage_bucket_samples.cc delete bucket
    */
   template <typename... Options>
-  StatusOr<void> DeleteBucket(std::string const& bucket_name,
-                              Options&&... options) {
+  Status DeleteBucket(std::string const& bucket_name, Options&&... options) {
     internal::DeleteBucketRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteBucket(request).status();
@@ -973,10 +973,9 @@ class Client {
    * @snippet storage_object_samples.cc download file
    */
   template <typename... Options>
-  StatusOr<void> DownloadToFile(std::string const& bucket_name,
-                                std::string const& object_name,
-                                std::string const& file_name,
-                                Options&&... options) {
+  Status DownloadToFile(std::string const& bucket_name,
+                        std::string const& object_name,
+                        std::string const& file_name, Options&&... options) {
     internal::ReadObjectRangeRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return DownloadFileImpl(request, file_name);
@@ -1001,9 +1000,8 @@ class Client {
    * @snippet storage_object_samples.cc delete object
    */
   template <typename... Options>
-  StatusOr<void> DeleteObject(std::string const& bucket_name,
-                              std::string const& object_name,
-                              Options&&... options) {
+  Status DeleteObject(std::string const& bucket_name,
+                      std::string const& object_name, Options&&... options) {
     internal::DeleteObjectRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteObject(request).status();
@@ -1416,9 +1414,8 @@ class Client {
    *     the format of the @p entity parameter.
    */
   template <typename... Options>
-  StatusOr<void> DeleteBucketAcl(std::string const& bucket_name,
-                                 std::string const& entity,
-                                 Options&&... options) {
+  Status DeleteBucketAcl(std::string const& bucket_name,
+                         std::string const& entity, Options&&... options) {
     internal::DeleteBucketAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteBucketAcl(request).status();
@@ -1686,10 +1683,9 @@ class Client {
    *     the format of the @p entity parameters.
    */
   template <typename... Options>
-  StatusOr<void> DeleteObjectAcl(std::string const& bucket_name,
-                                 std::string const& object_name,
-                                 std::string const& entity,
-                                 Options&&... options) {
+  Status DeleteObjectAcl(std::string const& bucket_name,
+                         std::string const& object_name,
+                         std::string const& entity, Options&&... options) {
     internal::DeleteObjectAclRequest request(bucket_name, object_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteObjectAcl(request).status();
@@ -1963,9 +1959,9 @@ class Client {
    *     the format of the @p entity parameter.
    */
   template <typename... Options>
-  StatusOr<void> DeleteDefaultObjectAcl(std::string const& bucket_name,
-                                        std::string const& entity,
-                                        Options&&... options) {
+  Status DeleteDefaultObjectAcl(std::string const& bucket_name,
+                                std::string const& entity,
+                                Options&&... options) {
     internal::DeleteDefaultObjectAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteDefaultObjectAcl(request).status();
@@ -2422,9 +2418,9 @@ class Client {
    *     Cloud Pub/Sub service.
    */
   template <typename... Options>
-  StatusOr<void> DeleteNotification(std::string const& bucket_name,
-                                    std::string const& notification_id,
-                                    Options&&... options) {
+  Status DeleteNotification(std::string const& bucket_name,
+                            std::string const& notification_id,
+                            Options&&... options) {
     internal::DeleteNotificationRequest request(bucket_name, notification_id);
     request.set_multiple_options(std::forward<Options>(options)...);
     return std::move(raw_client_->DeleteNotification(request)).status();
@@ -2489,9 +2485,8 @@ class Client {
       std::istream& source, std::uint64_t source_size,
       internal::ResumableUploadRequest const& request);
 
-  StatusOr<void> DownloadFileImpl(
-      internal::ReadObjectRangeRequest const& request,
-      std::string const& file_name);
+  Status DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
+                          std::string const& file_name);
 
   StatusOr<std::string> SignUrl(internal::SignUrlRequest const& request);
 

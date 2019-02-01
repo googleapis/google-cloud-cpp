@@ -191,16 +191,12 @@ TEST_F(ObjectAccessControlsTest, DeleteObjectAclTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
       mock, EXPECT_CALL(*mock, DeleteObjectAcl(_)),
       [](Client& client) {
-        return client
-            .DeleteObjectAcl("test-bucket-name", "test-object-name",
-                             "user-test-user-1")
-            .status();
+        return client.DeleteObjectAcl("test-bucket-name", "test-object-name",
+                                      "user-test-user-1");
       },
       [](Client& client) {
-        return client
-            .DeleteObjectAcl("test-bucket-name", "test-object-name",
-                             "user-test-user-1", IfMatchEtag("ABC="))
-            .status();
+        return client.DeleteObjectAcl("test-bucket-name", "test-object-name",
+                                      "user-test-user-1", IfMatchEtag("ABC="));
       },
       "DeleteObjectAcl");
 }
@@ -209,10 +205,8 @@ TEST_F(ObjectAccessControlsTest, DeleteObjectAclPermanentFailure) {
   testing::PermanentFailureStatusTest<internal::EmptyResponse>(
       *client, EXPECT_CALL(*mock, DeleteObjectAcl(_)),
       [](Client& client) {
-        return client
-            .DeleteObjectAcl("test-bucket-name", "test-object-name",
-                             "user-test-user-1")
-            .status();
+        return client.DeleteObjectAcl("test-bucket-name", "test-object-name",
+                                      "user-test-user-1");
       },
       "DeleteObjectAcl");
 }

@@ -157,15 +157,14 @@ void DeleteNotification(google::cloud::storage::Client client, int& argc,
   auto notification_id = ConsumeArg(argc, argv);
   //! [delete notification] [START storage_delete_bucket_notification]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string notification_id) {
-    StatusOr<void> status =
+    google::cloud::Status status =
         client.DeleteNotification(bucket_name, notification_id);
 
-    if (!status) {
+    if (!status.ok()) {
       std::cerr << "Error delete notification id " << notification_id
                 << " on bucket " << bucket_name
-                << ", status=" << status.status() << std::endl;
+                << ", status=" << status << std::endl;
       return;
     }
 

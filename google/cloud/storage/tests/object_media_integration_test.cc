@@ -77,9 +77,8 @@ TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
   upload.Close();
   ObjectMetadata meta = upload.metadata().value();
 
-  StatusOr<void> download =
-      client.DownloadToFile(bucket_name, object_name, file_name);
-  ASSERT_TRUE(download.ok()) << "status=" << download.status();
+  auto status = client.DownloadToFile(bucket_name, object_name, file_name);
+  ASSERT_TRUE(status.ok()) << "status=" << status;
   // Create a iostream to read the object back.
   std::ifstream stream(file_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
@@ -88,8 +87,8 @@ TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
   ASSERT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
   EXPECT_EQ(expected_str, actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -108,9 +107,9 @@ TEST_F(ObjectMediaIntegrationTest, JsonDownloadFile) {
   upload.Close();
   ObjectMetadata meta = upload.metadata().value();
 
-  StatusOr<void> download = client.DownloadToFile(
-      bucket_name, object_name, file_name, IfMetagenerationNotMatch(0));
-  ASSERT_TRUE(download.ok()) << "status=" << download.status();
+  auto status = client.DownloadToFile(bucket_name, object_name, file_name,
+                                      IfMetagenerationNotMatch(0));
+  ASSERT_TRUE(status.ok()) << "status=" << status;
   // Create a iostream to read the object back.
   std::ifstream stream(file_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
@@ -119,8 +118,8 @@ TEST_F(ObjectMediaIntegrationTest, JsonDownloadFile) {
   ASSERT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
   EXPECT_EQ(expected_str, actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -130,10 +129,9 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileFailure) {
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomObjectName();
 
-  StatusOr<void> download =
-      client.DownloadToFile(bucket_name, object_name, file_name);
-  EXPECT_FALSE(download.ok());
-  EXPECT_THAT(download.status().message(), HasSubstr(object_name));
+  auto status = client.DownloadToFile(bucket_name, object_name, file_name);
+  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status.message(), HasSubstr(object_name));
 }
 
 TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotOpenFile) {
@@ -148,13 +146,12 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotOpenFile) {
   // Create an invalid path for the destination object.
   auto file_name = MakeRandomObjectName() + "/" + MakeRandomObjectName();
 
-  StatusOr<void> download =
-      client.DownloadToFile(bucket_name, object_name, file_name);
-  EXPECT_FALSE(download.ok());
-  EXPECT_THAT(download.status().message(), HasSubstr(object_name));
+  auto status = client.DownloadToFile(bucket_name, object_name, file_name);
+  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status.message(), HasSubstr(object_name));
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotWriteToFile) {
@@ -178,13 +175,12 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotWriteToFile) {
   // order.
   auto file_name = "/dev/full";
 
-  StatusOr<void> download =
-      client.DownloadToFile(bucket_name, object_name, file_name);
-  EXPECT_FALSE(download.ok());
-  EXPECT_THAT(download.status().message(), HasSubstr(object_name));
+  auto status = client.DownloadToFile(bucket_name, object_name, file_name);
+  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status.message(), HasSubstr(object_name));
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
 #endif  // GTEST_OS_LINUX
 }
 
@@ -216,8 +212,8 @@ TEST_F(ObjectMediaIntegrationTest, UploadFile) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -244,8 +240,8 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileEmpty) {
   EXPECT_EQ(0U, actual.size());
   EXPECT_EQ("", actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -283,8 +279,8 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileUploadFailure) {
   EXPECT_FALSE(upload.ok());
   EXPECT_EQ(StatusCode::kFailedPrecondition, upload.status().code());
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -324,8 +320,8 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileNonRegularWarning) {
   EXPECT_NE(0U, count);
 
   t.join();
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 #endif  // GTEST_OS_LINUX
 }
@@ -369,8 +365,8 @@ TEST_F(ObjectMediaIntegrationTest, XmlUploadFile) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -408,8 +404,8 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableBySize) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -447,8 +443,8 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableByOption) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -486,8 +482,8 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableQuantum) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -524,8 +520,8 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableNonQuantum) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -579,8 +575,8 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
   stream.Close();
   EXPECT_TRUE(stream.status().ok()) << "status=" << stream.status();
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
 }
 
 /// @test Read a portion of a relatively large object using the JSON API.
@@ -619,8 +615,8 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
   EXPECT_EQ(1 * chunk, actual.size());
   EXPECT_EQ(large_text.substr(1 * chunk, 1 * chunk), actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
 }
 
 /// @test Read a portion of a relatively large object using the XML API.
@@ -658,8 +654,8 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
   EXPECT_EQ(1 * chunk, actual.size());
   EXPECT_EQ(large_text.substr(1 * chunk, 1 * chunk), actual);
 
-  StatusOr<void> status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status.status();
+  auto status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_TRUE(status.ok()) << "status=" << status;
 }
 
 }  // anonymous namespace

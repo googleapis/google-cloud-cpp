@@ -145,9 +145,8 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
   return internal::ObjectMetadataParser::FromString(upload_response->payload);
 }
 
-StatusOr<void> Client::DownloadFileImpl(
-    internal::ReadObjectRangeRequest const& request,
-    std::string const& file_name) {
+Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
+                                std::string const& file_name) {
   // TODO(#1665) - use Status to report errors.
   std::unique_ptr<internal::ObjectReadStreambuf> streambuf =
       raw_client_->ReadObject(request).value();
