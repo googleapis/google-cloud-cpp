@@ -6,7 +6,7 @@ var searchData=
   ['lifecycle_5fas_5foptional',['lifecycle_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#ae3b269d75f869a838b3c3b0c73705f92',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['lifecyclerule',['LifecycleRule',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRule.html#af9645e330d7b20ff0aa7a423b77f6601',1,'google::cloud::storage::v0::LifecycleRule']]],
   ['listbucketacl',['ListBucketAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a9c6b0882aefaba2c7d7b04e93e507c7a',1,'google::cloud::storage::v0::Client']]],
-  ['listbuckets',['ListBuckets',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a6d0094fab9b3d8e26857d7c34b29002e',1,'google::cloud::storage::v0::Client']]],
+  ['listbuckets',['ListBuckets',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ad2b12e1262905f3c66e910bb944b237c',1,'google::cloud::storage::v0::Client']]],
   ['listbucketsforproject',['ListBucketsForProject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a2e084a0359a2ebac0000fe41b7f4ea56',1,'google::cloud::storage::v0::Client']]],
   ['listbucketsiterator',['ListBucketsIterator',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html#a177d68ada24c43cc52775d7603abd207',1,'google::cloud::storage::v0::ListBucketsIterator']]],
   ['listbucketsreader',['ListBucketsReader',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#a7bce9f9472b9073b76e197e86fa44f2c',1,'google::cloud::storage::v0::ListBucketsReader']]],
