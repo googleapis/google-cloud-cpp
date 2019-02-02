@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ASYNC_INSTANCE_LIST_RESPONSES_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ASYNC_INSTANCE_LIST_RESPONSES_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_LIST_RESPONSES_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_LIST_RESPONSES_H_
 
 #include "google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h"
 #include "google/cloud/bigtable/version.h"
@@ -39,4 +39,4 @@ struct InstanceList {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ASYNC_INSTANCE_LIST_RESPONSES_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_LIST_RESPONSES_H_
