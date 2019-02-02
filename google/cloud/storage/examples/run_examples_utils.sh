@@ -260,6 +260,7 @@ run_all_object_examples() {
   local object_name="object-$(date +%s)-${RANDOM}.txt"
   local composed_object_name="composed-object-$(date +%s)-${RANDOM}.txt"
   local copied_object_name="copied-object-$(date +%s)-${RANDOM}.txt"
+  local multipart_object_name="multipart-object-$(date +%s)-${RANDOM}.txt"
 
   run_example ./storage_object_samples insert-object \
       "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
@@ -289,6 +290,12 @@ run_all_object_examples() {
       "${bucket_name}" "${copied_object_name}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
+
+  run_example ./storage_object_samples insert-object-multipart \
+      "${bucket_name}" "${multipart_object_name}" \
+      "text/plain" "a-string-to-serve-as-object-media"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${multipart_object_name}"
 
   local encrypted_object_name="enc-obj-$(date +%s)-${RANDOM}.txt"
   local encrypted_composed_object_name="composed-enc-obj-$(date +%s)-${RANDOM}.txt"

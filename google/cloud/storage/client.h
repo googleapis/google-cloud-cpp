@@ -693,7 +693,7 @@ class Client {
    *     `DisableMD5Hash`, `EncryptionKey`, `IfGenerationMatch`,
    *     `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `KmsKeyName`, `MD5HashValue`,
-   *     `PredefinedAcl`, `Projection`, and `UserProject`.
+   *     `PredefinedAcl`, `Projection`, `UserProject`, and `WithObjectMetadata`.
    *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
@@ -701,6 +701,9 @@ class Client {
    *
    * @par Example
    * @snippet storage_object_samples.cc insert object
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc insert object multipart
    */
   template <typename... Options>
   StatusOr<ObjectMetadata> InsertObject(std::string const& bucket_name,
