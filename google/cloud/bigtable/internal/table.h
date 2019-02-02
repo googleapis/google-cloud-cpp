@@ -64,6 +64,29 @@ void SetCommonTableOperationRequest(Request& request,
   request.set_table_name(table_name);
 }
 
+template <typename Response>
+Row TransformReadModifyWriteRowResponse(Response& response) {
+  std::vector<bigtable::Cell> cells;
+  auto& row = *response.mutable_row();
+  for (auto& family : *row.mutable_families()) {
+    for (auto& column : *family.mutable_columns()) {
+      for (auto& cell : *column.mutable_cells()) {
+        std::vector<std::string> labels;
+        std::move(cell.mutable_labels()->begin(), cell.mutable_labels()->end(),
+                  std::back_inserter(labels));
+        bigtable::Cell new_cell(row.key(), family.name(), column.qualifier(),
+                                cell.timestamp_micros(),
+                                std::move(*cell.mutable_value()),
+                                std::move(labels));
+
+        cells.emplace_back(std::move(new_cell));
+      }
+    }
+  }
+
+  return Row(std::move(*row.mutable_key()), std::move(cells));
+}
+
 template <typename Functor>
 class UnwrapCheckAndMutateResponse {
  public:
@@ -74,6 +97,28 @@ class UnwrapCheckAndMutateResponse {
                   google::bigtable::v2::CheckAndMutateRowResponse& response,
                   grpc::Status& status) {
     callback_(cq, response.predicate_matched(), status);
+  }
+
+ private:
+  Functor callback_;
+};
+
+template <typename Functor>
+class UnwrapReadModifyWriteRowResponse {
+ public:
+  UnwrapReadModifyWriteRowResponse(Functor&& callback)
+      : callback_(std::forward<Functor>(callback)) {}
+
+  void operator()(CompletionQueue& cq,
+                  google::bigtable::v2::ReadModifyWriteRowResponse& response,
+                  grpc::Status& status) {
+    if (!status.ok()) {
+      callback_(cq, Row("", {}), status);
+    }
+    callback_(cq,
+              TransformReadModifyWriteRowResponse<
+                  google::bigtable::v2::ReadModifyWriteRowResponse>(response),
+              status);
   }
 
  private:
@@ -466,6 +511,79 @@ class Table {
     AddRules(request, std::forward<Args>(rules)...);
 
     return CallReadModifyWriteRowRequest(request, status);
+  }
+
+  /**
+   * Make an asynchronous request to atomically read and modify a row.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v< Functor, CompletionQueue&, Row,
+   *         grpc::Status&>); the second argument to this callback is
+   *         the resulting row.
+   * @param row_key the row key on which modification will be performed
+   * @param rule to modify the row. Two types of rules are applied here
+   *     AppendValue which will read the existing value and append the
+   *     text provided to the value.
+   *     IncrementAmount which will read the existing uint64 big-endian-int
+   *     and add the value provided.
+   *     Both rules accept the family and column identifier to modify.
+   * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
+   * @return a handle to the submitted operation
+   *
+   * @tparam Functor the type of the callback.
+   */
+
+  template <typename Functor, typename... Args,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<
+                    Functor, CompletionQueue&, Row, grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> AsyncReadModifyWriteRow(
+      CompletionQueue& cq, Functor&& callback, std::string row_key,
+      bigtable::ReadModifyWriteRule rule, Args&&... rules) {
+    ::google::bigtable::v2::ReadModifyWriteRowRequest request;
+    request.set_row_key(std::move(row_key));
+    bigtable::internal::SetCommonTableOperationRequest<
+        ::google::bigtable::v2::ReadModifyWriteRowRequest>(
+        request, app_profile_id_.get(), table_name_.get());
+
+    // Generate a better compile time error message than the default one
+    // if the types do not match
+    static_assert(
+        bigtable::internal::conjunction<
+            std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
+        "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
+        "convertible to bigtable::ReadModifyWriteRule");
+
+    *request.add_rules() = std::move(rule).as_proto();
+    AddRules(request, std::forward<Args>(rules)...);
+
+    static_assert(internal::ExtractMemberFunctionType<decltype(
+                      &DataClient::AsyncReadModifyWriteRow)>::value,
+                  "Cannot extract member function type");
+    using MemberFunction =
+        typename internal::ExtractMemberFunctionType<decltype(
+            &DataClient::AsyncReadModifyWriteRow)>::MemberFunction;
+
+    using Retry = internal::AsyncRetryUnaryRpc<
+        DataClient, MemberFunction, internal::ConstantIdempotencyPolicy,
+        internal::UnwrapReadModifyWriteRowResponse<Functor>>;
+
+    auto retry = std::make_shared<Retry>(
+        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+        internal::ConstantIdempotencyPolicy(false), metadata_update_policy_,
+        client_, &DataClient::AsyncReadModifyWriteRow, std::move(request),
+        internal::UnwrapReadModifyWriteRowResponse<Functor>(
+            std::forward<Functor>(callback)));
+    return retry->Start(cq);
   }
 
   template <template <typename...> class Collection = std::vector>
