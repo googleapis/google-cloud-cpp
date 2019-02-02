@@ -44,7 +44,7 @@ if (NOT TARGET c_ares_project)
                         URL ${GOOGLE_CLOUD_CPP_C_ARES_URL}
                         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_C_ARES_SHA256}
                         CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
-                                   -DCMAKE_BUILD_TYPE=Release
+                                   -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
                                    -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
                                    -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
                                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
