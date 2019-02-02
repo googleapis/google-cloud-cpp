@@ -651,6 +651,7 @@ void WriteObjectRequesterPays(google::cloud::storage::Client client, int& argc,
   auto billed_project = ConsumeArg(argc, argv);
   //! [write object requester pays]
   namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string billed_project) {
     std::string const text = "Lorem ipsum dolor sit amet";
@@ -665,8 +666,17 @@ void WriteObjectRequesterPays(google::cloud::storage::Client client, int& argc,
     }
 
     stream.Close();
-    gcs::ObjectMetadata meta = stream.metadata().value();
-    std::cout << "The resulting object size is: " << meta.size() << std::endl;
+
+    StatusOr<gcs::ObjectMetadata> metadata = std::move(stream).metadata();
+    if (!metadata) {
+      std::cerr << "Error while writing to object " << object_name
+                << " in bucket " << bucket_name
+                << ", status=" << metadata.status() << std::endl;
+      return;
+    }
+    std::cout << "Successfully wrote to object " << metadata->name()
+              << " its size is: " << metadata->size()
+              << "\nFull metadata: " << *metadata << std::endl;
   }
   //! [write object requester pays]
   (std::move(client), bucket_name, object_name, billed_project);
