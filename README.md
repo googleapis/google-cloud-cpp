@@ -12,7 +12,7 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 - [Client Library Documentation][client-library-docs]
 
 [travis-shield]: https://img.shields.io/travis/googleapis/google-cloud-cpp/master.svg?label=travis
-[travis-link]: https://travis-ci.org/googleapis/google-cloud-cpp/builds
+[travis-link]: https://travis-ci.com/googleapis/google-cloud-cpp/builds
 [kokoro-ubuntu-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-ubuntu.svg
 [kokoro-ubuntu-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-ubuntu-link.html
 [kokoro-windows-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows.svg
