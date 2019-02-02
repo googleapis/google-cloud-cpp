@@ -26,12 +26,12 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-
 namespace {
-std::shared_ptr<oauth2::Credentials> StorageDefaultCredentials() {
+StatusOr<std::shared_ptr<oauth2::Credentials>> StorageDefaultCredentials() {
   auto emulator = cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
   if (emulator.has_value()) {
-    return oauth2::CreateAnonymousCredentials();
+    return StatusOr<std::shared_ptr<oauth2::Credentials>>(
+        oauth2::CreateAnonymousCredentials());
   }
   return oauth2::GoogleDefaultCredentials();
 }
@@ -61,7 +61,13 @@ std::size_t DefaultConnectionPoolSize() {
 
 }  // namespace
 
-ClientOptions::ClientOptions() : ClientOptions(StorageDefaultCredentials()) {}
+StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions() {
+  auto creds = StorageDefaultCredentials();
+  if (!creds) {
+    return creds.status();
+  }
+  return ClientOptions(*creds);
+}
 
 ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials)
     : credentials_(std::move(credentials)),

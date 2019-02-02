@@ -26,12 +26,13 @@ inline namespace STORAGE_CLIENT_NS {
 /**
  * Describes the configuration for a `storage::Client` object.
  *
- * By default read several environment variables to configure the client:
+ * By default, several environment variables are read to configure the client:
  *
  * - `CLOUD_STORAGE_TESTBENCH_ENDPOINT`: if set, use this http endpoint to
  *   make all http requests instead of the production GCS service. Also,
- *   if set it uses the `google::cloud::storage::oauth2::AnonymousCredentials`
- *   by default.
+ *   if set, the `CreateDefaultClientOptions()` function will use an
+ *   `AnonymousCredentials` object instead of loading Application Default
+ *   %Credentials.
  * - `CLOUD_STORAGE_ENABLE_CLOG`: if set, enable std::clog as a backend for
  *   `google::cloud::LogSink`.
  * - `CLOUD_STORAGE_ENABLE_TRACING`: if set, this is the list of components that
@@ -40,8 +41,17 @@ inline namespace STORAGE_CLIENT_NS {
  */
 class ClientOptions {
  public:
-  ClientOptions();
   explicit ClientOptions(std::shared_ptr<oauth2::Credentials> credentials);
+
+  /**
+   * Creates a `ClientOptions` with Google Application Default %Credentials.
+   *
+   * If Application Default %Credentials could not be loaded, this returns a
+   * `Status` with failure details.  If the `CLOUD_STORAGE_TESTBENCH_ENDPOINT`
+   * environment variable is set, this function instead uses an
+   * `AnonymousCredentials` to configure the client.
+   */
+  static StatusOr<ClientOptions> CreateDefaultClientOptions();
 
   std::shared_ptr<oauth2::Credentials> credentials() const {
     return credentials_;

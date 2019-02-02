@@ -33,46 +33,62 @@ inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
 /// Parses the JSON file at `path` and creates the appropriate Credentials type.
-std::unique_ptr<Credentials> LoadCredsFromPath(std::string const& path) {
-  using google::cloud::internal::ThrowRuntimeError;
+StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
+    std::string const& path) {
   namespace nl = google::cloud::storage::internal::nl;
 
   std::ifstream ifs(path);
   if (!ifs.is_open()) {
-    ThrowRuntimeError("Cannot open credentials file " + path);
+    // We use kUnknown here because we don't know if the file does not exist, or
+    // if we were unable to open it for some other reason.
+    return Status(StatusCode::kUnknown, "Cannot open credentials file " + path);
   }
   std::string contents(std::istreambuf_iterator<char>{ifs}, {});
   auto cred_json = nl::json::parse(contents, nullptr, false);
   if (cred_json.is_discarded()) {
-    ThrowRuntimeError("Invalid contents in credentials file " + path);
+    return Status(StatusCode::kInvalidArgument,
+                  "Invalid contents in credentials file " + path);
   }
   std::string cred_type = cred_json.value("type", "no type given");
   if (cred_type == "authorized_user") {
     auto info = ParseAuthorizedUserCredentials(contents, path);
-    return google::cloud::internal::make_unique<AuthorizedUserCredentials<>>(
-        info);
+    if (!info) {
+      return info.status();
+    }
+    std::unique_ptr<Credentials> ptr =
+        google::cloud::internal::make_unique<AuthorizedUserCredentials<>>(
+            *info);
+    return StatusOr<std::unique_ptr<Credentials>>(std::move(ptr));
   }
   if (cred_type == "service_account") {
     auto info = ParseServiceAccountCredentials(contents, path);
-    return google::cloud::internal::make_unique<ServiceAccountCredentials<>>(
-        info);
+    if (!info) {
+      return info.status();
+    }
+    std::unique_ptr<Credentials> ptr =
+        google::cloud::internal::make_unique<ServiceAccountCredentials<>>(
+            *info);
+    return StatusOr<std::unique_ptr<Credentials>>(std::move(ptr));
   }
-  ThrowRuntimeError(
-      "Unsupported credential type (" + cred_type +
-      ") when reading Application Default Credentials file from " + path + ".");
+  return StatusOr<std::unique_ptr<Credentials>>(
+      Status(StatusCode::kInvalidArgument,
+             "Unsupported credential type (" + cred_type +
+                 ") when reading Application Default Credentials file from " +
+                 path + "."));
 }
 
-std::unique_ptr<Credentials> MaybeLoadCredsFromAdcEnvVar() {
+StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcEnvVar() {
   auto path = GoogleAdcFilePathFromEnvVarOrEmpty();
   if (!path.empty()) {
     // If the path was specified, try to load that file; explicitly fail if it
     // doesn't exist or can't be read and parsed.
     return LoadCredsFromPath(path);
   }
-  return nullptr;
+  // No ptr indicates that there was no path to attempt loading creds from.
+  return StatusOr<std::unique_ptr<Credentials>>(nullptr);
 }
 
-std::unique_ptr<Credentials> MaybeLoadCredsFromGcloudAdcFile() {
+StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromGcloudAdcFile() {
   auto path = GoogleAdcFilePathFromWellKnownPathOrEmpty();
   if (!path.empty()) {
     // Just because we had the necessary information to build the path doesn't
@@ -85,21 +101,27 @@ std::unique_ptr<Credentials> MaybeLoadCredsFromGcloudAdcFile() {
   }
   // Either we were unable to construct the well known path or no file existed
   // at that path.
-  return nullptr;
+  return StatusOr<std::unique_ptr<Credentials>>(nullptr);
 }
 
-std::shared_ptr<Credentials> GoogleDefaultCredentials() {
+StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials() {
   // 1) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable is set.
   auto creds = MaybeLoadCredsFromAdcEnvVar();
-  if (creds) {
-    return std::move(creds);
+  if (!creds) {
+    return StatusOr<std::shared_ptr<Credentials>>(creds.status());
+  }
+  if (*creds) {
+    return StatusOr<std::shared_ptr<Credentials>>(std::move(*creds));
   }
 
   // 2) If no path was specified via environment variable, check if the gcloud
   // ADC file exists.
   creds = MaybeLoadCredsFromGcloudAdcFile();
-  if (creds) {
-    return std::move(creds);
+  if (!creds) {
+    return StatusOr<std::shared_ptr<Credentials>>(creds.status());
+  }
+  if (*creds) {
+    return StatusOr<std::shared_ptr<Credentials>>(std::move(*creds));
   }
 
   // 3) Check for implicit environment-based credentials (GCE, GAE Flexible
@@ -108,49 +130,67 @@ std::shared_ptr<Credentials> GoogleDefaultCredentials() {
   // the App Engine Flexible Environment, but this has not been explicitly
   // tested, as it requires a custom GAEF runtime.
   if (storage::internal::RunningOnComputeEngineVm()) {
-    return std::make_shared<ComputeEngineCredentials<>>();
+    return StatusOr<std::shared_ptr<Credentials>>(
+        std::make_shared<ComputeEngineCredentials<>>());
   }
 
   // We've exhausted all search points, thus credentials cannot be constructed.
   std::string adc_link =
       "https://developers.google.com/identity/protocols"
       "/application-default-credentials";
-  google::cloud::internal::ThrowRuntimeError(
-      "Could not automatically determine credentials. For more information,"
-      " please see " +
-      adc_link);
+  return StatusOr<std::shared_ptr<Credentials>>(
+      Status(StatusCode::kUnknown,
+             "Could not automatically determine credentials. For more "
+             "information, please see " +
+                 adc_link));
 }
 
 std::shared_ptr<Credentials> CreateAnonymousCredentials() {
   return std::make_shared<AnonymousCredentials>();
 }
 
-std::shared_ptr<Credentials> CreateAuthorizedUserCredentialsFromJsonFilePath(
-    std::string const& path) {
+StatusOr<std::shared_ptr<Credentials>>
+CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   auto info = ParseAuthorizedUserCredentials(contents, path);
-  return std::make_shared<AuthorizedUserCredentials<>>(info);
+  if (!info) {
+    return StatusOr<std::shared_ptr<Credentials>>(info.status());
+  }
+  return StatusOr<std::shared_ptr<Credentials>>(
+      std::make_shared<AuthorizedUserCredentials<>>(*info));
 }
 
-std::shared_ptr<Credentials> CreateAuthorizedUserCredentialsFromJsonContents(
-    std::string const& contents) {
+StatusOr<std::shared_ptr<Credentials>>
+CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents) {
   auto info = ParseAuthorizedUserCredentials(contents, "memory");
-  return std::make_shared<AuthorizedUserCredentials<>>(info);
+  if (!info) {
+    return StatusOr<std::shared_ptr<Credentials>>(info.status());
+  }
+  return StatusOr<std::shared_ptr<Credentials>>(
+      std::make_shared<AuthorizedUserCredentials<>>(*info));
 }
 
-std::shared_ptr<Credentials> CreateServiceAccountCredentialsFromJsonFilePath(
-    std::string const& path) {
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   auto info = ParseServiceAccountCredentials(contents, path);
-  return std::make_shared<ServiceAccountCredentials<>>(info);
+  if (!info) {
+    return StatusOr<std::shared_ptr<Credentials>>(info.status());
+  }
+  return StatusOr<std::shared_ptr<Credentials>>(
+      std::make_shared<ServiceAccountCredentials<>>(*info));
 }
 
-std::shared_ptr<Credentials> CreateServiceAccountCredentialsFromJsonContents(
-    std::string const& contents) {
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromJsonContents(std::string const& contents) {
   auto info = ParseServiceAccountCredentials(contents, "memory");
-  return std::make_shared<ServiceAccountCredentials<>>(info);
+  if (!info) {
+    return StatusOr<std::shared_ptr<Credentials>>(info.status());
+  }
+  return StatusOr<std::shared_ptr<Credentials>>(
+      std::make_shared<ServiceAccountCredentials<>>(*info));
 }
 
 std::shared_ptr<Credentials> CreateComputeEngineCredentials() {

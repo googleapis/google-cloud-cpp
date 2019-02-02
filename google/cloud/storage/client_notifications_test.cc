@@ -107,14 +107,15 @@ TEST_F(NotificationsTest, ListNotificationsPermanentFailure) {
 }
 
 TEST_F(NotificationsTest, CreateNotification) {
-  NotificationMetadata expected = internal::NotificationMetadataParser::FromString(R"""({
+  NotificationMetadata expected =
+      internal::NotificationMetadataParser::FromString(R"""({
           "id": "test-notification-1",
           "topic": "test-topic-1",
           "payload_format": "JSON_API_V1",
           "object_prefix": "test-object-prefix-",
           "event_type": [ "OBJECT_FINALIZE" ]
       })""")
-                                      .value();
+          .value();
 
   EXPECT_CALL(*mock_, CreateNotification(_))
       .WillOnce(Return(StatusOr<NotificationMetadata>(TransientError())))
@@ -143,9 +144,11 @@ TEST_F(NotificationsTest, CreateNotificationTooManyFailures) {
   testing::TooManyFailuresStatusTest<NotificationMetadata>(
       mock_, EXPECT_CALL(*mock_, CreateNotification(_)),
       [](Client& client) {
-        return client.CreateNotification("test-bucket-name", "test-topic-1",
-                                         payload_format::JsonApiV1(),
-                                         NotificationMetadata()).status();
+        return client
+            .CreateNotification("test-bucket-name", "test-topic-1",
+                                payload_format::JsonApiV1(),
+                                NotificationMetadata())
+            .status();
       },
       "CreateNotification");
 }
@@ -154,22 +157,25 @@ TEST_F(NotificationsTest, CreateNotificationPermanentFailure) {
   testing::PermanentFailureStatusTest<NotificationMetadata>(
       *client_, EXPECT_CALL(*mock_, CreateNotification(_)),
       [](Client& client) {
-        return client.CreateNotification("test-bucket-name", "test-topic-1",
-                                         payload_format::JsonApiV1(),
-                                         NotificationMetadata()).status();
+        return client
+            .CreateNotification("test-bucket-name", "test-topic-1",
+                                payload_format::JsonApiV1(),
+                                NotificationMetadata())
+            .status();
       },
       "CreateNotification");
 }
 
 TEST_F(NotificationsTest, GetNotification) {
-  NotificationMetadata expected = internal::NotificationMetadataParser::FromString(R"""({
+  NotificationMetadata expected =
+      internal::NotificationMetadataParser::FromString(R"""({
           "id": "test-notification-1",
           "topic": "test-topic-1",
           "payload_format": "JSON_API_V1",
           "object_prefix": "test-object-prefix-",
           "event_type": [ "OBJECT_FINALIZE" ]
       })""")
-                                      .value();
+          .value();
 
   EXPECT_CALL(*mock_, GetNotification(_))
       .WillOnce(Return(StatusOr<NotificationMetadata>(TransientError())))
@@ -191,8 +197,8 @@ TEST_F(NotificationsTest, GetNotificationTooManyFailures) {
   testing::TooManyFailuresStatusTest<NotificationMetadata>(
       mock_, EXPECT_CALL(*mock_, GetNotification(_)),
       [](Client& client) {
-        return client.GetNotification("test-bucket-name",
-                                      "test-notification-1").status();
+        return client.GetNotification("test-bucket-name", "test-notification-1")
+            .status();
       },
       "GetNotification");
 }
@@ -201,8 +207,8 @@ TEST_F(NotificationsTest, GetNotificationPermanentFailure) {
   testing::PermanentFailureStatusTest<NotificationMetadata>(
       *client_, EXPECT_CALL(*mock_, GetNotification(_)),
       [](Client& client) {
-        return client.GetNotification("test-bucket-name",
-                                      "test-notification-1").status();
+        return client.GetNotification("test-bucket-name", "test-notification-1")
+            .status();
       },
       "GetNotification");
 }

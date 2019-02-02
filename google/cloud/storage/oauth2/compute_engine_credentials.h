@@ -63,6 +63,7 @@ class ComputeEngineCredentials : public Credentials {
 
   explicit ComputeEngineCredentials(std::string const& service_account_email)
       : service_account_email_(service_account_email) {}
+
   StatusOr<std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
     return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
@@ -130,7 +131,7 @@ class ComputeEngineCredentials : public Credentials {
         "/computeMetadata/v1/instance/service-accounts/" +
             service_account_email_ + "/",
         true);
-    if (!response.ok()) {
+    if (!response) {
       return std::move(response).status();
     }
     if (response->status_code >= 300) {
@@ -170,7 +171,7 @@ class ComputeEngineCredentials : public Credentials {
         "/computeMetadata/v1/instance/service-accounts/" +
             service_account_email_ + "/token",
         false);
-    if (!response.ok()) {
+    if (!response) {
       return std::move(response).status();
     }
     if (response->status_code >= 300) {

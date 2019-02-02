@@ -43,7 +43,9 @@ class CurlResumableUploadIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(CurlResumableUploadIntegrationTest, Simple) {
-  auto client = CurlClient::Create(ClientOptions());
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  auto client = CurlClient::Create(*client_options);
   auto bucket_name = ResumableUploadTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -72,7 +74,9 @@ TEST_F(CurlResumableUploadIntegrationTest, Simple) {
 }
 
 TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
-  auto client = CurlClient::Create(ClientOptions());
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  auto client = CurlClient::Create(*client_options);
   auto bucket_name = ResumableUploadTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -107,7 +111,9 @@ TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
 }
 
 TEST_F(CurlResumableUploadIntegrationTest, Restore) {
-  auto client = CurlClient::Create(ClientOptions());
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  auto client = CurlClient::Create(*client_options);
   auto bucket_name = ResumableUploadTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 

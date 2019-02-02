@@ -46,7 +46,8 @@ class CurlResumableStreambufIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   void CheckUpload(int line_count, int line_size) {
-    Client client;
+    StatusOr<Client> client = Client::CreateDefaultClient();
+    ASSERT_TRUE(client.ok()) << "status=" << client.status();
     auto bucket_name = ResumableStreambufTestEnvironment::bucket_name();
     auto object_name = MakeRandomObjectName();
 
@@ -54,13 +55,13 @@ class CurlResumableStreambufIntegrationTest
     request.set_multiple_options(IfGenerationMatch(0));
 
     StatusOr<std::unique_ptr<ResumableUploadSession>> session =
-        client.raw_client()->CreateResumableSession(request);
+        client->raw_client()->CreateResumableSession(request);
     ASSERT_TRUE(session.ok());
 
     ObjectWriteStream writer(
         google::cloud::internal::make_unique<CurlResumableStreambuf>(
             std::move(session).value(),
-            client.raw_client()->client_options().upload_buffer_size(),
+            client->raw_client()->client_options().upload_buffer_size(),
             google::cloud::internal::make_unique<NullHashValidator>()));
 
     std::ostringstream expected_stream;
@@ -70,7 +71,7 @@ class CurlResumableStreambufIntegrationTest
     EXPECT_EQ(object_name, metadata.name());
     EXPECT_EQ(bucket_name, metadata.bucket());
 
-    ObjectReadStream reader = client.ReadObject(bucket_name, object_name);
+    ObjectReadStream reader = client->ReadObject(bucket_name, object_name);
 
     std::string actual(std::istreambuf_iterator<char>{reader}, {});
 
@@ -78,8 +79,8 @@ class CurlResumableStreambufIntegrationTest
     ASSERT_EQ(expected.size(), actual.size());
     EXPECT_EQ(expected, actual);
 
-    auto status = client.DeleteObject(bucket_name, object_name,
-                                      Generation(metadata.generation()));
+    auto status = client->DeleteObject(bucket_name, object_name,
+                                       Generation(metadata.generation()));
     ASSERT_TRUE(status.ok()) << "status=" << status;
   }
 };

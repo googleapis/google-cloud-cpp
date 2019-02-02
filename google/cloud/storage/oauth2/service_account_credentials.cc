@@ -20,16 +20,16 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
-ServiceAccountCredentialsInfo ParseServiceAccountCredentials(
+StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri) {
   namespace nl = storage::internal::nl;
   nl::json credentials = nl::json::parse(content, nullptr, false);
   if (credentials.is_discarded()) {
-    google::cloud::internal::ThrowInvalidArgument(
-        "Invalid ServiceAccountCredentials,"
-        " parsing failed on data loaded from " +
-        source);
+    return Status(StatusCode::kInvalidArgument,
+                  "Invalid ServiceAccountCredentials,"
+                  "parsing failed on data loaded from " +
+                      source);
   }
   char const private_key_id_key[] = "private_key_id";
   char const private_key_key[] = "private_key";
@@ -38,22 +38,25 @@ ServiceAccountCredentialsInfo ParseServiceAccountCredentials(
   for (auto const& key :
        {private_key_id_key, private_key_key, client_email_key}) {
     if (credentials.count(key) == 0U) {
-      google::cloud::internal::ThrowInvalidArgument(
-          "Invalid ServiceAccountCredentials, the " + std::string(key) +
-          " field is missing on data loaded from " + source);
+      return Status(StatusCode::kInvalidArgument,
+                    "Invalid ServiceAccountCredentials, the " +
+                        std::string(key) +
+                        " field is missing on data loaded from " + source);
     }
     if (credentials.value(key, "").empty()) {
-      google::cloud::internal::ThrowInvalidArgument(
-          "Invalid ServiceAccountCredentials, the " + std::string(key) +
-          " field is empty on data loaded from " + source);
+      return Status(StatusCode::kInvalidArgument,
+                    "Invalid ServiceAccountCredentials, the " +
+                        std::string(key) +
+                        " field is empty on data loaded from " + source);
     }
   }
   // The token_uri field may be missing, but may not be empty:
   if (credentials.count(token_uri_key) != 0U &&
       credentials.value(token_uri_key, "").empty()) {
-    google::cloud::internal::ThrowInvalidArgument(
-        "Invalid ServiceAccountCredentials, the " + std::string(token_uri_key) +
-        " field is empty on data loaded from " + source);
+    return Status(StatusCode::kInvalidArgument,
+                  "Invalid ServiceAccountCredentials, the " +
+                      std::string(token_uri_key) +
+                      " field is empty on data loaded from " + source);
   }
   return ServiceAccountCredentialsInfo{
       credentials.value(client_email_key, ""),

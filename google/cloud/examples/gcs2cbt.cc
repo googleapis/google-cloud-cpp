@@ -223,7 +223,13 @@ int main(int argc, char* argv[]) try {
   }
   std::cout << " DONE" << std::endl;
 
-  gcs::Client client(gcs::ClientOptions().set_project_id(project_id));
+  google::cloud::StatusOr<gcs::ClientOptions> opts =
+      gcs::ClientOptions::CreateDefaultClientOptions();
+  if (!opts) {
+    std::cerr << "Couldn't create gcs::ClientOptions, status=" << opts.status();
+    return 1;
+  }
+  gcs::Client client(opts->set_project_id(project_id));
   // The main thread just reads the file one line at a time.
   auto is = client.ReadObject(bucket, object);
   std::string line;

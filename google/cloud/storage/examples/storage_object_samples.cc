@@ -119,8 +119,14 @@ void InsertObjectStrictIdempotency(google::cloud::storage::Client unused,
   [](std::string bucket_name, std::string object_name, std::string contents) {
     // Create a client that only retries idempotent operations, the default is
     // to retry all operations.
-    gcs::Client client{gcs::ClientOptions(), gcs::StrictIdempotencyPolicy()};
-
+    StatusOr<gcs::ClientOptions> options =
+        gcs::ClientOptions::CreateDefaultClientOptions();
+    if (!options) {
+      std::cerr << "Error creating default ClientOptions, status="
+                << options.status() << std::endl;
+      return;
+    }
+    gcs::Client client{*options, gcs::StrictIdempotencyPolicy()};
     StatusOr<gcs::ObjectMetadata> object_metadata =
         client.InsertObject(bucket_name, object_name, std::move(contents),
                             gcs::IfGenerationMatch(0));
@@ -154,10 +160,22 @@ void InsertObjectModifiedRetry(google::cloud::storage::Client unused, int& argc,
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
   [](std::string bucket_name, std::string object_name, std::string contents) {
+    auto credentials = gcs::oauth2::GoogleDefaultCredentials();
+    if (!credentials) {
+      std::cerr << "Error obtaining default credentials, status="
+                << credentials.status() << std::endl;
+      return;
+    }
     // Create a client that only gives up on the third error. The default policy
     // is to retry for several minutes.
-    gcs::Client client{gcs::ClientOptions(),
-                       gcs::LimitedErrorCountRetryPolicy(3)};
+    StatusOr<gcs::ClientOptions> options =
+        gcs::ClientOptions::CreateDefaultClientOptions();
+    if (!options) {
+      std::cerr << "Error creating default ClientOptions, status="
+                << options.status() << std::endl;
+      return;
+    }
+    gcs::Client client{*options, gcs::LimitedErrorCountRetryPolicy(3)};
 
     StatusOr<gcs::ObjectMetadata> object_metadata =
         client.InsertObject(bucket_name, object_name, std::move(contents),
@@ -1465,7 +1483,13 @@ void CreatePutSignedUrl(google::cloud::storage::Client client, int& argc,
 
 int main(int argc, char* argv[]) try {
   // Create a client to communicate with Google Cloud Storage.
-  google::cloud::storage::Client client;
+  google::cloud::StatusOr<google::cloud::storage::Client> client =
+      google::cloud::storage::Client::CreateDefaultClient();
+  if (!client) {
+    std::cerr << "Failed to create Storage Client, status=" << client.status()
+              << std::endl;
+    return 1;
+  }
 
   using CommandType =
       std::function<void(google::cloud::storage::Client, int&, char* [])>;
@@ -1514,7 +1538,7 @@ int main(int argc, char* argv[]) try {
   for (auto&& kv : commands) {
     try {
       int fake_argc = 0;
-      kv.second(client, fake_argc, argv);
+      kv.second(*client, fake_argc, argv);
     } catch (Usage const& u) {
       command_usage += "    ";
       command_usage += u.msg;
@@ -1534,7 +1558,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  it->second(client, argc, argv);
+  it->second(*client, argc, argv);
 
   return 0;
 } catch (Usage const& ex) {

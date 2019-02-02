@@ -36,7 +36,7 @@ namespace oauth2 {
  * @see https://cloud.google.com/docs/authentication/production for details
  * about Application Default %Credentials.
  */
-std::shared_ptr<Credentials> GoogleDefaultCredentials();
+StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials();
 
 //@{
 /**
@@ -52,8 +52,8 @@ std::shared_ptr<Credentials> CreateAnonymousCredentials();
  * @note It is strongly preferred to instead use service account credentials
  * with Cloud Storage client libraries.
  */
-std::shared_ptr<Credentials> CreateAuthorizedUserCredentialsFromJsonFilePath(
-    std::string const&);
+StatusOr<std::shared_ptr<Credentials>>
+CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const&);
 
 /**
  * Creates an AuthorizedUserCredentials from a JSON string.
@@ -61,16 +61,16 @@ std::shared_ptr<Credentials> CreateAuthorizedUserCredentialsFromJsonFilePath(
  * @note It is strongly preferred to instead use service account credentials
  * with Cloud Storage client libraries.
  */
-std::shared_ptr<Credentials> CreateAuthorizedUserCredentialsFromJsonContents(
-    std::string const&);
+StatusOr<std::shared_ptr<Credentials>>
+CreateAuthorizedUserCredentialsFromJsonContents(std::string const&);
 
 /// Creates a ServiceAccountCredentials rom a JSON file at the specified path.
-std::shared_ptr<Credentials> CreateServiceAccountCredentialsFromJsonFilePath(
-    std::string const&);
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromJsonFilePath(std::string const&);
 
 /// Creates a ServiceAccountCredentials from a JSON string.
-std::shared_ptr<Credentials> CreateServiceAccountCredentialsFromJsonContents(
-    std::string const&);
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromJsonContents(std::string const&);
 
 /// Creates a ComputeEngineCredentials for the VM's default service account.
 std::shared_ptr<Credentials> CreateComputeEngineCredentials();

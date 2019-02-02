@@ -97,7 +97,9 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaEnvVar) {
   // Test that the authorized user credentials are loaded as the default when
   // specified via the well known environment variable.
   SetEnv(GoogleAdcEnvVar(), filename.c_str());
-  auto credentials = GoogleDefaultCredentials();
+  auto creds = GoogleDefaultCredentials();
+  ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
+  auto credentials = std::move(*creds);
   // Need to create a temporary for the pointer because clang-tidy warns about
   // using expressions with (potential) side-effects inside typeid().
   auto ptr = credentials.get();
@@ -111,7 +113,9 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaGcloudFile) {
   // stored in the the well known gcloud ADC file path.
   UnsetEnv(GoogleAdcEnvVar());
   SetEnv(GoogleGcloudAdcFileEnvVar(), filename.c_str());
-  auto credentials = GoogleDefaultCredentials();
+  auto creds = GoogleDefaultCredentials();
+  ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
+  auto credentials = std::move(*creds);
   auto ptr = credentials.get();
   EXPECT_EQ(typeid(*ptr), typeid(AuthorizedUserCredentials<>));
 }
@@ -119,7 +123,9 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaGcloudFile) {
 TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsFromFilename) {
   std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
   SetupAuthorizedUserCredentialsFileForTest(filename);
-  auto credentials = CreateAuthorizedUserCredentialsFromJsonFilePath(filename);
+  auto creds = CreateAuthorizedUserCredentialsFromJsonFilePath(filename);
+  ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
+  auto credentials = std::move(*creds);
   auto ptr = credentials.get();
   EXPECT_EQ(typeid(*ptr), typeid(AuthorizedUserCredentials<>));
 }
@@ -127,8 +133,10 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsFromFilename) {
 TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsFromContents) {
   // Test that the authorized user credentials are loaded from a string
   // representing JSON contents.
-  auto credentials = CreateAuthorizedUserCredentialsFromJsonContents(
+  auto creds = CreateAuthorizedUserCredentialsFromJsonContents(
       AUTHORIZED_USER_CRED_CONTENTS);
+  ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
+  auto credentials = std::move(*creds);
   auto ptr = credentials.get();
   EXPECT_EQ(typeid(*ptr), typeid(AuthorizedUserCredentials<>));
 }
@@ -171,7 +179,9 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaEnvVar) {
   // Test that the service account credentials are loaded as the default when
   // specified via the well known environment variable.
   SetEnv(GoogleAdcEnvVar(), filename.c_str());
-  auto credentials = GoogleDefaultCredentials();
+  auto creds = GoogleDefaultCredentials();
+  ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
+  auto credentials = std::move(*creds);
   // Need to create a temporary for the pointer because clang-tidy warns about
   // using expressions with (potential) side-effects inside typeid().
   auto ptr = credentials.get();
@@ -186,7 +196,9 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaGcloudFile) {
   // stored in the the well known gcloud ADC file path.
   UnsetEnv(GoogleAdcEnvVar());
   SetEnv(GoogleGcloudAdcFileEnvVar(), filename.c_str());
-  auto credentials = GoogleDefaultCredentials();
+  auto creds = GoogleDefaultCredentials();
+  ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
+  auto credentials = std::move(*creds);
   auto ptr = credentials.get();
   EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
 }
@@ -196,7 +208,9 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromFilename) {
   SetupServiceAccountCredentialsFileForTest(filename);
 
   // Test that the service account credentials are loaded from a file.
-  auto credentials = CreateServiceAccountCredentialsFromJsonFilePath(filename);
+  auto creds = CreateServiceAccountCredentialsFromJsonFilePath(filename);
+  ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
+  auto credentials = std::move(*creds);
   auto ptr = credentials.get();
   EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
 }
@@ -204,8 +218,10 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromFilename) {
 TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromContents) {
   // Test that the service account credentials are loaded from a string
   // representing JSON contents.
-  auto credentials = CreateServiceAccountCredentialsFromJsonContents(
+  auto creds = CreateServiceAccountCredentialsFromJsonContents(
       SERVICE_ACCOUNT_CRED_CONTENTS);
+  ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
+  auto credentials = std::move(*creds);
   auto ptr = credentials.get();
   EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
 }
@@ -219,7 +235,9 @@ TEST_F(GoogleCredentialsTest, LoadComputeEngineCredentialsFromADCFlow) {
   // ComputeEngineCredentials.
   SetEnv(GceCheckOverrideEnvVar(), "1");
 
-  auto credentials = GoogleDefaultCredentials();
+  auto creds = GoogleDefaultCredentials();
+  ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
+  auto credentials = std::move(*creds);
   auto ptr = credentials.get();
   EXPECT_EQ(typeid(*ptr), typeid(ComputeEngineCredentials<>));
 }
@@ -252,18 +270,11 @@ TEST_F(GoogleCredentialsTest, LoadUnknownTypeCredentials) {
   os.close();
   SetEnv(GoogleAdcEnvVar(), filename.c_str());
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { auto credentials = GoogleDefaultCredentials(); } catch (
-                   std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("Unsupported credential type"));
-    EXPECT_THAT(ex.what(), HasSubstr(filename));
-    throw;
-  },
-               std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(GoogleDefaultCredentials(),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto creds = GoogleDefaultCredentials();
+  ASSERT_FALSE(creds.ok()) << "status=" << creds.status();
+  EXPECT_THAT(creds.status().message(),
+              HasSubstr("Unsupported credential type"));
+  EXPECT_THAT(creds.status().message(), HasSubstr(filename));
 }
 
 TEST_F(GoogleCredentialsTest, LoadInvalidCredentials) {
@@ -274,36 +285,22 @@ TEST_F(GoogleCredentialsTest, LoadInvalidCredentials) {
   os.close();
   SetEnv(GoogleAdcEnvVar(), filename.c_str());
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { auto credentials = GoogleDefaultCredentials(); } catch (
-                   std::exception const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("Invalid contents in credentials file"));
-    EXPECT_THAT(ex.what(), HasSubstr(filename));
-    throw;
-  },
-               std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(GoogleDefaultCredentials(),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto creds = GoogleDefaultCredentials();
+  ASSERT_FALSE(creds.ok()) << "status=" << creds.status();
+  EXPECT_THAT(creds.status().message(),
+              HasSubstr("Invalid contents in credentials file"));
+  EXPECT_THAT(creds.status().message(), HasSubstr(filename));
 }
 
 TEST_F(GoogleCredentialsTest, MissingCredentialsViaEnvVar) {
   char const filename[] = "missing-credentials.json";
   SetEnv(GoogleAdcEnvVar(), filename);
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { auto credentials = GoogleDefaultCredentials(); } catch (
-                   std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("Cannot open credentials file"));
-    EXPECT_THAT(ex.what(), HasSubstr(filename));
-    throw;
-  },
-               std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(GoogleDefaultCredentials(),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto creds = GoogleDefaultCredentials();
+  ASSERT_FALSE(creds.ok()) << "status=" << creds.status();
+  EXPECT_THAT(creds.status().message(),
+              HasSubstr("Cannot open credentials file"));
+  EXPECT_THAT(creds.status().message(), HasSubstr(filename));
 }
 
 TEST_F(GoogleCredentialsTest, MissingCredentialsViaGcloudFilePath) {
@@ -318,18 +315,10 @@ TEST_F(GoogleCredentialsTest, MissingCredentialsViaGcloudFilePath) {
   // eventually finding no valid credentials and hitting a runtime error.
   SetEnv(GoogleGcloudAdcFileEnvVar(), filename);
 
-  // Ensure we don't find any valid credential type.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { auto credentials = GoogleDefaultCredentials(); } catch (
-                   std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("Could not automatically determine"));
-    throw;
-  },
-               std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(GoogleDefaultCredentials(),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto creds = GoogleDefaultCredentials();
+  ASSERT_FALSE(creds.ok()) << "status=" << creds.status();
+  EXPECT_THAT(creds.status().message(),
+              HasSubstr("Could not automatically determine"));
 }
 
 }  // namespace

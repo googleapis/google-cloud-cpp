@@ -50,7 +50,9 @@ bool UsingTestbench() {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
-  Client client;
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+
   auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -58,7 +60,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
   std::ostringstream expected;
 
   // Create the object, but only if it does not exist already.
-  auto os = client.WriteObject(
+  auto os = client->WriteObject(
       bucket_name, object_name, IfGenerationMatch(0),
       WithObjectMetadata(ObjectMetadata().set_content_type("text/plain")));
   os.exceptions(std::ios_base::failbit);
@@ -74,12 +76,14 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
 
-  auto status = client.DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
-  Client client;
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 
@@ -88,7 +92,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
 
   // Create the object, but only if it does not exist already.
   TestPermanentFailure([&] {
-    auto os = client.WriteObject(
+    auto os = client->WriteObject(
         bucket_name, object_name, IfGenerationMatch(0),
         WithObjectMetadata(ObjectMetadata().set_content_type("text/plain")));
     os.exceptions(std::ios_base::failbit);
@@ -99,7 +103,9 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
-  Client client;
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+
   auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -107,8 +113,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
   std::ostringstream expected;
 
   // Create the object, but only if it does not exist already.
-  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
-                               NewResumableUploadSession());
+  auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                                NewResumableUploadSession());
   os.exceptions(std::ios_base::failbit);
   os << LoremIpsum();
   EXPECT_FALSE(os.resumable_session_id().empty());
@@ -121,12 +127,14 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
 
-  auto status = client.DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
-  Client client;
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+
   auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
@@ -137,15 +145,15 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
   std::string session_id;
   {
     auto old_os =
-        client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
-                           NewResumableUploadSession());
+        client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                            NewResumableUploadSession());
     ASSERT_TRUE(old_os.good()) << "status=" << old_os.metadata().status();
     session_id = old_os.resumable_session_id();
     std::move(old_os).Suspend();
   }
 
-  auto os = client.WriteObject(bucket_name, object_name,
-                               RestoreResumableUploadSession(session_id));
+  auto os = client->WriteObject(bucket_name, object_name,
+                                RestoreResumableUploadSession(session_id));
   ASSERT_TRUE(os.good()) << "status=" << os.metadata().status();
   EXPECT_EQ(session_id, os.resumable_session_id());
   os << LoremIpsum();
@@ -158,27 +166,29 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
 
-  auto status = client.DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status;
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
-  Client client;
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+
   auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client.InsertObject(
+  StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name, object_name, expected, IfGenerationMatch(0));
   ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
 
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name, meta->bucket());
 
-  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
-                               NewResumableUploadSession());
+  auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                                NewResumableUploadSession());
   os << "Expected failure data:\n" << LoremIpsum();
 
   // This operation should fail because the object already exists.
@@ -187,7 +197,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
   EXPECT_FALSE(os.metadata().ok());
   EXPECT_EQ(StatusCode::kFailedPrecondition, os.metadata().status().code());
 
-  auto status = client.DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name, object_name);
   EXPECT_TRUE(status.ok()) << "status=" << status;
 }
 

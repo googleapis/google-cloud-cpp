@@ -32,9 +32,17 @@ static_assert(std::is_copy_constructible<storage::Client>::value,
 static_assert(std::is_copy_assignable<storage::Client>::value,
               "storage::Client must be assignable");
 
-std::shared_ptr<internal::RawClient> Client::CreateDefaultClient(
+std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
     ClientOptions options) {
   return internal::CurlClient::Create(std::move(options));
+}
+
+StatusOr<Client> Client::CreateDefaultClient() {
+  auto opts = ClientOptions::CreateDefaultClientOptions();
+  if (!opts) {
+    return StatusOr<Client>(opts.status());
+  }
+  return StatusOr<Client>(Client(*opts));
 }
 
 bool Client::UseSimpleUpload(std::string const& file_name) const {
@@ -88,7 +96,7 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
     msg += file_name;
     return Status(StatusCode::kNotFound, std::move(msg));
   }
-  // This function only works for regular files, and the `storage::Client()`
+  // This function only works for regular files, and the `storage::Client`
   // class checks before calling it.
   std::uint64_t source_size = google::cloud::internal::file_size(file_name);
 
@@ -100,7 +108,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     internal::ResumableUploadRequest const& request) {
   StatusOr<std::unique_ptr<internal::ResumableUploadSession>> session_status =
       raw_client()->CreateResumableSession(request);
-  if (!session_status.ok()) {
+  if (!session_status) {
     return std::move(session_status).status();
   }
 
@@ -114,8 +122,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
       internal::ResumableUploadResponse{});
   // We iterate while `source` is good and the retry policy has not been
   // exhausted.
-  while (!source.eof() && upload_response.ok() &&
-         upload_response->payload.empty()) {
+  while (!source.eof() && upload_response && upload_response->payload.empty()) {
     // Read a chunk of data from the source file.
     std::string buffer(chunk_size, '\0');
     source.read(&buffer[0], buffer.size());
@@ -127,7 +134,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
 
     auto expected = session->next_expected_byte() + gcount - 1;
     upload_response = session->UploadChunk(buffer, source_size);
-    if (!upload_response.ok()) {
+    if (!upload_response) {
       return std::move(upload_response).status();
     }
     if (session->next_expected_byte() != expected) {
@@ -138,7 +145,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     }
   }
 
-  if (!upload_response.ok()) {
+  if (!upload_response) {
     return std::move(upload_response).status();
   }
 

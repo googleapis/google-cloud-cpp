@@ -113,7 +113,9 @@ TEST_F(ClientOptionsTest, SetProjectId) {
 }
 
 TEST_F(ClientOptionsTest, SetdownloadBufferSize) {
-  ClientOptions client_options;
+  auto opts = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(opts.ok()) << "status=" << opts.status();
+  ClientOptions client_options = *opts;
   auto default_size = client_options.download_buffer_size();
   EXPECT_NE(0U, default_size);
   client_options.SetDownloadBufferSize(1024);
@@ -123,7 +125,9 @@ TEST_F(ClientOptionsTest, SetdownloadBufferSize) {
 }
 
 TEST_F(ClientOptionsTest, SetUploadBufferSize) {
-  ClientOptions client_options;
+  auto opts = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(opts.ok()) << "status=" << opts.status();
+  ClientOptions client_options = *opts;
   auto default_size = client_options.upload_buffer_size();
   EXPECT_NE(0U, default_size);
   client_options.SetUploadBufferSize(1024);
@@ -142,7 +146,9 @@ TEST_F(ClientOptionsTest, UserAgentPrefix) {
 }
 
 TEST_F(ClientOptionsTest, SetMaximumSimpleUploadSize) {
-  ClientOptions client_options;
+  auto opts = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(opts.ok()) << "status=" << opts.status();
+  ClientOptions client_options = *opts;
   auto default_size = client_options.maximum_simple_upload_size();
   EXPECT_NE(0U, default_size);
   client_options.set_maximum_simple_upload_size(1024);
@@ -152,7 +158,9 @@ TEST_F(ClientOptionsTest, SetMaximumSimpleUploadSize) {
 }
 
 TEST_F(ClientOptionsTest, SetEnableLockingCallbacks) {
-  ClientOptions client_options;
+  auto opts = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_TRUE(opts.ok()) << "status=" << opts.status();
+  ClientOptions client_options = *opts;
   auto default_value = client_options.enable_ssl_locking_callbacks();
   EXPECT_TRUE(default_value);
   client_options.set_enable_ssl_locking_callbacks(false);

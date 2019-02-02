@@ -470,11 +470,12 @@ TEST_F(BucketTest, LockBucketRetentionPolicy) {
 
   EXPECT_CALL(*mock, LockBucketRetentionPolicy(_))
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
-      .WillOnce(Invoke([expected](internal::LockBucketRetentionPolicyRequest const& r) {
-        EXPECT_EQ("test-bucket-name", r.bucket_name());
-        EXPECT_EQ(42U, r.metageneration());
-        return make_status_or(expected);
-      }));
+      .WillOnce(Invoke(
+          [expected](internal::LockBucketRetentionPolicyRequest const& r) {
+            EXPECT_EQ("test-bucket-name", r.bucket_name());
+            EXPECT_EQ(42U, r.metageneration());
+            return make_status_or(expected);
+          }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
 

@@ -38,7 +38,7 @@ struct AuthorizedUserCredentialsInfo {
 };
 
 /// Parses a user credentials JSON string into an AuthorizedUserCredentialsInfo.
-AuthorizedUserCredentialsInfo ParseAuthorizedUserCredentials(
+StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 
@@ -91,7 +91,7 @@ class AuthorizedUserCredentials : public Credentials {
     namespace nl = storage::internal::nl;
 
     auto response = request_.MakeRequest(payload_);
-    if (!response.ok()) {
+    if (!response) {
       return std::move(response).status();
     }
     if (response->status_code >= 300) {

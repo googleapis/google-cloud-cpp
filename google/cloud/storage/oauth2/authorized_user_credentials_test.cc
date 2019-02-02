@@ -88,7 +88,8 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
 })""";
 
   auto info = ParseAuthorizedUserCredentials(config, "test");
-  AuthorizedUserCredentials<MockHttpRequestBuilder> credentials(info);
+  ASSERT_TRUE(info.ok()) << "status=" << info.status();
+  AuthorizedUserCredentials<MockHttpRequestBuilder> credentials(*info);
   EXPECT_EQ("Authorization: Type access-token-value",
             credentials.AuthorizationHeader().value());
 }
@@ -139,7 +140,8 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
       "type": "magic_type"
 })""";
   auto info = ParseAuthorizedUserCredentials(config, "test");
-  AuthorizedUserCredentials<MockHttpRequestBuilder> credentials(info);
+  ASSERT_TRUE(info.ok()) << "status=" << info.status();
+  AuthorizedUserCredentials<MockHttpRequestBuilder> credentials(*info);
   EXPECT_EQ("Authorization: Type access-token-r1",
             credentials.AuthorizationHeader().value());
   EXPECT_EQ("Authorization: Type access-token-r2",
@@ -160,10 +162,11 @@ TEST_F(AuthorizedUserCredentialsTest, ParseSimple) {
 
   auto actual =
       ParseAuthorizedUserCredentials(config, "test-data", "unused-uri");
-  EXPECT_EQ("a-client-id.example.com", actual.client_id);
-  EXPECT_EQ("a-123456ABCDEF", actual.client_secret);
-  EXPECT_EQ("1/THETOKEN", actual.refresh_token);
-  EXPECT_EQ("https://oauth2.googleapis.com/test_endpoint", actual.token_uri);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ("a-client-id.example.com", actual->client_id);
+  EXPECT_EQ("a-123456ABCDEF", actual->client_secret);
+  EXPECT_EQ("1/THETOKEN", actual->refresh_token);
+  EXPECT_EQ("https://oauth2.googleapis.com/test_endpoint", actual->token_uri);
 }
 
 /// @test Verify that parsing an authorized user account JSON string works.
@@ -178,10 +181,11 @@ TEST_F(AuthorizedUserCredentialsTest, ParseUsesExplicitDefaultTokenUri) {
 
   auto actual = ParseAuthorizedUserCredentials(
       config, "test-data", "https://oauth2.googleapis.com/test_endpoint");
-  EXPECT_EQ("a-client-id.example.com", actual.client_id);
-  EXPECT_EQ("a-123456ABCDEF", actual.client_secret);
-  EXPECT_EQ("1/THETOKEN", actual.refresh_token);
-  EXPECT_EQ("https://oauth2.googleapis.com/test_endpoint", actual.token_uri);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ("a-client-id.example.com", actual->client_id);
+  EXPECT_EQ("a-123456ABCDEF", actual->client_secret);
+  EXPECT_EQ("1/THETOKEN", actual->refresh_token);
+  EXPECT_EQ("https://oauth2.googleapis.com/test_endpoint", actual->token_uri);
 }
 
 /// @test Verify that parsing an authorized user account JSON string works.
@@ -196,31 +200,22 @@ TEST_F(AuthorizedUserCredentialsTest, ParseUsesImplicitDefaultTokenUri) {
 
   // No token_uri passed in here, either.
   auto actual = ParseAuthorizedUserCredentials(config, "test-data");
-  EXPECT_EQ("a-client-id.example.com", actual.client_id);
-  EXPECT_EQ("a-123456ABCDEF", actual.client_secret);
-  EXPECT_EQ("1/THETOKEN", actual.refresh_token);
-  EXPECT_EQ(std::string(GoogleOAuthRefreshEndpoint()), actual.token_uri);
+  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  EXPECT_EQ("a-client-id.example.com", actual->client_id);
+  EXPECT_EQ("a-123456ABCDEF", actual->client_secret);
+  EXPECT_EQ("1/THETOKEN", actual->refresh_token);
+  EXPECT_EQ(std::string(GoogleOAuthRefreshEndpoint()), actual->token_uri);
 }
 
 /// @test Verify that invalid contents result in a readable error.
 TEST_F(AuthorizedUserCredentialsTest, ParseInvalidContentsFails) {
   std::string config = R"""( not-a-valid-json-string })""";
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        auto info = ParseAuthorizedUserCredentials(config, "test-as-a-source");
-      } catch (std::invalid_argument const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("Invalid AuthorizedUserCredentials"));
-        EXPECT_THAT(ex.what(), HasSubstr("test-as-a-source"));
-        throw;
-      },
-      std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      ParseAuthorizedUserCredentials(config, "test-as-a-source"),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto info = ParseAuthorizedUserCredentials(config, "test-as-a-source");
+  ASSERT_FALSE(info.ok());
+  EXPECT_THAT(info.status().message(),
+              HasSubstr("Invalid AuthorizedUserCredentials"));
+  EXPECT_THAT(info.status().message(), HasSubstr("test-as-a-source"));
 }
 
 /// @test Parsing a service account JSON string should detect empty fields.
@@ -235,24 +230,11 @@ TEST_F(AuthorizedUserCredentialsTest, ParseEmptyFieldFails) {
   for (auto const& field : {"client_id", "client_secret", "refresh_token"}) {
     internal::nl::json json = internal::nl::json::parse(contents);
     json[field] = "";
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    EXPECT_THROW(
-        try {
-          ParseAuthorizedUserCredentials(json.dump(), "test-data");
-        } catch (std::invalid_argument const& ex) {
-          EXPECT_THAT(ex.what(), HasSubstr(field));
-          EXPECT_THAT(ex.what(), HasSubstr(" field is empty"));
-          EXPECT_THAT(ex.what(), HasSubstr("test-data"));
-          throw;
-        },
-        std::invalid_argument)
-        << "field=" << field;
-#else
-    EXPECT_DEATH_IF_SUPPORTED(
-        ParseAuthorizedUserCredentials(json.dump(), "test-data"),
-        "exceptions are disabled")
-        << "field=" << field;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    auto info = ParseAuthorizedUserCredentials(json.dump(), "test-data");
+    ASSERT_FALSE(info.ok());
+    EXPECT_THAT(info.status().message(), HasSubstr(field));
+    EXPECT_THAT(info.status().message(), HasSubstr(" field is empty"));
+    EXPECT_THAT(info.status().message(), HasSubstr("test-data"));
   }
 }
 
@@ -268,24 +250,11 @@ TEST_F(AuthorizedUserCredentialsTest, ParseMissingFieldFails) {
   for (auto const& field : {"client_id", "client_secret", "refresh_token"}) {
     internal::nl::json json = internal::nl::json::parse(contents);
     json.erase(field);
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    EXPECT_THROW(
-        try {
-          ParseAuthorizedUserCredentials(json.dump(), "test-data");
-        } catch (std::invalid_argument const& ex) {
-          EXPECT_THAT(ex.what(), HasSubstr(field));
-          EXPECT_THAT(ex.what(), HasSubstr(" field is missing"));
-          EXPECT_THAT(ex.what(), HasSubstr("test-data"));
-          throw;
-        },
-        std::invalid_argument)
-        << "field=" << field;
-#else
-    EXPECT_DEATH_IF_SUPPORTED(
-        ParseAuthorizedUserCredentials(json.dump(), "test-data"),
-        "exceptions are disabled")
-        << "field=" << field;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    auto info = ParseAuthorizedUserCredentials(json.dump(), "test-data");
+    ASSERT_FALSE(info.ok());
+    EXPECT_THAT(info.status().message(), HasSubstr(field));
+    EXPECT_THAT(info.status().message(), HasSubstr(" field is missing"));
+    EXPECT_THAT(info.status().message(), HasSubstr("test-data"));
   }
 }
 

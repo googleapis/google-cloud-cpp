@@ -40,7 +40,7 @@ struct ServiceAccountCredentialsInfo {
 };
 
 /// Parses the contents of a JSON keyfile into a ServiceAccountCredentialsInfo.
-ServiceAccountCredentialsInfo ParseServiceAccountCredentials(
+StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 
@@ -186,7 +186,7 @@ class ServiceAccountCredentials : public Credentials {
     namespace nl = storage::internal::nl;
 
     auto response = request_.MakeRequest(payload_);
-    if (!response.ok()) {
+    if (!response) {
       return std::move(response).status();
     }
     if (response->status_code >= 300) {

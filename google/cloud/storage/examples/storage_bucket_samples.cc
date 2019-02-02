@@ -1055,7 +1055,13 @@ void LockRetentionPolicy(google::cloud::storage::Client client, int& argc,
 int main(int argc, char* argv[]) try {
   // Create a client to communicate with Google Cloud Storage.
   //! [create client]
-  google::cloud::storage::Client client;
+  google::cloud::StatusOr<google::cloud::storage::Client> client =
+      google::cloud::storage::Client::CreateDefaultClient();
+  if (!client) {
+    std::cerr << "Failed to create Storage Client, status=" << client.status()
+              << std::endl;
+    return 1;
+  }
   //! [create client]
 
   using CommandType =
@@ -1095,7 +1101,7 @@ int main(int argc, char* argv[]) try {
   for (auto&& kv : commands) {
     try {
       int fake_argc = 0;
-      kv.second(client, fake_argc, argv);
+      kv.second(*client, fake_argc, argv);
     } catch (Usage const& u) {
       command_usage += "    ";
       command_usage += u.msg;
@@ -1117,7 +1123,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  it->second(client, argc, argv);
+  it->second(*client, argc, argv);
 
   return 0;
 } catch (Usage const& ex) {

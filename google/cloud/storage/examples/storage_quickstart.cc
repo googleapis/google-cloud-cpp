@@ -31,10 +31,16 @@ int main(int argc, char* argv[]) {
 
   // Create a client to communicate with Google Cloud Storage. This client
   // uses the default configuration for authentication and project id.
-  gcs::Client client;
+  google::cloud::StatusOr<gcs::Client> client =
+      gcs::Client::CreateDefaultClient();
+  if (!client) {
+    std::cerr << "Failed to create Storage Client, status=" << client.status()
+              << std::endl;
+    return 1;
+  }
 
   google::cloud::StatusOr<gcs::BucketMetadata> bucket_metadata =
-      client.CreateBucketForProject(
+      client->CreateBucketForProject(
           bucket_name, project_id,
           gcs::BucketMetadata()
               .set_location("us-east1")
