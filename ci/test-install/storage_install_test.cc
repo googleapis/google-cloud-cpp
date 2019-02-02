@@ -57,10 +57,10 @@ int main(int argc, char* argv[]) try {
       bucket_name, object_name, gcs::Generation(meta.generation()));
   if (!status.ok()) {
     throw std::runtime_error(status.message());
+  }
 
-    return 0;
-  }
-  catch (std::exception const& ex) {
-    std::cerr << "Standard exception raised: " << ex.what() << std::endl;
-    return 1;
-  }
+  return 0;
+} catch (std::exception const& ex) {
+  std::cerr << "Standard exception raised: " << ex.what() << std::endl;
+  return 1;
+}
