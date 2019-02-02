@@ -246,18 +246,16 @@ class Client {
   /**
    * Fetches the list of buckets for the default project.
    *
-   * The default project is configured in the `ClientOptions` used to construct
-   * this object. If the application does not set the project id in the
-   * `ClientOptions`, the value of the `GOOGLE_CLOUD_PROJECT` is used. If
-   * neither the environment variable is set, nor a value is set explicitly by
-   * the application this function raises an exception.
+   * The default project is required to be configured in the `ClientOptions`
+   * used to construct this object. If the application does not set the project
+   * id in the `ClientOptions`, the value of the `GOOGLE_CLOUD_PROJECT` is
+   * used. If neither the environment variable is set, nor a value is set
+   * explicitly by the application, the returned `ListBucketsReader` will
+   * return an error status when used.
    *
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `MaxResults`, `Prefix`,
    *     `UserProject`, and `Projection`.
-   *
-   * @throw std::logic_error if the function is called without a default
-   *     project id set.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
@@ -266,18 +264,15 @@ class Client {
    * @snippet storage_bucket_samples.cc list buckets
    */
   template <typename... Options>
-  StatusOr<ListBucketsReader> ListBuckets(Options&&... options) {
+  ListBucketsReader ListBuckets(Options&&... options) {
     auto const& project_id = raw_client_->client_options().project_id();
-    if (project_id.empty()) {
-      std::string msg = "Default project id not set in ";
-      msg += __func__;
-      return Status(StatusCode::kFailedPrecondition, msg);
-    }
     return ListBucketsForProject(project_id, std::forward<Options>(options)...);
   }
 
   /**
-   * Creates a new Google Cloud Storage Bucket using the default project.
+   * Creates a new Google Cloud Storage bucket using the default project. If
+   * the default project is not configured the server will reject the request,
+   * and this function returns the error status.
    *
    * @param bucket_name the name of the new bucket.
    * @param metadata the metadata for the new Bucket.  The `name` field is
@@ -297,11 +292,6 @@ class Client {
                                         BucketMetadata metadata,
                                         Options&&... options) {
     auto const& project_id = raw_client_->client_options().project_id();
-    if (project_id.empty()) {
-      std::string msg = "Default project id not set in ";
-      msg += __func__;
-      return Status(StatusCode::kFailedPrecondition, msg);
-    }
     return CreateBucketForProject(std::move(bucket_name), project_id,
                                   std::move(metadata),
                                   std::forward<Options>(options)...);
@@ -2205,11 +2195,12 @@ class Client {
    * behalf.  This API allows you to discover the GCS service account for the
    * default project associated with this object.
    *
-   * The default project is configured in the `ClientOptions` used to construct
-   * this object. If the application does not set the project id in the
-   * `ClientOptions`, the value of the `GOOGLE_CLOUD_PROJECT` is used. If
-   * neither the environment variable is set, nor a value is set explicitly by
-   * the application this function raises an exception.
+   * The default project is required to be configured in the `ClientOptions`
+   * used to construct this object. If the application does not set the project
+   * id in the `ClientOptions`, the value of the `GOOGLE_CLOUD_PROJECT` is
+   * used. If neither the environment variable is set, nor a value is set
+   * explicitly by the application, the server will reject the request and this
+   * function will return the error status.
    *
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
@@ -2226,11 +2217,6 @@ class Client {
   template <typename... Options>
   StatusOr<ServiceAccount> GetServiceAccount(Options&&... options) {
     auto const& project_id = raw_client_->client_options().project_id();
-    if (project_id.empty()) {
-      std::string msg = "Default project id not set in ";
-      msg += __func__;
-      return Status(StatusCode::kFailedPrecondition, std::move(msg));
-    }
     return GetServiceAccountForProject(project_id,
                                        std::forward<Options>(options)...);
   }

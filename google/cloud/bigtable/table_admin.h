@@ -23,6 +23,7 @@
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/table_config.h"
 #include "google/cloud/future.h"
+#include "google/cloud/status_or.h"
 #include <future>
 #include <memory>
 
@@ -31,7 +32,7 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
- * Implements the API to administer tables instance a Cloud Bigtable instance.
+ * Implements the API to administer tables in a Cloud Bigtable instance.
  */
 class TableAdmin {
  public:
@@ -100,13 +101,12 @@ class TableAdmin {
    * @param config the initial schema for the table.
    * @return the attributes of the newly created table.  Notice that the server
    *     only populates the table_name() field at this time.
-   * @throws std::exception if the operation cannot be completed.
    *
    * @par Example
    * @snippet table_admin_snippets.cc create table
    */
-  ::google::bigtable::admin::v2::Table CreateTable(std::string table_id,
-                                                   TableConfig config);
+  StatusOr<::google::bigtable::admin::v2::Table> CreateTable(
+      std::string table_id, TableConfig config);
 
   /**
    * Sends an asynchronous request to create a new table in the instance.
@@ -151,7 +151,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_snippets.cc list tables
    */
-  std::vector<::google::bigtable::admin::v2::Table> ListTables(
+  StatusOr<std::vector<::google::bigtable::admin::v2::Table>> ListTables(
       ::google::bigtable::admin::v2::Table::View view);
 
   /**
