@@ -69,7 +69,7 @@ if (NOT TARGET curl_project)
                    # a version of libcurl with other protocols enabled they
                    # can select it using GOOGLE_CLOUD_CPP_CURL_PROVIDER=package.
                    -DHTTP_ONLY=ON
-                   -DCMAKE_BUILD_TYPE=Release
+                   -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
                    -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
                    -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}

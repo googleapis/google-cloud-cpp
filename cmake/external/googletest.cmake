@@ -48,7 +48,7 @@ if (NOT TARGET googletest_project)
                         URL ${GOOGLE_CLOUD_CPP_GOOGLETEST_URL}
                         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLETEST_SHA256}
                         CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
-                                   -DCMAKE_BUILD_TYPE=Release
+                                   -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
                                    -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
                                    -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
                                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
@@ -75,9 +75,14 @@ if (NOT TARGET googletest_project)
     # gtest.lib becomes gtestd.lib when compiled with for debugging.  This ugly
     # expression computes that value. Note that it must be a generator
     # expression because with MSBuild the config type can change after the
-    # configuration phase.
-    if (WIN32)
+    # configuration phase. We also set this for Linux since GTest will set a
+    # debug postfix regardless of platform.
+    if ("${CMAKE_GENERATOR}" MATCHES "^Visual Studio.*$")
         set(_lib_postfix $<$<CONFIG:DEBUG>:d>)
+    elseif("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+        set(_lib_postfix "d")
+    else()
+        set(_lib_postfix "")
     endif ()
 
     add_library(GTest::gtest INTERFACE IMPORTED)
