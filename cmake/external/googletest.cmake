@@ -72,11 +72,17 @@ if (NOT TARGET googletest_project)
     endif ()
 
     # On Windows GTest uses library postfixes for debug versions, that is
-    # gtest.lib becomes gtestd.lib when compiled with for debugging. We also set
-    # this for Linux since GTest will set a debug postfix regardless of
-    # platform.
-    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-        set(_lib_postfix d)
+    # gtest.lib becomes gtestd.lib when compiled with for debugging.  This ugly
+    # expression computes that value. Note that it must be a generator
+    # expression because with MSBuild the config type can change after the
+    # configuration phase. We also set this for Linux since GTest will set a
+    # debug postfix regardless of platform.
+    if ("${CMAKE_GENERATOR}" MATCHES "^Visual Studio.*$")
+        set(_lib_postfix $<$<CONFIG:DEBUG>:d>)
+    elseif("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+        set(_lib_postifx "d")
+    else()
+        set(_lib_postfix "")
     endif ()
 
     add_library(GTest::gtest INTERFACE IMPORTED)
