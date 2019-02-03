@@ -47,7 +47,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
 }
 
 void ListObjectAcl(gcs::Client client, int& argc, char* argv[]) {
-  if (argc < 3) {
+  if (argc != 3) {
     throw Usage{"list-object-acl <bucket-name> <object-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
@@ -77,7 +77,7 @@ void ListObjectAcl(gcs::Client client, int& argc, char* argv[]) {
 }
 
 void CreateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
-  if (argc < 5) {
+  if (argc != 5) {
     throw Usage{
         "create-object-acl <bucket-name> <object-name> <entity> <role>"};
   }
@@ -109,7 +109,7 @@ void CreateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
 }
 
 void DeleteObjectAcl(gcs::Client client, int& argc, char* argv[]) {
-  if (argc < 4) {
+  if (argc != 4) {
     throw Usage{"delete-object-acl <bucket-name> <object-name> <entity>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
@@ -137,7 +137,7 @@ void DeleteObjectAcl(gcs::Client client, int& argc, char* argv[]) {
 }
 
 void GetObjectAcl(gcs::Client client, int& argc, char* argv[]) {
-  if (argc < 4) {
+  if (argc != 4) {
     throw Usage{"get-object-acl <bucket-name> <object-name> <entity>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
@@ -167,7 +167,7 @@ void GetObjectAcl(gcs::Client client, int& argc, char* argv[]) {
 }
 
 void UpdateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
-  if (argc < 5) {
+  if (argc != 5) {
     throw Usage{
         "update-object-acl <bucket-name> <object-name> <entity> <role>"};
   }

@@ -159,7 +159,7 @@ void CreateBucketForProject(google::cloud::storage::Client client, int& argc,
 
 void GetBucketMetadata(google::cloud::storage::Client client, int& argc,
                        char* argv[]) {
-  if (argc < 2) {
+  if (argc != 2) {
     throw Usage{"get-bucket-metadata <bucket-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
@@ -641,7 +641,7 @@ void DisableRequesterPays(google::cloud::storage::Client client, int& argc,
 
 void WriteObjectRequesterPays(google::cloud::storage::Client client, int& argc,
                               char* argv[]) {
-  if (argc < 3) {
+  if (argc != 4) {
     throw Usage{
         "write-object-requester-pays <bucket-name> <object-name>"
         " <billed-project>"};
@@ -684,7 +684,7 @@ void WriteObjectRequesterPays(google::cloud::storage::Client client, int& argc,
 
 void ReadObjectRequesterPays(google::cloud::storage::Client client, int& argc,
                              char* argv[]) {
-  if (argc < 2) {
+  if (argc != 4) {
     throw Usage{
         "read-object-requester-pays <bucket-name> <object-name>"
         " <billed-project>"};

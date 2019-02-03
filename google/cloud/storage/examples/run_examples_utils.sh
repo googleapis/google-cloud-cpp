@@ -264,8 +264,7 @@ run_all_object_examples() {
 
   run_example ./storage_object_samples insert-object \
       "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
-  run_example ./storage_object_samples list-objects \
-      "${bucket_name}" "${object_name}"
+  run_example ./storage_object_samples list-objects "${bucket_name}"
   run_example ./storage_object_samples get-object-metadata \
       "${bucket_name}" "${object_name}"
   run_example ./storage_object_samples read-object \

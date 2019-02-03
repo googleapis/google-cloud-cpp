@@ -49,7 +49,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
 
 void ListObjects(google::cloud::storage::Client client, int& argc,
                  char* argv[]) {
-  if (argc < 2) {
+  if (argc != 2) {
     throw Usage{"list-objects <bucket-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
@@ -73,7 +73,7 @@ void ListObjects(google::cloud::storage::Client client, int& argc,
 
 void InsertObject(google::cloud::storage::Client client, int& argc,
                   char* argv[]) {
-  if (argc < 3) {
+  if (argc != 4) {
     throw Usage{
         "insert-object <bucket-name> <object-name> <object-contents (string)>"};
   }
@@ -105,7 +105,7 @@ void InsertObject(google::cloud::storage::Client client, int& argc,
 
 void InsertObjectStrictIdempotency(google::cloud::storage::Client unused,
                                    int& argc, char* argv[]) {
-  if (argc < 3) {
+  if (argc != 4) {
     throw Usage{
         "insert-object-strict-idempotency <bucket-name> <object-name> "
         "<object-contents (string)>"};
@@ -148,7 +148,7 @@ void InsertObjectStrictIdempotency(google::cloud::storage::Client unused,
 
 void InsertObjectModifiedRetry(google::cloud::storage::Client unused, int& argc,
                                char* argv[]) {
-  if (argc < 3) {
+  if (argc != 4) {
     throw Usage{
         "insert-object-modified-retry <bucket-name> <object-name> "
         "<object-contents (string)>"};
@@ -323,7 +323,7 @@ void CopyEncryptedObject(google::cloud::storage::Client client, int& argc,
 
 void GetObjectMetadata(google::cloud::storage::Client client, int& argc,
                        char* argv[]) {
-  if (argc < 3) {
+  if (argc != 3) {
     throw Usage{"get-object-metadata <bucket-name> <object-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
@@ -352,7 +352,7 @@ void GetObjectMetadata(google::cloud::storage::Client client, int& argc,
 
 void ReadObject(google::cloud::storage::Client client, int& argc,
                 char* argv[]) {
-  if (argc < 2) {
+  if (argc != 3) {
     throw Usage{"read-object <bucket-name> <object-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
@@ -376,7 +376,7 @@ void ReadObject(google::cloud::storage::Client client, int& argc,
 
 void DeleteObject(google::cloud::storage::Client client, int& argc,
                   char* argv[]) {
-  if (argc < 2) {
+  if (argc != 3) {
     throw Usage{"delete-object <bucket-name> <object-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
@@ -402,7 +402,7 @@ void DeleteObject(google::cloud::storage::Client client, int& argc,
 
 void WriteObject(google::cloud::storage::Client client, int& argc,
                  char* argv[]) {
-  if (argc < 3) {
+  if (argc != 4) {
     throw Usage{
         "write-object <bucket-name> <object-name> <target-object-line-count>"};
   }
@@ -812,7 +812,7 @@ void MakeObjectPublic(google::cloud::storage::Client client, int& argc,
 
 void ReadObjectUnauthenticated(google::cloud::storage::Client client, int& argc,
                                char* argv[]) {
-  if (argc < 2) {
+  if (argc != 3) {
     throw Usage{"read-object-unauthenticated <bucket-name> <object-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
@@ -1020,7 +1020,7 @@ void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
 
 void WriteObjectWithKmsKey(google::cloud::storage::Client client, int& argc,
                            char* argv[]) {
-  if (argc < 3) {
+  if (argc != 4) {
     throw Usage{
         "write-object-with-kms-key <bucket-name> <object-name>"
         " <kms-key-name>"};
