@@ -307,7 +307,7 @@ TEST_F(DataAsyncIntegrationTest, AsyncReadModifyWriteAppendValueTest) {
   CreateCells(*sync_table, created);
 
   CompletionQueue cq;
-  std::promise<Row> done;
+  google::cloud::promise<Row> done;
   std::thread pool([&cq] { cq.Run(); });
 
   table.AsyncReadModifyWriteRow(
@@ -360,7 +360,7 @@ TEST_F(DataAsyncIntegrationTest, AsyncReadModifyWriteRowIncrementAmountTest) {
   CreateCells(*sync_table, created);
 
   CompletionQueue cq;
-  std::promise<Row> done;
+  google::cloud::promise<Row> done;
   std::thread pool([&cq] { cq.Run(); });
 
   table.AsyncReadModifyWriteRow(
@@ -414,7 +414,7 @@ TEST_F(DataAsyncIntegrationTest, AsyncReadModifyWriteRowMultipleTest) {
   CreateCells(*sync_table, created);
 
   CompletionQueue cq;
-  std::promise<Row> done;
+  google::cloud::promise<Row> done;
   std::thread pool([&cq] { cq.Run(); });
   using R = bigtable::ReadModifyWriteRule;
 
