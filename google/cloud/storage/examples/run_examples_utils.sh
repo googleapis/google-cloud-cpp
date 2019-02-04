@@ -271,6 +271,8 @@ run_all_object_examples() {
       "${bucket_name}" "${object_name}"
   run_example ./storage_object_samples write-object \
       "${bucket_name}" "${object_name}" 100000
+   run_example ./storage_object_samples read-object-range \
+      "${bucket_name}" "${object_name}" "1000" "2000"
   run_example ./storage_object_samples update-object-metadata \
       "${bucket_name}" "${object_name}" "test-label" "test-value"
   run_example ./storage_object_samples patch-object-content-type \

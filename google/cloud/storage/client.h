@@ -867,6 +867,9 @@ class Client {
    * @par Example
    * @snippet storage_object_samples.cc read object
    *
+   * @par Example
+   * @snippet storage_object_samples.cc read object range
+   *
    * @par Example: read a object encrypted with a CSEK.
    * @snippet storage_object_samples.cc read encrypted object
    */

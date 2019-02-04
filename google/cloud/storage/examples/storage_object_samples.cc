@@ -374,6 +374,35 @@ void ReadObject(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name);
 }
 
+void ReadObjectRange(google::cloud::storage::Client client, int& argc,
+                     char* argv[]) {
+  if (argc != 5) {
+    throw Usage{"read-object-range <bucket-name> <object-name> <start> <end>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto start = std::stoll(ConsumeArg(argc, argv));
+  auto end = std::stoll(ConsumeArg(argc, argv));
+  //! [read object range] [START storage_download_byte_range]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+      std::int64_t start, std::int64_t end) {
+    gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name,
+        gcs::ReadRange(start, end));
+
+    int count = 0;
+    std::string line;
+    while (std::getline(stream, line, '\n')) {
+      std::cout << line << "\n";
+      ++count;
+    }
+
+    std::cout << "The requested range has " << count << " lines" << std::endl;
+  }
+  //! [read object range] [END storage_download_byte_range]
+  (std::move(client), bucket_name, object_name, start, end);
+}
+
 void DeleteObject(google::cloud::storage::Client client, int& argc,
                   char* argv[]) {
   if (argc != 3) {
@@ -1564,6 +1593,7 @@ int main(int argc, char* argv[]) try {
       {"copy-encrypted-object", &CopyEncryptedObject},
       {"get-object-metadata", &GetObjectMetadata},
       {"read-object", &ReadObject},
+      {"read-object-range", &ReadObjectRange},
       {"delete-object", &DeleteObject},
       {"write-object", &WriteObject},
       {"write-large-object", &WriteLargeObject},
