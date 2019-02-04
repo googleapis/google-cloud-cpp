@@ -130,6 +130,23 @@ inline namespace STORAGE_CLIENT_NS {
  * In addition, the @ref index "main page" contains examples using `StatusOr<T>`
  * to handle errors.
  *
+ * @par Retry, Backoff, and Idempotency Policies
+ *
+ * The library automatically retries requests that fail with transient errors,
+ * and follows the
+ * [recommended
+ * practice](https://cloud.google.com/storage/docs/exponential-backoff) to
+ * backoff between retries.
+ *
+ * The default policies are to continue retrying for up to 15 minutes, and to
+ * use truncated (at 5 minutes) exponential backoff, doubling the maximum
+ * backoff period between retries. Likewise, the idempotency policy is
+ * configured to retry all operations.
+ *
+ * The application can override these policies when constructing objects of this
+ * class. The documentation for the constructors show examples of this in
+ * action.
+ *
  * @see https://cloud.google.com/storage/ for an overview of GCS.
  *
  * @see https://cloud.google.com/storage/docs/key-terms for an introduction of
@@ -142,6 +159,15 @@ inline namespace STORAGE_CLIENT_NS {
  *     about Application Default %Credentials.
  *
  * @see #google::cloud::v0::StatusOr.
+ *
+ * @see `LimitedTimeRetryPolicy` and `LimitedErrorCountRetryPolicy` for
+ * alternative retry policies.
+ *
+ * @see `ExponentialBackoffPolicy` to configure different parameters for the
+ * exponential backoff policy.
+ *
+ * @see `AlwaysRetryIdempotencyPolicy` and `StrictIdempotencyPolicy` for
+ * alternative idempotency policies.
  */
 class Client {
  public:
