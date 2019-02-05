@@ -22,7 +22,14 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.4.x - TBD
+### v0.5.x - TBD
+
+### v0.4.x - 2019-02
+
+* Fixed some documentation.
+* Removed `StatusOr<void>`.
+* Updated `StatusOr` documentation.
+* Fixed some (minor) issues found by coverity.
 
 ### v0.3.x - 2019-01
 

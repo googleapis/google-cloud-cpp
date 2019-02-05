@@ -21,7 +21,19 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.6.x - TBD
+### v0.7.x - TBD
+
+### v0.6.x - 2019-02
+
+* Moved repo organization from GoogleCloudPlatform -> googleapis.
+* Implemented several more async functions.
+* Started migrating functions to `StatusOr` and away from throwing exceptions.
+* Several fixes to bulk mutator (#1880)
+* Disabled `make install` for external projects.
+* `Row` now has a move constructor.
+* Increased default message length limit.
+* Now testing build with libc++ on Linux.
+* Fixed some bugs found by Coverity scans.
 
 ### v0.5.x - 2019-01
 
