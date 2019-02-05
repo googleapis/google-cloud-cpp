@@ -27,7 +27,6 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 static_assert(std::is_copy_constructible<bigtable::TableAdmin>::value,
               "bigtable::TableAdmin must be constructible");
 static_assert(std::is_copy_assignable<bigtable::TableAdmin>::value,
@@ -80,12 +79,12 @@ StatusOr<std::vector<btadmin::Table>> TableAdmin::ListTables(
   return result;
 }
 
-btadmin::Table TableAdmin::GetTable(std::string const& table_id,
-                                    btadmin::Table::View view) {
+StatusOr<btadmin::Table> TableAdmin::GetTable(std::string const& table_id,
+                                              btadmin::Table::View view) {
   grpc::Status status;
   auto result = impl_.GetTable(table_id, status, view);
   if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
   return result;
 }

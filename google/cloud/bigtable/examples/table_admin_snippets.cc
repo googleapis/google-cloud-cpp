@@ -105,8 +105,12 @@ void GetTable(google::cloud::bigtable::TableAdmin admin, int argc,
   [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
     auto table =
         admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
-    std::cout << table.name() << "\n";
-    for (auto const& family : table.column_families()) {
+    if (!table) {
+      std::cerr << "GetTable failed: " << table.status() << std::endl;
+      return;
+    }
+    std::cout << table->name() << "\n";
+    for (auto const& family : table->column_families()) {
       std::string const& family_name = family.first;
       std::string gc_rule;
       google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
@@ -231,7 +235,6 @@ void CheckConsistency(google::cloud::bigtable::TableAdmin admin, int argc,
   //! [check consistency]
   [](google::cloud::bigtable::TableAdmin admin, std::string table_id_param,
      std::string consistency_token_param) {
-
     google::cloud::bigtable::TableId table_id(table_id_param);
     google::cloud::bigtable::ConsistencyToken consistency_token(
         consistency_token_param);

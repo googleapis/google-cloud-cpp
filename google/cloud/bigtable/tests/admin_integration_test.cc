@@ -193,12 +193,14 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
 
   // verify new table was created
   auto table_result = table_admin_->GetTable(table_id);
-  EXPECT_EQ(table->table_name(), table_result.name())
+  ASSERT_TRUE(table_result);
+  EXPECT_EQ(table->table_name(), table_result->name())
       << "Mismatched names for GetTable(" << table_id
-      << "): " << table->table_name() << " != " << table_result.name();
+      << "): " << table->table_name() << " != " << table_result->name();
 
   // get table
   auto table_detailed = table_admin_->GetTable(table_id, btadmin::Table::FULL);
+  ASSERT_TRUE(table_detailed);
   auto count_matching_families = [](btadmin::Table const& table,
                                     std::string const& name) {
     int count = 0;
@@ -209,8 +211,8 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
     }
     return count;
   };
-  EXPECT_EQ(1, count_matching_families(table_detailed, "fam"));
-  EXPECT_EQ(1, count_matching_families(table_detailed, "foo"));
+  EXPECT_EQ(1, count_matching_families(*table_detailed, "fam"));
+  EXPECT_EQ(1, count_matching_families(*table_detailed, "foo"));
 
   // update table
   std::vector<bigtable::ColumnFamilyModification> column_modification_list = {

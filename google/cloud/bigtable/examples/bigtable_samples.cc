@@ -53,11 +53,15 @@ void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
   std::cout << "Get table: " << std::endl;
   auto table =
       admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
-  std::cout << table.name() << "\n";
-  std::cout << "Table name : " << table.name() << std::endl;
+  if (!table) {
+    std::cerr << "GetTable failed: " << table.status() << std::endl;
+    return;
+  }
+  std::cout << table->name() << "\n";
+  std::cout << "Table name : " << table->name() << std::endl;
 
   std::cout << "List table families and GC rules: " << std::endl;
-  for (auto const& family : table.column_families()) {
+  for (auto const& family : table->column_families()) {
     std::string const& family_name = family.first;
     std::string gc_rule;
     google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
@@ -124,12 +128,16 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
   std::cout << "Get table: " << std::endl;
   auto table =
       admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
-  std::cout << table.name() << "\n";
-  std::cout << "Table name : " << table.name() << std::endl;
+  if (!table) {
+    std::cerr << "GetTable failed: " << table.status() << std::endl;
+    return;
+  }
+  std::cout << table->name() << "\n";
+  std::cout << "Table name : " << table->name() << std::endl;
   // [END bigtable_get_table]
 
   // [START bigtable_table_famalies]
-  for (auto const& family : table.column_families()) {
+  for (auto const& family : table->column_families()) {
     std::string const& family_name = family.first;
     std::string gc_rule;
     google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
@@ -217,4 +225,3 @@ int main(int argc, char* argv[]) try {
   return 1;
 }
 //! [all code]
-

@@ -165,14 +165,12 @@ class TableAdmin {
    *   - NAME: return only the name of the table.
    *   - VIEW_SCHEMA: return the name and the schema.
    *   - FULL: return all the information about the table.
-   * @return the information about the table.
-   * @throws std::exception if the information could not be obtained before the
-   *     RPC policies in effect gave up.
+   * @return the information about the table or status.
    *
    * @par Example
    * @snippet table_admin_snippets.cc get table
    */
-  ::google::bigtable::admin::v2::Table GetTable(
+  StatusOr<::google::bigtable::admin::v2::Table> GetTable(
       std::string const& table_id,
       ::google::bigtable::admin::v2::Table::View view =
           ::google::bigtable::admin::v2::Table::SCHEMA_VIEW);
