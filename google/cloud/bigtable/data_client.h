@@ -125,6 +125,12 @@ class DataClient {
       grpc::ClientContext* context,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request,
       google::bigtable::v2::ReadModifyWriteRowResponse* response) = 0;
+  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::v2::ReadModifyWriteRowResponse>>
+  AsyncReadModifyWriteRow(
+      grpc::ClientContext* context,
+      google::bigtable::v2::ReadModifyWriteRowRequest const& request,
+      grpc::CompletionQueue* cq) = 0;
   virtual std::unique_ptr<
       grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>
   ReadRows(grpc::ClientContext* context,
