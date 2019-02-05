@@ -166,7 +166,7 @@ TEST_P(NoexTableAsyncPollOpImmediateFinishTest, ImmediateFinish) {
   EXPECT_TRUE(user_op_completed);
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     ImmediateFinish, NoexTableAsyncPollOpImmediateFinishTest,
     ::testing::Values(
         // Finished in first shot.
@@ -332,7 +332,7 @@ TEST_P(NoexTableAsyncPollOpOneRetryTest, OneRetry) {
   EXPECT_TRUE(user_op_completed);
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     OneRetry, NoexTableAsyncPollOpOneRetryTest,
     ::testing::Values(
         // No error, not finished, then OK, finished == true,
@@ -512,7 +512,7 @@ TEST_P(NoexTableAsyncPollOpCancelInOpTest, CancelInOperation) {
   EXPECT_TRUE(user_op_completed);
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     CancelInOperation, NoexTableAsyncPollOpCancelInOpTest,
     ::testing::Values(
         // Simulate Cancel being called when an underlying operation is ongoing.
@@ -772,7 +772,7 @@ TEST_P(NoexTableAsyncPollOpCancelInTimerTest, TestCancelInTimer) {
   EXPECT_TRUE(user_op_completed);
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     CancelInTimer, NoexTableAsyncPollOpCancelInTimerTest,
     ::testing::Values(
         // Simulate Cancel being called when sleeping in a timer.

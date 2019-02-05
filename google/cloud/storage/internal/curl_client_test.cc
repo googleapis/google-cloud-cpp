@@ -401,10 +401,10 @@ TEST_P(CurlClientTest, DeleteNotification) {
   TestCorrectFailureStatus(status_or_foo.status());
 }
 
-INSTANTIATE_TEST_CASE_P(CredentialsFailure, CurlClientTest,
+INSTANTIATE_TEST_SUITE_P(CredentialsFailure, CurlClientTest,
                         ::testing::Values("credentials-failure"));
 
-INSTANTIATE_TEST_CASE_P(LibCurlFailure, CurlClientTest,
+INSTANTIATE_TEST_SUITE_P(LibCurlFailure, CurlClientTest,
                         ::testing::Values("libcurl-failure"));
 
 }  // namespace
