@@ -37,6 +37,47 @@ void PrintUsage(std::string const& cmd, std::string const& msg) {
             << command_usage << std::endl;
 }
 
+void AsyncApply(cbt::Table table, cbt::CompletionQueue cq,
+                std::vector<std::string> argv) {
+  if (argv.size() != 2U) {
+    throw Usage{"async-apply: <project-id> <instance-id> <table-id>"};
+  }
+
+  //! [async-apply]
+  [&](cbt::Table table, cbt::CompletionQueue cq, std::string table_id) {
+    // Write several rows with some trivial data.
+    for (int i = 0; i != 20; ++i) {
+      // Note: This example uses sequential numeric IDs for simplicity, but
+      // this can result in poor performance in a production application.
+      // Since rows are stored in sorted order by key, sequential keys can
+      // result in poor distribution of operations across nodes.
+      //
+      // For more information about how to design a Bigtable schema for the
+      // best performance, see the documentation:
+      //
+      //     https://cloud.google.com/bigtable/docs/schema-design
+
+      char buf[32];
+      snprintf(buf, sizeof(buf), "key-%06d", i);
+      google::cloud::bigtable::SingleRowMutation mutation(buf);
+      mutation.emplace_back(google::cloud::bigtable::SetCell(
+          "fam", "col0", "value0-" + std::to_string(i)));
+      mutation.emplace_back(google::cloud::bigtable::SetCell(
+          "fam", "col1", "value2-" + std::to_string(i)));
+      mutation.emplace_back(google::cloud::bigtable::SetCell(
+          "fam", "col2", "value3-" + std::to_string(i)));
+      mutation.emplace_back(google::cloud::bigtable::SetCell(
+          "fam", "col3", "value4-" + std::to_string(i)));
+
+      google::cloud::future<void> fut =
+          table.AsyncApply(std::move(mutation), cq);
+      fut.get();
+    }
+  }
+  //! [async-apply]
+  (std::move(table), std::move(cq), argv[1]);
+}
+
 void AsyncBulkApply(cbt::Table table, cbt::CompletionQueue cq,
                     std::vector<std::string> argv) {
   if (argv.size() != 2U) {
@@ -87,7 +128,7 @@ int main(int argc, char* argv[]) try {
       std::vector<std::string>)>;
 
   std::map<std::string, CommandType> commands = {
-      {"async-bulk-apply", &AsyncBulkApply}};
+      {"async-apply", &AsyncApply}, {"async-bulk-apply", &AsyncBulkApply}};
 
   google::cloud::bigtable::CompletionQueue cq;
 
