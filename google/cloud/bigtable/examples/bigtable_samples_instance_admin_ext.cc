@@ -73,8 +73,8 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
             return i.name() == instance_name;
           });
   if (!instances.failed_locations.empty()) {
-    std::cerr << "List instances result is uncertain, because we failed to "
-                 "contact these locations:";
+    std::cerr
+        << "The service tells us it has no information about these locations:";
     for (std::string const& location : instances.failed_locations) {
       std::cout << " " << location << std::endl;
     }
@@ -112,8 +112,8 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
     std::cout << instance.name() << std::endl;
   }
   if (!instances_after.failed_locations.empty()) {
-    std::cerr << "List instances result is uncertain, because we failed to "
-                 "contact these locations:";
+    std::cerr
+        << "The service tells us it has no information about these locations:";
     for (std::string const& location : instances_after.failed_locations) {
       std::cout << " " << location << std::endl;
     }
@@ -137,10 +137,10 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
     std::cout << "Cluster Name: " << cluster.name() << std::endl;
   }
   if (!cluster_list.failed_locations.empty()) {
-    std::cout
-        << "Cluster list may be incomplete becuase we failed to contact these "
-           "locations:"
-        << std::endl;
+    std::cout << "The Cloud Bigtable service reports that the following "
+                 "locations are temporarily unavailable and no information "
+                 "about clusters in these locations can be obtained:"
+              << std::endl;
     for (std::string const& location : cluster_list.failed_locations) {
       std::cout << location << std::endl;
     }
@@ -174,8 +174,8 @@ void CreateDevInstance(std::string project_id, int argc, char* argv[]) {
             return i.name() == instance_name;
           });
   if (!instances.failed_locations.empty()) {
-    std::cerr << "List instances result is uncertain, because we failed to "
-                 "contact these locations:";
+    std::cerr
+        << "The service tells us it has no information about these locations:";
     for (std::string const& location : instances.failed_locations) {
       std::cout << " " << location << std::endl;
     }
@@ -252,8 +252,8 @@ void CreateCluster(std::string project_id, int argc, char* argv[]) {
             return i.name() == instance_name;
           });
   if (!instances.failed_locations.empty()) {
-    std::cerr << "List instances result is uncertain, because we failed to "
-                 "contact these locations:";
+    std::cerr
+        << "The service tells us it has no information about these locations:";
     for (std::string const& location : instances.failed_locations) {
       std::cout << " " << location << std::endl;
     }
