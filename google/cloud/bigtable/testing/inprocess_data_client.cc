@@ -63,6 +63,17 @@ grpc::Status InProcessDataClient::ReadModifyWriteRow(
   return Stub()->ReadModifyWriteRow(context, request, response);
 }
 
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    google::bigtable::v2::ReadModifyWriteRowResponse>>
+InProcessDataClient::AsyncReadModifyWriteRow(
+    grpc::ClientContext* context,
+    const google::bigtable::v2::ReadModifyWriteRowRequest& request,
+    grpc::CompletionQueue* cq) {
+  auto result = Stub()->AsyncReadModifyWriteRow(context, request, cq);
+  return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::v2::ReadModifyWriteRowResponse>>(result.release());
+}
+
 std::unique_ptr<grpc::ClientReaderInterface<btproto::ReadRowsResponse>>
 InProcessDataClient::ReadRows(grpc::ClientContext* context,
                               btproto::ReadRowsRequest const& request) {

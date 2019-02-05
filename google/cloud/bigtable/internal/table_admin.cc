@@ -201,6 +201,7 @@ bool TableAdmin::WaitForConsistencyCheckHelper(
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id.get());
 
+  // TODO(#1918) - make use of polling policy deadlines
   auto polling_policy = polling_policy_->clone();
   do {
     auto response = ClientUtils::MakeCall(

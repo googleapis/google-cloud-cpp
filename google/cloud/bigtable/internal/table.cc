@@ -199,26 +199,8 @@ Row Table::CallReadModifyWriteRowRequest(
   if (!status.ok()) {
     return Row("", {});
   }
-
-  std::vector<bigtable::Cell> cells;
-  auto& row = *response.mutable_row();
-  for (auto& family : *row.mutable_families()) {
-    for (auto& column : *family.mutable_columns()) {
-      for (auto& cell : *column.mutable_cells()) {
-        std::vector<std::string> labels;
-        std::move(cell.mutable_labels()->begin(), cell.mutable_labels()->end(),
-                  std::back_inserter(labels));
-        bigtable::Cell new_cell(row.key(), family.name(), column.qualifier(),
-                                cell.timestamp_micros(),
-                                std::move(*cell.mutable_value()),
-                                std::move(labels));
-
-        cells.emplace_back(std::move(new_cell));
-      }
-    }
-  }
-
-  return Row(std::move(*row.mutable_key()), std::move(cells));
+  return internal::TransformReadModifyWriteRowResponse<
+      btproto::ReadModifyWriteRowResponse>(response);
 }
 
 // Call the `google.bigtable.v2.Bigtable.SampleRowKeys` RPC until

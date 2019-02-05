@@ -115,7 +115,8 @@ class PollableLoopAdapter {
   std::shared_ptr<AsyncOperation> Start(
       CompletionQueue& cq, AttemptFunctor&& attempt_completed_callback) {
     auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
-    // TODO(1431): add polling_policy_->Setup();
+
+    polling_policy_->Setup(*context);
     metadata_update_policy_.Setup(*context);
 
     return operation_.Start(
