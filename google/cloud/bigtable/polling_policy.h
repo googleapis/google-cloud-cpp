@@ -42,6 +42,8 @@ class PollingPolicy {
    */
   virtual std::unique_ptr<PollingPolicy> clone() = 0;
 
+  virtual void Setup(grpc::ClientContext& context) = 0;
+
   /**
    * Return true if `status` represents a permanent error that cannot be
    * retried.
@@ -79,6 +81,11 @@ class GenericPollingPolicy : public PollingPolicy {
 
   std::unique_ptr<PollingPolicy> clone() override {
     return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy(*this));
+  }
+
+  void Setup(grpc::ClientContext& context) override {
+    rpc_retry_policy_.Setup(context);
+    rpc_backoff_policy_.Setup(context);
   }
 
   bool IsPermanentError(grpc::Status const& status) override {
