@@ -180,7 +180,7 @@ TEST_P(NoexAsyncCheckConsistencyRetryTest, OneRetry) {
   EXPECT_TRUE(cq_impl->empty());
 }
 
-INSTANTIATE_TEST_CASE_P(OneRetry, NoexAsyncCheckConsistencyRetryTest,
+INSTANTIATE_TEST_SUITE_P(OneRetry, NoexAsyncCheckConsistencyRetryTest,
                         ::testing::Values(
                             // First RPC returns an OK status but indicates that
                             // replication has not yet caught up.
@@ -294,7 +294,7 @@ TEST_P(NoexAsyncCheckConsistencyEndToEnd, EndToEnd) {
   EXPECT_TRUE(cq_impl->empty());
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     EndToEnd, NoexAsyncCheckConsistencyEndToEnd,
     ::testing::Values(
         // Everything succeeds immediately.
@@ -478,7 +478,7 @@ TEST_P(NoexAsyncCheckConsistencyCancel, Cancellations) {
   EXPECT_TRUE(cq_impl->empty());
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     CancelTest, NoexAsyncCheckConsistencyCancel,
     ::testing::Values(
         // Cancel during GenerateConsistencyTokenResponse
