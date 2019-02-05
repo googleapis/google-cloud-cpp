@@ -77,7 +77,11 @@ void Benchmark::DeleteTable() {
   bigtable::TableAdmin admin(
       bigtable::CreateDefaultAdminClient(setup_.project_id(), client_options_),
       setup_.instance_id());
-  admin.DeleteTable(setup_.table_id());
+  auto status = admin.DeleteTable(setup_.table_id());
+  if (!status.ok()) {
+    std::cerr << "Failed to delete table: " << status << ". Continuing anyway."
+              << std::endl;
+  }
 }
 
 std::shared_ptr<bigtable::DataClient> Benchmark::MakeDataClient() {

@@ -79,51 +79,45 @@ StatusOr<std::vector<btadmin::Table>> TableAdmin::ListTables(
   return result;
 }
 
-btadmin::Table TableAdmin::GetTable(std::string const& table_id,
-                                    btadmin::Table::View view) {
+StatusOr<btadmin::Table> TableAdmin::GetTable(std::string const& table_id,
+                                              btadmin::Table::View view) {
   grpc::Status status;
   auto result = impl_.GetTable(table_id, status, view);
   if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
   return result;
 }
 
-void TableAdmin::DeleteTable(std::string const& table_id) {
+Status TableAdmin::DeleteTable(std::string const& table_id) {
   grpc::Status status;
   impl_.DeleteTable(table_id, status);
-  if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
-  }
+  return internal::MakeStatusFromRpcError(status);
 }
 
-btadmin::Table TableAdmin::ModifyColumnFamilies(
+StatusOr<btadmin::Table> TableAdmin::ModifyColumnFamilies(
     std::string const& table_id,
     std::vector<ColumnFamilyModification> modifications) {
   grpc::Status status;
   auto result =
       impl_.ModifyColumnFamilies(table_id, std::move(modifications), status);
   if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
   return result;
 }
 
-void TableAdmin::DropRowsByPrefix(std::string const& table_id,
-                                  std::string row_key_prefix) {
+Status TableAdmin::DropRowsByPrefix(std::string const& table_id,
+                                    std::string row_key_prefix) {
   grpc::Status status;
   impl_.DropRowsByPrefix(table_id, std::move(row_key_prefix), status);
-  if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
-  }
+  return internal::MakeStatusFromRpcError(status);
 }
 
-void TableAdmin::DropAllRows(std::string const& table_id) {
+Status TableAdmin::DropAllRows(std::string const& table_id) {
   grpc::Status status;
   impl_.DropAllRows(table_id, status);
-  if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
-  }
+  return internal::MakeStatusFromRpcError(status);
 }
 
 std::future<btadmin::Snapshot> TableAdmin::SnapshotTable(
@@ -173,33 +167,34 @@ btadmin::Snapshot TableAdmin::SnapshotTableImpl(
   return result;
 }
 
-btadmin::Snapshot TableAdmin::GetSnapshot(
+StatusOr<btadmin::Snapshot> TableAdmin::GetSnapshot(
     bigtable::ClusterId const& cluster_id,
     bigtable::SnapshotId const& snapshot_id) {
   grpc::Status status;
   auto result = impl_.GetSnapshot(cluster_id, snapshot_id, status);
   if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
   return result;
 }
 
-std::string TableAdmin::GenerateConsistencyToken(std::string const& table_id) {
+StatusOr<ConsistencyToken> TableAdmin::GenerateConsistencyToken(
+    std::string const& table_id) {
   grpc::Status status;
   std::string token = impl_.GenerateConsistencyToken(table_id, status);
   if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
-  return token;
+  return ConsistencyToken(token);
 }
 
-bool TableAdmin::CheckConsistency(
+StatusOr<bool> TableAdmin::CheckConsistency(
     bigtable::TableId const& table_id,
     bigtable::ConsistencyToken const& consistency_token) {
   grpc::Status status;
   bool consistent = impl_.CheckConsistency(table_id, consistency_token, status);
   if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
   return consistent;
 }
@@ -216,13 +211,11 @@ bool TableAdmin::WaitForConsistencyCheckImpl(
   return consistent;
 }
 
-void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
-                                bigtable::SnapshotId const& snapshot_id) {
+Status TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
+                                  bigtable::SnapshotId const& snapshot_id) {
   grpc::Status status;
   impl_.DeleteSnapshot(cluster_id, snapshot_id, status);
-  if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
-  }
+  return internal::MakeStatusFromRpcError(status);
 }
 
 std::future<btadmin::Table> TableAdmin::CreateTableFromSnapshot(
@@ -268,6 +261,17 @@ btadmin::Table TableAdmin::CreateTableFromSnapshotImpl(
         "while polling operation in TableAdmin::CreateTableFromSnapshot");
   }
   return result;
+}
+
+StatusOr<std::vector<::google::bigtable::admin::v2::Snapshot>>
+TableAdmin::ListSnapshots(bigtable::ClusterId cluster_id) {
+  grpc::Status status;
+  auto res = impl_.ListSnapshots(status, cluster_id);
+
+  if (!status.ok()) {
+    return internal::MakeStatusFromRpcError(status);
+  }
+  return res;
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

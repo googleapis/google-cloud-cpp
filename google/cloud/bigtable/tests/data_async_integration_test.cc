@@ -84,7 +84,7 @@ TEST_F(DataAsyncIntegrationTest, TableApply) {
   // Cleanup the thread running the completion queue event loop.
   cq.Shutdown();
   pool.join();
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
   CheckEqualUnordered(expected, actual);
 }
 
@@ -150,7 +150,7 @@ TEST_F(DataAsyncIntegrationTest, TableBulkApply) {
   // Cleanup the thread running the completion queue event loop.
   cq.Shutdown();
   pool.join();
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
   CheckEqualUnordered(expected, actual);
 }
 
@@ -201,7 +201,7 @@ TEST_F(DataAsyncIntegrationTest, SampleRowKeys) {
 
   cq.Shutdown();
   pool.join();
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
 
   // It is somewhat hard to verify that the values returned here are correct.
   // We cannot check the specific values, not even the format, of the row keys
@@ -247,7 +247,7 @@ TEST_F(DataAsyncIntegrationTest, TableCheckAndMutateRowPass) {
   std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000", {}},
                                        {key, family, "c2", 0, "v2000", {}}};
   auto actual = ReadRows(*sync_table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
   CheckEqualUnordered(expected, actual);
 }
 
@@ -278,7 +278,7 @@ TEST_F(DataAsyncIntegrationTest, TableCheckAndMutateRowFail) {
   std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000", {}},
                                        {key, family, "c3", 0, "v3000", {}}};
   auto actual = ReadRows(*sync_table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
   CheckEqualUnordered(expected, actual);
 }
 
@@ -336,7 +336,7 @@ TEST_F(DataAsyncIntegrationTest, AsyncReadModifyWriteAppendValueTest) {
   auto actual_cells_ignore_timestamp =
       GetCellsIgnoringTimestamp(result_row.cells());
 
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
   CheckEqualUnordered(expected_cells_ignore_timestamp,
                       actual_cells_ignore_timestamp);
 }
@@ -380,7 +380,7 @@ TEST_F(DataAsyncIntegrationTest, AsyncReadModifyWriteRowIncrementAmountTest) {
   auto expected_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
   auto actual_ignore_timestamp = GetCellsIgnoringTimestamp(row.cells());
 
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
 
@@ -443,7 +443,7 @@ TEST_F(DataAsyncIntegrationTest, AsyncReadModifyWriteRowMultipleTest) {
   auto expected_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
   auto actual_ignore_timestamp = GetCellsIgnoringTimestamp(row.cells());
 
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
 
@@ -488,7 +488,7 @@ TEST_F(DataAsyncIntegrationTest, TableReadRowsAllRows) {
   cq.Shutdown();
   pool.join();
 
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
   CheckEqualUnordered(created, actual);
 }
 
@@ -526,7 +526,7 @@ TEST_F(DataAsyncIntegrationTest, TableAsyncReadRow) {
   cq.Shutdown();
   pool.join();
 
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
   CheckEqualUnordered(expected, actual);
   EXPECT_TRUE(response.first);
 }
@@ -559,7 +559,7 @@ TEST_F(DataAsyncIntegrationTest, TableAsyncReadRowForNoRow) {
   cq.Shutdown();
   pool.join();
 
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
   EXPECT_FALSE(response.first);
   EXPECT_EQ(0, response.second.cells().size());
 }

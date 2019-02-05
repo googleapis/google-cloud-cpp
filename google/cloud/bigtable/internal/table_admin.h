@@ -360,19 +360,17 @@ class TableAdmin {
                       bigtable::SnapshotId const& snapshot_id,
                       grpc::Status& status);
 
-  template <template <typename...> class Collection = std::vector>
-  Collection<google::bigtable::admin::v2::Snapshot> ListSnapshots(
+  /**
+   * List snapshots in the given instance.
+   *
+   * @param status status of the operation
+   * @param cluster_id the name of the cluster for which snapshots should be
+   * listed.
+   * @return vector containing the snapshots for the given cluster.
+   */
+  std::vector<google::bigtable::admin::v2::Snapshot> ListSnapshots(
       grpc::Status& status,
-      bigtable::ClusterId const& cluster_id = bigtable::ClusterId("-")) {
-    Collection<::google::bigtable::admin::v2::Snapshot> result;
-    ListSnapshotsImpl(
-        cluster_id,
-        [&result](::google::bigtable::admin::v2::Snapshot snapshot) {
-          result.emplace_back(std::move(snapshot));
-        },
-        status);
-    return result;
-  }
+      bigtable::ClusterId const& cluster_id = bigtable::ClusterId("-"));
 
   /**
    * Make an asynchronous request to modify the column families of a table.
@@ -711,24 +709,6 @@ class TableAdmin {
   std::string ClusterName(bigtable::ClusterId const& cluster_id) {
     return instance_name() + "/clusters/" + cluster_id.get();
   }
-
-  /**
-   * Refactor implementation to `.cc` file.
-   *
-   * Provides a compilation barrier so that the application is not
-   * exposed to all the implementation details.
-   *
-   * @param cluster_id cluster_id which contains the snapshots.
-   * @param inserter Function to insert the object to result.
-   * @param clearer Function to clear the result object if RPC fails.
-   * @param status Status which contains the information whether the operation
-   * succeeded successfully or not.
-   */
-  void ListSnapshotsImpl(
-      bigtable::ClusterId const& cluster_id,
-      std::function<void(google::bigtable::admin::v2::Snapshot)> const&
-          inserter,
-      grpc::Status& status);
 
   bool WaitForConsistencyCheckHelper(
       bigtable::TableId const& table_id,

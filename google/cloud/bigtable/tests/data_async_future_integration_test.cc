@@ -69,7 +69,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
   // Cleanup the thread running the completion queue event loop.
   cq.Shutdown();
   pool.join();
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
   CheckEqualUnordered(expected, actual);
 }
 
@@ -126,7 +126,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncBulkApply) {
   // Cleanup the thread running the completion queue event loop.
   cq.Shutdown();
   pool.join();
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
   CheckEqualUnordered(expected, actual);
 }
 

@@ -84,7 +84,7 @@ TEST_F(MutationIntegrationTest, SetCellTest) {
 
   CreateCells(*table, created_cells);
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
 
   CheckEqualUnordered(created_cells, actual_cells);
 }
@@ -124,7 +124,7 @@ TEST_F(MutationIntegrationTest, SetCellNumericValueTest) {
 
   CreateCells(*table, created_cells);
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
 
   CheckEqualUnordered(created_cells, actual_cells);
 }
@@ -172,7 +172,7 @@ TEST_F(MutationIntegrationTest, SetCellIgnoreTimestampTest) {
 
   CreateCellsIgnoringTimestamp(*table, created_cells);
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
 
   // Create the expected_cells and actual_cells with same timestamp
   auto expected_cells_ignore_time = GetCellsIgnoringTimestamp(expected_cells);
@@ -221,7 +221,7 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForTimestampRangeTest) {
       row_key, bigtable::DeleteFromColumn(column_family2, "column_id2", 2000_us,
                                           4000_us)));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
 
   CheckEqualUnordered(expected_cells, actual_cells);
 }
@@ -268,7 +268,7 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForReversedTimestampRangeTest) {
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
 
   CheckEqualUnordered(created_cells, actual_cells);
 }
@@ -309,7 +309,7 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForEmptyTimestampRangeTest) {
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
 
   CheckEqualUnordered(created_cells, actual_cells);
 }
@@ -342,7 +342,7 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForAllTest) {
   table->Apply(bigtable::SingleRowMutation(
       row_key, bigtable::DeleteFromColumn(column_family1, "column_id3")));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
 
   CheckEqualUnordered(expected_cells, actual_cells);
 }
@@ -379,7 +379,7 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnStartingFromTest) {
       row_key, bigtable::DeleteFromColumnStartingFrom(column_family1,
                                                       "column_id1", 1000_us)));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
 
   CheckEqualUnordered(expected_cells, actual_cells);
 }
@@ -418,7 +418,7 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnEndingAtTest) {
       row_key, bigtable::DeleteFromColumnEndingAt(column_family1, "column_id1",
                                                   2000_us)));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
 
   CheckEqualUnordered(expected_cells, actual_cells);
 }
@@ -450,7 +450,7 @@ TEST_F(MutationIntegrationTest, DeleteFromFamilyTest) {
   table->Apply(bigtable::SingleRowMutation(
       row_key, bigtable::DeleteFromFamily(column_family1)));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
 
   CheckEqualUnordered(expected_cells, actual_cells);
 }
@@ -483,7 +483,7 @@ TEST_F(MutationIntegrationTest, DeleteFromRowTest) {
   table->Apply(
       bigtable::SingleRowMutation(row_key1, bigtable::DeleteFromRow()));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
 
   CheckEqualUnordered(expected_cells, actual_cells);
 }

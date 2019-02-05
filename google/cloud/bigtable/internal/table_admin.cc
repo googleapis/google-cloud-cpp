@@ -235,16 +235,15 @@ void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
       &AdminClient::DeleteSnapshot, request, "DeleteSnapshot", status);
 }
 
-void TableAdmin::ListSnapshotsImpl(
-    bigtable::ClusterId const& cluster_id,
-    std::function<void(google::bigtable::admin::v2::Snapshot)> const& inserter,
-    grpc::Status& status) {
+std::vector<google::bigtable::admin::v2::Snapshot> TableAdmin::ListSnapshots(
+    grpc::Status& status, bigtable::ClusterId const& cluster_id) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::PARENT, cluster_id);
+  std::vector<google::bigtable::admin::v2::Snapshot> result;
   std::string page_token;
   do {
     btadmin::ListSnapshotsRequest request;
@@ -260,11 +259,11 @@ void TableAdmin::ListSnapshotsImpl(
       break;
     }
 
-    for (auto& x : *response.mutable_snapshots()) {
-      inserter(x);
-    }
+    auto& snapshots = *response.mutable_snapshots();
+    std::move(snapshots.begin(), snapshots.end(), std::back_inserter(result));
     page_token = std::move(*response.mutable_next_page_token());
   } while (!page_token.empty());
+  return result;
 }
 
 }  // namespace noex

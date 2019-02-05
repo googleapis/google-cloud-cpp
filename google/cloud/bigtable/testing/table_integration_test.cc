@@ -51,8 +51,8 @@ std::unique_ptr<bigtable::Table> TableIntegrationTest::CreateTable(
                                                                table_name);
 }
 
-void TableIntegrationTest::DeleteTable(std::string const& table_name) {
-  table_admin_->DeleteTable(table_name);
+Status TableIntegrationTest::DeleteTable(std::string const& table_name) {
+  return table_admin_->DeleteTable(table_name);
 }
 
 std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(

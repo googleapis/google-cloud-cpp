@@ -100,9 +100,9 @@ TEST_F(SnapshotIntegrationTest, SnapshotOperationsTableTest) {
 
   CheckEqualUnordered(created_cells, actual_cells);
 
-  table_admin_->DeleteSnapshot(cluster_id, snapshot_id);
-  DeleteTable(table_id.get());
-  DeleteTable(table_id_new.get());
+  EXPECT_TRUE(table_admin_->DeleteSnapshot(cluster_id, snapshot_id).ok());
+  EXPECT_TRUE(DeleteTable(table_id.get()).ok());
+  EXPECT_TRUE(DeleteTable(table_id_new.get()).ok());
 }
 
 /// @test Verify that Snapshot CRUD operations work as expected.
@@ -138,7 +138,8 @@ TEST_F(SnapshotIntegrationTest, CreateListGetDeleteSnapshot) {
 
   // verify new snapshot id in list of snapshot
   auto snapshots_before = table_admin_->ListSnapshots(cluster_id);
-  ASSERT_FALSE(IsSnapshotPresent(snapshots_before, snapshot_id_str))
+  ASSERT_TRUE(snapshots_before);
+  ASSERT_FALSE(IsSnapshotPresent(*snapshots_before, snapshot_id_str))
       << "Snapshot (" << snapshot_id_str << ") already exists."
       << " This is unexpected, as the snapshot ids are"
       << " generated at random.";
@@ -148,20 +149,23 @@ TEST_F(SnapshotIntegrationTest, CreateListGetDeleteSnapshot) {
       table_admin_->SnapshotTable(cluster_id, snapshot_id, table_id, 36000_s)
           .get();
   auto snapshots_current = table_admin_->ListSnapshots(cluster_id);
-  EXPECT_TRUE(IsSnapshotPresent(snapshots_current, snapshot.name()));
+  ASSERT_TRUE(snapshots_current);
+  EXPECT_TRUE(IsSnapshotPresent(*snapshots_current, snapshot.name()));
 
   // get snapshot
   auto snapshot_check = table_admin_->GetSnapshot(cluster_id, snapshot_id);
   auto const npos = std::string::npos;
-  EXPECT_NE(npos, snapshot_check.name().find(snapshot_id_str));
+  ASSERT_TRUE(snapshot_check);
+  EXPECT_NE(npos, snapshot_check->name().find(snapshot_id_str));
 
   // Delete snapshot
-  table_admin_->DeleteSnapshot(cluster_id, snapshot_id);
+  EXPECT_TRUE(table_admin_->DeleteSnapshot(cluster_id, snapshot_id).ok());
   auto snapshots_after_delete = table_admin_->ListSnapshots(cluster_id);
-  EXPECT_FALSE(IsSnapshotPresent(snapshots_after_delete, snapshot.name()));
+  ASSERT_TRUE(snapshots_after_delete);
+  EXPECT_FALSE(IsSnapshotPresent(*snapshots_after_delete, snapshot.name()));
 
   // delete table
-  DeleteTable(table_id.get());
+  EXPECT_TRUE(DeleteTable(table_id.get()).ok());
 }
 
 // Test Cases Finished

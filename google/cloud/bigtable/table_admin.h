@@ -165,14 +165,12 @@ class TableAdmin {
    *   - NAME: return only the name of the table.
    *   - VIEW_SCHEMA: return the name and the schema.
    *   - FULL: return all the information about the table.
-   * @return the information about the table.
-   * @throws std::exception if the information could not be obtained before the
-   *     RPC policies in effect gave up.
+   * @return the information about the table or status.
    *
    * @par Example
    * @snippet table_admin_snippets.cc get table
    */
-  ::google::bigtable::admin::v2::Table GetTable(
+  StatusOr<::google::bigtable::admin::v2::Table> GetTable(
       std::string const& table_id,
       ::google::bigtable::admin::v2::Table::View view =
           ::google::bigtable::admin::v2::Table::SCHEMA_VIEW);
@@ -216,13 +214,13 @@ class TableAdmin {
    * @param table_id the id of the table within the instance associated with
    *     this object. The full name of the table is
    *     `this->instance_name() + "/tables/" + table_id`
-   * @throws std::exception if the table could not be deleted before the RPC
-   *     policies in effect gave up.
+   *
+   * @return status of the operation.
    *
    * @par Example
    * @snippet table_admin_snippets.cc delete table
    */
-  void DeleteTable(std::string const& table_id);
+  Status DeleteTable(std::string const& table_id);
 
   /**
    * Modify the schema for an existing table.
@@ -231,13 +229,11 @@ class TableAdmin {
    *     this object. The full name of the table is
    *     `this->instance_name() + "/tables/" + table_id`
    * @param modifications the list of modifications to the schema.
-   * @return the resulting table schema.
-   * @throws std::exception if the operation cannot be completed.
    *
    * @par Example
    * @snippet table_admin_snippets.cc modify table
    */
-  ::google::bigtable::admin::v2::Table ModifyColumnFamilies(
+  StatusOr<::google::bigtable::admin::v2::Table> ModifyColumnFamilies(
       std::string const& table_id,
       std::vector<ColumnFamilyModification> modifications);
 
@@ -248,13 +244,12 @@ class TableAdmin {
    *     this object. The full name of the table is
    *     `this->instance_name() + "/tables/" + table_id`
    * @param row_key_prefix drop any rows that start with this prefix.
-   * @throws std::exception if the operation cannot be completed.
    *
    * @par Example
    * @snippet table_admin_snippets.cc drop rows by prefix
    */
-  void DropRowsByPrefix(std::string const& table_id,
-                        std::string row_key_prefix);
+  Status DropRowsByPrefix(std::string const& table_id,
+                          std::string row_key_prefix);
 
   /**
    * Generates consistency token for a table.
@@ -262,12 +257,12 @@ class TableAdmin {
    * @param table_id the id of the table for which we want to generate
    *     consistency token.
    * @return the consistency token for table.
-   * @throws std::exception if the operation cannot be completed.
    *
    * @par Example
    * @snippet table_admin_snippets.cc generate consistency token
    */
-  std::string GenerateConsistencyToken(std::string const& table_id);
+  StatusOr<ConsistencyToken> GenerateConsistencyToken(
+      std::string const& table_id);
 
   /**
    * Checks consistency of a table.
@@ -276,13 +271,13 @@ class TableAdmin {
    *     consistency.
    * @param consistency_token the consistency token of the table.
    * @return the consistency status for the table.
-   * @throws std::exception if the operation cannot be completed.
    *
    * @par Example
    * @snippet table_admin_snippets.cc check consistency
    */
-  bool CheckConsistency(bigtable::TableId const& table_id,
-                        bigtable::ConsistencyToken const& consistency_token);
+  StatusOr<bool> CheckConsistency(
+      bigtable::TableId const& table_id,
+      bigtable::ConsistencyToken const& consistency_token);
 
   /**
    * Checks consistency of a table with multiple calls using a separate thread
@@ -310,12 +305,11 @@ class TableAdmin {
    * @param table_id the id of the table within the instance associated with
    *     this object. The full name of the table is
    *     `this->instance_name() + "/tables/" + table_id`
-   * @throws std::exception if the operation cannot be completed.
    *
    * @par Example
    * @snippet table_admin_snippets.cc drop all rows
    */
-  void DropAllRows(std::string const& table_id);
+  Status DropAllRows(std::string const& table_id);
 
   //@{
   /**
@@ -367,13 +361,11 @@ class TableAdmin {
    * @param cluster_id the cluster id to which snapshot is associated.
    * @param snapshot_id the id of the snapshot.
    * @return the information about the snapshot.
-   * @throws std::exception if the information could not be obtained before the
-   *     RPC policies in effect gave up.
    *
    * @par Example
    * @snippet table_admin_snippets.cc get snapshot
    */
-  google::bigtable::admin::v2::Snapshot GetSnapshot(
+  StatusOr<google::bigtable::admin::v2::Snapshot> GetSnapshot(
       bigtable::ClusterId const& cluster_id,
       bigtable::SnapshotId const& snapshot_id);
 
@@ -388,13 +380,12 @@ class TableAdmin {
    *
    * @param cluster_id the id of the cluster to which snapshot belongs.
    * @param snapshot_id the id of the snapshot which needs to be deleted.
-   * @throws std::exception if the operation cannot be completed.
    *
    * @par Example
    * @snippet table_admin_snippets.cc delete snapshot
    */
-  void DeleteSnapshot(bigtable::ClusterId const& cluster_id,
-                      bigtable::SnapshotId const& snapshot_id);
+  Status DeleteSnapshot(bigtable::ClusterId const& cluster_id,
+                        bigtable::SnapshotId const& snapshot_id);
 
   /**
    * Create table from snapshot.
@@ -423,22 +414,13 @@ class TableAdmin {
    * List snapshots in the given instance.
    * @param cluster_id the name of the cluster for which snapshots should be
    * listed.
-   * @return collection containing the snapshots for the given cluster.
-   * @throws std::exception if the operation cannot be completed.
+   * @return vector containing the snapshots for the given cluster.
    *
    * @par Example
    * @snippet table_admin_snippets.cc list snapshots
    */
-  template <template <typename...> class Collection = std::vector>
-  Collection<::google::bigtable::admin::v2::Snapshot> ListSnapshots(
-      bigtable::ClusterId cluster_id = bigtable::ClusterId("-")) {
-    grpc::Status status;
-    auto result = impl_.ListSnapshots<Collection>(status, cluster_id);
-    if (!status.ok()) {
-      bigtable::internal::ThrowRpcError(status, status.error_message());
-    }
-    return result;
-  }
+  StatusOr<std::vector<::google::bigtable::admin::v2::Snapshot>> ListSnapshots(
+      bigtable::ClusterId cluster_id = bigtable::ClusterId("-"));
 
  private:
   /**

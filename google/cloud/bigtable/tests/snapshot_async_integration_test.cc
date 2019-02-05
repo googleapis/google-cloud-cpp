@@ -108,7 +108,8 @@ TEST_F(SnapshotAsyncIntegrationTest, CreateListGetDeleteSnapshot) {
 
   // verify new snapshot id in list of snapshot
   auto snapshots_before = table_admin_->ListSnapshots(cluster_id);
-  ASSERT_FALSE(IsSnapshotPresent(snapshots_before, snapshot_id_str))
+  ASSERT_TRUE(snapshots_before);
+  ASSERT_FALSE(IsSnapshotPresent(*snapshots_before, snapshot_id_str))
       << "Snapshot (" << snapshot_id_str << ") already exists."
       << " This is unexpected, as the snapshot ids are"
       << " generated at random.";
@@ -118,7 +119,8 @@ TEST_F(SnapshotAsyncIntegrationTest, CreateListGetDeleteSnapshot) {
       table_admin_->SnapshotTable(cluster_id, snapshot_id, table_id, 36000_s)
           .get();
   auto snapshots_current = table_admin_->ListSnapshots(cluster_id);
-  EXPECT_TRUE(IsSnapshotPresent(snapshots_current, snapshot.name()));
+  ASSERT_TRUE(snapshots_current);
+  EXPECT_TRUE(IsSnapshotPresent(*snapshots_current, snapshot.name()));
 
   // get snapshot
   std::promise<btadmin::Snapshot> promise_get_snapshot;
@@ -146,10 +148,11 @@ TEST_F(SnapshotAsyncIntegrationTest, CreateListGetDeleteSnapshot) {
   promise_delete_snapshot.get_future().get();
 
   auto snapshots_after_delete = table_admin_->ListSnapshots(cluster_id);
-  EXPECT_FALSE(IsSnapshotPresent(snapshots_after_delete, snapshot.name()));
+  ASSERT_TRUE(snapshots_after_delete);
+  EXPECT_FALSE(IsSnapshotPresent(*snapshots_after_delete, snapshot.name()));
 
   // delete table
-  DeleteTable(table_id.get());
+  EXPECT_TRUE(DeleteTable(table_id.get()).ok());
 
   cq.Shutdown();
   pool.join();

@@ -230,7 +230,7 @@ TEST_F(AdminAsyncIntegrationTest, AsyncDropRowsByPrefixTest) {
 
   promise_drop_row.get_future().get();
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
 
   CheckEqualUnordered(expected_cells, actual_cells);
 
@@ -290,7 +290,7 @@ TEST_F(AdminAsyncIntegrationTest, AsyncDropAllRowsTest) {
   promise_drop_row.get_future().get();
 
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
-  DeleteTable(table_id);
+  EXPECT_TRUE(DeleteTable(table_id).ok());
 
   ASSERT_TRUE(actual_cells.empty());
   cq.Shutdown();
@@ -383,7 +383,7 @@ TEST_F(AdminAsyncIntegrationTest, CheckConsistencyIntegrationTest) {
   cq.Shutdown();
   pool.join();
 
-  table_admin.DeleteTable(table_id.get());
+  EXPECT_TRUE(table_admin.DeleteTable(table_id.get()).ok());
   instance_admin.DeleteInstance(id);
 }
 

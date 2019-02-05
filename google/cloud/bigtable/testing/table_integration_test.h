@@ -78,7 +78,7 @@ class TableIntegrationTest : public ::testing::Test {
       std::string const& table_name, bigtable::TableConfig& table_config);
 
   /// Deletes the table passed via arguments.
-  void DeleteTable(std::string const& table_name);
+  Status DeleteTable(std::string const& table_name);
 
   /// Return all the cells in @p table that pass @p filter.
   std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,

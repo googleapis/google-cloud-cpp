@@ -156,7 +156,11 @@ int main(int argc, char* argv[]) try {
 
   // Delete the table
   //! [delete table]
-  table_admin.DeleteTable(table_id);
+  google::cloud::Status status = table_admin.DeleteTable(table_id);
+  if (!status.ok()) {
+    std::cerr << "DeleteTable failed: " << status << std::endl;
+    return 1;
+  }
   //! [delete table]
 
   // Stop tracing because the remaining RPCs are OpenCensus related.
