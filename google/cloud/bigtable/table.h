@@ -203,6 +203,23 @@ class Table {
   void Apply(SingleRowMutation&& mut);
 
   /**
+   * Makes asycronous attempts to apply the mutation to a row.
+   *
+   * @param mut the mutation. Note that this function takes ownership
+   * (and then discards) the data in the mutation.  In general, a
+   *     `SingleRowMutation` can be used to modify and/or delete
+   * multiple cells, across different columns and column families.
+   * @param cq the completion queue that will execute the asynchronous
+   *    calls, the application must ensure that one or more threads are
+   *    blocked on `cq.Run()`.
+   *
+   * @par Example
+   * @snippet data_async_snippets.cc async-apply
+   */
+
+  future<void> AsyncApply(SingleRowMutation&& mut, CompletionQueue& cq);
+
+  /**
    * Attempts to apply mutations to multiple rows.
    *
    * @param mut the mutations, note that this function takes

@@ -328,6 +328,7 @@ function run_all_data_async_examples {
   # Use the same table in all the tests.
   local -r TABLE="data-ex-tbl-$(date +%s)-${RANDOM}"
   run_example ./table_admin_snippets create-table "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_async_snippets async-apply "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_async_snippets async-bulk-apply "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./table_admin_snippets delete-table "${project_id}" "${instance_id}" "${TABLE}" 
 

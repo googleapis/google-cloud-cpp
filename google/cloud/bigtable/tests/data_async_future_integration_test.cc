@@ -32,6 +32,47 @@ class DataAsyncFutureIntegrationTest
 
 using namespace google::cloud::testing_util::chrono_literals;
 
+TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
+  std::string const table_id = RandomTableId();
+  auto sync_table = CreateTable(table_id, table_config);
+
+  std::string const row_key = "key-000010";
+  std::vector<bigtable::Cell> created{
+      {row_key, family, "cc1", 1000, "v1000", {}},
+      {row_key, family, "cc2", 2000, "v2000", {}}};
+  SingleRowMutation mut(row_key);
+  for (auto const& c : created) {
+    mut.emplace_back(SetCell(
+        c.family_name(), c.column_qualifier(),
+        std::chrono::duration_cast<std::chrono::milliseconds>(c.timestamp()),
+        c.value()));
+  }
+
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  google::cloud::bigtable::Table table(data_client_, table_id);
+  auto fut_void = table.AsyncApply(std::move(mut), cq);
+
+  // Block until the asynchronous operation completes. This is not what one
+  // would do in a real application (the synchronous API is better in that
+  // case), but we need to wait before checking the results.
+  fut_void.get();
+
+  // Validate that the newly created cells are actually in the server.
+  std::vector<bigtable::Cell> expected{
+      {row_key, family, "cc1", 1000, "v1000", {}},
+      {row_key, family, "cc2", 2000, "v2000", {}}};
+
+  auto actual = ReadRows(*sync_table, bigtable::Filter::PassAllFilter());
+
+  // Cleanup the thread running the completion queue event loop.
+  cq.Shutdown();
+  pool.join();
+  DeleteTable(table_id);
+  CheckEqualUnordered(expected, actual);
+}
+
 TEST_F(DataAsyncFutureIntegrationTest, TableAsyncBulkApply) {
   std::string const table_id = RandomTableId();
   auto sync_table = CreateTable(table_id, table_config);
