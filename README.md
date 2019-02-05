@@ -6,6 +6,10 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 [![Kokoro CI status][kokoro-ubuntu-shield]][kokoro-ubuntu-link]
 [![Kokoro CI status][kokoro-windows-shield]][kokoro-windows-link]
 [![Kokoro CI status][kokoro-macos-shield]][kokoro-macos-link]
+[![Kokoro CI status][kokoro-asan-shield]][kokoro-asan-link]
+[![Kokoro CI status][kokoro-ubsan-shield]][kokoro-asan-link]
+[![Kokoro CI status][kokoro-noex-shield]][kokoro-noex-link]
+[![Kokoro CI status][kokoro-centos-7-shield]][kokoro-centos-7-link]
 [![Codecov Coverage status][codecov-shield]][codecov-link]
 
 - [Google Cloud Platform Documentation][cloud-platform-docs]
@@ -19,6 +23,14 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 [kokoro-windows-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-link.html
 [kokoro-macos-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-macos.svg
 [kokoro-macos-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-macos-link.html
+[kokoro-asan-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-asan.svg
+[kokoro-asan-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-asan-link.html
+[kokoro-ubsan-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-ubsan.svg
+[kokoro-ubsan-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-ubsan-link.html
+[kokoro-noex-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-noex.svg
+[kokoro-noex-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-noex-link.html
+[kokoro-centos-7-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-centos-7.svg
+[kokoro-centos-7-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-centos-7-link.html
 [codecov-shield]: https://codecov.io/gh/googleapis/google-cloud-cpp/branch/master/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/googleapis/google-cloud-cpp
 [cloud-platform]: https://cloud.google.com/
