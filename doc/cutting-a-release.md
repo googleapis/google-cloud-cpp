@@ -49,7 +49,8 @@ To find the next release number, look at the existing branch names on the
 git remote show upstream
 ```
 
-Through this document we will use this variable to represent the release name:
+Throughout this document we will use this variable to represent the release
+name:
 
 ```bash
 # Use the actual release prefix (e.g. v0.5) not just `N`.
@@ -61,7 +62,7 @@ actual release value, e.g. `v0.5` or `v0.7`, and not the generic `N`.
 
 Clone the main repository to create the branch:
 
-```sh
+```bash
 git clone git@github.com:googleapis/google-cloud-cpp.git releases
 cd releases
 git checkout -b "${RELEASE}.x"
@@ -88,7 +89,7 @@ git commit -m"Create ${RELEASE}.x release branch" .
 git push --set-upstream origin ${RELEASE}.x
 ```
 
-NOTE: No code review os Pull Request is needed as part of this step.
+NOTE: No code review or Pull Request is needed as part of this step.
 
 ## Update the documentation links
 
@@ -108,25 +109,26 @@ Change the value of the meta tag's `URL=` parameter to refer to the
 `index.html` file in the directory matching the new release version number.
 
 ```
-git commit -am"Update documentation to ${RELEASE}"
+git commit -am "Update documentation to ${RELEASE}"
 git push
 ```
 
 You are now finished with this "releases" clone of the repo that we created in
-the instructions above. You may not remove this directory.
+the instructions above. You may now remove this directory.
 
 ## Bump the version numbers in `master`
 
-Working in your fork of `gooogle-cloud-cpp`: bump the version numbers, and send
-the PR for review against `master`. For an example, look at
-[#1375](https://github.com/googleapis/google-cloud-cpp/pull/1375).
+Working in your fork of `gooogle-cloud-cpp`: bump the version numbers to the
+*next* version (i.e., one version past the release you just did above), and
+send the PR for review against `master`. For an example, look at
+[#1962](https://github.com/googleapis/google-cloud-cpp/pull/1962)
 
 ## Create a pre-release tag
 
 Create a pre-release using
 [GitHub](https://github.com/googleapis/google-cloud-cpp/releases/new).
-Make sure your reference the `v0.N.x` branch, and you check the `pre-release`
-checkbox.
+Make sure you reference the `v0.N.x` branch, set a tag name like `v0.N.0-pre1`,
+and you check the `pre-release` checkbox.
 
 Copy the relevant release notes into the description of the release.
 
@@ -134,7 +136,7 @@ After you create the release, capture the SHA256 checksums of the
 tarball and zip files, and edit the notes to include them. These
 commands might be handy:
 
-```sh
+```bash
 TAG=v0.6.0-pre1 # change this to the actual pre-release tag
 wget -q -O - https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.tar.gz | sha256sum
 wget -q -O - https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.zip | sha256sum
@@ -150,8 +152,8 @@ pre-release, and iterate until you are satisfied with the code.
 
 ## Promote the pre-release tag to an actual release
 
-Edit the pre-release, change the name, uncheck the pre-release checkbox and
-publish.
+Edit the pre-release, change the name, change the tag, uncheck the pre-release
+checkbox and publish.
 
 After you publish, remember to update the SHA256 sums, they change, as
 the tarball and zip files include the tag as part of the file paths.
