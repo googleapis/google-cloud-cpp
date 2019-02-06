@@ -11,9 +11,6 @@ google-cloud-cpp.
 
 ## Installing google-cloud-cpp
 
-*If*<br>
--- The Spartan ephors to Philip of Macedon.<br><br>
-
 **If** all the dependencies of `google-cloud-cpp` are installed and provide
 CMake support files, then compiling and installing the libraries
 requires two commands:
@@ -45,16 +42,21 @@ platforms.
 | ------- | --------------: | ----------- |
 | gRPC    | 1.17.x | gRPC++ for Cloud Bigtable |
 | libcurl | 7.47.0  | HTTP client library for the Google Cloud Storage client |
-| crc32c  | 1.06 | Hardware-accelerated CRC32C implementation |
+| crc32c  | 1.0.6 | Hardware-accelerated CRC32C implementation |
 | OpenSSL | 1.0.2 | Crypto functions for Google Cloud Storage authentication |
 
 Note that these libraries may have complex dependencies themselves, the
 following instructions include steps to install these dependencies too.
+When possible, the instructions below prefer to use pre-packaged versions of
+these libraries. In some cases the packages do not exist, or the package
+versions are too old. If this is the case, the instructions describe how you
+can manually download and install these packages. 
 
 #### Fedora (29)
 
-Fedora includes packages for gRPC (1.17), libcurl (7.61), and OpenSSL (1.1).
-Install these libraries and the necessary development tools:
+Fedora includes packages for gRPC, libcurl, and OpenSSL that are recent enough
+for `google-cloud-cpp`. Install these libraries and the necessary development
+tools:
 
 ```bash
 dnf makecache

@@ -57,8 +57,9 @@ APIs.
   - [macOS (using brew)](#macos-using-brew)
   - [Windows](#windows-using-vcpkg)
 - [Build](#build)
-  - [Linux and macOS](#linux-and-macos)
-  - [Windows](#windows-1)
+  - [Linux](#linux)
+  - [macOS](#macOS)
+  - [Windows](#windows)
 - [Install](#install)
 
 ## Requirements
@@ -374,30 +375,10 @@ To install `google-cloud-cpp` you must first install all its dependencies. Then
 you must configure `google-cloud-cpp` to find these dependencies, and install
 it.
 
-For example, if all the dependencies have installed the corresponding CMake
-support files, these commands will install `google-cloud-cpp`:
-
-```bash
-cmake -H. -Bbuild-output-for-install \
-    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package
-cmake --build build-output-for-install --target install
-```
-
-Unfortunately many distributions do not install said CMake support files, in
-which case you can configure `google-cloud-cpp` to find these dependencies using
-`pkg-config`, for example:
-
-```bash
-cmake -H. -Bbuild-output-for-install \
-    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
-    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config
-cmake --build build-output-for-install --target install
-```
-
 Installing the dependencies themselves may be as simple as using the package
 manager for your platform, or may require manually downloading, compiling, and
 installing said dependencies.  The [INSTALL.md](INSTALL.md) file describes how
-to compile all these dependencies for the most common platforms.
+to successfully install `google-cloud-cpp` on several platforms.
 
 ## Versioning
 
