@@ -27,13 +27,13 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Threads REQUIRED)
-find_package(bigtable_client 0.6.0 REQUIRED)
+find_package(bigtable_client 0.7.0 REQUIRED)
 
 # Defining new targets should be easy.
 add_executable(bigtable_install_test bigtable_install_test.cc)
 target_link_libraries(bigtable_install_test bigtable::client)
 
 find_package(CURL REQUIRED)
-find_package(storage_client 0.4.0 REQUIRED)
+find_package(storage_client 0.5.0 REQUIRED)
 add_executable(storage_install_test storage_install_test.cc)
 target_link_libraries(storage_install_test storage_client)
