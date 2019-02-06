@@ -31,6 +31,8 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+enum class Consistency { kConsistent, kInconsistent };
+
 /**
  * Implements the API to administer tables in a Cloud Bigtable instance.
  */
@@ -275,7 +277,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_snippets.cc check consistency
    */
-  StatusOr<bool> CheckConsistency(
+  StatusOr<Consistency> CheckConsistency(
       bigtable::TableId const& table_id,
       bigtable::ConsistencyToken const& consistency_token);
 

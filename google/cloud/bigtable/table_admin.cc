@@ -188,7 +188,7 @@ StatusOr<ConsistencyToken> TableAdmin::GenerateConsistencyToken(
   return ConsistencyToken(token);
 }
 
-StatusOr<bool> TableAdmin::CheckConsistency(
+StatusOr<Consistency> TableAdmin::CheckConsistency(
     bigtable::TableId const& table_id,
     bigtable::ConsistencyToken const& consistency_token) {
   grpc::Status status;
@@ -196,7 +196,7 @@ StatusOr<bool> TableAdmin::CheckConsistency(
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
-  return consistent;
+  return consistent ? Consistency::kConsistent : Consistency::kInconsistent;
 }
 
 bool TableAdmin::WaitForConsistencyCheckImpl(

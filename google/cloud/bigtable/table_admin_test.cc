@@ -653,7 +653,8 @@ TEST_F(TableAdminTest, CheckConsistencySimple) {
   bigtable::TableId table_id("the-table");
   bigtable::ConsistencyToken consistency_token("test-token");
   // After all the setup, make the actual call we want to test.
-  tested.CheckConsistency(table_id, consistency_token);
+  auto result = tested.CheckConsistency(table_id, consistency_token);
+  ASSERT_TRUE(result);
 }
 
 /**

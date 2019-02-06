@@ -260,7 +260,11 @@ void CheckConsistency(google::cloud::bigtable::TableAdmin admin, int argc,
     google::cloud::bigtable::ConsistencyToken consistency_token(
         consistency_token_param);
     auto result = admin.CheckConsistency(table_id, consistency_token);
-    if (result) {
+    if (!result) {
+      std::cerr << "CheckConsistency failed: " << result.status() << "\n";
+      return;
+    }
+    if (*result == google::cloud::bigtable::Consistency::kConsistent) {
       std::cout << "Table is consistent\n";
     } else {
       std::cout
