@@ -58,9 +58,7 @@ void ListObjects(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string bucket_name) {
     for (auto&& object_metadata : client.ListObjects(bucket_name)) {
       if (!object_metadata) {
-        std::cerr << "Error reading object list for " << bucket_name
-                  << ", status=" << object_metadata.status();
-        return;
+        throw std::runtime_error(object_metadata.status().message());
       }
 
       std::cout << "bucket_name=" << object_metadata->bucket()
@@ -89,10 +87,7 @@ void InsertObject(google::cloud::storage::Client client, int& argc,
         client.InsertObject(bucket_name, object_name, std::move(contents));
 
     if (!object_metadata) {
-      std::cerr << "Error inserting object " << object_name << " in bucket "
-                << bucket_name << ", status=" << object_metadata.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(object_metadata.status().message());
     }
 
     std::cout << "The object " << object_metadata->name()
@@ -121,21 +116,18 @@ void InsertObjectStrictIdempotency(google::cloud::storage::Client unused,
     // to retry all operations.
     StatusOr<gcs::ClientOptions> options =
         gcs::ClientOptions::CreateDefaultClientOptions();
+
     if (!options) {
-      std::cerr << "Error creating default ClientOptions, status="
-                << options.status() << std::endl;
-      return;
+      throw std::runtime_error(options.status().message());
     }
+
     gcs::Client client{*options, gcs::StrictIdempotencyPolicy()};
     StatusOr<gcs::ObjectMetadata> object_metadata =
         client.InsertObject(bucket_name, object_name, std::move(contents),
                             gcs::IfGenerationMatch(0));
 
     if (!object_metadata) {
-      std::cerr << "Error inserting object " << object_name << " in bucket "
-                << bucket_name << ", status=" << object_metadata.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(object_metadata.status().message());
     }
 
     std::cout << "The object " << object_metadata->name()
@@ -160,21 +152,22 @@ void InsertObjectModifiedRetry(google::cloud::storage::Client unused, int& argc,
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
   [](std::string bucket_name, std::string object_name, std::string contents) {
-    auto credentials = gcs::oauth2::GoogleDefaultCredentials();
+    StatusOr<std::shared_ptr<gcs::oauth2::Credentials>> credentials =
+        gcs::oauth2::GoogleDefaultCredentials();
+
     if (!credentials) {
-      std::cerr << "Error obtaining default credentials, status="
-                << credentials.status() << std::endl;
-      return;
+      throw std::runtime_error(credentials.status().message());
     }
+
     // Create a client that only gives up on the third error. The default policy
     // is to retry for several minutes.
     StatusOr<gcs::ClientOptions> options =
         gcs::ClientOptions::CreateDefaultClientOptions();
+
     if (!options) {
-      std::cerr << "Error creating default ClientOptions, status="
-                << options.status() << std::endl;
-      return;
+      throw std::runtime_error(options.status().message());
     }
+
     gcs::Client client{*options, gcs::LimitedErrorCountRetryPolicy(3)};
 
     StatusOr<gcs::ObjectMetadata> object_metadata =
@@ -182,10 +175,7 @@ void InsertObjectModifiedRetry(google::cloud::storage::Client unused, int& argc,
                             gcs::IfGenerationMatch(0));
 
     if (!object_metadata) {
-      std::cerr << "Error inserting object " << object_name << " in bucket "
-                << bucket_name << ", status=" << object_metadata.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(object_metadata.status().message());
     }
 
     std::cout << "The object " << object_metadata->name()
@@ -221,10 +211,7 @@ void InsertObjectMultipart(google::cloud::storage::Client client, int& argc,
             gcs::ObjectMetadata().set_content_type(content_type)));
 
     if (!object_metadata) {
-      std::cerr << "Error inserting object " << object_name << " in bucket "
-                << bucket_name << ", status=" << object_metadata.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(object_metadata.status().message());
     }
 
     std::cout << "The object " << object_metadata->name()
@@ -259,12 +246,7 @@ void CopyObject(google::cloud::storage::Client client, int& argc,
                           destination_bucket_name, destination_object_name);
 
     if (!new_copy_meta) {
-      std::cerr << "Error copying object " << source_bucket_name
-                << " in bucket " << source_bucket_name << " to bucket "
-                << destination_bucket_name << " with name "
-                << destination_object_name
-                << ", status=" << new_copy_meta.status() << std::endl;
-      return;
+      throw std::runtime_error(new_copy_meta.status().message());
     }
 
     std::cout << "Successfully copied " << source_object_name << " in bucket "
@@ -302,12 +284,7 @@ void CopyEncryptedObject(google::cloud::storage::Client client, int& argc,
         destination_object_name, gcs::EncryptionKey::FromBase64Key(key_base64));
 
     if (!new_copy_meta) {
-      std::cerr << "Error copying object " << source_bucket_name
-                << " in bucket " << source_bucket_name << " to bucket "
-                << destination_bucket_name << " with name "
-                << destination_object_name
-                << ", status=" << new_copy_meta.status() << std::endl;
-      return;
+      throw std::runtime_error(new_copy_meta.status().message());
     }
 
     std::cout << "Successfully copied " << source_object_name << " in bucket "
@@ -336,10 +313,7 @@ void GetObjectMetadata(google::cloud::storage::Client client, int& argc,
         client.GetObjectMetadata(bucket_name, object_name);
 
     if (!object_metadata) {
-      std::cerr << "Error getting object metadata for object " << object_name
-                << " in bucket " << bucket_name
-                << ", status=" << object_metadata.status() << std::endl;
-      return;
+      throw std::runtime_error(object_metadata.status().message());
     }
 
     std::cout << "The metadata for object " << object_metadata->name()
@@ -417,9 +391,7 @@ void DeleteObject(google::cloud::storage::Client client, int& argc,
         client.DeleteObject(bucket_name, object_name);
 
     if (!status.ok()) {
-      std::cerr << "Error deleting object " << object_name << " in bucket "
-                << bucket_name << ", status=" << status << std::endl;
-      return;
+      throw std::runtime_error(status.message());
     }
 
     std::cout << "Deleted " << object_name << " in bucket " << bucket_name
@@ -457,12 +429,11 @@ void WriteObject(google::cloud::storage::Client client, int& argc,
     stream.Close();
 
     StatusOr<gcs::ObjectMetadata> metadata = std::move(stream).metadata();
+
     if (!metadata) {
-      std::cerr << "Error while writing to object " << object_name
-                << " in bucket " << bucket_name
-                << ", status=" << metadata.status() << std::endl;
-      return;
+      throw std::runtime_error(metadata.status().message());
     }
+
     std::cout << "Successfully wrote to object " << metadata->name()
               << " its size is: " << metadata->size()
               << "\nFull metadata: " << *metadata << std::endl;
@@ -574,9 +545,7 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
     StatusOr<gcs::ObjectMetadata> metadata = stream.metadata();
     if (!metadata) {
-      std::cerr << "Error writing object " << object_name << " in bucket "
-                << bucket_name << ", status=" << metadata.status() << std::endl;
-      return;
+      throw std::runtime_error(metadata.status().message());
     }
 
     std::cout << "Upload completed, the new object metadata is: " << *metadata
@@ -606,10 +575,7 @@ void UploadFile(google::cloud::storage::Client client, int& argc,
         file_name, bucket_name, object_name, gcs::IfGenerationMatch(0));
 
     if (!object_metadata) {
-      std::cerr << "Error uploading file " << file_name << " to bucket "
-                << bucket_name << " as object " << object_name
-                << ", status=" << object_metadata.status() << std::endl;
-      return;
+      throw std::runtime_error(object_metadata.status().message());
     }
 
     std::cout << "Uploaded " << file_name << " to object "
@@ -643,10 +609,7 @@ void UploadFileResumable(google::cloud::storage::Client client, int& argc,
         gcs::NewResumableUploadSession());
 
     if (!object_metadata) {
-      std::cerr << "Error uploading file " << file_name << " to bucket "
-                << bucket_name << " as object " << object_name
-                << ", status=" << object_metadata.status() << std::endl;
-      return;
+      throw std::runtime_error(object_metadata.status().message());
     }
 
     std::cout << "Uploaded " << file_name << " to object "
@@ -675,10 +638,7 @@ void DownloadFile(google::cloud::storage::Client client, int& argc,
         client.DownloadToFile(bucket_name, object_name, file_name);
 
     if (!status.ok()) {
-      std::cerr << "Error downloading object " << object_name << " in bucket "
-                << bucket_name << " to file " << file_name
-                << ", status=" << status << std::endl;
-      return;
+      throw std::runtime_error(status.message());
     }
 
     std::cout << "Downloaded " << object_name << " to " << file_name
@@ -707,10 +667,7 @@ void UpdateObjectMetadata(google::cloud::storage::Client client, int& argc,
         client.GetObjectMetadata(bucket_name, object_name);
 
     if (!object_metadata) {
-      std::cerr << "Error getting object metadata for object " << object_name
-                << " in bucket " << bucket_name
-                << ", status=" << object_metadata.status() << std::endl;
-      return;
+      throw std::runtime_error(object_metadata.status().message());
     }
 
     gcs::ObjectMetadata desired = *object_metadata;
@@ -721,11 +678,7 @@ void UpdateObjectMetadata(google::cloud::storage::Client client, int& argc,
                             gcs::Generation(object_metadata->generation()));
 
     if (!updated) {
-      std::cerr << "Error updating object metadata for object "
-                << object_metadata->name() << " in bucket "
-                << object_metadata->bucket() << ", status=" << updated.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(updated.status().message());
     }
 
     std::cout << "Object updated. The full metadata after the update is: "
@@ -752,10 +705,7 @@ void PatchObjectDeleteMetadata(google::cloud::storage::Client client, int& argc,
         client.GetObjectMetadata(bucket_name, object_name);
 
     if (!original) {
-      std::cerr << "Error getting object metadata for object " << object_name
-                << " in bucket " << bucket_name
-                << ", status=" << original.status() << std::endl;
-      return;
+      throw std::runtime_error(original.status().message());
     }
 
     gcs::ObjectMetadata desired = *original;
@@ -765,10 +715,7 @@ void PatchObjectDeleteMetadata(google::cloud::storage::Client client, int& argc,
         client.PatchObject(bucket_name, object_name, *original, desired);
 
     if (!updated) {
-      std::cerr << "Error updating object metadata for object "
-                << original->name() << " in bucket " << original->bucket()
-                << ", status=" << updated.status() << std::endl;
-      return;
+      throw std::runtime_error(updated.status().message());
     }
 
     std::cout << "Object updated. The full metadata after the update is: "
@@ -797,10 +744,7 @@ void PatchObjectContentType(google::cloud::storage::Client client, int& argc,
         gcs::ObjectMetadataPatchBuilder().SetContentType(content_type));
 
     if (!updated) {
-      std::cerr << "Error patching object metadata for object " << object_name
-                << " in bucket " << bucket_name
-                << ", status=" << updated.status() << std::endl;
-      return;
+      throw std::runtime_error(updated.status().message());
     }
 
     std::cout << "Object updated. The full metadata after the update is: "
@@ -826,10 +770,7 @@ void MakeObjectPublic(google::cloud::storage::Client client, int& argc,
         gcs::PredefinedAcl::PublicRead());
 
     if (!updated) {
-      std::cerr << "Error patching object metadata for object " << object_name
-                << " in bucket " << bucket_name
-                << ", status=" << updated.status() << std::endl;
-      return;
+      throw std::runtime_error(updated.status().message());
     }
 
     std::cout << "Object updated. The full metadata after the update is: "
@@ -931,10 +872,7 @@ void WriteEncryptedObject(google::cloud::storage::Client client, int& argc,
         gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
 
     if (!object_metadata) {
-      std::cerr << "Error inserting object " << object_name << " in bucket "
-                << bucket_name << ", status=" << object_metadata.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(object_metadata.status().message());
     }
 
     std::cout << "The object " << object_metadata->name()
@@ -993,9 +931,7 @@ void ComposeObject(google::cloud::storage::Client client, int& argc,
         bucket_name, compose_objects, destination_object_name);
 
     if (!composed_object) {
-      std::cerr << "Error composing objects in bucket " << bucket_name
-                << ", status=" << composed_object.status() << std::endl;
-      return;
+      throw std::runtime_error(composed_object.status().message());
     }
 
     std::cout << "Composed new object " << composed_object->name()
@@ -1033,9 +969,7 @@ void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
         gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
 
     if (!composed_object) {
-      std::cerr << "Error composing objects in bucket " << bucket_name
-                << ", status=" << composed_object.status() << std::endl;
-      return;
+      throw std::runtime_error(composed_object.status().message());
     }
 
     std::cout << "Composed new object " << composed_object->name()
@@ -1074,12 +1008,11 @@ void WriteObjectWithKmsKey(google::cloud::storage::Client client, int& argc,
     stream.Close();
 
     StatusOr<gcs::ObjectMetadata> metadata = std::move(stream).metadata();
+
     if (!metadata) {
-      std::cerr << "Error while writing to object " << object_name
-                << " in bucket " << bucket_name
-                << ", status=" << metadata.status() << std::endl;
-      return;
+      throw std::runtime_error(metadata.status().message());
     }
+
     std::cout << "Successfully wrote to object " << metadata->name()
               << " its size is: " << metadata->size()
               << "\nFull metadata: " << *metadata << std::endl;
@@ -1111,10 +1044,7 @@ void RewriteObject(google::cloud::storage::Client client, int& argc,
                                      destination_object_name);
 
     if (!object_metadata) {
-      std::cerr << "Cannot rewrite object " << source_object_name
-                << " in bucket " << source_bucket_name
-                << ", status=" << object_metadata.status() << std::endl;
-      return;
+      throw std::runtime_error(object_metadata.status().message());
     }
 
     std::cout << "Rewrote object " << destination_object_name
@@ -1150,17 +1080,15 @@ void RewriteObjectNonBlocking(google::cloud::storage::Client client, int& argc,
         rewriter.ResultWithProgressCallback(
             [](StatusOr<gcs::RewriteProgress> const& progress) {
               if (!progress) {
-                std::cerr << "Error during rewrite: " << progress.status()
-                          << std::endl;
-                return;
+                throw std::runtime_error(progress.status().message());
               }
-
               std::cout << "Rewrote " << progress->total_bytes_rewritten << "/"
                         << progress->object_size << std::endl;
             });
 
     if (!object_metadata) {
-      return;  // No need to report the error, already done in the callback.
+      // Won't happen if we throw on error from the callback.
+      throw std::runtime_error(object_metadata.status().message());
     }
 
     std::cout << "Rewrote object " << object_metadata->name() << " in bucket "
@@ -1197,8 +1125,7 @@ void RewriteObjectToken(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::RewriteProgress> progress = rewriter.Iterate();
 
     if (!progress) {
-      std::cerr << "Error during rewrite: " << progress.status() << std::endl;
-      return;
+      throw std::runtime_error(progress.status().message());
     }
 
     if (progress->done) {
@@ -1241,16 +1168,15 @@ void RewriteObjectResume(google::cloud::storage::Client client, int& argc,
         rewriter.ResultWithProgressCallback(
             [](StatusOr<gcs::RewriteProgress> const& progress) {
               if (!progress) {
-                std::cerr << "Error during rewrite: " << progress.status()
-                          << std::endl;
-                return;
+                throw std::runtime_error(progress.status().message());
               }
               std::cout << "Rewrote " << progress->total_bytes_rewritten << "/"
                         << progress->object_size << std::endl;
             });
 
     if (!object_metadata) {
-      return;  // No need to report the error, already done in the callback.
+      // Won't happen if we throw on error from the callback.
+      throw std::runtime_error(object_metadata.status().message());
     }
 
     std::cout << "Rewrote object " << object_metadata->name() << " in bucket "
@@ -1286,8 +1212,7 @@ void RotateEncryptionKey(google::cloud::storage::Client client, int& argc,
             gcs::EncryptionKey::FromBase64Key(new_key_base64));
 
     if (!object_metadata) {
-      std::cerr << "Error rotating key on object " << object_name
-                << ", status=" << object_metadata.status() << std::endl;
+      throw std::runtime_error(object_metadata.status().message());
     }
 
     std::cout << "Rotated key on object " << object_metadata->name()
@@ -1318,20 +1243,16 @@ void RenameObject(google::cloud::storage::Client client, int& argc,
                                      new_object_name);
 
     if (!object_metadata) {
-      std::cerr << "Error renaming object " << old_object_name
-                << ", status=" << object_metadata.status() << std::endl;
-      return;
+      throw std::runtime_error(object_metadata.status().message());
     }
 
     google::cloud::Status status =
         client.DeleteObject(bucket_name, old_object_name);
 
     if (!status.ok()) {
-      std::cerr << "Error deleting original object " << old_object_name
-                << " in bucket " << bucket_name << ", status=" << status
-                << std::endl;
-      return;
+      throw std::runtime_error(status.message());
     }
+
     std::cout << "Renamed " << old_object_name << " to " << new_object_name
               << " in bucket " << bucket_name << std::endl;
   }
@@ -1354,10 +1275,7 @@ void SetObjectEventBasedHold(google::cloud::storage::Client client, int& argc,
         client.GetObjectMetadata(bucket_name, object_name);
 
     if (!original) {
-      std::cerr << "Error getting object metadata for object " << object_name
-                << " in bucket " << bucket_name
-                << ", status=" << original.status() << std::endl;
-      return;
+      throw std::runtime_error(original.status().message());
     }
 
     StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
@@ -1366,10 +1284,7 @@ void SetObjectEventBasedHold(google::cloud::storage::Client client, int& argc,
         gcs::IfMetagenerationMatch(original->metageneration()));
 
     if (!updated) {
-      std::cerr << "Error patching object metadata for object " << object_name
-                << " in bucket " << bucket_name
-                << ", status=" << updated.status() << std::endl;
-      return;
+      throw std::runtime_error(updated.status().message());
     }
 
     std::cout << "The event hold for object " << updated->name()
@@ -1396,10 +1311,7 @@ void ReleaseObjectEventBasedHold(google::cloud::storage::Client client,
         client.GetObjectMetadata(bucket_name, object_name);
 
     if (!original) {
-      std::cerr << "Error getting object metadata for object " << object_name
-                << " in bucket " << bucket_name
-                << ", status=" << original.status() << std::endl;
-      return;
+      throw std::runtime_error(original.status().message());
     }
 
     StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
@@ -1408,10 +1320,7 @@ void ReleaseObjectEventBasedHold(google::cloud::storage::Client client,
         gcs::IfMetagenerationMatch(original->metageneration()));
 
     if (!updated) {
-      std::cerr << "Error patching object metadata for object " << object_name
-                << " in bucket " << bucket_name
-                << ", status=" << updated.status() << std::endl;
-      return;
+      throw std::runtime_error(updated.status().message());
     }
 
     std::cout << "The event hold for object " << updated->name()
@@ -1438,10 +1347,7 @@ void SetObjectTemporaryHold(google::cloud::storage::Client client, int& argc,
         client.GetObjectMetadata(bucket_name, object_name);
 
     if (!original) {
-      std::cerr << "Error getting object metadata for object " << object_name
-                << " in bucket " << bucket_name
-                << ", status=" << original.status() << std::endl;
-      return;
+      throw std::runtime_error(original.status().message());
     }
 
     StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
@@ -1450,10 +1356,7 @@ void SetObjectTemporaryHold(google::cloud::storage::Client client, int& argc,
         gcs::IfMetagenerationMatch(original->metageneration()));
 
     if (!updated) {
-      std::cerr << "Error patching object metadata for object " << object_name
-                << " in bucket " << bucket_name
-                << ", status=" << updated.status() << std::endl;
-      return;
+      throw std::runtime_error(updated.status().message());
     }
 
     std::cout << "The temporary hold for object " << updated->name()
@@ -1480,10 +1383,7 @@ void ReleaseObjectTemporaryHold(google::cloud::storage::Client client,
         client.GetObjectMetadata(bucket_name, object_name);
 
     if (!original) {
-      std::cerr << "Error getting object metadata for object " << object_name
-                << " in bucket " << bucket_name
-                << ", status=" << original.status() << std::endl;
-      return;
+      throw std::runtime_error(original.status().message());
     }
 
     StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
@@ -1492,10 +1392,7 @@ void ReleaseObjectTemporaryHold(google::cloud::storage::Client client,
         gcs::IfMetagenerationMatch(original->metageneration()));
 
     if (!updated) {
-      std::cerr << "Error patching object metadata for object " << object_name
-                << " in bucket " << bucket_name
-                << ", status=" << updated.status() << std::endl;
-      return;
+      throw std::runtime_error(updated.status().message());
     }
 
     std::cout << "The temporary hold for object " << updated->name()
@@ -1524,9 +1421,7 @@ void CreateGetSignedUrl(google::cloud::storage::Client client, int& argc,
                             std::chrono::minutes(15)));
 
     if (!signed_url) {
-      std::cerr << "Error creating signed URL, status=" << signed_url.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(signed_url.status().message());
     }
 
     std::cout << "The signed url is: " << *signed_url << "\n\n"
@@ -1555,9 +1450,7 @@ void CreatePutSignedUrl(google::cloud::storage::Client client, int& argc,
         gcs::ContentType("application/octet-stream"));
 
     if (!signed_url) {
-      std::cerr << "Error creating signed URL, status=" << signed_url.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(signed_url.status().message());
     }
 
     std::cout << "The signed url is: " << *signed_url << "\n\n"

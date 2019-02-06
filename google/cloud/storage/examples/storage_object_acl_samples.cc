@@ -60,10 +60,7 @@ void ListObjectAcl(gcs::Client client, int& argc, char* argv[]) {
         client.ListObjectAcl(bucket_name, object_name);
 
     if (!items) {
-      std::cerr << "Error reading ACL for object " << object_name
-                << " in bucket " << bucket_name << ", status=" << items.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(items.status().message());
     }
 
     std::cout << "ACLs for object=" << object_name << " in bucket "
@@ -94,10 +91,7 @@ void CreateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
         client.CreateObjectAcl(bucket_name, object_name, entity, role);
 
     if (!object_acl) {
-      std::cerr << "Error creating object ACL entry for entity " << entity
-                << " in object " << object_name << " and bucket " << bucket_name
-                << ", status=" << object_acl.status() << std::endl;
-      return;
+      throw std::runtime_error(object_acl.status().message());
     }
 
     std::cout << "Role " << object_acl->role() << " granted to "
@@ -123,10 +117,7 @@ void DeleteObjectAcl(gcs::Client client, int& argc, char* argv[]) {
         client.DeleteObjectAcl(bucket_name, object_name, entity);
 
     if (!status.ok()) {
-      std::cerr << "Error deleting object ACL entry for entity " << entity
-                << " in object " << object_name << " and bucket " << bucket_name
-                << ", status=" << status << std::endl;
-      return;
+      throw std::runtime_error(status.message());
     }
 
     std::cout << "Deleted ACL entry for " << entity << " in object "
@@ -152,10 +143,7 @@ void GetObjectAcl(gcs::Client client, int& argc, char* argv[]) {
         client.GetObjectAcl(bucket_name, object_name, entity);
 
     if (!acl) {
-      std::cerr << "Error getting object ACL entry for entity " << entity
-                << " in object " << object_name << " and bucket " << bucket_name
-                << ", status=" << acl.status() << std::endl;
-      return;
+      throw std::runtime_error(acl.status().message());
     }
 
     std::cout << "ACL entry for " << acl->entity() << " in object "
@@ -184,10 +172,7 @@ void UpdateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
         client.GetObjectAcl(bucket_name, object_name, entity);
 
     if (!current_acl) {
-      std::cerr << "Error getting object ACL entry for entity " << entity
-                << " in object " << object_name << " and bucket " << bucket_name
-                << ", status=" << current_acl.status() << std::endl;
-      return;
+      throw std::runtime_error(current_acl.status().message());
     }
 
     current_acl->set_role(role);
@@ -196,10 +181,7 @@ void UpdateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
         client.UpdateObjectAcl(bucket_name, object_name, *current_acl);
 
     if (!updated_acl) {
-      std::cerr << "Error updating object ACL for entity " << entity
-                << " in object " << object_name << " and bucket " << bucket_name
-                << ", status=" << updated_acl.status() << std::endl;
-      return;
+      throw std::runtime_error(updated_acl.status().message());
     }
 
     std::cout << "ACL entry for " << updated_acl->entity() << " in object "
@@ -227,10 +209,7 @@ void PatchObjectAcl(gcs::Client client, int& argc, char* argv[]) {
         client.GetObjectAcl(bucket_name, object_name, entity);
 
     if (!original_acl) {
-      std::cerr << "Error getting object ACL entry for entity " << entity
-                << " in object " << object_name << " and bucket " << bucket_name
-                << ", status=" << original_acl.status() << std::endl;
-      return;
+      throw std::runtime_error(original_acl.status().message());
     }
 
     gcs::ObjectAccessControl new_acl = *original_acl;
@@ -240,10 +219,7 @@ void PatchObjectAcl(gcs::Client client, int& argc, char* argv[]) {
         bucket_name, object_name, entity, *original_acl, new_acl);
 
     if (!patched_acl) {
-      std::cerr << "Error patching object ACL entry for entity " << entity
-                << " in object " << object_name << " and bucket " << bucket_name
-                << ", status=" << patched_acl.status() << std::endl;
-      return;
+      throw std::runtime_error(patched_acl.status().message());
     }
 
     std::cout << "ACL entry for " << patched_acl->entity() << " in object "
@@ -273,10 +249,7 @@ void PatchObjectAclNoRead(gcs::Client client, int& argc, char* argv[]) {
         gcs::ObjectAccessControlPatchBuilder().set_role(role));
 
     if (!patched_acl) {
-      std::cerr << "Error patching object ACL entry for entity " << entity
-                << " in object " << object_name << " and bucket " << bucket_name
-                << ", status=" << patched_acl.status() << std::endl;
-      return;
+      throw std::runtime_error(patched_acl.status().message());
     }
 
     std::cout << "ACL entry for " << patched_acl->entity() << " in object "

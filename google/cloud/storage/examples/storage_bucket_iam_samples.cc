@@ -58,9 +58,7 @@ void GetBucketIamPolicy(google::cloud::storage::Client client, int& argc,
         client.GetBucketIamPolicy(bucket_name);
 
     if (!policy) {
-      std::cerr << "Error getting IAM policy for bucket " << bucket_name
-                << ", status=" << policy.status() << std::endl;
-      return;
+      throw std::runtime_error(policy.status().message());
     }
 
     std::cout << "The IAM policy for bucket " << bucket_name << " is "
@@ -87,9 +85,7 @@ void AddBucketIamMember(google::cloud::storage::Client client, int& argc,
         client.GetBucketIamPolicy(bucket_name);
 
     if (!policy) {
-      std::cerr << "Error getting current IAM policy for bucket " << bucket_name
-                << ", status=" << policy.status() << std::endl;
-      return;
+      throw std::runtime_error(policy.status().message());
     }
 
     policy->bindings.AddMember(role, member);
@@ -98,9 +94,7 @@ void AddBucketIamMember(google::cloud::storage::Client client, int& argc,
         client.SetBucketIamPolicy(bucket_name, *policy);
 
     if (!updated_policy) {
-      std::cerr << "Error setting IAM policy for bucket " << bucket_name
-                << ", status=" << updated_policy.status() << std::endl;
-      return;
+      throw std::runtime_error(updated_policy.status().message());
     }
 
     std::cout << "Updated IAM policy bucket " << bucket_name
@@ -126,9 +120,7 @@ void RemoveBucketIamMember(google::cloud::storage::Client client, int& argc,
     StatusOr<google::cloud::IamPolicy> policy =
         client.GetBucketIamPolicy(bucket_name);
     if (!policy) {
-      std::cerr << "Error getting current IAM policy for bucket " << bucket_name
-                << ", status=" << policy.status() << std::endl;
-      return;
+      throw std::runtime_error(policy.status().message());
     }
 
     policy->bindings.RemoveMember(role, member);
@@ -137,9 +129,7 @@ void RemoveBucketIamMember(google::cloud::storage::Client client, int& argc,
         client.SetBucketIamPolicy(bucket_name, *policy);
 
     if (!updated_policy) {
-      std::cerr << "Error setting IAM policy for bucket " << bucket_name
-                << ", status=" << updated_policy.status() << std::endl;
-      return;
+      throw std::runtime_error(updated_policy.status().message());
     }
 
     std::cout << "Updated IAM policy bucket " << bucket_name
@@ -170,9 +160,7 @@ void TestBucketIamPermissions(google::cloud::storage::Client client, int& argc,
         client.TestBucketIamPermissions(bucket_name, permissions);
 
     if (!actual_permissions) {
-      std::cerr << "Error checking IAM permissions for bucket " << bucket_name
-                << ", status=" << actual_permissions.status() << std::endl;
-      return;
+      throw std::runtime_error(actual_permissions.status().message());
     }
 
     if (actual_permissions->empty()) {

@@ -58,9 +58,7 @@ void ListDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
         client.ListDefaultObjectAcl(bucket_name);
 
     if (!items) {
-      std::cerr << "Error getting default object ACL entries for bucket "
-                << bucket_name << ", status=" << items.status() << std::endl;
-      return;
+      throw std::runtime_error(items.status().message());
     }
 
     std::cout << "ACLs for bucket=" << bucket_name << std::endl;
@@ -89,10 +87,7 @@ void CreateDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
         client.CreateDefaultObjectAcl(bucket_name, entity, role);
 
     if (!default_object_acl) {
-      std::cerr << "Failure getting default object ACL for entity " << entity
-                << " in bucket " << bucket_name
-                << ", status=" << default_object_acl.status() << std::endl;
-      return;
+      throw std::runtime_error(default_object_acl.status().message());
     }
 
     std::cout << "Role " << default_object_acl->role()
@@ -119,10 +114,7 @@ void DeleteDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
         client.DeleteDefaultObjectAcl(bucket_name, entity);
 
     if (!status.ok()) {
-      std::cerr << "Failure deleting default object ACL for entity " << entity
-                << " in bucket " << bucket_name << ", status=" << status
-                << std::endl;
-      return;
+      throw std::runtime_error(status.message());
     }
 
     std::cout << "Deleted ACL entry for " << entity << " in bucket "
@@ -147,10 +139,7 @@ void GetDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
         client.GetDefaultObjectAcl(bucket_name, entity);
 
     if (!acl) {
-      std::cerr << "Failure getting default object ACL for entity " << entity
-                << " in bucket " << bucket_name << ", status=" << acl.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(acl.status().message());
     }
 
     std::cout << "Default Object ACL entry for " << acl->entity()
@@ -177,10 +166,7 @@ void UpdateDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
         client.GetDefaultObjectAcl(bucket_name, entity);
 
     if (!original_acl) {
-      std::cerr << "Failure getting default object ACL for entity " << entity
-                << " in bucket " << bucket_name
-                << ", status=" << original_acl.status() << std::endl;
-      return;
+      throw std::runtime_error(original_acl.status().message());
     }
 
     original_acl->set_role(role);
@@ -189,10 +175,7 @@ void UpdateDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
         client.UpdateDefaultObjectAcl(bucket_name, *original_acl);
 
     if (!updated_acl) {
-      std::cerr << "Failure updating default object ACL for entity " << entity
-                << " in bucket " << bucket_name
-                << ", status=" << updated_acl.status() << std::endl;
-      return;
+      throw std::runtime_error(updated_acl.status().message());
     }
 
     std::cout << "Default Object ACL entry for " << updated_acl->entity()
@@ -220,10 +203,7 @@ void PatchDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
         client.GetDefaultObjectAcl(bucket_name, entity);
 
     if (!original_acl) {
-      std::cerr << "Failure getting default object ACL for entity " << entity
-                << " in bucket " << bucket_name
-                << ", status=" << original_acl.status() << std::endl;
-      return;
+      throw std::runtime_error(original_acl.status().message());
     }
 
     auto new_acl = *original_acl;
@@ -234,10 +214,7 @@ void PatchDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
                                      new_acl);
 
     if (!patched_acl) {
-      std::cerr << "Failure patching default object ACL for entity " << entity
-                << " in bucket " << bucket_name
-                << ", status=" << patched_acl.status() << std::endl;
-      return;
+      throw std::runtime_error(patched_acl.status().message());
     }
 
     std::cout << "Default Object ACL entry for " << patched_acl->entity()
@@ -268,10 +245,7 @@ void PatchDefaultObjectAclNoRead(google::cloud::storage::Client client,
             gcs::ObjectAccessControlPatchBuilder().set_role(role));
 
     if (!patched_acl) {
-      std::cerr << "Failure patching default object ACL for entity " << entity
-                << " in bucket " << bucket_name
-                << ", status=" << patched_acl.status() << std::endl;
-      return;
+      throw std::runtime_error(patched_acl.status().message());
     }
 
     std::cout << "Default Object ACL entry for " << patched_acl->entity()

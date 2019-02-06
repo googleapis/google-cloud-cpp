@@ -57,9 +57,7 @@ void ListBuckets(google::cloud::storage::Client client, int& argc,
     gcs::ListBucketsReader bucket_list = client.ListBuckets();
     for (auto&& bucket_metadata : bucket_list) {
       if (!bucket_metadata) {
-        std::cerr << "Error reading bucket list for default project"
-                  << ", status=" << bucket_metadata.status() << std::endl;
-        return;
+        throw std::runtime_error(bucket_metadata.status().message());
       }
 
       std::cout << bucket_metadata->name() << std::endl;
@@ -86,9 +84,7 @@ void ListBucketsForProject(google::cloud::storage::Client client, int& argc,
     int count = 0;
     for (auto&& bucket_metadata : client.ListBucketsForProject(project_id)) {
       if (!bucket_metadata) {
-        std::cerr << "Error reading bucket list for project " << project_id
-                  << ", status=" << bucket_metadata.status() << std::endl;
-        return;
+        throw std::runtime_error(bucket_metadata.status().message());
       }
 
       std::cout << bucket_metadata->name() << std::endl;
@@ -117,8 +113,7 @@ void CreateBucket(google::cloud::storage::Client client, int& argc,
         client.CreateBucket(bucket_name, gcs::BucketMetadata());
 
     if (!bucket_metadata) {
-      std::cerr << "Could not create bucket " << bucket_name << std::endl;
-      return;
+      throw std::runtime_error(bucket_metadata.status().message());
     }
 
     std::cout << "Bucket " << bucket_metadata->name() << " created."
@@ -144,9 +139,7 @@ void CreateBucketForProject(google::cloud::storage::Client client, int& argc,
                                       gcs::BucketMetadata());
 
     if (!bucket_metadata) {
-      std::cerr << "Could not create bucket " << bucket_name << " in project "
-                << project_id << std::endl;
-      return;
+      throw std::runtime_error(bucket_metadata.status().message());
     }
 
     std::cout << "Bucket " << bucket_metadata->name() << " created for project "
@@ -171,10 +164,9 @@ void GetBucketMetadata(google::cloud::storage::Client client, int& argc,
         client.GetBucketMetadata(bucket_name);
 
     if (!bucket_metadata) {
-      std::cerr << "Error while getting metadata for bucket " << bucket_name
-                << ", status=" << bucket_metadata.status() << std::endl;
-      return;
+      throw std::runtime_error(bucket_metadata.status().message());
     }
+
     std::cout << "The metadata for bucket " << bucket_metadata->name() << " is "
               << *bucket_metadata << std::endl;
   }
@@ -194,9 +186,7 @@ void DeleteBucket(google::cloud::storage::Client client, int& argc,
     google::cloud::Status status = client.DeleteBucket(bucket_name);
 
     if (!status.ok()) {
-      std::cerr << "Error while deleting bucket " << bucket_name
-                << ", status=" << status << std::endl;
-      return;
+      throw std::runtime_error(status.message());
     }
 
     std::cout << "The bucket " << bucket_name << " was deleted successfully."
@@ -220,9 +210,7 @@ void ChangeDefaultStorageClass(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::BucketMetadata> meta = client.GetBucketMetadata(bucket_name);
 
     if (!meta) {
-      std::cerr << "Error while getting metadata for bucket " << bucket_name
-                << ", status=" << meta.status() << std::endl;
-      return;
+      throw std::runtime_error(meta.status().message());
     }
 
     meta->set_storage_class(storage_class);
@@ -230,9 +218,7 @@ void ChangeDefaultStorageClass(google::cloud::storage::Client client, int& argc,
         client.UpdateBucket(bucket_name, *meta);
 
     if (!updated_meta) {
-      std::cerr << "Error updating the metadata for bucket " << meta->name()
-                << ", status=" << meta.status() << std::endl;
-      return;
+      throw std::runtime_error(updated_meta.status().message());
     }
 
     std::cout << "Updated the storage class in " << updated_meta->name()
@@ -258,9 +244,7 @@ void PatchBucketStorageClass(google::cloud::storage::Client client, int& argc,
         client.GetBucketMetadata(bucket_name);
 
     if (!original) {
-      std::cerr << "Error while getting metadata for bucket " << bucket_name
-                << ", status=" << original.status() << std::endl;
-      return;
+      throw std::runtime_error(original.status().message());
     }
 
     gcs::BucketMetadata desired = *original;
@@ -270,9 +254,7 @@ void PatchBucketStorageClass(google::cloud::storage::Client client, int& argc,
         client.PatchBucket(bucket_name, *original, desired);
 
     if (!patched) {
-      std::cerr << "Error patching the metadata for bucket " << original->name()
-                << ", status=" << patched.status() << std::endl;
-      return;
+      throw std::runtime_error(patched.status().message());
     }
 
     std::cout << "Storage class for bucket " << patched->name()
@@ -300,9 +282,7 @@ void PatchBucketStorageClassWithBuilder(google::cloud::storage::Client client,
         gcs::BucketMetadataPatchBuilder().SetStorageClass(storage_class));
 
     if (!patched) {
-      std::cerr << "Error patching the metadata for bucket " << bucket_name
-                << ", status=" << patched.status() << std::endl;
-      return;
+      throw std::runtime_error(patched.status().message());
     }
 
     std::cout << "Storage class for bucket " << patched->name()
@@ -329,9 +309,7 @@ void AddBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
                          gcs::BucketEncryption{key_name}));
 
     if (!updated_metadata) {
-      std::cerr << "Error updating the metadata for bucket " << bucket_name
-                << ", status=" << updated_metadata.status() << std::endl;
-      return;
+      throw std::runtime_error(updated_metadata.status().message());
     }
 
     if (!updated_metadata->has_encryption()) {
@@ -365,9 +343,7 @@ void GetBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::BucketMetadata> meta = client.GetBucketMetadata(bucket_name);
 
     if (!meta) {
-      std::cerr << "Error reading the metadata for bucket " << bucket_name
-                << ", status=" << meta.status() << std::endl;
-      return;
+      throw std::runtime_error(meta.status().message());
     }
 
     if (!meta->has_encryption()) {
@@ -399,10 +375,7 @@ void RemoveBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
         bucket_name, gcs::BucketMetadataPatchBuilder().ResetEncryption());
 
     if (!updated_metadata) {
-      std::cerr << "Error resetting the default encryption key for bucket "
-                << bucket_name << ", status=" << updated_metadata.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(updated_metadata.status().message());
     }
 
     std::cout << "Successfully removed default KMS key on bucket "
@@ -431,9 +404,7 @@ void AddBucketLabel(google::cloud::storage::Client client, int& argc,
         gcs::BucketMetadataPatchBuilder().SetLabel(label_key, label_value));
 
     if (!updated_metadata) {
-      std::cerr << "Error setting a label on bucket " << bucket_name
-                << ", status=" << updated_metadata.status() << std::endl;
-      return;
+      throw std::runtime_error(updated_metadata.status().message());
     }
 
     std::cout << "Successfully set label " << label_key << " to " << label_value
@@ -462,9 +433,7 @@ void GetBucketLabels(google::cloud::storage::Client client, int& argc,
         client.GetBucketMetadata(bucket_name, gcs::Fields("labels"));
 
     if (!bucket_metadata) {
-      std::cerr << "Error reading labels on bucket " << bucket_name
-                << ", status=" << bucket_metadata.status() << std::endl;
-      return;
+      throw std::runtime_error(bucket_metadata.status().message());
     }
 
     if (bucket_metadata->labels().empty()) {
@@ -498,10 +467,7 @@ void RemoveBucketLabel(google::cloud::storage::Client client, int& argc,
         bucket_name, gcs::BucketMetadataPatchBuilder().ResetLabel(label_key));
 
     if (!updated_metadata) {
-      std::cerr << "Error resetting label " << label_key << " on bucket "
-                << bucket_name << ", status=" << updated_metadata.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(updated_metadata.status().message());
     }
 
     std::cout << "Successfully reset label " << label_key << " on bucket  "
@@ -534,9 +500,7 @@ void GetBilling(google::cloud::storage::Client client, int& argc,
         client.GetBucketMetadata(bucket_name);
 
     if (!bucket_metadata) {
-      std::cerr << "Error reading metadata for bucket " << bucket_name
-                << ", status=" << bucket_metadata.status() << std::endl;
-      return;
+      throw std::runtime_error(bucket_metadata.status().message());
     }
 
     if (!bucket_metadata->has_billing()) {
@@ -578,10 +542,7 @@ void EnableRequesterPays(google::cloud::storage::Client client, int& argc,
         gcs::BucketMetadataPatchBuilder().SetBilling(gcs::BucketBilling{true}));
 
     if (!bucket_metadata) {
-      std::cerr << "Error setting the billing configuration for bucket "
-                << bucket_name << ", status=" << bucket_metadata.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(bucket_metadata.status().message());
     }
 
     std::cout << "Billing configuration for bucket " << bucket_metadata->name()
@@ -617,10 +578,7 @@ void DisableRequesterPays(google::cloud::storage::Client client, int& argc,
         gcs::UserProject(project_id));
 
     if (!bucket_metadata) {
-      std::cerr << "Error disabling billing configuration for bucket "
-                << bucket_name << ", status=" << bucket_metadata.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(bucket_metadata.status().message());
     }
 
     std::cout << "Billing configuration for bucket " << bucket_name
@@ -669,10 +627,7 @@ void WriteObjectRequesterPays(google::cloud::storage::Client client, int& argc,
 
     StatusOr<gcs::ObjectMetadata> metadata = std::move(stream).metadata();
     if (!metadata) {
-      std::cerr << "Error while writing to object " << object_name
-                << " in bucket " << bucket_name
-                << ", status=" << metadata.status() << std::endl;
-      return;
+      throw std::runtime_error(metadata.status().message());
     }
     std::cout << "Successfully wrote to object " << metadata->name()
               << " its size is: " << metadata->size()
@@ -723,9 +678,7 @@ void GetServiceAccount(google::cloud::storage::Client client, int& argc,
         client.GetServiceAccount();
 
     if (!service_account_details) {
-      std::cerr << "Error getting service account details, status="
-                << service_account_details.status() << std::endl;
-      return;
+      throw std::runtime_error(service_account_details.status().message());
     }
     std::cout << "The service account details are " << *service_account_details
               << std::endl;
@@ -749,9 +702,7 @@ void GetServiceAccountForProject(google::cloud::storage::Client client,
         client.GetServiceAccountForProject(project_id);
 
     if (!service_account_details) {
-      std::cerr << "Error getting service account details, status="
-                << service_account_details.status() << std::endl;
-      return;
+      throw std::runtime_error(service_account_details.status().message());
     }
 
     std::cout << "The service account details for project " << project_id
@@ -777,9 +728,7 @@ void GetDefaultEventBasedHold(google::cloud::storage::Client client, int& argc,
         client.GetBucketMetadata(bucket_name);
 
     if (!bucket_metadata) {
-      std::cerr << "Error fetching bucket metadata for bucket " << bucket_name
-                << ", status=" << bucket_metadata.status() << std::endl;
-      return;
+      throw std::runtime_error(bucket_metadata.status().message());
     }
 
     std::cout << "The default event-based hold for objects in bucket "
@@ -808,9 +757,7 @@ void EnableDefaultEventBasedHold(google::cloud::storage::Client client,
         client.GetBucketMetadata(bucket_name);
 
     if (!original) {
-      std::cerr << "Error fetching bucket metadata for bucket " << bucket_name
-                << ", status=" << original.status() << std::endl;
-      return;
+      throw std::runtime_error(original.status().message());
     }
 
     StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
@@ -819,10 +766,7 @@ void EnableDefaultEventBasedHold(google::cloud::storage::Client client,
         gcs::IfMetagenerationMatch(original->metageneration()));
 
     if (!patched_metadata) {
-      std::cerr << "Error setting default event based hold in bucket "
-                << original->name() << ", status=" << original.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(patched_metadata.status().message());
     }
 
     std::cout << "The default event-based hold for objects in bucket "
@@ -851,9 +795,7 @@ void DisableDefaultEventBasedHold(google::cloud::storage::Client client,
         client.GetBucketMetadata(bucket_name);
 
     if (!original) {
-      std::cerr << "Error fetching bucket metadata for bucket " << bucket_name
-                << ", status=" << original.status() << std::endl;
-      return;
+      throw std::runtime_error(original.status().message());
     }
 
     StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
@@ -862,10 +804,7 @@ void DisableDefaultEventBasedHold(google::cloud::storage::Client client,
         gcs::IfMetagenerationMatch(original->metageneration()));
 
     if (!patched_metadata) {
-      std::cerr << "Error disabling default event based hold in bucket "
-                << original->name() << ", status=" << original.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(patched_metadata.status().message());
     }
 
     std::cout << "The default event-based hold for objects in bucket "
@@ -894,9 +833,7 @@ void GetRetentionPolicy(google::cloud::storage::Client client, int& argc,
         client.GetBucketMetadata(bucket_name);
 
     if (!bucket_metadata) {
-      std::cerr << "Error fetching the metadata for bucket " << bucket_name
-                << ", status=" << bucket_metadata.status() << std::endl;
-      return;
+      throw std::runtime_error(bucket_metadata.status().message());
     }
 
     if (!bucket_metadata->has_retention_policy()) {
@@ -930,9 +867,7 @@ void SetRetentionPolicy(google::cloud::storage::Client client, int& argc,
         client.GetBucketMetadata(bucket_name);
 
     if (!original) {
-      std::cerr << "Error fetching the metadata for bucket " << bucket_name
-                << ", status=" << original.status() << std::endl;
-      return;
+      throw std::runtime_error(original.status().message());
     }
 
     StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
@@ -941,10 +876,7 @@ void SetRetentionPolicy(google::cloud::storage::Client client, int& argc,
         gcs::IfMetagenerationMatch(original->metageneration()));
 
     if (!patched_metadata) {
-      std::cerr << "Error setting the retention policy on bucket "
-                << original->name() << ", status=" << patched_metadata.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(patched_metadata.status().message());
     }
 
     if (!patched_metadata->has_retention_policy()) {
@@ -977,9 +909,7 @@ void RemoveRetentionPolicy(google::cloud::storage::Client client, int& argc,
         client.GetBucketMetadata(bucket_name);
 
     if (!original) {
-      std::cerr << "Error fetching the metadata for bucket " << bucket_name
-                << ", status=" << original.status() << std::endl;
-      return;
+      throw std::runtime_error(original.status().message());
     }
 
     StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
@@ -987,10 +917,7 @@ void RemoveRetentionPolicy(google::cloud::storage::Client client, int& argc,
         gcs::IfMetagenerationMatch(original->metageneration()));
 
     if (!patched_metadata) {
-      std::cerr << "Error removing the retention policy on bucket "
-                << original->name() << ", status=" << patched_metadata.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(patched_metadata.status().message());
     }
 
     if (!patched_metadata->has_retention_policy()) {
@@ -1025,9 +952,7 @@ void LockRetentionPolicy(google::cloud::storage::Client client, int& argc,
         client.GetBucketMetadata(bucket_name);
 
     if (!original) {
-      std::cerr << "Error fetching the metadata for bucket " << bucket_name
-                << ", status=" << original.status() << std::endl;
-      return;
+      throw std::runtime_error(original.status().message());
     }
 
     StatusOr<gcs::BucketMetadata> updated_metadata =
@@ -1035,10 +960,7 @@ void LockRetentionPolicy(google::cloud::storage::Client client, int& argc,
                                          original->metageneration());
 
     if (!updated_metadata) {
-      std::cerr << "Error locking bucket retention policy for bucket "
-                << bucket_name << ", status=" << updated_metadata.status()
-                << std::endl;
-      return;
+      throw std::runtime_error(updated_metadata.status().message());
     }
 
     if (!updated_metadata->has_retention_policy()) {

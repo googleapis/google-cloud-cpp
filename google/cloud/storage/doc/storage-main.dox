@@ -214,13 +214,13 @@ In these cases no `StatusOr` wrapper is used.
 
 @par Error Handling Example (without exceptions):
 
-Application developers that cannot or prefer not to use exceptions to signal
-errors can check if the `StatusOr<T>` contains an error using `.ok()`. The error
-details are available using the `.status()` member function. If the
-`StatusOr<T>` does not contain an error then the application can use the
-`StatusOr<T>` as a smart pointer to `T`, that is, `operator->()` and
-`operator*()` work as you would expect. Note that accessing the value of a
-`StatusOr<T>` that contains an error is undefined behavior.
+Applications that do not use exceptions to signal errors should check if the
+`StatusOr<T>` contains a value before using it. If the `StatusOr<T>` does
+contain a value then the `StatusOr<T>` can be used as a smart pointer to `T`.
+That is, `operator->()` and `operator*()` work as you would expect. If the
+`StatusOr<T>` does not contain a value then the error details are available
+using the `.status()` member function (and trying to access the value produces
+undefined behavior).
 
 @code {.cpp}
 using namespace google::cloud;
@@ -228,35 +228,30 @@ using namespace google::cloud;
   StatusOr<storage::BucketMetadata> metadata = client.GetBucketMetadata(
       "my-bucket");
 
-  if (!metadata.ok()) {
-    std::cerr << "Error retrieving metadata for my-bucket: "
-              << metadata.status() << std::endl;
+  if (!metadata) {
+    std::cerr << "GetBucketMetadata: " << metadata.status() << "\n";
     return;
   }
 
-  // here, use `metadata` as a smart pointer to `T`, for example:
-  std::cout << "The bucket " << metadata->name()
-            << " default storage class is " << metadata->storage_class()
-            << "\n";
-
-  // alternatively capture as a local variable and use normally:
-  storage::BucketMetadata bucket_metadata = *metadata;
-  std::cout << "Full metadata: " << bucket_metadata << "\n";
+  // use `metadata` as a smart pointer to `BucketMetadata`
+  std::cout << "The metadata for bucket " << metadata->name()
+            << " is " << *metadata << "\n";
 }
 @endcode
 
 @par Error Handling Example (with exceptions):
 
-Applications that prefer to use
-exceptions to signal errors can simply call `.value()` on the `StatusOr<T>`
-object. This will return a `T` if there was no error, and throw an exception if
-the `StatusOr<T>` object contains an error.
+Applications that use exceptions to signal errors can simply call `.value()` on
+the `StatusOr<T>` object. This will return a `T` if the `StatusOr<T>` object
+contains a value, and will otherwise throw an exception.
 
 @code {.cpp}
 using namespace google::cloud;
 [](storage::Client client) {
   storage::BucketMetadata metadata = client.GetBucketMetadata(
         "my-bucket").value(); // throws on error
+  std::cout << "The metadata for bucket " << metadata.name()
+            << " is " << metadata << "\n";
 }
 @endcode
 
