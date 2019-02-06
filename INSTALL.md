@@ -1,10 +1,11 @@
 # Installing google-cloud-cpp
 
 By default google-cloud-cpp libraries download and compile all their
-dependencies. This makes it easier for users to "take the library for a spin",
-and works well for users that "Live at Head", but does not work for package
-maintainers or users that prefer to compile their dependencies once and install
-them in `/usr/local/` or a similar directory.
+dependencies ([see below](#required-libraries) for a complete list). This makes
+it easier for users to "take the library for a spin", and works well for users
+that "Live at Head", but does not work for package maintainers or users that
+prefer to compile their dependencies once and install them in `/usr/local/` or a
+similar directory.
 
 This document provides instructions to install the dependencies of
 google-cloud-cpp.
