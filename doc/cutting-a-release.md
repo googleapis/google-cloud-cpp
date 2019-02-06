@@ -89,7 +89,7 @@ git commit -m"Create ${RELEASE}.x release branch" .
 git push --set-upstream origin ${RELEASE}.x
 ```
 
-NOTE: No code review or Pull Request is needed as part of this step.
+**NOTE:** No code review or Pull Request is needed as part of this step.
 
 ## Update the documentation links
 
@@ -128,7 +128,7 @@ send the PR for review against `master`. For an example, look at
 Create a pre-release using
 [GitHub](https://github.com/googleapis/google-cloud-cpp/releases/new).
 Make sure you reference the `v0.N.x` branch, set a tag name like `v0.N.0-pre1`,
-and you check the `pre-release` checkbox.
+and check the `pre-release` checkbox.
 
 Copy the relevant release notes into the description of the release.
 
