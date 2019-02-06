@@ -420,7 +420,7 @@ class TableAdmin {
    * @snippet table_admin_snippets.cc list snapshots
    */
   StatusOr<std::vector<::google::bigtable::admin::v2::Snapshot>> ListSnapshots(
-      bigtable::ClusterId cluster_id = bigtable::ClusterId("-"));
+      bigtable::ClusterId const& cluster_id = bigtable::ClusterId("-"));
 
  private:
   /**

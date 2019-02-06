@@ -264,7 +264,7 @@ btadmin::Table TableAdmin::CreateTableFromSnapshotImpl(
 }
 
 StatusOr<std::vector<::google::bigtable::admin::v2::Snapshot>>
-TableAdmin::ListSnapshots(bigtable::ClusterId cluster_id) {
+TableAdmin::ListSnapshots(bigtable::ClusterId const& cluster_id) {
   grpc::Status status;
   auto res = impl_.ListSnapshots(status, cluster_id);
 
