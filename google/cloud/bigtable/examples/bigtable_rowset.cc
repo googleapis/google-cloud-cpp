@@ -64,7 +64,7 @@ int main(int argc, char* argv[]) try {
       table_id);
   //! [connect data] [END connecting_to_bigtable]
 
-  // Add rows with keys range "key-0000010" - "key-0000020"
+  // Add rows with keys in the range: "key-0000010" - "key-0000020"
   for (int i = 10; i != 20; ++i) {
     // Note: This example uses sequential numeric IDs for simplicity, but
     // this can result in poor performance in a production application.
@@ -101,7 +101,7 @@ int main(int argc, char* argv[]) try {
   row_set.Append("key-000018");
   //! [append row keys] [END appending row keys]
 
-  //! [scan specific rows] [START scanning_specific_rows]
+  //! [scan specific rows] [START bigtable_read_keys_set]
   std::cout << "\nReading discontinuous keys: " << '\n';
   for (auto& row : table.ReadRows(std::move(row_set), filter)) {
     std::cout << row.row_key() << ":\n";
@@ -111,7 +111,7 @@ int main(int argc, char* argv[]) try {
                 << "\t\"" << cell.value() << '"' << '\n';
     }
   }
-  //! [scan specific rows] [END scanning_specific_rows]
+  //! [scan specific rows] [END bigtable_read_keys_set]
 
   std::cout << std::flush;
 
