@@ -58,9 +58,7 @@ void ListNotifications(google::cloud::storage::Client client, int& argc,
         client.ListNotifications(bucket_name);
 
     if (!items) {
-      std::cerr << "Error reading notification list for " << bucket_name
-                << ", status=" << items.status() << std::endl;
-      return;
+      throw std::runtime_error(items.status().message());
     }
 
     std::cout << "Notifications for bucket=" << bucket_name << std::endl;
@@ -89,10 +87,7 @@ void CreateNotification(google::cloud::storage::Client client, int& argc,
                                   gcs::NotificationMetadata());
 
     if (!notification) {
-      std::cerr << "Error creating notification for " << bucket_name
-                << " on topic " << topic_name
-                << ", status=" << notification.status() << std::endl;
-      return;
+      throw std::runtime_error(notification.status().message());
     }
 
     std::cout << "Successfully created notification " << notification->id()
@@ -127,10 +122,7 @@ void GetNotification(google::cloud::storage::Client client, int& argc,
         client.GetNotification(bucket_name, notification_id);
 
     if (!notification) {
-      std::cerr << "Error getting notification metadata for notification id "
-                << notification_id << " on bucket " << bucket_name
-                << ", status=" << notification.status() << std::endl;
-      return;
+      throw std::runtime_error(notification.status().message());
     }
 
     std::cout << "Notification " << notification->id() << " for bucket "
@@ -162,10 +154,7 @@ void DeleteNotification(google::cloud::storage::Client client, int& argc,
         client.DeleteNotification(bucket_name, notification_id);
 
     if (!status.ok()) {
-      std::cerr << "Error delete notification id " << notification_id
-                << " on bucket " << bucket_name << ", status=" << status
-                << std::endl;
-      return;
+      throw std::runtime_error(status.message());
     }
 
     std::cout << "Successfully deleted notification " << notification_id
