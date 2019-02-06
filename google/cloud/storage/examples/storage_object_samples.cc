@@ -152,13 +152,6 @@ void InsertObjectModifiedRetry(google::cloud::storage::Client unused, int& argc,
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
   [](std::string bucket_name, std::string object_name, std::string contents) {
-    StatusOr<std::shared_ptr<gcs::oauth2::Credentials>> credentials =
-        gcs::oauth2::GoogleDefaultCredentials();
-
-    if (!credentials) {
-      throw std::runtime_error(credentials.status().message());
-    }
-
     // Create a client that only gives up on the third error. The default policy
     // is to retry for several minutes.
     StatusOr<gcs::ClientOptions> options =
