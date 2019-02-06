@@ -27,7 +27,7 @@ is available [online][doxygen-link].
 ### v0.4.x - 2019-02
 
 * Fixed some documentation.
-* Removed `StatusOr<void>`.
+* **Breaking change**: Removed `StatusOr<void>`.
 * Updated `StatusOr` documentation.
 * Fixed some (minor) issues found by coverity.
 

@@ -24,16 +24,19 @@ the reference guide includes a quick start guide.
 
 ### v0.4.x - 2019-02
 
-* Removed almost all exception throwing in favor of `StatusOr<T>` return values.
+* **Breaking change**: Removed almost all exception throwing in favor of
+  `StatusOr<T>` return values.
 * Lots of cleanup to documentation and example code.
 * Avoids use of `StatusOr::value()` when the validity was already checked.
-* Client::ListBuckets() now directly returns ListBucketsReader, because it
-  cannot fail so StatusOr was not needed.
-* Removed support for `StatusOr<void>`; changed usages to return `Status` instead.
+* `Client::ListBuckets()` now directly returns `ListBucketsReader`, because it
+  cannot fail so `StatusOr` was not needed.
+* Removed support for `StatusOr<void>`; changed usages to return `Status`
+  instead.
 * 502s are now retryable errors from GCS.
-* LockBucketRetentionPolicy returns a BucketMetadata now instead of `void`.
+* **Breaking change**: `LockBucketRetentionPolicy` returns a `BucketMetadata`
+  now instead of `void`.
 * Cleaned up documentation and example code.
-* Disabled `make isntall` for external projects.
+* Disabled `make install` for external projects.
 * Moved repo organization from GoogleCloudPlatform -> googleapis.
 * Moved some internal-only APIs out of public interfaces.
 * Fixed resuming uploads when the server responds with a 308.

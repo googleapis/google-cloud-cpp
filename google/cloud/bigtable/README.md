@@ -27,7 +27,8 @@ is available [online][doxygen-link].
 
 * Moved repo organization from GoogleCloudPlatform -> googleapis.
 * Implemented several more async functions.
-* Started migrating functions to `StatusOr` and away from throwing exceptions.
+* **Breaking change**: Started migrating functions to `StatusOr` and away from
+  throwing exceptions.
 * Several fixes to bulk mutator (#1880)
 * Disabled `make install` for external projects.
 * `Row` now has a move constructor.
