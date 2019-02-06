@@ -15,7 +15,7 @@
 include(CMakeFindDependencyMacro)
 find_dependency(protobuf)
 find_dependency(gRPC)
-find_dependency(google_cloud_cpp_common 0.4.0)
+find_dependency(google_cloud_cpp_common)
 
 include("${CMAKE_CURRENT_LIST_DIR}/bigtable-targets.cmake")
 
