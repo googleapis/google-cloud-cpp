@@ -66,12 +66,20 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
   auto instance_name =
       instance_admin.project_name() + "/instances/" + instance_id.get();
   bool instance_exists =
-      instances.end() !=
+      instances.instances.end() !=
       std::find_if(
-          instances.begin(), instances.end(),
+          instances.instances.begin(), instances.instances.end(),
           [&instance_name](google::bigtable::admin::v2::Instance const& i) {
             return i.name() == instance_name;
           });
+  if (!instances.failed_locations.empty()) {
+    std::cerr
+        << "The service tells us it has no information about these locations:";
+    for (std::string const& location : instances.failed_locations) {
+      std::cout << " " << location << std::endl;
+    }
+    std::cerr << ". Continuing anyway" << std::endl;
+  }
   // [END bigtable_check_instance_exists]
 
   // Create instance if does not exists
@@ -100,8 +108,16 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
   // [START bigtable_list_instances]
   std::cout << "\nListing Instances: " << std::endl;
   auto instances_after = instance_admin.ListInstances();
-  for (auto const& instance : instances_after) {
+  for (auto const& instance : instances_after.instances) {
     std::cout << instance.name() << std::endl;
+  }
+  if (!instances_after.failed_locations.empty()) {
+    std::cerr
+        << "The service tells us it has no information about these locations:";
+    for (std::string const& location : instances_after.failed_locations) {
+      std::cout << " " << location << std::endl;
+    }
+    std::cerr << ". Continuing anyway" << std::endl;
   }
   // [END bigtable_list_instances]
 
@@ -117,8 +133,17 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
   std::cout << "\nListing Clusters: " << std::endl;
   auto cluster_list = instance_admin.ListClusters(instance_id.get());
   std::cout << "Cluster Name List: " << std::endl;
-  for (auto const& cluster : cluster_list) {
+  for (auto const& cluster : cluster_list.clusters) {
     std::cout << "Cluster Name: " << cluster.name() << std::endl;
+  }
+  if (!cluster_list.failed_locations.empty()) {
+    std::cout << "The Cloud Bigtable service reports that the following "
+                 "locations are temporarily unavailable and no information "
+                 "about clusters in these locations can be obtained:"
+              << std::endl;
+    for (std::string const& location : cluster_list.failed_locations) {
+      std::cout << location << std::endl;
+    }
   }
   // [END bigtable_get_clusters]
 }
@@ -142,12 +167,20 @@ void CreateDevInstance(std::string project_id, int argc, char* argv[]) {
   auto instance_name =
       instance_admin.project_name() + "/instances/" + instance_id.get();
   bool instance_exists =
-      instances.end() !=
+      instances.instances.end() !=
       std::find_if(
-          instances.begin(), instances.end(),
+          instances.instances.begin(), instances.instances.end(),
           [&instance_name](google::bigtable::admin::v2::Instance const& i) {
             return i.name() == instance_name;
           });
+  if (!instances.failed_locations.empty()) {
+    std::cerr
+        << "The service tells us it has no information about these locations:";
+    for (std::string const& location : instances.failed_locations) {
+      std::cout << " " << location << std::endl;
+    }
+    std::cerr << ". Continuing anyway" << std::endl;
+  }
   // Create instance if does not exists
   if (!instance_exists) {
     // [START bigtable_create_dev_instance]
@@ -212,12 +245,20 @@ void CreateCluster(std::string project_id, int argc, char* argv[]) {
   auto instance_name =
       instance_admin.project_name() + "/instances/" + instance_id.get();
   bool instance_exists =
-      instances.end() !=
+      instances.instances.end() !=
       std::find_if(
-          instances.begin(), instances.end(),
+          instances.instances.begin(), instances.instances.end(),
           [&instance_name](google::bigtable::admin::v2::Instance const& i) {
             return i.name() == instance_name;
           });
+  if (!instances.failed_locations.empty()) {
+    std::cerr
+        << "The service tells us it has no information about these locations:";
+    for (std::string const& location : instances.failed_locations) {
+      std::cout << " " << location << std::endl;
+    }
+    std::cerr << ". Continuing anyway" << std::endl;
+  }
   if (instance_exists) {
     // [START bigtable_create_cluster]
     std::cout << "Adding Cluster to Instance: " << instance_id.get()

@@ -29,14 +29,14 @@ static_assert(std::is_copy_assignable<bigtable::noex::InstanceAdmin>::value,
 using ClientUtils =
     bigtable::internal::noex::UnaryClientUtils<bigtable::InstanceAdminClient>;
 
-std::vector<btadmin::Instance> InstanceAdmin::ListInstances(
-    grpc::Status& status) {
+InstanceList InstanceAdmin::ListInstances(grpc::Status& status) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
   // Build the RPC request, try to minimize copying.
-  std::vector<btadmin::Instance> result;
+  InstanceList result;
+  std::unordered_set<std::string> unique_failed_locations;
   std::string page_token;
   do {
     btadmin::ListInstancesRequest request;
@@ -48,14 +48,22 @@ std::vector<btadmin::Instance> InstanceAdmin::ListInstances(
         &InstanceAdminClient::ListInstances, request,
         "InstanceAdmin::ListInstances", status, true);
     if (!status.ok()) {
-      return result;
+      return InstanceList();
     }
 
-    for (auto& x : *response.mutable_instances()) {
-      result.emplace_back(std::move(x));
-    }
+    auto& instances = *response.mutable_instances();
+    std::move(instances.begin(), instances.end(),
+              std::back_inserter(result.instances));
+    auto& failed_locations = *response.mutable_failed_locations();
+    std::move(
+        failed_locations.begin(), failed_locations.end(),
+        std::inserter(unique_failed_locations, unique_failed_locations.end()));
+
     page_token = std::move(*response.mutable_next_page_token());
   } while (!page_token.empty());
+
+  std::move(unique_failed_locations.begin(), unique_failed_locations.end(),
+            std::back_inserter(result.failed_locations));
   return result;
 }
 
@@ -103,14 +111,15 @@ btadmin::Cluster InstanceAdmin::GetCluster(
                                "InstanceAdmin::GetCluster", status, true);
 }
 
-std::vector<btadmin::Cluster> InstanceAdmin::ListClusters(
-    std::string const& instance_id, grpc::Status& status) {
+ClusterList InstanceAdmin::ListClusters(std::string const& instance_id,
+                                        grpc::Status& status) {
   // Copy the policies in effect for the operation.
   auto rpc_policy = rpc_retry_policy_->clone();
   auto backoff_policy = rpc_backoff_policy_->clone();
 
   // Build the RPC request, try to minimize copying.
-  std::vector<btadmin::Cluster> result;
+  ClusterList result;
+  std::unordered_set<std::string> unique_failed_locations;
   std::string page_token;
   do {
     btadmin::ListClustersRequest request;
@@ -122,14 +131,21 @@ std::vector<btadmin::Cluster> InstanceAdmin::ListClusters(
         &InstanceAdminClient::ListClusters, request,
         "InstanceAdmin::ListClusters", status, true);
     if (!status.ok()) {
-      return result;
+      return ClusterList();
     }
 
-    for (auto& x : *response.mutable_clusters()) {
-      result.emplace_back(std::move(x));
-    }
+    auto& clusters = *response.mutable_clusters();
+    std::move(clusters.begin(), clusters.end(),
+              std::back_inserter(result.clusters));
+    auto& failed_locations = *response.mutable_failed_locations();
+    std::move(
+        failed_locations.begin(), failed_locations.end(),
+        std::inserter(unique_failed_locations, unique_failed_locations.end()));
     page_token = std::move(*response.mutable_next_page_token());
   } while (!page_token.empty());
+
+  std::move(unique_failed_locations.begin(), unique_failed_locations.end(),
+            std::back_inserter(result.failed_locations));
   return result;
 }
 

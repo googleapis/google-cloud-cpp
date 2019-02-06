@@ -31,7 +31,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 static_assert(std::is_copy_assignable<bigtable::InstanceAdmin>::value,
               "bigtable::InstanceAdmin must be CopyAssignable");
 
-std::vector<btadmin::Instance> InstanceAdmin::ListInstances() {
+InstanceList InstanceAdmin::ListInstances() {
   grpc::Status status;
   auto result = impl_.ListInstances(status);
   if (!status.ok()) {
@@ -199,12 +199,9 @@ future<btadmin::Cluster> InstanceAdmin::AsyncGetCluster(
   return result;
 }
 
-std::vector<btadmin::Cluster> InstanceAdmin::ListClusters() {
-  return ListClusters("-");
-}
+ClusterList InstanceAdmin::ListClusters() { return ListClusters("-"); }
 
-std::vector<btadmin::Cluster> InstanceAdmin::ListClusters(
-    std::string const& instance_id) {
+ClusterList InstanceAdmin::ListClusters(std::string const& instance_id) {
   grpc::Status status;
   auto result = impl_.ListClusters(instance_id, status);
   if (!status.ok()) {

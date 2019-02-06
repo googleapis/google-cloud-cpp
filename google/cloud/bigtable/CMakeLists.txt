@@ -141,8 +141,6 @@ add_library(bigtable_client
             admin_client.cc
             app_profile_config.h
             app_profile_config.cc
-            async_cluster_list_responses.h
-            async_instance_list_responses.h
             async_operation.h
             bigtable_strong_types.h
             ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
@@ -151,6 +149,7 @@ add_library(bigtable_client
             client_options.cc
             cluster_config.h
             cluster_config.cc
+            cluster_list_responses.h
             column_family.h
             completion_queue.h
             completion_queue.cc
@@ -165,6 +164,7 @@ add_library(bigtable_client
             instance_admin.cc
             instance_config.h
             instance_config.cc
+            instance_list_responses.h
             instance_update_config.h
             instance_update_config.cc
             internal/async_bulk_apply.h

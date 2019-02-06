@@ -41,27 +41,31 @@ class InstanceAdminTest : public ::testing::Test {
 
 // A lambda to create lambdas. Basically we would be rewriting the same
 // lambda twice without this thing.
-auto create_list_instances_lambda = [](std::string expected_token,
-                                       std::string returned_token,
-                                       std::vector<std::string> instance_ids) {
-  return [expected_token, returned_token, instance_ids](
-             grpc::ClientContext* ctx,
-             btadmin::ListInstancesRequest const& request,
-             btadmin::ListInstancesResponse* response) {
-    auto const project_name = "projects/" + kProjectId;
-    EXPECT_EQ(project_name, request.parent());
-    EXPECT_EQ(expected_token, request.page_token());
+auto create_list_instances_lambda =
+    [](std::string expected_token, std::string returned_token,
+       std::vector<std::string> instance_ids,
+       std::vector<std::string> failed_locations = {}) {
+      return [expected_token, returned_token, instance_ids, failed_locations](
+                 grpc::ClientContext* ctx,
+                 btadmin::ListInstancesRequest const& request,
+                 btadmin::ListInstancesResponse* response) {
+        auto const project_name = "projects/" + kProjectId;
+        EXPECT_EQ(project_name, request.parent());
+        EXPECT_EQ(expected_token, request.page_token());
 
-    EXPECT_NE(nullptr, response);
-    for (auto const& instance_id : instance_ids) {
-      auto& instance = *response->add_instances();
-      instance.set_name(project_name + "/instances/" + instance_id);
-    }
-    // Return the right token.
-    response->set_next_page_token(returned_token);
-    return grpc::Status::OK;
-  };
-};
+        EXPECT_NE(nullptr, response);
+        for (auto const& instance_id : instance_ids) {
+          auto& instance = *response->add_instances();
+          instance.set_name(project_name + "/instances/" + instance_id);
+        }
+        for (auto const& failed_location : failed_locations) {
+          response->add_failed_locations(std::move(failed_location));
+        }
+        // Return the right token.
+        response->set_next_page_token(returned_token);
+        return grpc::Status::OK;
+      };
+    };
 
 // A lambda to create lambdas. Basically we would be rewriting the same
 // lambda twice without this thing.
@@ -113,11 +117,12 @@ auto create_policy_with_params = []() {
 // lambda twice without this thing.
 auto create_list_clusters_lambda =
     [](std::string expected_token, std::string returned_token,
-       std::string instance_id, std::vector<std::string> cluster_ids) {
-      return [expected_token, returned_token, instance_id, cluster_ids](
-                 grpc::ClientContext* ctx,
-                 btadmin::ListClustersRequest const& request,
-                 btadmin::ListClustersResponse* response) {
+       std::string instance_id, std::vector<std::string> cluster_ids,
+       std::vector<std::string> failed_locations = {}) {
+      return [expected_token, returned_token, instance_id, cluster_ids,
+              failed_locations](grpc::ClientContext* ctx,
+                                btadmin::ListClustersRequest const& request,
+                                btadmin::ListClustersResponse* response) {
         auto const instance_name =
             "projects/" + kProjectId + "/instances/" + instance_id;
         EXPECT_EQ(instance_name, request.parent());
@@ -127,6 +132,9 @@ auto create_list_clusters_lambda =
         for (auto const& cluster_id : cluster_ids) {
           auto& cluster = *response->add_clusters();
           cluster.set_name(instance_name + "/clusters/" + cluster_id);
+        }
+        for (auto const& failed_location : failed_locations) {
+          response->add_failed_locations(std::move(failed_location));
         }
         // Return the right token.
         response->set_next_page_token(returned_token);
@@ -235,10 +243,11 @@ TEST_F(InstanceAdminTest, ListInstances) {
   grpc::Status status;
   auto actual = tested.ListInstances(status);
   EXPECT_TRUE(status.ok());
+  EXPECT_TRUE(actual.failed_locations.empty());
   std::string instance_name = tested.project_name();
-  ASSERT_EQ(2UL, actual.size());
-  EXPECT_EQ(instance_name + "/instances/t0", actual[0].name());
-  EXPECT_EQ(instance_name + "/instances/t1", actual[1].name());
+  ASSERT_EQ(2UL, actual.instances.size());
+  EXPECT_EQ(instance_name + "/instances/t0", actual.instances[0].name());
+  EXPECT_EQ(instance_name + "/instances/t1", actual.instances[1].name());
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::ListInstances` handles failures.
@@ -262,12 +271,13 @@ TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
   grpc::Status status;
   auto actual = tested.ListInstances(status);
   EXPECT_TRUE(status.ok());
+  EXPECT_TRUE(actual.failed_locations.empty());
   std::string project_name = tested.project_name();
-  ASSERT_EQ(4UL, actual.size());
-  EXPECT_EQ(project_name + "/instances/t0", actual[0].name());
-  EXPECT_EQ(project_name + "/instances/t1", actual[1].name());
-  EXPECT_EQ(project_name + "/instances/t2", actual[2].name());
-  EXPECT_EQ(project_name + "/instances/t3", actual[3].name());
+  ASSERT_EQ(4UL, actual.instances.size());
+  EXPECT_EQ(project_name + "/instances/t0", actual.instances[0].name());
+  EXPECT_EQ(project_name + "/instances/t1", actual.instances[1].name());
+  EXPECT_EQ(project_name + "/instances/t2", actual.instances[2].name());
+  EXPECT_EQ(project_name + "/instances/t3", actual.instances[3].name());
 }
 
 /**
@@ -287,6 +297,35 @@ TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
   tested.ListInstances(status);
   EXPECT_FALSE(status.ok());
   EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
+}
+
+/// @test Verify that `bigtable::InstanceAdmin::ListInstances` accumulates
+/// failed locations.
+TEST_F(InstanceAdminTest, ListInstancesFailedLocations) {
+  bigtable::noex::InstanceAdmin tested(client_);
+  auto batch0 =
+      create_list_instances_lambda("", "token-001", {"t0"}, {"loc1", "loc2"});
+  auto batch1 =
+      create_list_instances_lambda("token-001", "token-002", {"t1"}, {});
+  auto batch2 =
+      create_list_instances_lambda("token-002", "", {"t2"}, {"loc1", "loc3"});
+  EXPECT_CALL(*client_, ListInstances(_, _, _))
+      .WillOnce(Invoke(batch0))
+      .WillOnce(Invoke(batch1))
+      .WillOnce(Invoke(batch2));
+
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  auto actual = tested.ListInstances(status);
+  EXPECT_TRUE(status.ok());
+  std::string project_name = tested.project_name();
+  ASSERT_EQ(3UL, actual.instances.size());
+  EXPECT_EQ(project_name + "/instances/t0", actual.instances[0].name());
+  EXPECT_EQ(project_name + "/instances/t1", actual.instances[1].name());
+  EXPECT_EQ(project_name + "/instances/t2", actual.instances[2].name());
+  std::sort(actual.failed_locations.begin(), actual.failed_locations.end());
+  std::vector<std::string> expected_failed_locations{"loc1", "loc2", "loc3"};
+  EXPECT_EQ(expected_failed_locations, actual.failed_locations);
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::GetInstance` works in the simple
@@ -396,10 +435,11 @@ TEST_F(InstanceAdminTest, ListClusters) {
   grpc::Status status;
   auto actual = tested.ListClusters(instance_id, status);
   EXPECT_TRUE(status.ok());
+  EXPECT_TRUE(actual.failed_locations.empty());
   std::string instance_name = tested.InstanceName(instance_id);
-  ASSERT_EQ(2UL, actual.size());
-  EXPECT_EQ(instance_name + "/clusters/t0", actual[0].name());
-  EXPECT_EQ(instance_name + "/clusters/t1", actual[1].name());
+  ASSERT_EQ(2UL, actual.clusters.size());
+  EXPECT_EQ(instance_name + "/clusters/t0", actual.clusters[0].name());
+  EXPECT_EQ(instance_name + "/clusters/t1", actual.clusters[1].name());
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::ListClusters` handles failures.
@@ -427,12 +467,43 @@ TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
   grpc::Status status;
   auto actual = tested.ListClusters(instance_id, status);
   EXPECT_TRUE(status.ok());
+  EXPECT_TRUE(actual.failed_locations.empty());
   std::string instance_name = tested.InstanceName(instance_id);
-  ASSERT_EQ(4UL, actual.size());
-  EXPECT_EQ(instance_name + "/clusters/t0", actual[0].name());
-  EXPECT_EQ(instance_name + "/clusters/t1", actual[1].name());
-  EXPECT_EQ(instance_name + "/clusters/t2", actual[2].name());
-  EXPECT_EQ(instance_name + "/clusters/t3", actual[3].name());
+  ASSERT_EQ(4UL, actual.clusters.size());
+  EXPECT_EQ(instance_name + "/clusters/t0", actual.clusters[0].name());
+  EXPECT_EQ(instance_name + "/clusters/t1", actual.clusters[1].name());
+  EXPECT_EQ(instance_name + "/clusters/t2", actual.clusters[2].name());
+  EXPECT_EQ(instance_name + "/clusters/t3", actual.clusters[3].name());
+}
+
+/// @test Verify that `bigtable::InstanceAdmin::ListClusters` accumulates failed
+/// locations.
+TEST_F(InstanceAdminTest, ListClustersFailedLocations) {
+  bigtable::noex::InstanceAdmin tested(client_);
+  std::string const& instance_id = "the-instance";
+  auto batch0 = create_list_clusters_lambda("", "token-001", instance_id,
+                                            {"t0"}, {"loc1", "loc2"});
+  auto batch1 = create_list_clusters_lambda("token-001", "token-002",
+                                            instance_id, {"t1"}, {});
+  auto batch2 = create_list_clusters_lambda("token-002", "", instance_id,
+                                            {"t2"}, {"loc1", "loc3"});
+  EXPECT_CALL(*client_, ListClusters(_, _, _))
+      .WillOnce(Invoke(batch0))
+      .WillOnce(Invoke(batch1))
+      .WillOnce(Invoke(batch2));
+
+  // After all the setup, make the actual call we want to test.
+  grpc::Status status;
+  auto actual = tested.ListClusters(instance_id, status);
+  EXPECT_TRUE(status.ok());
+  std::string instance_name = tested.InstanceName(instance_id);
+  ASSERT_EQ(3UL, actual.clusters.size());
+  EXPECT_EQ(instance_name + "/clusters/t0", actual.clusters[0].name());
+  EXPECT_EQ(instance_name + "/clusters/t1", actual.clusters[1].name());
+  EXPECT_EQ(instance_name + "/clusters/t2", actual.clusters[2].name());
+  std::sort(actual.failed_locations.begin(), actual.failed_locations.end());
+  std::vector<std::string> expected_failed_locations{"loc1", "loc2", "loc3"};
+  EXPECT_EQ(expected_failed_locations, actual.failed_locations);
 }
 
 /**

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_ADMIN_H_
 
 #include "google/cloud/bigtable/bigtable_strong_types.h"
+#include "google/cloud/bigtable/cluster_list_responses.h"
 #include "google/cloud/bigtable/instance_admin_client.h"
 #include "google/cloud/bigtable/instance_config.h"
 #include "google/cloud/bigtable/instance_update_config.h"
@@ -147,15 +148,29 @@ class InstanceAdmin {
       InstanceUpdateConfig instance_update_config);
 
   /**
-   * Return the list of instances in the project.
+   * Obtain the list of instances in the project.
+   *
+   * @note In some circumstances Cloud Bigtable may be unable to obtain the full
+   *   list of instances, typically because some transient failure has made
+   *   specific zones unavailable. In this cases the service returns a separate
+   *   list of `failed_locations` that represent the unavailable zones.
+   *   Applications may want to retry the operation after the transient
+   *   conditions have cleared.
    *
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc list instances
    */
-  std::vector<google::bigtable::admin::v2::Instance> ListInstances();
+  InstanceList ListInstances();
 
   /**
    * Query (asynchronously) the list of instances in the project.
+   *
+   * @note In some circumstances Cloud Bigtable may be unable to obtain the full
+   *   list of instances, typically because some transient failure has made
+   *   specific zones unavailable. In this cases the service returns a separate
+   *   list of `failed_locations` that represent the unavailable zones.
+   *   Applications may want to retry the operation after the transient
+   *   conditions have cleared.
    *
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
@@ -217,24 +232,44 @@ class InstanceAdmin {
   void DeleteInstance(std::string const& instance_id);
 
   /**
-   * Return the list of clusters in an instance.
+   * Obtain the list of clusters in an instance.
+   *
+   * @note In some circumstances Cloud Bigtable may be unable to obtain the full
+   *   list of clusters, typically because some transient failure has made
+   *   specific zones unavailable. In this cases the service returns a separate
+   *   list of `failed_locations` that represent the unavailable zones.
+   *   Applications may want to retry the operation after the transient
+   *   conditions have cleared.
    *
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc list clusters
    */
-  std::vector<google::bigtable::admin::v2::Cluster> ListClusters();
+  ClusterList ListClusters();
 
   /**
-   * Return the list of clusters in an instance.
+   * Obtain the list of clusters in an instance.
+   *
+   * @note In some circumstances Cloud Bigtable may be unable to obtain the full
+   *   list of clusters, typically because some transient failure has made
+   *   specific zones unavailable. In this cases the service returns a separate
+   *   list of `failed_locations` that represent the unavailable zones.
+   *   Applications may want to retry the operation after the transient
+   *   conditions have cleared.
    *
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc list clusters
    */
-  std::vector<google::bigtable::admin::v2::Cluster> ListClusters(
-      std::string const& instance_id);
+  ClusterList ListClusters(std::string const& instance_id);
 
   /**
    * Query (asynchronously) the list of clusters in a project.
+   *
+   * @note In some circumstances Cloud Bigtable may be unable to obtain the full
+   *   list of clusters, typically because some transient failure has made
+   *   specific zones unavailable. In this cases the service returns a separate
+   *   list of `failed_locations` that represent the unavailable zones.
+   *   Applications may want to retry the operation after the transient
+   *   conditions have cleared.
    *
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
@@ -251,6 +286,13 @@ class InstanceAdmin {
 
   /**
    * Query (asynchronously) the list of clusters in an instance.
+   *
+   * @note In some circumstances Cloud Bigtable may be unable to obtain the full
+   *   list of clusters, typically because some transient failure has made
+   *   specific zones unavailable. In this cases the service returns a separate
+   *   list of `failed_locations` that represent the unavailable zones.
+   *   Applications may want to retry the operation after the transient
+   *   conditions have cleared.
    *
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on

@@ -138,7 +138,8 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteInstanceTest) {
       config);
   auto instance = create_promise.get_future().get();
   auto instances_current = instance_admin_->ListInstances();
-  EXPECT_TRUE(IsInstancePresent(instances_current, instance.name()));
+  EXPECT_TRUE(instances_current.failed_locations.empty());
+  EXPECT_TRUE(IsInstancePresent(instances_current.instances, instance.name()));
 
   // Get instance
   std::promise<btadmin::Instance> done;
@@ -165,8 +166,10 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteInstanceTest) {
       instance_id);
   promise_delete_instance.get_future().get();
   auto instances_after_delete = instance_admin_->ListInstances();
-  EXPECT_TRUE(IsInstancePresent(instances_current, instance.name()));
-  EXPECT_FALSE(IsInstancePresent(instances_after_delete, instance.name()));
+  EXPECT_TRUE(instances_after_delete.failed_locations.empty());
+  EXPECT_TRUE(IsInstancePresent(instances_current.instances, instance.name()));
+  EXPECT_FALSE(
+      IsInstancePresent(instances_after_delete.instances, instance.name()));
 
   cq.Shutdown();
   pool.join();
@@ -271,7 +274,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
       },
       instance_id, cluster_id);
   promise_delete_cluster.get_future().get();
-  auto clusters_after_delete = instance_admin_->ListClusters(id);
+  auto clusters_after_delete = instance_admin_->ListClusters(id).clusters;
   instance_admin_->DeleteInstance(id);
   EXPECT_TRUE(IsClusterPresent(
       clusters_after, instance_details.name() + "/clusters/" + id + "-cl2"));

@@ -140,8 +140,17 @@ void ListInstances(google::cloud::bigtable::InstanceAdmin instance_admin,
     throw Usage{"list-instances: <project-id>"};
   }
   auto instances = instance_admin.ListInstances();
-  for (auto const& instance : instances) {
+  for (auto const& instance : instances.instances) {
     std::cout << instance.name() << std::endl;
+  }
+  if (!instances.failed_locations.empty()) {
+    std::cout << "The Cloud Bigtable service reports that the following "
+                 "locations are temporarily unavailable and no information "
+                 "about instances in these locations can be obtained:"
+              << std::endl;
+    for (std::string const& location : instances.failed_locations) {
+      std::cout << location << std::endl;
+    }
   }
 }
 //! [list instances]
@@ -202,8 +211,17 @@ void ListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
 
   auto cluster_list = instance_admin.ListClusters(ConsumeArg(argc, argv));
   std::cout << "Cluster Name List" << std::endl;
-  for (auto const& cluster : cluster_list) {
+  for (auto const& cluster : cluster_list.clusters) {
     std::cout << "Cluster Name:" << cluster.name() << std::endl;
+  }
+  if (!cluster_list.failed_locations.empty()) {
+    std::cout << "The Cloud Bigtable service reports that the following "
+                 "locations are temporarily unavailable and no information "
+                 "about clusters in these locations can be obtained:"
+              << std::endl;
+    for (std::string const& location : cluster_list.failed_locations) {
+      std::cout << location << std::endl;
+    }
   }
 }
 //! [list clusters]
@@ -217,8 +235,17 @@ void ListAllClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
 
   auto cluster_list = instance_admin.ListClusters();
   std::cout << "Cluster Name List" << std::endl;
-  for (auto const& cluster : cluster_list) {
+  for (auto const& cluster : cluster_list.clusters) {
     std::cout << "Cluster Name:" << cluster.name() << std::endl;
+  }
+  if (!cluster_list.failed_locations.empty()) {
+    std::cout << "The Cloud Bigtable service reports that the following "
+                 "locations are temporarily unavailable and no information "
+                 "about clusters in these locations can be obtained:"
+              << std::endl;
+    for (std::string const& location : cluster_list.failed_locations) {
+      std::cout << location << std::endl;
+    }
   }
 }
 //! [list all clusters]
@@ -300,8 +327,17 @@ void RunInstanceOperations(
 
   std::cout << "\nListing Instances: " << std::endl;
   auto instances = instance_admin.ListInstances();
-  for (auto const& instance : instances) {
+  for (auto const& instance : instances.instances) {
     std::cout << instance.name() << std::endl;
+  }
+  if (!instances.failed_locations.empty()) {
+    std::cerr << "The Cloud Bigtable service reports that the following "
+                 "locations are temporarily unavailable and no information "
+                 "about instances in these locations can be obtained:"
+              << std::endl;
+    for (auto& failed_location : instances.failed_locations) {
+      std::cerr << failed_location << std::endl;
+    }
   }
 
   std::cout << "\nGet Instance: " << std::endl;
@@ -313,8 +349,17 @@ void RunInstanceOperations(
   std::cout << "\nListing Clusters: " << std::endl;
   auto cluster_list = instance_admin.ListClusters(instance_id.get());
   std::cout << "Cluster Name List: " << std::endl;
-  for (auto const& cluster : cluster_list) {
+  for (auto const& cluster : cluster_list.clusters) {
     std::cout << "Cluster Name: " << cluster.name() << std::endl;
+  }
+  if (!cluster_list.failed_locations.empty()) {
+    std::cerr << "The Cloud Bigtable service reports that the following "
+                 "locations are temporarily unavailable and no information "
+                 "about clusters in these locations can be obtained:"
+              << std::endl;
+    for (auto& failed_location : cluster_list.failed_locations) {
+      std::cerr << failed_location << std::endl;
+    }
   }
 
   std::cout << "\nDeleting Instance: ";

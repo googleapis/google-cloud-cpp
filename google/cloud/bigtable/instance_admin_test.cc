@@ -223,10 +223,11 @@ TEST_F(InstanceAdminTest, ListInstances) {
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListInstances();
+  EXPECT_TRUE(actual.failed_locations.empty());
   std::string instance_name = tested.project_name();
-  ASSERT_EQ(2UL, actual.size());
-  EXPECT_EQ(instance_name + "/instances/t0", actual[0].name());
-  EXPECT_EQ(instance_name + "/instances/t1", actual[1].name());
+  ASSERT_EQ(2UL, actual.instances.size());
+  EXPECT_EQ(instance_name + "/instances/t0", actual.instances[0].name());
+  EXPECT_EQ(instance_name + "/instances/t1", actual.instances[1].name());
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::ListInstances` handles failures.
@@ -250,12 +251,13 @@ TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListInstances();
+  EXPECT_TRUE(actual.failed_locations.empty());
   std::string project_name = tested.project_name();
-  ASSERT_EQ(4UL, actual.size());
-  EXPECT_EQ(project_name + "/instances/t0", actual[0].name());
-  EXPECT_EQ(project_name + "/instances/t1", actual[1].name());
-  EXPECT_EQ(project_name + "/instances/t2", actual[2].name());
-  EXPECT_EQ(project_name + "/instances/t3", actual[3].name());
+  ASSERT_EQ(4UL, actual.instances.size());
+  EXPECT_EQ(project_name + "/instances/t0", actual.instances[0].name());
+  EXPECT_EQ(project_name + "/instances/t1", actual.instances[1].name());
+  EXPECT_EQ(project_name + "/instances/t2", actual.instances[2].name());
+  EXPECT_EQ(project_name + "/instances/t3", actual.instances[3].name());
 }
 
 /**
@@ -943,10 +945,11 @@ TEST_F(InstanceAdminTest, ListClusters) {
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListClusters(instance_id);
+  EXPECT_TRUE(actual.failed_locations.empty());
   std::string instance_name = tested.InstanceName(instance_id);
-  ASSERT_EQ(2UL, actual.size());
-  EXPECT_EQ(instance_name + "/clusters/t0", actual[0].name());
-  EXPECT_EQ(instance_name + "/clusters/t1", actual[1].name());
+  ASSERT_EQ(2UL, actual.clusters.size());
+  EXPECT_EQ(instance_name + "/clusters/t0", actual.clusters[0].name());
+  EXPECT_EQ(instance_name + "/clusters/t1", actual.clusters[1].name());
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::ListClusters` handles failures.
@@ -973,12 +976,13 @@ TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListClusters(instance_id);
+  EXPECT_TRUE(actual.failed_locations.empty());
   std::string instance_name = tested.InstanceName(instance_id);
-  ASSERT_EQ(4UL, actual.size());
-  EXPECT_EQ(instance_name + "/clusters/t0", actual[0].name());
-  EXPECT_EQ(instance_name + "/clusters/t1", actual[1].name());
-  EXPECT_EQ(instance_name + "/clusters/t2", actual[2].name());
-  EXPECT_EQ(instance_name + "/clusters/t3", actual[3].name());
+  ASSERT_EQ(4UL, actual.clusters.size());
+  EXPECT_EQ(instance_name + "/clusters/t0", actual.clusters[0].name());
+  EXPECT_EQ(instance_name + "/clusters/t1", actual.clusters[1].name());
+  EXPECT_EQ(instance_name + "/clusters/t2", actual.clusters[2].name());
+  EXPECT_EQ(instance_name + "/clusters/t3", actual.clusters[3].name());
 }
 
 /**
