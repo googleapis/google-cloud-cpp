@@ -63,7 +63,7 @@ dnf install -y automake cmake gcc-c++ git grpc-devel grpc-plugins \
         which zlib-devel
 ```
 
-**crc32c**: there is no Fedora package for this library, install it using:
+**crc32c**: there is no Fedora package for this library. To install use:
 
 ```bash
 cd /var/tmp/build
@@ -108,7 +108,7 @@ sudo apt install -y build-essential cmake git gcc g++ cmake \
         pkg-config tar wget zlib1g-dev
 ```
 
-**crc32c**: there is no Ubuntu package for this library, install it using:
+**crc32c**: there is no Ubuntu package for this library. To install it use:
 
 ```bash
 cd /var/tmp/build
@@ -151,17 +151,17 @@ old for the Google Cloud Platform APIs:
 cd /var/tmp/build
 wget -q https://github.com/grpc/grpc/archive/v1.17.2.tar.gz
 tar -xf v1.17.2.tar.gz
-cd /var/tmp/build/grpc-1.17.2
+cd grpc-1.17.2
 cd make -j $(nproc)
 sudo make install
 ldconfig
 ```
 
-**google-cloud-cpp**: finally we can install `google-cloud-cpp`, note that
+**google-cloud-cpp**: finally we can install `google-cloud-cpp`. Note that
 we use `pkg-config` to discover the options for gRPC:
 
 ```bash
-cd google-cloud-cpp
+cd $HOME/google-cloud-cpp # or wherever you have extracted google-cloud-cpp
 cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
@@ -170,18 +170,6 @@ cmake --build build-output -- -j $(nproc)
 cd build-output
 ctest --output-on-failure
 cmake --build . --target install
-```
-
-If you would rather not build the tests (which might speed up your build time):
-
-```bash
-cd google-cloud-cpp
-cmake -H. -Bbuild-output-for-install \
-    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
-    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
-    -DBUILD_TESTS=OFF
-cmake --build build-output-for-install -- -j $(nproc)
-cmake --build build-output-for-install --target install
 ```
 
 #### CentOS
@@ -205,13 +193,13 @@ yum install -y cmake3 gcc gcc-c++ git make openssl-devel
 ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 ```
 
-**crc32c**: there is no CentOS package for this library, install it using:
-
+**crc32c**: there is no CentOS package for this library. To install it use:
+ 
 ```bash
 cd /var/tmp/build
 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 tar -xf 1.0.6.tar.gz
-cd /var/tmp/build/crc32c-1.0.6
+cd crc32c-1.0.6
 cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -229,7 +217,7 @@ ldconfig
 cd /var/tmp/build
 wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
 tar -xf v3.6.1.tar.gz
-cd /var/tmp/build/protobuf-3.6.1/cmake
+cd protobuf-3.6.1/cmake
 cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -246,18 +234,18 @@ distributes c-ares-1.10. Manually install a newer version:
 cd /var/tmp/build
 wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
 tar -xf cares-1_14_0.tar.gz
-cd /var/tmp/build/c-ares-cares-1_14_0
+cd c-ares-cares-1_14_0
 ./buildconf && ./configure && make -j $(nproc) && make install
 ldconfig
 ```
 
-**gRPC**: can manually installed using:
+**gRPC**: can be manually installed using:
 
 ```bash
 cd /var/tmp/build
 wget -q https://github.com/grpc/grpc/archive/v1.17.2.tar.gz
 tar -xf v1.17.2.tar.gz
-cd /var/tmp/build/grpc-1.17.2
+cd grpc-1.17.2
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
 export PATH=/usr/local/bin:${PATH}
@@ -265,11 +253,11 @@ RUN make -j $(nproc) && make install
 RUN ldconfig
 ```
 
-**google-cloud-cpp**: finally we can install `google-cloud-cpp`, note that
+**google-cloud-cpp**: finally we can install `google-cloud-cpp`. Note that
 we use `pkg-config` to discover the options for gRPC:
 
 ```bash
-cd google-cloud-cpp
+cmake -H. -Bbuild-output \
 cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \

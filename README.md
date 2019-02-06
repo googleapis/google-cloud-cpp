@@ -375,7 +375,7 @@ you must configure `google-cloud-cpp` to find these dependencies, and install
 it.
 
 For example, if all the dependencies have installed the corresponding CMake
-support files, these commands will install `google-cloud-cpp` using:
+support files, these commands will install `google-cloud-cpp`:
 
 ```bash
 cmake -H. -Bbuild-output-for-install \
@@ -384,7 +384,7 @@ cmake --build build-output-for-install --target install
 ```
 
 Unfortunately many distributions do not install said CMake support files, in
-this case you can configure `google-cloud-cpp` to find these dependencies using
+which case you can configure `google-cloud-cpp` to find these dependencies using
 `pkg-config`, for example:
 
 ```bash
@@ -396,8 +396,8 @@ cmake --build build-output-for-install --target install
 
 Installing the dependencies themselves may be as simple as using the package
 manager for your platform, or may require manually downloading, compiling, and
-installing said dependency.  The [INSTALL.md](INSTALL.md) file describes how to
-compile all these dependencies for the most common platforms.
+installing said dependencies.  The [INSTALL.md](INSTALL.md) file describes how
+to compile all these dependencies for the most common platforms.
 
 ## Versioning
 
