@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_MUTATION_BATCHER_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_MUTATION_BATCHER_H_
 
+#include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/version.h"
@@ -36,25 +37,66 @@ class Table;
 
 namespace internal {
 
+// Type of callback executed on mutations completion. Just an alias for user
+// convenience.
 using AsyncApplyCompletionCallback =
     std::function<void(CompletionQueue&, grpc::Status&)>;
+// Type of callback executed on mutations admission. Just an alias for user
+// convenience.
 using AsyncApplyAdmissionCallback = std::function<void(CompletionQueue&)>;
 
+/**
+ * Objects of this class gather pack single row mutations into bulk mutations.
+ *
+ * This class should be used to underlie `Table::AsyncApplyBatched()`, which
+ * should have the same signature as `Table::AsyncApply()`.
+ *
+ * This class has two responsibilities:
+ *  * packing mutations in batches
+ *  * not admitting too many mutations (AKA flow control AKA backpressure)
+ */
 class MutationBatcher {
  public:
+  /// Configuration for MutationBatcher.
   struct Options {
     Options(
         // Cloud Bigtable doesn't accept more than this.
         size_t max_mutations_per_batch = 100000,
-        // Grpc has a 4MB limit. Let's make the default slightly smaller, so
-        // that overheads or miscalculations don't tip us over.
-        size_t max_size_per_batch = 4 * 1048576 * 9 / 10,
-        size_t max_batches = 8, size_t max_oustanding_size = 24 * 1048576);
+        // Let's make the default slightly smaller, so that overheads or
+        // miscalculations don't tip us over.
+        size_t max_size_per_batch = BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH *
+                                    9 / 10,
+        size_t max_batches = 8,
+        size_t max_oustanding_size =
+            BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH * 6)
+        : max_mutations_per_batch(max_mutations_per_batch),
+          max_size_per_batch(max_size_per_batch),
+          max_batches(max_batches),
+          max_oustanding_size(max_oustanding_size) {}
 
-    Options& SetMaxMutationsPerBatch(size_t max_mutations_per_batch_arg);
-    Options& SetMaxSizePerBatch(size_t max_size_per_batch_arg);
-    Options& SetMaxBatches(size_t max_batches_arg);
-    Options& SetMaxOustandingSize(size_t max_oustanding_size_arg);
+    // A single RPC will not have more mutations than this.
+    Options& SetMaxMutationsPerBatch(size_t max_mutations_per_batch_arg) {
+      max_mutations_per_batch = max_mutations_per_batch_arg;
+      return *this;
+    }
+
+    // Sum of mutations' sizes in a single RPC will not be larger than this.
+    Options& SetMaxSizePerBatch(size_t max_size_per_batch_arg) {
+      max_size_per_batch = max_size_per_batch_arg;
+      return *this;
+    }
+
+    // There will be no more RPCs outstanding (except for retries) than this.
+    Options& SetMaxBatches(size_t max_batches_arg) {
+      max_batches = max_batches_arg;
+      return *this;
+    }
+
+    // MutationBatcher will at most admit mutations of this total size.
+    Options& SetMaxOustandingSize(size_t max_oustanding_size_arg) {
+      max_oustanding_size = max_oustanding_size_arg;
+      return *this;
+    }
 
     size_t max_mutations_per_batch;
     size_t max_size_per_batch;
@@ -62,7 +104,12 @@ class MutationBatcher {
     size_t max_oustanding_size;
   };
 
-  MutationBatcher(noex::Table& table, Options options = Options());
+  MutationBatcher(noex::Table& table, Options options = Options())
+      : table_(table),
+        options_(options),
+        num_outstanding_batches_(),
+        oustanding_size_(),
+        cur_batch_(cloud::internal::make_unique<Batch>()) {}
 
   std::shared_ptr<AsyncOperation> AsyncApply(
       CompletionQueue& cq, AsyncApplyCompletionCallback&& completion_callback,
@@ -96,10 +143,16 @@ class MutationBatcher {
   class BatchedSingleRowMutation
       : public google::cloud::bigtable::AsyncOperation {
    public:
-    // TODO(dopiera): implement
+    // TODO(#1963): implement
     virtual void Cancel() override {}
   };
 
+  /**
+   * This class represents a single batch of mutations sent in one RPC.
+   *
+   * Objects of this class hold the accumulated mutations, their completion
+   * callbacks and basic statistics.
+   */
   class Batch {
    public:
     Batch() : num_mutations_(), requests_size_() {}
@@ -136,6 +189,8 @@ class MutationBatcher {
   void FlushIfPossible(CompletionQueue& cq);
   void BatchFinished(CompletionQueue& cq, std::unique_ptr<Batch> batch,
                      std::vector<FailedMutation> const& failed);
+  std::vector<AsyncApplyAdmissionCallback> FlushOnBatchFinished(
+      CompletionQueue& cq, std::unique_ptr<MutationBatcher::Batch> batch);
 
   std::mutex mu_;
   noex::Table& table_;

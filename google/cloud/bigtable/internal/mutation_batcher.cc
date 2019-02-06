@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,45 +22,6 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-MutationBatcher::Options::Options(size_t max_mutations_per_batch,
-                                  size_t max_size_per_batch, size_t max_batches,
-                                  size_t max_oustanding_size)
-    : max_mutations_per_batch(max_mutations_per_batch),
-      max_size_per_batch(max_size_per_batch),
-      max_batches(max_batches),
-      max_oustanding_size(max_oustanding_size) {}
-
-MutationBatcher::Options& MutationBatcher::Options::SetMaxMutationsPerBatch(
-    size_t max_mutations_per_batch_arg) {
-  max_mutations_per_batch = max_mutations_per_batch_arg;
-  return *this;
-}
-
-MutationBatcher::Options& MutationBatcher::Options::SetMaxSizePerBatch(
-    size_t max_size_per_batch_arg) {
-  max_size_per_batch = max_size_per_batch_arg;
-  return *this;
-}
-
-MutationBatcher::Options& MutationBatcher::Options::SetMaxBatches(
-    size_t max_batches_arg) {
-  max_batches = max_batches_arg;
-  return *this;
-}
-
-MutationBatcher::Options& MutationBatcher::Options::SetMaxOustandingSize(
-    size_t max_oustanding_size_arg) {
-  max_oustanding_size = max_oustanding_size_arg;
-  return *this;
-}
-
-MutationBatcher::MutationBatcher(noex::Table& table, Options options)
-    : table_(table),
-      options_(options),
-      num_outstanding_batches_(),
-      oustanding_size_(),
-      cur_batch_(cloud::internal::make_unique<Batch>()) {}
-
 std::shared_ptr<AsyncOperation> MutationBatcher::AsyncApply(
     CompletionQueue& cq, AsyncApplyCompletionCallback&& completion_callback,
     AsyncApplyAdmissionCallback&& admission_callback, SingleRowMutation&& mut) {
@@ -73,12 +34,9 @@ std::shared_ptr<AsyncOperation> MutationBatcher::AsyncApply(
   grpc::Status mutation_status = IsValid(pending);
   if (!mutation_status.ok()) {
     lk.unlock();
-    {
-      // Destroy the mutation before calling the admission callback so that we
-      // can limit the memory usage.
-      google::bigtable::v2::MutateRowsRequest::Entry entry;
-      pending.mut.MoveTo(&entry);
-    }
+    // Destroy the mutation before calling the admission callback so that we can
+    // limit the memory usage.
+    pending.mut.Clear();
     pending.completion_callback(cq, mutation_status);
     pending.completion_callback = AsyncApplyCompletionCallback();
     pending.admission_callback(cq);
@@ -213,8 +171,19 @@ void MutationBatcher::BatchFinished(
     std::vector<FailedMutation> const& failed) {
   batch->FireCallbacks(cq, failed);
 
-  std::unique_lock<std::mutex> lk(mu_);
+  auto admission_callbacks = FlushOnBatchFinished(cq, std::move(batch));
 
+  // Inform the user that we've admitted these mutations and there might be some
+  // space in the buffer finally.
+  for (auto& cb : admission_callbacks) {
+    grpc::Status status;
+    cb(cq);
+  }
+}
+
+std::vector<AsyncApplyAdmissionCallback> MutationBatcher::FlushOnBatchFinished(
+    CompletionQueue& cq, std::unique_ptr<MutationBatcher::Batch> batch) {
+  std::unique_lock<std::mutex> lk(mu_);
   oustanding_size_ -= batch->requests_size();
   num_outstanding_batches_ -= 1;
 
@@ -229,8 +198,8 @@ void MutationBatcher::BatchFinished(
 
   while (!pending_mutations_.empty() &&
          HasSpaceFor(pending_mutations_.front())) {
-    PendingSingleRowMutation& mut(pending_mutations_.front());
-    admission_callbacks.push_back(std::move(mut.admission_callback));
+    auto& mut(pending_mutations_.front());
+    admission_callbacks.emplace_back(std::move(mut.admission_callback));
     cur_batch_->Add(std::move(mut));
     pending_mutations_.pop();
   }
@@ -242,15 +211,7 @@ void MutationBatcher::BatchFinished(
   // flushed, it meant that there were no free slots. This function has just
   // released one slot and taken it again by running FlushIfPossible() so there
   // are no free slots again.
-
-  lk.unlock();
-
-  // Inform the user that we've admitted these mutations and there might be some
-  // space in the buffer finally.
-  for (auto& cb : admission_callbacks) {
-    grpc::Status status;
-    cb(cq);
-  }
+  return admission_callbacks;
 }
 
 }  // namespace internal
