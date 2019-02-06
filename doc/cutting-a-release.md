@@ -42,6 +42,13 @@ to create the release at an specific point in the revision history.
 
 ## Create the release branch
 
+To find the next release number, look at the existing branch names on the
+`upstream` repo and select the next available "v.0.N" version number.
+
+```bash
+git remote show upstream
+```
+
 Through this document we will use this variable to represent the release name:
 
 ```bash
@@ -63,7 +70,7 @@ git checkout -b "${RELEASE}.x"
 Modify the CMake script to indicate this is a release:
 
 ```bash
-sed -i 's/set(GOOGLE_CLOUD_CPP_IS_RELEASE "")/set(GOOGLE_CLOUD_CPP_IS_RELEASE "yes")/' google/cloud/CMakeLists.txt 
+sed -i 's/set(GOOGLE_CLOUD_CPP_IS_RELEASE "")/set(GOOGLE_CLOUD_CPP_IS_RELEASE "yes")/' google/cloud/CMakeLists.txt
 ```
 
 Run the CMake configuration step to update the Bazel configuration files:
@@ -81,20 +88,32 @@ git commit -m"Create ${RELEASE}.x release branch" .
 git push --set-upstream origin ${RELEASE}.x
 ```
 
+NOTE: No code review os Pull Request is needed as part of this step.
+
 ## Update the documentation links
 
-Pushing the branch should start the CI builds. One of the CI builds
-automatically pushes a new version of the documentation to the `gh-pages`
-branch. You should checkout that branch, change the `index.html` page to link to
-this new version and commit it:
+Pushing the branch should start the CI builds. You can find and watch the
+triggered builds at https://travis-ci.com/googleapis/google-cloud-cpp. One of
+the CI builds automatically pushes a new version of the documentation to the
+`gh-pages` branch. Wait for this build to complete, then you should checkout
+`gh-pages` and change the `index.html` page to link to this new version and
+commit it:
 
 ```bash
-git pull
 git checkout gh-pages
-sed -i "s;\(.*URL='\).*\(/index.html.*\);\1${RELEASE}\2;" index.html 
-git commit -m"Update documentation to ${RELEASE}" .
+git pull
+```
+
+Change the value of the meta tag's `URL=` parameter to refer to the
+`index.html` file in the directory matching the new release version number.
+
+```
+git commit -am"Update documentation to ${RELEASE}"
 git push
 ```
+
+You are now finished with this "releases" clone of the repo that we created in
+the instructions above. You may not remove this directory.
 
 ## Bump the version numbers in `master`
 
