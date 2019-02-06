@@ -76,15 +76,6 @@ matrix:
         BUILD_TYPE=Debug
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
-    - # Build with the UndefinedBehaviorSanitizer.
-      os: linux
-      compiler: clang
-      env:
-        CMAKE_FLAGS=-DSANITIZE_UNDEFINED=yes
-        BUILD_TYPE=Debug
-        DISTRO=ubuntu
-        DISTRO_VERSION=18.04
-      if: repo =~ ^googleapis/ or head_repo =~ ^googleapis/
     - # Generate code coverage information and upload to codecov.io.
       os: linux
       compiler: gcc
@@ -102,13 +93,6 @@ matrix:
         CMAKE_FLAGS=-DBUILD_TESTING=OFF
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
-    - # Compile with exceptions disabled.
-      os: linux
-      compiler: gcc
-      env:
-        CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=no
-        DISTRO=ubuntu
-        DISTRO_VERSION=16.04
     - # Compile on Fedora with libc++.
       os: linux
       compiler: clang
@@ -117,13 +101,6 @@ matrix:
         DISTRO=fedora
         DISTRO_VERSION=29
         USE_LIBCXX=yes
-      if: repo =~ ^googleapis/ or head_repo =~ ^googleapis/
-    - # Compile on CentOS.
-      os: linux
-      compiler: gcc
-      env:
-        DISTRO=centos
-        DISTRO_VERSION=7
       if: repo =~ ^googleapis/ or head_repo =~ ^googleapis/
   allow_failures:
     - # For the moment, allow failures in the ABI check builds.
