@@ -31,6 +31,7 @@ platforms.
 ## Table of Contents
 
 - [Installing google-cloud-cpp](#installing-google-cloud-cpp)
+  - [Fedora 29](#fedora-29)
   - [Ubuntu (Bionic Beaver)](#ubuntu-bionic-beaver)
   - [CentOS 7](#ubuntu-bionic-beaver)
 
@@ -49,6 +50,52 @@ platforms.
 
 Note that these libraries may have complex dependencies themselves, the
 following instructions include steps to install these dependencies too.
+
+#### Fedora (29)
+
+Fedora includes packages for gRPC (1.17), libcurl (7.61), and OpenSSL (1.1).
+Install these libraries and the necessary development tools:
+
+```bash
+dnf makecache
+dnf install -y automake cmake gcc-c++ git grpc-devel grpc-plugins \
+        libcurl-devel make openssl-devel pkgconfig protobuf-compiler tar wget \
+        which zlib-devel
+```
+
+**crc32c**: there is no Fedora package for this library, install it using:
+
+```bash
+cd /var/tmp/build
+wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
+tar -xf 1.0.6.tar.gz
+cd crc32c-1.0.6
+cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DCRC32C_BUILD_TESTS=OFF \
+      -DCRC32C_BUILD_BENCHMARKS=OFF \
+      -DCRC32C_USE_GLOG=OFF \
+      -H. -B.build/crc32c
+cmake --build .build/crc32c --target install -- -j $(nproc)
+ldconfig
+```
+
+**google-cloud-cpp**: we then can compile and install note that we use
+`pkg-config` to discover the options for gRPC and protobuf:
+
+```bash
+cd $HOME/google-cloud-cpp # or wherever you have extracted google-cloud-cpp
+cmake -H. -Bbuild-output \
+    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
+    -DGOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER=pkg-config \
+    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
+    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
+cmake --build build-output -- -j $(nproc)
+cd build-output
+ctest --output-on-failure
+cmake --build . --target install
+```
 
 #### Ubuntu (Bionic Beaver)
 
