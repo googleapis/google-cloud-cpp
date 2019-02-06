@@ -194,7 +194,7 @@ ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 ```
 
 **crc32c**: there is no CentOS package for this library. To install it use:
- 
+
 ```bash
 cd /var/tmp/build
 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
@@ -257,7 +257,6 @@ RUN ldconfig
 we use `pkg-config` to discover the options for gRPC:
 
 ```bash
-cmake -H. -Bbuild-output \
 cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
