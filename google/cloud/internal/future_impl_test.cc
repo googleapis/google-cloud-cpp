@@ -322,7 +322,7 @@ TEST(FutureImplInt, SetException) {
       },
       std::runtime_error);
 #else
-  std::cerr << "About to die" << std::endl;
+  std::cerr << "About to die\n";
   EXPECT_DEATH_IF_SUPPORTED(
       shared_state.get(),
       "future<T>::get\\(\\) had an exception but exceptions are disabled");

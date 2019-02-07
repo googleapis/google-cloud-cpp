@@ -79,7 +79,7 @@ struct OpenSslUtils {
     auto handle_openssl_failure = [&func_name](const char* error_msg) -> void {
       std::ostringstream err_builder;
       err_builder << "Permanent error in " << func_name
-                  << " (failed to sign string with PEM key): " << std::endl
+                  << " (failed to sign string with PEM key):\n"
                   << error_msg;
       google::cloud::internal::ThrowRuntimeError(err_builder.str());
     };

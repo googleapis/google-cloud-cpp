@@ -41,7 +41,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
-            << command_usage << std::endl;
+            << command_usage << "\n";
 }
 
 void ListNotifications(google::cloud::storage::Client client, int& argc,
@@ -61,9 +61,9 @@ void ListNotifications(google::cloud::storage::Client client, int& argc,
       throw std::runtime_error(items.status().message());
     }
 
-    std::cout << "Notifications for bucket=" << bucket_name << std::endl;
+    std::cout << "Notifications for bucket=" << bucket_name << "\n";
     for (gcs::NotificationMetadata const& notification : *items) {
-      std::cout << notification << std::endl;
+      std::cout << notification << "\n";
     }
   }
   //! [list notifications] [END storage_list_bucket_notifications]
@@ -101,7 +101,7 @@ void CreateNotification(google::cloud::storage::Client client, int& argc,
                 << notification->object_name_prefix() << "\n";
     }
     std::cout << "Full details for the notification:\n"
-              << *notification << std::endl;
+              << *notification << "\n";
   }
   //! [create notification] [END storage_create_bucket_notifications]
   (std::move(client), bucket_name, topic_name);
@@ -134,7 +134,7 @@ void GetNotification(google::cloud::storage::Client client, int& argc,
                 << " the prefix " << notification->object_name_prefix() << "\n";
     }
     std::cout << "Full details for the notification:\n"
-              << *notification << std::endl;
+              << *notification << "\n";
   }
   //! [get notification] [END storage_print_pubsub_bucket_notification]
   (std::move(client), bucket_name, notification_id);
@@ -158,7 +158,7 @@ void DeleteNotification(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "Successfully deleted notification " << notification_id
-              << " on bucket " << bucket_name << std::endl;
+              << " on bucket " << bucket_name << "\n";
   }
   //! [delete notification] [END storage_delete_bucket_notification]
   (std::move(client), bucket_name, notification_id);
@@ -171,8 +171,7 @@ int main(int argc, char* argv[]) try {
   google::cloud::StatusOr<google::cloud::storage::Client> client =
       google::cloud::storage::Client::CreateDefaultClient();
   if (!client) {
-    std::cerr << "Failed to create Storage Client, status=" << client.status()
-              << std::endl;
+    std::cerr << "Failed to create Storage Client, status=" << client.status() << "\n";
     return 1;
   }
 
@@ -216,6 +215,6 @@ int main(int argc, char* argv[]) try {
   PrintUsage(argc, argv, ex.msg);
   return 1;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }

@@ -22,7 +22,7 @@ namespace {
 const std::string handler_msg = "Custom handler invoked. Extra description: ";
 
 void CustomHandler(const char* msg) {
-  std::cerr << handler_msg << msg << std::endl;
+  std::cerr << handler_msg << msg << "\n";
   abort();
 }
 

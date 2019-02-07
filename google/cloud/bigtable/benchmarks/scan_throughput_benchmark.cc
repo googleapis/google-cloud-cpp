@@ -95,13 +95,13 @@ int main(int argc, char* argv[]) try {
         std::chrono::steady_clock::now() - start);
     std::cout << " DONE. Elapsed=" << FormatDuration(combined.elapsed)
               << ", Ops=" << combined.operations.size()
-              << ", Rows=" << combined.row_count << std::endl;
+              << ", Rows=" << combined.row_count << "\n";
     auto op_name = "Scan(" + std::to_string(scan_size) + ")";
     benchmark.PrintLatencyResult(std::cout, "scant", op_name, combined);
     results_by_size[op_name] = std::move(combined);
   }
 
-  std::cout << bigtable::benchmarks::Benchmark::ResultsCsvHeader() << std::endl;
+  std::cout << bigtable::benchmarks::Benchmark::ResultsCsvHeader() << "\n";
   benchmark.PrintResultCsv(std::cout, "scant", "BulkApply()", "Latency",
                            populate_results);
   for (auto& kv : results_by_size) {
@@ -113,7 +113,7 @@ int main(int argc, char* argv[]) try {
 
   return 0;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard exception raised: " << ex.what() << "\n";
   return 1;
 }
 

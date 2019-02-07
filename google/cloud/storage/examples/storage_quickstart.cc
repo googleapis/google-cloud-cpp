@@ -18,9 +18,8 @@
 
 int main(int argc, char* argv[]) {
   if (argc != 3) {
-    std::cerr << "Missing project id and/or bucket name." << std::endl;
-    std::cerr << "Usage: storage_quickstart <bucket-name> <project-id>"
-              << std::endl;
+    std::cerr << "Missing project id and/or bucket name.\n";
+    std::cerr << "Usage: storage_quickstart <bucket-name> <project-id>\n";
     return 1;
   }
   std::string bucket_name = argv[1];
@@ -34,8 +33,7 @@ int main(int argc, char* argv[]) {
   google::cloud::StatusOr<gcs::Client> client =
       gcs::Client::CreateDefaultClient();
   if (!client) {
-    std::cerr << "Failed to create Storage Client, status=" << client.status()
-              << std::endl;
+    std::cerr << "Failed to create Storage Client, status=" << client.status() << "\n";
     return 1;
   }
 
@@ -48,11 +46,11 @@ int main(int argc, char* argv[]) {
 
   if (!bucket_metadata) {
     std::cerr << "Error creating bucket " << bucket_name
-              << ", status=" << bucket_metadata.status() << std::endl;
+              << ", status=" << bucket_metadata.status() << "\n";
     return 1;
   }
 
-  std::cout << "Created bucket " << bucket_metadata->name() << std::endl;
+  std::cout << "Created bucket " << bucket_metadata->name() << "\n";
 
   return 0;
 }

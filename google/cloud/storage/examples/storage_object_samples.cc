@@ -44,7 +44,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
-            << command_usage << std::endl;
+            << command_usage << "\n";
 }
 
 void ListObjects(google::cloud::storage::Client client, int& argc,
@@ -62,7 +62,7 @@ void ListObjects(google::cloud::storage::Client client, int& argc,
       }
 
       std::cout << "bucket_name=" << object_metadata->bucket()
-                << ", object_name=" << object_metadata->name() << std::endl;
+                << ", object_name=" << object_metadata->name() << "\n";
     }
   }
   //! [list objects] [END storage_list_files]
@@ -92,7 +92,7 @@ void InsertObject(google::cloud::storage::Client client, int& argc,
 
     std::cout << "The object " << object_metadata->name()
               << " was created in bucket " << object_metadata->bucket()
-              << "\nFull metadata: " << *object_metadata << std::endl;
+              << "\nFull metadata: " << *object_metadata << "\n";
   }
   //! [insert object]
   (std::move(client), bucket_name, object_name, contents);
@@ -132,7 +132,7 @@ void InsertObjectStrictIdempotency(google::cloud::storage::Client unused,
 
     std::cout << "The object " << object_metadata->name()
               << " was created in bucket " << object_metadata->bucket()
-              << "\nFull metadata: " << *object_metadata << std::endl;
+              << "\nFull metadata: " << *object_metadata << "\n";
   }
   //! [insert object strict idempotency]
   (bucket_name, object_name, contents);
@@ -173,7 +173,7 @@ void InsertObjectModifiedRetry(google::cloud::storage::Client unused, int& argc,
 
     std::cout << "The object " << object_metadata->name()
               << " was created in bucket " << object_metadata->bucket()
-              << "\nFull metadata: " << *object_metadata << std::endl;
+              << "\nFull metadata: " << *object_metadata << "\n";
   }
   //! [insert object modified retry]
   (bucket_name, object_name, contents);
@@ -211,7 +211,7 @@ void InsertObjectMultipart(google::cloud::storage::Client client, int& argc,
               << " was created in bucket " << object_metadata->bucket()
               << "\nThe contentType was set to "
               << object_metadata->content_type()
-              << "\nFull metadata: " << *object_metadata << std::endl;
+              << "\nFull metadata: " << *object_metadata << "\n";
   }
   //! [insert object multipart]
   (std::move(client), bucket_name, object_name, content_type, contents);
@@ -245,8 +245,7 @@ void CopyObject(google::cloud::storage::Client client, int& argc,
     std::cout << "Successfully copied " << source_object_name << " in bucket "
               << source_bucket_name << " to bucket " << new_copy_meta->bucket()
               << " with name " << new_copy_meta->name()
-              << ".\nThe full metadata after the copy is: " << *new_copy_meta
-              << std::endl;
+              << ".\nThe full metadata after the copy is: " << *new_copy_meta << "\n";
   }
   //! [copy object] [END storage_copy_file]
   (std::move(client), source_bucket_name, source_object_name,
@@ -283,8 +282,7 @@ void CopyEncryptedObject(google::cloud::storage::Client client, int& argc,
     std::cout << "Successfully copied " << source_object_name << " in bucket "
               << source_bucket_name << " to bucket " << new_copy_meta->bucket()
               << " with name " << new_copy_meta->name()
-              << ".\nThe full metadata after the copy is: " << *new_copy_meta
-              << std::endl;
+              << ".\nThe full metadata after the copy is: " << *new_copy_meta << "\n";
   }
   //! [copy encrypted object]
   (std::move(client), source_bucket_name, source_object_name,
@@ -311,7 +309,7 @@ void GetObjectMetadata(google::cloud::storage::Client client, int& argc,
 
     std::cout << "The metadata for object " << object_metadata->name()
               << " in bucket " << object_metadata->bucket() << " is "
-              << *object_metadata << std::endl;
+              << *object_metadata << "\n";
   }
   //! [get object metadata] [END storage_get_metadata]
   (std::move(client), bucket_name, object_name);
@@ -335,7 +333,7 @@ void ReadObject(google::cloud::storage::Client client, int& argc,
       ++count;
     }
 
-    std::cout << "The object has " << count << " lines" << std::endl;
+    std::cout << "The object has " << count << " lines\n";
   }
   //! [read object] [END storage_download_file]
   (std::move(client), bucket_name, object_name);
@@ -364,7 +362,7 @@ void ReadObjectRange(google::cloud::storage::Client client, int& argc,
       ++count;
     }
 
-    std::cout << "The requested range has " << count << " lines" << std::endl;
+    std::cout << "The requested range has " << count << " lines\n";
   }
   //! [read object range] [END storage_download_byte_range]
   (std::move(client), bucket_name, object_name, start, end);
@@ -387,8 +385,7 @@ void DeleteObject(google::cloud::storage::Client client, int& argc,
       throw std::runtime_error(status.message());
     }
 
-    std::cout << "Deleted " << object_name << " in bucket " << bucket_name
-              << std::endl;
+    std::cout << "Deleted " << object_name << " in bucket " << bucket_name << "\n";
   }
   //! [delete object] [END storage_delete_file]
   (std::move(client), bucket_name, object_name);
@@ -429,7 +426,7 @@ void WriteObject(google::cloud::storage::Client client, int& argc,
 
     std::cout << "Successfully wrote to object " << metadata->name()
               << " its size is: " << metadata->size()
-              << "\nFull metadata: " << *metadata << std::endl;
+              << "\nFull metadata: " << *metadata << "\n";
   }
   //! [write object]
   (std::move(client), bucket_name, object_name, desired_line_count);
@@ -486,13 +483,12 @@ void StartResumableUpload(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
     gcs::ObjectWriteStream stream = client.WriteObject(
         bucket_name, object_name, gcs::NewResumableUploadSession());
-    std::cout << "Created resumable upload: " << stream.resumable_session_id()
-              << std::endl;
+    std::cout << "Created resumable upload: " << stream.resumable_session_id() << "\n";
     // As it is customary in C++, the destructor automatically closes the
     // stream, that would finish the upload and create the object. For this
     // example we want to restore the session as-if the application had crashed,
     // where no destructors get called.
-    stream << "This data will not get uploaded, it is too small" << std::endl;
+    stream << "This data will not get uploaded, it is too small\n";
     std::move(stream).Suspend();
   }
   //! [start resumable upload]
@@ -541,8 +537,7 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
       throw std::runtime_error(metadata.status().message());
     }
 
-    std::cout << "Upload completed, the new object metadata is: " << *metadata
-              << std::endl;
+    std::cout << "Upload completed, the new object metadata is: " << *metadata << "\n";
   }
   //! [resume resumable upload]
   (std::move(client), bucket_name, object_name, session_id);
@@ -574,7 +569,7 @@ void UploadFile(google::cloud::storage::Client client, int& argc,
     std::cout << "Uploaded " << file_name << " to object "
               << object_metadata->name() << " in bucket "
               << object_metadata->bucket()
-              << "\nFull metadata: " << *object_metadata << std::endl;
+              << "\nFull metadata: " << *object_metadata << "\n";
   }
   //! [upload file] [END storage_upload_file]
   (std::move(client), file_name, bucket_name, object_name);
@@ -608,7 +603,7 @@ void UploadFileResumable(google::cloud::storage::Client client, int& argc,
     std::cout << "Uploaded " << file_name << " to object "
               << object_metadata->name() << " in bucket "
               << object_metadata->bucket()
-              << "\nFull metadata: " << *object_metadata << std::endl;
+              << "\nFull metadata: " << *object_metadata << "\n";
   }
   //! [upload file resumable]
   (std::move(client), file_name, bucket_name, object_name);
@@ -634,8 +629,7 @@ void DownloadFile(google::cloud::storage::Client client, int& argc,
       throw std::runtime_error(status.message());
     }
 
-    std::cout << "Downloaded " << object_name << " to " << file_name
-              << std::endl;
+    std::cout << "Downloaded " << object_name << " to " << file_name << "\n";
   }
   //! [download file]
   (std::move(client), bucket_name, object_name, file_name);
@@ -675,7 +669,7 @@ void UpdateObjectMetadata(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "Object updated. The full metadata after the update is: "
-              << *updated << std::endl;
+              << *updated << "\n";
   }
   //! [update object metadata] [END storage_set_metadata]
   (std::move(client), bucket_name, object_name, key, value);
@@ -712,7 +706,7 @@ void PatchObjectDeleteMetadata(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "Object updated. The full metadata after the update is: "
-              << *updated << std::endl;
+              << *updated << "\n";
   }
   //! [patch object delete metadata]
   (std::move(client), bucket_name, object_name, key);
@@ -741,7 +735,7 @@ void PatchObjectContentType(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "Object updated. The full metadata after the update is: "
-              << *updated << std::endl;
+              << *updated << "\n";
   }
   //! [patch object content type]
   (std::move(client), bucket_name, object_name, content_type);
@@ -767,7 +761,7 @@ void MakeObjectPublic(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "Object updated. The full metadata after the update is: "
-              << *updated << std::endl;
+              << *updated << "\n";
   }
   //! [make object public] [END storage_make_public]
   (std::move(client), bucket_name, object_name);
@@ -794,7 +788,7 @@ void ReadObjectUnauthenticated(google::cloud::storage::Client client, int& argc,
     while (std::getline(stream, line, '\n')) {
       ++count;
     }
-    std::cout << "The object has " << count << " lines" << std::endl;
+    std::cout << "The object has " << count << " lines\n";
   }
   //! [read object unauthenticated]
   (bucket_name, object_name);
@@ -841,7 +835,7 @@ void GenerateEncryptionKey(google::cloud::storage::Client client, int& argc,
   gcs::EncryptionKeyData data = gcs::CreateKeyFromGenerator(gen);
 
   std::cout << "Base64 encoded key = " << data.key << "\n"
-            << "Base64 encoded SHA256 of key = " << data.sha256 << std::endl;
+            << "Base64 encoded SHA256 of key = " << data.sha256 << "\n";
   //! [generate encryption key] [END storage_generate_encryption_key]
 }
 
@@ -870,7 +864,7 @@ void WriteEncryptedObject(google::cloud::storage::Client client, int& argc,
 
     std::cout << "The object " << object_metadata->name()
               << " was created in bucket " << object_metadata->bucket()
-              << "\nFull metadata: " << *object_metadata << std::endl;
+              << "\nFull metadata: " << *object_metadata << "\n";
   }
   //! [insert encrypted object] [END storage_upload_encrypted_file]
   (std::move(client), bucket_name, object_name, base64_aes256_key);
@@ -895,7 +889,7 @@ void ReadEncryptedObject(google::cloud::storage::Client client, int& argc,
                           gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
 
     std::string data(std::istreambuf_iterator<char>{stream}, {});
-    std::cout << "The object contents are: " << data << std::endl;
+    std::cout << "The object contents are: " << data << "\n";
   }
   //! [read encrypted object] [END storage_download_encrypted_file]
   (std::move(client), bucket_name, object_name, base64_aes256_key);
@@ -929,7 +923,7 @@ void ComposeObject(google::cloud::storage::Client client, int& argc,
 
     std::cout << "Composed new object " << composed_object->name()
               << " in bucket " << composed_object->bucket()
-              << "\nFull metadata: " << *composed_object << std::endl;
+              << "\nFull metadata: " << *composed_object << "\n";
   }
   //! [compose object] [END storage_compose_file]
   (std::move(client), bucket_name, destination_object_name,
@@ -967,7 +961,7 @@ void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
 
     std::cout << "Composed new object " << composed_object->name()
               << " in bucket " << composed_object->bucket()
-              << "\nFull metadata: " << *composed_object << std::endl;
+              << "\nFull metadata: " << *composed_object << "\n";
   }
   //! [compose object from encrypted objects]
   (std::move(client), bucket_name, destination_object_name, base64_aes256_key,
@@ -1008,7 +1002,7 @@ void WriteObjectWithKmsKey(google::cloud::storage::Client client, int& argc,
 
     std::cout << "Successfully wrote to object " << metadata->name()
               << " its size is: " << metadata->size()
-              << "\nFull metadata: " << *metadata << std::endl;
+              << "\nFull metadata: " << *metadata << "\n";
   }
   //! [write object with kms key] [END storage_upload_with_kms_key]
   (std::move(client), bucket_name, object_name, kms_key_name);
@@ -1041,7 +1035,7 @@ void RewriteObject(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "Rewrote object " << destination_object_name
-              << " Metadata: " << *object_metadata << std::endl;
+              << " Metadata: " << *object_metadata << "\n";
   }
   //! [rewrite object]
   (std::move(client), source_bucket_name, source_object_name,
@@ -1076,7 +1070,7 @@ void RewriteObjectNonBlocking(google::cloud::storage::Client client, int& argc,
                 throw std::runtime_error(progress.status().message());
               }
               std::cout << "Rewrote " << progress->total_bytes_rewritten << "/"
-                        << progress->object_size << std::endl;
+                        << progress->object_size << "\n";
             });
 
     if (!object_metadata) {
@@ -1086,7 +1080,7 @@ void RewriteObjectNonBlocking(google::cloud::storage::Client client, int& argc,
 
     std::cout << "Rewrote object " << object_metadata->name() << " in bucket "
               << object_metadata->bucket()
-              << "\nFull Metadata: " << *object_metadata << std::endl;
+              << "\nFull Metadata: " << *object_metadata << "\n";
   }
   //! [rewrite object non blocking]
   (std::move(client), source_bucket_name, source_object_name,
@@ -1122,11 +1116,10 @@ void RewriteObjectToken(google::cloud::storage::Client client, int& argc,
     }
 
     if (progress->done) {
-      std::cout << "The rewrite completed immediately, no token to resume later"
-                << std::endl;
+      std::cout << "The rewrite completed immediately, no token to resume later\n";
       return;
     }
-    std::cout << "Rewrite in progress, token " << rewriter.token() << std::endl;
+    std::cout << "Rewrite in progress, token " << rewriter.token() << "\n";
   }
   //! [rewrite object token]
   (std::move(client), source_bucket_name, source_object_name,
@@ -1164,7 +1157,7 @@ void RewriteObjectResume(google::cloud::storage::Client client, int& argc,
                 throw std::runtime_error(progress.status().message());
               }
               std::cout << "Rewrote " << progress->total_bytes_rewritten << "/"
-                        << progress->object_size << std::endl;
+                        << progress->object_size << "\n";
             });
 
     if (!object_metadata) {
@@ -1174,7 +1167,7 @@ void RewriteObjectResume(google::cloud::storage::Client client, int& argc,
 
     std::cout << "Rewrote object " << object_metadata->name() << " in bucket "
               << object_metadata->bucket()
-              << "\nFull Metadata: " << *object_metadata << std::endl;
+              << "\nFull Metadata: " << *object_metadata << "\n";
   }
   //! [rewrite object resume]
   (std::move(client), source_bucket_name, source_object_name,
@@ -1210,7 +1203,7 @@ void RotateEncryptionKey(google::cloud::storage::Client client, int& argc,
 
     std::cout << "Rotated key on object " << object_metadata->name()
               << " in bucket " << object_metadata->bucket()
-              << "\nFull Metadata: " << *object_metadata << std::endl;
+              << "\nFull Metadata: " << *object_metadata << "\n";
   }
   //! [rotate encryption key] [END storage_rotate_encryption_key]
   (std::move(client), bucket_name, object_name, old_key_base64, new_key_base64);
@@ -1247,7 +1240,7 @@ void RenameObject(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "Renamed " << old_object_name << " to " << new_object_name
-              << " in bucket " << bucket_name << std::endl;
+              << " in bucket " << bucket_name << "\n";
   }
   //! [rename object] [END storage_move_file]
   (std::move(client), bucket_name, old_object_name, new_object_name);
@@ -1282,8 +1275,7 @@ void SetObjectEventBasedHold(google::cloud::storage::Client client, int& argc,
 
     std::cout << "The event hold for object " << updated->name()
               << " in bucket " << updated->bucket() << " is "
-              << (updated->event_based_hold() ? "enabled" : "disabled")
-              << std::endl;
+              << (updated->event_based_hold() ? "enabled" : "disabled") << "\n";
   }
   //! [set event based hold] [END storage_set_event_based_hold]
   (std::move(client), bucket_name, object_name);
@@ -1318,8 +1310,7 @@ void ReleaseObjectEventBasedHold(google::cloud::storage::Client client,
 
     std::cout << "The event hold for object " << updated->name()
               << " in bucket " << updated->bucket() << " is "
-              << (updated->event_based_hold() ? "enabled" : "disabled")
-              << std::endl;
+              << (updated->event_based_hold() ? "enabled" : "disabled") << "\n";
   }
   //! [release event based hold] [END storage_release_event_based_hold]
   (std::move(client), bucket_name, object_name);
@@ -1354,8 +1345,7 @@ void SetObjectTemporaryHold(google::cloud::storage::Client client, int& argc,
 
     std::cout << "The temporary hold for object " << updated->name()
               << " in bucket " << updated->bucket() << " is "
-              << (updated->temporary_hold() ? "enabled" : "disabled")
-              << std::endl;
+              << (updated->temporary_hold() ? "enabled" : "disabled") << "\n";
   }
   //! [set temporary hold] [END storage_set_temporary_hold]
   (std::move(client), bucket_name, object_name);
@@ -1390,8 +1380,7 @@ void ReleaseObjectTemporaryHold(google::cloud::storage::Client client,
 
     std::cout << "The temporary hold for object " << updated->name()
               << " in bucket " << updated->bucket() << " is "
-              << (updated->temporary_hold() ? "enabled" : "disabled")
-              << std::endl;
+              << (updated->temporary_hold() ? "enabled" : "disabled") << "\n";
   }
   //! [release temporary hold] [END storage_release_temporary_hold]
   (std::move(client), bucket_name, object_name);
@@ -1419,7 +1408,7 @@ void CreateGetSignedUrl(google::cloud::storage::Client client, int& argc,
 
     std::cout << "The signed url is: " << *signed_url << "\n\n"
               << "You can use this URL with any user agent, for example:\n"
-              << "curl '" << *signed_url << "'" << std::endl;
+              << "curl '" << *signed_url << "'\n";
   }
   //! [sign url] [END storage_generate_signed_url]
   (std::move(client), bucket_name, object_name);
@@ -1449,7 +1438,7 @@ void CreatePutSignedUrl(google::cloud::storage::Client client, int& argc,
     std::cout << "The signed url is: " << *signed_url << "\n\n"
               << "You can use this URL with any user agent, for example:\n"
               << "curl -X PUT -H 'Content-Type: application/octet-stream'"
-              << " --upload-file my-file '" << *signed_url << "'" << std::endl;
+              << " --upload-file my-file '" << *signed_url << "'\n";
   }
   //! [create put signed url]
   (std::move(client), bucket_name, object_name);
@@ -1462,8 +1451,7 @@ int main(int argc, char* argv[]) try {
   google::cloud::StatusOr<google::cloud::storage::Client> client =
       google::cloud::storage::Client::CreateDefaultClient();
   if (!client) {
-    std::cerr << "Failed to create Storage Client, status=" << client.status()
-              << std::endl;
+    std::cerr << "Failed to create Storage Client, status=" << client.status() << "\n";
     return 1;
   }
 
@@ -1543,6 +1531,6 @@ int main(int argc, char* argv[]) try {
   PrintUsage(argc, argv, ex.msg);
   return 1;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }

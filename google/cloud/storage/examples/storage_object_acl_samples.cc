@@ -43,7 +43,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
-            << command_usage << std::endl;
+            << command_usage << "\n";
 }
 
 void ListObjectAcl(gcs::Client client, int& argc, char* argv[]) {
@@ -64,9 +64,9 @@ void ListObjectAcl(gcs::Client client, int& argc, char* argv[]) {
     }
 
     std::cout << "ACLs for object=" << object_name << " in bucket "
-              << bucket_name << std::endl;
+              << bucket_name << "\n";
     for (gcs::ObjectAccessControl const& acl : *items) {
-      std::cout << acl.role() << ":" << acl.entity() << std::endl;
+      std::cout << acl.role() << ":" << acl.entity() << "\n";
     }
   }
   //! [list object acl]
@@ -96,7 +96,7 @@ void CreateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
 
     std::cout << "Role " << object_acl->role() << " granted to "
               << object_acl->entity() << " on " << object_acl->object()
-              << "\nFull attributes: " << *object_acl << std::endl;
+              << "\nFull attributes: " << *object_acl << "\n";
   }
   //! [create object acl] [END storage_create_file_acl]
   (std::move(client), bucket_name, object_name, entity, role);
@@ -121,7 +121,7 @@ void DeleteObjectAcl(gcs::Client client, int& argc, char* argv[]) {
     }
 
     std::cout << "Deleted ACL entry for " << entity << " in object "
-              << object_name << " in bucket " << bucket_name << std::endl;
+              << object_name << " in bucket " << bucket_name << "\n";
   }
   //! [delete object acl] [END storage_delete_file_acl]
   (std::move(client), bucket_name, object_name, entity);
@@ -148,7 +148,7 @@ void GetObjectAcl(gcs::Client client, int& argc, char* argv[]) {
 
     std::cout << "ACL entry for " << acl->entity() << " in object "
               << acl->object() << " in bucket " << acl->bucket() << " is "
-              << *acl << std::endl;
+              << *acl << "\n";
   }
   //! [get object acl] [END storage_print_file_acl]
   (std::move(client), bucket_name, object_name, entity);
@@ -186,7 +186,7 @@ void UpdateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
 
     std::cout << "ACL entry for " << updated_acl->entity() << " in object "
               << updated_acl->object() << " in bucket " << updated_acl->bucket()
-              << " is now " << *updated_acl << std::endl;
+              << " is now " << *updated_acl << "\n";
   }
   //! [update object acl] [END storage_update_file_acl]
   (std::move(client), bucket_name, object_name, entity, role);
@@ -224,7 +224,7 @@ void PatchObjectAcl(gcs::Client client, int& argc, char* argv[]) {
 
     std::cout << "ACL entry for " << patched_acl->entity() << " in object "
               << patched_acl->object() << " in bucket " << patched_acl->bucket()
-              << " is now " << *patched_acl << std::endl;
+              << " is now " << *patched_acl << "\n";
   }
   //! [patch object acl]
   (std::move(client), bucket_name, object_name, entity, role);
@@ -254,7 +254,7 @@ void PatchObjectAclNoRead(gcs::Client client, int& argc, char* argv[]) {
 
     std::cout << "ACL entry for " << patched_acl->entity() << " in object "
               << patched_acl->object() << " in bucket " << patched_acl->bucket()
-              << " is now " << *patched_acl << std::endl;
+              << " is now " << *patched_acl << "\n";
   }
   //! [patch object acl no-read]
   (std::move(client), bucket_name, object_name, entity, role);
@@ -267,8 +267,7 @@ int main(int argc, char* argv[]) try {
   google::cloud::StatusOr<google::cloud::storage::Client> client =
       google::cloud::storage::Client::CreateDefaultClient();
   if (!client) {
-    std::cerr << "Failed to create Storage Client, status=" << client.status()
-              << std::endl;
+    std::cerr << "Failed to create Storage Client, status=" << client.status() << "\n";
     return 1;
   }
 
@@ -314,6 +313,6 @@ int main(int argc, char* argv[]) try {
   PrintUsage(argc, argv, ex.msg);
   return 1;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }

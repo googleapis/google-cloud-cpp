@@ -41,7 +41,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
-            << command_usage << std::endl;
+            << command_usage << "\n";
 }
 
 // This full example demonstrate various instance operations
@@ -61,7 +61,7 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
   // [END connect_instance_admin]
 
   // [START bigtable_check_instance_exists]
-  std::cout << "\nCheck Instance exists: " << std::endl;
+  std::cout << "\nCheck Instance exists:\n";
   auto instances = instance_admin.ListInstances();
   auto instance_name =
       instance_admin.project_name() + "/instances/" + instance_id.get();
@@ -76,9 +76,9 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
     std::cerr
         << "The service tells us it has no information about these locations:";
     for (std::string const& location : instances.failed_locations) {
-      std::cout << " " << location << std::endl;
+      std::cout << " " << location << "\n";
     }
-    std::cerr << ". Continuing anyway" << std::endl;
+    std::cerr << ". Continuing anyway\n";
   }
   // [END bigtable_check_instance_exists]
 
@@ -97,52 +97,50 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
     config.set_type(google::cloud::bigtable::InstanceConfig::PRODUCTION);
 
     auto instance_details = instance_admin.CreateInstance(config).get();
-    std::cout << " Done" << std::endl;
+    std::cout << " Done\n";
     // [END bigtable_create_prod_instance]
   } else {
-    std::cout << "\nInstance " << instance_id.get() << " already exists."
-              << std::endl;
+    std::cout << "\nInstance " << instance_id.get() << " already exists.\n";
     return;
   }
 
   // [START bigtable_list_instances]
-  std::cout << "\nListing Instances: " << std::endl;
+  std::cout << "\nListing Instances:\n";
   auto instances_after = instance_admin.ListInstances();
   for (auto const& instance : instances_after.instances) {
-    std::cout << instance.name() << std::endl;
+    std::cout << instance.name() << "\n";
   }
   if (!instances_after.failed_locations.empty()) {
     std::cerr
         << "The service tells us it has no information about these locations:";
     for (std::string const& location : instances_after.failed_locations) {
-      std::cout << " " << location << std::endl;
+      std::cout << " " << location << "\n";
     }
-    std::cerr << ". Continuing anyway" << std::endl;
+    std::cerr << ". Continuing anyway\n";
   }
   // [END bigtable_list_instances]
 
   // [START bigtable_get_instance]
-  std::cout << "\nGet Instance: " << std::endl;
+  std::cout << "\nGet Instance:\n";
   auto instance = instance_admin.GetInstance(instance_id.get());
   std::string instance_detail;
   google::protobuf::TextFormat::PrintToString(instance, &instance_detail);
-  std::cout << "GetInstance details : " << std::endl << instance_detail;
+  std::cout << "GetInstance details :\n" << instance_detail;
   // [END bigtable_get_instance]
 
   // [START bigtable_get_clusters]
-  std::cout << "\nListing Clusters: " << std::endl;
+  std::cout << "\nListing Clusters:\n";
   auto cluster_list = instance_admin.ListClusters(instance_id.get());
-  std::cout << "Cluster Name List: " << std::endl;
+  std::cout << "Cluster Name List:\n";
   for (auto const& cluster : cluster_list.clusters) {
-    std::cout << "Cluster Name: " << cluster.name() << std::endl;
+    std::cout << "Cluster Name: " << cluster.name() << "\n";
   }
   if (!cluster_list.failed_locations.empty()) {
     std::cout << "The Cloud Bigtable service reports that the following "
                  "locations are temporarily unavailable and no information "
-                 "about clusters in these locations can be obtained:"
-              << std::endl;
+                 "about clusters in these locations can be obtained:\n";
     for (std::string const& location : cluster_list.failed_locations) {
-      std::cout << location << std::endl;
+      std::cout << location << "\n";
     }
   }
   // [END bigtable_get_clusters]
@@ -162,7 +160,7 @@ void CreateDevInstance(std::string project_id, int argc, char* argv[]) {
       google::cloud::bigtable::CreateDefaultInstanceAdminClient(
           project_id, google::cloud::bigtable::ClientOptions()));
 
-  std::cout << "\nCheck Instance exists: " << std::endl;
+  std::cout << "\nCheck Instance exists:\n";
   auto instances = instance_admin.ListInstances();
   auto instance_name =
       instance_admin.project_name() + "/instances/" + instance_id.get();
@@ -177,9 +175,9 @@ void CreateDevInstance(std::string project_id, int argc, char* argv[]) {
     std::cerr
         << "The service tells us it has no information about these locations:";
     for (std::string const& location : instances.failed_locations) {
-      std::cout << " " << location << std::endl;
+      std::cout << " " << location << "\n";
     }
-    std::cerr << ". Continuing anyway" << std::endl;
+    std::cerr << ". Continuing anyway\n";
   }
   // Create instance if does not exists
   if (!instance_exists) {
@@ -196,14 +194,13 @@ void CreateDevInstance(std::string project_id, int argc, char* argv[]) {
     config.set_type(google::cloud::bigtable::InstanceConfig::DEVELOPMENT);
 
     auto future = instance_admin.CreateInstance(config).get();
-    std::cout << " Done" << std::endl;
+    std::cout << " Done\n";
     // [END bigtable_create_dev_instance]
   } else {
-    std::cout << "\nInstance " << instance_id.get() << " already exists."
-              << std::endl;
+    std::cout << "\nInstance " << instance_id.get() << " already exists.\n";
     return;
   }
-  std::cout << " Done" << std::endl;
+  std::cout << " Done\n";
 }
 
 void DeleteInstance(std::string project_id, int argc, char* argv[]) {
@@ -221,7 +218,7 @@ void DeleteInstance(std::string project_id, int argc, char* argv[]) {
   // [START bigtable_delete_instance]
   std::cout << "\nDeleting Instance: ";
   instance_admin.DeleteInstance(instance_id);
-  std::cout << " Done" << std::endl;
+  std::cout << " Done\n";
   // [END bigtable_delete_instance]
 }
 
@@ -240,7 +237,7 @@ void CreateCluster(std::string project_id, int argc, char* argv[]) {
       google::cloud::bigtable::CreateDefaultInstanceAdminClient(
           project_id, google::cloud::bigtable::ClientOptions()));
 
-  std::cout << "\nCheck Instance exists: " << std::endl;
+  std::cout << "\nCheck Instance exists:\n";
   auto instances = instance_admin.ListInstances();
   auto instance_name =
       instance_admin.project_name() + "/instances/" + instance_id.get();
@@ -255,24 +252,22 @@ void CreateCluster(std::string project_id, int argc, char* argv[]) {
     std::cerr
         << "The service tells us it has no information about these locations:";
     for (std::string const& location : instances.failed_locations) {
-      std::cout << " " << location << std::endl;
+      std::cout << " " << location << "\n";
     }
-    std::cerr << ". Continuing anyway" << std::endl;
+    std::cerr << ". Continuing anyway\n";
   }
   if (instance_exists) {
     // [START bigtable_create_cluster]
-    std::cout << "Adding Cluster to Instance: " << instance_id.get()
-              << std::endl;
+    std::cout << "Adding Cluster to Instance: " << instance_id.get() << "\n";
     auto cluster_config = google::cloud::bigtable::ClusterConfig(
         zone, 3, google::cloud::bigtable::ClusterConfig::SSD);
     auto cluster =
         instance_admin.CreateCluster(cluster_config, instance_id, cluster_id);
 
-    std::cout << "Cluster Created: " << cluster_id.get() << std::endl;
+    std::cout << "Cluster Created: " << cluster_id.get() << "\n";
     // [END bigtable_create_cluster]
   } else {
-    std::cout << "\nInstance " << instance_id.get() << " does not exists."
-              << std::endl;
+    std::cout << "\nInstance " << instance_id.get() << " does not exists.\n";
     return;
   }
 }
@@ -293,7 +288,7 @@ void DeleteCluster(std::string project_id, int argc, char* argv[]) {
   // [START bigtable_delete_cluster]
   std::cout << "\nDeleting Cluster: ";
   instance_admin.DeleteCluster(instance_id, cluster_id);
-  std::cout << " Done" << std::endl;
+  std::cout << " Done\n";
   // [END bigtable_delete_cluster]
 }
 
@@ -343,7 +338,7 @@ int main(int argc, char* argv[]) try {
   PrintUsage(argc, argv, ex.msg);
   return 1;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }
 //! [all code]

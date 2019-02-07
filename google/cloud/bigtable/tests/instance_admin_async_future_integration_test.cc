@@ -308,8 +308,7 @@ int main(int argc, char* argv[]) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(cmd).find_last_of('/');
     // Show usage if number of arguments is invalid.
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1) << " <project_id>"
-              << std::endl;
+    std::cerr << "Usage: " << cmd.substr(last_slash + 1) << " <project_id>\n";
     return 1;
   }
 

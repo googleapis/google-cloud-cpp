@@ -41,7 +41,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
-            << command_usage << std::endl;
+            << command_usage << "\n";
 }
 
 void GetBucketIamPolicy(google::cloud::storage::Client client, int& argc,
@@ -62,7 +62,7 @@ void GetBucketIamPolicy(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "The IAM policy for bucket " << bucket_name << " is "
-              << *policy << std::endl;
+              << *policy << "\n";
   }
   //! [get bucket iam policy] [END storage_view_bucket_iam_members]
   (std::move(client), bucket_name);
@@ -98,7 +98,7 @@ void AddBucketIamMember(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "Updated IAM policy bucket " << bucket_name
-              << ". The new policy is " << *updated_policy << std::endl;
+              << ". The new policy is " << *updated_policy << "\n";
   }
   //! [add bucket iam member] [END storage_add_bucket_iam_member]
   (std::move(client), bucket_name, role, member);
@@ -133,7 +133,7 @@ void RemoveBucketIamMember(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "Updated IAM policy bucket " << bucket_name
-              << ". The new policy is " << *updated_policy << std::endl;
+              << ". The new policy is " << *updated_policy << "\n";
   }
   //! [remove bucket iam member] [END storage_remove_bucket_iam_member]
   (std::move(client), bucket_name, role, member);
@@ -165,7 +165,7 @@ void TestBucketIamPermissions(google::cloud::storage::Client client, int& argc,
 
     if (actual_permissions->empty()) {
       std::cout << "The caller does not hold any of the tested permissions the"
-                << " bucket " << bucket_name << std::endl;
+                << " bucket " << bucket_name << "\n";
       return;
     }
 
@@ -174,7 +174,7 @@ void TestBucketIamPermissions(google::cloud::storage::Client client, int& argc,
     for (auto const& permission : *actual_permissions) {
       std::cout << "\n    " << permission;
     }
-    std::cout << std::endl;
+    std::cout << "\n";
   }
   //! [test bucket iam permissions]
   (std::move(client), bucket_name, permissions);
@@ -188,8 +188,7 @@ int main(int argc, char* argv[]) try {
   google::cloud::StatusOr<google::cloud::storage::Client> client =
       google::cloud::storage::Client::CreateDefaultClient();
   if (!client) {
-    std::cerr << "Failed to create Storage Client, status=" << client.status()
-              << std::endl;
+    std::cerr << "Failed to create Storage Client, status=" << client.status() << "\n";
     return 1;
   }
   //! [create client]
@@ -234,6 +233,6 @@ int main(int argc, char* argv[]) try {
   PrintUsage(argc, argv, ex.msg);
   return 1;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }

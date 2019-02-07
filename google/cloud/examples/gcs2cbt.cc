@@ -151,7 +151,7 @@ The options are:
 
     std::ostringstream os;
     os << "Missing argument " << arg_name << "\n";
-    os << "Usage: " << cmd << usage << std::endl;
+    os << "Usage: " << cmd << usage << "\n";
     throw std::runtime_error(os.str());
   }
 };
@@ -221,7 +221,7 @@ int main(int argc, char* argv[]) try {
     workers.push_back(std::async(std::launch::async, read_buffer, table,
                                  report_worker_progress_rate));
   }
-  std::cout << " DONE" << std::endl;
+  std::cout << " DONE\n";
 
   google::cloud::StatusOr<gcs::ClientOptions> opts =
       gcs::ClientOptions::CreateDefaultClientOptions();
@@ -237,7 +237,7 @@ int main(int argc, char* argv[]) try {
   int lineno = 0;
   auto headers = ParseLine(++lineno, line, options.separator);
 
-  std::cout << "# HEADER " << line << std::endl;
+  std::cout << "# HEADER " << line << "\n";
 
   std::cout << "Reading input file " << std::flush;
   auto start = std::chrono::steady_clock::now();
@@ -297,7 +297,7 @@ int main(int argc, char* argv[]) try {
   if (count != 0) {
     buffer.Push(std::move(bulk));
   }
-  std::cout << " DONE" << std::endl;
+  std::cout << " DONE\n";
 
   std::cout << "Waiting for worker threads " << std::flush;
   // Let the workers know that they can exit.
@@ -310,20 +310,20 @@ int main(int argc, char* argv[]) try {
       task.get();
     } catch (std::exception const& ex) {
       std::cerr << "Exception raised by worker " << worker_count << ": "
-                << ex.what() << std::endl;
+                << ex.what() << "\n";
     }
     ++worker_count;
     std::cout << '.' << std::flush;
   }
-  std::cout << " DONE" << std::endl;
+  std::cout << " DONE\n";
 
   auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(
       std::chrono::steady_clock::now() - start);
-  std::cout << "Total running time " << elapsed.count() << "s" << std::endl;
+  std::cout << "Total running time " << elapsed.count() << "s\n";
 
   return 0;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard exception raised: " << ex.what() << "\n";
   return 1;
 }
 
