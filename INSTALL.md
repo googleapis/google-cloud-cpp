@@ -272,8 +272,8 @@ cd grpc-1.17.2
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
 export PATH=/usr/local/bin:${PATH}
-RUN make -j $(nproc) && make install
-RUN ldconfig
+make -j $(nproc) && make install
+ldconfig
 ```
 
 #### google-cloud-cpp
