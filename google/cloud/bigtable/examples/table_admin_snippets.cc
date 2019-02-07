@@ -47,7 +47,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
-            << command_usage << std::endl;
+            << command_usage << "\n";
 }
 
 void CreateTable(google::cloud::bigtable::TableAdmin admin, int argc,
@@ -83,11 +83,11 @@ void ListTables(google::cloud::bigtable::TableAdmin admin, int argc,
         admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
 
     if (!tables) {
-      std::cerr << "ListTables failed: " << tables.status() << std::endl;
+      std::cerr << "ListTables failed: " << tables.status() << "\n";
       return;
     }
     for (auto const& table : *tables) {
-      std::cout << table.name() << std::endl;
+      std::cout << table.name() << "\n";
     }
   }
   //! [list tables]
@@ -111,7 +111,7 @@ void GetTable(google::cloud::bigtable::TableAdmin admin, int argc,
       std::string gc_rule;
       google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
                                                   &gc_rule);
-      std::cout << "\t" << family_name << "\t\t" << gc_rule << std::endl;
+      std::cout << "\t" << family_name << "\t\t" << gc_rule << "\n";
     }
   }
   //! [get table]
@@ -158,7 +158,7 @@ void ModifyTable(google::cloud::bigtable::TableAdmin admin, int argc,
 
     std::string formatted;
     google::protobuf::TextFormat::PrintToString(schema, &formatted);
-    std::cout << "Schema modified to: " << formatted << std::endl;
+    std::cout << "Schema modified to: " << formatted << "\n";
   }
   //! [modify table]
   (std::move(admin), table_id);
@@ -209,9 +209,9 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
         admin.GenerateConsistencyToken(table_id.get()));
     auto result = admin.WaitForConsistencyCheck(table_id, consistency_token);
     if (result.get()) {
-      std::cout << "Table is consistent" << std::endl;
+      std::cout << "Table is consistent\n";
     } else {
-      std::cout << "Table is not consistent" << std::endl;
+      std::cout << "Table is not consistent\n";
     }
   }
   //! [wait for consistency check]
@@ -237,7 +237,7 @@ void CheckConsistency(google::cloud::bigtable::TableAdmin admin, int argc,
         consistency_token_param);
     auto result = admin.CheckConsistency(table_id, consistency_token);
     if (result) {
-      std::cout << "Table is consistent" << std::endl;
+      std::cout << "Table is consistent\n";
     } else {
       std::cout
           << "Table is not yet consistent, Please Try again Later with the "
@@ -260,7 +260,7 @@ void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
   //! [generate consistency token]
   [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
     std::string token = admin.GenerateConsistencyToken(table_id);
-    std::cout << std::endl << "generated token is : " << token << std::endl;
+    std::cout << "\n" << "generated token is : " << token << "\n";
   }
   //! [generate consistency token]
   (std::move(admin), table_id);
@@ -281,7 +281,7 @@ void GetSnapshot(google::cloud::bigtable::TableAdmin admin, int argc,
     google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
     google::cloud::bigtable::SnapshotId snapshot_id(snapshot_id_str);
     auto snapshot = admin.GetSnapshot(cluster_id, snapshot_id);
-    std::cout << "GetSnapshot name : " << snapshot.name() << std::endl;
+    std::cout << "GetSnapshot name : " << snapshot.name() << "\n";
   }
   //! [get snapshot]
   (std::move(admin), cluster_id_str, snapshot_id_str);
@@ -299,9 +299,9 @@ void ListSnapshots(google::cloud::bigtable::TableAdmin admin, int argc,
     google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
 
     auto snapshot_list = admin.ListSnapshots(cluster_id);
-    std::cout << "Snapshot Name List" << std::endl;
+    std::cout << "Snapshot Name List\n";
     for (auto const& snapshot : snapshot_list) {
-      std::cout << "Snapshot Name:" << snapshot.name() << std::endl;
+      std::cout << "Snapshot Name:" << snapshot.name() << "\n";
     }
   }
   //! [list snapshots]
@@ -347,7 +347,7 @@ void CreateTableFromSnapshot(google::cloud::bigtable::TableAdmin admin,
     google::cloud::bigtable::SnapshotId snapshot_id(snapshot_id_str);
     auto future =
         admin.CreateTableFromSnapshot(cluster_id, snapshot_id, table_id);
-    std::cout << "Table created :" << future.get().name() << std::endl;
+    std::cout << "Table created :" << future.get().name() << "\n";
   }
   //! [create table from snapshot]
   (std::move(admin), cluster_id_str, snapshot_id_str, table_id);
@@ -429,7 +429,7 @@ int main(int argc, char* argv[]) try {
   PrintUsage(argc, argv, ex.msg);
   return 1;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }
 //! [all code]

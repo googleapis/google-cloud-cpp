@@ -68,7 +68,7 @@
  *   auto id = google::cloud::LogSink::AttachFunctor(
  *       [](google::cloud::LogRecord record) {
  *           if (record.severity >= google::cloud::Severity::CRITICAL) {
- *             std::cerr << record << std::endl;
+ *             std::cerr << record << "\n";
  *           }
  *       });
  *   // Use "id" to remove the capture.

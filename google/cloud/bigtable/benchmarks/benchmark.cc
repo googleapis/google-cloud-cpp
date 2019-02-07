@@ -35,7 +35,7 @@ Benchmark::Benchmark(BenchmarkSetup const& setup)
     server_ = CreateEmbeddedServer();
     std::string address = server_->address();
     std::cout << "Running embedded Cloud Bigtable server at " << address
-              << std::endl;
+              << "\n";
     server_thread_ = std::thread([this]() { server_->Wait(); });
 
     client_options_.set_admin_endpoint(address);
@@ -115,7 +115,7 @@ BenchmarkResult Benchmark::PopulateTable() {
                                shard_result.operations.end());
     } catch (std::exception const& ex) {
       std::cerr << "Exception raised by PopulateTask/" << count << ": "
-                << ex.what() << std::endl;
+                << ex.what() << "\n";
     }
     ++count;
   }
@@ -124,7 +124,7 @@ BenchmarkResult Benchmark::PopulateTable() {
       std::chrono::steady_clock::now() - upload_start);
   std::cout << " DONE. Elapsed=" << FormatDuration(result.elapsed)
             << ", Ops=" << result.operations.size()
-            << ", Rows=" << result.row_count << std::endl;
+            << ", Rows=" << result.row_count << "\n";
   return result;
 }
 
@@ -149,7 +149,7 @@ void Benchmark::PrintThroughputResult(std::ostream& os,
   auto ops_throughput =
       1000 * result.operations.size() / result.elapsed.count();
   os << "# " << phase << " op throughput=" << ops_throughput << " ops/s"
-     << std::endl;
+     << "\n";
 }
 
 void Benchmark::PrintLatencyResult(std::ostream& os,
@@ -174,7 +174,7 @@ void Benchmark::PrintLatencyResult(std::ostream& os,
        << FormatDuration(i->latency);
     sep = ", ";
   }
-  os << std::endl;
+  os << "\n";
 }
 
 std::string Benchmark::ResultsCsvHeader() {

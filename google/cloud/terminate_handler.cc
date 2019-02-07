@@ -44,7 +44,7 @@ class TerminateFunction {
 TerminateFunction& GetTerminateHolder() {
   static TerminateFunction f([](const char* msg) {
     std::cerr << "Aborting because exceptions are disabled: " << msg
-              << std::endl;
+              << "\n";
     std::abort();
   });
   return f;
@@ -62,7 +62,7 @@ TerminateHandler GetTerminateHandler() { return GetTerminateHolder().Get(); }
   GetTerminateHolder().Get()(msg);
   std::cerr << "Aborting because the installed terminate handler returned. "
                "Error details: "
-            << msg << std::endl;
+            << msg << "\n";
   std::abort();
 }
 

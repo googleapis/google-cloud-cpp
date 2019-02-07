@@ -329,7 +329,7 @@ int main(int argc, char* argv[]) {
     // Show Usage if invalid no of arguments
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
               << "<project_id> <instance_id> <zone> <replication_zone>"
-              << std::endl;
+              << "\n";
     return 1;
   }
 

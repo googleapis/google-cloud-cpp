@@ -41,7 +41,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
-            << command_usage << std::endl;
+            << command_usage << "\n";
 }
 
 void ListBuckets(google::cloud::storage::Client client, int& argc,
@@ -60,12 +60,12 @@ void ListBuckets(google::cloud::storage::Client client, int& argc,
         throw std::runtime_error(bucket_metadata.status().message());
       }
 
-      std::cout << bucket_metadata->name() << std::endl;
+      std::cout << bucket_metadata->name() << "\n";
       ++count;
     }
 
     if (count == 0) {
-      std::cout << "No buckets in default project" << std::endl;
+      std::cout << "No buckets in default project\n";
     }
   }
   //! [list buckets] [END storage_list_buckets]
@@ -87,12 +87,12 @@ void ListBucketsForProject(google::cloud::storage::Client client, int& argc,
         throw std::runtime_error(bucket_metadata.status().message());
       }
 
-      std::cout << bucket_metadata->name() << std::endl;
+      std::cout << bucket_metadata->name() << "\n";
       ++count;
     }
 
     if (count == 0) {
-      std::cout << "No buckets in project " << project_id << std::endl;
+      std::cout << "No buckets in project " << project_id << "\n";
     }
   }
   //! [list buckets for project]
@@ -117,7 +117,7 @@ void CreateBucket(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "Bucket " << bucket_metadata->name() << " created."
-              << "\nFull Metadata: " << *bucket_metadata << std::endl;
+              << "\nFull Metadata: " << *bucket_metadata << "\n";
   }
   //! [create bucket] [END storage_create_bucket]
   (std::move(client), bucket_name);
@@ -144,7 +144,7 @@ void CreateBucketForProject(google::cloud::storage::Client client, int& argc,
 
     std::cout << "Bucket " << bucket_metadata->name() << " created for project "
               << project_id << " [" << bucket_metadata->project_number() << "]"
-              << "\nFull Metadata: " << *bucket_metadata << std::endl;
+              << "\nFull Metadata: " << *bucket_metadata << "\n";
   }
   //! [create bucket for project]
   (std::move(client), bucket_name, project_id);
@@ -168,7 +168,7 @@ void GetBucketMetadata(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "The metadata for bucket " << bucket_metadata->name() << " is "
-              << *bucket_metadata << std::endl;
+              << *bucket_metadata << "\n";
   }
   //! [get bucket metadata] [END storage_get_bucket_metadata]
   (std::move(client), bucket_name);
@@ -190,7 +190,7 @@ void DeleteBucket(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "The bucket " << bucket_name << " was deleted successfully."
-              << std::endl;
+              << "\n";
   }
   //! [delete bucket] [END storage_delete_bucket]
   (std::move(client), bucket_name);
@@ -223,7 +223,7 @@ void ChangeDefaultStorageClass(google::cloud::storage::Client client, int& argc,
 
     std::cout << "Updated the storage class in " << updated_meta->name()
               << " to " << updated_meta->storage_class() << "."
-              << "\nFull metadata:" << *updated_meta << std::endl;
+              << "\nFull metadata:" << *updated_meta << "\n";
   }
   //! [update bucket]
   (std::move(client), bucket_name, storage_class);
@@ -259,7 +259,7 @@ void PatchBucketStorageClass(google::cloud::storage::Client client, int& argc,
 
     std::cout << "Storage class for bucket " << patched->name()
               << " has been patched to " << patched->storage_class() << "."
-              << "\nFull metadata: " << *patched << std::endl;
+              << "\nFull metadata: " << *patched << "\n";
   }
   //! [patch bucket storage class] [END storage_change_default_storage_class]
   (std::move(client), bucket_name, storage_class);
@@ -287,7 +287,7 @@ void PatchBucketStorageClassWithBuilder(google::cloud::storage::Client client,
 
     std::cout << "Storage class for bucket " << patched->name()
               << " has been patched to " << patched->storage_class() << "."
-              << "\nFull metadata: " << *patched << std::endl;
+              << "\nFull metadata: " << *patched << "\n";
   }
   //! [patch bucket storage class with builder]
   (std::move(client), bucket_name, storage_class);
@@ -317,14 +317,14 @@ void AddBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
                 << updated_metadata->name()
                 << " was sucessful, but the encryption is not set."
                 << "This is unexpected, maybe a concurrent change?"
-                << std::endl;
+                << "\n";
       return;
     }
 
     std::cout << "Successfully set default KMS key on bucket  "
               << updated_metadata->name() << " to "
               << updated_metadata->encryption().default_kms_key_name << "."
-              << "\nFull metadata: " << *updated_metadata << std::endl;
+              << "\nFull metadata: " << *updated_metadata << "\n";
   }
   //! [add bucket kms key] [END storage_set_bucket_default_kms_key]
   (std::move(client), bucket_name, key_name);
@@ -348,13 +348,13 @@ void GetBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
 
     if (!meta->has_encryption()) {
       std::cout << "The bucket " << meta->name()
-                << " does not have a default KMS key set." << std::endl;
+                << " does not have a default KMS key set.\n";
       return;
     }
 
     std::cout << "The default KMS key for bucket " << meta->name()
               << " is: " << meta->encryption().default_kms_key_name
-              << std::endl;
+              << "\n";
   }
   //! [get bucket default kms key] [END storage_get_bucket_default_kms_key]
   (std::move(client), bucket_name);
@@ -379,7 +379,7 @@ void RemoveBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "Successfully removed default KMS key on bucket "
-              << updated_metadata->name() << std::endl;
+              << updated_metadata->name() << "\n";
   }
   // [END storage_bucket_delete_default_kms_key]
   //! [remove bucket default kms key]
@@ -413,7 +413,7 @@ void AddBucketLabel(google::cloud::storage::Client client, int& argc,
     for (auto const& kv : updated_metadata->labels()) {
       std::cout << "\n  " << kv.first << ": " << kv.second;
     }
-    std::cout << std::endl;
+    std::cout << "\n";
   }
   //! [add bucket label] [END storage_add_bucket_label]
   (std::move(client), bucket_name, label_key, label_value);
@@ -438,7 +438,7 @@ void GetBucketLabels(google::cloud::storage::Client client, int& argc,
 
     if (bucket_metadata->labels().empty()) {
       std::cout << "The bucket " << bucket_name << " has no labels set."
-                << std::endl;
+                << "\n";
       return;
     }
 
@@ -446,7 +446,7 @@ void GetBucketLabels(google::cloud::storage::Client client, int& argc,
     for (auto const& kv : bucket_metadata->labels()) {
       std::cout << "\n  " << kv.first << ": " << kv.second;
     }
-    std::cout << std::endl;
+    std::cout << "\n";
   }
   //! [get bucket label] [END storage_get_bucket_labels]
   (std::move(client), bucket_name);
@@ -473,14 +473,14 @@ void RemoveBucketLabel(google::cloud::storage::Client client, int& argc,
     std::cout << "Successfully reset label " << label_key << " on bucket  "
               << updated_metadata->name() << ".";
     if (updated_metadata->labels().empty()) {
-      std::cout << " The bucket now has no labels." << std::endl;
+      std::cout << " The bucket now has no labels.\n";
       return;
     }
     std::cout << " The bucket labels are now:";
     for (auto const& kv : updated_metadata->labels()) {
       std::cout << "\n  " << kv.first << ": " << kv.second;
     }
-    std::cout << std::endl;
+    std::cout << "\n";
   }
   //! [remove bucket label] [END storage_remove_bucket_label]
   (std::move(client), bucket_name, label_key);
@@ -507,7 +507,7 @@ void GetBilling(google::cloud::storage::Client client, int& argc,
       std::cout
           << "The bucket " << bucket_metadata->name() << " does not have a"
           << " billing configuration. The default applies, i.e., the project"
-          << " that owns the bucket pays for the requests." << std::endl;
+          << " that owns the bucket pays for the requests.\n";
       return;
     }
 
@@ -515,12 +515,12 @@ void GetBilling(google::cloud::storage::Client client, int& argc,
       std::cout
           << "The bucket " << bucket_metadata->name()
           << " is configured to charge the calling project for the requests."
-          << std::endl;
+          << "\n";
     } else {
       std::cout << "The bucket " << bucket_metadata->name()
                 << " is configured to charge the project that owns the bucket "
                    "for the requests."
-                << std::endl;
+                << "\n";
     }
   }
   //! [get billing] [END storage_get_requester_pays_status]
@@ -548,13 +548,13 @@ void EnableRequesterPays(google::cloud::storage::Client client, int& argc,
     std::cout << "Billing configuration for bucket " << bucket_metadata->name()
               << " is updated. The bucket now";
     if (!bucket_metadata->has_billing()) {
-      std::cout << " has no billing configuration." << std::endl;
+      std::cout << " has no billing configuration.\n";
     } else if (bucket_metadata->billing().requester_pays) {
       std::cout << " is configured to charge the caller for requests"
-                << std::endl;
+                << "\n";
     } else {
       std::cout << " is configured to charge the project that owns the bucket"
-                << " for requests." << std::endl;
+                << " for requests.\n";
     }
   }
   //! [enable requester pays] [END storage_enable_requester_pays]
@@ -584,13 +584,13 @@ void DisableRequesterPays(google::cloud::storage::Client client, int& argc,
     std::cout << "Billing configuration for bucket " << bucket_name
               << " is updated. The bucket now";
     if (!bucket_metadata->has_billing()) {
-      std::cout << " has no billing configuration." << std::endl;
+      std::cout << " has no billing configuration.\n";
     } else if (bucket_metadata->billing().requester_pays) {
       std::cout << " is configured to charge the caller for requests"
-                << std::endl;
+                << "\n";
     } else {
       std::cout << " is configured to charge the project that owns the bucket"
-                << " for requests." << std::endl;
+                << " for requests.\n";
     }
   }
   //! [disable requester pays] [END storage_disable_requester_pays]
@@ -631,7 +631,7 @@ void WriteObjectRequesterPays(google::cloud::storage::Client client, int& argc,
     }
     std::cout << "Successfully wrote to object " << metadata->name()
               << " its size is: " << metadata->size()
-              << "\nFull metadata: " << *metadata << std::endl;
+              << "\nFull metadata: " << *metadata << "\n";
   }
   //! [write object requester pays]
   (std::move(client), bucket_name, object_name, billed_project);
@@ -681,7 +681,7 @@ void GetServiceAccount(google::cloud::storage::Client client, int& argc,
       throw std::runtime_error(service_account_details.status().message());
     }
     std::cout << "The service account details are " << *service_account_details
-              << std::endl;
+              << "\n";
   }
   //! [get service account] [END storage_get_service_account]
   (std::move(client));
@@ -706,7 +706,7 @@ void GetServiceAccountForProject(google::cloud::storage::Client client,
     }
 
     std::cout << "The service account details for project " << project_id
-              << " are " << *service_account_details << std::endl;
+              << " are " << *service_account_details << "\n";
   }
   // [END storage_get_service_account_for_project]
   //! [get service account for project]
@@ -735,7 +735,7 @@ void GetDefaultEventBasedHold(google::cloud::storage::Client client, int& argc,
               << bucket_metadata->name() << " is "
               << (bucket_metadata->default_event_based_hold() ? "enabled"
                                                               : "disabled")
-              << std::endl;
+              << "\n";
   }
   // [END storage_get_default_event_based_hold]
   //! [get default event based hold]
@@ -773,7 +773,7 @@ void EnableDefaultEventBasedHold(google::cloud::storage::Client client,
               << bucket_name << " is "
               << (patched_metadata->default_event_based_hold() ? "enabled"
                                                                : "disabled")
-              << std::endl;
+              << "\n";
   }
   // [END storage_enable_default_event_based_hold]
   //! [enable default event based hold]
@@ -811,7 +811,7 @@ void DisableDefaultEventBasedHold(google::cloud::storage::Client client,
               << bucket_name << " is "
               << (patched_metadata->default_event_based_hold() ? "enabled"
                                                                : "disabled")
-              << std::endl;
+              << "\n";
   }
   // [END storage_disable_default_event_based_hold]
   //! [disable default event based hold]
@@ -838,13 +838,13 @@ void GetRetentionPolicy(google::cloud::storage::Client client, int& argc,
 
     if (!bucket_metadata->has_retention_policy()) {
       std::cout << "The bucket " << bucket_metadata->name()
-                << " does not have a retention policy set." << std::endl;
+                << " does not have a retention policy set.\n";
       return;
     }
 
     std::cout << "The bucket " << bucket_metadata->name()
               << " retention policy is set to "
-              << bucket_metadata->retention_policy() << std::endl;
+              << bucket_metadata->retention_policy() << "\n";
   }
   // [END storage_get_retention_policy]
   //! [get retention policy]
@@ -881,13 +881,13 @@ void SetRetentionPolicy(google::cloud::storage::Client client, int& argc,
 
     if (!patched_metadata->has_retention_policy()) {
       std::cout << "The bucket " << patched_metadata->name()
-                << " does not have a retention policy set." << std::endl;
+                << " does not have a retention policy set.\n";
       return;
     }
 
     std::cout << "The bucket " << patched_metadata->name()
               << " retention policy is set to "
-              << patched_metadata->retention_policy() << std::endl;
+              << patched_metadata->retention_policy() << "\n";
   }
   // [END storage_set_retention_policy]
   //! [set retention policy]
@@ -922,7 +922,7 @@ void RemoveRetentionPolicy(google::cloud::storage::Client client, int& argc,
 
     if (!patched_metadata->has_retention_policy()) {
       std::cout << "The bucket " << patched_metadata->name()
-                << " does not have a retention policy set." << std::endl;
+                << " does not have a retention policy set.\n";
       return;
     }
 
@@ -930,7 +930,7 @@ void RemoveRetentionPolicy(google::cloud::storage::Client client, int& argc,
               << " retention policy is set to "
               << patched_metadata->retention_policy()
               << ". This is unexpected, maybe a concurrent change by another"
-              << " application?" << std::endl;
+              << " application?\n";
   }
   // [END storage_remove_retention_policy]
   //! [remove retention policy]
@@ -969,14 +969,14 @@ void LockRetentionPolicy(google::cloud::storage::Client client, int& argc,
                 << " operation to set it was successful.\n"
                 << "This is unexpected, and may indicate that another"
                 << " application has modified the bucket concurrently."
-                << std::endl;
+                << "\n";
       return;
     }
 
     std::cout << "Retention policy successfully locked for bucket "
               << updated_metadata->name() << "\nNew retention policy is: "
               << updated_metadata->retention_policy()
-              << "\nFull metadata: " << *updated_metadata << std::endl;
+              << "\nFull metadata: " << *updated_metadata << "\n";
   }
   // [END storage_lock_retention_policy]
   //! [lock retention policy]
@@ -991,7 +991,7 @@ int main(int argc, char* argv[]) try {
       google::cloud::storage::Client::CreateDefaultClient();
   if (!client) {
     std::cerr << "Failed to create Storage Client, status=" << client.status()
-              << std::endl;
+              << "\n";
     return 1;
   }
   //! [create client]
@@ -1062,6 +1062,6 @@ int main(int argc, char* argv[]) try {
   PrintUsage(argc, argv, ex.msg);
   return 1;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }

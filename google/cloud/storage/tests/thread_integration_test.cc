@@ -266,7 +266,7 @@ int main(int argc, char* argv[]) {
     auto last_slash = std::string(argv[0]).find_last_of('/');
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
               << " <project-id> <location (GCP region, e.g us-east1)>"
-              << std::endl;
+              << "\n";
     return 1;
   }
 

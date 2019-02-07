@@ -41,7 +41,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
-            << command_usage << std::endl;
+            << command_usage << "\n";
 }
 
 void ListBucketAcl(google::cloud::storage::Client client, int& argc,
@@ -61,9 +61,9 @@ void ListBucketAcl(google::cloud::storage::Client client, int& argc,
       throw std::runtime_error(items.status().message());
     }
 
-    std::cout << "ACLs for bucket=" << bucket_name << std::endl;
+    std::cout << "ACLs for bucket=" << bucket_name << "\n";
     for (gcs::BucketAccessControl const& acl : *items) {
-      std::cout << acl.role() << ":" << acl.entity() << std::endl;
+      std::cout << acl.role() << ":" << acl.entity() << "\n";
     }
   }
   //! [list bucket acl] [END storage_print_bucket_acl]
@@ -93,7 +93,7 @@ void CreateBucketAcl(google::cloud::storage::Client client, int& argc,
     std::cout << "Role " << bucket_acl->role() << " granted to "
               << bucket_acl->entity() << " on bucket " << bucket_acl->bucket()
               << "\n"
-              << "Full attributes: " << *bucket_acl << std::endl;
+              << "Full attributes: " << *bucket_acl << "\n";
   }
   //! [create bucket acl] [END storage_create_bucket_acl]
   (std::move(client), bucket_name, entity, role);
@@ -116,7 +116,7 @@ void DeleteBucketAcl(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "Deleted ACL entry for " << entity << " in bucket "
-              << bucket_name << std::endl;
+              << bucket_name << "\n";
   }
   //! [delete bucket acl] [END storage_delete_bucket_acl]
   (std::move(client), bucket_name, entity);
@@ -141,7 +141,7 @@ void GetBucketAcl(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "ACL entry for " << acl->entity() << " in bucket "
-              << acl->bucket() << " is " << *acl << std::endl;
+              << acl->bucket() << " is " << *acl << "\n";
   }
   //! [get bucket acl] [END storage_print_bucket_acl_for_user]
   (std::move(client), bucket_name, entity);
@@ -172,7 +172,7 @@ void UpdateBucketAcl(google::cloud::storage::Client client, int& argc,
 
     std::cout << "Bucket ACL updated. The ACL entry for "
               << updated_acl->entity() << " in bucket " << updated_acl->bucket()
-              << " is " << *updated_acl << std::endl;
+              << " is " << *updated_acl << "\n";
   }
   //! [update bucket acl]
   (std::move(client), bucket_name, entity, role);
@@ -210,7 +210,7 @@ void PatchBucketAcl(google::cloud::storage::Client client, int& argc,
 
     std::cout << "ACL entry for " << patched_acl->entity() << " in bucket "
               << patched_acl->bucket() << " is now " << *patched_acl
-              << std::endl;
+              << "\n";
   }
   //! [patch bucket acl]
   (std::move(client), bucket_name, entity, role);
@@ -239,7 +239,7 @@ void PatchBucketAclNoRead(google::cloud::storage::Client client, int& argc,
 
     std::cout << "ACL entry for " << patched_acl->entity() << " in bucket "
               << patched_acl->bucket() << " is now " << *patched_acl
-              << std::endl;
+              << "\n";
   }
   //! [patch bucket acl no-read]
   (std::move(client), bucket_name, entity, role);
@@ -252,7 +252,7 @@ int main(int argc, char* argv[]) try {
       google::cloud::storage::Client::CreateDefaultClient();
   if (!client) {
     std::cerr << "Failed to create Storage Client, status=" << client.status()
-              << std::endl;
+              << "\n";
     return 1;
   }
 
@@ -299,6 +299,6 @@ int main(int argc, char* argv[]) try {
   PrintUsage(argc, argv, ex.msg);
   return 1;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }

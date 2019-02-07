@@ -43,7 +43,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
-            << command_usage << std::endl;
+            << command_usage << "\n";
 }
 
 //! [create instance]
@@ -70,12 +70,12 @@ void CreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   std::cout << "Waiting for instance creation to complete ";
   for (int i = 0; i != 100; ++i) {
     if (std::future_status::ready == future.wait_for(std::chrono::seconds(2))) {
-      std::cout << "DONE: " << future.get().name() << std::endl;
+      std::cout << "DONE: " << future.get().name() << "\n";
       return;
     }
     std::cout << '.' << std::flush;
   }
-  std::cout << "TIMEOUT" << std::endl;
+  std::cout << "TIMEOUT\n";
 }
 //! [create instance]
 
@@ -103,12 +103,12 @@ void CreateDevInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   std::cout << "Waiting for instance creation to complete ";
   for (int i = 0; i != 100; ++i) {
     if (std::future_status::ready == future.wait_for(std::chrono::seconds(2))) {
-      std::cout << "DONE: " << future.get().name() << std::endl;
+      std::cout << "DONE: " << future.get().name() << "\n";
       return;
     }
     std::cout << '.' << std::flush;
   }
-  std::cout << "TIMEOUT" << std::endl;
+  std::cout << "TIMEOUT\n";
 }
 //! [create dev instance]
 
@@ -129,7 +129,7 @@ void UpdateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
       instance_admin.UpdateInstance(std::move(instance_update_config));
   std::string instance_detail;
   google::protobuf::TextFormat::PrintToString(future.get(), &instance_detail);
-  std::cout << "GetInstance details : " << instance_detail << std::endl;
+  std::cout << "GetInstance details : " << instance_detail << "\n";
 }
 //! [update instance]
 
@@ -141,15 +141,15 @@ void ListInstances(google::cloud::bigtable::InstanceAdmin instance_admin,
   }
   auto instances = instance_admin.ListInstances();
   for (auto const& instance : instances.instances) {
-    std::cout << instance.name() << std::endl;
+    std::cout << instance.name() << "\n";
   }
   if (!instances.failed_locations.empty()) {
     std::cout << "The Cloud Bigtable service reports that the following "
                  "locations are temporarily unavailable and no information "
                  "about instances in these locations can be obtained:"
-              << std::endl;
+              << "\n";
     for (std::string const& location : instances.failed_locations) {
-      std::cout << location << std::endl;
+      std::cout << location << "\n";
     }
   }
 }
@@ -165,7 +165,7 @@ void GetInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   auto instance = instance_admin.GetInstance(instance_id);
   std::string instance_detail;
   google::protobuf::TextFormat::PrintToString(instance, &instance_detail);
-  std::cout << "GetInstance details : " << instance_detail << std::endl;
+  std::cout << "GetInstance details : " << instance_detail << "\n";
 }
 //! [get instance]
 
@@ -198,7 +198,7 @@ void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
       zone, 3, google::cloud::bigtable::ClusterConfig::HDD);
   auto cluster =
       instance_admin.CreateCluster(cluster_config, instance_id, cluster_id);
-  std::cout << "Cluster Created " << cluster_id.get() << std::endl;
+  std::cout << "Cluster Created " << cluster_id.get() << "\n";
 }
 //! [create cluster]
 
@@ -210,17 +210,17 @@ void ListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
   }
 
   auto cluster_list = instance_admin.ListClusters(ConsumeArg(argc, argv));
-  std::cout << "Cluster Name List" << std::endl;
+  std::cout << "Cluster Name List\n";
   for (auto const& cluster : cluster_list.clusters) {
-    std::cout << "Cluster Name:" << cluster.name() << std::endl;
+    std::cout << "Cluster Name:" << cluster.name() << "\n";
   }
   if (!cluster_list.failed_locations.empty()) {
     std::cout << "The Cloud Bigtable service reports that the following "
                  "locations are temporarily unavailable and no information "
                  "about clusters in these locations can be obtained:"
-              << std::endl;
+              << "\n";
     for (std::string const& location : cluster_list.failed_locations) {
-      std::cout << location << std::endl;
+      std::cout << location << "\n";
     }
   }
 }
@@ -234,17 +234,17 @@ void ListAllClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
   }
 
   auto cluster_list = instance_admin.ListClusters();
-  std::cout << "Cluster Name List" << std::endl;
+  std::cout << "Cluster Name List\n";
   for (auto const& cluster : cluster_list.clusters) {
-    std::cout << "Cluster Name:" << cluster.name() << std::endl;
+    std::cout << "Cluster Name:" << cluster.name() << "\n";
   }
   if (!cluster_list.failed_locations.empty()) {
     std::cout << "The Cloud Bigtable service reports that the following "
                  "locations are temporarily unavailable and no information "
                  "about clusters in these locations can be obtained:"
-              << std::endl;
+              << "\n";
     for (std::string const& location : cluster_list.failed_locations) {
-      std::cout << location << std::endl;
+      std::cout << location << "\n";
     }
   }
 }
@@ -271,7 +271,7 @@ void UpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
   std::string cluster_detail;
   google::protobuf::TextFormat::PrintToString(modified_cluster,
                                               &cluster_detail);
-  std::cout << "cluster details : " << cluster_detail << std::endl;
+  std::cout << "cluster details : " << cluster_detail << "\n";
 }
 //! [update cluster]
 
@@ -286,7 +286,7 @@ void GetCluster(google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
   auto cluster = instance_admin.GetCluster(instance_id, cluster_id);
   std::string cluster_detail;
   google::protobuf::TextFormat::PrintToString(cluster, &cluster_detail);
-  std::cout << "GetCluster details : " << cluster_detail << std::endl;
+  std::cout << "GetCluster details : " << cluster_detail << "\n";
 }
 //! [get cluster]
 
@@ -323,48 +323,48 @@ void RunInstanceOperations(
 
   std::cout << "\nCreating a PRODUCTION Instance: ";
   auto future = instance_admin.CreateInstance(config).get();
-  std::cout << " Done" << std::endl;
+  std::cout << " Done\n";
 
-  std::cout << "\nListing Instances: " << std::endl;
+  std::cout << "\nListing Instances: \n";
   auto instances = instance_admin.ListInstances();
   for (auto const& instance : instances.instances) {
-    std::cout << instance.name() << std::endl;
+    std::cout << instance.name() << "\n";
   }
   if (!instances.failed_locations.empty()) {
     std::cerr << "The Cloud Bigtable service reports that the following "
                  "locations are temporarily unavailable and no information "
                  "about instances in these locations can be obtained:"
-              << std::endl;
+              << "\n";
     for (auto& failed_location : instances.failed_locations) {
-      std::cerr << failed_location << std::endl;
+      std::cerr << failed_location << "\n";
     }
   }
 
-  std::cout << "\nGet Instance: " << std::endl;
+  std::cout << "\nGet Instance: \n";
   auto instance = instance_admin.GetInstance(instance_id.get());
   std::string instance_detail;
   google::protobuf::TextFormat::PrintToString(instance, &instance_detail);
-  std::cout << "GetInstance details : " << std::endl << instance_detail;
+  std::cout << "GetInstance details : \n" << instance_detail;
 
-  std::cout << "\nListing Clusters: " << std::endl;
+  std::cout << "\nListing Clusters: \n";
   auto cluster_list = instance_admin.ListClusters(instance_id.get());
-  std::cout << "Cluster Name List: " << std::endl;
+  std::cout << "Cluster Name List: \n";
   for (auto const& cluster : cluster_list.clusters) {
-    std::cout << "Cluster Name: " << cluster.name() << std::endl;
+    std::cout << "Cluster Name: " << cluster.name() << "\n";
   }
   if (!cluster_list.failed_locations.empty()) {
     std::cerr << "The Cloud Bigtable service reports that the following "
                  "locations are temporarily unavailable and no information "
                  "about clusters in these locations can be obtained:"
-              << std::endl;
+              << "\n";
     for (auto& failed_location : cluster_list.failed_locations) {
-      std::cerr << failed_location << std::endl;
+      std::cerr << failed_location << "\n";
     }
   }
 
   std::cout << "\nDeleting Instance: ";
   instance_admin.DeleteInstance(instance_id.get());
-  std::cout << " Done" << std::endl;
+  std::cout << " Done\n";
 }
 //! [run instance operations]
 
@@ -379,7 +379,7 @@ void CreateAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
   auto config =
       google::cloud::bigtable::AppProfileConfig::MultiClusterUseAny(profile_id);
   auto profile = instance_admin.CreateAppProfile(instance_id, config);
-  std::cout << "New profile created with name=" << profile.name() << std::endl;
+  std::cout << "New profile created with name=" << profile.name() << "\n";
 }
 //! [create app profile]
 
@@ -398,7 +398,7 @@ void CreateAppProfileCluster(
   auto config = google::cloud::bigtable::AppProfileConfig::SingleClusterRouting(
       profile_id, cluster_id);
   auto profile = instance_admin.CreateAppProfile(instance_id, config);
-  std::cout << "New profile created with name=" << profile.name() << std::endl;
+  std::cout << "New profile created with name=" << profile.name() << "\n";
 }
 //! [create app profile cluster]
 
@@ -413,7 +413,7 @@ void GetAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
   auto profile = instance_admin.GetAppProfile(instance_id, profile_id);
   std::string detail;
   google::protobuf::TextFormat::PrintToString(profile, &detail);
-  std::cout << "Application Profile details=" << detail << std::endl;
+  std::cout << "Application Profile details=" << detail << "\n";
 }
 //! [get app profile]
 
@@ -436,7 +436,7 @@ void UpdateAppProfileDescription(
   auto profile = profile_future.get();
   std::string detail;
   google::protobuf::TextFormat::PrintToString(profile, &detail);
-  std::cout << "Application Profile details=" << detail << std::endl;
+  std::cout << "Application Profile details=" << detail << "\n";
 }
 //! [update app profile description]
 
@@ -459,7 +459,7 @@ void UpdateAppProfileRoutingAny(
   auto profile = profile_future.get();
   std::string detail;
   google::protobuf::TextFormat::PrintToString(profile, &detail);
-  std::cout << "Application Profile details=" << detail << std::endl;
+  std::cout << "Application Profile details=" << detail << "\n";
 }
 //! [update app profile routing any]
 
@@ -483,7 +483,7 @@ void UpdateAppProfileRoutingSingleCluster(
   auto profile = profile_future.get();
   std::string detail;
   google::protobuf::TextFormat::PrintToString(profile, &detail);
-  std::cout << "Application Profile details=" << detail << std::endl;
+  std::cout << "Application Profile details=" << detail << "\n";
 }
 //! [update app profile routing]
 
@@ -496,11 +496,11 @@ void ListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
   std::string instance_id(ConsumeArg(argc, argv));
   auto profiles = instance_admin.ListAppProfiles(instance_id);
   std::cout << "The " << instance_id << " instance has " << profiles.size()
-            << " application profiles" << std::endl;
+            << " application profiles\n";
   for (auto const& profile : profiles) {
     std::string detail;
     google::protobuf::TextFormat::PrintToString(profile, &detail);
-    std::cout << detail << std::endl;
+    std::cout << detail << "\n";
   }
 }
 //! [list app profiles]
@@ -532,7 +532,7 @@ void DeleteAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
     }
   }
   instance_admin.DeleteAppProfile(instance_id, profile_id, ignore_warnings);
-  std::cout << "Application Profile deleted" << std::endl;
+  std::cout << "Application Profile deleted\n";
 }
 //! [delete app profile]
 
@@ -608,7 +608,7 @@ void TestIamPermissions(google::cloud::bigtable::InstanceAdmin instance_admin,
     std::cout << sep << p;
     sep = ", ";
   }
-  std::cout << "]" << std::endl;
+  std::cout << "]\n";
 }
 //! [test iam permissions]
 
@@ -693,7 +693,7 @@ int main(int argc, char* argv[]) try {
   PrintUsage(argc, argv, ex.msg);
   return 1;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }
 //! [all code]

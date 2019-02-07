@@ -127,7 +127,7 @@ int main(int argc, char* argv[]) try {
 
   if (!google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").has_value()) {
     std::cerr << "GOOGLE_CLOUD_PROJECT environment variable must be set"
-              << std::endl;
+              << "\n";
     return 1;
   }
 
@@ -135,7 +135,7 @@ int main(int argc, char* argv[]) try {
       gcs::ClientOptions::CreateDefaultClientOptions();
   if (!client_options) {
     std::cerr << "Could not create ClientOptions, status="
-              << client_options.status() << std::endl;
+              << client_options.status() << "\n";
     return 1;
   }
   if (!options.enable_connection_pool) {
@@ -157,7 +157,7 @@ int main(int argc, char* argv[]) try {
                         gcs::PredefinedDefaultObjectAcl("projectPrivate"),
                         gcs::Projection("full"))
           .value();
-  std::cout << "# Running test on bucket: " << meta.name() << std::endl;
+  std::cout << "# Running test on bucket: " << meta.name() << "\n";
   std::string notes = google::cloud::storage::version_string() + ";" +
                       google::cloud::internal::compiler() + ";" +
                       google::cloud::internal::compiler_flags();
@@ -170,13 +170,13 @@ int main(int argc, char* argv[]) try {
             << "\n# Thread Count: " << options.thread_count
             << "\n# Enable connection pool: " << options.enable_connection_pool
             << "\n# Enable XML API: " << options.enable_xml_api
-            << "\n# Build info: " << notes << std::endl;
+            << "\n# Build info: " << notes << "\n";
 
   std::vector<std::string> object_names =
       CreateAllObjects(client, generator, bucket_name, options);
   RunTest(client, bucket_name, options, object_names);
   DeleteAllObjects(client, bucket_name, options, object_names);
-  std::cout << "# Deleting " << bucket_name << std::endl;
+  std::cout << "# Deleting " << bucket_name << "\n";
   auto status = client.DeleteBucket(bucket_name);
   if (!status.ok()) {
     google::cloud::internal::ThrowStatus(status);
@@ -184,7 +184,7 @@ int main(int argc, char* argv[]) try {
 
   return 0;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard exception raised: " << ex.what() << "\n";
   return 1;
 }
 
@@ -338,7 +338,7 @@ std::vector<std::string> CreateAllObjects(
   auto const max_group_size =
       std::max(options.object_count / options.thread_count, 1L);
   std::cout << "# Creating test objects [" << max_group_size << "] "
-            << std::endl;
+            << "\n";
 
   // Generate the list of object names.
   std::vector<std::string> object_names;
@@ -372,7 +372,7 @@ std::vector<std::string> CreateAllObjects(
   }
   auto elapsed = std::chrono::steady_clock::now() - start;
   std::cout << "# Created in " << duration_cast<milliseconds>(elapsed).count()
-            << "ms" << std::endl;
+            << "ms\n";
   return object_names;
 }
 
@@ -448,7 +448,7 @@ void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
       std::max(object_names.size() / options.thread_count, std::size_t(1));
 
   std::cout << "# Deleting test objects [" << max_group_size << "]"
-            << std::endl;
+            << "\n";
   auto start = std::chrono::steady_clock::now();
   std::vector<std::future<TestResult>> tasks;
   std::vector<gcs::ObjectMetadata> group;
@@ -469,7 +469,7 @@ void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
   }
   auto elapsed = std::chrono::steady_clock::now() - start;
   std::cout << "# Deleted in " << duration_cast<milliseconds>(elapsed).count()
-            << "ms" << std::endl;
+            << "ms\n";
 }
 
 void Options::ParseArgs(int& argc, char* argv[]) {
@@ -548,7 +548,7 @@ The options are:
   }
   std::ostringstream os;
   os << "Missing argument " << arg_name << "\n";
-  os << "Usage: " << Basename(argv[0]) << usage << std::endl;
+  os << "Usage: " << Basename(argv[0]) << usage << "\n";
   throw std::runtime_error(os.str());
 }
 

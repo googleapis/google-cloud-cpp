@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) try {
     std::string const cmd = argv[0];
     std::cerr << "Usage: " << basename(cmd)
               << " <project_id> <instance_id> <table_id> <profile_id>"
-              << std::endl;
+              << "\n";
     return 1;
   }
 
@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) try {
     ++i;
   }
 
-  std::cout << "Wrote some greetings to " << table_id << std::endl;
+  std::cout << "Wrote some greetings to " << table_id << "\n";
 
   // Access Cloud Bigtable using a different profile
   //! [read with app profile]
@@ -79,31 +79,31 @@ int main(int argc, char* argv[]) try {
       read.ReadRow("key-0", cbt::Filter::ColumnRangeClosed("fam", "c0", "c0"));
   if (!result.first) {
     std::cout << "Cannot find row 'key-0' in the table: " << table_id
-              << std::endl;
+              << "\n";
     return 1;
   }
   auto const& cell = result.second.cells().front();
   std::cout << cell.family_name() << ":" << cell.column_qualifier() << "    @ "
             << cell.timestamp().count() << "us\n"
-            << '"' << cell.value() << '"' << std::endl;
+            << '"' << cell.value() << '"' << "\n";
   //! [read with app profile]
 
   // Read multiple rows.
   //! [scan all with app profile]
-  std::cout << "Scanning all the data from " << table_id << std::endl;
+  std::cout << "Scanning all the data from " << table_id << "\n";
   for (auto& row : read.ReadRows(cbt::RowRange::InfiniteRange(),
                                  cbt::Filter::PassAllFilter())) {
     std::cout << row.row_key() << ":\n";
     for (auto& cell : row.cells()) {
       std::cout << "\t" << cell.family_name() << ":" << cell.column_qualifier()
                 << "    @ " << cell.timestamp().count() << "us\n"
-                << "\t\"" << cell.value() << '"' << std::endl;
+                << "\t\"" << cell.value() << '"' << "\n";
     }
   }
   //! [scan all with app profile]
 
   return 0;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }

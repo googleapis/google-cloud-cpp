@@ -30,13 +30,13 @@ namespace {
   std::cerr << msg << "\n"
             << "Status: " << status.error_message() << " ["
             << status.error_code() << "] - " << status.error_details()
-            << std::endl;
+            << "\n";
   for (auto const& failed : failures) {
     std::cerr << "Mutation " << failed.original_index() << " failed with"
               << failed.status().error_message() << " ["
-              << failed.status().error_code() << "]" << std::endl;
+              << failed.status().error_code() << "]\n";
   }
-  std::cerr << "Aborting because exceptions are disabled." << std::endl;
+  std::cerr << "Aborting because exceptions are disabled.\n";
   std::abort();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
