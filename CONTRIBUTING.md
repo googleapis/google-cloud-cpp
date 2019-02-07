@@ -123,7 +123,7 @@ Reformatting all the files in a specific directory should be safe too, for
 example:
 
 ```console
-$ find google/cloud -o -name '*.h' -o -name '*.cc' -print0 \
+$ find google/cloud -name '*.h' -o -name '*.cc' -print0 \
     | xargs -0 clang-format -i
 ```
 
