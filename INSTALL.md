@@ -66,7 +66,9 @@ dnf install -y automake cmake gcc-c++ git grpc-devel grpc-plugins \
         which zlib-devel
 ```
 
-**crc32c**: there is no Fedora package for this library. To install use:
+#### crc32c
+ 
+There is no Fedora package for this library. To install use:
 
 ```bash
 cd /var/tmp/build
@@ -84,8 +86,10 @@ cmake --build .build/crc32c --target install -- -j $(nproc)
 ldconfig
 ```
 
-**google-cloud-cpp**: we then can compile and install note that we use
-`pkg-config` to discover the options for gRPC and protobuf:
+#### google-cloud-cpp
+
+We can now compile and install `google-cloud-cpp`. Note that we use `pkg-config`
+to discover the options for gRPC and protobuf:
 
 ```bash
 cd $HOME/google-cloud-cpp # or wherever you have extracted google-cloud-cpp
@@ -111,7 +115,9 @@ sudo apt install -y build-essential cmake git gcc g++ cmake \
         pkg-config tar wget zlib1g-dev
 ```
 
-**crc32c**: there is no Ubuntu package for this library. To install it use:
+#### crc32c
+ 
+There is no Ubuntu package for this library. To install it use:
 
 ```bash
 cd /var/tmp/build
@@ -129,9 +135,11 @@ sudo cmake --build .build/crc32c --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
-**Protobuf**: while protobuf-3.0.0 is distributed with Ubuntu, the Google Cloud
-Plaform proto files require more recent versions (circa 3.4.x). To manually
-install a more recent version use:
+#### Protobuf
+
+While protobuf-3.0.0 is distributed with Ubuntu, the Google Cloud Plaform proto
+files require more recent versions (circa 3.4.x). To manually install a more
+recent version use:
 
 ```bash
 cd /var/tmp/build
@@ -147,8 +155,10 @@ sudo cmake --build .build --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
-**gRPC**: likewise, Ubuntu has packages for grpc-1.3.x, but this version is too
-old for the Google Cloud Platform APIs:
+#### gRPC
+
+Likewise, Ubuntu has packages for grpc-1.3.x, but this version is too old for
+the Google Cloud Platform APIs:
 
 ```bash
 cd /var/tmp/build
@@ -160,8 +170,10 @@ sudo make install
 ldconfig
 ```
 
-**google-cloud-cpp**: finally we can install `google-cloud-cpp`. Note that
-we use `pkg-config` to discover the options for gRPC:
+#### google-cloud-cpp
+
+Finally we can install `google-cloud-cpp`. Note that we use `pkg-config` to
+discover the options for gRPC:
 
 ```bash
 cd $HOME/google-cloud-cpp # or wherever you have extracted google-cloud-cpp
@@ -196,7 +208,9 @@ yum install -y cmake3 gcc gcc-c++ git make openssl-devel
 ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 ```
 
-**crc32c**: there is no CentOS package for this library. To install it use:
+#### crc32c
+
+There is no CentOS package for this library. To install it use:
 
 ```bash
 cd /var/tmp/build
@@ -214,7 +228,9 @@ cmake --build .build/crc32c --target install -- -j $(nproc)
 ldconfig
 ```
 
-**Protobuf**: likewise, manually install protobuf:
+#### Protobuf
+
+Likewise, manually install protobuf:
 
 ```bash
 cd /var/tmp/build
@@ -230,7 +246,9 @@ cmake --build .build --target install -- -j $(nproc)
 ldconfig
 ```
 
-**c-ares**: recent versions of gRPC require c-ares >= 1.11, but CentOS-7
+#### c-ares
+
+Recent versions of gRPC require c-ares >= 1.11, while CentOS-7
 distributes c-ares-1.10. Manually install a newer version:
 
 ```bash
@@ -242,7 +260,9 @@ cd c-ares-cares-1_14_0
 ldconfig
 ```
 
-**gRPC**: can be manually installed using:
+#### gRPC
+
+Can be manually installed using:
 
 ```bash
 cd /var/tmp/build
@@ -256,8 +276,10 @@ RUN make -j $(nproc) && make install
 RUN ldconfig
 ```
 
-**google-cloud-cpp**: finally we can install `google-cloud-cpp`. Note that
-we use `pkg-config` to discover the options for gRPC:
+#### google-cloud-cpp
+
+Finally we can install `google-cloud-cpp`. Note that we use `pkg-config` to
+discover the options for gRPC:
 
 ```bash
 cmake -H. -Bbuild-output \
