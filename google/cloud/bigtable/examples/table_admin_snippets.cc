@@ -260,7 +260,8 @@ void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
   //! [generate consistency token]
   [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
     std::string token = admin.GenerateConsistencyToken(table_id);
-    std::cout << "\n" << "generated token is : " << token << "\n";
+    std::cout << "\n"
+              << "generated token is : " << token << "\n";
   }
   //! [generate consistency token]
   (std::move(admin), table_id);

@@ -90,7 +90,8 @@ int main(int argc, char* argv[]) try {
   //! [read row] [START getting_a_row]
   auto result = table.ReadRow("key-0", filter);
   if (!result.first) {
-    std::cout << "Cannot find row 'key-0' in the table: " << table.table_name() << "\n";
+    std::cout << "Cannot find row 'key-0' in the table: " << table.table_name()
+              << "\n";
     return 0;
   }
   auto const& cell = result.second.cells().front();

@@ -130,7 +130,8 @@ int main(int argc, char* argv[]) try {
       "key-0",
       google::cloud::bigtable::Filter::ColumnRangeClosed("family", "c0", "c0"));
   if (!result.first) {
-    std::cout << "Cannot find row 'key-0' in the table: " << table.table_name() << "\n";
+    std::cout << "Cannot find row 'key-0' in the table: " << table.table_name()
+              << "\n";
     return 0;
   }
   auto const& cell = result.second.cells().front();

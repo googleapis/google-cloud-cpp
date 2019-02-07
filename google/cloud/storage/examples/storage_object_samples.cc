@@ -245,7 +245,8 @@ void CopyObject(google::cloud::storage::Client client, int& argc,
     std::cout << "Successfully copied " << source_object_name << " in bucket "
               << source_bucket_name << " to bucket " << new_copy_meta->bucket()
               << " with name " << new_copy_meta->name()
-              << ".\nThe full metadata after the copy is: " << *new_copy_meta << "\n";
+              << ".\nThe full metadata after the copy is: " << *new_copy_meta
+              << "\n";
   }
   //! [copy object] [END storage_copy_file]
   (std::move(client), source_bucket_name, source_object_name,
@@ -282,7 +283,8 @@ void CopyEncryptedObject(google::cloud::storage::Client client, int& argc,
     std::cout << "Successfully copied " << source_object_name << " in bucket "
               << source_bucket_name << " to bucket " << new_copy_meta->bucket()
               << " with name " << new_copy_meta->name()
-              << ".\nThe full metadata after the copy is: " << *new_copy_meta << "\n";
+              << ".\nThe full metadata after the copy is: " << *new_copy_meta
+              << "\n";
   }
   //! [copy encrypted object]
   (std::move(client), source_bucket_name, source_object_name,
@@ -385,7 +387,8 @@ void DeleteObject(google::cloud::storage::Client client, int& argc,
       throw std::runtime_error(status.message());
     }
 
-    std::cout << "Deleted " << object_name << " in bucket " << bucket_name << "\n";
+    std::cout << "Deleted " << object_name << " in bucket " << bucket_name
+              << "\n";
   }
   //! [delete object] [END storage_delete_file]
   (std::move(client), bucket_name, object_name);
@@ -483,7 +486,8 @@ void StartResumableUpload(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
     gcs::ObjectWriteStream stream = client.WriteObject(
         bucket_name, object_name, gcs::NewResumableUploadSession());
-    std::cout << "Created resumable upload: " << stream.resumable_session_id() << "\n";
+    std::cout << "Created resumable upload: " << stream.resumable_session_id()
+              << "\n";
     // As it is customary in C++, the destructor automatically closes the
     // stream, that would finish the upload and create the object. For this
     // example we want to restore the session as-if the application had crashed,
@@ -537,7 +541,8 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
       throw std::runtime_error(metadata.status().message());
     }
 
-    std::cout << "Upload completed, the new object metadata is: " << *metadata << "\n";
+    std::cout << "Upload completed, the new object metadata is: " << *metadata
+              << "\n";
   }
   //! [resume resumable upload]
   (std::move(client), bucket_name, object_name, session_id);
@@ -1116,7 +1121,8 @@ void RewriteObjectToken(google::cloud::storage::Client client, int& argc,
     }
 
     if (progress->done) {
-      std::cout << "The rewrite completed immediately, no token to resume later\n";
+      std::cout
+          << "The rewrite completed immediately, no token to resume later\n";
       return;
     }
     std::cout << "Rewrite in progress, token " << rewriter.token() << "\n";
@@ -1451,7 +1457,8 @@ int main(int argc, char* argv[]) try {
   google::cloud::StatusOr<google::cloud::storage::Client> client =
       google::cloud::storage::Client::CreateDefaultClient();
   if (!client) {
-    std::cerr << "Failed to create Storage Client, status=" << client.status() << "\n";
+    std::cerr << "Failed to create Storage Client, status=" << client.status()
+              << "\n";
     return 1;
   }
 

@@ -41,7 +41,8 @@ int main(int argc, char* argv[]) try {
   auto result = table.ReadRow(
       row_key, google::cloud::bigtable::Filter::FamilyRegex(column_family));
   if (!result.first) {
-    std::cout << "Cannot find row " << row_key << " in the table: " << table_id << "\n";
+    std::cout << "Cannot find row " << row_key << " in the table: " << table_id
+              << "\n";
     return 0;
   }
 

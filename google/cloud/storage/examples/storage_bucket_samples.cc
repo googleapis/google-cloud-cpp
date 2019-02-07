@@ -672,7 +672,8 @@ void GetServiceAccount(google::cloud::storage::Client client, int& argc,
     if (!service_account_details) {
       throw std::runtime_error(service_account_details.status().message());
     }
-    std::cout << "The service account details are " << *service_account_details << "\n";
+    std::cout << "The service account details are " << *service_account_details
+              << "\n";
   }
   //! [get service account] [END storage_get_service_account]
   (std::move(client));
@@ -725,7 +726,8 @@ void GetDefaultEventBasedHold(google::cloud::storage::Client client, int& argc,
     std::cout << "The default event-based hold for objects in bucket "
               << bucket_metadata->name() << " is "
               << (bucket_metadata->default_event_based_hold() ? "enabled"
-                                                              : "disabled") << "\n";
+                                                              : "disabled")
+              << "\n";
   }
   // [END storage_get_default_event_based_hold]
   //! [get default event based hold]
@@ -762,7 +764,8 @@ void EnableDefaultEventBasedHold(google::cloud::storage::Client client,
     std::cout << "The default event-based hold for objects in bucket "
               << bucket_name << " is "
               << (patched_metadata->default_event_based_hold() ? "enabled"
-                                                               : "disabled") << "\n";
+                                                               : "disabled")
+              << "\n";
   }
   // [END storage_enable_default_event_based_hold]
   //! [enable default event based hold]
@@ -799,7 +802,8 @@ void DisableDefaultEventBasedHold(google::cloud::storage::Client client,
     std::cout << "The default event-based hold for objects in bucket "
               << bucket_name << " is "
               << (patched_metadata->default_event_based_hold() ? "enabled"
-                                                               : "disabled") << "\n";
+                                                               : "disabled")
+              << "\n";
   }
   // [END storage_disable_default_event_based_hold]
   //! [disable default event based hold]
@@ -977,7 +981,8 @@ int main(int argc, char* argv[]) try {
   google::cloud::StatusOr<google::cloud::storage::Client> client =
       google::cloud::storage::Client::CreateDefaultClient();
   if (!client) {
-    std::cerr << "Failed to create Storage Client, status=" << client.status() << "\n";
+    std::cerr << "Failed to create Storage Client, status=" << client.status()
+              << "\n";
     return 1;
   }
   //! [create client]

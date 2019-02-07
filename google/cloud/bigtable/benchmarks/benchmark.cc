@@ -34,7 +34,8 @@ Benchmark::Benchmark(BenchmarkSetup const& setup)
   if (setup_.use_embedded_server()) {
     server_ = CreateEmbeddedServer();
     std::string address = server_->address();
-    std::cout << "Running embedded Cloud Bigtable server at " << address << "\n";
+    std::cout << "Running embedded Cloud Bigtable server at " << address
+              << "\n";
     server_thread_ = std::thread([this]() { server_->Wait(); });
 
     client_options_.set_admin_endpoint(address);

@@ -88,8 +88,8 @@ void AsyncListInstances(cbt::InstanceAdmin instance_admin,
             for (const auto& failed_location : instance_list.failed_locations) {
               std::cout << failed_location << "\n";
             }
-            std::cout
-                << "This is typically a transient condition, try again later.\n";
+            std::cout << "This is typically a transient condition, try again "
+                         "later.\n";
           }
         });
     final.get();
@@ -152,8 +152,8 @@ void AsyncListClusters(cbt::InstanceAdmin instance_admin,
             for (const auto& failed_location : cluster_list.failed_locations) {
               std::cout << failed_location << "\n";
             }
-            std::cout
-                << "This is typically a transient condition, try again later.\n";
+            std::cout << "This is typically a transient condition, try again "
+                         "later.\n";
           }
         });
 
@@ -188,8 +188,8 @@ void AsyncListAllClusters(cbt::InstanceAdmin instance_admin,
             for (const auto& failed_location : cluster_list.failed_locations) {
               std::cout << failed_location << "\n";
             }
-            std::cout
-                << "This is typically a transient condition, try again later.\n";
+            std::cout << "This is typically a transient condition, try again "
+                         "later.\n";
           }
         });
 
