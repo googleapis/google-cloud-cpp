@@ -429,9 +429,10 @@ run_rowset_examples() {
 
   # Use the same table in all the tests.
   local -r TABLE="rowset-tbl-${RANDOM}"
+  local -r PREFIX="key-${RANDOM}"
 
   run_example ./bigtable_rowset "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_rowset_prefix "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_rowset_prefix "${project_id}" "${instance_id}" "${TABLE}" "${PREFIX}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
