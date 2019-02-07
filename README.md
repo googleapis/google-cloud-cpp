@@ -69,8 +69,10 @@ APIs.
   - [macOS (using brew)](#macos-using-brew)
   - [Windows](#windows-using-vcpkg)
 - [Build](#build)
-  - [Linux and macOS](#linux-and-macos)
-  - [Windows](#windows-1)
+  - [Linux](#linux)
+  - [macOS](#macOS)
+  - [Windows](#windows)
+- [Install](#install)
 
 ## Requirements
 
@@ -80,7 +82,7 @@ The Google Cloud C++ libraries are tested with the following compilers:
 
 | Compiler    | Minimum Version |
 | ----------- | --------------- |
-| GCC         | 4.9 |
+| GCC         | 4.8 |
 | Clang       | 3.8 |
 | MSVC++      | 14.1 |
 | Apple Clang | 8.1 |
@@ -104,7 +106,7 @@ versions of these dependencies:
 
 | Library | Minimum version |
 | ------- | --------------- |
-| gRPC    | v1.10.x |
+| gRPC    | v1.17.x |
 | libcurl | 7.47.0  |
 
 #### Tests
@@ -372,6 +374,23 @@ ctest --output-on-failure
 
 You will find compiled binaries in `build-output\` respective to their
 source directories.
+
+### Install
+
+By default `google-cloud-cpp` downloads and compiles all its dependencies.
+The default configuration disables the `install` target, because the version of
+the dependencies downloaded by `google-cloud-cpp` may conflict with the versions
+already installed in your system, or with the versions you want to use for
+development.
+
+To install `google-cloud-cpp` you must first install all its dependencies. Then
+you must configure `google-cloud-cpp` to find these dependencies, and install
+it.
+
+Installing the dependencies themselves may be as simple as using the package
+manager for your platform, or may require manually downloading, compiling, and
+installing said dependencies.  The [INSTALL.md](INSTALL.md) file describes how
+to successfully install `google-cloud-cpp` on several platforms.
 
 ## Versioning
 

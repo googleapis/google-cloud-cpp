@@ -69,6 +69,8 @@ google_cloud_cpp_add_common_options(storage_common_options)
 include(CTest)
 
 include(IncludeCurl)
+find_package(OpenSSL REQUIRED)
+find_package(ZLIB REQUIRED)
 
 # the client library
 add_library(storage_client
