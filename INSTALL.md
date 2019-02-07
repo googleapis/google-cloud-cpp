@@ -10,8 +10,6 @@ similar directory.
 This document provides instructions to install the dependencies of
 google-cloud-cpp.
 
-## Installing google-cloud-cpp
-
 **If** all the dependencies of `google-cloud-cpp` are installed and provide
 CMake support files, then compiling and installing the libraries
 requires two commands:
@@ -26,15 +24,6 @@ Unfortunately getting your system to this state may require multiple steps,
 the following sections describe how to install `google-cloud-cpp` on several
 platforms.
 
-## Table of Contents
-
-- [Installing google-cloud-cpp](#installing-google-cloud-cpp)
-  - [Fedora 29](#fedora-29)
-  - [Ubuntu (Bionic Beaver)](#ubuntu-bionic-beaver)
-  - [CentOS 7](#ubuntu-bionic-beaver)
-
-## Installing google-cloud-cpp
-
 ### Required Libraries
 
 `google-cloud-cpp` directly depends on the following libraries:
@@ -46,35 +35,54 @@ platforms.
 | crc32c  | 1.0.6 | Hardware-accelerated CRC32C implementation |
 | OpenSSL | 1.0.2 | Crypto functions for Google Cloud Storage authentication |
 
-Note that these libraries may have complex dependencies themselves, the
-following instructions include steps to install these dependencies too.
+Note that these libraries may also depend on other libraries. The following
+instructions include steps to install these indirect dependencies too.
+
 When possible, the instructions below prefer to use pre-packaged versions of
-these libraries. In some cases the packages do not exist, or the package
-versions are too old. If this is the case, the instructions describe how you
-can manually download and install these packages. 
+these libraries and their dependencies. In some cases the packages do not exist,
+or the package versions are too old to support `google-cloud-cpp`. If this is
+the case, the instructions describe how you can manually download and install
+these dependencies.
+
+## Table of Contents
+
+- [Fedora 29](#fedora-29)
+- [openSUSE (Tumbleweed)](#opensuse-tumbleweed)
+- [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804--bionic-beaver)
+- [CentOS 7](#centos-7)
 
 ### Fedora (29)
 
-Fedora includes packages for gRPC, libcurl, and OpenSSL that are recent enough
-for `google-cloud-cpp`. Install these libraries and the necessary development
-tools:
+
+Install the minimal development tools:
+
 
 ```bash
-dnf makecache
-dnf install -y automake cmake gcc-c++ git grpc-devel grpc-plugins \
-        libcurl-devel make openssl-devel pkgconfig protobuf-compiler tar wget \
-        which zlib-devel
+sudo dnf makecache && \
+sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig zlib-devel
+```
+
+
+
+Fedora includes packages for gRPC, libcurl, and OpenSSL that are recent enough
+for `google-cloud-cpp`. Install these packages and additional development
+tools to compile the dependencies
+
+```bash
+sudo dnf makecache && \
+sudo dnf install -y grpc-devel grpc-plugins \
+        libcurl-devel protobuf-compiler tar wget zlib-devel
 ```
 
 #### crc32c
- 
-There is no Fedora package for this library. To install use:
+
+There is no Fedora package for this library. To install it, use:
 
 ```bash
 cd /var/tmp/build
 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 tar -xf 1.0.6.tar.gz
-cd crc32c-1.0.6
+cd /var/tmp/build/crc32c-1.0.6
 cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -82,48 +90,114 @@ cmake \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
       -H. -B.build/crc32c
-cmake --build .build/crc32c --target install -- -j $(nproc)
-ldconfig
+sudo cmake --build .build/crc32c --target install -- -j $(nproc)
+sudo ldconfig
 ```
 
 #### google-cloud-cpp
 
-We can now compile and install `google-cloud-cpp`. Note that we use `pkg-config`
-to discover the options for gRPC and protobuf:
+We can now compile and install `google-cloud-cpp`. Note that we use
+`pkg-config` to discover the options for gRPC and protobuf:
 
 ```bash
-cd $HOME/google-cloud-cpp # or wherever you have extracted google-cloud-cpp
+cd /home/build/google-cloud-cpp
 cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build build-output -- -j $(nproc)
-cd build-output
+cd /home/build/google-cloud-cpp/build-output
 ctest --output-on-failure
-cmake --build . --target install
+sudo cmake --build . --target install
 ```
 
-### Ubuntu (Bionic Beaver)
 
-First install the development tools, libcurl, and OpenSSL.
+### OpenSUSE (Tumbleweed)
+
+
+Install the minimal development tools:
+
 
 ```bash
-sudo apt update
+sudo zypper refresh && \
+sudo zypper install -y cmake gcc gcc-c++ git libcurl-devel libopenssl-devel make
+```
+
+
+
+OpenSUSE:tumbleweed provides packages for gRPC, libcurl, and protobuf, and the
+versions of these packages are recent enough to support the Google Cloud
+Platform proto files.
+
+```bash
+sudo zypper refresh && \
+sudo zypper install -y grpc-devel libcurl-devel pkg-config tar wget
+```
+
+#### crc32c
+
+There is no OpenSUSE package for this library. To install it, use:
+
+```bash
+cd /var/tmp/build
+wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
+tar -xf 1.0.6.tar.gz
+cd /var/tmp/build/crc32c-1.0.6
+cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DCRC32C_BUILD_TESTS=OFF \
+      -DCRC32C_BUILD_BENCHMARKS=OFF \
+      -DCRC32C_USE_GLOG=OFF \
+      -H. -B.build/crc32c
+sudo cmake --build .build/crc32c --target install -- -j $(nproc)
+sudo ldconfig
+```
+
+#### google-cloud-cpp
+
+We can now compile and install `google-cloud-cpp`. Note that we use
+`pkg-config` to discover the options for gRPC and protobuf:
+
+```bash
+cd /home/build/google-cloud-cpp
+cmake -H. -Bbuild-output \
+    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
+    -DGOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER=pkg-config \
+    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
+    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
+cmake --build build-output -- -j $(nproc)
+cd /home/build/google-cloud-cpp/build-output
+ctest --output-on-failure
+sudo cmake --build . --target install
+```
+
+
+### Ubuntu (18.04 - Bionic Beaver)
+
+
+Install the minimal development tools:
+
+
+```bash
+sudo apt update && \
 sudo apt install -y build-essential cmake git gcc g++ cmake \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
         pkg-config tar wget zlib1g-dev
 ```
 
+
+
 #### crc32c
- 
+
 There is no Ubuntu package for this library. To install it use:
 
 ```bash
 cd /var/tmp/build
 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 tar -xf 1.0.6.tar.gz
-cd build/crc32c-1.0.6
+cd /var/tmp/build/crc32c-1.0.6
 cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -137,7 +211,7 @@ sudo ldconfig
 
 #### Protobuf
 
-While protobuf-3.0.0 is distributed with Ubuntu, the Google Cloud Plaform proto
+While protobuf-3.0 is distributed with Ubuntu, the Google Cloud Plaform proto
 files require more recent versions (circa 3.4.x). To manually install a more
 recent version use:
 
@@ -145,7 +219,7 @@ recent version use:
 cd /var/tmp/build
 wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
 tar -xf v3.6.1.tar.gz
-cd protobuf-3.6.1/cmake
+cd /var/tmp/build/protobuf-3.6.1/cmake
 cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -164,10 +238,10 @@ the Google Cloud Platform APIs:
 cd /var/tmp/build
 wget -q https://github.com/grpc/grpc/archive/v1.17.2.tar.gz
 tar -xf v1.17.2.tar.gz
-cd grpc-1.17.2
-cd make -j $(nproc)
+cd /var/tmp/build/grpc-1.17.2
+make -j $(nproc)
 sudo make install
-ldconfig
+sudo ldconfig
 ```
 
 #### google-cloud-cpp
@@ -176,37 +250,39 @@ Finally we can install `google-cloud-cpp`. Note that we use `pkg-config` to
 discover the options for gRPC:
 
 ```bash
-cd $HOME/google-cloud-cpp # or wherever you have extracted google-cloud-cpp
+cd /home/build/google-cloud-cpp
 cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build build-output -- -j $(nproc)
-cd build-output
+cd /home/build/google-cloud-cpp/build-output
 ctest --output-on-failure
-cmake --build . --target install
+sudo cmake --build . --target install
 ```
 
-### CentOS
 
-First install the development tools an OpenSSL. The development tools
-distributed with CentOS (notably CMake) are too old to build `google-cloud-cpp`
-and its dependencies. In these instructions, we use `cmake3` via
+### CentOS (7)
+
+
+First install the development tools and OpenSSL. The development tools
+distributed with CentOS (notably CMake) are too old to build
+`google-cloud-cpp` and its dependencies. In these instructions, we use
+`cmake3` obtained from
 [Software Collections](https://www.softwarecollections.org/).
 
+
 ```bash
-# Extra Packages for Enterprise Linux used to install cmake3
 rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-
-yum install centos-release-scl
-yum-config-manager --enable rhel-server-rhscl-7-rpms
-
-yum makecache
-yum install -y cmake3 gcc gcc-c++ git make openssl-devel
-
-# Install cmake3 & ctest3 as cmake & ctest respectively.
+sudo yum install -y centos-release-scl
+sudo yum-config-manager --enable rhel-server-rhscl-7-rpms
+sudo yum makecache && \
+sudo yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool make \
+        openssl-devel pkgconfig tar wget which zlib-devel
 ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 ```
+
+
 
 #### crc32c
 
@@ -216,7 +292,7 @@ There is no CentOS package for this library. To install it use:
 cd /var/tmp/build
 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 tar -xf 1.0.6.tar.gz
-cd crc32c-1.0.6
+cd /var/tmp/build/crc32c-1.0.6
 cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -224,8 +300,8 @@ cmake \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
       -H. -B.build/crc32c
-cmake --build .build/crc32c --target install -- -j $(nproc)
-ldconfig
+sudo cmake --build .build/crc32c --target install -- -j $(nproc)
+sudo ldconfig
 ```
 
 #### Protobuf
@@ -236,14 +312,14 @@ Likewise, manually install protobuf:
 cd /var/tmp/build
 wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
 tar -xf v3.6.1.tar.gz
-cd protobuf-3.6.1/cmake
+cd /var/tmp/build/protobuf-3.6.1/cmake
 cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -H. -B.build
-cmake --build .build --target install -- -j $(nproc)
-ldconfig
+sudo cmake --build .build --target install -- -j $(nproc)
+sudo ldconfig
 ```
 
 #### c-ares
@@ -255,9 +331,10 @@ distributes c-ares-1.10. Manually install a newer version:
 cd /var/tmp/build
 wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
 tar -xf cares-1_14_0.tar.gz
-cd c-ares-cares-1_14_0
-./buildconf && ./configure && make -j $(nproc) && make install
-ldconfig
+cd /var/tmp/build/c-ares-cares-1_14_0
+./buildconf && ./configure && make -j $(nproc)
+sudo make install
+sudo ldconfig
 ```
 
 #### gRPC
@@ -268,12 +345,13 @@ Can be manually installed using:
 cd /var/tmp/build
 wget -q https://github.com/grpc/grpc/archive/v1.17.2.tar.gz
 tar -xf v1.17.2.tar.gz
-cd grpc-1.17.2
+cd /var/tmp/build/grpc-1.17.2
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
 export PATH=/usr/local/bin:${PATH}
-make -j $(nproc) && make install
-ldconfig
+make -j $(nproc)
+sudo make install
+sudo ldconfig
 ```
 
 #### google-cloud-cpp
@@ -282,12 +360,14 @@ Finally we can install `google-cloud-cpp`. Note that we use `pkg-config` to
 discover the options for gRPC:
 
 ```bash
+cd /var/tmp/build/google-cloud-cpp
 cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build build-output -- -j $(nproc)
-cd build-output
+cd /var/tmp/build/google-cloud-cpp/build-output
 ctest --output-on-failure
-cmake --build . --target install
+sudo cmake --build . --target install
 ```
+

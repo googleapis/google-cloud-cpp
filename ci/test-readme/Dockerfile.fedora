@@ -12,23 +12,90 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DISTRO_VERSION=28
+ARG DISTRO_VERSION=29
 FROM fedora:${DISTRO_VERSION}
 MAINTAINER "Carlos O'Ryan <coryan@google.com>"
 
-# Please keep the formatting in these commands, it is optimized to cut & paste
-# into the README.md file.
-RUN dnf makecache
-RUN dnf install -y clang cmake gcc-c++ git libcurl-devel make openssl-devel
+# Please keep the formatting below, it is used by `extract-readme.sh` and
+# `extract-install.md` to generate the contents of the top-level README.md and
+# INSTALL.md files.
 
-ARG CXX=g++
-ARG CC=gcc
+## [START INSTALL.md]
 
-WORKDIR /var/tmp/
-RUN git clone https://github.com/googleapis/google-cloud-cpp.git
-WORKDIR /var/tmp/google-cloud-cpp
-RUN git submodule update --init
-RUN cmake -H. -Bbuild-output
+# Install the minimal development tools:
+
+## [START README.md]
+
+# ```bash
+RUN dnf makecache && \
+    dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig zlib-devel
+# ```
+
+## [END README.md]
+
+## [START IGNORED]
+# Verify that the tools above are enough to compile google-cloud-cpp when using
+# external projects.
+WORKDIR /home/build/external
+COPY . /home/build/external
+RUN cmake -H. -Bbuild-output -DCMAKE_BUILD_TYPE=Debug
 RUN cmake --build build-output -- -j $(nproc)
-WORKDIR /var/tmp/google-cloud-cpp/build-output
+RUN (cd build-output && ctest --output-on-failure)
+## [END IGNORED]
+
+# Fedora includes packages for gRPC, libcurl, and OpenSSL that are recent enough
+# for `google-cloud-cpp`. Install these packages and additional development
+# tools to compile the dependencies
+
+# ```bash
+RUN dnf makecache && \
+    dnf install -y grpc-devel grpc-plugins \
+        libcurl-devel protobuf-compiler tar wget zlib-devel
+# ```
+
+# #### crc32c
+
+# There is no Fedora package for this library. To install it, use:
+
+# ```bash
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
+RUN tar -xf 1.0.6.tar.gz
+WORKDIR /var/tmp/build/crc32c-1.0.6
+RUN cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DCRC32C_BUILD_TESTS=OFF \
+      -DCRC32C_BUILD_BENCHMARKS=OFF \
+      -DCRC32C_USE_GLOG=OFF \
+      -H. -B.build/crc32c
+RUN cmake --build .build/crc32c --target install -- -j $(nproc)
+RUN ldconfig
+# ```
+
+# #### google-cloud-cpp
+
+# We can now compile and install `google-cloud-cpp`. Note that we use
+# `pkg-config` to discover the options for gRPC and protobuf:
+
+# ```bash
+WORKDIR /home/build/google-cloud-cpp
+COPY . /home/build/google-cloud-cpp
+RUN cmake -H. -Bbuild-output \
+    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
+    -DGOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER=pkg-config \
+    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
+    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
+RUN cmake --build build-output -- -j $(nproc)
+WORKDIR /home/build/google-cloud-cpp/build-output
 RUN ctest --output-on-failure
+RUN cmake --build . --target install
+# ```
+
+## [END INSTALL.md]
+
+# Verify that the installed files are actually usable
+WORKDIR /home/build/test-install-plain-make
+ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
+COPY ci/test-install /home/build/test-install-plain-make
+RUN make

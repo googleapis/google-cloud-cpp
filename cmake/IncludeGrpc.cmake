@@ -55,7 +55,7 @@ include(IncludeProtobuf)
 if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "external")
     include(external/grpc)
 elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
-    find_package(gRPC REQUIRED gRPC>=1.17)
+    find_package(gRPC REQUIRED gRPC>=1.16)
 
     if (NOT TARGET protobuf::libprotobuf)
         message(
@@ -126,14 +126,14 @@ elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
     find_package(PkgConfig REQUIRED)
     include(PkgConfigHelper)
 
-    pkg_check_modules(gRPC REQUIRED grpc>=1.17)
+    pkg_check_modules(gRPC REQUIRED grpc>=1.16)
     add_library(gRPC::grpc INTERFACE IMPORTED)
     set_library_properties_from_pkg_config(gRPC::grpc gRPC)
     set_property(TARGET gRPC::grpc
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES protobuf::libprotobuf)
 
-    pkg_check_modules(gRPC++ REQUIRED grpc++>=1.17)
+    pkg_check_modules(gRPC++ REQUIRED grpc++>=1.16)
     add_library(gRPC::grpc++ INTERFACE IMPORTED)
     set_library_properties_from_pkg_config(gRPC::grpc++ gRPC++)
     set_property(TARGET gRPC::grpc++

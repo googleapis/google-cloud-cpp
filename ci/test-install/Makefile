@@ -20,7 +20,7 @@
 
 # This is hard-coded because it is intended for a test, applications typically
 # have their own configuration files.
-CXX=clang++ -std=c++11
+CXX=g++ -std=c++11
 CXXLD=$(CXX)
 
 

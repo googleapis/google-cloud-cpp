@@ -7,3 +7,10 @@
 _build/
 build-output/
 cmake-build-*/
+
+# Skip these directories, the files here are not needed to build any of
+# the Docker images. Furthermore, when creating new Dockerfiles the files
+# here change a lot, but do not change the image, so they trigger image rebuids
+# without any benefit.
+ci/travis/
+ci/test-readme/
