@@ -26,20 +26,20 @@ namespace cbt = google::cloud::bigtable;
 // and delete the table.
 
 int main(int argc, char* argv[]) try {
-  if (argc != 4) {
+  if (argc != 5) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(cmd).find_last_of('/');
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project_id> <instance_id> <table_id>" << std::endl;
+              << " <project_id> <instance_id> <table_id> <prefix>" << std::endl;
     return 1;
   }
 
   std::string const project_id = argv[1];
   std::string const instance_id = argv[2];
   std::string const table_id = argv[3];
+  std::string const prefix = argv[4];
 
   std::string const family_name = "family";
-  std::string prefix = "key-";
 
   // Connect to the Cloud Bigtable Admin API.
   //! [connect admin] [START connecting_to_bigtable]
@@ -67,27 +67,21 @@ int main(int argc, char* argv[]) try {
   //! [connect data] [END connecting_to_bigtable]
 
   //! [write rows] [START writing_rows]
-  std::vector<std::string> greetings{"Hello World!", "Hello Cloud Bigtable!",
-                                     "Hello C++!"};
 
-  int i = 0;
-  for (auto greeting : greetings) {
-    // Each row has a unique row key.
-    //
-    // Note: This example uses sequential numeric IDs for simplicity, but
-    // this can result in poor performance in a production application.
-    // Since rows are stored in sorted order by key, sequential keys can
-    // result in poor distribution of operations across nodes.
-    //
-    // For more information about how to design a Bigtable schema for the
-    // best performance, see the documentation:
-    //
-    //     https://cloud.google.com/bigtable/docs/schema-design
-    std::string row_key = prefix + std::to_string(i);
-    table.Apply(google::cloud::bigtable::SingleRowMutation(
-        std::move(row_key),
-        google::cloud::bigtable::SetCell(family_name, "c0", greeting)));
-    ++i;
+  int q = 0;
+  for (int i = 0; i != 4; ++i) {
+    for (int j = 0; j != 4; ++j) {
+      for (int k = 0; k != 4; ++k) {
+        std::string row_key = "root/" + std::to_string(i) + "/";
+        row_key += std::to_string(j) + "/";
+        row_key += std::to_string(k);
+        google::cloud::bigtable::SingleRowMutation mutation(row_key);
+        mutation.emplace_back(google::cloud::bigtable::SetCell(
+            family_name, "col0", "value-" + std::to_string(q)));
+        ++q;
+        table.Apply(std::move(mutation));
+      }
+    }
   }
   //! [write rows] [END writing_rows]
 

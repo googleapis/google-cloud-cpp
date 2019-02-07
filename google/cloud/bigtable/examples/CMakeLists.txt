@@ -66,5 +66,4 @@ add_executable(bigtable_rowset bigtable_rowset.cc)
 target_link_libraries(bigtable_rowset bigtable_client bigtable_common_options)
 
 add_executable(bigtable_rowset_prefix bigtable_rowset_prefix.cc)
-target_link_libraries(bigtable_rowset_prefix bigtable_client 
-                      bigtable_common_options)
+target_link_libraries(bigtable_rowset_prefix bigtable_client bigtable_common_options)
