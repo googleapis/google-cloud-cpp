@@ -35,7 +35,7 @@ platforms.
 
 ## Installing google-cloud-cpp
 
-#### Required Libraries
+### Required Libraries
 
 `google-cloud-cpp` directly depends on the following libraries:
 
@@ -53,7 +53,7 @@ these libraries. In some cases the packages do not exist, or the package
 versions are too old. If this is the case, the instructions describe how you
 can manually download and install these packages. 
 
-#### Fedora (29)
+### Fedora (29)
 
 Fedora includes packages for gRPC, libcurl, and OpenSSL that are recent enough
 for `google-cloud-cpp`. Install these libraries and the necessary development
@@ -100,7 +100,7 @@ ctest --output-on-failure
 cmake --build . --target install
 ```
 
-#### Ubuntu (Bionic Beaver)
+### Ubuntu (Bionic Beaver)
 
 First install the development tools, libcurl, and OpenSSL.
 
@@ -175,7 +175,7 @@ ctest --output-on-failure
 cmake --build . --target install
 ```
 
-#### CentOS
+### CentOS
 
 First install the development tools an OpenSSL. The development tools
 distributed with CentOS (notably CMake) are too old to build `google-cloud-cpp`
