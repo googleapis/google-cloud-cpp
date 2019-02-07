@@ -16,17 +16,6 @@
 
 set -eu
 
-
-if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../../.."; pwd)"
-fi
-source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
-source "${PROJECT_ROOT}/ci/define-dump-log.sh"
-
-echo "================================================================"
-printenv
-echo "================================================================"
-
 export CC=gcc
 export CXX=g++
 export DISTRO=ubuntu
@@ -55,6 +44,16 @@ else
   echo "Unknown BUILD_NAME (${BUILD_NAME}). Fix the Kokoro .cfg file."
   exit 1
 fi
+
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../../.."; pwd)"
+fi
+source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
+source "${PROJECT_ROOT}/ci/define-dump-log.sh"
+
+echo "================================================================"
+printenv
+echo "================================================================"
 
 echo "================================================================"
 echo "Updating submodules."
