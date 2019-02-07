@@ -431,10 +431,12 @@ run_rowset_examples() {
   local -r TABLE="rowset-tbl-${RANDOM}"
 
   run_example ./bigtable_rowset "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_rowset_prefix "${project_id}" "${instance_id}" "${TABLE}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
   run_example_usage ./bigtable_rowset
+  run_example_usage ./bigtable_rowset_prefix
 }
 ################################################
 # Run the Bigtable hello app profile example.
