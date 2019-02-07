@@ -30,7 +30,8 @@ int main(int argc, char* argv[]) try {
     std::string const cmd = argv[0];
     auto last_slash = std::string(cmd).find_last_of('/');
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project_id> <instance_id> <table_id> <prefix>" << std::endl;
+              << " <project_id> <instance_id> <table_id> <prefix>"
+              << "\n";
     return 1;
   }
 
@@ -107,7 +108,7 @@ int main(int argc, char* argv[]) try {
     for (auto& cell : row.cells()) {
       std::cout << "\t" << cell.family_name() << ":" << cell.column_qualifier()
                 << "    @ " << cell.timestamp().count() << "us\n"
-                << "\t\"" << cell.value() << '"' << '\n';
+                << "\t\"" << cell.value() << '"' << "\n";
     }
   }
   //! [scan rows] [END bigtable_read_range_set]
@@ -121,7 +122,7 @@ int main(int argc, char* argv[]) try {
 
   return 0;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }
 //! [all code]
