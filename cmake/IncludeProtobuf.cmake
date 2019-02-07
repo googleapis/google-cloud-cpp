@@ -48,7 +48,7 @@ endfunction ()
 if ("${GOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER}" STREQUAL "external")
     include(external/protobuf)
 elseif("${GOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER}" STREQUAL "package")
-    find_package(protobuf REQUIRED protobuf>=3.5.2)
+    find_package(protobuf REQUIRED protobuf>=3.5)
 
     # Older versions of CMake (<= 3.9) do not define the protobuf::protoc
     # target, in this case we define it ourselves to simplify how the rest of
