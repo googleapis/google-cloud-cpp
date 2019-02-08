@@ -95,13 +95,17 @@ Get-Date -Format o
 $packages = @("zlib:x64-windows-static", "openssl:x64-windows-static",
               "protobuf:x64-windows-static", "c-ares:x64-windows-static",
               "grpc:x64-windows-static", "curl:x64-windows-static",
-              "gtest:x64-windows-static", "crc32c:x64-windows-static")
+              "crc32c:x64-windows-static")
 foreach ($pkg in $packages) {
     .\vcpkg.exe install $pkg
     if ($LastExitCode) {
         throw "vcpkg install $pkg failed with exit code $LastExitCode"
     }
 }
+
+# The dependencies are cached, we need to remove this old dependency. Otherwise
+# CMake files the old version of gtest+gmock instead of the external project.
+.\vcpkg.exe remove --recurse "gtest:x64-windows-static"
 
 Write-Host "Create cache zip file."
 Get-Date -Format o
