@@ -237,7 +237,7 @@ void ReadRowSet(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     throw Usage{"read-rowset: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [read rows]
+  //! [read rowset]
   [](google::cloud::bigtable::Table table) {
     namespace cbt = google::cloud::bigtable;
     auto row_set = cbt::RowSet();
@@ -261,7 +261,7 @@ void ReadRowSet(google::cloud::bigtable::Table table, int argc, char* argv[]) {
 
     std::cout << std::flush;
   }
-  //! [read rows]
+  //! [read rowset]
   (std::move(table));
 }
 
@@ -271,7 +271,7 @@ void ReadRowSetPrefix(google::cloud::bigtable::Table table, int argc,
     throw Usage{"read-rowset-prefix: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [read rows]
+  //! [read rowset prefix]
   [](google::cloud::bigtable::Table table) {
     namespace cbt = google::cloud::bigtable;
     auto row_set = cbt::RowSet();
@@ -295,7 +295,7 @@ void ReadRowSetPrefix(google::cloud::bigtable::Table table, int argc,
 
     std::cout << std::flush;
   }
-  //! [read rows]
+  //! [read rowset prefix]
   (std::move(table));
 }
 
