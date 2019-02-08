@@ -39,8 +39,8 @@ struct ServiceAccountCredentialsInfo {
   std::string private_key_id;
   std::string private_key;
   std::string token_uri;
-  // Optional; if empty, a default set of scopes will be used.
-  std::set<std::string> scopes;
+  // If no set is supplied, a default set of scopes will be used.
+  google::cloud::optional<std::set<std::string>> scopes;
   // See https://developers.google.com/identity/protocols/OAuth2ServiceAccount.
   google::cloud::optional<std::string> subject;
 };
@@ -147,11 +147,11 @@ class ServiceAccountCredentials : public Credentials {
 
     // Scopes must be specified in a comma-delimited string.
     std::string scope_str;
-    if (info.scopes.empty()) {
+    if (!info.scopes) {
       scope_str = GoogleOAuthScopeCloudPlatform();
     } else {
       std::string sep = "";
-      for (const auto& scope : info.scopes) {
+      for (const auto& scope : *(info.scopes)) {
         scope_str += sep + scope;
         sep = ",";
       }

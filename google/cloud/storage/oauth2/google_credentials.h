@@ -81,11 +81,11 @@ CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path);
  *
  * @param path the path to the file containing service account JSON credentials.
  * @param scopes the scopes to request during the authorization grant. If
- *     omitted or an empty set is provided, the cloud-platform scope,
- *     defined by `GoogleOAuthScopeCloudPlatform()`, is used.
+ *     omitted, the cloud-platform scope, defined by
+ *     `GoogleOAuthScopeCloudPlatform()`, is used as a default.
  * @param subject for domain-wide delegation; the email address of the user for
- *     which to request delegated access. If omitted, no "subject" attribute
- *     is included in the authorization grant.
+ *     which to request delegated access. If omitted, no "subject" attribute is
+ *     included in the authorization grant.
  *
  * @see https://developers.google.com/identity/protocols/googlescopes for a list
  *     of OAuth 2.0 scopes used with Google APIs.
@@ -95,15 +95,16 @@ CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path);
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonFilePath(
-    std::string const& path, std::set<std::string> const& scopes,
-    google::cloud::optional<std::string> const& subject);
+    std::string const& path,
+    google::cloud::optional<std::set<std::string>> scopes,
+    google::cloud::optional<std::string> subject);
 
 /**
  * Creates a ServiceAccountCredentials from a JSON string.
  *
  * These credentials use the cloud-platform OAuth 2.0 scope, defined by
- * `GoogleOAuthScopeCloudPlatform()`. To specify alternate scopes, use the
- * overloaded version of this function.
+ * `GoogleOAuthScopeCloudPlatform()`. To specify an alternate set of scopes, use
+ * the overloaded version of this function.
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(std::string const& contents);
@@ -114,11 +115,11 @@ CreateServiceAccountCredentialsFromJsonContents(std::string const& contents);
  * @param contents the string containing the JSON contents of a service account
  *     credentials file.
  * @param scopes the scopes to request during the authorization grant. If
- *     omitted or an empty set is provided, the cloud-platform scope,
- *     defined by `GoogleOAuthScopeCloudPlatform()`, is used.
+ *     omitted, the cloud-platform scope, defined by
+ *     `GoogleOAuthScopeCloudPlatform()`, is used as a default.
  * @param subject for domain-wide delegation; the email address of the user for
- *     which to request delegated access. If omitted or an empty string is
- *     provided, no "subject" attribute is included in the authorization grant.
+ *     which to request delegated access. If omitted, no "subject" attribute is
+ *     included in the authorization grant.
  *
  * @see https://developers.google.com/identity/protocols/googlescopes for a list
  *     of OAuth 2.0 scopes used with Google APIs.
@@ -128,8 +129,9 @@ CreateServiceAccountCredentialsFromJsonContents(std::string const& contents);
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(
-    std::string const& contents, std::set<std::string> const& scopes,
-    google::cloud::optional<std::string> const& subject);
+    std::string const& contents,
+    google::cloud::optional<std::set<std::string>> scopes,
+    google::cloud::optional<std::string> subject);
 
 /// Creates a ComputeEngineCredentials for the VM's default service account.
 std::shared_ptr<Credentials> CreateComputeEngineCredentials();

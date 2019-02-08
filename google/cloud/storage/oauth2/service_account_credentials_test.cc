@@ -143,7 +143,7 @@ void CheckInfoYieldsExpectedAssertion(ServiceAccountCredentialsInfo const& info,
 TEST_F(ServiceAccountCredentialsTest,
        RefreshingSendsCorrectRequestBodyAndParsesResponse) {
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
-  ASSERT_TRUE(info.ok()) << "status=" << info.status();
+  ASSERT_TRUE(info) << "status=" << info.status();
   CheckInfoYieldsExpectedAssertion(*info, kExpectedAssertionParam);
 }
 
@@ -151,9 +151,9 @@ TEST_F(ServiceAccountCredentialsTest,
 TEST_F(ServiceAccountCredentialsTest,
        RefreshingSendsCorrectRequestBodyAndParsesResponseForNonDefaultVals) {
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
-  ASSERT_TRUE(info.ok()) << "status=" << info.status();
-  info->scopes = std::set<std::string>{kAltScopeForTest};
-  info->subject = google::cloud::optional<std::string>(kSubjectForGrant);
+  ASSERT_TRUE(info) << "status=" << info.status();
+  info->scopes = {kAltScopeForTest};
+  info->subject = std::string(kSubjectForGrant);
   CheckInfoYieldsExpectedAssertion(*info,
                                    kExpectedAssertionWithOptionalArgsParam);
 }
@@ -201,7 +201,7 @@ TEST_F(ServiceAccountCredentialsTest,
           }));
 
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
-  ASSERT_TRUE(info.ok()) << "status=" << info.status();
+  ASSERT_TRUE(info) << "status=" << info.status();
   ServiceAccountCredentials<MockHttpRequestBuilder> credentials(*info);
   // Calls Refresh to obtain the access token for our authorization header.
   EXPECT_EQ("Authorization: Type access-token-r1",
@@ -236,7 +236,7 @@ TEST_F(ServiceAccountCredentialsTest, ParseSimple) {
 
   auto actual =
       ParseServiceAccountCredentials(contents, "test-data", "unused-uri");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_TRUE(actual) << "status=" << actual.status();
   EXPECT_EQ("not-a-key-id-just-for-testing", actual->private_key_id);
   EXPECT_EQ("not-a-valid-key-just-for-testing", actual->private_key);
   EXPECT_EQ("test-only@test-group.example.com", actual->client_email);
@@ -255,7 +255,7 @@ TEST_F(ServiceAccountCredentialsTest, ParseUsesExplicitDefaultTokenUri) {
 
   auto actual = ParseServiceAccountCredentials(
       contents, "test-data", "https://oauth2.googleapis.com/test_endpoint");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_TRUE(actual) << "status=" << actual.status();
   EXPECT_EQ("not-a-key-id-just-for-testing", actual->private_key_id);
   EXPECT_EQ("not-a-valid-key-just-for-testing", actual->private_key);
   EXPECT_EQ("test-only@test-group.example.com", actual->client_email);
@@ -274,7 +274,7 @@ TEST_F(ServiceAccountCredentialsTest, ParseUsesImplicitDefaultTokenUri) {
 
   // No token_uri passed in here, either.
   auto actual = ParseServiceAccountCredentials(contents, "test-data");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_TRUE(actual) << "status=" << actual.status();
   EXPECT_EQ("not-a-key-id-just-for-testing", actual->private_key_id);
   EXPECT_EQ("not-a-valid-key-just-for-testing", actual->private_key);
   EXPECT_EQ("test-only@test-group.example.com", actual->client_email);
@@ -286,7 +286,7 @@ TEST_F(ServiceAccountCredentialsTest, ParseInvalidContentsFails) {
   std::string config = R"""( not-a-valid-json-string )""";
 
   auto actual = ParseServiceAccountCredentials(config, "test-as-a-source");
-  ASSERT_FALSE(actual.ok()) << "status=" << actual.status();
+  ASSERT_FALSE(actual) << "status=" << actual.status();
   EXPECT_THAT(actual.status().message(),
               HasSubstr("Invalid ServiceAccountCredentials"));
   EXPECT_THAT(actual.status().message(), HasSubstr("test-as-a-source"));
@@ -307,7 +307,7 @@ TEST_F(ServiceAccountCredentialsTest, ParseEmptyFieldFails) {
     internal::nl::json json = internal::nl::json::parse(contents);
     json[field] = "";
     auto actual = ParseServiceAccountCredentials(json.dump(), "test-data", "");
-    ASSERT_FALSE(actual.ok()) << "status=" << actual.status();
+    ASSERT_FALSE(actual) << "status=" << actual.status();
     EXPECT_THAT(actual.status().message(), HasSubstr(field));
     EXPECT_THAT(actual.status().message(), HasSubstr(" field is empty"));
     EXPECT_THAT(actual.status().message(), HasSubstr("test-data"));
@@ -328,7 +328,7 @@ TEST_F(ServiceAccountCredentialsTest, ParseMissingFieldFails) {
     internal::nl::json json = internal::nl::json::parse(contents);
     json.erase(field);
     auto actual = ParseServiceAccountCredentials(json.dump(), "test-data", "");
-    ASSERT_FALSE(actual.ok()) << "status=" << actual.status();
+    ASSERT_FALSE(actual) << "status=" << actual.status();
     EXPECT_THAT(actual.status().message(), HasSubstr(field));
     EXPECT_THAT(actual.status().message(), HasSubstr(" field is missing"));
     EXPECT_THAT(actual.status().message(), HasSubstr("test-data"));
@@ -358,7 +358,7 @@ TEST_F(ServiceAccountCredentialsTest, SignBlob) {
   }));
 
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
-  ASSERT_TRUE(info.ok()) << "status=" << info.status();
+  ASSERT_TRUE(info) << "status=" << info.status();
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
       *info);
 
@@ -412,7 +412,7 @@ TEST_F(ServiceAccountCredentialsTest, ClientId) {
   }));
 
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
-  ASSERT_TRUE(info.ok()) << "status=" << info.status();
+  ASSERT_TRUE(info) << "status=" << info.status();
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
       *info);
 

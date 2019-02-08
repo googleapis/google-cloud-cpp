@@ -217,8 +217,8 @@ TEST_F(GoogleCredentialsTest,
   // Test that the service account credentials are loaded from a file.
   auto creds = CreateServiceAccountCredentialsFromJsonFilePath(
       filename,
-      std::set<std::string>{
-          "https://www.googleapis.com/auth/devstorage.full_control"},
+      google::cloud::optional<std::set<std::string>>(
+          {"https://www.googleapis.com/auth/devstorage.full_control"}),
       google::cloud::optional<std::string>("user@foo.bar"));
   ASSERT_TRUE(creds) << "status=" << creds.status();
   auto* ptr = creds->get();
@@ -230,8 +230,8 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromContents) {
   // representing JSON contents.
   auto creds = CreateServiceAccountCredentialsFromJsonContents(
       SERVICE_ACCOUNT_CRED_CONTENTS,
-      std::set<std::string>{
-          "https://www.googleapis.com/auth/devstorage.full_control"},
+      google::cloud::optional<std::set<std::string>>(
+          {"https://www.googleapis.com/auth/devstorage.full_control"}),
       google::cloud::optional<std::string>("user@foo.bar"));
   ASSERT_TRUE(creds) << "status=" << creds.status();
   auto* ptr = creds->get();

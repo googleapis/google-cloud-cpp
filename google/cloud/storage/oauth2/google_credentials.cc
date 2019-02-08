@@ -174,13 +174,15 @@ CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents) {
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path) {
   return CreateServiceAccountCredentialsFromJsonFilePath(
-      path, {}, google::cloud::optional<std::string>());
+      path, google::cloud::optional<std::set<std::string>>(),
+      google::cloud::optional<std::string>());
 }
 
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonFilePath(
-    std::string const& path, std::set<std::string> const& scopes,
-    google::cloud::optional<std::string> const& subject) {
+    std::string const& path,
+    google::cloud::optional<std::set<std::string>> scopes,
+    google::cloud::optional<std::string> subject) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   auto info = ParseServiceAccountCredentials(contents, path);
@@ -189,8 +191,8 @@ CreateServiceAccountCredentialsFromJsonFilePath(
   }
   // These are supplied as extra parameters to this method, not in the JSON
   // file.
-  info->scopes = scopes;
-  info->subject = subject;
+  info->subject = std::move(subject);
+  info->scopes = std::move(scopes);
   return StatusOr<std::shared_ptr<Credentials>>(
       std::make_shared<ServiceAccountCredentials<>>(*info));
 }
@@ -198,21 +200,23 @@ CreateServiceAccountCredentialsFromJsonFilePath(
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(std::string const& contents) {
   return CreateServiceAccountCredentialsFromJsonContents(
-      contents, {}, google::cloud::optional<std::string>());
+      contents, google::cloud::optional<std::set<std::string>>(),
+      google::cloud::optional<std::string>());
 }
 
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(
-    std::string const& contents, std::set<std::string> const& scopes,
-    google::cloud::optional<std::string> const& subject) {
+    std::string const& contents,
+    google::cloud::optional<std::set<std::string>> scopes,
+    google::cloud::optional<std::string> subject) {
   auto info = ParseServiceAccountCredentials(contents, "memory");
   if (!info) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());
   }
   // These are supplied as extra parameters to this method, not in the JSON
-  // contents.
-  info->scopes = scopes;  // Constructor will populate default scopes if empty.
-  info->subject = subject;
+  // file.
+  info->subject = std::move(subject);
+  info->scopes = std::move(scopes);
   return StatusOr<std::shared_ptr<Credentials>>(
       std::make_shared<ServiceAccountCredentials<>>(*info));
 }
