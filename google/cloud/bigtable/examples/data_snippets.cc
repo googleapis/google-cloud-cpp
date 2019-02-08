@@ -232,6 +232,73 @@ void ReadRowsWithLimit(google::cloud::bigtable::Table table, int argc,
   (std::move(table));
 }
 
+void ReadRowSet(google::cloud::bigtable::Table table, int argc, char* argv[]) {
+  if (argc != 1) {
+    throw Usage{"read-rowset: <project-id> <instance-id> <table-id>"};
+  }
+
+  //! [read rows]
+  [](google::cloud::bigtable::Table table) {
+    namespace cbt = google::cloud::bigtable;
+    auto row_set = cbt::RowSet();
+
+    row_set.Append("key-000010");
+    row_set.Append("key-000014");
+    row_set.Append("key-000018");
+
+    auto filter = google::cloud::bigtable::Filter::Latest(1);
+
+    for (auto& row : table.ReadRows(std::move(row_set), filter)) {
+      std::cout << row.row_key() << ":\n";
+      for (auto& cell : row.cells()) {
+        std::cout << "\t" << cell.family_name() << ":"
+                  << cell.column_qualifier() << "    @ "
+                  << cell.timestamp().count() << "us\n"
+                  << "\t\"" << cell.value() << '"' << "\n";
+      }
+    }
+    //! [scan all] [END scanning_all_rows]
+
+    std::cout << std::flush;
+  }
+  //! [read rows]
+  (std::move(table));
+}
+
+void ReadRowSetPrefix(google::cloud::bigtable::Table table, int argc,
+                      char* argv[]) {
+  if (argc != 1) {
+    throw Usage{"read-rowset-prefix: <project-id> <instance-id> <table-id>"};
+  }
+
+  //! [read rows]
+  [](google::cloud::bigtable::Table table) {
+    namespace cbt = google::cloud::bigtable;
+    auto row_set = cbt::RowSet();
+    std::string prefix = "key-0000";
+
+    auto range_prefix = cbt::RowRange::Prefix(prefix);
+    row_set.Append(range_prefix);
+
+    auto filter = google::cloud::bigtable::Filter::Latest(1);
+
+    for (auto& row : table.ReadRows(std::move(row_set), filter)) {
+      std::cout << row.row_key() << ":\n";
+      for (auto& cell : row.cells()) {
+        std::cout << "\t" << cell.family_name() << ":"
+                  << cell.column_qualifier() << "    @ "
+                  << cell.timestamp().count() << "us\n"
+                  << "\t\"" << cell.value() << '"' << "\n";
+      }
+    }
+    //! [scan all] [END scanning_all_rows]
+
+    std::cout << std::flush;
+  }
+  //! [read rows]
+  (std::move(table));
+}
+
 void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
                     char* argv[]) {
   if (argc != 1) {
@@ -334,6 +401,8 @@ int main(int argc, char* argv[]) try {
       {"bulk-apply", &BulkApply},
       {"read-row", &ReadRow},
       {"read-rows", &ReadRows},
+      {"read-rowset", &ReadRowSet},
+      {"read-rowset-prefix", &ReadRowSetPrefix},
       {"read-rows-with-limit", &ReadRowsWithLimit},
       {"check-and-mutate", &CheckAndMutate},
       {"read-modify-write", &ReadModifyWrite},
