@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/oauth2/credentials.h"
 #include <memory>
+#include <set>
 
 namespace google {
 namespace cloud {
@@ -53,7 +54,7 @@ std::shared_ptr<Credentials> CreateAnonymousCredentials();
  * with Cloud Storage client libraries.
  */
 StatusOr<std::shared_ptr<Credentials>>
-CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const&);
+CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path);
 
 /**
  * Creates an AuthorizedUserCredentials from a JSON string.
@@ -62,21 +63,61 @@ CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const&);
  * with Cloud Storage client libraries.
  */
 StatusOr<std::shared_ptr<Credentials>>
-CreateAuthorizedUserCredentialsFromJsonContents(std::string const&);
+CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents);
 
-/// Creates a ServiceAccountCredentials rom a JSON file at the specified path.
+/**
+ * Creates a ServiceAccountCredentials from a JSON file at the specified path.
+ *
+ * @param path the path to the file containing service account JSON credentials.
+ * @param scopes the scopes to request during the authorization grant. If
+ *     omitted or an empty set is provided, the cloud-platform scope,
+ *     defined by `GoogleOAuthScopeCloudPlatform()`, is used.
+ * @param subject for domain-wide delegation; the email address of the user for
+ *     which to request delegated access. If omitted or an empty string is
+ *     provided, no "subject" attribute is included in the authorization grant.
+ *
+ * @see https://developers.google.com/identity/protocols/OAuth2ServiceAccount
+ *     for more information about domain-wide delegation.
+ *
+ * @see https://developers.google.com/identity/protocols/googlescopes for a list
+ *     of OAuth 2.0 scopes used with Google APIs.
+ */
 StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromJsonFilePath(std::string const&);
+CreateServiceAccountCredentialsFromJsonFilePath(
+    std::string const& path,
+    std::set<std::string> const& scopes = std::set<std::string>(),
+    std::string const& subject = "");
 
-/// Creates a ServiceAccountCredentials from a JSON string.
+/**
+ * Creates a ServiceAccountCredentials from a JSON string.
+ *
+ * @param contents the string containing the JSON contents of a service account
+ *     credentials file.
+ * @param scopes the scopes to request during the authorization grant. If
+ *     omitted or an empty set is provided, the cloud-platform scope,
+ *     defined by `GoogleOAuthScopeCloudPlatform()`, is used.
+ * @param subject for domain-wide delegation; the email address of the user for
+ *     which to request delegated access. If omitted or an empty string is
+ *     provided, no "subject" attribute is included in the authorization grant.
+ *
+ * @see https://developers.google.com/identity/protocols/OAuth2ServiceAccount
+ *     for more information about domain-wide delegation.
+ *
+ * @see https://developers.google.com/identity/protocols/googlescopes for a list
+ *     of OAuth 2.0 scopes used with Google APIs.
+ */
 StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromJsonContents(std::string const&);
+CreateServiceAccountCredentialsFromJsonContents(
+    std::string const& contents,
+    std::set<std::string> const& scopes = std::set<std::string>(),
+    std::string const& subject = "");
 
 /// Creates a ComputeEngineCredentials for the VM's default service account.
 std::shared_ptr<Credentials> CreateComputeEngineCredentials();
 
 /// Creates a ComputeEngineCredentials for the VM's specified service account.
-std::shared_ptr<Credentials> CreateComputeEngineCredentials(std::string const&);
+std::shared_ptr<Credentials> CreateComputeEngineCredentials(
+    std::string const& service_account_email);
 
 //@}
 

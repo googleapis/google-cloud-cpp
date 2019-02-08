@@ -37,6 +37,8 @@ using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::StrEq;
 
+constexpr char kAltScopeForTest[] =
+    "https://www.googleapis.com/auth/devstorage.full_control";
 // This "magic" assertion below was generated from helper script,
 // "make_jwt_assertion_for_test_data.py". Note that when our JSON library dumps
 // a string representation, the keys are always in alphabetical order; our
@@ -45,6 +47,11 @@ using ::testing::StrEq;
 // different Base64-encoded string, and thus a different assertion string.
 constexpr char kExpectedAssertionParam[] =
     R"""(assertion=eyJhbGciOiJSUzI1NiIsImtpZCI6ImExYTExMWFhMTExMWExMWExMWExMWFhMTExYTExMWExYTExMTExMTEiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL29hdXRoMi5nb29nbGVhcGlzLmNvbS90b2tlbiIsImV4cCI6MTUzMDA2MzkyNCwiaWF0IjoxNTMwMDYwMzI0LCJpc3MiOiJmb28tZW1haWxAZm9vLXByb2plY3QuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzY29wZSI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvY2xvdWQtcGxhdGZvcm0ifQ.OtL40PSxdAB9rxRkXj-UeyuMhQCoT10WJY4ccOrPXriwm-DRl5AMgbBkQvVmWeYuPMTiFKWz_CMMBjVc3lFPW015eHvKT5r3ySGra1i8hJ9cDsWO7SdIGB-l00G-BdRxVEhN8U4C20eUhlvhtjXemOwlCFrKjF22rJB-ChiKy84rXs3O-Hz0dWmsSZPfVD9q-2S2vJdr9vz7NoP-fCmpxhQ3POVocYb-2OEM5c4Uo_e7lQTX3bRtVc19wz_wrTu9wMMMRYt52K8WPoWPURt7qpjHX88_EitXMzH-cJUQoDsgIoZ6vDlQMs7_nqNfgrlsGWHpPoSoGgvJMg1vJbzVLw)""";
+// This "magic" assertion is generated in a similar manner, but specifies a
+// non-default scope set and subject string (values used can be found in the
+// kAltScopeForTest and kSubjectForGrant variables).
+constexpr char kExpectedAssertionWithOptionalArgsParam[] =
+    R"""(assertion=eyJhbGciOiJSUzI1NiIsImtpZCI6ImExYTExMWFhMTExMWExMWExMWExMWFhMTExYTExMWExYTExMTExMTEiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL29hdXRoMi5nb29nbGVhcGlzLmNvbS90b2tlbiIsImV4cCI6MTUzMDA2MzkyNCwiaWF0IjoxNTMwMDYwMzI0LCJpc3MiOiJmb28tZW1haWxAZm9vLXByb2plY3QuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzY29wZSI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvZGV2c3RvcmFnZS5mdWxsX2NvbnRyb2wiLCJzdWIiOiJ1c2VyQGZvby5iYXIifQ.D2sZntI1C0yF3LE3R0mssmidj8e9m5VU6UwzIUvDIG6yAxQLDRWK_gEdPW7etJ1xklIDwPEk0WgEsiu9pP89caPig0nK-bih7f1vbpRBTx4Vke07roW3DpFCLXFgaEXhKJYbzoYOJ62H_oBbQISC9qSF841sqEHmbjOqj5rSAR43wJm9H9juDT8apGpDNVCJM5pSo99NprLCvxUXuCBnacEsSQwbbZlLHfmBdyrllJsumx8RgFd22laEHsgPAMTxP-oM2iyf3fBEs2s1Dj7GxdWdpG6D9abJA6Hs8H1HqSwwyEWTXH6v_SPMYGsN1hIMTAWbO7J11bdHdjxo0hO5CA)""";
 constexpr long int kFixedJwtTimestamp = 1530060324;
 constexpr char kGrantParamUnescaped[] =
     "urn:ietf:params:oauth:grant-type:jwt-bearer";
@@ -62,6 +69,7 @@ constexpr char kJsonKeyfileContents[] = R"""({
       "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
       "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
 })""";
+constexpr char kSubjectForGrant[] = "user@foo.bar";
 
 class ServiceAccountCredentialsTest : public ::testing::Test {
  protected:
@@ -84,9 +92,8 @@ struct FakeClock : public std::chrono::system_clock {
   }
 };
 
-/// @test Verify that we can create service account credentials from a keyfile.
-TEST_F(ServiceAccountCredentialsTest,
-       RefreshingSendsCorrectRequestBodyAndParsesResponse) {
+void CheckInfoYieldsExpectedAssertion(ServiceAccountCredentialsInfo const& info,
+                                      std::string const& assertion) {
   auto mock_request = std::make_shared<MockHttpRequest::Impl>();
   std::string response = R"""({
       "token_type": "Type",
@@ -94,8 +101,8 @@ TEST_F(ServiceAccountCredentialsTest,
       "expires_in": 1234
   })""";
   EXPECT_CALL(*mock_request, MakeRequest(_))
-      .WillOnce(Invoke([response](std::string const& payload) {
-        EXPECT_THAT(payload, HasSubstr(kExpectedAssertionParam));
+      .WillOnce(Invoke([response, assertion](std::string const& payload) {
+        EXPECT_THAT(payload, HasSubstr(assertion));
         // Hard-coded in this order in ServiceAccountCredentials class.
         EXPECT_THAT(payload,
                     HasSubstr(std::string("grant_type=") + kGrantParamEscaped));
@@ -125,13 +132,30 @@ TEST_F(ServiceAccountCredentialsTest,
             return t;
           }));
 
-  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
-  ASSERT_TRUE(info.ok()) << "status=" << info.status();
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
-      *info);
+      info);
   // Calls Refresh to obtain the access token for our authorization header.
   EXPECT_EQ("Authorization: Type access-token-value",
             credentials.AuthorizationHeader().value());
+}
+
+/// @test Verify that we can create service account credentials from a keyfile.
+TEST_F(ServiceAccountCredentialsTest,
+       RefreshingSendsCorrectRequestBodyAndParsesResponse) {
+  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  ASSERT_TRUE(info.ok()) << "status=" << info.status();
+  CheckInfoYieldsExpectedAssertion(*info, kExpectedAssertionParam);
+}
+
+/// @test Verify that we can create service account credentials from a keyfile.
+TEST_F(ServiceAccountCredentialsTest,
+       RefreshingSendsCorrectRequestBodyAndParsesResponseForNonDefaultVals) {
+  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  ASSERT_TRUE(info.ok()) << "status=" << info.status();
+  info->scopes = std::set<std::string>{kAltScopeForTest};
+  info->subject = kSubjectForGrant;
+  CheckInfoYieldsExpectedAssertion(*info,
+                                   kExpectedAssertionWithOptionalArgsParam);
 }
 
 /// @test Verify that we refresh service account credentials appropriately.

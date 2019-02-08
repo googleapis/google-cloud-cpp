@@ -172,23 +172,35 @@ CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents) {
 }
 
 StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path) {
+CreateServiceAccountCredentialsFromJsonFilePath(
+    std::string const& path, std::set<std::string> const& scopes,
+    std::string const& subject) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   auto info = ParseServiceAccountCredentials(contents, path);
   if (!info) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());
   }
+  // These are supplied as extra parameters to this method, not in the JSON
+  // file.
+  info->scopes = scopes;
+  info->subject = subject;
   return StatusOr<std::shared_ptr<Credentials>>(
       std::make_shared<ServiceAccountCredentials<>>(*info));
 }
 
 StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromJsonContents(std::string const& contents) {
+CreateServiceAccountCredentialsFromJsonContents(
+    std::string const& contents, std::set<std::string> const& scopes,
+    std::string const& subject) {
   auto info = ParseServiceAccountCredentials(contents, "memory");
   if (!info) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());
   }
+  // These are supplied as extra parameters to this method, not in the JSON
+  // contents.
+  info->scopes = scopes;
+  info->subject = subject;
   return StatusOr<std::shared_ptr<Credentials>>(
       std::make_shared<ServiceAccountCredentials<>>(*info));
 }

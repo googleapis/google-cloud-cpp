@@ -204,7 +204,7 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaGcloudFile) {
 }
 
 TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromFilename) {
-  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  std::string filename = ::testing::TempDir() + SERVICE_ACCOUNT_CRED_FILENAME;
   SetupServiceAccountCredentialsFileForTest(filename);
 
   // Test that the service account credentials are loaded from a file.
@@ -215,11 +215,31 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromFilename) {
   EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
 }
 
+TEST_F(GoogleCredentialsTest,
+       LoadValidServiceAccountCredentialsFromFilenameWithOptionalArgs) {
+  std::string filename = ::testing::TempDir() + SERVICE_ACCOUNT_CRED_FILENAME;
+  SetupServiceAccountCredentialsFileForTest(filename);
+
+  // Test that the service account credentials are loaded from a file.
+  auto creds = CreateServiceAccountCredentialsFromJsonFilePath(
+      filename,
+      std::set<std::string>{
+          "https://www.googleapis.com/auth/devstorage.full_control"},
+      "user@foo.bar");
+  ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
+  auto credentials = std::move(*creds);
+  auto ptr = credentials.get();
+  EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
+}
+
 TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromContents) {
   // Test that the service account credentials are loaded from a string
   // representing JSON contents.
   auto creds = CreateServiceAccountCredentialsFromJsonContents(
-      SERVICE_ACCOUNT_CRED_CONTENTS);
+      SERVICE_ACCOUNT_CRED_CONTENTS,
+      std::set<std::string>{
+          "https://www.googleapis.com/auth/devstorage.full_control"},
+      "user@foo.bar");
   ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
   auto credentials = std::move(*creds);
   auto ptr = credentials.get();
