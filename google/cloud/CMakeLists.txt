@@ -197,7 +197,9 @@ if (BUILD_TESTING)
         optional_test.cc
         status_or_test.cc
         status_test.cc
-        terminate_handler_test.cc)
+        terminate_handler_test.cc
+        testing_util/assert_ok_test.cc
+        )
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_common_unit_tests.bzl"
