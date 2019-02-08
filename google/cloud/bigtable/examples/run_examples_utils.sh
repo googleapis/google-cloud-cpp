@@ -301,6 +301,8 @@ run_all_data_examples() {
   run_example ./data_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets read-rows-with-limit "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets read-rows "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets read-rowset "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets read-rowset-prefix "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets sample-rows "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets sample-rows-collections "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
