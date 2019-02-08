@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) try {
     std::string const cmd = argv[0];
     auto last_slash = std::string(argv[0]).find_last_of("/");
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project> <instance> <table>" << std::endl;
+              << " <project> <instance> <table>\n";
     return 1;
   }
   std::string const project_id = argv[1];
@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) try {
   auto created_table = admin.CreateTable(
       table_name, bigtable::TableConfig(
                       {{family, bigtable::GcRule::MaxNumVersions(1)}}, {}));
-  std::cout << table_name << " created successfully" << std::endl;
+  std::cout << table_name << " created successfully\n";
 
   auto client = bigtable::CreateDefaultDataClient(project_id, instance_id,
                                                   bigtable::ClientOptions());
@@ -57,26 +57,24 @@ int main(int argc, char* argv[]) try {
                                    bigtable::SetCell(family, "c1", "v3")}),
   };
   table.BulkApply(std::move(bulk));
-  std::cout << "bulk mutation successful" << std::endl;
+  std::cout << "bulk mutation successful\n";
 
   auto row0 = table.ReadRow("row-key-0", bigtable::Filter::PassAllFilter());
   if (!row0.first) {
-    std::cout << "Cannot find row-key-0" << std::endl;
+    std::cout << "Cannot find row-key-0\n";
   } else {
     for (auto const& cell : row0.second.cells()) {
       std::cout << cell.row_key() << ": " << cell.family_name() << ":"
-                << cell.column_qualifier() << " = " << cell.value()
-                << std::endl;
+                << cell.column_qualifier() << " = " << cell.value() << "\n";
     }
   }
   auto row1 = table.ReadRow("row-key-1", bigtable::Filter::PassAllFilter());
   if (!row0.first) {
-    std::cout << "Cannot find row-key-0" << std::endl;
+    std::cout << "Cannot find row-key-0\n";
   } else {
     for (auto const& cell : row1.second.cells()) {
       std::cout << cell.row_key() << ": " << cell.family_name() << ":"
-                << cell.column_qualifier() << " = " << cell.value()
-                << std::endl;
+                << cell.column_qualifier() << " = " << cell.value() << "\n";
     }
   }
 
@@ -85,9 +83,9 @@ int main(int argc, char* argv[]) try {
   std::cerr << "bigtable::PermanentMutationFailure raised: " << ex.what()
             << " - " << ex.status().error_message() << " ["
             << ex.status().error_code()
-            << "], details=" << ex.status().error_details() << std::endl;
+            << "], details=" << ex.status().error_details() << "\n";
   return 1;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard exception raised: " << ex.what() << "\n";
   return 1;
 }
