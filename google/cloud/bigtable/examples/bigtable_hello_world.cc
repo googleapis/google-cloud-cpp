@@ -119,7 +119,7 @@ int main(int argc, char* argv[]) try {
   //! [delete table] [START deleting_a_table]
   google::cloud::Status status = table_admin.DeleteTable(table_id);
   if (!status.ok()) {
-    std::cerr << "DeleteTable failed: " << status << std::endl;
+    std::cerr << "DeleteTable failed: " << status << "\n";
     return 1;
   }
   //! [delete table] [END deleting_a_table]

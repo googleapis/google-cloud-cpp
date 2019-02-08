@@ -79,8 +79,8 @@ void Benchmark::DeleteTable() {
       setup_.instance_id());
   auto status = admin.DeleteTable(setup_.table_id());
   if (!status.ok()) {
-    std::cerr << "Failed to delete table: " << status << ". Continuing anyway."
-              << std::endl;
+    std::cerr << "Failed to delete table: " << status
+              << ". Continuing anyway.\n";
   }
 }
 
