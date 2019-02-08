@@ -402,7 +402,7 @@ if (BUILD_TESTING)
                                       protobuf::libprotobuf
                                       bigtable_common_options)
         if (MSVC)
-            target_compile_options(${target} "/bigobj")
+            target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
         add_test(NAME ${target} COMMAND ${target})
     endforeach ()
