@@ -29,6 +29,7 @@ google_cloud_cpp_testing_hdrs = [
 ]
 
 google_cloud_cpp_testing_srcs = [
+    "testing_util/assert_ok.cc",
     "testing_util/capture_log_lines_backend.cc",
     "testing_util/environment_variable_restore.cc",
     "testing_util/custom_google_mock_main.cc",

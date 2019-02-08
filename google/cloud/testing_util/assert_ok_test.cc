@@ -17,66 +17,128 @@
 #include <gtest/gtest-spi.h>
 #include <gtest/gtest.h>
 
+using ::google::cloud::Status;
+using ::google::cloud::StatusCode;
+using ::google::cloud::StatusOr;
+
 TEST(AssertOkTest, AssertionOk) {
-  ::google::cloud::Status status;
+  Status status;
   ASSERT_OK(status);
 }
 
+TEST(AssertOkTest, AssertionOkStatusOr) {
+  StatusOr<int> status_or(42);
+  ASSERT_OK(status_or);
+}
+
 TEST(AssertOkTest, AssertionOkDescription) {
-  ::google::cloud::Status status;
+  Status status;
   ASSERT_OK(status) << "OK is not OK?";
+}
+
+TEST(AssertOkTest, AssertionOkDescriptionStatusOr) {
+  StatusOr<int> status_or(42);
+  ASSERT_OK(status_or) << "OK is not OK?";
 }
 
 TEST(AssertOkTest, AssertionFailed) {
   EXPECT_FATAL_FAILURE(
       {
-        ::google::cloud::Status status(::google::cloud::StatusCode::kInternal,
-                                       "oh no!");
+        Status status(StatusCode::kInternal, "oh no!");
         ASSERT_OK(status);
       },
       "Status of \"status\" is expected to be OK, but evaluates to \"oh no!\" "
       "(code INTERNAL)");
 }
 
+TEST(AssertOkTest, AssertionFailedStatusOr) {
+  EXPECT_FATAL_FAILURE(
+      {
+        StatusOr<int> status_or(Status(StatusCode::kInternal, "oh no!"));
+        ASSERT_OK(status_or);
+      },
+      "Status of \"status_or\" is expected to be OK, but evaluates to \"oh "
+      "no!\" (code INTERNAL)");
+}
+
 TEST(AssertOkTest, AssertionFailedDescription) {
   EXPECT_FATAL_FAILURE(
       {
-        ::google::cloud::Status status(::google::cloud::StatusCode::kInternal,
-                                       "oh no!");
+        Status status(StatusCode::kInternal, "oh no!");
         ASSERT_OK(status) << "my precious assertion failed";
       },
       "Status of \"status\" is expected to be OK, but evaluates to \"oh no!\" "
       "(code INTERNAL)\nmy precious assertion failed");
 }
 
+TEST(AssertOkTest, AssertionFailedDescriptionStatusOr) {
+  EXPECT_FATAL_FAILURE(
+      {
+        StatusOr<int> status_or(Status(StatusCode::kInternal, "oh no!"));
+        ASSERT_OK(status_or) << "my precious assertion failed";
+      },
+      "Status of \"status_or\" is expected to be OK, but evaluates to \"oh "
+      "no!\" "
+      "(code INTERNAL)\nmy precious assertion failed");
+}
+
 TEST(ExpectOkTest, ExpectOk) {
-  ::google::cloud::Status status;
+  Status status;
   EXPECT_OK(status);
 }
 
+TEST(ExpectOkTest, ExpectOkStatusOr) {
+  StatusOr<int> status_or(42);
+  EXPECT_OK(status_or);
+}
+
 TEST(ExpectOkTest, ExpectionOkDescription) {
-  ::google::cloud::Status status;
+  Status status;
   EXPECT_OK(status) << "OK is not OK?";
+}
+
+TEST(ExpectOkTest, ExpectionOkDescriptionStatusOr) {
+  StatusOr<int> status_or(42);
+  EXPECT_OK(status_or) << "OK is not OK?";
 }
 
 TEST(ExpectOkTest, ExpectionFailed) {
   EXPECT_NONFATAL_FAILURE(
       {
-        ::google::cloud::Status status(::google::cloud::StatusCode::kInternal,
-                                       "oh no!");
+        Status status(StatusCode::kInternal, "oh no!");
         EXPECT_OK(status);
       },
       "Status of \"status\" is expected to be OK, but evaluates to \"oh no!\" "
       "(code INTERNAL)");
 }
 
+TEST(ExpectOkTest, ExpectionFailedStatusOr) {
+  EXPECT_NONFATAL_FAILURE(
+      {
+        StatusOr<int> status_or(Status(StatusCode::kInternal, "oh no!"));
+        EXPECT_OK(status_or);
+      },
+      "Status of \"status_or\" is expected to be OK, but evaluates to \"oh "
+      "no!\" "
+      "(code INTERNAL)");
+}
+
 TEST(ExpectOkTest, ExpectionFailedDescription) {
   EXPECT_NONFATAL_FAILURE(
       {
-        ::google::cloud::Status status(::google::cloud::StatusCode::kInternal,
-                                       "oh no!");
+        Status status(StatusCode::kInternal, "oh no!");
         EXPECT_OK(status) << "my precious assertion failed";
       },
       "Status of \"status\" is expected to be OK, but evaluates to \"oh no!\" "
       "(code INTERNAL)\nmy precious assertion failed");
+}
+
+TEST(ExpectOkTest, ExpectionFailedDescriptionStatusOr) {
+  EXPECT_NONFATAL_FAILURE(
+      {
+        StatusOr<int> status_or(Status(StatusCode::kInternal, "oh no!"));
+        EXPECT_OK(status_or) << "my precious assertion failed";
+      },
+      "Status of \"status_or\" is expected to be OK, but evaluates to \"oh "
+      "no!\" (code INTERNAL)\nmy precious assertion failed");
 }
