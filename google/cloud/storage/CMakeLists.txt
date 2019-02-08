@@ -379,7 +379,7 @@ if (BUILD_TESTING)
                                           storage_common_options
                                           nlohmann_json)
             if (MSVC)
-                target_compile_options(${target} "/bigobj")
+            target_compile_options(${target} PRIVATE "/bigobj")
             endif ()
             add_test(NAME ${target} COMMAND ${target})
         endif ()
