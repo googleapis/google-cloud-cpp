@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_TESTING_UTIL_ASSERT_OK_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_TESTING_UTIL_ASSERT_OK_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_ASSERT_OK_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_ASSERT_OK_H_
 
 #include "google/cloud/status.h"
 #include <gtest/gtest.h>
@@ -42,4 +42,4 @@ testing::AssertionResult PredFormatStatus(
 #define EXPECT_OK(val) \
   EXPECT_PRED_FORMAT1(::testing::internal::PredFormatStatus, val)
 
-#endif /* GOOGLE_CLOUD_CPP_GOOGLE_TESTING_UTIL_ASSERT_OK_H_ */
+#endif /* GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_ASSERT_OK_H_ */
