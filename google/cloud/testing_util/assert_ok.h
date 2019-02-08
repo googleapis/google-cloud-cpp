@@ -42,4 +42,4 @@ testing::AssertionResult PredFormatStatus(
 #define EXPECT_OK(val) \
   EXPECT_PRED_FORMAT1(::testing::internal::PredFormatStatus, val)
 
-#endif /* GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_ASSERT_OK_H_ */
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_ASSERT_OK_H_
