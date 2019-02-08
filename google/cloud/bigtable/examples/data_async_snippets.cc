@@ -34,7 +34,7 @@ void PrintUsage(std::string const& cmd, std::string const& msg) {
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
-            << command_usage << std::endl;
+            << command_usage << "\n";
 }
 
 void AsyncApply(cbt::Table table, cbt::CompletionQueue cq,
@@ -196,7 +196,7 @@ int main(int argc, char* argv[]) try {
   PrintUsage(argv[0], ex.msg);
   return 1;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }
 //! [all code]

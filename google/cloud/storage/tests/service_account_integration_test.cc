@@ -68,8 +68,7 @@ int main(int argc, char* argv[]) {
   if (argc != 2) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(argv[0]).find_last_of('/');
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1) << " <project>"
-              << std::endl;
+    std::cerr << "Usage: " << cmd.substr(last_slash + 1) << " <project>\n";
     return 1;
   }
 

@@ -34,7 +34,7 @@ void PrintUsage(std::string const& cmd, std::string const& msg) {
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
-            << command_usage << std::endl;
+            << command_usage << "\n";
 }
 
 void AsyncGetInstance(cbt::InstanceAdmin instance_admin,
@@ -55,7 +55,7 @@ void AsyncGetInstance(cbt::InstanceAdmin instance_admin,
           std::string instance_detail;
           google::protobuf::TextFormat::PrintToString(instance,
                                                       &instance_detail);
-          std::cout << "GetInstance details : " << instance_detail << std::endl;
+          std::cout << "GetInstance details : " << instance_detail << "\n";
         });
 
     final.get();
@@ -80,17 +80,16 @@ void AsyncListInstances(cbt::InstanceAdmin instance_admin,
         [](google::cloud::future<google::cloud::bigtable::v0::InstanceList> f) {
           auto instance_list = f.get();
           for (const auto& instance : instance_list.instances) {
-            std::cout << instance.name() << std::endl;
+            std::cout << instance.name() << "\n";
           }
           if (!instance_list.failed_locations.empty()) {
             std::cout << "The Cloud Bigtable service reports that it could not "
                          "retrieve data for the following zones:\n";
             for (const auto& failed_location : instance_list.failed_locations) {
-              std::cout << failed_location << std::endl;
+              std::cout << failed_location << "\n";
             }
-            std::cout
-                << "This is typically a transient condition, try again later."
-                << std::endl;
+            std::cout << "This is typically a transient condition, try again "
+                         "later.\n";
           }
         });
     final.get();
@@ -119,7 +118,7 @@ void AsyncGetCluster(cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
           auto cluster = f.get();
           std::string cluster_detail;
           google::protobuf::TextFormat::PrintToString(cluster, &cluster_detail);
-          std::cout << "GetCluster details : " << cluster_detail << std::endl;
+          std::cout << "GetCluster details : " << cluster_detail << "\n";
         });
 
     final.get();
@@ -143,19 +142,18 @@ void AsyncListClusters(cbt::InstanceAdmin instance_admin,
     auto final = future.then(
         [](google::cloud::future<google::cloud::bigtable::v0::ClusterList> f) {
           auto cluster_list = f.get();
-          std::cout << "Cluster Name List" << std::endl;
+          std::cout << "Cluster Name List\n";
           for (const auto& cluster : cluster_list.clusters) {
-            std::cout << cluster.name() << std::endl;
+            std::cout << cluster.name() << "\n";
           }
           if (!cluster_list.failed_locations.empty()) {
             std::cout << "The Cloud Bigtable service reports that it could not "
                          "retrieve data for the following zones:\n";
             for (const auto& failed_location : cluster_list.failed_locations) {
-              std::cout << failed_location << std::endl;
+              std::cout << failed_location << "\n";
             }
-            std::cout
-                << "This is typically a transient condition, try again later."
-                << std::endl;
+            std::cout << "This is typically a transient condition, try again "
+                         "later.\n";
           }
         });
 
@@ -180,19 +178,18 @@ void AsyncListAllClusters(cbt::InstanceAdmin instance_admin,
     auto final = future.then(
         [](google::cloud::future<google::cloud::bigtable::v0::ClusterList> f) {
           auto cluster_list = f.get();
-          std::cout << "Cluster Name List" << std::endl;
+          std::cout << "Cluster Name List\n";
           for (const auto& cluster : cluster_list.clusters) {
-            std::cout << cluster.name() << std::endl;
+            std::cout << cluster.name() << "\n";
           }
           if (!cluster_list.failed_locations.empty()) {
             std::cout << "The Cloud Bigtable service reports that it could not "
                          "retrieve data for the following zones:\n";
             for (const auto& failed_location : cluster_list.failed_locations) {
-              std::cout << failed_location << std::endl;
+              std::cout << failed_location << "\n";
             }
-            std::cout
-                << "This is typically a transient condition, try again later."
-                << std::endl;
+            std::cout << "This is typically a transient condition, try again "
+                         "later.\n";
           }
         });
 
@@ -276,7 +273,7 @@ int main(int argc, char* argv[]) try {
   PrintUsage(argv[0], ex.msg);
   return 1;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }
 //! [all code]

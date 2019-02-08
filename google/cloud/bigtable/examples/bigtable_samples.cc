@@ -28,7 +28,7 @@ namespace {
 //! [run table operations]
 void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
                         std::string const& table_id) {
-  std::cout << "Creating a table: " << std::endl;
+  std::cout << "Creating a table:\n";
   auto schema = admin.CreateTable(
       table_id,
       google::cloud::bigtable::TableConfig(
@@ -36,37 +36,36 @@ void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
            {"foo",
             google::cloud::bigtable::GcRule::MaxAge(std::chrono::hours(72))}},
           {}));
-  std::cout << " Done" << std::endl;
+  std::cout << " Done\n";
 
-  std::cout << "Listing tables: " << std::endl;
+  std::cout << "Listing tables:\n";
   auto tables =
       admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
 
   if (!tables) {
-    std::cerr << "ListTables failed: " << tables.status() << std::endl;
+    std::cerr << "ListTables failed: " << tables.status() << "\n";
     return;
   }
   for (auto const& table : *tables) {
-    std::cout << table.name() << std::endl;
+    std::cout << table.name() << "\n";
   }
 
-  std::cout << "Get table: " << std::endl;
+  std::cout << "Get table:\n";
   auto table =
       admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
   std::cout << table.name() << "\n";
-  std::cout << "Table name : " << table.name() << std::endl;
+  std::cout << "Table name : " << table.name() << "\n";
 
-  std::cout << "List table families and GC rules: " << std::endl;
+  std::cout << "List table families and GC rules:\n";
   for (auto const& family : table.column_families()) {
     std::string const& family_name = family.first;
     std::string gc_rule;
     google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
                                                 &gc_rule);
-    std::cout << "Table Families :" << family_name << "\t\t" << gc_rule
-              << std::endl;
+    std::cout << "Table Families :" << family_name << "\t\t" << gc_rule << "\n";
   }
 
-  std::cout << "Update a column family GC rule: " << std::endl;
+  std::cout << "Update a column family GC rule:\n";
   auto schema1 = admin.ModifyColumnFamilies(
       table_id,
       {google::cloud::bigtable::ColumnFamilyModification::Drop("foo"),
@@ -83,11 +82,11 @@ void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
 
   std::string formatted;
   google::protobuf::TextFormat::PrintToString(schema1, &formatted);
-  std::cout << "Schema modified to: " << formatted << std::endl;
+  std::cout << "Schema modified to: " << formatted << "\n";
 
-  std::cout << "Deleting table: " << std::endl;
+  std::cout << "Deleting table:\n";
   admin.DeleteTable(table_id);
-  std::cout << " Done" << std::endl;
+  std::cout << " Done\n";
 }
 //! [run table operations]
 
@@ -95,7 +94,7 @@ void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
 void RunFullExample(google::cloud::bigtable::TableAdmin admin,
                     std::string const& table_id) {
   // [START bigtable_create_table]
-  std::cout << "Creating a table: " << std::endl;
+  std::cout << "Creating a table:\n";
   auto schema = admin.CreateTable(
       table_id,
       google::cloud::bigtable::TableConfig(
@@ -103,29 +102,29 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
            {"foo",
             google::cloud::bigtable::GcRule::MaxAge(std::chrono::hours(72))}},
           {}));
-  std::cout << " Done" << std::endl;
+  std::cout << " Done\n";
   // [END bigtable_create_table]
 
   // [START bigtable_list_table]
-  std::cout << "Listing tables: " << std::endl;
+  std::cout << "Listing tables:\n";
   auto tables =
       admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
 
   if (!tables) {
-    std::cerr << "ListTables failed: " << tables.status() << std::endl;
+    std::cerr << "ListTables failed: " << tables.status() << "\n";
     return;
   }
   for (auto const& table : *tables) {
-    std::cout << table.name() << std::endl;
+    std::cout << table.name() << "\n";
   }
   // [END bigtable_list_table]
 
   // [START bigtable_get_table]
-  std::cout << "Get table: " << std::endl;
+  std::cout << "Get table:\n";
   auto table =
       admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
   std::cout << table.name() << "\n";
-  std::cout << "Table name : " << table.name() << std::endl;
+  std::cout << "Table name : " << table.name() << "\n";
   // [END bigtable_get_table]
 
   // [START bigtable_table_famalies]
@@ -134,13 +133,12 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
     std::string gc_rule;
     google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
                                                 &gc_rule);
-    std::cout << "Table Families :" << family_name << "\t\t" << gc_rule
-              << std::endl;
+    std::cout << "Table Families :" << family_name << "\t\t" << gc_rule << "\n";
   }
   // [END bigtable_table_famalies]
 
   // [START bigtable_update_column_famaly]
-  std::cout << "Update a column family GC rule: " << std::endl;
+  std::cout << "Update a column family GC rule:\n";
   auto schema1 = admin.ModifyColumnFamilies(
       table_id,
       {google::cloud::bigtable::ColumnFamilyModification::Drop("foo"),
@@ -157,13 +155,13 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
 
   std::string formatted;
   google::protobuf::TextFormat::PrintToString(schema1, &formatted);
-  std::cout << "Schema modified to: " << formatted << std::endl;
+  std::cout << "Schema modified to: " << formatted << "\n";
   // [END bigtable_update_column_famaly]
 
   // [START bigtable_delete_table]
-  std::cout << "Deleting table: " << std::endl;
+  std::cout << "Deleting table:\n";
   admin.DeleteTable(table_id);
-  std::cout << " Done" << std::endl;
+  std::cout << " Done\n";
   // [END bigtable_delete_table]
 }
 
@@ -207,13 +205,13 @@ int main(int argc, char* argv[]) try {
   } else if (command == "run-full-example") {
     RunFullExample(admin, table_id);
   } else {
-    std::cerr << "Unknown command: " << command << std::endl;
+    std::cerr << "Unknown command: " << command << "\n";
     print_usage();
   }
 
   return 0;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }
 //! [all code]

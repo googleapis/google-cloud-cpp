@@ -33,6 +33,6 @@ int main() {
 #error "LIBCURL should not be included by storage public headers"
 #endif  // OPENSSL_VERSION_NUMBER
 
-  std::cout << "PASSED: this is a compile-time test" << std::endl;
+  std::cout << "PASSED: this is a compile-time test\n";
   return 0;
 }

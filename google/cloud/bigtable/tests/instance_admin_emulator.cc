@@ -40,7 +40,7 @@ class InstanceAdminEmulator final
       google::longrunning::Operation* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     std::string name =
         request->parent() + "/instances/" + request->instance_id();
@@ -75,7 +75,7 @@ class InstanceAdminEmulator final
                            btadmin::Instance* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     auto i = instances_.find(request->name());
     if (i == instances_.end()) {
@@ -91,7 +91,7 @@ class InstanceAdminEmulator final
       btadmin::ListInstancesResponse* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     std::string prefix = request->parent() + "/instances/";
     for (auto const& kv : instances_) {
@@ -107,7 +107,7 @@ class InstanceAdminEmulator final
                               btadmin::Instance* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
   }
@@ -118,7 +118,7 @@ class InstanceAdminEmulator final
       google::longrunning::Operation* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     std::string name = request->instance().name();
     auto it = instances_.find(name);
@@ -168,7 +168,7 @@ class InstanceAdminEmulator final
                               google::protobuf::Empty* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     auto i = instances_.find(request->name());
     if (i == instances_.end()) {
@@ -191,7 +191,7 @@ class InstanceAdminEmulator final
       google::longrunning::Operation* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     std::string name = request->parent() + "/clusters/" + request->cluster_id();
     auto ins = clusters_.emplace(name, request->cluster());
@@ -215,7 +215,7 @@ class InstanceAdminEmulator final
                           btadmin::Cluster* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     auto i = clusters_.find(request->name());
     if (i == clusters_.end()) {
@@ -230,7 +230,7 @@ class InstanceAdminEmulator final
                             btadmin::ListClustersResponse* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     // We should only return the clusters for the project embedded in the
     // request->parent() field. Do some simple (and naive) parsing, ignore
@@ -271,7 +271,7 @@ class InstanceAdminEmulator final
       google::longrunning::Operation* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     std::string name = request->name();
     auto it = clusters_.find(name);
@@ -294,7 +294,7 @@ class InstanceAdminEmulator final
                              google::protobuf::Empty* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     auto i = clusters_.find(request->name());
     if (i == clusters_.end()) {
@@ -309,7 +309,7 @@ class InstanceAdminEmulator final
                                 btadmin::AppProfile* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     auto name = request->parent() + "/appProfiles/" + request->app_profile_id();
     auto ins = app_profiles_.emplace(name, request->app_profile());
@@ -329,7 +329,7 @@ class InstanceAdminEmulator final
                              btadmin::AppProfile* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     auto i = app_profiles_.find(request->name());
     if (i == app_profiles_.end()) {
@@ -345,7 +345,7 @@ class InstanceAdminEmulator final
       btadmin::ListAppProfilesResponse* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     auto const& parent = request->parent();
     for (auto const& kv : app_profiles_) {
@@ -363,7 +363,7 @@ class InstanceAdminEmulator final
       google::longrunning::Operation* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     std::string name = request->app_profile().name();
     auto it = app_profiles_.find(name);
@@ -402,7 +402,7 @@ class InstanceAdminEmulator final
                                 google::protobuf::Empty* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     auto i = app_profiles_.find(request->name());
     if (i == app_profiles_.end()) {
@@ -417,7 +417,7 @@ class InstanceAdminEmulator final
                             google::iam::v1::Policy* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     auto it = policies_.find(request->resource());
     if (it == policies_.end()) {
@@ -434,7 +434,7 @@ class InstanceAdminEmulator final
                             google::iam::v1::Policy* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     auto policy = request->policy();
     *response = policy;
@@ -449,7 +449,7 @@ class InstanceAdminEmulator final
       google::iam::v1::TestIamPermissionsResponse* response) override {
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << std::endl;
+    std::cout << __func__ << "request=" << request_text << "\n";
 
     auto it = instances_.find(request->resource());
     if (it != instances_.end()) {
@@ -548,7 +548,7 @@ int run_server(int argc, char* argv[]) {
 int main(int argc, char* argv[]) try {
   return run_server(argc, argv);
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ Exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ Exception raised: " << ex.what() << "\n";
   return 1;
 }
 #else

@@ -116,7 +116,7 @@ void InitializeSslLocking(bool enable_ssl_callbacks) {
     // This is a case where printing to stderr is justified, this happens during
     // the library initialization, nothing else may get reported to the
     // application developer.
-    std::cerr << os.str() << std::endl;
+    std::cerr << os.str() << "\n";
     google::cloud::internal::ThrowRuntimeError(os.str());
   }
 

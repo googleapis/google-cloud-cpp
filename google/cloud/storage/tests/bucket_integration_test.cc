@@ -954,7 +954,7 @@ int main(int argc, char* argv[]) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(argv[0]).find_last_of('/');
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project> <bucket> <topic>" << std::endl;
+              << " <project> <bucket> <topic>\n";
     return 1;
   }
 
