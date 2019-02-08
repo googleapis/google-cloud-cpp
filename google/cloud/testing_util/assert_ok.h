@@ -23,13 +23,13 @@ namespace testing {
 namespace internal {
 
 // A unary predicate-formatter for google::cloud::Status.
-testing::AssertionResult IsOkPredFormat(const char* expr,
-                                        const ::google::cloud::Status& status);
+testing::AssertionResult IsOkPredFormat(char const* expr,
+                                        ::google::cloud::Status const& status);
 
 // A unary predicate-formatter for google::cloud::StatusOr<T>.
 template <typename T>
 testing::AssertionResult IsOkPredFormat(
-    const char* expr, const ::google::cloud::StatusOr<T>& status_or) {
+    char const* expr, ::google::cloud::StatusOr<T> const& status_or) {
   if (status_or) {
     return testing::AssertionSuccess();
   }
