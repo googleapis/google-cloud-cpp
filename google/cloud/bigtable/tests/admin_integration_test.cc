@@ -86,7 +86,7 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTablesTest) {
     EXPECT_EQ(1, CountMatchingTables(table_id, *current_table_list));
   }
   for (auto const& table_id : expected_table_list) {
-    EXPECT_TRUE(DeleteTable(table_id).ok());
+    EXPECT_STATUS_OK(DeleteTable(table_id));
   }
   current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   ASSERT_STATUS_OK(current_table_list);
@@ -131,9 +131,9 @@ TEST_F(AdminIntegrationTest, DropRowsByPrefixTest) {
   // Create records
   CreateCells(*table, created_cells);
   // Delete all the records for a row
-  EXPECT_TRUE(table_admin_->DropRowsByPrefix(table_id, row_key1_prefix).ok());
+  EXPECT_STATUS_OK(table_admin_->DropRowsByPrefix(table_id, row_key1_prefix));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  EXPECT_TRUE(DeleteTable(table_id).ok());
+  EXPECT_STATUS_OK(DeleteTable(table_id));
 
   CheckEqualUnordered(expected_cells, actual_cells);
 }
@@ -163,9 +163,9 @@ TEST_F(AdminIntegrationTest, DropAllRowsTest) {
   // Create records
   CreateCells(*table, created_cells);
   // Delete all the records from a table
-  EXPECT_TRUE(table_admin_->DropAllRows(table_id).ok());
+  EXPECT_STATUS_OK(table_admin_->DropAllRows(table_id));
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  EXPECT_TRUE(DeleteTable(table_id).ok());
+  EXPECT_STATUS_OK(DeleteTable(table_id));
 
   ASSERT_TRUE(actual_cells.empty());
 }
@@ -194,14 +194,14 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
 
   // verify new table was created
   auto table_result = table_admin_->GetTable(table_id);
-  ASSERT_TRUE(table_result);
+  ASSERT_STATUS_OK(table_result);
   EXPECT_EQ(table->table_name(), table_result->name())
       << "Mismatched names for GetTable(" << table_id
       << "): " << table->table_name() << " != " << table_result->name();
 
   // get table
   auto table_detailed = table_admin_->GetTable(table_id, btadmin::Table::FULL);
-  ASSERT_TRUE(table_detailed);
+  ASSERT_STATUS_OK(table_detailed);
   auto count_matching_families = [](btadmin::Table const& table,
                                     std::string const& name) {
     int count = 0;
@@ -225,7 +225,7 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
 
   auto table_modified =
       table_admin_->ModifyColumnFamilies(table_id, column_modification_list);
-  ASSERT_TRUE(table_modified);
+  ASSERT_STATUS_OK(table_modified);
   EXPECT_EQ(1, count_matching_families(*table_modified, "fam"));
   EXPECT_EQ(0, count_matching_families(*table_modified, "foo"));
   EXPECT_EQ(1, count_matching_families(*table_modified, "newfam"));
@@ -234,7 +234,7 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
   EXPECT_EQ(2, gc.intersection().rules_size());
 
   // delete table
-  EXPECT_TRUE(DeleteTable(table_id).ok());
+  EXPECT_STATUS_OK(DeleteTable(table_id));
   // List to verify it is no longer there
   auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   ASSERT_STATUS_OK(current_table_list);
@@ -310,14 +310,14 @@ TEST_F(AdminIntegrationTest, CheckConsistencyIntegrationTest) {
   CreateCells(table, created_cells);
 
   auto consistency_token(table_admin.GenerateConsistencyToken(table_id.get()));
-  ASSERT_TRUE(consistency_token);
+  ASSERT_STATUS_OK(consistency_token);
 
   auto result =
       table_admin.WaitForConsistencyCheck(table_id, *consistency_token);
 
   EXPECT_TRUE(result.get());
 
-  EXPECT_TRUE(table_admin.DeleteTable(table_id.get()).ok());
+  EXPECT_STATUS_OK(table_admin.DeleteTable(table_id.get()));
   instance_admin.DeleteInstance(id);
 }
 

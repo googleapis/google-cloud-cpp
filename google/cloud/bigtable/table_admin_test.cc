@@ -456,7 +456,7 @@ TEST_F(TableAdminTest, DeleteTable) {
   EXPECT_CALL(*client_, DeleteTable(_, _, _)).WillOnce(Invoke(mock));
 
   // After all the setup, make the actual call we want to test.
-  EXPECT_TRUE(tested.DeleteTable("the-table").ok());
+  EXPECT_STATUS_OK(tested.DeleteTable("the-table"));
 }
 
 /**
@@ -544,7 +544,7 @@ TEST_F(TableAdminTest, DropRowsByPrefix) {
   EXPECT_CALL(*client_, DropRowRange(_, _, _)).WillOnce(Invoke(mock));
 
   // After all the setup, make the actual call we want to test.
-  EXPECT_TRUE(tested.DropRowsByPrefix("the-table", "foobar").ok());
+  EXPECT_STATUS_OK(tested.DropRowsByPrefix("the-table", "foobar"));
 }
 
 /**
@@ -577,7 +577,7 @@ TEST_F(TableAdminTest, DropAllRows) {
   EXPECT_CALL(*client_, DropRowRange(_, _, _)).WillOnce(Invoke(mock));
 
   // After all the setup, make the actual call we want to test.
-  EXPECT_TRUE(tested.DropAllRows("the-table").ok());
+  EXPECT_STATUS_OK(tested.DropAllRows("the-table"));
 }
 
 /**
@@ -654,7 +654,7 @@ TEST_F(TableAdminTest, CheckConsistencySimple) {
   bigtable::ConsistencyToken consistency_token("test-token");
   // After all the setup, make the actual call we want to test.
   auto result = tested.CheckConsistency(table_id, consistency_token);
-  ASSERT_TRUE(result);
+  ASSERT_STATUS_OK(result);
 }
 
 /**
@@ -816,7 +816,7 @@ TEST_F(TableAdminTest, DeleteSnapshotSimple) {
   // After all the setup, make the actual call we want to test.
   bigtable::ClusterId cluster_id("the-cluster");
   bigtable::SnapshotId snapshot_id("random-snapshot");
-  EXPECT_TRUE(tested.DeleteSnapshot(cluster_id, snapshot_id).ok());
+  EXPECT_STATUS_OK(tested.DeleteSnapshot(cluster_id, snapshot_id));
 }
 
 /**
@@ -1151,7 +1151,7 @@ TEST_F(TableAdminTest, ListSnapshots_Simple) {
 
   bigtable::ClusterId cluster_id("the-cluster");
   auto actual_snapshots = tested.ListSnapshots(cluster_id);
-  EXPECT_TRUE(actual_snapshots);
+  EXPECT_STATUS_OK(actual_snapshots);
   ASSERT_EQ(2UL, actual_snapshots->size());
   std::string instance_name = tested.instance_name();
   EXPECT_EQ(instance_name + "/clusters/the-cluster/snapshots/s0",
@@ -1184,7 +1184,7 @@ TEST_F(TableAdminTest, ListSnapshots_RecoverableFailure) {
 
   bigtable::ClusterId cluster_id("the-cluster");
   auto actual_snapshots = tested.ListSnapshots(cluster_id);
-  EXPECT_TRUE(actual_snapshots);
+  EXPECT_STATUS_OK(actual_snapshots);
   ASSERT_EQ(4UL, actual_snapshots->size());
   std::string instance_name = tested.instance_name();
   EXPECT_EQ(instance_name + "/clusters/the-cluster/snapshots/s0",

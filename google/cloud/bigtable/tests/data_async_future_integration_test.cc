@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/endian.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 
@@ -69,7 +70,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
   // Cleanup the thread running the completion queue event loop.
   cq.Shutdown();
   pool.join();
-  EXPECT_TRUE(DeleteTable(table_id).ok());
+  EXPECT_STATUS_OK(DeleteTable(table_id));
   CheckEqualUnordered(expected, actual);
 }
 
@@ -126,7 +127,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncBulkApply) {
   // Cleanup the thread running the completion queue event loop.
   cq.Shutdown();
   pool.join();
-  EXPECT_TRUE(DeleteTable(table_id).ok());
+  EXPECT_STATUS_OK(DeleteTable(table_id));
   CheckEqualUnordered(expected, actual);
 }
 
