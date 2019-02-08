@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) try {
     std::string const cmd = argv[0];
     auto last_slash = std::string(cmd).find_last_of('/');
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project_id> <instance_id> <table_id>" << std::endl;
+              << " <project_id> <instance_id> <table_id>\n";
     return 1;
   }
 
@@ -131,13 +131,13 @@ int main(int argc, char* argv[]) try {
       google::cloud::bigtable::Filter::ColumnRangeClosed("family", "c0", "c0"));
   if (!result.first) {
     std::cout << "Cannot find row 'key-0' in the table: " << table.table_name()
-              << std::endl;
+              << "\n";
     return 0;
   }
   auto const& cell = result.second.cells().front();
   std::cout << cell.family_name() << ":" << cell.column_qualifier() << "    @ "
             << cell.timestamp().count() << "us\n"
-            << '"' << cell.value() << '"' << std::endl;
+            << '"' << cell.value() << '"' << "\n";
   //! [read row]
 
   // Read a single row.
@@ -149,7 +149,7 @@ int main(int argc, char* argv[]) try {
     for (auto& cell : row.cells()) {
       std::cout << "\t" << cell.family_name() << ":" << cell.column_qualifier()
                 << "    @ " << cell.timestamp().count() << "us\n"
-                << "\t\"" << cell.value() << '"' << std::endl;
+                << "\t\"" << cell.value() << '"' << "\n";
     }
   }
   //! [scan all]
@@ -168,11 +168,11 @@ int main(int argc, char* argv[]) try {
     std::this_thread::sleep_for(std::chrono::seconds(10));
     std::cout << '.' << std::flush;
   }
-  std::cout << " DONE" << std::endl;
+  std::cout << " DONE\n";
 
   return 0;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }
 //! [all code]

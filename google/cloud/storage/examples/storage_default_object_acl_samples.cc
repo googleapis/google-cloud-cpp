@@ -41,7 +41,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
-            << command_usage << std::endl;
+            << command_usage << "\n";
 }
 
 void ListDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
@@ -61,9 +61,9 @@ void ListDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
       throw std::runtime_error(items.status().message());
     }
 
-    std::cout << "ACLs for bucket=" << bucket_name << std::endl;
+    std::cout << "ACLs for bucket=" << bucket_name << "\n";
     for (gcs::ObjectAccessControl const& acl : *items) {
-      std::cout << acl.role() << ":" << acl.entity() << std::endl;
+      std::cout << acl.role() << ":" << acl.entity() << "\n";
     }
   }
   //! [list default object acl] [END storage_print_bucket_default_acl]
@@ -94,7 +94,7 @@ void CreateDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
               << " will be granted default to " << default_object_acl->entity()
               << " on any new object created on bucket "
               << default_object_acl->bucket() << "\n"
-              << "Full attributes: " << *default_object_acl << std::endl;
+              << "Full attributes: " << *default_object_acl << "\n";
   }
   //! [create default object acl] [END storage_add_default_owner]
   (std::move(client), bucket_name, entity, role);
@@ -118,7 +118,7 @@ void DeleteDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "Deleted ACL entry for " << entity << " in bucket "
-              << bucket_name << std::endl;
+              << bucket_name << "\n";
   }
   //! [delete default object acl] [END storage_remove_bucket_default_owner]
   (std::move(client), bucket_name, entity);
@@ -143,7 +143,7 @@ void GetDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
     }
 
     std::cout << "Default Object ACL entry for " << acl->entity()
-              << " in bucket " << acl->bucket() << " is " << *acl << std::endl;
+              << " in bucket " << acl->bucket() << " is " << *acl << "\n";
   }
   //! [get default object acl]
   (std::move(client), bucket_name, entity);
@@ -180,7 +180,7 @@ void UpdateDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
 
     std::cout << "Default Object ACL entry for " << updated_acl->entity()
               << " in bucket " << updated_acl->bucket() << " is now "
-              << *updated_acl << std::endl;
+              << *updated_acl << "\n";
   }
   //! [update default object acl]
   (std::move(client), bucket_name, entity, role);
@@ -219,7 +219,7 @@ void PatchDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
 
     std::cout << "Default Object ACL entry for " << patched_acl->entity()
               << " in bucket " << patched_acl->bucket() << " is now "
-              << *patched_acl << std::endl;
+              << *patched_acl << "\n";
   }
   //! [patch default object acl]
   (std::move(client), bucket_name, entity, role);
@@ -250,7 +250,7 @@ void PatchDefaultObjectAclNoRead(google::cloud::storage::Client client,
 
     std::cout << "Default Object ACL entry for " << patched_acl->entity()
               << " in bucket " << patched_acl->bucket() << " is now "
-              << *patched_acl << std::endl;
+              << *patched_acl << "\n";
   }
   //! [patch default object acl no-read]
   (std::move(client), bucket_name, entity, role);
@@ -263,7 +263,7 @@ int main(int argc, char* argv[]) try {
       google::cloud::storage::Client::CreateDefaultClient();
   if (!client) {
     std::cerr << "Failed to create Storage Client, status=" << client.status()
-              << std::endl;
+              << "\n";
     return 1;
   }
 
@@ -310,6 +310,6 @@ int main(int argc, char* argv[]) try {
   PrintUsage(argc, argv, ex.msg);
   return 1;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }

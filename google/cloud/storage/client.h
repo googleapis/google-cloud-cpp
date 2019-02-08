@@ -118,7 +118,7 @@ inline namespace STORAGE_CLIENT_NS {
  *
  * if (!bucket_metadata) {
  *   std::cerr << "Error getting metadata for my-bucket: "
- *             << bucket_metadata.status() << std::endl;
+ *             << bucket_metadata.status() << "\n";
  *   return;
  * }
  *

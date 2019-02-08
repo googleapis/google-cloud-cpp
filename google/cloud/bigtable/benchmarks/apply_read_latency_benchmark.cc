@@ -143,7 +143,7 @@ int main(int argc, char* argv[]) try {
       append(combined, result);
     } catch (std::exception const& ex) {
       std::cerr << "Standard exception raised by task[" << count
-                << "]: " << ex.what() << std::endl;
+                << "]: " << ex.what() << "\n";
     }
     ++count;
   }
@@ -154,14 +154,14 @@ int main(int argc, char* argv[]) try {
   combined.read_results.elapsed = latency_test_elapsed;
   std::cout << " DONE. Elapsed=" << FormatDuration(latency_test_elapsed)
             << ", Ops=" << combined.apply_results.operations.size()
-            << ", Rows=" << combined.apply_results.row_count << std::endl;
+            << ", Rows=" << combined.apply_results.row_count << "\n";
 
   benchmark.PrintLatencyResult(std::cout, "perf", "Apply()",
                                combined.apply_results);
   benchmark.PrintLatencyResult(std::cout, "perf", "ReadRow()",
                                combined.read_results);
 
-  std::cout << bigtable::benchmarks::Benchmark::ResultsCsvHeader() << std::endl;
+  std::cout << bigtable::benchmarks::Benchmark::ResultsCsvHeader() << "\n";
   benchmark.PrintResultCsv(std::cout, "perf", "BulkApply()", "Latency",
                            populate_results);
   benchmark.PrintResultCsv(std::cout, "perf", "Apply()", "Latency",
@@ -173,7 +173,7 @@ int main(int argc, char* argv[]) try {
 
   return 0;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard exception raised: " << ex.what() << "\n";
   return 1;
 }
 

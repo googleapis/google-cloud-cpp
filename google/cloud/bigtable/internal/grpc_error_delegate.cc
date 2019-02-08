@@ -80,7 +80,7 @@ void ThrowRpcError(grpc::Status const& status, char const* msg) {
 #else
   bigtable::GRpcError ex(msg, status);
   std::cerr << "Aborting because exceptions are disabled: " << ex.what()
-            << std::endl;
+            << "\n";
   google::cloud::Terminate(ex.what());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }

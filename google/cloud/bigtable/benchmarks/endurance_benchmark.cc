@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) try {
   benchmark.CreateTable();
 
   // Start the threads running the latency test.
-  std::cout << "# Running Endurance Benchmark:" << std::endl;
+  std::cout << "# Running Endurance Benchmark:\n";
   auto latency_test_start = std::chrono::steady_clock::now();
   std::vector<std::future<long>> tasks;
   for (int i = 0; i != setup.thread_count(); ++i) {
@@ -97,7 +97,7 @@ int main(int argc, char* argv[]) try {
       combined += result;
     } catch (std::exception const& ex) {
       std::cerr << "Standard exception raised by task[" << count
-                << "]: " << ex.what() << std::endl;
+                << "]: " << ex.what() << "\n";
     }
     ++count;
   }
@@ -106,12 +106,12 @@ int main(int argc, char* argv[]) try {
   auto throughput = 1000.0 * combined / elapsed.count();
   std::cout << "# DONE. Elapsed=" << FormatDuration(elapsed)
             << ", Ops=" << combined << ", Throughput: " << throughput
-            << " ops/sec" << std::endl;
+            << " ops/sec\n";
 
   benchmark.DeleteTable();
   return 0;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard exception raised: " << ex.what() << "\n";
   return 1;
 }
 
