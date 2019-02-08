@@ -18,8 +18,8 @@ namespace testing {
 namespace internal {
 
 // A unary predicate-formatter for google::cloud::Status.
-testing::AssertionResult PredFormatStatus(
-    const char* expr, const ::google::cloud::Status& status) {
+testing::AssertionResult IsOkPredFormat(const char* expr,
+                                        const ::google::cloud::Status& status) {
   if (status.ok()) {
     return testing::AssertionSuccess();
   }

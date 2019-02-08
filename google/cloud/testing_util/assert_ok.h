@@ -23,26 +23,26 @@ namespace testing {
 namespace internal {
 
 // A unary predicate-formatter for google::cloud::Status.
-testing::AssertionResult PredFormatStatus(
-    const char* expr, const ::google::cloud::Status& status);
+testing::AssertionResult IsOkPredFormat(const char* expr,
+                                        const ::google::cloud::Status& status);
 
 // A unary predicate-formatter for google::cloud::StatusOr<T>.
 template <typename T>
-testing::AssertionResult PredFormatStatus(
+testing::AssertionResult IsOkPredFormat(
     const char* expr, const ::google::cloud::StatusOr<T>& status_or) {
   if (status_or) {
     return testing::AssertionSuccess();
   }
-  return PredFormatStatus(expr, status_or.status());
+  return IsOkPredFormat(expr, status_or.status());
 }
 
 }  // namespace internal
 }  // namespace testing
 
 #define ASSERT_OK(val) \
-  ASSERT_PRED_FORMAT1(::testing::internal::PredFormatStatus, val)
+  ASSERT_PRED_FORMAT1(::testing::internal::IsOkPredFormat, val)
 
 #define EXPECT_OK(val) \
-  EXPECT_PRED_FORMAT1(::testing::internal::PredFormatStatus, val)
+  EXPECT_PRED_FORMAT1(::testing::internal::IsOkPredFormat, val)
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_ASSERT_OK_H_
