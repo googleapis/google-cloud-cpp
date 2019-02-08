@@ -17,6 +17,7 @@
 """Automatically generated source lists for google_cloud_cpp_testing - DO NOT EDIT."""
 
 google_cloud_cpp_testing_hdrs = [
+    "testing_util/assert_ok.h",
     "testing_util/capture_log_lines_backend.h",
     "testing_util/check_predicate_becomes_false.h",
     "testing_util/chrono_literals.h",

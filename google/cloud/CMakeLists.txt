@@ -160,6 +160,7 @@ google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 
 if (BUILD_TESTING)
     add_library(google_cloud_cpp_testing
+                testing_util/assert_ok.h
                 testing_util/capture_log_lines_backend.h
                 testing_util/capture_log_lines_backend.cc
                 testing_util/check_predicate_becomes_false.h
