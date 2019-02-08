@@ -223,6 +223,9 @@ if (BUILD_TESTING)
                                       GTest::gmock
                                       GTest::gtest
                                       google_cloud_cpp_common_options)
+        if (MSVC)
+            target_compile_options(${target} "/bigobj")
+        endif ()
         add_test(NAME ${target} COMMAND ${target})
     endforeach ()
 endif ()
