@@ -153,7 +153,7 @@ TEST_F(ServiceAccountCredentialsTest,
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
   ASSERT_TRUE(info.ok()) << "status=" << info.status();
   info->scopes = std::set<std::string>{kAltScopeForTest};
-  info->subject = kSubjectForGrant;
+  info->subject = google::cloud::optional<std::string>(kSubjectForGrant);
   CheckInfoYieldsExpectedAssertion(*info,
                                    kExpectedAssertionWithOptionalArgsParam);
 }

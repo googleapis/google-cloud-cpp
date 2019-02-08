@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_SERVICE_ACCOUNT_CREDENTIALS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_SERVICE_ACCOUNT_CREDENTIALS_H_
 
+#include "google/cloud/optional.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/openssl_util.h"
@@ -41,7 +42,7 @@ struct ServiceAccountCredentialsInfo {
   // Optional; if empty, a default set of scopes will be used.
   std::set<std::string> scopes;
   // See https://developers.google.com/identity/protocols/OAuth2ServiceAccount.
-  std::string subject;
+  google::cloud::optional<std::string> subject;
 };
 
 /// Parses the contents of a JSON keyfile into a ServiceAccountCredentialsInfo.
@@ -172,8 +173,8 @@ class ServiceAccountCredentials : public Credentials {
         {"iat", now_from_epoch},
         // Resulting access token should be expire after one hour.
         {"exp", expiration_from_epoch}};
-    if (!info.subject.empty()) {
-      assertion_payload["sub"] = info.subject;
+    if (info.subject) {
+      assertion_payload["sub"] = *(info.subject);
     }
 
     return std::make_pair(std::move(assertion_header),
