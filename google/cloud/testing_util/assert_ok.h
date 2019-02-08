@@ -39,6 +39,13 @@ testing::AssertionResult IsOkPredFormat(
 }  // namespace internal
 }  // namespace testing
 
+// This is a dirty workaround for the fact that protobuf defines a poorman's
+// version of this macro for grpc::Status.
+
+#ifdef EXPECT_OK
+#undef EXPECT_OK
+#endif
+
 #define ASSERT_OK(val) \
   ASSERT_PRED_FORMAT1(::testing::internal::IsOkPredFormat, val)
 
