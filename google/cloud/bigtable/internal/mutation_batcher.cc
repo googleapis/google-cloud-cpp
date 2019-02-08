@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/mutation_batcher.h"
+#include "google/cloud/bigtable/internal/client_options_defaults.h"
 #include "google/cloud/bigtable/internal/table.h"
 #include <sstream>
 
@@ -21,6 +22,15 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
+
+MutationBatcher::Options::Options()
+    :  // Cloud Bigtable doesn't accept more than this.
+      max_mutations_per_batch(100000),
+      // Let's make the default slightly smaller, so that overheads or
+      // miscalculations don't tip us over.
+      max_size_per_batch(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH * 9 / 10),
+      max_batches(8),
+      max_oustanding_size(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH * 6) {}
 
 std::shared_ptr<AsyncOperation> MutationBatcher::AsyncApply(
     CompletionQueue& cq, AsyncApplyCompletionCallback&& completion_callback,

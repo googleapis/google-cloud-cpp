@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 
 #include "google/cloud/bigtable/client_options.h"
+#include "google/cloud/bigtable/internal/client_options_defaults.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/getenv.h"
 #include <thread>

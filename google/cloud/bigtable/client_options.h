@@ -19,19 +19,6 @@
 #include "google/cloud/internal/throw_delegate.h"
 #include <grpcpp/grpcpp.h>
 
-// Make the default pool size 4 because that is consistent with what Go does.
-#ifndef BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE
-#define BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE 4
-#endif  // BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE
-
-#ifndef BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU
-#define BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU 2
-#endif  // BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU
-
-#ifndef BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH
-#define BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH (256 * 1024L * 1024L)
-#endif  // BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH
-
 namespace google {
 namespace cloud {
 namespace bigtable {

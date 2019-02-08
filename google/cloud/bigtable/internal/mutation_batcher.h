@@ -59,20 +59,7 @@ class MutationBatcher {
  public:
   /// Configuration for MutationBatcher.
   struct Options {
-    Options(
-        // Cloud Bigtable doesn't accept more than this.
-        size_t max_mutations_per_batch = 100000,
-        // Let's make the default slightly smaller, so that overheads or
-        // miscalculations don't tip us over.
-        size_t max_size_per_batch = BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH *
-                                    9 / 10,
-        size_t max_batches = 8,
-        size_t max_oustanding_size =
-            BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH * 6)
-        : max_mutations_per_batch(max_mutations_per_batch),
-          max_size_per_batch(max_size_per_batch),
-          max_batches(max_batches),
-          max_oustanding_size(max_oustanding_size) {}
+    Options();
 
     // A single RPC will not have more mutations than this.
     Options& SetMaxMutationsPerBatch(size_t max_mutations_per_batch_arg) {
