@@ -60,8 +60,6 @@ class DummyOperation {
 
   DummyOperation(std::shared_ptr<DummyOperationImpl> impl) : impl_(impl) {}
 
-  virtual ~DummyOperation() = default;
-
   template <typename F, typename std::enable_if<
                             google::cloud::internal::is_invocable<
                                 F, CompletionQueue&, grpc::Status&>::value,
@@ -73,7 +71,7 @@ class DummyOperation {
     return impl_->Start(cq, context_moved, std::move(callback));
   }
 
-  virtual int AccumulatedResult() { return impl_->AccumulatedResult(); }
+  int AccumulatedResult() { return impl_->AccumulatedResult(); }
 
  private:
   std::shared_ptr<DummyOperationImpl> impl_;
