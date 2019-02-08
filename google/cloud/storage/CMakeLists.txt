@@ -378,6 +378,9 @@ if (BUILD_TESTING)
                                           CURL::CURL
                                           storage_common_options
                                           nlohmann_json)
+            if (MSVC)
+                target_compile_options(${target} "/bigobj")
+            endif ()
             add_test(NAME ${target} COMMAND ${target})
         endif ()
     endforeach ()
