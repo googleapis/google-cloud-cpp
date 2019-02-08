@@ -43,8 +43,7 @@ void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
       admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
 
   if (!tables) {
-    std::cerr << "ListTables failed: " << tables.status() << "\n";
-    return;
+    throw std::runtime_error(tables.status().message());
   }
   for (auto const& table : *tables) {
     std::cout << table.name() << "\n";
@@ -54,10 +53,8 @@ void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
   auto table =
       admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
   if (!table) {
-    std::cerr << "GetTable failed: " << table.status() << "\n";
-    return;
+    throw std::runtime_error(table.status().message());
   }
-  std::cout << table->name() << "\n";
   std::cout << "Table name : " << table->name() << "\n";
 
   std::cout << "List table families and GC rules:\n";
@@ -84,8 +81,7 @@ void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
                       google::cloud::bigtable::GcRule::MaxAge(
                           std::chrono::hours(72))))});
   if (!schema1) {
-    std::cerr << "ModifyColumnFamilies failed: " << schema1.status() << "\n";
-    return;
+    throw std::runtime_error(schema1.status().message());
   }
 
   std::string formatted;
@@ -95,8 +91,7 @@ void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
   std::cout << "Deleting table:\n";
   google::cloud::Status status = admin.DeleteTable(table_id);
   if (!status.ok()) {
-    std::cerr << "DeleteTable failed: " << status << "\n";
-    return;
+    throw std::runtime_error(status.message());
   }
   std::cout << " Done\n";
 }
@@ -123,8 +118,7 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
       admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
 
   if (!tables) {
-    std::cerr << "ListTables failed: " << tables.status() << "\n";
-    return;
+    throw std::runtime_error(tables.status().message());
   }
   for (auto const& table : *tables) {
     std::cout << table.name() << "\n";
@@ -136,10 +130,8 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
   auto table =
       admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
   if (!table) {
-    std::cerr << "GetTable failed: " << table.status() << "\n";
-    return;
+    throw std::runtime_error(table.status().message());
   }
-  std::cout << table->name() << "\n";
   std::cout << "Table name : " << table->name() << "\n";
   // [END bigtable_get_table]
 
@@ -170,8 +162,7 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
                           std::chrono::hours(72))))});
 
   if (!schema1) {
-    std::cerr << "ModifyColumnFamilies failed: " << schema1.status() << "\n";
-    return;
+    throw std::runtime_error(schema1.status().message());
   }
 
   std::string formatted;
@@ -183,8 +174,7 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
   std::cout << "Deleting table:\n";
   google::cloud::Status status = admin.DeleteTable(table_id);
   if (!status.ok()) {
-    std::cerr << "DeleteTable failed: " << status << "\n";
-    return;
+    throw std::runtime_error(status.message());
   }
   std::cout << " Done\n";
   // [END bigtable_delete_table]

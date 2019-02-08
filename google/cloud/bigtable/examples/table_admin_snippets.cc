@@ -83,8 +83,7 @@ void ListTables(google::cloud::bigtable::TableAdmin admin, int argc,
         admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
 
     if (!tables) {
-      std::cerr << "ListTables failed: " << tables.status() << "\n";
-      return;
+      throw std::runtime_error(tables.status().message());
     }
     for (auto const& table : *tables) {
       std::cout << table.name() << "\n";
@@ -106,8 +105,7 @@ void GetTable(google::cloud::bigtable::TableAdmin admin, int argc,
     auto table =
         admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
     if (!table) {
-      std::cerr << "GetTable failed: " << table.status() << "\n";
-      return;
+      throw std::runtime_error(table.status().message());
     }
     std::cout << table->name() << "\n";
     for (auto const& family : table->column_families()) {
@@ -133,8 +131,7 @@ void DeleteTable(google::cloud::bigtable::TableAdmin admin, int argc,
   [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
     google::cloud::Status status = admin.DeleteTable(table_id);
     if (!status.ok()) {
-      std::cerr << "DeleteTable failed: " << status << "\n";
-      return;
+      throw std::runtime_error(status.message());
     }
   }
   //! [delete table]
@@ -165,8 +162,7 @@ void ModifyTable(google::cloud::bigtable::TableAdmin admin, int argc,
                             std::chrono::hours(72))))});
 
     if (!schema) {
-      std::cerr << "ModifyColumnFamilies failed: " << schema.status() << "\n";
-      return;
+      throw std::runtime_error(schema.status().message());
     }
     std::string formatted;
     google::protobuf::TextFormat::PrintToString(*schema, &formatted);
@@ -187,8 +183,7 @@ void DropAllRows(google::cloud::bigtable::TableAdmin admin, int argc,
   [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
     google::cloud::Status status = admin.DropAllRows(table_id);
     if (!status.ok()) {
-      std::cerr << "DropAllRows failed: " << status << "\n";
-      return;
+      throw std::runtime_error(status.message());
     }
   }
   //! [drop all rows]
@@ -207,8 +202,7 @@ void DropRowsByPrefix(google::cloud::bigtable::TableAdmin admin, int argc,
     google::cloud::Status status =
         admin.DropRowsByPrefix(table_id, "key-00004");
     if (!status.ok()) {
-      std::cerr << "DropRowsByPrefix failed: " << status << "\n";
-      return;
+      throw std::runtime_error(status.message());
     }
   }
   //! [drop rows by prefix]
@@ -228,9 +222,7 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
     google::cloud::bigtable::TableId table_id(table_id_param);
     auto consistency_token(admin.GenerateConsistencyToken(table_id.get()));
     if (!consistency_token) {
-      std::cerr << "GenerateConsistencyToken failed: "
-                << consistency_token.status() << "\n";
-      return;
+      throw std::runtime_error(consistency_token.status().message());
     }
     auto result = admin.WaitForConsistencyCheck(table_id, *consistency_token);
     if (result.get()) {
@@ -261,8 +253,7 @@ void CheckConsistency(google::cloud::bigtable::TableAdmin admin, int argc,
         consistency_token_param);
     auto result = admin.CheckConsistency(table_id, consistency_token);
     if (!result) {
-      std::cerr << "CheckConsistency failed: " << result.status() << "\n";
-      return;
+      throw std::runtime_error(result.status().message());
     }
     if (*result == google::cloud::bigtable::Consistency::kConsistent) {
       std::cout << "Table is consistent\n";
@@ -289,9 +280,7 @@ void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
   [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
     auto token = admin.GenerateConsistencyToken(table_id);
     if (!token) {
-      std::cerr << "GenerateConsistencyToken failed: " << token.status()
-                << "\n";
-      return;
+      throw std::runtime_error(token.status().message());
     }
     std::cout << "\n"
               << "generated token is : " << token->get() << "\n";
@@ -316,8 +305,7 @@ void GetSnapshot(google::cloud::bigtable::TableAdmin admin, int argc,
     google::cloud::bigtable::SnapshotId snapshot_id(snapshot_id_str);
     auto snapshot = admin.GetSnapshot(cluster_id, snapshot_id);
     if (!snapshot) {
-      std::cerr << "GetSnapshot failed: " << snapshot.status() << "\n";
-      return;
+      throw std::runtime_error(snapshot.status().message());
     }
     std::cout << "GetSnapshot name : " << snapshot->name() << "\n";
   }
@@ -338,8 +326,7 @@ void ListSnapshots(google::cloud::bigtable::TableAdmin admin, int argc,
 
     auto snapshot_list = admin.ListSnapshots(cluster_id);
     if (!snapshot_list) {
-      std::cerr << "ListSnapshots failed: " << snapshot_list.status() << "\n";
-      return;
+      throw std::runtime_error(snapshot_list.status().message());
     }
     std::cout << "Snapshot Name List\n";
     for (auto const& snapshot : *snapshot_list) {
@@ -368,8 +355,7 @@ void DeleteSnapshot(google::cloud::bigtable::TableAdmin admin, int argc,
     google::cloud::Status status =
         admin.DeleteSnapshot(cluster_id, snapshot_id);
     if (!status.ok()) {
-      std::cerr << "DeleteSnapshot failed: " << status << "\n";
-      return;
+      throw std::runtime_error(status.message());
     }
   }
   //! [delete snapshot]
