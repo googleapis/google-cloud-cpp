@@ -21,14 +21,18 @@ MAINTAINER "Carlos O'Ryan <coryan@google.com>"
 
 ## [START INSTALL.md]
 
-# First install the development tools, libcurl, and OpenSSL.
+# First install the development tools, and libcurl.  On Debian, libcurl links
+# against libssl-1.0.2, and one must link against the same version or risk
+# an inconsistent configuration of the library, particularly around locking
+# callbacks. Therefore, must install libssl1.0-dev to use libcurl. Note that
+# this removes libssl-dev if you have it installed already.
 
 ## [START README.md]
 
 # ```bash
 RUN apt update && \
     apt install -y build-essential cmake git gcc g++ cmake \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
+        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl1.0-dev make \
         pkg-config tar wget zlib1g-dev
 # ```
 
