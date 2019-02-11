@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -109,15 +110,16 @@ TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
   ASSERT_THAT(instance1.get().name(), HasSubstr(id1));
   ASSERT_THAT(instance2.get().name(), HasSubstr(id2));
 
-  auto clusters = instance_admin_->ListClusters().clusters;
-  for (auto const& cluster : clusters) {
+  auto clusters = instance_admin_->ListClusters();
+  ASSERT_STATUS_OK(clusters);
+  for (auto const& cluster : clusters->clusters) {
     EXPECT_NE(std::string::npos,
               cluster.name().find(instance_admin_->project_name()));
   }
-  EXPECT_FALSE(clusters.empty());
+  EXPECT_FALSE(clusters->clusters.empty());
 
-  instance_admin_->DeleteInstance(id1);
-  instance_admin_->DeleteInstance(id2);
+  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(id1));
+  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(id2));
 }
 
 /// @test Verify that AppProfile CRUD operations work as expected.
@@ -140,6 +142,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
                        generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
   auto initial_profiles = instance_admin_->ListAppProfiles(instance_id);
+  ASSERT_STATUS_OK(initial_profiles);
 
   // Simplify writing the rest of the test.
   auto count_matching_profiles =
@@ -151,33 +154,38 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
             });
       };
 
-  EXPECT_EQ(0U, count_matching_profiles(id1, initial_profiles));
-  EXPECT_EQ(0U, count_matching_profiles(id2, initial_profiles));
+  EXPECT_EQ(0U, count_matching_profiles(id1, *initial_profiles));
+  EXPECT_EQ(0U, count_matching_profiles(id2, *initial_profiles));
 
   auto profile_1 = instance_admin_->CreateAppProfile(
       bigtable::InstanceId(instance_id),
       bigtable::AppProfileConfig::MultiClusterUseAny(
           bigtable::AppProfileId(id1)));
+  ASSERT_STATUS_OK(profile_1);
   auto profile_2 = instance_admin_->CreateAppProfile(
       bigtable::InstanceId(instance_id),
       bigtable::AppProfileConfig::MultiClusterUseAny(
           bigtable::AppProfileId(id2)));
+  ASSERT_STATUS_OK(profile_2);
 
   auto current_profiles = instance_admin_->ListAppProfiles(instance_id);
-  EXPECT_EQ(1U, count_matching_profiles(id1, current_profiles));
-  EXPECT_EQ(1U, count_matching_profiles(id2, current_profiles));
+  ASSERT_STATUS_OK(current_profiles);
+  EXPECT_EQ(1U, count_matching_profiles(id1, *current_profiles));
+  EXPECT_EQ(1U, count_matching_profiles(id2, *current_profiles));
 
   auto detail_1 = instance_admin_->GetAppProfile(
       bigtable::InstanceId(instance_id), bigtable::AppProfileId(id1));
-  EXPECT_EQ(detail_1.name(), profile_1.name());
-  EXPECT_THAT(detail_1.name(), HasSubstr(instance_id));
-  EXPECT_THAT(detail_1.name(), HasSubstr(id1));
+  ASSERT_STATUS_OK(detail_1);
+  EXPECT_EQ(detail_1->name(), profile_1->name());
+  EXPECT_THAT(detail_1->name(), HasSubstr(instance_id));
+  EXPECT_THAT(detail_1->name(), HasSubstr(id1));
 
   auto detail_2 = instance_admin_->GetAppProfile(
       bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2));
-  EXPECT_EQ(detail_2.name(), profile_2.name());
-  EXPECT_THAT(detail_2.name(), HasSubstr(instance_id));
-  EXPECT_THAT(detail_2.name(), HasSubstr(id2));
+  ASSERT_STATUS_OK(detail_2);
+  EXPECT_EQ(detail_2->name(), profile_2->name());
+  EXPECT_THAT(detail_2->name(), HasSubstr(instance_id));
+  EXPECT_THAT(detail_2->name(), HasSubstr(id2));
 
   auto profile_updated_future = instance_admin_->UpdateAppProfile(
       bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2),
@@ -186,22 +194,25 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   auto update_2 = profile_updated_future.get();
   auto detail_2_after_update = instance_admin_->GetAppProfile(
       bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2));
+  ASSERT_STATUS_OK(detail_2_after_update);
   EXPECT_EQ("new description", update_2.description());
-  EXPECT_EQ("new description", detail_2_after_update.description());
+  EXPECT_EQ("new description", detail_2_after_update->description());
 
-  instance_admin_->DeleteAppProfile(bigtable::InstanceId(instance_id),
-                                    bigtable::AppProfileId(id1), true);
+  ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(
+      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id1), true));
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
-  EXPECT_EQ(0U, count_matching_profiles(id1, current_profiles));
-  EXPECT_EQ(1U, count_matching_profiles(id2, current_profiles));
+  ASSERT_STATUS_OK(current_profiles);
+  EXPECT_EQ(0U, count_matching_profiles(id1, *current_profiles));
+  EXPECT_EQ(1U, count_matching_profiles(id2, *current_profiles));
 
-  instance_admin_->DeleteAppProfile(bigtable::InstanceId(instance_id),
-                                    bigtable::AppProfileId(id2), false);
+  ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(
+      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2), false));
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
-  EXPECT_EQ(0U, count_matching_profiles(id1, current_profiles));
-  EXPECT_EQ(0U, count_matching_profiles(id2, current_profiles));
+  ASSERT_STATUS_OK(current_profiles);
+  EXPECT_EQ(0U, count_matching_profiles(id1, *current_profiles));
+  EXPECT_EQ(0U, count_matching_profiles(id2, *current_profiles));
 
-  instance_admin_->DeleteInstance(instance_id);
+  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
 }
 
 /// @test Verify that Instance CRUD operations work as expected.
@@ -212,8 +223,9 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
 
   // verify new instance id in list of instances
   auto instances_before = instance_admin_->ListInstances();
-  ASSERT_TRUE(instances_before.failed_locations.empty());
-  ASSERT_FALSE(IsInstancePresent(instances_before.instances, instance_id))
+  ASSERT_STATUS_OK(instances_before);
+  ASSERT_TRUE(instances_before->failed_locations.empty());
+  ASSERT_FALSE(IsInstancePresent(instances_before->instances, instance_id))
       << "Instance (" << instance_id << ") already exists."
       << " This is unexpected, as the instance ids are"
       << " generated at random.";
@@ -222,14 +234,16 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
   auto config = IntegrationTestConfig(instance_id);
   auto instance = instance_admin_->CreateInstance(config).get();
   auto instances_current = instance_admin_->ListInstances();
-  ASSERT_TRUE(instances_current.failed_locations.empty());
-  EXPECT_TRUE(IsInstancePresent(instances_current.instances, instance.name()));
+  ASSERT_STATUS_OK(instances_current);
+  ASSERT_TRUE(instances_current->failed_locations.empty());
+  EXPECT_TRUE(IsInstancePresent(instances_current->instances, instance.name()));
 
   // Get instance
   auto instance_check = instance_admin_->GetInstance(instance_id);
+  ASSERT_STATUS_OK(instance_check);
   auto const npos = std::string::npos;
-  EXPECT_NE(npos, instance_check.name().find(instance_admin_->project_name()));
-  EXPECT_NE(npos, instance_check.name().find(instance_id));
+  EXPECT_NE(npos, instance_check->name().find(instance_admin_->project_name()));
+  EXPECT_NE(npos, instance_check->name().find(instance_id));
 
   // update instance
   btadmin::Instance instance_copy;
@@ -240,16 +254,18 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
   auto instance_after =
       instance_admin_->UpdateInstance(std::move(instance_update_config)).get();
   auto instance_after_update = instance_admin_->GetInstance(instance_id);
-  EXPECT_EQ(updated_display_name, instance_after_update.display_name());
+  ASSERT_STATUS_OK(instance_after_update);
+  EXPECT_EQ(updated_display_name, instance_after_update->display_name());
 
   // Delete instance
-  instance_admin_->DeleteInstance(instance_id);
+  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
   auto instances_after_delete = instance_admin_->ListInstances();
-  ASSERT_TRUE(instances_after_delete.failed_locations.empty());
+  ASSERT_STATUS_OK(instances_after_delete);
+  ASSERT_TRUE(instances_after_delete->failed_locations.empty());
   EXPECT_TRUE(
-      IsInstancePresent(instances_current.instances, instance_copy.name()));
+      IsInstancePresent(instances_current->instances, instance_copy.name()));
   EXPECT_FALSE(
-      IsInstancePresent(instances_after_delete.instances, instance.name()));
+      IsInstancePresent(instances_after_delete->instances, instance.name()));
 }
 
 /// @test Verify that cluster CRUD operations work as expected.
@@ -267,8 +283,9 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
       instance_admin_->CreateInstance(instance_config).get();
 
   // create cluster
-  auto clusters_before = instance_admin_->ListClusters(id).clusters;
-  ASSERT_FALSE(IsClusterPresent(clusters_before, cluster_id_str))
+  auto clusters_before = instance_admin_->ListClusters(id);
+  ASSERT_STATUS_OK(clusters_before);
+  ASSERT_FALSE(IsClusterPresent(clusters_before->clusters, cluster_id_str))
       << "Cluster (" << cluster_id_str << ") already exists."
       << " This is unexpected, as the cluster ids are"
       << " generated at random.";
@@ -278,15 +295,17 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   auto cluster =
       instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
           .get();
-  auto clusters_after = instance_admin_->ListClusters(id).clusters;
-  EXPECT_FALSE(IsClusterPresent(clusters_before, cluster.name()));
-  EXPECT_TRUE(IsClusterPresent(clusters_after, cluster.name()));
+  auto clusters_after = instance_admin_->ListClusters(id);
+  ASSERT_STATUS_OK(clusters_after);
+  EXPECT_FALSE(IsClusterPresent(clusters_before->clusters, cluster.name()));
+  EXPECT_TRUE(IsClusterPresent(clusters_after->clusters, cluster.name()));
 
   // Get cluster
   auto cluster_check = instance_admin_->GetCluster(instance_id, cluster_id);
+  ASSERT_STATUS_OK(cluster_check);
   std::string cluster_name_prefix =
       instance_admin_->project_name() + "/instances/" + id + "/clusters/";
-  EXPECT_EQ(cluster_name_prefix + cluster_id.get(), cluster_check.name());
+  EXPECT_EQ(cluster_name_prefix + cluster_id.get(), cluster_check->name());
 
   // Update cluster
   btadmin::Cluster cluster_copy;
@@ -299,18 +318,22 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
       instance_admin_->UpdateCluster(std::move(updated_cluster_config)).get();
   auto check_cluster_after_update =
       instance_admin_->GetCluster(instance_id, cluster_id);
+  ASSERT_STATUS_OK(check_cluster_after_update);
 
   EXPECT_EQ(3, cluster_copy.serve_nodes());
-  EXPECT_EQ(4, check_cluster_after_update.serve_nodes());
+  EXPECT_EQ(4, check_cluster_after_update->serve_nodes());
 
   // Delete cluster
-  instance_admin_->DeleteCluster(std::move(instance_id), std::move(cluster_id));
-  auto clusters_after_delete = instance_admin_->ListClusters(id).clusters;
-  instance_admin_->DeleteInstance(id);
-  EXPECT_TRUE(IsClusterPresent(
-      clusters_after, instance_details.name() + "/clusters/" + id + "-cl2"));
+  ASSERT_STATUS_OK(instance_admin_->DeleteCluster(std::move(instance_id),
+                                                  std::move(cluster_id)));
+  auto clusters_after_delete = instance_admin_->ListClusters(id);
+  ASSERT_STATUS_OK(clusters_after_delete);
+  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(id));
+  EXPECT_TRUE(
+      IsClusterPresent(clusters_after->clusters,
+                       instance_details.name() + "/clusters/" + id + "-cl2"));
   EXPECT_FALSE(
-      IsClusterPresent(clusters_after_delete,
+      IsClusterPresent(clusters_after_delete->clusters,
                        instance_details.name() + "/clusters/" + id + "-cl2"));
 }
 
@@ -333,16 +356,19 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
 
   auto initial_policy =
       instance_admin_->SetIamPolicy(id, iam_bindings, "test-tag");
+  ASSERT_STATUS_OK(initial_policy);
 
   auto fetched_policy = instance_admin_->GetIamPolicy(id);
+  ASSERT_STATUS_OK(fetched_policy);
 
-  EXPECT_EQ(initial_policy.version, fetched_policy.version);
-  EXPECT_EQ(initial_policy.etag, fetched_policy.etag);
+  EXPECT_EQ(initial_policy->version, fetched_policy->version);
+  EXPECT_EQ(initial_policy->etag, fetched_policy->etag);
 
   auto permission_set = instance_admin_->TestIamPermissions(
       id, {"bigtable.tables.list", "bigtable.tables.delete"});
+  ASSERT_STATUS_OK(permission_set);
 
-  EXPECT_EQ(2U, permission_set.size());
+  EXPECT_EQ(2U, permission_set->size());
 }
 
 int main(int argc, char* argv[]) {

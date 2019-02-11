@@ -63,20 +63,23 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
   // [START bigtable_check_instance_exists]
   std::cout << "\nCheck Instance exists:\n";
   auto instances = instance_admin.ListInstances();
+  if (!instances) {
+    throw std::runtime_error(instances.status().message());
+  }
   auto instance_name =
       instance_admin.project_name() + "/instances/" + instance_id.get();
   bool instance_exists =
-      instances.instances.end() !=
+      instances->instances.end() !=
       std::find_if(
-          instances.instances.begin(), instances.instances.end(),
+          instances->instances.begin(), instances->instances.end(),
           [&instance_name](google::bigtable::admin::v2::Instance const& i) {
             return i.name() == instance_name;
           });
-  if (!instances.failed_locations.empty()) {
+  if (!instances->failed_locations.empty()) {
     std::cerr
         << "The service tells us it has no information about these locations:";
-    for (std::string const& location : instances.failed_locations) {
-      std::cout << " " << location << "\n";
+    for (std::string const& location : instances->failed_locations) {
+      std::cout << " " << location;
     }
     std::cerr << ". Continuing anyway\n";
   }
@@ -107,13 +110,16 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
   // [START bigtable_list_instances]
   std::cout << "\nListing Instances:\n";
   auto instances_after = instance_admin.ListInstances();
-  for (auto const& instance : instances_after.instances) {
+  if (!instances_after) {
+    throw std::runtime_error(instances_after.status().message());
+  }
+  for (auto const& instance : instances_after->instances) {
     std::cout << instance.name() << "\n";
   }
-  if (!instances_after.failed_locations.empty()) {
+  if (!instances_after->failed_locations.empty()) {
     std::cerr
         << "The service tells us it has no information about these locations:";
-    for (std::string const& location : instances_after.failed_locations) {
+    for (std::string const& location : instances_after->failed_locations) {
       std::cout << " " << location << "\n";
     }
     std::cerr << ". Continuing anyway\n";
@@ -123,23 +129,29 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
   // [START bigtable_get_instance]
   std::cout << "\nGet Instance:\n";
   auto instance = instance_admin.GetInstance(instance_id.get());
+  if (!instance) {
+    throw std::runtime_error(instance.status().message());
+  }
   std::string instance_detail;
-  google::protobuf::TextFormat::PrintToString(instance, &instance_detail);
+  google::protobuf::TextFormat::PrintToString(*instance, &instance_detail);
   std::cout << "GetInstance details :\n" << instance_detail;
   // [END bigtable_get_instance]
 
   // [START bigtable_get_clusters]
   std::cout << "\nListing Clusters:\n";
   auto cluster_list = instance_admin.ListClusters(instance_id.get());
+  if (!cluster_list) {
+    throw std::runtime_error(cluster_list.status().message());
+  }
   std::cout << "Cluster Name List:\n";
-  for (auto const& cluster : cluster_list.clusters) {
+  for (auto const& cluster : cluster_list->clusters) {
     std::cout << "Cluster Name: " << cluster.name() << "\n";
   }
-  if (!cluster_list.failed_locations.empty()) {
+  if (!cluster_list->failed_locations.empty()) {
     std::cout << "The Cloud Bigtable service reports that the following "
                  "locations are temporarily unavailable and no information "
                  "about clusters in these locations can be obtained:\n";
-    for (std::string const& location : cluster_list.failed_locations) {
+    for (std::string const& location : cluster_list->failed_locations) {
       std::cout << location << "\n";
     }
   }
@@ -162,19 +174,22 @@ void CreateDevInstance(std::string project_id, int argc, char* argv[]) {
 
   std::cout << "\nCheck Instance exists:\n";
   auto instances = instance_admin.ListInstances();
+  if (!instances) {
+    throw std::runtime_error(instances.status().message());
+  }
   auto instance_name =
       instance_admin.project_name() + "/instances/" + instance_id.get();
   bool instance_exists =
-      instances.instances.end() !=
+      instances->instances.end() !=
       std::find_if(
-          instances.instances.begin(), instances.instances.end(),
+          instances->instances.begin(), instances->instances.end(),
           [&instance_name](google::bigtable::admin::v2::Instance const& i) {
             return i.name() == instance_name;
           });
-  if (!instances.failed_locations.empty()) {
+  if (!instances->failed_locations.empty()) {
     std::cerr
         << "The service tells us it has no information about these locations:";
-    for (std::string const& location : instances.failed_locations) {
+    for (std::string const& location : instances->failed_locations) {
       std::cout << " " << location << "\n";
     }
     std::cerr << ". Continuing anyway\n";
@@ -217,7 +232,10 @@ void DeleteInstance(std::string project_id, int argc, char* argv[]) {
 
   // [START bigtable_delete_instance]
   std::cout << "\nDeleting Instance: ";
-  instance_admin.DeleteInstance(instance_id);
+  google::cloud::Status status = instance_admin.DeleteInstance(instance_id);
+  if (!status.ok()) {
+    throw std::runtime_error(status.message());
+  }
   std::cout << " Done\n";
   // [END bigtable_delete_instance]
 }
@@ -239,19 +257,22 @@ void CreateCluster(std::string project_id, int argc, char* argv[]) {
 
   std::cout << "\nCheck Instance exists:\n";
   auto instances = instance_admin.ListInstances();
+  if (!instances) {
+    throw std::runtime_error(instances.status().message());
+  }
   auto instance_name =
       instance_admin.project_name() + "/instances/" + instance_id.get();
   bool instance_exists =
-      instances.instances.end() !=
+      instances->instances.end() !=
       std::find_if(
-          instances.instances.begin(), instances.instances.end(),
+          instances->instances.begin(), instances->instances.end(),
           [&instance_name](google::bigtable::admin::v2::Instance const& i) {
             return i.name() == instance_name;
           });
-  if (!instances.failed_locations.empty()) {
+  if (!instances->failed_locations.empty()) {
     std::cerr
         << "The service tells us it has no information about these locations:";
-    for (std::string const& location : instances.failed_locations) {
+    for (std::string const& location : instances->failed_locations) {
       std::cout << " " << location << "\n";
     }
     std::cerr << ". Continuing anyway\n";
@@ -287,7 +308,11 @@ void DeleteCluster(std::string project_id, int argc, char* argv[]) {
 
   // [START bigtable_delete_cluster]
   std::cout << "\nDeleting Cluster: ";
-  instance_admin.DeleteCluster(instance_id, cluster_id);
+  google::cloud::Status status =
+      instance_admin.DeleteCluster(instance_id, cluster_id);
+  if (!status.ok()) {
+    throw std::runtime_error(status.message());
+  }
   std::cout << " Done\n";
   // [END bigtable_delete_cluster]
 }
