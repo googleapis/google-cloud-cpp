@@ -295,14 +295,16 @@ run_all_data_examples() {
 
   # Use the same table in all the tests.
   local -r TABLE="data-ex-tbl-$(date +%s)-${RANDOM}"
+  local -r PREFIX="key-${RANDOM}"
   run_example ./table_admin_snippets create-table "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets apply "${project_id}" "${instance_id}" "${TABLE}"  
   run_example ./data_snippets bulk-apply "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets read-rows-with-limit "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets read-rows "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets read-rowset "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets read-rowset-prefix "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets populate-table-hierarchy "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets read-rowset "${project_id}" "${instance_id}" "${TABLE}" "${PREFIX}"
+  run_example ./data_snippets read-rowset-prefix "${project_id}" "${instance_id}" "${TABLE}" "${PREFIX}"
   run_example ./data_snippets sample-rows "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets sample-rows-collections "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
