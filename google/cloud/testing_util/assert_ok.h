@@ -17,7 +17,7 @@
 
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include <grpcpp/impl/codegen/status.h>
+#include <grpcpp/support/status.h>
 #include <gtest/gtest.h>
 
 namespace testing {
