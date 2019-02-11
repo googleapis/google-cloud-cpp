@@ -160,6 +160,8 @@ google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 
 if (BUILD_TESTING)
     add_library(google_cloud_cpp_testing
+                testing_util/assert_ok.cc
+                testing_util/assert_ok.h
                 testing_util/capture_log_lines_backend.h
                 testing_util/capture_log_lines_backend.cc
                 testing_util/check_predicate_becomes_false.h
@@ -197,7 +199,8 @@ if (BUILD_TESTING)
         optional_test.cc
         status_or_test.cc
         status_test.cc
-        terminate_handler_test.cc)
+        terminate_handler_test.cc
+        testing_util/assert_ok_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_common_unit_tests.bzl"
