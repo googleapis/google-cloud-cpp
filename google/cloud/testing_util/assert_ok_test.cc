@@ -142,3 +142,63 @@ TEST(ExpectOkTest, ExpectionFailedDescriptionStatusOr) {
       "Status of \"status_or\" is expected to be OK, but evaluates to \"oh "
       "no!\" (code INTERNAL)\nmy precious assertion failed");
 }
+
+TEST(GrpcStatusTest, AssertionOk) {
+  ::grpc::Status status;
+  ASSERT_STATUS_OK(status);
+}
+
+TEST(GrpcStatusTest, AssertionOkDescription) {
+  ::grpc::Status status;
+  ASSERT_STATUS_OK(status) << "OK is not OK?";
+}
+
+TEST(GrpcStatusTest, AssertionFailed) {
+  EXPECT_FATAL_FAILURE(
+      {
+        ::grpc::Status status(::grpc::StatusCode::INTERNAL, "oh no!");
+        ASSERT_STATUS_OK(status);
+      },
+      "Status of \"status\" is expected to be OK, but evaluates to \"oh no!\" "
+      "(code INTERNAL)");
+}
+
+TEST(GrpcStatusTest, AssertionFailedDescription) {
+  EXPECT_FATAL_FAILURE(
+      {
+        ::grpc::Status status(::grpc::StatusCode::INTERNAL, "oh no!");
+        ASSERT_STATUS_OK(status) << "my precious assertion failed";
+      },
+      "Status of \"status\" is expected to be OK, but evaluates to \"oh no!\" "
+      "(code INTERNAL)\nmy precious assertion failed");
+}
+
+TEST(GrpcStatusTest, ExpectOk) {
+  ::grpc::Status status;
+  EXPECT_STATUS_OK(status);
+}
+
+TEST(GrpcStatusTest, ExpectionOkDescription) {
+  ::grpc::Status status;
+  EXPECT_STATUS_OK(status) << "OK is not OK?";
+}
+
+TEST(GrpcStatusTest, ExpectionFailed) {
+  EXPECT_NONFATAL_FAILURE(
+      {
+        ::grpc::Status status(::grpc::StatusCode::INTERNAL, "oh no!");
+        EXPECT_STATUS_OK(status);
+      },
+      "Status of \"status\" is expected to be OK, but evaluates to \"oh no!\" "
+      "(code INTERNAL)");
+}
+
+TEST(GrpcStatusTest, ExpectionFailedDescription) {
+  EXPECT_NONFATAL_FAILURE(
+      {
+        ::grpc::Status status(::grpc::StatusCode::INTERNAL, "oh no!");
+        EXPECT_STATUS_OK(status) << "my precious assertion failed";
+      },
+      "Status of \"status\" is expected to be OK, but evaluates to \"oh no!\" "
+      "(code INTERNAL)\nmy precious assertion failed");
+}

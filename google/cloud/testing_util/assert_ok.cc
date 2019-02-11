@@ -17,6 +17,15 @@
 namespace testing {
 namespace internal {
 
+namespace {
+
+std::string GrpcErrorCodeName(::grpc::StatusCode code) {
+  return ::google::cloud::StatusCodeToString(
+      static_cast<::google::cloud::StatusCode>(code));
+}
+
+}  // namespace
+
 // A unary predicate-formatter for google::cloud::Status.
 testing::AssertionResult IsOkPredFormat(char const* expr,
                                         ::google::cloud::Status const& status) {
@@ -27,6 +36,19 @@ testing::AssertionResult IsOkPredFormat(char const* expr,
          << "Status of \"" << expr
          << "\" is expected to be OK, but evaluates to \"" << status.message()
          << "\" (code " << status.code() << ")";
+}
+
+// A unary predicate-formatter for grpc::Status.
+testing::AssertionResult IsOkPredFormat(char const* expr,
+                                        ::grpc::Status const& status) {
+  if (status.ok()) {
+    return testing::AssertionSuccess();
+  }
+  return testing::AssertionFailure()
+         << "Status of \"" << expr
+         << "\" is expected to be OK, but evaluates to \""
+         << status.error_message() << "\" (code "
+         << GrpcErrorCodeName(status.error_code()) << ")";
 }
 
 }  // namespace internal

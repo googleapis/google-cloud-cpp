@@ -17,6 +17,7 @@
 
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
+#include <grpcpp/impl/codegen/status.h>
 #include <gtest/gtest.h>
 
 namespace testing {
@@ -25,6 +26,10 @@ namespace internal {
 // A unary predicate-formatter for google::cloud::Status.
 testing::AssertionResult IsOkPredFormat(char const* expr,
                                         ::google::cloud::Status const& status);
+
+// A unary predicate-formatter for grpc::Status.
+testing::AssertionResult IsOkPredFormat(char const* expr,
+                                        ::grpc::Status const& status);
 
 // A unary predicate-formatter for google::cloud::StatusOr<T>.
 template <typename T>
