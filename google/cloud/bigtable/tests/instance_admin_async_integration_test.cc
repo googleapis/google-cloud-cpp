@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/instance_admin.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 
@@ -138,8 +139,9 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteInstanceTest) {
       config);
   auto instance = create_promise.get_future().get();
   auto instances_current = instance_admin_->ListInstances();
-  EXPECT_TRUE(instances_current.failed_locations.empty());
-  EXPECT_TRUE(IsInstancePresent(instances_current.instances, instance.name()));
+  ASSERT_STATUS_OK(instances_current);
+  EXPECT_TRUE(instances_current->failed_locations.empty());
+  EXPECT_TRUE(IsInstancePresent(instances_current->instances, instance.name()));
 
   // Get instance
   std::promise<btadmin::Instance> done;
@@ -166,10 +168,11 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteInstanceTest) {
       instance_id);
   promise_delete_instance.get_future().get();
   auto instances_after_delete = instance_admin_->ListInstances();
-  EXPECT_TRUE(instances_after_delete.failed_locations.empty());
-  EXPECT_TRUE(IsInstancePresent(instances_current.instances, instance.name()));
+  ASSERT_STATUS_OK(instances_after_delete);
+  EXPECT_TRUE(instances_after_delete->failed_locations.empty());
+  EXPECT_TRUE(IsInstancePresent(instances_current->instances, instance.name()));
   EXPECT_FALSE(
-      IsInstancePresent(instances_after_delete.instances, instance.name()));
+      IsInstancePresent(instances_after_delete->instances, instance.name()));
 
   cq.Shutdown();
   pool.join();
@@ -274,12 +277,13 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
       },
       instance_id, cluster_id);
   promise_delete_cluster.get_future().get();
-  auto clusters_after_delete = instance_admin_->ListClusters(id).clusters;
-  instance_admin_->DeleteInstance(id);
+  auto clusters_after_delete = instance_admin_->ListClusters(id);
+  ASSERT_STATUS_OK(clusters_after_delete);
+  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(id));
   EXPECT_TRUE(IsClusterPresent(
       clusters_after, instance_details.name() + "/clusters/" + id + "-cl2"));
   EXPECT_FALSE(
-      IsClusterPresent(clusters_after_delete,
+      IsClusterPresent(clusters_after_delete->clusters,
                        instance_details.name() + "/clusters/" + id + "-cl2"));
 
   cq.Shutdown();
@@ -490,7 +494,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
   EXPECT_EQ(0U, count_matching_profiles(id1, current_profiles));
   EXPECT_EQ(0U, count_matching_profiles(id2, current_profiles));
 
-  instance_admin_->DeleteInstance(instance_id);
+  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
 
   cq.Shutdown();
   pool.join();
@@ -519,6 +523,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncSetGetTestIamAPIsTest) {
 
   auto initial_policy =
       instance_admin_->SetIamPolicy(id, iam_bindings, "test-tag");
+  ASSERT_STATUS_OK(initial_policy);
 
   // Get policy
   std::promise<google::cloud::IamPolicy> promise_get_policy;
@@ -532,13 +537,14 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncSetGetTestIamAPIsTest) {
       });
   auto response_get_policy = promise_get_policy.get_future().get();
 
-  EXPECT_EQ(initial_policy.version, response_get_policy.version);
-  EXPECT_EQ(initial_policy.etag, response_get_policy.etag);
+  EXPECT_EQ(initial_policy->version, response_get_policy.version);
+  EXPECT_EQ(initial_policy->etag, response_get_policy.etag);
 
   auto permission_set = instance_admin_->TestIamPermissions(
       id, {"bigtable.tables.list", "bigtable.tables.delete"});
+  ASSERT_STATUS_OK(permission_set);
 
-  EXPECT_EQ(2U, permission_set.size());
+  EXPECT_EQ(2U, permission_set->size());
 
   cq.Shutdown();
   pool.join();

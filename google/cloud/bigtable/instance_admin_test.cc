@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
 #include "google/cloud/internal/make_unique.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -223,11 +224,12 @@ TEST_F(InstanceAdminTest, ListInstances) {
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListInstances();
-  EXPECT_TRUE(actual.failed_locations.empty());
+  ASSERT_STATUS_OK(actual);
+  EXPECT_TRUE(actual->failed_locations.empty());
   std::string instance_name = tested.project_name();
-  ASSERT_EQ(2UL, actual.instances.size());
-  EXPECT_EQ(instance_name + "/instances/t0", actual.instances[0].name());
-  EXPECT_EQ(instance_name + "/instances/t1", actual.instances[1].name());
+  ASSERT_EQ(2UL, actual->instances.size());
+  EXPECT_EQ(instance_name + "/instances/t0", actual->instances[0].name());
+  EXPECT_EQ(instance_name + "/instances/t1", actual->instances[1].name());
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::ListInstances` handles failures.
@@ -251,13 +253,14 @@ TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListInstances();
-  EXPECT_TRUE(actual.failed_locations.empty());
+  ASSERT_STATUS_OK(actual);
+  EXPECT_TRUE(actual->failed_locations.empty());
   std::string project_name = tested.project_name();
-  ASSERT_EQ(4UL, actual.instances.size());
-  EXPECT_EQ(project_name + "/instances/t0", actual.instances[0].name());
-  EXPECT_EQ(project_name + "/instances/t1", actual.instances[1].name());
-  EXPECT_EQ(project_name + "/instances/t2", actual.instances[2].name());
-  EXPECT_EQ(project_name + "/instances/t3", actual.instances[3].name());
+  ASSERT_EQ(4UL, actual->instances.size());
+  EXPECT_EQ(project_name + "/instances/t0", actual->instances[0].name());
+  EXPECT_EQ(project_name + "/instances/t1", actual->instances[1].name());
+  EXPECT_EQ(project_name + "/instances/t2", actual->instances[2].name());
+  EXPECT_EQ(project_name + "/instances/t3", actual->instances[3].name());
 }
 
 /**
@@ -272,12 +275,8 @@ TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
-// After all the setup, make the actual call we want to test.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(tested.ListInstances(), std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(tested.ListInstances(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // After all the setup, make the actual call we want to test.
+  EXPECT_FALSE(tested.ListInstances());
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::CreateInstance` works.
@@ -895,7 +894,7 @@ TEST_F(InstanceAdminTest, DeleteInstance) {
       expected_text);
   EXPECT_CALL(*client_, DeleteInstance(_, _, _)).WillOnce(Invoke(mock));
   // After all the setup, make the actual call we want to test.
-  tested.DeleteInstance("the-instance");
+  ASSERT_STATUS_OK(tested.DeleteInstance("the-instance"));
 }
 
 /// @test Verify unrecoverable error for DeleteInstance
@@ -905,13 +904,8 @@ TEST_F(InstanceAdminTest, DeleteInstanceUnrecoverableError) {
   EXPECT_CALL(*client_, DeleteInstance(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
-// After all the setup, make the actual call we want to test.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(tested.DeleteInstance("other-instance"), std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(tested.DeleteInstance("other-instance"),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // After all the setup, make the actual call we want to test.
+  EXPECT_FALSE(tested.DeleteInstance("other-instance").ok());
 }
 
 /// @test Verify that recoverable error for DeleteInstance
@@ -922,13 +916,8 @@ TEST_F(InstanceAdminTest, DeleteInstanceRecoverableError) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
-// After all the setup, make the actual call we want to test.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(tested.DeleteInstance("other-instance"), std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(tested.DeleteInstance("other-instance"),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // After all the setup, make the actual call we want to test.
+  EXPECT_FALSE(tested.DeleteInstance("other-instance").ok());
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::ListClusters` works in the easy
@@ -945,11 +934,11 @@ TEST_F(InstanceAdminTest, ListClusters) {
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListClusters(instance_id);
-  EXPECT_TRUE(actual.failed_locations.empty());
+  EXPECT_TRUE(actual->failed_locations.empty());
   std::string instance_name = tested.InstanceName(instance_id);
-  ASSERT_EQ(2UL, actual.clusters.size());
-  EXPECT_EQ(instance_name + "/clusters/t0", actual.clusters[0].name());
-  EXPECT_EQ(instance_name + "/clusters/t1", actual.clusters[1].name());
+  ASSERT_EQ(2UL, actual->clusters.size());
+  EXPECT_EQ(instance_name + "/clusters/t0", actual->clusters[0].name());
+  EXPECT_EQ(instance_name + "/clusters/t1", actual->clusters[1].name());
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::ListClusters` handles failures.
@@ -976,13 +965,14 @@ TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListClusters(instance_id);
-  EXPECT_TRUE(actual.failed_locations.empty());
+  ASSERT_STATUS_OK(actual);
+  EXPECT_TRUE(actual->failed_locations.empty());
   std::string instance_name = tested.InstanceName(instance_id);
-  ASSERT_EQ(4UL, actual.clusters.size());
-  EXPECT_EQ(instance_name + "/clusters/t0", actual.clusters[0].name());
-  EXPECT_EQ(instance_name + "/clusters/t1", actual.clusters[1].name());
-  EXPECT_EQ(instance_name + "/clusters/t2", actual.clusters[2].name());
-  EXPECT_EQ(instance_name + "/clusters/t3", actual.clusters[3].name());
+  ASSERT_EQ(4UL, actual->clusters.size());
+  EXPECT_EQ(instance_name + "/clusters/t0", actual->clusters[0].name());
+  EXPECT_EQ(instance_name + "/clusters/t1", actual->clusters[1].name());
+  EXPECT_EQ(instance_name + "/clusters/t2", actual->clusters[2].name());
+  EXPECT_EQ(instance_name + "/clusters/t3", actual->clusters[3].name());
 }
 
 /**
@@ -998,13 +988,8 @@ TEST_F(InstanceAdminTest, ListClustersUnrecoverableFailures) {
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   std::string const& instance_id = "the-instance";
-// After all the setup, make the actual call we want to test.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(tested.ListClusters(instance_id), std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(tested.ListClusters(instance_id),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // After all the setup, make the actual call we want to test.
+  EXPECT_FALSE(tested.ListClusters(instance_id));
 }
 
 /// @test Verify positive scenario for GetCluster
@@ -1018,8 +1003,9 @@ TEST_F(InstanceAdminTest, GetCluster) {
   bigtable::ClusterId cluster_id("the-cluster");
   // After all the setup, make the actual call we want to test.
   auto cluster = tested.GetCluster(instance_id, cluster_id);
+  ASSERT_STATUS_OK(cluster);
   EXPECT_EQ("projects/the-project/instances/the-instance/clusters/the-cluster",
-            cluster.name());
+            cluster->name());
 }
 
 /// @test Verify unrecoverable error for GetCluster
@@ -1033,12 +1019,7 @@ TEST_F(InstanceAdminTest, GetClusterUnrecoverableError) {
   bigtable::InstanceId instance_id("other-instance");
   bigtable::ClusterId cluster_id("other-cluster");
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(tested.GetCluster(instance_id, cluster_id), std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(tested.GetCluster(instance_id, cluster_id),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  ASSERT_FALSE(tested.GetCluster(instance_id, cluster_id));
 }
 
 /// @test Verify recoverable errors for GetCluster
@@ -1063,8 +1044,9 @@ TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
   bigtable::ClusterId cluster_id("the-cluster");
   // After all the setup, make the actual call we want to test.
   auto cluster = tested.GetCluster(instance_id, cluster_id);
+  ASSERT_STATUS_OK(cluster);
   EXPECT_EQ("projects/the-project/instances/the-instance/clusters/the-cluster",
-            cluster.name());
+            cluster->name());
 }
 
 /// @test Verify that DeleteCluster works in the positive case.
@@ -1081,7 +1063,7 @@ TEST_F(InstanceAdminTest, DeleteCluster) {
   bigtable::InstanceId instance_id("the-instance");
   bigtable::ClusterId cluster_id("the-cluster");
   // After all the setup, make the actual call we want to test.
-  tested.DeleteCluster(instance_id, cluster_id);
+  ASSERT_STATUS_OK(tested.DeleteCluster(instance_id, cluster_id));
 }
 
 /// @test Verify unrecoverable error for DeleteCluster
@@ -1093,13 +1075,8 @@ TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
   bigtable::InstanceId instance_id("other-instance");
   bigtable::ClusterId cluster_id("other-cluster");
-// After all the setup, make the actual call we want to test.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(tested.DeleteCluster(instance_id, cluster_id), std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(tested.DeleteCluster(instance_id, cluster_id),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // After all the setup, make the actual call we want to test.
+  EXPECT_FALSE(tested.DeleteCluster(instance_id, cluster_id).ok());
 }
 
 /// @test Verify that recoverable error for DeleteCluster
@@ -1112,13 +1089,8 @@ TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
 
   bigtable::InstanceId instance_id("other-instance");
   bigtable::ClusterId cluster_id("other-cluster");
-// After all the setup, make the actual call we want to test.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(tested.DeleteCluster(instance_id, cluster_id), std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(tested.DeleteCluster(instance_id, cluster_id),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // After all the setup, make the actual call we want to test.
+  EXPECT_FALSE(tested.DeleteCluster(instance_id, cluster_id).ok());
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::CreateCluster` works.
@@ -1860,12 +1832,7 @@ TEST_F(InstanceAdminTest, GetIamPolicyUnrecoverableError) {
 
   std::string resource = "other-resource";
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(tested.GetIamPolicy(resource), std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(tested.GetIamPolicy(resource),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_FALSE(tested.GetIamPolicy(resource));
 }
 
 /// @test Verify recoverable errors for InstanceAdmin::GetIamPolicy.
@@ -1904,9 +1871,10 @@ TEST_F(InstanceAdminTest, SetIamPolicy) {
   google::cloud::IamBindings iam_bindings =
       google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
   auto policy = tested.SetIamPolicy(resource, iam_bindings, "test-tag");
+  ASSERT_STATUS_OK(policy);
 
-  EXPECT_EQ(1U, policy.bindings.size());
-  EXPECT_EQ("test-tag", policy.etag);
+  EXPECT_EQ(1U, policy->bindings.size());
+  EXPECT_EQ("test-tag", policy->etag);
 }
 
 /// @test Verify unrecoverable errors for InstanceAdmin::SetIamPolicy.
@@ -1923,14 +1891,7 @@ TEST_F(InstanceAdminTest, SetIamPolicyUnrecoverableError) {
   std::string resource = "test-resource";
   google::cloud::IamBindings iam_bindings =
       google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(tested.SetIamPolicy(resource, iam_bindings, "test-tag"),
-               std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      tested.SetIamPolicy(resource, iam_bindings, "test-tag"),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_FALSE(tested.SetIamPolicy(resource, iam_bindings, "test-tag"));
 }
 
 /// @test Verify recoverable errors for InstanceAdmin::SetIamPolicy.
@@ -1956,9 +1917,10 @@ TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
   google::cloud::IamBindings iam_bindings =
       google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
   auto policy = tested.SetIamPolicy(resource, iam_bindings, "test-tag");
+  ASSERT_STATUS_OK(policy);
 
-  EXPECT_EQ(1U, policy.bindings.size());
-  EXPECT_EQ("test-tag", policy.etag);
+  EXPECT_EQ(1U, policy->bindings.size());
+  EXPECT_EQ("test-tag", policy->etag);
 }
 
 /// @test Verify that InstanceAdmin::TestIamPermissions works in simple case.
@@ -1985,8 +1947,9 @@ TEST_F(InstanceAdminTest, TestIamPermissions) {
   std::string resource = "the-resource";
   auto permission_set =
       tested.TestIamPermissions(resource, {"reader", "writer", "owner"});
+  ASSERT_STATUS_OK(permission_set);
 
-  EXPECT_EQ(2U, permission_set.size());
+  EXPECT_EQ(2U, permission_set->size());
 }
 
 /// @test Test for unrecoverable errors for InstanceAdmin::TestIamPermissions.
@@ -2002,15 +1965,8 @@ TEST_F(InstanceAdminTest, TestIamPermissionsUnrecoverableError) {
 
   std::string resource = "other-resource";
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      tested.TestIamPermissions(resource, {"reader", "writer", "owner"}),
-      std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      tested.TestIamPermissions(resource, {"reader", "writer", "owner"}),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_FALSE(
+      tested.TestIamPermissions(resource, {"reader", "writer", "owner"}));
 }
 
 /// @test Test for recoverable errors for InstanceAdmin::TestIamPermissions.
@@ -2044,6 +2000,7 @@ TEST_F(InstanceAdminTest, TestIamPermissionsRecoverableError) {
   std::string resource = "the-resource";
   auto permission_set =
       tested.TestIamPermissions(resource, {"writer", "reader", "owner"});
+  ASSERT_STATUS_OK(permission_set);
 
-  EXPECT_EQ(2U, permission_set.size());
+  EXPECT_EQ(2U, permission_set->size());
 }
