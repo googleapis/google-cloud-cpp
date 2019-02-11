@@ -78,8 +78,8 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
   if (!instances->failed_locations.empty()) {
     std::cerr
         << "The service tells us it has no information about these locations:";
-    for (std::string const& location : instances->failed_locations) {
-      std::cout << " " << location;
+    for (auto const& failed_location : instances->failed_locations) {
+      std::cerr << " " << failed_location;
     }
     std::cerr << ". Continuing anyway\n";
   }
@@ -119,8 +119,8 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
   if (!instances_after->failed_locations.empty()) {
     std::cerr
         << "The service tells us it has no information about these locations:";
-    for (std::string const& location : instances_after->failed_locations) {
-      std::cout << " " << location << "\n";
+    for (auto const& failed_location : instances_after->failed_locations) {
+      std::cerr << " " << failed_location;
     }
     std::cerr << ". Continuing anyway\n";
   }
@@ -151,8 +151,8 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
     std::cout << "The Cloud Bigtable service reports that the following "
                  "locations are temporarily unavailable and no information "
                  "about clusters in these locations can be obtained:\n";
-    for (std::string const& location : cluster_list->failed_locations) {
-      std::cout << location << "\n";
+    for (auto const& failed_location : cluster_list->failed_locations) {
+      std::cout << failed_location << "\n";
     }
   }
   // [END bigtable_get_clusters]
@@ -189,8 +189,8 @@ void CreateDevInstance(std::string project_id, int argc, char* argv[]) {
   if (!instances->failed_locations.empty()) {
     std::cerr
         << "The service tells us it has no information about these locations:";
-    for (std::string const& location : instances->failed_locations) {
-      std::cout << " " << location << "\n";
+    for (auto const& failed_location : instances->failed_locations) {
+      std::cerr << " " << failed_location;
     }
     std::cerr << ". Continuing anyway\n";
   }
@@ -272,8 +272,8 @@ void CreateCluster(std::string project_id, int argc, char* argv[]) {
   if (!instances->failed_locations.empty()) {
     std::cerr
         << "The service tells us it has no information about these locations:";
-    for (std::string const& location : instances->failed_locations) {
-      std::cout << " " << location << "\n";
+    for (auto const& failed_location : instances->failed_locations) {
+      std::cerr << " " << failed_location;
     }
     std::cerr << ". Continuing anyway\n";
   }
