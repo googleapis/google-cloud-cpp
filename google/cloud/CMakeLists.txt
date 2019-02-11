@@ -177,6 +177,9 @@ if (BUILD_TESTING)
                 testing_util/testing_types.cc)
     target_link_libraries(google_cloud_cpp_testing
                           PUBLIC google_cloud_cpp_common GTest::gmock
+                          gRPC::grpc++
+                          gRPC::grpc
+                          protobuf::libprotobuf
                           PRIVATE google_cloud_cpp_common_options)
 
     create_bazel_config(google_cloud_cpp_testing)
