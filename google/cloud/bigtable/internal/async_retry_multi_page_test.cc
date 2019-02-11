@@ -86,7 +86,7 @@ class DummyOperation {
     return state_->Start(cq, context_moved, std::move(callback));
   }
 
-  virtual int AccumulatedResult() { return state_->AccumulatedResult(); }
+  int AccumulatedResult() { return state_->AccumulatedResult(); }
 
  private:
   std::shared_ptr<DummyOperationImpl> state_;

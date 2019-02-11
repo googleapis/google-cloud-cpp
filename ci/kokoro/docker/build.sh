@@ -16,6 +16,34 @@
 
 set -eu
 
+export CC=gcc
+export CXX=g++
+export DISTRO=ubuntu
+export DISTRO_VERSION=18.04
+
+if [[ "${BUILD_NAME+x}" != "x" ]]; then
+ echo "The BUILD_NAME is not defined or is empty. Fix the Kokoro .cfg file."
+ exit 1
+elif [[ "${BUILD_NAME}" = "asan" ]]; then
+  export BUILD_TYPE=Debug
+  export CC=clang
+  export CXX=clang++
+  export CMAKE_FLAGS="-DSANITIZE_ADDRESS=yes"
+elif [[ "${BUILD_NAME}" = "centos-7" ]]; then
+ export DISTRO=centos
+ export DISTRO_VERSION=7
+elif [[ "${BUILD_NAME}" = "noex" ]]; then
+ export DISTRO_VERSION=16.04
+ export CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=no"
+elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
+  export BUILD_TYPE=Debug
+  export CC=clang
+  export CXX=clang++
+  export CMAKE_FLAGS="-DSANITIZE_UNDEFINED=yes"
+else
+  echo "Unknown BUILD_NAME (${BUILD_NAME}). Fix the Kokoro .cfg file."
+  exit 1
+fi
 
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
   readonly PROJECT_ROOT="$(cd "$(dirname $0)/../../.."; pwd)"

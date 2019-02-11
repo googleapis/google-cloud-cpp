@@ -17,6 +17,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -110,8 +111,9 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
 
   // verify new instance id in list of instances
   auto instances_before = instance_admin_->ListInstances();
-  ASSERT_TRUE(instances_before.failed_locations.empty());
-  ASSERT_FALSE(IsInstancePresent(instances_before.instances, instance_id))
+  ASSERT_STATUS_OK(instances_before);
+  ASSERT_TRUE(instances_before->failed_locations.empty());
+  ASSERT_FALSE(IsInstancePresent(instances_before->instances, instance_id))
       << "Instance (" << instance_id << ") already exists."
       << " This is unexpected, as the instance ids are"
       << " generated at random.";
@@ -156,10 +158,11 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   auto instance_after =
       instance_admin_->UpdateInstance(std::move(instance_update_config)).get();
   auto instance_after_update = instance_admin_->GetInstance(instance_id);
-  EXPECT_EQ(updated_display_name, instance_after_update.display_name());
+  ASSERT_STATUS_OK(instance_after_update);
+  EXPECT_EQ(updated_display_name, instance_after_update->display_name());
 
   // Delete instance
-  instance_admin_->DeleteInstance(instance_id);
+  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
   auto instances_after_delete = instance_admin_->AsyncListInstances(cq).get();
   EXPECT_TRUE(IsInstancePresent(async_instances_current.instances,
                                 instance_copy.name()));
@@ -234,15 +237,17 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
       instance_admin_->UpdateCluster(std::move(updated_cluster_config)).get();
   auto check_cluster_after_update =
       instance_admin_->GetCluster(instance_id, cluster_id);
+  ASSERT_STATUS_OK(check_cluster_after_update);
 
   EXPECT_EQ(3, cluster_copy.serve_nodes());
-  EXPECT_EQ(4, check_cluster_after_update.serve_nodes());
+  EXPECT_EQ(4, check_cluster_after_update->serve_nodes());
 
   // Delete cluster
-  instance_admin_->DeleteCluster(std::move(instance_id), std::move(cluster_id));
+  ASSERT_STATUS_OK(instance_admin_->DeleteCluster(std::move(instance_id),
+                                                  std::move(cluster_id)));
   auto clusters_list_after_delete =
       instance_admin_->AsyncListClusters(cq, id).get();
-  instance_admin_->DeleteInstance(id);
+  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(id));
   EXPECT_TRUE(
       IsClusterPresent(clusters_list_after.clusters,
                        instance_details.name() + "/clusters/" + id + "-cl2"));
@@ -294,8 +299,8 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAllClustersTest) {
   EXPECT_TRUE(
       IsIdOrNamePresentInClusterList(clusters_list.clusters, instance2_name));
 
-  instance_admin_->DeleteInstance(id1);
-  instance_admin_->DeleteInstance(id2);
+  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(id1));
+  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(id2));
 
   cq.Shutdown();
   pool.join();
@@ -308,8 +313,7 @@ int main(int argc, char* argv[]) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(cmd).find_last_of('/');
     // Show usage if number of arguments is invalid.
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1) << " <project_id>"
-              << std::endl;
+    std::cerr << "Usage: " << cmd.substr(last_slash + 1) << " <project_id>\n";
     return 1;
   }
 

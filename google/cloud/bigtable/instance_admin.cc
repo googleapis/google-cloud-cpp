@@ -31,11 +31,11 @@ inline namespace BIGTABLE_CLIENT_NS {
 static_assert(std::is_copy_assignable<bigtable::InstanceAdmin>::value,
               "bigtable::InstanceAdmin must be CopyAssignable");
 
-InstanceList InstanceAdmin::ListInstances() {
+StatusOr<InstanceList> InstanceAdmin::ListInstances() {
   grpc::Status status;
   auto result = impl_.ListInstances(status);
   if (!status.ok()) {
-    bigtable::internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
   return result;
 }
@@ -144,11 +144,12 @@ google::bigtable::admin::v2::Instance InstanceAdmin::UpdateInstanceImpl(
   return result;
 }
 
-btadmin::Instance InstanceAdmin::GetInstance(std::string const& instance_id) {
+StatusOr<btadmin::Instance> InstanceAdmin::GetInstance(
+    std::string const& instance_id) {
   grpc::Status status;
   auto result = impl_.GetInstance(instance_id, status);
   if (!status.ok()) {
-    bigtable::internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
   return result;
 }
@@ -166,21 +167,19 @@ future<btadmin::Instance> InstanceAdmin::AsyncGetInstance(
   return result;
 }
 
-void InstanceAdmin::DeleteInstance(std::string const& instance_id) {
+Status InstanceAdmin::DeleteInstance(std::string const& instance_id) {
   grpc::Status status;
   impl_.DeleteInstance(instance_id, status);
-  if (!status.ok()) {
-    bigtable::internal::ThrowRpcError(status, status.error_message());
-  }
+  return internal::MakeStatusFromRpcError(status);
 }
 
-btadmin::Cluster InstanceAdmin::GetCluster(
+StatusOr<btadmin::Cluster> InstanceAdmin::GetCluster(
     bigtable::InstanceId const& instance_id,
     bigtable::ClusterId const& cluster_id) {
   grpc::Status status;
   auto result = impl_.GetCluster(instance_id, cluster_id, status);
   if (!status.ok()) {
-    bigtable::internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
   return result;
 }
@@ -199,13 +198,16 @@ future<btadmin::Cluster> InstanceAdmin::AsyncGetCluster(
   return result;
 }
 
-ClusterList InstanceAdmin::ListClusters() { return ListClusters("-"); }
+StatusOr<ClusterList> InstanceAdmin::ListClusters() {
+  return ListClusters("-");
+}
 
-ClusterList InstanceAdmin::ListClusters(std::string const& instance_id) {
+StatusOr<ClusterList> InstanceAdmin::ListClusters(
+    std::string const& instance_id) {
   grpc::Status status;
   auto result = impl_.ListClusters(instance_id, status);
   if (!status.ok()) {
-    bigtable::internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
   return result;
 }
@@ -267,32 +269,30 @@ google::bigtable::admin::v2::Cluster InstanceAdmin::UpdateClusterImpl(
   }
   return result;
 }
-void InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
-                                  bigtable::ClusterId const& cluster_id) {
+Status InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
+                                    bigtable::ClusterId const& cluster_id) {
   grpc::Status status;
   impl_.DeleteCluster(instance_id, cluster_id, status);
-  if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
-  }
+  return internal::MakeStatusFromRpcError(status);
 }
 
-btadmin::AppProfile InstanceAdmin::CreateAppProfile(
+StatusOr<btadmin::AppProfile> InstanceAdmin::CreateAppProfile(
     bigtable::InstanceId const& instance_id, AppProfileConfig config) {
   grpc::Status status;
   auto result = impl_.CreateAppProfile(instance_id, std::move(config), status);
   if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
   return result;
 }
 
-btadmin::AppProfile InstanceAdmin::GetAppProfile(
+StatusOr<btadmin::AppProfile> InstanceAdmin::GetAppProfile(
     bigtable::InstanceId const& instance_id,
     bigtable::AppProfileId const& profile_id) {
   grpc::Status status;
   auto result = impl_.GetAppProfile(instance_id, profile_id, status);
   if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
   return result;
 }
@@ -305,24 +305,22 @@ std::future<btadmin::AppProfile> InstanceAdmin::UpdateAppProfile(
                     std::move(config));
 }
 
-std::vector<btadmin::AppProfile> InstanceAdmin::ListAppProfiles(
+StatusOr<std::vector<btadmin::AppProfile>> InstanceAdmin::ListAppProfiles(
     std::string const& instance_id) {
   grpc::Status status;
   auto result = impl_.ListAppProfiles(instance_id, status);
   if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
   return result;
 }
 
-void InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
-                                     bigtable::AppProfileId const& profile_id,
-                                     bool ignore_warnings) {
+Status InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
+                                       bigtable::AppProfileId const& profile_id,
+                                       bool ignore_warnings) {
   grpc::Status status;
   impl_.DeleteAppProfile(instance_id, profile_id, ignore_warnings, status);
-  if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
-  }
+  return internal::MakeStatusFromRpcError(status);
 }
 
 google::bigtable::admin::v2::Cluster InstanceAdmin::CreateClusterImpl(
@@ -388,37 +386,37 @@ btadmin::AppProfile InstanceAdmin::UpdateAppProfileImpl(
   return result;
 }
 
-google::cloud::IamPolicy InstanceAdmin::GetIamPolicy(
+StatusOr<google::cloud::IamPolicy> InstanceAdmin::GetIamPolicy(
     std::string const& instance_id) {
   grpc::Status status;
   auto result = impl_.GetIamPolicy(instance_id, status);
 
   if (!status.ok()) {
-    bigtable::internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
   return result;
 }
 
-google::cloud::IamPolicy InstanceAdmin::SetIamPolicy(
+StatusOr<google::cloud::IamPolicy> InstanceAdmin::SetIamPolicy(
     std::string const& instance_id,
     google::cloud::IamBindings const& iam_bindings, std::string const& etag) {
   grpc::Status status;
   auto result = impl_.SetIamPolicy(instance_id, iam_bindings, etag, status);
 
   if (!status.ok()) {
-    bigtable::internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
   return result;
 }
 
-std::vector<std::string> InstanceAdmin::TestIamPermissions(
+StatusOr<std::vector<std::string>> InstanceAdmin::TestIamPermissions(
     std::string const& instance_id,
     std::vector<std::string> const& permissions) {
   grpc::Status status;
   auto result = impl_.TestIamPermissions(instance_id, permissions, status);
 
   if (!status.ok()) {
-    bigtable::internal::ThrowRpcError(status, status.error_message());
+    return internal::MakeStatusFromRpcError(status);
   }
 
   return result;

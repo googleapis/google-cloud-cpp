@@ -73,7 +73,7 @@ class DummyOperation {
     return impl_->Start(cq, context_moved, std::move(callback));
   }
 
-  virtual int AccumulatedResult() { return impl_->AccumulatedResult(); }
+  int AccumulatedResult() { return impl_->AccumulatedResult(); }
 
  private:
   std::shared_ptr<DummyOperationImpl> impl_;

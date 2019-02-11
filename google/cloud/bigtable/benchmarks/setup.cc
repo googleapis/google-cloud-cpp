@@ -74,7 +74,7 @@ BenchmarkSetup::BenchmarkSetup(std::string const& prefix, int& argc,
               << " [thread-count (" << kDefaultThreads << ")]"
               << " [test-duration-seconds (" << kDefaultTestDuration << "min)]"
               << " [table-size (" << kDefaultTableSize << ")]"
-              << " [use-embedded-server (false)]" << std::endl;
+              << " [use-embedded-server (false)]\n";
     google::cloud::internal::ThrowRuntimeError(msg);
   };
 

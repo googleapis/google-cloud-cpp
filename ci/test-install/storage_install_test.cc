@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) try {
     // Until std::filesystem is widely available this hack works for most paths.
     auto last_slash = std::string(argv[0]).find_last_of("/\\");
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <bucket-name> <object-name>" << std::endl;
+              << " <bucket-name> <object-name>\n";
     return 1;
   }
   std::string const bucket_name = argv[1];
@@ -33,17 +33,17 @@ int main(int argc, char* argv[]) try {
       gcs::Client::CreateDefaultClient();
   if (!client) {
     std::cerr << "Could not create default GCS Client, status="
-              << client.status() << std::endl;
+              << client.status() << "\n";
     return 1;
   }
 
   gcs::ObjectWriteStream os = client->WriteObject(bucket_name, object_name);
   os.exceptions(std::ios_base::badbit | std::ios_base::failbit);
-  os << "Hello World" << std::endl;
+  os << "Hello World\n";
   os.Close();
   gcs::ObjectMetadata meta = os.metadata().value();
   std::cout << "Successfully created object, generation=" << meta.generation()
-            << std::endl;
+            << "\n";
 
   gcs::ObjectReadStream stream = client->ReadObject(bucket_name, object_name);
   stream.exceptions(std::ios_base::badbit | std::ios_base::failbit);
@@ -61,6 +61,6 @@ int main(int argc, char* argv[]) try {
 
   return 0;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard exception raised: " << ex.what() << "\n";
   return 1;
 }

@@ -31,7 +31,7 @@ void PrintUsage(std::string const& cmd, std::string const& msg) {
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
-            << command_usage << std::endl;
+            << command_usage << "\n";
 }
 
 void AsyncCreateTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
@@ -55,7 +55,7 @@ void AsyncCreateTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
     auto final = future.then(
         [](google::cloud::future<google::bigtable::admin::v2::Table> f) {
           auto table = f.get();
-          std::cout << "Table created as " << table.name() << std::endl;
+          std::cout << "Table created as " << table.name() << "\n";
         });
     final.get();  // block to keep sample small and correct.
   }
@@ -85,7 +85,7 @@ void AsyncGetTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
             std::string gc_rule;
             google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
                                                         &gc_rule);
-            std::cout << "\t" << family_name << "\t\t" << gc_rule << std::endl;
+            std::cout << "\t" << family_name << "\t\t" << gc_rule << "\n";
           }
         });
 
@@ -170,6 +170,6 @@ int main(int argc, char* argv[]) try {
   PrintUsage(argv[0], ex.msg);
   return 1;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }

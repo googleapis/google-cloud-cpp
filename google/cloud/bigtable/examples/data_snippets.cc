@@ -54,7 +54,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
-            << command_usage << std::endl;
+            << command_usage << "\n";
 }
 
 void Apply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
@@ -144,7 +144,7 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     std::pair<bool, google::cloud::bigtable::Row> tuple =
         table.ReadRow(MAGIC_ROW_KEY, std::move(filter));
     if (!tuple.first) {
-      std::cout << "Row " << MAGIC_ROW_KEY << " not found" << std::endl;
+      std::cout << "Row " << MAGIC_ROW_KEY << " not found\n";
       return;
     }
     std::cout << "key: " << tuple.second.row_key() << "\n";
@@ -417,7 +417,7 @@ int main(int argc, char* argv[]) try {
   PrintUsage(argc, argv, ex.msg);
   return 1;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << std::endl;
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }
 //! [all code]

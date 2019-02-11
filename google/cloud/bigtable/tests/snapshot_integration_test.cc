@@ -175,7 +175,7 @@ int main(int argc, char* argv[]) {
     auto last_slash = std::string(cmd).find_last_of('/');
     // Show Usage if invalid no of arguments
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project_id> <instance_id> <cluster_id>" << std::endl;
+              << " <project_id> <instance_id> <cluster_id>\n";
     return 1;
   }
 
