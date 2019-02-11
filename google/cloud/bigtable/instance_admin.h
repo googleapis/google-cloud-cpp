@@ -23,6 +23,7 @@
 #include "google/cloud/bigtable/internal/async_list_instances.h"
 #include "google/cloud/bigtable/internal/instance_admin.h"
 #include "google/cloud/future.h"
+#include "google/cloud/status_or.h"
 #include <future>
 #include <memory>
 
@@ -160,7 +161,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc list instances
    */
-  InstanceList ListInstances();
+  StatusOr<InstanceList> ListInstances();
 
   /**
    * Query (asynchronously) the list of instances in the project.
@@ -191,7 +192,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc get instance
    */
-  google::bigtable::admin::v2::Instance GetInstance(
+  StatusOr<google::bigtable::admin::v2::Instance> GetInstance(
       std::string const& instance_id);
 
   /**
@@ -229,7 +230,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc delete instance
    */
-  void DeleteInstance(std::string const& instance_id);
+  Status DeleteInstance(std::string const& instance_id);
 
   /**
    * Obtain the list of clusters in an instance.
@@ -244,7 +245,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc list clusters
    */
-  ClusterList ListClusters();
+  StatusOr<ClusterList> ListClusters();
 
   /**
    * Obtain the list of clusters in an instance.
@@ -259,7 +260,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc list clusters
    */
-  ClusterList ListClusters(std::string const& instance_id);
+  StatusOr<ClusterList> ListClusters(std::string const& instance_id);
 
   /**
    * Query (asynchronously) the list of clusters in a project.
@@ -341,8 +342,8 @@ class InstanceAdmin {
    *  @par Example
    *  @snippet bigtable_samples_instance_admin.cc delete cluster
    */
-  void DeleteCluster(bigtable::InstanceId const& instance_id,
-                     bigtable::ClusterId const& cluster_id);
+  Status DeleteCluster(bigtable::InstanceId const& instance_id,
+                       bigtable::ClusterId const& cluster_id);
 
   /**
    * Gets the specified cluster of an instance in the project.
@@ -355,7 +356,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc get cluster
    */
-  google::bigtable::admin::v2::Cluster GetCluster(
+  StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
       bigtable::InstanceId const& instance_id,
       bigtable::ClusterId const& cluster_id);
 
@@ -401,7 +402,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc create app profile cluster
    */
-  google::bigtable::admin::v2::AppProfile CreateAppProfile(
+  StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
       bigtable::InstanceId const& instance_id, AppProfileConfig config);
 
   /**
@@ -414,7 +415,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc get app profile
    */
-  google::bigtable::admin::v2::AppProfile GetAppProfile(
+  StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
       bigtable::InstanceId const& instance_id,
       bigtable::AppProfileId const& profile_id);
 
@@ -448,8 +449,8 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc list app profiles
    */
-  std::vector<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
-      std::string const& instance_id);
+  StatusOr<std::vector<google::bigtable::admin::v2::AppProfile>>
+  ListAppProfiles(std::string const& instance_id);
 
   /**
    * Delete an existing application profile.
@@ -462,9 +463,9 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc delete app profile
    */
-  void DeleteAppProfile(bigtable::InstanceId const& instance_id,
-                        bigtable::AppProfileId const& profile_id,
-                        bool ignore_warnings = false);
+  Status DeleteAppProfile(bigtable::InstanceId const& instance_id,
+                          bigtable::AppProfileId const& profile_id,
+                          bool ignore_warnings = false);
 
   /**
    * Gets the policy for @p instance_id.
@@ -475,7 +476,8 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc get iam policy
    */
-  google::cloud::IamPolicy GetIamPolicy(std::string const& instance_id);
+  StatusOr<google::cloud::IamPolicy> GetIamPolicy(
+      std::string const& instance_id);
 
   /**
    * Sets the IAM policy for an instance.
@@ -492,7 +494,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc set iam policy
    */
-  google::cloud::IamPolicy SetIamPolicy(
+  StatusOr<google::cloud::IamPolicy> SetIamPolicy(
       std::string const& instance_id,
       google::cloud::IamBindings const& iam_bindings,
       std::string const& etag = std::string{});
@@ -509,7 +511,7 @@ class InstanceAdmin {
    * @see https://cloud.google.com/bigtable/docs/access-control for a list of
    *     valid permissions on Google Cloud Bigtable.
    */
-  std::vector<std::string> TestIamPermissions(
+  StatusOr<std::vector<std::string>> TestIamPermissions(
       std::string const& instance_id,
       std::vector<std::string> const& permissions);
 
