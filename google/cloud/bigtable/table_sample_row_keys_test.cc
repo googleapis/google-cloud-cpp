@@ -44,7 +44,7 @@ TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
-  std::vector<bigtable::RowKeySample> result = table_.SampleRows<>();
+  std::vector<bigtable::RowKeySample> result = *(table_.SampleRows<>());
   auto it = result.begin();
   EXPECT_NE(it, result.end());
   EXPECT_EQ(it->row_key, "test1");
@@ -70,7 +70,8 @@ TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
-  std::vector<bigtable::RowKeySample> result = table_.SampleRows<std::vector>();
+  std::vector<bigtable::RowKeySample> result =
+      *(table_.SampleRows<std::vector>());
   auto it = result.begin();
   EXPECT_NE(it, result.end());
   EXPECT_EQ(it->row_key, "test1");
@@ -96,7 +97,7 @@ TEST_F(TableSampleRowKeysTest, SimpleListTest) {
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
-  std::list<bigtable::RowKeySample> result = table_.SampleRows<std::list>();
+  std::list<bigtable::RowKeySample> result = *(table_.SampleRows<std::list>());
   auto it = result.begin();
   EXPECT_NE(it, result.end());
   EXPECT_EQ(it->row_key, "test1");
@@ -147,7 +148,7 @@ TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
 
   EXPECT_CALL(*reader_retry, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  auto results = table_.SampleRows<std::vector>();
+  auto results = *(table_.SampleRows<std::vector>());
 
   auto it = results.begin();
   EXPECT_NE(it, results.end());
@@ -204,6 +205,6 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
       .WillOnce(Invoke(create_cancelled_stream))
       .WillOnce(Invoke(create_cancelled_stream));
 
-  EXPECT_THROW(custom_table.SampleRows<std::vector>(), std::runtime_error);
+  EXPECT_FALSE(custom_table.SampleRows<std::vector>());
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

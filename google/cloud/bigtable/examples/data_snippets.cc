@@ -288,7 +288,13 @@ void SampleRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   //! [sample row keys]
   [](google::cloud::bigtable::Table table) {
     auto samples = table.SampleRows<>();
-    for (auto const& sample : samples) {
+
+    if (!samples) {
+      std::cerr << "SampleRows failed: " << samples.status() << std::endl;
+      return;
+    }
+
+    for (auto const& sample : *samples) {
       std::cout << "key=" << sample.row_key << " - " << sample.offset_bytes
                 << "\n";
     }
@@ -308,12 +314,26 @@ void SampleRowsCollections(google::cloud::bigtable::Table table, int argc,
   //! [sample row keys collections]
   [](google::cloud::bigtable::Table table) {
     auto list_samples = table.SampleRows<std::list>();
-    for (auto const& sample : list_samples) {
+
+    if (!list_samples) {
+      std::cerr << "SampleRowsCollections failed: " << list_samples.status()
+                << std::endl;
+      return;
+    }
+
+    for (auto const& sample : *list_samples) {
       std::cout << "key=" << sample.row_key << " - " << sample.offset_bytes
                 << "\n";
     }
     auto deque_samples = table.SampleRows<std::deque>();
-    for (auto const& sample : deque_samples) {
+
+    if (!deque_samples) {
+      std::cerr << "SampleRowsCollections failed: " << deque_samples.status()
+                << std::endl;
+      return;
+    }
+
+    for (auto const& sample : *deque_samples) {
       std::cout << "key=" << sample.row_key << " - " << sample.offset_bytes
                 << "\n";
     }

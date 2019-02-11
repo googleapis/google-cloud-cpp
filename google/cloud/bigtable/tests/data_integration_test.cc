@@ -577,14 +577,14 @@ TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
   // and it might return row keys that have never been written to.
   // All we can check is that this is not empty, and that the offsets are in
   // ascending order.
-  EXPECT_FALSE(samples.empty());
+  EXPECT_FALSE(samples->empty());
   std::int64_t previous = 0;
-  for (auto const& s : samples) {
+  for (auto const& s : *samples) {
     EXPECT_LE(previous, s.offset_bytes);
     previous = s.offset_bytes;
   }
   // At least one of the samples should have non-zero offset:
-  auto last = samples.back();
+  auto last = samples->back();
   EXPECT_LT(0, last.offset_bytes);
 }
 
