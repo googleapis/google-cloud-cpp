@@ -39,17 +39,10 @@ testing::AssertionResult IsOkPredFormat(
 }  // namespace internal
 }  // namespace testing
 
-// This is a dirty workaround for the fact that protobuf defines a poorman's
-// version of this macro for grpc::Status.
-
-#ifdef EXPECT_OK
-#undef EXPECT_OK
-#endif
-
-#define ASSERT_OK(val) \
+#define ASSERT_STATUS_OK(val) \
   ASSERT_PRED_FORMAT1(::testing::internal::IsOkPredFormat, val)
 
-#define EXPECT_OK(val) \
+#define EXPECT_STATUS_OK(val) \
   EXPECT_PRED_FORMAT1(::testing::internal::IsOkPredFormat, val)
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_ASSERT_OK_H_
