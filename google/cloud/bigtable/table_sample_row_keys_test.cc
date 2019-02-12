@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_sample_row_keys_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <typeinfo>
 
@@ -44,12 +45,13 @@ TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
-  std::vector<bigtable::RowKeySample> result = *(table_.SampleRows<>());
-  auto it = result.begin();
-  EXPECT_NE(it, result.end());
+  auto result = table_.SampleRows<>();
+  ASSERT_STATUS_OK(result);
+  auto it = result->begin();
+  EXPECT_NE(it, result->end());
   EXPECT_EQ(it->row_key, "test1");
   EXPECT_EQ(it->offset_bytes, 11);
-  EXPECT_EQ(++it, result.end());
+  EXPECT_EQ(++it, result->end());
 }
 
 /// @test Verify that Table::SampleRows<T>() works for std::vector.
@@ -70,13 +72,13 @@ TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
-  std::vector<bigtable::RowKeySample> result =
-      *(table_.SampleRows<std::vector>());
-  auto it = result.begin();
-  EXPECT_NE(it, result.end());
+  auto result = table_.SampleRows<std::vector>();
+  ASSERT_STATUS_OK(result);
+  auto it = result->begin();
+  EXPECT_NE(it, result->end());
   EXPECT_EQ(it->row_key, "test1");
   EXPECT_EQ(it->offset_bytes, 11);
-  EXPECT_EQ(++it, result.end());
+  EXPECT_EQ(++it, result->end());
 }
 
 /// @test Verify that Table::SampleRows<T>() works for std::list.
@@ -148,15 +150,16 @@ TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
 
   EXPECT_CALL(*reader_retry, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  auto results = *(table_.SampleRows<std::vector>());
+  auto results = table_.SampleRows<std::vector>();
+  ASSERT_STATUS_OK(results);
 
-  auto it = results.begin();
-  EXPECT_NE(it, results.end());
+  auto it = results->begin();
+  EXPECT_NE(it, results->end());
   EXPECT_EQ("test2", it->row_key);
   ++it;
-  EXPECT_NE(it, results.end());
+  EXPECT_NE(it, results->end());
   EXPECT_EQ("test3", it->row_key);
-  EXPECT_EQ(++it, results.end());
+  EXPECT_EQ(++it, results->end());
 }
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -205,6 +208,7 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
       .WillOnce(Invoke(create_cancelled_stream))
       .WillOnce(Invoke(create_cancelled_stream));
 
-  EXPECT_FALSE(custom_table.SampleRows<std::vector>());
+  auto result = custom_table.SampleRows<std::vector>();
+  ASSERT_STATUS_OK(result);
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/endian.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 
@@ -570,6 +571,7 @@ TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
   }
   auto samples = table->SampleRows<std::vector>();
   DeleteTable(table_id);
+  ASSERT_STATUS_OK(samples);
 
   // It is somewhat hard to verify that the values returned here are correct.
   // We cannot check the specific values, not even the format, of the row keys
