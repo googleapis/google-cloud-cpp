@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['scopes',['scopes',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1ComputeEngineCredentials.html#a250080a7a503749fc666af1358473f31',1,'google::cloud::storage::v0::oauth2::ComputeEngineCredentials']]],
+  ['scopes',['scopes',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1ServiceAccountCredentialsInfo.html#a627d516661fc8f256d4ac3212d6a7336',1,'google::cloud::storage::v0::oauth2::ServiceAccountCredentialsInfo::scopes()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1ComputeEngineCredentials.html#a250080a7a503749fc666af1358473f31',1,'google::cloud::storage::v0::oauth2::ComputeEngineCredentials::scopes()']]],
   ['self_5flink',['self_link',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#aebb942e0698bf2f516a98f1f9c4901af',1,'google::cloud::storage::v0::NotificationMetadata']]],
   ['service_5faccount_2ecc',['service_account.cc',['../service__account_8cc.html',1,'']]],
   ['service_5faccount_2eh',['service_account.h',['../service__account_8h.html',1,'']]],
@@ -115,6 +115,7 @@ var searchData=
   ['storage_5fthroughput_5fbenchmark_2ecc',['storage_throughput_benchmark.cc',['../storage__throughput__benchmark_8cc.html',1,'']]],
   ['stream',['Stream',['../../common/classgoogle_1_1cloud_1_1v0_1_1Logger.html#a4b9eacec5fc783554d7ffaefd5282cd1',1,'google::cloud::v0::Logger::Stream()'],['../../common/classgoogle_1_1cloud_1_1v0_1_1Logger_3_01false_01_4.html#a5ca7d7218740aa1e526f4c119f340c43',1,'google::cloud::v0::Logger&lt; false &gt;::Stream()'],['../../common/classgoogle_1_1cloud_1_1v0_1_1Logger_3_01false_01_4.html#a5ca7d7218740aa1e526f4c119f340c43',1,'google::cloud::v0::Logger&lt; false &gt;::Stream()']]],
   ['strictidempotencypolicy',['StrictIdempotencyPolicy',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1StrictIdempotencyPolicy.html',1,'google::cloud::storage::v0::StrictIdempotencyPolicy'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1StrictIdempotencyPolicy.html#a708a6a8b4828256418b7d54a1b973f27',1,'google::cloud::storage::v0::StrictIdempotencyPolicy::StrictIdempotencyPolicy()']]],
+  ['subject',['subject',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1ServiceAccountCredentialsInfo.html#a554b0fe2ed1acbea4f3f39a999161b2c',1,'google::cloud::storage::v0::oauth2::ServiceAccountCredentialsInfo']]],
   ['suspend',['Suspend',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectWriteStream.html#a490e502fe2056510670609fd2ac00220',1,'google::cloud::storage::v0::ObjectWriteStream']]],
   ['swap',['swap',['../../common/classgoogle_1_1cloud_1_1v0_1_1promise.html#ab286432c73f4fff7b8bb38553d135cc2',1,'google::cloud::v0::promise::swap()'],['../../common/classgoogle_1_1cloud_1_1v0_1_1promise_3_01void_01_4.html#a92ed3e20340a23e39a31888728178143',1,'google::cloud::v0::promise&lt; void &gt;::swap()']]]
 ];
