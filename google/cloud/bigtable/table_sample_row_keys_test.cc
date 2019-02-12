@@ -210,5 +210,6 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
 
   auto result = custom_table.SampleRows<std::vector>();
   ASSERT_STATUS_OK(result);
+  EXPECT_FALSE(custom_table.SampleRows<std::vector>());
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
