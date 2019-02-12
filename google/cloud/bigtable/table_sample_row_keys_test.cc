@@ -208,8 +208,6 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
       .WillOnce(Invoke(create_cancelled_stream))
       .WillOnce(Invoke(create_cancelled_stream));
 
-  auto result = custom_table.SampleRows<std::vector>();
-  ASSERT_STATUS_OK(result);
   EXPECT_FALSE(custom_table.SampleRows<std::vector>());
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
