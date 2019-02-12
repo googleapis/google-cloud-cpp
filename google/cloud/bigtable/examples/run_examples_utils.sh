@@ -294,8 +294,10 @@ run_all_data_examples() {
   run_example ./bigtable_samples run-full-example "${project_id}" "${instance_id}" "${FULL_TABLE}"
 
   # Use the same table in all the tests.
-  local -r TABLE="data-ex-tbl-$(date +%s)-${RANDOM}"
-  local -r PREFIX="key-${RANDOM}"
+  local -r TABLE="data-ex-tbl-$(date +%s)-${RANDOM}"  
+  local -r ROW_KEY_1="root/0/0/1"
+  local -r ROW_KEY_2="root/0/1/0"
+  
   run_example ./table_admin_snippets create-table "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets apply "${project_id}" "${instance_id}" "${TABLE}"  
   run_example ./data_snippets bulk-apply "${project_id}" "${instance_id}" "${TABLE}"
@@ -303,8 +305,8 @@ run_all_data_examples() {
   run_example ./data_snippets read-rows-with-limit "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets read-rows "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets populate-table-hierarchy "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets read-rowset "${project_id}" "${instance_id}" "${TABLE}" "${PREFIX}"
-  run_example ./data_snippets read-rowset-prefix "${project_id}" "${instance_id}" "${TABLE}" "${PREFIX}"
+  run_example ./data_snippets read-rowset "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_1}" "${ROW_KEY_2}"  
+  run_example ./data_snippets read-rowset-prefix "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_1}"
   run_example ./data_snippets sample-rows "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets sample-rows-collections "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
@@ -433,15 +435,12 @@ run_rowset_examples() {
 
   # Use the same table in all the tests.
   local -r TABLE="rowset-tbl-${RANDOM}"
-  local -r PREFIX="key-${RANDOM}"
 
   run_example ./bigtable_rowset "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./bigtable_rowset_prefix "${project_id}" "${instance_id}" "${TABLE}" "${PREFIX}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
-  run_example_usage ./bigtable_rowset
-  run_example_usage ./bigtable_rowset_prefix
+  run_example_usage ./bigtable_rowset 
 }
 ################################################
 # Run the Bigtable hello app profile example.

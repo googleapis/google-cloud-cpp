@@ -269,12 +269,8 @@ void ReadRowSet(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   }
 
   std::vector<std::string> row_keys;
-
-  int no_of_keys = argc - 1;
-
-  for (int i = 1; i <= no_of_keys; ++i) {
-    std::string key = ConsumeArg(argc, argv);
-    row_keys.push_back(std::move(key));
+  while (argc > 1) {
+    row_keys.emplace_back(ConsumeArg(argc, argv));
   }
 
   //! [read rowset]
