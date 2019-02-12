@@ -153,8 +153,8 @@ void ListInstances(google::cloud::bigtable::InstanceAdmin instance_admin,
     std::cout << "The Cloud Bigtable service reports that the following "
                  "locations are temporarily unavailable and no information "
                  "about instances in these locations can be obtained:\n";
-    for (std::string const& location : instances->failed_locations) {
-      std::cout << location << "\n";
+    for (auto const& failed_location : instances->failed_locations) {
+      std::cout << failed_location << "\n";
     }
   }
 }
@@ -232,8 +232,8 @@ void ListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
     std::cout << "The Cloud Bigtable service reports that the following "
                  "locations are temporarily unavailable and no information "
                  "about clusters in these locations can be obtained:\n";
-    for (std::string const& location : cluster_list->failed_locations) {
-      std::cout << location << "\n";
+    for (auto const& failed_location : cluster_list->failed_locations) {
+      std::cout << failed_location << "\n";
     }
   }
 }
@@ -258,8 +258,8 @@ void ListAllClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
     std::cout << "The Cloud Bigtable service reports that the following "
                  "locations are temporarily unavailable and no information "
                  "about clusters in these locations can be obtained:\n";
-    for (std::string const& location : cluster_list->failed_locations) {
-      std::cout << location << "\n";
+    for (auto const& failed_location : cluster_list->failed_locations) {
+      std::cout << failed_location << "\n";
     }
   }
 }
@@ -359,11 +359,11 @@ void RunInstanceOperations(
     std::cout << instance.name() << "\n";
   }
   if (!instances->failed_locations.empty()) {
-    std::cerr << "The Cloud Bigtable service reports that the following "
+    std::cout << "The Cloud Bigtable service reports that the following "
                  "locations are temporarily unavailable and no information "
                  "about instances in these locations can be obtained:\n";
-    for (auto& failed_location : instances->failed_locations) {
-      std::cerr << failed_location << "\n";
+    for (auto const& failed_location : instances->failed_locations) {
+      std::cout << failed_location << "\n";
     }
   }
 
@@ -386,11 +386,11 @@ void RunInstanceOperations(
     std::cout << "Cluster Name: " << cluster.name() << "\n";
   }
   if (!cluster_list->failed_locations.empty()) {
-    std::cerr << "The Cloud Bigtable service reports that the following "
+    std::cout << "The Cloud Bigtable service reports that the following "
                  "locations are temporarily unavailable and no information "
                  "about clusters in these locations can be obtained:\n";
-    for (auto& failed_location : cluster_list->failed_locations) {
-      std::cerr << failed_location << "\n";
+    for (auto const& failed_location : cluster_list->failed_locations) {
+      std::cout << failed_location << "\n";
     }
   }
 
