@@ -16,7 +16,7 @@
 
 set -eu
 
-exec sed \
+sed \
     -e '/^## \[START IGNORED\]/,/^## \[END IGNORED\]/d' \
     -e '/^## /d' \
     -e 's/^# //' \
@@ -33,4 +33,18 @@ exec sed \
     -e 's/^make install/sudo make install/' \
     -e 's/update-alternatives/sudo update-alternatives/g' \
     -e 's/add-apt-repository/sudo add-apt-repository/g' \
-    -e 's/^    sudo/sudo/' $*
+    -e 's/^    sudo/sudo/' $* | \
+    awk '
+      BEGIN {
+        removing_blanks=0;
+      }
+      {
+        if ($0 != "") {
+          removing_blanks = 0;
+          print $0;
+        } else if (removing_blanks != 1) {
+          removing_blanks = 1;
+          print $0;
+        }
+      }
+    '

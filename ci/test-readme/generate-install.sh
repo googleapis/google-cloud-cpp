@@ -75,20 +75,16 @@ END_OF_PREAMBLE
 
 echo
 echo "### Fedora (29)"
-echo
 "${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.fedora"
 
 echo
 echo "### OpenSUSE (Tumbleweed)"
-echo
 "${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.opensuse"
 
 echo
 echo "### Ubuntu (18.04 - Bionic Beaver)"
-echo
 "${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.ubuntu"
 
 echo
 echo "### CentOS (7)"
-echo
 "${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.centos"

@@ -53,16 +53,12 @@ these dependencies.
 
 ### Fedora (29)
 
-
 Install the minimal development tools:
-
 
 ```bash
 sudo dnf makecache && \
 sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig zlib-devel
 ```
-
-
 
 Fedora includes packages for gRPC, libcurl, and OpenSSL that are recent enough
 for `google-cloud-cpp`. Install these packages and additional development
@@ -115,16 +111,12 @@ sudo cmake --build . --target install
 
 ### OpenSUSE (Tumbleweed)
 
-
 Install the minimal development tools:
-
 
 ```bash
 sudo zypper refresh && \
 sudo zypper install -y cmake gcc gcc-c++ git libcurl-devel libopenssl-devel make
 ```
-
-
 
 OpenSUSE:tumbleweed provides packages for gRPC, libcurl, and protobuf, and the
 versions of these packages are recent enough to support the Google Cloud
@@ -176,9 +168,7 @@ sudo cmake --build . --target install
 
 ### Ubuntu (18.04 - Bionic Beaver)
 
-
 Install the minimal development tools:
-
 
 ```bash
 sudo apt update && \
@@ -186,8 +176,6 @@ sudo apt install -y build-essential cmake git gcc g++ cmake \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
         pkg-config tar wget zlib1g-dev
 ```
-
-
 
 #### crc32c
 
@@ -264,13 +252,11 @@ sudo cmake --build . --target install
 
 ### CentOS (7)
 
-
 First install the development tools and OpenSSL. The development tools
 distributed with CentOS (notably CMake) are too old to build
 `google-cloud-cpp` and its dependencies. In these instructions, we use
 `cmake3` obtained from
 [Software Collections](https://www.softwarecollections.org/).
-
 
 ```bash
 rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
@@ -281,8 +267,6 @@ sudo yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool make \
         openssl-devel pkgconfig tar wget which zlib-devel
 ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 ```
-
-
 
 #### crc32c
 
