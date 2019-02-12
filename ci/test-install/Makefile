@@ -20,7 +20,8 @@
 
 # This is hard-coded because it is intended for a test, applications typically
 # have their own configuration files.
-CXX=g++ -std=c++11
+CXX=g++
+CXXFLAGS=-std=c++11
 CXXLD=$(CXX)
 
 
@@ -38,7 +39,7 @@ CBT_LIBS := \
     $(shell pkg-config libcares --libs-only-l)
 
 bigtable_install_test: bigtable_install_test.cc
-	$(CXXLD) $(CBT_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
+	$(CXXLD) $(CXXFLAGS) $(CBT_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
 
 
 GCS_DEPS := storage_client google_cloud_cpp_common libcurl openssl
@@ -48,4 +49,4 @@ GCS_CXXLDFLAGS := $(shell pkg-config $(GCS_DEPS) --libs-only-L)
 GCS_LIBS := $(shell pkg-config $(GCS_DEPS) --libs-only-l) -lcrc32c
 
 storage_install_test: storage_install_test.cc
-	$(CXXLD) $(GCS_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(GCS_LIBS)
+	$(CXXLD) $(CXXFLAGS) $(GCS_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(GCS_LIBS)
