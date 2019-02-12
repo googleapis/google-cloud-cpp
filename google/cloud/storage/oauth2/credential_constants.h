@@ -50,13 +50,13 @@ constexpr std::chrono::seconds GoogleOAuthAccessTokenExpirationSlack() {
   return std::chrono::seconds(500);
 }
 
-/// The endpoint to fetch an OAuth access token from.
+/// The endpoint to fetch an OAuth 2.0 access token from.
 inline char const* GoogleOAuthRefreshEndpoint() {
   static constexpr char kEndpoint[] = "https://oauth2.googleapis.com/token";
   return kEndpoint;
 }
 
-/// String representing the "cloud-platform" OAuth scope.
+/// String representing the "cloud-platform" OAuth 2.0 scope.
 inline char const* GoogleOAuthScopeCloudPlatform() {
   static constexpr char kScope[] =
       "https://www.googleapis.com/auth/cloud-platform";
