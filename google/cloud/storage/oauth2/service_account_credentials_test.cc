@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <cstring>
@@ -143,7 +144,7 @@ void CheckInfoYieldsExpectedAssertion(ServiceAccountCredentialsInfo const& info,
 TEST_F(ServiceAccountCredentialsTest,
        RefreshingSendsCorrectRequestBodyAndParsesResponse) {
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
-  ASSERT_TRUE(info) << "status=" << info.status();
+  ASSERT_STATUS_OK(info);
   CheckInfoYieldsExpectedAssertion(*info, kExpectedAssertionParam);
 }
 
@@ -151,7 +152,7 @@ TEST_F(ServiceAccountCredentialsTest,
 TEST_F(ServiceAccountCredentialsTest,
        RefreshingSendsCorrectRequestBodyAndParsesResponseForNonDefaultVals) {
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
-  ASSERT_TRUE(info) << "status=" << info.status();
+  ASSERT_STATUS_OK(info);
   info->scopes = {kAltScopeForTest};
   info->subject = std::string(kSubjectForGrant);
   CheckInfoYieldsExpectedAssertion(*info,
@@ -201,7 +202,7 @@ TEST_F(ServiceAccountCredentialsTest,
           }));
 
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
-  ASSERT_TRUE(info) << "status=" << info.status();
+  ASSERT_STATUS_OK(info);
   ServiceAccountCredentials<MockHttpRequestBuilder> credentials(*info);
   // Calls Refresh to obtain the access token for our authorization header.
   EXPECT_EQ("Authorization: Type access-token-r1",
@@ -236,7 +237,7 @@ TEST_F(ServiceAccountCredentialsTest, ParseSimple) {
 
   auto actual =
       ParseServiceAccountCredentials(contents, "test-data", "unused-uri");
-  ASSERT_TRUE(actual) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ("not-a-key-id-just-for-testing", actual->private_key_id);
   EXPECT_EQ("not-a-valid-key-just-for-testing", actual->private_key);
   EXPECT_EQ("test-only@test-group.example.com", actual->client_email);
@@ -255,7 +256,7 @@ TEST_F(ServiceAccountCredentialsTest, ParseUsesExplicitDefaultTokenUri) {
 
   auto actual = ParseServiceAccountCredentials(
       contents, "test-data", "https://oauth2.googleapis.com/test_endpoint");
-  ASSERT_TRUE(actual) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ("not-a-key-id-just-for-testing", actual->private_key_id);
   EXPECT_EQ("not-a-valid-key-just-for-testing", actual->private_key);
   EXPECT_EQ("test-only@test-group.example.com", actual->client_email);
@@ -274,7 +275,7 @@ TEST_F(ServiceAccountCredentialsTest, ParseUsesImplicitDefaultTokenUri) {
 
   // No token_uri passed in here, either.
   auto actual = ParseServiceAccountCredentials(contents, "test-data");
-  ASSERT_TRUE(actual) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ("not-a-key-id-just-for-testing", actual->private_key_id);
   EXPECT_EQ("not-a-valid-key-just-for-testing", actual->private_key);
   EXPECT_EQ("test-only@test-group.example.com", actual->client_email);
@@ -358,7 +359,7 @@ TEST_F(ServiceAccountCredentialsTest, SignBlob) {
   }));
 
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
-  ASSERT_TRUE(info) << "status=" << info.status();
+  ASSERT_STATUS_OK(info);
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
       *info);
 
@@ -371,7 +372,7 @@ x-goog-meta-foo:bar,baz
 /bucket/objectname)""";
 
   auto actual = credentials.SignString(blob);
-  ASSERT_TRUE(actual.first.ok());
+  ASSERT_STATUS_OK(actual.first);
 
   // To generate the expected output I used:
   //   openssl dgst -sha256 -sign private.pem blob.txt | openssl base64 -A
@@ -412,7 +413,7 @@ TEST_F(ServiceAccountCredentialsTest, ClientId) {
   }));
 
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
-  ASSERT_TRUE(info) << "status=" << info.status();
+  ASSERT_STATUS_OK(info);
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
       *info);
 

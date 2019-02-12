@@ -15,6 +15,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/expect_exception.h"
 #include "google/cloud/testing_util/init_google_mock.h"
@@ -54,7 +55,7 @@ class ObjectRewriteIntegrationTest
 
 TEST_F(ObjectRewriteIntegrationTest, Copy) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto source_object_name = MakeRandomObjectName();
@@ -64,7 +65,7 @@ TEST_F(ObjectRewriteIntegrationTest, Copy) {
 
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name, source_object_name, expected, IfGenerationMatch(0));
-  ASSERT_TRUE(source_meta.ok()) << "status=" << source_meta.status();
+  ASSERT_STATUS_OK(source_meta);
 
   EXPECT_EQ(source_object_name, source_meta->name());
   EXPECT_EQ(bucket_name, source_meta->bucket());
@@ -72,7 +73,7 @@ TEST_F(ObjectRewriteIntegrationTest, Copy) {
   StatusOr<ObjectMetadata> meta = client->CopyObject(
       bucket_name, source_object_name, bucket_name, destination_object_name,
       WithObjectMetadata(ObjectMetadata().set_content_type("text/plain")));
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
   EXPECT_EQ(destination_object_name, meta->name());
   EXPECT_EQ(bucket_name, meta->bucket());
   EXPECT_EQ("text/plain", meta->content_type());
@@ -82,14 +83,14 @@ TEST_F(ObjectRewriteIntegrationTest, Copy) {
   EXPECT_EQ(expected, actual);
 
   auto status = client->DeleteObject(bucket_name, destination_object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
   status = client->DeleteObject(bucket_name, source_object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -97,12 +98,12 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
 
   StatusOr<ObjectMetadata> original = client->InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
-  ASSERT_TRUE(original.ok()) << "status=" << original.status();
+  ASSERT_STATUS_OK(original);
 
   StatusOr<ObjectMetadata> meta = client->CopyObject(
       bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
       DestinationPredefinedAcl::AuthenticatedRead(), Projection::Full());
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
   EXPECT_LT(0, CountMatchingEntities(meta->acl(),
                                      ObjectAccessControl()
                                          .set_entity("allAuthenticatedUsers")
@@ -110,14 +111,14 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
       << *meta;
 
   auto status = client->DeleteObject(bucket_name, copy_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
   status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -125,32 +126,32 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
 
   StatusOr<BucketMetadata> bucket =
       client->GetBucketMetadata(bucket_name, Projection::Full());
-  ASSERT_TRUE(bucket.ok()) << "status=" << bucket.status();
+  ASSERT_STATUS_OK(bucket);
   ASSERT_TRUE(bucket->has_owner());
   std::string owner = bucket->owner().entity;
 
   StatusOr<ObjectMetadata> original = client->InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
-  ASSERT_TRUE(original.ok()) << "status=" << original.status();
+  ASSERT_STATUS_OK(original);
 
   StatusOr<ObjectMetadata> meta = client->CopyObject(
       bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
       DestinationPredefinedAcl::BucketOwnerFullControl(), Projection::Full());
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
   EXPECT_LT(0, CountMatchingEntities(
                    meta->acl(),
                    ObjectAccessControl().set_entity(owner).set_role("OWNER")))
       << *meta;
 
   auto status = client->DeleteObject(bucket_name, copy_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
   status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -158,32 +159,32 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
 
   StatusOr<BucketMetadata> bucket =
       client->GetBucketMetadata(bucket_name, Projection::Full());
-  ASSERT_TRUE(bucket.ok()) << "status=" << bucket.status();
+  ASSERT_STATUS_OK(bucket);
   ASSERT_TRUE(bucket->has_owner());
   std::string owner = bucket->owner().entity;
 
   StatusOr<ObjectMetadata> original = client->InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
-  ASSERT_TRUE(original.ok()) << "status=" << original.status();
+  ASSERT_STATUS_OK(original);
 
   StatusOr<ObjectMetadata> meta = client->CopyObject(
       bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
       DestinationPredefinedAcl::BucketOwnerRead(), Projection::Full());
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
   EXPECT_LT(0, CountMatchingEntities(
                    meta->acl(),
                    ObjectAccessControl().set_entity(owner).set_role("READER")))
       << *meta;
 
   auto status = client->DeleteObject(bucket_name, copy_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
   status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPrivate) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -191,12 +192,12 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPrivate) {
 
   StatusOr<ObjectMetadata> original = client->InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
-  ASSERT_TRUE(original.ok()) << "status=" << original.status();
+  ASSERT_STATUS_OK(original);
 
   StatusOr<ObjectMetadata> meta = client->CopyObject(
       bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
       DestinationPredefinedAcl::Private(), Projection::Full());
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
   ASSERT_TRUE(meta->has_owner());
   EXPECT_LT(0, CountMatchingEntities(meta->acl(),
                                      ObjectAccessControl()
@@ -205,14 +206,14 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPrivate) {
       << *meta;
 
   auto status = client->DeleteObject(bucket_name, copy_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
   status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclProjectPrivate) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -220,12 +221,12 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclProjectPrivate) {
 
   StatusOr<ObjectMetadata> original = client->InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
-  ASSERT_TRUE(original.ok()) << "status=" << original.status();
+  ASSERT_STATUS_OK(original);
 
   StatusOr<ObjectMetadata> meta = client->CopyObject(
       bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
       DestinationPredefinedAcl::ProjectPrivate(), Projection::Full());
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
   ASSERT_TRUE(meta->has_owner());
   EXPECT_LT(0, CountMatchingEntities(meta->acl(),
                                      ObjectAccessControl()
@@ -234,14 +235,14 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclProjectPrivate) {
       << *meta;
 
   auto status = client->DeleteObject(bucket_name, copy_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
   status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPublicRead) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -249,12 +250,12 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPublicRead) {
 
   StatusOr<ObjectMetadata> original = client->InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
-  ASSERT_TRUE(original.ok()) << "status=" << original.status();
+  ASSERT_STATUS_OK(original);
 
   StatusOr<ObjectMetadata> meta = client->CopyObject(
       bucket_name, object_name, bucket_name, copy_name, IfGenerationMatch(0),
       DestinationPredefinedAcl::PublicRead(), Projection::Full());
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
   EXPECT_LT(
       0, CountMatchingEntities(
              meta->acl(),
@@ -262,14 +263,14 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPublicRead) {
       << *meta;
 
   auto status = client->DeleteObject(bucket_name, copy_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
   status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectRewriteIntegrationTest, ComposeSimple) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -277,7 +278,7 @@ TEST_F(ObjectRewriteIntegrationTest, ComposeSimple) {
   // Create the object, but only if it does not exist already.
   StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
 
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name, meta->bucket());
@@ -289,18 +290,18 @@ TEST_F(ObjectRewriteIntegrationTest, ComposeSimple) {
   StatusOr<ObjectMetadata> composed_meta = client->ComposeObject(
       bucket_name, source_objects, composed_object_name,
       WithObjectMetadata(ObjectMetadata().set_content_type("plain/text")));
-  ASSERT_TRUE(composed_meta.ok()) << "status=" << composed_meta.status();
+  ASSERT_STATUS_OK(composed_meta);
   EXPECT_EQ(meta->size() * 2, composed_meta->size());
 
   auto status = client->DeleteObject(bucket_name, composed_object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
   status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectRewriteIntegrationTest, ComposedUsingEncryptedObject) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -312,7 +313,7 @@ TEST_F(ObjectRewriteIntegrationTest, ComposedUsingEncryptedObject) {
   StatusOr<ObjectMetadata> meta =
       client->InsertObject(bucket_name, object_name, content,
                            IfGenerationMatch(0), EncryptionKey(key));
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
 
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name, meta->bucket());
@@ -326,18 +327,18 @@ TEST_F(ObjectRewriteIntegrationTest, ComposedUsingEncryptedObject) {
                                                      {object_name}};
   StatusOr<ObjectMetadata> composed_meta = client->ComposeObject(
       bucket_name, source_objects, composed_object_name, EncryptionKey(key));
-  ASSERT_TRUE(composed_meta.ok()) << "status=" << composed_meta.status();
+  ASSERT_STATUS_OK(composed_meta);
 
   EXPECT_EQ(meta->size() * 2, composed_meta->size());
   auto status = client->DeleteObject(bucket_name, composed_object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
   status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteSimple) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto source_name = MakeRandomObjectName();
@@ -345,7 +346,7 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteSimple) {
   // Create the object, but only if it does not exist already.
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name, source_name, LoremIpsum(), IfGenerationMatch(0));
-  ASSERT_TRUE(source_meta.ok()) << "status=" << source_meta.status();
+  ASSERT_STATUS_OK(source_meta);
 
   EXPECT_EQ(source_name, source_meta->name());
   EXPECT_EQ(bucket_name, source_meta->bucket());
@@ -354,20 +355,20 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteSimple) {
   auto object_name = MakeRandomObjectName();
   StatusOr<ObjectMetadata> rewritten_meta = client->RewriteObjectBlocking(
       bucket_name, source_name, bucket_name, object_name);
-  ASSERT_TRUE(rewritten_meta.ok()) << "status=" << rewritten_meta.status();
+  ASSERT_STATUS_OK(rewritten_meta);
 
   EXPECT_EQ(bucket_name, rewritten_meta->bucket());
   EXPECT_EQ(object_name, rewritten_meta->name());
 
   auto status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
   status = client->DeleteObject(bucket_name, source_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteEncrypted) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto source_name = MakeRandomObjectName();
@@ -377,7 +378,7 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteEncrypted) {
   StatusOr<ObjectMetadata> source_meta =
       client->InsertObject(bucket_name, source_name, LoremIpsum(),
                            IfGenerationMatch(0), EncryptionKey(source_key));
-  ASSERT_TRUE(source_meta.ok()) << "status=" << source_meta.status();
+  ASSERT_STATUS_OK(source_meta);
 
   EXPECT_EQ(source_name, source_meta->name());
   EXPECT_EQ(bucket_name, source_meta->bucket());
@@ -390,21 +391,21 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteEncrypted) {
       SourceEncryptionKey(source_key), EncryptionKey(dest_key));
 
   StatusOr<ObjectMetadata> rewritten_meta = rewriter.Result();
-  ASSERT_TRUE(rewritten_meta.ok()) << "status=" << rewritten_meta.status();
+  ASSERT_STATUS_OK(rewritten_meta);
 
   EXPECT_EQ(bucket_name, rewritten_meta->bucket());
   EXPECT_EQ(object_name, rewritten_meta->name());
 
   auto status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
   status = client->DeleteObject(bucket_name, source_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteLarge) {
   // The testbench always requires multiple iterations to copy this object.
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto source_name = MakeRandomObjectName();
@@ -421,7 +422,7 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteLarge) {
 
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name, source_name, large_text, IfGenerationMatch(0));
-  ASSERT_TRUE(source_meta.ok()) << "status=" << source_meta.status();
+  ASSERT_STATUS_OK(source_meta);
 
   EXPECT_EQ(source_name, source_meta->name());
   EXPECT_EQ(bucket_name, source_meta->bucket());
@@ -433,25 +434,25 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteLarge) {
 
   StatusOr<ObjectMetadata> rewritten_meta =
       writer.ResultWithProgressCallback([](StatusOr<RewriteProgress> const& p) {
-        ASSERT_TRUE(p.ok()) << "progress status=" << p.status();
+        ASSERT_STATUS_OK(p);
         EXPECT_TRUE((p->total_bytes_rewritten < p->object_size) xor p->done)
             << "p.done=" << p->done << ", p.object_size=" << p->object_size
             << ", p.total_bytes_rewritten=" << p->total_bytes_rewritten;
       });
-  ASSERT_TRUE(rewritten_meta.ok()) << "status=" << rewritten_meta.status();
+  ASSERT_STATUS_OK(rewritten_meta);
 
   EXPECT_EQ(bucket_name, rewritten_meta->bucket());
   EXPECT_EQ(object_name, rewritten_meta->name());
 
   auto status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
   status = client->DeleteObject(bucket_name, source_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto source_object_name = MakeRandomObjectName();
@@ -465,7 +466,7 @@ TEST_F(ObjectRewriteIntegrationTest, CopyFailure) {
 
 TEST_F(ObjectRewriteIntegrationTest, ComposeFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -481,7 +482,7 @@ TEST_F(ObjectRewriteIntegrationTest, ComposeFailure) {
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectRewriteTestEnvironment::bucket_name();
   auto source_object_name = MakeRandomObjectName();

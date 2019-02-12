@@ -18,6 +18,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/retry_tests.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -83,7 +84,7 @@ TEST_F(DefaultObjectAccessControlsTest, ListDefaultObjectAcl) {
 
   StatusOr<std::vector<ObjectAccessControl>> actual =
       client.ListDefaultObjectAcl("test-bucket");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
@@ -127,7 +128,7 @@ TEST_F(DefaultObjectAccessControlsTest, CreateDefaultObjectAcl) {
 
   StatusOr<ObjectAccessControl> actual = client.CreateDefaultObjectAcl(
       "test-bucket", "user-test-user-1", ObjectAccessControl::ROLE_READER());
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   // Compare just a few fields because the values for most of the fields are
   // hard to predict when testing against the production environment.
   EXPECT_EQ(expected.bucket(), actual->bucket());
@@ -178,7 +179,7 @@ TEST_F(DefaultObjectAccessControlsTest, DeleteDefaultObjectAcl) {
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
   auto status = client.DeleteDefaultObjectAcl("test-bucket", "user-test-user");
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(DefaultObjectAccessControlsTest, DeleteDefaultObjectAclTooManyFailures) {
@@ -228,7 +229,7 @@ TEST_F(DefaultObjectAccessControlsTest, GetDefaultObjectAcl) {
 
   StatusOr<ObjectAccessControl> actual =
       client.GetDefaultObjectAcl("test-bucket", "user-test-user-1");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
@@ -278,7 +279,7 @@ TEST_F(DefaultObjectAccessControlsTest, UpdateDefaultObjectAcl) {
       "test-bucket", ObjectAccessControl()
                          .set_entity("user-test-user-1")
                          .set_role(ObjectAccessControl::ROLE_READER()));
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   // Compare just a few fields because the values for most of the fields are
   // hard to predict when testing against the production environment.
   EXPECT_EQ(expected.bucket(), actual->bucket());
@@ -340,7 +341,7 @@ TEST_F(DefaultObjectAccessControlsTest, PatchDefaultObjectAcl) {
   auto actual = client.PatchDefaultObjectAcl(
       "test-bucket", "user-test-user-1",
       ObjectAccessControlPatchBuilder().set_role("OWNER"));
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(result, *actual);
 }
 

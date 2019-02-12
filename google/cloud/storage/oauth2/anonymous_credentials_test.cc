@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/anonymous_credentials.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -28,7 +29,7 @@ class AnonymousCredentialsTest : public ::testing::Test {};
 TEST_F(AnonymousCredentialsTest, AuthorizationHeaderReturnsEmptyString) {
   AnonymousCredentials credentials;
   auto header = credentials.AuthorizationHeader();
-  ASSERT_TRUE(header.ok());
+  ASSERT_STATUS_OK(header);
   EXPECT_EQ("", header.value());
 }
 

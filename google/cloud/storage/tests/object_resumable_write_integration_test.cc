@@ -15,6 +15,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 
@@ -51,7 +52,7 @@ bool UsingTestbench() {
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -77,12 +78,12 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
   }
 
   auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
@@ -104,7 +105,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -128,12 +129,12 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
   }
 
   auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -167,12 +168,12 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
   }
 
   auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -182,7 +183,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
   // Create the object, but only if it does not exist already.
   StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name, object_name, expected, IfGenerationMatch(0));
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
 
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name, meta->bucket());
@@ -198,7 +199,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
   EXPECT_EQ(StatusCode::kFailedPrecondition, os.metadata().status().code());
 
   auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
 }
 
 }  // anonymous namespace

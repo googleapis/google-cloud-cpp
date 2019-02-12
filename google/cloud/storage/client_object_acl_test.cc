@@ -18,6 +18,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/retry_tests.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -84,7 +85,7 @@ TEST_F(ObjectAccessControlsTest, ListObjectAcl) {
 
   StatusOr<std::vector<ObjectAccessControl>> actual =
       client.ListObjectAcl("test-bucket", "test-object");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
@@ -132,7 +133,7 @@ TEST_F(ObjectAccessControlsTest, CreateObjectAcl) {
   StatusOr<ObjectAccessControl> actual =
       client.CreateObjectAcl("test-bucket", "test-object", "user-test-user-1",
                              ObjectAccessControl::ROLE_READER());
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   // Compare just a few fields because the values for most of the fields are
   // hard to predict when testing against the production environment.
   EXPECT_EQ(expected.bucket(), actual->bucket());
@@ -233,7 +234,7 @@ TEST_F(ObjectAccessControlsTest, GetObjectAcl) {
 
   StatusOr<ObjectAccessControl> actual =
       client.GetObjectAcl("test-bucket", "test-object", "user-test-user-1");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
@@ -284,7 +285,7 @@ TEST_F(ObjectAccessControlsTest, UpdateObjectAcl) {
   ObjectAccessControl acl =
       ObjectAccessControl().set_role("OWNER").set_entity("user-test-user");
   auto actual = client.UpdateObjectAcl("test-bucket", "test-object", acl);
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
@@ -343,7 +344,7 @@ TEST_F(ObjectAccessControlsTest, PatchObjectAcl) {
   auto actual = client.PatchObjectAcl(
       "test-bucket", "test-object", "user-test-user-1",
       ObjectAccessControlPatchBuilder().set_role("OWNER"));
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(result, *actual);
 }
 
