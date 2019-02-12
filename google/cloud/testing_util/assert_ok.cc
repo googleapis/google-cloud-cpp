@@ -24,8 +24,7 @@ testing::AssertionResult IsOkPredFormat(char const* expr,
     return testing::AssertionSuccess();
   }
   return testing::AssertionFailure()
-         << "Value of: " << expr << "\nExpected: is OK\n"
-         << "Actual: " << status.message() << " (code " << status.code() << ")";
+         << "Value of: " << expr << "\nExpected: is OK\nActual: " << status;
 }
 
 }  // namespace internal
