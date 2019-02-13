@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/endian.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
@@ -66,7 +67,7 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetDeleteTableTest) {
   std::string const table_id = RandomTableId();
   auto previous_table_list =
       table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_TRUE(previous_table_list);
+  ASSERT_STATUS_OK(previous_table_list);
   auto previous_count = CountMatchingTables(table_id, *previous_table_list);
   ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
                                << " This is unexpected, as the table ids are"

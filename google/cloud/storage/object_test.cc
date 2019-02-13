@@ -18,6 +18,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/retry_tests.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -77,7 +78,7 @@ TEST_F(ObjectTest, InsertObjectMedia) {
 
   auto actual = client->InsertObject("test-bucket-name", "test-object-name",
                                      "test object contents");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
@@ -149,7 +150,7 @@ TEST_F(ObjectTest, GetObjectMetadata) {
 
   auto actual =
       client.GetObjectMetadata("test-bucket-name", "test-object-name");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
@@ -186,7 +187,7 @@ TEST_F(ObjectTest, DeleteObject) {
                 ExponentialBackoffPolicy(ms(100), ms(500), 2)};
 
   auto status = client.DeleteObject("test-bucket-name", "test-object-name");
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectTest, DeleteObjectTooManyFailures) {
@@ -276,7 +277,7 @@ TEST_F(ObjectTest, UpdateObject) {
   update.mutable_metadata().emplace("test-label", "test-value");
   auto actual =
       client.UpdateObject("test-bucket-name", "test-object-name", update);
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
@@ -352,7 +353,7 @@ TEST_F(ObjectTest, PatchObject) {
                                    ObjectMetadataPatchBuilder()
                                        .SetContentDisposition("new-disposition")
                                        .SetContentLanguage("x-made-up-lang"));
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 

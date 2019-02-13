@@ -16,6 +16,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
@@ -43,11 +44,11 @@ constexpr char kJsonKeyfileContents[] = R"""({
 TEST(SignedUrlIntegrationTest, Sign) {
   auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
       kJsonKeyfileContents);
-  ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
+  ASSERT_STATUS_OK(creds);
   Client client(*creds);
 
   auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "test-object");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
 
   EXPECT_THAT(*actual, HasSubstr("test-bucket"));
   EXPECT_THAT(*actual, HasSubstr("test-object"));
@@ -56,11 +57,11 @@ TEST(SignedUrlIntegrationTest, Sign) {
 TEST(SignedUrlIntegrationTest, BucketOnly) {
   auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
       kJsonKeyfileContents);
-  ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
+  ASSERT_STATUS_OK(creds);
   Client client(*creds);
 
   auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "", WithAcl());
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
 
   EXPECT_THAT(*actual, HasSubstr("test-bucket?GoogleAccessId="));
 }
@@ -68,11 +69,11 @@ TEST(SignedUrlIntegrationTest, BucketOnly) {
 TEST(SignedUrlIntegrationTest, SignEscape) {
   auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
       kJsonKeyfileContents);
-  ASSERT_TRUE(creds.ok()) << "status=" << creds.status();
+  ASSERT_STATUS_OK(creds);
   Client client(*creds);
 
   auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "test+object");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
 
   EXPECT_THAT(*actual, HasSubstr("test-bucket"));
   EXPECT_THAT(*actual, HasSubstr("test%2Bobject"));

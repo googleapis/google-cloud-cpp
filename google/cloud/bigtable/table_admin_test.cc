@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
 #include "google/cloud/internal/make_unique.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
@@ -202,7 +203,7 @@ TEST_F(TableAdminTest, ListTables) {
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListTables(btadmin::Table::FULL);
-  ASSERT_TRUE(actual) << actual.status();
+  ASSERT_STATUS_OK(actual);
   auto const& v = *actual;
   std::string instance_name = tested.instance_name();
   ASSERT_EQ(2UL, v.size());
@@ -231,7 +232,7 @@ TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListTables(btadmin::Table::FULL);
-  ASSERT_TRUE(actual) << actual.status();
+  ASSERT_STATUS_OK(actual);
   auto const& v = *actual;
   std::string instance_name = tested.instance_name();
   ASSERT_EQ(4UL, v.size());
@@ -315,7 +316,7 @@ initial_splits { key: 'p' }
       {{"f1", GC::MaxNumVersions(1)}, {"f2", GC::MaxAge(1_s)}},
       {"a", "c", "p"});
   auto table = tested.CreateTable("new-table", std::move(config));
-  EXPECT_TRUE(table) << table.status();
+  EXPECT_STATUS_OK(table);
 }
 
 /**

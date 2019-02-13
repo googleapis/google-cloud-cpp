@@ -18,6 +18,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/retry_tests.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -61,7 +62,8 @@ class ObjectCopyTest : public ::testing::Test {
 
 TEST_F(ObjectCopyTest, CopyObject) {
   std::string text = R"""({"name": "test-bucket-name/test-object-name/1"})""";
-  auto expected = storage::internal::ObjectMetadataParser::FromString(text).value();
+  auto expected =
+      storage::internal::ObjectMetadataParser::FromString(text).value();
 
   EXPECT_CALL(*mock, CopyObject(_))
       .WillOnce(Invoke([&expected](internal::CopyObjectRequest const& request) {
@@ -77,7 +79,7 @@ TEST_F(ObjectCopyTest, CopyObject) {
   StatusOr<ObjectMetadata> actual =
       client.CopyObject("source-bucket-name", "source-object-name",
                         "test-bucket-name", "test-object-name");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
@@ -156,7 +158,7 @@ TEST_F(ObjectCopyTest, ComposeObject) {
 
   auto actual = client.ComposeObject(
       "test-bucket-name", {{"object1"}, {"object2"}}, "test-object-name");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
@@ -258,25 +260,25 @@ TEST_F(ObjectCopyTest, RewriteObject) {
       WithObjectMetadata(
           ObjectMetadata().upsert_metadata("test-key", "test-value")));
   auto actual = copier.Iterate();
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_FALSE(actual->done);
   EXPECT_EQ(1048576UL, actual->total_bytes_rewritten);
   EXPECT_EQ(10485760UL, actual->object_size);
 
   auto current = copier.CurrentProgress();
-  ASSERT_TRUE(current.ok()) << "status=" << current.status();
+  ASSERT_STATUS_OK(current);
   EXPECT_FALSE(current->done);
   EXPECT_EQ(1048576UL, current->total_bytes_rewritten);
   EXPECT_EQ(10485760UL, current->object_size);
 
   actual = copier.Iterate();
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_FALSE(actual->done);
   EXPECT_EQ(2097152UL, actual->total_bytes_rewritten);
   EXPECT_EQ(10485760UL, actual->object_size);
 
   auto metadata = copier.Result();
-  ASSERT_TRUE(metadata.ok()) << "status=" << metadata.status();
+  ASSERT_STATUS_OK(metadata);
   EXPECT_EQ("test-destination-bucket-name", metadata->bucket());
   EXPECT_EQ("test-destination-object-name", metadata->name());
 }

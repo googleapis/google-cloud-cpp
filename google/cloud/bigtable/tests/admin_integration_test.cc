@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
@@ -65,7 +66,7 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTablesTest) {
   // Get the current list of tables.
   auto previous_table_list =
       table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_TRUE(previous_table_list);
+  ASSERT_STATUS_OK(previous_table_list);
 
   int const TABLE_COUNT = 5;
   for (int index = 0; index < TABLE_COUNT; ++index) {
@@ -79,7 +80,7 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTablesTest) {
     expected_table_list.emplace_back(table_id);
   }
   auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_TRUE(current_table_list);
+  ASSERT_STATUS_OK(current_table_list);
   // Delete the tables so future tests have a clean slate.
   for (auto const& table_id : expected_table_list) {
     EXPECT_EQ(1, CountMatchingTables(table_id, *current_table_list));
@@ -88,7 +89,7 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTablesTest) {
     DeleteTable(table_id);
   }
   current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_TRUE(current_table_list);
+  ASSERT_STATUS_OK(current_table_list);
   // Delete the tables so future tests have a clean slate.
   for (auto const& table_id : expected_table_list) {
     EXPECT_EQ(0, CountMatchingTables(table_id, *current_table_list));
@@ -177,7 +178,7 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
   // verify new table id in current table list
   auto previous_table_list =
       table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_TRUE(previous_table_list);
+  ASSERT_STATUS_OK(previous_table_list);
   auto previous_count = CountMatchingTables(table_id, *previous_table_list);
   ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
                                << " This is unexpected, as the table ids are"
@@ -233,7 +234,7 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
   DeleteTable(table_id);
   // List to verify it is no longer there
   auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_TRUE(current_table_list);
+  ASSERT_STATUS_OK(current_table_list);
   auto table_count = CountMatchingTables(table_id, *current_table_list);
   EXPECT_EQ(0, table_count);
 }

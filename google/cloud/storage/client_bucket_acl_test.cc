@@ -18,6 +18,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/retry_tests.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -120,7 +121,7 @@ TEST_F(BucketAccessControlsTest, ListBucketAcl) {
 
   StatusOr<std::vector<BucketAccessControl>> actual =
       client.ListBucketAcl("test-bucket");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
@@ -163,7 +164,7 @@ TEST_F(BucketAccessControlsTest, CreateBucketAcl) {
 
   StatusOr<BucketAccessControl> actual = client.CreateBucketAcl(
       "test-bucket", "user-test-user-1", BucketAccessControl::ROLE_READER());
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
 
   // Compare just a few fields because the values for most of the fields are
   // hard to predict when testing against the production environment.
@@ -212,7 +213,7 @@ TEST_F(BucketAccessControlsTest, DeleteBucketAcl) {
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
   auto status = client.DeleteBucketAcl("test-bucket", "user-test-user-1");
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(BucketAccessControlsTest, DeleteBucketAclTooManyFailures) {
@@ -258,7 +259,7 @@ TEST_F(BucketAccessControlsTest, GetBucketAcl) {
 
   StatusOr<BucketAccessControl> actual =
       client.GetBucketAcl("test-bucket", "user-test-user-1");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
 
   EXPECT_EQ(expected, *actual);
 }
@@ -306,7 +307,7 @@ TEST_F(BucketAccessControlsTest, UpdateBucketAcl) {
   StatusOr<BucketAccessControl> actual = client.UpdateBucketAcl(
       "test-bucket",
       BucketAccessControl().set_entity("user-test-user-1").set_role("OWNER"));
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
 
   EXPECT_EQ(expected, *actual);
 }
@@ -371,7 +372,7 @@ TEST_F(BucketAccessControlsTest, PatchBucketAcl) {
   StatusOr<BucketAccessControl> actual = client.PatchBucketAcl(
       "test-bucket", "user-test-user-1",
       BucketAccessControlPatchBuilder().set_role("OWNER"));
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
 
   EXPECT_EQ(result, *actual);
 }

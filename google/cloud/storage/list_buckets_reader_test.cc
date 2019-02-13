@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -35,8 +36,7 @@ namespace {
 BucketMetadata CreateElement(int index) {
   std::string id = "bucket-" + std::to_string(index);
   std::string name = id;
-  std::string link =
-      "https://www.googleapis.com/storage/v1/b/" + id;
+  std::string link = "https://www.googleapis.com/storage/v1/b/" + id;
   internal::nl::json metadata{
       {"id", id},
       {"name", name},
@@ -79,7 +79,7 @@ TEST(ListBucketsReaderTest, Basic) {
   ListBucketsReader reader(mock, "foo-bar-baz", Prefix("dir/"));
   std::vector<BucketMetadata> actual;
   for (auto&& bucket : reader) {
-    ASSERT_TRUE(bucket.ok()) << "status=" << bucket.status();
+    ASSERT_STATUS_OK(bucket);
     actual.push_back(*bucket);
   }
   EXPECT_THAT(actual, ContainerEq(expected));

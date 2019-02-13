@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/curl_resumable_upload_session.h"
 #include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -67,12 +68,12 @@ TEST(CurlResumableUploadSessionTest, Simple) {
       }));
 
   auto upload = session.UploadChunk(payload, 0U);
-  EXPECT_TRUE(upload.ok());
+  EXPECT_STATUS_OK(upload);
   EXPECT_EQ(size - 1, upload->last_committed_byte);
   EXPECT_EQ(size, session.next_expected_byte());
 
   upload = session.UploadChunk(payload, 2 * size);
-  EXPECT_TRUE(upload.ok());
+  EXPECT_STATUS_OK(upload);
   EXPECT_EQ(2 * size - 1, upload->last_committed_byte);
   EXPECT_EQ(2 * size, session.next_expected_byte());
 }
@@ -134,7 +135,7 @@ TEST(CurlResumableUploadSessionTest, SessionUpdatedInChunkUpload) {
   auto upload = session.UploadChunk(payload, 0U);
   EXPECT_EQ(size, session.next_expected_byte());
   upload = session.UploadChunk(payload, 0U);
-  EXPECT_TRUE(upload.ok());
+  EXPECT_STATUS_OK(upload);
   EXPECT_EQ(2 * size, session.next_expected_byte());
   EXPECT_EQ(url2, session.session_id());
 }

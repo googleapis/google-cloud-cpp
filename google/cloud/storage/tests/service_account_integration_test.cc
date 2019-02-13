@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 
@@ -41,13 +42,13 @@ std::string ServiceAccountTestEnvironment::project_id_;
 TEST(ServiceAccountIntegrationTest, Get) {
   auto project_id = ServiceAccountTestEnvironment::project_id();
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   StatusOr<ServiceAccount> a1 = client->GetServiceAccountForProject(project_id);
   EXPECT_FALSE(a1->email_address().empty());
 
   auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  ASSERT_STATUS_OK(client_options);
   Client client_with_default(client_options->set_project_id(project_id));
   StatusOr<ServiceAccount> a2 = client_with_default.GetServiceAccount();
   EXPECT_FALSE(a2->email_address().empty());

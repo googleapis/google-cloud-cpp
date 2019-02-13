@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/log.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 #include <cstdlib>
 #include <vector>
@@ -43,7 +44,7 @@ TEST(CurlRequestTest, SimpleGET) {
   request.AddHeader("charsets: utf-8");
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  ASSERT_TRUE(response.ok());
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
   nl::json parsed = nl::json::parse(response->payload);
   nl::json args = parsed["args"];
@@ -72,7 +73,7 @@ TEST(CurlRequestTest, RepeatedGET) {
 
   auto req = request.BuildRequest();
   auto response = req.MakeRequest(std::string{});
-  ASSERT_TRUE(response.ok());
+  ASSERT_STATUS_OK(response);
 
   EXPECT_EQ(200, response->status_code);
   nl::json parsed = nl::json::parse(response->payload);
@@ -111,7 +112,7 @@ TEST(CurlRequestTest, SimplePOST) {
   request.AddHeader("charsets: utf-8");
 
   auto response = request.BuildRequest().MakeRequest(data);
-  ASSERT_TRUE(response.ok());
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
   nl::json parsed = nl::json::parse(response->payload);
   nl::json form = parsed["form"];
@@ -128,7 +129,7 @@ TEST(CurlRequestTest, Handle404) {
   request.AddHeader("charsets: utf-8");
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  ASSERT_TRUE(response.ok());
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(404, response->status_code);
 }
 
@@ -141,7 +142,7 @@ TEST(CurlRequestTest, HandleTeapot) {
   request.AddHeader("charsets: utf-8");
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  ASSERT_TRUE(response.ok());
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(418, response->status_code);
   EXPECT_THAT(response->payload, HasSubstr("[ teapot ]"));
 }
@@ -162,7 +163,7 @@ TEST(CurlRequestTest, CheckResponseHeaders) {
   request.AddHeader("charsets: utf-8");
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  ASSERT_TRUE(response.ok());
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
   EXPECT_EQ(1U, response->headers.count("x-test-empty"));
   EXPECT_EQ("", response->headers.find("x-test-empty")->second);
@@ -184,7 +185,7 @@ TEST(CurlRequestTest, UserAgentPrefix) {
   builder.AddHeader("charsets: utf-8");
 
   auto response = builder.BuildRequest().MakeRequest(std::string{});
-  ASSERT_TRUE(response.ok());
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
   auto payload = nl::json::parse(response->payload);
   ASSERT_EQ(1U, payload.count("headers"));
@@ -202,7 +203,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Projection) {
   request.AddOption(storage::Projection("full"));
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  ASSERT_TRUE(response.ok());
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
   nl::json parsed = nl::json::parse(response->payload);
   nl::json args = parsed["args"];
@@ -225,7 +226,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_UserProject) {
   request.AddOption(storage::UserProject("a-project"));
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  ASSERT_TRUE(response.ok());
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
   nl::json parsed = nl::json::parse(response->payload);
   nl::json args = parsed["args"];
@@ -248,7 +249,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationMatch) {
   request.AddOption(storage::IfGenerationMatch(42));
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  ASSERT_TRUE(response.ok());
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
   nl::json parsed = nl::json::parse(response->payload);
   nl::json args = parsed["args"];
@@ -271,7 +272,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationNotMatch) {
   request.AddOption(storage::IfGenerationNotMatch(42));
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  ASSERT_TRUE(response.ok());
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
   nl::json parsed = nl::json::parse(response->payload);
   nl::json args = parsed["args"];
@@ -294,7 +295,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetagenerationMatch) {
   request.AddOption(storage::IfMetagenerationMatch(42));
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  ASSERT_TRUE(response.ok());
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
   nl::json parsed = nl::json::parse(response->payload);
   nl::json args = parsed["args"];
@@ -317,7 +318,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetagenerationNotMatch) {
   request.AddOption(storage::IfMetagenerationNotMatch(42));
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  ASSERT_TRUE(response.ok());
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
   nl::json parsed = nl::json::parse(response->payload);
   nl::json args = parsed["args"];
@@ -342,7 +343,7 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Multiple) {
   request.AddOption(storage::IfGenerationNotMatch(42));
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
-  ASSERT_TRUE(response.ok());
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
   nl::json parsed = nl::json::parse(response->payload);
   nl::json args = parsed["args"];
@@ -387,7 +388,7 @@ TEST(CurlRequestTest, Logging) {
     request.AddHeader("x-test-header: foo");
 
     auto response = request.BuildRequest().MakeRequest("this is some text");
-    ASSERT_TRUE(response.ok());
+    ASSERT_STATUS_OK(response);
     EXPECT_EQ(200, response->status_code);
   }
 

@@ -17,6 +17,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 #include <cstdlib>
 #include <vector>
@@ -77,7 +78,7 @@ TEST(CurlUploadRequestTest, UploadPartial) {
   expected_data += current_message;
   upload.NextBuffer(current_message);
   auto response = upload.Close();
-  ASSERT_TRUE(response.ok());
+  ASSERT_STATUS_OK(response);
   ASSERT_EQ(200, response->status_code)
       << ", status_code=" << response->status_code
       << ", payload=" << response->payload << ", headers={" << [&response] {

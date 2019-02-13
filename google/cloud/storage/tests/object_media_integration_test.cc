@@ -17,6 +17,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
@@ -63,7 +64,7 @@ bool UsingTestbench() {
 
 TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -80,7 +81,7 @@ TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
   ObjectMetadata meta = upload.metadata().value();
 
   auto status = client->DownloadToFile(bucket_name, object_name, file_name);
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
   // Create a iostream to read the object back.
   std::ifstream stream(file_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
@@ -90,13 +91,13 @@ TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
   EXPECT_EQ(expected_str, actual);
 
   status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, JsonDownloadFile) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -113,7 +114,7 @@ TEST_F(ObjectMediaIntegrationTest, JsonDownloadFile) {
 
   auto status = client->DownloadToFile(bucket_name, object_name, file_name,
                                        IfMetagenerationNotMatch(0));
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
   // Create a iostream to read the object back.
   std::ifstream stream(file_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
@@ -123,13 +124,13 @@ TEST_F(ObjectMediaIntegrationTest, JsonDownloadFile) {
   EXPECT_EQ(expected_str, actual);
 
   status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, DownloadFileFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -142,14 +143,14 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileFailure) {
 
 TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotOpenFile) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   StatusOr<ObjectMetadata> meta =
       client->InsertObject(bucket_name, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
 
   // Create an invalid path for the destination object.
   auto file_name = MakeRandomObjectName() + "/" + MakeRandomObjectName();
@@ -159,20 +160,20 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotOpenFile) {
   EXPECT_THAT(status.message(), HasSubstr(object_name));
 
   status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotWriteToFile) {
 #if GTEST_OS_LINUX
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
   StatusOr<ObjectMetadata> meta =
       client->InsertObject(bucket_name, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
 
   // We want to test that the code handles write errors *after* the file is
   // successfully opened for writing. Such errors are hard to get, typically
@@ -190,13 +191,13 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotWriteToFile) {
   EXPECT_THAT(status.message(), HasSubstr(object_name));
 
   status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
 #endif  // GTEST_OS_LINUX
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFile) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
@@ -211,7 +212,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFile) {
 
   StatusOr<ObjectMetadata> meta = client->UploadFile(
       file_name, bucket_name, object_name, IfGenerationMatch(0));
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name, meta->bucket());
   auto expected_str = expected.str();
@@ -225,13 +226,13 @@ TEST_F(ObjectMediaIntegrationTest, UploadFile) {
   EXPECT_EQ(expected_str, actual);
 
   auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileEmpty) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
@@ -242,7 +243,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileEmpty) {
 
   StatusOr<ObjectMetadata> meta = client->UploadFile(
       file_name, bucket_name, object_name, IfGenerationMatch(0));
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name, meta->bucket());
   EXPECT_EQ(0U, meta->size());
@@ -255,13 +256,13 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileEmpty) {
   EXPECT_EQ("", actual);
 
   auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileMissingFileFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto file_name = MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
@@ -276,7 +277,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileMissingFileFailure) {
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileUploadFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
@@ -288,7 +289,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileUploadFailure) {
   // Create the object.
   StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
 
   // Trying to upload the file to the same object with the IfGenerationMatch(0)
   // condition should fail because the object already exists.
@@ -298,7 +299,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileUploadFailure) {
   EXPECT_EQ(StatusCode::kFailedPrecondition, upload.status().code());
 
   auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -308,7 +309,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileNonRegularWarning) {
   // the test there.
 #if GTEST_OS_LINUX || GTEST_OS_MAC
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
@@ -328,7 +329,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileNonRegularWarning) {
   StatusOr<ObjectMetadata> meta =
       client->UploadFile(file_name, bucket_name, object_name,
                          IfGenerationMatch(0), DisableMD5Hash(true));
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
   LogSink::Instance().RemoveBackend(id);
 
   auto count = std::count_if(
@@ -341,14 +342,14 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileNonRegularWarning) {
 
   t.join();
   auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 #endif  // GTEST_OS_LINUX
 }
 
 TEST_F(ObjectMediaIntegrationTest, XmlUploadFile) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
@@ -377,7 +378,7 @@ TEST_F(ObjectMediaIntegrationTest, XmlUploadFile) {
 
   StatusOr<ObjectMetadata> meta = client->UploadFile(
       file_name, bucket_name, object_name, IfGenerationMatch(0), Fields(""));
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
   auto expected_str = expected.str();
 
   // Create a iostream to read the object back.
@@ -388,14 +389,14 @@ TEST_F(ObjectMediaIntegrationTest, XmlUploadFile) {
   EXPECT_EQ(expected_str, actual);
 
   auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileResumableBySize) {
   // Create a client that always uses resumable uploads.
   auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  ASSERT_STATUS_OK(client_options);
   Client client(client_options->set_maximum_simple_upload_size(0));
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
@@ -410,7 +411,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableBySize) {
 
   StatusOr<ObjectMetadata> meta = client.UploadFile(
       file_name, bucket_name, object_name, IfGenerationMatch(0));
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name, meta->bucket());
   auto expected_str = expected.str();
@@ -429,13 +430,13 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableBySize) {
   EXPECT_EQ(expected_str, actual);
 
   auto status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileResumableByOption) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
@@ -451,7 +452,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableByOption) {
   StatusOr<ObjectMetadata> meta =
       client->UploadFile(file_name, bucket_name, object_name,
                          IfGenerationMatch(0), NewResumableUploadSession());
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name, meta->bucket());
   auto expected_str = expected.str();
@@ -470,14 +471,14 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableByOption) {
   EXPECT_EQ(expected_str, actual);
 
   auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileResumableQuantum) {
   // Create a client that always uses resumable uploads.
   auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  ASSERT_STATUS_OK(client_options);
   Client client(client_options->set_maximum_simple_upload_size(0));
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
@@ -497,7 +498,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableQuantum) {
 
   StatusOr<ObjectMetadata> meta = client.UploadFile(
       file_name, bucket_name, object_name, IfGenerationMatch(0));
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name, meta->bucket());
   auto expected_str = expected.str();
@@ -511,14 +512,14 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableQuantum) {
   EXPECT_EQ(expected_str, actual);
 
   auto status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileResumableNonQuantum) {
   // Create a client that always uses resumable uploads.
   auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  ASSERT_STATUS_OK(client_options);
   Client client(client_options->set_maximum_simple_upload_size(0));
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
@@ -537,7 +538,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableNonQuantum) {
 
   StatusOr<ObjectMetadata> meta = client.UploadFile(
       file_name, bucket_name, object_name, IfGenerationMatch(0));
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name, meta->bucket());
   auto expected_str = expected.str();
@@ -551,14 +552,14 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableNonQuantum) {
   EXPECT_EQ(expected_str, actual);
 
   auto status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 TEST_F(ObjectMediaIntegrationTest, UploadFileResumableUploadFailure) {
   // Create a client that always uses resumable uploads.
   auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  ASSERT_STATUS_OK(client_options);
   Client client(client_options->set_maximum_simple_upload_size(0));
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
   auto bucket_name = MakeRandomBucketName();
@@ -577,7 +578,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableUploadFailure) {
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -597,7 +598,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
   // Create an object with the contents to download.
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name, object_name, large_text, IfGenerationMatch(0));
-  ASSERT_TRUE(source_meta.ok()) << "status=" << source_meta.status();
+  ASSERT_STATUS_OK(source_meta);
 
   // Create a iostream to read the object back.
   auto stream = client->ReadObject(bucket_name, object_name);
@@ -607,17 +608,17 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
 
   EXPECT_EQ(large_text.substr(0, 1024), actual);
   stream.Close();
-  EXPECT_TRUE(stream.status().ok()) << "status=" << stream.status();
+  EXPECT_STATUS_OK(stream.status());
 
   auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
 }
 
 /// @test Read a portion of a relatively large object using the JSON API.
 TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
   // The testbench always requires multiple iterations to copy this object.
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -638,7 +639,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
 
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name, object_name, large_text, IfGenerationMatch(0));
-  ASSERT_TRUE(source_meta.ok()) << "status=" << source_meta.status();
+  ASSERT_STATUS_OK(source_meta);
 
   EXPECT_EQ(object_name, source_meta->name());
   EXPECT_EQ(bucket_name, source_meta->bucket());
@@ -652,14 +653,14 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
   EXPECT_EQ(large_text.substr(1 * chunk, 1 * chunk), actual);
 
   auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
 }
 
 /// @test Read a portion of a relatively large object using the XML API.
 TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
   // The testbench always requires multiple iterations to copy this object.
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
   auto object_name = MakeRandomObjectName();
@@ -680,7 +681,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
 
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name, object_name, large_text, IfGenerationMatch(0));
-  ASSERT_TRUE(source_meta.ok()) << "status=" << source_meta.status();
+  ASSERT_STATUS_OK(source_meta);
 
   EXPECT_EQ(object_name, source_meta->name());
   EXPECT_EQ(bucket_name, source_meta->bucket());
@@ -693,7 +694,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
   EXPECT_EQ(large_text.substr(1 * chunk, 1 * chunk), actual);
 
   auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_TRUE(status.ok()) << "status=" << status;
+  EXPECT_STATUS_OK(status);
 }
 
 }  // anonymous namespace

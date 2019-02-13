@@ -15,6 +15,7 @@
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
 #include <gmock/gmock.h>
 
@@ -114,7 +115,7 @@ TEST_F(ClientOptionsTest, SetProjectId) {
 
 TEST_F(ClientOptionsTest, SetdownloadBufferSize) {
   auto opts = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_TRUE(opts.ok()) << "status=" << opts.status();
+  ASSERT_STATUS_OK(opts);
   ClientOptions client_options = *opts;
   auto default_size = client_options.download_buffer_size();
   EXPECT_NE(0U, default_size);
@@ -126,7 +127,7 @@ TEST_F(ClientOptionsTest, SetdownloadBufferSize) {
 
 TEST_F(ClientOptionsTest, SetUploadBufferSize) {
   auto opts = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_TRUE(opts.ok()) << "status=" << opts.status();
+  ASSERT_STATUS_OK(opts);
   ClientOptions client_options = *opts;
   auto default_size = client_options.upload_buffer_size();
   EXPECT_NE(0U, default_size);
@@ -147,7 +148,7 @@ TEST_F(ClientOptionsTest, UserAgentPrefix) {
 
 TEST_F(ClientOptionsTest, SetMaximumSimpleUploadSize) {
   auto opts = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_TRUE(opts.ok()) << "status=" << opts.status();
+  ASSERT_STATUS_OK(opts);
   ClientOptions client_options = *opts;
   auto default_size = client_options.maximum_simple_upload_size();
   EXPECT_NE(0U, default_size);
@@ -159,7 +160,7 @@ TEST_F(ClientOptionsTest, SetMaximumSimpleUploadSize) {
 
 TEST_F(ClientOptionsTest, SetEnableLockingCallbacks) {
   auto opts = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_TRUE(opts.ok()) << "status=" << opts.status();
+  ASSERT_STATUS_OK(opts);
   ClientOptions client_options = *opts;
   auto default_value = client_options.enable_ssl_locking_callbacks();
   EXPECT_TRUE(default_value);
