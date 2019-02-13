@@ -99,12 +99,13 @@ TEST_F(TableSampleRowKeysTest, SimpleListTest) {
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
-  std::list<bigtable::RowKeySample> result = *(table_.SampleRows<std::list>());
-  auto it = result.begin();
-  EXPECT_NE(it, result.end());
+  auto result = table_.SampleRows<std::list>();
+  ASSERT_STATUS_OK(result);
+  auto it = result->begin();
+  EXPECT_NE(it, result->end());
   EXPECT_EQ(it->row_key, "test1");
   EXPECT_EQ(it->offset_bytes, 11);
-  EXPECT_EQ(++it, result.end());
+  EXPECT_EQ(++it, result->end());
 }
 
 TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
