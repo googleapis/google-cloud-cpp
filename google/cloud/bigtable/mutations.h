@@ -275,6 +275,12 @@ class SingleRowMutation {
     request.mutable_mutations()->Swap(&ops_);
   }
 
+  /// Remove the contents of the mutation.
+  void Clear() {
+    google::bigtable::v2::MutateRowsRequest::Entry entry;
+    MoveTo(&entry);
+  }
+
  private:
   /// Add multiple mutations to single row
   template <typename... M>

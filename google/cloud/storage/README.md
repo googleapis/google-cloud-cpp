@@ -11,7 +11,7 @@ client.
 ## Status
 
 This library support Google Cloud Storage at the
-[Alpha](../README.md#versioning) quality level.
+[Beta](../README.md#versioning) quality level.
 
 ## Documentation
 

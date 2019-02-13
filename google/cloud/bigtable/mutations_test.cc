@@ -254,3 +254,17 @@ TEST(MutationsTest, SingleRowMutationSingleVariadic) {
   ASSERT_EQ(1, entry.mutations_size());
   EXPECT_EQ(row_key, entry.row_key());
 }
+
+/// @test Verify that SingleRowMutation::Clear() works.
+TEST(MutationsTest, SingleRowMutationClear) {
+  std::string const row_key = "row-key-1";
+
+  bigtable::SingleRowMutation mut(
+      row_key, bigtable::SetCell("family", "c1", 1_ms, "V1000"));
+
+  mut.Clear();
+  EXPECT_EQ("", mut.row_key());
+  google::bigtable::v2::MutateRowsRequest::Entry entry;
+  mut.MoveTo(&entry);
+  EXPECT_EQ(0, entry.mutations_size());
+}
