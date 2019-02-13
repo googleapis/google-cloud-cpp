@@ -110,6 +110,9 @@ size_t MutationBatcher::Batch::FireFailedCallbacks(
   lk.unlock();
   int idx = 0;
   for (auto& f : failed) {
+    // For some reason clang-tidy thinks that AsyncApplyCompletionCallback would
+    // be fine with a const reference to status.
+    // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
     grpc::Status status(f.status());
     to_fire[idx++]->callback(cq, status);
   }
