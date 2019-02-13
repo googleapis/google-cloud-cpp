@@ -425,25 +425,6 @@ run_hello_world_example() {
   run_example_usage ./bigtable_hello_world
 }
 ################################################
-#
-# This function allows us to keep a single place where all the examples are
-# listed. We want to run these examples in the continuous integration builds
-# because they rot otherwise.
-run_rowset_examples() {
-  local project_id=$1
-  local instance_id=$2
-  shift 2
-
-  # Use the same table in all the tests.
-  local -r TABLE="rowset-tbl-${RANDOM}"
-
-  run_example ./bigtable_rowset "${project_id}" "${instance_id}" "${TABLE}"
-
-  # Verify that calling without a command produces the right exit status and
-  # some kind of Usage message.
-  run_example_usage ./bigtable_rowset 
-}
-################################################
 # Run the Bigtable hello app profile example.
 # Globals:
 #   None
