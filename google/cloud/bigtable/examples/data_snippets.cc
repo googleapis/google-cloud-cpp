@@ -310,7 +310,7 @@ void SampleRowsCollections(google::cloud::bigtable::Table table, int argc,
 
   //! [sample row keys collections]
   [](google::cloud::bigtable::Table table) {
-    auto list_samples = table.SampleRows<std::list>();    
+    auto list_samples = table.SampleRows<std::list>();
     if (!list_samples) {
       throw std::runtime_error(list_samples.status().message());
     }
@@ -318,8 +318,7 @@ void SampleRowsCollections(google::cloud::bigtable::Table table, int argc,
       std::cout << "key=" << sample.row_key << " - " << sample.offset_bytes
                 << "\n";
     }
-    
-    auto deque_samples = table.SampleRows<std::deque>();    
+    auto deque_samples = table.SampleRows<std::deque>();
     if (!deque_samples) {
       throw std::runtime_error(deque_samples.status().message());
     }
