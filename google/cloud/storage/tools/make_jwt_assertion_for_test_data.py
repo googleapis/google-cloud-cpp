@@ -52,6 +52,8 @@ TIMESTAMP = 1530060324
 # also used in constructing the JWT assertion.
 SCOPE_STR = "https://www.googleapis.com/auth/cloud-platform"
 
+ALT_SCOPE_STR = "https://www.googleapis.com/auth/devstorage.full_control";
+
 # pylint: enable=line-too-long
 ############################################
 
@@ -70,35 +72,52 @@ def ordered_json_str(ordered_dict):
             # only map to strings and ints, so we can take this shortcut.
             q=('' if isinstance(val, int) else '"')
         ))
-    return '{' + ','.join(kv_strs) + '}'
+    return "{" + ",".join(kv_strs) + "}"
 
+
+def payload_str(scopes, subject=None):
+    payload_dict = {
+        "aud": CONTENTS_DICT["token_uri"],
+        "exp": TIMESTAMP + 3600,
+        "iat": TIMESTAMP,
+        "iss": CONTENTS_DICT["client_email"],
+        "scope": scopes,
+    }
+    if subject:
+        payload_dict["sub"] = subject
+    return jwk.base64url_encode(ordered_json_str(payload_dict))
 
 def main():
     """Print out the JWT assertion."""
-    signing_algorithm_str = 'RS256'  # RSA
+    signing_algorithm_str = "RS256"  # RSA
     headers_str = jwk.base64url_encode(
         ordered_json_str({
-            'alg': signing_algorithm_str,
-            'kid': CONTENTS_DICT['private_key_id'],
-            'typ': 'JWT',
+            "alg": signing_algorithm_str,
+            "kid": CONTENTS_DICT["private_key_id"],
+            "typ": "JWT",
         })
     )
-    payload_str = jwk.base64url_encode(
-        ordered_json_str({
-            'aud': CONTENTS_DICT['token_uri'],
-            'exp': TIMESTAMP + 3600,
-            'iat': TIMESTAMP,
-            'iss': CONTENTS_DICT['client_email'],
-            'scope': SCOPE_STR,
-        })
-    )
+
+    payload_str_for_defaults = payload_str(SCOPE_STR)
+    print("Assertion for default scope and no subject:")
     print(jws._sign_header_and_claims(  # pylint: disable=protected-access
         headers_str,
-        payload_str,
+        payload_str_for_defaults,
         signing_algorithm_str,
-        CONTENTS_DICT['private_key']
+        CONTENTS_DICT["private_key"]
+    ))
+
+    print()
+
+    payload_str_for_nondefaults = payload_str(ALT_SCOPE_STR, "user@foo.bar")
+    print("Assertion for non-default scope and using a subject:")
+    print(jws._sign_header_and_claims(  # pylint: disable=protected-access
+        headers_str,
+        payload_str_for_nondefaults,
+        signing_algorithm_str,
+        CONTENTS_DICT["private_key"]
     ))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

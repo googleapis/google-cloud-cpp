@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_SERVICE_ACCOUNT_CREDENTIALS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_SERVICE_ACCOUNT_CREDENTIALS_H_
 
+#include "google/cloud/optional.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/openssl_util.h"
@@ -25,6 +26,7 @@
 #include <ctime>
 #include <iostream>
 #include <mutex>
+#include <set>
 
 namespace google {
 namespace cloud {
@@ -37,6 +39,10 @@ struct ServiceAccountCredentialsInfo {
   std::string private_key_id;
   std::string private_key;
   std::string token_uri;
+  // If no set is supplied, a default set of scopes will be used.
+  google::cloud::optional<std::set<std::string>> scopes;
+  // See https://developers.google.com/identity/protocols/OAuth2ServiceAccount.
+  google::cloud::optional<std::string> subject;
 };
 
 /// Parses the contents of a JSON keyfile into a ServiceAccountCredentialsInfo.
@@ -96,7 +102,7 @@ class ServiceAccountCredentials : public Credentials {
     request_builder.AddHeader(
         "Content-Type: application/x-www-form-urlencoded");
     request_ = request_builder.BuildRequest();
-    info_ = std::move(info);
+    info_ = info;
   }
 
   StatusOr<std::string> AuthorizationHeader() override {
@@ -139,7 +145,17 @@ class ServiceAccountCredentials : public Credentials {
     nl::json assertion_header = {
         {"alg", "RS256"}, {"kid", info.private_key_id}, {"typ", "JWT"}};
 
-    std::string scope = GoogleOAuthScopeCloudPlatform();
+    // Scopes must be specified in a comma-delimited string.
+    std::string scope_str;
+    if (!info.scopes) {
+      scope_str = GoogleOAuthScopeCloudPlatform();
+    } else {
+      std::string sep = "";
+      for (const auto& scope : *(info.scopes)) {
+        scope_str += sep + scope;
+        sep = ",";
+      }
+    }
 
     auto now = clock_.now();
     auto expiration = now + GoogleOAuthAccessTokenLifetime();
@@ -152,11 +168,14 @@ class ServiceAccountCredentials : public Credentials {
         static_cast<long>(std::chrono::system_clock::to_time_t(expiration));
     nl::json assertion_payload = {
         {"iss", info.client_email},
-        {"scope", scope},
+        {"scope", scope_str},
         {"aud", info.token_uri},
         {"iat", now_from_epoch},
         // Resulting access token should be expire after one hour.
         {"exp", expiration_from_epoch}};
+    if (info.subject) {
+      assertion_payload["sub"] = *(info.subject);
+    }
 
     return std::make_pair(std::move(assertion_header),
                           std::move(assertion_payload));
