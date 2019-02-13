@@ -62,7 +62,7 @@ sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig zlib-devel
 
 Fedora includes packages for gRPC, libcurl, and OpenSSL that are recent enough
 for `google-cloud-cpp`. Install these packages and additional development
-tools to compile the dependencies
+tools to compile the dependencies:
 
 ```bash
 sudo dnf makecache && \
@@ -75,10 +75,10 @@ sudo dnf install -y grpc-devel grpc-plugins \
 There is no Fedora package for this library. To install it, use:
 
 ```bash
-cd /var/tmp/build
+cd $HOME/Downloads
 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 tar -xf 1.0.6.tar.gz
-cd /var/tmp/build/crc32c-1.0.6
+cd $HOME/Downloads/crc32c-1.0.6
 cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -96,14 +96,14 @@ We can now compile and install `google-cloud-cpp`. Note that we use
 `pkg-config` to discover the options for gRPC and protobuf:
 
 ```bash
-cd /home/build/google-cloud-cpp
+cd $HOME/google-cloud-cpp
 cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build build-output -- -j $(nproc)
-cd /home/build/google-cloud-cpp/build-output
+cd $HOME/google-cloud-cpp/build-output
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
@@ -132,10 +132,10 @@ sudo zypper install -y grpc-devel libcurl-devel pkg-config tar wget
 There is no OpenSUSE package for this library. To install it, use:
 
 ```bash
-cd /var/tmp/build
+cd $HOME/Downloads
 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 tar -xf 1.0.6.tar.gz
-cd /var/tmp/build/crc32c-1.0.6
+cd $HOME/Downloads/crc32c-1.0.6
 cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -153,14 +153,14 @@ We can now compile and install `google-cloud-cpp`. Note that we use
 `pkg-config` to discover the options for gRPC and protobuf:
 
 ```bash
-cd /home/build/google-cloud-cpp
+cd $HOME/google-cloud-cpp
 cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build build-output -- -j $(nproc)
-cd /home/build/google-cloud-cpp/build-output
+cd $HOME/google-cloud-cpp/build-output
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
@@ -182,10 +182,10 @@ sudo apt install -y build-essential cmake git gcc g++ cmake \
 There is no Ubuntu package for this library. To install it use:
 
 ```bash
-cd /var/tmp/build
+cd $HOME/Downloads
 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 tar -xf 1.0.6.tar.gz
-cd /var/tmp/build/crc32c-1.0.6
+cd $HOME/Downloads/crc32c-1.0.6
 cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -204,10 +204,10 @@ files require more recent versions (circa 3.4.x). To manually install a more
 recent version use:
 
 ```bash
-cd /var/tmp/build
+cd $HOME/Downloads
 wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
 tar -xf v3.6.1.tar.gz
-cd /var/tmp/build/protobuf-3.6.1/cmake
+cd $HOME/Downloads/protobuf-3.6.1/cmake
 cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -223,10 +223,10 @@ Likewise, Ubuntu has packages for grpc-1.3.x, but this version is too old for
 the Google Cloud Platform APIs:
 
 ```bash
-cd /var/tmp/build
+cd $HOME/Downloads
 wget -q https://github.com/grpc/grpc/archive/v1.17.2.tar.gz
 tar -xf v1.17.2.tar.gz
-cd /var/tmp/build/grpc-1.17.2
+cd $HOME/Downloads/grpc-1.17.2
 make -j $(nproc)
 sudo make install
 sudo ldconfig
@@ -238,13 +238,13 @@ Finally we can install `google-cloud-cpp`. Note that we use `pkg-config` to
 discover the options for gRPC:
 
 ```bash
-cd /home/build/google-cloud-cpp
+cd $HOME/google-cloud-cpp
 cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build build-output -- -j $(nproc)
-cd /home/build/google-cloud-cpp/build-output
+cd $HOME/google-cloud-cpp/build-output
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
@@ -273,10 +273,10 @@ ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 There is no CentOS package for this library. To install it use:
 
 ```bash
-cd /var/tmp/build
+cd $HOME/Downloads
 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 tar -xf 1.0.6.tar.gz
-cd /var/tmp/build/crc32c-1.0.6
+cd $HOME/Downloads/crc32c-1.0.6
 cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -293,10 +293,10 @@ sudo ldconfig
 Likewise, manually install protobuf:
 
 ```bash
-cd /var/tmp/build
+cd $HOME/Downloads
 wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
 tar -xf v3.6.1.tar.gz
-cd /var/tmp/build/protobuf-3.6.1/cmake
+cd $HOME/Downloads/protobuf-3.6.1/cmake
 cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -312,10 +312,10 @@ Recent versions of gRPC require c-ares >= 1.11, while CentOS-7
 distributes c-ares-1.10. Manually install a newer version:
 
 ```bash
-cd /var/tmp/build
+cd $HOME/Downloads
 wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
 tar -xf cares-1_14_0.tar.gz
-cd /var/tmp/build/c-ares-cares-1_14_0
+cd $HOME/Downloads/c-ares-cares-1_14_0
 ./buildconf && ./configure && make -j $(nproc)
 sudo make install
 sudo ldconfig
@@ -326,10 +326,10 @@ sudo ldconfig
 Can be manually installed using:
 
 ```bash
-cd /var/tmp/build
+cd $HOME/Downloads
 wget -q https://github.com/grpc/grpc/archive/v1.17.2.tar.gz
 tar -xf v1.17.2.tar.gz
-cd /var/tmp/build/grpc-1.17.2
+cd $HOME/Downloads/grpc-1.17.2
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
 export PATH=/usr/local/bin:${PATH}
@@ -344,13 +344,13 @@ Finally we can install `google-cloud-cpp`. Note that we use `pkg-config` to
 discover the options for gRPC:
 
 ```bash
-cd /var/tmp/build/google-cloud-cpp
+cd $HOME/Downloads/google-cloud-cpp
 cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build build-output -- -j $(nproc)
-cd /var/tmp/build/google-cloud-cpp/build-output
+cd $HOME/Downloads/google-cloud-cpp/build-output
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```

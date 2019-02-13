@@ -45,7 +45,7 @@ RUN (cd build-output && ctest --output-on-failure)
 
 # Fedora includes packages for gRPC, libcurl, and OpenSSL that are recent enough
 # for `google-cloud-cpp`. Install these packages and additional development
-# tools to compile the dependencies
+# tools to compile the dependencies:
 
 # ```bash
 RUN dnf makecache && \

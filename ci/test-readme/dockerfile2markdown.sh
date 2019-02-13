@@ -33,6 +33,8 @@ sed \
     -e 's/^make install/sudo make install/' \
     -e 's/update-alternatives/sudo update-alternatives/g' \
     -e 's/add-apt-repository/sudo add-apt-repository/g' \
+    -e 's;/home/build;$HOME;' \
+    -e 's;/var/tmp/build;$HOME/Downloads;' \
     -e 's/^    sudo/sudo/' $* | \
     awk '
       BEGIN {
