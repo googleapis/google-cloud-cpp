@@ -551,8 +551,7 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
   ASSERT_STATUS_OK(meta);
 
   auto current_notifications = client->ListNotifications(bucket_name);
-  ASSERT_TRUE(current_notifications.ok())
-      << "status=" << current_notifications.status();
+  ASSERT_STATUS_OK(current_notifications);
   EXPECT_TRUE(current_notifications->empty())
       << "Test aborted. Non-empty notification list returned from newly"
       << " created bucket <" << bucket_name
@@ -567,8 +566,7 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
   EXPECT_THAT(create->topic(), HasSubstr(BucketTestEnvironment::topic()));
 
   current_notifications = client->ListNotifications(bucket_name);
-  ASSERT_TRUE(current_notifications.ok())
-      << "status=" << current_notifications.status();
+  ASSERT_STATUS_OK(current_notifications);
   auto count = std::count_if(current_notifications->begin(),
                              current_notifications->end(),
                              [create](NotificationMetadata const& x) {
@@ -584,8 +582,7 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
   ASSERT_STATUS_OK(status);
 
   current_notifications = client->ListNotifications(bucket_name);
-  ASSERT_TRUE(current_notifications.ok())
-      << "status=" << current_notifications.status();
+  ASSERT_STATUS_OK(current_notifications);
   count = std::count_if(current_notifications->begin(),
                         current_notifications->end(),
                         [create](NotificationMetadata const& x) {
@@ -646,8 +643,7 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
       "storage.objects.list", "storage.objects.get", "storage.objects.delete"};
   StatusOr<std::vector<std::string>> actual_permissions =
       client->TestBucketIamPermissions(bucket_name, expected_permissions);
-  ASSERT_TRUE(actual_permissions.ok())
-      << "status=" << actual_permissions.status();
+  ASSERT_STATUS_OK(actual_permissions);
   EXPECT_THAT(*actual_permissions, ElementsAreArray(expected_permissions));
 
   auto status = client->DeleteBucket(bucket_name);
@@ -669,8 +665,7 @@ TEST_F(BucketIntegrationTest, BucketLock) {
       bucket_name,
       BucketMetadataPatchBuilder().SetRetentionPolicy(std::chrono::seconds(30)),
       IfMetagenerationMatch(meta->metageneration()));
-  ASSERT_TRUE(after_setting_retention_policy.ok())
-      << "status=" << after_setting_retention_policy.status();
+  ASSERT_STATUS_OK(after_setting_retention_policy);
 
   auto after_locking = client->LockBucketRetentionPolicy(
       bucket_name, after_setting_retention_policy->metageneration());
