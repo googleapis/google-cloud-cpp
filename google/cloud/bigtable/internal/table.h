@@ -635,6 +635,51 @@ class Table {
   //@}
 
  private:
+  friend class NoexTableStreamingAsyncBulkApplyTest_SimpleTest_Test;
+  /**
+   * Make an asynchronous request to mutate a multiple rows and stream results.
+   *
+   * @param mut the bulk mutation to apply.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param callback a functor to be called when the operation completes. It
+   *     must satisfy (using C++17 types):
+   *     static_assert(std::is_invocable_v<
+   *         Functor, CompletionQueue&, std::vector<FailedMutation>&,
+   *             grpc::Status&>);
+   * @return a handle to the submitted operation
+   *
+   * @tparam Functor the type of the callback.
+   */
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<
+                    Functor, CompletionQueue&, std::vector<FailedMutation>&,
+                    grpc::Status&>::value,
+                int>::type valid_callback_type = 0>
+  std::shared_ptr<AsyncOperation> StreamingAsyncBulkApply(
+      CompletionQueue& cq,
+      typename internal::AsyncRetryBulkApply<
+          Functor>::MutationsSucceededFunctor&& mutations_succeeded_callback,
+      typename internal::AsyncRetryBulkApply<Functor>::MutationsFailedFunctor&&
+          mutations_failed_callback,
+      typename internal::AsyncRetryBulkApply<Functor>::AttemptFinishedFunctor&&
+          attempt_finished_callback,
+      Functor&& callback, BulkMutation&& mut) {
+    auto op =
+        std::make_shared<bigtable::internal::AsyncRetryBulkApply<Functor>>(
+            rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+            *idempotent_mutation_policy_, metadata_update_policy_, client_,
+            app_profile_id_, table_name_, std::move(mut),
+            std::move(mutations_succeeded_callback),
+            std::move(mutations_failed_callback),
+            std::move(attempt_finished_callback),
+            std::forward<Functor>(callback));
+
+    return op->Start(cq);
+  }
+
   //@{
   /// @name Helper functions to implement constructors with changed policies.
   void ChangePolicy(RPCRetryPolicy& policy) {

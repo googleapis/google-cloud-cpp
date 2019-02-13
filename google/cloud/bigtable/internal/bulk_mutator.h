@@ -45,6 +45,16 @@ class BulkMutator {
   grpc::Status MakeOneRequest(bigtable::DataClient& client,
                               grpc::ClientContext& client_context);
 
+  /**
+   * Return the permanently failed mutations.
+   *
+   * This will return all the mutations which we've learned are definite
+   * failures since since the last call to this member function.
+   *
+   * Whatever is returned, will not be returned by `ExtractFinalFailures`.
+   */
+  std::vector<FailedMutation> ConsumeAccumulatedFailures();
+
   /// Give up on any pending mutations, move them to the failures array.
   std::vector<FailedMutation> ExtractFinalFailures();
 
@@ -52,8 +62,13 @@ class BulkMutator {
   /// Get ready for a new request.
   void PrepareForRequest();
 
-  /// Process a single response.
-  void ProcessResponse(google::bigtable::v2::MutateRowsResponse& response);
+  /**
+   * Process a single response.
+   *
+   * @return Original indices of mutations which have succeeded.
+   */
+  std::vector<int> ProcessResponse(
+      google::bigtable::v2::MutateRowsResponse& response);
 
   /// A request has finished and we have processed all the responses.
   void FinishRequest();
@@ -104,6 +119,13 @@ class BulkMutator {
  */
 class AsyncBulkMutator : private BulkMutator {
  public:
+  using MutationsSucceededFunctor =
+      std::function<void(CompletionQueue&, std::vector<int>)>;
+  using MutationsFailedFunctor =
+      std::function<void(CompletionQueue&, std::vector<FailedMutation>)>;
+  using AttemptFinishedFunctor =
+      std::function<void(CompletionQueue&, grpc::Status&)>;
+
   AsyncBulkMutator(std::shared_ptr<bigtable::DataClient> client,
                    bigtable::AppProfileId const& app_profile_id,
                    bigtable::TableId const& table_name,
@@ -112,6 +134,21 @@ class AsyncBulkMutator : private BulkMutator {
       : BulkMutator(app_profile_id, table_name, idempotent_policy,
                     std::move(mut)),
         client_(std::move(client)) {}
+
+  AsyncBulkMutator(std::shared_ptr<bigtable::DataClient> client,
+                   bigtable::AppProfileId const& app_profile_id,
+                   bigtable::TableId const& table_name,
+                   IdempotentMutationPolicy& idempotent_policy,
+                   MutationsSucceededFunctor&& mutations_succeeded_callback,
+                   MutationsFailedFunctor&& mutations_failed_callback,
+                   AttemptFinishedFunctor&& attempt_finished_callback,
+                   BulkMutation&& mut)
+      : BulkMutator(app_profile_id, table_name, idempotent_policy,
+                    std::move(mut)),
+        client_(std::move(client)),
+        mutations_succeeded_callback_(std::move(mutations_succeeded_callback)),
+        mutations_failed_callback_(std::move(mutations_failed_callback)),
+        attempt_finished_callback_(std::move(attempt_finished_callback)) {}
 
   using Request = google::bigtable::v2::MutateRowsRequest;
   using Response = std::vector<FailedMutation>;
@@ -127,9 +164,15 @@ class AsyncBulkMutator : private BulkMutator {
     PrepareForRequest();
     return cq.MakeUnaryStreamRpc(
         *client_, &DataClient::AsyncMutateRows, mutations_, std::move(context),
-        [this](CompletionQueue&, const grpc::ClientContext&,
+        [this](CompletionQueue& cq, const grpc::ClientContext&,
                google::bigtable::v2::MutateRowsResponse& response) {
-          ProcessResponse(response);
+          std::vector<int> succeeded_mutations = ProcessResponse(response);
+          if (mutations_succeeded_callback_) {
+            mutations_succeeded_callback_(cq, std::move(succeeded_mutations));
+          }
+          if (mutations_failed_callback_) {
+            mutations_failed_callback_(cq, ConsumeAccumulatedFailures());
+          }
         },
         FinishedCallback<Functor>(*this, std::forward<Functor>(callback)));
   }
@@ -156,6 +199,10 @@ class AsyncBulkMutator : private BulkMutator {
         status = grpc::Status(grpc::StatusCode::UNAVAILABLE,
                               "Some mutations were not confirmed");
       }
+      if (parent_.attempt_finished_callback_) {
+        grpc::Status status_copy(status);
+        parent_.attempt_finished_callback_(cq, status_copy);
+      }
       callback_(cq, status);
     }
 
@@ -168,6 +215,9 @@ class AsyncBulkMutator : private BulkMutator {
 
  private:
   std::shared_ptr<bigtable::DataClient> client_;
+  MutationsSucceededFunctor mutations_succeeded_callback_;
+  MutationsFailedFunctor mutations_failed_callback_;
+  AttemptFinishedFunctor attempt_finished_callback_;
 };
 
 }  // namespace internal
