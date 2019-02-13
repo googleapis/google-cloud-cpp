@@ -62,13 +62,13 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">client_options.cc File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="client__options_8h_source.html">google/cloud/bigtable/client_options.h</a>&quot;</code><br />
+<code>#include &quot;google/cloud/bigtable/internal/client_options_defaults.h&quot;</code><br />
 <code>#include &quot;google/cloud/internal/build_info.h&quot;</code><br />
 <code>#include &quot;google/cloud/internal/getenv.h&quot;</code><br />
 <code>#include &lt;thread&gt;</code><br />
@@ -88,69 +88,11 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud_1_1bigtable_1_1v0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The inlined, versioned namespace for the Cloud Bigtable C++ client APIs. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a5cdb8cfbd103919bc766bc4db60d80c8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client__options_8cc.html#a5cdb8cfbd103919bc766bc4db60d80c8">BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE</a>&#160;&#160;&#160;4</td></tr>
-<tr class="separator:a5cdb8cfbd103919bc766bc4db60d80c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05d0f2567bc347a3f69e433ccaed24c0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client__options_8cc.html#a05d0f2567bc347a3f69e433ccaed24c0">BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:a05d0f2567bc347a3f69e433ccaed24c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56cc44e77e037fa800fd63540b1d3695"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client__options_8cc.html#a56cc44e77e037fa800fd63540b1d3695">BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH</a>&#160;&#160;&#160;(256 * 1024L * 1024L)</td></tr>
-<tr class="separator:a56cc44e77e037fa800fd63540b1d3695"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a41ef56720f310ab4ea29ea08b5efcbf5"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a41ef56720f310ab4ea29ea08b5efcbf5">google::cloud::bigtable::v0::CalculateDefaultConnectionPoolSize</a> ()</td></tr>
 <tr class="separator:a41ef56720f310ab4ea29ea08b5efcbf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a05d0f2567bc347a3f69e433ccaed24c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a05d0f2567bc347a3f69e433ccaed24c0">&#9670;&nbsp;</a></span>BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00025">25</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
-
-</div>
-</div>
-<a id="a5cdb8cfbd103919bc766bc4db60d80c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5cdb8cfbd103919bc766bc4db60d80c8">&#9670;&nbsp;</a></span>BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE&#160;&#160;&#160;4</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00021">21</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
-
-</div>
-</div>
-<a id="a56cc44e77e037fa800fd63540b1d3695"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a56cc44e77e037fa800fd63540b1d3695">&#9670;&nbsp;</a></span>BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH&#160;&#160;&#160;(256 * 1024L * 1024L)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00029">29</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
