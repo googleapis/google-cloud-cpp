@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 #include <cstring>
 
@@ -88,7 +89,7 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
 })""";
 
   auto info = ParseAuthorizedUserCredentials(config, "test");
-  ASSERT_TRUE(info.ok()) << "status=" << info.status();
+  ASSERT_STATUS_OK(info);
   AuthorizedUserCredentials<MockHttpRequestBuilder> credentials(*info);
   EXPECT_EQ("Authorization: Type access-token-value",
             credentials.AuthorizationHeader().value());
@@ -140,7 +141,7 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
       "type": "magic_type"
 })""";
   auto info = ParseAuthorizedUserCredentials(config, "test");
-  ASSERT_TRUE(info.ok()) << "status=" << info.status();
+  ASSERT_STATUS_OK(info);
   AuthorizedUserCredentials<MockHttpRequestBuilder> credentials(*info);
   EXPECT_EQ("Authorization: Type access-token-r1",
             credentials.AuthorizationHeader().value());
@@ -162,7 +163,7 @@ TEST_F(AuthorizedUserCredentialsTest, ParseSimple) {
 
   auto actual =
       ParseAuthorizedUserCredentials(config, "test-data", "unused-uri");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ("a-client-id.example.com", actual->client_id);
   EXPECT_EQ("a-123456ABCDEF", actual->client_secret);
   EXPECT_EQ("1/THETOKEN", actual->refresh_token);
@@ -181,7 +182,7 @@ TEST_F(AuthorizedUserCredentialsTest, ParseUsesExplicitDefaultTokenUri) {
 
   auto actual = ParseAuthorizedUserCredentials(
       config, "test-data", "https://oauth2.googleapis.com/test_endpoint");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ("a-client-id.example.com", actual->client_id);
   EXPECT_EQ("a-123456ABCDEF", actual->client_secret);
   EXPECT_EQ("1/THETOKEN", actual->refresh_token);
@@ -200,7 +201,7 @@ TEST_F(AuthorizedUserCredentialsTest, ParseUsesImplicitDefaultTokenUri) {
 
   // No token_uri passed in here, either.
   auto actual = ParseAuthorizedUserCredentials(config, "test-data");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ("a-client-id.example.com", actual->client_id);
   EXPECT_EQ("a-123456ABCDEF", actual->client_secret);
   EXPECT_EQ("1/THETOKEN", actual->refresh_token);

@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/log.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 #include <cstdlib>
 #include <vector>
@@ -51,7 +52,7 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
   std::iterator_traits<std::string::iterator>::difference_type count = 0;
   do {
     response = download.GetMore(buffer);
-    EXPECT_TRUE(response.ok());
+    EXPECT_STATUS_OK(response);
     count += std::count(buffer.begin(), buffer.end(), '\n');
   } while (response->status_code == 100);
 

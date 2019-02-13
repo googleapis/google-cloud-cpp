@@ -18,6 +18,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/retry_tests.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -95,7 +96,7 @@ TEST_F(BucketTest, CreateBucket) {
   auto actual = client.CreateBucket(
       "test-bucket-name",
       BucketMetadata().set_location("US").set_storage_class("STANDARD"));
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
@@ -150,7 +151,7 @@ TEST_F(BucketTest, GetBucketMetadata) {
                 LimitedErrorCountRetryPolicy(2)};
 
   auto actual = client.GetBucketMetadata("foo-bar-baz");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
@@ -183,7 +184,7 @@ TEST_F(BucketTest, DeleteBucket) {
                 LimitedErrorCountRetryPolicy(2)};
 
   auto status = client.DeleteBucket("foo-bar-baz");
-  ASSERT_TRUE(status.ok()) << "status=" << status;
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(BucketTest, DeleteBucketTooManyFailures) {
@@ -234,7 +235,7 @@ TEST_F(BucketTest, UpdateBucket) {
   auto actual = client.UpdateBucket(
       "test-bucket-name",
       BucketMetadata().set_location("US").set_storage_class("STANDARD"));
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
@@ -293,7 +294,7 @@ TEST_F(BucketTest, PatchBucket) {
   auto actual = client.PatchBucket(
       "test-bucket-name",
       BucketMetadataPatchBuilder().SetStorageClass("STANDARD"));
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
@@ -341,7 +342,7 @@ TEST_F(BucketTest, GetBucketIamPolicy) {
                 LimitedErrorCountRetryPolicy(2)};
 
   auto actual = client.GetBucketIamPolicy("test-bucket-name");
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
@@ -380,7 +381,7 @@ TEST_F(BucketTest, SetBucketIamPolicy) {
                 LimitedErrorCountRetryPolicy(2)};
 
   auto actual = client.SetBucketIamPolicy("test-bucket-name", expected);
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
@@ -428,7 +429,7 @@ TEST_F(BucketTest, TestBucketIamPermissions) {
 
   auto actual = client.TestBucketIamPermissions("test-bucket-name",
                                                 {"storage.buckets.delete"});
-  ASSERT_TRUE(actual.ok()) << "status=" << actual.status();
+  ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, ElementsAreArray(expected.permissions));
 }
 
@@ -480,7 +481,7 @@ TEST_F(BucketTest, LockBucketRetentionPolicy) {
                 LimitedErrorCountRetryPolicy(2)};
 
   auto metadata = client.LockBucketRetentionPolicy("test-bucket-name", 42U);
-  ASSERT_TRUE(metadata.ok()) << "status=" << metadata.status();
+  ASSERT_STATUS_OK(metadata);
   EXPECT_EQ(expected, *metadata);
 }
 

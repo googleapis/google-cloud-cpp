@@ -41,14 +41,7 @@ This library supports the following Google Cloud Platform services with clients
 at the [Beta](#versioning) quality level:
 
 - [Google Cloud Bigtable](google/cloud/bigtable/README.md#readme)
-
-This library supports the following Google Cloud Platform services with clients
-at the [Alpha](#versioning) quality level:
-
 - [Google Cloud Storage](google/cloud/storage/README.md#readme)
-
-The libraries in this code base likely do not (yet) cover all the available
-APIs.
 
 ## Table of Contents
 

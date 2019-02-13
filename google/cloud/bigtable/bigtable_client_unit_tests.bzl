@@ -45,6 +45,7 @@ bigtable_client_unit_tests = [
     "internal/async_retry_op_test.cc",
     "internal/async_retry_unary_rpc_and_poll_test.cc",
     "internal/bulk_mutator_test.cc",
+    "internal/mutation_batcher_test.cc",
     "internal/table_async_check_and_mutate_row_test.cc",
     "internal/instance_admin_test.cc",
     "internal/grpc_error_delegate_test.cc",

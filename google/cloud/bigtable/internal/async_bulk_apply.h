@@ -62,6 +62,10 @@ template <typename Functor,
 class AsyncRetryBulkApply : public AsyncRetryOp<ConstantIdempotencyPolicy,
                                                 Functor, AsyncBulkMutator> {
  public:
+  using MutationsSucceededFunctor = AsyncBulkMutator::MutationsSucceededFunctor;
+  using MutationsFailedFunctor = AsyncBulkMutator::MutationsFailedFunctor;
+  using AttemptFinishedFunctor = AsyncBulkMutator::AttemptFinishedFunctor;
+
   AsyncRetryBulkApply(std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
                       std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
                       IdempotentMutationPolicy& idempotent_policy,
@@ -78,6 +82,30 @@ class AsyncRetryBulkApply : public AsyncRetryOp<ConstantIdempotencyPolicy,
             std::move(metadata_update_policy), std::forward<Functor>(callback),
             AsyncBulkMutator(client, std::move(app_profile_id),
                              std::move(table_name), idempotent_policy,
+                             std::forward<BulkMutation>(mut))) {}
+
+  AsyncRetryBulkApply(std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
+                      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+                      IdempotentMutationPolicy& idempotent_policy,
+                      MetadataUpdatePolicy metadata_update_policy,
+                      std::shared_ptr<bigtable::DataClient> client,
+                      bigtable::AppProfileId const& app_profile_id,
+                      bigtable::TableId const& table_name, BulkMutation&& mut,
+                      MutationsSucceededFunctor&& mutations_succeeded_callback,
+                      MutationsFailedFunctor&& mutations_failed_callback,
+                      AttemptFinishedFunctor&& attempt_finished_callback,
+                      Functor&& callback)
+      : AsyncRetryOp<ConstantIdempotencyPolicy, Functor, AsyncBulkMutator>(
+            __func__, std::move(rpc_retry_policy),
+            // BulkMutator is idempotent because it keeps track of idempotency
+            // of the mutations it holds.
+            std::move(rpc_backoff_policy), ConstantIdempotencyPolicy(true),
+            std::move(metadata_update_policy), std::forward<Functor>(callback),
+            AsyncBulkMutator(client, std::move(app_profile_id),
+                             std::move(table_name), idempotent_policy,
+                             std::move(mutations_succeeded_callback),
+                             std::move(mutations_failed_callback),
+                             std::move(attempt_finished_callback),
                              std::forward<BulkMutation>(mut))) {}
 };
 

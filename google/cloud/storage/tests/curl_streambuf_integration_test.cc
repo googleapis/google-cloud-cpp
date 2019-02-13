@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/curl_streambuf.h"
 #include "google/cloud/storage/object_stream.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -61,10 +62,9 @@ TEST(CurlStreambufIntegrationTest, WriteManyBytes) {
     expected += random;
   }
   writer.Close();
-  ASSERT_TRUE(writer.metadata().ok())
+  ASSERT_STATUS_OK(writer.metadata())
       << ", status=" << writer.metadata().status()
-      << ", payload=" << writer.payload()
-      << ", headers={" << [&writer] {
+      << ", payload=" << writer.payload() << ", headers={" << [&writer] {
            std::string result;
            char const* sep = "";
            for (auto&& kv : writer.headers()) {

@@ -16,6 +16,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #include <future>
@@ -90,18 +91,18 @@ void CreateObjects(std::string const& bucket_name, ObjectNameList group,
                    std::string contents) {
   // Create our own client so no state is shared with the other threads.
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
   for (auto const& object_name : group) {
     StatusOr<ObjectMetadata> meta = client->InsertObject(
         bucket_name, object_name, contents, IfGenerationMatch(0));
-    ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+    ASSERT_STATUS_OK(meta);
   }
 }
 
 void DeleteObjects(std::string const& bucket_name, ObjectNameList group) {
   // Create our own client so no state is shared with the other threads.
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
   for (auto const& object_name : group) {
     (void)client->DeleteObject(bucket_name, object_name);
   }
@@ -112,7 +113,7 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   auto project_id = ThreadTestEnvironment::project_id();
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_TRUE(client.ok()) << "status=" << client.status();
+  ASSERT_STATUS_OK(client);
 
   StatusOr<BucketMetadata> meta = client->CreateBucketForProject(
       bucket_name, project_id,
@@ -122,7 +123,7 @@ TEST_F(ThreadIntegrationTest, Unshared) {
           .disable_versioning(),
       PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
       Projection("full"));
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
   EXPECT_EQ(bucket_name, meta->name());
 
   constexpr int kObjectCount = 2000;
@@ -156,7 +157,7 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   }
 
   auto delete_status = client->DeleteBucket(bucket_name);
-  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status;
+  ASSERT_STATUS_OK(delete_status);
   // This is basically a smoke test, if the test does not crash it was
   // successful.
 }
@@ -182,7 +183,7 @@ TEST_F(ThreadIntegrationTest, ReuseConnections) {
   auto log_backend = std::make_shared<CaptureSendHeaderBackend>();
 
   auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_TRUE(client_options.ok()) << "status=" << client_options.status();
+  ASSERT_STATUS_OK(client_options);
   Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
@@ -199,7 +200,7 @@ TEST_F(ThreadIntegrationTest, ReuseConnections) {
           .disable_versioning(),
       PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
       Projection("full"));
-  ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+  ASSERT_STATUS_OK(meta);
   EXPECT_EQ(bucket_name, meta->name());
 
   constexpr int kObjectCount = 100;
@@ -214,7 +215,7 @@ TEST_F(ThreadIntegrationTest, ReuseConnections) {
     auto start = std::chrono::steady_clock::now();
     StatusOr<ObjectMetadata> meta = client.InsertObject(
         bucket_name, name, LoremIpsum(), IfGenerationMatch(0));
-    ASSERT_TRUE(meta.ok()) << "status=" << meta.status();
+    ASSERT_STATUS_OK(meta);
     create_elapsed.emplace_back(std::chrono::steady_clock::now() - start);
   }
   for (auto const& name : objects) {
@@ -224,7 +225,7 @@ TEST_F(ThreadIntegrationTest, ReuseConnections) {
   }
   LogSink::Instance().RemoveBackend(id);
   auto delete_status = client.DeleteBucket(bucket_name);
-  ASSERT_TRUE(delete_status.ok()) << "status=" << delete_status;
+  ASSERT_STATUS_OK(delete_status);
 
   std::set<std::string> connected;
   std::copy_if(

@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -82,7 +83,7 @@ TEST(ListObjectsReaderTest, Basic) {
   ListObjectsReader reader(mock, "foo-bar-baz", Prefix("dir/"));
   std::vector<ObjectMetadata> actual;
   for (auto&& object : reader) {
-    ASSERT_TRUE(object.ok());
+    ASSERT_STATUS_OK(object);
     actual.emplace_back(std::move(object).value());
   }
   EXPECT_THAT(actual, ContainerEq(expected));

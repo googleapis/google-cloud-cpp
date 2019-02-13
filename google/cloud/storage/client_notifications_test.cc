@@ -20,6 +20,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/retry_tests.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -84,7 +85,7 @@ TEST_F(NotificationsTest, ListNotifications) {
 
   StatusOr<std::vector<NotificationMetadata>> actual =
       client.ListNotifications("test-bucket");
-  ASSERT_TRUE(actual.ok());
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, actual.value());
 }
 
@@ -136,7 +137,7 @@ TEST_F(NotificationsTest, CreateNotification) {
       NotificationMetadata()
           .set_object_name_prefix("test-object-prefix-")
           .append_event_type(event_type::ObjectFinalize()));
-  ASSERT_TRUE(actual.ok());
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, actual.value());
 }
 
@@ -189,7 +190,7 @@ TEST_F(NotificationsTest, GetNotification) {
 
   StatusOr<NotificationMetadata> actual =
       client.GetNotification("test-bucket", "test-notification-1");
-  ASSERT_TRUE(actual.ok());
+  ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, actual.value());
 }
 
@@ -225,7 +226,7 @@ TEST_F(NotificationsTest, DeleteNotification) {
   Client client{std::shared_ptr<internal::RawClient>(mock_)};
 
   auto status = client.DeleteNotification("test-bucket", "test-notification-1");
-  ASSERT_TRUE(status.ok());
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(NotificationsTest, DeleteNotificationTooManyFailures) {

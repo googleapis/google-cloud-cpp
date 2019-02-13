@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/curl_resumable_streambuf.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 
@@ -47,7 +48,7 @@ class CurlResumableStreambufIntegrationTest
  protected:
   void CheckUpload(int line_count, int line_size) {
     StatusOr<Client> client = Client::CreateDefaultClient();
-    ASSERT_TRUE(client.ok()) << "status=" << client.status();
+    ASSERT_STATUS_OK(client);
     auto bucket_name = ResumableStreambufTestEnvironment::bucket_name();
     auto object_name = MakeRandomObjectName();
 
@@ -56,7 +57,7 @@ class CurlResumableStreambufIntegrationTest
 
     StatusOr<std::unique_ptr<ResumableUploadSession>> session =
         client->raw_client()->CreateResumableSession(request);
-    ASSERT_TRUE(session.ok());
+    ASSERT_STATUS_OK(session);
 
     ObjectWriteStream writer(
         google::cloud::internal::make_unique<CurlResumableStreambuf>(
@@ -81,7 +82,7 @@ class CurlResumableStreambufIntegrationTest
 
     auto status = client->DeleteObject(bucket_name, object_name,
                                        Generation(metadata.generation()));
-    ASSERT_TRUE(status.ok()) << "status=" << status;
+    ASSERT_STATUS_OK(status);
   }
 };
 
