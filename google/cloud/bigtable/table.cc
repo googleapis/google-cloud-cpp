@@ -120,15 +120,15 @@ std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter) {
   return result;
 }
 
-bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
-                              std::vector<Mutation> true_mutations,
-                              std::vector<Mutation> false_mutations) {
+StatusOr<bool> Table::CheckAndMutateRow(std::string row_key, Filter filter,
+                                        std::vector<Mutation> true_mutations,
+                                        std::vector<Mutation> false_mutations) {
   grpc::Status status;
   bool value = impl_.CheckAndMutateRow(std::move(row_key), std::move(filter),
                                        std::move(true_mutations),
                                        std::move(false_mutations), status);
   if (!status.ok()) {
-    bigtable::internal::ThrowRpcError(status, status.error_message());
+    return bigtable::internal::MakeStatusFromRpcError(status);
   }
   return value;
 }

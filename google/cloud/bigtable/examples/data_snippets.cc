@@ -249,12 +249,16 @@ void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
     // If the predicate matches, change the latest value to "off", otherwise,
     // change the latest value to "on".  Modify the "flop-flip" column at the
     // same time.
-    table.CheckAndMutateRow(
+    auto mut = table.CheckAndMutateRow(
         MAGIC_ROW_KEY, std::move(predicate),
         {google::cloud::bigtable::SetCell("fam", "flip-flop", "off"),
          google::cloud::bigtable::SetCell("fam", "flop-flip", "on")},
         {google::cloud::bigtable::SetCell("fam", "flip-flop", "on"),
          google::cloud::bigtable::SetCell("fam", "flop-flip", "off")});
+
+    if (!mut) {
+      throw std::runtime_error(mut.status().message());
+    }
   }
   //! [check and mutate]
   (std::move(table));
