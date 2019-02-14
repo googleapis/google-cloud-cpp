@@ -535,10 +535,13 @@ int run_server(int argc, char* argv[]) {
   if (argc == 2) {
     server_address += argv[1];
   } else {
-    server_address += "9090";
+    server_address += "0";
   }
   DefaultEmbeddedServer server(server_address);
-  std::cout << "Listening on " << server.address();
+  // Need to flush so the output becomes immediately visible to the driver
+  // scripts.
+  std::cout << "Cloud Bigtable emulator running on " << server.address()
+            << std::endl;
   server.Wait();
 
   return 0;
