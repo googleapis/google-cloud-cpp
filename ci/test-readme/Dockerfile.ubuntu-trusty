@@ -16,40 +16,136 @@ ARG DISTRO_VERSION=trusty
 FROM ubuntu:${DISTRO_VERSION}
 MAINTAINER "Carlos O'Ryan <coryan@google.com>"
 
-# Please keep the formatting in these commands, it is optimized to cut & paste
-# into the README.md file.
-RUN apt update
-RUN apt install -y software-properties-common
+# Please keep the formatting below, it is used by `extract-readme.sh` and
+# `extract-install.md` to generate the contents of the top-level README.md and
+# INSTALL.md files.
+
+## [START INSTALL.md]
+
+# Install the minimal development tools:
+
+## [START README.md]
+
+# ```bash
+RUN apt update && apt install -y software-properties-common
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test -y
-RUN apt update
-RUN apt install -y cmake3 git gcc-4.9 g++-4.9 make wget zlib1g-dev
-RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
-WORKDIR /var/tmp/
+RUN apt update && \
+    apt install -y cmake3 git gcc g++ make pkg-config tar wget zlib1g-dev
+# ```
+
+# Ubuntu:14.04 ships with a very old version of OpenSSL, this version is not
+# supported by gRPC. We need to compile and install OpenSSL-1.0.2 from source:
+
+# ```bash
+WORKDIR /var/tmp/build
 RUN wget -q https://www.openssl.org/source/openssl-1.0.2n.tar.gz
 RUN tar xf openssl-1.0.2n.tar.gz
-WORKDIR /var/tmp/openssl-1.0.2n
-RUN ./Configure --prefix=/usr/local --openssldir=/usr/local linux-x86_64 shared
+WORKDIR /var/tmp/build/openssl-1.0.2n
+RUN ./Configure --prefix=/usr/local --openssldir=/usr/local linux-x86_64
 RUN make -j $(nproc)
 RUN make install
+# ```
 
-#RUN export CMAKE_FLAGS=-DOPENSSL_ROOT_DIR=/usr/local
-WORKDIR /var/tmp/
+# Because google-cloud-cpp uses both gRPC and curl, we need to compile libcurl
+# against the same version of OpenSSL:
+
+# ```bash
+WORKDIR /var/tmp/build
 RUN wget -q https://curl.haxx.se/download/curl-7.61.0.tar.gz
 RUN tar xf curl-7.61.0.tar.gz
-WORKDIR /var/tmp/curl-7.61.0
+WORKDIR /var/tmp/build/curl-7.61.0
 RUN ./configure
 RUN make -j $(nproc)
 RUN make install
+# ```
 
-ARG CXX=g++
-ARG CC=gcc
+## [END README.md]
 
-WORKDIR /var/tmp/
-RUN git clone https://github.com/googleapis/google-cloud-cpp.git
-WORKDIR /var/tmp/google-cloud-cpp
-RUN git submodule update --init
-RUN cmake -H. -Bbuild-output
+## [START IGNORED]
+# Verify that the tools above are enough to compile google-cloud-cpp when using
+# external projects.
+WORKDIR /home/build/external
+COPY . /home/build/external
+RUN cmake -H. -Bbuild-output -DCMAKE_BUILD_TYPE=Debug
 RUN cmake --build build-output -- -j $(nproc)
-WORKDIR /var/tmp/google-cloud-cpp/build-output
+RUN (cd build-output && ctest --output-on-failure)
+## [END IGNORED]
+
+# #### crc32c
+
+# There is no Ubuntu Trusty package for this library. To install it, use:
+
+# ```bash
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
+RUN tar -xf 1.0.6.tar.gz
+WORKDIR /var/tmp/build/crc32c-1.0.6
+RUN cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DCRC32C_BUILD_TESTS=OFF \
+      -DCRC32C_BUILD_BENCHMARKS=OFF \
+      -DCRC32C_USE_GLOG=OFF \
+      -H. -B.build/crc32c
+RUN cmake --build .build/crc32c --target install -- -j $(nproc)
+# ```
+
+# #### Protobuf
+
+# While protobuf-2.5 is distributed with Ubuntu:trusty, the Google Cloud Plaform
+# proto files require more recent versions (circa 3.4.x). To manually install a
+# more recent version use:
+
+# ```bash
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
+RUN tar -xf v3.6.1.tar.gz
+WORKDIR /var/tmp/build/protobuf-3.6.1/cmake
+RUN cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -H. -B.build
+RUN cmake --build .build --target install -- -j $(nproc)
+# ```
+
+# #### gRPC
+
+# Ubuntu:trusty does not provide a package for gRPC. Manually install this
+# library:
+
+# ```bash
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/grpc/grpc/archive/v1.17.2.tar.gz
+RUN tar -xf v1.17.2.tar.gz
+WORKDIR /var/tmp/build/grpc-1.17.2
+RUN make
+RUN make install
+# ```
+
+# #### google-cloud-cpp
+
+# We can now compile and install `google-cloud-cpp`. Note that we use
+# `pkg-config` to discover the options for gRPC and protobuf:
+
+# ```bash
+WORKDIR /home/build/google-cloud-cpp
+COPY . /home/build/google-cloud-cpp
+RUN cmake -H. -Bbuild-output \
+    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
+    -DGOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER=pkg-config \
+    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
+    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
+RUN cmake --build build-output -- -j $(nproc)
+WORKDIR /home/build/google-cloud-cpp/build-output
 RUN ctest --output-on-failure
+RUN cmake --build . --target install
+# ```
+
+## [END INSTALL.md]
+
+# Verify that the installed files are actually usable
+WORKDIR /home/build/test-install-plain-make
+ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
+COPY ci/test-install /home/build/test-install-plain-make
+RUN make

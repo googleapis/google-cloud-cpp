@@ -35,28 +35,28 @@ FAKE_REGION="fake-region-$(date +%s)-${RANDOM}"
 # has not changed.
 export GOOGLE_CLOUD_PROJECT="fake-project-$(date +%s)-${RANDOM}"
 run_example ./storage_latency_benchmark \
-      --duration=5 \
+      --duration=1 \
       --object-count=10 \
       "${FAKE_REGION}"
 run_example ./storage_latency_benchmark \
       --enable-xml-api=false \
-      --duration=5 \
+      --duration=1 \
       --object-count=10 \
       "${FAKE_REGION}"
 
 run_example ./storage_throughput_benchmark \
-      --duration=5 \
+      --duration=1 \
       --object-count=8 \
       --object-chunk-count=10 \
       "${FAKE_REGION}"
 run_example ./storage_throughput_benchmark \
       --enable-xml-api=false \
-      --duration=5 \
+      --duration=1 \
       --object-count=8 \
       --object-chunk-count=10 \
       "${FAKE_REGION}"
 
-if [ "${EXIT_STATUS}" = "0" ]; then
+if [[ "${EXIT_STATUS}" = "0" ]]; then
   TESTBENCH_DUMP_LOG=no
 fi
 exit ${EXIT_STATUS}
