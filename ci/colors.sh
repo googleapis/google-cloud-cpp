@@ -19,5 +19,10 @@ if [ -z "${COLOR_RESET+x}" ]; then
     readonly COLOR_GREEN="$(tput setaf 2)"
     readonly COLOR_YELLOW="$(tput setaf 3)"
     readonly COLOR_RESET="$(tput sgr0)"
+  else
+    readonly COLOR_RED=""
+    readonly COLOR_GREEN=""
+    readonly COLOR_YELLOW=""
+    readonly COLOR_RESET=""
   fi
 fi
