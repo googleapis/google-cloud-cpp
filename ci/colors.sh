@@ -13,16 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if [ -n "${COLOR_RESET+x}" ]; then
-  echo "COLOR_* variables already defined."
-elif [ "${TERM:-}" = "dumb" ]; then
-  readonly COLOR_RED=""
-  readonly COLOR_GREEN=""
-  readonly COLOR_YELLOW=""
-  readonly COLOR_RESET=""
-else
-  readonly COLOR_RED="$(tput setaf 1)"
-  readonly COLOR_GREEN="$(tput setaf 2)"
-  readonly COLOR_YELLOW="$(tput setaf 3)"
-  readonly COLOR_RESET="$(tput sgr0)"
+if [ -z "${COLOR_RESET+x}" ]; then
+  if type tput >/dev/null 2>&1; then
+    readonly COLOR_RED="$(tput setaf 1)"
+    readonly COLOR_GREEN="$(tput setaf 2)"
+    readonly COLOR_YELLOW="$(tput setaf 3)"
+    readonly COLOR_RESET="$(tput sgr0)"
+  fi
 fi
