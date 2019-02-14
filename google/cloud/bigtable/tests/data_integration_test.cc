@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/endian.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 
@@ -570,6 +571,7 @@ TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
   }
   auto samples = table->SampleRows<std::vector>();
   DeleteTable(table_id);
+  ASSERT_STATUS_OK(samples);
 
   // It is somewhat hard to verify that the values returned here are correct.
   // We cannot check the specific values, not even the format, of the row keys
@@ -577,14 +579,14 @@ TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
   // and it might return row keys that have never been written to.
   // All we can check is that this is not empty, and that the offsets are in
   // ascending order.
-  EXPECT_FALSE(samples.empty());
+  EXPECT_FALSE(samples->empty());
   std::int64_t previous = 0;
-  for (auto const& s : samples) {
+  for (auto const& s : *samples) {
     EXPECT_LE(previous, s.offset_bytes);
     previous = s.offset_bytes;
   }
   // At least one of the samples should have non-zero offset:
-  auto last = samples.back();
+  auto last = samples->back();
   EXPECT_LT(0, last.offset_bytes);
 }
 

@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/table.h"
 #include "google/cloud/future.h"
+#include "google/cloud/status_or.h"
 
 namespace google {
 namespace cloud {
@@ -339,11 +340,11 @@ class Table {
    * @snippet data_snippets.cc sample row keys collections
    */
   template <template <typename...> class Collection = std::vector>
-  Collection<bigtable::RowKeySample> SampleRows() {
+  StatusOr<Collection<bigtable::RowKeySample>> SampleRows() {
     grpc::Status status;
     auto result = impl_.SampleRows<Collection>(status);
     if (!status.ok()) {
-      bigtable::internal::ThrowRpcError(status, status.error_message());
+      return bigtable::internal::MakeStatusFromRpcError(status);
     }
 
     return result;
