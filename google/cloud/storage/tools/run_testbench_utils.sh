@@ -83,18 +83,16 @@ start_testbench() {
       >testbench.log 2>&1 </dev/null &
   TESTBENCH_PID=$!
 
-  local testbench_port="0"
+  local testbench_port=""
+  local -r listening_at='Listening at: http://0.0.0.0:\([1-9][0-9]*\)'
   for attempt in $(seq 1 8); do
-    if grep -q 'Listening at: http://0.0.0.0:' testbench.log; then
-      testbench_port=$(
-          grep -m 1 'Listening at: http://0.0.0.0:' testbench.log | \
-          egrep -o 'http://0.0.0.0:[0-9]+' | sed 's/.*://')
-      break
-    fi
+    testbench_port=$(sed -n "s,^.*${listening_at}.*$,\1,p" testbench.log)
+    echo " DEBUG FOUND = ${testbench_port}" >&2
+    [[ -n "${testbench_port}" ]] && break
     sleep 1
   done
 
-  if [[ "${testbench_port}" = "0" ]]; then
+  if [[ -z "${testbench_port}" ]]; then
     echo "Cannot find listening port for testbench." >&2
     exit 1
   fi
