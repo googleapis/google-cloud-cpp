@@ -89,7 +89,7 @@ class RowSet {
     using value_type = T;
     using type =
         std::integral_constant<bool,
-                               std::is_convertible<T, std::string>::value or
+                               std::is_convertible<T, std::string>::value ||
                                    std::is_convertible<T, RowRange>::value>;
     static constexpr bool value = type::value;
   };

@@ -364,6 +364,9 @@ if (BUILD_TESTING)
                        target
                        ${target})
         add_executable(${target} ${fname})
+        if (MSVC)
+            target_compile_options(${target} PRIVATE "/bigobj")
+        endif ()
         if (BUILD_TESTING)
             target_link_libraries(${target}
                                   PRIVATE storage_client_testing

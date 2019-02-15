@@ -29,7 +29,7 @@ using testing_util::ExpectFutureError;
 TEST(FutureTestInt, conform_30_6_5_3) {
   // TODO(coryan) - allocators are not supported for now.
   static_assert(
-      not std::uses_allocator<promise<int>, std::allocator<int>>::value,
+      !std::uses_allocator<promise<int>, std::allocator<int>>::value,
       "promise<int> should use allocators if provided");
 }
 

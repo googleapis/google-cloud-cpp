@@ -38,7 +38,7 @@ namespace internal {
 template <typename T, typename... Args>
 std::unique_ptr<T> make_unique(Args&&... a) {
   static_assert(
-      not std::is_array<T>::value,
+      !std::is_array<T>::value,
       "Sorry, array types not supported in bigtable::internal::make_unique<T>");
   return std::unique_ptr<T>(new T(std::forward<Args>(a)...));
 }

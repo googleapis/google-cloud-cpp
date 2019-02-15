@@ -176,7 +176,7 @@ bool SslLibraryNeedsLocking(std::string const& curl_ssl_id) {
   //    https://curl.haxx.se/libcurl/c/threadsafe.html
   // Only these library prefixes require special configuration for using safely
   // with multiple threads.
-  return (curl_ssl_id.rfind("OpenSSL/1.0", 0) == 0 or
+  return (curl_ssl_id.rfind("OpenSSL/1.0", 0) == 0 ||
           curl_ssl_id.rfind("LibreSSL/2", 0) == 0);
 }
 

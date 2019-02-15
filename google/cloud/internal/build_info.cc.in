@@ -50,7 +50,7 @@ bool is_release() {
     std::transform(
         value.begin(), value.end(), value.begin(),
         [](char c) -> char { return static_cast<char>(std::tolower(c)); });
-    return value == "yes" or value == "1" or value == "true";
+    return value == "yes" || value == "1" || value == "true";
   }();
 
  return is_release;
