@@ -181,7 +181,7 @@ class StatusOr final {
   // it first.
   template <typename U = T>
   typename std::enable_if<
-      not std::is_same<StatusOr, typename std::decay<U>::type>::value,
+      !std::is_same<StatusOr, typename std::decay<U>::type>::value,
       StatusOr>::type&
   operator=(U&& rhs) {
     // There may be shorter ways to express this, but this is fairly readable,

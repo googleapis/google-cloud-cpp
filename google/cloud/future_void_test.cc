@@ -36,7 +36,7 @@ static_assert(
 TEST(FutureTestVoid, conform_30_6_5_3) {
   // TODO(#1364) - allocators are not supported for now.
   static_assert(
-      not std::uses_allocator<promise<void>, std::allocator<int>>::value,
+      !std::uses_allocator<promise<void>, std::allocator<int>>::value,
       "promise<void> should use allocators if provided");
 }
 
