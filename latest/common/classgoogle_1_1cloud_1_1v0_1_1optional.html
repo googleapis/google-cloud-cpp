@@ -95,9 +95,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a37d5d200dc79bd7413d9a4dae99216b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae45504134adf4793e35dbcabc3f4893f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html">optional</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html#ae45504134adf4793e35dbcabc3f4893f">operator=</a> (<a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html">optional</a>&lt; T &gt; &amp;&amp;rhs) noexcept</td></tr>
 <tr class="separator:ae45504134adf4793e35dbcabc3f4893f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a133ff9718157ac25cc27f7676e3b1fcc"><td class="memTemplParams" colspan="2">template&lt;typename U  = T&gt; </td></tr>
-<tr class="memitem:a133ff9718157ac25cc27f7676e3b1fcc"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; not std::is_same&lt; <a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html">optional</a>, typename std::decay&lt; U &gt;::type &gt;::<a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html#af05e1b247158cf2616390f1288cc937e">value</a>, <a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html">optional</a> &gt;::type &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html#a133ff9718157ac25cc27f7676e3b1fcc">operator=</a> (U &amp;&amp;rhs)</td></tr>
-<tr class="separator:a133ff9718157ac25cc27f7676e3b1fcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98382b53cd0735dab58f5784f6c6df63"><td class="memTemplParams" colspan="2">template&lt;typename U  = T&gt; </td></tr>
+<tr class="memitem:a98382b53cd0735dab58f5784f6c6df63"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; !std::is_same&lt; <a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html">optional</a>, typename std::decay&lt; U &gt;::type &gt;::<a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html#af05e1b247158cf2616390f1288cc937e">value</a>, <a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html">optional</a> &gt;::type &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html#a98382b53cd0735dab58f5784f6c6df63">operator=</a> (U &amp;&amp;rhs)</td></tr>
+<tr class="separator:a98382b53cd0735dab58f5784f6c6df63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21f164c4bfd25b2be6038f4bd0166c0e"><td class="memItemLeft" align="right" valign="top">constexpr T const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html#a21f164c4bfd25b2be6038f4bd0166c0e">operator-&gt;</a> () const</td></tr>
 <tr class="separator:a21f164c4bfd25b2be6038f4bd0166c0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff0f79c89d43802df248fd93e6cbb526"><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html#aff0f79c89d43802df248fd93e6cbb526">operator-&gt;</a> ()</td></tr>
@@ -732,8 +732,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a133ff9718157ac25cc27f7676e3b1fcc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a133ff9718157ac25cc27f7676e3b1fcc">&#9670;&nbsp;</a></span>operator=() <span class="overload">[3/3]</span></h2>
+<a id="a98382b53cd0735dab58f5784f6c6df63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98382b53cd0735dab58f5784f6c6df63">&#9670;&nbsp;</a></span>operator=() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -746,7 +746,7 @@ template&lt;typename U  = T&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::enable_if&lt; not std::is_same&lt;<a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html">optional</a>, typename std::decay&lt;U&gt;::type&gt;::<a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html#af05e1b247158cf2616390f1288cc937e">value</a>, <a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html">optional</a>&gt;::type&amp; <a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html">google::cloud::v0::optional</a>&lt; T &gt;::operator= </td>
+          <td class="memname">std::enable_if&lt; !std::is_same&lt;<a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html">optional</a>, typename std::decay&lt;U&gt;::type&gt;::<a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html#af05e1b247158cf2616390f1288cc937e">value</a>, <a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html">optional</a>&gt;::type&amp; <a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html">google::cloud::v0::optional</a>&lt; T &gt;::operator= </td>
           <td>(</td>
           <td class="paramtype">U &amp;&amp;&#160;</td>
           <td class="paramname"><em>rhs</em></td><td>)</td>
