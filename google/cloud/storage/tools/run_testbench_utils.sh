@@ -75,17 +75,29 @@ start_testbench() {
   echo "Launching testbench emulator in the background"
   trap kill_testbench EXIT
 
-  # The tests typically run in a Docker container, where the ports are largely
-  # free; when using in manual tests, you can set EMULATOR_PORT.
-  local -r testbench_port=${TESTBENCH_PORT:-8000}
-
-  gunicorn --bind 0.0.0.0:${testbench_port} \
+  gunicorn --bind 0.0.0.0:0 \
       --worker-class gevent \
       --access-logfile - \
       --pythonpath "${PROJECT_ROOT}/google/cloud/storage/testbench" \
       testbench:application \
       >testbench.log 2>&1 </dev/null &
   TESTBENCH_PID=$!
+
+  local testbench_port="0"
+  for attempt in $(seq 1 8); do
+    if grep -q 'Listening at: http://0.0.0.0:' testbench.log; then
+      testbench_port=$(
+          grep -m 1 'Listening at: http://0.0.0.0:' testbench.log | \
+          egrep -o 'http://0.0.0.0:[0-9]+' | sed 's/.*://')
+      break
+    fi
+    sleep 1
+  done
+
+  if [[ "${testbench_port}" = "0" ]]; then
+    echo "Cannot find listening port for testbench." >&2
+    exit 1
+  fi
 
   export HTTPBIN_ENDPOINT="http://localhost:${testbench_port}/httpbin"
   export CLOUD_STORAGE_TESTBENCH_ENDPOINT="http://localhost:${testbench_port}"
