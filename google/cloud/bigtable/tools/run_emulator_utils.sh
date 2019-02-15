@@ -52,11 +52,13 @@ wait_for_port() {
   local emulator_port="0"
   local -r expected='Cloud Bigtable emulator running on'
   for attempt in $(seq 1 8); do
-    if head -1 "${logfile}" | grep -q "${expected}"; then
+    if grep -q "${expected}" "${logfile}"; then
        # The port number is whatever is after the last ':'. Note that on IPv6
        # there may be multiple ':' characters, and recall that regular
-       # expressions are greedy.
-       emulator_port=$(head -1 "${logfile}" | sed 's/^.*://')
+       # expressions are greedy. If grep has multiple matches this breaks,
+       # which is Okay because then the emulator is exhibiting unexpected
+       # behavior.
+       emulator_port=$(grep "${expected}" "${logfile}" | sed 's/^.*://')
        break
     fi
     sleep 1
