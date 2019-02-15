@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_MUTATION_BATCHER_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_MUTATION_BATCHER_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MUTATION_BATCHER_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MUTATION_BATCHER_H_
 
 #include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/mutations.h"
+#include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/status.h"
@@ -31,26 +32,18 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace noex {
-class Table;
-}  // namespace noex
-
-namespace internal {
-
-// Type of callback executed on mutations completion. Just an alias for user
-// convenience.
-using AsyncApplyCompletionCallback =
-    std::function<void(CompletionQueue&, grpc::Status&)>;
-// Type of callback executed on mutations admission. Just an alias for user
-// convenience.
-using AsyncApplyAdmissionCallback = std::function<void(CompletionQueue&)>;
-
 /**
  * Objects of this class pack single row mutations into bulk mutations.
  *
- * This class has two responsibilities:
- *  * packing mutations in batches
- *  * not admitting too many mutations (AKA flow control AKA backpressure)
+ * In order to maximize throughput when applying a lot of mutations to Cloud
+ * Bigtable, one should pack the mutations in BulkMutations. This class helps
+ * in doing so. Instead of operating on stateless `Table` object, one should
+ * create a `MutationBatcher` and use its `AsyncApply` member function instead
+ * of `Table::AsyncApply`. It has large internal buffers to accumulate the
+ * `SingleRowMutations` into batches.
+ *
+ * Objects of this class also signal back-pressure to their users in case the
+ * buffers fill up. This way, a simple flow control can be achieved.
  */
 class MutationBatcher {
  public:
@@ -88,31 +81,85 @@ class MutationBatcher {
     size_t max_oustanding_size;
   };
 
-  MutationBatcher(noex::Table& table, Options options = Options())
-      : table_(table),
+  MutationBatcher(Table table, Options options = Options())
+      : table_(std::move(table)),
         options_(options),
         num_outstanding_batches_(),
         oustanding_size_(),
         cur_batch_(std::make_shared<Batch>()) {}
 
-  std::shared_ptr<AsyncOperation> AsyncApply(
-      CompletionQueue& cq, AsyncApplyCompletionCallback completion_callback,
-      AsyncApplyAdmissionCallback admission_callback, SingleRowMutation mut);
+  /**
+   * Asynchronously apply mutation.
+   *
+   * The mutation will most likely be batched together with others to optimize
+   * for throughput. As a result, latency is likely to be worse than
+   * `Table::AsyncApply`.
+   *
+   * @param mut the mutation. Note that this function takes ownership
+   *    (and then discards) the data in the mutation.  In general, a
+   *    `SingleRowMutation` can be used to modify and/or delete
+   *    multiple cells, across different columns and column families.
+   * @param cq the completion queue that will execute the asynchronous
+   *    calls, the application must ensure that one or more threads are
+   *    blocked on `cq.Run()`.
+   *
+   * @return *admission* and *completion* futures
+   *
+   * The *completion* future will report the mutation's status once it
+   * completes.
+   *
+   * The admission future should be used for flow control. In order to bound the
+   * memory usage used by `MutationBatcher`, one should not submit more
+   * mutations before the admission future is satisfied. Put another way, this
+   * future will be satisfied when the mutation is admitted to
+   * `MutationBatcher`'s internal buffers. In most cases this future will be
+   * already satisfied at this function's completion.
+   *
+   * One should not make assumptions on which future will be satisfied first.
+   *
+   * This quasi-synchronous example shows the intended use:
+   * @code
+   * bigtable::MutationBatcher batcher(bigtable::Table(...args...));
+   * bigtable::CompletionQueue cq;
+   * std::thread cq_runner([]() { cq.Run(); });
+   *
+   * while (HasMoreMutations()) {
+   *   auto admission_completion = batcher.AsyncApply(cq, GenerateMutation());
+   *   auto& admission_future = admission_completion.first;
+   *   auto& completion_future = admission_completion.second;
+   *   completion_future.then([](future<Status> completion_status) {
+   *       // handle mutation completion asynchronously
+   *       });
+   *   // Potentially slow down submission not to make buffers in
+   *   // MutationBatcher grow unbounded.
+   *   admission_future.get();
+   * }
+   * // wait for all mutations to complete
+   * cq.Shutdown();
+   * cq_runner.join();
+   * @endcode
+   */
+  std::pair<future<void>, future<Status>> AsyncApply(CompletionQueue& cq,
+                                                     SingleRowMutation mut);
 
  private:
+  using CompletionPromise = promise<Status>;
+  using AdmissionPromise = promise<void>;
+  struct Batch;
+
   /**
    * This structure represents a single mutation before it is admitted.
    */
   struct PendingSingleRowMutation {
     PendingSingleRowMutation(SingleRowMutation mut_arg,
-                             AsyncApplyCompletionCallback completion_callback,
-                             AsyncApplyAdmissionCallback admission_callback);
+                             CompletionPromise&& completion_promise,
+                             AdmissionPromise&& admission_promise);
 
     SingleRowMutation mut;
     size_t num_mutations;
     size_t request_size;
-    AsyncApplyCompletionCallback completion_callback;
-    AsyncApplyAdmissionCallback admission_callback;
+    CompletionPromise completion_promise;
+    AdmissionPromise admission_promise;
   };
 
   /**
@@ -131,7 +178,7 @@ class MutationBatcher {
    * This class represents a single batch of mutations sent in one RPC.
    *
    * Objects of this class hold the accumulated mutations, their completion
-   * callbacks and basic statistics.
+   * promises and basic statistics.
    *
    * Objects of this class don't need separate synchronization.
    * There are 2 important stages of these objects' lifecycle: when mutations
@@ -149,10 +196,10 @@ class MutationBatcher {
 
     struct MutationData {
       MutationData(PendingSingleRowMutation pending)
-          : callback(std::move(pending.completion_callback)),
+          : completion_promise(std::move(pending.completion_promise)),
             num_mutations(pending.num_mutations),
             request_size(pending.request_size) {}
-      AsyncApplyCompletionCallback callback;
+      CompletionPromise completion_promise;
       int num_mutations;
       int request_size;
     };
@@ -232,7 +279,7 @@ class MutationBatcher {
   void Admit(PendingSingleRowMutation mut);
 
   std::mutex mu_;
-  noex::Table& table_;
+  Table table_;
   Options options_;
 
   /// Num batches sent but not completed.
@@ -244,17 +291,16 @@ class MutationBatcher {
   std::shared_ptr<Batch> cur_batch_;
 
   /**
-   * These are the mutations which have not been admitted yet. If the user is
-   * properly reacting to `admission_callback`s, there should be very few of
+   * These are the mutations which have not been admission yet. If the user is
+   * properly reacting to `admission_promise`s, there should be very few of
    * these (likely no more than one).
    */
   std::queue<PendingSingleRowMutation> pending_mutations_;
 };
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_MUTATION_BATCHER_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MUTATION_BATCHER_H_

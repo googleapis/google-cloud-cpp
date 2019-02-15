@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/mutation_batcher.h"
+#include "google/cloud/bigtable/mutation_batcher.h"
 #include "google/cloud/bigtable/grpc_error.h"
-#include "google/cloud/bigtable/testing/internal_table_test_fixture.h"
 #include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
+#include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/future.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -26,8 +27,6 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
-
 namespace btproto = google::bigtable::v2;
 namespace bt = ::google::cloud::bigtable;
 using namespace ::testing;
@@ -66,7 +65,7 @@ struct MutationState {
 
   bool admitted;
   bool completed;
-  grpc::Status completion_status;
+  google::cloud::Status completion_status;
 };
 
 class MutationStates {
@@ -123,8 +122,7 @@ auto generate_response_generator = [](ResultPiece const& result_piece) {
   };
 };
 
-class MutationBatcherTest
-    : public bigtable::testing::internal::TableTestFixture {
+class MutationBatcherTest : public bigtable::testing::TableTestFixture {
  protected:
   MutationBatcherTest()
       : cq_impl_(std::make_shared<bigtable::testing::MockCompletionQueue>()),
@@ -209,13 +207,16 @@ class MutationBatcherTest
 
   std::shared_ptr<MutationState> Apply(SingleRowMutation mut) {
     auto res = std::make_shared<MutationState>();
-    batcher_->AsyncApply(cq_,
-                         [res](CompletionQueue&, grpc::Status& status) {
-                           res->completed = true;
-                           res->completion_status = status;
-                         },
-                         [res](CompletionQueue&) { res->admitted = true; },
-                         std::move(mut));
+    auto admission_and_completion = batcher_->AsyncApply(cq_, std::move(mut));
+    admission_and_completion.first.then([res](future<void> f) {
+      f.get();
+      res->admitted = true;
+    });
+    admission_and_completion.second.then(
+        [res](future<google::cloud::Status> status) {
+          res->completed = true;
+          res->completion_status = status.get();
+        });
     return res;
   }
 
@@ -454,7 +455,7 @@ TEST_F(MutationBatcherTest, ErrorsArePropagated) {
 
   EXPECT_TRUE(state1.AllCompleted());
   EXPECT_EQ(0, NumOperationsOustanding());
-  EXPECT_TRUE(state1.states_[0]->completion_status.ok());
+  EXPECT_STATUS_OK(state1.states_[0]->completion_status);
   EXPECT_FALSE(state1.states_[1]->completion_status.ok());
 }
 
@@ -596,7 +597,7 @@ TEST_F(MutationBatcherTest, StreamingWorks) {
   // First mutation succeed in the first response piece.
   ReadPiece();
   EXPECT_TRUE(state1->completed);
-  EXPECT_TRUE(state1->completion_status.ok());
+  EXPECT_STATUS_OK(state1->completion_status);
   EXPECT_FALSE(state2->completed);
   EXPECT_FALSE(state3->completed);
   EXPECT_FALSE(state4->completed);
@@ -618,7 +619,7 @@ TEST_F(MutationBatcherTest, StreamingWorks) {
   EXPECT_TRUE(state3->completed);
   EXPECT_FALSE(state3->completion_status.ok());
   EXPECT_TRUE(state4->completed);
-  EXPECT_TRUE(state4->completion_status.ok());
+  EXPECT_STATUS_OK(state4->completion_status);
   EXPECT_EQ(1, NumOperationsOustanding());
 
   FinishStream();
@@ -636,7 +637,7 @@ TEST_F(MutationBatcherTest, StreamingWorks) {
   // The retried mutation should finish.
   ReadPiece();
   EXPECT_TRUE(state2->completed);
-  EXPECT_TRUE(state2->completion_status.ok());
+  EXPECT_STATUS_OK(state2->completion_status);
   EXPECT_EQ(1, NumOperationsOustanding());
 
   FinishStream();
@@ -717,7 +718,7 @@ TEST_F(MutationBatcherTest, MutationsAreAdmittedMidStream) {
   EXPECT_TRUE(state3->admitted);
   EXPECT_FALSE(state4->admitted);
   EXPECT_TRUE(state1->completed);
-  EXPECT_TRUE(state1->completion_status.ok());
+  EXPECT_STATUS_OK(state1->completion_status);
   EXPECT_FALSE(state2->completed);
   EXPECT_FALSE(state3->completed);
   EXPECT_FALSE(state4->completed);
@@ -814,7 +815,6 @@ TEST_F(MutationBatcherTest, BatchReleasesSlotBeforeRetry) {
   EXPECT_EQ(0, NumOperationsOustanding());
 }
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud

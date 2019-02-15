@@ -25,6 +25,8 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+class MutationBatcher;
+
 /**
  * The main interface to interact with data in a Cloud Bigtable table.
  *
@@ -381,6 +383,7 @@ class Table {
   }
 
  private:
+  friend class MutationBatcher;
   noex::Table impl_;
 };
 
