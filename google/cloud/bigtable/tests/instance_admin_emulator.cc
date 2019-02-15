@@ -540,8 +540,8 @@ int run_server(int argc, char* argv[]) {
   DefaultEmbeddedServer server(server_address);
   // Need to flush so the output becomes immediately visible to the driver
   // scripts.
-  std::cout << "Cloud Bigtable emulator running on " << server.address()
-            << std::endl;
+  std::cout << "Cloud Bigtable emulator running on " << server.address() << '\n'
+            << std::flush;
   server.Wait();
 
   return 0;
