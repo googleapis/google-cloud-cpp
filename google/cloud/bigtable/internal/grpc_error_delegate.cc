@@ -61,7 +61,6 @@ StatusCode MapStatusCode(grpc::StatusCode const& code) {
     case grpc::StatusCode::DATA_LOSS:
       return StatusCode::kDataLoss;
     default:
-      std::cerr << "Unexpected grpc::StatusCode: " << code << "\n";
       return StatusCode::kUnknown;
   }
 }
