@@ -15,7 +15,6 @@
 #include "google/cloud/firestore/field_path.h"
 #include <array>
 #include <cctype>
-#include <ciso646>
 
 namespace google {
 namespace cloud {

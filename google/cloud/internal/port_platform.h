@@ -26,10 +26,6 @@
  * of the platform problems.
  */
 
-// With Microsoft Visual Studio we need an extra header for the word boolean
-// operators.
-#include <ciso646>
-
 // Turn off clang-format because these nested #if/#endif blocks are more
 // readable with indentation.
 // clang-format off
