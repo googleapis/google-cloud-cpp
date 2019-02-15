@@ -47,8 +47,8 @@ TEST(Status, StatusCodeToString) {
   EXPECT_EQ("INTERNAL", StatusCodeToString(StatusCode::kInternal));
   EXPECT_EQ("UNAVAILABLE", StatusCodeToString(StatusCode::kUnavailable));
   EXPECT_EQ("DATA_LOSS", StatusCodeToString(StatusCode::kDataLoss));
-  EXPECT_EQ("UNEXPECTED_STATUS_CODE=-1",
-            StatusCodeToString(StatusCode::kDoNotUse));
+  EXPECT_EQ("UNEXPECTED_STATUS_CODE=42",
+            StatusCodeToString(static_cast<StatusCode>(42)));
 }
 
 }  // namespace

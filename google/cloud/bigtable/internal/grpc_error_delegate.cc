@@ -60,9 +60,9 @@ StatusCode MapStatusCode(grpc::StatusCode const& code) {
       return StatusCode::kUnavailable;
     case grpc::StatusCode::DATA_LOSS:
       return StatusCode::kDataLoss;
-    case grpc::StatusCode::DO_NOT_USE:
     default:
-      return StatusCode::kDoNotUse;
+      std::cerr << "Unexpected grpc::StatusCode: " << code << "\n";
+      return StatusCode::kUnknown;
   }
 }
 }  // namespace

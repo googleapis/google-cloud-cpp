@@ -49,7 +49,6 @@ enum class StatusCode {
   kInternal = 13,
   kUnavailable = 14,
   kDataLoss = 15,
-  kDoNotUse = -1
 };
 
 std::string StatusCodeToString(StatusCode code);
