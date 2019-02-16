@@ -28,7 +28,7 @@ namespace oauth2 {
 /**
  * Interface for OAuth 2.0 credentials used to access Google Cloud services.
  *
- * Instantiating a specific kind of Credentials should usually be done via the
+ * Instantiating a specific kind of `Credentials` should usually be done via the
  * convenience methods declared in google_credentials.h.
  *
  * @see https://cloud.google.com/docs/authentication/ for an overview of
@@ -39,13 +39,13 @@ class Credentials {
   virtual ~Credentials() = default;
 
   /**
-   * Returns a pair consisting of:
-   * - The status containing failure details if we were unable to obtain a
-   *   value for the Authorization header. For credentials that need to be
-   *   periodically refreshed, this might include failure details from a refresh
-   *   HTTP request. Otherwise an OK status is returned.
-   * - The value for the Authorization header in HTTP requests, or an empty
-   *   string if we were unable to obtain one.
+   * Attempts to obtain a value for the Authorization HTTP header.
+   *
+   * If unable to obtain a value for the Authorization header, which could
+   * happen for `Credentials` that need to be periodically refreshed, the
+   * underyling `Status` will indicate failure details from the refresh HTTP
+   * request. Otherwise, the returned value will contain the Authorization
+   * header to be used in HTTP requests.
    */
   virtual StatusOr<std::string> AuthorizationHeader() = 0;
 };
