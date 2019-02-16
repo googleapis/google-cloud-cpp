@@ -295,12 +295,19 @@ run_all_data_examples() {
 
   # Use the same table in all the tests.
   local -r TABLE="data-ex-tbl-$(date +%s)-${RANDOM}"
+  local -r PREFIX="root/0/1/"
+  local -r ROW_KEY_1="root/0/0/1"
+  local -r ROW_KEY_2="root/0/1/0"
+
   run_example ./table_admin_snippets create-table "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets apply "${project_id}" "${instance_id}" "${TABLE}"  
+  run_example ./data_snippets apply "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets bulk-apply "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets read-rows-with-limit "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets read-rows "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets populate-table-hierarchy "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets read-rowset "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_1}" "${ROW_KEY_2}"
+  run_example ./data_snippets read-rowset-prefix "${project_id}" "${instance_id}" "${TABLE}" "${PREFIX}"
   run_example ./data_snippets sample-rows "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets sample-rows-collections "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
@@ -416,25 +423,6 @@ run_hello_world_example() {
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
   run_example_usage ./bigtable_hello_world
-}
-################################################
-#
-# This function allows us to keep a single place where all the examples are
-# listed. We want to run these examples in the continuous integration builds
-# because they rot otherwise.
-run_rowset_examples() {
-  local project_id=$1
-  local instance_id=$2
-  shift 2
-
-  # Use the same table in all the tests.
-  local -r TABLE="rowset-tbl-${RANDOM}"
-
-  run_example ./bigtable_rowset "${project_id}" "${instance_id}" "${TABLE}"
-
-  # Verify that calling without a command produces the right exit status and
-  # some kind of Usage message.
-  run_example_usage ./bigtable_rowset
 }
 ################################################
 # Run the Bigtable hello app profile example.

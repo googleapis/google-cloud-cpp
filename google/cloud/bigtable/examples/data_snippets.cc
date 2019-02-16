@@ -232,6 +232,107 @@ void ReadRowsWithLimit(google::cloud::bigtable::Table table, int argc,
   (std::move(table));
 }
 
+void PopulateTableHierarchy(google::cloud::bigtable::Table table, int argc,
+                            char* argv[]) {
+  if (argc != 1) {
+    throw Usage{
+        "populate-table-hierarchy: <project-id> <instance-id> <table-id>"};
+  }
+
+  //! [populate table hierarchy]
+  [](google::cloud::bigtable::Table table) {
+    // Write several rows.
+    int q = 0;
+    for (int i = 0; i != 4; ++i) {
+      for (int j = 0; j != 4; ++j) {
+        for (int k = 0; k != 4; ++k) {
+          std::string row_key = "root/" + std::to_string(i) + "/";
+          row_key += std::to_string(j) + "/";
+          row_key += std::to_string(k);
+          google::cloud::bigtable::SingleRowMutation mutation(row_key);
+          mutation.emplace_back(google::cloud::bigtable::SetCell(
+              "fam", "col0", "value-" + std::to_string(q)));
+          ++q;
+          table.Apply(std::move(mutation));
+        }
+      }
+    }
+  }
+  //! [populate table hierarchy]
+  (std::move(table));
+}
+
+void ReadRowSet(google::cloud::bigtable::Table table, int argc, char* argv[]) {
+  if (argc < 2) {
+    throw Usage{
+        "read-rowset: <project-id> <instance-id> <table-id> [row_keys]"};
+  }
+
+  std::vector<std::string> row_keys;
+  while (argc > 1) {
+    row_keys.emplace_back(ConsumeArg(argc, argv));
+  }
+
+  //! [read rowset]
+  [&row_keys](google::cloud::bigtable::Table table) {
+    namespace cbt = google::cloud::bigtable;
+    auto row_set = cbt::RowSet();
+
+    for (auto row_key : row_keys) {
+      row_set.Append(row_key);
+    }
+
+    auto filter = google::cloud::bigtable::Filter::Latest(1);
+
+    for (auto& row : table.ReadRows(std::move(row_set), filter)) {
+      std::cout << row.row_key() << ":\n";
+      for (auto& cell : row.cells()) {
+        std::cout << "\t" << cell.family_name() << ":"
+                  << cell.column_qualifier() << "    @ "
+                  << cell.timestamp().count() << "us\n"
+                  << "\t\"" << cell.value() << '"' << "\n";
+      }
+    }
+    std::cout << std::flush;
+  }
+  //! [read rowset]
+  (std::move(table));
+}
+
+void ReadRowSetPrefix(google::cloud::bigtable::Table table, int argc,
+                      char* argv[]) {
+  if (argc != 2) {
+    throw Usage{
+        "read-rowset-prefix: <project-id> <instance-id> <table-id> <prefix>"};
+  }
+
+  std::string prefix = ConsumeArg(argc, argv);
+
+  //! [read rowset prefix]
+  [&prefix](google::cloud::bigtable::Table table) {
+    namespace cbt = google::cloud::bigtable;
+    auto row_set = cbt::RowSet();
+
+    auto range_prefix = cbt::RowRange::Prefix(prefix);
+    row_set.Append(range_prefix);
+
+    auto filter = google::cloud::bigtable::Filter::Latest(1);
+
+    for (auto& row : table.ReadRows(std::move(row_set), filter)) {
+      std::cout << row.row_key() << ":\n";
+      for (auto& cell : row.cells()) {
+        std::cout << "\t" << cell.family_name() << ":"
+                  << cell.column_qualifier() << "    @ "
+                  << cell.timestamp().count() << "us\n"
+                  << "\t\"" << cell.value() << '"' << "\n";
+      }
+    }
+    std::cout << std::flush;
+  }
+  //! [read rowset prefix]
+  (std::move(table));
+}
+
 void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
                     char* argv[]) {
   if (argc != 1) {
@@ -343,6 +444,9 @@ int main(int argc, char* argv[]) try {
       {"bulk-apply", &BulkApply},
       {"read-row", &ReadRow},
       {"read-rows", &ReadRows},
+      {"populate-table-hierarchy", &PopulateTableHierarchy},
+      {"read-rowset", &ReadRowSet},
+      {"read-rowset-prefix", &ReadRowSetPrefix},
       {"read-rows-with-limit", &ReadRowsWithLimit},
       {"check-and-mutate", &CheckAndMutate},
       {"read-modify-write", &ReadModifyWrite},
