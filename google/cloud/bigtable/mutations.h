@@ -277,8 +277,8 @@ class SingleRowMutation {
 
   /// Remove the contents of the mutation.
   void Clear() {
-    google::bigtable::v2::MutateRowsRequest::Entry entry;
-    MoveTo(&entry);
+    row_key_.clear();
+    ops_.Clear();
   }
 
  private:
