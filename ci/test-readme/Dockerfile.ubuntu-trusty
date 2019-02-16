@@ -22,9 +22,11 @@ MAINTAINER "Carlos O'Ryan <coryan@google.com>"
 
 ## [START INSTALL.md]
 
-# Install the minimal development tools:
+# Install the minimal development tools.
 
 ## [START README.md]
+
+# We use the `ubuntu-toolchain-r` PPA to get a modern version of CMake:
 
 # ```bash
 RUN apt update && apt install -y software-properties-common
@@ -32,6 +34,18 @@ RUN add-apt-repository ppa:ubuntu-toolchain-r/test -y
 RUN apt update && \
     apt install -y cmake3 git gcc g++ make pkg-config tar wget zlib1g-dev
 # ```
+
+## [END README.md]
+
+## [START IGNORED]
+# Verify that the tools above are enough to compile google-cloud-cpp when using
+# external projects.
+WORKDIR /home/build/external
+COPY . /home/build/external
+RUN cmake -H. -Bbuild-output -DCMAKE_BUILD_TYPE=Debug
+RUN cmake --build build-output -- -j $(nproc)
+RUN (cd build-output && ctest --output-on-failure)
+## [END IGNORED]
 
 # Ubuntu:14.04 ships with a very old version of OpenSSL, this version is not
 # supported by gRPC. We need to compile and install OpenSSL-1.0.2 from source:

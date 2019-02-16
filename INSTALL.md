@@ -482,7 +482,9 @@ sudo cmake --build . --target install
 
 ### Ubuntu (14.04 - Trusty Tahr)
 
-Install the minimal development tools:
+Install the minimal development tools.
+
+We use the `ubuntu-toolchain-r` PPA to get a modern version of CMake:
 
 ```bash
 sudo apt update && sudo apt install -y software-properties-common
@@ -682,10 +684,10 @@ sudo cmake --build . --target install
 
 ### CentOS (7)
 
-First install the development tools and OpenSSL. The development tools
-distributed with CentOS (notably CMake) are too old to build
-`google-cloud-cpp` and its dependencies. In these instructions, we use
-`cmake3` obtained from
+First install the development tools and OpenSSL.
+
+The development tools distributed with CentOS (notably CMake) are too old to
+build `google-cloud-cpp`. In these instructions, we use `cmake3` obtained from
 [Software Collections](https://www.softwarecollections.org/).
 
 ```bash
