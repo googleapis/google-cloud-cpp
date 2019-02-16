@@ -5,7 +5,6 @@ var searchData=
   ['kcancelled',['kCancelled',['../namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9ca971493a769ad0aed23946733ede4a8f1',1,'google::cloud::v0']]],
   ['kdataloss',['kDataLoss',['../namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9ca3118b7fae62033f78581e16942bbdf32',1,'google::cloud::v0']]],
   ['kdeadlineexceeded',['kDeadlineExceeded',['../namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9ca4d40d05ef9a0c7b22fb80d1bbf8a72df',1,'google::cloud::v0']]],
-  ['kdonotuse',['kDoNotUse',['../namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9ca7d505fad180733ed9e9d14815e955f3a',1,'google::cloud::v0']]],
   ['kfailedprecondition',['kFailedPrecondition',['../namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9ca17f82936b75ec2c8d1665298cadde372',1,'google::cloud::v0']]],
   ['kinternal',['kInternal',['../namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9ca96509148247c627a753b021d6dbea774',1,'google::cloud::v0']]],
   ['kinvalidargument',['kInvalidArgument',['../namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9ca80fdc050363ea6925fa2e7eb7f0a94a0',1,'google::cloud::v0']]],

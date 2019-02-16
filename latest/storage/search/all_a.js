@@ -5,7 +5,6 @@ var searchData=
   ['kcancelled',['kCancelled',['../../common/namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9ca971493a769ad0aed23946733ede4a8f1',1,'google::cloud::v0']]],
   ['kdataloss',['kDataLoss',['../../common/namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9ca3118b7fae62033f78581e16942bbdf32',1,'google::cloud::v0']]],
   ['kdeadlineexceeded',['kDeadlineExceeded',['../../common/namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9ca4d40d05ef9a0c7b22fb80d1bbf8a72df',1,'google::cloud::v0']]],
-  ['kdonotuse',['kDoNotUse',['../../common/namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9ca7d505fad180733ed9e9d14815e955f3a',1,'google::cloud::v0']]],
   ['key',['key',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1EncryptionKeyData.html#a18e20c87f7e5da7100b32df9fde2c431',1,'google::cloud::storage::v0::EncryptionKeyData']]],
   ['key_5fsha256',['key_sha256',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1CustomerEncryption.html#a2e6896c7f0b57e0c7a998bf92c5bfd9c',1,'google::cloud::storage::v0::CustomerEncryption']]],
   ['kfailedprecondition',['kFailedPrecondition',['../../common/namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9ca17f82936b75ec2c8d1665298cadde372',1,'google::cloud::v0']]],
