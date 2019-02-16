@@ -49,6 +49,7 @@ these dependencies.
 - [Fedora 29](#fedora-29)
 - [openSUSE (Tumbleweed)](#opensuse-tumbleweed)
 - [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804--bionic-beaver)
+- [Ubuntu (16.04 - Xenial Xerus)](#ubuntu-1604--xenial-xerus)
 - [CentOS 7](#centos-7)
 
 ### Fedora (29)
@@ -221,6 +222,114 @@ sudo ldconfig
 
 Likewise, Ubuntu has packages for grpc-1.3.x, but this version is too old for
 the Google Cloud Platform APIs:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/grpc/grpc/archive/v1.17.2.tar.gz
+tar -xf v1.17.2.tar.gz
+cd $HOME/Downloads/grpc-1.17.2
+make -j $(nproc)
+sudo make install
+sudo ldconfig
+```
+
+#### google-cloud-cpp
+
+Finally we can install `google-cloud-cpp`. Note that we use `pkg-config` to
+discover the options for gRPC:
+
+```bash
+cd $HOME/google-cloud-cpp
+cmake -H. -Bbuild-output \
+    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
+    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
+    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
+cmake --build build-output -- -j $(nproc)
+cd $HOME/google-cloud-cpp/build-output
+ctest --output-on-failure
+sudo cmake --build . --target install
+```
+
+
+### Ubuntu (16.04 - Xenial Xerus)
+
+Install the minimal development tools:
+
+```bash
+sudo apt update && \
+sudo apt install -y build-essential cmake git gcc g++ cmake \
+        libcurl4-openssl-dev libssl-dev make \
+        pkg-config tar wget zlib1g-dev
+```
+
+#### crc32c
+
+There is no Ubuntu-16.04 package for this library. To install it use:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
+tar -xf 1.0.6.tar.gz
+cd $HOME/Downloads/crc32c-1.0.6
+cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DCRC32C_BUILD_TESTS=OFF \
+      -DCRC32C_BUILD_BENCHMARKS=OFF \
+      -DCRC32C_USE_GLOG=OFF \
+      -H. -B.build/crc32c
+sudo cmake --build .build/crc32c --target install -- -j $(nproc)
+sudo ldconfig
+```
+
+#### Protobuf
+
+While protobuf-2.6 is distributed with Ubuntu-16.04, the Google Cloud Plaform
+proto files require more recent versions (circa 3.4.x). To manually install a
+more recent version use:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
+tar -xf v3.6.1.tar.gz
+cd $HOME/Downloads/protobuf-3.6.1/cmake
+cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -H. -B.build
+sudo cmake --build .build --target install -- -j $(nproc)
+sudo ldconfig
+```
+
+#### c-ares
+
+Recent versions of gRPC require c-ares >= 1.11, while Ubuntu-16.04
+distributes c-ares-1.10. We need some additional development tools to compile
+this library:
+
+```bash
+sudo apt update && \
+sudo apt install -y automake libtool
+```
+
+After installing these tools we can manually install a newer version
+of c-ares:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
+tar -xf cares-1_14_0.tar.gz
+cd $HOME/Downloads/c-ares-cares-1_14_0
+./buildconf && ./configure && make -j $(nproc)
+sudo make install
+sudo ldconfig
+```
+
+#### gRPC
+
+Ubuntu-16.04 does not provide packages for the C++ gRPC bindings, install the
+library manually:
 
 ```bash
 cd $HOME/Downloads

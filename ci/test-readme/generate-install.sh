@@ -70,6 +70,7 @@ these dependencies.
 - [Fedora 29](#fedora-29)
 - [openSUSE (Tumbleweed)](#opensuse-tumbleweed)
 - [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804--bionic-beaver)
+- [Ubuntu (16.04 - Xenial Xerus)](#ubuntu-1604--xenial-xerus)
 - [CentOS 7](#centos-7)
 END_OF_PREAMBLE
 
@@ -84,6 +85,10 @@ echo "### OpenSUSE (Tumbleweed)"
 echo
 echo "### Ubuntu (18.04 - Bionic Beaver)"
 "${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.ubuntu"
+
+echo
+echo "### Ubuntu (16.04 - Xenial Xerus)"
+"${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.ubuntu-xenial"
 
 echo
 echo "### CentOS (7)"
