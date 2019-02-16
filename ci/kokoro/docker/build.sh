@@ -63,6 +63,9 @@ echo "================================================================"
 
 echo "================================================================"
 echo "Creating Docker image with all the development tools."
+# We do not want to print the log unless there is an error, so disable the -e
+# flag. Later, we will want to print out the emulator(s) logs *only* if there
+# is an error, so disabling from this point on is the right choice.
 set +e
 "${PROJECT_ROOT}/ci/travis/install-linux.sh" \
     >create-build-docker-image.log 2>&1 </dev/null
@@ -72,14 +75,15 @@ if [[ "$?" != 0 ]]; then
 fi
 echo "================================================================"
 
-set -e
 echo "================================================================"
 echo "Running the full build."
-
 export NEEDS_CCACHE=no
 "${PROJECT_ROOT}/ci/travis/build-linux.sh"
+exit_status=$?
 echo "================================================================"
 
 echo "================================================================"
 "${PROJECT_ROOT}/ci/travis/dump-logs.sh"
 echo "================================================================"
+
+exit ${exit_status}
