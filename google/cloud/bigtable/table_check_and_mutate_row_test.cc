@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 
 namespace bigtable = google::cloud::bigtable;
@@ -32,12 +33,15 @@ TEST_F(TableCheckAndMutateRowTest, Simple) {
   EXPECT_CALL(*client_, CheckAndMutateRow(_, _, _))
       .WillOnce(Return(grpc::Status::OK));
 
-  table_.CheckAndMutateRow(
+  auto mut = table_.CheckAndMutateRow(
       "foo", bigtable::Filter::PassAllFilter(),
       {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
       {bigtable::SetCell("fam", "col", 0_ms, "it was false")});
+
+  ASSERT_STATUS_OK(mut);
 }
 
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify that Table::CheckAndMutateRow() raises an on failures.
 TEST_F(TableCheckAndMutateRowTest, Failure) {
   using namespace ::testing;
@@ -46,18 +50,10 @@ TEST_F(TableCheckAndMutateRowTest, Failure) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(table_.CheckAndMutateRow(
-                   "foo", bigtable::Filter::PassAllFilter(),
-                   {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
-                   {bigtable::SetCell("fam", "col", 0_ms, "it was false")}),
-               std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      table_.CheckAndMutateRow(
-          "foo", bigtable::Filter::PassAllFilter(),
-          {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
-          {bigtable::SetCell("fam", "col", 0_ms, "it was false")}),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_FALSE(table_.CheckAndMutateRow(
+      "foo", bigtable::Filter::PassAllFilter(),
+      {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
+      {bigtable::SetCell("fam", "col", 0_ms, "it was false")}));
+
 }
+#endif // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

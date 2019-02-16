@@ -319,10 +319,9 @@ class Table {
    * @par Example
    * @snippet data_snippets.cc check and mutate
    */
-  bool CheckAndMutateRow(std::string row_key, Filter filter,
-                         std::vector<Mutation> true_mutations,
-                         std::vector<Mutation> false_mutations);
-
+  StatusOr<bool> CheckAndMutateRow(std::string row_key, Filter filter,
+                                   std::vector<Mutation> true_mutations,
+                                   std::vector<Mutation> false_mutations);
   /**
    * Sample of the row keys in the table, including approximate data sizes.
    *
