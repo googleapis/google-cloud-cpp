@@ -29,6 +29,10 @@ echo "================================================================"
 echo "Update or Install Bazel."
 echo
 
+# macOS does not have sha256sum by default, but `shasum -a 256` does the same
+# thing:
+function sha256sum() { shasum -a 256 "$@" ; } && export -f sha256sum
+
 "${PROJECT_ROOT}/ci/install-bazel.sh" macos
 
 export PATH=$HOME/bin:$PATH
