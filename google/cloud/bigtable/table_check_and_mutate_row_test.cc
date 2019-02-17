@@ -54,6 +54,5 @@ TEST_F(TableCheckAndMutateRowTest, Failure) {
       "foo", bigtable::Filter::PassAllFilter(),
       {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
       {bigtable::SetCell("fam", "col", 0_ms, "it was false")}));
-
 }
-#endif // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

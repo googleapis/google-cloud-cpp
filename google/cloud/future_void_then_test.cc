@@ -68,12 +68,11 @@ TEST(FutureTestVoid, ThenException) {
   EXPECT_TRUE(next.valid());
   EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
 
-  EXPECT_THROW(
-      try { next.get(); } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("test message"));
-        throw;
-      },
-      std::runtime_error);
+  EXPECT_THROW(try { next.get(); } catch (std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("test message"));
+    throw;
+  },
+               std::runtime_error);
   EXPECT_FALSE(next.valid());
 #else
   EXPECT_DEATH_IF_SUPPORTED(p.set_value(), "test message");
@@ -152,12 +151,11 @@ TEST(FutureTestVoid, conform_2_3_3_b) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   p.set_exception(std::make_exception_ptr(std::runtime_error("test message")));
   EXPECT_TRUE(unwrapped.is_ready());
-  EXPECT_THROW(
-      try { unwrapped.get(); } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("test message"));
-        throw;
-      },
-      std::runtime_error);
+  EXPECT_THROW(try { unwrapped.get(); } catch (std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("test message"));
+    throw;
+  },
+               std::runtime_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       p.set_exception(
@@ -183,12 +181,11 @@ TEST(FutureTestVoid, conform_2_3_3_c) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   p2.set_exception(std::make_exception_ptr(std::runtime_error("test message")));
   EXPECT_TRUE(unwrapped.is_ready());
-  EXPECT_THROW(
-      try { unwrapped.get(); } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("test message"));
-        throw;
-      },
-      std::runtime_error);
+  EXPECT_THROW(try { unwrapped.get(); } catch (std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("test message"));
+    throw;
+  },
+               std::runtime_error);
 #else
   std::string expected = "future_error\\[";
   expected += std::make_error_code(std::future_errc::promise_already_satisfied)
@@ -215,12 +212,11 @@ TEST(FutureTestVoid, conform_2_3_3_d) {
   EXPECT_TRUE(unwrapped.is_ready());
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { unwrapped.get(); } catch (std::future_error const& ex) {
-        EXPECT_EQ(std::future_errc::broken_promise, ex.code());
-        throw;
-      },
-      std::future_error);
+  EXPECT_THROW(try { unwrapped.get(); } catch (std::future_error const& ex) {
+    EXPECT_EQ(std::future_errc::broken_promise, ex.code());
+    throw;
+  },
+               std::future_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       unwrapped.get(),
@@ -355,12 +351,11 @@ TEST(FutureTestVoid, conform_2_3_8_e) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   p.set_value();
   EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
-  EXPECT_THROW(
-      try { next.get(); } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("test exception in functor"));
-        throw;
-      },
-      std::runtime_error);
+  EXPECT_THROW(try { next.get(); } catch (std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("test exception in functor"));
+    throw;
+  },
+               std::runtime_error);
   EXPECT_FALSE(next.valid());
 #else
   EXPECT_DEATH_IF_SUPPORTED(p.set_value(), "test exception in functor");
@@ -465,12 +460,11 @@ TEST(FutureTestVoid, conform_2_3_9_d) {
   EXPECT_TRUE(called);
   EXPECT_TRUE(r.is_ready());
 
-  EXPECT_THROW(
-      try { r.get(); } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("test message"));
-        throw;
-      },
-      std::runtime_error);
+  EXPECT_THROW(try { r.get(); } catch (std::runtime_error const& ex) {
+    EXPECT_THAT(ex.what(), HasSubstr("test message"));
+    throw;
+  },
+               std::runtime_error);
 #else
   // With exceptions disabled the program terminates as soon as the exception is
   // set.
@@ -502,12 +496,11 @@ TEST(FutureTestVoid, conform_2_3_9_e) {
   EXPECT_TRUE(called);
   EXPECT_TRUE(r.is_ready());
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { r.get(); } catch (std::future_error const& ex) {
-        EXPECT_EQ(std::future_errc::broken_promise, ex.code());
-        throw;
-      },
-      std::future_error);
+  EXPECT_THROW(try { r.get(); } catch (std::future_error const& ex) {
+    EXPECT_EQ(std::future_errc::broken_promise, ex.code());
+    throw;
+  },
+               std::future_error);
 #else
   // With exceptions disabled setting the value immediately terminates.
   EXPECT_DEATH_IF_SUPPORTED(

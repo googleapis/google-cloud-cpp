@@ -353,9 +353,9 @@ void ReadObjectRange(google::cloud::storage::Client client, int& argc,
   //! [read object range] [START storage_download_byte_range]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
-      std::int64_t start, std::int64_t end) {
-    gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name,
-        gcs::ReadRange(start, end));
+     std::int64_t start, std::int64_t end) {
+    gcs::ObjectReadStream stream =
+        client.ReadObject(bucket_name, object_name, gcs::ReadRange(start, end));
 
     int count = 0;
     std::string line;
@@ -1463,7 +1463,7 @@ int main(int argc, char* argv[]) try {
   }
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char*[])>;
+      std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"list-objects", &ListObjects},
       {"insert-object", &InsertObject},

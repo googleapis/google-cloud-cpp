@@ -231,7 +231,6 @@ void CheckConsistency(google::cloud::bigtable::TableAdmin admin, int argc,
   //! [check consistency]
   [](google::cloud::bigtable::TableAdmin admin, std::string table_id_param,
      std::string consistency_token_param) {
-
     google::cloud::bigtable::TableId table_id(table_id_param);
     google::cloud::bigtable::ConsistencyToken consistency_token(
         consistency_token_param);

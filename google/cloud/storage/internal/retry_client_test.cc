@@ -82,8 +82,7 @@ TEST_F(RetryClientTest, TooManyTransientsHandling) {
 
   // Use a read-only operation because these are always idempotent.
   EXPECT_CALL(*mock, GetObjectMetadata(_))
-      .WillRepeatedly(
-          Return(StatusOr<ObjectMetadata>(TransientError())));
+      .WillRepeatedly(Return(StatusOr<ObjectMetadata>(TransientError())));
 
   StatusOr<ObjectMetadata> result = client.GetObjectMetadata(
       GetObjectMetadataRequest("test-bucket", "test-object"));

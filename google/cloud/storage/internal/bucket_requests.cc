@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/bucket_requests.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/format_rfc3339.h"
+#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include <sstream>
 
@@ -63,7 +63,8 @@ BucketPolicyOnly ParseBucketOnlyPolicy(internal::nl::json const& json) {
 
 }  // namespace
 
-StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(internal::nl::json const& json) {
+StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
+    internal::nl::json const& json) {
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
@@ -100,7 +101,8 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(internal::nl::json const& 
   return result;
 }
 
-StatusOr<LifecycleRule> LifecycleRuleParser::FromString(std::string const& text) {
+StatusOr<LifecycleRule> LifecycleRuleParser::FromString(
+    std::string const& text) {
   auto json = internal::nl::json::parse(text, nullptr, false);
   return FromJson(json);
 }
@@ -281,7 +283,8 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
 
   if (meta.has_encryption()) {
     json e;
-    SetIfNotEmpty(e, "defaultKmsKeyName", meta.encryption().default_kms_key_name);
+    SetIfNotEmpty(e, "defaultKmsKeyName",
+                  meta.encryption().default_kms_key_name);
     metadata_as_json["encryption"] = std::move(e);
   }
 
@@ -347,14 +350,16 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
   SetIfNotEmpty(metadata_as_json, "name", meta.name());
 
   if (meta.has_retention_policy()) {
-    json r{{"retentionPeriod", meta.retention_policy().retention_period.count()}};
+    json r{
+        {"retentionPeriod", meta.retention_policy().retention_period.count()}};
     metadata_as_json["retentionPolicy"] = std::move(r);
   }
 
   SetIfNotEmpty(metadata_as_json, "storageClass", meta.storage_class());
 
   if (meta.versioning().has_value()) {
-    metadata_as_json["versioning"] = json{{"enabled", meta.versioning()->enabled}};
+    metadata_as_json["versioning"] =
+        json{{"enabled", meta.versioning()->enabled}};
   }
 
   if (meta.has_website()) {

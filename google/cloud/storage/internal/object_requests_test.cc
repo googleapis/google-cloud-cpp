@@ -391,7 +391,8 @@ TEST(ObjectRequestsTest, RewriteObjectResponse) {
 
   text += object1 + "\n}";
 
-  auto expected_resource = internal::ObjectMetadataParser::FromString(object1).value();
+  auto expected_resource =
+      internal::ObjectMetadataParser::FromString(object1).value();
 
   auto actual =
       RewriteObjectResponse::FromHttpResponse(HttpResponse{200, text, {}})
@@ -545,10 +546,12 @@ TEST(ObjectRequestsTest, ResumableUploadResponseNoRange) {
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseMissingBytesInRange) {
-  auto actual = ResumableUploadResponse::FromHttpResponse(HttpResponse{
-      200,
-      "test-payload",
-      {{"location", "location-value"}, {"range", "units=0-2000"}}}).value();
+  auto actual = ResumableUploadResponse::FromHttpResponse(
+                    HttpResponse{200,
+                                 "test-payload",
+                                 {{"location", "location-value"},
+                                  {"range", "units=0-2000"}}})
+                    .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("location-value", actual.upload_session_url);
   EXPECT_EQ(0U, actual.last_committed_byte);
@@ -556,39 +559,48 @@ TEST(ObjectRequestsTest, ResumableUploadResponseMissingBytesInRange) {
 
 TEST(ObjectRequestsTest, ResumableUploadResponseMissingRangeEnd) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
-      HttpResponse{200, "test-payload", {{"range", "bytes=0-"}}}).value();
+                    HttpResponse{200, "test-payload", {{"range", "bytes=0-"}}})
+                    .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0U, actual.last_committed_byte);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeEnd) {
-  auto actual = ResumableUploadResponse::FromHttpResponse(
-      HttpResponse{200, "test-payload", {{"range", "bytes=0-abcd"}}}).value();
+  auto actual =
+      ResumableUploadResponse::FromHttpResponse(
+          HttpResponse{200, "test-payload", {{"range", "bytes=0-abcd"}}})
+          .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0U, actual.last_committed_byte);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeBegin) {
-  auto actual = ResumableUploadResponse::FromHttpResponse(
-      HttpResponse{200, "test-payload", {{"range", "bytes=abcd-2000"}}}).value();
+  auto actual =
+      ResumableUploadResponse::FromHttpResponse(
+          HttpResponse{200, "test-payload", {{"range", "bytes=abcd-2000"}}})
+          .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0U, actual.last_committed_byte);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseUnexpectedRangeBegin) {
-  auto actual = ResumableUploadResponse::FromHttpResponse(
-      HttpResponse{200, "test-payload", {{"range", "bytes=3000-2000"}}}).value();
+  auto actual =
+      ResumableUploadResponse::FromHttpResponse(
+          HttpResponse{200, "test-payload", {{"range", "bytes=3000-2000"}}})
+          .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0U, actual.last_committed_byte);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseNegativeEnd) {
-  auto actual = ResumableUploadResponse::FromHttpResponse(
-      HttpResponse{200, "test-payload", {{"range", "bytes=0--7"}}}).value();
+  auto actual =
+      ResumableUploadResponse::FromHttpResponse(
+          HttpResponse{200, "test-payload", {{"range", "bytes=0--7"}}})
+          .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0U, actual.last_committed_byte);
@@ -679,8 +691,8 @@ TEST(PatchObjectRequestTest, DiffSetAcl) {
   original.set_acl({});
   ObjectMetadata updated = original;
   updated.set_acl({internal::ObjectAccessControlParser::FromString(
-      R"""({"entity": "user-test-user", "role": "OWNER"})""")
-      .value()});
+                       R"""({"entity": "user-test-user", "role": "OWNER"})""")
+                       .value()});
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
   nl::json patch = nl::json::parse(request.payload());
@@ -693,8 +705,8 @@ TEST(PatchObjectRequestTest, DiffSetAcl) {
 TEST(PatchObjectRequestTest, DiffResetAcl) {
   ObjectMetadata original = CreateObjectMetadataForTest();
   original.set_acl({internal::ObjectAccessControlParser::FromString(
-      R"""({"entity": "user-test-user", "role": "OWNER"})""")
-      .value()});
+                        R"""({"entity": "user-test-user", "role": "OWNER"})""")
+                        .value()});
   ObjectMetadata updated = original;
   updated.set_acl({});
   PatchObjectRequest request("test-bucket", "test-object", original, updated);

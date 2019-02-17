@@ -21,9 +21,8 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-StatusOr<ResumableUploadResponse>
-LoggingResumableUploadSession::UploadChunk(std::string const& buffer,
-                                           std::uint64_t upload_size) {
+StatusOr<ResumableUploadResponse> LoggingResumableUploadSession::UploadChunk(
+    std::string const& buffer, std::uint64_t upload_size) {
   GCP_LOG(INFO) << __func__ << "() << upload_size=" << upload_size
                 << ", buffer.size=" << buffer.size();
   auto response = session_->UploadChunk(buffer, upload_size);

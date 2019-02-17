@@ -29,8 +29,8 @@ TEST(ComputeMD5HashTest, Empty) {
 }
 
 TEST(ComputeMD5HashTest, Simple) {
-  std::string actual = ComputeMD5Hash(
-      "The quick brown fox jumps over the lazy dog");
+  std::string actual =
+      ComputeMD5Hash("The quick brown fox jumps over the lazy dog");
   // I used this command to get the expected value:
   // /bin/echo -n "The quick brown fox jumps over the lazy dog" |
   //     openssl md5 -binary | openssl base64
@@ -45,8 +45,8 @@ TEST(ComputeCrc32cChecksumTest, Empty) {
 }
 
 TEST(ComputeCrc32cChecksumTest, Simple) {
-  std::string actual = ComputeCrc32cChecksum(
-      "The quick brown fox jumps over the lazy dog");
+  std::string actual =
+      ComputeCrc32cChecksum("The quick brown fox jumps over the lazy dog");
   // I used this command to get the expected value:
   // /bin/echo -n "The quick brown fox jumps over the lazy dog" > foo.txt &&
   // gsutil hash foo.txt

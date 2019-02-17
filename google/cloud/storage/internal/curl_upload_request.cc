@@ -202,8 +202,8 @@ Status CurlUploadRequest::WaitForHandles(int& repeats) {
   int numfds = 0;
   CURLMcode result =
       curl_multi_wait(multi_.get(), nullptr, 0, timeout_ms, &numfds);
-  GCP_LOG(DEBUG) << __func__ << "(): numfds=" << numfds
-                 << ", result=" << result << ", repeats=" << repeats;
+  GCP_LOG(DEBUG) << __func__ << "(): numfds=" << numfds << ", result=" << result
+                 << ", repeats=" << repeats;
   if (result != CURLM_OK) {
     return AsStatus(result, __func__);
   }

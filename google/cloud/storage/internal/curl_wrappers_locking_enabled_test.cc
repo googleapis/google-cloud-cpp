@@ -36,4 +36,3 @@ TEST(CurlWrappers, LockingEnabledTest) {
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-

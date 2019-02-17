@@ -20,8 +20,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
-StatusOr<std::string>
-AnonymousCredentials::AuthorizationHeader() {
+StatusOr<std::string> AnonymousCredentials::AuthorizationHeader() {
   return std::string{};
 }
 

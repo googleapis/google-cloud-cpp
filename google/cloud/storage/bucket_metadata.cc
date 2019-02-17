@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/bucket_metadata.h"
-#include "google/cloud/status.h"
 #include "google/cloud/internal/ios_flags_saver.h"
-#include "google/cloud/storage/internal/format_rfc3339.h"
+#include "google/cloud/status.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/bucket_requests.h"
+#include "google/cloud/storage/internal/format_rfc3339.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
@@ -26,7 +26,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-
 std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
   auto join = [](char const* sep, std::vector<std::string> const& list) {
     if (list.empty()) {
@@ -448,7 +447,8 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetRetentionPolicy(
   // fields.
   impl_.AddSubPatch("retentionPolicy",
                     internal::PatchBuilder().SetIntField(
-                        "retentionPeriod", static_cast<std::uint64_t>(v.retention_period.count())));
+                        "retentionPeriod", static_cast<std::uint64_t>(
+                                               v.retention_period.count())));
   return *this;
 }
 

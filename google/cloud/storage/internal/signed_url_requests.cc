@@ -46,7 +46,7 @@ std::string SignUrlRequest::StringToSign() const {
   CurlHandle curl;
   os << '/' << bucket_name();
   if (!object_name().empty()) {
-    os << '/'  << curl.MakeEscapedString(object_name()).get();
+    os << '/' << curl.MakeEscapedString(object_name()).get();
   }
   char const* sep = "?";
   for (auto const& key_value : query_parameters_) {

@@ -22,7 +22,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-
 bool operator==(ObjectMetadata const& lhs, ObjectMetadata const& rhs) {
   return static_cast<internal::CommonMetadata<ObjectMetadata> const&>(lhs) ==
              rhs &&
@@ -35,7 +34,8 @@ bool operator==(ObjectMetadata const& lhs, ObjectMetadata const& rhs) {
          lhs.content_type_ == rhs.content_type_ && lhs.crc32c_ == rhs.crc32c_ &&
          lhs.customer_encryption_ == rhs.customer_encryption_ &&
          lhs.event_based_hold_ == rhs.event_based_hold_ &&
-         lhs.generation_ == rhs.generation_ && lhs.kms_key_name_ == rhs.kms_key_name_ &&
+         lhs.generation_ == rhs.generation_ &&
+         lhs.kms_key_name_ == rhs.kms_key_name_ &&
          lhs.md5_hash_ == rhs.md5_hash_ && lhs.media_link_ == rhs.media_link_ &&
          lhs.metadata_ == rhs.metadata_ &&
          lhs.retention_expiration_time_ == rhs.retention_expiration_time_ &&

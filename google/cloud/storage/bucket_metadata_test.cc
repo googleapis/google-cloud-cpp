@@ -895,8 +895,10 @@ TEST(BucketMetadataPatchBuilder, ResetDefaultEventBasedHold) {
 
 TEST(BucketMetadataPatchBuilder, SetDefaultAcl) {
   BucketMetadataPatchBuilder builder;
-  builder.SetDefaultAcl({internal::ObjectAccessControlParser::FromString(
-      R"""({"entity": "user-test-user", "role": "OWNER"})""").value()});
+  builder.SetDefaultAcl(
+      {internal::ObjectAccessControlParser::FromString(
+           R"""({"entity": "user-test-user", "role": "OWNER"})""")
+           .value()});
 
   auto actual = builder.BuildPatch();
   auto json = internal::nl::json::parse(actual);

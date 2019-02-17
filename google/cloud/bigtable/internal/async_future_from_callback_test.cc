@@ -51,13 +51,12 @@ TEST(AsyncFutureFromCallbackGeneric, Failure) {
 
   ASSERT_TRUE(fut.is_ready());
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { fut.get(); } catch (GRpcError const& ex) {
-        EXPECT_EQ(grpc::StatusCode::UNAVAILABLE, ex.error_code());
-        EXPECT_THAT(ex.what(), HasSubstr("try again"));
-        throw;
-      },
-      GRpcError);
+  EXPECT_THROW(try { fut.get(); } catch (GRpcError const& ex) {
+    EXPECT_EQ(grpc::StatusCode::UNAVAILABLE, ex.error_code());
+    EXPECT_THAT(ex.what(), HasSubstr("try again"));
+    throw;
+  },
+               GRpcError);
 #else
   EXPECT_DEATH_IF_SUPPORTED(fut.get(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -90,13 +89,12 @@ TEST(AsyncFutureFromCallbackVoid, Failure) {
 
   ASSERT_TRUE(fut.is_ready());
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { fut.get(); } catch (GRpcError const& ex) {
-        EXPECT_EQ(grpc::StatusCode::UNAVAILABLE, ex.error_code());
-        EXPECT_THAT(ex.what(), HasSubstr("try again"));
-        throw;
-      },
-      GRpcError);
+  EXPECT_THROW(try { fut.get(); } catch (GRpcError const& ex) {
+    EXPECT_EQ(grpc::StatusCode::UNAVAILABLE, ex.error_code());
+    EXPECT_THAT(ex.what(), HasSubstr("try again"));
+    throw;
+  },
+               GRpcError);
 #else
   EXPECT_DEATH_IF_SUPPORTED(fut.get(), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

@@ -222,7 +222,7 @@ Status CurlDownloadRequest::WaitForHandles(int& repeats) {
   return status;
 }
 
-Status CurlDownloadRequest::AsStatus(CURLMcode result, char const *where) {
+Status CurlDownloadRequest::AsStatus(CURLMcode result, char const* where) {
   if (result == CURLM_OK) {
     return Status();
   }
