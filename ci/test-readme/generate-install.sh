@@ -69,8 +69,11 @@ these dependencies.
 
 - [Fedora 29](#fedora-29)
 - [openSUSE (Tumbleweed)](#opensuse-tumbleweed)
+- [openSUSE (Leap)](#opensuse-leap)
 - [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804--bionic-beaver)
 - [Ubuntu (16.04 - Xenial Xerus)](#ubuntu-1604--xenial-xerus)
+- [Ubuntu (16.04 - Trusty Tahr)](#ubuntu-1404--trusty-tahr)
+- [Debian (Stretch)](#debian-stretch)
 - [CentOS 7](#centos-7)
 END_OF_PREAMBLE
 
@@ -83,12 +86,24 @@ echo "### OpenSUSE (Tumbleweed)"
 "${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.opensuse"
 
 echo
+echo "### OpenSUSE (Leap)"
+"${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.opensuse-leap"
+
+echo
 echo "### Ubuntu (18.04 - Bionic Beaver)"
 "${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.ubuntu"
 
 echo
 echo "### Ubuntu (16.04 - Xenial Xerus)"
 "${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.ubuntu-xenial"
+
+echo
+echo "### Ubuntu (14.04 - Trusty Tahr)"
+"${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.ubuntu-trusty"
+
+echo
+echo "### Debian (Stretch)"
+"${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.debian"
 
 echo
 echo "### CentOS (7)"
