@@ -15,7 +15,11 @@
 #include "google/cloud/log.h"
 #include <gmock/gmock.h>
 
-using namespace google::cloud;
+namespace google {
+namespace cloud {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace {
+
 using namespace ::testing;
 
 TEST(LogSeverityTest, Streaming) {
@@ -219,3 +223,8 @@ TEST(LogSinkTest, DisabledLogsMakeNoCalls) {
   // With no backends, we expect no calls to the expressions in the log line.
   EXPECT_EQ(0, counter);
 }
+
+}  // namespace
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google
