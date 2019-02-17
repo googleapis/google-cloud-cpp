@@ -596,9 +596,9 @@ On Debian Stretch, libcurl links against openssl-1.0.2, and one must link
 against the same version or risk an inconsistent configuration of the library.
 This is especially important for multi-threaded applications, as openssl-1.0.2
 requires explicitly setting locking callbacks. Therefore, to use libcurl one
-must link against openssl-1.0.2. To do so, we must need to install
-libssl1.0-dev. Note that this removes libssl-dev if you have it installed
-already, and would prevent you from compiling against openssl-1.1.0.
+must link against openssl-1.0.2. To do so, we need to install libssl1.0-dev.
+Note that this removes libssl-dev if you have it installed already, and would
+prevent you from compiling against openssl-1.1.0.
 
 ```bash
 sudo apt update && \
