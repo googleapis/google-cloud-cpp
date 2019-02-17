@@ -32,18 +32,53 @@ a number of tools.  We use [Chocolatey](https://www.chocolatey.com) to drive the
 installation, so you would need to install it first.  This needs to be executed
 in a `cmd.exe` shell, running as the `Administrator`:
 
-```commandline
-C:\...> @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -Command "iex (
+```console
+> @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -Command "iex (
 (New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 ```
 
 Then you can install the dependencies in the same shell:
-```commandline
-C:\...> choco install -y cmake git cmake.portable activeperl ninja golang yasm putty
-C:\...> choco install -y visualstudio2017community
-C:\...> choco install -y visualstudio2017-workload-nativedesktop
-C:\...> choco install -y microsoft-build-tools
+```console
+> choco install -y cmake git cmake.portable activeperl ninja golang yasm putty
+> choco install -y visualstudio2017community visualstudio2017-workload-nativedesktop microsoft-build-tools
 ```
+
+### Connecting to GitHub with PuTTY
+
+This short recipe is offered to setup your SSH keys quickly using PuTTY.  If
+you prefer another SSH client for Windows, please search the Internet for a
+tutorial on how to configure it.
+
+First, generate a private/public key pair with `puttygen`:
+
+```console
+> puttygen
+```
+
+Then store the public key in your
+[GitHub Settings](https://github.com/settings/keys).
+
+Once you have generated the public/private key pair, start the SSH agent in the
+background:
+
+```console
+> pageant
+```
+
+and use the menu to load the private key you generated above. Test the keys
+with:
+
+```console
+> plink -T git@github.com
+```
+
+and do not forget to setup the `GIT_SSH` environment variable:
+
+```console
+> set GIT_SSH=plink
+```
+
+### Download and compile `vcpkg`
 
 The previous installation should create a
 `Developer Command Prompt for VS 2017` entry in your "Windows" menu, use that
@@ -51,73 +86,88 @@ entry to create a new shell.
 In that shell, install `vcpkg` the Microsoft-supported ports for many Open
 Source projects:
 
-```commandline
-C:\...> cd \Users\%USERNAME%
-C:\...> git clone --depth 10 https://github.com/Microsoft/vcpkg.git
-C:\...> cd vcpkg
-C:\...> .\bootstrap-vcpkg.bat
-C:\...> .\vcpkg install grpc abseil
-C:\...> .\vcpkg integrate install
+```console
+> cd \Users\%USERNAME%
+> git clone --depth 10 https://github.com/Microsoft/vcpkg.git
+> cd vcpkg
+> .\bootstrap-vcpkg.bat
 ```
+
+You can get `vcpkg` to compile all the dependencies for `google-cloud-cpp` by
+installing `google-cloud-cpp` itself:
+
+```console
+> vcpkg.exe install google-cloud-cpp:x64-windows-static
+> vcpkg.exe integrate install
+```
+
+### Clone and compile `google-cloud-cpp`
 
 You may need to create a new key pair to connect to GitHub.  Search the web
 for how to do this.  Then you can clone the code:
 
-```commandline
-C:\...> cd \Users\%USERNAME%\source
-C:\...> git clone git@github.com:<GITHUB-USERNAME_HERE>/google-cloud-cpp.git
-C:\...> cd google-cloud-cpp
-C:\...> git submodule update --init
+```console
+> cd \Users\%USERNAME%
+> git clone git@github.com:<GITHUB-USERNAME_HERE>/google-cloud-cpp.git
+> cd google-cloud-cpp
+> git submodule update --init
 ```
 
 And compile the code using:
 
-```commandline
-C:\...> mkdir .build
-C:\...> cd .build
-C:\...> cmake -DCMAKE_TOOLCHAIN_FILE=C:/Users/%USERNAME%/vcpkg/scripts/buildsystems/vcpkg.cmake -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package ..
-C:\...> cmake --build . -- /m
+```console
+> call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+> cmake -GNinja -H. -B.build
+   -DCMAKE_BUILD_TYPE=Debug
+   -DCMAKE_TOOLCHAIN_FILE=C:\Users\%USERNAME%\vcpkg\scripts\buildsystems\vcpkg.cmake
+   -DVCPKG_TARGET_TRIPLET=x64-windows-static
+   -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package
+> cmake --build .build
 ```
 
 Run the tests using:
 
-```commandline
-C:\...> ctest -C Debug .
+```console
+> cd .build
+> ctest --output-on-failure
 ```
 
-### Creating a Windows VM using Google Compute Engine
+## Appendix: Creating a Windows VM using Google Compute Engine
 
 If you do not have a Windows workstation, but need a Windows development
 environment to troubleshoot a test or build problem, it might be convenient to
 create a Windows VM. The following commands assume you have already created a
 project:
 
-```commandline
+```console
 $ PROJECT_ID=... # Set to your project id
 ```
 
 Select a zone to run your VM:
 
-```commandline
+```console
 $ gcloud compute zones list
 $ ZONE=... # Pick a zone close to where you are...
 ```
 
 Select the name of the VM:
 
-```commandline
+```console
 $ VM=... # e.g. VM=my-windows-devbox
 ```
 
 Then create the virtual machine using:
 
-```commandline
-$ IMAGE=$(gcloud compute images list --filter="family=('windows-2016')" --sort-by=name | awk '{print $1}' | tail -1)
-$ PROJECT_NUMBER=$(gcloud projects list --filter="project_id=${PROJECT_ID}" | awk '{print $3}' | tail -1)
+```console
+$ IMAGE=$(gcloud compute images list \
+    --filter="family=('windows-2019')" --sort-by=name | awk '{print $1}' | tail -1)
+$ PROJECT_NUMBER=$(gcloud projects list --filter="project_id=${PROJECT_ID}" | \
+    awk '{print $3}' | tail -1)
 $ gcloud compute --project "${PROJECT_ID}" instances create "${VM}" \
   --zone "${ZONE}" \
   --image "${IMAGE}" --image-project "windows-cloud" \
-  --boot-disk-size "128" --boot-disk-type "pd-standard" --boot-disk-device-name "${VM}" \
+  --boot-disk-size "1024" --boot-disk-type "pd-standard" \
+  --boot-disk-device-name "${VM}" \
   --service-account "${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
   --machine-type "n1-standard-8" \
   --subnet "default" \
@@ -127,7 +177,7 @@ $ gcloud compute --project "${PROJECT_ID}" instances create "${VM}" \
 
 Reset the password for your account:
 
-```commandline
+```console
 $ gcloud compute --project "${PROJECT_ID}" reset-windows-password --zone "${ZONE}" "${VM}"
 ```
 
@@ -135,38 +185,3 @@ Save that password in some kind of password manager.  Then connect to the VM
 using your favorite RDP client.  The Google Cloud Compute Engine
 [documentation](https://cloud.google.com/compute/docs/quickstart-windows)
 suggests some third-party clients that may be useful.
-
-### Connecting to GitHub with PuTTY
-
-This short recipe is offered to setup your SSH keys quickly using PuTTY.  If
-you prefer another SSH client for Windows, please search the Internet for a
-tutorial on how to configure it.  Generate a private/public key pair with
-`puttygen`:
-
-```commandline
-C:\...> puttygen
-```
-
-Then store the public key in your
-[GitHub Settings](https://github.com/settings/keys).
-
-Once you have generated the public/private key pair, start the SSH agent in the
-background:
-
-```commandline
-C:\...> pageant
-```
-
-and use the menu to load the private key you generated above. Test the keys
-with:
-
-```commandline
-C:\...> plink -T git@github.com
-```
-
-and do not forget to setup the `GIT_SSH` environment variable:
-
-```commandline
-C:\...> set GIT_SSH=plink
-C:\...> git clone git@github.com:<GITHUB-USERNAME-HERE>/google-cloud-cpp.git
-```
