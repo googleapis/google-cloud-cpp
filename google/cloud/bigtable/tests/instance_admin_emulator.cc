@@ -38,9 +38,10 @@ class InstanceAdminEmulator final
       grpc::ServerContext* context,
       btadmin::CreateInstanceRequest const* request,
       google::longrunning::Operation* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     std::string name =
         request->parent() + "/instances/" + request->instance_id();
@@ -73,9 +74,10 @@ class InstanceAdminEmulator final
   grpc::Status GetInstance(grpc::ServerContext* context,
                            btadmin::GetInstanceRequest const* request,
                            btadmin::Instance* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto i = instances_.find(request->name());
     if (i == instances_.end()) {
@@ -89,9 +91,10 @@ class InstanceAdminEmulator final
       grpc::ServerContext* context,
       btadmin::ListInstancesRequest const* request,
       btadmin::ListInstancesResponse* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     std::string prefix = request->parent() + "/instances/";
     for (auto const& kv : instances_) {
@@ -105,9 +108,10 @@ class InstanceAdminEmulator final
   grpc::Status UpdateInstance(grpc::ServerContext* context,
                               btadmin::Instance const* request,
                               btadmin::Instance* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "not implemented");
   }
@@ -116,9 +120,10 @@ class InstanceAdminEmulator final
       grpc::ServerContext* context,
       btadmin::PartialUpdateInstanceRequest const* request,
       google::longrunning::Operation* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     std::string name = request->instance().name();
     auto it = instances_.find(name);
@@ -166,9 +171,10 @@ class InstanceAdminEmulator final
   grpc::Status DeleteInstance(grpc::ServerContext* context,
                               btadmin::DeleteInstanceRequest const* request,
                               google::protobuf::Empty* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto i = instances_.find(request->name());
     if (i == instances_.end()) {
@@ -189,9 +195,10 @@ class InstanceAdminEmulator final
       grpc::ServerContext* context,
       btadmin::CreateClusterRequest const* request,
       google::longrunning::Operation* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     std::string name = request->parent() + "/clusters/" + request->cluster_id();
     auto ins = clusters_.emplace(name, request->cluster());
@@ -213,9 +220,10 @@ class InstanceAdminEmulator final
   grpc::Status GetCluster(grpc::ServerContext* context,
                           btadmin::GetClusterRequest const* request,
                           btadmin::Cluster* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto i = clusters_.find(request->name());
     if (i == clusters_.end()) {
@@ -228,14 +236,15 @@ class InstanceAdminEmulator final
   grpc::Status ListClusters(grpc::ServerContext* context,
                             btadmin::ListClustersRequest const* request,
                             btadmin::ListClustersResponse* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     // We should only return the clusters for the project embedded in the
     // request->parent() field. Do some simple (and naive) parsing, ignore
     // malformed requests for now.
-    auto project_path =
+    std::string project_path =
         request->parent().substr(0, request->parent().find("/instances"));
 
     auto return_all_clusters = false;
@@ -269,9 +278,10 @@ class InstanceAdminEmulator final
   grpc::Status UpdateCluster(
       grpc::ServerContext* context, btadmin::Cluster const* request,
       google::longrunning::Operation* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     std::string name = request->name();
     auto it = clusters_.find(name);
@@ -292,9 +302,10 @@ class InstanceAdminEmulator final
   grpc::Status DeleteCluster(grpc::ServerContext* context,
                              btadmin::DeleteClusterRequest const* request,
                              google::protobuf::Empty* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto i = clusters_.find(request->name());
     if (i == clusters_.end()) {
@@ -307,9 +318,10 @@ class InstanceAdminEmulator final
   grpc::Status CreateAppProfile(grpc::ServerContext* context,
                                 btadmin::CreateAppProfileRequest const* request,
                                 btadmin::AppProfile* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto name = request->parent() + "/appProfiles/" + request->app_profile_id();
     auto ins = app_profiles_.emplace(name, request->app_profile());
@@ -327,9 +339,10 @@ class InstanceAdminEmulator final
   grpc::Status GetAppProfile(grpc::ServerContext* context,
                              btadmin::GetAppProfileRequest const* request,
                              btadmin::AppProfile* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto i = app_profiles_.find(request->name());
     if (i == app_profiles_.end()) {
@@ -343,9 +356,10 @@ class InstanceAdminEmulator final
       grpc::ServerContext* context,
       btadmin::ListAppProfilesRequest const* request,
       btadmin::ListAppProfilesResponse* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto const& parent = request->parent();
     for (auto const& kv : app_profiles_) {
@@ -361,9 +375,10 @@ class InstanceAdminEmulator final
       grpc::ServerContext* context,
       btadmin::UpdateAppProfileRequest const* request,
       google::longrunning::Operation* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     std::string name = request->app_profile().name();
     auto it = app_profiles_.find(name);
@@ -400,9 +415,10 @@ class InstanceAdminEmulator final
   grpc::Status DeleteAppProfile(grpc::ServerContext* context,
                                 btadmin::DeleteAppProfileRequest const* request,
                                 google::protobuf::Empty* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto i = app_profiles_.find(request->name());
     if (i == app_profiles_.end()) {
@@ -415,9 +431,10 @@ class InstanceAdminEmulator final
   grpc::Status GetIamPolicy(grpc::ServerContext* context,
                             google::iam::v1::GetIamPolicyRequest const* request,
                             google::iam::v1::Policy* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto it = policies_.find(request->resource());
     if (it == policies_.end()) {
@@ -432,9 +449,10 @@ class InstanceAdminEmulator final
   grpc::Status SetIamPolicy(grpc::ServerContext* context,
                             google::iam::v1::SetIamPolicyRequest const* request,
                             google::iam::v1::Policy* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto policy = request->policy();
     *response = policy;
@@ -447,9 +465,10 @@ class InstanceAdminEmulator final
       grpc::ServerContext* context,
       google::iam::v1::TestIamPermissionsRequest const* request,
       google::iam::v1::TestIamPermissionsResponse* response) override {
+    std::unique_lock<std::mutex> lk(mu_);
     std::string request_text;
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
-    std::cout << __func__ << "request=" << request_text << "\n";
+    std::cout << __func__ << "() request=" << request_text << "\n";
 
     auto it = instances_.find(request->resource());
     if (it != instances_.end()) {
@@ -463,6 +482,7 @@ class InstanceAdminEmulator final
   }
 
  private:
+  std::mutex mu_;
   std::map<std::string, btadmin::Instance> instances_;
   std::map<std::string, btadmin::Cluster> clusters_;
   std::map<std::string, google::longrunning::Operation> pending_operations_;
