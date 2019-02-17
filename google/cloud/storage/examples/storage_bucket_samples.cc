@@ -383,6 +383,96 @@ void RemoveBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name);
 }
 
+void EnableBucketPolicyOnly(google::cloud::storage::Client client, int& argc,
+                            char *argv[]) {
+    if (argc != 2) {
+        throw Usage{"enable-bucket-policy-only <bucket-name>"};
+    }
+    auto bucket_name = ConsumeArg(argc, argv);
+    //! [enable bucket policy only]
+    // [START storage_enable_bucket_policy_only]
+    namespace gcs = google::cloud::storage;
+    using google::cloud::StatusOr;
+    [](gcs::Client client, std::string bucket_name) {
+        gcs::BucketIamConfiguration configuration;
+        configuration.bucket_policy_only = gcs::BucketPolicyOnly{true};
+        StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
+                bucket_name, gcs::BucketMetadataPatchBuilder().SetIamConfiguration(std::move(configuration)));
+
+        if (!updated_metadata) {
+            throw std::runtime_error(updated_metadata.status().message());
+        }
+
+        std::cout << "Successfully enabled Bucket Policy Only on bucket "
+            << updated_metadata->name() << "\n";
+    }
+    // [END storage_enable_bucket_policy_only]
+    //! [enable bucket policy only]
+    (std::move(client), bucket_name);
+}
+
+void DisableBucketPolicyOnly(google::cloud::storage::Client client, int& argc,
+                            char *argv[]) {
+    if (argc != 2) {
+        throw Usage{"disable-bucket-policy-only <bucket-name>"};
+    }
+    auto bucket_name = ConsumeArg(argc, argv);
+    //! [disable bucket policy only]
+    // [START storage_disable_bucket_policy_only]
+    namespace gcs = google::cloud::storage;
+    using google::cloud::StatusOr;
+    [](gcs::Client client, std::string bucket_name) {
+        gcs::BucketIamConfiguration configuration;
+        configuration.bucket_policy_only = gcs::BucketPolicyOnly{false};
+        StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
+                bucket_name, gcs::BucketMetadataPatchBuilder().SetIamConfiguration(std::move(configuration)));
+
+        if (!updated_metadata) {
+            throw std::runtime_error(updated_metadata.status().message());
+        }
+
+        std::cout << "Successfully disabled Bucket Policy Only on bucket "
+            << updated_metadata->name() << "\n";
+    }
+    // [END storage_disable_bucket_policy_only]
+    //! [disable bucket policy only]
+    (std::move(client), bucket_name);
+}
+
+void GetBucketPolicyOnly(google::cloud::storage::Client client, int& argc,
+                            char *argv[]) {
+    if (argc != 2) {
+        throw Usage{"get-bucket-policy-only <bucket-name>"};
+    }
+    auto bucket_name = ConsumeArg(argc, argv);
+    //! [get bucket policy only]
+    // [START storage_get_bucket_policy_only]
+    namespace gcs = google::cloud::storage;
+    using google::cloud::StatusOr;
+    [](gcs::Client client, std::string bucket_name) {
+        StatusOr<gcs::BucketMetadata> meta = client.GetBucketMetadata(bucket_name);
+
+        if (!meta) {
+            throw std::runtime_error(meta.status().message());
+        }
+
+        if (meta->has_iam_configuration()) {
+            auto bucket_policy_only = meta->iam_configuration().bucket_policy_only;
+
+            std::cout << "Bucket Policy Only is enabled for "
+                << meta->name() << "\n";
+            std::cout << "Bucket will be locked on "
+                << bucket_policy_only << "\n";
+        } else {
+            std::cout << "Bucket Policy Only is not enabled for "
+                << meta->name() << "\n";
+        }
+    }
+    // [END storage_get_bucket_policy_only]
+    //! [get bucket policy only]
+    (std::move(client), bucket_name);
+}
+
 void AddBucketLabel(google::cloud::storage::Client client, int& argc,
                     char* argv[]) {
   if (argc != 4) {
@@ -1003,6 +1093,9 @@ int main(int argc, char* argv[]) try {
       {"add-bucket-default-kms-key", &AddBucketDefaultKmsKey},
       {"get-bucket-default-kms-key", &GetBucketDefaultKmsKey},
       {"remove-bucket-default-kms-key", &RemoveBucketDefaultKmsKey},
+      {"enable-bucket-policy-only", &EnableBucketPolicyOnly},
+      {"disable-bucket-policy-only", &DisableBucketPolicyOnly},
+      {"get-bucket-policy-only", &GetBucketPolicyOnly},
       {"add-bucket-label", &AddBucketLabel},
       {"get-bucket-labels", &GetBucketLabels},
       {"remove-bucket-label", &RemoveBucketLabel},
