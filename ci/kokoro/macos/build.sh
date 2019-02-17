@@ -26,14 +26,14 @@ readonly PROJECT_ROOT="${PWD}"
 echo
 echo "================================================================"
 echo "================================================================"
-echo "Update Bazel."
+echo "Update or Install Bazel."
 echo
 
-readonly BAZEL_VERSION=0.20.0
-readonly GITHUB_DL="https://github.com/bazelbuild/bazel/releases/download"
-wget -q "${GITHUB_DL}/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-installer-darwin-x86_64.sh"
-chmod +x "bazel-${BAZEL_VERSION}-installer-darwin-x86_64.sh"
-./bazel-${BAZEL_VERSION}-installer-darwin-x86_64.sh --user
+# macOS does not have sha256sum by default, but `shasum -a 256` does the same
+# thing:
+function sha256sum() { shasum -a 256 "$@" ; } && export -f sha256sum
+
+"${PROJECT_ROOT}/ci/install-bazel.sh" macos
 
 export PATH=$HOME/bin:$PATH
 echo "which bazel: $(which bazel)"
