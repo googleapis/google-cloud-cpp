@@ -202,9 +202,9 @@ sudo ldconfig
 
 #### Protobuf
 
-OpenSUSE Leap includes a package for protobuf-2.6, this is too old to support
-the Google Cloud Platform proto files, or to support gRPC for that matter.
-Manually install protobuf:
+OpenSUSE Leap includes a package for protobuf-2.6, but this is too old to
+support the Google Cloud Platform proto files, or to support gRPC for that
+matter. Manually install protobuf:
 
 ```bash
 cd $HOME/Downloads
@@ -245,8 +245,8 @@ sudo ldconfig
 
 #### gRPC
 
-The gRPC Makefile uses `which` to determine whether the compiler is available,
-install this command for the extremely rare case where it may be missing from
+The gRPC Makefile uses `which` to determine whether the compiler is available.
+Install this command for the extremely rare case where it may be missing from
 your workstation or build server:
 
 ```bash
@@ -486,7 +486,7 @@ Install the minimal development tools:
 
 ```bash
 sudo apt update && sudo apt install -y software-properties-common
-add-sudo apt-repository ppa:ubuntu-toolchain-r/test -y
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 sudo apt update && \
 sudo apt install -y cmake3 git gcc g++ make pkg-config tar wget zlib1g-dev
 ```
@@ -594,11 +594,11 @@ First install the development tools and libcurl.
 
 On Debian Stretch, libcurl links against openssl-1.0.2, and one must link
 against the same version or risk an inconsistent configuration of the library.
-This is specially important for multi-threaded applications, as openssl-1.0.2
+This is especially important for multi-threaded applications, as openssl-1.0.2
 requires explicitly setting locking callbacks. Therefore, to use libcurl one
-must link against openssl-1.0.2. To do so, we must need to libssl1.0-dev. Note
-that this removes libssl-dev if you have it installed already, and would
-prevent you from compiling against openssl-1.1.0.
+must link against openssl-1.0.2. To do so, we must need to install
+libssl1.0-dev. Note that this removes libssl-dev if you have it installed
+already, and would prevent you from compiling against openssl-1.1.0.
 
 ```bash
 sudo apt update && \

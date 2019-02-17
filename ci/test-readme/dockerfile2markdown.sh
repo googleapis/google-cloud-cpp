@@ -24,15 +24,15 @@ sed \
     -e 's/^RUN //' \
     -e 's/^ENV /export /' \
     -e '/^COPY /d' \
-    -e 's/apt/sudo apt/g' \
+    -e 's/update-alternatives/sudo update-alternatives/g' \
+    -e 's/add-apt-repository/sudo add-apt-repository/g' \
+    -e 's/apt /sudo apt /g' \
     -e 's/dnf/sudo dnf/g' \
     -e 's/yum/sudo yum/g' \
     -e 's/zypper/sudo zypper/g' \
     -e 's/ldconfig/sudo ldconfig/g' \
     -e 's/^\(cmake.*--target install.*\)/sudo \1/g' \
     -e 's/^make install/sudo make install/' \
-    -e 's/update-alternatives/sudo update-alternatives/g' \
-    -e 's/add-apt-repository/sudo add-apt-repository/g' \
     -e 's;/home/build;$HOME;' \
     -e 's;/var/tmp/build;$HOME/Downloads;' \
     -e 's/^    sudo/sudo/' $* | \
