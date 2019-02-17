@@ -136,7 +136,6 @@ TEST(LogSinkTest, ClogMultiple) {
   EXPECT_EQ(0U, LogSink::Instance().BackendCount());
 }
 
-
 namespace {
 /// A class to count calls to IOStream operator.
 struct IOStreamCounter {

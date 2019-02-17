@@ -340,9 +340,10 @@ TEST(PatchBucketRequestTest, DiffSetDefaultAcl) {
 
 TEST(PatchBucketRequestTest, DiffResetDefaultAcl) {
   BucketMetadata original = CreateBucketMetadataForTest();
-  original.set_default_acl({internal::ObjectAccessControlParser::FromString(
-      R"""({"entity": "user-test-user", "role": "OWNER"})""")
-      .value()});
+  original.set_default_acl(
+      {internal::ObjectAccessControlParser::FromString(
+           R"""({"entity": "user-test-user", "role": "OWNER"})""")
+           .value()});
   BucketMetadata updated = original;
   updated.set_default_acl({});
   PatchBucketRequest request("test-bucket", original, updated);
@@ -880,7 +881,8 @@ TEST(BucketRequestsTest, TestIamPermissionsResponse) {
       ]})""";
 
   auto actual = TestBucketIamPermissionsResponse::FromHttpResponse(
-      HttpResponse{200, text, {}}).value();
+                    HttpResponse{200, text, {}})
+                    .value();
   EXPECT_THAT(actual.permissions,
               ElementsAre("storage.buckets.get", "storage.buckets.setIamPolicy",
                           "storage.objects.update"));
@@ -905,7 +907,8 @@ TEST(BucketRequestsTest, TestIamPermissionsResponseEmpty) {
   std::string text = R"""({})""";
 
   auto actual = TestBucketIamPermissionsResponse::FromHttpResponse(
-      HttpResponse{200, text, {}}).value();
+                    HttpResponse{200, text, {}})
+                    .value();
   EXPECT_TRUE(actual.permissions.empty());
 }
 

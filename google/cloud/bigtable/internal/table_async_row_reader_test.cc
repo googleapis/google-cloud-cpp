@@ -78,22 +78,22 @@ TEST_F(NoexTableAsyncReadRowsTest, Simple) {
   bool read_rows_op_called = false;
   bool done_op_called = false;
 
-  table_.AsyncReadRows(
-      cq,
-      [&read_rows_op_called](CompletionQueue& cq, Row row,
-                             grpc::Status& status) {
-        EXPECT_EQ("0001", row.row_key());
-        EXPECT_TRUE(status.ok());
-        read_rows_op_called = true;
-      },
-      [&done_op_called](CompletionQueue& cq, bool& response,
-                        grpc::Status const& status) {
-        EXPECT_TRUE(response);
-        EXPECT_TRUE(status.ok());
-        EXPECT_EQ("mocked-status", status.error_message());
-        done_op_called = true;
-      },
-      bt::RowSet(), bt::RowReader::NO_ROWS_LIMIT, bt::Filter::PassAllFilter());
+  table_.AsyncReadRows(cq,
+                       [&read_rows_op_called](CompletionQueue& cq, Row row,
+                                              grpc::Status& status) {
+                         EXPECT_EQ("0001", row.row_key());
+                         EXPECT_TRUE(status.ok());
+                         read_rows_op_called = true;
+                       },
+                       [&done_op_called](CompletionQueue& cq, bool& response,
+                                         grpc::Status const& status) {
+                         EXPECT_TRUE(response);
+                         EXPECT_TRUE(status.ok());
+                         EXPECT_EQ("mocked-status", status.error_message());
+                         done_op_called = true;
+                       },
+                       bt::RowSet(), bt::RowReader::NO_ROWS_LIMIT,
+                       bt::Filter::PassAllFilter());
 
   using bigtable::AsyncOperation;
   impl->SimulateCompletion(cq, true);
@@ -187,22 +187,22 @@ TEST_F(NoexTableAsyncReadRowsTest, ReadRowsWithRetry) {
   bool read_rows_op_called = false;
   bool done_op_called = false;
 
-  table_.AsyncReadRows(
-      cq,
-      [&read_rows_op_called](CompletionQueue& cq, Row row,
-                             grpc::Status& status) {
-        EXPECT_TRUE(status.ok());
-        read_rows_op_called = true;
-      },
-      [&done_op_called](CompletionQueue& cq, bool& response,
-                        grpc::Status const& status) {
-        EXPECT_TRUE(response);
-        EXPECT_TRUE(status.ok());
-        EXPECT_EQ("mocked-status", status.error_message());
-        done_op_called = true;
-      },
-      bt::RowSet(bt::RowRange::Range("0000", "0005")),
-      bt::RowReader::NO_ROWS_LIMIT, bt::Filter::PassAllFilter());
+  table_.AsyncReadRows(cq,
+                       [&read_rows_op_called](CompletionQueue& cq, Row row,
+                                              grpc::Status& status) {
+                         EXPECT_TRUE(status.ok());
+                         read_rows_op_called = true;
+                       },
+                       [&done_op_called](CompletionQueue& cq, bool& response,
+                                         grpc::Status const& status) {
+                         EXPECT_TRUE(response);
+                         EXPECT_TRUE(status.ok());
+                         EXPECT_EQ("mocked-status", status.error_message());
+                         done_op_called = true;
+                       },
+                       bt::RowSet(bt::RowRange::Range("0000", "0005")),
+                       bt::RowReader::NO_ROWS_LIMIT,
+                       bt::Filter::PassAllFilter());
 
   using bigtable::AsyncOperation;
   impl->SimulateCompletion(cq, true);

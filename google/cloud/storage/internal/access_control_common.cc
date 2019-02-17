@@ -21,7 +21,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 Status AccessControlCommon::ParseFromJson(AccessControlCommon& result,
-                                        nl::json const& json) {
+                                          nl::json const& json) {
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }

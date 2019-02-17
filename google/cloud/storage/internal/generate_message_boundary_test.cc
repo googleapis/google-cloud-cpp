@@ -22,8 +22,8 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
-using ::testing::Not;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 TEST(GenerateMessageBoundaryTest, Simple) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
@@ -54,14 +54,15 @@ TEST(GenerateMessageBoundaryTest, RequiresGrowth) {
   int constexpr kMismatchedStringLength = 512;
 
   auto g1 = google::cloud::internal::MakeDefaultPRNG();
-  std::string message = google::cloud::internal::Sample(
-      g1, kMismatchedStringLength, chars);
+  std::string message =
+      google::cloud::internal::Sample(g1, kMismatchedStringLength, chars);
   // Copy the PRNG to obtain the same sequence of random numbers that
   // `generator` will create later.
   g1 = generator;
   message += google::cloud::internal::Sample(g1, kMatchedStringLength, chars);
   g1 = google::cloud::internal::MakeDefaultPRNG();
-  message += google::cloud::internal::Sample(g1, kMismatchedStringLength, chars);
+  message +=
+      google::cloud::internal::Sample(g1, kMismatchedStringLength, chars);
 
   auto string_generator = [&generator](int n) {
     return google::cloud::internal::Sample(generator, n, chars);
@@ -72,9 +73,9 @@ TEST(GenerateMessageBoundaryTest, RequiresGrowth) {
   // that forces the algorithm to find the initial string, and to grow it
   // several times before the kMatchedStringLength common characters are
   // exhausted.
-  auto boundary =
-      GenerateMessageBoundary(message, std::move(string_generator),
-          kMatchedStringLength / 2, kMatchedStringLength / 4);
+  auto boundary = GenerateMessageBoundary(message, std::move(string_generator),
+                                          kMatchedStringLength / 2,
+                                          kMatchedStringLength / 4);
   EXPECT_THAT(message, Not(HasSubstr(boundary)));
 
   // We expect that the string is longer than the common characters.

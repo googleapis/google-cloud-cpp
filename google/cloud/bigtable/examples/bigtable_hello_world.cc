@@ -83,7 +83,8 @@ int main(int argc, char* argv[]) try {
   //! [write rows] [END writing_rows]
 
   //! [create filter] [START creating_a_filter]
-  auto filter = google::cloud::bigtable::Filter::ColumnRangeClosed("family", "c0", "c0");
+  auto filter =
+      google::cloud::bigtable::Filter::ColumnRangeClosed("family", "c0", "c0");
   //! [create filter] [END creating_a_filter]
 
   // Read a single row.

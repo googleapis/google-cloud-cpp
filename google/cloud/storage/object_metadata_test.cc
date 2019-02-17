@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/object_metadata.h"
-#include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
+#include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/parse_rfc3339.h"
 #include <gmock/gmock.h>
 
@@ -330,7 +330,8 @@ TEST(ObjectMetadataTest, InsertMetadata) {
 TEST(ObjectMetadataPatchBuilder, SetAcl) {
   ObjectMetadataPatchBuilder builder;
   builder.SetAcl({internal::ObjectAccessControlParser::FromString(
-      R"""({"entity": "user-test-user", "role": "OWNER"})""").value()});
+                      R"""({"entity": "user-test-user", "role": "OWNER"})""")
+                      .value()});
 
   auto actual = builder.BuildPatch();
   auto actual_as_json = internal::nl::json::parse(actual);

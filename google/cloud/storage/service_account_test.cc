@@ -26,7 +26,8 @@ ServiceAccount CreateServiceAccountForTest() {
   return ServiceAccount::ParseFromString(R"""({
       "email_address": "service-123@example.com",
       "kind": "storage#serviceAccount"
-})""").value();
+})""")
+      .value();
 }
 
 /// @test Verify that we parse JSON objects into ServiceAccount objects.

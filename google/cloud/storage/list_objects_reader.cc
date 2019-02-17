@@ -69,9 +69,7 @@ ListObjectsIterator& ListObjectsIterator::operator++() {
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
-ListObjectsReader::iterator ListObjectsReader::begin() {
-  return GetNext();
-}
+ListObjectsReader::iterator ListObjectsReader::begin() { return GetNext(); }
 
 ListObjectsIterator ListObjectsReader::GetNext() {
   static Status const past_the_end_error(
@@ -79,7 +77,8 @@ ListObjectsIterator ListObjectsReader::GetNext() {
       "Cannot iterating past the end of ListObjectReader");
   if (current_objects_.end() == current_) {
     if (on_last_page_) {
-      return ListObjectsIterator(nullptr, StatusOr<ObjectMetadata>(past_the_end_error));
+      return ListObjectsIterator(nullptr,
+                                 StatusOr<ObjectMetadata>(past_the_end_error));
     }
     request_.set_page_token(std::move(next_page_token_));
     auto response = client_->ListObjects(request_);

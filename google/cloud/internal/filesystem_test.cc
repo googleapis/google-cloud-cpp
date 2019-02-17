@@ -253,14 +253,12 @@ TEST(FilesystemTest, StatusErrorDoesThrow) {
   std::ofstream(file_name).close();
   auto path = file_name + "/files/cannot/be/directories";
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { status(path); } catch (std::system_error const& ex) {
-        EXPECT_EQ(static_cast<int>(std::errc::not_a_directory),
-                  ex.code().value());
-        EXPECT_THAT(ex.what(), HasSubstr(path));
-        throw;
-      },
-      std::system_error);
+  EXPECT_THROW(try { status(path); } catch (std::system_error const& ex) {
+    EXPECT_EQ(static_cast<int>(std::errc::not_a_directory), ex.code().value());
+    EXPECT_THAT(ex.what(), HasSubstr(path));
+    throw;
+  },
+               std::system_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(status(path), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -305,14 +303,13 @@ TEST(FilesystemTest, FileSizeNotFound) {
 TEST(FilesystemTest, FileSizeNotFoundDoesThrow) {
   auto path = CreateRandomFileName();
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { file_size(path); } catch (std::system_error const& ex) {
-        EXPECT_EQ(static_cast<int>(std::errc::no_such_file_or_directory),
-                  ex.code().value());
-        EXPECT_THAT(ex.what(), HasSubstr(path));
-        throw;
-      },
-      std::system_error);
+  EXPECT_THROW(try { file_size(path); } catch (std::system_error const& ex) {
+    EXPECT_EQ(static_cast<int>(std::errc::no_such_file_or_directory),
+              ex.code().value());
+    EXPECT_THAT(ex.what(), HasSubstr(path));
+    throw;
+  },
+               std::system_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(file_size(path), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

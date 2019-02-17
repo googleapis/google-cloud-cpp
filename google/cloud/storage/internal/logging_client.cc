@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/logging_client.h"
-#include "google/cloud/storage/internal/logging_resumable_upload_session.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/log.h"
+#include "google/cloud/storage/internal/logging_resumable_upload_session.h"
 #include "google/cloud/storage/internal/raw_client_wrapper_utils.h"
 
 namespace google {
@@ -155,14 +155,14 @@ StatusOr<ObjectMetadata> LoggingClient::GetObjectMetadata(
   return MakeCall(*client_, &RawClient::GetObjectMetadata, request, __func__);
 }
 
-StatusOr<std::unique_ptr<ObjectReadStreambuf>>
-LoggingClient::ReadObject(ReadObjectRangeRequest const& request) {
+StatusOr<std::unique_ptr<ObjectReadStreambuf>> LoggingClient::ReadObject(
+    ReadObjectRangeRequest const& request) {
   return MakeCallNoResponseLogging(*client_, &RawClient::ReadObject, request,
                                    __func__);
 }
 
-StatusOr<std::unique_ptr<ObjectWriteStreambuf>>
-LoggingClient::WriteObject(InsertObjectStreamingRequest const& request) {
+StatusOr<std::unique_ptr<ObjectWriteStreambuf>> LoggingClient::WriteObject(
+    InsertObjectStreamingRequest const& request) {
   return MakeCallNoResponseLogging(*client_, &RawClient::WriteObject, request,
                                    __func__);
 }
@@ -210,7 +210,7 @@ LoggingClient::CreateResumableSession(ResumableUploadRequest const& request) {
 }
 
 StatusOr<std::unique_ptr<ResumableUploadSession>>
-LoggingClient::RestoreResumableSession(std::string const &request){
+LoggingClient::RestoreResumableSession(std::string const& request) {
   return MakeCallNoResponseLogging(
       *client_, &RawClient::RestoreResumableSession, request, __func__);
 }
@@ -275,8 +275,7 @@ StatusOr<ObjectAccessControl> LoggingClient::PatchObjectAcl(
   return MakeCall(*client_, &RawClient::PatchObjectAcl, request, __func__);
 }
 
-StatusOr<ListDefaultObjectAclResponse>
-LoggingClient::ListDefaultObjectAcl(
+StatusOr<ListDefaultObjectAclResponse> LoggingClient::ListDefaultObjectAcl(
     ListDefaultObjectAclRequest const& request) {
   return MakeCall(*client_, &RawClient::ListDefaultObjectAcl, request,
                   __func__);

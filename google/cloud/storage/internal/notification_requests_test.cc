@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/notification_requests.h"
-#include "google/cloud/storage/notification_payload_format.h"
 #include "google/cloud/storage/notification_event_type.h"
+#include "google/cloud/storage/notification_payload_format.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -45,7 +45,8 @@ TEST(NotificationRequestTest, Parse) {
       "payload_format": "JSON_API_V1",
       "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket/notificationConfigs/test-id-123",
       "topic": "test-topic"
-  })""").value();
+  })""")
+                    .value();
   EXPECT_EQ(2U, actual.custom_attributes().size());
   EXPECT_TRUE(actual.has_custom_attribute("test-ca-1"));
   EXPECT_EQ("value1", actual.custom_attribute("test-ca-1"));

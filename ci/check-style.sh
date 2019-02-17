@@ -43,7 +43,7 @@ find . \( -path ./.git \
 # Apply clang-format(1) to fix whitespace and other formatting rules.
 # The version of clang-format is important, different versions have slightly
 # different formatting output (sigh).
-find google/cloud -name '*.cc' -o -name '*.h' -print0 \
+find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 \
      | xargs -0 clang-format -i
 
 # Apply several transformations that cannot be enforced by clang-format:

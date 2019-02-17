@@ -36,16 +36,12 @@ TEST(HttpResponseTest, OStream) {
 }
 
 TEST(HttpResponseTest, AsStatus) {
-  EXPECT_EQ(StatusCode::kUnknown,
-            AsStatus(HttpResponse{-42, "weird"}).code());
+  EXPECT_EQ(StatusCode::kUnknown, AsStatus(HttpResponse{-42, "weird"}).code());
   EXPECT_EQ(StatusCode::kUnknown,
             AsStatus(HttpResponse{99, "still weird"}).code());
-  EXPECT_EQ(StatusCode::kOk,
-            AsStatus(HttpResponse{100, "Continue"}).code());
-  EXPECT_EQ(StatusCode::kOk,
-            AsStatus(HttpResponse{200, "success"}).code());
-  EXPECT_EQ(StatusCode::kOk,
-            AsStatus(HttpResponse{299, "success"}).code());
+  EXPECT_EQ(StatusCode::kOk, AsStatus(HttpResponse{100, "Continue"}).code());
+  EXPECT_EQ(StatusCode::kOk, AsStatus(HttpResponse{200, "success"}).code());
+  EXPECT_EQ(StatusCode::kOk, AsStatus(HttpResponse{299, "success"}).code());
   EXPECT_EQ(StatusCode::kUnknown,
             AsStatus(HttpResponse{300, "libcurl should handle this"}).code());
   EXPECT_EQ(StatusCode::kFailedPrecondition,
@@ -62,8 +58,7 @@ TEST(HttpResponseTest, AsStatus) {
             AsStatus(HttpResponse{405, "method not allowed"}).code());
   EXPECT_EQ(StatusCode::kAborted,
             AsStatus(HttpResponse{409, "conflict"}).code());
-  EXPECT_EQ(StatusCode::kNotFound,
-            AsStatus(HttpResponse{410, "gone"}).code());
+  EXPECT_EQ(StatusCode::kNotFound, AsStatus(HttpResponse{410, "gone"}).code());
   EXPECT_EQ(StatusCode::kInvalidArgument,
             AsStatus(HttpResponse{411, "length required"}).code());
   EXPECT_EQ(StatusCode::kFailedPrecondition,
@@ -84,8 +79,7 @@ TEST(HttpResponseTest, AsStatus) {
             AsStatus(HttpResponse{503, "service unavailable"}).code());
   EXPECT_EQ(StatusCode::kInternal,
             AsStatus(HttpResponse{599, "some 5XX error"}).code());
-  EXPECT_EQ(StatusCode::kUnknown,
-            AsStatus(HttpResponse{600, "bad"}).code());
+  EXPECT_EQ(StatusCode::kUnknown, AsStatus(HttpResponse{600, "bad"}).code());
 }
 }  // namespace
 }  // namespace internal

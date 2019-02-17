@@ -20,7 +20,6 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::StartsWith;

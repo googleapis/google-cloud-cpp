@@ -23,9 +23,9 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 namespace {
-StatusOr<ResumableUploadResponse> ReturnError(
-    Status&& last_status, RetryPolicy const& retry_policy,
-    char const* error_message) {
+StatusOr<ResumableUploadResponse> ReturnError(Status&& last_status,
+                                              RetryPolicy const& retry_policy,
+                                              char const* error_message) {
   std::ostringstream os;
   if (retry_policy.IsExhausted()) {
     os << "Retry policy exhausted in " << error_message << ": " << last_status;
@@ -36,9 +36,8 @@ StatusOr<ResumableUploadResponse> ReturnError(
 }
 }  // namespace
 
-StatusOr<ResumableUploadResponse>
-RetryResumableUploadSession::UploadChunk(std::string const& buffer,
-                                         std::uint64_t upload_size) {
+StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadChunk(
+    std::string const& buffer, std::uint64_t upload_size) {
   Status last_status;
   while (!retry_policy_->IsExhausted()) {
     auto result = session_->UploadChunk(buffer, upload_size);
@@ -62,8 +61,7 @@ RetryResumableUploadSession::UploadChunk(std::string const& buffer,
   return Status(last_status.code(), os.str());
 }
 
-StatusOr<ResumableUploadResponse>
-RetryResumableUploadSession::ResetSession() {
+StatusOr<ResumableUploadResponse> RetryResumableUploadSession::ResetSession() {
   Status last_status;
   while (!retry_policy_->IsExhausted()) {
     auto result = session_->ResetSession();
