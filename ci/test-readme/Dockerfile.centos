@@ -21,13 +21,13 @@ MAINTAINER "Carlos O'Ryan <coryan@google.com>"
 
 ## [START INSTALL.md]
 
-# First install the development tools and OpenSSL. The development tools
-# distributed with CentOS (notably CMake) are too old to build
-# `google-cloud-cpp` and its dependencies. In these instructions, we use
-# `cmake3` obtained from
-# [Software Collections](https://www.softwarecollections.org/).
+# First install the development tools and OpenSSL.
 
 ## [START README.md]
+
+# The development tools distributed with CentOS (notably CMake) are too old to
+# build `google-cloud-cpp`. In these instructions, we use `cmake3` obtained from
+# [Software Collections](https://www.softwarecollections.org/).
 
 # ```bash
 RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm

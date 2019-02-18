@@ -35,7 +35,7 @@ sed \
     -e 's/^make install/sudo make install/' \
     -e 's;/home/build;$HOME;' \
     -e 's;/var/tmp/build;$HOME/Downloads;' \
-    -e 's/^    sudo/sudo/' $* | \
+    -e 's/^    sudo/sudo/' "$@" | \
     awk '
       BEGIN {
         removing_blanks=0;

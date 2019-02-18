@@ -51,14 +51,14 @@ at the [Beta](#versioning) quality level:
   - [Libraries](#libraries)
   - [Tests](#tests)
 - [Install Dependencies](#install-dependencies)
-  - [CentOS](#centos)
+  - [CentOS (7)](#centos-7)
   - [Debian (Stretch)](#debian-stretch)
-  - [Fedora](#fedora)
+  - [Fedora (29)](#fedora-29)
   - [OpenSuSE (Tumbleweed)](#opensuse-tumbleweed)
   - [OpenSuSE (Leap)](#opensuse-leap)
-  - [Ubuntu (Bionic Beaver)](#ubuntu-bionic-beaver)
-  - [Ubuntu (Xenial Xerus)](#ubuntu-xenial-xerus)
-  - [Ubuntu (Trusty)](#ubuntu-trusty-tahr)
+  - [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804---bionic-beaver)
+  - [Ubuntu (16.04 - Xenial Xerus)](#ubuntu-1604---xenial-xerus)
+  - [Ubuntu (14.04 - Trusty Tahr)](#ubuntu-1404---trusty-tahr)
   - [macOS (using brew)](#macos-using-brew)
   - [Windows](#windows-using-vcpkg)
 - [Build](#build)
@@ -89,7 +89,7 @@ of these tools we test with are:
 | Tool       | Minimum Version |
 | ---------- | --------------- |
 | CMake      | 3.5 |
-| Bazel      | 0.12.0 |
+| Bazel      | 0.20.0 |
 
 #### Libraries
 
@@ -110,111 +110,88 @@ against the latest version of the SDK on each commit and PR.
 
 ## Install Dependencies
 
-#### CentOS
+### CentOS (7)
 
-Some of the development tools distributed with CentOS (notably CMake) are quite
-old, In these instructions, we use `cmake3` via
+The development tools distributed with CentOS (notably CMake) are too old to
+build `google-cloud-cpp`. In these instructions, we use `cmake3` obtained from
 [Software Collections](https://www.softwarecollections.org/).
 
 ```bash
-# Extra Packages for Enterprise Linux used to install cmake3
 rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-
-yum install centos-release-scl
-yum-config-manager --enable rhel-server-rhscl-7-rpms
-
-yum makecache
-yum install -y cmake3 gcc gcc-c++ git make openssl-devel
-
-# Install cmake3 & ctest3 as cmake & ctest respectively.
+sudo yum install -y centos-release-scl
+sudo yum-config-manager --enable rhel-server-rhscl-7-rpms
+sudo yum makecache && \
+sudo yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool make \
+        openssl-devel pkgconfig tar wget which zlib-devel
 ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 ```
 
-#### Debian (Stretch)
+### Debian (Stretch)
+
+On Debian Stretch, libcurl links against openssl-1.0.2, and one must link
+against the same version or risk an inconsistent configuration of the library.
+This is especially important for multi-threaded applications, as openssl-1.0.2
+requires explicitly setting locking callbacks. Therefore, to use libcurl one
+must link against openssl-1.0.2. To do so, we need to install libssl1.0-dev.
+Note that this removes libssl-dev if you have it installed already, and would
+prevent you from compiling against openssl-1.1.0.
 
 ```bash
-sudo apt update
-sudo apt install -y build-essential cmake git gcc g++ cmake libcurl4-openssl-dev libssl-dev make zlib1g-dev
+sudo apt update && \
+sudo apt install -y build-essential cmake git gcc g++ cmake \
+        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl1.0-dev make \
+        pkg-config tar wget zlib1g-dev
 ```
 
-#### Fedora
+### Fedora (29)
 
 ```bash
-sudo dnf makecache
-sudo dnf install -y clang cmake gcc-c++ git libcurl-devel make openssl-devel
+sudo dnf makecache && \
+sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig zlib-devel
 ```
 
-#### OpenSuSE (Tumbleweed)
+### OpenSUSE (Tumbleweed)
 
 ```bash
-sudo zypper refresh
-sudo zypper install -y cmake gcc gcc-c++ git libcurl-devel make
+sudo zypper refresh && \
+sudo zypper install -y cmake gcc gcc-c++ git libcurl-devel libopenssl-devel make
 ```
 
-#### OpenSuSE (Leap)
-
-The stock compiler on OpenSuSE (Leap) has poor support for C++11, we recommend
-updating to `g++-5` using:
+### OpenSUSE (Leap)
 
 ```bash
-sudo zypper refresh
-sudo zypper install -y cmake gcc gcc-c++ git libcurl-devel make
-sudo zypper install gcc5 gcc5-c++
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100
-sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100
+sudo zypper refresh && \
+sudo zypper install -y cmake gcc gcc-c++ git libcurl-devel libopenssl-devel \
+        make tar wget
 ```
 
-#### Ubuntu (Bionic Beaver)
+### Ubuntu (18.04 - Bionic Beaver)
 
 ```bash
-sudo apt update
-sudo apt install -y build-essential cmake git gcc g++ cmake libcurl4-openssl-dev libssl-dev make zlib1g-dev
+sudo apt update && \
+sudo apt install -y build-essential cmake git gcc g++ cmake \
+        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
+        pkg-config tar wget zlib1g-dev
 ```
 
-#### Ubuntu (Xenial Xerus)
+### Ubuntu (16.04 - Xenial Xerus)
 
 ```bash
-sudo apt update
-sudo apt install -y build-essential cmake git gcc g++ cmake libcurl4-openssl-dev libssl-dev make zlib1g-dev
+sudo apt update && \
+sudo apt install -y build-essential cmake git gcc g++ cmake \
+        libcurl4-openssl-dev libssl-dev make \
+        pkg-config tar wget zlib1g-dev
 ```
 
-#### Ubuntu (Trusty Tahr)
+### Ubuntu (14.04 - Trusty Tahr)
 
-The default compiler on Ubuntu-14.04 (Trusty Tahr) doesn't fully support C++11.
-In addition, gRPC requires a newer version of OpenSSL than the one included
-in the system.
-
-It is possible to work around these limitations on a *new* installation of
-Ubuntu-14.04, but there are [known issues][issue-913] working on a system where
-these libraries are already installed.
-
-[issue-913]: https://github.com/googleapis/google-cloud-cpp/issues/913
-
-Nevertheless, the following steps are known to work:
+We use the `ubuntu-toolchain-r` PPA to get a modern version of CMake:
 
 ```bash
-sudo apt update
-sudo apt install -y software-properties-common
+sudo apt update && sudo apt install -y software-properties-common
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-sudo apt update
-sudo apt install -y cmake3 git gcc-4.9 g++-4.9 make wget zlib1g-dev
-sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
-cd /var/tmp/
-sudo wget -q https://www.openssl.org/source/openssl-1.0.2n.tar.gz
-sudo tar xf openssl-1.0.2n.tar.gz
-cd /var/tmp/openssl-1.0.2n
-sudo ./Configure --prefix=/usr/local --openssldir=/usr/local linux-x86_64 shared
-sudo make -j $(nproc)
-sudo make install
-
-cd /var/tmp/
-sudo wget -q https://curl.haxx.se/download/curl-7.61.0.tar.gz
-sudo tar xf curl-7.61.0.tar.gz
-cd /var/tmp/curl-7.61.0
-sudo ./configure
-sudo make -j $(nproc)
-sudo make install
+sudo apt update && \
+sudo apt install -y cmake3 git gcc g++ make pkg-config tar wget zlib1g-dev
 ```
 
 #### macOS (using brew)
