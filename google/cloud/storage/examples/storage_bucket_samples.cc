@@ -657,6 +657,30 @@ void ReadObjectRequesterPays(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name, billed_project);
 }
 
+void DeleteObjectRequesterPays(google::cloud::storage::Client client, int& argc,
+                               char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "delete-object-requester-pays <bucket-name> <object-name>"
+        " <billed-project>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto billed_project = ConsumeArg(argc, argv);
+  //! [delete object requester pays]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string billed_project) {
+    google::cloud::Status status = client.DeleteObject(
+        bucket_name, object_name, gcs::UserProject(billed_project));
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
+    }
+  }
+  //! [read object requester pays]
+  (std::move(client), bucket_name, object_name, billed_project);
+}
+
 void GetServiceAccount(google::cloud::storage::Client client, int& argc,
                        char* argv[]) {
   if (argc != 1) {
@@ -1011,6 +1035,7 @@ int main(int argc, char* argv[]) try {
       {"disable-requester-pays", &DisableRequesterPays},
       {"write-object-requester-pays", &WriteObjectRequesterPays},
       {"read-object-requester-pays", &ReadObjectRequesterPays},
+      {"delete-object-requester-pays", &DeleteObjectRequesterPays},
       {"get-service-account", &GetServiceAccount},
       {"get-service-account-for-project", &GetServiceAccountForProject},
       {"get-default-event-based-hold", &GetDefaultEventBasedHold},
