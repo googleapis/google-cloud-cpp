@@ -22,7 +22,8 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
-using google::cloud::storage::internal::BinaryDataAsDebugString;
+
+using ::google::cloud::storage::internal::BinaryDataAsDebugString;
 
 std::size_t const MAX_DATA_DEBUG_SIZE = 48;
 

@@ -25,15 +25,16 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 namespace nl = internal::nl;
-using internal::ListObjectsRequest;
-using internal::ListObjectsResponse;
-using storage::testing::MockClient;
-using storage::testing::canonical_errors::PermanentError;
-using ::testing::_;
+
+using ::google::cloud::storage::internal::ListObjectsRequest;
+using ::google::cloud::storage::internal::ListObjectsResponse;
+using ::google::cloud::storage::testing::MockClient;
+using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::testing::ContainerEq;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
+using ::testing::_;
 
 ObjectMetadata CreateElement(int index) {
   std::string id = "object-" + std::to_string(index);

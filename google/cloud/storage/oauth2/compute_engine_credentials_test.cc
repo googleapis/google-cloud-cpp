@@ -28,17 +28,18 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 namespace {
+
 using ::google::cloud::storage::internal::GceMetadataHostname;
 using ::google::cloud::storage::internal::HttpResponse;
 using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
-using ::testing::_;
 using ::testing::An;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::StrEq;
 using ::testing::UnorderedElementsAre;
+using ::testing::_;
 
 class ComputeEngineCredentialsTest : public ::testing::Test {
  protected:

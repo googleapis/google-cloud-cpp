@@ -51,7 +51,7 @@ void ListBuckets(google::cloud::storage::Client client, int& argc,
   }
   //! [list buckets] [START storage_list_buckets]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client) {
     int count = 0;
     gcs::ListBucketsReader bucket_list = client.ListBuckets();
@@ -107,7 +107,7 @@ void CreateBucket(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   //! [create bucket] [START storage_create_bucket]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.CreateBucket(bucket_name, gcs::BucketMetadata());
@@ -132,7 +132,7 @@ void CreateBucketForProject(google::cloud::storage::Client client, int& argc,
   auto project_id = ConsumeArg(argc, argv);
   //! [create bucket for project]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string project_id) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.CreateBucketForProject(bucket_name, project_id,
@@ -158,7 +158,7 @@ void GetBucketMetadata(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   //! [get bucket metadata] [START storage_get_bucket_metadata]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name);
@@ -204,7 +204,7 @@ void ChangeDefaultStorageClass(google::cloud::storage::Client client, int& argc,
   auto storage_class = ConsumeArg(argc, argv);
   //! [update bucket]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string storage_class) {
     StatusOr<gcs::BucketMetadata> meta = client.GetBucketMetadata(bucket_name);
 
@@ -237,7 +237,7 @@ void PatchBucketStorageClass(google::cloud::storage::Client client, int& argc,
   auto storage_class = ConsumeArg(argc, argv);
   //! [patch bucket storage class] [START storage_change_default_storage_class]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string storage_class) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
@@ -274,7 +274,7 @@ void PatchBucketStorageClassWithBuilder(google::cloud::storage::Client client,
   auto storage_class = ConsumeArg(argc, argv);
   //! [patch bucket storage class with builder]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string storage_class) {
     StatusOr<gcs::BucketMetadata> patched = client.PatchBucket(
         bucket_name,
@@ -301,7 +301,7 @@ void AddBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
   auto key_name = ConsumeArg(argc, argv);
   //! [add bucket kms key] [START storage_set_bucket_default_kms_key]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string key_name) {
     StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().SetEncryption(
@@ -336,7 +336,7 @@ void GetBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   //! [get bucket default kms key] [START storage_get_bucket_default_kms_key]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<gcs::BucketMetadata> meta = client.GetBucketMetadata(bucket_name);
 
@@ -366,7 +366,7 @@ void RemoveBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
   //! [remove bucket default kms key]
   // [START storage_bucket_delete_default_kms_key]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().ResetEncryption());
@@ -393,7 +393,7 @@ void AddBucketLabel(google::cloud::storage::Client client, int& argc,
   auto label_value = ConsumeArg(argc, argv);
   //! [add bucket label] [START storage_add_bucket_label]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string label_key,
      std::string label_value) {
     StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
@@ -424,7 +424,7 @@ void GetBucketLabels(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   //! [get bucket labels] [START storage_get_bucket_labels]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name, gcs::Fields("labels"));
@@ -457,7 +457,7 @@ void RemoveBucketLabel(google::cloud::storage::Client client, int& argc,
   auto label_key = ConsumeArg(argc, argv);
   //! [remove bucket label] [START storage_remove_bucket_label]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string label_key) {
     StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().ResetLabel(label_key));
@@ -490,7 +490,7 @@ void GetBilling(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   //! [get billing] [START storage_get_requester_pays_status]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name);
@@ -529,7 +529,7 @@ void EnableRequesterPays(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   //! [enable requester pays] [START storage_enable_requester_pays]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata = client.PatchBucket(
         bucket_name,
@@ -563,7 +563,7 @@ void DisableRequesterPays(google::cloud::storage::Client client, int& argc,
   auto project_id = ConsumeArg(argc, argv);
   //! [disable requester pays] [START storage_disable_requester_pays]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string project_id) {
     StatusOr<gcs::BucketMetadata> bucket_metadata = client.PatchBucket(
         bucket_name,
@@ -601,7 +601,7 @@ void WriteObjectRequesterPays(google::cloud::storage::Client client, int& argc,
   auto billed_project = ConsumeArg(argc, argv);
   //! [write object requester pays]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string billed_project) {
     std::string const text = "Lorem ipsum dolor sit amet";
@@ -664,7 +664,7 @@ void GetServiceAccount(google::cloud::storage::Client client, int& argc,
   }
   //! [get service account] [START storage_get_service_account]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client) {
     StatusOr<gcs::ServiceAccount> service_account_details =
         client.GetServiceAccount();
@@ -688,7 +688,7 @@ void GetServiceAccountForProject(google::cloud::storage::Client client,
   //! [get service account for project]
   // [START storage_get_service_account_for_project]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string project_id) {
     StatusOr<gcs::ServiceAccount> service_account_details =
         client.GetServiceAccountForProject(project_id);
@@ -714,7 +714,7 @@ void GetDefaultEventBasedHold(google::cloud::storage::Client client, int& argc,
   //! [get default event based hold]
   // [START storage_get_default_event_based_hold]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name);
@@ -743,7 +743,7 @@ void EnableDefaultEventBasedHold(google::cloud::storage::Client client,
   //! [enable default event based hold]
   // [START storage_enable_default_event_based_hold]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
@@ -781,7 +781,7 @@ void DisableDefaultEventBasedHold(google::cloud::storage::Client client,
   //! [disable default event based hold]
   // [START storage_disable_default_event_based_hold]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
@@ -819,7 +819,7 @@ void GetRetentionPolicy(google::cloud::storage::Client client, int& argc,
   //! [get retention policy]
   // [START storage_get_retention_policy]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name);
@@ -853,7 +853,7 @@ void SetRetentionPolicy(google::cloud::storage::Client client, int& argc,
   //! [set retention policy]
   // [START storage_set_retention_policy]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::chrono::seconds period) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
@@ -895,7 +895,7 @@ void RemoveRetentionPolicy(google::cloud::storage::Client client, int& argc,
   //! [remove retention policy]
   // [START storage_remove_retention_policy]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
@@ -938,7 +938,7 @@ void LockRetentionPolicy(google::cloud::storage::Client client, int& argc,
   //! [lock retention policy]
   // [START storage_lock_retention_policy]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);

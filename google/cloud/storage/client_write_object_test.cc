@@ -24,13 +24,14 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-using ::testing::_;
+
 using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
-using testing::canonical_errors::PermanentError;
-using testing::canonical_errors::TransientError;
+using ::testing::_;
+using ::google::cloud::storage::testing::canonical_errors::PermanentError;
+using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ms = std::chrono::milliseconds;
 
 /**

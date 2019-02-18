@@ -52,7 +52,7 @@ void GetBucketIamPolicy(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   //! [get bucket iam policy] [START storage_view_bucket_iam_members]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<google::cloud::IamPolicy> policy =
         client.GetBucketIamPolicy(bucket_name);
@@ -78,7 +78,7 @@ void AddBucketIamMember(google::cloud::storage::Client client, int& argc,
   auto member = ConsumeArg(argc, argv);
   //! [add bucket iam member] [START storage_add_bucket_iam_member]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string role,
      std::string member) {
     StatusOr<google::cloud::IamPolicy> policy =
@@ -114,7 +114,7 @@ void RemoveBucketIamMember(google::cloud::storage::Client client, int& argc,
   auto member = ConsumeArg(argc, argv);
   //! [remove bucket iam member] [START storage_remove_bucket_iam_member]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string role,
      std::string member) {
     StatusOr<google::cloud::IamPolicy> policy =
@@ -153,7 +153,7 @@ void TestBucketIamPermissions(google::cloud::storage::Client client, int& argc,
   }
   //! [test bucket iam permissions]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name,
      std::vector<std::string> permissions) {
     StatusOr<std::vector<std::string>> actual_permissions =

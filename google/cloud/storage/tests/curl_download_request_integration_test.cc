@@ -25,6 +25,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+
 using ::testing::HasSubstr;
 
 namespace {

@@ -22,8 +22,6 @@
 #include <cstdlib>
 #include <vector>
 
-using ::testing::HasSubstr;
-
 namespace google {
 namespace cloud {
 namespace storage {

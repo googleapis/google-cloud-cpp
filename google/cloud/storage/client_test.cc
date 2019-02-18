@@ -25,9 +25,10 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-using ::testing::_;
+
 using ::testing::Return;
-using testing::canonical_errors::TransientError;
+using ::testing::_;
+using ::google::cloud::storage::testing::canonical_errors::TransientError;
 
 class ObservableRetryPolicy : public LimitedErrorCountRetryPolicy {
  public:

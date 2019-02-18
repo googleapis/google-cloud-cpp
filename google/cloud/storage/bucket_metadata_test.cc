@@ -25,8 +25,9 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-using google::cloud::make_optional;
-using google::cloud::optional;
+
+using ::google::cloud::make_optional;
+using ::google::cloud::optional;
 using ::testing::HasSubstr;
 using ::testing::Not;
 

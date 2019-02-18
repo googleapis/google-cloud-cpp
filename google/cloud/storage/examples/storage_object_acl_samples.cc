@@ -54,7 +54,7 @@ void ListObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto object_name = ConsumeArg(argc, argv);
   //! [list object acl]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
     StatusOr<std::vector<gcs::ObjectAccessControl>> items =
         client.ListObjectAcl(bucket_name, object_name);
@@ -84,7 +84,7 @@ void CreateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto role = ConsumeArg(argc, argv);
   //! [create object acl] [START storage_create_file_acl]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string entity, std::string role) {
     StatusOr<gcs::ObjectAccessControl> object_acl =
@@ -136,7 +136,7 @@ void GetObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto entity = ConsumeArg(argc, argv);
   //! [get object acl] [START storage_print_file_acl]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string entity) {
     StatusOr<gcs::ObjectAccessControl> acl =
@@ -165,7 +165,7 @@ void UpdateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto role = ConsumeArg(argc, argv);
   //! [update object acl] [START storage_update_file_acl]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string entity, std::string role) {
     StatusOr<gcs::ObjectAccessControl> current_acl =
@@ -202,7 +202,7 @@ void PatchObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto role = ConsumeArg(argc, argv);
   //! [patch object acl]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string entity, std::string role) {
     StatusOr<gcs::ObjectAccessControl> original_acl =
@@ -241,7 +241,7 @@ void PatchObjectAclNoRead(gcs::Client client, int& argc, char* argv[]) {
   auto role = ConsumeArg(argc, argv);
   //! [patch object acl no-read]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string entity, std::string role) {
     StatusOr<gcs::ObjectAccessControl> patched_acl = client.PatchObjectAcl(

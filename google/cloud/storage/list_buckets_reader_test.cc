@@ -23,15 +23,17 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-using internal::ListBucketsRequest;
-using internal::ListBucketsResponse;
-using ::testing::_;
+
+using ::google::cloud::storage::internal::ListBucketsRequest;
+using ::google::cloud::storage::internal::ListBucketsResponse;
+using ::google::cloud::storage::testing::MockClient;
+using ::google::cloud::storage::testing::canonical_errors::PermanentError;
+using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::ContainerEq;
 using ::testing::Invoke;
-using testing::MockClient;
 using ::testing::Return;
-using testing::canonical_errors::PermanentError;
-using testing::canonical_errors::TransientError;
+using ::testing::_;
+
 namespace {
 BucketMetadata CreateElement(int index) {
   std::string id = "bucket-" + std::to_string(index);

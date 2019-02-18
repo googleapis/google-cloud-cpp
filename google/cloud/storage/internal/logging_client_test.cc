@@ -24,11 +24,12 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
-using google::cloud::storage::testing::canonical_errors::TransientError;
-using ::testing::_;
+
+using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
+using ::testing::_;
 
 class MockLogBackend : public google::cloud::LogBackend {
  public:

@@ -26,14 +26,15 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-using ::testing::_;
+
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
-using testing::canonical_errors::TransientError;
+using ::testing::_;
+using ::google::cloud::storage::testing::canonical_errors::TransientError;
 
 /**
  * Test the functions in Storage::Client related to 'Buckets: *'.
