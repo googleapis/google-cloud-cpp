@@ -47,8 +47,12 @@ function (create_googletest_aliases)
     add_library(GTest::gtest_main ALIAS GTest_gtest_main)
 endfunction ()
 
+include(CTest)
 if (TARGET GTest::gmock)
     # GTest::gmock is already defined, do not define it again.
+elseif(NOT BUILD_TESTING)
+    # Tests are turned off via -DBUILD_TESTING, do not load the googletest or
+    # googlemock dependency.
 elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "external")
     include(external/googletest)
 elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "package")
