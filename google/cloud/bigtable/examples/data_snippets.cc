@@ -379,7 +379,11 @@ void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
             "fam", "counter", 1),
         google::cloud::bigtable::ReadModifyWriteRule::AppendValue("fam", "list",
                                                                   ";element"));
-    std::cout << row.row_key() << "\n";
+
+    if (!row) {
+      throw std::runtime_error(row.status().message());
+    }
+    std::cout << row->row_key() << "\n";
   }
   //! [read modify write]
   (std::move(table));

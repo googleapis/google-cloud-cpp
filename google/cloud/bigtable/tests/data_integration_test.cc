@@ -415,13 +415,13 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteAppendValueTest) {
                                     family2, "column-id2", add_suffix2),
                                 bigtable::ReadModifyWriteRule::AppendValue(
                                     family3, "column-id3", add_suffix3));
-
+  ASSERT_STATUS_OK(result_row);
   // Returned cells contains timestamp in microseconds which is
   // not matching with the timestamp in expected cells, So creating
   // cells by ignoring timestamp
   auto expected_cells_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
   auto actual_cells_ignore_timestamp =
-      GetCellsIgnoringTimestamp(result_row.cells());
+      GetCellsIgnoringTimestamp(result_row->cells());
 
   DeleteTable(table_id);
   CheckEqualUnordered(expected_cells_ignore_timestamp,
@@ -447,11 +447,11 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteRowIncrementAmountTest) {
   auto row = table->ReadModifyWriteRow(
       key, bigtable::ReadModifyWriteRule::IncrementAmount(family1, "c1", 42),
       bigtable::ReadModifyWriteRule::IncrementAmount(family1, "c2", 7));
-
+  ASSERT_STATUS_OK(row);
   // Ignore the server set timestamp on the returned cells because it is not
   // predictable.
   auto expected_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
-  auto actual_ignore_timestamp = GetCellsIgnoringTimestamp(row.cells());
+  auto actual_ignore_timestamp = GetCellsIgnoringTimestamp(row->cells());
 
   DeleteTable(table_id);
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
@@ -494,11 +494,11 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteRowMultipleTest) {
                                 R::AppendValue(family1, "c4", "suffix"),
                                 R::AppendValue(family2, "d3", "suffix"),
                                 R::AppendValue(family2, "d4", "suffix"));
-
+  ASSERT_STATUS_OK(row);
   // Ignore the server set timestamp on the returned cells because it is not
   // predictable.
   auto expected_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
-  auto actual_ignore_timestamp = GetCellsIgnoringTimestamp(row.cells());
+  auto actual_ignore_timestamp = GetCellsIgnoringTimestamp(row->cells());
 
   DeleteTable(table_id);
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
@@ -533,11 +533,11 @@ TEST_F(DataIntegrationTest, TableCellValueInt64Test) {
                                 R::IncrementAmount(family2, "d2", 9999993000),
                                 R::AppendValue(family1, "c3", "suffix"),
                                 R::AppendValue(family2, "d3", "suffix"));
-
+  ASSERT_STATUS_OK(row);
   // Ignore the server set timestamp on the returned cells because it is not
   // predictable.
   auto expected_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
-  auto actual_ignore_timestamp = GetCellsIgnoringTimestamp(row.cells());
+  auto actual_ignore_timestamp = GetCellsIgnoringTimestamp(row->cells());
 
   DeleteTable(table_id);
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);

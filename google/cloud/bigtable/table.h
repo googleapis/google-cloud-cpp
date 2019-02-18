@@ -368,14 +368,15 @@ class Table {
    * @snippet data_snippets.cc read modify write
    */
   template <typename... Args>
-  Row ReadModifyWriteRow(std::string row_key,
-                         bigtable::ReadModifyWriteRule rule, Args&&... rules) {
+  StatusOr<Row> ReadModifyWriteRow(std::string row_key,
+                                   bigtable::ReadModifyWriteRule rule,
+                                   Args&&... rules) {
     grpc::Status status;
     Row row =
         impl_.ReadModifyWriteRow(std::move(row_key), status, std::move(rule),
                                  std::forward<Args>(rules)...);
     if (!status.ok()) {
-      internal::ThrowRpcError(status, status.error_message());
+      return bigtable::internal::MakeStatusFromRpcError(status);
     }
     return row;
   }
