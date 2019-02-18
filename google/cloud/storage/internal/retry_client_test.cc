@@ -25,7 +25,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::google::cloud::testing_util::chrono_literals::operator""_us;
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
