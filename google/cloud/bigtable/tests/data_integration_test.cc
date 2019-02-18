@@ -590,34 +590,67 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
     return;
   }
 
+  // TODO(#2015) - Capture the elapsed time for each operation, so we can figure
+  //   out which one causes the test to timeout.
+  auto start = std::chrono::steady_clock::now();
+  auto elapsed_ms = [&start] {
+    using ms = std::chrono::milliseconds;
+    auto now = std::chrono::steady_clock::now();
+    auto elapsed = now - start;
+    start = now;
+    return std::chrono::duration_cast<ms>(elapsed).count();
+  };
+
   std::string const table_id = RandomTableId();
+  // TODO(#2015) - Capture elapsed time to troubleshoot flakiness.
+  SCOPED_TRACE("RandomTableId() " + std::to_string(elapsed_ms()) + "ms");
+
   auto table = CreateTable(table_id, table_config);
+  // TODO(#2015) - Capture elapsed time to troubleshoot flakiness.
+  SCOPED_TRACE("CreateTable() " + std::to_string(elapsed_ms()) + "ms");
 
   std::string const row_key = "row-key-1";
-  // cell vector contains 10 cells of 25 MiB
-  auto const MiB = 1024L * 1024L;
+  // cell vector contains 4 cells of 32 MiB each, or 128 MiB (without
+  // considering any overhead). That is much larger that the default gRPC
+  // message size (~4 MiB), and yet much smaller than the configured message
+  // size (~256MiB). Therefore, the row would not fit in a message if we failed
+  // to change the default configuration, but it is not so large that it will
+  // fail to work if we miss the overhead estimation.
+  auto const MiB = 1024 * 1024UL;
+  auto const cell_size = 32 * MiB;
+  auto const cell_count = 4;
+  // Smaller rows are not a good test, they would pass with the default setting.
+  auto const min_row_size = 10 * 4 * MiB;
+  // Larger rows are not a good test, they would fail even if the setting was
+  // working.
+  auto const max_row_size = 256 * MiB;
 
-  std::string value((25 * MiB), 'a');
+  std::string value(cell_size, 'a');
   std::vector<bigtable::Cell> created;
   std::vector<bigtable::Cell> expected;
 
-  std::string col_qualifier;
-  for (int i = 0; i < 10; i++) {
-    col_qualifier = "c" + std::to_string(i);
+  for (int i = 0; i < cell_count; i++) {
+    auto col_qualifier = "c" + std::to_string(i);
     created.push_back(bigtable::Cell(row_key, family, col_qualifier, 0, value));
     expected.push_back(
         bigtable::Cell(row_key, family, col_qualifier, 0, value));
   }
 
   CreateCells(*table, created);
+  // TODO(#2015) - Capture elapsed time to troubleshoot flakiness.
+  SCOPED_TRACE("CreateCells() " + std::to_string(elapsed_ms()) + "ms");
+
   auto result = table->ReadRow(row_key, bigtable::Filter::PassAllFilter());
   EXPECT_TRUE(result.first);
+  // TODO(#2015) - Capture elapsed time to troubleshoot flakiness.
+  SCOPED_TRACE("ReadRow() " + std::to_string(elapsed_ms()) + "ms");
 
-  int totalrowsize = 0;
+  std::size_t total_row_size = 0;
   for (auto const& cell : result.second.cells()) {
-    totalrowsize += cell.value().size();
+    total_row_size += cell.value().size();
   }
-  EXPECT_LE(totalrowsize, (256 * MiB));
+  EXPECT_LT(total_row_size, max_row_size);
+  EXPECT_GT(total_row_size, min_row_size);
 
   // Ignore the server set timestamp on the returned cells because it is not
   // predictable.
@@ -625,5 +658,7 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
   auto actual_ignore_timestamp =
       GetCellsIgnoringTimestamp(result.second.cells());
   EXPECT_STATUS_OK(DeleteTable(table_id));
+  // TODO(#2015) - Capture elapsed time to troubleshoot flakiness.
+  SCOPED_TRACE("DeleteTable() " + std::to_string(elapsed_ms()) + "ms");
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
