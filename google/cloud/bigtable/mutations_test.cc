@@ -36,20 +36,6 @@ TEST(MutationsTest, SetCell) {
   EXPECT_EQ("v", server_set.op.set_cell().value());
   EXPECT_EQ(bigtable::ServerSetTimestamp(),
             server_set.op.set_cell().timestamp_micros());
-
-  std::string fam("fam2"), col("col2");
-  // We want to make sure the strings are efficiently moved.  The C++ library
-  // often implements the "small string optimization", where the memory
-  // allocation costs are traded off for extra copies.  Use a large string to
-  // work around that optimization and test the move behavior.
-  std::string val(1000000, 'a');
-  auto val_data = val.data();
-  auto moved = bigtable::SetCell(std::move(fam), std::move(col), 2345_ms,
-                                 std::move(val));
-  ASSERT_TRUE(moved.op.has_set_cell());
-  EXPECT_EQ("fam2", moved.op.set_cell().family_name());
-  EXPECT_EQ("col2", moved.op.set_cell().column_qualifier());
-  EXPECT_EQ(val_data, moved.op.set_cell().value().data());
 }
 
 TEST(MutationsTest, SetCellNumericValue) {
