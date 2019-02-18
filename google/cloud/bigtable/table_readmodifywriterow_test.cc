@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -95,11 +96,12 @@ row {
       bigtable::ReadModifyWriteRule::AppendValue(family1, column_id1,
                                                  "-value2"));
 
-  EXPECT_EQ("response-row-key", row.row_key());
-  EXPECT_EQ("response-family1", row.cells().at(0).family_name());
-  EXPECT_EQ("response-colid1", row.cells().at(0).column_qualifier());
-  EXPECT_EQ(1, (int)row.cells().size());
-  EXPECT_EQ("value1-value2", row.cells().at(0).value());
+  ASSERT_STATUS_OK(row);
+  EXPECT_EQ("response-row-key", row->row_key());
+  EXPECT_EQ("response-family1", row->cells().at(0).family_name());
+  EXPECT_EQ("response-colid1", row->cells().at(0).column_qualifier());
+  EXPECT_EQ(1, (int)row->cells().size());
+  EXPECT_EQ("value1-value2", row->cells().at(0).value());
 }
 
 TEST_F(TableReadModifyWriteTest, MultipleIncrementAmountTest) {
@@ -164,15 +166,16 @@ TEST_F(TableReadModifyWriteTest, MultipleIncrementAmountTest) {
       bigtable::ReadModifyWriteRule::IncrementAmount(family1, column_id2, 200),
       bigtable::ReadModifyWriteRule::IncrementAmount(family2, column_id2, 400));
 
-  EXPECT_EQ("response-row-key", row.row_key());
-  EXPECT_EQ("response-family1", row.cells().at(0).family_name());
-  EXPECT_EQ("response-colid1", row.cells().at(0).column_qualifier());
-  EXPECT_EQ(2, (int)row.cells().size());
-  EXPECT_EQ("1200", row.cells().at(0).value());
+  ASSERT_STATUS_OK(row);
+  EXPECT_EQ("response-row-key", row->row_key());
+  EXPECT_EQ("response-family1", row->cells().at(0).family_name());
+  EXPECT_EQ("response-colid1", row->cells().at(0).column_qualifier());
+  EXPECT_EQ(2, (int)row->cells().size());
+  EXPECT_EQ("1200", row->cells().at(0).value());
 
-  EXPECT_EQ("response-family2", row.cells().at(1).family_name());
-  EXPECT_EQ("response-colid2", row.cells().at(1).column_qualifier());
-  EXPECT_EQ("400", row.cells().at(1).value());
+  EXPECT_EQ("response-family2", row->cells().at(1).family_name());
+  EXPECT_EQ("response-colid2", row->cells().at(1).column_qualifier());
+  EXPECT_EQ("400", row->cells().at(1).value());
 }
 
 TEST_F(TableReadModifyWriteTest, MultipleMixedRuleTest) {
@@ -238,15 +241,16 @@ TEST_F(TableReadModifyWriteTest, MultipleMixedRuleTest) {
                                                  "value_string"),
       bigtable::ReadModifyWriteRule::IncrementAmount(family2, column_id2, 400));
 
-  EXPECT_EQ("response-row-key", row.row_key());
-  EXPECT_EQ("response-family1", row.cells().at(0).family_name());
-  EXPECT_EQ("response-colid1", row.cells().at(0).column_qualifier());
-  EXPECT_EQ(2, (int)row.cells().size());
-  EXPECT_EQ("1200", row.cells().at(0).value());
+  ASSERT_STATUS_OK(row);
+  EXPECT_EQ("response-row-key", row->row_key());
+  EXPECT_EQ("response-family1", row->cells().at(0).family_name());
+  EXPECT_EQ("response-colid1", row->cells().at(0).column_qualifier());
+  EXPECT_EQ(2, (int)row->cells().size());
+  EXPECT_EQ("1200", row->cells().at(0).value());
 
-  EXPECT_EQ("response-family2", row.cells().at(1).family_name());
-  EXPECT_EQ("response-colid2", row.cells().at(1).column_qualifier());
-  EXPECT_EQ("value_string", row.cells().at(1).value());
+  EXPECT_EQ("response-family2", row->cells().at(1).family_name());
+  EXPECT_EQ("response-colid2", row->cells().at(1).column_qualifier());
+  EXPECT_EQ("value_string", row->cells().at(1).value());
 }
 
 TEST_F(TableReadModifyWriteTest, UnrecoverableFailureTest) {
@@ -259,20 +263,11 @@ TEST_F(TableReadModifyWriteTest, UnrecoverableFailureTest) {
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      table_.ReadModifyWriteRow(row_key,
-                                bigtable::ReadModifyWriteRule::AppendValue(
-                                    family1, column_id1, "value1"),
-                                bigtable::ReadModifyWriteRule::AppendValue(
-                                    family1, column_id1, "-value2")),
-      std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      table_.ReadModifyWriteRow(row_key,
-                                bigtable::ReadModifyWriteRule::AppendValue(
-                                    family1, column_id1, "value1"),
-                                bigtable::ReadModifyWriteRule::AppendValue(
-                                    family1, column_id1, "-value2")),
-      "exceptions are disabled");
+  EXPECT_FALSE(table_.ReadModifyWriteRow(
+      row_key,
+      bigtable::ReadModifyWriteRule::AppendValue(family1, column_id1, "value1"),
+      bigtable::ReadModifyWriteRule::AppendValue(family1, column_id1,
+                                                 "-value2")));
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
