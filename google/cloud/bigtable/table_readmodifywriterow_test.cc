@@ -262,12 +262,9 @@ TEST_F(TableReadModifyWriteTest, UnrecoverableFailureTest) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_FALSE(table_.ReadModifyWriteRow(
       row_key,
       bigtable::ReadModifyWriteRule::AppendValue(family1, column_id1, "value1"),
       bigtable::ReadModifyWriteRule::AppendValue(family1, column_id1,
                                                  "-value2")));
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
