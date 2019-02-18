@@ -70,9 +70,9 @@ these dependencies.
 - [Fedora 29](#fedora-29)
 - [openSUSE (Tumbleweed)](#opensuse-tumbleweed)
 - [openSUSE (Leap)](#opensuse-leap)
-- [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804--bionic-beaver)
-- [Ubuntu (16.04 - Xenial Xerus)](#ubuntu-1604--xenial-xerus)
-- [Ubuntu (16.04 - Trusty Tahr)](#ubuntu-1404--trusty-tahr)
+- [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804---bionic-beaver)
+- [Ubuntu (16.04 - Xenial Xerus)](#ubuntu-1604---xenial-xerus)
+- [Ubuntu (16.04 - Trusty Tahr)](#ubuntu-1404---trusty-tahr)
 - [Debian (Stretch)](#debian-stretch)
 - [CentOS 7](#centos-7)
 END_OF_PREAMBLE
