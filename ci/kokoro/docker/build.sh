@@ -25,7 +25,7 @@ if [[ "${BUILD_NAME+x}" != "x" ]]; then
  echo "The BUILD_NAME is not defined or is empty. Fix the Kokoro .cfg file."
  exit 1
 elif [[ "${BUILD_NAME}" = "asan" ]]; then
-  # Compiule with the AddressSanitizer enabled.
+  # Compile with the AddressSanitizer enabled.
   export BUILD_TYPE=Debug
   export CC=clang
   export CXX=clang++
