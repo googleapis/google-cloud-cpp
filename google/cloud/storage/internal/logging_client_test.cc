@@ -26,10 +26,10 @@ namespace internal {
 namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
-using ::testing::_;
 
 class MockLogBackend : public google::cloud::LogBackend {
  public:

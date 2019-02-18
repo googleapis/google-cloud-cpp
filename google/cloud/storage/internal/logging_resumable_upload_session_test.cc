@@ -27,10 +27,10 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::CaptureLogLinesBackend;
+using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
-using ::testing::_;
 
 class LoggingResumableUploadSessionTest : public ::testing::Test {
  protected:

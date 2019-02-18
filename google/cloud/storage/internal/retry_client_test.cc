@@ -26,11 +26,11 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::chrono_literals::operator""_us;
-using ::testing::HasSubstr;
-using ::testing::Return;
-using ::testing::_;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::testing::_;
+using ::testing::HasSubstr;
+using ::testing::Return;
 
 class RetryClientTest : public ::testing::Test {
  protected:

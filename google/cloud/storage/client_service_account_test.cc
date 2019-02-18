@@ -28,11 +28,11 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::oauth2::CreateAnonymousCredentials;
+using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::testing::_;
 using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
-using ::testing::_;
-using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ms = std::chrono::milliseconds;
 
 /**

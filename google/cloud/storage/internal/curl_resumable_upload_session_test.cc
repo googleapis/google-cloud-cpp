@@ -25,8 +25,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::testing::Invoke;
 using ::testing::_;
+using ::testing::Invoke;
 
 class MockCurlClient : public CurlClient {
  public:
