@@ -101,11 +101,10 @@ run_all_requester_pays_examples() {
       "${bucket_name}" "${object_name}" "${PROJECT_ID}"
   run_example ./storage_bucket_samples read-object-requester-pays \
       "${bucket_name}" "${object_name}" "${PROJECT_ID}"
+  run_example ./storage_bucket_samples delete-object-requester-pays \
+      "${bucket_name}" "${object_name}" "${PROJECT_ID}"
   run_example ./storage_bucket_samples disable-requester-pays \
       "${bucket_name}" "${PROJECT_ID}"
-
-  run_example ./storage_object_samples delete-object \
-      "${bucket_name}" "${object_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
 }
 
@@ -901,7 +900,12 @@ run_quickstart() {
 ################################################
 # Run all the examples.
 # Globals:
+#   PROJECT_ID: the id of a GCP project, do not use a project number.
 #   BUCKET_NAME: the name of the bucket to use in the examples.
+#   DESTINATION_BUCKET_NAME: a different bucket to test object rewrites
+#   TOPIC_NAME: a Cloud Pub/Sub topic configured to receive notifications
+#       from GCS.
+#   STORAGE_CMEK_KEY: a Cloud KMS key name.
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
