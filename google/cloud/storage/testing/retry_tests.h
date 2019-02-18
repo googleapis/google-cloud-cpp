@@ -54,7 +54,7 @@ void TooManyFailuresTest(
     ::testing::internal::TypedExpectation<F>& oncall,
     std::function<void(Client& client)> const& tested_operation,
     char const* api_name) {
-  using canonical_errors::TransientError;
+  using ::google::cloud::storage::testing::canonical_errors::TransientError;
   using ::testing::HasSubstr;
   using ::testing::Return;
   // A storage::Client with a simple to test policy.
@@ -120,7 +120,7 @@ void NonIdempotentFailuresTest(
     ::testing::internal::TypedExpectation<F>& oncall,
     std::function<void(Client& client)> const& tested_operation,
     char const* api_name, bool has_will_repeatedly = false) {
-  using canonical_errors::TransientError;
+  using ::google::cloud::storage::testing::canonical_errors::TransientError;
   using ::testing::HasSubstr;
   using ::testing::Return;
   // A storage::Client with the strict idempotency policy, but with a generous
@@ -187,7 +187,7 @@ void IdempotentFailuresTest(
     ::testing::internal::TypedExpectation<F>& oncall,
     std::function<void(Client& client)> const& tested_operation,
     char const* api_name, bool has_will_repeatedly = true) {
-  using canonical_errors::TransientError;
+  using ::google::cloud::storage::testing::canonical_errors::TransientError;
   using ::testing::HasSubstr;
   using ::testing::Return;
   // A storage::Client with the strict idempotency policy, but with a generous
@@ -288,7 +288,7 @@ void PermanentFailureTest(Client& client,
                           ::testing::internal::TypedExpectation<F>& oncall,
                           std::function<void(Client& client)> tested_operation,
                           char const* api_name) {
-  using canonical_errors::PermanentError;
+  using ::google::cloud::storage::testing::canonical_errors::PermanentError;
   using ::testing::HasSubstr;
   using ::testing::Return;
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -343,7 +343,7 @@ void TooManyFailuresStatusTest(
     ::testing::internal::TypedExpectation<F>& oncall,
     std::function<Status(Client& client)> const& tested_operation,
     char const* api_name) {
-  using canonical_errors::TransientError;
+  using ::google::cloud::storage::testing::canonical_errors::TransientError;
   using ::testing::HasSubstr;
   using ::testing::Return;
   // A storage::Client with a simple to test policy.
@@ -391,7 +391,7 @@ void NonIdempotentFailuresStatusTest(
     ::testing::internal::TypedExpectation<F>& oncall,
     std::function<Status(Client& client)> const& tested_operation,
     char const* api_name) {
-  using canonical_errors::TransientError;
+  using ::google::cloud::storage::testing::canonical_errors::TransientError;
   using ::testing::HasSubstr;
   using ::testing::Return;
   // A storage::Client with the strict idempotency policy, but with a generous
@@ -439,7 +439,7 @@ void IdempotentFailuresStatusTest(
     ::testing::internal::TypedExpectation<F>& oncall,
     std::function<Status(Client& client)> const& tested_operation,
     char const* api_name) {
-  using canonical_errors::TransientError;
+  using ::google::cloud::storage::testing::canonical_errors::TransientError;
   using ::testing::HasSubstr;
   using ::testing::Return;
   // A storage::Client with the strict idempotency policy, and with an
@@ -525,7 +525,7 @@ void PermanentFailureStatusTest(
     Client& client, ::testing::internal::TypedExpectation<F>& oncall,
     std::function<Status(Client& client)> tested_operation,
     char const* api_name) {
-  using canonical_errors::PermanentError;
+  using ::google::cloud::storage::testing::canonical_errors::PermanentError;
   using ::testing::HasSubstr;
   using ::testing::Return;
 

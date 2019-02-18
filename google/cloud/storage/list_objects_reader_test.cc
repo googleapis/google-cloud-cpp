@@ -24,7 +24,6 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-namespace nl = internal::nl;
 
 using ::google::cloud::storage::internal::ListObjectsRequest;
 using ::google::cloud::storage::internal::ListObjectsResponse;

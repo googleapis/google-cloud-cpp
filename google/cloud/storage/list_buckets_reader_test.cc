@@ -23,6 +23,8 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace {
+
 using ::google::cloud::storage::internal::ListBucketsRequest;
 using ::google::cloud::storage::internal::ListBucketsResponse;
 using ::google::cloud::storage::testing::MockClient;
@@ -33,7 +35,6 @@ using ::testing::ContainerEq;
 using ::testing::Invoke;
 using ::testing::Return;
 
-namespace {
 BucketMetadata CreateElement(int index) {
   std::string id = "bucket-" + std::to_string(index);
   std::string name = id;

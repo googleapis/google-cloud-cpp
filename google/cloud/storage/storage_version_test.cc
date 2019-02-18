@@ -20,6 +20,8 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace {
+
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::StartsWith;
@@ -58,6 +60,7 @@ TEST(StorageVersionTest, HasBuildInfoInDevelopment) {
               HasSubstr("+" + google::cloud::internal::gitrev()));
 }
 
+}  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
