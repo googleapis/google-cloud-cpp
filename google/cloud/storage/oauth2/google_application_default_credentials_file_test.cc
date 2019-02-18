@@ -23,6 +23,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 namespace {
+
 using ::google::cloud::internal::SetEnv;
 using ::google::cloud::internal::UnsetEnv;
 using ::google::cloud::testing_util::EnvironmentVariableRestore;

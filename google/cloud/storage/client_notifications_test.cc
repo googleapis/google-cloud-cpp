@@ -28,13 +28,14 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
+
+using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
 using ms = std::chrono::milliseconds;
-using testing::canonical_errors::TransientError;
 
 /**
  * Test the BucketAccessControls-related functions in storage::Client.

@@ -21,7 +21,9 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+
 using ::testing::HasSubstr;
+
 TEST(HttpResponseTest, OStream) {
   HttpResponse response{
       404, "some-payload", {{"header1", "value1"}, {"header2", "value2"}}};

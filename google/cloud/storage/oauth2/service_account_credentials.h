@@ -121,7 +121,7 @@ class ServiceAccountCredentials : public Credentials {
    *   credentials.
    */
   std::pair<Status, std::string> SignString(std::string const& text) const {
-    using storage::internal::OpenSslUtils;
+    using ::google::cloud::storage::internal::OpenSslUtils;
     return std::make_pair(
         Status(), OpenSslUtils::Base64Encode(OpenSslUtils::SignStringWithPem(
                       text, info_.private_key, JwtSigningAlgorithms::RS256)));
@@ -189,7 +189,7 @@ class ServiceAccountCredentials : public Credentials {
   std::string MakeJWTAssertion(storage::internal::nl::json const& header,
                                storage::internal::nl::json const& payload,
                                std::string const& pem_contents) {
-    using storage::internal::OpenSslUtils;
+    using ::google::cloud::storage::internal::OpenSslUtils;
     std::string encoded_header =
         OpenSslUtils::UrlsafeBase64Encode(header.dump());
     std::string encoded_payload =

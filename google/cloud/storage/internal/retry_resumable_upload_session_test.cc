@@ -26,13 +26,14 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+
+using ::google::cloud::storage::testing::canonical_errors::PermanentError;
+using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
-using namespace testing_util::chrono_literals;
-using storage::testing::canonical_errors::PermanentError;
-using storage::testing::canonical_errors::TransientError;
 
 class RetryResumableUploadSessionTest : public ::testing::Test {
  protected:

@@ -27,7 +27,8 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
-using testing::HasSubstr;
+
+using ::testing::HasSubstr;
 
 std::string HttpBinEndpoint() {
   return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT")
@@ -368,8 +369,8 @@ TEST(CurlRequestTest, Logging) {
   auto mock_logger = std::make_shared<MockLogBackend>();
   google::cloud::LogSink::Instance().AddBackend(mock_logger);
 
-  using testing::_;
-  using testing::Invoke;
+  using ::testing::_;
+  using ::testing::Invoke;
 
   std::string log_messages;
   EXPECT_CALL(*mock_logger, ProcessWithOwnership(_))

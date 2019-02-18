@@ -25,14 +25,14 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+namespace {
+
 using ::testing::HasSubstr;
 
-namespace {
 std::string HttpBinEndpoint() {
   return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT")
       .value_or("https://nghttp2.org/httpbin");
 }
-}  // namespace
 
 TEST(CurlDownloadRequestTest, SimpleStream) {
   // httpbin can generate up to 100 lines, do not try to download more than
@@ -75,6 +75,7 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
   EXPECT_EQ(kDownloadedLines, count);
 }
 
+}  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -25,6 +25,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+
 using ::google::cloud::testing_util::CaptureLogLinesBackend;
 using ::testing::_;
 using ::testing::HasSubstr;

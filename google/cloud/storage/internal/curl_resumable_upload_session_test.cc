@@ -24,6 +24,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+
 using ::testing::_;
 using ::testing::Invoke;
 

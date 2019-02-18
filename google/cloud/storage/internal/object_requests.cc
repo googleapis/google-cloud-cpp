@@ -104,7 +104,7 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromString(
 }
 
 internal::nl::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta) {
-  using internal::nl::json;
+  using ::google::cloud::storage::internal::nl::json;
   json metadata_as_json;
   if (!meta.acl().empty()) {
     for (ObjectAccessControl const& a : meta.acl()) {
@@ -142,7 +142,7 @@ std::string ObjectMetadataJsonPayloadForUpdate(ObjectMetadata const& meta) {
 
 internal::nl::json ObjectMetadataJsonPayloadForCompose(
     ObjectMetadata const& meta) {
-  using internal::nl::json;
+  using ::google::cloud::storage::internal::nl::json;
   json metadata_as_json;
   if (!meta.acl().empty()) {
     for (ObjectAccessControl const& a : meta.acl()) {
@@ -345,7 +345,7 @@ ComposeObjectRequest::ComposeObjectRequest(
       source_objects_(std::move(source_objects)) {}
 
 std::string ComposeObjectRequest::JsonPayload() const {
-  using internal::nl::json;
+  using ::google::cloud::storage::internal::nl::json;
   json compose_object_payload_json;
   compose_object_payload_json["kind"] = "storage#composeRequest";
   json destination_metadata_payload;

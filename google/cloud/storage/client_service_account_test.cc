@@ -26,13 +26,14 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-using storage::oauth2::CreateAnonymousCredentials;
+
+using ::google::cloud::storage::oauth2::CreateAnonymousCredentials;
+using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
 using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::ReturnRef;
 using ms = std::chrono::milliseconds;
-using testing::canonical_errors::TransientError;
 
 /**
  * Test the Projects.serviceAccount-related functions in storage::Client.

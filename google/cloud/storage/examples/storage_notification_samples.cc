@@ -52,7 +52,7 @@ void ListNotifications(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   //! [list notifications] [START storage_list_bucket_notifications]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<std::vector<gcs::NotificationMetadata>> items =
         client.ListNotifications(bucket_name);
@@ -79,7 +79,7 @@ void CreateNotification(google::cloud::storage::Client client, int& argc,
   auto topic_name = ConsumeArg(argc, argv);
   //! [create notification] [START storage_create_bucket_notifications]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string topic_name) {
     StatusOr<gcs::NotificationMetadata> notification =
         client.CreateNotification(bucket_name, topic_name,
@@ -116,7 +116,7 @@ void GetNotification(google::cloud::storage::Client client, int& argc,
   auto notification_id = ConsumeArg(argc, argv);
   //! [get notification] [START storage_print_pubsub_bucket_notification]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string notification_id) {
     StatusOr<gcs::NotificationMetadata> notification =
         client.GetNotification(bucket_name, notification_id);

@@ -223,10 +223,10 @@ using the `.status()` member function (and trying to access the value produces
 undefined behavior).
 
 @code {.cpp}
-using namespace google::cloud;
-[](storage::Client client) {
-  StatusOr<storage::BucketMetadata> metadata = client.GetBucketMetadata(
-      "my-bucket");
+using gcs = google::cloud::storage;
+[](gcs::Client client) {
+  google::cloud::StatusOr<gcs::BucketMetadata> metadata =
+    client.GetBucketMetadata("my-bucket");
 
   if (!metadata) {
     std::cerr << "GetBucketMetadata: " << metadata.status() << "\n";
@@ -246,10 +246,10 @@ the `StatusOr<T>` object. This will return a `T` if the `StatusOr<T>` object
 contains a value, and will otherwise throw an exception.
 
 @code {.cpp}
-using namespace google::cloud;
-[](storage::Client client) {
-  storage::BucketMetadata metadata = client.GetBucketMetadata(
-        "my-bucket").value(); // throws on error
+using gcs = google::cloud::storage;
+[](gcs::Client client) {
+  gcs::BucketMetadata metadata = client.GetBucketMetadata(
+        "my-bucket").value();  // throws on error
   std::cout << "The metadata for bucket " << metadata.name()
             << " is " << metadata << "\n";
 }

@@ -25,7 +25,10 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 namespace {
-using raw_client_wrapper_utils::CheckSignature;
+
+using ::google::cloud::storage::internal::raw_client_wrapper_utils::
+    CheckSignature;
+
 /**
  * Logs the input and results of each `RawClient` operation.
  *

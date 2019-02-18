@@ -233,7 +233,7 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromString(
 }
 
 std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
-  using internal::nl::json;
+  using ::google::cloud::storage::internal::nl::json;
   json metadata_as_json;
   if (!meta.acl().empty()) {
     for (BucketAccessControl const& a : meta.acl()) {

@@ -80,7 +80,7 @@ void InsertObject(google::cloud::storage::Client client, int& argc,
   auto contents = ConsumeArg(argc, argv);
   //! [insert object]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string contents) {
     StatusOr<gcs::ObjectMetadata> object_metadata =
@@ -110,7 +110,7 @@ void InsertObjectStrictIdempotency(google::cloud::storage::Client unused,
   auto contents = ConsumeArg(argc, argv);
   //! [insert object strict idempotency]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](std::string bucket_name, std::string object_name, std::string contents) {
     // Create a client that only retries idempotent operations, the default is
     // to retry all operations.
@@ -150,7 +150,7 @@ void InsertObjectModifiedRetry(google::cloud::storage::Client unused, int& argc,
   auto contents = ConsumeArg(argc, argv);
   //! [insert object modified retry]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](std::string bucket_name, std::string object_name, std::string contents) {
     // Create a client that only gives up on the third error. The default policy
     // is to retry for several minutes.
@@ -192,7 +192,7 @@ void InsertObjectMultipart(google::cloud::storage::Client client, int& argc,
   auto contents = ConsumeArg(argc, argv);
   //! [insert object multipart]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string content_type, std::string contents) {
     // Setting the object metadata (via the `gcs::WithObjectMadata` option)
@@ -230,7 +230,7 @@ void CopyObject(google::cloud::storage::Client client, int& argc,
   auto destination_object_name = ConsumeArg(argc, argv);
   //! [copy object] [START storage_copy_file]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string source_bucket_name,
      std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name) {
@@ -268,7 +268,7 @@ void CopyEncryptedObject(google::cloud::storage::Client client, int& argc,
   auto key = ConsumeArg(argc, argv);
   //! [copy encrypted object]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string source_bucket_name,
      std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name, std::string key_base64) {
@@ -300,7 +300,7 @@ void GetObjectMetadata(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   //! [get object metadata] [START storage_get_metadata]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
     StatusOr<gcs::ObjectMetadata> object_metadata =
         client.GetObjectMetadata(bucket_name, object_name);
@@ -406,7 +406,7 @@ void WriteObject(google::cloud::storage::Client client, int& argc,
 
   //! [write object]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      long desired_line_count) {
     std::string const text = "Lorem ipsum dolor sit amet";
@@ -511,7 +511,7 @@ void ResumeResumableUpload(google::cloud::storage::Client client, int& argc,
 
   //! [resume resumable upload]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string session_id) {
     // Restore a resumable upload stream, the library automatically queries the
@@ -559,7 +559,7 @@ void UploadFile(google::cloud::storage::Client client, int& argc,
 
   //! [upload file] [START storage_upload_file]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string file_name, std::string bucket_name,
      std::string object_name) {
     // Note that the client library automatically computes a hash on the
@@ -592,7 +592,7 @@ void UploadFileResumable(google::cloud::storage::Client client, int& argc,
 
   //! [upload file resumable]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string file_name, std::string bucket_name,
      std::string object_name) {
     // Note that the client library automatically computes a hash on the
@@ -652,7 +652,7 @@ void UpdateObjectMetadata(google::cloud::storage::Client client, int& argc,
   auto value = ConsumeArg(argc, argv);
   //! [update object metadata] [START storage_set_metadata]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string key, std::string value) {
     StatusOr<gcs::ObjectMetadata> object_metadata =
@@ -690,7 +690,7 @@ void PatchObjectDeleteMetadata(google::cloud::storage::Client client, int& argc,
   auto key = ConsumeArg(argc, argv);
   //! [patch object delete metadata]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string key) {
     StatusOr<gcs::ObjectMetadata> original =
@@ -728,7 +728,7 @@ void PatchObjectContentType(google::cloud::storage::Client client, int& argc,
   auto content_type = ConsumeArg(argc, argv);
   //! [patch object content type]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string content_type) {
     StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
@@ -755,7 +755,7 @@ void MakeObjectPublic(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   //! [make object public] [START storage_make_public]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
     StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name, gcs::ObjectMetadataPatchBuilder(),
@@ -856,7 +856,7 @@ void WriteEncryptedObject(google::cloud::storage::Client client, int& argc,
   auto base64_aes256_key = ConsumeArg(argc, argv);
   //! [insert encrypted object] [START storage_upload_encrypted_file]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string base64_aes256_key) {
     StatusOr<gcs::ObjectMetadata> object_metadata = client.InsertObject(
@@ -915,7 +915,7 @@ void ComposeObject(google::cloud::storage::Client client, int& argc,
   }
   //! [compose object] [START storage_compose_file]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name,
      std::string destination_object_name,
      std::vector<gcs::ComposeSourceObject> compose_objects) {
@@ -952,7 +952,7 @@ void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
   }
   //! [compose object from encrypted objects]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name,
      std::string destination_object_name, std::string base64_aes256_key,
      std::vector<gcs::ComposeSourceObject> compose_objects) {
@@ -986,7 +986,7 @@ void WriteObjectWithKmsKey(google::cloud::storage::Client client, int& argc,
 
   //! [write object with kms key] [START storage_upload_with_kms_key]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string kms_key_name) {
     gcs::ObjectWriteStream stream = client.WriteObject(
@@ -1026,7 +1026,7 @@ void RewriteObject(google::cloud::storage::Client client, int& argc,
   auto destination_object_name = ConsumeArg(argc, argv);
   //! [rewrite object]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string source_bucket_name,
      std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name) {
@@ -1060,7 +1060,7 @@ void RewriteObjectNonBlocking(google::cloud::storage::Client client, int& argc,
   auto destination_object_name = ConsumeArg(argc, argv);
   //! [rewrite object non blocking]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string source_bucket_name,
      std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name) {
@@ -1106,7 +1106,7 @@ void RewriteObjectToken(google::cloud::storage::Client client, int& argc,
 
   //! [rewrite object token]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string source_bucket_name,
      std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name) {
@@ -1147,7 +1147,7 @@ void RewriteObjectResume(google::cloud::storage::Client client, int& argc,
 
   //! [rewrite object resume]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string source_bucket_name,
      std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name, std::string rewrite_token) {
@@ -1194,7 +1194,7 @@ void RotateEncryptionKey(google::cloud::storage::Client client, int& argc,
 
   //! [rotate encryption key] [START storage_rotate_encryption_key]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string old_key_base64, std::string new_key_base64) {
     StatusOr<gcs::ObjectMetadata> object_metadata =
@@ -1227,7 +1227,7 @@ void RenameObject(google::cloud::storage::Client client, int& argc,
 
   //! [rename object] [START storage_move_file]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string old_object_name,
      std::string new_object_name) {
     StatusOr<gcs::ObjectMetadata> object_metadata =
@@ -1261,7 +1261,7 @@ void SetObjectEventBasedHold(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   //! [set event based hold] [START storage_set_event_based_hold]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
@@ -1296,7 +1296,7 @@ void ReleaseObjectEventBasedHold(google::cloud::storage::Client client,
   auto object_name = ConsumeArg(argc, argv);
   //! [release event based hold] [START storage_release_event_based_hold]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
@@ -1331,7 +1331,7 @@ void SetObjectTemporaryHold(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   //! [set temporary hold] [START storage_set_temporary_hold]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
@@ -1366,7 +1366,7 @@ void ReleaseObjectTemporaryHold(google::cloud::storage::Client client,
   auto object_name = ConsumeArg(argc, argv);
   //! [release temporary hold] [START storage_release_temporary_hold]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
@@ -1401,7 +1401,7 @@ void CreateGetSignedUrl(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   //! [sign url] [START storage_generate_signed_url]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
     StatusOr<std::string> signed_url = client.CreateV2SignedUrl(
         "GET", std::move(bucket_name), std::move(object_name),
@@ -1429,7 +1429,7 @@ void CreatePutSignedUrl(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   //! [create put signed url]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
     StatusOr<std::string> signed_url = client.CreateV2SignedUrl(
         "PUT", std::move(bucket_name), std::move(object_name),

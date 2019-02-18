@@ -22,6 +22,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+
 using ::std::chrono::duration_cast;
 using ::std::chrono::milliseconds;
 using ::std::chrono::nanoseconds;

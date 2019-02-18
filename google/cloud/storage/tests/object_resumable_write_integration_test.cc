@@ -24,7 +24,8 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-using google::cloud::storage::testing::TestPermanentFailure;
+
+using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::HasSubstr;
 
 /// Store the project and instance captured from the command-line arguments.

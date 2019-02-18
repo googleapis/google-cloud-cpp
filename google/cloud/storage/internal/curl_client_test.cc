@@ -30,6 +30,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+
 using ::google::cloud::storage::oauth2::Credentials;
 using ::testing::HasSubstr;
 

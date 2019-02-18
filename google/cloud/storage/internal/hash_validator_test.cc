@@ -25,6 +25,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+
 using ::testing::HasSubstr;
 
 // These values were obtained using:
