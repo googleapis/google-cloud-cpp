@@ -36,7 +36,7 @@ TEST_F(TableApplyTest, Simple) {
       "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
   ASSERT_STATUS_OK(mut);
 }
-
+/*
 /// @test Verify that Table::Apply() raises an exception on permanent failures.
 TEST_F(TableApplyTest, Failure) {
   using namespace ::testing;
@@ -45,9 +45,18 @@ TEST_F(TableApplyTest, Failure) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "uh-oh")));
 
-  EXPECT_FALSE(table_.Apply(bigtable::SingleRowMutation(
-      "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")})));
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(table_.Apply(bigtable::SingleRowMutation(
+                   "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")})),
+               std::exception);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      table_.Apply(bigtable::SingleRowMutation(
+          "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")})),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+*/
 
 /// @test Verify that Table::Apply() retries on partial failures.
 TEST_F(TableApplyTest, Retry) {

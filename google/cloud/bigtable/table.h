@@ -193,7 +193,8 @@ class Table {
    *     `SingleRowMutation` can be used to modify and/or delete multiple cells,
    *     across different columns and column families.
    *
-   * @returns a vector of FailedMutation objects.
+   * @return The list of mutations that failed, empty when the operation is
+   *     successful.
    *
    * @par Example
    * @snippet data_snippets.cc apply
