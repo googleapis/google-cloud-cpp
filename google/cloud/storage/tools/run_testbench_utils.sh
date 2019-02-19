@@ -86,8 +86,10 @@ start_testbench() {
   local testbench_port=""
   local -r listening_at='Listening at: http://0.0.0.0:\([1-9][0-9]*\)'
   for attempt in $(seq 1 8); do
-    testbench_port=$(sed -n "s,^.*${listening_at}.*$,\1,p" testbench.log)
-    [[ -n "${testbench_port}" ]] && break
+    if [[ -r testbench.log ]]; then
+        testbench_port=$(sed -n "s,^.*${listening_at}.*$,\1,p" testbench.log)
+        [[ -n "${testbench_port}" ]] && break
+    fi
     sleep 1
   done
 
