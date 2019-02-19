@@ -45,7 +45,7 @@ TEST(CompletionQueueTest, LifeCycle) {
       });
 
   auto f = promise.get_future();
-  auto status = f.wait_for(50_ms);
+  auto status = f.wait_for(500_ms);
   EXPECT_EQ(std::future_status::ready, status);
 
   cq.Shutdown();
@@ -67,7 +67,7 @@ TEST(CompletionQueueTest, CancelAlarm) {
   alarm->Cancel();
 
   auto f = promise.get_future();
-  auto status = f.wait_for(100_ms);
+  auto status = f.wait_for(500_ms);
   EXPECT_EQ(std::future_status::ready, status);
   EXPECT_TRUE(f.get().cancelled);
 
