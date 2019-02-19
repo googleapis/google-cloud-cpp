@@ -48,12 +48,19 @@ inline namespace BIGTABLE_CLIENT_NS {
 static_assert(std::is_copy_assignable<bigtable::Table>::value,
               "bigtable::Table must be CopyAssignable");
 
-void Table::Apply(SingleRowMutation&& mut) {
+StatusOr<std::vector<FailedMutation>> Table::Apply(SingleRowMutation&& mut) {
   std::vector<FailedMutation> failures = impl_.Apply(std::move(mut));
   if (!failures.empty()) {
-    grpc::Status status = failures.front().status();
-    ReportPermanentFailures(status.error_message().c_str(), status, failures);
+    // grpc::Status status = failures.front().status();
+    // if (!status.ok()) {
+    for (auto&& f : failures) {
+      std::cerr << "Operation " << f.original_index() << " failed with "
+                << f.status().error_message() << '\n';
+    }
+    // return bigtable::internal::MakeStatusFromRpcError(status);
+    //}
   }
+  return failures;
 }
 
 future<void> Table::AsyncApply(SingleRowMutation&& mut, CompletionQueue& cq) {

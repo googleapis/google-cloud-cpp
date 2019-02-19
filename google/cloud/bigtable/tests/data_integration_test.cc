@@ -83,9 +83,9 @@ void DataIntegrationTest::Apply(bigtable::Table& table, std::string row_key,
         duration_cast<milliseconds>(microseconds(cell.timestamp())),
         cell.value()));
   }
-  table.Apply(std::move(mutation));
+  auto mut = table.Apply(std::move(mutation));
+  ASSERT_STATUS_OK(mut);
 }
-
 void DataIntegrationTest::BulkApply(bigtable::Table& table,
                                     std::vector<bigtable::Cell> const& cells) {
   using namespace std::chrono;
@@ -164,7 +164,7 @@ TEST_F(DataIntegrationTest, TableSingleRow) {
       row_key, bigtable::SetCell(family, "c1", 1_ms, "V1000"),
       bigtable::SetCell(family, "c2", 2_ms, "V2000"),
       bigtable::SetCell(family, "c3", 3_ms, "V3000"));
-  table->Apply(std::move(mutation));
+  ASSERT_STATUS_OK(table->Apply(std::move(mutation)));
   std::vector<bigtable::Cell> expected{
       {row_key, family, "c1", 1000, "V1000", {}},
       {row_key, family, "c2", 2000, "V2000", {}},
@@ -174,7 +174,6 @@ TEST_F(DataIntegrationTest, TableSingleRow) {
   EXPECT_STATUS_OK(DeleteTable(table_id));
   CheckEqualUnordered(expected, actual);
 }
-
 TEST_F(DataIntegrationTest, TableReadRowTest) {
   std::string const table_id = RandomTableId();
   auto table = CreateTable(table_id, table_config);
