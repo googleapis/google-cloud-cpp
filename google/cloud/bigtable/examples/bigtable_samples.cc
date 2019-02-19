@@ -43,8 +43,7 @@ void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
       admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
 
   if (!tables) {
-    std::cerr << "ListTables failed: " << tables.status() << "\n";
-    return;
+    throw std::runtime_error(tables.status().message());
   }
   for (auto const& table : *tables) {
     std::cout << table.name() << "\n";
@@ -53,11 +52,13 @@ void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
   std::cout << "Get table:\n";
   auto table =
       admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
-  std::cout << table.name() << "\n";
-  std::cout << "Table name : " << table.name() << "\n";
+  if (!table) {
+    throw std::runtime_error(table.status().message());
+  }
+  std::cout << "Table name : " << table->name() << "\n";
 
   std::cout << "List table families and GC rules:\n";
-  for (auto const& family : table.column_families()) {
+  for (auto const& family : table->column_families()) {
     std::string const& family_name = family.first;
     std::string gc_rule;
     google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
@@ -79,13 +80,19 @@ void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
                       google::cloud::bigtable::GcRule::MaxNumVersions(3),
                       google::cloud::bigtable::GcRule::MaxAge(
                           std::chrono::hours(72))))});
+  if (!schema1) {
+    throw std::runtime_error(schema1.status().message());
+  }
 
   std::string formatted;
-  google::protobuf::TextFormat::PrintToString(schema1, &formatted);
+  google::protobuf::TextFormat::PrintToString(*schema1, &formatted);
   std::cout << "Schema modified to: " << formatted << "\n";
 
   std::cout << "Deleting table:\n";
-  admin.DeleteTable(table_id);
+  google::cloud::Status status = admin.DeleteTable(table_id);
+  if (!status.ok()) {
+    throw std::runtime_error(status.message());
+  }
   std::cout << " Done\n";
 }
 //! [run table operations]
@@ -111,8 +118,7 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
       admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
 
   if (!tables) {
-    std::cerr << "ListTables failed: " << tables.status() << "\n";
-    return;
+    throw std::runtime_error(tables.status().message());
   }
   for (auto const& table : *tables) {
     std::cout << table.name() << "\n";
@@ -123,12 +129,14 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
   std::cout << "Get table:\n";
   auto table =
       admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
-  std::cout << table.name() << "\n";
-  std::cout << "Table name : " << table.name() << "\n";
+  if (!table) {
+    throw std::runtime_error(table.status().message());
+  }
+  std::cout << "Table name : " << table->name() << "\n";
   // [END bigtable_get_table]
 
   // [START bigtable_table_famalies]
-  for (auto const& family : table.column_families()) {
+  for (auto const& family : table->column_families()) {
     std::string const& family_name = family.first;
     std::string gc_rule;
     google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
@@ -153,14 +161,21 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
                       google::cloud::bigtable::GcRule::MaxAge(
                           std::chrono::hours(72))))});
 
+  if (!schema1) {
+    throw std::runtime_error(schema1.status().message());
+  }
+
   std::string formatted;
-  google::protobuf::TextFormat::PrintToString(schema1, &formatted);
+  google::protobuf::TextFormat::PrintToString(*schema1, &formatted);
   std::cout << "Schema modified to: " << formatted << "\n";
   // [END bigtable_update_column_famaly]
 
   // [START bigtable_delete_table]
   std::cout << "Deleting table:\n";
-  admin.DeleteTable(table_id);
+  google::cloud::Status status = admin.DeleteTable(table_id);
+  if (!status.ok()) {
+    throw std::runtime_error(status.message());
+  }
   std::cout << " Done\n";
   // [END bigtable_delete_table]
 }

@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
@@ -100,9 +101,9 @@ TEST_F(SnapshotIntegrationTest, SnapshotOperationsTableTest) {
 
   CheckEqualUnordered(created_cells, actual_cells);
 
-  table_admin_->DeleteSnapshot(cluster_id, snapshot_id);
-  DeleteTable(table_id.get());
-  DeleteTable(table_id_new.get());
+  EXPECT_STATUS_OK(table_admin_->DeleteSnapshot(cluster_id, snapshot_id));
+  EXPECT_STATUS_OK(DeleteTable(table_id.get()));
+  EXPECT_STATUS_OK(DeleteTable(table_id_new.get()));
 }
 
 /// @test Verify that Snapshot CRUD operations work as expected.
@@ -138,7 +139,8 @@ TEST_F(SnapshotIntegrationTest, CreateListGetDeleteSnapshot) {
 
   // verify new snapshot id in list of snapshot
   auto snapshots_before = table_admin_->ListSnapshots(cluster_id);
-  ASSERT_FALSE(IsSnapshotPresent(snapshots_before, snapshot_id_str))
+  ASSERT_STATUS_OK(snapshots_before);
+  ASSERT_FALSE(IsSnapshotPresent(*snapshots_before, snapshot_id_str))
       << "Snapshot (" << snapshot_id_str << ") already exists."
       << " This is unexpected, as the snapshot ids are"
       << " generated at random.";
@@ -148,20 +150,23 @@ TEST_F(SnapshotIntegrationTest, CreateListGetDeleteSnapshot) {
       table_admin_->SnapshotTable(cluster_id, snapshot_id, table_id, 36000_s)
           .get();
   auto snapshots_current = table_admin_->ListSnapshots(cluster_id);
-  EXPECT_TRUE(IsSnapshotPresent(snapshots_current, snapshot.name()));
+  ASSERT_STATUS_OK(snapshots_current);
+  EXPECT_TRUE(IsSnapshotPresent(*snapshots_current, snapshot.name()));
 
   // get snapshot
   auto snapshot_check = table_admin_->GetSnapshot(cluster_id, snapshot_id);
   auto const npos = std::string::npos;
-  EXPECT_NE(npos, snapshot_check.name().find(snapshot_id_str));
+  ASSERT_STATUS_OK(snapshot_check);
+  EXPECT_NE(npos, snapshot_check->name().find(snapshot_id_str));
 
   // Delete snapshot
-  table_admin_->DeleteSnapshot(cluster_id, snapshot_id);
+  EXPECT_STATUS_OK(table_admin_->DeleteSnapshot(cluster_id, snapshot_id));
   auto snapshots_after_delete = table_admin_->ListSnapshots(cluster_id);
-  EXPECT_FALSE(IsSnapshotPresent(snapshots_after_delete, snapshot.name()));
+  ASSERT_STATUS_OK(snapshots_after_delete);
+  EXPECT_FALSE(IsSnapshotPresent(*snapshots_after_delete, snapshot.name()));
 
   // delete table
-  DeleteTable(table_id.get());
+  EXPECT_STATUS_OK(DeleteTable(table_id.get()));
 }
 
 // Test Cases Finished

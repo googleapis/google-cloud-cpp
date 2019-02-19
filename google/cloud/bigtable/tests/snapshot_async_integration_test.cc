@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
@@ -108,7 +109,8 @@ TEST_F(SnapshotAsyncIntegrationTest, CreateListGetDeleteSnapshot) {
 
   // verify new snapshot id in list of snapshot
   auto snapshots_before = table_admin_->ListSnapshots(cluster_id);
-  ASSERT_FALSE(IsSnapshotPresent(snapshots_before, snapshot_id_str))
+  ASSERT_STATUS_OK(snapshots_before);
+  ASSERT_FALSE(IsSnapshotPresent(*snapshots_before, snapshot_id_str))
       << "Snapshot (" << snapshot_id_str << ") already exists."
       << " This is unexpected, as the snapshot ids are"
       << " generated at random.";
@@ -118,7 +120,8 @@ TEST_F(SnapshotAsyncIntegrationTest, CreateListGetDeleteSnapshot) {
       table_admin_->SnapshotTable(cluster_id, snapshot_id, table_id, 36000_s)
           .get();
   auto snapshots_current = table_admin_->ListSnapshots(cluster_id);
-  EXPECT_TRUE(IsSnapshotPresent(snapshots_current, snapshot.name()));
+  ASSERT_STATUS_OK(snapshots_current);
+  EXPECT_TRUE(IsSnapshotPresent(*snapshots_current, snapshot.name()));
 
   // get snapshot
   std::promise<btadmin::Snapshot> promise_get_snapshot;
@@ -146,10 +149,11 @@ TEST_F(SnapshotAsyncIntegrationTest, CreateListGetDeleteSnapshot) {
   promise_delete_snapshot.get_future().get();
 
   auto snapshots_after_delete = table_admin_->ListSnapshots(cluster_id);
-  EXPECT_FALSE(IsSnapshotPresent(snapshots_after_delete, snapshot.name()));
+  ASSERT_STATUS_OK(snapshots_after_delete);
+  EXPECT_FALSE(IsSnapshotPresent(*snapshots_after_delete, snapshot.name()));
 
   // delete table
-  DeleteTable(table_id.get());
+  EXPECT_STATUS_OK(DeleteTable(table_id.get()));
 
   cq.Shutdown();
   pool.join();

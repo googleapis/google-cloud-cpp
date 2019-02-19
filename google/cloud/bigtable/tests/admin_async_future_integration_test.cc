@@ -109,7 +109,7 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetDeleteTableTest) {
 
   chain.get();
   SUCCEED();  // we expect that previous operations do not fail.
-  DeleteTable(table_id);
+  EXPECT_STATUS_OK(DeleteTable(table_id));
 
   cq.Shutdown();
   pool.join();
