@@ -452,14 +452,14 @@ void GetBucketPolicyOnly(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
-    StatusOr<gcs::BucketMetadata> meta = client.GetBucketMetadata(bucket_name);
+    StatusOr<gcs::BucketMetadata> bucket_metadata = client.GetBucketMetadata(bucket_name);
 
     if (!meta) {
       throw std::runtime_error(meta.status().message());
     }
 
     if (meta->has_iam_configuration()) {
-      auto bucket_policy_only = meta->iam_configuration().bucket_policy_only;
+      gcs::BucketPolicyOnly bucket_policy_only = meta->iam_configuration().bucket_policy_only;
 
       std::cout << "Bucket Policy Only is enabled for " << meta->name() << "\n";
       std::cout << "Bucket will be locked on " << bucket_policy_only << "\n";
