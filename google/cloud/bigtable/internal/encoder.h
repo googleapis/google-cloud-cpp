@@ -45,7 +45,7 @@ namespace internal {
  * Convert from Numeric Value to string of BigEndian bytes.
  * @code
  * bigtable::Cell new_cell("row_key", "column_family", "column_id3", 1000,
- *                         bigtable::bigendian64_t(5000), {});
+ *                         bigtable::bigendian64_t(5000));
  * @endcode
  *
  * Convert from string of BigEndian bytes to Numeric Value.

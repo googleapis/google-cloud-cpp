@@ -27,10 +27,8 @@ TEST(CellTest, Simple) {
   std::string column_qualifier = "column";
   std::int64_t timestamp = 42;
   std::string value = "value";
-  std::vector<std::string> labels;
 
-  bigtable::Cell cell(row_key, family_name, column_qualifier, timestamp, value,
-                      labels);
+  bigtable::Cell cell(row_key, family_name, column_qualifier, timestamp, value);
   EXPECT_EQ(row_key, cell.row_key());
   EXPECT_EQ(family_name, cell.family_name());
   EXPECT_EQ(column_qualifier, cell.column_qualifier());
@@ -48,9 +46,7 @@ TEST(CellTest, SimpleNumericValue) {
   std::string column_qualifier = "column";
   std::int64_t timestamp = 42;
   bigtable::bigendian64_t value(343321020);
-  std::vector<std::string> labels;
-  bigtable::Cell cell(row_key, family_name, column_qualifier, timestamp, value,
-                      labels);
+  bigtable::Cell cell(row_key, family_name, column_qualifier, timestamp, value);
   EXPECT_EQ(row_key, cell.row_key());
   EXPECT_EQ(family_name, cell.family_name());
   EXPECT_EQ(column_qualifier, cell.column_qualifier());
@@ -68,13 +64,11 @@ TEST(CellTest, SimpleNumericNegativeValue) {
   std::string column_qualifier = "column";
   std::int64_t timestamp = 42;
   bigtable::bigendian64_t value(-343321020);
-  std::vector<std::string> labels;
-  bigtable::Cell cell(row_key, family_name, column_qualifier, timestamp, value,
-                      labels);
+  bigtable::Cell cell(row_key, family_name, column_qualifier, timestamp, value);
   EXPECT_EQ(row_key, cell.row_key());
   EXPECT_EQ(family_name, cell.family_name());
   EXPECT_EQ(column_qualifier, cell.column_qualifier());
   EXPECT_EQ(timestamp, cell.timestamp().count());
   EXPECT_EQ(value.get(), cell.value_as<bigtable::bigendian64_t>().get());
-  EXPECT_EQ(0U, cell.labels().size());
+  EXPECT_EQ(0U, cell.eabels().size());
 }
