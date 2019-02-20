@@ -167,7 +167,7 @@ class MutationBatcher {
     // The reason why it's not simple std::vector is that we want this structure
     // to shrink as individual mutations complete, so that the user can have a
     // bound on the amount of overhead per outstanding Apply.
-    std::unordered_map<int, std::unique_ptr<MutationData>> mutation_data_;
+    std::unordered_map<int, MutationData> mutation_data_;
   };
 
   grpc::Status IsValid(PendingSingleRowMutation& mut) const;

@@ -87,26 +87,27 @@ void MutationBatcher::Batch::Add(PendingSingleRowMutation&& mut) {
   requests_size_ += mut.request_size;
   num_mutations_ += mut.num_mutations;
   requests_.emplace_back(std::move(mut.mut));
-  mutation_data_.emplace(std::make_pair(
-      last_idx_++, cloud::internal::make_unique<MutationData>(std::move(mut))));
+  mutation_data_.emplace(last_idx_++, MutationData(std::move(mut)));
 }
 
 void MutationBatcher::Batch::FireCallbacks(
     CompletionQueue& cq, std::vector<FailedMutation> const& failed) {
   for (auto const& f : failed) {
     int const idx = f.original_index();
-    // For some reason clang-tidy thinks that callbacks_[idx] would be fine with
-    // a const reference to status.
+    // For some reason clang-tidy thinks that it->second.callback would be fine
+    // with a const reference to status.
     // NOLINTNEXTLINE (performance-unnecessary-copy-initialization)
     grpc::Status status(f.status());
     auto it = mutation_data_.find(idx);
-    it->second->callback(cq, status);
+    it->second.callback(cq, status);
     mutation_data_.erase(it);
   }
   for (auto& mutation_data : mutation_data_) {
+    // Everything remaining was a success, report them via their callbacks.
     grpc::Status status;
-    mutation_data.second->callback(cq, status);
+    mutation_data.second.callback(cq, status);
   }
+  mutation_data_.clear();
 }
 
 grpc::Status MutationBatcher::IsValid(PendingSingleRowMutation& mut) const {
