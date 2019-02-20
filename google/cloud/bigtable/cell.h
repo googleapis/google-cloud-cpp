@@ -53,34 +53,23 @@ class Cell {
   Cell(std::string row_key, std::string family_name,
        std::string column_qualifier, std::int64_t timestamp,
        bigendian64_t value, std::vector<std::string> labels)
-      : row_key_(std::move(row_key)),
-        family_name_(std::move(family_name)),
-        column_qualifier_(std::move(column_qualifier)),
-        timestamp_(timestamp),
-        value_(google::cloud::bigtable::internal::AsBigEndian64(value)),
-        labels_(std::move(labels)) {}
+      : Cell(std::move(row_key), std::move(family_name),
+             std::move(column_qualifier), timestamp,
+             internal::AsBigEndian64(value), std::move(labels)) {}
 
   /// Create a cell and fill it with data, but with empty labels.
   Cell(std::string row_key, std::string family_name,
        std::string column_qualifier, std::int64_t timestamp, std::string value)
-      : row_key_(std::move(row_key)),
-        family_name_(std::move(family_name)),
-        column_qualifier_(std::move(column_qualifier)),
-        timestamp_(timestamp),
-        value_(std::move(value)),
-        labels_{} {}
+      : Cell(std::move(row_key), std::move(family_name),
+             std::move(column_qualifier), timestamp, std::move(value), {}) {}
 
   /// Create a Cell and fill it with bigendian 64 bit value, but with empty
   /// labels.
   Cell(std::string row_key, std::string family_name,
        std::string column_qualifier, std::int64_t timestamp,
        bigendian64_t value)
-      : row_key_(std::move(row_key)),
-        family_name_(std::move(family_name)),
-        column_qualifier_(std::move(column_qualifier)),
-        timestamp_(timestamp),
-        value_(google::cloud::bigtable::internal::AsBigEndian64(value)),
-        labels_{} {}
+      : Cell(std::move(row_key), std::move(family_name),
+             std::move(column_qualifier), timestamp, std::move(value), {}) {}
 
   /// Return the row key this cell belongs to. The returned value is not valid
   /// after this object is deleted.
