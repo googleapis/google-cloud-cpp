@@ -147,8 +147,8 @@ class MutationBatcher {
     BulkMutation TransferRequest() { return std::move(requests_); }
 
     void Add(PendingSingleRowMutation&& mut);
-    void FireCallbacks(CompletionQueue& cq,
-                       std::vector<FailedMutation> const& failed);
+    size_t FireCallbacks(CompletionQueue& cq,
+                         std::vector<FailedMutation> const& failed);
 
    private:
     struct MutationData {
@@ -183,8 +183,8 @@ class MutationBatcher {
   void BatchFinished(CompletionQueue& cq, std::shared_ptr<Batch> const& batch,
                      std::vector<FailedMutation> const& failed);
   std::vector<AsyncApplyAdmissionCallback> FlushOnBatchFinished(
-      CompletionQueue& cq,
-      std::shared_ptr<MutationBatcher::Batch> const& batch);
+      CompletionQueue& cq, size_t completed_size);
+  void Admit(PendingSingleRowMutation&& mut);
 
   std::mutex mu_;
   noex::Table& table_;
