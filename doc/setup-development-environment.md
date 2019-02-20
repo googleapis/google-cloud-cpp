@@ -2,22 +2,119 @@
 
 ## Linux
 
-Install the dependencies needed for your distribution.  The best documentation
-are the Docker files used for the continuous integration builds.  For example,
-if you are planning to develop on Ubuntu open
-[Dockerfile.ubuntu](../ci/travis/Dockerfile.ubuntu), there you will find the
-tools to install:
+Install the dependencies needed for your distribution. The top-level
+[README](../README.md) file should list the minimal development tools necessary
+to compile `google-cloud-cpp`. But for active development you may want to
+install additional tools to run the unit and integration tests.
 
-```Dockerfile
-RUN apt-get update && apt-get install -y \
-  automake \
-  build-essential \
-  clang \
-  ... # More stuff omitted.
+These instructions will describe how to install these tools for
+Ubuntu 18.04 (Bionic Beaver). For other distributions you may consult the
+Dockerfile used by the integration tests. For example, 
+[Dockerfile.ubuntu](../ci/travis/Dockerfile.ubuntu), or
+[Dockerfile.fedora](../ci/travis/Dockerfile.fedora).
+
+First, install the basic development tools:
+
+```console
+sudo apt update
+sudo apt install -y build-essential cmake git gcc g++ cmake \
+        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
+        pkg-config tar wget zlib1g-dev
 ```
 
-Run the same commands as `root` in your workstation and your environment will
-be ready.
+Then install `clang-6.0` and some additional Clang tools that we use to enforce
+code style rules:
+
+```console
+sudo apt install -y clang-6.0 clang-tidy clang-format clang-tools
+sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-6.0 100
+sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-6.0 100
+sudo update-alternatives --install /usr/bin/scan-build scan-build /usr/bin/scan-build-6.0 100
+```
+
+Install buildifier tool, which we use to format `BUILD` files:
+
+```console
+sudo wget -q -O /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/0.17.2/buildifier
+sudo chmod 755 /usr/bin/buildifier
+```
+
+Install cmake_format to automatically format the CMake list files. We pin this
+tool to a specific version because the formatting changes when the "latest"
+version is updated, and we do not want the builds to break just
+because some third party changed something.
+
+```console
+sudo apt install -y python python-pip
+pip install --upgrade pip
+pip install numpy cmake_format==0.4.0
+```
+
+Install the Python modules used in the integration tests:
+
+```console
+pip install flask httpbin gevent gunicorn crc32c --user
+```
+
+Add the pip directory to your PATH:
+
+```console
+export PATH=$PATH:$HOME/.local/bin
+```
+
+You need to install the Google Cloud SDK. These instructions work for a GCE
+VM, but you may need to adapt them for your environment. Check the instructions
+on the
+[Google Cloud SDK website](https://cloud.google.com/sdk/) for alternatives.
+
+```console
+wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-233.0.0-linux-x86_64.tar.gz
+sha256sum google-cloud-sdk-233.0.0-linux-x86_64.tar.gz | \
+    grep -q '^a04ff6c4dcfc59889737810174b5d3c702f7a0a20e5ffcec3a5c3fccc59c3b7a '
+echo $?
+tar x -C $HOME -f google-cloud-sdk-233.0.0-linux-x86_64.tar.gz
+$HOME/google-cloud-sdk/bin/gcloud --quiet components install cbt bigtable
+```
+
+### Clone and compile `google-cloud-cpp`
+
+You may need to create a new key pair to connect to GitHub.  Search the web
+for how to do this.  Then you can clone the code:
+
+```console
+cd $HOME
+git clone git@github.com:<GITHUB-USERNAME_HERE>/google-cloud-cpp.git
+cd google-cloud-cpp
+git submodule update --init
+```
+
+And compile the code using:
+
+```console
+cmake -H. -B.build 
+cmake --build .build -- -j $(nproc)
+```
+
+Run the tests using:
+
+```console
+env -C .build ctest --output-on-failure
+```
+
+Run the Google Cloud Storage integration tests:
+
+```console
+env -C .build $PWD/google/cloud/storage/ci/run_integration_tests.sh
+```
+
+Run the Google Cloud Bigtable integration tests:
+
+```console
+env -C .build \
+    CBT=$HOME/google-cloud-sdk/bin/cbt \
+    CBT_EMULATOR=$HOME/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
+    $PWD/google/cloud/bigtable/ci/run_integration_tests.sh
+```
 
 ### Installing Docker
 
@@ -132,6 +229,65 @@ Run the tests using:
 > ctest --output-on-failure
 ```
 
+## Appendix: Creating a Linux VM using Google Compute Engine
+
+From time to time you may want to setup a Linux VM in Google Compute Engine.
+This might be useful to run performance tests in isolation, but "close" to the
+service you are doing development for. The following instructions assume you
+have already created a project:
+
+```console
+$ PROJECT_ID=$(gcloud config get-value project)
+# Or manually set it if you have not configured your default project:
+```
+
+Select a zone to run your VM:
+
+```console
+$ gcloud compute zones list
+$ ZONE=... # Pick a zone.
+```
+
+Select the name of the VM:
+
+```console
+$ VM=... # e.g. VM=my-windows-devbox
+```
+
+Then create the virtual machine using:
+
+```console
+# Googlers should consult go/drawfork before selecting an image.
+$ IMAGE_PROJECT=ubuntu-os-cloud
+$ IMAGE=$(gcloud compute images list \
+    --project=${IMAGE_PROJECT} \
+    --filter="family ~ ubuntu-1804" \
+    --sort-by=~name \
+    --format="value(name)" \
+    --limit=1)
+$ PROJECT_NUMBER=$(gcloud projects list \
+    --filter="project_id=${PROJECT_ID}" \
+    --format="value(project_number)" \
+    --limit=1)
+$ gcloud compute --project "${PROJECT_ID}" instances create "${VM}" \
+  --zone "${ZONE}" \
+  --image "${IMAGE}" \
+  --image-project "${IMAGE_PROJECT}" \
+  --boot-disk-size "1024" --boot-disk-type "pd-standard" \
+  --boot-disk-device-name "${VM}" \
+  --service-account "${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
+  --machine-type "n1-standard-8" \
+  --subnet "default" \
+  --maintenance-policy "MIGRATE" \
+  --scopes "https://www.googleapis.com/auth/bigtable.admin","https://www.googleapis.com/auth/bigtable.data","https://www.googleapis.com/auth/cloud-platform"
+```
+
+To login to this image use:
+
+```console
+$ gcloud compute ssh --ssh-flag=-A --zone=${ZONE} ${VM}
+```
+
 ## Appendix: Creating a Windows VM using Google Compute Engine
 
 If you do not have a Windows workstation, but need a Windows development
@@ -160,9 +316,13 @@ Then create the virtual machine using:
 
 ```console
 $ IMAGE=$(gcloud compute images list \
-    --filter="family=('windows-2019')" --sort-by=name | awk '{print $1}' | tail -1)
-$ PROJECT_NUMBER=$(gcloud projects list --filter="project_id=${PROJECT_ID}" | \
-    awk '{print $3}' | tail -1)
+    --sort-by=~name \
+    --format="value(name)" \
+    --limit=1)
+$ PROJECT_NUMBER=$(gcloud projects list \
+    --filter="project_id=${PROJECT_ID}" \
+    --format="value(project_number)" \
+    --limit=1)
 $ gcloud compute --project "${PROJECT_ID}" instances create "${VM}" \
   --zone "${ZONE}" \
   --image "${IMAGE}" --image-project "windows-cloud" \
