@@ -145,43 +145,31 @@ bool MutationBatcher::HasSpaceFor(PendingSingleRowMutation const& mut) const {
              options_.max_mutations_per_batch;
 }
 
-class BatchFinishedCallback {
- public:
-  BatchFinishedCallback(MutationBatcher& parent,
-                        std::unique_ptr<MutationBatcher::Batch> batch)
-      : parent_(parent), batch_(std::move(batch)) {}
-
-  void operator()(CompletionQueue& cq, std::vector<FailedMutation>& failed,
-                  grpc::Status&) {
-    // status is ignored - it's basically an logical AND on all mutations'
-    // statuses.
-    parent_.BatchFinished(cq, std::move(batch_), failed);
-  }
-
- private:
-  MutationBatcher& parent_;
-  std::unique_ptr<MutationBatcher::Batch> batch_;
-};
-
 void MutationBatcher::FlushIfPossible(CompletionQueue& cq) {
   if (cur_batch_->num_mutations() > 0 &&
       num_outstanding_batches_ < options_.max_batches) {
     oustanding_size_ += cur_batch_->requests_size();
     ++num_outstanding_batches_;
-    auto req = cur_batch_->TransferRequest();
-    table_.AsyncBulkApply(cq,
-                          BatchFinishedCallback(*this, std::move(cur_batch_)),
-                          std::move(req));
-    cur_batch_ = cloud::internal::make_unique<Batch>();
+    auto batch = cur_batch_;
+    table_.AsyncBulkApply(
+        cq,
+        [this, batch](CompletionQueue& cq, std::vector<FailedMutation>& failed,
+                      grpc::Status&) {
+          // status is ignored - it's basically an logical AND on all mutations'
+          // statuses.
+          BatchFinished(cq, batch, failed);
+        },
+        cur_batch_->TransferRequest());
+    cur_batch_ = std::make_shared<Batch>();
   }
 }
 
 void MutationBatcher::BatchFinished(
-    CompletionQueue& cq, std::unique_ptr<MutationBatcher::Batch> batch,
+    CompletionQueue& cq, std::shared_ptr<MutationBatcher::Batch> const& batch,
     std::vector<FailedMutation> const& failed) {
   batch->FireCallbacks(cq, failed);
 
-  auto admission_callbacks = FlushOnBatchFinished(cq, std::move(batch));
+  auto admission_callbacks = FlushOnBatchFinished(cq, batch);
 
   // Inform the user that we've admitted these mutations and there might be some
   // space in the buffer finally.
@@ -192,14 +180,10 @@ void MutationBatcher::BatchFinished(
 }
 
 std::vector<AsyncApplyAdmissionCallback> MutationBatcher::FlushOnBatchFinished(
-    CompletionQueue& cq, std::unique_ptr<MutationBatcher::Batch> batch) {
+    CompletionQueue& cq, std::shared_ptr<MutationBatcher::Batch> const& batch) {
   std::unique_lock<std::mutex> lk(mu_);
   oustanding_size_ -= batch->requests_size();
   num_outstanding_batches_ -= 1;
-
-  // We want to release as much resources as we can because the next thing we're
-  // going to do is flush some mutations and admit more.
-  batch.reset();
 
   FlushIfPossible(cq);
 
