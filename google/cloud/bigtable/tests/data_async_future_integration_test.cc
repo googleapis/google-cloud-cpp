@@ -38,9 +38,8 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
   auto sync_table = CreateTable(table_id, table_config);
 
   std::string const row_key = "key-000010";
-  std::vector<bigtable::Cell> created{
-      {row_key, family, "cc1", 1000, "v1000", {}},
-      {row_key, family, "cc2", 2000, "v2000", {}}};
+  std::vector<bigtable::Cell> created{{row_key, family, "cc1", 1000, "v1000"},
+                                      {row_key, family, "cc2", 2000, "v2000"}};
   SingleRowMutation mut(row_key);
   for (auto const& c : created) {
     mut.emplace_back(SetCell(
@@ -61,9 +60,8 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
   fut_void.get();
 
   // Validate that the newly created cells are actually in the server.
-  std::vector<bigtable::Cell> expected{
-      {row_key, family, "cc1", 1000, "v1000", {}},
-      {row_key, family, "cc2", 2000, "v2000", {}}};
+  std::vector<bigtable::Cell> expected{{row_key, family, "cc1", 1000, "v1000"},
+                                       {row_key, family, "cc2", 2000, "v2000"}};
 
   auto actual = ReadRows(*sync_table, bigtable::Filter::PassAllFilter());
 
@@ -82,11 +80,11 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncBulkApply) {
   std::string const row_key2 = "key-000020";
   std::map<std::string, std::vector<bigtable::Cell>> created{
       {row_key1,
-       {{row_key1, family, "cc1", 1000, "vv10", {}},
-        {row_key1, family, "cc2", 2000, "vv20", {}}}},
+       {{row_key1, family, "cc1", 1000, "vv10"},
+        {row_key1, family, "cc2", 2000, "vv20"}}},
       {row_key2,
-       {{row_key2, family, "cc1", 3000, "vv30", {}},
-        {row_key2, family, "cc2", 4000, "vv40", {}}}}};
+       {{row_key2, family, "cc1", 3000, "vv30"},
+        {row_key2, family, "cc2", 4000, "vv40"}}}};
 
   BulkMutation mut;
   for (auto const& row_cells : created) {

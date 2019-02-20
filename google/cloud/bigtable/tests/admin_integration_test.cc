@@ -116,17 +116,17 @@ TEST_F(AdminIntegrationTest, DropRowsByPrefixTest) {
   std::string const row_key1_1 = row_key1_prefix + "_1-Key1";
   std::string const row_key2 = row_key2_prefix + "-Key2";
   std::vector<bigtable::Cell> created_cells{
-      {row_key1, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key1, column_family1, "column_id1", 1000, "v-c-0-1", {}},
-      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2", {}},
-      {row_key1_1, column_family2, "column_id3", 2000, "v-c-0-2", {}},
-      {row_key1_1, column_family2, "column_id3", 3000, "v-c-0-2", {}},
-      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
-      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2", {}},
+      {row_key1, column_family1, "column_id1", 0, "v-c-0-0"},
+      {row_key1, column_family1, "column_id1", 1000, "v-c-0-1"},
+      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2"},
+      {row_key1_1, column_family2, "column_id3", 2000, "v-c-0-2"},
+      {row_key1_1, column_family2, "column_id3", 3000, "v-c-0-2"},
+      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"},
   };
   std::vector<bigtable::Cell> expected_cells{
-      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
-      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2", {}}};
+      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"}};
 
   // Create records
   CreateCells(*table, created_cells);
@@ -153,11 +153,11 @@ TEST_F(AdminIntegrationTest, DropAllRowsTest) {
   std::string const row_key1 = "DropRowKey1";
   std::string const row_key2 = "DropRowKey2";
   std::vector<bigtable::Cell> created_cells{
-      {row_key1, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key1, column_family1, "column_id1", 1000, "v-c-0-1", {}},
-      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2", {}},
-      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
-      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2", {}},
+      {row_key1, column_family1, "column_id1", 0, "v-c-0-0"},
+      {row_key1, column_family1, "column_id1", 1000, "v-c-0-1"},
+      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2"},
+      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"},
   };
 
   // Create records
@@ -300,11 +300,11 @@ TEST_F(AdminIntegrationTest, CheckConsistencyIntegrationTest) {
   std::string const row_key1 = "DropRowKey1";
   std::string const row_key2 = "DropRowKey2";
   std::vector<bigtable::Cell> created_cells{
-      {row_key1, column_family1, "column_id1", 1000, "v-c-0-0", {}},
-      {row_key1, column_family1, "column_id2", 1000, "v-c-0-1", {}},
-      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2", {}},
-      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
-      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2", {}},
+      {row_key1, column_family1, "column_id1", 1000, "v-c-0-0"},
+      {row_key1, column_family1, "column_id2", 1000, "v-c-0-1"},
+      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2"},
+      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"},
   };
 
   CreateCells(table, created_cells);
