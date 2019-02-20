@@ -494,7 +494,7 @@ sudo apt install -y cmake3 git gcc g++ make pkg-config tar wget zlib1g-dev
 ```
 
 Ubuntu:14.04 ships with a very old version of OpenSSL, this version is not
-supported by gRPC. We need to compile and install OpenSSL-1.0.2 from source:
+supported by gRPC. We need to compile and install OpenSSL-1.0.2 from source.
 
 ```bash
 cd $HOME/Downloads
@@ -506,8 +506,15 @@ make -j $(nproc)
 sudo make install
 ```
 
-We also need to configure CMake to find the version of OpenSSL we just
-installed:
+Note that by default OpenSSL installs itself in `/usr/local/ssl`. Installing
+on a more conventional location, such as `/usr/local` or `/usr`, can break
+many programs in your system. OpenSSL 1.0.2 is actually incompatible with
+with OpenSSL 1.0.0 which is the version expected by the programs already
+installed by Ubuntu 14.04.
+
+In any case, as the library installs itself in this non-standard location, we
+also need to configure CMake and other build program to find this version of
+OpenSSL:
 
 ```bash
 export OPENSSL_ROOT_DIR=/usr/local/ssl
