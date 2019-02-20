@@ -18,24 +18,9 @@
 #include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_sample_row_keys_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
-#include "google/cloud/testing_util/chrono_literals.h"
 #include <future>
 #include <thread>
 #include <typeinfo>
-
-namespace std {
-namespace chrono {
-
-void PrintTo(std::chrono::milliseconds const& ms, std::ostream* stream) {
-  *stream << ms.count() << "ms";
-}
-
-void PrintTo(std::chrono::seconds const& s, std::ostream* stream) {
-  *stream << s.count() << "s";
-}
-
-}  // namespace chrono
-}  // namespace std
 
 namespace google {
 namespace cloud {
@@ -45,7 +30,6 @@ namespace internal {
 
 namespace bt = ::google::cloud::bigtable;
 namespace btproto = google::bigtable::v2;
-using namespace google::cloud::testing_util::chrono_literals;
 using namespace ::testing;
 
 class RetryMultiPageTest
