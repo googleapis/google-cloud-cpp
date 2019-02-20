@@ -173,10 +173,11 @@ class MutationBatcher {
   }
 
   void FlushIfPossible(CompletionQueue& cq);
-  void BatchFinished(CompletionQueue& cq, std::shared_ptr<Batch> batch,
+  void BatchFinished(CompletionQueue& cq, std::shared_ptr<Batch> const& batch,
                      std::vector<FailedMutation> const& failed);
   std::vector<AsyncApplyAdmissionCallback> FlushOnBatchFinished(
-      CompletionQueue& cq, std::shared_ptr<MutationBatcher::Batch> batch);
+      CompletionQueue& cq,
+      std::shared_ptr<MutationBatcher::Batch> const& batch);
 
   std::mutex mu_;
   noex::Table& table_;

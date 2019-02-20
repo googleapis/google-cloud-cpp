@@ -152,8 +152,9 @@ void MutationBatcher::FlushIfPossible(CompletionQueue& cq) {
     ++num_outstanding_batches_;
     auto batch = cur_batch_;
     table_.AsyncBulkApply(
-        cq, [this, batch](CompletionQueue& cq,
-                          std::vector<FailedMutation>& failed, grpc::Status&) {
+        cq,
+        [this, batch](CompletionQueue& cq, std::vector<FailedMutation>& failed,
+                      grpc::Status&) {
           // status is ignored - it's basically an logical AND on all mutations'
           // statuses.
           BatchFinished(cq, batch, failed);
@@ -164,7 +165,7 @@ void MutationBatcher::FlushIfPossible(CompletionQueue& cq) {
 }
 
 void MutationBatcher::BatchFinished(
-    CompletionQueue& cq, std::shared_ptr<MutationBatcher::Batch> batch,
+    CompletionQueue& cq, std::shared_ptr<MutationBatcher::Batch> const& batch,
     std::vector<FailedMutation> const& failed) {
   batch->FireCallbacks(cq, failed);
 
@@ -179,14 +180,10 @@ void MutationBatcher::BatchFinished(
 }
 
 std::vector<AsyncApplyAdmissionCallback> MutationBatcher::FlushOnBatchFinished(
-    CompletionQueue& cq, std::shared_ptr<MutationBatcher::Batch> batch) {
+    CompletionQueue& cq, std::shared_ptr<MutationBatcher::Batch> const& batch) {
   std::unique_lock<std::mutex> lk(mu_);
   oustanding_size_ -= batch->requests_size();
   num_outstanding_batches_ -= 1;
-
-  // We want to release as much resources as we can because the next thing we're
-  // going to do is flush some mutations and admit more.
-  batch.reset();
 
   FlushIfPossible(cq);
 
