@@ -96,7 +96,7 @@ class MutationBatcher {
         options_(options),
         num_outstanding_batches_(),
         oustanding_size_(),
-        cur_batch_(cloud::internal::make_unique<Batch>()) {}
+        cur_batch_(std::make_shared<Batch>()) {}
 
   std::shared_ptr<AsyncOperation> AsyncApply(
       CompletionQueue& cq, AsyncApplyCompletionCallback&& completion_callback,
@@ -105,7 +105,6 @@ class MutationBatcher {
 
  private:
   class Batch;
-  friend class BatchFinishedCallback;
 
   /**
    * This structure represents a single mutation before it is admitted.
@@ -174,10 +173,10 @@ class MutationBatcher {
   }
 
   void FlushIfPossible(CompletionQueue& cq);
-  void BatchFinished(CompletionQueue& cq, std::unique_ptr<Batch> batch,
+  void BatchFinished(CompletionQueue& cq, std::shared_ptr<Batch> batch,
                      std::vector<FailedMutation> const& failed);
   std::vector<AsyncApplyAdmissionCallback> FlushOnBatchFinished(
-      CompletionQueue& cq, std::unique_ptr<MutationBatcher::Batch> batch);
+      CompletionQueue& cq, std::shared_ptr<MutationBatcher::Batch> batch);
 
   std::mutex mu_;
   noex::Table& table_;
@@ -186,7 +185,7 @@ class MutationBatcher {
   size_t num_outstanding_batches_;
   size_t oustanding_size_;
 
-  std::unique_ptr<Batch> cur_batch_;
+  std::shared_ptr<Batch> cur_batch_;
 
   // These are the mutations which have not been admission yet. If the user is
   // properly reacting to `admission_callback`s, there should be very few of
