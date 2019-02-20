@@ -26,17 +26,16 @@ class TableApplyTest : public bigtable::testing::TableTestFixture {};
 }  // anonymous namespace
 
 /// @test Verify that Table::Apply() works in a simplest case.
-
 TEST_F(TableApplyTest, Simple) {
   using namespace ::testing;
 
   EXPECT_CALL(*client_, MutateRow(_, _, _)).WillOnce(Return(grpc::Status::OK));
 
-  auto mut = table_.Apply(bigtable::SingleRowMutation(
+  auto status = table_.Apply(bigtable::SingleRowMutation(
       "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
-  ASSERT_STATUS_OK(mut);
+  ASSERT_STATUS_OK(status);
 }
-/*
+
 /// @test Verify that Table::Apply() raises an exception on permanent failures.
 TEST_F(TableApplyTest, Failure) {
   using namespace ::testing;
@@ -46,17 +45,12 @@ TEST_F(TableApplyTest, Failure) {
           Return(grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "uh-oh")));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(table_.Apply(bigtable::SingleRowMutation(
-                   "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")})),
-               std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      table_.Apply(bigtable::SingleRowMutation(
-          "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")})),
-      "exceptions are disabled");
+  auto status = table_.Apply(bigtable::SingleRowMutation(
+      "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
+
+  EXPECT_FALSE(status.ok());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
-*/
 
 /// @test Verify that Table::Apply() retries on partial failures.
 TEST_F(TableApplyTest, Retry) {
@@ -71,11 +65,11 @@ TEST_F(TableApplyTest, Retry) {
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(Return(grpc::Status::OK));
 
-  auto mut = table_.Apply(bigtable::SingleRowMutation(
+  auto status = table_.Apply(bigtable::SingleRowMutation(
       "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
-  ASSERT_STATUS_OK(mut);
+  ASSERT_STATUS_OK(status);
 }
-/*
+
 /// @test Verify that Table::Apply() retries only idempotent mutations.
 TEST_F(TableApplyTest, RetryIdempotent) {
   using namespace ::testing;
@@ -85,23 +79,9 @@ TEST_F(TableApplyTest, RetryIdempotent) {
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  // TODO(#234) - update this test when Apply() returns on error.
-  try {
-    table_.Apply(bigtable::SingleRowMutation(
-        "not-idempotent", {bigtable::SetCell("fam", "col", "val")}));
-  } catch (bigtable::PermanentMutationFailure const& ex) {
-    ASSERT_EQ(1UL, ex.failures().size());
-    EXPECT_EQ(0, ex.failures()[0].original_index());
-  } catch (std::exception const& ex) {
-    FAIL() << "unexpected std::exception raised: " << ex.what();
-  } catch (...) {
-    FAIL() << "unexpected exception of unknown type raised";
-  }
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      table_.Apply(bigtable::SingleRowMutation(
-          "not-idempotent", {bigtable::SetCell("fam", "col", "val")})),
-      "exceptions are disabled");
+
+  auto status = table_.Apply(bigtable::SingleRowMutation(
+      "not-idempotent", {bigtable::SetCell("fam", "col", "val")}));
+  EXPECT_FALSE(status.ok());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
-*/

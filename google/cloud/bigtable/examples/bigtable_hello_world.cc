@@ -75,11 +75,13 @@ int main(int argc, char* argv[]) try {
     //
     //     https://cloud.google.com/bigtable/docs/schema-design
     std::string row_key = "key-" + std::to_string(i);
-    auto table_mut = table.Apply(google::cloud::bigtable::SingleRowMutation(
-        std::move(row_key),
-        google::cloud::bigtable::SetCell("family", "c0", greeting)));
-    if (!table_mut) {
-      throw std::runtime_error(table_mut.status().message());
+    google::cloud::Status status =
+        table.Apply(google::cloud::bigtable::SingleRowMutation(
+            std::move(row_key),
+            google::cloud::bigtable::SetCell("family", "c0", greeting)));
+
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
     }
     ++i;
   }

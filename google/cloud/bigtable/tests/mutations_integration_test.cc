@@ -218,10 +218,10 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForTimestampRangeTest) {
   // Create records
   CreateCells(*table, created_cells);
   // Delete the columns with column identifier as column_id2
-  auto mut = table->Apply(bigtable::SingleRowMutation(
+  auto status = table->Apply(bigtable::SingleRowMutation(
       row_key, bigtable::DeleteFromColumn(column_family2, "column_id2", 2000_us,
                                           4000_us)));
-  ASSERT_STATUS_OK(mut);
+  ASSERT_STATUS_OK(status);
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   EXPECT_STATUS_OK(DeleteTable(table_id));
 
@@ -257,9 +257,9 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForReversedTimestampRangeTest) {
   CreateCells(*table, created_cells);
 
   // Try to delete the columns with an invalid range:
-  auto mut = table->Apply(bigtable::SingleRowMutation(
+  auto status = table->Apply(bigtable::SingleRowMutation(
       key, bigtable::DeleteFromColumn(column_family2, "c2", 4000_us, 2000_us)));
-  EXPECT_STATUS_OK(mut);
+  EXPECT_FALSE(status.ok());
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   EXPECT_STATUS_OK(DeleteTable(table_id));
 
@@ -288,9 +288,9 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForEmptyTimestampRangeTest) {
 
   CreateCells(*table, created_cells);
 
-  auto mut = table->Apply(bigtable::SingleRowMutation(
+  auto status = table->Apply(bigtable::SingleRowMutation(
       key, bigtable::DeleteFromColumn(column_family2, "c2", 2000_us, 2000_us)));
-  EXPECT_STATUS_OK(mut);
+  EXPECT_FALSE(status.ok());
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   EXPECT_STATUS_OK(DeleteTable(table_id));
 
@@ -322,9 +322,9 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForAllTest) {
   // Create records
   CreateCells(*table, created_cells);
   // Delete the columns with column identifier column_id3
-  auto mut = table->Apply(bigtable::SingleRowMutation(
+  auto status = table->Apply(bigtable::SingleRowMutation(
       row_key, bigtable::DeleteFromColumn(column_family1, "column_id3")));
-  ASSERT_STATUS_OK(mut);
+  ASSERT_STATUS_OK(status);
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   EXPECT_STATUS_OK(DeleteTable(table_id));
 
@@ -359,10 +359,10 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnStartingFromTest) {
   // Create records
   CreateCells(*table, created_cells);
   // Delete the columns with column identifier column_id1
-  auto mut = table->Apply(bigtable::SingleRowMutation(
+  auto status = table->Apply(bigtable::SingleRowMutation(
       row_key, bigtable::DeleteFromColumnStartingFrom(column_family1,
                                                       "column_id1", 1000_us)));
-  ASSERT_STATUS_OK(mut);
+  ASSERT_STATUS_OK(status);
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   EXPECT_STATUS_OK(DeleteTable(table_id));
 
@@ -399,10 +399,10 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnEndingAtTest) {
   // end_time is not inclusive, only records with timestamp < time_end
   // will be deleted
   // Delete the columns with column identifier column_id1
-  auto mut = table->Apply(bigtable::SingleRowMutation(
+  auto status = table->Apply(bigtable::SingleRowMutation(
       row_key, bigtable::DeleteFromColumnEndingAt(column_family1, "column_id1",
                                                   2000_us)));
-  ASSERT_STATUS_OK(mut);
+  ASSERT_STATUS_OK(status);
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   EXPECT_STATUS_OK(DeleteTable(table_id));
 
@@ -433,9 +433,9 @@ TEST_F(MutationIntegrationTest, DeleteFromFamilyTest) {
   // Create records
   CreateCells(*table, created_cells);
   // Delete all the records for family
-  auto mut = table->Apply(bigtable::SingleRowMutation(
+  auto status = table->Apply(bigtable::SingleRowMutation(
       row_key, bigtable::DeleteFromFamily(column_family1)));
-  ASSERT_STATUS_OK(mut);
+  ASSERT_STATUS_OK(status);
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   EXPECT_STATUS_OK(DeleteTable(table_id));
 
@@ -467,9 +467,9 @@ TEST_F(MutationIntegrationTest, DeleteFromRowTest) {
   // Create records
   CreateCells(*table, created_cells);
   // Delete all the records for a row
-  auto mut = table->Apply(
+  auto status = table->Apply(
       bigtable::SingleRowMutation(row_key1, bigtable::DeleteFromRow()));
-  ASSERT_STATUS_OK(mut);
+  ASSERT_STATUS_OK(status);
   auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
   EXPECT_STATUS_OK(DeleteTable(table_id));
 

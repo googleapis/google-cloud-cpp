@@ -184,7 +184,13 @@ OperationResult RunOneApply(bigtable::Table& table, std::string row_key,
   for (int field = 0; field != kNumFields; ++field) {
     mutation.emplace_back(MakeRandomMutation(generator, field));
   }
-  auto op = [&table, &mutation]() { table.Apply(std::move(mutation)); };
+  auto op = [&table, &mutation]() {
+    auto status = table.Apply(std::move(mutation));
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
+    }
+  };
+
   return Benchmark::TimeOperation(std::move(op));
 }
 

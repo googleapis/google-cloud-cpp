@@ -83,9 +83,10 @@ void DataIntegrationTest::Apply(bigtable::Table& table, std::string row_key,
         duration_cast<milliseconds>(microseconds(cell.timestamp())),
         cell.value()));
   }
-  auto mut = table.Apply(std::move(mutation));
-  ASSERT_STATUS_OK(mut);
+  auto status = table.Apply(std::move(mutation));
+  ASSERT_STATUS_OK(status);
 }
+
 void DataIntegrationTest::BulkApply(bigtable::Table& table,
                                     std::vector<bigtable::Cell> const& cells) {
   using namespace std::chrono;
@@ -174,6 +175,7 @@ TEST_F(DataIntegrationTest, TableSingleRow) {
   EXPECT_STATUS_OK(DeleteTable(table_id));
   CheckEqualUnordered(expected, actual);
 }
+
 TEST_F(DataIntegrationTest, TableReadRowTest) {
   std::string const table_id = RandomTableId();
   auto table = CreateTable(table_id, table_config);

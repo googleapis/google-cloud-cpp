@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/benchmarks/embedded_server.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 #include <thread>
 
@@ -72,7 +73,8 @@ TEST(EmbeddedServer, TableApply) {
                bigtable::SetCell("fam", "col", milliseconds(0), "val")});
 
   EXPECT_EQ(0, server->mutate_row_count());
-  table.Apply(std::move(mutation));
+  auto status = table.Apply(std::move(mutation));
+  EXPECT_STATUS_OK(status);
   EXPECT_EQ(1, server->mutate_row_count());
 
   server->Shutdown();

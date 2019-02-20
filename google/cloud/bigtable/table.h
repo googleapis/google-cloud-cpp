@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/table.h"
 #include "google/cloud/future.h"
+#include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 
 namespace google {
@@ -193,14 +194,13 @@ class Table {
    *     `SingleRowMutation` can be used to modify and/or delete multiple cells,
    *     across different columns and column families.
    *
-   * @return The list of mutations that failed, empty when the operation is
-   *     successful.
+   * @return status of the operation.
    *
    * @par Example
    * @snippet data_snippets.cc apply
    */
 
-  StatusOr<std::vector<FailedMutation>> Apply(SingleRowMutation&& mut);
+  Status Apply(SingleRowMutation&& mut);
 
   /**
    * Makes asycronous attempts to apply the mutation to a row.
