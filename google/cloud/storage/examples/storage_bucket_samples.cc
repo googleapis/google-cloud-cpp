@@ -458,7 +458,7 @@ void GetBucketPolicyOnly(google::cloud::storage::Client client, int& argc,
       throw std::runtime_error(bucket_metadata.status().message());
     }
 
-    if (bucket_metadata->has_iam_configuration()) {
+    if (bucket_metadata->has_iam_configuration() && bucket_metadata->iam_configuration().bucket_policy_only.has_value()) {
       gcs::BucketPolicyOnly bucket_policy_only = *bucket_metadata->iam_configuration().bucket_policy_only;
 
       std::cout << "Bucket Policy Only is enabled for " << bucket_metadata->name() << "\n";
