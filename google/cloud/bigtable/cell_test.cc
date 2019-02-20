@@ -70,5 +70,5 @@ TEST(CellTest, SimpleNumericNegativeValue) {
   EXPECT_EQ(column_qualifier, cell.column_qualifier());
   EXPECT_EQ(timestamp, cell.timestamp().count());
   EXPECT_EQ(value.get(), cell.value_as<bigtable::bigendian64_t>().get());
-  EXPECT_EQ(0U, cell.eabels().size());
+  EXPECT_EQ(0U, cell.labels().size());
 }
