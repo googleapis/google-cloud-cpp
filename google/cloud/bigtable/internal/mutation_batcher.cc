@@ -84,6 +84,7 @@ MutationBatcher::PendingSingleRowMutation::PendingSingleRowMutation(
 }
 
 void MutationBatcher::Batch::Add(PendingSingleRowMutation&& mut) {
+  std::unique_lock<std::mutex> lk(mu_);
   requests_size_ += mut.request_size;
   num_mutations_ += mut.num_mutations;
   requests_.emplace_back(std::move(mut.mut));
@@ -92,23 +93,28 @@ void MutationBatcher::Batch::Add(PendingSingleRowMutation&& mut) {
 
 size_t MutationBatcher::Batch::FireCallbacks(
     CompletionQueue& cq, std::vector<FailedMutation> const& failed) {
+  std::unique_lock<std::mutex> lk(mu_);
+  std::vector<std::pair<MutationData, grpc::Status>> to_fire;
   size_t completed_size = 0;
+
   for (auto const& f : failed) {
     int const idx = f.original_index();
-    // For some reason clang-tidy thinks that it->second.callback would be fine
-    // with a const reference to status.
-    // NOLINTNEXTLINE (performance-unnecessary-copy-initialization)
-    grpc::Status status(f.status());
     auto it = mutation_data_.find(idx);
-    it->second.callback(cq, status);
     completed_size += it->second.request_size;
+    to_fire.emplace_back(std::move(it->second), f.status());
     mutation_data_.erase(it);
   }
+
   for (auto& mutation_data : mutation_data_) {
     // Everything remaining was a success, report them via their callbacks.
     grpc::Status status;
     completed_size += mutation_data.second.request_size;
-    mutation_data.second.callback(cq, status);
+    to_fire.emplace_back(std::move(mutation_data.second), std::move(status));
+  }
+  lk.unlock();
+
+  for (auto& data_and_status : to_fire) {
+    data_and_status.first.callback(cq, data_and_status.second);
   }
   mutation_data_.clear();
   return completed_size;
