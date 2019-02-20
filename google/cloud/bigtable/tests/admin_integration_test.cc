@@ -246,9 +246,7 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
 TEST_F(AdminIntegrationTest, CheckConsistencyIntegrationTest) {
   using namespace google::cloud::testing_util::chrono_literals;
 
-  std::string id =
-      "it-" + google::cloud::internal::Sample(
-                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  std::string id = bigtable::testing::TableTestEnvironment::RandomInstanceId();
   std::string const random_table_id = RandomTableId();
 
   auto project_id = bigtable::testing::TableTestEnvironment::project_id();

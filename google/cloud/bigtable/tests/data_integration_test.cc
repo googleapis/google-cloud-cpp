@@ -110,8 +110,19 @@ void DataIntegrationTest::BulkApply(bigtable::Table& table,
 using namespace google::cloud::testing_util::chrono_literals;
 
 TEST_F(DataIntegrationTest, TableApply) {
+auto start = std::chrono::steady_clock::now();
+auto elapsed_ms = [&start] {
+  using ms = std::chrono::milliseconds;
+  auto now = std::chrono::steady_clock::now();
+  auto elapsed = now - start;
+  start = now;
+  return std::chrono::duration_cast<ms>(elapsed).count();
+};
+
   std::string const table_id = RandomTableId();
+  std::cerr << "Random: " << elapsed_ms() << std::endl;
   auto table = CreateTable(table_id, table_config);
+std::cerr << "Create: " << elapsed_ms() << std::endl;
 
   std::string const row_key = "row-key-1";
   std::vector<bigtable::Cell> created{{row_key, family, "c0", 1000, "v1000"},
@@ -121,8 +132,13 @@ TEST_F(DataIntegrationTest, TableApply) {
                                        {row_key, family, "c1", 2000, "v2000"}};
 
   auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
+std::cerr << "ReadRows: " << elapsed_ms() << std::endl;
   EXPECT_STATUS_OK(DeleteTable(table_id));
-  CheckEqualUnordered(expected, actual);
+std::cerr << "Delete: " << elapsed_ms() << std::endl;
+
+CheckEqualUnordered(expected, actual);
+std::cerr << "Check: " << elapsed_ms() << std::endl;
+
 }
 
 TEST_F(DataIntegrationTest, TableBulkApply) {

@@ -30,6 +30,30 @@ std::string TableTestEnvironment::instance_id_;
 std::string TableTestEnvironment::cluster_id_;
 std::string TableTestEnvironment::zone_;
 std::string TableTestEnvironment::replication_zone_;
+google::cloud::internal::DefaultPRNG TableTestEnvironment::generator_;
+
+void TableTestEnvironment::SetUp() {
+  generator_ = google::cloud::internal::MakeDefaultPRNG();
+}
+
+void TableTestEnvironment::TearDown() {}
+
+std::string TableTestEnvironment::CreateRandomId(std::string const& prefix,
+                                                 std::size_t count) {
+  return prefix +
+         google::cloud::internal::Sample(
+             generator_, count, "abcdefghijklmnopqrstuvwxyz0123456789");
+}
+
+std::string TableTestEnvironment::RandomTableId() {
+  constexpr int RANDOM_CHARACTERS = 16;
+  return CreateRandomId("table-", RANDOM_CHARACTERS);
+}
+
+std::string TableTestEnvironment::RandomInstanceId() {
+  constexpr int RANDOM_CHARACTERS = 8;
+  return CreateRandomId("it-", RANDOM_CHARACTERS);
+}
 
 void TableIntegrationTest::SetUp() {
   admin_client_ = bigtable::CreateDefaultAdminClient(
@@ -140,11 +164,9 @@ void TableIntegrationTest::CheckEqualUnordered(
 }
 
 std::string TableIntegrationTest::RandomTableId() {
-  constexpr int RANDOM_CHARACTERS = 8;
-  return std::string("table-") + google::cloud::internal::Sample(
-                                     generator_, RANDOM_CHARACTERS,
-                                     "abcdefghijklmnopqrstuvwxyz0123456789");
+  return TableTestEnvironment::RandomTableId();
 }
+
 }  // namespace testing
 
 int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
