@@ -153,7 +153,7 @@ TEST_F(SnapshotAsyncIntegrationTest, CreateListGetDeleteSnapshot) {
   EXPECT_FALSE(IsSnapshotPresent(*snapshots_after_delete, snapshot.name()));
 
   // delete table
-  EXPECT_STATUS_OK(DeleteTable(table_id.get()));
+  EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id.get()));
 
   cq.Shutdown();
   pool.join();

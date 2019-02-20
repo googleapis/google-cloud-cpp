@@ -69,14 +69,15 @@ class TableTestEnvironment : public ::testing::Environment {
    * instances of a test with minimal chance of interference, without having
    * to coordinate via some global state.
    */
-  static std::string CreateRandomId(std::string const& prefix,
-                                    std::size_t count);
+  static std::string CreateRandomId(std::string const& prefix, int count);
 
   /// Return a random table id.
   static std::string RandomTableId();
 
   /// Return a random instance id.
   static std::string RandomInstanceId();
+
+  static std::string const& table_id() { return table_id_; }
 
  private:
   static std::string project_id_;
@@ -86,6 +87,8 @@ class TableTestEnvironment : public ::testing::Environment {
   static std::string replication_zone_;
 
   static google::cloud::internal::DefaultPRNG generator_;
+
+  static std::string table_id_;
 };
 
 /**
@@ -96,12 +99,8 @@ class TableIntegrationTest : public ::testing::Test {
  protected:
   void SetUp() override;
 
-  /// Creates the table with @p table_config
-  std::unique_ptr<bigtable::Table> CreateTable(
-      std::string const& table_name, bigtable::TableConfig& table_config);
-
-  /// Deletes the table passed via arguments.
-  Status DeleteTable(std::string const& table_name);
+  /// Gets a Table object for the current test.
+  bigtable::Table GetTable();
 
   /// Return all the cells in @p table that pass @p filter.
   std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,

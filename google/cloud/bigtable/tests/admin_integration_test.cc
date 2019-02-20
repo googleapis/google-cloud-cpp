@@ -75,7 +75,7 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTablesTest) {
     ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
                                  << " This is unexpected, as the table ids are"
                                  << " generated at random.";
-    CreateTable(table_id, table_config);
+    EXPECT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
 
     expected_table_list.emplace_back(table_id);
   }
@@ -86,7 +86,7 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTablesTest) {
     EXPECT_EQ(1, CountMatchingTables(table_id, *current_table_list));
   }
   for (auto const& table_id : expected_table_list) {
-    EXPECT_STATUS_OK(DeleteTable(table_id));
+    EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
   }
   current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   ASSERT_STATUS_OK(current_table_list);
@@ -107,7 +107,9 @@ TEST_F(AdminIntegrationTest, DropRowsByPrefixTest) {
        {column_family2, bigtable::GcRule::MaxNumVersions(10)},
        {column_family3, bigtable::GcRule::MaxNumVersions(10)}},
       {});
-  auto table = CreateTable(table_id, table_config);
+  auto table_meta = table_admin_->CreateTable(table_id, table_config);
+  EXPECT_STATUS_OK(table_meta);
+  bigtable::Table table(data_client_, table_id);
 
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key1_prefix = "DropRowPrefix1";
@@ -129,11 +131,11 @@ TEST_F(AdminIntegrationTest, DropRowsByPrefixTest) {
       {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"}};
 
   // Create records
-  CreateCells(*table, created_cells);
+  CreateCells(table, created_cells);
   // Delete all the records for a row
   EXPECT_STATUS_OK(table_admin_->DropRowsByPrefix(table_id, row_key1_prefix));
-  auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+  auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
+  EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
 
   CheckEqualUnordered(expected_cells, actual_cells);
 }
@@ -148,7 +150,10 @@ TEST_F(AdminIntegrationTest, DropAllRowsTest) {
        {column_family2, bigtable::GcRule::MaxNumVersions(10)},
        {column_family3, bigtable::GcRule::MaxNumVersions(10)}},
       {});
-  auto table = CreateTable(table_id, table_config);
+
+  ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
+  bigtable::Table table(data_client_, table_id);
+
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key1 = "DropRowKey1";
   std::string const row_key2 = "DropRowKey2";
@@ -161,11 +166,11 @@ TEST_F(AdminIntegrationTest, DropAllRowsTest) {
   };
 
   // Create records
-  CreateCells(*table, created_cells);
+  CreateCells(table, created_cells);
   // Delete all the records from a table
   EXPECT_STATUS_OK(table_admin_->DropAllRows(table_id));
-  auto actual_cells = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+  auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
+  EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
 
   ASSERT_TRUE(actual_cells.empty());
 }
@@ -190,14 +195,15 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
       {"a1000", "a2000", "b3000", "m5000"});
 
   // create table
-  auto table = CreateTable(table_id, table_config);
+  ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
+  bigtable::Table table(data_client_, table_id);
 
   // verify new table was created
   auto table_result = table_admin_->GetTable(table_id);
   ASSERT_STATUS_OK(table_result);
-  EXPECT_EQ(table->table_name(), table_result->name())
+  EXPECT_EQ(table.table_name(), table_result->name())
       << "Mismatched names for GetTable(" << table_id
-      << "): " << table->table_name() << " != " << table_result->name();
+      << "): " << table.table_name() << " != " << table_result->name();
 
   // get table
   auto table_detailed = table_admin_->GetTable(table_id, btadmin::Table::FULL);
@@ -234,7 +240,7 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
   EXPECT_EQ(2, gc.intersection().rules_size());
 
   // delete table
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+  EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
   // List to verify it is no longer there
   auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   ASSERT_STATUS_OK(current_table_list);
