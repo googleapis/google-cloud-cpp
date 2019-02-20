@@ -194,6 +194,27 @@ sudo apt update && \
 sudo apt install -y cmake3 git gcc g++ make pkg-config tar wget zlib1g-dev
 ```
 
+Ubuntu:14.04 ships with a very old version of OpenSSL, this version is not
+supported by gRPC. We need to compile and install OpenSSL-1.0.2 from source:
+
+```bash
+cd $HOME/Downloads
+wget -q https://www.openssl.org/source/openssl-1.0.2n.tar.gz
+tar xf openssl-1.0.2n.tar.gz
+cd $HOME/Downloads/openssl-1.0.2n
+./config --shared
+make -j $(nproc)
+sudo make install
+```
+
+We also need to configure CMake to find the version of OpenSSL we just
+installed:
+
+```bash
+export OPENSSL_ROOT_DIR=/usr/local/ssl
+export PKG_CONFIG_PATH=/usr/local/ssl/lib/pkgconfig
+```
+
 #### macOS (using brew)
 
 ```bash

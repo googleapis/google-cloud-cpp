@@ -35,7 +35,26 @@ RUN apt update && \
     apt install -y cmake3 git gcc g++ make pkg-config tar wget zlib1g-dev
 # ```
 
-## [END README.md]
+# Ubuntu:14.04 ships with a very old version of OpenSSL, this version is not
+# supported by gRPC. We need to compile and install OpenSSL-1.0.2 from source:
+
+# ```bash
+WORKDIR /var/tmp/build
+RUN wget -q https://www.openssl.org/source/openssl-1.0.2n.tar.gz
+RUN tar xf openssl-1.0.2n.tar.gz
+WORKDIR /var/tmp/build/openssl-1.0.2n
+RUN ./config --shared
+RUN make -j $(nproc)
+RUN make install
+# ```
+
+# We also need to configure CMake to find the version of OpenSSL we just
+# installed:
+
+# ```bash
+ENV OPENSSL_ROOT_DIR=/usr/local/ssl
+ENV PKG_CONFIG_PATH=/usr/local/ssl/lib/pkgconfig
+# ```
 
 ## [START IGNORED]
 # Verify that the tools above are enough to compile google-cloud-cpp when using
@@ -47,18 +66,9 @@ RUN cmake --build build-output -- -j $(nproc)
 RUN (cd build-output && ctest --output-on-failure)
 ## [END IGNORED]
 
-# Ubuntu:14.04 ships with a very old version of OpenSSL, this version is not
-# supported by gRPC. We need to compile and install OpenSSL-1.0.2 from source:
+## [END README.md]
 
-# ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://www.openssl.org/source/openssl-1.0.2n.tar.gz
-RUN tar xf openssl-1.0.2n.tar.gz
-WORKDIR /var/tmp/build/openssl-1.0.2n
-RUN ./Configure --prefix=/usr/local --openssldir=/usr/local linux-x86_64
-RUN make -j $(nproc)
-RUN make install
-# ```
+# #### libcurl.
 
 # Because google-cloud-cpp uses both gRPC and curl, we need to compile libcurl
 # against the same version of OpenSSL:
@@ -68,22 +78,11 @@ WORKDIR /var/tmp/build
 RUN wget -q https://curl.haxx.se/download/curl-7.61.0.tar.gz
 RUN tar xf curl-7.61.0.tar.gz
 WORKDIR /var/tmp/build/curl-7.61.0
-RUN ./configure
+RUN ./configure --prefix=/usr/local/curl
 RUN make -j $(nproc)
 RUN make install
+RUN ldconfig
 # ```
-
-## [END README.md]
-
-## [START IGNORED]
-# Verify that the tools above are enough to compile google-cloud-cpp when using
-# external projects.
-WORKDIR /home/build/external
-COPY . /home/build/external
-RUN cmake -H. -Bbuild-output -DCMAKE_BUILD_TYPE=Debug
-RUN cmake --build build-output -- -j $(nproc)
-RUN (cd build-output && ctest --output-on-failure)
-## [END IGNORED]
 
 # #### crc32c
 
@@ -102,6 +101,7 @@ RUN cmake \
       -DCRC32C_USE_GLOG=OFF \
       -H. -B.build/crc32c
 RUN cmake --build .build/crc32c --target install -- -j $(nproc)
+RUN ldconfig
 # ```
 
 # #### Protobuf
@@ -121,6 +121,30 @@ RUN cmake \
         -Dprotobuf_BUILD_TESTS=OFF \
         -H. -B.build
 RUN cmake --build .build --target install -- -j $(nproc)
+RUN ldconfig
+# ```
+
+# #### c-ares
+
+# Recent versions of gRPC require c-ares >= 1.11, while Ubuntu-16.04
+# distributes c-ares-1.10. We need some additional development tools to compile
+# this library:
+
+# ```bash
+RUN apt update && \
+    apt install -y automake libtool
+# ```
+
+# After installing these tools we can manually install a newer version
+# of c-ares:
+
+# ```bash
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
+RUN tar -xf cares-1_14_0.tar.gz
+WORKDIR /var/tmp/build/c-ares-cares-1_14_0
+RUN ./buildconf && ./configure && make -j $(nproc)
+RUN make install
 # ```
 
 # #### gRPC
@@ -129,11 +153,12 @@ RUN cmake --build .build --target install -- -j $(nproc)
 # library:
 
 # ```bash
+ENV PKG_CONFIG_PATH=/usr/local/ssl/lib/pkgconfig:/usr/local/curl/lib/pkgconfig
 WORKDIR /var/tmp/build
 RUN wget -q https://github.com/grpc/grpc/archive/v1.17.2.tar.gz
 RUN tar -xf v1.17.2.tar.gz
 WORKDIR /var/tmp/build/grpc-1.17.2
-RUN make
+RUN make -j $(nproc)
 RUN make install
 # ```
 
@@ -143,9 +168,14 @@ RUN make install
 # `pkg-config` to discover the options for gRPC and protobuf:
 
 # ```bash
+RUN echo
+RUN pkg-config --modversion libcurl
+RUN pkg-config --libs libcurl
+RUN pkg-config --cflags libcurl
 WORKDIR /home/build/google-cloud-cpp
 COPY . /home/build/google-cloud-cpp
 RUN cmake -H. -Bbuild-output \
+    -DCMAKE_FIND_ROOT_PATH="/usr/local/curl;/usr/local/ssl" \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
@@ -160,6 +190,5 @@ RUN cmake --build . --target install
 
 # Verify that the installed files are actually usable
 WORKDIR /home/build/test-install-plain-make
-ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 COPY ci/test-install /home/build/test-install-plain-make
 RUN make
