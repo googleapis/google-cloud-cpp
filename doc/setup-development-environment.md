@@ -98,8 +98,7 @@ cmake --build .build -- -j $(nproc)
 Run the tests using:
 
 ```console
-cd .build
-ctest --output-on-failure
+env -C .build ctest --output-on-failure
 ```
 
 Run the Google Cloud Storage integration tests:
