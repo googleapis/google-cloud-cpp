@@ -68,14 +68,6 @@ matrix:
         DISTRO=ubuntu-install
         DISTRO_VERSION=18.04
       if: repo =~ ^googleapis/ or head_repo =~ ^googleapis/
-    - # Run clang-tidy, clang-format, and generate the documentation.
-      os: linux
-      compiler: clang
-      env:
-        CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes
-        BUILD_TYPE=Debug
-        DISTRO=ubuntu
-        DISTRO_VERSION=18.04
     - # Generate code coverage information and upload to codecov.io.
       os: linux
       compiler: gcc
@@ -93,15 +85,6 @@ matrix:
         CMAKE_FLAGS=-DBUILD_TESTING=OFF
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
-    - # Compile on Fedora with libc++.
-      os: linux
-      compiler: clang
-      env:
-        CMAKE_FLAGS=-DBUILD_SHARED_LIBS=ON
-        DISTRO=fedora
-        DISTRO_VERSION=29
-        USE_LIBCXX=yes
-      if: repo =~ ^googleapis/ or head_repo =~ ^googleapis/
   allow_failures:
     - # For the moment, allow failures in the ABI check builds.
       # TODO(#694) - remove this when the ABI is declared stable.
