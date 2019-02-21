@@ -494,17 +494,34 @@ sudo apt install -y cmake3 git gcc g++ make pkg-config tar wget zlib1g-dev
 ```
 
 Ubuntu:14.04 ships with a very old version of OpenSSL, this version is not
-supported by gRPC. We need to compile and install OpenSSL-1.0.2 from source:
+supported by gRPC. We need to compile and install OpenSSL-1.0.2 from source.
 
 ```bash
 cd $HOME/Downloads
 wget -q https://www.openssl.org/source/openssl-1.0.2n.tar.gz
 tar xf openssl-1.0.2n.tar.gz
 cd $HOME/Downloads/openssl-1.0.2n
-./Configure --prefix=/usr/local --openssldir=/usr/local linux-x86_64
+./config --shared
 make -j $(nproc)
 sudo make install
 ```
+
+Note that by default OpenSSL installs itself in `/usr/local/ssl`. Installing
+on a more conventional location, such as `/usr/local` or `/usr`, can break
+many programs in your system. OpenSSL 1.0.2 is actually incompatible with
+with OpenSSL 1.0.0 which is the version expected by the programs already
+installed by Ubuntu 14.04.
+
+In any case, as the library installs itself in this non-standard location, we
+also need to configure CMake and other build program to find this version of
+OpenSSL:
+
+```bash
+export OPENSSL_ROOT_DIR=/usr/local/ssl
+export PKG_CONFIG_PATH=/usr/local/ssl/lib/pkgconfig
+```
+
+#### libcurl.
 
 Because google-cloud-cpp uses both gRPC and curl, we need to compile libcurl
 against the same version of OpenSSL:
@@ -514,9 +531,10 @@ cd $HOME/Downloads
 wget -q https://curl.haxx.se/download/curl-7.61.0.tar.gz
 tar xf curl-7.61.0.tar.gz
 cd $HOME/Downloads/curl-7.61.0
-./configure
+./configure --prefix=/usr/local/curl
 make -j $(nproc)
 sudo make install
+sudo ldconfig
 ```
 
 #### crc32c
@@ -536,6 +554,7 @@ cmake \
       -DCRC32C_USE_GLOG=OFF \
       -H. -B.build/crc32c
 sudo cmake --build .build/crc32c --target install -- -j $(nproc)
+sudo ldconfig
 ```
 
 #### Protobuf
@@ -555,6 +574,30 @@ cmake \
         -Dprotobuf_BUILD_TESTS=OFF \
         -H. -B.build
 sudo cmake --build .build --target install -- -j $(nproc)
+sudo ldconfig
+```
+
+#### c-ares
+
+Recent versions of gRPC require c-ares >= 1.11, while Ubuntu-16.04
+distributes c-ares-1.10. We need some additional development tools to compile
+this library:
+
+```bash
+sudo apt update && \
+sudo apt install -y automake libtool
+```
+
+After installing these tools we can manually install a newer version
+of c-ares:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
+tar -xf cares-1_14_0.tar.gz
+cd $HOME/Downloads/c-ares-cares-1_14_0
+./buildconf && ./configure && make -j $(nproc)
+sudo make install
 ```
 
 #### gRPC
@@ -563,11 +606,12 @@ Ubuntu:trusty does not provide a package for gRPC. Manually install this
 library:
 
 ```bash
+export PKG_CONFIG_PATH=/usr/local/ssl/lib/pkgconfig:/usr/local/curl/lib/pkgconfig
 cd $HOME/Downloads
 wget -q https://github.com/grpc/grpc/archive/v1.17.2.tar.gz
 tar -xf v1.17.2.tar.gz
 cd $HOME/Downloads/grpc-1.17.2
-make
+make -j $(nproc)
 sudo make install
 ```
 
@@ -577,8 +621,13 @@ We can now compile and install `google-cloud-cpp`. Note that we use
 `pkg-config` to discover the options for gRPC and protobuf:
 
 ```bash
+echo
+pkg-config --modversion libcurl
+pkg-config --libs libcurl
+pkg-config --cflags libcurl
 cd $HOME/google-cloud-cpp
 cmake -H. -Bbuild-output \
+    -DCMAKE_FIND_ROOT_PATH="/usr/local/curl;/usr/local/ssl" \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
