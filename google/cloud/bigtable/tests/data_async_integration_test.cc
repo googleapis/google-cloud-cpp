@@ -493,14 +493,13 @@ TEST_F(DataAsyncIntegrationTest, TableAsyncReadRow) {
   google::cloud::promise<std::pair<bool, Row>> done;
   std::thread pool([&cq] { cq.Run(); });
 
-  table.AsyncReadRow(
-      cq,
-      [&done](CompletionQueue& cq, std::pair<bool, Row> response,
-              grpc::Status const& status) {
-        done.set_value(response);
-        EXPECT_TRUE(status.ok());
-      },
-      "row-key-1", Filter::PassAllFilter());
+  table.AsyncReadRow(cq,
+                     [&done](CompletionQueue& cq, std::pair<bool, Row> response,
+                             grpc::Status const& status) {
+                       done.set_value(response);
+                       EXPECT_TRUE(status.ok());
+                     },
+                     "row-key-1", Filter::PassAllFilter());
 
   auto response = done.get_future().get();
   std::vector<bigtable::Cell> actual;
@@ -528,14 +527,13 @@ TEST_F(DataAsyncIntegrationTest, TableAsyncReadRowForNoRow) {
   google::cloud::promise<std::pair<bool, Row>> done;
   std::thread pool([&cq] { cq.Run(); });
 
-  table.AsyncReadRow(
-      cq,
-      [&done](CompletionQueue& cq, std::pair<bool, Row> response,
-              grpc::Status const& status) {
-        done.set_value(response);
-        EXPECT_TRUE(status.ok());
-      },
-      "row-key-1", Filter::PassAllFilter());
+  table.AsyncReadRow(cq,
+                     [&done](CompletionQueue& cq, std::pair<bool, Row> response,
+                             grpc::Status const& status) {
+                       done.set_value(response);
+                       EXPECT_TRUE(status.ok());
+                     },
+                     "row-key-1", Filter::PassAllFilter());
 
   auto response = done.get_future().get();
 
