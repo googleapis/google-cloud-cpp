@@ -141,7 +141,7 @@ class MutationBatcher {
    */
   class Batch {
    public:
-    Batch() : num_mutations_(), requests_size_() {}
+    Batch() : num_mutations_(), requests_size_(), last_idx_() {}
     size_t requests_size() { return requests_size_; }
     size_t num_mutations() { return num_mutations_; }
     BulkMutation TransferRequest() { return std::move(requests_); }
@@ -151,16 +151,23 @@ class MutationBatcher {
                        std::vector<FailedMutation> const& failed);
 
    private:
+    struct MutationData {
+      MutationData(PendingSingleRowMutation&& pending)
+          : callback(std::move(pending.completion_callback)),
+            num_mutations(pending.num_mutations),
+            request_size(pending.request_size) {}
+      AsyncApplyCompletionCallback callback;
+      int num_mutations;
+      int request_size;
+    };
     size_t num_mutations_;
     size_t requests_size_;
     BulkMutation requests_;
-    // The reason why it's not simple std::vector is that whenever the vector
-    // grows, it will copy the callbacks. The callbacks might be large, so we
-    // want to avoid that.
-    //
-    // In order for std::vector to move rather than copy, std::function's move
-    // ctor would have to be noexcept (it is not until C++20).
-    std::deque<AsyncApplyCompletionCallback> callbacks_;
+    int last_idx_;
+    // The reason why it's not simple std::vector is that we want this structure
+    // to shrink as individual mutations complete, so that the user can have a
+    // bound on the amount of overhead per outstanding Apply.
+    std::unordered_map<int, MutationData> mutation_data_;
   };
 
   grpc::Status IsValid(PendingSingleRowMutation& mut) const;
