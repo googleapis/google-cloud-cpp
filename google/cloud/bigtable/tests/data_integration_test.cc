@@ -32,7 +32,7 @@ class DataIntegrationTest : public bigtable::testing::TableIntegrationTest {
   void BulkApply(bigtable::Table& table,
                  std::vector<bigtable::Cell> const& cells);
 
-  /// The column family used in this test.
+  /// The column families used in this test.
   std::string const family1 = "family1";
   std::string const family2 = "family2";
   std::string const family3 = "family3";
@@ -554,20 +554,7 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
     return;
   }
 
-  // TODO(#2015) - Capture the elapsed time for each operation, so we can figure
-  //   out which one causes the test to timeout.
-  auto start = std::chrono::steady_clock::now();
-  auto elapsed_ms = [&start] {
-    using ms = std::chrono::milliseconds;
-    auto now = std::chrono::steady_clock::now();
-    auto elapsed = now - start;
-    start = now;
-    return std::chrono::duration_cast<ms>(elapsed).count();
-  };
-
   auto table = GetTable();
-  // TODO(#2015) - Capture elapsed time to troubleshoot flakiness.
-  SCOPED_TRACE("CreateTable() " + std::to_string(elapsed_ms()) + "ms");
 
   std::string const row_key = "row-key-1";
   // cell vector contains 4 cells of 32 MiB each, or 128 MiB (without
@@ -579,10 +566,12 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
   auto const MiB = 1024 * 1024UL;
   auto const cell_size = 32 * MiB;
   auto const cell_count = 4;
-  // Smaller rows are not a good test, they would pass with the default setting.
+  // Smaller rows than this size are not a good test, they would pass with the
+  // default setting, so only accept rows that are at least 10x the default
+  // setting of 4 MiB.
   auto const min_row_size = 10 * 4 * MiB;
-  // Larger rows are not a good test, they would fail even if the setting was
-  // working.
+  // Larger rows than this size are not a good test, they would fail even if the
+  // setting was working.
   auto const max_row_size = 256 * MiB;
 
   std::string value(cell_size, 'a');
@@ -598,13 +587,9 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
   }
 
   CreateCells(table, created);
-  // TODO(#2015) - Capture elapsed time to troubleshoot flakiness.
-  SCOPED_TRACE("CreateCells() " + std::to_string(elapsed_ms()) + "ms");
 
   auto result = table.ReadRow(row_key, bigtable::Filter::PassAllFilter());
   EXPECT_TRUE(result.first);
-  // TODO(#2015) - Capture elapsed time to troubleshoot flakiness.
-  SCOPED_TRACE("ReadRow() " + std::to_string(elapsed_ms()) + "ms");
 
   std::size_t total_row_size = 0;
   for (auto const& cell : result.second.cells()) {
@@ -618,7 +603,5 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
   auto expected_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
   auto actual_ignore_timestamp =
       GetCellsIgnoringTimestamp(result.second.cells());
-  // TODO(#2015) - Capture elapsed time to troubleshoot flakiness.
-  SCOPED_TRACE("DeleteTable() " + std::to_string(elapsed_ms()) + "ms");
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
