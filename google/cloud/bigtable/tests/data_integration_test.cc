@@ -174,8 +174,9 @@ TEST_F(DataIntegrationTest, TableReadRowTest) {
 
   CreateCells(table, created);
   auto row_cell = table.ReadRow(row_key1, bigtable::Filter::PassAllFilter());
+  ASSERT_STATUS_OK(row_cell);
   std::vector<bigtable::Cell> actual;
-  actual.emplace_back(row_cell.second.cells().at(0));
+  actual.emplace_back(row_cell->second.cells().at(0));
   CheckEqualUnordered(expected, actual);
 }
 
@@ -188,7 +189,8 @@ TEST_F(DataIntegrationTest, TableReadRowNotExistTest) {
 
   CreateCells(table, created);
   auto row_cell = table.ReadRow(row_key2, bigtable::Filter::PassAllFilter());
-  EXPECT_FALSE(row_cell.first);
+  ASSERT_STATUS_OK(row_cell);
+  EXPECT_FALSE(row_cell->first);
 }
 
 TEST_F(DataIntegrationTest, TableReadRowsAllRows) {
@@ -589,10 +591,11 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
   CreateCells(table, created);
 
   auto result = table.ReadRow(row_key, bigtable::Filter::PassAllFilter());
-  EXPECT_TRUE(result.first);
+  ASSERT_STATUS_OK(result);
+  EXPECT_TRUE(result->first);
 
   std::size_t total_row_size = 0;
-  for (auto const& cell : result.second.cells()) {
+  for (auto const& cell : result->second.cells()) {
     total_row_size += cell.value().size();
   }
   EXPECT_LT(total_row_size, max_row_size);
@@ -602,6 +605,6 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
   // predictable.
   auto expected_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
   auto actual_ignore_timestamp =
-      GetCellsIgnoringTimestamp(result.second.cells());
+      GetCellsIgnoringTimestamp(result->second.cells());
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }

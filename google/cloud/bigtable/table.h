@@ -299,8 +299,8 @@ class Table {
    * @par Example
    * @snippet data_snippets.cc read row
    */
-  std::pair<bool, Row> ReadRow(std::string row_key, Filter filter);
 
+  StatusOr<std::pair<bool, Row>> ReadRow(std::string row_key, Filter filter);
   /**
    * Atomic test-and-set for a row using filter expressions.
    *

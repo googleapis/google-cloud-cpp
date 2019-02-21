@@ -40,13 +40,16 @@ int main(int argc, char* argv[]) try {
   std::cout << "Getting a single row by row key:" << std::flush;
   auto result = table.ReadRow(
       row_key, google::cloud::bigtable::Filter::FamilyRegex(column_family));
-  if (!result.first) {
+  if (!result) {
+    throw std::runtime_error(result.status().message());
+  }
+  if (!result->first) {
     std::cout << "Cannot find row " << row_key << " in the table: " << table_id
               << "\n";
     return 0;
   }
 
-  auto const& cell = result.second.cells().front();
+  auto const& cell = result->second.cells().front();
   std::cout << cell.family_name() << ":" << cell.column_qualifier() << "    @ "
             << cell.timestamp().count() << "us\n"
             << '"' << cell.value() << '"' << "\n";

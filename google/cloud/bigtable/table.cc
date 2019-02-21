@@ -112,11 +112,12 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                         true);
 }
 
-std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter) {
+StatusOr<std::pair<bool, Row>> Table::ReadRow(std::string row_key,
+                                              Filter filter) {
   grpc::Status status;
   auto result = impl_.ReadRow(std::move(row_key), std::move(filter), status);
   if (!status.ok()) {
-    google::cloud::internal::ThrowRuntimeError(status.error_message());
+    return bigtable::internal::MakeStatusFromRpcError(status);
   }
   return result;
 }

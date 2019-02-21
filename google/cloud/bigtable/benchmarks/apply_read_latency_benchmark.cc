@@ -199,6 +199,9 @@ OperationResult RunOneReadRow(bigtable::Table& table, std::string row_key) {
     auto row = table.ReadRow(
         std::move(row_key),
         bigtable::Filter::ColumnRangeClosed(kColumnFamily, "field0", "field9"));
+    if (!row) {
+      throw std::runtime_error(row.status().message());
+    }
   };
   return Benchmark::TimeOperation(std::move(op));
 }
