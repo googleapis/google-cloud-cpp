@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) try {
     throw std::runtime_error(row1.message());
   }
   if (!row1->first) {
-    std::cout << "Cannot find row-key-0\n";
+    std::cout << "Cannot find row-key-1\n";
   } else {
     for (auto const& cell : row1->second.cells()) {
       std::cout << cell.row_key() << ": " << cell.family_name() << ":"
