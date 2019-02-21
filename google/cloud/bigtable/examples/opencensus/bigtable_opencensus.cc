@@ -121,7 +121,6 @@ int main(int argc, char* argv[]) try {
         table.Apply(google::cloud::bigtable::SingleRowMutation(
             std::move(row_key),
             google::cloud::bigtable::SetCell("family", "c0", greeting)));
-
     if (!status.ok()) {
       throw std::runtime_error(status.message());
     }

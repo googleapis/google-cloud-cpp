@@ -133,43 +133,7 @@ void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   //! [bulk apply]
   (std::move(table));
 }
-/*
-void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
-  if (argc != 1) {
-    throw Usage{"read-row: <project-id> <instance-id> <table-id>"};
-  }
 
-  //! [read row]
-  [](google::cloud::bigtable::Table table) {
-    // Filter the results, only include the latest value on each cell.
-    auto filter = google::cloud::bigtable::Filter::Latest(1);
-    // Read a row, this returns a tuple (bool, row)
-    std::pair<bool, google::cloud::bigtable::Row> tuple =
-        table.ReadRow(MAGIC_ROW_KEY, std::move(filter));
-    if (!tuple.first) {
-      std::cout << "Row " << MAGIC_ROW_KEY << " not found\n";
-      return;
-    }
-    std::cout << "key: " << tuple.second.row_key() << "\n";
-    for (auto& cell : tuple.second.cells()) {
-      std::cout << "    " << cell.family_name() << ":"
-                << cell.column_qualifier() << " = <";
-      if (cell.column_qualifier() == "counter") {
-        // This example uses "counter" to store 64-bit numbers in BigEndian
-        // format, extract them as follows:
-        std::cout
-            << cell.value_as<google::cloud::bigtable::bigendian64_t>().get();
-      } else {
-        std::cout << cell.value();
-      }
-      std::cout << ">\n";
-    }
-    std::cout << std::flush;
-  }
-  //! [read row]
-  (std::move(table));
-}
-*/
 void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   if (argc != 1) {
     throw Usage{"read-row: <project-id> <instance-id> <table-id>"};
