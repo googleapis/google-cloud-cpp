@@ -86,7 +86,10 @@ void Apply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
           "fam", "col2", "value3-" + std::to_string(i)));
       mutation.emplace_back(google::cloud::bigtable::SetCell(
           "fam", "col3", "value4-" + std::to_string(i)));
-      table.Apply(std::move(mutation));
+      google::cloud::Status status = table.Apply(std::move(mutation));
+      if (!status.ok()) {
+        throw std::runtime_error(status.message());
+      }
     }
   }
   //! [apply]
@@ -253,7 +256,10 @@ void PopulateTableHierarchy(google::cloud::bigtable::Table table, int argc,
           mutation.emplace_back(google::cloud::bigtable::SetCell(
               "fam", "col0", "value-" + std::to_string(q)));
           ++q;
-          table.Apply(std::move(mutation));
+          google::cloud::Status status = table.Apply(std::move(mutation));
+          if (!status.ok()) {
+            throw std::runtime_error(status.message());
+          }
         }
       }
     }
