@@ -60,6 +60,9 @@ int main(int argc, char* argv[]) try {
   std::cout << "bulk mutation successful\n";
 
   auto row0 = table.ReadRow("row-key-0", bigtable::Filter::PassAllFilter());
+  if (!row0.ok()) {
+    throw std::runtime_error(row0.message());
+  }
   if (!row0->first) {
     std::cout << "Cannot find row-key-0\n";
   } else {
@@ -69,7 +72,10 @@ int main(int argc, char* argv[]) try {
     }
   }
   auto row1 = table.ReadRow("row-key-1", bigtable::Filter::PassAllFilter());
-  if (!row0->first) {
+  if (!row1.ok()) {
+    throw std::runtime_error(row1.message());
+  }
+  if (!row1->first) {
     std::cout << "Cannot find row-key-0\n";
   } else {
     for (auto const& cell : row1->second.cells()) {
