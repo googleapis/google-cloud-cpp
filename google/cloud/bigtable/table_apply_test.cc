@@ -44,12 +44,10 @@ TEST_F(TableApplyTest, Failure) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "uh-oh")));
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   auto status = table_.Apply(bigtable::SingleRowMutation(
       "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
-
   EXPECT_FALSE(status.ok());
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_EQ(google::cloud::StatusCode::kFailedPrecondition, status.code());
 }
 
 /// @test Verify that Table::Apply() retries on partial failures.
@@ -78,10 +76,8 @@ TEST_F(TableApplyTest, RetryIdempotent) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-
   auto status = table_.Apply(bigtable::SingleRowMutation(
       "not-idempotent", {bigtable::SetCell("fam", "col", "val")}));
   EXPECT_FALSE(status.ok());
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_EQ(google::cloud::StatusCode::kUnavailable, status.code());
 }
