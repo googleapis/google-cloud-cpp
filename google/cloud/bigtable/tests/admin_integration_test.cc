@@ -97,19 +97,7 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTablesTest) {
 }
 
 TEST_F(AdminIntegrationTest, DropRowsByPrefixTest) {
-  std::string const table_id = RandomTableId();
-  std::string const column_family1 = "family1";
-  std::string const column_family2 = "family2";
-  std::string const column_family3 = "family3";
-
-  bigtable::TableConfig table_config = bigtable::TableConfig(
-      {{column_family1, bigtable::GcRule::MaxNumVersions(10)},
-       {column_family2, bigtable::GcRule::MaxNumVersions(10)},
-       {column_family3, bigtable::GcRule::MaxNumVersions(10)}},
-      {});
-  auto table_meta = table_admin_->CreateTable(table_id, table_config);
-  EXPECT_STATUS_OK(table_meta);
-  bigtable::Table table(data_client_, table_id);
+  auto table = GetTable();
 
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key1_prefix = "DropRowPrefix1";
@@ -118,59 +106,48 @@ TEST_F(AdminIntegrationTest, DropRowsByPrefixTest) {
   std::string const row_key1_1 = row_key1_prefix + "_1-Key1";
   std::string const row_key2 = row_key2_prefix + "-Key2";
   std::vector<bigtable::Cell> created_cells{
-      {row_key1, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key1, column_family1, "column_id1", 1000, "v-c-0-1"},
-      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key1_1, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key1_1, column_family2, "column_id3", 3000, "v-c-0-2"},
-      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"},
+      {row_key1, "family1", "column_id1", 0, "v-c-0-0"},
+      {row_key1, "family1", "column_id1", 1000, "v-c-0-1"},
+      {row_key1, "family2", "column_id3", 2000, "v-c-0-2"},
+      {row_key1_1, "family2", "column_id3", 2000, "v-c-0-2"},
+      {row_key1_1, "family2", "column_id3", 3000, "v-c-0-2"},
+      {row_key2, "family2", "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, "family3", "column_id3", 3000, "v-c1-0-2"},
   };
   std::vector<bigtable::Cell> expected_cells{
-      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"}};
+      {row_key2, "family2", "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, "family3", "column_id3", 3000, "v-c1-0-2"}};
 
   // Create records
   CreateCells(table, created_cells);
   // Delete all the records for a row
-  EXPECT_STATUS_OK(table_admin_->DropRowsByPrefix(table_id, row_key1_prefix));
+  EXPECT_STATUS_OK(table_admin_->DropRowsByPrefix(
+      bigtable::testing::TableTestEnvironment::table_id(), row_key1_prefix));
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
-  EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
 
   CheckEqualUnordered(expected_cells, actual_cells);
 }
 
 TEST_F(AdminIntegrationTest, DropAllRowsTest) {
-  std::string const table_id = RandomTableId();
-  std::string const column_family1 = "family1";
-  std::string const column_family2 = "family2";
-  std::string const column_family3 = "family3";
-  bigtable::TableConfig table_config = bigtable::TableConfig(
-      {{column_family1, bigtable::GcRule::MaxNumVersions(10)},
-       {column_family2, bigtable::GcRule::MaxNumVersions(10)},
-       {column_family3, bigtable::GcRule::MaxNumVersions(10)}},
-      {});
-
-  ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
-  bigtable::Table table(data_client_, table_id);
+  auto table = GetTable();
 
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key1 = "DropRowKey1";
   std::string const row_key2 = "DropRowKey2";
   std::vector<bigtable::Cell> created_cells{
-      {row_key1, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key1, column_family1, "column_id1", 1000, "v-c-0-1"},
-      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"},
+      {row_key1, "family1", "column_id1", 0, "v-c-0-0"},
+      {row_key1, "family1", "column_id1", 1000, "v-c-0-1"},
+      {row_key1, "family2", "column_id3", 2000, "v-c-0-2"},
+      {row_key2, "family2", "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, "family3", "column_id3", 3000, "v-c1-0-2"},
   };
 
   // Create records
   CreateCells(table, created_cells);
   // Delete all the records from a table
-  EXPECT_STATUS_OK(table_admin_->DropAllRows(table_id));
+  EXPECT_STATUS_OK(table_admin_->DropAllRows(
+      bigtable::testing::TableTestEnvironment::table_id()));
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
-  EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
 
   ASSERT_TRUE(actual_cells.empty());
 }
