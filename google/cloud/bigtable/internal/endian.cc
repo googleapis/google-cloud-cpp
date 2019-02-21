@@ -25,8 +25,7 @@ namespace internal {
 /**
  * Convert a numeric value into a string of bytes and return it.
  */
-std::string Encoder<std::int64_t>::Encode(
-    std::int64_t const& value) {
+std::string Encoder<std::int64_t>::Encode(std::int64_t const& value) {
   static_assert(sizeof(std::int64_t) == 8,
                 "This code assumes an 8-byte integer");
   static_assert(std::numeric_limits<unsigned char>::digits == 8,
