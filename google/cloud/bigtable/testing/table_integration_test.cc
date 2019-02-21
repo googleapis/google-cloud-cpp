@@ -74,13 +74,19 @@ std::string TableTestEnvironment::CreateRandomId(std::string const& prefix,
 }
 
 std::string TableTestEnvironment::RandomTableId() {
-  constexpr int RANDOM_CHARACTERS = 16;
-  return CreateRandomId("table-", RANDOM_CHARACTERS);
+  // This value was discovered by trial and error, it is not documented in the
+  // proto files.
+  constexpr int kMaxTableIdLength = 51;
+  static std::string const prefix = "table-";
+  return CreateRandomId(prefix, kMaxTableIdLength - prefix.length());
 }
 
 std::string TableTestEnvironment::RandomInstanceId() {
-  constexpr int RANDOM_CHARACTERS = 8;
-  return CreateRandomId("it-", RANDOM_CHARACTERS);
+  // This value was discovered by trial and error, it is not documented in the
+  // proto files.
+  constexpr int kMaxInstanceIdLenth = 33;
+  static std::string const prefix = "instance-";
+  return CreateRandomId(prefix, kMaxInstanceIdLenth - prefix.length());
 }
 
 void TableIntegrationTest::SetUp() {
