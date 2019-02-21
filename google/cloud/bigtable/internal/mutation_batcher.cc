@@ -84,6 +84,7 @@ MutationBatcher::PendingSingleRowMutation::PendingSingleRowMutation(
 }
 
 void MutationBatcher::Batch::Add(PendingSingleRowMutation&& mut) {
+  std::unique_lock<std::mutex> lk(mu_);
   requests_size_ += mut.request_size;
   num_mutations_ += mut.num_mutations;
   requests_.emplace_back(std::move(mut.mut));
@@ -92,6 +93,11 @@ void MutationBatcher::Batch::Add(PendingSingleRowMutation&& mut) {
 
 size_t MutationBatcher::Batch::FireCallbacks(
     CompletionQueue& cq, std::vector<FailedMutation> const& failed) {
+  std::unordered_map<int, MutationData> tmp;
+  {
+    std::unique_lock<std::mutex> lk(mu_);
+    tmp.swap(mutation_data_);
+  }
   size_t completed_size = 0;
   for (auto const& f : failed) {
     int const idx = f.original_index();
@@ -99,18 +105,17 @@ size_t MutationBatcher::Batch::FireCallbacks(
     // with a const reference to status.
     // NOLINTNEXTLINE (performance-unnecessary-copy-initialization)
     grpc::Status status(f.status());
-    auto it = mutation_data_.find(idx);
+    auto it = tmp.find(idx);
     it->second.callback(cq, status);
     completed_size += it->second.request_size;
-    mutation_data_.erase(it);
+    tmp.erase(it);
   }
-  for (auto& mutation_data : mutation_data_) {
+  for (auto& mutation_data : tmp) {
     // Everything remaining was a success, report them via their callbacks.
     grpc::Status status;
     completed_size += mutation_data.second.request_size;
     mutation_data.second.callback(cq, status);
   }
-  mutation_data_.clear();
   return completed_size;
 }
 

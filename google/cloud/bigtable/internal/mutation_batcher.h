@@ -160,6 +160,8 @@ class MutationBatcher {
       int num_mutations;
       int request_size;
     };
+
+    std::mutex mu_;
     size_t num_mutations_;
     size_t requests_size_;
     BulkMutation requests_;
