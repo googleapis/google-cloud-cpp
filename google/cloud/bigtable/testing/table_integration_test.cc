@@ -76,7 +76,7 @@ std::string TableTestEnvironment::CreateRandomId(std::string const& prefix,
 std::string TableTestEnvironment::RandomTableId() {
   // This value was discovered by trial and error, it is not documented in the
   // proto files.
-  constexpr int kMaxTableIdLength = 51;
+  constexpr int kMaxTableIdLength = 50;
   static std::string const prefix = "table-";
   return CreateRandomId(prefix, kMaxTableIdLength - prefix.length());
 }
