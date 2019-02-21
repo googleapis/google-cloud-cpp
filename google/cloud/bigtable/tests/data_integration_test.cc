@@ -470,20 +470,18 @@ TEST_F(DataIntegrationTest, TableCellValueInt64Test) {
   auto table = GetTable();
   std::string const key = "row-key";
 
-  std::vector<bigtable::Cell> created{
-      {key, family1, "c1", 0, bigtable::bigendian64_t(42)},
-      {key, family1, "c3", 0, "start;"},
-      {key, family2, "d1", 0, bigtable::bigendian64_t(2)},
-      {key, family2, "d2", 0, bigtable::bigendian64_t(5012)},
-      {key, family2, "d3", 0, "start;"}};
+  std::vector<bigtable::Cell> created{{key, family1, "c1", 0, 42},
+                                      {key, family1, "c3", 0, "start;"},
+                                      {key, family2, "d1", 0, 2},
+                                      {key, family2, "d2", 0, 5012},
+                                      {key, family2, "d3", 0, "start;"}};
 
-  std::vector<bigtable::Cell> expected{
-      {key, family1, "c1", 0, bigtable::bigendian64_t(40)},
-      {key, family1, "c2", 0, bigtable::bigendian64_t(7)},
-      {key, family1, "c3", 0, "start;suffix"},
-      {key, family2, "d1", 0, bigtable::bigendian64_t(2002)},
-      {key, family2, "d2", 0, bigtable::bigendian64_t(9999998012)},
-      {key, family2, "d3", 0, "start;suffix"}};
+  std::vector<bigtable::Cell> expected{{key, family1, "c1", 0, 40},
+                                       {key, family1, "c2", 0, 7},
+                                       {key, family1, "c3", 0, "start;suffix"},
+                                       {key, family2, "d1", 0, 2002},
+                                       {key, family2, "d2", 0, 9999998012},
+                                       {key, family2, "d3", 0, "start;suffix"}};
 
   CreateCells(table, created);
   using R = bigtable::ReadModifyWriteRule;

@@ -159,8 +159,7 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
       if (cell.column_qualifier() == "counter") {
         // This example uses "counter" to store 64-bit numbers in BigEndian
         // format, extract them as follows:
-        std::cout
-            << cell.value_as<google::cloud::bigtable::bigendian64_t>().get();
+        std::cout << cell.value_as<std::int64_t>();
       } else {
         std::cout << cell.value();
       }

@@ -51,8 +51,8 @@ class Cell {
 
   /// Create a Cell and fill it with bigendian 64 bit value.
   Cell(std::string row_key, std::string family_name,
-       std::string column_qualifier, std::int64_t timestamp,
-       bigendian64_t value, std::vector<std::string> labels)
+       std::string column_qualifier, std::int64_t timestamp, std::int64_t value,
+       std::vector<std::string> labels)
       : Cell(std::move(row_key), std::move(family_name),
              std::move(column_qualifier), timestamp,
              internal::AsBigEndian64(value), std::move(labels)) {}
@@ -66,8 +66,7 @@ class Cell {
   /// Create a Cell and fill it with bigendian 64 bit value, but with empty
   /// labels.
   Cell(std::string row_key, std::string family_name,
-       std::string column_qualifier, std::int64_t timestamp,
-       bigendian64_t value)
+       std::string column_qualifier, std::int64_t timestamp, std::int64_t value)
       : Cell(std::move(row_key), std::move(family_name),
              std::move(column_qualifier), timestamp, std::move(value), {}) {}
 

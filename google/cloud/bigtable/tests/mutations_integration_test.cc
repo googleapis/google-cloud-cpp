@@ -94,27 +94,11 @@ TEST_F(MutationIntegrationTest, SetCellNumericValueTest) {
   std::string const row_key = "SetCellNumRowKey";
   std::vector<bigtable::Cell> created_cells{
       {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key,
-       column_family1,
-       "column_id1",
-       1000,
-       bigtable::bigendian64_t(2000),
-       {}},
-      {row_key,
-       column_family1,
-       "column_id1",
-       2000,
-       bigtable::bigendian64_t(3000),
-       {}},
+      {row_key, column_family1, "column_id1", 1000, 2000},
+      {row_key, column_family1, "column_id1", 2000, 3000},
       {row_key, column_family2, "column_id2", 0, "v-c0-0-0"},
-      {row_key,
-       column_family2,
-       "column_id3",
-       1000,
-       bigtable::bigendian64_t(5000),
-       {}},
-      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2"},
-  };
+      {row_key, column_family2, "column_id3", 1000, 5000},
+      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2"}};
 
   CreateCells(table, created_cells);
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
@@ -131,8 +115,7 @@ TEST_F(MutationIntegrationTest, SetCellNumericValueExceptionTest) {
   std::string const table_id = RandomTableId();
   bigtable::Cell new_cell("row-key", "column_family", "column_id", 1000,
                           "string-value");
-  EXPECT_THROW(new_cell.value_as<bigtable::bigendian64_t>().get(),
-               std::range_error);
+  EXPECT_THROW(new_cell.value_as<std::int64_t>(), std::range_error);
 }
 #endif
 

@@ -13,9 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/endian.h"
-#include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/throw_delegate.h"
-#include <cstring>
 #include <limits>
 
 namespace google {
@@ -25,51 +23,50 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
 /**
- * Convert BigEndian numeric value into a string of bytes and return it.
+ * Convert a numeric value into a string of bytes and return it.
  */
-std::string Encoder<bigtable::bigendian64_t>::Encode(
-    bigtable::bigendian64_t const& value) {
-  static_assert(std::numeric_limits<unsigned char>::digits ==
-                    sizeof(bigtable::bigendian64_t),
-                "This code assumes char is an 8-bit number");
-
-  char big_endian_buffer[sizeof(bigtable::bigendian64_t) + 1] = "";
-  if (google::cloud::internal::IsBigEndian()) {
-    std::memcpy(&big_endian_buffer, &value, sizeof(value));
-  } else {
-    bigtable::bigendian64_t swapped_value = ByteSwap64(value);
-    std::memcpy(&big_endian_buffer, &swapped_value, sizeof(swapped_value));
-  }
-
-  return std::string(big_endian_buffer, sizeof(bigtable::bigendian64_t));
+std::string Encoder<std::int64_t>::Encode(
+    std::int64_t const& value) {
+  static_assert(sizeof(std::int64_t) == 8,
+                "This code assumes an 8-byte integer");
+  static_assert(std::numeric_limits<unsigned char>::digits == 8,
+                "This code assumes an 8-bit char");
+  uint64_t const n = value;
+  std::string s(8, '0');
+  s[0] = (n >> 56) & 0xFF;
+  s[1] = (n >> 48) & 0xFF;
+  s[2] = (n >> 40) & 0xFF;
+  s[3] = (n >> 32) & 0xFF;
+  s[4] = (n >> 24) & 0xFF;
+  s[5] = (n >> 16) & 0xFF;
+  s[6] = (n >> 8) & 0xFF;
+  s[7] = (n >> 0) & 0xFF;
+  return s;
 }
 
 /**
  * Convert BigEndian string of bytes into BigEndian numeric value and return it.
  */
-bigtable::bigendian64_t Encoder<bigtable::bigendian64_t>::Decode(
-    std::string const& value) {
-  // Check if value is BigEndian 64-bit integer
-  if (value.size() != sizeof(bigtable::bigendian64_t)) {
-    google::cloud::internal::ThrowRangeError(
-        "Value is not convertible to uint64");
+std::int64_t Encoder<std::int64_t>::Decode(std::string const& value) {
+  static_assert(sizeof(std::int64_t) == 8,
+                "This code assumes an 8-byte integer");
+  static_assert(std::numeric_limits<unsigned char>::digits == 8,
+                "This code assumes an 8-bit char");
+  if (value.size() != 8) {
+    google::cloud::internal::ThrowRangeError("Value must be 8 bytes");
   }
-  bigtable::bigendian64_t big_endian_value(0);
-  std::memcpy(&big_endian_value, value.c_str(),
-              sizeof(bigtable::bigendian64_t));
-  if (!google::cloud::internal::IsBigEndian()) {
-    big_endian_value = ByteSwap64(big_endian_value);
-  }
-  return big_endian_value;
+  return ((value[7] & uint64_t{0xFF}) << 0) |
+         ((value[6] & uint64_t{0xFF}) << 8) |
+         ((value[5] & uint64_t{0xFF}) << 16) |
+         ((value[4] & uint64_t{0xFF}) << 24) |
+         ((value[3] & uint64_t{0xFF}) << 32) |
+         ((value[2] & uint64_t{0xFF}) << 40) |
+         ((value[1] & uint64_t{0xFF}) << 48) |
+         ((value[0] & uint64_t{0xFF}) << 56);
 }
 
-inline bigtable::bigendian64_t ByteSwap64(bigtable::bigendian64_t value) {
-  return bigtable::bigendian64_t(
-      google::cloud::internal::ToBigEndian(value.get()));
-}
-
-std::string AsBigEndian64(bigtable::bigendian64_t value) {
-  return bigtable::internal::Encoder<bigtable::bigendian64_t>::Encode(value);
+std::string AsBigEndian64(std::int64_t value) {
+  return bigtable::internal::Encoder<std::int64_t>::Encode(value);
 }
 
 }  // namespace internal

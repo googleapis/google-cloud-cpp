@@ -25,52 +25,46 @@ namespace internal {
 
 /**
  * This struct is used to provide the functionality to convert
- * from/to BigEndian numeric value to/from string of bytes.
+ * from/to a numeric value to/from a big-endian string of bytes.
  *
  * Why this functionality:
- * In Google Cloud Bigtable, values are stored in a cell as a std::string
- * data type only. But still this cell contains string and numeric values.
- * String can be stored into cell as it is, but Numeric values are stored
- * as a 64-bit BigEndian hex bytes converted into string of bytes.
- * For human readability it should be easy to put string and numeric
- * values into the cell. So using functions of this struct we can
- * convert human readable numeric values into string of BigEndian hex
- * bytes and get it back into human readable numeric values.
+ * In Google Cloud Bigtable, values are stored in a cell as a std::string data
+ * type only. But still this cell contains string and numeric values. String
+ * can be stored into cell as it is, but Numeric values are encoded as an
+ * 8-byte big-endian value. For human readability it should be easy to put
+ * string and numeric values into the cell. So using functions of this struct
+ * we can encode numeric values as a big-endian sequence of bytes for use in a
+ * cell, and we can decode those 8-byte strings to get the numeric value back.
  *
- * Currently we only support conversion of 64 bit BigEndian values
- * from/to numeric values. This structure can be extended to support
- * other types of data also.
+ * Currently we only support encoding/decoding std::int64_t. This structure can
+ * be extended to support other types of data also.
  *
  * How to use for coding:
- * Convert from Numeric Value to string of BigEndian bytes.
+ * Convert from Numeric Value to string of big-endian bytes.
  * @code
  * bigtable::Cell new_cell("row_key", "column_family", "column_id3", 1000,
- *                         bigtable::bigendian64_t(5000));
+ *                         5000);
  * @endcode
  *
- * Convert from string of BigEndian bytes to Numeric Value.
+ * Convert from string of big-endian bytes to Numeric Value.
  * @code
- * std::int64_t cell_value = new_cell.value_as<bigtable::bigendian64_t>().get();
+ * std::int64_t cell_value = new_cell.value_as<std::int64_t>();
  * @endcode
  *
- * How to use to support new data types:
+ * How to support new data types:
  * Recommended way is to define your own Strong Type
  * (see: bigtable/internal/strong_type.h) to use with this struct.
  *
  *  // Following code shows how to support new type for Encode and Decode
- *  // functions. Code shows support fot bigtable::bigendian64_t strong type
+ *  // functions.
  *
- *  // Encode function : Convert BigEndian 64 bit hex bytes inside
- *  // strong type bigendian64_t into string of bytes.
+ *  // Encode function : Convert a std::int64_t to an 8-byte big endian string.
  * @code
  * template<>
- * std::string Encoder<bigtable::bigendian64_t>::Encode
- *                               (bigtable::bigendian64_t const& value) {}
- *  // Decode function : Convert BigEndian 64 bit string of bytes into
- *  // strong type bigendian64_t
+ * std::string Encoder<std::int64_t>::Encode(std::int64_t const& value) {}
+ * // Decode function : Convert a big endian 8-byte string into a std::int64_t
  * template<>
- * bigtable::bigendian64_t Encoder<bigtable::bigendian64_t>::Decode
- *                               (std::string const& value) {}
+ * std::int64_t Encoder<std::int64_t>::Decode(std::string const& value) {}
  * @endcode
  *
  * Implement above two functions for conversion and use it as mentioned in

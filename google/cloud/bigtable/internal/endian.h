@@ -17,23 +17,21 @@
 
 #include "google/cloud/bigtable/internal/encoder.h"
 #include "google/cloud/bigtable/internal/strong_type.h"
+#include <string>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-using bigendian64_t = internal::StrongType<std::int64_t, struct BigEndianType>;
-
 namespace internal {
 
 template <>
-struct Encoder<bigtable::bigendian64_t> {
-  static std::string Encode(bigtable::bigendian64_t const& value);
-  static bigtable::bigendian64_t Decode(std::string const& value);
+struct Encoder<std::int64_t> {
+  static std::string Encode(std::int64_t const& value);
+  static std::int64_t Decode(std::string const& value);
 };
 
-bigtable::bigendian64_t ByteSwap64(bigtable::bigendian64_t value);
-std::string AsBigEndian64(bigtable::bigendian64_t value);
+std::string AsBigEndian64(std::int64_t value);
 
 }  // namespace internal
 
