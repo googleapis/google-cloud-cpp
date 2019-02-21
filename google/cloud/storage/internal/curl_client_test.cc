@@ -24,6 +24,10 @@
 #include <utility>
 #include <vector>
 
+#ifndef INSTANTIATE_TEST_SUITE_P
+#error "Wrong googletest TEST_SUITE_P not defined"
+#endif  // INSTANTIATE_TEST_SUITE_P
+
 namespace google {
 namespace cloud {
 namespace storage {

@@ -105,7 +105,21 @@ foreach ($pkg in $packages) {
 
 # The dependencies are cached, we need to remove this old dependency. Otherwise
 # CMake files the old version of gtest+gmock instead of the external project.
+# This is clearly a defect in our hand-crafted caching, but without caching the
+# build takes about 1 hour to just build the dependencies.
+Write-Host "================================================================"
+Write-Host "================================================================"
 .\vcpkg.exe remove --recurse --purge "gtest:x64-windows-static"
+Remove-Item -Recurse -Path installed\x64-windows-static\include\gtest
+Remove-Item -Recurse -Path installed\x64-windows-static\include\gmock
+
+Write-Host "================================================================"
+Write-Host "================================================================"
+.\vcpkg.exe list
+Get-ChildItem -Recurse -Path installed\x64-windows-static\include\gtest -File
+Get-ChildItem -Recurse -Path installed\x64-windows-static\include\gmock -File
+Write-Host "================================================================"
+Write-Host "================================================================"
 
 Write-Host "Create cache zip file."
 Get-Date -Format o
