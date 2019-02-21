@@ -403,10 +403,10 @@ TEST_P(CurlClientTest, DeleteNotification) {
 }
 
 INSTANTIATE_TEST_SUITE_P(CredentialsFailure, CurlClientTest,
-                        ::testing::Values("credentials-failure"));
+                         ::testing::Values("credentials-failure"));
 
 INSTANTIATE_TEST_SUITE_P(LibCurlFailure, CurlClientTest,
-                        ::testing::Values("libcurl-failure"));
+                         ::testing::Values("libcurl-failure"));
 
 }  // namespace
 }  // namespace internal
