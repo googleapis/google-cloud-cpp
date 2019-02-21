@@ -59,7 +59,7 @@ std::shared_ptr<AsyncOperation> MutationBatcher::AsyncApply(
   }
   AsyncApplyAdmissionCallback admission_callback_to_fire(
       std::move(pending.admission_callback));
-  cur_batch_->Add(std::move(pending));
+  Admit(std::move(pending));
   FlushIfPossible(cq);
 
   lk.unlock();
@@ -90,8 +90,9 @@ void MutationBatcher::Batch::Add(PendingSingleRowMutation&& mut) {
   mutation_data_.emplace(last_idx_++, MutationData(std::move(mut)));
 }
 
-void MutationBatcher::Batch::FireCallbacks(
+size_t MutationBatcher::Batch::FireCallbacks(
     CompletionQueue& cq, std::vector<FailedMutation> const& failed) {
+  size_t completed_size = 0;
   for (auto const& f : failed) {
     int const idx = f.original_index();
     // For some reason clang-tidy thinks that it->second.callback would be fine
@@ -100,14 +101,17 @@ void MutationBatcher::Batch::FireCallbacks(
     grpc::Status status(f.status());
     auto it = mutation_data_.find(idx);
     it->second.callback(cq, status);
+    completed_size += it->second.request_size;
     mutation_data_.erase(it);
   }
   for (auto& mutation_data : mutation_data_) {
     // Everything remaining was a success, report them via their callbacks.
     grpc::Status status;
+    completed_size += mutation_data.second.request_size;
     mutation_data.second.callback(cq, status);
   }
   mutation_data_.clear();
+  return completed_size;
 }
 
 grpc::Status MutationBatcher::IsValid(PendingSingleRowMutation& mut) const {
@@ -147,7 +151,6 @@ bool MutationBatcher::HasSpaceFor(PendingSingleRowMutation const& mut) const {
 void MutationBatcher::FlushIfPossible(CompletionQueue& cq) {
   if (cur_batch_->num_mutations() > 0 &&
       num_outstanding_batches_ < options_.max_batches) {
-    oustanding_size_ += cur_batch_->requests_size();
     ++num_outstanding_batches_;
     auto batch = cur_batch_;
     table_.AsyncBulkApply(
@@ -166,9 +169,9 @@ void MutationBatcher::FlushIfPossible(CompletionQueue& cq) {
 void MutationBatcher::BatchFinished(
     CompletionQueue& cq, std::shared_ptr<MutationBatcher::Batch> const& batch,
     std::vector<FailedMutation> const& failed) {
-  batch->FireCallbacks(cq, failed);
+  size_t completed_size = batch->FireCallbacks(cq, failed);
 
-  auto admission_callbacks = FlushOnBatchFinished(cq, batch);
+  auto admission_callbacks = FlushOnBatchFinished(cq, completed_size);
 
   // Inform the user that we've admitted these mutations and there might be some
   // space in the buffer finally.
@@ -179,9 +182,9 @@ void MutationBatcher::BatchFinished(
 }
 
 std::vector<AsyncApplyAdmissionCallback> MutationBatcher::FlushOnBatchFinished(
-    CompletionQueue& cq, std::shared_ptr<MutationBatcher::Batch> const& batch) {
+    CompletionQueue& cq, size_t completed_size) {
   std::unique_lock<std::mutex> lk(mu_);
-  oustanding_size_ -= batch->requests_size();
+  oustanding_size_ -= completed_size;
   num_outstanding_batches_ -= 1;
 
   FlushIfPossible(cq);
@@ -193,7 +196,7 @@ std::vector<AsyncApplyAdmissionCallback> MutationBatcher::FlushOnBatchFinished(
          HasSpaceFor(pending_mutations_.front())) {
     auto& mut(pending_mutations_.front());
     admission_callbacks.emplace_back(std::move(mut.admission_callback));
-    cur_batch_->Add(std::move(mut));
+    Admit(std::move(mut));
     pending_mutations_.pop();
   }
   // There is no reason to call FlushIfPossible() here.
@@ -205,6 +208,11 @@ std::vector<AsyncApplyAdmissionCallback> MutationBatcher::FlushOnBatchFinished(
   // released one slot and taken it again by running FlushIfPossible() so there
   // are no free slots again.
   return admission_callbacks;
+}
+
+void MutationBatcher::Admit(PendingSingleRowMutation&& mut) {
+  oustanding_size_ += mut.request_size;
+  cur_batch_->Add(std::move(mut));
 }
 
 }  // namespace internal
