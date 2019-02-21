@@ -105,7 +105,7 @@ foreach ($pkg in $packages) {
 
 # The dependencies are cached, we need to remove this old dependency. Otherwise
 # CMake files the old version of gtest+gmock instead of the external project.
-.\vcpkg.exe remove --recurse "gtest:x64-windows-static"
+.\vcpkg.exe remove --recurse --purge "gtest:x64-windows-static"
 
 Write-Host "Create cache zip file."
 Get-Date -Format o
