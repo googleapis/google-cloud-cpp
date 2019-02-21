@@ -112,6 +112,11 @@ against the latest version of the SDK on each commit and PR.
 
 ### CentOS (7)
 
+[![Kokoro install centos status][kokoro-install-centos-shield]][kokoro-install-centos-link]
+
+[kokoro-install-centos-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-centos.svg
+[kokoro-install-centos-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-centos-link.html
+
 The development tools distributed with CentOS (notably CMake) are too old to
 build `google-cloud-cpp`. In these instructions, we use `cmake3` obtained from
 [Software Collections](https://www.softwarecollections.org/).
@@ -127,6 +132,11 @@ ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 ```
 
 ### Debian (Stretch)
+
+[![Kokoro install debian status][kokoro-install-debian-shield]][kokoro-install-debian-link]
+
+[kokoro-install-debian-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-debian.svg
+[kokoro-install-debian-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-debian-link.html
 
 On Debian Stretch, libcurl links against openssl-1.0.2, and one must link
 against the same version or risk an inconsistent configuration of the library.
@@ -145,12 +155,22 @@ sudo apt install -y build-essential cmake git gcc g++ cmake \
 
 ### Fedora (29)
 
+[![Kokoro install fedora status][kokoro-install-fedora-shield]][kokoro-install-fedora-link]
+
+[kokoro-install-fedora-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-fedora.svg
+[kokoro-install-fedora-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-fedora-link.html
+
 ```bash
 sudo dnf makecache && \
 sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig zlib-devel
 ```
 
 ### OpenSUSE (Tumbleweed)
+
+[![Kokoro install opensuse status][kokoro-install-opensuse-shield]][kokoro-install-opensuse-link]
+
+[kokoro-install-opensuse-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-opensuse.svg
+[kokoro-install-opensuse-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-opensuse-link.html
 
 ```bash
 sudo zypper refresh && \
@@ -159,6 +179,11 @@ sudo zypper install -y cmake gcc gcc-c++ git libcurl-devel libopenssl-devel make
 
 ### OpenSUSE (Leap)
 
+[![Kokoro install opensuse-leap status][kokoro-install-opensuse-leap-shield]][kokoro-install-opensuse-leap-link]
+
+[kokoro-install-opensuse-leap-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-opensuse-leap.svg
+[kokoro-install-opensuse-leap-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-opensuse-leap-link.html
+
 ```bash
 sudo zypper refresh && \
 sudo zypper install -y cmake gcc gcc-c++ git libcurl-devel libopenssl-devel \
@@ -166,6 +191,11 @@ sudo zypper install -y cmake gcc gcc-c++ git libcurl-devel libopenssl-devel \
 ```
 
 ### Ubuntu (18.04 - Bionic Beaver)
+
+[![Kokoro install ubuntu status][kokoro-install-ubuntu-shield]][kokoro-install-ubuntu-link]
+
+[kokoro-install-ubuntu-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-ubuntu.svg
+[kokoro-install-ubuntu-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-ubuntu-link.html
 
 ```bash
 sudo apt update && \
@@ -176,6 +206,11 @@ sudo apt install -y build-essential cmake git gcc g++ cmake \
 
 ### Ubuntu (16.04 - Xenial Xerus)
 
+[![Kokoro install ubuntu-xenial status][kokoro-install-ubuntu-xenial-shield]][kokoro-install-ubuntu-xenial-link]
+
+[kokoro-install-ubuntu-xenial-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-ubuntu-xenial.svg
+[kokoro-install-ubuntu-xenial-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-ubuntu-xenial-link.html
+
 ```bash
 sudo apt update && \
 sudo apt install -y build-essential cmake git gcc g++ cmake \
@@ -184,6 +219,11 @@ sudo apt install -y build-essential cmake git gcc g++ cmake \
 ```
 
 ### Ubuntu (14.04 - Trusty Tahr)
+
+[![Kokoro install ubuntu-trusty status][kokoro-install-ubuntu-trusty-shield]][kokoro-install-ubuntu-trusty-link]
+
+[kokoro-install-ubuntu-trusty-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-ubuntu-trusty.svg
+[kokoro-install-ubuntu-trusty-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-ubuntu-trusty-link.html
 
 We use the `ubuntu-toolchain-r` PPA to get a modern version of CMake:
 
