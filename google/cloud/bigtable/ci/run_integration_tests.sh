@@ -32,7 +32,7 @@ set +e
 success=""
 readonly TIMEOUT_CMD="$(which timeout)"
 if [ -n "${TIMEOUT_CMD}" ]; then
-  timeout="${TIMEOUT_CMD} 20s"
+  timeout="${TIMEOUT_CMD} 300s"
 else
   timeout="env"
 fi

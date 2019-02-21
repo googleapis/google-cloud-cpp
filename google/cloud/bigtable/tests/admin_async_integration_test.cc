@@ -170,32 +170,10 @@ TEST_F(AdminAsyncIntegrationTest, CreateListGetDeleteTableTest) {
 
 /// @test Verify that `noex::TableAdmin` AsyncDropRowsByPrefix works
 TEST_F(AdminAsyncIntegrationTest, AsyncDropRowsByPrefixTest) {
-  std::string const table_id = RandomTableId();
-  std::string const column_family1 = "family1";
-  std::string const column_family2 = "family2";
-  std::string const column_family3 = "family3";
-
-  bigtable::TableConfig table_config = bigtable::TableConfig(
-      {{column_family1, bigtable::GcRule::MaxNumVersions(10)},
-       {column_family2, bigtable::GcRule::MaxNumVersions(10)},
-       {column_family3, bigtable::GcRule::MaxNumVersions(10)}},
-      {});
+  auto table = GetTable();
 
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
-
-  std::promise<btadmin::Table> promise_create_table;
-  noex_table_admin_->AsyncCreateTable(
-      cq,
-      [&promise_create_table](CompletionQueue& cq, btadmin::Table& table,
-                              grpc::Status const& status) {
-        promise_create_table.set_value(std::move(table));
-      },
-      table_id, table_config);
-
-  auto table_created = promise_create_table.get_future().get();
-
-  bigtable::Table table(data_client_, table_id);
 
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key1_prefix = "DropRowPrefix1";
@@ -204,17 +182,17 @@ TEST_F(AdminAsyncIntegrationTest, AsyncDropRowsByPrefixTest) {
   std::string const row_key1_1 = row_key1_prefix + "_1-Key1";
   std::string const row_key2 = row_key2_prefix + "-Key2";
   std::vector<bigtable::Cell> created_cells{
-      {row_key1, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key1, column_family1, "column_id1", 1000, "v-c-0-1"},
-      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key1_1, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key1_1, column_family2, "column_id3", 3000, "v-c-0-2"},
-      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"},
+      {row_key1, "family1", "column_id1", 0, "v-c-0-0"},
+      {row_key1, "family1", "column_id1", 1000, "v-c-0-1"},
+      {row_key1, "family2", "column_id3", 2000, "v-c-0-2"},
+      {row_key1_1, "family2", "column_id3", 2000, "v-c-0-2"},
+      {row_key1_1, "family2", "column_id3", 3000, "v-c-0-2"},
+      {row_key2, "family2", "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, "family3", "column_id3", 3000, "v-c1-0-2"},
   };
   std::vector<bigtable::Cell> expected_cells{
-      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"}};
+      {row_key2, "family2", "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, "family3", "column_id3", 3000, "v-c1-0-2"}};
 
   // Create records
   CreateCells(table, created_cells);
@@ -226,11 +204,10 @@ TEST_F(AdminAsyncIntegrationTest, AsyncDropRowsByPrefixTest) {
       [&promise_drop_row](CompletionQueue& cq, grpc::Status const& status) {
         promise_drop_row.set_value();
       },
-      table_id, row_key1_prefix);
+      bigtable::testing::TableTestEnvironment::table_id(), row_key1_prefix);
 
   promise_drop_row.get_future().get();
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
-  EXPECT_STATUS_OK(DeleteTable(table_id));
 
   CheckEqualUnordered(expected_cells, actual_cells);
 
@@ -239,41 +216,20 @@ TEST_F(AdminAsyncIntegrationTest, AsyncDropRowsByPrefixTest) {
 }
 
 TEST_F(AdminAsyncIntegrationTest, AsyncDropAllRowsTest) {
-  std::string const table_id = RandomTableId();
-  std::string const column_family1 = "family1";
-  std::string const column_family2 = "family2";
-  std::string const column_family3 = "family3";
-  bigtable::TableConfig table_config = bigtable::TableConfig(
-      {{column_family1, bigtable::GcRule::MaxNumVersions(10)},
-       {column_family2, bigtable::GcRule::MaxNumVersions(10)},
-       {column_family3, bigtable::GcRule::MaxNumVersions(10)}},
-      {});
+  auto table = GetTable();
 
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
-
-  std::promise<btadmin::Table> promise_create_table;
-  noex_table_admin_->AsyncCreateTable(
-      cq,
-      [&promise_create_table](CompletionQueue& cq, btadmin::Table& table,
-                              grpc::Status const& status) {
-        promise_create_table.set_value(std::move(table));
-      },
-      table_id, table_config);
-
-  auto table_created = promise_create_table.get_future().get();
-
-  bigtable::Table table(data_client_, table_id);
 
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key1 = "DropRowKey1";
   std::string const row_key2 = "DropRowKey2";
   std::vector<bigtable::Cell> created_cells{
-      {row_key1, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key1, column_family1, "column_id1", 1000, "v-c-0-1"},
-      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"},
+      {row_key1, "family1", "column_id1", 0, "v-c-0-0"},
+      {row_key1, "family1", "column_id1", 1000, "v-c-0-1"},
+      {row_key1, "family2", "column_id3", 2000, "v-c-0-2"},
+      {row_key2, "family2", "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, "family3", "column_id3", 3000, "v-c1-0-2"},
   };
 
   // Create records
@@ -286,11 +242,10 @@ TEST_F(AdminAsyncIntegrationTest, AsyncDropAllRowsTest) {
       [&promise_drop_row](CompletionQueue& cq, grpc::Status const& status) {
         promise_drop_row.set_value();
       },
-      table_id);
+      bigtable::testing::TableTestEnvironment::table_id());
   promise_drop_row.get_future().get();
 
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
-  EXPECT_STATUS_OK(DeleteTable(table_id));
 
   ASSERT_TRUE(actual_cells.empty());
   cq.Shutdown();
@@ -301,9 +256,7 @@ TEST_F(AdminAsyncIntegrationTest, AsyncDropAllRowsTest) {
 TEST_F(AdminAsyncIntegrationTest, CheckConsistencyIntegrationTest) {
   using namespace google::cloud::testing_util::chrono_literals;
 
-  std::string id =
-      "it-" + google::cloud::internal::Sample(
-                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  std::string id = bigtable::testing::TableTestEnvironment::RandomInstanceId();
   std::string const random_table_id = RandomTableId();
 
   auto project_id = bigtable::testing::TableTestEnvironment::project_id();

@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/make_unique.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <google/protobuf/text_format.h>
 #include <algorithm>
 #include <cctype>
@@ -30,6 +31,63 @@ std::string TableTestEnvironment::instance_id_;
 std::string TableTestEnvironment::cluster_id_;
 std::string TableTestEnvironment::zone_;
 std::string TableTestEnvironment::replication_zone_;
+google::cloud::internal::DefaultPRNG TableTestEnvironment::generator_;
+std::string TableTestEnvironment::table_id_;
+
+void TableTestEnvironment::SetUp() {
+  generator_ = google::cloud::internal::MakeDefaultPRNG();
+
+  auto admin_client = bigtable::CreateDefaultAdminClient(
+      TableTestEnvironment::project_id(), ClientOptions());
+  auto table_admin =
+      bigtable::TableAdmin(admin_client, TableTestEnvironment::instance_id());
+
+  std::string const family1 = "family1";
+  std::string const family2 = "family2";
+  std::string const family3 = "family3";
+  std::string const family4 = "family4";
+  bigtable::TableConfig table_config =
+      bigtable::TableConfig({{family1, bigtable::GcRule::MaxNumVersions(10)},
+                             {family2, bigtable::GcRule::MaxNumVersions(10)},
+                             {family3, bigtable::GcRule::MaxNumVersions(10)},
+                             {family4, bigtable::GcRule::MaxNumVersions(10)}},
+                            {});
+
+  table_id_ = RandomTableId();
+  ASSERT_STATUS_OK(table_admin.CreateTable(table_id_, table_config));
+}
+
+void TableTestEnvironment::TearDown() {
+  auto admin_client = bigtable::CreateDefaultAdminClient(
+      TableTestEnvironment::project_id(), ClientOptions());
+  auto table_admin =
+      bigtable::TableAdmin(admin_client, TableTestEnvironment::instance_id());
+
+  ASSERT_STATUS_OK(table_admin.DeleteTable(table_id_));
+}
+
+std::string TableTestEnvironment::CreateRandomId(std::string const& prefix,
+                                                 int count) {
+  return prefix +
+         google::cloud::internal::Sample(
+             generator_, count, "abcdefghijklmnopqrstuvwxyz0123456789");
+}
+
+std::string TableTestEnvironment::RandomTableId() {
+  // This value was discovered by trial and error, it is not documented in the
+  // proto files.
+  constexpr int kMaxTableIdLength = 50;
+  static std::string const prefix = "table-";
+  return CreateRandomId(prefix, kMaxTableIdLength - prefix.length());
+}
+
+std::string TableTestEnvironment::RandomInstanceId() {
+  // This value was discovered by trial and error, it is not documented in the
+  // proto files.
+  constexpr int kMaxInstanceIdLenth = 33;
+  static std::string const prefix = "instance-";
+  return CreateRandomId(prefix, kMaxInstanceIdLenth - prefix.length());
+}
 
 void TableIntegrationTest::SetUp() {
   admin_client_ = bigtable::CreateDefaultAdminClient(
@@ -42,17 +100,12 @@ void TableIntegrationTest::SetUp() {
   data_client_ = bigtable::CreateDefaultDataClient(
       TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
       ClientOptions());
+
+  ASSERT_STATUS_OK(table_admin_->DropAllRows(TableTestEnvironment::table_id()));
 }
 
-std::unique_ptr<bigtable::Table> TableIntegrationTest::CreateTable(
-    std::string const& table_name, bigtable::TableConfig& table_config) {
-  table_admin_->CreateTable(table_name, table_config);
-  return google::cloud::internal::make_unique<bigtable::Table>(data_client_,
-                                                               table_name);
-}
-
-Status TableIntegrationTest::DeleteTable(std::string const& table_name) {
-  return table_admin_->DeleteTable(table_name);
+bigtable::Table TableIntegrationTest::GetTable() {
+  return bigtable::Table(data_client_, TableTestEnvironment::table_id());
 }
 
 std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
@@ -140,11 +193,9 @@ void TableIntegrationTest::CheckEqualUnordered(
 }
 
 std::string TableIntegrationTest::RandomTableId() {
-  constexpr int RANDOM_CHARACTERS = 8;
-  return std::string("table-") + google::cloud::internal::Sample(
-                                     generator_, RANDOM_CHARACTERS,
-                                     "abcdefghijklmnopqrstuvwxyz0123456789");
+  return TableTestEnvironment::RandomTableId();
 }
+
 }  // namespace testing
 
 int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {

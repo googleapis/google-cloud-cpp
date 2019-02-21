@@ -67,28 +67,20 @@ TEST_F(SnapshotIntegrationTest, SnapshotOperationsTableTest) {
       bigtable::testing::TableTestEnvironment::cluster_id());
   google::cloud::bigtable::SnapshotId snapshot_id(table_id.get() + "-snapshot");
 
-  std::string const column_family1 = "family1";
-  std::string const column_family2 = "family2";
-  std::string const column_family3 = "family3";
-  bigtable::TableConfig table_config = bigtable::TableConfig(
-      {{column_family1, bigtable::GcRule::MaxNumVersions(10)},
-       {column_family2, bigtable::GcRule::MaxNumVersions(10)},
-       {column_family3, bigtable::GcRule::MaxNumVersions(10)}},
-      {});
-  auto table = CreateTable(table_id.get(), table_config);
+  auto table = GetTable();
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key1 = "row1";
   std::string const row_key2 = "row2";
   std::vector<bigtable::Cell> created_cells{
-      {row_key1, column_family1, "column_id1", 1000, "v-c-0-0"},
-      {row_key1, column_family1, "column_id2", 1000, "v-c-0-1"},
-      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"},
+      {row_key1, "family1", "column_id1", 1000, "v-c-0-0"},
+      {row_key1, "family1", "column_id2", 1000, "v-c-0-1"},
+      {row_key1, "family2", "column_id3", 2000, "v-c-0-2"},
+      {row_key2, "family2", "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, "family3", "column_id3", 3000, "v-c1-0-2"},
   };
 
   // Create records
-  CreateCells(*table, created_cells);
+  CreateCells(table, created_cells);
   auto snapshot =
       table_admin_->SnapshotTable(cluster_id, snapshot_id, table_id, 36000_s)
           .get();
@@ -102,8 +94,7 @@ TEST_F(SnapshotIntegrationTest, SnapshotOperationsTableTest) {
   CheckEqualUnordered(created_cells, actual_cells);
 
   EXPECT_STATUS_OK(table_admin_->DeleteSnapshot(cluster_id, snapshot_id));
-  EXPECT_STATUS_OK(DeleteTable(table_id.get()));
-  EXPECT_STATUS_OK(DeleteTable(table_id_new.get()));
+  EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id_new.get()));
 }
 
 /// @test Verify that Snapshot CRUD operations work as expected.
@@ -114,28 +105,19 @@ TEST_F(SnapshotIntegrationTest, CreateListGetDeleteSnapshot) {
   std::string snapshot_id_str = table_id.get() + "-snapshot";
   google::cloud::bigtable::SnapshotId snapshot_id(snapshot_id_str);
 
-  // create table prerequisites for snapshot operations.
-  std::string const column_family1 = "family1";
-  std::string const column_family2 = "family2";
-  std::string const column_family3 = "family3";
-  bigtable::TableConfig table_config = bigtable::TableConfig(
-      {{column_family1, bigtable::GcRule::MaxNumVersions(10)},
-       {column_family2, bigtable::GcRule::MaxNumVersions(10)},
-       {column_family3, bigtable::GcRule::MaxNumVersions(10)}},
-      {});
-  auto table = CreateTable(table_id.get(), table_config);
+  auto table = GetTable();
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key1 = "row1";
   std::string const row_key2 = "row2";
   std::vector<bigtable::Cell> created_cells{
-      {row_key1, column_family1, "column_id1", 1000, "v-c-0-0"},
-      {row_key1, column_family1, "column_id2", 1000, "v-c-0-1"},
-      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"},
+      {row_key1, "family1", "column_id1", 1000, "v-c-0-0"},
+      {row_key1, "family1", "column_id2", 1000, "v-c-0-1"},
+      {row_key1, "family2", "column_id3", 2000, "v-c-0-2"},
+      {row_key2, "family2", "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, "family3", "column_id3", 3000, "v-c1-0-2"},
   };
   // Create records
-  CreateCells(*table, created_cells);
+  CreateCells(table, created_cells);
 
   // verify new snapshot id in list of snapshot
   auto snapshots_before = table_admin_->ListSnapshots(cluster_id);
@@ -164,9 +146,6 @@ TEST_F(SnapshotIntegrationTest, CreateListGetDeleteSnapshot) {
   auto snapshots_after_delete = table_admin_->ListSnapshots(cluster_id);
   ASSERT_STATUS_OK(snapshots_after_delete);
   EXPECT_FALSE(IsSnapshotPresent(*snapshots_after_delete, snapshot.name()));
-
-  // delete table
-  EXPECT_STATUS_OK(DeleteTable(table_id.get()));
 }
 
 // Test Cases Finished

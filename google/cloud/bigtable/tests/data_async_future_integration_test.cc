@@ -26,16 +26,13 @@ namespace {
 class DataAsyncFutureIntegrationTest
     : public bigtable::testing::TableIntegrationTest {
  protected:
-  std::string const family = "family";
-  bigtable::TableConfig table_config = bigtable::TableConfig(
-      {{family, bigtable::GcRule::MaxNumVersions(10)}}, {});
+  std::string const family = "family1";
 };
 
 using namespace google::cloud::testing_util::chrono_literals;
 
 TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
-  std::string const table_id = RandomTableId();
-  auto sync_table = CreateTable(table_id, table_config);
+  auto table = GetTable();
 
   std::string const row_key = "key-000010";
   std::vector<bigtable::Cell> created{{row_key, family, "cc1", 1000, "v1000"},
@@ -51,7 +48,6 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
 
-  google::cloud::bigtable::Table table(data_client_, table_id);
   auto fut_void = table.AsyncApply(std::move(mut), cq);
 
   // Block until the asynchronous operation completes. This is not what one
@@ -63,18 +59,16 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
   std::vector<bigtable::Cell> expected{{row_key, family, "cc1", 1000, "v1000"},
                                        {row_key, family, "cc2", 2000, "v2000"}};
 
-  auto actual = ReadRows(*sync_table, bigtable::Filter::PassAllFilter());
+  auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
 
   // Cleanup the thread running the completion queue event loop.
   cq.Shutdown();
   pool.join();
-  EXPECT_STATUS_OK(DeleteTable(table_id));
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(DataAsyncFutureIntegrationTest, TableAsyncBulkApply) {
-  std::string const table_id = RandomTableId();
-  auto sync_table = CreateTable(table_id, table_config);
+  auto table = GetTable();
 
   std::string const row_key1 = "key-000010";
   std::string const row_key2 = "key-000020";
@@ -103,7 +97,6 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncBulkApply) {
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
 
-  google::cloud::bigtable::Table table(data_client_, table_id);
   auto fut_void = table.AsyncBulkApply(std::move(mut), cq);
 
   // Block until the asynchronous operation completes. This is not what one
@@ -120,12 +113,11 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncBulkApply) {
     }
   }
 
-  auto actual = ReadRows(*sync_table, bigtable::Filter::PassAllFilter());
+  auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
 
   // Cleanup the thread running the completion queue event loop.
   cq.Shutdown();
   pool.join();
-  EXPECT_STATUS_OK(DeleteTable(table_id));
   CheckEqualUnordered(expected, actual);
 }
 

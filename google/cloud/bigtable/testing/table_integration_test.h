@@ -51,11 +51,33 @@ class TableTestEnvironment : public ::testing::Environment {
     replication_zone_ = std::move(replication_zone);
   }
 
+  void SetUp() override;
+  void TearDown() override;
+
   static std::string const& project_id() { return project_id_; }
   static std::string const& instance_id() { return instance_id_; }
   static std::string const& cluster_id() { return cluster_id_; }
   static std::string const& zone() { return zone_; }
   static std::string const& replication_zone() { return replication_zone_; }
+
+  /**
+   * Generate a random string for instance, cluster, or table identifiers.
+   *
+   * Return a string starting with @p prefix and with @p count random symbols
+   * from the [a-z0-9] set. These strings are useful as identifiers for tables,
+   * clusters, or instances. Using a random table id allows us to run two
+   * instances of a test with minimal chance of interference, without having
+   * to coordinate via some global state.
+   */
+  static std::string CreateRandomId(std::string const& prefix, int count);
+
+  /// Return a random table id.
+  static std::string RandomTableId();
+
+  /// Return a random instance id.
+  static std::string RandomInstanceId();
+
+  static std::string const& table_id() { return table_id_; }
 
  private:
   static std::string project_id_;
@@ -63,6 +85,10 @@ class TableTestEnvironment : public ::testing::Environment {
   static std::string cluster_id_;
   static std::string zone_;
   static std::string replication_zone_;
+
+  static google::cloud::internal::DefaultPRNG generator_;
+
+  static std::string table_id_;
 };
 
 /**
@@ -73,12 +99,8 @@ class TableIntegrationTest : public ::testing::Test {
  protected:
   void SetUp() override;
 
-  /// Creates the table with @p table_config
-  std::unique_ptr<bigtable::Table> CreateTable(
-      std::string const& table_name, bigtable::TableConfig& table_config);
-
-  /// Deletes the table passed via arguments.
-  Status DeleteTable(std::string const& table_name);
+  /// Gets a Table object for the current test.
+  bigtable::Table GetTable();
 
   /// Return all the cells in @p table that pass @p filter.
   std::vector<bigtable::Cell> ReadRows(bigtable::Table& table,
@@ -124,9 +146,6 @@ class TableIntegrationTest : public ::testing::Test {
   std::string RandomTableId();
 
  protected:
-  google::cloud::internal::DefaultPRNG generator_ =
-      google::cloud::internal::MakeDefaultPRNG();
-
   std::shared_ptr<bigtable::AdminClient> admin_client_;
   std::unique_ptr<bigtable::TableAdmin> table_admin_;
   std::unique_ptr<bigtable::noex::TableAdmin> noex_table_admin_;

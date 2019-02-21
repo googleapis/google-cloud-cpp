@@ -29,39 +29,30 @@ class FilterIntegrationTest : public bigtable::testing::TableIntegrationTest {
    * Create the following rows in @p table, the magic values for the column
    * families are defined above.
    *
-   * | Row Key                 | Family | Column | Contents      |
-   * | :---------------------- | :----- | :----- | :------------ |
-   * | "{prefix}/one-cell"     | fam0   | c      | cell @ 3000 |
-   * | "{prefix}/two-cells"    | fam0   | c      | cell @ 3000 |
-   * | "{prefix}/two-cells"    | fam0   | c2     | cell @ 3000 |
-   * | "{prefix}/many"         | fam0   | c      | cells @ 0, 1000, 2000, 3000 |
-   * | "{prefix}/many-columns" | fam0   | c0     | cell @ 3000 |
-   * | "{prefix}/many-columns" | fam0   | c1     | cell @ 3000 |
-   * | "{prefix}/many-columns" | fam0   | c2     | cell @ 3000 |
-   * | "{prefix}/many-columns" | fam0   | c3     | cell @ 3000 |
-   * | "{prefix}/complex"      | fam0   | col0   | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | fam0   | col1   | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | fam0   | ...    | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | fam0   | col9   | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | fam1   | col0   | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | fam1   | col1   | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | fam1   | ...    | cell @ 3000, 6000 |
-   * | "{prefix}/complex"      | fam1   | col9   | cell @ 3000, 6000 |
+   * | Row Key                 | Family  | Column | Contents     |
+   * | :---------------------- | :------ | :----- | :----------- |
+   * | "{prefix}/one-cell"     | family1 | c      | cell @ 3000  |
+   * | "{prefix}/two-cells"    | family1 | c      | cell @ 3000  |
+   * | "{prefix}/two-cells"    | family1 | c2     | cell @ 3000  |
+   * | "{prefix}/many"         | family1 | c      | cell @ 0     |
+   * | "{prefix}/many"         | family1 | c      | cell @ 1000  |
+   * | "{prefix}/many"         | family1 | c      | cell @ 2000  |
+   * | "{prefix}/many"         | family1 | c      | cell @ 3000  |
+   * | "{prefix}/many-columns" | family1 | c0     | cell @ 3000  |
+   * | "{prefix}/many-columns" | family1 | c1     | cell @ 3000  |
+   * | "{prefix}/many-columns" | family1 | c2     | cell @ 3000  |
+   * | "{prefix}/many-columns" | family1 | c3     | cell @ 3000  |
+   * | "{prefix}/complex"      | family1 | col0   | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | family1 | col1   | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | family1 | ...    | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | family1 | col9   | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | family2 | col0   | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | family2 | col1   | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | family2 | ...    | cell @ 3000, 6000 |
+   * | "{prefix}/complex"      | family2 | col9   | cell @ 3000, 6000 |
    *
    */
   void CreateComplexRows(bigtable::Table& table, std::string const& prefix);
-
-  std::string const fam0 = "fam0";
-  std::string const fam1 = "fam1";
-  std::string const fam2 = "fam2";
-  std::string const fam3 = "fam3";
-
-  bigtable::TableConfig table_config =
-      bigtable::TableConfig({{fam0, bigtable::GcRule::MaxNumVersions(10)},
-                             {fam1, bigtable::GcRule::MaxNumVersions(10)},
-                             {fam2, bigtable::GcRule::MaxNumVersions(10)},
-                             {fam3, bigtable::GcRule::MaxNumVersions(10)}},
-                            {});
 };
 
 /// Return true if connected to the Cloud Bigtable Emulator.
@@ -90,242 +81,229 @@ int main(int argc, char* argv[]) {
 }
 
 TEST_F(FilterIntegrationTest, PassAll) {
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const row_key = "pass-all-row-key";
   std::vector<bigtable::Cell> expected{
-      {row_key, "fam0", "c", 0, "v-c-0-0"},
-      {row_key, "fam0", "c", 1000, "v-c-0-1"},
-      {row_key, "fam0", "c", 2000, "v-c-0-2"},
-      {row_key, "fam1", "c0", 0, "v-c0-0-0"},
-      {row_key, "fam1", "c1", 1000, "v-c1-0-1"},
-      {row_key, "fam1", "c1", 2000, "v-c1-0-2"},
+      {row_key, "family1", "c", 0, "v-c-0-0"},
+      {row_key, "family1", "c", 1000, "v-c-0-1"},
+      {row_key, "family1", "c", 2000, "v-c-0-2"},
+      {row_key, "family2", "c0", 0, "v-c0-0-0"},
+      {row_key, "family2", "c1", 1000, "v-c1-0-1"},
+      {row_key, "family2", "c1", 2000, "v-c1-0-2"},
   };
-  CreateCells(*table, expected);
+  CreateCells(table, expected);
 
-  auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+  auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(FilterIntegrationTest, BlockAll) {
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const row_key = "block-all-row-key";
   std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "c", 0, "v-c-0-0"},
-      {row_key, "fam0", "c", 1000, "v-c-0-1"},
-      {row_key, "fam0", "c", 2000, "v-c-0-2"},
-      {row_key, "fam1", "c0", 0, "v-c0-0-0"},
-      {row_key, "fam1", "c1", 1000, "v-c1-0-1"},
-      {row_key, "fam1", "c1", 2000, "v-c1-0-2"},
+      {row_key, "family1", "c", 0, "v-c-0-0"},
+      {row_key, "family1", "c", 1000, "v-c-0-1"},
+      {row_key, "family1", "c", 2000, "v-c-0-2"},
+      {row_key, "family2", "c0", 0, "v-c0-0-0"},
+      {row_key, "family2", "c1", 1000, "v-c1-0-1"},
+      {row_key, "family2", "c1", 2000, "v-c1-0-2"},
   };
-  CreateCells(*table, created);
+  CreateCells(table, created);
   std::vector<bigtable::Cell> expected{};
 
-  auto actual = ReadRows(*table, bigtable::Filter::BlockAllFilter());
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+  auto actual = ReadRows(table, bigtable::Filter::BlockAllFilter());
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(FilterIntegrationTest, Latest) {
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const row_key = "latest-row-key";
   std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "c", 0, "v-c-0-0"},
-      {row_key, "fam0", "c", 1000, "v-c-0-1"},
-      {row_key, "fam0", "c", 2000, "v-c-0-2"},
-      {row_key, "fam1", "c0", 0, "v-c0-0-0"},
-      {row_key, "fam1", "c1", 1000, "v-c1-0-1"},
-      {row_key, "fam1", "c1", 2000, "v-c1-0-2"},
-      {row_key, "fam1", "c1", 3000, "v-c1-0-3"},
+      {row_key, "family1", "c", 0, "v-c-0-0"},
+      {row_key, "family1", "c", 1000, "v-c-0-1"},
+      {row_key, "family1", "c", 2000, "v-c-0-2"},
+      {row_key, "family2", "c0", 0, "v-c0-0-0"},
+      {row_key, "family2", "c1", 1000, "v-c1-0-1"},
+      {row_key, "family2", "c1", 2000, "v-c1-0-2"},
+      {row_key, "family2", "c1", 3000, "v-c1-0-3"},
   };
-  CreateCells(*table, created);
+  CreateCells(table, created);
   std::vector<bigtable::Cell> expected{
-      {row_key, "fam0", "c", 1000, "v-c-0-1"},
-      {row_key, "fam0", "c", 2000, "v-c-0-2"},
-      {row_key, "fam1", "c0", 0, "v-c0-0-0"},
-      {row_key, "fam1", "c1", 2000, "v-c1-0-2"},
-      {row_key, "fam1", "c1", 3000, "v-c1-0-3"},
+      {row_key, "family1", "c", 1000, "v-c-0-1"},
+      {row_key, "family1", "c", 2000, "v-c-0-2"},
+      {row_key, "family2", "c0", 0, "v-c0-0-0"},
+      {row_key, "family2", "c1", 2000, "v-c1-0-2"},
+      {row_key, "family2", "c1", 3000, "v-c1-0-3"},
   };
 
-  auto actual = ReadRows(*table, bigtable::Filter::Latest(2));
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+  auto actual = ReadRows(table, bigtable::Filter::Latest(2));
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(FilterIntegrationTest, FamilyRegex) {
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const row_key = "family-regex-row-key";
   std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "c2", 0, "bar"}, {row_key, "fam0", "c", 0, "bar"},
-      {row_key, "fam1", "c", 0, "bar"},  {row_key, "fam2", "c", 0, "bar"},
-      {row_key, "fam2", "c2", 0, "bar"}, {row_key, "fam3", "c2", 0, "bar"},
+      {row_key, "family1", "c2", 0, "bar"},
+      {row_key, "family1", "c", 0, "bar"},
+      {row_key, "family2", "c", 0, "bar"},
+      {row_key, "family3", "c", 0, "bar"},
+      {row_key, "family3", "c2", 0, "bar"},
+      {row_key, "family4", "c2", 0, "bar"},
   };
-  CreateCells(*table, created);
+  CreateCells(table, created);
   std::vector<bigtable::Cell> expected{
-      {row_key, "fam0", "c2", 0, "bar"},
-      {row_key, "fam0", "c", 0, "bar"},
-      {row_key, "fam2", "c", 0, "bar"},
-      {row_key, "fam2", "c2", 0, "bar"},
+      {row_key, "family1", "c2", 0, "bar"},
+      {row_key, "family1", "c", 0, "bar"},
+      {row_key, "family3", "c", 0, "bar"},
+      {row_key, "family3", "c2", 0, "bar"},
   };
 
-  auto actual = ReadRows(*table, bigtable::Filter::FamilyRegex("fam[02]"));
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+  auto actual = ReadRows(table, bigtable::Filter::FamilyRegex("family[13]"));
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(FilterIntegrationTest, ColumnRegex) {
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const row_key = "column-regex-row-key";
   std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "abc", 0, "bar"}, {row_key, "fam1", "bcd", 0, "bar"},
-      {row_key, "fam2", "abc", 0, "bar"}, {row_key, "fam3", "def", 0, "bar"},
-      {row_key, "fam0", "fgh", 0, "bar"}, {row_key, "fam1", "hij", 0, "bar"},
+      {row_key, "family1", "abc", 0, "bar"},
+      {row_key, "family2", "bcd", 0, "bar"},
+      {row_key, "family3", "abc", 0, "bar"},
+      {row_key, "family4", "def", 0, "bar"},
+      {row_key, "family1", "fgh", 0, "bar"},
+      {row_key, "family2", "hij", 0, "bar"},
   };
-  CreateCells(*table, created);
+  CreateCells(table, created);
   std::vector<bigtable::Cell> expected{
-      {row_key, "fam0", "abc", 0, "bar"},
-      {row_key, "fam2", "abc", 0, "bar"},
-      {row_key, "fam0", "fgh", 0, "bar"},
-      {row_key, "fam1", "hij", 0, "bar"},
+      {row_key, "family1", "abc", 0, "bar"},
+      {row_key, "family3", "abc", 0, "bar"},
+      {row_key, "family1", "fgh", 0, "bar"},
+      {row_key, "family2", "hij", 0, "bar"},
   };
 
-  auto actual = ReadRows(*table, bigtable::Filter::ColumnRegex("(abc|.*h.*)"));
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+  auto actual = ReadRows(table, bigtable::Filter::ColumnRegex("(abc|.*h.*)"));
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(FilterIntegrationTest, ColumnRange) {
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const row_key = "column-range-row-key";
   std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "a00", 0, "bar"}, {row_key, "fam0", "b00", 0, "bar"},
-      {row_key, "fam0", "b01", 0, "bar"}, {row_key, "fam0", "b02", 0, "bar"},
-      {row_key, "fam1", "a00", 0, "bar"}, {row_key, "fam1", "b01", 0, "bar"},
-      {row_key, "fam1", "b00", 0, "bar"},
+      {row_key, "family1", "a00", 0, "bar"},
+      {row_key, "family1", "b00", 0, "bar"},
+      {row_key, "family1", "b01", 0, "bar"},
+      {row_key, "family1", "b02", 0, "bar"},
+      {row_key, "family2", "a00", 0, "bar"},
+      {row_key, "family2", "b01", 0, "bar"},
+      {row_key, "family2", "b00", 0, "bar"},
   };
-  CreateCells(*table, created);
+  CreateCells(table, created);
   std::vector<bigtable::Cell> expected{
-      {row_key, "fam0", "b00", 0, "bar"},
-      {row_key, "fam0", "b01", 0, "bar"},
+      {row_key, "family1", "b00", 0, "bar"},
+      {row_key, "family1", "b01", 0, "bar"},
   };
 
   auto actual =
-      ReadRows(*table, bigtable::Filter::ColumnRange("fam0", "b00", "b02"));
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+      ReadRows(table, bigtable::Filter::ColumnRange("family1", "b00", "b02"));
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(FilterIntegrationTest, TimestampRange) {
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const row_key = "timestamp-range-row-key";
   std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "c0", 1000, "v1000"},
-      {row_key, "fam1", "c1", 2000, "v2000"},
-      {row_key, "fam2", "c2", 3000, "v3000"},
-      {row_key, "fam0", "c3", 4000, "v4000"},
-      {row_key, "fam1", "c4", 4000, "v5000"},
-      {row_key, "fam2", "c5", 6000, "v6000"},
+      {row_key, "family1", "c0", 1000, "v1000"},
+      {row_key, "family2", "c1", 2000, "v2000"},
+      {row_key, "family3", "c2", 3000, "v3000"},
+      {row_key, "family1", "c3", 4000, "v4000"},
+      {row_key, "family2", "c4", 4000, "v5000"},
+      {row_key, "family3", "c5", 6000, "v6000"},
   };
-  CreateCells(*table, created);
+  CreateCells(table, created);
   std::vector<bigtable::Cell> expected{
-      {row_key, "fam2", "c2", 3000, "v3000"},
-      {row_key, "fam0", "c3", 4000, "v4000"},
-      {row_key, "fam1", "c4", 4000, "v5000"},
+      {row_key, "family3", "c2", 3000, "v3000"},
+      {row_key, "family1", "c3", 4000, "v4000"},
+      {row_key, "family2", "c4", 4000, "v5000"},
   };
 
   auto actual = ReadRows(
-      *table, bigtable::Filter::TimestampRange(std::chrono::milliseconds(3),
-                                               std::chrono::milliseconds(6)));
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+      table, bigtable::Filter::TimestampRange(std::chrono::milliseconds(3),
+                                              std::chrono::milliseconds(6)));
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(FilterIntegrationTest, RowKeysRegex) {
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const row_key = "row-key-regex-row-key";
   std::vector<bigtable::Cell> created{
-      {row_key + "/abc0", "fam0", "c0", 1000, "v1000"},
-      {row_key + "/bcd0", "fam1", "c1", 2000, "v2000"},
-      {row_key + "/abc1", "fam2", "c2", 3000, "v3000"},
-      {row_key + "/fgh0", "fam0", "c3", 4000, "v4000"},
-      {row_key + "/hij0", "fam1", "c4", 4000, "v5000"},
-      {row_key + "/hij1", "fam2", "c5", 6000, "v6000"},
+      {row_key + "/abc0", "family1", "c0", 1000, "v1000"},
+      {row_key + "/bcd0", "family2", "c1", 2000, "v2000"},
+      {row_key + "/abc1", "family3", "c2", 3000, "v3000"},
+      {row_key + "/fgh0", "family1", "c3", 4000, "v4000"},
+      {row_key + "/hij0", "family2", "c4", 4000, "v5000"},
+      {row_key + "/hij1", "family3", "c5", 6000, "v6000"},
   };
-  CreateCells(*table, created);
+  CreateCells(table, created);
   std::vector<bigtable::Cell> expected{
-      {row_key + "/bcd0", "fam1", "c1", 2000, "v2000"},
+      {row_key + "/bcd0", "family2", "c1", 2000, "v2000"},
   };
 
   auto actual =
-      ReadRows(*table, bigtable::Filter::RowKeysRegex(row_key + "/bc.*"));
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+      ReadRows(table, bigtable::Filter::RowKeysRegex(row_key + "/bc.*"));
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(FilterIntegrationTest, ValueRegex) {
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const prefix = "value-regex-prefix";
   std::vector<bigtable::Cell> created{
-      {prefix + "/abc0", "fam0", "c0", 1000, "v1000"},
-      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000"},
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
-      {prefix + "/hij1", "fam2", "c5", 6000, "v6000"},
+      {prefix + "/abc0", "family1", "c0", 1000, "v1000"},
+      {prefix + "/bcd0", "family2", "c1", 2000, "v2000"},
+      {prefix + "/abc1", "family3", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "family1", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "family2", "c4", 4000, "v5000"},
+      {prefix + "/hij1", "family3", "c5", 6000, "v6000"},
   };
-  CreateCells(*table, created);
+  CreateCells(table, created);
   std::vector<bigtable::Cell> expected{
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
+      {prefix + "/abc1", "family3", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "family1", "c3", 4000, "v4000"},
   };
 
-  auto actual = ReadRows(*table, bigtable::Filter::ValueRegex("v[34][0-9].*"));
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+  auto actual = ReadRows(table, bigtable::Filter::ValueRegex("v[34][0-9].*"));
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(FilterIntegrationTest, ValueRange) {
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const prefix = "value-range-prefix";
   std::vector<bigtable::Cell> created{
-      {prefix + "/abc0", "fam0", "c0", 1000, "v1000"},
-      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000"},
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
-      {prefix + "/hij1", "fam2", "c5", 6000, "v6000"},
+      {prefix + "/abc0", "family1", "c0", 1000, "v1000"},
+      {prefix + "/bcd0", "family2", "c1", 2000, "v2000"},
+      {prefix + "/abc1", "family3", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "family1", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "family2", "c4", 4000, "v5000"},
+      {prefix + "/hij1", "family3", "c5", 6000, "v6000"},
   };
-  CreateCells(*table, created);
+  CreateCells(table, created);
   std::vector<bigtable::Cell> expected{
-      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000"},
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
+      {prefix + "/bcd0", "family2", "c1", 2000, "v2000"},
+      {prefix + "/abc1", "family3", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "family1", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "family2", "c4", 4000, "v5000"},
   };
 
-  auto actual =
-      ReadRows(*table, bigtable::Filter::ValueRange("v2000", "v6000"));
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+  auto actual = ReadRows(table, bigtable::Filter::ValueRange("v2000", "v6000"));
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(FilterIntegrationTest, CellsRowLimit) {
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const prefix = "cell-row-limit-prefix";
-  CreateComplexRows(*table, prefix);
+  CreateComplexRows(table, prefix);
 
-  auto result = ReadRows(*table, bigtable::Filter::CellsRowLimit(3));
+  auto result = ReadRows(table, bigtable::Filter::CellsRowLimit(3));
 
   std::map<std::string, int> actual;
   for (auto const& cell : result) {
@@ -339,18 +317,16 @@ TEST_F(FilterIntegrationTest, CellsRowLimit) {
                                       {prefix + "/complex", 3}};
 
   EXPECT_THAT(expected, ::testing::ContainerEq(actual));
-  EXPECT_STATUS_OK(DeleteTable(table_id));
 }
 
 TEST_F(FilterIntegrationTest, CellsRowOffset) {
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const prefix = "cell-row-offset-prefix";
-  CreateComplexRows(*table, prefix);
+  CreateComplexRows(table, prefix);
 
   // Search in the range [row_key_prefix, row_key_prefix + "0"), we used '/' as
   // the separator and the successor of "/" is "0".
-  auto result = ReadRows(*table, bigtable::Filter::CellsRowOffset(2));
+  auto result = ReadRows(table, bigtable::Filter::CellsRowOffset(2));
 
   std::map<std::string, int> actual;
   for (auto const& cell : result) {
@@ -362,7 +338,6 @@ TEST_F(FilterIntegrationTest, CellsRowOffset) {
                                       {prefix + "/complex", 78}};
 
   EXPECT_THAT(expected, ::testing::ContainerEq(actual));
-  EXPECT_STATUS_OK(DeleteTable(table_id));
 }
 
 TEST_F(FilterIntegrationTest, RowSample) {
@@ -372,8 +347,7 @@ TEST_F(FilterIntegrationTest, RowSample) {
     return;
   }
 
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const prefix = "row-sample-prefix";
 
   constexpr int row_count = 20000;
@@ -381,9 +355,9 @@ TEST_F(FilterIntegrationTest, RowSample) {
   for (int row = 0; row != row_count; ++row) {
     std::string row_key = prefix + "/" + std::to_string(row);
     bulk.emplace_back(bigtable::SingleRowMutation(
-        row_key, bigtable::SetCell("fam0", "col", 4_ms, "foo")));
+        row_key, bigtable::SetCell("family1", "col", 4_ms, "foo")));
   }
-  table->BulkApply(std::move(bulk));
+  table.BulkApply(std::move(bulk));
 
   // We want to check that the sampling rate was "more or less" the prescribed
   // value.  We use 5% as the allowed error, this is arbitrary.  If we wanted to
@@ -421,36 +395,33 @@ TEST_F(FilterIntegrationTest, RowSample) {
 
   // Search in the range [row_key_prefix, row_key_prefix + "0"), we used '/' as
   // the separator and the successor of "/" is "0".
-  auto result = ReadRows(*table, bigtable::Filter::RowSample(kSampleRate));
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+  auto result = ReadRows(table, bigtable::Filter::RowSample(kSampleRate));
   EXPECT_LE(kMinCount, result.size());
   EXPECT_GE(kMaxCount, result.size());
 }
 
 TEST_F(FilterIntegrationTest, StripValueTransformer) {
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const prefix = "strip-value-transformer-prefix";
   std::vector<bigtable::Cell> created{
-      {prefix + "/abc0", "fam0", "c0", 1000, "v1000"},
-      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000"},
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
-      {prefix + "/hij1", "fam2", "c5", 6000, "v6000"},
+      {prefix + "/abc0", "family1", "c0", 1000, "v1000"},
+      {prefix + "/bcd0", "family2", "c1", 2000, "v2000"},
+      {prefix + "/abc1", "family3", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "family1", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "family2", "c4", 4000, "v5000"},
+      {prefix + "/hij1", "family3", "c5", 6000, "v6000"},
   };
-  CreateCells(*table, created);
+  CreateCells(table, created);
   std::vector<bigtable::Cell> expected{
-      {prefix + "/abc0", "fam0", "c0", 1000, ""},
-      {prefix + "/bcd0", "fam1", "c1", 2000, ""},
-      {prefix + "/abc1", "fam2", "c2", 3000, ""},
-      {prefix + "/fgh0", "fam0", "c3", 4000, ""},
-      {prefix + "/hij0", "fam1", "c4", 4000, ""},
-      {prefix + "/hij1", "fam2", "c5", 6000, ""},
+      {prefix + "/abc0", "family1", "c0", 1000, ""},
+      {prefix + "/bcd0", "family2", "c1", 2000, ""},
+      {prefix + "/abc1", "family3", "c2", 3000, ""},
+      {prefix + "/fgh0", "family1", "c3", 4000, ""},
+      {prefix + "/hij0", "family2", "c4", 4000, ""},
+      {prefix + "/hij1", "family3", "c5", 6000, ""},
   };
 
-  auto actual = ReadRows(*table, bigtable::Filter::StripValueTransformer());
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+  auto actual = ReadRows(table, bigtable::Filter::StripValueTransformer());
   CheckEqualUnordered(expected, actual);
 }
 
@@ -460,116 +431,107 @@ TEST_F(FilterIntegrationTest, ApplyLabelTransformer) {
     return;
   }
 
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const prefix = "apply-label-transformer-prefix";
   std::vector<bigtable::Cell> created{
-      {prefix + "/abc0", "fam0", "c0", 1000, "v1000"},
-      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000"},
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
-      {prefix + "/hij1", "fam2", "c5", 6000, "v6000"},
+      {prefix + "/abc0", "family1", "c0", 1000, "v1000"},
+      {prefix + "/bcd0", "family2", "c1", 2000, "v2000"},
+      {prefix + "/abc1", "family3", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "family1", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "family2", "c4", 4000, "v5000"},
+      {prefix + "/hij1", "family3", "c5", 6000, "v6000"},
   };
-  CreateCells(*table, created);
+  CreateCells(table, created);
   std::vector<bigtable::Cell> expected{
-      {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {"foo"}},
-      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000", {"foo"}},
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {"foo"}},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {"foo"}},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {"foo"}},
-      {prefix + "/hij1", "fam2", "c5", 6000, "v6000", {"foo"}},
+      {prefix + "/abc0", "family1", "c0", 1000, "v1000", {"foo"}},
+      {prefix + "/bcd0", "family2", "c1", 2000, "v2000", {"foo"}},
+      {prefix + "/abc1", "family3", "c2", 3000, "v3000", {"foo"}},
+      {prefix + "/fgh0", "family1", "c3", 4000, "v4000", {"foo"}},
+      {prefix + "/hij0", "family2", "c4", 4000, "v5000", {"foo"}},
+      {prefix + "/hij1", "family3", "c5", 6000, "v6000", {"foo"}},
   };
 
-  auto actual =
-      ReadRows(*table, bigtable::Filter::ApplyLabelTransformer("foo"));
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+  auto actual = ReadRows(table, bigtable::Filter::ApplyLabelTransformer("foo"));
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(FilterIntegrationTest, Condition) {
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const prefix = "condition-prefix";
   std::vector<bigtable::Cell> created{
-      {prefix + "/abc0", "fam0", "c0", 1000, "v1000"},
-      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000"},
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
-      {prefix + "/hij1", "fam2", "c5", 6000, "v6000"},
+      {prefix + "/abc0", "family1", "c0", 1000, "v1000"},
+      {prefix + "/bcd0", "family2", "c1", 2000, "v2000"},
+      {prefix + "/abc1", "family3", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "family1", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "family2", "c4", 4000, "v5000"},
+      {prefix + "/hij1", "family3", "c5", 6000, "v6000"},
   };
-  CreateCells(*table, created);
+  CreateCells(table, created);
   std::vector<bigtable::Cell> expected{
-      {prefix + "/abc0", "fam0", "c0", 1000, "v1000"},
-      {prefix + "/bcd0", "fam1", "c1", 2000, ""},
-      {prefix + "/abc1", "fam2", "c2", 3000, ""},
-      {prefix + "/fgh0", "fam0", "c3", 4000, ""},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
+      {prefix + "/abc0", "family1", "c0", 1000, "v1000"},
+      {prefix + "/bcd0", "family2", "c1", 2000, ""},
+      {prefix + "/abc1", "family3", "c2", 3000, ""},
+      {prefix + "/fgh0", "family1", "c3", 4000, ""},
+      {prefix + "/hij0", "family2", "c4", 4000, "v5000"},
   };
 
   using F = bigtable::Filter;
   auto actual =
-      ReadRows(*table, F::Condition(F::ValueRangeClosed("v2000", "v4000"),
-                                    F::StripValueTransformer(),
-                                    F::FamilyRegex("fam[01]")));
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+      ReadRows(table, F::Condition(F::ValueRangeClosed("v2000", "v4000"),
+                                   F::StripValueTransformer(),
+                                   F::FamilyRegex("family[12]")));
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(FilterIntegrationTest, Chain) {
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const prefix = "chain-prefix";
   std::vector<bigtable::Cell> created{
-      {prefix + "/abc0", "fam0", "c0", 1000, "v1000"},
-      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000"},
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
-      {prefix + "/hij1", "fam2", "c5", 6000, "v6000"},
+      {prefix + "/abc0", "family1", "c0", 1000, "v1000"},
+      {prefix + "/bcd0", "family2", "c1", 2000, "v2000"},
+      {prefix + "/abc1", "family3", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "family1", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "family2", "c4", 4000, "v5000"},
+      {prefix + "/hij1", "family3", "c5", 6000, "v6000"},
   };
-  CreateCells(*table, created);
+  CreateCells(table, created);
   std::vector<bigtable::Cell> expected{
-      {prefix + "/fgh0", "fam0", "c3", 4000, ""},
+      {prefix + "/fgh0", "family1", "c3", 4000, ""},
   };
 
   using F = bigtable::Filter;
   auto actual =
-      ReadRows(*table, F::Chain(F::ValueRangeClosed("v2000", "v5000"),
-                                F::StripValueTransformer(),
-                                F::ColumnRangeClosed("fam0", "c2", "c3")));
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+      ReadRows(table, F::Chain(F::ValueRangeClosed("v2000", "v5000"),
+                               F::StripValueTransformer(),
+                               F::ColumnRangeClosed("family1", "c2", "c3")));
   CheckEqualUnordered(expected, actual);
 }
 
 TEST_F(FilterIntegrationTest, Interleave) {
-  std::string const table_id = RandomTableId();
-  auto table = CreateTable(table_id, table_config);
+  auto table = GetTable();
   std::string const prefix = "interleave-prefix";
   std::vector<bigtable::Cell> created{
-      {prefix + "/abc0", "fam0", "c0", 1000, "v1000"},
-      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000"},
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
-      {prefix + "/hij1", "fam2", "c5", 6000, "v6000"},
+      {prefix + "/abc0", "family1", "c0", 1000, "v1000"},
+      {prefix + "/bcd0", "family2", "c1", 2000, "v2000"},
+      {prefix + "/abc1", "family3", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "family1", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "family2", "c4", 4000, "v5000"},
+      {prefix + "/hij1", "family3", "c5", 6000, "v6000"},
   };
-  CreateCells(*table, created);
+  CreateCells(table, created);
   std::vector<bigtable::Cell> expected{
-      {prefix + "/bcd0", "fam1", "c1", 2000, ""},
-      {prefix + "/abc1", "fam2", "c2", 3000, ""},
-      {prefix + "/fgh0", "fam0", "c3", 4000, ""},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
-      {prefix + "/hij0", "fam1", "c4", 4000, ""},
+      {prefix + "/bcd0", "family2", "c1", 2000, ""},
+      {prefix + "/abc1", "family3", "c2", 3000, ""},
+      {prefix + "/fgh0", "family1", "c3", 4000, ""},
+      {prefix + "/fgh0", "family1", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "family2", "c4", 4000, ""},
   };
 
   using F = bigtable::Filter;
   auto actual = ReadRows(
-      *table, F::Interleave(F::Chain(F::ValueRangeClosed("v2000", "v5000"),
-                                     F::StripValueTransformer()),
-                            F::ColumnRangeClosed("fam0", "c2", "c3")));
-  EXPECT_STATUS_OK(DeleteTable(table_id));
+      table, F::Interleave(F::Chain(F::ValueRangeClosed("v2000", "v5000"),
+                                    F::StripValueTransformer()),
+                           F::ColumnRangeClosed("family1", "c2", "c3")));
   CheckEqualUnordered(expected, actual);
 }
 
@@ -584,28 +546,28 @@ void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
   // Prepare a set of rows, with different numbers of cells, columns, and
   // column families.
   mutation.emplace_back(bt::SingleRowMutation(
-      prefix + "/one-cell", {bt::SetCell("fam0", "c", 3_ms, "foo")}));
+      prefix + "/one-cell", {bt::SetCell("family1", "c", 3_ms, "foo")}));
   mutation.emplace_back(bt::SingleRowMutation(
-      prefix + "/two-cells", {bt::SetCell("fam0", "c", 3_ms, "foo"),
-                              bt::SetCell("fam0", "c2", 3_ms, "foo")}));
+      prefix + "/two-cells", {bt::SetCell("family1", "c", 3_ms, "foo"),
+                              bt::SetCell("family1", "c2", 3_ms, "foo")}));
   mutation.emplace_back(bt::SingleRowMutation(
-      prefix + "/many", {bt::SetCell("fam0", "c", 0_ms, "foo"),
-                         bt::SetCell("fam0", "c", 1_ms, "foo"),
-                         bt::SetCell("fam0", "c", 2_ms, "foo"),
-                         bt::SetCell("fam0", "c", 3_ms, "foo")}));
+      prefix + "/many", {bt::SetCell("family1", "c", 0_ms, "foo"),
+                         bt::SetCell("family1", "c", 1_ms, "foo"),
+                         bt::SetCell("family1", "c", 2_ms, "foo"),
+                         bt::SetCell("family1", "c", 3_ms, "foo")}));
   mutation.emplace_back(bt::SingleRowMutation(
-      prefix + "/many-columns", {bt::SetCell("fam0", "c0", 3_ms, "foo"),
-                                 bt::SetCell("fam0", "c1", 3_ms, "foo"),
-                                 bt::SetCell("fam0", "c2", 3_ms, "foo"),
-                                 bt::SetCell("fam0", "c3", 3_ms, "foo")}));
+      prefix + "/many-columns", {bt::SetCell("family1", "c0", 3_ms, "foo"),
+                                 bt::SetCell("family1", "c1", 3_ms, "foo"),
+                                 bt::SetCell("family1", "c2", 3_ms, "foo"),
+                                 bt::SetCell("family1", "c3", 3_ms, "foo")}));
   // This one is complicated: create a mutation with several families and
   // columns.
   bt::SingleRowMutation complex(prefix + "/complex");
   for (int i = 0; i != 4; ++i) {
     for (int j = 0; j != 10; ++j) {
-      complex.emplace_back(bt::SetCell("fam" + std::to_string(i),
+      complex.emplace_back(bt::SetCell("family" + std::to_string(i + 1),
                                        "col" + std::to_string(j), 3_ms, "foo"));
-      complex.emplace_back(bt::SetCell("fam" + std::to_string(i),
+      complex.emplace_back(bt::SetCell("family" + std::to_string(i + 1),
                                        "col" + std::to_string(j), 6_ms, "bar"));
     }
   }
