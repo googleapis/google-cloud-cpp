@@ -165,11 +165,10 @@ TEST_F(DataIntegrationTest, TableSingleRow) {
       bigtable::SetCell(family, "c3", 3_ms, "V3000"));
 
   ASSERT_STATUS_OK(table->Apply(std::move(mutation)));
-  std::vector<bigtable::Cell> expected{
-      {row_key, family, "c1", 1000, "V1000"},
-      {row_key, family, "c2", 2000, "V2000"},
-      {row_key, family, "c3", 3000, "V3000"}};
-  
+  std::vector<bigtable::Cell> expected{{row_key, family, "c1", 1000, "V1000"},
+                                       {row_key, family, "c2", 2000, "V2000"},
+                                       {row_key, family, "c3", 3000, "V3000"}};
+
   auto actual = ReadRows(*table, bigtable::Filter::PassAllFilter());
   EXPECT_STATUS_OK(DeleteTable(table_id));
   CheckEqualUnordered(expected, actual);
