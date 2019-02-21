@@ -181,12 +181,12 @@ TEST_P(NoexAsyncCheckConsistencyRetryTest, OneRetry) {
 }
 
 INSTANTIATE_TEST_SUITE_P(OneRetry, NoexAsyncCheckConsistencyRetryTest,
-                        ::testing::Values(
-                            // First RPC returns an OK status but indicates that
-                            // replication has not yet caught up.
-                            false,
-                            // First RPC fails.
-                            true));
+                         ::testing::Values(
+                             // First RPC returns an OK status but indicates
+                             // that replication has not yet caught up.
+                             false,
+                             // First RPC fails.
+                             true));
 
 class EndToEndConfig {
  public:
