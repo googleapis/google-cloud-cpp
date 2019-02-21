@@ -45,9 +45,8 @@ TEST_F(DataAsyncIntegrationTest, TableApply) {
   auto sync_table = CreateTable(table_id, table_config);
 
   std::string const row_key = "row-key-1";
-  std::vector<bigtable::Cell> created{
-      {row_key, family, "c0", 1000, "v1000", {}},
-      {row_key, family, "c1", 2000, "v2000", {}}};
+  std::vector<bigtable::Cell> created{{row_key, family, "c0", 1000, "v1000"},
+                                      {row_key, family, "c1", 2000, "v2000"}};
   SingleRowMutation mut(row_key);
   for (auto const& c : created) {
     mut.emplace_back(SetCell(
@@ -76,9 +75,8 @@ TEST_F(DataAsyncIntegrationTest, TableApply) {
   done.get_future().get();
 
   // Validate that the newly created cells are actually in the server.
-  std::vector<bigtable::Cell> expected{
-      {row_key, family, "c0", 1000, "v1000", {}},
-      {row_key, family, "c1", 2000, "v2000", {}}};
+  std::vector<bigtable::Cell> expected{{row_key, family, "c0", 1000, "v1000"},
+                                       {row_key, family, "c1", 2000, "v2000"}};
 
   auto actual = ReadRows(*sync_table, bigtable::Filter::PassAllFilter());
 
@@ -97,11 +95,11 @@ TEST_F(DataAsyncIntegrationTest, TableBulkApply) {
   std::string const row_key2 = "row-key-2";
   std::map<std::string, std::vector<bigtable::Cell>> created{
       {row_key1,
-       {{row_key1, family, "c0", 1000, "v1000", {}},
-        {row_key1, family, "c1", 2000, "v2000", {}}}},
+       {{row_key1, family, "c0", 1000, "v1000"},
+        {row_key1, family, "c1", 2000, "v2000"}}},
       {row_key2,
-       {{row_key2, family, "c0", 3000, "v1000", {}},
-        {row_key2, family, "c0", 4000, "v1000", {}}}}};
+       {{row_key2, family, "c0", 3000, "v1000"},
+        {row_key2, family, "c0", 4000, "v1000"}}}};
 
   BulkMutation mut;
   for (auto const& row_cells : created) {
@@ -227,7 +225,7 @@ TEST_F(DataAsyncIntegrationTest, TableCheckAndMutateRowPass) {
   noex::Table table(data_client_, table_id);
   std::string const key = "row-key";
 
-  std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000", {}}};
+  std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000"}};
   CreateCells(*sync_table, created);
   std::promise<void> done;
   CompletionQueue cq;
@@ -245,8 +243,8 @@ TEST_F(DataAsyncIntegrationTest, TableCheckAndMutateRowPass) {
   done.get_future().get();
   cq.Shutdown();
   pool.join();
-  std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000", {}},
-                                       {key, family, "c2", 0, "v2000", {}}};
+  std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000"},
+                                       {key, family, "c2", 0, "v2000"}};
   auto actual = ReadRows(*sync_table, bigtable::Filter::PassAllFilter());
   EXPECT_STATUS_OK(DeleteTable(table_id));
   CheckEqualUnordered(expected, actual);
@@ -258,7 +256,7 @@ TEST_F(DataAsyncIntegrationTest, TableCheckAndMutateRowFail) {
   noex::Table table(data_client_, table_id);
   std::string const key = "row-key";
 
-  std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000", {}}};
+  std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000"}};
   CreateCells(*sync_table, created);
   CompletionQueue cq;
   std::promise<void> done;
@@ -276,8 +274,8 @@ TEST_F(DataAsyncIntegrationTest, TableCheckAndMutateRowFail) {
   done.get_future().get();
   cq.Shutdown();
   pool.join();
-  std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000", {}},
-                                       {key, family, "c3", 0, "v3000", {}}};
+  std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000"},
+                                       {key, family, "c3", 0, "v3000"}};
   auto actual = ReadRows(*sync_table, bigtable::Filter::PassAllFilter());
   EXPECT_STATUS_OK(DeleteTable(table_id));
   CheckEqualUnordered(expected, actual);
@@ -295,15 +293,15 @@ TEST_F(DataAsyncIntegrationTest, AsyncReadModifyWriteAppendValueTest) {
   std::string const add_suffix3 = "-newrecord";
 
   std::vector<bigtable::Cell> created{
-      {row_key1, family1, "column-id1", 1000, "v1000", {}},
-      {row_key1, family2, "column-id2", 2000, "v2000", {}},
-      {row_key1, family3, "column-id1", 2000, "v3000", {}},
-      {row_key1, family1, "column-id3", 2000, "v5000", {}}};
+      {row_key1, family1, "column-id1", 1000, "v1000"},
+      {row_key1, family2, "column-id2", 2000, "v2000"},
+      {row_key1, family3, "column-id1", 2000, "v3000"},
+      {row_key1, family1, "column-id3", 2000, "v5000"}};
 
   std::vector<bigtable::Cell> expected{
-      {row_key1, family1, "column-id1", 1000, "v1000" + add_suffix1, {}},
-      {row_key1, family2, "column-id2", 2000, "v2000" + add_suffix2, {}},
-      {row_key1, family3, "column-id3", 2000, add_suffix3, {}}};
+      {row_key1, family1, "column-id1", 1000, "v1000" + add_suffix1},
+      {row_key1, family2, "column-id2", 2000, "v2000" + add_suffix2},
+      {row_key1, family3, "column-id3", 2000, add_suffix3}};
 
   CreateCells(*sync_table, created);
 
@@ -350,13 +348,13 @@ TEST_F(DataAsyncIntegrationTest, AsyncReadModifyWriteRowIncrementAmountTest) {
 
   // An initial; BigEndian int64 number with value 0.
   std::string v1("\x00\x00\x00\x00\x00\x00\x00\x00", 8);
-  std::vector<bigtable::Cell> created{{key, family1, "c1", 0, v1, {}}};
+  std::vector<bigtable::Cell> created{{key, family1, "c1", 0, v1}};
 
   // The expected values as buffers containing BigEndian int64 numbers.
   std::string e1("\x00\x00\x00\x00\x00\x00\x00\x2A", 8);
   std::string e2("\x00\x00\x00\x00\x00\x00\x00\x07", 8);
-  std::vector<bigtable::Cell> expected{{key, family1, "c1", 0, e1, {}},
-                                       {key, family1, "c2", 0, e2, {}}};
+  std::vector<bigtable::Cell> expected{{key, family1, "c1", 0, e1},
+                                       {key, family1, "c2", 0, e2}};
 
   CreateCells(*sync_table, created);
 
@@ -392,25 +390,24 @@ TEST_F(DataAsyncIntegrationTest, AsyncReadModifyWriteRowMultipleTest) {
   std::string const key = "row-key";
 
   std::string v1("\x00\x00\x00\x00\x00\x00\x00\x00", 8);
-  std::vector<bigtable::Cell> created{{key, family1, "c1", 0, v1, {}},
-                                      {key, family1, "c3", 0, "start;", {}},
-                                      {key, family2, "d1", 0, v1, {}},
-                                      {key, family2, "d3", 0, "start;", {}}};
+  std::vector<bigtable::Cell> created{{key, family1, "c1", 0, v1},
+                                      {key, family1, "c3", 0, "start;"},
+                                      {key, family2, "d1", 0, v1},
+                                      {key, family2, "d3", 0, "start;"}};
 
   // The expected values as buffers containing BigEndian int64 numbers.
   std::string e1("\x00\x00\x00\x00\x00\x00\x00\x2A", 8);
   std::string e2("\x00\x00\x00\x00\x00\x00\x00\x07", 8);
   std::string e3("\x00\x00\x00\x00\x00\x00\x07\xD0", 8);
   std::string e4("\x00\x00\x00\x00\x00\x00\x0B\xB8", 8);
-  std::vector<bigtable::Cell> expected{
-      {key, family1, "c1", 0, e1, {}},
-      {key, family1, "c2", 0, e2, {}},
-      {key, family1, "c3", 0, "start;suffix", {}},
-      {key, family1, "c4", 0, "suffix", {}},
-      {key, family2, "d1", 0, e3, {}},
-      {key, family2, "d2", 0, e4, {}},
-      {key, family2, "d3", 0, "start;suffix", {}},
-      {key, family2, "d4", 0, "suffix", {}}};
+  std::vector<bigtable::Cell> expected{{key, family1, "c1", 0, e1},
+                                       {key, family1, "c2", 0, e2},
+                                       {key, family1, "c3", 0, "start;suffix"},
+                                       {key, family1, "c4", 0, "suffix"},
+                                       {key, family2, "d1", 0, e3},
+                                       {key, family2, "d2", 0, e4},
+                                       {key, family2, "d3", 0, "start;suffix"},
+                                       {key, family2, "d4", 0, "suffix"}};
 
   CreateCells(*sync_table, created);
 
@@ -458,10 +455,10 @@ TEST_F(DataAsyncIntegrationTest, TableReadRowsAllRows) {
   std::string const long_value(1024, 'v');  // a long value
 
   std::vector<bigtable::Cell> created{
-      {row_key1, family, "c1", 1000, "data1", {}},
-      {row_key1, family, "c2", 1000, "data2", {}},
-      {row_key2, family, "c1", 1000, "", {}},
-      {row_key3, family, "c1", 1000, long_value, {}}};
+      {row_key1, family, "c1", 1000, "data1"},
+      {row_key1, family, "c2", 1000, "data2"},
+      {row_key2, family, "c1", 1000, ""},
+      {row_key3, family, "c1", 1000, long_value}};
 
   CreateCells(*sync_table, created);
 
@@ -500,11 +497,9 @@ TEST_F(DataAsyncIntegrationTest, TableAsyncReadRow) {
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
 
-  std::vector<bigtable::Cell> created{
-      {row_key1, family, "c1", 1000, "v1000", {}},
-      {row_key2, family, "c2", 2000, "v2000", {}}};
-  std::vector<bigtable::Cell> expected{
-      {row_key1, family, "c1", 1000, "v1000", {}}};
+  std::vector<bigtable::Cell> created{{row_key1, family, "c1", 1000, "v1000"},
+                                      {row_key2, family, "c2", 2000, "v2000"}};
+  std::vector<bigtable::Cell> expected{{row_key1, family, "c1", 1000, "v1000"}};
 
   CreateCells(*sync_table, created);
 
@@ -538,8 +533,7 @@ TEST_F(DataAsyncIntegrationTest, TableAsyncReadRowForNoRow) {
   noex::Table table(data_client_, table_id);
   std::string const row_key2 = "row-key-2";
 
-  std::vector<bigtable::Cell> created{
-      {row_key2, family, "c2", 2000, "v2000", {}}};
+  std::vector<bigtable::Cell> created{{row_key2, family, "c2", 2000, "v2000"}};
 
   CreateCells(*sync_table, created);
 

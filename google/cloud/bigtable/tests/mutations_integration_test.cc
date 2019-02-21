@@ -75,12 +75,12 @@ TEST_F(MutationIntegrationTest, SetCellTest) {
   // Create a vector of cells which will be inserted into bigtable
   std::string const row_key = "SetCellRowKey";
   std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key, column_family1, "column_id1", 1000, "v-c-0-1", {}},
-      {row_key, column_family1, "column_id1", 2000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 0, "v-c0-0-0", {}},
-      {row_key, column_family2, "column_id3", 1000, "v-c1-0-1", {}},
-      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2", {}},
+      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
+      {row_key, column_family1, "column_id1", 1000, "v-c-0-1"},
+      {row_key, column_family1, "column_id1", 2000, "v-c-0-2"},
+      {row_key, column_family2, "column_id2", 0, "v-c0-0-0"},
+      {row_key, column_family2, "column_id3", 1000, "v-c1-0-1"},
+      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2"},
   };
 
   CreateCells(*table, created_cells);
@@ -100,7 +100,7 @@ TEST_F(MutationIntegrationTest, SetCellNumericValueTest) {
   // Create a vector of cells which will be inserted into bigtable
   std::string const row_key = "SetCellNumRowKey";
   std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
+      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
       {row_key,
        column_family1,
        "column_id1",
@@ -113,14 +113,14 @@ TEST_F(MutationIntegrationTest, SetCellNumericValueTest) {
        2000,
        bigtable::bigendian64_t(3000),
        {}},
-      {row_key, column_family2, "column_id2", 0, "v-c0-0-0", {}},
+      {row_key, column_family2, "column_id2", 0, "v-c0-0-0"},
       {row_key,
        column_family2,
        "column_id3",
        1000,
        bigtable::bigendian64_t(5000),
        {}},
-      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2", {}},
+      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2"},
   };
 
   CreateCells(*table, created_cells);
@@ -138,7 +138,7 @@ TEST_F(MutationIntegrationTest, SetCellNumericValueTest) {
 TEST_F(MutationIntegrationTest, SetCellNumericValueExceptionTest) {
   std::string const table_id = RandomTableId();
   bigtable::Cell new_cell("row-key", "column_family", "column_id", 1000,
-                          "string-value", {});
+                          "string-value");
   EXPECT_THROW(new_cell.value_as<bigtable::bigendian64_t>().get(),
                std::range_error);
 }
@@ -154,21 +154,21 @@ TEST_F(MutationIntegrationTest, SetCellIgnoreTimestampTest) {
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key = "SetCellRowKey";
   std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key, column_family1, "column_id2", 1000, "v-c-0-1", {}},
-      {row_key, column_family1, "column_id3", 2000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 0, "v-c0-0-0", {}},
-      {row_key, column_family2, "column_id3", 1000, "v-c1-0-1", {}},
-      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2", {}},
+      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
+      {row_key, column_family1, "column_id2", 1000, "v-c-0-1"},
+      {row_key, column_family1, "column_id3", 2000, "v-c-0-2"},
+      {row_key, column_family2, "column_id2", 0, "v-c0-0-0"},
+      {row_key, column_family2, "column_id3", 1000, "v-c1-0-1"},
+      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2"},
   };
   std::int64_t server_timestamp = -1;
   std::vector<bigtable::Cell> expected_cells{
-      {row_key, column_family1, "column_id1", server_timestamp, "v-c-0-0", {}},
-      {row_key, column_family1, "column_id2", server_timestamp, "v-c-0-1", {}},
-      {row_key, column_family1, "column_id3", server_timestamp, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", server_timestamp, "v-c0-0-0", {}},
-      {row_key, column_family2, "column_id3", server_timestamp, "v-c1-0-1", {}},
-      {row_key, column_family3, "column_id1", server_timestamp, "v-c1-0-2", {}},
+      {row_key, column_family1, "column_id1", server_timestamp, "v-c-0-0"},
+      {row_key, column_family1, "column_id2", server_timestamp, "v-c-0-1"},
+      {row_key, column_family1, "column_id3", server_timestamp, "v-c-0-2"},
+      {row_key, column_family2, "column_id2", server_timestamp, "v-c0-0-0"},
+      {row_key, column_family2, "column_id3", server_timestamp, "v-c1-0-1"},
+      {row_key, column_family3, "column_id1", server_timestamp, "v-c1-0-2"},
   };
 
   CreateCellsIgnoringTimestamp(*table, created_cells);
@@ -193,26 +193,26 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForTimestampRangeTest) {
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key = "DeleteColumn-Key";
   std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key, column_family1, "column_id2", 1000, "v-c-0-1", {}},
-      {row_key, column_family1, "column_id3", 2000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
-      {row_key, column_family2, "column_id2", 1000, "v-c0-0-1", {}},
-      {row_key, column_family2, "column_id2", 3000, "v-c0-0-2", {}},
-      {row_key, column_family2, "column_id2", 4000, "v-c0-0-3", {}},
-      {row_key, column_family2, "column_id3", 1000, "v-c1-0-1", {}},
-      {row_key, column_family2, "column_id2", 2000, "v-c1-0-2", {}},
-      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2", {}},
+      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
+      {row_key, column_family1, "column_id2", 1000, "v-c-0-1"},
+      {row_key, column_family1, "column_id3", 2000, "v-c-0-2"},
+      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key, column_family2, "column_id2", 1000, "v-c0-0-1"},
+      {row_key, column_family2, "column_id2", 3000, "v-c0-0-2"},
+      {row_key, column_family2, "column_id2", 4000, "v-c0-0-3"},
+      {row_key, column_family2, "column_id3", 1000, "v-c1-0-1"},
+      {row_key, column_family2, "column_id2", 2000, "v-c1-0-2"},
+      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2"},
   };
 
   std::vector<bigtable::Cell> expected_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key, column_family1, "column_id2", 1000, "v-c-0-1", {}},
-      {row_key, column_family1, "column_id3", 2000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 1000, "v-c0-0-1", {}},
-      {row_key, column_family2, "column_id2", 4000, "v-c0-0-3", {}},
-      {row_key, column_family2, "column_id3", 1000, "v-c1-0-1", {}},
-      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2", {}},
+      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
+      {row_key, column_family1, "column_id2", 1000, "v-c-0-1"},
+      {row_key, column_family1, "column_id3", 2000, "v-c-0-2"},
+      {row_key, column_family2, "column_id2", 1000, "v-c0-0-1"},
+      {row_key, column_family2, "column_id2", 4000, "v-c0-0-3"},
+      {row_key, column_family2, "column_id3", 1000, "v-c1-0-1"},
+      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2"},
   };
 
   // Create records
@@ -243,15 +243,15 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForReversedTimestampRangeTest) {
   // Create a vector of cell which will be inserted into bigtable
   std::string const key = "row";
   std::vector<bigtable::Cell> created_cells{
-      {key, column_family1, "c1", 1000, "v1", {}},
-      {key, column_family1, "c2", 1000, "v2", {}},
-      {key, column_family1, "c3", 2000, "v3", {}},
-      {key, column_family2, "c2", 1000, "v4", {}},
-      {key, column_family2, "c2", 3000, "v5", {}},
-      {key, column_family2, "c2", 4000, "v6", {}},
-      {key, column_family2, "c3", 1000, "v7", {}},
-      {key, column_family2, "c2", 2000, "v8", {}},
-      {key, column_family3, "c1", 2000, "v9", {}},
+      {key, column_family1, "c1", 1000, "v1"},
+      {key, column_family1, "c2", 1000, "v2"},
+      {key, column_family1, "c3", 2000, "v3"},
+      {key, column_family2, "c2", 1000, "v4"},
+      {key, column_family2, "c2", 3000, "v5"},
+      {key, column_family2, "c2", 4000, "v6"},
+      {key, column_family2, "c3", 1000, "v7"},
+      {key, column_family2, "c2", 2000, "v8"},
+      {key, column_family3, "c1", 2000, "v9"},
   };
 
   CreateCells(*table, created_cells);
@@ -281,9 +281,9 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForEmptyTimestampRangeTest) {
   // Create a vector of cell which will be inserted into bigtable
   std::string const key = "row";
   std::vector<bigtable::Cell> created_cells{
-      {key, column_family1, "c3", 2000, "v3", {}},
-      {key, column_family2, "c2", 2000, "v2", {}},
-      {key, column_family3, "c1", 2000, "v1", {}},
+      {key, column_family1, "c3", 2000, "v3"},
+      {key, column_family2, "c2", 2000, "v2"},
+      {key, column_family3, "c1", 2000, "v1"},
   };
 
   CreateCells(*table, created_cells);
@@ -307,16 +307,16 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForAllTest) {
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key = "DeleteColumnForAll-Key";
   std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key, column_family1, "column_id3", 1000, "v-c-0-1", {}},
-      {row_key, column_family2, "column_id3", 2000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
-      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2", {}},
+      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
+      {row_key, column_family1, "column_id3", 1000, "v-c-0-1"},
+      {row_key, column_family2, "column_id3", 2000, "v-c-0-2"},
+      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2"},
   };
   std::vector<bigtable::Cell> expected_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key, column_family2, "column_id3", 2000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
+      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
+      {row_key, column_family2, "column_id3", 2000, "v-c-0-2"},
+      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
   };
 
   // Create records
@@ -342,18 +342,18 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnStartingFromTest) {
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key = "DeleteColumnStartingFrom-Key";
   std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key, column_family1, "column_id1", 1000, "v-c-0-1", {}},
-      {row_key, column_family1, "column_id1", 2000, "v-c-0-1", {}},
-      {row_key, column_family2, "column_id3", 2000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
-      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2", {}},
+      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
+      {row_key, column_family1, "column_id1", 1000, "v-c-0-1"},
+      {row_key, column_family1, "column_id1", 2000, "v-c-0-1"},
+      {row_key, column_family2, "column_id3", 2000, "v-c-0-2"},
+      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2"},
   };
   std::vector<bigtable::Cell> expected_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key, column_family2, "column_id3", 2000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
-      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2", {}},
+      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
+      {row_key, column_family2, "column_id3", 2000, "v-c-0-2"},
+      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2"},
   };
 
   // Create records
@@ -380,18 +380,18 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnEndingAtTest) {
   // Create a vector of cell which will be inserted into bigtable cloud
   std::string const row_key = "DeleteColumnEndingAt-Key";
   std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key, column_family1, "column_id1", 1000, "v-c-0-1", {}},
-      {row_key, column_family1, "column_id1", 2000, "v-c-0-1", {}},
-      {row_key, column_family2, "column_id3", 2000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
-      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2", {}},
+      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
+      {row_key, column_family1, "column_id1", 1000, "v-c-0-1"},
+      {row_key, column_family1, "column_id1", 2000, "v-c-0-1"},
+      {row_key, column_family2, "column_id3", 2000, "v-c-0-2"},
+      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2"},
   };
   std::vector<bigtable::Cell> expected_cells{
-      {row_key, column_family1, "column_id1", 2000, "v-c-0-1", {}},
-      {row_key, column_family2, "column_id3", 2000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
-      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2", {}},
+      {row_key, column_family1, "column_id1", 2000, "v-c-0-1"},
+      {row_key, column_family2, "column_id3", 2000, "v-c-0-2"},
+      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2"},
   };
 
   // Create records
@@ -419,15 +419,15 @@ TEST_F(MutationIntegrationTest, DeleteFromFamilyTest) {
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key = "DeleteFamily-Key";
   std::vector<bigtable::Cell> created_cells{
-      {row_key, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key, column_family1, "column_id1", 1000, "v-c-0-1", {}},
-      {row_key, column_family2, "column_id3", 2000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
-      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2", {}},
+      {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
+      {row_key, column_family1, "column_id1", 1000, "v-c-0-1"},
+      {row_key, column_family2, "column_id3", 2000, "v-c-0-2"},
+      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key, column_family1, "column_id3", 3000, "v-c1-0-2"},
   };
   std::vector<bigtable::Cell> expected_cells{
-      {row_key, column_family2, "column_id3", 2000, "v-c-0-2", {}},
-      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
+      {row_key, column_family2, "column_id3", 2000, "v-c-0-2"},
+      {row_key, column_family2, "column_id2", 2000, "v-c0-0-0"},
   };
 
   // Create records
@@ -453,15 +453,15 @@ TEST_F(MutationIntegrationTest, DeleteFromRowTest) {
   std::string const row_key1 = "DeleteRowKey1";
   std::string const row_key2 = "DeleteRowKey2";
   std::vector<bigtable::Cell> created_cells{
-      {row_key1, column_family1, "column_id1", 0, "v-c-0-0", {}},
-      {row_key1, column_family1, "column_id1", 1000, "v-c-0-1", {}},
-      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2", {}},
-      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
-      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2", {}},
+      {row_key1, column_family1, "column_id1", 0, "v-c-0-0"},
+      {row_key1, column_family1, "column_id1", 1000, "v-c-0-1"},
+      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2"},
+      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"},
   };
   std::vector<bigtable::Cell> expected_cells{
-      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0", {}},
-      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2", {}},
+      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"},
   };
 
   // Create records

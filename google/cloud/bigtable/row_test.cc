@@ -20,7 +20,7 @@ namespace bigtable = google::cloud::bigtable;
 /// @test Verify Row instantiation and trivial accessors.
 TEST(RowTest, RowInstantiation) {
   std::string row_key = "row";
-  bigtable::Cell cell(row_key, "family", "column", 42, "value", {});
+  bigtable::Cell cell(row_key, "family", "column", 42, "value");
   bigtable::Row row(row_key, {cell});
 
   EXPECT_EQ(1U, row.cells().size());
@@ -30,7 +30,7 @@ TEST(RowTest, RowInstantiation) {
   EXPECT_EQ(0U, empty_row.cells().size());
   EXPECT_EQ(empty_row.cells().begin(), empty_row.cells().end());
 
-  bigtable::Cell cell2(row_key, "family", "column", 43, "val", {});
+  bigtable::Cell cell2(row_key, "family", "column", 43, "val");
   bigtable::Row two_cells_row(row_key, {cell, cell2});
   EXPECT_EQ(2U, two_cells_row.cells().size());
   EXPECT_EQ(std::next(two_cells_row.cells().begin())->value(), cell2.value());

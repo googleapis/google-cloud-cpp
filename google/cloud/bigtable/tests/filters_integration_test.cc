@@ -94,12 +94,12 @@ TEST_F(FilterIntegrationTest, PassAll) {
   auto table = CreateTable(table_id, table_config);
   std::string const row_key = "pass-all-row-key";
   std::vector<bigtable::Cell> expected{
-      {row_key, "fam0", "c", 0, "v-c-0-0", {}},
-      {row_key, "fam0", "c", 1000, "v-c-0-1", {}},
-      {row_key, "fam0", "c", 2000, "v-c-0-2", {}},
-      {row_key, "fam1", "c0", 0, "v-c0-0-0", {}},
-      {row_key, "fam1", "c1", 1000, "v-c1-0-1", {}},
-      {row_key, "fam1", "c1", 2000, "v-c1-0-2", {}},
+      {row_key, "fam0", "c", 0, "v-c-0-0"},
+      {row_key, "fam0", "c", 1000, "v-c-0-1"},
+      {row_key, "fam0", "c", 2000, "v-c-0-2"},
+      {row_key, "fam1", "c0", 0, "v-c0-0-0"},
+      {row_key, "fam1", "c1", 1000, "v-c1-0-1"},
+      {row_key, "fam1", "c1", 2000, "v-c1-0-2"},
   };
   CreateCells(*table, expected);
 
@@ -113,12 +113,12 @@ TEST_F(FilterIntegrationTest, BlockAll) {
   auto table = CreateTable(table_id, table_config);
   std::string const row_key = "block-all-row-key";
   std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "c", 0, "v-c-0-0", {}},
-      {row_key, "fam0", "c", 1000, "v-c-0-1", {}},
-      {row_key, "fam0", "c", 2000, "v-c-0-2", {}},
-      {row_key, "fam1", "c0", 0, "v-c0-0-0", {}},
-      {row_key, "fam1", "c1", 1000, "v-c1-0-1", {}},
-      {row_key, "fam1", "c1", 2000, "v-c1-0-2", {}},
+      {row_key, "fam0", "c", 0, "v-c-0-0"},
+      {row_key, "fam0", "c", 1000, "v-c-0-1"},
+      {row_key, "fam0", "c", 2000, "v-c-0-2"},
+      {row_key, "fam1", "c0", 0, "v-c0-0-0"},
+      {row_key, "fam1", "c1", 1000, "v-c1-0-1"},
+      {row_key, "fam1", "c1", 2000, "v-c1-0-2"},
   };
   CreateCells(*table, created);
   std::vector<bigtable::Cell> expected{};
@@ -133,21 +133,21 @@ TEST_F(FilterIntegrationTest, Latest) {
   auto table = CreateTable(table_id, table_config);
   std::string const row_key = "latest-row-key";
   std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "c", 0, "v-c-0-0", {}},
-      {row_key, "fam0", "c", 1000, "v-c-0-1", {}},
-      {row_key, "fam0", "c", 2000, "v-c-0-2", {}},
-      {row_key, "fam1", "c0", 0, "v-c0-0-0", {}},
-      {row_key, "fam1", "c1", 1000, "v-c1-0-1", {}},
-      {row_key, "fam1", "c1", 2000, "v-c1-0-2", {}},
-      {row_key, "fam1", "c1", 3000, "v-c1-0-3", {}},
+      {row_key, "fam0", "c", 0, "v-c-0-0"},
+      {row_key, "fam0", "c", 1000, "v-c-0-1"},
+      {row_key, "fam0", "c", 2000, "v-c-0-2"},
+      {row_key, "fam1", "c0", 0, "v-c0-0-0"},
+      {row_key, "fam1", "c1", 1000, "v-c1-0-1"},
+      {row_key, "fam1", "c1", 2000, "v-c1-0-2"},
+      {row_key, "fam1", "c1", 3000, "v-c1-0-3"},
   };
   CreateCells(*table, created);
   std::vector<bigtable::Cell> expected{
-      {row_key, "fam0", "c", 1000, "v-c-0-1", {}},
-      {row_key, "fam0", "c", 2000, "v-c-0-2", {}},
-      {row_key, "fam1", "c0", 0, "v-c0-0-0", {}},
-      {row_key, "fam1", "c1", 2000, "v-c1-0-2", {}},
-      {row_key, "fam1", "c1", 3000, "v-c1-0-3", {}},
+      {row_key, "fam0", "c", 1000, "v-c-0-1"},
+      {row_key, "fam0", "c", 2000, "v-c-0-2"},
+      {row_key, "fam1", "c0", 0, "v-c0-0-0"},
+      {row_key, "fam1", "c1", 2000, "v-c1-0-2"},
+      {row_key, "fam1", "c1", 3000, "v-c1-0-3"},
   };
 
   auto actual = ReadRows(*table, bigtable::Filter::Latest(2));
@@ -160,19 +160,16 @@ TEST_F(FilterIntegrationTest, FamilyRegex) {
   auto table = CreateTable(table_id, table_config);
   std::string const row_key = "family-regex-row-key";
   std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "c2", 0, "bar", {}},
-      {row_key, "fam0", "c", 0, "bar", {}},
-      {row_key, "fam1", "c", 0, "bar", {}},
-      {row_key, "fam2", "c", 0, "bar", {}},
-      {row_key, "fam2", "c2", 0, "bar", {}},
-      {row_key, "fam3", "c2", 0, "bar", {}},
+      {row_key, "fam0", "c2", 0, "bar"}, {row_key, "fam0", "c", 0, "bar"},
+      {row_key, "fam1", "c", 0, "bar"},  {row_key, "fam2", "c", 0, "bar"},
+      {row_key, "fam2", "c2", 0, "bar"}, {row_key, "fam3", "c2", 0, "bar"},
   };
   CreateCells(*table, created);
   std::vector<bigtable::Cell> expected{
-      {row_key, "fam0", "c2", 0, "bar", {}},
-      {row_key, "fam0", "c", 0, "bar", {}},
-      {row_key, "fam2", "c", 0, "bar", {}},
-      {row_key, "fam2", "c2", 0, "bar", {}},
+      {row_key, "fam0", "c2", 0, "bar"},
+      {row_key, "fam0", "c", 0, "bar"},
+      {row_key, "fam2", "c", 0, "bar"},
+      {row_key, "fam2", "c2", 0, "bar"},
   };
 
   auto actual = ReadRows(*table, bigtable::Filter::FamilyRegex("fam[02]"));
@@ -185,19 +182,16 @@ TEST_F(FilterIntegrationTest, ColumnRegex) {
   auto table = CreateTable(table_id, table_config);
   std::string const row_key = "column-regex-row-key";
   std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "abc", 0, "bar", {}},
-      {row_key, "fam1", "bcd", 0, "bar", {}},
-      {row_key, "fam2", "abc", 0, "bar", {}},
-      {row_key, "fam3", "def", 0, "bar", {}},
-      {row_key, "fam0", "fgh", 0, "bar", {}},
-      {row_key, "fam1", "hij", 0, "bar", {}},
+      {row_key, "fam0", "abc", 0, "bar"}, {row_key, "fam1", "bcd", 0, "bar"},
+      {row_key, "fam2", "abc", 0, "bar"}, {row_key, "fam3", "def", 0, "bar"},
+      {row_key, "fam0", "fgh", 0, "bar"}, {row_key, "fam1", "hij", 0, "bar"},
   };
   CreateCells(*table, created);
   std::vector<bigtable::Cell> expected{
-      {row_key, "fam0", "abc", 0, "bar", {}},
-      {row_key, "fam2", "abc", 0, "bar", {}},
-      {row_key, "fam0", "fgh", 0, "bar", {}},
-      {row_key, "fam1", "hij", 0, "bar", {}},
+      {row_key, "fam0", "abc", 0, "bar"},
+      {row_key, "fam2", "abc", 0, "bar"},
+      {row_key, "fam0", "fgh", 0, "bar"},
+      {row_key, "fam1", "hij", 0, "bar"},
   };
 
   auto actual = ReadRows(*table, bigtable::Filter::ColumnRegex("(abc|.*h.*)"));
@@ -210,18 +204,15 @@ TEST_F(FilterIntegrationTest, ColumnRange) {
   auto table = CreateTable(table_id, table_config);
   std::string const row_key = "column-range-row-key";
   std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "a00", 0, "bar", {}},
-      {row_key, "fam0", "b00", 0, "bar", {}},
-      {row_key, "fam0", "b01", 0, "bar", {}},
-      {row_key, "fam0", "b02", 0, "bar", {}},
-      {row_key, "fam1", "a00", 0, "bar", {}},
-      {row_key, "fam1", "b01", 0, "bar", {}},
-      {row_key, "fam1", "b00", 0, "bar", {}},
+      {row_key, "fam0", "a00", 0, "bar"}, {row_key, "fam0", "b00", 0, "bar"},
+      {row_key, "fam0", "b01", 0, "bar"}, {row_key, "fam0", "b02", 0, "bar"},
+      {row_key, "fam1", "a00", 0, "bar"}, {row_key, "fam1", "b01", 0, "bar"},
+      {row_key, "fam1", "b00", 0, "bar"},
   };
   CreateCells(*table, created);
   std::vector<bigtable::Cell> expected{
-      {row_key, "fam0", "b00", 0, "bar", {}},
-      {row_key, "fam0", "b01", 0, "bar", {}},
+      {row_key, "fam0", "b00", 0, "bar"},
+      {row_key, "fam0", "b01", 0, "bar"},
   };
 
   auto actual =
@@ -235,18 +226,18 @@ TEST_F(FilterIntegrationTest, TimestampRange) {
   auto table = CreateTable(table_id, table_config);
   std::string const row_key = "timestamp-range-row-key";
   std::vector<bigtable::Cell> created{
-      {row_key, "fam0", "c0", 1000, "v1000", {}},
-      {row_key, "fam1", "c1", 2000, "v2000", {}},
-      {row_key, "fam2", "c2", 3000, "v3000", {}},
-      {row_key, "fam0", "c3", 4000, "v4000", {}},
-      {row_key, "fam1", "c4", 4000, "v5000", {}},
-      {row_key, "fam2", "c5", 6000, "v6000", {}},
+      {row_key, "fam0", "c0", 1000, "v1000"},
+      {row_key, "fam1", "c1", 2000, "v2000"},
+      {row_key, "fam2", "c2", 3000, "v3000"},
+      {row_key, "fam0", "c3", 4000, "v4000"},
+      {row_key, "fam1", "c4", 4000, "v5000"},
+      {row_key, "fam2", "c5", 6000, "v6000"},
   };
   CreateCells(*table, created);
   std::vector<bigtable::Cell> expected{
-      {row_key, "fam2", "c2", 3000, "v3000", {}},
-      {row_key, "fam0", "c3", 4000, "v4000", {}},
-      {row_key, "fam1", "c4", 4000, "v5000", {}},
+      {row_key, "fam2", "c2", 3000, "v3000"},
+      {row_key, "fam0", "c3", 4000, "v4000"},
+      {row_key, "fam1", "c4", 4000, "v5000"},
   };
 
   auto actual = ReadRows(
@@ -261,16 +252,16 @@ TEST_F(FilterIntegrationTest, RowKeysRegex) {
   auto table = CreateTable(table_id, table_config);
   std::string const row_key = "row-key-regex-row-key";
   std::vector<bigtable::Cell> created{
-      {row_key + "/abc0", "fam0", "c0", 1000, "v1000", {}},
-      {row_key + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
-      {row_key + "/abc1", "fam2", "c2", 3000, "v3000", {}},
-      {row_key + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
-      {row_key + "/hij0", "fam1", "c4", 4000, "v5000", {}},
-      {row_key + "/hij1", "fam2", "c5", 6000, "v6000", {}},
+      {row_key + "/abc0", "fam0", "c0", 1000, "v1000"},
+      {row_key + "/bcd0", "fam1", "c1", 2000, "v2000"},
+      {row_key + "/abc1", "fam2", "c2", 3000, "v3000"},
+      {row_key + "/fgh0", "fam0", "c3", 4000, "v4000"},
+      {row_key + "/hij0", "fam1", "c4", 4000, "v5000"},
+      {row_key + "/hij1", "fam2", "c5", 6000, "v6000"},
   };
   CreateCells(*table, created);
   std::vector<bigtable::Cell> expected{
-      {row_key + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
+      {row_key + "/bcd0", "fam1", "c1", 2000, "v2000"},
   };
 
   auto actual =
@@ -284,17 +275,17 @@ TEST_F(FilterIntegrationTest, ValueRegex) {
   auto table = CreateTable(table_id, table_config);
   std::string const prefix = "value-regex-prefix";
   std::vector<bigtable::Cell> created{
-      {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
-      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {}},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {}},
-      {prefix + "/hij1", "fam2", "c5", 6000, "v6000", {}},
+      {prefix + "/abc0", "fam0", "c0", 1000, "v1000"},
+      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000"},
+      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
+      {prefix + "/hij1", "fam2", "c5", 6000, "v6000"},
   };
   CreateCells(*table, created);
   std::vector<bigtable::Cell> expected{
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {}},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
+      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
   };
 
   auto actual = ReadRows(*table, bigtable::Filter::ValueRegex("v[34][0-9].*"));
@@ -307,19 +298,19 @@ TEST_F(FilterIntegrationTest, ValueRange) {
   auto table = CreateTable(table_id, table_config);
   std::string const prefix = "value-range-prefix";
   std::vector<bigtable::Cell> created{
-      {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
-      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {}},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {}},
-      {prefix + "/hij1", "fam2", "c5", 6000, "v6000", {}},
+      {prefix + "/abc0", "fam0", "c0", 1000, "v1000"},
+      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000"},
+      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
+      {prefix + "/hij1", "fam2", "c5", 6000, "v6000"},
   };
   CreateCells(*table, created);
   std::vector<bigtable::Cell> expected{
-      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {}},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {}},
+      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000"},
+      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
   };
 
   auto actual =
@@ -441,21 +432,21 @@ TEST_F(FilterIntegrationTest, StripValueTransformer) {
   auto table = CreateTable(table_id, table_config);
   std::string const prefix = "strip-value-transformer-prefix";
   std::vector<bigtable::Cell> created{
-      {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
-      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {}},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {}},
-      {prefix + "/hij1", "fam2", "c5", 6000, "v6000", {}},
+      {prefix + "/abc0", "fam0", "c0", 1000, "v1000"},
+      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000"},
+      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
+      {prefix + "/hij1", "fam2", "c5", 6000, "v6000"},
   };
   CreateCells(*table, created);
   std::vector<bigtable::Cell> expected{
-      {prefix + "/abc0", "fam0", "c0", 1000, "", {}},
-      {prefix + "/bcd0", "fam1", "c1", 2000, "", {}},
-      {prefix + "/abc1", "fam2", "c2", 3000, "", {}},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "", {}},
-      {prefix + "/hij0", "fam1", "c4", 4000, "", {}},
-      {prefix + "/hij1", "fam2", "c5", 6000, "", {}},
+      {prefix + "/abc0", "fam0", "c0", 1000, ""},
+      {prefix + "/bcd0", "fam1", "c1", 2000, ""},
+      {prefix + "/abc1", "fam2", "c2", 3000, ""},
+      {prefix + "/fgh0", "fam0", "c3", 4000, ""},
+      {prefix + "/hij0", "fam1", "c4", 4000, ""},
+      {prefix + "/hij1", "fam2", "c5", 6000, ""},
   };
 
   auto actual = ReadRows(*table, bigtable::Filter::StripValueTransformer());
@@ -473,12 +464,12 @@ TEST_F(FilterIntegrationTest, ApplyLabelTransformer) {
   auto table = CreateTable(table_id, table_config);
   std::string const prefix = "apply-label-transformer-prefix";
   std::vector<bigtable::Cell> created{
-      {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
-      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {}},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {}},
-      {prefix + "/hij1", "fam2", "c5", 6000, "v6000", {}},
+      {prefix + "/abc0", "fam0", "c0", 1000, "v1000"},
+      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000"},
+      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
+      {prefix + "/hij1", "fam2", "c5", 6000, "v6000"},
   };
   CreateCells(*table, created);
   std::vector<bigtable::Cell> expected{
@@ -501,20 +492,20 @@ TEST_F(FilterIntegrationTest, Condition) {
   auto table = CreateTable(table_id, table_config);
   std::string const prefix = "condition-prefix";
   std::vector<bigtable::Cell> created{
-      {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
-      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {}},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {}},
-      {prefix + "/hij1", "fam2", "c5", 6000, "v6000", {}},
+      {prefix + "/abc0", "fam0", "c0", 1000, "v1000"},
+      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000"},
+      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
+      {prefix + "/hij1", "fam2", "c5", 6000, "v6000"},
   };
   CreateCells(*table, created);
   std::vector<bigtable::Cell> expected{
-      {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
-      {prefix + "/bcd0", "fam1", "c1", 2000, "", {}},
-      {prefix + "/abc1", "fam2", "c2", 3000, "", {}},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "", {}},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {}},
+      {prefix + "/abc0", "fam0", "c0", 1000, "v1000"},
+      {prefix + "/bcd0", "fam1", "c1", 2000, ""},
+      {prefix + "/abc1", "fam2", "c2", 3000, ""},
+      {prefix + "/fgh0", "fam0", "c3", 4000, ""},
+      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
   };
 
   using F = bigtable::Filter;
@@ -531,16 +522,16 @@ TEST_F(FilterIntegrationTest, Chain) {
   auto table = CreateTable(table_id, table_config);
   std::string const prefix = "chain-prefix";
   std::vector<bigtable::Cell> created{
-      {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
-      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {}},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {}},
-      {prefix + "/hij1", "fam2", "c5", 6000, "v6000", {}},
+      {prefix + "/abc0", "fam0", "c0", 1000, "v1000"},
+      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000"},
+      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
+      {prefix + "/hij1", "fam2", "c5", 6000, "v6000"},
   };
   CreateCells(*table, created);
   std::vector<bigtable::Cell> expected{
-      {prefix + "/fgh0", "fam0", "c3", 4000, "", {}},
+      {prefix + "/fgh0", "fam0", "c3", 4000, ""},
   };
 
   using F = bigtable::Filter;
@@ -557,20 +548,20 @@ TEST_F(FilterIntegrationTest, Interleave) {
   auto table = CreateTable(table_id, table_config);
   std::string const prefix = "interleave-prefix";
   std::vector<bigtable::Cell> created{
-      {prefix + "/abc0", "fam0", "c0", 1000, "v1000", {}},
-      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000", {}},
-      {prefix + "/abc1", "fam2", "c2", 3000, "v3000", {}},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
-      {prefix + "/hij0", "fam1", "c4", 4000, "v5000", {}},
-      {prefix + "/hij1", "fam2", "c5", 6000, "v6000", {}},
+      {prefix + "/abc0", "fam0", "c0", 1000, "v1000"},
+      {prefix + "/bcd0", "fam1", "c1", 2000, "v2000"},
+      {prefix + "/abc1", "fam2", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "fam1", "c4", 4000, "v5000"},
+      {prefix + "/hij1", "fam2", "c5", 6000, "v6000"},
   };
   CreateCells(*table, created);
   std::vector<bigtable::Cell> expected{
-      {prefix + "/bcd0", "fam1", "c1", 2000, "", {}},
-      {prefix + "/abc1", "fam2", "c2", 3000, "", {}},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "", {}},
-      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000", {}},
-      {prefix + "/hij0", "fam1", "c4", 4000, "", {}},
+      {prefix + "/bcd0", "fam1", "c1", 2000, ""},
+      {prefix + "/abc1", "fam2", "c2", 3000, ""},
+      {prefix + "/fgh0", "fam0", "c3", 4000, ""},
+      {prefix + "/fgh0", "fam0", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "fam1", "c4", 4000, ""},
   };
 
   using F = bigtable::Filter;
