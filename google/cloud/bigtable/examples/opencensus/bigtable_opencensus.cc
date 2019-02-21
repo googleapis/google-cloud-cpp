@@ -117,9 +117,14 @@ int main(int argc, char* argv[]) try {
     //
     //     https://cloud.google.com/bigtable/docs/schema-design
     std::string row_key = "key-" + std::to_string(i);
-    table.Apply(google::cloud::bigtable::SingleRowMutation(
-        std::move(row_key),
-        google::cloud::bigtable::SetCell("family", "c0", greeting)));
+    google::cloud::Status status =
+        table.Apply(google::cloud::bigtable::SingleRowMutation(
+            std::move(row_key),
+            google::cloud::bigtable::SetCell("family", "c0", greeting)));
+
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
+    }
     ++i;
   }
   //! [write rows]
@@ -129,12 +134,15 @@ int main(int argc, char* argv[]) try {
   auto result = table.ReadRow(
       "key-0",
       google::cloud::bigtable::Filter::ColumnRangeClosed("family", "c0", "c0"));
-  if (!result.first) {
+  if (!result) {
+    throw std::runtime_error(result.status().message());
+  }
+  if (!result->first) {
     std::cout << "Cannot find row 'key-0' in the table: " << table.table_name()
               << "\n";
     return 0;
   }
-  auto const& cell = result.second.cells().front();
+  auto const& cell = result->second.cells().front();
   std::cout << cell.family_name() << ":" << cell.column_qualifier() << "    @ "
             << cell.timestamp().count() << "us\n"
             << '"' << cell.value() << '"' << "\n";
