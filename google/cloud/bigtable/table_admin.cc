@@ -150,7 +150,7 @@ StatusOr<btadmin::Snapshot> TableAdmin::SnapshotTableImpl(
       &AdminClient::SnapshotTable, request, "SnapshotTable", status, true);
 
   if (!status.ok()) {
-    return internal::MakeStatusFromRpcError(status);
+    return bigtable::internal::MakeStatusFromRpcError(status);
   }
 
   auto result =
@@ -159,7 +159,7 @@ StatusOr<btadmin::Snapshot> TableAdmin::SnapshotTableImpl(
           impl_.metadata_update_policy_, operation, "TableAdmin::SnapshotTable",
           status);
   if (!status.ok()) {
-    return internal::MakeStatusFromRpcError(status);
+    return bigtable::internal::MakeStatusFromRpcError(status);
   }
 
   return result;
