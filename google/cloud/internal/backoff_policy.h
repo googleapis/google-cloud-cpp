@@ -95,8 +95,8 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    *
    * @code
    * using namespace std::chrono_literals; // C++14
-   * auto r1 = ExponentialBackoffPolicy<S,T>(10ms, 500ms);
-   * auto r2 = ExponentialBackoffPolicy<S,T>(10min, 10min + 2s);
+   * auto r1 = ExponentialBackoffPolicy<S,T>(10ms, 500ms, 1.618);
+   * auto r2 = ExponentialBackoffPolicy<S,T>(10min, 10min + 2s, 1.002);
    * @endcode
    *
    * @param initial_delay how long to wait after the first (unsuccessful)
