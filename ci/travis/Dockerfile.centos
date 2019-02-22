@@ -14,7 +14,6 @@
 
 ARG DISTRO_VERSION=7
 FROM centos:${DISTRO_VERSION}
-LABEL maintainer="Carlos O'Ryan <coryan@google.com>"
 
 # We need the "Extra Packages for Enterprise Linux" for cmake3
 RUN rpm -Uvh \

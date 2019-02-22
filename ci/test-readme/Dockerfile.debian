@@ -14,7 +14,6 @@
 
 ARG DISTRO_VERSION=9
 FROM debian:${DISTRO_VERSION}
-LABEL maintainer="Carlos O'Ryan <coryan@google.com>"
 
 # Please keep the formatting in these commands, it is optimized to cut & paste
 # into the README.md file.
