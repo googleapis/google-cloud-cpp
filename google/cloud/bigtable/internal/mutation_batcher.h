@@ -46,10 +46,7 @@ using AsyncApplyCompletionCallback =
 using AsyncApplyAdmissionCallback = std::function<void(CompletionQueue&)>;
 
 /**
- * Objects of this class gather pack single row mutations into bulk mutations.
- *
- * This class should be used to underlie `Table::AsyncApplyBatched()`, which
- * should have the same signature as `Table::AsyncApply()`.
+ * Objects of this class pack single row mutations into bulk mutations.
  *
  * This class has two responsibilities:
  *  * packing mutations in batches
@@ -181,11 +178,11 @@ class MutationBatcher {
     return pending_mutations_.empty() && HasSpaceFor(mut);
   }
 
-  void FlushIfPossible(CompletionQueue& cq);
+  bool FlushIfPossible(CompletionQueue& cq);
   void BatchFinished(CompletionQueue& cq, std::shared_ptr<Batch> const& batch,
                      std::vector<FailedMutation> const& failed);
-  std::vector<AsyncApplyAdmissionCallback> FlushOnBatchFinished(
-      CompletionQueue& cq, size_t completed_size);
+  void FlushOnBatchFinished(CompletionQueue& cq, size_t completed_size);
+  void TryAdmit(CompletionQueue& cq, std::unique_lock<std::mutex>& lk);
   void Admit(PendingSingleRowMutation&& mut);
 
   std::mutex mu_;
