@@ -36,11 +36,6 @@ matrix:
     - # Compile on Travis' native environment with Bazel
       os: linux
       compiler: gcc
-      install: ci/install-retry.sh ci/install-bazel.sh linux
-      script: ci/travis/build-bazel.sh
-    - # Compile on Travis' native environment with Bazel
-      os: linux
-      compiler: gcc
       env:
         TEST_BAZEL_AS_DEPENDENCY=yes
       install: ci/install-retry.sh ci/install-bazel.sh linux
