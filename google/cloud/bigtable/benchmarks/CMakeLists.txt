@@ -63,6 +63,9 @@ if (BUILD_TESTING)
                                       gRPC::grpc++
                                       gRPC::grpc
                                       protobuf::libprotobuf)
+        if (MSVC)
+            target_compile_options(${target} PRIVATE "/bigobj")
+        endif ()
         add_test(NAME ${target} COMMAND ${target})
     endforeach ()
 endif ()
