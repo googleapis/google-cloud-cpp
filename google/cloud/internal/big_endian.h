@@ -28,9 +28,8 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-// Encodes an 8-bit, 16-bit, 32-bit, or 64-bit signed or unsigned value as a
-// big-endian sequence of bytes. The returned string has a size matching
-// `sizeof(T)`. Example:
+// Encodes signed or unsigned integers as a big-endian sequence of bytes. The
+// returned string has a size matching `sizeof(T)`. Example:
 //
 //   std::string s = EncodeBigEndian(std::int32_t{255});
 //   assert(s == std::string("\0\0\0\xFF", 4));
@@ -52,9 +51,8 @@ std::string EncodeBigEndian(T value) {
 }
 
 // Decodes the given string as a big-endian sequence of bytes representing an
-// integer of the specified type. The allowed types are std::int8_t through
-// std::int64_t, both signed and unsigned. Returns an error status if the given
-// string is the wrong size for the specified type. Example:
+// integer of the specified type. Returns an error status if the given string
+// is the wrong size for the specified type. Example:
 //
 //   std::string s("\0\0\0\xFF", 4);
 //   StatusOr<std::int32_t> decoded = DecodeBigEndian(s);
