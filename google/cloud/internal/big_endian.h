@@ -51,7 +51,7 @@ inline std::string EncodeBigEndian(T value) {
 }
 
 // Decodes the given string as a big-endian sequence of bytes representing an
-// integer of the specified type. The allowed types std::int8_t through
+// integer of the specified type. The allowed types are std::int8_t through
 // std::int64_t, both signed and unsigned. Returns an error status if the given
 // string is the wrong size for the specified type. Example:
 //
@@ -65,7 +65,8 @@ inline StatusOr<T> DecodeBigEndian(std::string const& value) {
   static_assert(std::numeric_limits<unsigned char>::digits == 8,
                 "This code assumes an 8-bit char");
   if (value.size() != sizeof(T)) {
-    return Status(StatusCode::kInvalidArgument, "Value must be 8 bytes long");
+    return Status(StatusCode::kInvalidArgument,
+                  "Value must be sizeof(T) bytes long");
   }
   using unsigned_type = typename std::make_unsigned<T>::type;
   unsigned_type shift = sizeof(T) * 8;

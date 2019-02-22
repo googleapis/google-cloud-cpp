@@ -14,9 +14,9 @@
 
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include <string>
 #include <ios>
 #include <limits>
+#include <string>
 #include <vector>
 
 namespace google {

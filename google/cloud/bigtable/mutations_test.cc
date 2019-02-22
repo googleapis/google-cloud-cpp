@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/mutations.h"
+#include "google/cloud/internal/big_endian.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/internal/big_endian.h"
 #include <google/rpc/error_details.pb.h>
 #include <gmock/gmock.h>
 
@@ -41,8 +41,8 @@ TEST(MutationsTest, SetCell) {
 }
 
 TEST(MutationsTest, SetCellNumericValue) {
-  using google::cloud::internal::EncodeBigEndian;
   using google::cloud::internal::DecodeBigEndian;
+  using google::cloud::internal::EncodeBigEndian;
   auto actual = bigtable::SetCell("family", "col", 1234_ms,
                                   EncodeBigEndian(std::int64_t{9876543210}));
   ASSERT_TRUE(actual.op.has_set_cell());

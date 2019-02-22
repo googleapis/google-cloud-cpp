@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CELL_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CELL_H_
 
-#include "google/cloud/internal/big_endian.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/big_endian.h"
 
 #include <chrono>
 #include <vector>
@@ -100,7 +100,8 @@ class Cell {
    * and sometimes as big-endian integers. This is a helper function to convert
    * the blob into a T value.
    */
-  template <typename T> T value_as() const {
+  template <typename T>
+  T value_as() const {
     // TODO(milestone/12): Stop using .value(), which could throw.
     return google::cloud::internal::DecodeBigEndian<T>(value_).value();
   }
