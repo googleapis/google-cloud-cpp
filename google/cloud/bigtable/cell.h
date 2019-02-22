@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CELL_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CELL_H_
 
-#include "google/cloud/bigtable/internal/endian.h"
+#include "google/cloud/internal/big_endian.h"
 #include "google/cloud/bigtable/version.h"
 
 #include <chrono>
@@ -55,7 +55,8 @@ class Cell {
        std::vector<std::string> labels)
       : Cell(std::move(row_key), std::move(family_name),
              std::move(column_qualifier), timestamp,
-             internal::AsBigEndian64(value), std::move(labels)) {}
+             google::cloud::internal::EncodeBigEndian(value),
+             std::move(labels)) {}
 
   /// Create a cell and fill it with data, but with empty labels.
   Cell(std::string row_key, std::string family_name,
@@ -102,7 +103,8 @@ class Cell {
    */
   template <typename T>
   T value_as() const {
-    return google::cloud::bigtable::internal::Encoder<T>::Decode(value_);
+    // TODO(milestone/12): Stop using .value(), which could throw.
+    return google::cloud::internal::DecodeBigEndian<T>(value_).value();
   }
 
   /// Return the labels applied to this cell by label transformer read filters.

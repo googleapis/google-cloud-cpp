@@ -131,10 +131,7 @@ void Crc32cHashValidator::ProcessHeader(std::string const& key,
 }
 
 HashValidator::Result Crc32cHashValidator::Finish() && {
-  std::uint32_t big_endian = google::cloud::internal::ToBigEndian(current_);
-  std::string hash;
-  hash.resize(sizeof(big_endian));
-  std::memcpy(&hash[0], &big_endian, sizeof(big_endian));
+  std::string const hash = google::cloud::internal::EncodeBigEndian(current_);
   auto computed = OpenSslUtils::Base64Encode(hash);
   bool is_mismatch = !received_hash_.empty() && (received_hash_ != computed);
   return Result{std::move(received_hash_), std::move(computed), is_mismatch};

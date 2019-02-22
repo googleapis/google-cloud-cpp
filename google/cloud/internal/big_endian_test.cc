@@ -14,8 +14,7 @@
 
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include <gmock/gmock.h>
-#include <cstring>
+#include <string>
 #include <ios>
 #include <limits>
 #include <vector>
@@ -187,60 +186,6 @@ TEST(RoundTripBigEndian, UInt64) {
   };
   SCOPED_TRACE("std::uint64_t");
   RunTests(test_data);
-}
-
-TEST(BigEndianTest, Int16) {
-  std::uint8_t buf[] = {0x01, 0x02};
-  std::int16_t value;
-  static_assert(sizeof(value) == sizeof(buf), "Mismatched sizes");
-  std::memcpy(&value, buf, sizeof(buf));
-  EXPECT_EQ(0x0102, FromBigEndian(value));
-  EXPECT_EQ(value, FromBigEndian(ToBigEndian(value)));
-}
-
-TEST(BigEndianTest, UInt16) {
-  std::uint8_t buf[] = {0x01, 0x02};
-  std::uint16_t value;
-  static_assert(sizeof(value) == sizeof(buf), "Mismatched sizes");
-  std::memcpy(&value, buf, sizeof(buf));
-  EXPECT_EQ(0x0102U, FromBigEndian(value));
-  EXPECT_EQ(value, FromBigEndian(ToBigEndian(value)));
-}
-
-TEST(BigEndianTest, Int32) {
-  std::uint8_t buf[] = {0x01, 0x02, 0x03, 0x04};
-  std::int32_t value;
-  static_assert(sizeof(value) == sizeof(buf), "Mismatched sizes");
-  std::memcpy(&value, buf, sizeof(buf));
-  EXPECT_EQ(0x01020304, FromBigEndian(value));
-  EXPECT_EQ(value, FromBigEndian(ToBigEndian(value)));
-}
-
-TEST(BigEndianTest, UInt32) {
-  std::uint8_t buf[] = {0x01, 0x02, 0x03, 0x04};
-  std::uint32_t value;
-  static_assert(sizeof(value) == sizeof(buf), "Mismatched sizes");
-  std::memcpy(&value, buf, sizeof(buf));
-  EXPECT_EQ(0x01020304U, FromBigEndian(value));
-  EXPECT_EQ(value, FromBigEndian(ToBigEndian(value)));
-}
-
-TEST(BigEndianTest, Int64) {
-  std::uint8_t buf[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
-  std::int64_t value;
-  static_assert(sizeof(value) == sizeof(buf), "Mismatched sizes");
-  std::memcpy(&value, buf, sizeof(buf));
-  EXPECT_EQ(0x0102030405060708, FromBigEndian(value));
-  EXPECT_EQ(value, FromBigEndian(ToBigEndian(value)));
-}
-
-TEST(BigEndianTest, UInt64) {
-  std::uint8_t buf[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
-  std::uint64_t value;
-  static_assert(sizeof(value) == sizeof(buf), "Mismatched sizes");
-  std::memcpy(&value, buf, sizeof(buf));
-  EXPECT_EQ(0x0102030405060708U, FromBigEndian(value));
-  EXPECT_EQ(value, FromBigEndian(ToBigEndian(value)));
 }
 
 }  // namespace
