@@ -87,12 +87,13 @@ TEST_F(SnapshotAsyncIntegrationTest, CreateListGetDeleteSnapshot) {
   auto snapshot =
       table_admin_->SnapshotTable(cluster_id, snapshot_id, table_id, 36000_s)
           .get();
+  EXPECT_STATUS_OK(snapshot);
 
   // Verify that the newly created snapshot appears on the list.
   auto snapshots_current = table_admin_->ListSnapshots(cluster_id);
   ASSERT_STATUS_OK(snapshots_current);
 
-  EXPECT_TRUE(IsSnapshotPresent(*snapshots_current, snapshot.name()));
+  EXPECT_TRUE(IsSnapshotPresent(*snapshots_current, snapshot->name()));
 
   // get snapshot
   std::promise<btadmin::Snapshot> promise_get_snapshot;
@@ -121,7 +122,7 @@ TEST_F(SnapshotAsyncIntegrationTest, CreateListGetDeleteSnapshot) {
 
   auto snapshots_after_delete = table_admin_->ListSnapshots(cluster_id);
   ASSERT_STATUS_OK(snapshots_after_delete);
-  EXPECT_FALSE(IsSnapshotPresent(*snapshots_after_delete, snapshot.name()));
+  EXPECT_FALSE(IsSnapshotPresent(*snapshots_after_delete, snapshot->name()));
 
   cq.Shutdown();
   pool.join();
