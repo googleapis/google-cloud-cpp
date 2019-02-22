@@ -17,6 +17,7 @@
 
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
+#include <array>
 #include <cstdint>
 #include <limits>
 #include <string>
@@ -36,18 +37,18 @@ namespace internal {
 //
 template <typename T,
           typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
-inline std::string EncodeBigEndian(T value) {
+std::string EncodeBigEndian(T value) {
   static_assert(std::numeric_limits<unsigned char>::digits == 8,
                 "This code assumes an 8-bit char");
   using unsigned_type = typename std::make_unsigned<T>::type;
   unsigned_type const n = value;
   auto shift = sizeof(n) * 8;
-  std::string s(sizeof(n), '\0');
-  for (auto& c : s) {
+  std::array<unsigned char, sizeof(n)> a;
+  for (auto& c : a) {
     shift -= 8;
     c = (n >> shift) & 0xFF;
   }
-  return s;
+  return {a.begin(), a.end()};
 }
 
 // Decodes the given string as a big-endian sequence of bytes representing an
@@ -61,7 +62,7 @@ inline std::string EncodeBigEndian(T value) {
 //
 template <typename T,
           typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
-inline StatusOr<T> DecodeBigEndian(std::string const& value) {
+StatusOr<T> DecodeBigEndian(std::string const& value) {
   static_assert(std::numeric_limits<unsigned char>::digits == 8,
                 "This code assumes an 8-bit char");
   if (value.size() != sizeof(T)) {
