@@ -137,14 +137,24 @@ class MutationBatcher {
    */
   class Batch {
    public:
-    Batch() : num_mutations_(), requests_size_(), last_idx_() {}
+    Batch()
+        : num_mutations_(),
+          requests_size_(),
+          last_idx_(),
+          attempt_finished_() {}
     size_t requests_size() { return requests_size_; }
     size_t num_mutations() { return num_mutations_; }
     BulkMutation TransferRequest() { return std::move(requests_); }
 
     void Add(PendingSingleRowMutation mut);
-    size_t FireCallbacks(CompletionQueue& cq,
-                         std::vector<FailedMutation> const& failed);
+    // Returns the size of the completed mutations.
+    size_t FireFailedCallbacks(CompletionQueue& cq,
+                               std::vector<FailedMutation> failed);
+    // Returns the size of the completed mutations.
+    size_t FireSuccessfulCallbacks(CompletionQueue& cq,
+                                   std::vector<int> indices);
+    // Returns if this was the first attempt on this batch.
+    bool AttemptFinished();
 
    private:
     struct MutationData {
@@ -162,14 +172,22 @@ class MutationBatcher {
     size_t requests_size_;
     BulkMutation requests_;
     int last_idx_;
+    // Whether at least one AsyncBulkApply finished.
+    bool attempt_finished_;
     // The reason why it's not simple std::vector is that we want this structure
     // to shrink as individual mutations complete, so that the user can have a
     // bound on the amount of overhead per outstanding Apply.
     std::unordered_map<int, MutationData> mutation_data_;
   };
 
+  // Check if a mutation doesn't exceed allowed limits.
   grpc::Status IsValid(PendingSingleRowMutation& mut) const;
+  // Check whether there is space for the passed mutation in the currently
+  // constructed batch.
   bool HasSpaceFor(PendingSingleRowMutation const& mut) const;
+  // Check if one can append a mutation to the currently constructed batch. Even
+  // if there is space for the mutation, we shouldn't append mutations if some
+  // other are not admitted yet.
   bool CanAppendToBatch(PendingSingleRowMutation const& mut) const {
     // If some mutations are already subject to flow control, don't admit any
     // new, even if there's space for them. Otherwise we might starve big
@@ -177,20 +195,36 @@ class MutationBatcher {
     return pending_mutations_.empty() && HasSpaceFor(mut);
   }
 
+  // Send the currently constructed batch if there are not too many outstanding
+  // already. If there are no mutations in the batch, it's a noop.
   bool FlushIfPossible(CompletionQueue& cq);
-  void BatchFinished(CompletionQueue& cq, std::shared_ptr<Batch> const& batch,
-                     std::vector<FailedMutation> const& failed);
-  void FlushOnBatchFinished(CompletionQueue& cq, size_t completed_size);
+  // Entry point for lower layers indicating that mutations with indices
+  // `indices` in batch `batch` have finished successfully.
+  void MutationsSucceeded(CompletionQueue& cq, MutationBatcher::Batch& batch,
+                          std::vector<int> indices);
+  // Entry point for lower layers indicating that mutations listed in `failed`
+  // in batch `batch` have failed permanently.
+  void MutationsFailed(CompletionQueue& cq, MutationBatcher::Batch& batch,
+                       std::vector<FailedMutation> failed);
+  // Entry point for lower layers indicating that an attempt to send the
+  // `batch` was made. This might be called multiple times in case of retries.
+  void BatchAttemptFinished(CompletionQueue& cq, MutationBatcher::Batch& batch);
+  // Try to move mutations waiting in `pending_mutations_` to the currently
+  // constructed batch. Unlocks `lk`.
   void TryAdmit(CompletionQueue& cq, std::unique_lock<std::mutex>& lk);
+  // Append mutation `mut` to the currently constructed batch.
   void Admit(PendingSingleRowMutation mut);
 
   std::mutex mu_;
   noex::Table& table_;
   Options options_;
 
+  // Num batches sent but not completed.
   size_t num_outstanding_batches_;
+  // Size of admitted but uncompleted mutations.
   size_t oustanding_size_;
 
+  // Currently contructed batch of mutations.
   std::shared_ptr<Batch> cur_batch_;
 
   // These are the mutations which have not been admission yet. If the user is

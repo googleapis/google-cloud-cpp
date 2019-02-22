@@ -90,32 +90,60 @@ void MutationBatcher::Batch::Add(PendingSingleRowMutation mut) {
   mutation_data_.emplace(last_idx_++, MutationData(std::move(mut)));
 }
 
-size_t MutationBatcher::Batch::FireCallbacks(
-    CompletionQueue& cq, std::vector<FailedMutation> const& failed) {
-  std::unordered_map<int, MutationData> tmp;
-  {
-    std::unique_lock<std::mutex> lk(mu_);
-    tmp.swap(mutation_data_);
-  }
+size_t MutationBatcher::Batch::FireFailedCallbacks(
+    CompletionQueue& cq, std::vector<FailedMutation> failed) {
+  std::unique_lock<std::mutex> lk(mu_);
+
+  std::vector<MutationData> to_fire;
   size_t completed_size = 0;
+
   for (auto const& f : failed) {
     int const idx = f.original_index();
-    // For some reason clang-tidy thinks that it->second.callback would be fine
-    // with a const reference to status.
-    // NOLINTNEXTLINE (performance-unnecessary-copy-initialization)
-    grpc::Status status(f.status());
-    auto it = tmp.find(idx);
-    it->second.callback(cq, status);
+    auto it = mutation_data_.find(idx);
     completed_size += it->second.request_size;
-    tmp.erase(it);
+    to_fire.emplace_back(std::move(it->second));
+    // Release resources as early as possible.
+    mutation_data_.erase(it);
   }
-  for (auto& mutation_data : tmp) {
-    // Everything remaining was a success, report them via their callbacks.
-    grpc::Status status;
-    completed_size += mutation_data.second.request_size;
-    mutation_data.second.callback(cq, status);
+  lk.unlock();
+  int idx = 0;
+  for (auto& f : failed) {
+    // For some reason clang-tidy thinks that AsyncApplyCompletionCallback would
+    // be fine with a const reference to status.
+    // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
+    grpc::Status status(f.status());
+    to_fire[idx++].callback(cq, status);
   }
   return completed_size;
+}
+
+size_t MutationBatcher::Batch::FireSuccessfulCallbacks(
+    CompletionQueue& cq, std::vector<int> indices) {
+  std::unique_lock<std::mutex> lk(mu_);
+
+  std::vector<MutationData> to_fire;
+  size_t completed_size = 0;
+
+  for (int idx : indices) {
+    auto it = mutation_data_.find(idx);
+    completed_size += it->second.request_size;
+    to_fire.emplace_back(std::move(it->second));
+    // Release resources as early as possible.
+    mutation_data_.erase(it);
+  }
+  lk.unlock();
+  for (auto& data : to_fire) {
+    grpc::Status status;
+    data.callback(cq, status);
+  }
+  return completed_size;
+}
+
+bool MutationBatcher::Batch::AttemptFinished() {
+  std::unique_lock<std::mutex> lk(mu_);
+  bool was_first = !attempt_finished_;
+  attempt_finished_ = true;
+  return was_first;
 }
 
 grpc::Status MutationBatcher::IsValid(PendingSingleRowMutation& mut) const {
@@ -157,13 +185,22 @@ bool MutationBatcher::FlushIfPossible(CompletionQueue& cq) {
       num_outstanding_batches_ < options_.max_batches) {
     ++num_outstanding_batches_;
     auto batch = cur_batch_;
-    table_.AsyncBulkApply(
+    table_.StreamingAsyncBulkApply(
         cq,
+        [this, batch](CompletionQueue& cq, std::vector<int> succeeded) {
+          MutationsSucceeded(cq, *batch, std::move(succeeded));
+        },
+        [this, batch](CompletionQueue& cq, std::vector<FailedMutation> failed) {
+          MutationsFailed(cq, *batch, std::move(failed));
+        },
+        [this, batch](CompletionQueue& cq, grpc::Status&) {
+          BatchAttemptFinished(cq, *batch);
+        },
         [this, batch](CompletionQueue& cq, std::vector<FailedMutation>& failed,
                       grpc::Status&) {
-          // status is ignored - it's basically an logical AND on all mutations'
-          // statuses.
-          BatchFinished(cq, batch, failed);
+          // It means that there are not going to be anymore retries and the
+          // final failed mutations are passed here.
+          MutationsFailed(cq, *batch, failed);
         },
         cur_batch_->TransferRequest());
     cur_batch_ = std::make_shared<Batch>();
@@ -172,20 +209,38 @@ bool MutationBatcher::FlushIfPossible(CompletionQueue& cq) {
   return false;
 }
 
-void MutationBatcher::BatchFinished(
-    CompletionQueue& cq, std::shared_ptr<MutationBatcher::Batch> const& batch,
-    std::vector<FailedMutation> const& failed) {
-  size_t completed_size = batch->FireCallbacks(cq, failed);
+void MutationBatcher::MutationsSucceeded(CompletionQueue& cq,
+                                         MutationBatcher::Batch& batch,
+                                         std::vector<int> indices) {
+  size_t completed_size = batch.FireSuccessfulCallbacks(cq, std::move(indices));
 
-  FlushOnBatchFinished(cq, completed_size);
-}
-
-void MutationBatcher::FlushOnBatchFinished(CompletionQueue& cq,
-                                           size_t completed_size) {
   std::unique_lock<std::mutex> lk(mu_);
   oustanding_size_ -= completed_size;
-  num_outstanding_batches_ -= 1;
+  TryAdmit(cq, lk);  // unlocks the lock
+}
 
+void MutationBatcher::MutationsFailed(CompletionQueue& cq,
+                                      MutationBatcher::Batch& batch,
+                                      std::vector<FailedMutation> failed) {
+  size_t completed_size = batch.FireFailedCallbacks(cq, std::move(failed));
+
+  std::unique_lock<std::mutex> lk(mu_);
+  oustanding_size_ -= completed_size;
+  TryAdmit(cq, lk);  // unlocks the lock
+}
+
+void MutationBatcher::BatchAttemptFinished(CompletionQueue& cq,
+                                           MutationBatcher::Batch& batch) {
+  bool was_first_attempt = batch.AttemptFinished();
+  if (!was_first_attempt) {
+    return;
+  }
+  std::unique_lock<std::mutex> lk(mu_);
+  // We consider a batch finished if the original request finished. If it is
+  // later retried, we don't count it against the limit. The reasoning is that
+  // it would usually be some long tail of mutations and it should not take up
+  // the resources for the incoming requests.
+  num_outstanding_batches_ -= 1;
   FlushIfPossible(cq);
   TryAdmit(cq, lk);
 }

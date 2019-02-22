@@ -529,6 +529,291 @@ TEST_F(MutationBatcherTest, SmallMutationsDontSkipPending) {
   EXPECT_EQ(0, NumOperationsOustanding());
 }
 
+TEST_F(MutationBatcherTest, StreamingWorks) {
+  std::vector<SingleRowMutation> mutations(
+      {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo1", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo2", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo3", {bt::SetCell("fam", "col1", 0_ms, "baz")}),
+       SingleRowMutation("foo4", {bt::SetCell("fam", "col", 0_ms, "baz")})});
+  batcher_.reset(
+      new MutationBatcher(table_, MutationBatcher::Options().SetMaxBatches(1)));
+
+  ExpectInteraction(
+      {// The first mutation will hold the first batch so that others can fit in
+       // one.
+       Exchange({mutations[0]}, {ResultPiece({0}, {}, {})}),
+       Exchange({mutations[1], mutations[2], mutations[3], mutations[4]},
+                {
+                    // First mutation succeed in the first response piece.
+                    ResultPiece({0}, {}, {}),
+                    // Second mutation fails transiently in the second response
+                    // piece.
+                    ResultPiece({}, {1}, {}),
+                    // Third mutation fails permanently and fourth succeds in
+                    // the third
+                    // response piece.
+                    ResultPiece({3}, {}, {2}),
+                }),
+       // The second mutation is retried and succeeds
+       Exchange({mutations[2]}, {ResultPiece({0}, {}, {})})});
+
+  auto state0 = Apply(mutations[0]);
+  EXPECT_TRUE(state0->admitted);
+  EXPECT_FALSE(state0->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  auto state1 = Apply(mutations[1]);
+  auto state2 = Apply(mutations[2]);
+  auto state3 = Apply(mutations[3]);
+  auto state4 = Apply(mutations[4]);
+  EXPECT_TRUE(state1->admitted);
+  EXPECT_TRUE(state2->admitted);
+  EXPECT_TRUE(state3->admitted);
+  EXPECT_TRUE(state4->admitted);
+  EXPECT_FALSE(state1->completed);
+  EXPECT_FALSE(state2->completed);
+  EXPECT_FALSE(state3->completed);
+  EXPECT_FALSE(state4->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  FinishSingleItemStream();
+  EXPECT_TRUE(state0->completed);
+
+  EXPECT_FALSE(state1->completed);
+  EXPECT_FALSE(state2->completed);
+  EXPECT_FALSE(state3->completed);
+  EXPECT_FALSE(state4->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  OpenStream();
+  EXPECT_FALSE(state1->completed);
+  EXPECT_FALSE(state2->completed);
+  EXPECT_FALSE(state3->completed);
+  EXPECT_FALSE(state4->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  // First mutation succeed in the first response piece.
+  ReadPiece();
+  EXPECT_TRUE(state1->completed);
+  EXPECT_TRUE(state1->completion_status.ok());
+  EXPECT_FALSE(state2->completed);
+  EXPECT_FALSE(state3->completed);
+  EXPECT_FALSE(state4->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  // Second mutation fails transiently in the second response
+  // piece. That means nothing should happen.
+  ReadPiece();
+  EXPECT_FALSE(state2->completed);
+  EXPECT_FALSE(state3->completed);
+  EXPECT_FALSE(state4->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  // Third mutation fails permanently and fourth succeds in
+  // the third
+  // response piece.
+  ReadPiece();
+  EXPECT_FALSE(state2->completed);
+  EXPECT_TRUE(state3->completed);
+  EXPECT_FALSE(state3->completion_status.ok());
+  EXPECT_TRUE(state4->completed);
+  EXPECT_TRUE(state4->completion_status.ok());
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  FinishStream();
+  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_FALSE(state2->completed);
+
+  FinishTimer();
+  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_FALSE(state2->completed);
+
+  OpenStream();
+  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_FALSE(state2->completed);
+
+  // The retried mutation should finish.
+  ReadPiece();
+  EXPECT_TRUE(state2->completed);
+  EXPECT_TRUE(state2->completion_status.ok());
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  FinishStream();
+  EXPECT_EQ(0, NumOperationsOustanding());
+}
+
+TEST_F(MutationBatcherTest, MutationsAreAdmittedMidStream) {
+  std::vector<SingleRowMutation> mutations(
+      {SingleRowMutation("foo0", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo1", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo2", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo3", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo4", {bt::SetCell("fam", "col", 0_ms, "baz")})});
+
+  size_t const mutation_size = MutationSize(mutations[0]);
+  ASSERT_EQ(mutation_size, MutationSize(mutations[1]));
+  ASSERT_EQ(mutation_size, MutationSize(mutations[2]));
+  ASSERT_EQ(mutation_size, MutationSize(mutations[3]));
+  ASSERT_EQ(mutation_size, MutationSize(mutations[4]));
+
+  batcher_.reset(new MutationBatcher(
+      table_, MutationBatcher::Options().SetMaxBatches(1).SetMaxOustandingSize(
+                  2 * mutation_size)));
+
+  ExpectInteraction(
+      {// The first mutation will hold the first batch so that others can fit in
+       // one.
+       Exchange({mutations[0]}, {ResultPiece({0}, {}, {})}),
+       // These two mutations will fill the whole flow control. They will finish
+       // one-by-one and we expect gradually admitting further mutations.
+       Exchange({mutations[1], mutations[2]},
+                {ResultPiece({0}, {}, {}), ResultPiece({}, {}, {1})}),
+       Exchange({mutations[3], mutations[4]}, {ResultPiece({0, 1}, {}, {})})});
+
+  auto state0 = Apply(mutations[0]);
+  EXPECT_TRUE(state0->admitted);
+  EXPECT_FALSE(state0->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  auto state1 = Apply(mutations[1]);
+  auto state2 = Apply(mutations[2]);
+  auto state3 = Apply(mutations[3]);
+  auto state4 = Apply(mutations[4]);
+  EXPECT_TRUE(state1->admitted);
+  EXPECT_FALSE(state2->admitted);
+  EXPECT_FALSE(state3->admitted);
+  EXPECT_FALSE(state4->admitted);
+  EXPECT_FALSE(state1->completed);
+  EXPECT_FALSE(state2->completed);
+  EXPECT_FALSE(state3->completed);
+  EXPECT_FALSE(state4->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  FinishSingleItemStream();
+  EXPECT_TRUE(state0->completed);
+
+  EXPECT_TRUE(state2->admitted);
+  EXPECT_FALSE(state3->admitted);
+  EXPECT_FALSE(state4->admitted);
+  EXPECT_FALSE(state1->completed);
+  EXPECT_FALSE(state2->completed);
+  EXPECT_FALSE(state3->completed);
+  EXPECT_FALSE(state4->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  OpenStream();
+  EXPECT_FALSE(state3->admitted);
+  EXPECT_FALSE(state4->admitted);
+  EXPECT_FALSE(state1->completed);
+  EXPECT_FALSE(state2->completed);
+  EXPECT_FALSE(state3->completed);
+  EXPECT_FALSE(state4->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  ReadPiece();
+  // The whole batch didn't finish, but the mutation did, so we can admit some
+  // more.
+  EXPECT_TRUE(state3->admitted);
+  EXPECT_FALSE(state4->admitted);
+  EXPECT_TRUE(state1->completed);
+  EXPECT_TRUE(state1->completion_status.ok());
+  EXPECT_FALSE(state2->completed);
+  EXPECT_FALSE(state3->completed);
+  EXPECT_FALSE(state4->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  ReadPiece();
+  // The whole batch didn't finish, but the mutation did, so we can admit some
+  // more.
+  EXPECT_TRUE(state4->admitted);
+  EXPECT_TRUE(state2->completed);
+  EXPECT_FALSE(state2->completion_status.ok());
+  EXPECT_FALSE(state3->completed);
+  EXPECT_FALSE(state4->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  FinishStream();
+  EXPECT_FALSE(state3->completed);
+  EXPECT_FALSE(state4->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  FinishSingleItemStream();
+  EXPECT_TRUE(state3->completed);
+  EXPECT_TRUE(state4->completed);
+  EXPECT_EQ(0, NumOperationsOustanding());
+}
+
+TEST_F(MutationBatcherTest, BatchReleasesSlotBeforeRetry) {
+  std::vector<SingleRowMutation> mutations(
+      {SingleRowMutation("foo0", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo1", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo2", {bt::SetCell("fam", "col", 0_ms, "baz")})});
+
+  batcher_.reset(new MutationBatcher(
+      table_,
+      MutationBatcher::Options().SetMaxBatches(1).SetMaxMutationsPerBatch(1)));
+
+  ExpectInteraction(
+      {// The first mutation will fail transiently
+       Exchange({mutations[0]}, {ResultPiece({}, {0}, {})}),
+       // This is going to release the batch and allow another batch to be sent.
+       Exchange({mutations[1]}, {ResultPiece({0}, {}, {})}),
+       // Then the retry is going to be attempted
+       Exchange({mutations[0]}, {}),
+       Exchange({mutations[0]}, {ResultPiece({0}, {}, {})})});
+
+  auto state0 = Apply(mutations[0]);
+  EXPECT_TRUE(state0->admitted);
+  EXPECT_FALSE(state0->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  auto state1 = Apply(mutations[1]);
+  EXPECT_TRUE(state1->admitted);
+  EXPECT_FALSE(state1->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  FinishSingleItemStream();
+  // First mutation should now be postponed on a timer, but second mutation
+  // should have been let in, hence there are 2 operations on the completion
+  // queue.
+  EXPECT_EQ(2, NumOperationsOustanding());
+
+  // This is going to finish the timer (and schedule the second attempt of first
+  // mutation) and open the stream for the second batch.
+  cq_impl_->SimulateCompletion(cq_, true);
+  EXPECT_EQ(2, NumOperationsOustanding());
+  EXPECT_FALSE(state0->completed);
+  EXPECT_FALSE(state1->completed);
+
+  // This is going to open the stream for the first batch and read the only
+  // result piece for the second batch.
+  cq_impl_->SimulateCompletion(cq_, true);
+  EXPECT_EQ(2, NumOperationsOustanding());
+  EXPECT_TRUE(state1->completed);
+  EXPECT_FALSE(state0->completed);
+
+  // This is going to finish streams for both batches
+  cq_impl_->SimulateCompletion(cq_, false);
+  EXPECT_EQ(2, NumOperationsOustanding());
+  EXPECT_FALSE(state0->completed);
+  cq_impl_->SimulateCompletion(cq_, true);
+  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_FALSE(state0->completed);
+
+  // This is going to finish the timer for the second retry of the first batch
+  // and definitely finish the second batch.
+  cq_impl_->SimulateCompletion(cq_, true);
+  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_FALSE(state0->completed);
+
+  // Now we've got only the first batch in the completion queue, so we might
+  // easily finish it.
+  FinishSingleItemStream();
+  EXPECT_TRUE(state0->completed);
+  EXPECT_EQ(0, NumOperationsOustanding());
+}
+
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
