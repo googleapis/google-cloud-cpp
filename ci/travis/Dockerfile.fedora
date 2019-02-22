@@ -14,7 +14,7 @@
 
 ARG DISTRO_VERSION=28
 FROM fedora:${DISTRO_VERSION}
-MAINTAINER "Carlos O'Ryan <coryan@google.com>"
+LABEL maintainer="Carlos O'Ryan <coryan@google.com>"
 
 RUN dnf makecache && dnf install -y \
     autoconf \
