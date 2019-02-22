@@ -23,11 +23,68 @@
 #elif defined(__GNUC__) || defined(__clang__)
 #include <byteswap.h>
 #endif
+#include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
+#include <cstdint>
+#include <limits>
+#include <string>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
+
+// Encodes an 8-bit, 16-bit, 32-bit, or 64-bit signed or unsigned value as a
+// big-endian sequence of bytes. The returned string has a size matching
+// `sizeof(T)`. Example:
+//
+//   std::string s = EncodeBigEndian(std::int32_t{255});
+//   assert(s == std::string("\0\0\0\xFF", 4));
+//
+template <typename T,
+          typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+inline std::string EncodeBigEndian(T value) {
+  static_assert(std::numeric_limits<unsigned char>::digits == 8,
+                "This code assumes an 8-bit char");
+  using unsigned_type = typename std::make_unsigned<T>::type;
+  unsigned_type const n = value;
+  unsigned_type shift = sizeof(n) * 8;
+  std::string s(sizeof(n), '\0');
+  for (auto& c : s) {
+    shift -= 8;
+    c = (n >> shift) & 0xFF;
+  }
+  return s;
+}
+
+// Decodes the given string as a big-endian sequence of bytes representing an
+// integer of the specified type. The allowed types std::int8_t through
+// std::int64_t, both signed and unsigned. Returns an error status if the given
+// string is the wrong size for the specified type. Example:
+//
+//   std::string s("\0\0\0\xFF", 4);
+//   StatusOr<std::int32_t> decoded = DecodeBigEndian(s);
+//   if (decoded) assert(*decoded == 255);
+//
+template <typename T,
+          typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+inline StatusOr<T> DecodeBigEndian(std::string const& value) {
+  static_assert(std::numeric_limits<unsigned char>::digits == 8,
+                "This code assumes an 8-bit char");
+  if (value.size() != sizeof(T)) {
+    return Status(StatusCode::kInvalidArgument, "Value must be 8 bytes long");
+  }
+  using unsigned_type = typename std::make_unsigned<T>::type;
+  unsigned_type shift = sizeof(T) * 8;
+  T result = 0;
+  for (auto const& c : value) {
+    shift -= 8;
+    result |= (c & unsigned_type{0xFF}) << shift;
+  }
+  return result;
+}
+
 constexpr char ENDIAN_DETECTOR[sizeof(int)] = {1};
 constexpr bool IsBigEndian() {
   return ENDIAN_DETECTOR[0] != 1;  // ignore different type comparison
