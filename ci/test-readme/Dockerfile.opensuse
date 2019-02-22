@@ -14,7 +14,6 @@
 
 ARG DISTRO_VERSION=tumbleweed
 FROM opensuse:${DISTRO_VERSION}
-MAINTAINER "Carlos O'Ryan <coryan@google.com>"
 
 ## [START INSTALL.md]
 

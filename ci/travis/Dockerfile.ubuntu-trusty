@@ -14,7 +14,6 @@
 
 ARG DISTRO_VERSION=14.04
 FROM ubuntu:${DISTRO_VERSION}
-MAINTAINER "Carlos O'Ryan <coryan@google.com>"
 
 # The default compilers in Ubuntu 14.04 are fairly old, we need to install
 # from the ubuntu-toolchain-r/test PPA.  That changes the installation steps
