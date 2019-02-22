@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/internal/make_unique.h"
+#include "google/cloud/testing_util/assert_ok.h"
 
 namespace bigtable = google::cloud::bigtable;
 
@@ -60,8 +61,9 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
       }));
 
   auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter());
-  EXPECT_TRUE(std::get<0>(result));
-  auto row = std::get<1>(result);
+  ASSERT_STATUS_OK(result);
+  EXPECT_TRUE(std::get<0>(*result));
+  auto row = std::get<1>(*result);
   EXPECT_EQ("r1", row.row_key());
 }
 
@@ -84,7 +86,8 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
       }));
 
   auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter());
-  EXPECT_FALSE(std::get<0>(result));
+  ASSERT_STATUS_OK(result);
+  EXPECT_FALSE(std::get<0>(*result));
 }
 
 TEST_F(TableReadRowTest, UnrecoverableFailure) {
@@ -103,12 +106,6 @@ TEST_F(TableReadRowTest, UnrecoverableFailure) {
             return stream.release()->AsUniqueMocked();
           }));
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(table_.ReadRow("r1", bigtable::Filter::PassAllFilter()),
-               std::exception);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      table_.ReadRow("r1", bigtable::Filter::PassAllFilter()),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto row = table_.ReadRow("r1", bigtable::Filter::PassAllFilter());
+  EXPECT_FALSE(row);
 }

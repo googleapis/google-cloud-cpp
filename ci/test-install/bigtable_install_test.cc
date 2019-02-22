@@ -60,19 +60,25 @@ int main(int argc, char* argv[]) try {
   std::cout << "bulk mutation successful\n";
 
   auto row0 = table.ReadRow("row-key-0", bigtable::Filter::PassAllFilter());
-  if (!row0.first) {
+  if (!row0) {
+    throw std::runtime_error(row0.status().message());
+  }
+  if (!row0->first) {
     std::cout << "Cannot find row-key-0\n";
   } else {
-    for (auto const& cell : row0.second.cells()) {
+    for (auto const& cell : row0->second.cells()) {
       std::cout << cell.row_key() << ": " << cell.family_name() << ":"
                 << cell.column_qualifier() << " = " << cell.value() << "\n";
     }
   }
   auto row1 = table.ReadRow("row-key-1", bigtable::Filter::PassAllFilter());
-  if (!row0.first) {
-    std::cout << "Cannot find row-key-0\n";
+  if (!row1) {
+    throw std::runtime_error(row1.status().message());
+  }
+  if (!row1->first) {
+    std::cout << "Cannot find row-key-1\n";
   } else {
-    for (auto const& cell : row1.second.cells()) {
+    for (auto const& cell : row1->second.cells()) {
       std::cout << cell.row_key() << ": " << cell.family_name() << ":"
                 << cell.column_qualifier() << " = " << cell.value() << "\n";
     }

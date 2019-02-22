@@ -144,14 +144,16 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     // Filter the results, only include the latest value on each cell.
     auto filter = google::cloud::bigtable::Filter::Latest(1);
     // Read a row, this returns a tuple (bool, row)
-    std::pair<bool, google::cloud::bigtable::Row> tuple =
-        table.ReadRow(MAGIC_ROW_KEY, std::move(filter));
-    if (!tuple.first) {
+    auto tuple = table.ReadRow(MAGIC_ROW_KEY, std::move(filter));
+    if (!tuple) {
+      throw std::runtime_error(tuple.status().message());
+    }
+    if (!tuple->first) {
       std::cout << "Row " << MAGIC_ROW_KEY << " not found\n";
       return;
     }
-    std::cout << "key: " << tuple.second.row_key() << "\n";
-    for (auto& cell : tuple.second.cells()) {
+    std::cout << "key: " << tuple->second.row_key() << "\n";
+    for (auto& cell : tuple->second.cells()) {
       std::cout << "    " << cell.family_name() << ":"
                 << cell.column_qualifier() << " = <";
       if (cell.column_qualifier() == "counter") {
