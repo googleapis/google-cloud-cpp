@@ -181,11 +181,11 @@ class MutationBatcher {
     return pending_mutations_.empty() && HasSpaceFor(mut);
   }
 
-  void FlushIfPossible(CompletionQueue& cq);
+  bool FlushIfPossible(CompletionQueue& cq);
   void BatchFinished(CompletionQueue& cq, std::shared_ptr<Batch> const& batch,
                      std::vector<FailedMutation> const& failed);
-  std::vector<AsyncApplyAdmissionCallback> FlushOnBatchFinished(
-      CompletionQueue& cq, size_t completed_size);
+  void FlushOnBatchFinished(CompletionQueue& cq, size_t completed_size);
+  void TryAdmit(CompletionQueue& cq, std::unique_lock<std::mutex>& lk);
   void Admit(PendingSingleRowMutation&& mut);
 
   std::mutex mu_;

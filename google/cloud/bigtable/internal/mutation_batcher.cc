@@ -153,7 +153,7 @@ bool MutationBatcher::HasSpaceFor(PendingSingleRowMutation const& mut) const {
              options_.max_mutations_per_batch;
 }
 
-void MutationBatcher::FlushIfPossible(CompletionQueue& cq) {
+bool MutationBatcher::FlushIfPossible(CompletionQueue& cq) {
   if (cur_batch_->num_mutations() > 0 &&
       num_outstanding_batches_ < options_.max_batches) {
     ++num_outstanding_batches_;
@@ -168,7 +168,9 @@ void MutationBatcher::FlushIfPossible(CompletionQueue& cq) {
         },
         cur_batch_->TransferRequest());
     cur_batch_ = std::make_shared<Batch>();
+    return true;
   }
+  return false;
 }
 
 void MutationBatcher::BatchFinished(
@@ -176,43 +178,45 @@ void MutationBatcher::BatchFinished(
     std::vector<FailedMutation> const& failed) {
   size_t completed_size = batch->FireCallbacks(cq, failed);
 
-  auto admission_callbacks = FlushOnBatchFinished(cq, completed_size);
-
-  // Inform the user that we've admitted these mutations and there might be some
-  // space in the buffer finally.
-  for (auto& cb : admission_callbacks) {
-    grpc::Status status;
-    cb(cq);
-  }
+  FlushOnBatchFinished(cq, completed_size);
 }
 
-std::vector<AsyncApplyAdmissionCallback> MutationBatcher::FlushOnBatchFinished(
-    CompletionQueue& cq, size_t completed_size) {
+void MutationBatcher::FlushOnBatchFinished(CompletionQueue& cq,
+                                           size_t completed_size) {
   std::unique_lock<std::mutex> lk(mu_);
   oustanding_size_ -= completed_size;
   num_outstanding_batches_ -= 1;
 
   FlushIfPossible(cq);
+  TryAdmit(cq, lk);
+}
 
+void MutationBatcher::TryAdmit(CompletionQueue& cq,
+                               std::unique_lock<std::mutex>& lk) {
   // Defer callbacks until we release the lock
   std::vector<AsyncApplyAdmissionCallback> admission_callbacks;
 
-  while (!pending_mutations_.empty() &&
-         HasSpaceFor(pending_mutations_.front())) {
-    auto& mut(pending_mutations_.front());
-    admission_callbacks.emplace_back(std::move(mut.admission_callback));
-    Admit(std::move(mut));
-    pending_mutations_.pop();
+  for (;;) {
+    while (!pending_mutations_.empty() &&
+           HasSpaceFor(pending_mutations_.front())) {
+      auto& mut(pending_mutations_.front());
+      admission_callbacks.emplace_back(std::move(mut.admission_callback));
+      Admit(std::move(mut));
+      pending_mutations_.pop();
+    }
+    if (!FlushIfPossible(cq)) {
+      break;
+    }
   }
-  // There is no reason to call FlushIfPossible() here.
-  // If there weren't any mutations waiting pending_mutations_, then there is
-  // nothing to flush.
-  // If there were mutation on pending_mutations_, it means that there were some
-  // mutations already in cur_batch_ and cur_batch wasn't flushed. If it wasn't
-  // flushed, it meant that there were no free slots. This function has just
-  // released one slot and taken it again by running FlushIfPossible() so there
-  // are no free slots again.
-  return admission_callbacks;
+
+  lk.unlock();
+
+  // Inform the user that we've admitted these mutations and there might be
+  // some space in the buffer finally.
+  for (auto& cb : admission_callbacks) {
+    grpc::Status status;
+    cb(cq);
+  }
 }
 
 void MutationBatcher::Admit(PendingSingleRowMutation&& mut) {
