@@ -1,11 +1,11 @@
 /*!
 @page bigtable-samples-data-client Example: Advanced Reading and Writing Samples
 
-This example is for advance reading and writing opertions on bigtable data client, that illustrates how to:
+This example is for advanced reading and writing opertions on bigtable data client, that illustrates how to:
 
 - Use ReadModifyWrite to append a string to a value.
 - Use ReadModifyWrite to increment a value.
-- Use the features to simplify reading bigendian64 values from Cloud Bigtable.
+- Use the features to simplify reading big-endian values from Cloud Bigtable.
 - Use CheckAndMutate to modify a value only if it exists.
 
 ## Run the example
@@ -32,7 +32,7 @@ The example uses the following headers:
 
 @snippet data_snippets.cc read modify write
 
-### Use the features to simplify reading bigendian64 values from Cloud Bigtable.
+### Use the features to simplify reading big-endian values from Cloud Bigtable.
 
 @snippet data_snippets.cc read row
 

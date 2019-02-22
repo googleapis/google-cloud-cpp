@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/endian.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
@@ -332,11 +331,11 @@ TEST_F(DataAsyncIntegrationTest, AsyncReadModifyWriteRowIncrementAmountTest) {
 
   std::string const key = "row-key";
 
-  // An initial; BigEndian int64 number with value 0.
+  // An initial; big-endian int64 number with value 0.
   std::string v1("\x00\x00\x00\x00\x00\x00\x00\x00", 8);
   std::vector<bigtable::Cell> created{{key, "family1", "c1", 0, v1}};
 
-  // The expected values as buffers containing BigEndian int64 numbers.
+  // The expected values as buffers containing big-endian int64 numbers.
   std::string e1("\x00\x00\x00\x00\x00\x00\x00\x2A", 8);
   std::string e2("\x00\x00\x00\x00\x00\x00\x00\x07", 8);
   std::vector<bigtable::Cell> expected{{key, "family1", "c1", 0, e1},
@@ -380,7 +379,7 @@ TEST_F(DataAsyncIntegrationTest, AsyncReadModifyWriteRowMultipleTest) {
                                       {key, "family2", "d1", 0, v1},
                                       {key, "family2", "d3", 0, "start;"}};
 
-  // The expected values as buffers containing BigEndian int64 numbers.
+  // The expected values as buffers containing big-endian int64 numbers.
   std::string e1("\x00\x00\x00\x00\x00\x00\x00\x2A", 8);
   std::string e2("\x00\x00\x00\x00\x00\x00\x00\x07", 8);
   std::string e3("\x00\x00\x00\x00\x00\x00\x07\xD0", 8);

@@ -14,7 +14,6 @@
 
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/instance_admin_client.h"
-#include "google/cloud/bigtable/internal/endian.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"

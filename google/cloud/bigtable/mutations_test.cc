@@ -43,8 +43,8 @@ TEST(MutationsTest, SetCell) {
 TEST(MutationsTest, SetCellNumericValue) {
   using google::cloud::internal::EncodeBigEndian;
   using google::cloud::internal::DecodeBigEndian;
-  auto actual =
-      bigtable::SetCell("family", "col", 1234_ms, EncodeBigEndian(9876543210));
+  auto actual = bigtable::SetCell("family", "col", 1234_ms,
+                                  EncodeBigEndian(std::int64_t{9876543210}));
   ASSERT_TRUE(actual.op.has_set_cell());
   EXPECT_EQ("family", actual.op.set_cell().family_name());
   EXPECT_EQ("col", actual.op.set_cell().column_qualifier());
@@ -53,8 +53,8 @@ TEST(MutationsTest, SetCellNumericValue) {
   EXPECT_STATUS_OK(decoded);
   EXPECT_EQ(9876543210, *decoded);
 
-  auto server_set = bigtable::SetCell(
-      "fam", "col", bigtable::internal::AsBigEndian64(32234401));
+  auto server_set =
+      bigtable::SetCell("fam", "col", EncodeBigEndian(std::int64_t{32234401}));
   ASSERT_TRUE(server_set.op.has_set_cell());
   EXPECT_EQ("fam", server_set.op.set_cell().family_name());
   EXPECT_EQ("col", server_set.op.set_cell().column_qualifier());

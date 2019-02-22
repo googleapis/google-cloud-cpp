@@ -49,7 +49,7 @@ class Cell {
         value_(std::move(value)),
         labels_(std::move(labels)) {}
 
-  /// Create a Cell and fill it with bigendian 64 bit value.
+  /// Create a Cell and fill it with a 64-bit value encoded as big endian.
   Cell(std::string row_key, std::string family_name,
        std::string column_qualifier, std::int64_t timestamp, std::int64_t value,
        std::vector<std::string> labels)
@@ -64,8 +64,8 @@ class Cell {
       : Cell(std::move(row_key), std::move(family_name),
              std::move(column_qualifier), timestamp, std::move(value), {}) {}
 
-  /// Create a Cell and fill it with bigendian 64 bit value, but with empty
-  /// labels.
+  /// Create a Cell and fill it with a 64-bit value encoded as big endian, but
+  /// with empty labels.
   Cell(std::string row_key, std::string family_name,
        std::string column_qualifier, std::int64_t timestamp, std::int64_t value)
       : Cell(std::move(row_key), std::move(family_name),
@@ -97,12 +97,10 @@ class Cell {
    *
    * Google Cloud Bigtable stores arbitrary blobs in each cell. Some
    * applications interpret these blobs as strings, other as encoded protos,
-   * and sometimes as BigEndian or LittleEndian integers. This is a helper
-   * function to convert the blob into a T value. It uses
-   * `bigtable::internal::encoder<>` to decode the value.
+   * and sometimes as big-endian integers. This is a helper function to convert
+   * the blob into a T value.
    */
-  template <typename T>
-  T value_as() const {
+  template <typename T> T value_as() const {
     // TODO(milestone/12): Stop using .value(), which could throw.
     return google::cloud::internal::DecodeBigEndian<T>(value_).value();
   }

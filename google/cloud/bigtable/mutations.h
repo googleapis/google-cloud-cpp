@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MUTATIONS_H_
 
 #include "google/cloud/bigtable/internal/conjunction.h"
-#include "google/cloud/bigtable/internal/endian.h"
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
 #include <grpcpp/grpcpp.h>
