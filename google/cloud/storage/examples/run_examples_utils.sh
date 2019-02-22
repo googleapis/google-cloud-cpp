@@ -700,7 +700,7 @@ run_all_cmek_examples() {
 }
 
 ################################################
-# Run all Object examples.
+# Run the examples to create V2 signed urls.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
@@ -709,7 +709,7 @@ run_all_cmek_examples() {
 # Returns:
 #   None
 ################################################
-run_all_signed_url_examples() {
+run_all_signed_url_v2_examples() {
   local bucket_name=$1
   shift
 
@@ -717,13 +717,13 @@ run_all_signed_url_examples() {
 
   if [[ -n "${CLOUD_STORAGE_TESTBENCH_ENDPOINT:-}" ]]; then
     echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
-        " signed URL examples disabled when using the testbench."
+        " V2 Signed URL examples disabled when using the testbench."
     return
   fi
 
-  run_example ./storage_object_samples create-put-signed-url \
+  run_example ./storage_object_samples create-put-signed-url-v2 \
       "${bucket_name}" "${object_name}"
-  run_example ./storage_object_samples create-get-signed-url \
+  run_example ./storage_object_samples create-get-signed-url-v2 \
       "${bucket_name}" "${object_name}"
 
   local magic_string="${RANDOM}-some-data-to-serve-as-object-media"
@@ -732,7 +732,7 @@ run_all_signed_url_examples() {
   echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
         " using PUT signed URL"
   local put_url
-  put_url=$(./storage_object_samples create-put-signed-url \
+  put_url=$(./storage_object_samples create-put-signed-url-v2 \
       "${bucket_name}" "${object_name}" | head -1 | \
       sed "s/The signed url is: //")
   curl --silent -X PUT -H 'Content-Type: application/octet-stream' \
@@ -750,7 +750,74 @@ run_all_signed_url_examples() {
   echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
         " using GET signed URL"
   local get_url
-  get_url=$(./storage_object_samples create-get-signed-url \
+  get_url=$(./storage_object_samples create-get-signed-url-v2 \
+      "${bucket_name}" "${object_name}" | head -1 | \
+      sed "s/The signed url is: //")
+  if curl --silent "${get_url}" | grep -q "${magic_string}"; then
+    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
+        " using PUT signed URL"
+  else
+    echo   "${COLOR_RED}[   FAILED ]${COLOR_RESET}" \
+        " using PUT signed URL"
+  fi
+  set -e
+
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name}"
+}
+
+################################################
+# Run the examples to create V4 signed urls.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   bucket_name: the name of the bucket to run the examples against.
+# Returns:
+#   None
+################################################
+run_all_signed_url_v4_examples() {
+  local bucket_name=$1
+  shift
+
+  local object_name="object-$(date +%s)-${RANDOM}.txt"
+
+  if [[ -n "${CLOUD_STORAGE_TESTBENCH_ENDPOINT:-}" ]]; then
+    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
+        " V4 Signed URL examples disabled when using the testbench."
+    return
+  fi
+
+  run_example ./storage_object_samples create-put-signed-url-v4 \
+      "${bucket_name}" "${object_name}"
+  run_example ./storage_object_samples create-get-signed-url-v4 \
+      "${bucket_name}" "${object_name}"
+
+  local magic_string="${RANDOM}-some-data-to-serve-as-object-media"
+
+  set +e
+  echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
+        " using PUT signed URL"
+  local put_url
+  put_url=$(./storage_object_samples create-put-signed-url-v4 \
+      "${bucket_name}" "${object_name}" | head -1 | \
+      sed "s/The signed url is: //")
+  curl --silent -X PUT -H 'Content-Type: application/octet-stream' \
+      "${put_url}" -d "${magic_string}"
+  if [[ $? = 0 ]]; then
+    echo "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
+        " using PUT signed URL"
+  else
+    echo   "${COLOR_RED}[   FAILED ]${COLOR_RESET}" \
+        " using PUT signed URL"
+  fi
+  set -e
+
+  set +e
+  echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
+        " using GET signed URL"
+  local get_url
+  get_url=$(./storage_object_samples create-get-signed-url-v4 \
       "${bucket_name}" "${object_name}" | head -1 | \
       sed "s/The signed url is: //")
   if curl --silent "${get_url}" | grep -q "${magic_string}"; then
@@ -938,7 +1005,8 @@ run_all_storage_examples() {
   run_all_public_object_examples "${BUCKET_NAME}"
   run_event_based_hold_examples "${BUCKET_NAME}"
   run_temporary_hold_examples "${BUCKET_NAME}"
-  run_all_signed_url_examples "${BUCKET_NAME}"
+  run_all_signed_url_v2_examples "${BUCKET_NAME}"
+  run_all_signed_url_v4_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
   run_all_notification_examples "${TOPIC_NAME}"
   run_all_cmek_examples "${STORAGE_CMEK_KEY}"

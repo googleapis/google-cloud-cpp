@@ -2257,7 +2257,7 @@ class Client {
   //@{
   /// @name Signed URL support operations.
   /**
-   * Create a signed URL for the given parameters.
+   * Create a V2 signed URL for the given parameters.
    *
    * @note By default URLs created with this function expire after 7 days.
    *
@@ -2296,7 +2296,10 @@ class Client {
    * @return the signed URL.
    *
    * @par Example
-   * @snippet storage_object_samples.cc sign url
+   * @snippet storage_object_samples.cc sign url v2
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc create put signed url v2
    *
    * @see https://cloud.google.com/storage/docs/access-control/signed-urls for
    *     a general description of signed URLs and how they can be used.
@@ -2312,7 +2315,69 @@ class Client {
     internal::V2SignUrlRequest request(std::move(verb), std::move(bucket_name),
                                        std::move(object_name));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return SignUrl(request);
+    return SignUrlV2(request);
+  }
+
+  /**
+   * Create a V2 signed URL for the given parameters.
+   *
+   * @note By default URLs created with this function expire after 7 days.
+   *
+   * @note The application must ensure that any URL created with this function
+   *     is a valid request via the XML API. For example, the options for
+   *     bucket requests may include a sub-resource (e.g. `WithBilling()`) but
+   *     not all sub-resources are valid for objects.  Likewise, only a single
+   *     sub-resource may be retrieved in each request.
+   *
+   * @param verb the operation allowed through this signed URL, `GET`, `POST`,
+   *     `PUT`, `HEAD`, etc. are valid values.
+   * @param bucket_name the name of the bucket.
+   * @param object_name the name of the object, note that the object may not
+   *     exist for signed URLs that upload new objects. Use an empty string for
+   *     requests that only affect a bucket.
+   * @param options a list of optional parameters for the signed URL, this
+   *     include: `SignedUrlTimestamp`, `SignedUrlDuration`, `MD5HashValue`,
+   *     `ContentType`, `AddExtensionHeaderOption`, `AddQueryParameterOption`,
+   *     and `AddSubResourceOption`. Note that only the last
+   *     `AddSubResourceOption` option has any effect.
+   *
+   * @par Helper Functions
+   *
+   * The following functions create a `AddSubResourceOption` with less
+   * opportunities for typos in the sub-resource name: `WithAcl()`,
+   * `WithBilling()`, `WithCompose()`, `WithCors()`, `WithEncryption()`,
+   * `WithEncryptionConfig()`, `WithLifecycle()`, `WithLocation()`,
+   * `WithLogging()`, `WithStorageClass()`, and `WithTagging()`.
+   *
+   * Likewise, the following helper functions can create properly formatted
+   * `AddExtensionHeaderOption` objects: `WithGeneration()`,
+   * `WithGenerationMarker()`, `WithMarker()`,
+   * `WithResponseContentDisposition()`, `WithResponseContentType()`, and
+   * `WithUserProject()`.
+   *
+   * @return the signed URL.
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc sign url v4
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc create put signed url v4
+   *
+   * @see https://cloud.google.com/storage/docs/access-control/signed-urls for
+   *     a general description of signed URLs and how they can be used.
+   *
+   * @see https://cloud.google.com/storage/docs/xml-api/overview for a detailed
+   *     description of the XML API.
+   */
+  template <typename... Options>
+  StatusOr<std::string> CreateV4SignedUrl(std::string verb,
+                                          std::string bucket_name,
+                                          std::string object_name,
+                                          Options&&... options) {
+    internal::V4SignUrlRequest request(std::move(verb), std::move(bucket_name),
+                                       std::move(object_name));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return SignUrlV4(std::move(request));
   }
   //@}
 
@@ -2532,7 +2597,8 @@ class Client {
   Status DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
                           std::string const& file_name);
 
-  StatusOr<std::string> SignUrl(internal::V2SignUrlRequest const& request);
+  StatusOr<std::string> SignUrlV2(internal::V2SignUrlRequest const& request);
+  StatusOr<std::string> SignUrlV4(internal::V4SignUrlRequest request);
 
   std::shared_ptr<internal::RawClient> raw_client_;
 };
