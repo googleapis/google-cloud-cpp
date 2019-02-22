@@ -40,14 +40,14 @@ std::string EncodeBigEndian(T value) {
   static_assert(std::numeric_limits<unsigned char>::digits == 8,
                 "This code assumes an 8-bit char");
   using unsigned_type = typename std::make_unsigned<T>::type;
-  unsigned_type const n = value;
+  unsigned_type const n = *reinterpret_cast<unsigned_type*>(&value);
   auto shift = sizeof(n) * 8;
-  std::array<unsigned char, sizeof(n)> a;
+  std::array<std::uint8_t, sizeof(n)> a;
   for (auto& c : a) {
     shift -= 8;
     c = (n >> shift) & 0xFF;
   }
-  return {a.begin(), a.end()};
+  return {reinterpret_cast<const char*>(a.begin()), a.size()};
 }
 
 // Decodes the given string as a big-endian sequence of bytes representing an
@@ -70,12 +70,13 @@ StatusOr<T> DecodeBigEndian(std::string const& value) {
   }
   using unsigned_type = typename std::make_unsigned<T>::type;
   auto shift = sizeof(T) * 8;
-  T result = 0;
+  unsigned_type result = 0;
   for (auto const& c : value) {
+    auto const n = *reinterpret_cast<const unsigned_type*>(&c);
     shift -= 8;
-    result |= (c & unsigned_type{0xFF}) << shift;
+    result |= (n & 0xFF) << shift;
   }
-  return result;
+  return *reinterpret_cast<T*>(&result);
 }
 
 }  // namespace internal
