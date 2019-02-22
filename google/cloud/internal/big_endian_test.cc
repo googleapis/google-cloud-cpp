@@ -15,7 +15,6 @@
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <ios>
-#include <limits>
 #include <string>
 #include <vector>
 
@@ -47,16 +46,14 @@ void RunTests(std::vector<TestData<T>> const& test_data) {
 
 TEST(RoundTripBigEndian, Int8) {
   std::vector<TestData<std::int8_t>> test_data = {
-      {std::numeric_limits<std::int8_t>::min(), std::string("\x80", 1)},
-      {-128, std::string("\x80", 1)},
-      {-127, std::string("\x81", 1)},
-      {-2, std::string("\xFE", 1)},
-      {-1, std::string("\xFF", 1)},
-      {0, std::string("\0", 1)},
-      {1, std::string("\x01", 1)},
-      {2, std::string("\x02", 1)},
-      {127, std::string("\x7F", 1)},
-      {std::numeric_limits<std::int8_t>::max(), std::string("\x7F", 1)},
+      {-128, std::string("\x80", 1)},  //
+      {-127, std::string("\x81", 1)},  //
+      {-2, std::string("\xFE", 1)},    //
+      {-1, std::string("\xFF", 1)},    //
+      {0, std::string("\0", 1)},       //
+      {1, std::string("\x01", 1)},     //
+      {2, std::string("\x02", 1)},     //
+      {127, std::string("\x7F", 1)},   //
   };
   SCOPED_TRACE("std::int8_t");
   RunTests(test_data);
@@ -64,14 +61,12 @@ TEST(RoundTripBigEndian, Int8) {
 
 TEST(RoundTripBigEndian, UInt8) {
   std::vector<TestData<std::uint8_t>> test_data = {
-      {std::numeric_limits<std::uint8_t>::min(), std::string("\0", 1)},
-      {0, std::string("\0", 1)},
-      {1, std::string("\x01", 1)},
-      {2, std::string("\x02", 1)},
-      {127, std::string("\x7F", 1)},
-      {128, std::string("\x80", 1)},
-      {255, std::string("\xFF", 1)},
-      {std::numeric_limits<std::uint8_t>::max(), std::string("\xFF", 1)},
+      {0, std::string("\0", 1)},      //
+      {1, std::string("\x01", 1)},    //
+      {2, std::string("\x02", 1)},    //
+      {127, std::string("\x7F", 1)},  //
+      {128, std::string("\x80", 1)},  //
+      {255, std::string("\xFF", 1)},  //
   };
   SCOPED_TRACE("std::uint8_t");
   RunTests(test_data);
@@ -79,7 +74,7 @@ TEST(RoundTripBigEndian, UInt8) {
 
 TEST(RoundTripBigEndian, Int16) {
   std::vector<TestData<std::int16_t>> test_data = {
-      {std::numeric_limits<std::int16_t>::min(), std::string("\x80\0", 2)},
+      {-0x7FFF - 1, std::string("\x80\x00", 2)},
       {-257, std::string("\xFE\xFF", 2)},
       {-256, std::string("\xFF\x00", 2)},
       {-255, std::string("\xFF\x01", 2)},
@@ -91,7 +86,6 @@ TEST(RoundTripBigEndian, Int16) {
       {256, std::string("\x01\x00", 2)},
       {0x7F00, std::string("\x7F\x00", 2)},
       {0x7FFF, std::string("\x7F\xFF", 2)},
-      {std::numeric_limits<std::int16_t>::max(), std::string("\x7F\xFF", 2)},
   };
   SCOPED_TRACE("std::int16_t");
   RunTests(test_data);
@@ -99,14 +93,13 @@ TEST(RoundTripBigEndian, Int16) {
 
 TEST(RoundTripBigEndian, UInt16) {
   std::vector<TestData<std::uint16_t>> test_data = {
-      {std::numeric_limits<std::uint16_t>::min(), std::string("\0\0", 2)},
       {0, std::string("\0\0", 2)},
       {1, std::string("\0\x01", 2)},
       {255, std::string("\0\xFF", 2)},
       {256, std::string("\x01\x00", 2)},
       {0x7F00, std::string("\x7F\x00", 2)},
       {0x7FFF, std::string("\x7F\xFF", 2)},
-      {std::numeric_limits<std::uint16_t>::max(), std::string("\xFF\xFF", 2)},
+      {0xFFFF, std::string("\xFF\xFF", 2)},
   };
   SCOPED_TRACE("std::uint16_t");
   RunTests(test_data);
@@ -114,7 +107,7 @@ TEST(RoundTripBigEndian, UInt16) {
 
 TEST(RoundTripBigEndian, Int32) {
   std::vector<TestData<std::int32_t>> test_data = {
-      {std::numeric_limits<std::int32_t>::min(), std::string("\x80\0\0\0", 4)},
+      {-0x7FFFFFFF - 1, std::string("\x80\0\0\0", 4)},
       {-257, std::string("\xFF\xFF\xFE\xFF", 4)},
       {-256, std::string("\xFF\xFF\xFF\x00", 4)},
       {-255, std::string("\xFF\xFF\xFF\x01", 4)},
@@ -126,8 +119,7 @@ TEST(RoundTripBigEndian, Int32) {
       {256, std::string("\0\0\x01\x00", 4)},
       {0xFF00, std::string("\0\0\xFF\x00", 4)},
       {0xFFFF, std::string("\0\0\xFF\xFF", 4)},
-      {std::numeric_limits<std::int32_t>::max(),
-       std::string("\x7F\xFF\xFF\xFF", 4)},
+      {0x7FFFFFFF, std::string("\x7F\xFF\xFF\xFF", 4)},
   };
   SCOPED_TRACE("std::int32_t");
   RunTests(test_data);
@@ -135,15 +127,13 @@ TEST(RoundTripBigEndian, Int32) {
 
 TEST(RoundTripBigEndian, UInt32) {
   std::vector<TestData<std::uint32_t>> test_data = {
-      {std::numeric_limits<std::uint32_t>::min(), std::string("\0\0\0\0", 4)},
       {0, std::string("\0\0\0\0", 4)},
       {1, std::string("\0\0\0\x01", 4)},
       {255, std::string("\0\0\0\xFF", 4)},
       {256, std::string("\0\0\x01\x00", 4)},
       {0xFF00, std::string("\0\0\xFF\x00", 4)},
       {0xFFFF, std::string("\0\0\xFF\xFF", 4)},
-      {std::numeric_limits<std::uint32_t>::max(),
-       std::string("\xFF\xFF\xFF\xFF", 4)},
+      {0xFFFFFFFF, std::string("\xFF\xFF\xFF\xFF", 4)},
   };
   SCOPED_TRACE("std::uint32_t");
   RunTests(test_data);
@@ -151,8 +141,7 @@ TEST(RoundTripBigEndian, UInt32) {
 
 TEST(RoundTripBigEndian, Int64) {
   std::vector<TestData<std::int64_t>> test_data = {
-      {std::numeric_limits<std::int64_t>::min(),
-       std::string("\x80\0\0\0\0\0\0\0", 8)},
+      {-0x7FFFFFFFFFFFFFFF - 1, std::string("\x80\0\0\0\0\0\0\0", 8)},
       {-257, std::string("\xFF\xFF\xFF\xFF\xFF\xFF\xFE\xFF", 8)},
       {-256, std::string("\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00", 8)},
       {-255, std::string("\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x01", 8)},
@@ -164,8 +153,7 @@ TEST(RoundTripBigEndian, Int64) {
       {256, std::string("\0\0\0\0\0\0\x01\x00", 8)},
       {0xFF00, std::string("\0\0\0\0\0\0\xFF\x00", 8)},
       {0xFFFF, std::string("\0\0\0\0\0\0\xFF\xFF", 8)},
-      {std::numeric_limits<std::int64_t>::max(),
-       std::string("\x7F\xFF\xFF\xFF\xFF\xFF\xFF\xFF", 8)},
+      {0x7FFFFFFFFFFFFFFF, std::string("\x7F\xFF\xFF\xFF\xFF\xFF\xFF\xFF", 8)},
   };
   SCOPED_TRACE("std::int64_t");
   RunTests(test_data);
@@ -173,16 +161,13 @@ TEST(RoundTripBigEndian, Int64) {
 
 TEST(RoundTripBigEndian, UInt64) {
   std::vector<TestData<std::uint64_t>> test_data = {
-      {std::numeric_limits<std::uint64_t>::min(),
-       std::string("\0\0\0\0\0\0\0\0", 8)},
       {0, std::string("\0\0\0\0\0\0\0\0", 8)},
       {1, std::string("\0\0\0\0\0\0\0\x01", 8)},
       {255, std::string("\0\0\0\0\0\0\0\xFF", 8)},
       {256, std::string("\0\0\0\0\0\0\x01\x00", 8)},
       {0xFF00, std::string("\0\0\0\0\0\0\xFF\x00", 8)},
       {0xFFFF, std::string("\0\0\0\0\0\0\xFF\xFF", 8)},
-      {std::numeric_limits<std::uint64_t>::max(),
-       std::string("\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF", 8)},
+      {0xFFFFFFFFFFFFFFFF, std::string("\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF", 8)},
   };
   SCOPED_TRACE("std::uint64_t");
   RunTests(test_data);

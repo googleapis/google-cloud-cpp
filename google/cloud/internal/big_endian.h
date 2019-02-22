@@ -41,7 +41,7 @@ inline std::string EncodeBigEndian(T value) {
                 "This code assumes an 8-bit char");
   using unsigned_type = typename std::make_unsigned<T>::type;
   unsigned_type const n = value;
-  unsigned_type shift = sizeof(n) * 8;
+  auto shift = sizeof(n) * 8;
   std::string s(sizeof(n), '\0');
   for (auto& c : s) {
     shift -= 8;
@@ -65,11 +65,12 @@ inline StatusOr<T> DecodeBigEndian(std::string const& value) {
   static_assert(std::numeric_limits<unsigned char>::digits == 8,
                 "This code assumes an 8-bit char");
   if (value.size() != sizeof(T)) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Value must be sizeof(T) bytes long");
+    auto const msg = "Given value with " + std::to_string(value.size()) +
+                     " bytes; expected " + std::to_string(sizeof(T));
+    return Status(StatusCode::kInvalidArgument, msg);
   }
   using unsigned_type = typename std::make_unsigned<T>::type;
-  unsigned_type shift = sizeof(T) * 8;
+  auto shift = sizeof(T) * 8;
   T result = 0;
   for (auto const& c : value) {
     shift -= 8;
