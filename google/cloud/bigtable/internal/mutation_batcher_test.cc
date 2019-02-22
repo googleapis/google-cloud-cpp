@@ -101,6 +101,28 @@ class MutationStates {
   std::vector<std::shared_ptr<MutationState>> states_;
 };
 
+// Lambda returning lambdas. Given a ResultPiece, return a lambda filling a
+// MutateRowsResponse accordingly.
+auto generate_response_generator = [](ResultPiece const& result_piece) {
+  return [result_piece](btproto::MutateRowsResponse* r, void*) {
+    for (int idx : result_piece.succeeded) {
+      auto& e = *r->add_entries();
+      e.set_index(idx);
+      e.mutable_status()->set_code(grpc::StatusCode::OK);
+    }
+    for (int idx : result_piece.transiently_failed) {
+      auto& e = *r->add_entries();
+      e.set_index(idx);
+      e.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
+    }
+    for (int idx : result_piece.permanently_failed) {
+      auto& e = *r->add_entries();
+      e.set_index(idx);
+      e.mutable_status()->set_code(grpc::StatusCode::PERMISSION_DENIED);
+    }
+  };
+};
+
 class MutationBatcherTest
     : public bigtable::testing::internal::TableTestFixture {
  protected:
@@ -110,36 +132,23 @@ class MutationBatcherTest
         batcher_(new MutationBatcher(table_)) {}
 
   void ExpectInteraction(std::vector<Exchange> const& interactions) {
+    // gmock expectation matching starts form the latest added, so we need to
+    // add them in the reverse order.
     for (auto exchange_it = interactions.crbegin();
          exchange_it != interactions.crend(); ++exchange_it) {
       auto exchange = *exchange_it;
+      // Not making it a unique_ptr because we'll be passing it to a lamba
+      // returning it as a unique_ptr.
       MockClientAsyncReaderInterface<btproto::MutateRowsResponse>* reader =
           new MockClientAsyncReaderInterface<btproto::MutateRowsResponse>;
       EXPECT_CALL(*reader, Read(_, _))
           .WillOnce(Invoke([](btproto::MutateRowsResponse* r, void*) {}));
+      // Just like in the outer loop, we need to reverse the order to counter
+      // the gmocks expectation matching order (from latest added to first).
       for (auto result_piece_it = exchange.res.rbegin();
            result_piece_it != exchange.res.rend(); ++result_piece_it) {
-        auto result_piece = *result_piece_it;
         EXPECT_CALL(*reader, Read(_, _))
-            .WillOnce(
-                Invoke([result_piece](btproto::MutateRowsResponse* r, void*) {
-                  for (int idx : result_piece.succeeded) {
-                    auto& e = *r->add_entries();
-                    e.set_index(idx);
-                    e.mutable_status()->set_code(grpc::StatusCode::OK);
-                  }
-                  for (int idx : result_piece.transiently_failed) {
-                    auto& e = *r->add_entries();
-                    e.set_index(idx);
-                    e.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
-                  }
-                  for (int idx : result_piece.permanently_failed) {
-                    auto& e = *r->add_entries();
-                    e.set_index(idx);
-                    e.mutable_status()->set_code(
-                        grpc::StatusCode::PERMISSION_DENIED);
-                  }
-                }))
+            .WillOnce(Invoke(generate_response_generator(*result_piece_it)))
             .RetiresOnSaturation();
       }
 
