@@ -46,10 +46,7 @@ using AsyncApplyCompletionCallback =
 using AsyncApplyAdmissionCallback = std::function<void(CompletionQueue&)>;
 
 /**
- * Objects of this class gather pack single row mutations into bulk mutations.
- *
- * This class should be used to underlie `Table::AsyncApplyBatched()`, which
- * should have the same signature as `Table::AsyncApply()`.
+ * Objects of this class pack single row mutations into bulk mutations.
  *
  * This class has two responsibilities:
  *  * packing mutations in batches

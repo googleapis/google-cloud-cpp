@@ -196,7 +196,7 @@ void MutationBatcher::TryAdmit(CompletionQueue& cq,
   // Defer callbacks until we release the lock
   std::vector<AsyncApplyAdmissionCallback> admission_callbacks;
 
-  for (;;) {
+  do {
     while (!pending_mutations_.empty() &&
            HasSpaceFor(pending_mutations_.front())) {
       auto& mut(pending_mutations_.front());
@@ -204,10 +204,7 @@ void MutationBatcher::TryAdmit(CompletionQueue& cq,
       Admit(std::move(mut));
       pending_mutations_.pop();
     }
-    if (!FlushIfPossible(cq)) {
-      break;
-    }
-  }
+  } while (FlushIfPossible(cq));
 
   lk.unlock();
 
