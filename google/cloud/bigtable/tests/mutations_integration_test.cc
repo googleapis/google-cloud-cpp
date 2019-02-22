@@ -114,7 +114,8 @@ TEST_F(MutationIntegrationTest, SetCellNumericValueExceptionTest) {
   std::string const table_id = RandomTableId();
   bigtable::Cell new_cell("row-key", "column_family", "column_id", 1000,
                           "string-value");
-  EXPECT_THROW(new_cell.value_as<std::int64_t>(), std::runtime_error);
+  EXPECT_THROW(new_cell.decode_big_endian_integer<std::int64_t>(),
+               std::runtime_error);
 }
 #endif
 

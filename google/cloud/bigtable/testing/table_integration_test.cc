@@ -275,7 +275,8 @@ void PrintTo(bigtable::Cell const& cell, std::ostream* os) {
     // such because it makes debugging much easier ...
     static_assert(std::numeric_limits<unsigned char>::digits == 8,
                   "This code assumes char is an 8-bit number");
-    *os << "[int64:" << cell.value_as<std::int64_t>() << "]";
+    *os << "[int64:" << cell.decode_big_endian_integer<std::int64_t>().value()
+        << "]";
   }
   *os << ", labels={";
   char const* del = "";

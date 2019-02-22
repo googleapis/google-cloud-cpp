@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/big_endian.h"
+#include "google/cloud/status_or.h"
 
 #include <chrono>
 #include <vector>
@@ -93,7 +94,7 @@ class Cell {
   std::string const& value() const { return value_; }
 
   /**
-   * Interpret the value as an encoded `T` and return it.
+   * Interpret the value as a big-endian encoded `T` and return it.
    *
    * Google Cloud Bigtable stores arbitrary blobs in each cell. Some
    * applications interpret these blobs as strings, other as encoded protos,
@@ -101,9 +102,8 @@ class Cell {
    * the blob into a T value.
    */
   template <typename T>
-  T value_as() const {
-    // TODO(milestone/12): Stop using .value(), which could throw.
-    return google::cloud::internal::DecodeBigEndian<T>(value_).value();
+  StatusOr<T> decode_big_endian_integer() const {
+    return google::cloud::internal::DecodeBigEndian<T>(value_);
   }
 
   /// Return the labels applied to this cell by label transformer read filters.
