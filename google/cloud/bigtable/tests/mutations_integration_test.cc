@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/grpc_error.h"
-#include "google/cloud/bigtable/internal/endian.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -94,27 +93,11 @@ TEST_F(MutationIntegrationTest, SetCellNumericValueTest) {
   std::string const row_key = "SetCellNumRowKey";
   std::vector<bigtable::Cell> created_cells{
       {row_key, column_family1, "column_id1", 0, "v-c-0-0"},
-      {row_key,
-       column_family1,
-       "column_id1",
-       1000,
-       bigtable::bigendian64_t(2000),
-       {}},
-      {row_key,
-       column_family1,
-       "column_id1",
-       2000,
-       bigtable::bigendian64_t(3000),
-       {}},
+      {row_key, column_family1, "column_id1", 1000, 2000},
+      {row_key, column_family1, "column_id1", 2000, 3000},
       {row_key, column_family2, "column_id2", 0, "v-c0-0-0"},
-      {row_key,
-       column_family2,
-       "column_id3",
-       1000,
-       bigtable::bigendian64_t(5000),
-       {}},
-      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2"},
-  };
+      {row_key, column_family2, "column_id3", 1000, 5000},
+      {row_key, column_family3, "column_id1", 2000, "v-c1-0-2"}};
 
   CreateCells(table, created_cells);
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
@@ -122,19 +105,27 @@ TEST_F(MutationIntegrationTest, SetCellNumericValueTest) {
   CheckEqualUnordered(created_cells, actual_cells);
 }
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /**
- * Check if assert is thrown while string value set and numeric value
- * retrieve into Cloud Bigtable
+ * Check if an error is returned when a string value was set and a numeric
+ * value was retrieved. NOTE: This error happens only when/because the length
+ * of the string != sizeof(int64_t).
  */
-TEST_F(MutationIntegrationTest, SetCellNumericValueExceptionTest) {
+TEST_F(MutationIntegrationTest, SetCellNumericValueErrorTest) {
   std::string const table_id = RandomTableId();
-  bigtable::Cell new_cell("row-key", "column_family", "column_id", 1000,
-                          "string-value");
-  EXPECT_THROW(new_cell.value_as<bigtable::bigendian64_t>().get(),
-               std::range_error);
+  bigtable::Cell new_cell(
+      "row-key", "column_family", "column_id", 1000,
+      "some string value that is longer than sizeof(int64_t)");
+  auto decoded = new_cell.decode_big_endian_integer<std::int64_t>();
+  EXPECT_FALSE(decoded);
+
+  // To be explicit, setting a string value that happens to be 8-bytes long
+  // *will* be decodeable to in int64_t. I don't know what value it will be,
+  // but it's decodeable.
+  new_cell =
+      bigtable::Cell("row-key", "column_family", "column_id", 1000, "12345678");
+  decoded = new_cell.decode_big_endian_integer<std::int64_t>();
+  EXPECT_STATUS_OK(decoded);
 }
-#endif
 
 /**
  * Verify that the values inserted by SetCell with server-side timestamp are

@@ -15,8 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CELL_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CELL_H_
 
-#include "google/cloud/bigtable/internal/endian.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/big_endian.h"
+#include "google/cloud/status_or.h"
 
 #include <chrono>
 #include <vector>
@@ -49,13 +50,14 @@ class Cell {
         value_(std::move(value)),
         labels_(std::move(labels)) {}
 
-  /// Create a Cell and fill it with bigendian 64 bit value.
+  /// Create a Cell and fill it with a 64-bit value encoded as big endian.
   Cell(std::string row_key, std::string family_name,
-       std::string column_qualifier, std::int64_t timestamp,
-       bigendian64_t value, std::vector<std::string> labels)
+       std::string column_qualifier, std::int64_t timestamp, std::int64_t value,
+       std::vector<std::string> labels)
       : Cell(std::move(row_key), std::move(family_name),
              std::move(column_qualifier), timestamp,
-             internal::AsBigEndian64(value), std::move(labels)) {}
+             google::cloud::internal::EncodeBigEndian(value),
+             std::move(labels)) {}
 
   /// Create a cell and fill it with data, but with empty labels.
   Cell(std::string row_key, std::string family_name,
@@ -63,11 +65,10 @@ class Cell {
       : Cell(std::move(row_key), std::move(family_name),
              std::move(column_qualifier), timestamp, std::move(value), {}) {}
 
-  /// Create a Cell and fill it with bigendian 64 bit value, but with empty
-  /// labels.
+  /// Create a Cell and fill it with a 64-bit value encoded as big endian, but
+  /// with empty labels.
   Cell(std::string row_key, std::string family_name,
-       std::string column_qualifier, std::int64_t timestamp,
-       bigendian64_t value)
+       std::string column_qualifier, std::int64_t timestamp, std::int64_t value)
       : Cell(std::move(row_key), std::move(family_name),
              std::move(column_qualifier), timestamp, std::move(value), {}) {}
 
@@ -93,17 +94,16 @@ class Cell {
   std::string const& value() const { return value_; }
 
   /**
-   * Interpret the value as an encoded `T` and return it.
+   * Interpret the value as a big-endian encoded `T` and return it.
    *
    * Google Cloud Bigtable stores arbitrary blobs in each cell. Some
    * applications interpret these blobs as strings, other as encoded protos,
-   * and sometimes as BigEndian or LittleEndian integers. This is a helper
-   * function to convert the blob into a T value. It uses
-   * `bigtable::internal::encoder<>` to decode the value.
+   * and sometimes as big-endian integers. This is a helper function to convert
+   * the blob into a T value.
    */
   template <typename T>
-  T value_as() const {
-    return google::cloud::bigtable::internal::Encoder<T>::Decode(value_);
+  StatusOr<T> decode_big_endian_integer() const {
+    return google::cloud::internal::DecodeBigEndian<T>(value_);
   }
 
   /// Return the labels applied to this cell by label transformer read filters.

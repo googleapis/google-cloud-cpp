@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/mutations.h"
+#include "google/cloud/internal/big_endian.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <google/rpc/error_details.pb.h>
 #include <gmock/gmock.h>
@@ -39,28 +41,26 @@ TEST(MutationsTest, SetCell) {
 }
 
 TEST(MutationsTest, SetCellNumericValue) {
-  auto actual = bigtable::SetCell(
-      "family", "col", 1234_ms,
-      bigtable::internal::AsBigEndian64(bigtable::bigendian64_t(9876543210)));
+  using google::cloud::internal::DecodeBigEndian;
+  using google::cloud::internal::EncodeBigEndian;
+  auto actual = bigtable::SetCell("family", "col", 1234_ms,
+                                  EncodeBigEndian(std::int64_t{9876543210}));
   ASSERT_TRUE(actual.op.has_set_cell());
   EXPECT_EQ("family", actual.op.set_cell().family_name());
   EXPECT_EQ("col", actual.op.set_cell().column_qualifier());
   EXPECT_EQ(1234000, actual.op.set_cell().timestamp_micros());
-  EXPECT_EQ(bigtable::bigendian64_t(9876543210).get(),
-            bigtable::internal::Encoder<bigtable::bigendian64_t>::Decode(
-                actual.op.set_cell().value())
-                .get());
+  auto decoded = DecodeBigEndian<std::int64_t>(actual.op.set_cell().value());
+  EXPECT_STATUS_OK(decoded);
+  EXPECT_EQ(9876543210, *decoded);
 
-  auto server_set = bigtable::SetCell(
-      "fam", "col",
-      bigtable::internal::AsBigEndian64(bigtable::bigendian64_t(32234401)));
+  auto server_set =
+      bigtable::SetCell("fam", "col", EncodeBigEndian(std::int64_t{32234401}));
   ASSERT_TRUE(server_set.op.has_set_cell());
   EXPECT_EQ("fam", server_set.op.set_cell().family_name());
   EXPECT_EQ("col", server_set.op.set_cell().column_qualifier());
-  EXPECT_EQ(bigtable::bigendian64_t(32234401).get(),
-            bigtable::internal::Encoder<bigtable::bigendian64_t>::Decode(
-                server_set.op.set_cell().value())
-                .get());
+  decoded = DecodeBigEndian<std::int64_t>(server_set.op.set_cell().value());
+  EXPECT_STATUS_OK(decoded);
+  EXPECT_EQ(32234401, *decoded);
   EXPECT_EQ(bigtable::ServerSetTimestamp(),
             server_set.op.set_cell().timestamp_micros());
 }

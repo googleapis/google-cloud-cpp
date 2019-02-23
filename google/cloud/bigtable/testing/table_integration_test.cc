@@ -271,11 +271,12 @@ void PrintTo(bigtable::Cell const& cell, std::ostream* os) {
     *os << ")";
   }
   if (cell.value().size() == 8) {
-    // Sometimes the value represents a BigEndian 64-bit integer, print it as
+    // Sometimes the value represents a big-endian 64-bit integer, print it as
     // such because it makes debugging much easier ...
     static_assert(std::numeric_limits<unsigned char>::digits == 8,
                   "This code assumes char is an 8-bit number");
-    *os << "[uint64:" << cell.value_as<bigtable::bigendian64_t>().get() << "]";
+    *os << "[int64:" << cell.decode_big_endian_integer<std::int64_t>().value()
+        << "]";
   }
   *os << ", labels={";
   char const* del = "";

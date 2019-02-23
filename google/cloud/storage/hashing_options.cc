@@ -36,10 +36,7 @@ std::string ComputeMD5Hash(std::string const& payload) {
 std::string ComputeCrc32cChecksum(std::string const& payload) {
   auto checksum = crc32c::Extend(
       0, reinterpret_cast<std::uint8_t const*>(payload.data()), payload.size());
-  std::uint32_t big_endian = google::cloud::internal::ToBigEndian(checksum);
-  std::string hash;
-  hash.resize(sizeof(big_endian));
-  std::memcpy(&hash[0], &big_endian, sizeof(big_endian));
+  std::string const hash = google::cloud::internal::EncodeBigEndian(checksum);
   return internal::OpenSslUtils::Base64Encode(hash);
 }
 
