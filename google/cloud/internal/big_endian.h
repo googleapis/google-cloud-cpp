@@ -47,7 +47,7 @@ std::string EncodeBigEndian(T value) {
     shift -= 8;
     c = n >> shift;
   }
-  return {reinterpret_cast<const char*>(a.data()), a.size()};
+  return {reinterpret_cast<char const*>(a.data()), a.size()};
 }
 
 // Decodes the given string as a big-endian sequence of bytes representing an
@@ -72,7 +72,7 @@ StatusOr<T> DecodeBigEndian(std::string const& value) {
   auto shift = sizeof(T) * 8;
   unsigned_type result = 0;
   for (auto const& c : value) {
-    auto const n = *reinterpret_cast<const std::uint8_t*>(&c);
+    auto const n = *reinterpret_cast<std::uint8_t const*>(&c);
     shift -= 8;
     result |= unsigned_type{n} << shift;
   }
