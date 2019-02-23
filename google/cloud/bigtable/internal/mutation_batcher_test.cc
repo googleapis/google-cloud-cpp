@@ -40,20 +40,25 @@ size_t MutationSize(SingleRowMutation mut) {
   return entry.ByteSizeLong();
 }
 
+struct ResultPiece {
+  ResultPiece(std::vector<int> succeeded_mutations,
+              std::vector<int> transiently_failed_mutations,
+              std::vector<int> permanently_failed_mutations)
+      : succeeded(std::move(succeeded_mutations)),
+        transiently_failed(std::move(transiently_failed_mutations)),
+        permanently_failed(std::move(permanently_failed_mutations)) {}
+
+  std::vector<int> succeeded;
+  std::vector<int> transiently_failed;
+  std::vector<int> permanently_failed;
+};
+
 struct Exchange {
-  Exchange(std::vector<SingleRowMutation> req, std::vector<int> failed_indices)
-      : req(std::move(req)),
-        failed(failed_indices.begin(), failed_indices.end()) {
-    for (size_t i = 0; i < req.size(); ++i) {
-      if (failed.find(i) == failed.end()) {
-        succeeded.insert(i);
-      }
-    }
-  }
+  Exchange(std::vector<SingleRowMutation> req, std::vector<ResultPiece> res)
+      : req(std::move(req)), res(std::move(res)) {}
 
   std::vector<SingleRowMutation> req;
-  std::set<int> succeeded;
-  std::set<int> failed;
+  std::vector<ResultPiece> res;
 };
 
 struct MutationState {
@@ -96,6 +101,28 @@ class MutationStates {
   std::vector<std::shared_ptr<MutationState>> states_;
 };
 
+// Lambda returning lambdas. Given a ResultPiece, return a lambda filling a
+// MutateRowsResponse accordingly.
+auto generate_response_generator = [](ResultPiece const& result_piece) {
+  return [result_piece](btproto::MutateRowsResponse* r, void*) {
+    for (int idx : result_piece.succeeded) {
+      auto& e = *r->add_entries();
+      e.set_index(idx);
+      e.mutable_status()->set_code(grpc::StatusCode::OK);
+    }
+    for (int idx : result_piece.transiently_failed) {
+      auto& e = *r->add_entries();
+      e.set_index(idx);
+      e.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
+    }
+    for (int idx : result_piece.permanently_failed) {
+      auto& e = *r->add_entries();
+      e.set_index(idx);
+      e.mutable_status()->set_code(grpc::StatusCode::PERMISSION_DENIED);
+    }
+  };
+};
+
 class MutationBatcherTest
     : public bigtable::testing::internal::TableTestFixture {
  protected:
@@ -105,24 +132,25 @@ class MutationBatcherTest
         batcher_(new MutationBatcher(table_)) {}
 
   void ExpectInteraction(std::vector<Exchange> const& interactions) {
+    // gmock expectation matching starts form the latest added, so we need to
+    // add them in the reverse order.
     for (auto exchange_it = interactions.crbegin();
          exchange_it != interactions.crend(); ++exchange_it) {
       auto exchange = *exchange_it;
+      // Not making it a unique_ptr because we'll be passing it to a lamba
+      // returning it as a unique_ptr.
       MockClientAsyncReaderInterface<btproto::MutateRowsResponse>* reader =
           new MockClientAsyncReaderInterface<btproto::MutateRowsResponse>;
       EXPECT_CALL(*reader, Read(_, _))
-          .WillOnce(Invoke([exchange](btproto::MutateRowsResponse* r, void*) {
-            for (size_t i = 0; i < exchange.req.size(); ++i) {
-              auto& e = *r->add_entries();
-              e.set_index(i);
-              e.mutable_status()->set_code(
-                  (exchange.failed.find(i) == exchange.failed.end())
-                      ? grpc::StatusCode::OK
-                      // Pick a permanent error.
-                      : grpc::StatusCode::PERMISSION_DENIED);
-            }
-          }))
           .WillOnce(Invoke([](btproto::MutateRowsResponse* r, void*) {}));
+      // Just like in the outer loop, we need to reverse the order to counter
+      // the gmocks expectation matching order (from latest added to first).
+      for (auto result_piece_it = exchange.res.rbegin();
+           result_piece_it != exchange.res.rend(); ++result_piece_it) {
+        EXPECT_CALL(*reader, Read(_, _))
+            .WillOnce(Invoke(generate_response_generator(*result_piece_it)))
+            .RetiresOnSaturation();
+      }
 
       EXPECT_CALL(*reader, Finish(_, _))
           .WillOnce(Invoke([](grpc::Status* status, void*) {
@@ -153,7 +181,7 @@ class MutationBatcherTest
     }
   }
 
-  void FinishBatch() {
+  void FinishSingleItemStream() {
     cq_impl_->SimulateCompletion(cq_, true);
     // state == PROCESSING
     cq_impl_->SimulateCompletion(cq_, true);
@@ -162,6 +190,22 @@ class MutationBatcherTest
     // state == FINISHING
     cq_impl_->SimulateCompletion(cq_, true);
   }
+
+  void OpenStream() {
+    cq_impl_->SimulateCompletion(cq_, true);
+    // state == PROCESSING
+  }
+
+  void ReadPiece() { cq_impl_->SimulateCompletion(cq_, true); }
+
+  void FinishStream() {
+    // state == PROCESSING
+    cq_impl_->SimulateCompletion(cq_, false);
+    // state == FINISHING
+    cq_impl_->SimulateCompletion(cq_, true);
+  }
+
+  void FinishTimer() { cq_impl_->SimulateCompletion(cq_, true); }
 
   std::shared_ptr<MutationState> Apply(SingleRowMutation mut) {
     auto res = std::make_shared<MutationState>();
@@ -184,7 +228,7 @@ class MutationBatcherTest
     return MutationStates(std::move(res));
   }
 
-  int NumBatchesOustanding() { return cq_impl_->size(); }
+  int NumOperationsOustanding() { return cq_impl_->size(); }
 
   std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
   CompletionQueue cq_;
@@ -207,17 +251,17 @@ TEST_F(MutationBatcherTest, TrivialTest) {
   std::vector<SingleRowMutation> mutations(
       {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")})});
 
-  ExpectInteraction({{{mutations[0]}, {}}});
+  ExpectInteraction({{{mutations[0]}, {ResultPiece({0}, {}, {})}}});
 
   auto state = Apply(mutations[0]);
   EXPECT_TRUE(state->admitted);
   EXPECT_FALSE(state->completed);
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
-  FinishBatch();
+  FinishSingleItemStream();
 
   EXPECT_TRUE(state->completed);
-  EXPECT_EQ(0, NumBatchesOustanding());
+  EXPECT_EQ(0, NumOperationsOustanding());
 }
 
 TEST_F(MutationBatcherTest, BatchIsFlushedImmediately) {
@@ -231,29 +275,30 @@ TEST_F(MutationBatcherTest, BatchIsFlushedImmediately) {
                                                  .SetMaxBatches(1)
                                                  .SetMaxOustandingSize(4000)));
 
-  ExpectInteraction({Exchange({mutations[0]}, {}),
-                     Exchange({mutations[1], mutations[2]}, {})});
+  ExpectInteraction(
+      {Exchange({mutations[0]}, {ResultPiece({0}, {}, {})}),
+       Exchange({mutations[1], mutations[2]}, {ResultPiece({0, 1}, {}, {})})});
 
   auto state0 = Apply(mutations[0]);
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
   auto state1 = ApplyMany(mutations.begin() + 1, mutations.end());
   EXPECT_TRUE(state1.AllAdmitted());
   EXPECT_TRUE(state1.NoneCompleted());
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
-  FinishBatch();
+  FinishSingleItemStream();
 
   EXPECT_TRUE(state0->completed);
   EXPECT_TRUE(state1.NoneCompleted());
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
-  FinishBatch();
+  FinishSingleItemStream();
 
   EXPECT_TRUE(state1.AllCompleted());
-  EXPECT_EQ(0, NumBatchesOustanding());
+  EXPECT_EQ(0, NumOperationsOustanding());
 }
 
 class MutationBatcherBoolParamTest : public MutationBatcherTest,
@@ -285,11 +330,11 @@ TEST_P(MutationBatcherBoolParamTest, PerBatchLimitsAreObeyed) {
                   .SetMaxOustandingSize(4000)));
 
   ExpectInteraction(
-      {Exchange({mutations[0]}, {}),
+      {Exchange({mutations[0]}, {ResultPiece({0}, {}, {})}),
        // The only slot is now taken by the batch holding SingleRowMutation 0.
-       Exchange({mutations[1], mutations[2]}, {}),
+       Exchange({mutations[1], mutations[2]}, {ResultPiece({0, 1}, {}, {})}),
        // SingleRowMutations 1 and 2 fill up the batch, so mutation 3 won't fit.
-       Exchange({mutations[3]}, {})}
+       Exchange({mutations[3]}, {ResultPiece({0}, {}, {})})}
       // Therefore, mutation 3 is executed in its own batch.
   );
 
@@ -297,7 +342,7 @@ TEST_P(MutationBatcherBoolParamTest, PerBatchLimitsAreObeyed) {
 
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
   auto immediatelly_admitted =
       ApplyMany(mutations.begin() + 1, mutations.begin() + 3);
@@ -307,26 +352,26 @@ TEST_P(MutationBatcherBoolParamTest, PerBatchLimitsAreObeyed) {
   EXPECT_TRUE(immediatelly_admitted.NoneCompleted());
   EXPECT_FALSE(initially_not_admitted->admitted);
   EXPECT_FALSE(initially_not_admitted->completed);
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
-  FinishBatch();
+  FinishSingleItemStream();
 
   EXPECT_TRUE(state0->completed);
   EXPECT_TRUE(immediatelly_admitted.NoneCompleted());
   EXPECT_FALSE(initially_not_admitted->completed);
   EXPECT_TRUE(initially_not_admitted->admitted);
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
-  FinishBatch();
+  FinishSingleItemStream();
 
   EXPECT_TRUE(immediatelly_admitted.AllCompleted());
   EXPECT_FALSE(initially_not_admitted->completed);
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
-  FinishBatch();
+  FinishSingleItemStream();
 
   EXPECT_TRUE(initially_not_admitted->completed);
-  EXPECT_EQ(0, NumBatchesOustanding());
+  EXPECT_EQ(0, NumOperationsOustanding());
 }
 
 INSTANTIATE_TEST_CASE_P(SizeOrNumMutationsLimit, MutationBatcherBoolParamTest,
@@ -349,7 +394,7 @@ TEST_F(MutationBatcherTest, RequestsWithManyMutationsAreRejected) {
   EXPECT_TRUE(state->admitted);
   EXPECT_TRUE(state->completed);
   EXPECT_FALSE(state->completion_status.ok());
-  EXPECT_EQ(0, NumBatchesOustanding());
+  EXPECT_EQ(0, NumOperationsOustanding());
 }
 
 TEST_F(MutationBatcherTest, LargeMutationsAreRejected) {
@@ -364,7 +409,7 @@ TEST_F(MutationBatcherTest, LargeMutationsAreRejected) {
   EXPECT_TRUE(state->admitted);
   EXPECT_TRUE(state->completed);
   EXPECT_FALSE(state->completion_status.ok());
-  EXPECT_EQ(0, NumBatchesOustanding());
+  EXPECT_EQ(0, NumOperationsOustanding());
 }
 
 TEST_F(MutationBatcherTest, RequestsWithNoMutationsAreRejected) {
@@ -374,7 +419,7 @@ TEST_F(MutationBatcherTest, RequestsWithNoMutationsAreRejected) {
   EXPECT_TRUE(state->admitted);
   EXPECT_TRUE(state->completed);
   EXPECT_FALSE(state->completion_status.ok());
-  EXPECT_EQ(0, NumBatchesOustanding());
+  EXPECT_EQ(0, NumOperationsOustanding());
 }
 
 TEST_F(MutationBatcherTest, ErrorsArePropagated) {
@@ -385,29 +430,30 @@ TEST_F(MutationBatcherTest, ErrorsArePropagated) {
   batcher_.reset(
       new MutationBatcher(table_, MutationBatcher::Options().SetMaxBatches(1)));
 
-  ExpectInteraction({Exchange({mutations[0]}, {}),
-                     Exchange({mutations[1], mutations[2]}, {1})});
+  ExpectInteraction(
+      {Exchange({mutations[0]}, {ResultPiece({0}, {}, {})}),
+       Exchange({mutations[1], mutations[2]}, {ResultPiece({0}, {}, {1})})});
 
   auto state0 = Apply(mutations[0]);
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
   auto state1 = ApplyMany(mutations.begin() + 1, mutations.end());
   EXPECT_TRUE(state1.AllAdmitted());
   EXPECT_TRUE(state1.NoneCompleted());
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
-  FinishBatch();
+  FinishSingleItemStream();
 
   EXPECT_TRUE(state0->completed);
   EXPECT_TRUE(state1.NoneCompleted());
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
-  FinishBatch();
+  FinishSingleItemStream();
 
   EXPECT_TRUE(state1.AllCompleted());
-  EXPECT_EQ(0, NumBatchesOustanding());
+  EXPECT_EQ(0, NumOperationsOustanding());
   EXPECT_TRUE(state1.states_[0]->completion_status.ok());
   EXPECT_FALSE(state1.states_[1]->completion_status.ok());
 }
@@ -428,31 +474,32 @@ TEST_F(MutationBatcherTest, SmallMutationsDontSkipPending) {
   // The third doesn't fit that batch, so becomes pending.
   // The fourth also becomes pending despite fitting in the open batch.
 
-  ExpectInteraction({Exchange({mutations[0]}, {}), Exchange({mutations[1]}, {}),
-                     Exchange({mutations[2]}, {}),
-                     Exchange({mutations[3]}, {})});
+  ExpectInteraction({Exchange({mutations[0]}, {ResultPiece({0}, {}, {})}),
+                     Exchange({mutations[1]}, {ResultPiece({0}, {}, {})}),
+                     Exchange({mutations[2]}, {ResultPiece({0}, {}, {})}),
+                     Exchange({mutations[3]}, {ResultPiece({0}, {}, {})})});
 
   auto state0 = Apply(mutations[0]);
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
   auto state1 = Apply(mutations[1]);
   EXPECT_TRUE(state1->admitted);
   EXPECT_FALSE(state1->completed);
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
   auto state2 = Apply(mutations[2]);
   EXPECT_FALSE(state2->admitted);
   EXPECT_FALSE(state2->completed);
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
   auto state3 = Apply(mutations[3]);
   EXPECT_FALSE(state3->admitted);
   EXPECT_FALSE(state3->completed);
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
-  FinishBatch();
+  FinishSingleItemStream();
 
   EXPECT_TRUE(state0->completed);
   EXPECT_FALSE(state1->completed);
@@ -460,26 +507,26 @@ TEST_F(MutationBatcherTest, SmallMutationsDontSkipPending) {
   EXPECT_FALSE(state3->completed);
   EXPECT_TRUE(state2->admitted);
   EXPECT_FALSE(state3->admitted);
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
-  FinishBatch();
+  FinishSingleItemStream();
 
   EXPECT_TRUE(state1->completed);
   EXPECT_FALSE(state2->completed);
   EXPECT_FALSE(state3->completed);
   EXPECT_TRUE(state3->admitted);
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
-  FinishBatch();
+  FinishSingleItemStream();
 
   EXPECT_TRUE(state2->completed);
   EXPECT_FALSE(state3->completed);
-  EXPECT_EQ(1, NumBatchesOustanding());
+  EXPECT_EQ(1, NumOperationsOustanding());
 
-  FinishBatch();
+  FinishSingleItemStream();
 
   EXPECT_TRUE(state3->completed);
-  EXPECT_EQ(0, NumBatchesOustanding());
+  EXPECT_EQ(0, NumOperationsOustanding());
 }
 
 }  // namespace internal
