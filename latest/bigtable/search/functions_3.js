@@ -1,6 +1,7 @@
 var searchData=
 [
   ['data_5fendpoint',['data_endpoint',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#aa1a311d31f38f642baf942345bf4394c',1,'google::cloud::bigtable::v0::ClientOptions']]],
+  ['decode_5fbig_5fendian_5finteger',['decode_big_endian_integer',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Cell.html#a6666a45209c2da33d9f0a35c6b5e9f6b',1,'google::cloud::bigtable::v0::Cell']]],
   ['defaultdataclient',['DefaultDataClient',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DefaultDataClient.html#a06b99d6e93dd729c0043c76d528a1727',1,'google::cloud::bigtable::v0::DefaultDataClient::DefaultDataClient(std::string project, std::string instance, ClientOptions options)'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DefaultDataClient.html#ac56b6ee057535ed511d88eb61ff0a28c',1,'google::cloud::bigtable::v0::DefaultDataClient::DefaultDataClient(std::string project, std::string instance)']]],
   ['defaultidempotentmutationpolicy',['DefaultIdempotentMutationPolicy',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a7b8559b9505cedd0864d3111db45c2a0',1,'google::cloud::bigtable::v0']]],
   ['defaultpollingpolicy',['DefaultPollingPolicy',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a48ead7634470d921dbc4dc76498ba60b',1,'google::cloud::bigtable::v0']]],
