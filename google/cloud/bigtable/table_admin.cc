@@ -120,7 +120,7 @@ Status TableAdmin::DropAllRows(std::string const& table_id) {
   return internal::MakeStatusFromRpcError(status);
 }
 
-std::future<btadmin::Snapshot> TableAdmin::SnapshotTable(
+std::future<StatusOr<btadmin::Snapshot>> TableAdmin::SnapshotTable(
     bigtable::ClusterId const& cluster_id,
     bigtable::SnapshotId const& snapshot_id, bigtable::TableId const& table_id,
     std::chrono::seconds duration_ttl) {
@@ -128,7 +128,7 @@ std::future<btadmin::Snapshot> TableAdmin::SnapshotTable(
                     cluster_id, snapshot_id, table_id, duration_ttl);
 }
 
-btadmin::Snapshot TableAdmin::SnapshotTableImpl(
+StatusOr<btadmin::Snapshot> TableAdmin::SnapshotTableImpl(
     bigtable::ClusterId const& cluster_id,
     bigtable::SnapshotId const& snapshot_id, bigtable::TableId const& table_id,
     std::chrono::seconds duration_ttl) {
@@ -150,8 +150,7 @@ btadmin::Snapshot TableAdmin::SnapshotTableImpl(
       &AdminClient::SnapshotTable, request, "SnapshotTable", status, true);
 
   if (!status.ok()) {
-    bigtable::internal::ThrowRpcError(status,
-                                      "unrecoverable error in MakeCall()");
+    return bigtable::internal::MakeStatusFromRpcError(status);
   }
 
   auto result =
@@ -160,8 +159,7 @@ btadmin::Snapshot TableAdmin::SnapshotTableImpl(
           impl_.metadata_update_policy_, operation, "TableAdmin::SnapshotTable",
           status);
   if (!status.ok()) {
-    bigtable::internal::ThrowRpcError(
-        status, "while polling operation in TableAdmin::SnapshotTable");
+    return bigtable::internal::MakeStatusFromRpcError(status);
   }
 
   return result;

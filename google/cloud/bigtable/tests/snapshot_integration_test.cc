@@ -131,9 +131,10 @@ TEST_F(SnapshotIntegrationTest, CreateListGetDeleteSnapshot) {
   auto snapshot =
       table_admin_->SnapshotTable(cluster_id, snapshot_id, table_id, 36000_s)
           .get();
+  EXPECT_STATUS_OK(snapshot);
   auto snapshots_current = table_admin_->ListSnapshots(cluster_id);
   ASSERT_STATUS_OK(snapshots_current);
-  EXPECT_TRUE(IsSnapshotPresent(*snapshots_current, snapshot.name()));
+  EXPECT_TRUE(IsSnapshotPresent(*snapshots_current, snapshot->name()));
 
   // get snapshot
   auto snapshot_check = table_admin_->GetSnapshot(cluster_id, snapshot_id);
@@ -145,7 +146,7 @@ TEST_F(SnapshotIntegrationTest, CreateListGetDeleteSnapshot) {
   EXPECT_STATUS_OK(table_admin_->DeleteSnapshot(cluster_id, snapshot_id));
   auto snapshots_after_delete = table_admin_->ListSnapshots(cluster_id);
   ASSERT_STATUS_OK(snapshots_after_delete);
-  EXPECT_FALSE(IsSnapshotPresent(*snapshots_after_delete, snapshot.name()));
+  EXPECT_FALSE(IsSnapshotPresent(*snapshots_after_delete, snapshot->name()));
 }
 
 // Test Cases Finished

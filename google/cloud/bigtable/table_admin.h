@@ -346,7 +346,7 @@ class TableAdmin {
    *   future contains an exception of type `bigtable::PollTimeout`.
    *
    */
-  std::future<google::bigtable::admin::v2::Snapshot> SnapshotTable(
+  std::future<StatusOr<google::bigtable::admin::v2::Snapshot>> SnapshotTable(
       bigtable::ClusterId const& cluster_id,
       bigtable::SnapshotId const& snapshot_id,
       bigtable::TableId const& table_id, std::chrono::seconds duration_ttl);
@@ -437,7 +437,7 @@ class TableAdmin {
    * Implements the polling loop for `SnapshotTable` in a
    * separate thread
    */
-  google::bigtable::admin::v2::Snapshot SnapshotTableImpl(
+  StatusOr<google::bigtable::admin::v2::Snapshot> SnapshotTableImpl(
       bigtable::ClusterId const& cluster_id,
       bigtable::SnapshotId const& snapshot_id,
       bigtable::TableId const& table_id, std::chrono::seconds duration_ttl);

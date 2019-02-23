@@ -887,11 +887,12 @@ TEST_F(TableAdminTest, SnapshotTableSimple) {
   bigtable::TableId table_id("the-table");
   auto future = tested.SnapshotTable(cluster_id, snapshot_id, table_id, 100_s);
   auto actual = future.get();
+  EXPECT_STATUS_OK(actual);
 
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected, *actual)) << delta;
 }
 
 /// @test Verify that `bigtable::TableAdmin::SnapshotTable` works.
@@ -927,11 +928,12 @@ TEST_F(TableAdminTest, SnapshotTableImmediatelyReady) {
   bigtable::TableId table_id("the-table");
   auto future = tested.SnapshotTable(cluster_id, snapshot_id, table_id, 100_s);
   auto actual = future.get();
+  EXPECT_STATUS_OK(actual);
 
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected, *actual)) << delta;
 }
 
 /// @test Failures while polling in `bigtable::TableAdmin::SnapshotTable`.
@@ -982,14 +984,14 @@ TEST_F(TableAdminTest, SnapshotTablePollRecoverableFailures) {
   bigtable::TableId table_id("the-table");
   auto future = tested.SnapshotTable(cluster_id, snapshot_id, table_id, 100_s);
   auto actual = future.get();
+  EXPECT_STATUS_OK(actual);
 
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected, *actual)) << delta;
 }
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Failure when polling exhausted for
 /// `bigtable::TableAdmin::SnapshotTable`.
 TEST_F(TableAdminTest, SnapshotTablePollingExhausted) {
@@ -1021,7 +1023,7 @@ TEST_F(TableAdminTest, SnapshotTablePollingExhausted) {
   bigtable::TableId table_id("the-table");
 
   auto future = tested.SnapshotTable(cluster_id, snapshot_id, table_id, 100_s);
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
+  EXPECT_FALSE(future.get());
 }
 
 /// @test `bigtable::TableAdmin::SnapshotTable` call has permanent failure.
@@ -1049,7 +1051,7 @@ TEST_F(TableAdminTest, SnapshotTablePermanentFailure) {
   bigtable::TableId table_id("the-table");
 
   auto future = tested.SnapshotTable(cluster_id, snapshot_id, table_id, 100_s);
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
+  EXPECT_FALSE(future.get());
 }
 
 /// @test Failures in `bigtable::TableAdmin::SnapshotTable`.
@@ -1065,7 +1067,7 @@ TEST_F(TableAdminTest, SnapshotTableRequestFailure) {
   bigtable::SnapshotId snapshot_id("random-snapshot");
   bigtable::TableId table_id("the-table");
   auto future = tested.SnapshotTable(cluster_id, snapshot_id, table_id, 100_s);
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
+  EXPECT_FALSE(future.get());
 }
 
 /// @test Failures while polling in `bigtable::TableAdmin::SnapshotTable`.
@@ -1087,7 +1089,7 @@ TEST_F(TableAdminTest, SnapshotTablePollUnrecoverableFailure) {
   bigtable::SnapshotId snapshot_id("random-snapshot");
   bigtable::TableId table_id("the-table");
   auto future = tested.SnapshotTable(cluster_id, snapshot_id, table_id, 100_s);
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
+  EXPECT_FALSE(future.get());
 }
 
 /// @test Polling in `bigtable::TableAdmin::SnapshotTable` returns failure.
@@ -1134,9 +1136,8 @@ TEST_F(TableAdminTest, SnapshotTablePollReturnsFailure) {
   bigtable::TableId table_id("the-table");
 
   auto future = tested.SnapshotTable(cluster_id, snapshot_id, table_id, 100_s);
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
+  EXPECT_FALSE(future.get());
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /**
  * @test Verify that `bigtable::TableAdmin::ListSnapshots` works in the easy
