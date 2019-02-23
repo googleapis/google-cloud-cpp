@@ -44,7 +44,7 @@ var searchData=
   ['sink',['Sink',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#afc8297118b11eed2c10b12aad5ba230c',1,'google::cloud::bigtable::v0::Filter']]],
   ['size',['size',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#acd144e4a1daa8edaf849b7dae6338879',1,'google::cloud::v0::IamBindings']]],
   ['snapshotid',['SnapshotId',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#abe486b71e585f7c014633813866b9c18',1,'google::cloud::bigtable::v0']]],
-  ['snapshottable',['SnapshotTable',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a0f636d6126f6525e62a95f16f47dc51e',1,'google::cloud::bigtable::v0::AdminClient::SnapshotTable()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#aaf9e940ed58a8d14fac50728106064ad',1,'google::cloud::bigtable::v0::TableAdmin::SnapshotTable()']]],
+  ['snapshottable',['SnapshotTable',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a0f636d6126f6525e62a95f16f47dc51e',1,'google::cloud::bigtable::v0::AdminClient::SnapshotTable()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a5873e9fc2608c5af685ded188d3a1763',1,'google::cloud::bigtable::v0::TableAdmin::SnapshotTable()']]],
   ['ssd',['SSD',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClusterConfig.html#a51a893ac1b4db32695039077f95a0279',1,'google::cloud::bigtable::v0::ClusterConfig']]],
   ['startingat',['StartingAt',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html#a87c58f3883997b72123a68d16d7877d6',1,'google::cloud::bigtable::v0::RowRange']]],
   ['state_5fnot_5fknown',['STATE_NOT_KNOWN',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceUpdateConfig.html#af30e57a558f553ed99189aa2d0b0aeb0',1,'google::cloud::bigtable::v0::InstanceUpdateConfig']]],
