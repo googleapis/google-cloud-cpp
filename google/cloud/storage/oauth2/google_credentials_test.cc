@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/internal/setenv.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/storage/internal/compute_engine_util.h"
 #include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/storage/oauth2/authorized_user_credentials.h"
@@ -218,10 +217,8 @@ TEST_F(GoogleCredentialsTest,
 
   // Test that the service account credentials are loaded from a file.
   auto creds = CreateServiceAccountCredentialsFromJsonFilePath(
-      filename,
-      google::cloud::optional<std::set<std::string>>(
-          {"https://www.googleapis.com/auth/devstorage.full_control"}),
-      google::cloud::optional<std::string>("user@foo.bar"));
+      filename, {{"https://www.googleapis.com/auth/devstorage.full_control"}},
+      "user@foo.bar");
   ASSERT_STATUS_OK(creds);
   auto* ptr = creds->get();
   EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
@@ -232,9 +229,8 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromContents) {
   // representing JSON contents.
   auto creds = CreateServiceAccountCredentialsFromJsonContents(
       SERVICE_ACCOUNT_CRED_CONTENTS,
-      google::cloud::optional<std::set<std::string>>(
-          {"https://www.googleapis.com/auth/devstorage.full_control"}),
-      google::cloud::optional<std::string>("user@foo.bar"));
+      {{"https://www.googleapis.com/auth/devstorage.full_control"}},
+      "user@foo.bar");
   ASSERT_STATUS_OK(creds);
   auto* ptr = creds->get();
   EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));

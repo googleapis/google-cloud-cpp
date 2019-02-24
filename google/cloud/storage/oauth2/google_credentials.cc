@@ -173,9 +173,7 @@ CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents) {
 
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path) {
-  return CreateServiceAccountCredentialsFromJsonFilePath(
-      path, google::cloud::optional<std::set<std::string>>(),
-      google::cloud::optional<std::string>());
+  return CreateServiceAccountCredentialsFromJsonFilePath(path, {}, {});
 }
 
 StatusOr<std::shared_ptr<Credentials>>
@@ -199,9 +197,7 @@ CreateServiceAccountCredentialsFromJsonFilePath(
 
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(std::string const& contents) {
-  return CreateServiceAccountCredentialsFromJsonContents(
-      contents, google::cloud::optional<std::set<std::string>>(),
-      google::cloud::optional<std::string>());
+  return CreateServiceAccountCredentialsFromJsonContents(contents, {}, {});
 }
 
 StatusOr<std::shared_ptr<Credentials>>

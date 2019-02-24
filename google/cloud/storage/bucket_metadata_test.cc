@@ -26,8 +26,6 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ::google::cloud::make_optional;
-using ::google::cloud::optional;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
@@ -171,15 +169,11 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ("acl-id-1", actual.acl().at(1).id());
   EXPECT_TRUE(actual.billing().requester_pays);
   EXPECT_EQ(2U, actual.cors().size());
-  auto expected_cors_0 = CorsEntry{make_optional<std::int64_t>(3600),
-                                   {"GET", "HEAD"},
-                                   {"cross-origin-example.com"},
-                                   {}};
+  auto expected_cors_0 =
+      CorsEntry{3600, {"GET", "HEAD"}, {"cross-origin-example.com"}, {}};
   EXPECT_EQ(expected_cors_0, actual.cors().at(0));
-  auto expected_cors_1 = CorsEntry{optional<std::int64_t>(),
-                                   {"GET", "HEAD"},
-                                   {"another-example.com"},
-                                   {"Content-Type"}};
+  auto expected_cors_1 =
+      CorsEntry{{}, {"GET", "HEAD"}, {"another-example.com"}, {"Content-Type"}};
   EXPECT_EQ(expected_cors_1, actual.cors().at(1));
   EXPECT_TRUE(actual.default_event_based_hold());
   EXPECT_EQ(1U, actual.default_acl().size());
@@ -764,7 +758,7 @@ TEST(BucketMetadataTest, SetVersioning) {
   EXPECT_TRUE(expected.versioning().has_value());
   EXPECT_TRUE(expected.versioning()->enabled);
   auto copy = expected;
-  copy.set_versioning(optional<BucketVersioning>(BucketVersioning{false}));
+  copy.set_versioning(BucketVersioning{false});
   EXPECT_TRUE(copy.versioning().has_value());
   EXPECT_FALSE(copy.versioning()->enabled);
   EXPECT_NE(copy, expected);
@@ -843,8 +837,7 @@ TEST(BucketMetadataPatchBuilder, SetCors) {
   BucketMetadataPatchBuilder builder;
   std::vector<CorsEntry> v;
   v.emplace_back(CorsEntry{{}, {"method1", "method2"}, {}, {"header1"}});
-  v.emplace_back(CorsEntry{
-      google::cloud::optional<std::int64_t>(86400), {}, {"origin1"}, {}});
+  v.emplace_back(CorsEntry{86400, {}, {"origin1"}, {}});
   builder.SetCors(v);
 
   auto actual = builder.BuildPatch();
