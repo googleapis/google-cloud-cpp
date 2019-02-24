@@ -18,11 +18,6 @@
 
 using namespace google::cloud::bigtable::internal;
 
-namespace {
-std::string const cmsg("testing with std::string const&");
-char const* msg = "testing with char const*";
-}  // anonymous namespace
-
 TEST(MakeStatusFromRpcError, AllCodes) {
   using google::cloud::StatusCode;
 
@@ -56,15 +51,4 @@ TEST(MakeStatusFromRpcError, AllCodes) {
     auto const actual = MakeStatusFromRpcError(original);
     EXPECT_EQ(expected, actual);
   }
-}
-
-TEST(ThrowDelegateTest, RpcError) {
-  grpc::Status status(grpc::StatusCode::UNAVAILABLE, "try-again");
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(ThrowRpcError(status, msg), google::cloud::bigtable::GRpcError);
-  EXPECT_THROW(ThrowRpcError(status, cmsg), google::cloud::bigtable::GRpcError);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(ThrowRpcError(status, msg), msg);
-  EXPECT_DEATH_IF_SUPPORTED(ThrowRpcError(status, cmsg), cmsg);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }

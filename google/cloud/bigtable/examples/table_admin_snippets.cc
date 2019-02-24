@@ -380,7 +380,7 @@ void CreateTableFromSnapshot(google::cloud::bigtable::TableAdmin admin,
     google::cloud::bigtable::SnapshotId snapshot_id(snapshot_id_str);
     auto future =
         admin.CreateTableFromSnapshot(cluster_id, snapshot_id, table_id);
-    std::cout << "Table created :" << future.get().name() << "\n";
+    std::cout << "Table created :" << future.get()->name() << "\n";
   }
   //! [create table from snapshot]
   (std::move(admin), cluster_id_str, snapshot_id_str, table_id);

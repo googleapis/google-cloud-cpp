@@ -336,7 +336,7 @@ TEST_F(InstanceAdminTest, CreateInstance) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected, *actual)) << delta;
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::CreateInstance` works.
@@ -381,7 +381,7 @@ TEST_F(InstanceAdminTest, CreateInstanceImmediatelyReady) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected, *actual)) << delta;
 }
 
 /// @test Failures while polling in `bigtable::InstanceAdmin::CreateInstance`.
@@ -439,10 +439,9 @@ TEST_F(InstanceAdminTest, CreateInstancePollRecoverableFailures) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected, *actual)) << delta;
 }
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Failures in `bigtable::InstanceAdmin::CreateInstance`.
 TEST_F(InstanceAdminTest, CreateInstanceRequestFailure) {
   using namespace ::testing;
@@ -456,7 +455,7 @@ TEST_F(InstanceAdminTest, CreateInstanceRequestFailure) {
       bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
       {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
 
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
+  EXPECT_FALSE(future.get());
 }
 
 /// @test Failures while polling in `bigtable::InstanceAdmin::CreateInstance`.
@@ -480,7 +479,7 @@ TEST_F(InstanceAdminTest, CreateInstancePollUnrecoverableFailure) {
   auto future = tested.CreateInstance(bigtable::InstanceConfig(
       bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
       {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
+  EXPECT_FALSE(future.get());
 }
 
 /// @test Polling in `bigtable::InstanceAdmin::CreateInstance` returns failure.
@@ -527,7 +526,7 @@ TEST_F(InstanceAdminTest, CreateInstancePollReturnsFailure) {
   auto future = tested.CreateInstance(bigtable::InstanceConfig(
       bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
       {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
+  EXPECT_FALSE(future.get());
 }
 
 /// @test Failures in `bigtable::InstanceAdmin::UpdateInstance`.
@@ -542,7 +541,7 @@ TEST_F(InstanceAdminTest, UpdateInstanceRequestFailure) {
   btadmin::Instance instance;
   bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
   auto future = tested.UpdateInstance(std::move(instance_update_config));
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
+  EXPECT_FALSE(future.get());
 }
 
 /// @test Failures while polling in `bigtable::InstanceAdmin::UpdateInstance`.
@@ -564,7 +563,7 @@ TEST_F(InstanceAdminTest, UpdateInstancePollUnrecoverableFailure) {
   btadmin::Instance instance;
   bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
   auto future = tested.UpdateInstance(std::move(instance_update_config));
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
+  EXPECT_FALSE(future.get());
 }
 
 /// @test Polling in `bigtable::InstanceAdmin::UpdateInstance` returns failure.
@@ -609,7 +608,7 @@ TEST_F(InstanceAdminTest, UpdateInstancePollReturnsFailure) {
   btadmin::Instance instance;
   bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
   auto future = tested.UpdateInstance(std::move(instance_update_config));
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
+  EXPECT_FALSE(future.get());
 }
 
 /// @test Failures in `bigtable::InstanceAdmin::UpdateCluster`.
@@ -624,7 +623,7 @@ TEST_F(InstanceAdminTest, UpdateClusterRequestFailure) {
   btadmin::Cluster cluster;
   bigtable::ClusterConfig cluster_config(std::move(cluster));
   auto future = tested.UpdateCluster(std::move(cluster_config));
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
+  EXPECT_FALSE(future.get());
 }
 
 /// @test Failures while polling in `bigtable::InstanceAdmin::UpdateCluster`.
@@ -645,7 +644,7 @@ TEST_F(InstanceAdminTest, UpdateClusterPollUnrecoverableFailure) {
   btadmin::Cluster cluster;
   bigtable::ClusterConfig cluster_config(std::move(cluster));
   auto future = tested.UpdateCluster(std::move(cluster_config));
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
+  EXPECT_FALSE(future.get());
 }
 
 /// @test Polling in `bigtable::InstanceAdmin::UpdateCluster` returns failure.
@@ -689,9 +688,8 @@ TEST_F(InstanceAdminTest, UpdateClusterPollReturnsFailure) {
   btadmin::Cluster cluster;
   bigtable::ClusterConfig cluster_config(std::move(cluster));
   auto future = tested.UpdateCluster(std::move(cluster_config));
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
+  EXPECT_FALSE(future.get());
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateInstance` works.
 TEST_F(InstanceAdminTest, UpdateInstance) {
@@ -765,7 +763,7 @@ TEST_F(InstanceAdminTest, UpdateInstance) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected_copy, *actual)) << delta;
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateInstance` works.
@@ -815,7 +813,7 @@ TEST_F(InstanceAdminTest, UpdateInstanceImmediatelyReady) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected_copy, *actual)) << delta;
 }
 
 /// @test Failures while polling in `bigtable::InstanceAdmin::UpdateInstance`.
@@ -879,7 +877,7 @@ TEST_F(InstanceAdminTest, UpdateInstancePollRecoverableFailures) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected_copy, *actual)) << delta;
 }
 
 /// @test Verify that DeleteInstance works in the positive case.
@@ -1148,7 +1146,7 @@ TEST_F(InstanceAdminTest, CreateCluster) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected, *actual)) << delta;
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::CreateCluster` works.
@@ -1193,7 +1191,7 @@ TEST_F(InstanceAdminTest, CreateClusterImmediatelyReady) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected, *actual)) << delta;
 }
 
 /// @test Failures while polling in `bigtable::InstanceAdmin::CreateCluster`.
@@ -1256,7 +1254,7 @@ TEST_F(InstanceAdminTest, CreateClusterPollRecoverableFailures) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected, *actual)) << delta;
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateCluster` works.
@@ -1323,7 +1321,7 @@ TEST_F(InstanceAdminTest, UpdateCluster) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected_copy, *actual)) << delta;
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateCluster` works.
@@ -1373,7 +1371,7 @@ TEST_F(InstanceAdminTest, UpdateClusterImmediatelyReady) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected_copy, *actual)) << delta;
 }
 
 /// @test Failures while polling in `bigtable::InstanceAdmin::UpdateCluster`.
@@ -1437,7 +1435,7 @@ TEST_F(InstanceAdminTest, UpdateClusterPollRecoverableFailures) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected_copy, *actual)) << delta;
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateAppProfile` works.
@@ -1509,7 +1507,7 @@ TEST_F(InstanceAdminTest, UpdateAppProfile) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected_copy, *actual)) << delta;
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateAppProfile` works.
@@ -1560,7 +1558,7 @@ TEST_F(InstanceAdminTest, UpdateAppProfileImmediatelyReady) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected_copy, *actual)) << delta;
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateAppProfile` works.
@@ -1618,10 +1616,9 @@ TEST_F(InstanceAdminTest, UpdateAppProfileRecoverableFailures) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected_copy, *actual)) << delta;
 }
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify that `bigtable::InstanceAdmin::UpdateAppProfile` works.
 TEST_F(InstanceAdminTest, UpdateAppProfileTooManyRecoverableFailures) {
   using ::testing::_;
@@ -1642,12 +1639,7 @@ TEST_F(InstanceAdminTest, UpdateAppProfileTooManyRecoverableFailures) {
           .set_description("Test Profile")
           .set_multi_cluster_use_any());
 
-  EXPECT_THROW(try { future.get(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("try-again"));
-    EXPECT_THAT(ex.what(), HasSubstr("UpdateAppProfile"));
-    throw;
-  },
-               std::runtime_error);
+  EXPECT_FALSE(future.get());
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::UpdateAppProfile` works.
@@ -1669,14 +1661,8 @@ TEST_F(InstanceAdminTest, UpdateAppProfilePermanentFailure) {
           .set_description("Test Profile")
           .set_multi_cluster_use_any());
 
-  EXPECT_THROW(try { future.get(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("uh oh"));
-    EXPECT_THAT(ex.what(), HasSubstr("UpdateAppProfile"));
-    throw;
-  },
-               std::runtime_error);
+  EXPECT_FALSE(future.get());
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /// @test Failures while polling in `bigtable::InstanceAdmin::UpdateAppProfile`.
 TEST_F(InstanceAdminTest, UpdateAppProfilePollRecoverableFailures) {
@@ -1739,7 +1725,7 @@ TEST_F(InstanceAdminTest, UpdateAppProfilePollRecoverableFailures) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected_copy, *actual)) << delta;
 }
 
 /// @test Operation failures in `bigtable::InstanceAdmin::UpdateAppProfile`.
@@ -1803,7 +1789,7 @@ TEST_F(InstanceAdminTest, UpdateAppProfileOperationFailure) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected_copy, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected_copy, *actual)) << delta;
 }
 
 /// @test Verify positive scenario for InstanceAdmin::GetIamPolicy.

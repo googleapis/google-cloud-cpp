@@ -73,21 +73,6 @@ google::cloud::Status MakeStatusFromRpcError(grpc::Status const& status) {
   return google::cloud::Status(code, status.error_message());
 }
 
-void ThrowRpcError(grpc::Status const& status, char const* msg) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  throw bigtable::GRpcError(msg, status);
-#else
-  bigtable::GRpcError ex(msg, status);
-  std::cerr << "Aborting because exceptions are disabled: " << ex.what()
-            << "\n";
-  google::cloud::Terminate(ex.what());
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-void ThrowRpcError(grpc::Status const& status, std::string const& msg) {
-  ThrowRpcError(status, msg.c_str());
-}
-
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

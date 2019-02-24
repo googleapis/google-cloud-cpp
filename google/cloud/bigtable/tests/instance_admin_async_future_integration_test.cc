@@ -17,6 +17,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <google/protobuf/text_format.h>
@@ -139,7 +140,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   auto instance = instance_admin_->CreateInstance(config).get();
   auto async_instances_current = instance_admin_->AsyncListInstances(cq).get();
   EXPECT_TRUE(
-      IsInstancePresent(async_instances_current.instances, instance.name()));
+      IsInstancePresent(async_instances_current.instances, instance->name()));
 
   // Get instance
   google::cloud::future<btadmin::Instance> fut =
@@ -150,9 +151,9 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   EXPECT_NE(npos, instance_check.name().find(instance_id));
 
   // update instance
-  btadmin::Instance instance_copy;
-  instance_copy.CopyFrom(instance);
-  bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
+  google::cloud::StatusOr<btadmin::Instance> instance_copy;
+  instance_copy->CopyFrom(*instance);
+  bigtable::InstanceUpdateConfig instance_update_config(std::move(*instance));
   auto const updated_display_name = instance_id + " updated";
   instance_update_config.set_display_name(updated_display_name);
   auto instance_after =
@@ -165,9 +166,9 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
   auto instances_after_delete = instance_admin_->AsyncListInstances(cq).get();
   EXPECT_TRUE(IsInstancePresent(async_instances_current.instances,
-                                instance_copy.name()));
+                                instance_copy->name()));
   EXPECT_FALSE(
-      IsInstancePresent(instances_after_delete.instances, instance.name()));
+      IsInstancePresent(instances_after_delete.instances, instance->name()));
 
   cq.Shutdown();
   pool.join();
@@ -207,14 +208,15 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   auto cluster =
       instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
           .get();
-  ASSERT_FALSE(cluster.name().empty());
+  ASSERT_FALSE(cluster->name().empty());
   auto clusters_list_after = instance_admin_->AsyncListClusters(cq, id).get();
   EXPECT_TRUE(clusters_list_after.failed_locations.empty())
       << "The Cloud Bigtable service (or emulator) reports that it could not"
       << " retrieve the information for some locations. This is typically due"
       << " to an outage or some other transient condition.";
-  EXPECT_FALSE(IsClusterPresent(clusters_list_before.clusters, cluster.name()));
-  EXPECT_TRUE(IsClusterPresent(clusters_list_after.clusters, cluster.name()));
+  EXPECT_FALSE(
+      IsClusterPresent(clusters_list_before.clusters, cluster->name()));
+  EXPECT_TRUE(IsClusterPresent(clusters_list_after.clusters, cluster->name()));
   EXPECT_TRUE(IsIdOrNamePresentInClusterList(clusters_list_after.clusters,
                                              cluster_id_str));
 
@@ -227,19 +229,19 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   EXPECT_EQ(cluster_name_prefix + cluster_id.get(), cluster_check.name());
 
   // Update cluster
-  btadmin::Cluster cluster_copy;
-  cluster_copy.CopyFrom(cluster);
+  google::cloud::StatusOr<btadmin::Cluster> cluster_copy;
+  cluster_copy->CopyFrom(*cluster);
   // update the storage type
-  cluster.set_serve_nodes(4);
-  cluster.clear_state();
-  bigtable::ClusterConfig updated_cluster_config(std::move(cluster));
+  cluster->set_serve_nodes(4);
+  cluster->clear_state();
+  bigtable::ClusterConfig updated_cluster_config(std::move(*cluster));
   auto cluster_after_update =
       instance_admin_->UpdateCluster(std::move(updated_cluster_config)).get();
   auto check_cluster_after_update =
       instance_admin_->GetCluster(instance_id, cluster_id);
   ASSERT_STATUS_OK(check_cluster_after_update);
 
-  EXPECT_EQ(3, cluster_copy.serve_nodes());
+  EXPECT_EQ(3, cluster_copy->serve_nodes());
   EXPECT_EQ(4, check_cluster_after_update->serve_nodes());
 
   // Delete cluster
@@ -250,12 +252,12 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   ASSERT_STATUS_OK(instance_admin_->DeleteInstance(id));
   EXPECT_TRUE(
       IsClusterPresent(clusters_list_after.clusters,
-                       instance_details.name() + "/clusters/" + id + "-cl2"));
+                       instance_details->name() + "/clusters/" + id + "-cl2"));
   EXPECT_FALSE(
       IsClusterPresent(clusters_list_after_delete.clusters,
-                       instance_details.name() + "/clusters/" + id + "-cl2"));
+                       instance_details->name() + "/clusters/" + id + "-cl2"));
   EXPECT_FALSE(
-      IsClusterPresent(clusters_list_after_delete.clusters, cluster.name()));
+      IsClusterPresent(clusters_list_after_delete.clusters, cluster->name()));
   cq.Shutdown();
   pool.join();
 }
@@ -280,8 +282,8 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAllClustersTest) {
   auto instance2 = instance_admin_->CreateInstance(instance_config2);
   // Wait for instance creation
 
-  auto instance1_name = instance1.get().name();
-  auto instance2_name = instance2.get().name();
+  auto instance1_name = instance1.get()->name();
+  auto instance2_name = instance2.get()->name();
   ASSERT_THAT(instance1_name, HasSubstr(id1));
   ASSERT_THAT(instance2_name, HasSubstr(id2));
 

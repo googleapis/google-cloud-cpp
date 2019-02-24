@@ -300,7 +300,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
       instance_id, "us-central1-c", bigtable::InstanceConfig::PRODUCTION, 3);
   auto future = instance_admin_->CreateInstance(instance_config);
   // Wait for instance creation
-  ASSERT_THAT(future.get().name(), HasSubstr(instance_id));
+  ASSERT_THAT(future.get()->name(), HasSubstr(instance_id));
 
   bigtable::noex::InstanceAdmin admin(instance_admin_client_);
   google::cloud::bigtable::CompletionQueue cq;

@@ -108,7 +108,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc create instance
    */
-  std::future<google::bigtable::admin::v2::Instance> CreateInstance(
+  std::future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
       InstanceConfig instance_config);
 
   /**
@@ -122,7 +122,7 @@ class InstanceAdmin {
    *  @par Example
    *  @snippet bigtable_samples_instance_admin.cc create cluster
    */
-  std::future<google::bigtable::admin::v2::Cluster> CreateCluster(
+  std::future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
       ClusterConfig cluster_config, bigtable::InstanceId const& instance_id,
       bigtable::ClusterId const& cluster_id);
 
@@ -145,7 +145,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc update instance
    */
-  std::future<google::bigtable::admin::v2::Instance> UpdateInstance(
+  std::future<StatusOr<google::bigtable::admin::v2::Instance>> UpdateInstance(
       InstanceUpdateConfig instance_update_config);
 
   /**
@@ -329,7 +329,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc update cluster
    */
-  std::future<google::bigtable::admin::v2::Cluster> UpdateCluster(
+  std::future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
       ClusterConfig cluster_config);
 
   /**
@@ -436,9 +436,10 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_samples_instance_admin.cc update app profile routing
    */
-  std::future<google::bigtable::admin::v2::AppProfile> UpdateAppProfile(
-      bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
-      AppProfileUpdateConfig config);
+  std::future<StatusOr<google::bigtable::admin::v2::AppProfile>>
+  UpdateAppProfile(bigtable::InstanceId instance_id,
+                   bigtable::AppProfileId profile_id,
+                   AppProfileUpdateConfig config);
 
   /**
    * List the application profiles in an instance.
@@ -517,25 +518,25 @@ class InstanceAdmin {
 
  private:
   /// Implement CreateInstance() with a separate thread.
-  google::bigtable::admin::v2::Instance CreateInstanceImpl(
+  StatusOr<google::bigtable::admin::v2::Instance> CreateInstanceImpl(
       InstanceConfig instance_config);
 
   /// Implement CreateCluster() with a separate thread.
-  google::bigtable::admin::v2::Cluster CreateClusterImpl(
+  StatusOr<google::bigtable::admin::v2::Cluster> CreateClusterImpl(
       ClusterConfig const& cluster_config,
       bigtable::InstanceId const& instance_id,
       bigtable::ClusterId const& cluster_id);
 
   // Implement UpdateInstance() with a separate thread.
-  google::bigtable::admin::v2::Instance UpdateInstanceImpl(
+  StatusOr<google::bigtable::admin::v2::Instance> UpdateInstanceImpl(
       InstanceUpdateConfig instance_update_config);
 
   // Implement UpdateCluster() with a separate thread.
-  google::bigtable::admin::v2::Cluster UpdateClusterImpl(
+  StatusOr<google::bigtable::admin::v2::Cluster> UpdateClusterImpl(
       ClusterConfig cluster_config);
 
   /// Poll the result of UpdateAppProfile in a separate thread.
-  google::bigtable::admin::v2::AppProfile UpdateAppProfileImpl(
+  StatusOr<google::bigtable::admin::v2::AppProfile> UpdateAppProfileImpl(
       bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
       AppProfileUpdateConfig config);
 

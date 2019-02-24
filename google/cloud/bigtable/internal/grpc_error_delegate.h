@@ -29,22 +29,6 @@ namespace internal {
  */
 google::cloud::Status MakeStatusFromRpcError(grpc::Status const& status);
 
-//@{
-/**
- * @name Delete exception raising to hidden functions.
- *
- * The following functions raise the corresponding exception, unless the user
- * has disabled exception handling, in which case they print the error message
- * to std::cerr and call std::abort().
- *
- * We copied this technique from Abseil.  Unfortunately we cannot use it
- * directly because it is not a public interface for Abseil.
- */
-[[noreturn]] void ThrowRpcError(grpc::Status const& status, char const* msg);
-[[noreturn]] void ThrowRpcError(grpc::Status const& status,
-                                std::string const& msg);
-//@}
-
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

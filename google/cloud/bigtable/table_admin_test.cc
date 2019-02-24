@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
 #include "google/cloud/internal/make_unique.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <google/protobuf/text_format.h>
@@ -706,9 +707,9 @@ TEST_F(TableAdminTest, AsyncCheckConsistencySimple) {
   bigtable::TableId table_id("the-async-table");
   bigtable::ConsistencyToken consistency_token("test-async-token");
   // After all the setup, make the actual call we want to test.
-  std::future<bool> result =
+  std::future<google::cloud::StatusOr<bool>> result =
       tested.WaitForConsistencyCheck(table_id, consistency_token);
-  EXPECT_TRUE(result.get());
+  EXPECT_STATUS_OK(result.get());
 }
 
 /**
@@ -727,16 +728,9 @@ TEST_F(TableAdminTest, AsyncCheckConsistencyFailure) {
   bigtable::TableId table_id("other-async-table");
   bigtable::ConsistencyToken consistency_token("test-async-token");
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  // After all the setup, make the actual call we want to test.
-  std::future<bool> result =
+  std::future<google::cloud::StatusOr<bool>> result =
       tested.WaitForConsistencyCheck(table_id, consistency_token);
-  EXPECT_THROW(result.get(), bigtable::GRpcError);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(
-      tested.WaitForConsistencyCheck(table_id, consistency_token),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_FALSE(result.get());
 }
 
 /**
@@ -1277,14 +1271,13 @@ TEST_F(TableAdminTest, CreateTableFromSnapshot_Simple) {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected, actual)) << delta;
+  EXPECT_TRUE(differencer.Compare(expected, *actual)) << delta;
 }
 
 /**
  * @test Verify that `bigtable::TableAdmin::CreateTableFromSnapshot` handles
  * unrecoverable failure.
  */
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 TEST_F(TableAdminTest, CreateTableFromSnapshot_UnrecoverableFailures) {
   using namespace ::testing;
 
@@ -1298,7 +1291,7 @@ TEST_F(TableAdminTest, CreateTableFromSnapshot_UnrecoverableFailures) {
       bigtable::ClusterId("other-cluster"), bigtable::SnapshotId("snapshot-1"),
       table_id);
   // After all the setup, make the actual call we want to test.
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
+  EXPECT_FALSE(future.get());
 }
 
 /// @test Polling in `bigtable::TableAdmin::CreateTableFromSnapshot` returns
@@ -1347,7 +1340,7 @@ TEST_F(TableAdminTest, CreateTableFromSnapshot_PollReturnsFailure) {
       bigtable::ClusterId("other-cluster"), bigtable::SnapshotId("snapshot-1"),
       table_id);
   // After all the setup, make the actual call we want to test.
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
+  EXPECT_FALSE(future.get());
 }
 
 /// @test Polling in `bigtable::TableAdmin::CreateTableFromSnapshot` returns
@@ -1409,6 +1402,5 @@ TEST_F(TableAdminTest, CreateTableFromSnapshot_ExhaustPollingPolicyFailure) {
       bigtable::ClusterId("other-cluster"), bigtable::SnapshotId("snapshot-1"),
       table_id);
   // After all the setup, make the actual call we want to test.
-  EXPECT_THROW(future.get(), bigtable::GRpcError);
+  EXPECT_FALSE(future.get());
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
