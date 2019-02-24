@@ -328,6 +328,53 @@ TEST(OptionalTest, WithNoDefaultConstructor) {
   EXPECT_TRUE(actual.has_value());
   EXPECT_EQ(actual->str(), "foo");
 }
+
+struct ExplicitlyConvertible {
+  explicit operator std::string() const { return "explicit-conversion"; }
+};
+
+struct ImplicitlyConvertible {
+  operator std::string() const { return "implicit-conversion"; }
+};
+
+TEST(OptionalTest, ValueConstructorWithImplicitConversion) {
+  optional<int> i = 123.5;
+  EXPECT_EQ(*i, 123);
+  optional<std::string> x = "hi";
+  EXPECT_EQ(*x, "hi");
+  optional<std::string> implicit_conversion = ImplicitlyConvertible{};
+  EXPECT_EQ(*implicit_conversion, "implicit-conversion");
+  // We may want to make a full no-compile test for the following case, but
+  // those are kinda a PITA.
+  optional<std::string> explicit_conversion(ExplicitlyConvertible{});
+  EXPECT_EQ(*explicit_conversion, "explicit-conversion");
+}
+
+TEST(OptionalTest, ValueAssignmentWithImplicitConversion) {
+  optional<std::string> x;
+  x = "hi";
+  EXPECT_EQ(*x, "hi");
+}
+
+optional<std::string> FunctionReturningOptStringValue() {
+  return "it-worked";  // If this compiles, it works.
+}
+
+TEST(OptionalTest, OptionalReturnWithValue) {
+  optional<std::string> x = FunctionReturningOptStringValue();
+  EXPECT_EQ(*x, "it-worked");
+}
+
+optional<std::string> FunctionReturningOptWithoutValue() {
+  return {};  // If this compiles, it works.
+}
+
+TEST(OptionalTest, OptionalReturnWithoutValue) {
+  optional<std::string> x = FunctionReturningOptWithoutValue();
+  EXPECT_FALSE(x);
+  EXPECT_FALSE(x.has_value());
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
