@@ -479,6 +479,9 @@ void UpdateAppProfileDescription(
       google::cloud::bigtable::AppProfileUpdateConfig().set_description(
           description));
   auto profile = profile_future.get();
+  if (!profile) {
+    throw std::runtime_error(profile.status().message());
+  }
   std::string detail;
   google::protobuf::TextFormat::PrintToString(*profile, &detail);
   std::cout << "Application Profile details=" << detail << "\n";
@@ -502,6 +505,9 @@ void UpdateAppProfileRoutingAny(
           .set_multi_cluster_use_any()
           .set_ignore_warnings(true));
   auto profile = profile_future.get();
+  if (!profile) {
+    throw std::runtime_error(profile.status().message());
+  }
   std::string detail;
   google::protobuf::TextFormat::PrintToString(*profile, &detail);
   std::cout << "Application Profile details=" << detail << "\n";
@@ -526,6 +532,9 @@ void UpdateAppProfileRoutingSingleCluster(
           .set_single_cluster_routing(cluster_id)
           .set_ignore_warnings(true));
   auto profile = profile_future.get();
+  if (!profile) {
+    throw std::runtime_error(profile.status().message());
+  }
   std::string detail;
   google::protobuf::TextFormat::PrintToString(*profile, &detail);
   std::cout << "Application Profile details=" << detail << "\n";
