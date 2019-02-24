@@ -51,27 +51,39 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  */
 template <typename T>
 class optional {
+ private:
+  template <typename T1, typename U1>
+  using AllowImplicit = typename std::is_convertible<U1&&, T1>;
+
  public:
   optional() : buffer_{}, has_value_(false) {}
-  explicit optional(T const& x) : has_value_(true) {
-    new (reinterpret_cast<T*>(&buffer_)) T(x);
-  }
-  explicit optional(T&& x) noexcept : has_value_(true) {
-    new (reinterpret_cast<T*>(&buffer_)) T(std::move(x));
-  }
-  optional(optional<T>&& rhs) noexcept : has_value_(rhs.has_value_) {
-    if (has_value_) {
-      new (reinterpret_cast<T*>(&buffer_)) T(std::move(*rhs));
-    }
-  }
-  optional(optional<T> const& rhs) : has_value_(rhs.has_value_) {
+  optional(optional const& rhs) : has_value_(rhs.has_value_) {
     if (has_value_) {
       new (reinterpret_cast<T*>(&buffer_)) T(*rhs);
     }
   }
+  optional(optional&& rhs) noexcept : has_value_(rhs.has_value_) {
+    if (has_value_) {
+      new (reinterpret_cast<T*>(&buffer_)) T(std::move(*rhs));
+    }
+  }
+  template <typename U = T,
+            typename std::enable_if<std::is_constructible<T, U&&>::value &&
+                                        AllowImplicit<T, U>::value,
+                                    int>::type = 0>
+  optional(U&& x) noexcept : has_value_(true) {
+    new (reinterpret_cast<T*>(&buffer_)) T(std::move(x));
+  }
+  template <typename U = T,
+            typename std::enable_if<std::is_constructible<T, U&&>::value &&
+                                        !AllowImplicit<T, U>::value,
+                                    int>::type = 0>
+  explicit optional(U&& x) noexcept : has_value_(true) {
+    new (reinterpret_cast<T*>(&buffer_)) T(std::move(x));
+  }
   ~optional() { reset(); }
 
-  optional& operator=(optional<T> const& rhs) {
+  optional& operator=(optional const& rhs) {
     // There may be shorter ways to express this, but this is fairly readable,
     // and should be reasonably efficient. Note that we must avoid destructing
     // the destination and/or default initializing it unless really needed.
@@ -92,7 +104,7 @@ class optional {
     return *this;
   }
 
-  optional& operator=(optional<T>&& rhs) noexcept {
+  optional& operator=(optional&& rhs) noexcept {
     // There may be shorter ways to express this, but this is fairly readable,
     // and should be reasonably efficient. Note that we must avoid destructing
     // the destination and/or default initializing it unless really needed.
