@@ -70,7 +70,11 @@ void CreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   std::cout << "Waiting for instance creation to complete ";
   for (int i = 0; i != 100; ++i) {
     if (std::future_status::ready == future.wait_for(std::chrono::seconds(2))) {
-      std::cout << "DONE: " << future.get()->name() << "\n";
+      auto instance = future.get();
+      if (!instance) {
+        throw std::runtime_error(instance.status().message());
+      }
+      std::cout << "DONE: " << instance->name() << "\n";
       return;
     }
     std::cout << '.' << std::flush;
@@ -103,7 +107,11 @@ void CreateDevInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   std::cout << "Waiting for instance creation to complete ";
   for (int i = 0; i != 100; ++i) {
     if (std::future_status::ready == future.wait_for(std::chrono::seconds(2))) {
-      std::cout << "DONE: " << future.get()->name() << "\n";
+      auto instance = future.get();
+      if (!instance) {
+        throw std::runtime_error(instance.status().message());
+      }
+      std::cout << "DONE: " << instance->name() << "\n";
       return;
     }
     std::cout << '.' << std::flush;
