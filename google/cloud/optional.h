@@ -62,7 +62,7 @@ class optional {
       new (reinterpret_cast<T*>(&buffer_)) T(*rhs);
     }
   }
-  optional(optional&& rhs) noexcept : has_value_(rhs.has_value_) {
+  optional(optional&& rhs) : has_value_(rhs.has_value_) {
     if (has_value_) {
       new (reinterpret_cast<T*>(&buffer_)) T(std::move(*rhs));
     }
@@ -71,14 +71,14 @@ class optional {
             typename std::enable_if<std::is_constructible<T, U&&>::value &&
                                         AllowImplicit<T, U>::value,
                                     int>::type = 0>
-  optional(U&& x) noexcept : has_value_(true) {
+  optional(U&& x) : has_value_(true) {
     new (reinterpret_cast<T*>(&buffer_)) T(std::move(x));
   }
   template <typename U = T,
             typename std::enable_if<std::is_constructible<T, U&&>::value &&
                                         !AllowImplicit<T, U>::value,
                                     int>::type = 0>
-  explicit optional(U&& x) noexcept : has_value_(true) {
+  explicit optional(U&& x) : has_value_(true) {
     new (reinterpret_cast<T*>(&buffer_)) T(std::move(x));
   }
   ~optional() { reset(); }
