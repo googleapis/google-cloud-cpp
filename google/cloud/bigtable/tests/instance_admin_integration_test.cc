@@ -249,7 +249,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
 
   // update instance
   google::cloud::StatusOr<btadmin::Instance> instance_copy;
-  instance_copy->CopyFrom(*instance);
+  instance_copy = *instance;
   bigtable::InstanceUpdateConfig instance_update_config(std::move(*instance));
   auto const updated_display_name = instance_id + " updated";
   instance_update_config.set_display_name(updated_display_name);
@@ -311,7 +311,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
 
   // Update cluster
   google::cloud::StatusOr<btadmin::Cluster> cluster_copy;
-  cluster_copy->CopyFrom(*cluster);
+  cluster_copy = *cluster;
   // update the storage type
   cluster->set_serve_nodes(4);
   cluster->clear_state();
