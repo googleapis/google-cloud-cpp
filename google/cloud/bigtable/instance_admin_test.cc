@@ -332,7 +332,7 @@ TEST_F(InstanceAdminTest, CreateInstance) {
       bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
       {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
   auto actual = future.get();
-
+  EXPECT_STATUS_OK(actual);
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
@@ -377,7 +377,7 @@ TEST_F(InstanceAdminTest, CreateInstanceImmediatelyReady) {
       bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
       {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
   auto actual = future.get();
-
+  EXPECT_STATUS_OK(actual);
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
@@ -435,7 +435,7 @@ TEST_F(InstanceAdminTest, CreateInstancePollRecoverableFailures) {
       bigtable::InstanceId("test-instance"), bigtable::DisplayName("foo bar"),
       {{"c1", {"a-zone", 3, bigtable::ClusterConfig::SSD}}}));
   auto actual = future.get();
-
+  EXPECT_STATUS_OK(actual);
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
@@ -759,7 +759,7 @@ TEST_F(InstanceAdminTest, UpdateInstance) {
 
   auto future = tested.UpdateInstance(std::move(instance_update_config));
   auto actual = future.get();
-
+  EXPECT_STATUS_OK(actual);
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
@@ -809,7 +809,7 @@ TEST_F(InstanceAdminTest, UpdateInstanceImmediatelyReady) {
 
   auto future = tested.UpdateInstance(std::move(instance_update_config));
   auto actual = future.get();
-
+  EXPECT_STATUS_OK(actual);
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
@@ -873,7 +873,7 @@ TEST_F(InstanceAdminTest, UpdateInstancePollRecoverableFailures) {
 
   auto future = tested.UpdateInstance(std::move(instance_update_config));
   auto actual = future.get();
-
+  EXPECT_STATUS_OK(actual);
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
@@ -1143,6 +1143,7 @@ TEST_F(InstanceAdminTest, CreateCluster) {
       bigtable::ClusterId("other-cluster"));
 
   auto actual = future.get();
+  EXPECT_STATUS_OK(actual);
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
@@ -1187,7 +1188,7 @@ TEST_F(InstanceAdminTest, CreateClusterImmediatelyReady) {
       bigtable::InstanceId("test-instance"),
       bigtable::ClusterId("other-cluster"));
   auto actual = future.get();
-
+  EXPECT_STATUS_OK(actual);
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
@@ -1250,7 +1251,7 @@ TEST_F(InstanceAdminTest, CreateClusterPollRecoverableFailures) {
       bigtable::InstanceId("test-instance"),
       bigtable::ClusterId("other-cluster"));
   auto actual = future.get();
-
+  EXPECT_STATUS_OK(actual);
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
@@ -1317,7 +1318,7 @@ TEST_F(InstanceAdminTest, UpdateCluster) {
 
   auto future = tested.UpdateCluster(std::move(cluster_config));
   auto actual = future.get();
-
+  EXPECT_STATUS_OK(actual);
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
@@ -1367,7 +1368,7 @@ TEST_F(InstanceAdminTest, UpdateClusterImmediatelyReady) {
 
   auto future = tested.UpdateCluster(std::move(cluster_config));
   auto actual = future.get();
-
+  EXPECT_STATUS_OK(actual);
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
@@ -1431,7 +1432,7 @@ TEST_F(InstanceAdminTest, UpdateClusterPollRecoverableFailures) {
 
   auto future = tested.UpdateCluster(std::move(cluster_config));
   auto actual = future.get();
-
+  EXPECT_STATUS_OK(actual);
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
@@ -1503,7 +1504,7 @@ TEST_F(InstanceAdminTest, UpdateAppProfile) {
           .set_description("Test Profile")
           .set_multi_cluster_use_any());
   auto actual = future.get();
-
+  EXPECT_STATUS_OK(actual);
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
@@ -1554,7 +1555,7 @@ TEST_F(InstanceAdminTest, UpdateAppProfileImmediatelyReady) {
           .set_description("Test Profile")
           .set_multi_cluster_use_any());
   auto actual = future.get();
-
+  EXPECT_STATUS_OK(actual);
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
@@ -1612,7 +1613,7 @@ TEST_F(InstanceAdminTest, UpdateAppProfileRecoverableFailures) {
           .set_description("Test Profile")
           .set_multi_cluster_use_any());
   auto actual = future.get();
-
+  EXPECT_STATUS_OK(actual);
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
@@ -1721,7 +1722,7 @@ TEST_F(InstanceAdminTest, UpdateAppProfilePollRecoverableFailures) {
 
   auto future = tested.UpdateCluster(std::move(cluster_config));
   auto actual = future.get();
-
+  EXPECT_STATUS_OK(actual);
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
@@ -1785,7 +1786,7 @@ TEST_F(InstanceAdminTest, UpdateAppProfileOperationFailure) {
 
   auto future = tested.UpdateCluster(std::move(cluster_config));
   auto actual = future.get();
-
+  EXPECT_STATUS_OK(actual);
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
