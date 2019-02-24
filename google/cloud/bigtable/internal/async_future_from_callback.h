@@ -42,7 +42,7 @@ namespace internal {
 template <typename R>
 class AsyncFutureFromCallback {
  public:
-  explicit AsyncFutureFromCallback(promise<R>&& p, char const* w)
+  explicit AsyncFutureFromCallback(promise<R> p, char const* w)
       : promise_(std::move(p)), where_(w) {}
 
   void operator()(CompletionQueue& cq, R& result, grpc::Status& status) {
@@ -70,7 +70,7 @@ class AsyncFutureFromCallback {
 template <>
 class AsyncFutureFromCallback<void> {
  public:
-  explicit AsyncFutureFromCallback(promise<void>&& p, char const* w)
+  explicit AsyncFutureFromCallback(promise<void> p, char const* w)
       : promise_(std::move(p)), where_(w) {}
 
   void operator()(CompletionQueue& cq, google::protobuf::Empty& result,
@@ -94,7 +94,7 @@ class AsyncFutureFromCallback<void> {
  * and returns a new instance.
  */
 template <typename T>
-AsyncFutureFromCallback<T> MakeAsyncFutureFromCallback(promise<T>&& p,
+AsyncFutureFromCallback<T> MakeAsyncFutureFromCallback(promise<T> p,
                                                        const char* w) {
   return AsyncFutureFromCallback<T>(std::move(p), w);
 }

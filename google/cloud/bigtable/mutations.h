@@ -235,19 +235,19 @@ class SingleRowMutation {
 
   /// Create a row mutation from gRPC proto
   explicit SingleRowMutation(
-      ::google::bigtable::v2::MutateRowsRequest::Entry&& entry)
+      ::google::bigtable::v2::MutateRowsRequest::Entry entry)
       : row_key_(std::move(*entry.mutable_row_key())), ops_() {
     ops_.Swap(entry.mutable_mutations());
   }
 
   /// Create a row mutation from gRPC proto
-  explicit SingleRowMutation(::google::bigtable::v2::MutateRowRequest&& request)
+  explicit SingleRowMutation(::google::bigtable::v2::MutateRowRequest request)
       : row_key_(std::move(*request.mutable_row_key())), ops_() {
     ops_.Swap(request.mutable_mutations());
   }
 
   // Add a mutation at the end.
-  SingleRowMutation& emplace_back(Mutation&& mut) {
+  SingleRowMutation& emplace_back(Mutation mut) {
     ops_.Add()->Swap(&mut.op);
     return *this;
   }
@@ -283,12 +283,12 @@ class SingleRowMutation {
  private:
   /// Add multiple mutations to single row
   template <typename... M>
-  void emplace_many(Mutation&& first, M&&... tail) {
-    emplace_back(std::forward<Mutation>(first));
+  void emplace_many(Mutation first, M&&... tail) {
+    emplace_back(std::move(first));
     emplace_many(std::forward<M>(tail)...);
   }
 
-  void emplace_many(Mutation&& m) { emplace_back(std::forward<Mutation>(m)); }
+  void emplace_many(Mutation m) { emplace_back(std::move(m)); }
 
  private:
   std::string row_key_;
@@ -339,11 +339,11 @@ class FailedMutation {
 class PermanentMutationFailure : public std::runtime_error {
  public:
   PermanentMutationFailure(char const* msg,
-                           std::vector<FailedMutation>&& failures)
+                           std::vector<FailedMutation> failures)
       : std::runtime_error(msg), failures_(std::move(failures)) {}
 
   PermanentMutationFailure(char const* msg, grpc::Status status,
-                           std::vector<FailedMutation>&& failures)
+                           std::vector<FailedMutation> failures)
       : std::runtime_error(msg),
         failures_(std::move(failures)),
         status_(std::move(status)) {}
@@ -402,13 +402,12 @@ class BulkMutation {
       : BulkMutation(list.begin(), list.end()) {}
 
   /// Create a muti-row mutation from a SingleRowMutation
-  explicit BulkMutation(SingleRowMutation&& mutation) : BulkMutation() {
+  explicit BulkMutation(SingleRowMutation mutation) : BulkMutation() {
     emplace_back(std::move(mutation));
   }
 
   /// Create a muti-row mutation from two SingleRowMutation
-  BulkMutation(SingleRowMutation&& m1, SingleRowMutation&& m2)
-      : BulkMutation() {
+  BulkMutation(SingleRowMutation m1, SingleRowMutation m2) : BulkMutation() {
     emplace_back(std::move(m1));
     emplace_back(std::move(m2));
   }
@@ -425,13 +424,13 @@ class BulkMutation {
   }
 
   // Add a mutation to the batch.
-  BulkMutation& emplace_back(SingleRowMutation&& mut) {
+  BulkMutation& emplace_back(SingleRowMutation mut) {
     mut.MoveTo(request_.add_entries());
     return *this;
   }
 
   // Add a failed mutation to the batch.
-  BulkMutation& emplace_back(FailedMutation&& fm) {
+  BulkMutation& emplace_back(FailedMutation fm) {
     fm.mutation_.MoveTo(request_.add_entries());
     fm.status_ = grpc::Status::OK;
     return *this;
@@ -454,14 +453,12 @@ class BulkMutation {
 
  private:
   template <typename... M>
-  void emplace_many(SingleRowMutation&& first, M&&... tail) {
-    emplace_back(std::forward<SingleRowMutation>(first));
+  void emplace_many(SingleRowMutation first, M&&... tail) {
+    emplace_back(std::move(first));
     emplace_many(std::forward<M>(tail)...);
   }
 
-  void emplace_many(SingleRowMutation&& m) {
-    emplace_back(std::forward<SingleRowMutation>(m));
-  }
+  void emplace_many(SingleRowMutation m) { emplace_back(std::move(m)); }
 
  private:
   google::bigtable::v2::MutateRowsRequest request_;

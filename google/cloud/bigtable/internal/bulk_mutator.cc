@@ -29,7 +29,7 @@ namespace btproto = google::bigtable::v2;
 BulkMutator::BulkMutator(bigtable::AppProfileId const& app_profile_id,
                          bigtable::TableId const& table_name,
                          IdempotentMutationPolicy& idempotent_policy,
-                         BulkMutation&& mut) {
+                         BulkMutation mut) {
   // Every time the client library calls MakeOneRequest(), the data in the
   // "pending_*" variables initializes the next request.  So in the constructor
   // we start by putting the data on the "pending_*" variables.

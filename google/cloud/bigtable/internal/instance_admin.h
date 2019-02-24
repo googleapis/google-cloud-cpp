@@ -1025,7 +1025,7 @@ class InstanceAdmin {
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   struct TransformResponseHelper {
-    TransformResponseHelper(Functor&& callback)
+    TransformResponseHelper(Functor callback)
         : application_callback_(std::move(callback)) {}
 
     void operator()(CompletionQueue& cq, google::iam::v1::Policy& response,

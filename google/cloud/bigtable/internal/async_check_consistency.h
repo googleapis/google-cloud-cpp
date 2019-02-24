@@ -126,10 +126,10 @@ class AsyncPollCheckConsistency
                             MetadataUpdatePolicy metadata_update_policy,
                             std::shared_ptr<bigtable::AdminClient> client,
                             ConsistencyToken consistency_token,
-                            std::string const& table_name, Functor&& callback)
+                            std::string const& table_name, Functor callback)
       : AsyncPollOp<Functor, AsyncCheckConsistency>(
             error_message, std::move(polling_policy),
-            std::move(metadata_update_policy), std::forward<Functor>(callback),
+            std::move(metadata_update_policy), std::move(callback),
             AsyncCheckConsistency(std::move(client),
                                   std::move(consistency_token),
                                   std::move(table_name))) {}
@@ -189,10 +189,10 @@ class AsyncAwaitConsistency
     using MemberFunction =
         typename internal::ExtractMemberFunctionType<decltype(
             &AdminClient::AsyncGenerateConsistencyToken)>::MemberFunction;
-    using Retry =
-        internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
-                                     internal::ConstantIdempotencyPolicy,
-                                     ConsistencyTokenGeneratedFunctor<Functor>>;
+    using FunctorType = typename std::decay<Functor>::type;
+    using Retry = internal::AsyncRetryUnaryRpc<
+        AdminClient, MemberFunction, internal::ConstantIdempotencyPolicy,
+        ConsistencyTokenGeneratedFunctor<FunctorType>>;
     google::bigtable::admin::v2::GenerateConsistencyTokenRequest request;
     request.set_name(table_name_);
 
@@ -202,7 +202,7 @@ class AsyncAwaitConsistency
         internal::ConstantIdempotencyPolicy(true), metadata_update_policy_,
         client_, &AdminClient::AsyncGenerateConsistencyToken,
         std::move(request),
-        ConsistencyTokenGeneratedFunctor<Functor>(
+        ConsistencyTokenGeneratedFunctor<FunctorType>(
             shared_from_this(), std::forward<Functor>(callback)));
     current_op_ = retry->Start(cq);
     return std::static_pointer_cast<AsyncOperation>(this->shared_from_this());
@@ -227,8 +227,8 @@ class AsyncAwaitConsistency
   class CheckConsistencyFunctor {
    public:
     CheckConsistencyFunctor(std::shared_ptr<AsyncAwaitConsistency> parent,
-                            Functor&& callback)
-        : parent_(parent), callback_(std::forward<Functor>(callback)) {}
+                            Functor callback)
+        : parent_(parent), callback_(std::move(callback)) {}
 
     void operator()(CompletionQueue& cq, bool response,
                     grpc::Status const& status) {
@@ -266,8 +266,8 @@ class AsyncAwaitConsistency
   class ConsistencyTokenGeneratedFunctor {
    public:
     ConsistencyTokenGeneratedFunctor(
-        std::shared_ptr<AsyncAwaitConsistency> parent, Functor&& callback)
-        : parent_(parent), callback_(std::forward<Functor>(callback)) {}
+        std::shared_ptr<AsyncAwaitConsistency> parent, Functor callback)
+        : parent_(parent), callback_(std::move(callback)) {}
     void operator()(
         CompletionQueue& cq,
         google::bigtable::admin::v2::GenerateConsistencyTokenResponse& response,
@@ -299,8 +299,7 @@ class AsyncAwaitConsistency
           std::move(parent_->client_),
           ConsistencyToken(std::move(response.consistency_token())),
           std::move(parent_->table_name_),
-          CheckConsistencyFunctor<Functor>(parent_,
-                                           std::forward<Functor>(callback_)));
+          CheckConsistencyFunctor<Functor>(parent_, std::move(callback_)));
       parent_->current_op_ = op->Start(cq);
     }
 

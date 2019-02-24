@@ -177,10 +177,10 @@ class AsyncPollLongrunningOp
                          MetadataUpdatePolicy metadata_update_policy,
                          std::shared_ptr<Client> client,
                          google::longrunning::Operation operation,
-                         Functor&& callback)
+                         Functor callback)
       : AsyncPollOp<Functor, AsyncLongrunningOp<Client, Response>>(
             error_message, std::move(polling_policy),
-            std::move(metadata_update_policy), std::forward<Functor>(callback),
+            std::move(metadata_update_policy), std::move(callback),
             AsyncLongrunningOp<Client, Response>(std::move(client),
                                                  std::move(operation))) {}
 };

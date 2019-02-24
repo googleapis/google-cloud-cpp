@@ -33,8 +33,8 @@ MutationBatcher::Options::Options()
       max_oustanding_size(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH * 6) {}
 
 std::shared_ptr<AsyncOperation> MutationBatcher::AsyncApply(
-    CompletionQueue& cq, AsyncApplyCompletionCallback&& completion_callback,
-    AsyncApplyAdmissionCallback&& admission_callback, SingleRowMutation&& mut) {
+    CompletionQueue& cq, AsyncApplyCompletionCallback completion_callback,
+    AsyncApplyAdmissionCallback admission_callback, SingleRowMutation mut) {
   PendingSingleRowMutation pending(std::move(mut),
                                    std::move(completion_callback),
                                    std::move(admission_callback));
@@ -69,12 +69,11 @@ std::shared_ptr<AsyncOperation> MutationBatcher::AsyncApply(
 }
 
 MutationBatcher::PendingSingleRowMutation::PendingSingleRowMutation(
-    SingleRowMutation&& mut_arg,
-    AsyncApplyCompletionCallback&& completion_callback,
-    AsyncApplyAdmissionCallback&& admission_callback)
-    : mut(mut_arg),
-      completion_callback(completion_callback),
-      admission_callback(admission_callback) {
+    SingleRowMutation mut_arg, AsyncApplyCompletionCallback completion_callback,
+    AsyncApplyAdmissionCallback admission_callback)
+    : mut(std::move(mut_arg)),
+      completion_callback(std::move(completion_callback)),
+      admission_callback(std::move(admission_callback)) {
   ::google::bigtable::v2::MutateRowsRequest::Entry tmp;
   mut.MoveTo(&tmp);
   // This operation might not be cheap, so let's cache it.
@@ -83,7 +82,7 @@ MutationBatcher::PendingSingleRowMutation::PendingSingleRowMutation(
   mut = SingleRowMutation(std::move(tmp));
 }
 
-void MutationBatcher::Batch::Add(PendingSingleRowMutation&& mut) {
+void MutationBatcher::Batch::Add(PendingSingleRowMutation mut) {
   std::unique_lock<std::mutex> lk(mu_);
   requests_size_ += mut.request_size;
   num_mutations_ += mut.num_mutations;
@@ -216,7 +215,7 @@ void MutationBatcher::TryAdmit(CompletionQueue& cq,
   }
 }
 
-void MutationBatcher::Admit(PendingSingleRowMutation&& mut) {
+void MutationBatcher::Admit(PendingSingleRowMutation mut) {
   oustanding_size_ += mut.request_size;
   cur_batch_->Add(std::move(mut));
 }

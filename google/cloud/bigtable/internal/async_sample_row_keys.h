@@ -73,7 +73,7 @@ class AsyncSampleRowKeys {
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> Start(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext>&& context,
+      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       Functor&& callback) {
     return cq.MakeUnaryStreamRpc(
         *client_, &DataClient::AsyncSampleRowKeys, request_, std::move(context),
@@ -94,7 +94,7 @@ class AsyncSampleRowKeys {
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   struct FinishedCallback {
-    FinishedCallback(AsyncSampleRowKeys& parent, Functor&& callback)
+    FinishedCallback(AsyncSampleRowKeys& parent, Functor callback)
         : parent_(parent), callback_(callback) {}
 
     void operator()(CompletionQueue& cq, grpc::ClientContext& context,
@@ -150,14 +150,13 @@ class AsyncRetrySampleRowKeys
                           MetadataUpdatePolicy metadata_update_policy,
                           std::shared_ptr<bigtable::DataClient> client,
                           bigtable::AppProfileId const& app_profile_id,
-                          bigtable::TableId const& table_name,
-                          Functor&& callback)
+                          bigtable::TableId const& table_name, Functor callback)
       : AsyncRetryOp<ConstantIdempotencyPolicy, Functor, AsyncSampleRowKeys>(
             error_message, std::move(rpc_retry_policy),
             // BulkMutator is idempotent because it keeps track of idempotency
             // of the mutations it holds.
             std::move(rpc_backoff_policy), ConstantIdempotencyPolicy(true),
-            std::move(metadata_update_policy), std::forward<Functor>(callback),
+            std::move(metadata_update_policy), std::move(callback),
             AsyncSampleRowKeys(client, std::move(app_profile_id),
                                std::move(table_name))) {}
 };

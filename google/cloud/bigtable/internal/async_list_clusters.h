@@ -135,11 +135,11 @@ class AsyncRetryListClusters
                          std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
                          MetadataUpdatePolicy metadata_update_policy,
                          std::shared_ptr<InstanceAdminClient> client,
-                         std::string instance_name, Functor&& callback)
+                         std::string instance_name, Functor callback)
       : AsyncRetryMultiPage<Functor, AsyncListClusters>(
             error_message, std::move(rpc_retry_policy),
             std::move(rpc_backoff_policy), metadata_update_policy,
-            std::forward<Functor>(callback),
+            std::move(callback),
             AsyncListClusters(std::move(client), std::move(instance_name))){};
 };
 

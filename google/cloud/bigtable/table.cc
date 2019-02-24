@@ -48,7 +48,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 static_assert(std::is_copy_assignable<bigtable::Table>::value,
               "bigtable::Table must be CopyAssignable");
 
-Status Table::Apply(SingleRowMutation&& mut) {
+Status Table::Apply(SingleRowMutation mut) {
   std::vector<FailedMutation> failures = impl_.Apply(std::move(mut));
   if (!failures.empty()) {
     grpc::Status status = failures.front().status();
@@ -57,7 +57,7 @@ Status Table::Apply(SingleRowMutation&& mut) {
   return google::cloud::Status{};
 }
 
-future<void> Table::AsyncApply(SingleRowMutation&& mut, CompletionQueue& cq) {
+future<void> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
   promise<google::bigtable::v2::MutateRowResponse> p;
   future<google::bigtable::v2::MutateRowResponse> result = p.get_future();
 
@@ -73,7 +73,7 @@ future<void> Table::AsyncApply(SingleRowMutation&& mut, CompletionQueue& cq) {
   return final;
 }
 
-void Table::BulkApply(BulkMutation&& mut) {
+void Table::BulkApply(BulkMutation mut) {
   grpc::Status status;
   std::vector<FailedMutation> failures =
       impl_.BulkApply(std::move(mut), status);
@@ -82,7 +82,7 @@ void Table::BulkApply(BulkMutation&& mut) {
   }
 }
 
-future<void> Table::AsyncBulkApply(BulkMutation&& mut, CompletionQueue& cq) {
+future<void> Table::AsyncBulkApply(BulkMutation mut, CompletionQueue& cq) {
   promise<std::vector<FailedMutation>> pfm;
   future<std::vector<FailedMutation>> resultfm = pfm.get_future();
   impl_.AsyncBulkApply(

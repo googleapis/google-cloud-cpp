@@ -89,7 +89,7 @@ template <
     typename std::enable_if<CheckTimerCallback<Functor>::value, int>::type = 0>
 class AsyncTimerFunctor : public AsyncGrpcOperation {
  public:
-  explicit AsyncTimerFunctor(Functor&& functor,
+  explicit AsyncTimerFunctor(Functor functor,
                              std::unique_ptr<grpc::Alarm> alarm)
       : functor_(std::move(functor)), alarm_(std::move(alarm)) {}
 
@@ -171,8 +171,8 @@ template <typename Request, typename Response, typename Functor,
               CheckUnaryRpcCallback<Functor, Response>::value, int>::type = 0>
 class AsyncUnaryRpcFunctor : public AsyncGrpcOperation {
  public:
-  explicit AsyncUnaryRpcFunctor(Functor&& functor)
-      : sync_(false), functor_(std::forward<Functor>(functor)) {}
+  explicit AsyncUnaryRpcFunctor(Functor functor)
+      : sync_(false), functor_(std::move(functor)) {}
 
   /// Make the RPC request and prepare the response callback.
   template <typename Client, typename MemberFunction>
@@ -240,12 +240,12 @@ template <typename Request, typename Response, typename DataFunctor,
                                   int>::type = 0>
 class AsyncUnaryStreamRpcFunctor : public AsyncGrpcOperation {
  public:
-  explicit AsyncUnaryStreamRpcFunctor(DataFunctor&& data_functor,
-                                      FinishedFunctor&& finished_functor)
+  explicit AsyncUnaryStreamRpcFunctor(DataFunctor data_functor,
+                                      FinishedFunctor finished_functor)
       : tag_(nullptr),
         state_(CREATING),
-        data_functor_(std::forward<DataFunctor>(data_functor)),
-        finished_functor_(std::forward<FinishedFunctor>(finished_functor)) {}
+        data_functor_(std::move(data_functor)),
+        finished_functor_(std::move(finished_functor)) {}
 
   /// Make the RPC request and prepare the response callback.
   template <typename Client, typename MemberFunction>

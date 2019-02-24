@@ -96,9 +96,8 @@ class MutationBatcher {
         cur_batch_(std::make_shared<Batch>()) {}
 
   std::shared_ptr<AsyncOperation> AsyncApply(
-      CompletionQueue& cq, AsyncApplyCompletionCallback&& completion_callback,
-      AsyncApplyAdmissionCallback&& admission_callback,
-      SingleRowMutation&& mut);
+      CompletionQueue& cq, AsyncApplyCompletionCallback completion_callback,
+      AsyncApplyAdmissionCallback admission_callback, SingleRowMutation mut);
 
  private:
   class Batch;
@@ -107,9 +106,9 @@ class MutationBatcher {
    * This structure represents a single mutation before it is admitted.
    */
   struct PendingSingleRowMutation {
-    PendingSingleRowMutation(SingleRowMutation&& mut_arg,
-                             AsyncApplyCompletionCallback&& completion_callback,
-                             AsyncApplyAdmissionCallback&& admission_callback);
+    PendingSingleRowMutation(SingleRowMutation mut_arg,
+                             AsyncApplyCompletionCallback completion_callback,
+                             AsyncApplyAdmissionCallback admission_callback);
 
     SingleRowMutation mut;
     size_t num_mutations;
@@ -143,13 +142,13 @@ class MutationBatcher {
     size_t num_mutations() { return num_mutations_; }
     BulkMutation TransferRequest() { return std::move(requests_); }
 
-    void Add(PendingSingleRowMutation&& mut);
+    void Add(PendingSingleRowMutation mut);
     size_t FireCallbacks(CompletionQueue& cq,
                          std::vector<FailedMutation> const& failed);
 
    private:
     struct MutationData {
-      MutationData(PendingSingleRowMutation&& pending)
+      MutationData(PendingSingleRowMutation pending)
           : callback(std::move(pending.completion_callback)),
             num_mutations(pending.num_mutations),
             request_size(pending.request_size) {}
@@ -183,7 +182,7 @@ class MutationBatcher {
                      std::vector<FailedMutation> const& failed);
   void FlushOnBatchFinished(CompletionQueue& cq, size_t completed_size);
   void TryAdmit(CompletionQueue& cq, std::unique_lock<std::mutex>& lk);
-  void Admit(PendingSingleRowMutation&& mut);
+  void Admit(PendingSingleRowMutation mut);
 
   std::mutex mu_;
   noex::Table& table_;

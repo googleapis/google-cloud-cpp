@@ -79,13 +79,12 @@ class AsyncReadRowsOperation
       bigtable::TableId const& table_name, RowSet row_set,
       std::int64_t rows_limit, Filter filter, bool raise_on_error,
       std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
-      ReadRowCallback&& read_row_callback, DoneCallback&& done_callback)
+      ReadRowCallback read_row_callback, DoneCallback done_callback)
       : AsyncRetryOp<ConstantIdempotencyPolicy, DoneCallback,
                      AsyncRowReader<ReadRowCallback>>(
             __func__, std::move(rpc_retry_policy),
             std::move(rpc_backoff_policy), ConstantIdempotencyPolicy(true),
-            std::move(metadata_update_policy),
-            std::forward<DoneCallback>(done_callback),
+            std::move(metadata_update_policy), std::move(done_callback),
             AsyncRowReader<ReadRowCallback>(
                 client, std::move(app_profile_id), std::move(table_name),
                 std::move(row_set), rows_limit, std::move(filter),
@@ -117,7 +116,7 @@ template <typename Functor, typename std::enable_if<
                                 int>::type valid_callback_type = 0>
 class ReadRowCallbackAdapter {
  public:
-  explicit ReadRowCallbackAdapter(Functor&& callback,
+  explicit ReadRowCallbackAdapter(Functor callback,
                                   std::shared_ptr<std::vector<Row>> row)
       : callback_(std::move(callback)), rows_(std::move(row)) {}
 

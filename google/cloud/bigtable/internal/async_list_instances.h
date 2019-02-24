@@ -139,7 +139,7 @@ class AsyncRetryListInstances
       : AsyncRetryMultiPage<Functor, AsyncListInstances>(
             error_message, std::move(rpc_retry_policy),
             std::move(rpc_backoff_policy), metadata_update_policy,
-            std::forward<Functor>(callback),
+            std::move(callback),
             AsyncListInstances(std::move(client), std::move(project_name))){};
 };
 
