@@ -104,11 +104,11 @@ class PollableLoopAdapter {
   explicit PollableLoopAdapter(char const* error_message,
                                std::unique_ptr<PollingPolicy> polling_policy,
                                MetadataUpdatePolicy metadata_update_policy,
-                               UserFunctor&& callback, Operation&& operation)
+                               UserFunctor callback, Operation operation)
       : error_message_(error_message),
         polling_policy_(std::move(polling_policy)),
         metadata_update_policy_(std::move(metadata_update_policy)),
-        user_callback_(std::forward<UserFunctor>(callback)),
+        user_callback_(std::move(callback)),
         operation_(std::move(operation)) {}
 
   template <typename AttemptFunctor>
@@ -235,11 +235,11 @@ class AsyncPollOp
   explicit AsyncPollOp(char const* error_message,
                        std::unique_ptr<PollingPolicy> polling_policy,
                        MetadataUpdatePolicy metadata_update_policy,
-                       Functor&& callback, Operation&& operation)
+                       Functor callback, Operation operation)
       : AsyncLoopOp<PollableLoopAdapter<Functor, Operation>>(
             PollableLoopAdapter<Functor, Operation>(
                 error_message, std::move(polling_policy),
-                metadata_update_policy, std::forward<Functor>(callback),
+                metadata_update_policy, std::move(callback),
                 std::move(operation))) {}
 };
 

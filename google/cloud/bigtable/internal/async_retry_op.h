@@ -115,14 +115,14 @@ class RetriableLoopAdapter {
       std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
       std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
       IdempotencyPolicy idempotent_policy,
-      MetadataUpdatePolicy metadata_update_policy, UserFunctor&& callback,
-      Operation&& operation)
+      MetadataUpdatePolicy metadata_update_policy, UserFunctor callback,
+      Operation operation)
       : error_message_(error_message),
         rpc_retry_policy_(std::move(rpc_retry_policy)),
         rpc_backoff_policy_(std::move(rpc_backoff_policy)),
         idempotent_policy_(std::move(idempotent_policy)),
         metadata_update_policy_(std::move(metadata_update_policy)),
-        user_callback_(std::forward<UserFunctor>(callback)),
+        user_callback_(std::move(callback)),
         operation_(std::move(operation)) {}
 
   template <typename AttemptFunctor>
@@ -258,7 +258,7 @@ class AsyncRetryOp
             RetriableLoopAdapter<IdempotencyPolicy, Functor, Operation>(
                 error_message, std::move(rpc_retry_policy),
                 std::move(rpc_backoff_policy), std::move(idempotent_policy),
-                metadata_update_policy, std::forward<Functor>(callback),
+                metadata_update_policy, std::move(callback),
                 std::move(operation))) {}
 };
 

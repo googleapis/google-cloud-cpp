@@ -61,14 +61,14 @@ class MultipageRetriableAdapter {
       char const* error_message,
       std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
       std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-      MetadataUpdatePolicy metadata_update_policy, UserFunctor&& callback,
-      Operation&& operation)
+      MetadataUpdatePolicy metadata_update_policy, UserFunctor callback,
+      Operation operation)
       : error_message_(error_message),
         rpc_retry_policy_(std::move(rpc_retry_policy)),
         rpc_backoff_policy_(std::move(rpc_backoff_policy)),
         rpc_backoff_policy_prototype_(rpc_backoff_policy_->clone()),
         metadata_update_policy_(std::move(metadata_update_policy)),
-        user_callback_(std::forward<UserFunctor>(callback)),
+        user_callback_(std::move(callback)),
         operation_(std::move(operation)) {}
 
   template <typename AttemptFunctor>
@@ -193,13 +193,13 @@ class AsyncRetryMultiPage
                       std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
                       std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
                       MetadataUpdatePolicy metadata_update_policy,
-                      Functor&& callback, Operation&& operation)
+                      Functor callback, Operation operation)
       : AsyncLoopOp<MultipageRetriableAdapter<Functor, Operation>>(
             MultipageRetriableAdapter<Functor, Operation>(
                 error_message, std::move(rpc_retry_policy),
                 std::move(rpc_backoff_policy),
-                std::move(metadata_update_policy),
-                std::forward<Functor>(callback), std::move(operation))) {}
+                std::move(metadata_update_policy), std::move(callback),
+                std::move(operation))) {}
 };
 
 }  // namespace internal

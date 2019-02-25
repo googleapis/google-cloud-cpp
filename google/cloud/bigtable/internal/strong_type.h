@@ -56,8 +56,7 @@ namespace internal {
 template <typename T, typename Parameter>
 class StrongType {
  public:
-  explicit StrongType(T const& value) : value_(value) {}
-  explicit StrongType(T&& value) : value_(std::move(value)) {}
+  explicit StrongType(T value) : value_(std::move(value)) {}
   T& get() { return value_; }
   T const& get() const { return value_; }
 

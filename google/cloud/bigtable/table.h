@@ -200,7 +200,7 @@ class Table {
    * @snippet data_snippets.cc apply
    */
 
-  Status Apply(SingleRowMutation&& mut);
+  Status Apply(SingleRowMutation mut);
 
   /**
    * Makes asycronous attempts to apply the mutation to a row.
@@ -217,7 +217,7 @@ class Table {
    * @snippet data_async_snippets.cc async-apply
    */
 
-  future<void> AsyncApply(SingleRowMutation&& mut, CompletionQueue& cq);
+  future<void> AsyncApply(SingleRowMutation mut, CompletionQueue& cq);
 
   /**
    * Attempts to apply mutations to multiple rows.
@@ -239,7 +239,7 @@ class Table {
    * @par Example
    * @snippet data_snippets.cc bulk apply
    */
-  void BulkApply(BulkMutation&& mut);
+  void BulkApply(BulkMutation mut);
 
   /**
    * Makes asyncronous attempts to apply mutations to multiple rows.
@@ -256,7 +256,7 @@ class Table {
    * @par Example
    * @snippet data_async_snippets.cc bulk async-bulk-apply
    */
-  future<void> AsyncBulkApply(BulkMutation&& mut, CompletionQueue& cq);
+  future<void> AsyncBulkApply(BulkMutation mut, CompletionQueue& cq);
 
   /**
    * Reads a set of rows from the table.

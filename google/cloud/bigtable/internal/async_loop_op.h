@@ -56,10 +56,10 @@ struct MeetsLoopOperationRequirements {
           decltype(
               &Operation::template Start<PrototypeLoopOperationStartCallback>),
           Operation&, CompletionQueue&,
-          PrototypeLoopOperationStartCallback&&>::value,
+          PrototypeLoopOperationStartCallback>::value,
       "Operation::Start<PrototypeLoopOperationStartCallback> has to be "
       "non-static and invocable with CompletionQueue&, "
-      "PrototypeLoopOperationStartCallback&&.");
+      "PrototypeLoopOperationStartCallback.");
   static_assert(
       google::cloud::internal::is_invocable<
           decltype(&Operation::Cancel), Operation&, CompletionQueue&>::value,
@@ -73,7 +73,7 @@ struct MeetsLoopOperationRequirements {
                                  decltype(&Operation::template Start<
                                           PrototypeLoopOperationStartCallback>),
                                  Operation&, CompletionQueue&,
-                                 PrototypeLoopOperationStartCallback&&>,
+                                 PrototypeLoopOperationStartCallback>,
                              std::shared_ptr<AsyncOperation>>::value,
                 "Operation::Start<>(...) has to return a "
                 "std::shared_ptr<AsyncOperation>");
@@ -131,7 +131,7 @@ template <typename Operation>
 class AsyncLoopOp : public std::enable_shared_from_this<AsyncLoopOp<Operation>>,
                     public AsyncOperation {
  public:
-  explicit AsyncLoopOp(Operation&& operation)
+  explicit AsyncLoopOp(Operation operation)
       : cancelled_(), operation_(std::move(operation)) {}
 
   void Cancel() override {

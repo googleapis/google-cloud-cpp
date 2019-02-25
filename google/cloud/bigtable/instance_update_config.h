@@ -89,7 +89,7 @@ class InstanceUpdateConfig {
   }
 
   InstanceUpdateConfig& emplace_label(std::string const& key,
-                                      std::string&& value) {
+                                      std::string value) {
     (*proto_.mutable_instance()->mutable_labels())[key] = std::move(value);
     AddPathIfNotPresent("labels");
     return *this;

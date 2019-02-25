@@ -34,7 +34,7 @@ class BulkMutator {
  public:
   BulkMutator(bigtable::AppProfileId const& app_profile_id,
               bigtable::TableId const& table_name,
-              IdempotentMutationPolicy& idempotent_policy, BulkMutation&& mut);
+              IdempotentMutationPolicy& idempotent_policy, BulkMutation mut);
 
   /// Return true if there are pending mutations in the mutator
   bool HasPendingMutations() const {
@@ -130,7 +130,7 @@ class AsyncBulkMutator : private BulkMutator {
                    bigtable::AppProfileId const& app_profile_id,
                    bigtable::TableId const& table_name,
                    IdempotentMutationPolicy& idempotent_policy,
-                   BulkMutation&& mut)
+                   BulkMutation mut)
       : BulkMutator(app_profile_id, table_name, idempotent_policy,
                     std::move(mut)),
         client_(std::move(client)) {}
@@ -139,10 +139,10 @@ class AsyncBulkMutator : private BulkMutator {
                    bigtable::AppProfileId const& app_profile_id,
                    bigtable::TableId const& table_name,
                    IdempotentMutationPolicy& idempotent_policy,
-                   MutationsSucceededFunctor&& mutations_succeeded_callback,
-                   MutationsFailedFunctor&& mutations_failed_callback,
-                   AttemptFinishedFunctor&& attempt_finished_callback,
-                   BulkMutation&& mut)
+                   MutationsSucceededFunctor mutations_succeeded_callback,
+                   MutationsFailedFunctor mutations_failed_callback,
+                   AttemptFinishedFunctor attempt_finished_callback,
+                   BulkMutation mut)
       : BulkMutator(app_profile_id, table_name, idempotent_policy,
                     std::move(mut)),
         client_(std::move(client)),
@@ -159,7 +159,7 @@ class AsyncBulkMutator : private BulkMutator {
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> Start(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext>&& context,
+      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       Functor&& callback) {
     PrepareForRequest();
     return cq.MakeUnaryStreamRpc(
@@ -188,7 +188,7 @@ class AsyncBulkMutator : private BulkMutator {
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   struct FinishedCallback {
-    FinishedCallback(AsyncBulkMutator& parent, Functor&& callback)
+    FinishedCallback(AsyncBulkMutator& parent, Functor callback)
         : parent_(parent), callback_(callback) {}
 
     void operator()(CompletionQueue& cq, grpc::ClientContext& context,

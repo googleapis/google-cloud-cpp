@@ -62,7 +62,7 @@ class AsyncRowReader {
       bigtable::TableId const& table_name, RowSet row_set,
       std::int64_t rows_limit, Filter filter, bool raise_on_error,
       std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
-      ReadRowCallback&& read_row_callback)
+      ReadRowCallback read_row_callback)
       : client_(std::move(client)),
         app_profile_id_(std::move(app_profile_id)),
         table_name_(std::move(table_name)),
@@ -112,7 +112,7 @@ class AsyncRowReader {
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> Start(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext>&& context,
+      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       Functor&& callback) {
     google::bigtable::v2::ReadRowsRequest request;
     request.set_app_profile_id(app_profile_id_.get());
@@ -152,7 +152,7 @@ class AsyncRowReader {
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   struct FinishedCallback {
-    FinishedCallback(AsyncRowReader& parent, Functor&& callback)
+    FinishedCallback(AsyncRowReader& parent, Functor callback)
         : parent_(parent), callback_(std::move(callback)) {}
 
     void operator()(CompletionQueue& cq, grpc::ClientContext& context,

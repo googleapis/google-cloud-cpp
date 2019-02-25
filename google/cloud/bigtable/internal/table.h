@@ -90,8 +90,8 @@ Row TransformReadModifyWriteRowResponse(Response& response) {
 template <typename Functor>
 class UnwrapCheckAndMutateResponse {
  public:
-  UnwrapCheckAndMutateResponse(Functor&& callback)
-      : callback_(std::forward<Functor>(callback)) {}
+  UnwrapCheckAndMutateResponse(Functor callback)
+      : callback_(std::move(callback)) {}
 
   void operator()(CompletionQueue& cq,
                   google::bigtable::v2::CheckAndMutateRowResponse& response,
@@ -106,8 +106,8 @@ class UnwrapCheckAndMutateResponse {
 template <typename Functor>
 class UnwrapReadModifyWriteRowResponse {
  public:
-  UnwrapReadModifyWriteRowResponse(Functor&& callback)
-      : callback_(std::forward<Functor>(callback)) {}
+  UnwrapReadModifyWriteRowResponse(Functor callback)
+      : callback_(std::move(callback)) {}
 
   void operator()(CompletionQueue& cq,
                   google::bigtable::v2::ReadModifyWriteRowResponse& response,
@@ -198,7 +198,7 @@ class Table {
    * @return The list of mutations that failed, empty when the operation is
    *     successful.
    */
-  std::vector<FailedMutation> Apply(SingleRowMutation&& mut);
+  std::vector<FailedMutation> Apply(SingleRowMutation mut);
 
   /**
    * Make an asynchronous request to mutate a single row.
@@ -229,7 +229,7 @@ class Table {
           int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncApply(CompletionQueue& cq,
                                              Functor&& callback,
-                                             SingleRowMutation&& mut) {
+                                             SingleRowMutation mut) {
     google::bigtable::v2::MutateRowRequest request;
     internal::SetCommonTableOperationRequest<
         google::bigtable::v2::MutateRowRequest>(request, app_profile_id_.get(),
@@ -295,7 +295,7 @@ class Table {
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> AsyncBulkApply(CompletionQueue& cq,
                                                  Functor&& callback,
-                                                 BulkMutation&& mut) {
+                                                 BulkMutation mut) {
     auto op =
         std::make_shared<bigtable::internal::AsyncRetryBulkApply<Functor>>(
             rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
@@ -306,8 +306,7 @@ class Table {
     return op->Start(cq);
   }
 
-  std::vector<FailedMutation> BulkApply(BulkMutation&& mut,
-                                        grpc::Status& status);
+  std::vector<FailedMutation> BulkApply(BulkMutation mut, grpc::Status& status);
 
   RowReader ReadRows(RowSet row_set, Filter filter,
                      bool raise_on_error = false);
@@ -660,13 +659,13 @@ class Table {
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> StreamingAsyncBulkApply(
       CompletionQueue& cq,
-      typename internal::AsyncRetryBulkApply<
-          Functor>::MutationsSucceededFunctor&& mutations_succeeded_callback,
-      typename internal::AsyncRetryBulkApply<Functor>::MutationsFailedFunctor&&
+      typename internal::AsyncRetryBulkApply<Functor>::MutationsSucceededFunctor
+          mutations_succeeded_callback,
+      typename internal::AsyncRetryBulkApply<Functor>::MutationsFailedFunctor
           mutations_failed_callback,
-      typename internal::AsyncRetryBulkApply<Functor>::AttemptFinishedFunctor&&
+      typename internal::AsyncRetryBulkApply<Functor>::AttemptFinishedFunctor
           attempt_finished_callback,
-      Functor&& callback, BulkMutation&& mut) {
+      Functor&& callback, BulkMutation mut) {
     auto op =
         std::make_shared<bigtable::internal::AsyncRetryBulkApply<Functor>>(
             rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),

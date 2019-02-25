@@ -33,7 +33,7 @@ static_assert(std::is_copy_assignable<bigtable::noex::Table>::value,
 
 // Call the `google.bigtable.v2.Bigtable.MutateRow` RPC repeatedly until
 // successful, or until the policies in effect tell us to stop.
-std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut) {
+std::vector<FailedMutation> Table::Apply(SingleRowMutation mut) {
   // Copy the policies in effect for this operation.  Many policy classes change
   // their state as the operation makes progress (or fails to make progress), so
   // we need fresh instances.
@@ -87,7 +87,7 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation&& mut) {
 // successful, or until the policies in effect tell us to stop.  When the RPC
 // is partially successful, this function retries only the mutations that did
 // not succeed.
-std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
+std::vector<FailedMutation> Table::BulkApply(BulkMutation mut,
                                              grpc::Status& status) {
   // Copy the policies in effect for this operation.  Many policy classes change
   // their state as the operation makes progress (or fails to make progress), so
@@ -97,8 +97,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation&& mut,
   auto idemponent_policy = idempotent_mutation_policy_->clone();
 
   bigtable::internal::BulkMutator mutator(app_profile_id_, table_name_,
-                                          *idemponent_policy,
-                                          std::forward<BulkMutation>(mut));
+                                          *idemponent_policy, std::move(mut));
   while (mutator.HasPendingMutations()) {
     grpc::ClientContext client_context;
     backoff_policy->Setup(client_context);

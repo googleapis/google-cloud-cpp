@@ -65,7 +65,7 @@ class AsyncUnaryRpc {
   using Response = typename Sig::ResponseType;
   //@}
   AsyncUnaryRpc(std::shared_ptr<Client> client,
-                MemberFunctionType Client::*call, Request&& request)
+                MemberFunctionType Client::*call, Request request)
       : client_(std::move(client)),
         call_(std::move(call)),
         request_(std::move(request)) {}
@@ -94,7 +94,7 @@ class AsyncUnaryRpc {
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> Start(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext>&& context,
+      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       Functor&& callback) {
     return cq.MakeUnaryRpc(
         *client_, call_, request_, std::move(context),
@@ -137,12 +137,12 @@ class AsyncRetryUnaryRpc
       IdempotencyPolicy idempotent_policy,
       MetadataUpdatePolicy metadata_update_policy,
       std::shared_ptr<Client> client, MemberFunctionType Client::*call,
-      Request&& request, Functor&& callback)
+      Request request, Functor callback)
       : AsyncRetryOp<IdempotencyPolicy, Functor,
                      AsyncUnaryRpc<Client, MemberFunctionType>>(
             error_message, std::move(rpc_retry_policy),
             std::move(rpc_backoff_policy), std::move(idempotent_policy),
-            std::move(metadata_update_policy), std::forward<Functor>(callback),
+            std::move(metadata_update_policy), std::move(callback),
             AsyncUnaryRpc<Client, MemberFunctionType>(
                 std::move(client), std::move(call), std::move(request))) {}
 };
@@ -157,7 +157,7 @@ template <typename Functor,
               int>::type valid_callback_type = 0>
 class EmptyResponseAdaptor {
  public:
-  explicit EmptyResponseAdaptor(Functor&& callback)
+  explicit EmptyResponseAdaptor(Functor callback)
       : callback_(std::move(callback)) {}
 
   const void operator()(CompletionQueue& cq, google::protobuf::Empty& response,
