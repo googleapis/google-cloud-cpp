@@ -175,6 +175,7 @@ TEST(MutationsTest, MutipleRowMutations) {
       .push_back(bigtable::SingleRowMutation(
           "foo2", {bigtable::SetCell("f", "c", 0_ms, "v2")}));
 
+  ASSERT_EQ(2, actual.size());
   actual.MoveTo(&request);
   ASSERT_EQ(2, request.entries_size());
   EXPECT_EQ("foo1", request.entries(0).row_key());
@@ -190,6 +191,7 @@ TEST(MutationsTest, MutipleRowMutations) {
   };
   bigtable::BulkMutation from_vec(vec.begin(), vec.end());
 
+  ASSERT_EQ(3, from_vec.size());
   from_vec.MoveTo(&request);
   ASSERT_EQ(3, request.entries_size());
   EXPECT_EQ("foo1", request.entries(0).row_key());
@@ -202,6 +204,7 @@ TEST(MutationsTest, MutipleRowMutations) {
       bigtable::SingleRowMutation("foo3",
                                   {bigtable::SetCell("f", "c", 0_ms, "v3")}),
   };
+  ASSERT_EQ(2, from_il.size());
   from_il.MoveTo(&request);
   ASSERT_EQ(2, request.entries_size());
   EXPECT_EQ("foo2", request.entries(0).row_key());

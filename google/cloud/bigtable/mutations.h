@@ -401,7 +401,7 @@ class BulkMutation {
   BulkMutation(std::initializer_list<SingleRowMutation> list)
       : BulkMutation(list.begin(), list.end()) {}
 
-  /// Create a muti-row mutation from a SingleRowMutation
+  /// Create a multi-row mutation from a SingleRowMutation
   explicit BulkMutation(SingleRowMutation mutation) : BulkMutation() {
     emplace_back(std::move(mutation));
   }
@@ -450,6 +450,9 @@ class BulkMutation {
 
   /// Return true if there are no mutations in this set.
   bool empty() const { return request_.entries().empty(); }
+
+  /// Return the number of mutations in this set.
+  size_t size() const { return request_.entries().size(); }
 
  private:
   template <typename... M>
