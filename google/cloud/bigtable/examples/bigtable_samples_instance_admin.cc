@@ -70,7 +70,11 @@ void CreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   std::cout << "Waiting for instance creation to complete ";
   for (int i = 0; i != 100; ++i) {
     if (std::future_status::ready == future.wait_for(std::chrono::seconds(2))) {
-      std::cout << "DONE: " << future.get().name() << "\n";
+      auto instance = future.get();
+      if (!instance) {
+        throw std::runtime_error(instance.status().message());
+      }
+      std::cout << "DONE: " << instance->name() << "\n";
       return;
     }
     std::cout << '.' << std::flush;
@@ -103,7 +107,11 @@ void CreateDevInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   std::cout << "Waiting for instance creation to complete ";
   for (int i = 0; i != 100; ++i) {
     if (std::future_status::ready == future.wait_for(std::chrono::seconds(2))) {
-      std::cout << "DONE: " << future.get().name() << "\n";
+      auto instance = future.get();
+      if (!instance) {
+        throw std::runtime_error(instance.status().message());
+      }
+      std::cout << "DONE: " << instance->name() << "\n";
       return;
     }
     std::cout << '.' << std::flush;
@@ -130,8 +138,13 @@ void UpdateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
 
   auto future =
       instance_admin.UpdateInstance(std::move(instance_update_config));
+  auto updated_instance = future.get();
+  if (!updated_instance) {
+    throw std::runtime_error(updated_instance.status().message());
+  }
   std::string instance_detail;
-  google::protobuf::TextFormat::PrintToString(future.get(), &instance_detail);
+  google::protobuf::TextFormat::PrintToString(*updated_instance,
+                                              &instance_detail);
   std::cout << "GetInstance details : " << instance_detail << "\n";
 }
 //! [update instance]
@@ -285,9 +298,11 @@ void UpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
       google::cloud::bigtable::ClusterConfig(std::move(*cluster));
 
   auto modified_cluster = instance_admin.UpdateCluster(modified_config).get();
-
+  if (!modified_cluster) {
+    throw std::runtime_error(modified_cluster.status().message());
+  }
   std::string cluster_detail;
-  google::protobuf::TextFormat::PrintToString(modified_cluster,
+  google::protobuf::TextFormat::PrintToString(*modified_cluster,
                                               &cluster_detail);
   std::cout << "cluster details : " << cluster_detail << "\n";
 }
@@ -479,8 +494,11 @@ void UpdateAppProfileDescription(
       google::cloud::bigtable::AppProfileUpdateConfig().set_description(
           description));
   auto profile = profile_future.get();
+  if (!profile) {
+    throw std::runtime_error(profile.status().message());
+  }
   std::string detail;
-  google::protobuf::TextFormat::PrintToString(profile, &detail);
+  google::protobuf::TextFormat::PrintToString(*profile, &detail);
   std::cout << "Application Profile details=" << detail << "\n";
 }
 //! [update app profile description]
@@ -502,8 +520,11 @@ void UpdateAppProfileRoutingAny(
           .set_multi_cluster_use_any()
           .set_ignore_warnings(true));
   auto profile = profile_future.get();
+  if (!profile) {
+    throw std::runtime_error(profile.status().message());
+  }
   std::string detail;
-  google::protobuf::TextFormat::PrintToString(profile, &detail);
+  google::protobuf::TextFormat::PrintToString(*profile, &detail);
   std::cout << "Application Profile details=" << detail << "\n";
 }
 //! [update app profile routing any]
@@ -526,8 +547,11 @@ void UpdateAppProfileRoutingSingleCluster(
           .set_single_cluster_routing(cluster_id)
           .set_ignore_warnings(true));
   auto profile = profile_future.get();
+  if (!profile) {
+    throw std::runtime_error(profile.status().message());
+  }
   std::string detail;
-  google::protobuf::TextFormat::PrintToString(profile, &detail);
+  google::protobuf::TextFormat::PrintToString(*profile, &detail);
   std::cout << "Application Profile details=" << detail << "\n";
 }
 //! [update app profile routing]

@@ -197,14 +197,14 @@ StatusOr<Consistency> TableAdmin::CheckConsistency(
   return consistent ? Consistency::kConsistent : Consistency::kInconsistent;
 }
 
-bool TableAdmin::WaitForConsistencyCheckImpl(
+StatusOr<bool> TableAdmin::WaitForConsistencyCheckImpl(
     bigtable::TableId const& table_id,
     bigtable::ConsistencyToken const& consistency_token) {
   grpc::Status status;
   bool consistent =
       impl_.WaitForConsistencyCheckHelper(table_id, consistency_token, status);
   if (!status.ok()) {
-    internal::ThrowRpcError(status, status.error_message());
+    return bigtable::internal::MakeStatusFromRpcError(status);
   }
   return consistent;
 }
@@ -216,7 +216,7 @@ Status TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
   return internal::MakeStatusFromRpcError(status);
 }
 
-std::future<btadmin::Table> TableAdmin::CreateTableFromSnapshot(
+std::future<StatusOr<btadmin::Table>> TableAdmin::CreateTableFromSnapshot(
     bigtable::ClusterId const& cluster_id,
     bigtable::SnapshotId const& snapshot_id, std::string table_id) {
   return std::async(std::launch::async,
@@ -224,7 +224,7 @@ std::future<btadmin::Table> TableAdmin::CreateTableFromSnapshot(
                     snapshot_id, table_id);
 }
 
-btadmin::Table TableAdmin::CreateTableFromSnapshotImpl(
+StatusOr<btadmin::Table> TableAdmin::CreateTableFromSnapshotImpl(
     bigtable::ClusterId const& cluster_id,
     bigtable::SnapshotId const& snapshot_id, std::string table_id) {
   // Copy the policies in effect for the operation.
@@ -245,8 +245,7 @@ btadmin::Table TableAdmin::CreateTableFromSnapshotImpl(
       impl_.metadata_update_policy_, &AdminClient::CreateTableFromSnapshot,
       request, "TableAdmin", status, true);
   if (!status.ok()) {
-    bigtable::internal::ThrowRpcError(status,
-                                      "unrecoverable error in MakeCall()");
+    return bigtable::internal::MakeStatusFromRpcError(status);
   }
 
   result = internal::PollLongRunningOperation<btadmin::Table, AdminClient>(
@@ -254,9 +253,7 @@ btadmin::Table TableAdmin::CreateTableFromSnapshotImpl(
       impl_.metadata_update_policy_, operation,
       "TableAdmin::CreateTableFromSnapshot", status);
   if (!status.ok()) {
-    bigtable::internal::ThrowRpcError(
-        status,
-        "while polling operation in TableAdmin::CreateTableFromSnapshot");
+    return bigtable::internal::MakeStatusFromRpcError(status);
   }
   return result;
 }

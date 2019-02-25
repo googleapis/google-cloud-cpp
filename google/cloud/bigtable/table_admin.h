@@ -293,7 +293,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_snippets.cc wait for consistency check
    */
-  std::future<bool> WaitForConsistencyCheck(
+  std::future<StatusOr<bool>> WaitForConsistencyCheck(
       bigtable::TableId const& table_id,
       bigtable::ConsistencyToken const& consistency_token) {
     return std::async(std::launch::async,
@@ -406,9 +406,10 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_snippets.cc create table from snapshot
    */
-  std::future<google::bigtable::admin::v2::Table> CreateTableFromSnapshot(
-      bigtable::ClusterId const& cluster_id,
-      bigtable::SnapshotId const& snapshot_id, std::string table_id);
+  std::future<StatusOr<google::bigtable::admin::v2::Table>>
+  CreateTableFromSnapshot(bigtable::ClusterId const& cluster_id,
+                          bigtable::SnapshotId const& snapshot_id,
+                          std::string table_id);
 
   //@}
 
@@ -429,7 +430,7 @@ class TableAdmin {
    * Implements the polling loop for `WaitForConsistencyCheck` on a
    * separate thread
    */
-  bool WaitForConsistencyCheckImpl(
+  StatusOr<bool> WaitForConsistencyCheckImpl(
       bigtable::TableId const& table_id,
       bigtable::ConsistencyToken const& consistency_token);
 
@@ -443,7 +444,7 @@ class TableAdmin {
       bigtable::TableId const& table_id, std::chrono::seconds duration_ttl);
 
   /// Implement CreateTableFromSnapshot() with a separate thread.
-  google::bigtable::admin::v2::Table CreateTableFromSnapshotImpl(
+  StatusOr<google::bigtable::admin::v2::Table> CreateTableFromSnapshotImpl(
       bigtable::ClusterId const& cluster_id,
       bigtable::SnapshotId const& snapshot_id, std::string table_id);
 

@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <google/protobuf/text_format.h>
@@ -107,8 +108,8 @@ TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
   auto instance1 = instance_admin_->CreateInstance(instance_config1);
   auto instance2 = instance_admin_->CreateInstance(instance_config2);
   // Wait for instance creation
-  ASSERT_THAT(instance1.get().name(), HasSubstr(id1));
-  ASSERT_THAT(instance2.get().name(), HasSubstr(id2));
+  ASSERT_THAT(instance1.get()->name(), HasSubstr(id1));
+  ASSERT_THAT(instance2.get()->name(), HasSubstr(id2));
 
   auto clusters = instance_admin_->ListClusters();
   ASSERT_STATUS_OK(clusters);
@@ -131,8 +132,10 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   auto instance_config = IntegrationTestConfig(
       instance_id, "us-central1-c", bigtable::InstanceConfig::PRODUCTION, 3);
   auto future = instance_admin_->CreateInstance(instance_config);
+  auto actual = future.get();
+  EXPECT_STATUS_OK(actual);
   // Wait for instance creation
-  ASSERT_THAT(future.get().name(), HasSubstr(instance_id));
+  ASSERT_THAT(actual->name(), HasSubstr(instance_id));
 
   std::string id1 =
       "profile-" + google::cloud::internal::Sample(
@@ -195,7 +198,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   auto detail_2_after_update = instance_admin_->GetAppProfile(
       bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2));
   ASSERT_STATUS_OK(detail_2_after_update);
-  EXPECT_EQ("new description", update_2.description());
+  EXPECT_EQ("new description", update_2->description());
   EXPECT_EQ("new description", detail_2_after_update->description());
 
   ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(
@@ -236,7 +239,8 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
   auto instances_current = instance_admin_->ListInstances();
   ASSERT_STATUS_OK(instances_current);
   ASSERT_TRUE(instances_current->failed_locations.empty());
-  EXPECT_TRUE(IsInstancePresent(instances_current->instances, instance.name()));
+  EXPECT_TRUE(
+      IsInstancePresent(instances_current->instances, instance->name()));
 
   // Get instance
   auto instance_check = instance_admin_->GetInstance(instance_id);
@@ -246,9 +250,9 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
   EXPECT_NE(npos, instance_check->name().find(instance_id));
 
   // update instance
-  btadmin::Instance instance_copy;
-  instance_copy.CopyFrom(instance);
-  bigtable::InstanceUpdateConfig instance_update_config(std::move(instance));
+  google::cloud::StatusOr<btadmin::Instance> instance_copy;
+  instance_copy = *instance;
+  bigtable::InstanceUpdateConfig instance_update_config(std::move(*instance));
   auto const updated_display_name = instance_id + " updated";
   instance_update_config.set_display_name(updated_display_name);
   auto instance_after =
@@ -263,9 +267,9 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
   ASSERT_STATUS_OK(instances_after_delete);
   ASSERT_TRUE(instances_after_delete->failed_locations.empty());
   EXPECT_TRUE(
-      IsInstancePresent(instances_current->instances, instance_copy.name()));
+      IsInstancePresent(instances_current->instances, instance_copy->name()));
   EXPECT_FALSE(
-      IsInstancePresent(instances_after_delete->instances, instance.name()));
+      IsInstancePresent(instances_after_delete->instances, instance->name()));
 }
 
 /// @test Verify that cluster CRUD operations work as expected.
@@ -297,8 +301,8 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
           .get();
   auto clusters_after = instance_admin_->ListClusters(id);
   ASSERT_STATUS_OK(clusters_after);
-  EXPECT_FALSE(IsClusterPresent(clusters_before->clusters, cluster.name()));
-  EXPECT_TRUE(IsClusterPresent(clusters_after->clusters, cluster.name()));
+  EXPECT_FALSE(IsClusterPresent(clusters_before->clusters, cluster->name()));
+  EXPECT_TRUE(IsClusterPresent(clusters_after->clusters, cluster->name()));
 
   // Get cluster
   auto cluster_check = instance_admin_->GetCluster(instance_id, cluster_id);
@@ -308,19 +312,19 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   EXPECT_EQ(cluster_name_prefix + cluster_id.get(), cluster_check->name());
 
   // Update cluster
-  btadmin::Cluster cluster_copy;
-  cluster_copy.CopyFrom(cluster);
+  google::cloud::StatusOr<btadmin::Cluster> cluster_copy;
+  cluster_copy = *cluster;
   // update the storage type
-  cluster.set_serve_nodes(4);
-  cluster.clear_state();
-  bigtable::ClusterConfig updated_cluster_config(std::move(cluster));
+  cluster->set_serve_nodes(4);
+  cluster->clear_state();
+  bigtable::ClusterConfig updated_cluster_config(std::move(*cluster));
   auto cluster_after_update =
       instance_admin_->UpdateCluster(std::move(updated_cluster_config)).get();
   auto check_cluster_after_update =
       instance_admin_->GetCluster(instance_id, cluster_id);
   ASSERT_STATUS_OK(check_cluster_after_update);
 
-  EXPECT_EQ(3, cluster_copy.serve_nodes());
+  EXPECT_EQ(3, cluster_copy->serve_nodes());
   EXPECT_EQ(4, check_cluster_after_update->serve_nodes());
 
   // Delete cluster
@@ -331,10 +335,10 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   ASSERT_STATUS_OK(instance_admin_->DeleteInstance(id));
   EXPECT_TRUE(
       IsClusterPresent(clusters_after->clusters,
-                       instance_details.name() + "/clusters/" + id + "-cl2"));
+                       instance_details->name() + "/clusters/" + id + "-cl2"));
   EXPECT_FALSE(
       IsClusterPresent(clusters_after_delete->clusters,
-                       instance_details.name() + "/clusters/" + id + "-cl2"));
+                       instance_details->name() + "/clusters/" + id + "-cl2"));
 }
 
 /// @test Verify that IAM Policy APIs work as expected.
