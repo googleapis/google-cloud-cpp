@@ -125,9 +125,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a76b4d78a4df0e9ee86bffdc6b3d2382e"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a85d7141e4e4fef95ca46b1397b3c5d4e">Consistency</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a76b4d78a4df0e9ee86bffdc6b3d2382e">CheckConsistency</a> (bigtable::TableId const &amp;table_id, bigtable::ConsistencyToken const &amp;consistency_token)</td></tr>
 <tr class="memdesc:a76b4d78a4df0e9ee86bffdc6b3d2382e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks consistency of a table.  <a href="#a76b4d78a4df0e9ee86bffdc6b3d2382e">More...</a><br /></td></tr>
 <tr class="separator:a76b4d78a4df0e9ee86bffdc6b3d2382e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa70c28dd2ff12117a9576604b43ea09"><td class="memItemLeft" align="right" valign="top">std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#afa70c28dd2ff12117a9576604b43ea09">WaitForConsistencyCheck</a> (bigtable::TableId const &amp;table_id, bigtable::ConsistencyToken const &amp;consistency_token)</td></tr>
-<tr class="memdesc:afa70c28dd2ff12117a9576604b43ea09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks consistency of a table with multiple calls using a separate thread.  <a href="#afa70c28dd2ff12117a9576604b43ea09">More...</a><br /></td></tr>
-<tr class="separator:afa70c28dd2ff12117a9576604b43ea09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1405c9847cdadab77813e8891f80eb7d"><td class="memItemLeft" align="right" valign="top">std::future&lt; StatusOr&lt; bool &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a1405c9847cdadab77813e8891f80eb7d">WaitForConsistencyCheck</a> (bigtable::TableId const &amp;table_id, bigtable::ConsistencyToken const &amp;consistency_token)</td></tr>
+<tr class="memdesc:a1405c9847cdadab77813e8891f80eb7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks consistency of a table with multiple calls using a separate thread.  <a href="#a1405c9847cdadab77813e8891f80eb7d">More...</a><br /></td></tr>
+<tr class="separator:a1405c9847cdadab77813e8891f80eb7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad42381459dacf2f570de738430a33b68"><td class="memItemLeft" align="right" valign="top">Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#ad42381459dacf2f570de738430a33b68">DropAllRows</a> (std::string const &amp;table_id)</td></tr>
 <tr class="memdesc:ad42381459dacf2f570de738430a33b68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all the rows in a table.  <a href="#ad42381459dacf2f570de738430a33b68">More...</a><br /></td></tr>
 <tr class="separator:ad42381459dacf2f570de738430a33b68"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,9 +146,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad244eda1f3ed97cd45cc6c7aca0b56ff"><td class="memItemLeft" align="right" valign="top">Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#ad244eda1f3ed97cd45cc6c7aca0b56ff">DeleteSnapshot</a> (bigtable::ClusterId const &amp;cluster_id, bigtable::SnapshotId const &amp;snapshot_id)</td></tr>
 <tr class="memdesc:ad244eda1f3ed97cd45cc6c7aca0b56ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a snapshot.  <a href="#ad244eda1f3ed97cd45cc6c7aca0b56ff">More...</a><br /></td></tr>
 <tr class="separator:ad244eda1f3ed97cd45cc6c7aca0b56ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2dcf28d547643156730e8fb38f35977"><td class="memItemLeft" align="right" valign="top">std::future&lt; google::bigtable::admin::v2::Table &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#ad2dcf28d547643156730e8fb38f35977">CreateTableFromSnapshot</a> (bigtable::ClusterId const &amp;cluster_id, bigtable::SnapshotId const &amp;snapshot_id, std::string table_id)</td></tr>
-<tr class="memdesc:ad2dcf28d547643156730e8fb38f35977"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create table from snapshot.  <a href="#ad2dcf28d547643156730e8fb38f35977">More...</a><br /></td></tr>
-<tr class="separator:ad2dcf28d547643156730e8fb38f35977"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a331630fc76951acae9d6e9dc94bf188a"><td class="memItemLeft" align="right" valign="top">std::future&lt; StatusOr&lt; google::bigtable::admin::v2::Table &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a331630fc76951acae9d6e9dc94bf188a">CreateTableFromSnapshot</a> (bigtable::ClusterId const &amp;cluster_id, bigtable::SnapshotId const &amp;snapshot_id, std::string table_id)</td></tr>
+<tr class="memdesc:a331630fc76951acae9d6e9dc94bf188a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create table from snapshot.  <a href="#a331630fc76951acae9d6e9dc94bf188a">More...</a><br /></td></tr>
+<tr class="separator:a331630fc76951acae9d6e9dc94bf188a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the API to administer tables in a Cloud Bigtable instance. </p>
@@ -494,14 +494,14 @@ template&lt;typename... Policies&gt; </div>
 
 </div>
 </div>
-<a id="ad2dcf28d547643156730e8fb38f35977"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad2dcf28d547643156730e8fb38f35977">&#9670;&nbsp;</a></span>CreateTableFromSnapshot()</h2>
+<a id="a331630fc76951acae9d6e9dc94bf188a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a331630fc76951acae9d6e9dc94bf188a">&#9670;&nbsp;</a></span>CreateTableFromSnapshot()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::future&lt; btadmin::Table &gt; google::cloud::bigtable::v0::TableAdmin::CreateTableFromSnapshot </td>
+          <td class="memname">std::future&lt; StatusOr&lt; btadmin::Table &gt; &gt; google::cloud::bigtable::v0::TableAdmin::CreateTableFromSnapshot </td>
           <td>(</td>
           <td class="paramtype">bigtable::ClusterId const &amp;&#160;</td>
           <td class="paramname"><em>cluster_id</em>, </td>
@@ -542,7 +542,7 @@ template&lt;typename... Policies&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str,</div><div class="line">     std::string snapshot_id_str, std::string table_id) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a73d20496d86761052e55848775b1e30b">google::cloud::bigtable::ClusterId</a> cluster_id(cluster_id_str);</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#abe486b71e585f7c014633813866b9c18">google::cloud::bigtable::SnapshotId</a> snapshot_id(snapshot_id_str);</div><div class="line">    <span class="keyword">auto</span> future =</div><div class="line">        admin.CreateTableFromSnapshot(cluster_id, snapshot_id, table_id);</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Table created :&quot;</span> &lt;&lt; future.get().name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str,</div><div class="line">     std::string snapshot_id_str, std::string table_id) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a73d20496d86761052e55848775b1e30b">google::cloud::bigtable::ClusterId</a> cluster_id(cluster_id_str);</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#abe486b71e585f7c014633813866b9c18">google::cloud::bigtable::SnapshotId</a> snapshot_id(snapshot_id_str);</div><div class="line">    <span class="keyword">auto</span> future =</div><div class="line">        admin.CreateTableFromSnapshot(cluster_id, snapshot_id, table_id);</div><div class="line">    <span class="keyword">auto</span> table = future.get();</div><div class="line">    <span class="keywordflow">if</span> (!table) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(table.status().message());</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Table created :&quot;</span> &lt;&lt; table-&gt;name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00219">219</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -887,7 +887,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>vector containing the snapshots for the given cluster.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a73d20496d86761052e55848775b1e30b">google::cloud::bigtable::ClusterId</a> cluster_id(cluster_id_str);</div><div class="line"></div><div class="line">    <span class="keyword">auto</span> snapshot_list = admin.ListSnapshots(cluster_id);</div><div class="line">    <span class="keywordflow">if</span> (!snapshot_list) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(snapshot_list.status().message());</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Snapshot Name List\n&quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; snapshot : *snapshot_list) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Snapshot Name:&quot;</span> &lt;&lt; snapshot.name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00265">265</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00262">262</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -1074,8 +1074,8 @@ template&lt;typename... Policies&gt; </div>
 
 </div>
 </div>
-<a id="afa70c28dd2ff12117a9576604b43ea09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa70c28dd2ff12117a9576604b43ea09">&#9670;&nbsp;</a></span>WaitForConsistencyCheck()</h2>
+<a id="a1405c9847cdadab77813e8891f80eb7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1405c9847cdadab77813e8891f80eb7d">&#9670;&nbsp;</a></span>WaitForConsistencyCheck()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1084,7 +1084,7 @@ template&lt;typename... Policies&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::future&lt;bool&gt; google::cloud::bigtable::v0::TableAdmin::WaitForConsistencyCheck </td>
+          <td class="memname">std::future&lt;StatusOr&lt;bool&gt; &gt; google::cloud::bigtable::v0::TableAdmin::WaitForConsistencyCheck </td>
           <td>(</td>
           <td class="paramtype">bigtable::TableId const &amp;&#160;</td>
           <td class="paramname"><em>table_id</em>, </td>
