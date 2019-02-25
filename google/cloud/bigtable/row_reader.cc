@@ -65,24 +65,11 @@ RowReader::RowReader(
     std::unique_ptr<RPCBackoffPolicy> backoff_policy,
     MetadataUpdatePolicy metadata_update_policy,
     std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
-    : RowReader(std::move(client), std::move(table_name), std::move(row_set),
-                rows_limit, std::move(filter), std::move(retry_policy),
-                std::move(backoff_policy), std::move(metadata_update_policy),
-                std::move(parser_factory), true) {}
-
-RowReader::RowReader(
-    std::shared_ptr<DataClient> client, bigtable::TableId table_name,
-    RowSet row_set, std::int64_t rows_limit, Filter filter,
-    std::unique_ptr<RPCRetryPolicy> retry_policy,
-    std::unique_ptr<RPCBackoffPolicy> backoff_policy,
-    MetadataUpdatePolicy metadata_update_policy,
-    std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
-    bool raise_on_error)
     : RowReader(std::move(client), bigtable::AppProfileId(""),
                 std::move(table_name), std::move(row_set), rows_limit,
                 std::move(filter), std::move(retry_policy),
                 std::move(backoff_policy), std::move(metadata_update_policy),
-                std::move(parser_factory), raise_on_error) {}
+                std::move(parser_factory)) {}
 
 RowReader::RowReader(
     std::shared_ptr<DataClient> client, bigtable::AppProfileId app_profile_id,
@@ -91,20 +78,6 @@ RowReader::RowReader(
     std::unique_ptr<RPCBackoffPolicy> backoff_policy,
     MetadataUpdatePolicy metadata_update_policy,
     std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
-    : RowReader(std::move(client), std::move(app_profile_id),
-                std::move(table_name), std::move(row_set), rows_limit,
-                std::move(filter), std::move(retry_policy),
-                std::move(backoff_policy), std::move(metadata_update_policy),
-                std::move(parser_factory), true) {}
-
-RowReader::RowReader(
-    std::shared_ptr<DataClient> client, bigtable::AppProfileId app_profile_id,
-    bigtable::TableId table_name, RowSet row_set, std::int64_t rows_limit,
-    Filter filter, std::unique_ptr<RPCRetryPolicy> retry_policy,
-    std::unique_ptr<RPCBackoffPolicy> backoff_policy,
-    MetadataUpdatePolicy metadata_update_policy,
-    std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
-    bool raise_on_error)
     : client_(std::move(client)),
       app_profile_id_(std::move(app_profile_id)),
       table_name_(std::move(table_name)),
@@ -121,20 +94,14 @@ RowReader::RowReader(
       processed_chunks_count_(0),
       rows_count_(0),
       status_(grpc::Status::OK),
-      raise_on_error_(raise_on_error),
-      error_retrieved_(raise_on_error) {}
+      error_retrieved_() {}
 
 // The name must be all lowercase to work with range-for loops.
 // NOLINTNEXTLINE(readability-identifier-naming)
 RowReader::iterator RowReader::begin() {
   if (operation_cancelled_) {
-    if (raise_on_error_) {
-      google::cloud::internal::ThrowRuntimeError(
-          "Operation already cancelled.");
-    } else {
-      status_ = grpc::Status::CANCELLED;
-      return internal::RowReaderIterator(this, true);
-    }
+    status_ = grpc::Status::CANCELLED;
+    return internal::RowReaderIterator(this, true);
   }
   if (!stream_) {
     MakeRequest();
@@ -219,11 +186,7 @@ void RowReader::Advance(internal::OptionalRow& row) {
     }
 
     if (!status.ok() && !retry_policy_->OnFailure(status)) {
-      if (raise_on_error_) {
-        google::cloud::internal::ThrowRuntimeError("Unretriable error: " +
-                                                   status.error_message());
-        /*NOTREACHED*/
-      }
+      // XXX report failure
       return;
     }
 
@@ -292,7 +255,7 @@ void RowReader::Cancel() {
 RowReader::~RowReader() {
   // Make sure we don't leave open streams.
   Cancel();
-  if (!raise_on_error_ && !error_retrieved_ && !status_.ok()) {
+  if (!error_retrieved_ && !status_.ok()) {
     GCP_LOG(ERROR)
         << "Exceptions are disabled, RowReader has an error,"
         << " and the error status was not retrieved by the application: "

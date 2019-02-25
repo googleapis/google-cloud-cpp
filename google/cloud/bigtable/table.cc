@@ -103,13 +103,12 @@ future<void> Table::AsyncBulkApply(BulkMutation mut, CompletionQueue& cq) {
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {
-  return impl_.ReadRows(std::move(row_set), std::move(filter), true);
+  return impl_.ReadRows(std::move(row_set), std::move(filter));
 }
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                           Filter filter) {
-  return impl_.ReadRows(std::move(row_set), rows_limit, std::move(filter),
-                        true);
+  return impl_.ReadRows(std::move(row_set), rows_limit, std::move(filter));
 }
 
 StatusOr<std::pair<bool, Row>> Table::ReadRow(std::string row_key,

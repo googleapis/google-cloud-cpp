@@ -333,33 +333,6 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
   EXPECT_EQ(++it, reader.end());
 }
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-TEST_F(RowReaderTest, FailedStreamWithNoRetryThrows) {
-  auto* stream = new MockReadRowsReader;  // wrapped in unique_ptr by ReadRows
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
-  {
-    testing::InSequence s;
-    EXPECT_CALL(*client_, ReadRows(_, _))
-        .WillOnce(Invoke(stream->MakeMockReturner()));
-    EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
-    EXPECT_CALL(*stream, Finish())
-        .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
-
-    EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(false));
-    EXPECT_CALL(*backoff_policy_, OnCompletionHook(_)).Times(0);
-  }
-
-  parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(),
-      bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      std::move(retry_policy_), std::move(backoff_policy_),
-      metadata_update_policy_, std::move(parser_factory_));
-
-  EXPECT_THROW(reader.begin(), std::exception);
-}
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-
 TEST_F(RowReaderTest, FailedStreamWithNoRetryThrowsNoExcept) {
   auto* stream = new MockReadRowsReader;  // wrapped in unique_ptr by ReadRows
   auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
@@ -380,7 +353,7 @@ TEST_F(RowReaderTest, FailedStreamWithNoRetryThrowsNoExcept) {
       client_, bigtable::TableId(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
-      metadata_update_policy_, std::move(parser_factory_), false);
+      metadata_update_policy_, std::move(parser_factory_));
 
   reader.begin();
   grpc::Status status = reader.Finish();
@@ -427,10 +400,6 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
   EXPECT_EQ(++it, reader.end());
 }
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-
-using testing::Throw;
-
 TEST_F(RowReaderTest, FailedParseIsRetried) {
   auto* stream = new MockReadRowsReader;  // wrapped in unique_ptr by ReadRows
   auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
@@ -469,34 +438,6 @@ TEST_F(RowReaderTest, FailedParseIsRetried) {
   EXPECT_NE(it, reader.end());
   EXPECT_EQ(it->row_key(), "r1");
   EXPECT_EQ(++it, reader.end());
-}
-
-TEST_F(RowReaderTest, FailedParseWithNoRetryThrows) {
-  auto* stream = new MockReadRowsReader;  // wrapped in unique_ptr by ReadRows
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
-  {
-    testing::InSequence s;
-    EXPECT_CALL(*client_, ReadRows(_, _))
-        .WillOnce(Invoke(stream->MakeMockReturner()));
-    EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
-    EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
-    grpc::Status status;
-    EXPECT_CALL(*parser, HandleEndOfStreamHook(_))
-        .WillOnce(testing::SetArgReferee<0>(
-            grpc::Status(grpc::StatusCode::INTERNAL, "InternalError")));
-
-    EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(false));
-    EXPECT_CALL(*backoff_policy_, OnCompletionHook(_)).Times(0);
-  }
-
-  parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(),
-      bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      std::move(retry_policy_), std::move(backoff_policy_),
-      metadata_update_policy_, std::move(parser_factory_));
-
-  EXPECT_THROW(reader.begin(), std::exception);
 }
 
 TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
@@ -541,7 +482,6 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
   EXPECT_EQ(it->row_key(), "r1");
   EXPECT_EQ(++it, reader.end());
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 TEST_F(RowReaderTest, FailedParseWithNoRetryThrowsNoExcept) {
   auto* stream = new MockReadRowsReader;  // wrapped in unique_ptr by ReadRows
@@ -566,7 +506,7 @@ TEST_F(RowReaderTest, FailedParseWithNoRetryThrowsNoExcept) {
       client_, bigtable::TableId(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
-      metadata_update_policy_, std::move(parser_factory_), false);
+      metadata_update_policy_, std::move(parser_factory_));
 
   reader.begin();
   grpc::Status status = reader.Finish();
@@ -696,51 +636,6 @@ TEST_F(RowReaderTest, RowLimitIsNotDecreasedToZero) {
   EXPECT_EQ(++it, reader.end());
 }
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-TEST_F(RowReaderTest, BeginThrowsAfterCancelClosesStream) {
-  auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
-  parser->SetRows({"r1"});
-  auto* stream = new MockReadRowsReader;
-  {
-    testing::InSequence s;
-    EXPECT_CALL(*client_, ReadRows(_, _))
-        .WillOnce(Invoke(stream->MakeMockReturner()));
-    EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
-    EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
-    EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
-    EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
-    EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
-  }
-
-  parser_factory_->AddParser(std::move(parser));
-  bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(),
-      bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      std::move(retry_policy_), std::move(backoff_policy_),
-      metadata_update_policy_, std::move(parser_factory_));
-
-  auto it = reader.begin();
-  EXPECT_NE(it, reader.end());
-  EXPECT_EQ(it->row_key(), "r1");
-  EXPECT_NE(it, reader.end());
-  // Manually cancel the call.
-  reader.Cancel();
-  EXPECT_THROW(reader.begin(), std::runtime_error);
-}
-
-TEST_F(RowReaderTest, BeginThrowsAfterImmediateCancel) {
-  bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(),
-      bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      std::move(retry_policy_), std::move(backoff_policy_),
-      metadata_update_policy_, std::move(parser_factory_));
-  // Manually cancel the call before a stream was created.
-  reader.Cancel();
-
-  EXPECT_THROW(reader.begin(), std::runtime_error);
-}
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-
 TEST_F(RowReaderTest, BeginThrowsAfterCancelClosesStreamNoExcept) {
   auto parser = google::cloud::internal::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
@@ -761,7 +656,7 @@ TEST_F(RowReaderTest, BeginThrowsAfterCancelClosesStreamNoExcept) {
       client_, bigtable::TableId(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
-      metadata_update_policy_, std::move(parser_factory_), false);
+      metadata_update_policy_, std::move(parser_factory_));
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -783,7 +678,7 @@ TEST_F(RowReaderTest, BeginThrowsAfterImmediateCancelNoExcept) {
       client_, bigtable::TableId(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
-      metadata_update_policy_, std::move(parser_factory_), false));
+      metadata_update_policy_, std::move(parser_factory_)));
   // Manually cancel the call before a stream was created.
   reader->Cancel();
   reader->begin();
@@ -817,7 +712,7 @@ TEST_F(RowReaderTest, NoExceptionDestructorWillLogIfErrorNotRetrived) {
       client_, bigtable::TableId(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
-      metadata_update_policy_, std::move(parser_factory_), false));
+      metadata_update_policy_, std::move(parser_factory_)));
   reader->Cancel();
   reader->begin();
   reader.reset();
