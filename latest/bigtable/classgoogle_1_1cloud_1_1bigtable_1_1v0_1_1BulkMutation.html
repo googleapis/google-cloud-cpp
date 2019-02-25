@@ -90,7 +90,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a0018336e11d57bc8b689b78310d2bcc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a multi-row mutation from a initializer list.  <a href="#a0018336e11d57bc8b689b78310d2bcc0">More...</a><br /></td></tr>
 <tr class="separator:a0018336e11d57bc8b689b78310d2bcc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ad6447a7930915180a03574e2efd69b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1BulkMutation.html#a0ad6447a7930915180a03574e2efd69b">BulkMutation</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html">SingleRowMutation</a> mutation)</td></tr>
-<tr class="memdesc:a0ad6447a7930915180a03574e2efd69b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a muti-row mutation from a <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html" title="Represent a single row mutation. ">SingleRowMutation</a>.  <a href="#a0ad6447a7930915180a03574e2efd69b">More...</a><br /></td></tr>
+<tr class="memdesc:a0ad6447a7930915180a03574e2efd69b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a multi-row mutation from a <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html" title="Represent a single row mutation. ">SingleRowMutation</a>.  <a href="#a0ad6447a7930915180a03574e2efd69b">More...</a><br /></td></tr>
 <tr class="separator:a0ad6447a7930915180a03574e2efd69b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d3dc3e6a04f33ab9374350f3cbb7637"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1BulkMutation.html#a0d3dc3e6a04f33ab9374350f3cbb7637">BulkMutation</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html">SingleRowMutation</a> m1, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html">SingleRowMutation</a> m2)</td></tr>
 <tr class="memdesc:a0d3dc3e6a04f33ab9374350f3cbb7637"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a muti-row mutation from two <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html" title="Represent a single row mutation. ">SingleRowMutation</a>.  <a href="#a0d3dc3e6a04f33ab9374350f3cbb7637">More...</a><br /></td></tr>
@@ -111,6 +111,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5e2eae3b238dc4750e1a0240cce74a93"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1BulkMutation.html#a5e2eae3b238dc4750e1a0240cce74a93">empty</a> () const</td></tr>
 <tr class="memdesc:a5e2eae3b238dc4750e1a0240cce74a93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if there are no mutations in this set.  <a href="#a5e2eae3b238dc4750e1a0240cce74a93">More...</a><br /></td></tr>
 <tr class="separator:a5e2eae3b238dc4750e1a0240cce74a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed31ecb908b32bc8e341464da2604e5e"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1BulkMutation.html#aed31ecb908b32bc8e341464da2604e5e">size</a> () const</td></tr>
+<tr class="memdesc:aed31ecb908b32bc8e341464da2604e5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the number of mutations in this set.  <a href="#aed31ecb908b32bc8e341464da2604e5e">More...</a><br /></td></tr>
+<tr class="separator:aed31ecb908b32bc8e341464da2604e5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represent a set of mutations across multiple rows. </p>
@@ -243,7 +246,7 @@ template&lt;typename iterator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Create a muti-row mutation from a <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html" title="Represent a single row mutation. ">SingleRowMutation</a>. </p>
+<p>Create a multi-row mutation from a <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html" title="Represent a single row mutation. ">SingleRowMutation</a>. </p>
 
 <p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00405">405</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
@@ -462,6 +465,35 @@ template&lt;typename... M&gt; </div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00440">440</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+
+</div>
+</div>
+<a id="aed31ecb908b32bc8e341464da2604e5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed31ecb908b32bc8e341464da2604e5e">&#9670;&nbsp;</a></span>size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t google::cloud::bigtable::v0::BulkMutation::size </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the number of mutations in this set. </p>
+
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00455">455</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
