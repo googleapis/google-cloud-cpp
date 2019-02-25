@@ -138,8 +138,13 @@ void UpdateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
 
   auto future =
       instance_admin.UpdateInstance(std::move(instance_update_config));
+  auto updated_instance = future.get();
+  if (!updated_instance) {
+    throw std::runtime_error(updated_instance.status().message());
+  }
   std::string instance_detail;
-  google::protobuf::TextFormat::PrintToString(*future.get(), &instance_detail);
+  google::protobuf::TextFormat::PrintToString(*updated_instance,
+                                              &instance_detail);
   std::cout << "GetInstance details : " << instance_detail << "\n";
 }
 //! [update instance]
@@ -293,7 +298,9 @@ void UpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
       google::cloud::bigtable::ClusterConfig(std::move(*cluster));
 
   auto modified_cluster = instance_admin.UpdateCluster(modified_config).get();
-
+  if (!modified_cluster) {
+    throw std::runtime_error(modified_cluster.status().message());
+  }
   std::string cluster_detail;
   google::protobuf::TextFormat::PrintToString(*modified_cluster,
                                               &cluster_detail);
