@@ -158,7 +158,6 @@ void MutationBatcher::OnSuccessfulMutations(CompletionQueue& cq,
     // Release resources as early as possible.
     batch.mutation_data.erase(it);
   }
-  indices = std::vector<int>();
 
   std::unique_lock<std::mutex> lk(mu_);
   oustanding_size_ -= completed_size;
@@ -182,7 +181,9 @@ void MutationBatcher::OnFailedMutations(CompletionQueue& cq,
     // Release resources as early as possible.
     batch.mutation_data.erase(it);
   }
-  failed = std::vector<FailedMutation>();
+  // TODO(#2093): remove once `FailedMutations` are small.
+  failed.clear();
+  failed.shrink_to_fit();
 
   std::unique_lock<std::mutex> lk(mu_);
   oustanding_size_ -= completed_size;
