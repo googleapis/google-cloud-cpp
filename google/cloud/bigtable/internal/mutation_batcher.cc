@@ -191,15 +191,14 @@ void MutationBatcher::OnFailedMutations(CompletionQueue& cq,
 
 void MutationBatcher::OnBulkApplyAttemptFinished(
     CompletionQueue& cq, MutationBatcher::Batch& batch) {
-  bool was_first_attempt = !batch.attempt_finished;
-  batch.attempt_finished = true;
-  // We consider a batch finished if the original request finished. If it is
-  // later retried, we don't count it against the limit. The reasoning is that
-  // it would usually be some long tail of mutations and it should not take up
-  // the resources for the incoming requests.
-  if (!was_first_attempt) {
+  if (batch.attempt_finished) {
+    // We consider a batch finished if the original request finished. If it is
+    // later retried, we don't count it against the limit. The reasoning is that
+    // it would usually be some long tail of mutations and it should not take up
+    // the resources for the incoming requests.
     return;
   }
+  batch.attempt_finished = true;
   std::unique_lock<std::mutex> lk(mu_);
   num_outstanding_batches_ -= 1;
   FlushIfPossible(cq);
