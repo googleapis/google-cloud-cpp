@@ -99,11 +99,6 @@ class RowReader {
    */
   void Cancel();
 
-  grpc::Status Finish() {
-    error_retrieved_ = true;
-    return status_;
-  }
-
  private:
   /**
    * Read and parse the next row in the response.
@@ -113,7 +108,7 @@ class RowReader {
    *
    * This call possibly blocks waiting for data until a full row is available.
    */
-  void Advance(internal::OptionalRow& row);
+  StatusOr<internal::OptionalRow> Advance();
 
   /// Called by Advance(), does not handle retries.
   grpc::Status AdvanceOrFail(internal::OptionalRow& row);
@@ -163,9 +158,6 @@ class RowReader {
   std::int64_t rows_count_;
   /// Holds the last read row key, for retries.
   std::string last_read_row_key_;
-
-  grpc::Status status_;
-  bool error_retrieved_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

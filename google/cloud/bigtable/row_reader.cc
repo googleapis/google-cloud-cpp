@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/row_reader.h"
+#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/table.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/throw_delegate.h"
@@ -30,13 +31,13 @@ static_assert(
     "RowReader::iterator should be an InputIterator");
 static_assert(
     std::is_same<std::iterator_traits<RowReader::iterator>::value_type,
-                 Row>::value,
+                 StatusOr<Row>>::value,
     "RowReader::iterator should be an InputIterator of Row");
 static_assert(std::is_same<std::iterator_traits<RowReader::iterator>::pointer,
-                           Row*>::value,
+                           StatusOr<Row>*>::value,
               "RowReader::iterator should be an InputIterator of Row");
 static_assert(std::is_same<std::iterator_traits<RowReader::iterator>::reference,
-                           Row&>::value,
+                           StatusOr<Row>&>::value,
               "RowReader::iterator should be an InputIterator of Row");
 static_assert(std::is_copy_constructible<RowReader::iterator>::value,
               "RowReader::iterator must be CopyConstructible");
@@ -92,20 +93,11 @@ RowReader::RowReader(
       stream_is_open_(false),
       operation_cancelled_(false),
       processed_chunks_count_(0),
-      rows_count_(0),
-      status_(grpc::Status::OK),
-      error_retrieved_() {}
+      rows_count_(0) {}
 
 // The name must be all lowercase to work with range-for loops.
 // NOLINTNEXTLINE(readability-identifier-naming)
 RowReader::iterator RowReader::begin() {
-  if (operation_cancelled_) {
-    status_ = grpc::Status::CANCELLED;
-    return internal::RowReaderIterator(this, true);
-  }
-  if (!stream_) {
-    MakeRequest();
-  }
   // Increment the iterator to read a row.
   return ++internal::RowReaderIterator(this, false);
 }
@@ -158,12 +150,15 @@ bool RowReader::NextChunk() {
   return true;
 }
 
-void RowReader::Advance(internal::OptionalRow& row) {
+StatusOr<internal::OptionalRow> RowReader::Advance() {
+  if (operation_cancelled_) {
+    return Status(StatusCode::kCancelled, "Operation cancelled.");
+  }
   while (true) {
-    grpc::Status status;
-    status_ = status = AdvanceOrFail(row);
+    internal::OptionalRow row;
+    grpc::Status status = AdvanceOrFail(row);
     if (status.ok()) {
-      return;
+      return std::move(row);
     }
 
     // In the unlikely case when we have already reached the requested
@@ -171,7 +166,7 @@ void RowReader::Advance(internal::OptionalRow& row) {
     // an error at end of stream for example), there is no need to
     // retry and we have no good value for rows_limit anyway.
     if (rows_limit_ != NO_ROWS_LIMIT && rows_limit_ <= rows_count_) {
-      return;
+      return internal::MakeStatusFromRpcError(status);
     }
 
     if (!last_read_row_key_.empty()) {
@@ -182,12 +177,11 @@ void RowReader::Advance(internal::OptionalRow& row) {
 
     // If we receive an error, but the retriable set is empty, stop.
     if (row_set_.IsEmpty()) {
-      return;
+      return internal::MakeStatusFromRpcError(status);
     }
 
-    if (!status.ok() && !retry_policy_->OnFailure(status)) {
-      // XXX report failure
-      return;
+    if (!retry_policy_->OnFailure(status)) {
+      return internal::MakeStatusFromRpcError(status);
     }
 
     auto delay = backoff_policy_->OnCompletion(status);
@@ -199,8 +193,9 @@ void RowReader::Advance(internal::OptionalRow& row) {
 }
 
 grpc::Status RowReader::AdvanceOrFail(internal::OptionalRow& row) {
-  grpc::Status status;
   row.reset();
+  grpc::Status status;
+  MakeRequest();
   while (!parser_->HasNext()) {
     if (NextChunk()) {
       parser_->HandleChunk(
@@ -255,13 +250,6 @@ void RowReader::Cancel() {
 RowReader::~RowReader() {
   // Make sure we don't leave open streams.
   Cancel();
-  if (!error_retrieved_ && !status_.ok()) {
-    GCP_LOG(ERROR)
-        << "Exceptions are disabled, RowReader has an error,"
-        << " and the error status was not retrieved by the application: "
-        << "status_code=" << status_.error_code()
-        << ", error_message=" << status_.error_message();
-  }
 }
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
