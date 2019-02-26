@@ -47,8 +47,8 @@ cc_binary(
 )
 
 cc_binary(
-    name = "bigtable_samples_instance_admin_ext",
-    srcs = ["bigtable_samples_instance_admin_ext.cc"],
+    name = "bigtable_samples_instance_admin",
+    srcs = ["bigtable_samples_instance_admin.cc"],
     deps = ["//google/cloud/bigtable:bigtable_client"],
 )
 
