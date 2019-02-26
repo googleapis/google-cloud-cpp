@@ -125,28 +125,28 @@ function run_all_instance_admin_examples {
   run_example ./bigtable_instance_admin_snippets run \
       "${project_id}" "${RUN_INSTANCE}" "${RUN_INSTANCE}-c1" "${zone_id}"
 
-  run_example ./bigtable_samples_instance_admin_ext run \
+  run_example ./bigtable_samples_instance_admin run \
       "${project_id}" "${RUN_INSTANCE}" "${RUN_INSTANCE}-c1" "${zone_id}"
 
   run_example ./bigtable_instance_admin_snippets create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"
-  run_example ./bigtable_samples_instance_admin_ext create-cluster \
+  run_example ./bigtable_samples_instance_admin create-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${replication_zone_id}"
-  run_example ./bigtable_samples_instance_admin_ext delete-cluster \
+  run_example ./bigtable_samples_instance_admin delete-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
-  run_example ./bigtable_samples_instance_admin_ext delete-instance \
+  run_example ./bigtable_samples_instance_admin delete-instance \
       "${project_id}" "${INSTANCE}"
 
-  run_example ./bigtable_samples_instance_admin_ext \
+  run_example ./bigtable_samples_instance_admin \
       create-dev-instance \
       "${project_id}" "${DEV_INSTANCE}" "${INSTANCE}-c1" "${zone_id}"
-  run_example ./bigtable_samples_instance_admin_ext delete-instance \
+  run_example ./bigtable_samples_instance_admin delete-instance \
       "${project_id}" "${DEV_INSTANCE}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
   run_example_usage ./bigtable_instance_admin_snippets
-  run_example_usage ./bigtable_samples_instance_admin_ext
+  run_example_usage ./bigtable_samples_instance_admin
 }
 
 # Run all the instance admin async examples.
