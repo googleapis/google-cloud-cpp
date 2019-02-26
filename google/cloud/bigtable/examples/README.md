@@ -198,6 +198,6 @@ $ ./data_snippets apply ${PROJECT_ID} ${INSTANCE_ID} ${TABLE_ID}
 ```
 
 [hello_world_code]: bigtable_hello_world.cc
-[instance_admin_code]: bigtable_samples_instance_admin.cc
+[instance_admin_code]: bigtable_instance_admin_snippets.cc
 [table_admin_code]: table_admin_snippets.cc
 [data_snippets]: data_snippets.cc
