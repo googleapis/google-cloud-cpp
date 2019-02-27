@@ -73,6 +73,7 @@ std::pair<future<void>, future<Status>> MutationBatcher::AsyncApply(
 future<void> MutationBatcher::AsyncWaitForNoPendingRequests() {
   std::unique_lock<std::mutex> lk(mu_);
   if (num_requests_pending_ == 0) {
+    // TODO(#2112): Use make_satisfied_future<> once it's implemented.
     promise<void> satisfied_promise;
     satisfied_promise.set_value();
     return satisfied_promise.get_future();
@@ -221,19 +222,19 @@ void MutationBatcher::OnBulkApplyAttemptFinished(
 
 std::vector<MutationBatcher::AdmissionPromise> MutationBatcher::TryAdmit(
     CompletionQueue& cq) {
-  // Defer staisfying promises until we release the lock.
-  std::vector<AdmissionPromise> res;
+  // Defer satisfying promises until we release the lock.
+  std::vector<AdmissionPromise> admission_promises;
 
   do {
     while (!pending_mutations_.empty() &&
            HasSpaceFor(pending_mutations_.front())) {
       auto& mut(pending_mutations_.front());
-      res.emplace_back(std::move(mut.admission_promise));
+      admission_promises.emplace_back(std::move(mut.admission_promise));
       Admit(std::move(mut));
       pending_mutations_.pop();
     }
   } while (FlushIfPossible(cq));
-  return res;
+  return admission_promises;
 }
 
 void MutationBatcher::Admit(PendingSingleRowMutation mut) {
