@@ -18,5 +18,7 @@ var searchData=
   ['multiclusteruseany',['MultiClusterUseAny',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AppProfileConfig.html#a08d9eea52668e29e70a11022d55561a3',1,'google::cloud::bigtable::v0::AppProfileConfig']]],
   ['mutaterow',['MutateRow',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DefaultDataClient.html#a1ea2f437fa8eae09dbfb1bd6567a148e',1,'google::cloud::bigtable::v0::DefaultDataClient::MutateRow()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#afe7f9a78e8ebc5fe306b584f1bb29d02',1,'google::cloud::bigtable::v0::DataClient::MutateRow()']]],
   ['mutaterows',['MutateRows',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DefaultDataClient.html#a3e98730407e54ec7e55f444048028fb1',1,'google::cloud::bigtable::v0::DefaultDataClient::MutateRows()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#ac50801dcddff400ed667ca57d0805e10',1,'google::cloud::bigtable::v0::DataClient::MutateRows()']]],
-  ['mutation',['mutation',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1FailedMutation.html#ac5233691d59291598a1a0a3ed5299b06',1,'google::cloud::bigtable::v0::FailedMutation']]]
+  ['mutation',['mutation',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1FailedMutation.html#ac5233691d59291598a1a0a3ed5299b06',1,'google::cloud::bigtable::v0::FailedMutation']]],
+  ['mutationbatcher',['MutationBatcher',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher.html#a13beb20606a59b9a952d4728f82e18e5',1,'google::cloud::bigtable::v0::MutationBatcher']]],
+  ['mutationdata',['MutationData',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Batch_1_1MutationData.html#adf41280e025b73bfe260668abedf8ecd',1,'google::cloud::bigtable::v0::MutationBatcher::Batch::MutationData']]]
 ];

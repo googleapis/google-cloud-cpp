@@ -7,6 +7,10 @@ var searchData=
   ['makerelativetimer',['MakeRelativeTimer',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#a2ed4d2e184b0a56f0de1f345f5a3ec9c',1,'google::cloud::bigtable::v0::CompletionQueue']]],
   ['makeunaryrpc',['MakeUnaryRpc',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#af6eeef14a79b2413928f1200730d9d7e',1,'google::cloud::bigtable::v0::CompletionQueue']]],
   ['makeunarystreamrpc',['MakeUnaryStreamRpc',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#af099d92f80eb4a239a2fe55b55fa802e',1,'google::cloud::bigtable::v0::CompletionQueue']]],
+  ['max_5fbatches',['max_batches',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#a082558dbe35a369b914e787e56617646',1,'google::cloud::bigtable::v0::MutationBatcher::Options']]],
+  ['max_5fmutations_5fper_5fbatch',['max_mutations_per_batch',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#abd89168940071a8f91784c91ca3c3b1c',1,'google::cloud::bigtable::v0::MutationBatcher::Options']]],
+  ['max_5foustanding_5fsize',['max_oustanding_size',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#a3e39d8e384d2efa3dfbd408890405e8e',1,'google::cloud::bigtable::v0::MutationBatcher::Options']]],
+  ['max_5fsize_5fper_5fbatch',['max_size_per_batch',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#a99d51d16f105dfa28f7a111eae459164',1,'google::cloud::bigtable::v0::MutationBatcher::Options']]],
   ['maxage',['MaxAge',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1GcRule.html#a5115d55f92e64a20e051f998d1083bcd',1,'google::cloud::bigtable::v0::GcRule']]],
   ['maxnumversions',['MaxNumVersions',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1GcRule.html#ac8c1f17114b5e0308e6fb0d985c5f00c',1,'google::cloud::bigtable::v0::GcRule']]],
   ['members',['members',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBinding.html#a4720c6c324a228b7a6810a45d4bc91f4',1,'google::cloud::v0::IamBinding']]],
@@ -23,6 +27,10 @@ var searchData=
   ['mutaterow',['MutateRow',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DefaultDataClient.html#a1ea2f437fa8eae09dbfb1bd6567a148e',1,'google::cloud::bigtable::v0::DefaultDataClient::MutateRow()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#afe7f9a78e8ebc5fe306b584f1bb29d02',1,'google::cloud::bigtable::v0::DataClient::MutateRow()']]],
   ['mutaterows',['MutateRows',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DefaultDataClient.html#a3e98730407e54ec7e55f444048028fb1',1,'google::cloud::bigtable::v0::DefaultDataClient::MutateRows()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#ac50801dcddff400ed667ca57d0805e10',1,'google::cloud::bigtable::v0::DataClient::MutateRows()']]],
   ['mutation',['Mutation',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html',1,'google::cloud::bigtable::v0::Mutation'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1FailedMutation.html#ac5233691d59291598a1a0a3ed5299b06',1,'google::cloud::bigtable::v0::FailedMutation::mutation()']]],
+  ['mutation_5fbatcher_2ecc',['mutation_batcher.cc',['../mutation__batcher_8cc.html',1,'']]],
+  ['mutation_5fbatcher_2eh',['mutation_batcher.h',['../mutation__batcher_8h.html',1,'']]],
+  ['mutationbatcher',['MutationBatcher',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher.html',1,'google::cloud::bigtable::v0::MutationBatcher'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a26c8f6be2070a3f5d8c01acabb3ad719',1,'google::cloud::bigtable::v0::Table::MutationBatcher()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher.html#a13beb20606a59b9a952d4728f82e18e5',1,'google::cloud::bigtable::v0::MutationBatcher::MutationBatcher()']]],
+  ['mutationdata',['MutationData',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Batch_1_1MutationData.html',1,'google::cloud::bigtable::v0::MutationBatcher::Batch::MutationData'],['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Batch_1_1MutationData.html#adf41280e025b73bfe260668abedf8ecd',1,'google::cloud::bigtable::v0::MutationBatcher::Batch::MutationData::MutationData()']]],
   ['mutations_2ecc',['mutations.cc',['../mutations_8cc.html',1,'']]],
   ['mutations_2eh',['mutations.h',['../mutations_8h.html',1,'']]]
 ];

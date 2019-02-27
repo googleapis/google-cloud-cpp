@@ -41,6 +41,7 @@ var searchData=
   ['columnrangerightopen',['ColumnRangeRightOpen',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#afc89c150565c30461f31c56d6737e610',1,'google::cloud::bigtable::v0::Filter']]],
   ['columnregex',['ColumnRegex',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#a65a56b80a7439759d3a363acdfaa5f31',1,'google::cloud::bigtable::v0::Filter']]],
   ['compiletimeenabled',['CompileTimeEnabled',['../../common/classgoogle_1_1cloud_1_1v0_1_1LogSink.html#a173e9e432b49ee22cb83a01b204ad63b',1,'google::cloud::v0::LogSink']]],
+  ['completion_5fpromise',['completion_promise',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Batch_1_1MutationData.html#ab8da5b9822073ce2b4335f71678cd68a',1,'google::cloud::bigtable::v0::MutationBatcher::Batch::MutationData']]],
   ['completion_5fqueue_2ecc',['completion_queue.cc',['../completion__queue_8cc.html',1,'']]],
   ['completion_5fqueue_2eh',['completion_queue.h',['../completion__queue_8h.html',1,'']]],
   ['completionqueue',['CompletionQueue',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html',1,'google::cloud::bigtable::v0::CompletionQueue'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#a73890ff278f4a37365a94d998d3541aa',1,'google::cloud::bigtable::v0::CompletionQueue::CompletionQueue()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#a03924d27ec5d3869c489a0b1c0003f66',1,'google::cloud::bigtable::v0::CompletionQueue::CompletionQueue(std::shared_ptr&lt; internal::CompletionQueueImpl &gt; impl)']]],
