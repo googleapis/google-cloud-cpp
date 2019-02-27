@@ -45,7 +45,7 @@ std::string EncodeBigEndian(T value) {
   std::array<std::uint8_t, sizeof(n)> a;
   for (auto& c : a) {
     shift -= 8;
-    c = n >> shift;
+    c = static_cast<std::uint8_t>(n >> shift);
   }
   return {reinterpret_cast<char const*>(a.data()), a.size()};
 }
