@@ -95,7 +95,7 @@ Get-Date -Format o
 $packages = @("zlib:x64-windows-static", "openssl:x64-windows-static",
               "protobuf:x64-windows-static", "c-ares:x64-windows-static",
               "grpc:x64-windows-static", "curl:x64-windows-static",
-              "crc32c:x64-windows-static")
+              "gtest:x64-windows-static", "crc32c:x64-windows-static")
 foreach ($pkg in $packages) {
     .\vcpkg.exe install $pkg
     if ($LastExitCode) {
@@ -103,24 +103,12 @@ foreach ($pkg in $packages) {
     }
 }
 
-# The dependencies are cached, we need to remove this old dependency. Otherwise
-# CMake files the old version of gtest+gmock instead of the external project.
-# This is clearly a defect in our hand-crafted caching, but without caching the
-# build takes about 1 hour to just build the dependencies.
-Write-Host "================================================================"
-Write-Host "================================================================"
-.\vcpkg.exe remove --recurse --purge "gtest:x64-windows-static"
-Remove-Item -Recurse -Path installed\x64-windows-static\include\gtest
-Remove-Item -Recurse -Path installed\x64-windows-static\include\gmock
-
 Write-Host "================================================================"
 Write-Host "================================================================"
 .\vcpkg.exe list
-Get-ChildItem -Recurse -Path installed\x64-windows-static\include\gtest -File
-Get-ChildItem -Recurse -Path installed\x64-windows-static\include\gmock -File
-Write-Host "================================================================"
-Write-Host "================================================================"
 
+Write-Host "================================================================"
+Write-Host "================================================================"
 Write-Host "Create cache zip file."
 Get-Date -Format o
 cmd /c 7z a vcpkg-installed.zip installed\
@@ -129,6 +117,8 @@ if ($LastExitCode) {
     Write-Host "zip build cache failed with exit code $LastExitCode"
 }
 
+Write-Host "================================================================"
+Write-Host "================================================================"
 Write-Host "Upload cache zip file."
 Get-Date -Format o
 gsutil cp vcpkg-installed.zip gs://cloud-cpp-kokoro-results/build-artifacts/vcpkg-installed.zip
