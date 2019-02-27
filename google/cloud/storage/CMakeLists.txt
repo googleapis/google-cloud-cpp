@@ -164,6 +164,8 @@ add_library(storage_client
             internal/retry_resumable_upload_session.cc
             internal/service_account_requests.h
             internal/service_account_requests.cc
+            internal/sha256_hash.h
+            internal/sha256_hash.cc
             internal/signed_url_requests.h
             internal/signed_url_requests.cc
             lifecycle_rule.h
@@ -332,6 +334,7 @@ if (BUILD_TESTING)
         internal/retry_client_test.cc
         internal/retry_resumable_upload_session_test.cc
         internal/service_account_requests_test.cc
+        internal/sha256_hash_test.cc
         internal/signed_url_requests_test.cc
         lifecycle_rule_test.cc
         list_buckets_reader_test.cc
