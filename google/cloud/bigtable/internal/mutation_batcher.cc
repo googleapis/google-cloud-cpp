@@ -28,7 +28,7 @@ MutationBatcher::Options::Options()
       max_mutations_per_batch(100000),
       // Let's make the default slightly smaller, so that overheads or
       // miscalculations don't tip us over.
-      max_size_per_batch(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH * 9 / 10),
+      max_size_per_batch(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH * 9LL / 10),
       max_batches(8),
       max_oustanding_size(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH * 6) {}
 
