@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/mutation_batcher.h"
+#include "google/cloud/bigtable/mutation_batcher.h"
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
+#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/table.h"
 #include <sstream>
 
@@ -21,8 +22,6 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
-
 MutationBatcher::Options::Options()
     :  // Cloud Bigtable doesn't accept more than this.
       max_mutations_per_batch(100000),
@@ -32,24 +31,26 @@ MutationBatcher::Options::Options()
       max_batches(8),
       max_oustanding_size(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH * 6) {}
 
-std::shared_ptr<AsyncOperation> MutationBatcher::AsyncApply(
-    CompletionQueue& cq, AsyncApplyCompletionCallback completion_callback,
-    AsyncApplyAdmissionCallback admission_callback, SingleRowMutation mut) {
+std::pair<future<void>, future<Status>> MutationBatcher::AsyncApply(
+    CompletionQueue& cq, SingleRowMutation mut) {
+  AdmissionPromise admission_promise;
+  CompletionPromise completion_promise;
+  auto res = std::make_pair(admission_promise.get_future(),
+                            completion_promise.get_future());
   PendingSingleRowMutation pending(std::move(mut),
-                                   std::move(completion_callback),
-                                   std::move(admission_callback));
-  auto res = std::make_shared<BatchedSingleRowMutation>();
+                                   std::move(completion_promise),
+                                   std::move(admission_promise));
   std::unique_lock<std::mutex> lk(mu_);
 
   grpc::Status mutation_status = IsValid(pending);
   if (!mutation_status.ok()) {
     lk.unlock();
-    // Destroy the mutation before calling the admission callback so that we can
-    // limit the memory usage.
+    // Destroy the mutation before satisfying the admission promise so that we
+    // can limit the memory usage.
     pending.mut.Clear();
-    pending.completion_callback(cq, mutation_status);
-    pending.completion_callback = AsyncApplyCompletionCallback();
-    pending.admission_callback(cq);
+    pending.completion_promise.set_value(
+        internal::MakeStatusFromRpcError(mutation_status));
+    pending.admission_promise.set_value();
     return res;
   }
 
@@ -57,23 +58,23 @@ std::shared_ptr<AsyncOperation> MutationBatcher::AsyncApply(
     pending_mutations_.push(std::move(pending));
     return res;
   }
-  AsyncApplyAdmissionCallback admission_callback_to_fire(
-      std::move(pending.admission_callback));
+  AdmissionPromise admission_promise_to_satisfy(
+      std::move(pending.admission_promise));
   Admit(std::move(pending));
   FlushIfPossible(cq);
 
   lk.unlock();
 
-  admission_callback_to_fire(cq);
+  admission_promise_to_satisfy.set_value();
   return res;
 }
 
 MutationBatcher::PendingSingleRowMutation::PendingSingleRowMutation(
-    SingleRowMutation mut_arg, AsyncApplyCompletionCallback completion_callback,
-    AsyncApplyAdmissionCallback admission_callback)
+    SingleRowMutation mut_arg, CompletionPromise completion_promise,
+    AdmissionPromise admission_promise)
     : mut(std::move(mut_arg)),
-      completion_callback(std::move(completion_callback)),
-      admission_callback(std::move(admission_callback)) {
+      completion_promise(std::move(completion_promise)),
+      admission_promise(std::move(admission_promise)) {
   ::google::bigtable::v2::MutateRowsRequest::Entry tmp;
   mut.MoveTo(&tmp);
   // This operation might not be cheap, so let's cache it.
@@ -121,7 +122,7 @@ bool MutationBatcher::FlushIfPossible(CompletionQueue& cq) {
       num_outstanding_batches_ < options_.max_batches) {
     ++num_outstanding_batches_;
     auto batch = cur_batch_;
-    table_.StreamingAsyncBulkApply(
+    table_.impl_.StreamingAsyncBulkApply(
         cq,
         [this, batch](CompletionQueue& cq, std::vector<int> succeeded) {
           OnSuccessfulMutations(cq, *batch, std::move(succeeded));
@@ -153,8 +154,7 @@ void MutationBatcher::OnSuccessfulMutations(CompletionQueue& cq,
   for (int idx : indices) {
     auto it = batch.mutation_data.find(idx);
     completed_size += it->second.request_size;
-    grpc::Status status;
-    it->second.callback(cq, status);
+    it->second.completion_promise.set_value(Status());
     // Release resources as early as possible.
     batch.mutation_data.erase(it);
   }
@@ -173,11 +173,8 @@ void MutationBatcher::OnFailedMutations(CompletionQueue& cq,
     int const idx = f.original_index();
     auto it = batch.mutation_data.find(idx);
     completed_size += it->second.request_size;
-    // For some reason clang-tidy thinks that AsyncApplyCompletionCallback would
-    // be fine with a const reference to status.
-    // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
-    grpc::Status status(f.status());
-    it->second.callback(cq, status);
+    it->second.completion_promise.set_value(
+        internal::MakeStatusFromRpcError(f.status()));
     // Release resources as early as possible.
     batch.mutation_data.erase(it);
   }
@@ -208,14 +205,14 @@ void MutationBatcher::OnBulkApplyAttemptFinished(
 
 void MutationBatcher::TryAdmit(CompletionQueue& cq,
                                std::unique_lock<std::mutex>& lk) {
-  // Defer callbacks until we release the lock
-  std::vector<AsyncApplyAdmissionCallback> admission_callbacks;
+  // Defer promises until we release the lock
+  std::vector<AdmissionPromise> admission_promises;
 
   do {
     while (!pending_mutations_.empty() &&
            HasSpaceFor(pending_mutations_.front())) {
       auto& mut(pending_mutations_.front());
-      admission_callbacks.emplace_back(std::move(mut.admission_callback));
+      admission_promises.emplace_back(std::move(mut.admission_promise));
       Admit(std::move(mut));
       pending_mutations_.pop();
     }
@@ -223,11 +220,11 @@ void MutationBatcher::TryAdmit(CompletionQueue& cq,
 
   lk.unlock();
 
-  // Inform the user that we've admitted these mutations and there might be
-  // some space in the buffer finally.
-  for (auto& cb : admission_callbacks) {
+  // Inform the user that we've admitted these mutations and there might be some
+  // space in the buffer finally.
+  for (auto& promise : admission_promises) {
     grpc::Status status;
-    cb(cq);
+    promise.set_value();
   }
 }
 
@@ -240,7 +237,6 @@ void MutationBatcher::Admit(PendingSingleRowMutation mut) {
                                     Batch::MutationData(std::move(mut)));
 }
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
