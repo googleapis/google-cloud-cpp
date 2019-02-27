@@ -17,7 +17,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/format_rfc3339.h"
+#include "google/cloud/storage/internal/format_time_point.h"
 #include <future>
 #include <iomanip>
 #include <sstream>

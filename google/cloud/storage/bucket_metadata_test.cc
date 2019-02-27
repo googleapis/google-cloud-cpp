@@ -15,7 +15,7 @@
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/bucket_requests.h"
-#include "google/cloud/storage/internal/format_rfc3339.h"
+#include "google/cloud/storage/internal/format_time_point.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/storage_class.h"
 #include <gmock/gmock.h>
