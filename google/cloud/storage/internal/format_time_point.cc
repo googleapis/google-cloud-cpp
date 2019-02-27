@@ -27,26 +27,35 @@ std::string FormatFractional(std::chrono::nanoseconds ns) {
   }
 
   char buffer[16];
-  std::string result = ".";
   // If the fractional seconds can be just expressed as milliseconds, do that,
   // we do not want to print 1.123000000
   auto d = std::lldiv(ns.count(), 1000000LL);
   if (d.rem == 0) {
-    std::snprintf(buffer, sizeof(buffer), "%03lld", d.quot);
-    result += buffer;
-    return result;
+    std::snprintf(buffer, sizeof(buffer), ".%03lld", d.quot);
+    return buffer;
   }
   d = std::lldiv(ns.count(), 1000LL);
   if (d.rem == 0) {
-    std::snprintf(buffer, sizeof(buffer), "%06lld", d.quot);
-    result += buffer;
-    return result;
+    std::snprintf(buffer, sizeof(buffer), ".%06lld", d.quot);
+    return buffer;
   }
 
-  std::snprintf(buffer, sizeof(buffer), "%09lld",
+  std::snprintf(buffer, sizeof(buffer), ".%09lld",
                 static_cast<long long>(ns.count()));
-  result += buffer;
-  return result;
+  return buffer;
+}
+
+std::tm AsUtcTm(std::chrono::system_clock::time_point tp) {
+  std::time_t time = std::chrono::system_clock::to_time_t(tp);
+  std::tm tm{};
+  // The standard C++ function to convert time_t to a struct tm is not thread
+  // safe (it holds global storage), use some OS specific stuff here:
+#if _WIN32
+  gmtime_s(&tm, &time);
+#else
+  gmtime_r(&time, &tm);
+#endif  // _WIN32
+  return tm;
 }
 }  // namespace
 
@@ -57,17 +66,9 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 std::string FormatRfc3339(std::chrono::system_clock::time_point tp) {
-  std::time_t time = std::chrono::system_clock::to_time_t(tp);
-  std::tm tm;
-  // The standard C++ function to convert time_t to a struct tm is not thread
-  // safe (it holds global storage), use some OS specific stuff here:
-#if _WIN32
-  gmtime_s(&tm, &time);
-#else
-  gmtime_r(&time, &tm);
-#endif  // _WIN32
+  std::tm tm = AsUtcTm(tp);
   char buffer[256];
-  std::strftime(buffer, sizeof(buffer), "%Y-%m-%dT%T", &tm);
+  std::strftime(buffer, sizeof(buffer), "%Y-%m-%dT%H:%M:%S", &tm);
 
   std::string result(buffer);
   // Add the fractional seconds...
@@ -79,6 +80,22 @@ std::string FormatRfc3339(std::chrono::system_clock::time_point tp) {
   result += "Z";
   return result;
 }
+
+std::string FormatV4SignedUrlTimestamp(
+    std::chrono::system_clock::time_point tp) {
+  std::tm tm = AsUtcTm(tp);
+  char buffer[256];
+  std::strftime(buffer, sizeof(buffer), "%Y%m%dT%H%M%SZ", &tm);
+  return buffer;
+}
+
+std::string FormatV4SignedUrlScope(std::chrono::system_clock::time_point tp) {
+  std::tm tm = AsUtcTm(tp);
+  char buffer[256];
+  std::strftime(buffer, sizeof(buffer), "%Y%m%d", &tm);
+  return buffer;
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
