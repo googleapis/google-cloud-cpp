@@ -83,6 +83,57 @@ TEST(SignedUrlRequests, SignEscaped) {
   EXPECT_THAT(os.str(), HasSubstr(expected_blob));
 }
 
+TEST(SignedUrlRequests, SubResource) {
+  SignUrlRequest request("GET", "test-bucket", "test-object");
+  EXPECT_EQ("GET", request.verb());
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ("test-object", request.object_name());
+
+  request.set_multiple_options(
+      WithAcl(), ExpirationTime(ParseRfc3339("2019-02-26T13:14:15Z")));
+
+  EXPECT_EQ("acl", request.sub_resource());
+
+  // The magic seconds where found using:
+  //     date +%s -u --date=2019-02-26T13:14:15Z
+  //
+  std::string expected_blob = R"""(GET
+
+
+1551186855
+/test-bucket/test-object?acl)""";
+
+  EXPECT_EQ(expected_blob, request.StringToSign());
+
+  std::ostringstream os;
+  os << request;
+  EXPECT_THAT(os.str(), HasSubstr(expected_blob));
+}
+
+TEST(SignedUrlRequests, SubResourceMultiple) {
+  SignUrlRequest request("GET", "test-bucket", "");
+  EXPECT_EQ("GET", request.verb());
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ("", request.object_name());
+
+  request.set_multiple_options(
+      WithAcl(), WithBilling(),
+      ExpirationTime(ParseRfc3339("2019-02-26T13:14:15Z")));
+
+  EXPECT_EQ("billing", request.sub_resource());
+
+  // The magic seconds where found using:
+  //     date +%s -u --date=2019-02-26T13:14:15Z
+  //
+  std::string expected_blob = R"""(GET
+
+
+1551186855
+/test-bucket?billing)""";
+
+  EXPECT_EQ(expected_blob, request.StringToSign());
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

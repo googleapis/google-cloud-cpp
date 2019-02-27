@@ -39,6 +39,7 @@ class SignUrlRequest {
   std::string const& verb() const { return verb_; }
   std::string const& bucket_name() const { return bucket_name_; }
   std::string const& object_name() const { return object_name_; }
+  std::string const& sub_resource() const { return sub_resource_; }
   std::chrono::seconds expiration_time_as_seconds() const {
     return std::chrono::duration_cast<std::chrono::seconds>(
         expiration_time_.time_since_epoch());
@@ -96,9 +97,17 @@ class SignUrlRequest {
     query_parameters_.push_back(o.value());
   }
 
+  void set_option(SubResourceOption const& o) {
+    if (!o.has_value()) {
+      return;
+    }
+    sub_resource_ = o.value();
+  }
+
   std::string verb_;
   std::string bucket_name_;
   std::string object_name_;
+  std::string sub_resource_;
   std::string md5_hash_value_;
   std::string content_type_;
   std::chrono::system_clock::time_point expiration_time_;
