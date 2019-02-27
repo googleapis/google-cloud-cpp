@@ -48,6 +48,19 @@ std::string FormatFractional(std::chrono::nanoseconds ns) {
   result += buffer;
   return result;
 }
+
+std::tm AsTm(std::chrono::system_clock::time_point tp) {
+  std::time_t time = std::chrono::system_clock::to_time_t(tp);
+  std::tm tm{};
+  // The standard C++ function to convert time_t to a struct tm is not thread
+  // safe (it holds global storage), use some OS specific stuff here:
+#if _WIN32
+  gmtime_s(&tm, &time);
+#else
+  gmtime_r(&time, &tm);
+#endif  // _WIN32
+  return tm;
+}
 }  // namespace
 
 namespace google {
@@ -57,15 +70,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 std::string FormatRfc3339(std::chrono::system_clock::time_point tp) {
-  std::time_t time = std::chrono::system_clock::to_time_t(tp);
-  std::tm tm;
-  // The standard C++ function to convert time_t to a struct tm is not thread
-  // safe (it holds global storage), use some OS specific stuff here:
-#if _WIN32
-  gmtime_s(&tm, &time);
-#else
-  gmtime_r(&time, &tm);
-#endif  // _WIN32
+  std::tm tm = AsTm(tp);
   char buffer[256];
   std::strftime(buffer, sizeof(buffer), "%Y-%m-%dT%T", &tm);
 
@@ -79,6 +84,24 @@ std::string FormatRfc3339(std::chrono::system_clock::time_point tp) {
   result += "Z";
   return result;
 }
+
+std::string FormatV4SignedUrlTimestamp(
+    std::chrono::system_clock::time_point tp) {
+  std::tm tm = AsTm(tp);
+  char buffer[256];
+  std::strftime(buffer, sizeof(buffer), "%Y%m%dT%H%M%S", &tm);
+  std::string result(buffer);
+  result += "Z";
+  return result;
+}
+
+std::string FormatV4SignedUrlScope(std::chrono::system_clock::time_point tp) {
+  std::tm tm = AsTm(tp);
+  char buffer[256];
+  std::strftime(buffer, sizeof(buffer), "%Y%m%d", &tm);
+  return buffer;
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
