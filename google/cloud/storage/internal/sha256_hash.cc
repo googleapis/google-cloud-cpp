@@ -30,18 +30,17 @@ std::vector<std::uint8_t> Sha256Hash(std::string const& str) {
 
   unsigned char hash[SHA256_DIGEST_LENGTH];
   SHA256_Final(hash, &sha256);
-  static_assert(std::numeric_limits<unsigned char>::digits <= 8,
-                "This code assumes `unsigned char` fits in a `std::uint8_t`.");
   // Note that this constructor (from a range) converts the `unsigned char` to
-  // `std::uint8_t` if needed. That should work because of the static_assert(),
-  // though it is (I think) guaranteed by the standard.
+  // `std::uint8_t` if needed, this should work because (a) the values returned
+  // by `SHA256_Final()` are 8-bit values, and (b) because if `std::uint8_t`
+  // exists it must be large enough to fit an `unsigned char`.
   return {hash, hash + sizeof(hash)};
 }
 
 std::string HexEncode(std::vector<std::uint8_t> const& bytes) {
   std::string result;
   for (auto c : bytes) {
-    char buf[16];
+    char buf[sizeof("ff")];
     std::snprintf(buf, sizeof(buf), "%02x", c);
     result += buf;
   }
