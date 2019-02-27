@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/sha256_hash.h"
 #include <openssl/evp.h>
 #include <openssl/sha.h>
+#include <limits>
 
 namespace google {
 namespace cloud {
@@ -25,16 +26,21 @@ namespace internal {
 std::vector<std::uint8_t> Sha256Hash(std::string const& str) {
   SHA256_CTX sha256;
   SHA256_Init(&sha256);
-  SHA256_Update(&sha256, str.c_str(), str.size());
+  SHA256_Update(&sha256, str.data(), str.size());
 
   unsigned char hash[SHA256_DIGEST_LENGTH];
   SHA256_Final(hash, &sha256);
+  static_assert(std::numeric_limits<unsigned char>::digits <= 8,
+                "This code assumes `unsigned char` fits in a `std::uint8_t`.");
+  // Note that this constructor (from a range) converts the `unsigned char` to
+  // `std::uint8_t` if needed. That should work because of the static_assert(),
+  // though it is (I think) guaranteed by the standard.
   return {hash, hash + sizeof(hash)};
 }
 
-std::string HexEncode(std::vector<std::uint8_t> const& str) {
+std::string HexEncode(std::vector<std::uint8_t> const& bytes) {
   std::string result;
-  for (auto c : str) {
+  for (auto c : bytes) {
     char buf[16];
     std::snprintf(buf, sizeof(buf), "%02x", c);
     result += buf;
