@@ -106,12 +106,9 @@ foreach ($pkg in $packages) {
 Write-Host "================================================================"
 Write-Host "================================================================"
 .\vcpkg.exe list
-# TODO(coryan) - remove this after testing in the CI system.
-Get-ChildItem -Recurse -Path installed\x64-windows-static\include\gtest -File
-Get-ChildItem -Recurse -Path installed\x64-windows-static\include\gmock -File
-Write-Host "================================================================"
-Write-Host "================================================================"
 
+Write-Host "================================================================"
+Write-Host "================================================================"
 Write-Host "Create cache zip file."
 Get-Date -Format o
 cmd /c 7z a vcpkg-installed.zip installed\
@@ -120,12 +117,12 @@ if ($LastExitCode) {
     Write-Host "zip build cache failed with exit code $LastExitCode"
 }
 
-# DEBUG DO NOT MERGE
-# Write-Host "Upload cache zip file."
-# Get-Date -Format o
-# gsutil cp vcpkg-installed.zip gs://cloud-cpp-kokoro-results/build-artifacts/vcpkg-installed.zip
-# if ($LastExitCode) {
-#     # Ignore errors, caching failures should not break the build.
-#     Write-Host "gsutil upload failed with exit code $LastExitCode"
-# }
-# DEBUG DO NOT MERGE
+Write-Host "================================================================"
+Write-Host "================================================================"
+Write-Host "Upload cache zip file."
+Get-Date -Format o
+gsutil cp vcpkg-installed.zip gs://cloud-cpp-kokoro-results/build-artifacts/vcpkg-installed.zip
+if ($LastExitCode) {
+    # Ignore errors, caching failures should not break the build.
+    Write-Host "gsutil upload failed with exit code $LastExitCode"
+}
