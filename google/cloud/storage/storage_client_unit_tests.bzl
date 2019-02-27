@@ -42,7 +42,7 @@ storage_client_unit_tests = [
     "internal/curl_wrappers_locking_enabled_test.cc",
     "internal/curl_wrappers_locking_disabled_test.cc",
     "internal/default_object_acl_requests_test.cc",
-    "internal/format_rfc3339_test.cc",
+    "internal/format_time_point_test.cc",
     "internal/generate_message_boundary_test.cc",
     "internal/hash_validator_test.cc",
     "internal/http_response_test.cc",

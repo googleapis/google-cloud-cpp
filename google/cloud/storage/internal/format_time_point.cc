@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/format_rfc3339.h"
+#include "google/cloud/storage/internal/format_time_point.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <cctype>
 #include <cstdio>
