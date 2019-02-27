@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MUTATIONS_H_
 
 #include "google/cloud/bigtable/internal/conjunction.h"
+#include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
 #include <grpcpp/grpcpp.h>
@@ -310,6 +312,9 @@ class FailedMutation {
         status_(ToGrpcStatus(status)),
         original_index_(index) {}
 
+  FailedMutation(SingleRowMutation mut, google::cloud::Status status, int index)
+      : mutation_(std::move(mut)), gcstatus_(status), original_index_(index) {}
+
   FailedMutation(FailedMutation&&) = default;
   FailedMutation& operator=(FailedMutation&&) = default;
   FailedMutation(FailedMutation const&) = default;
@@ -319,6 +324,7 @@ class FailedMutation {
   /// @name accessors
   SingleRowMutation const& mutation() const { return mutation_; }
   grpc::Status const& status() const { return status_; }
+  google::cloud::Status const& gcstatus() const { return gcstatus_; }
   int original_index() const { return original_index_; }
   //@}
 
@@ -330,6 +336,8 @@ class FailedMutation {
  private:
   SingleRowMutation mutation_;
   grpc::Status status_;
+  google::cloud::Status gcstatus_;
+
   int original_index_;
 };
 
