@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/mock_sample_row_keys_reader.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 
 namespace bigtable = google::cloud::bigtable;
@@ -323,10 +324,9 @@ commit_row: true
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
-  EXPECT_EQ(it->row_key(), "r1");
+  ASSERT_STATUS_OK(*it);
+  EXPECT_EQ((*it)->row_key(), "r1");
   EXPECT_EQ(++it, reader.end());
-  status = reader.Finish();
-  EXPECT_TRUE(status.ok());
 }
 
 TEST_F(NoexTableTest, ReadRowsCanReadWithRetries) {
@@ -386,13 +386,13 @@ commit_row: true
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
-  EXPECT_EQ(it->row_key(), "r1");
+  ASSERT_STATUS_OK(*it);
+  EXPECT_EQ((*it)->row_key(), "r1");
   ++it;
   EXPECT_NE(it, reader.end());
-  EXPECT_EQ(it->row_key(), "r2");
+  ASSERT_STATUS_OK(*it);
+  EXPECT_EQ((*it)->row_key(), "r2");
   EXPECT_EQ(++it, reader.end());
-  status = reader.Finish();
-  EXPECT_TRUE(status.ok());
 }
 
 TEST_F(NoexTableTest, ReadRowsThrowsWhenTooManyErrors) {
@@ -415,9 +415,9 @@ TEST_F(NoexTableTest, ReadRowsThrowsWhenTooManyErrors) {
   auto reader =
       table.ReadRows(bigtable::RowSet(), bigtable::Filter::PassAllFilter());
 
-  reader.begin();
-  grpc::Status status = reader.Finish();
-  EXPECT_FALSE(status.ok());
+  auto it = reader.begin();
+  ASSERT_NE(reader.end(), it);
+  ASSERT_FALSE(*it);
 }
 
 /// @test Verify that Table::Apply() works in a simplest case.

@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/testing_util/assert_ok.h"
 
 namespace bigtable = google::cloud::bigtable;
 using testing::_;
@@ -55,7 +56,8 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
-  EXPECT_EQ(it->row_key(), "r1");
+  ASSERT_STATUS_OK(*it);
+  EXPECT_EQ((*it)->row_key(), "r1");
   EXPECT_EQ(++it, reader.end());
 }
 
@@ -109,10 +111,12 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
-  EXPECT_EQ(it->row_key(), "r1");
+  ASSERT_STATUS_OK(*it);
+  EXPECT_EQ((*it)->row_key(), "r1");
   ++it;
   EXPECT_NE(it, reader.end());
-  EXPECT_EQ(it->row_key(), "r2");
+  ASSERT_STATUS_OK(*it);
+  EXPECT_EQ((*it)->row_key(), "r2");
   EXPECT_EQ(++it, reader.end());
 }
 
@@ -135,6 +139,9 @@ TEST_F(TableReadRowsTest, ReadRowsThrowsWhenTooManyErrors) {
   auto reader =
       table.ReadRows(bigtable::RowSet(), bigtable::Filter::PassAllFilter());
 
-  // XXX: Fix once Status is propagated.
-  // EXPECT_THROW(reader.begin(), std::exception);
+  auto it = reader.begin();
+  ASSERT_NE(reader.end(), it);
+  ASSERT_FALSE(*it);
+  ++it;
+  ASSERT_EQ(reader.end(), it);
 }

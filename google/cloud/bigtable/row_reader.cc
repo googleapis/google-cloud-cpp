@@ -98,8 +98,7 @@ RowReader::RowReader(
 // The name must be all lowercase to work with range-for loops.
 // NOLINTNEXTLINE(readability-identifier-naming)
 RowReader::iterator RowReader::begin() {
-  // Increment the iterator to read a row.
-  return ++internal::RowReaderIterator(this, false);
+  return internal::RowReaderIterator(this, false);
 }
 
 // The name must be all lowercase to work with range-for loops.
@@ -160,13 +159,14 @@ StatusOr<internal::OptionalRow> RowReader::Advance() {
     if (status.ok()) {
       return std::move(row);
     }
+    row.reset();
 
     // In the unlikely case when we have already reached the requested
     // number of rows and still receive an error (the parser can throw
     // an error at end of stream for example), there is no need to
     // retry and we have no good value for rows_limit anyway.
     if (rows_limit_ != NO_ROWS_LIMIT && rows_limit_ <= rows_count_) {
-      return internal::MakeStatusFromRpcError(status);
+      return std::move(row);
     }
 
     if (!last_read_row_key_.empty()) {
@@ -177,7 +177,7 @@ StatusOr<internal::OptionalRow> RowReader::Advance() {
 
     // If we receive an error, but the retriable set is empty, stop.
     if (row_set_.IsEmpty()) {
-      return internal::MakeStatusFromRpcError(status);
+      return std::move(row);
     }
 
     if (!retry_policy_->OnFailure(status)) {
@@ -195,7 +195,9 @@ StatusOr<internal::OptionalRow> RowReader::Advance() {
 grpc::Status RowReader::AdvanceOrFail(internal::OptionalRow& row) {
   row.reset();
   grpc::Status status;
-  MakeRequest();
+  if (!stream_) {
+    MakeRequest();
+  }
   while (!parser_->HasNext()) {
     if (NextChunk()) {
       parser_->HandleChunk(
