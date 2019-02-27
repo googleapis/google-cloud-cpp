@@ -106,7 +106,7 @@ class InstanceAdmin {
    *   future contains an exception of type `bigtable::PollTimeout`.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc create instance
+   * @snippet bigtable_instance_admin_snippets.cc create instance
    */
   std::future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
       InstanceConfig instance_config);
@@ -120,7 +120,7 @@ class InstanceAdmin {
    *   created. It must be between 6 and 30 characters.
    *
    *  @par Example
-   *  @snippet bigtable_samples_instance_admin.cc create cluster
+   *  @snippet bigtable_instance_admin_snippets.cc create cluster
    */
   std::future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
       ClusterConfig cluster_config, bigtable::InstanceId const& instance_id,
@@ -143,7 +143,7 @@ class InstanceAdmin {
    *   future contains an exception of type `bigtable::PollTimeout`.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc update instance
+   * @snippet bigtable_instance_admin_snippets.cc update instance
    */
   std::future<StatusOr<google::bigtable::admin::v2::Instance>> UpdateInstance(
       InstanceUpdateConfig instance_update_config);
@@ -159,7 +159,7 @@ class InstanceAdmin {
    *   conditions have cleared.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc list instances
+   * @snippet bigtable_instance_admin_snippets.cc list instances
    */
   StatusOr<InstanceList> ListInstances();
 
@@ -190,7 +190,7 @@ class InstanceAdmin {
    * Return the details of @p instance_id.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc get instance
+   * @snippet bigtable_instance_admin_snippets.cc get instance
    */
   StatusOr<google::bigtable::admin::v2::Instance> GetInstance(
       std::string const& instance_id);
@@ -228,7 +228,7 @@ class InstanceAdmin {
    * deleted
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc delete instance
+   * @snippet bigtable_instance_admin_snippets.cc delete instance
    */
   Status DeleteInstance(std::string const& instance_id);
 
@@ -243,7 +243,7 @@ class InstanceAdmin {
    *   conditions have cleared.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc list clusters
+   * @snippet bigtable_instance_admin_snippets.cc list clusters
    */
   StatusOr<ClusterList> ListClusters();
 
@@ -258,7 +258,7 @@ class InstanceAdmin {
    *   conditions have cleared.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc list clusters
+   * @snippet bigtable_instance_admin_snippets.cc list clusters
    */
   StatusOr<ClusterList> ListClusters(std::string const& instance_id);
 
@@ -281,7 +281,7 @@ class InstanceAdmin {
    *     `projects/<project>/locations/<zone_id>` format.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc list clusters
+   * @snippet bigtable_instance_admin_snippets.cc list clusters
    */
   future<ClusterList> AsyncListClusters(CompletionQueue& cq);
 
@@ -305,7 +305,7 @@ class InstanceAdmin {
    *     `projects/<project>/locations/<zone_id>` format.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc list clusters
+   * @snippet bigtable_instance_admin_snippets.cc list clusters
    */
   future<ClusterList> AsyncListClusters(CompletionQueue& cq,
                                         std::string const& instance_id);
@@ -327,7 +327,7 @@ class InstanceAdmin {
    *   future contains an exception of type `bigtable::PollTimeout`.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc update cluster
+   * @snippet bigtable_instance_admin_snippets.cc update cluster
    */
   std::future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
       ClusterConfig cluster_config);
@@ -340,7 +340,7 @@ class InstanceAdmin {
    *   deleted
    *
    *  @par Example
-   *  @snippet bigtable_samples_instance_admin.cc delete cluster
+   *  @snippet bigtable_instance_admin_snippets.cc delete cluster
    */
   Status DeleteCluster(bigtable::InstanceId const& instance_id,
                        bigtable::ClusterId const& cluster_id);
@@ -354,7 +354,7 @@ class InstanceAdmin {
    * @return a Cluster for given instance_id and cluster_id.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc get cluster
+   * @snippet bigtable_instance_admin_snippets.cc get cluster
    */
   StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
       bigtable::InstanceId const& instance_id,
@@ -397,10 +397,10 @@ class InstanceAdmin {
    * @return The proto describing the new application profile.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc create app profile
+   * @snippet bigtable_instance_admin_snippets.cc create app profile
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc create app profile cluster
+   * @snippet bigtable_instance_admin_snippets.cc create app profile cluster
    */
   StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
       bigtable::InstanceId const& instance_id, AppProfileConfig config);
@@ -413,7 +413,7 @@ class InstanceAdmin {
    * @return The proto describing the application profile.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc get app profile
+   * @snippet bigtable_instance_admin_snippets.cc get app profile
    */
   StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
       bigtable::InstanceId const& instance_id,
@@ -428,13 +428,13 @@ class InstanceAdmin {
    * @return The proto describing the new application profile.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc update app profile description
+   * @snippet bigtable_instance_admin_snippets.cc update app profile description
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc update app profile routing any
+   * @snippet bigtable_instance_admin_snippets.cc update app profile routing any
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc update app profile routing
+   * @snippet bigtable_instance_admin_snippets.cc update app profile routing
    */
   std::future<StatusOr<google::bigtable::admin::v2::AppProfile>>
   UpdateAppProfile(bigtable::InstanceId instance_id,
@@ -448,7 +448,7 @@ class InstanceAdmin {
    * @return a std::vector with the protos describing any profiles.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc list app profiles
+   * @snippet bigtable_instance_admin_snippets.cc list app profiles
    */
   StatusOr<std::vector<google::bigtable::admin::v2::AppProfile>>
   ListAppProfiles(std::string const& instance_id);
@@ -462,7 +462,7 @@ class InstanceAdmin {
    *     application profile.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc delete app profile
+   * @snippet bigtable_instance_admin_snippets.cc delete app profile
    */
   Status DeleteAppProfile(bigtable::InstanceId const& instance_id,
                           bigtable::AppProfileId const& profile_id,
@@ -475,7 +475,7 @@ class InstanceAdmin {
    * @return Policy the full IAM policy for the instance.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc get iam policy
+   * @snippet bigtable_instance_admin_snippets.cc get iam policy
    */
   StatusOr<google::cloud::IamPolicy> GetIamPolicy(
       std::string const& instance_id);
@@ -493,7 +493,7 @@ class InstanceAdmin {
    * @return Policy the current IAM bindings for the instance.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc set iam policy
+   * @snippet bigtable_instance_admin_snippets.cc set iam policy
    */
   StatusOr<google::cloud::IamPolicy> SetIamPolicy(
       std::string const& instance_id,
@@ -507,7 +507,7 @@ class InstanceAdmin {
    * @param permissions set of permissions to check for the resource.
    *
    * @par Example
-   * @snippet bigtable_samples_instance_admin.cc test iam permissions
+   * @snippet bigtable_instance_admin_snippets.cc test iam permissions
    *
    * @see https://cloud.google.com/bigtable/docs/access-control for a list of
    *     valid permissions on Google Cloud Bigtable.

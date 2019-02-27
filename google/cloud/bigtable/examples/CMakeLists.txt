@@ -33,14 +33,14 @@ target_link_libraries(bigtable_quickstart bigtable_client
 add_executable(bigtable_samples bigtable_samples.cc)
 target_link_libraries(bigtable_samples bigtable_client bigtable_common_options)
 
+add_executable(bigtable_instance_admin_snippets
+               bigtable_instance_admin_snippets.cc)
+target_link_libraries(bigtable_instance_admin_snippets bigtable_client
+                      bigtable_common_options)
+
 add_executable(bigtable_samples_instance_admin
                bigtable_samples_instance_admin.cc)
 target_link_libraries(bigtable_samples_instance_admin bigtable_client
-                      bigtable_common_options)
-
-add_executable(bigtable_samples_instance_admin_ext
-               bigtable_samples_instance_admin_ext.cc)
-target_link_libraries(bigtable_samples_instance_admin_ext bigtable_client
                       bigtable_common_options)
 
 add_executable(instance_admin_async_snippets instance_admin_async_snippets.cc)

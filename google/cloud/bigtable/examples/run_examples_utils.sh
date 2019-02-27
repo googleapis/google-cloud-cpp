@@ -27,7 +27,7 @@ function cleanup_instance {
 
   echo
   echo "Cleaning up test instance projects/${project}/instances/${instance}"
-  ./bigtable_samples_instance_admin delete-instance "${project}" "${instance}"
+  ./bigtable_instance_admin_snippets delete-instance "${project}" "${instance}"
 }
 
 function exit_handler {
@@ -66,87 +66,87 @@ function run_all_instance_admin_examples {
   local -r DEV_INSTANCE="in-$(date +%s)-dev"
   local -r RUN_INSTANCE="in-$(date +%s)-run"
 
-  run_example ./bigtable_samples_instance_admin create-instance \
+  run_example ./bigtable_instance_admin_snippets create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"
-  run_example ./bigtable_samples_instance_admin list-instances \
+  run_example ./bigtable_instance_admin_snippets list-instances \
       "${project_id}"     
-  run_example ./bigtable_samples_instance_admin get-instance \
+  run_example ./bigtable_instance_admin_snippets get-instance \
       "${project_id}" "${INSTANCE}"
-  run_example ./bigtable_samples_instance_admin list-clusters \
+  run_example ./bigtable_instance_admin_snippets list-clusters \
       "${project_id}" "${INSTANCE}"
-  run_example ./bigtable_samples_instance_admin list-all-clusters \
+  run_example ./bigtable_instance_admin_snippets list-all-clusters \
       "${project_id}"
-  run_example ./bigtable_samples_instance_admin create-cluster \
+  run_example ./bigtable_instance_admin_snippets create-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${replication_zone_id}"
-  run_example ./bigtable_samples_instance_admin update-cluster \
+  run_example ./bigtable_instance_admin_snippets update-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
-  run_example ./bigtable_samples_instance_admin get-cluster \
+  run_example ./bigtable_instance_admin_snippets get-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
-  run_example ./bigtable_samples_instance_admin create-app-profile \
+  run_example ./bigtable_instance_admin_snippets create-app-profile \
       "${project_id}" "${INSTANCE}" "my-profile"
-  run_example ./bigtable_samples_instance_admin delete-app-profile \
+  run_example ./bigtable_instance_admin_snippets delete-app-profile \
       "${project_id}" "${INSTANCE}" "my-profile"
-  run_example ./bigtable_samples_instance_admin \
+  run_example ./bigtable_instance_admin_snippets \
       create-app-profile-cluster "${project_id}" "${INSTANCE}" "profile-c2" \
       "${INSTANCE}-c2"
-  run_example ./bigtable_samples_instance_admin list-app-profiles \
+  run_example ./bigtable_instance_admin_snippets list-app-profiles \
       "${project_id}" "${INSTANCE}"
-  run_example ./bigtable_samples_instance_admin get-app-profile \
+  run_example ./bigtable_instance_admin_snippets get-app-profile \
       "${project_id}" "${INSTANCE}" "profile-c2"
-  run_example ./bigtable_samples_instance_admin \
+  run_example ./bigtable_instance_admin_snippets \
        update-app-profile-description \
       "${project_id}" "${INSTANCE}" "profile-c2" "new-profile-description"
-  run_example ./bigtable_samples_instance_admin \
+  run_example ./bigtable_instance_admin_snippets \
        update-app-profile-routing-any \
       "${project_id}" "${INSTANCE}" "profile-c2"
-  run_example ./bigtable_samples_instance_admin \
+  run_example ./bigtable_instance_admin_snippets \
       update-app-profile-routing \
       "${project_id}" "${INSTANCE}" "profile-c2" "${INSTANCE}-c2"
-  run_example ./bigtable_samples_instance_admin delete-app-profile \
+  run_example ./bigtable_instance_admin_snippets delete-app-profile \
       "${project_id}" "${INSTANCE}" "profile-c2"
-  run_example ./bigtable_samples_instance_admin delete-cluster \
+  run_example ./bigtable_instance_admin_snippets delete-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
-  run_example ./bigtable_samples_instance_admin get-iam-policy \
+  run_example ./bigtable_instance_admin_snippets get-iam-policy \
       "${project_id}" "${INSTANCE}"
-  run_example ./bigtable_samples_instance_admin set-iam-policy \
+  run_example ./bigtable_instance_admin_snippets set-iam-policy \
       "${project_id}" "${INSTANCE}" "roles/bigtable.user" "nobody@example.com"
-  run_example ./bigtable_samples_instance_admin test-iam-permissions \
+  run_example ./bigtable_instance_admin_snippets test-iam-permissions \
       "${project_id}" "${INSTANCE}" "bigtable.instances.delete"
-  run_example ./bigtable_samples_instance_admin delete-instance \
+  run_example ./bigtable_instance_admin_snippets delete-instance \
       "${project_id}" "${INSTANCE}"
 
-  run_example ./bigtable_samples_instance_admin create-dev-instance \
+  run_example ./bigtable_instance_admin_snippets create-dev-instance \
       "${project_id}" "${DEV_INSTANCE}" "${zone_id}"
-  run_example ./bigtable_samples_instance_admin update-instance \
+  run_example ./bigtable_instance_admin_snippets update-instance \
       "${project_id}" "${DEV_INSTANCE}"
-  run_example ./bigtable_samples_instance_admin delete-instance \
+  run_example ./bigtable_instance_admin_snippets delete-instance \
       "${project_id}" "${DEV_INSTANCE}"
+
+  run_example ./bigtable_instance_admin_snippets run \
+      "${project_id}" "${RUN_INSTANCE}" "${RUN_INSTANCE}-c1" "${zone_id}"
 
   run_example ./bigtable_samples_instance_admin run \
       "${project_id}" "${RUN_INSTANCE}" "${RUN_INSTANCE}-c1" "${zone_id}"
 
-  run_example ./bigtable_samples_instance_admin_ext run \
-      "${project_id}" "${RUN_INSTANCE}" "${RUN_INSTANCE}-c1" "${zone_id}"
-
-  run_example ./bigtable_samples_instance_admin create-instance \
+  run_example ./bigtable_instance_admin_snippets create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"
-  run_example ./bigtable_samples_instance_admin_ext create-cluster \
+  run_example ./bigtable_samples_instance_admin create-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${replication_zone_id}"
-  run_example ./bigtable_samples_instance_admin_ext delete-cluster \
+  run_example ./bigtable_samples_instance_admin delete-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
-  run_example ./bigtable_samples_instance_admin_ext delete-instance \
+  run_example ./bigtable_samples_instance_admin delete-instance \
       "${project_id}" "${INSTANCE}"
 
-  run_example ./bigtable_samples_instance_admin_ext \
+  run_example ./bigtable_samples_instance_admin \
       create-dev-instance \
       "${project_id}" "${DEV_INSTANCE}" "${INSTANCE}-c1" "${zone_id}"
-  run_example ./bigtable_samples_instance_admin_ext delete-instance \
+  run_example ./bigtable_samples_instance_admin delete-instance \
       "${project_id}" "${DEV_INSTANCE}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
+  run_example_usage ./bigtable_instance_admin_snippets
   run_example_usage ./bigtable_samples_instance_admin
-  run_example_usage ./bigtable_samples_instance_admin_ext
 }
 
 # Run all the instance admin async examples.
@@ -171,7 +171,7 @@ function run_all_instance_admin_async_examples {
   # Create a (very likely unique) instance name.
   local -r INSTANCE="in-$(date +%s)"
 
-  run_example ./bigtable_samples_instance_admin create-instance \
+  run_example ./bigtable_instance_admin_snippets create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"
   run_example ./instance_admin_async_snippets async-get-instance \
       "${project_id}" "${INSTANCE}"
@@ -181,13 +181,13 @@ function run_all_instance_admin_async_examples {
       "${project_id}" "${INSTANCE}"
   run_example ./instance_admin_async_snippets async-list-all-clusters \
       "${project_id}"
-  run_example ./bigtable_samples_instance_admin create-cluster \
+  run_example ./bigtable_instance_admin_snippets create-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${replication_zone_id}"
   run_example ./instance_admin_async_snippets async-get-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
-  run_example ./bigtable_samples_instance_admin delete-cluster \
+  run_example ./bigtable_instance_admin_snippets delete-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
-  run_example ./bigtable_samples_instance_admin delete-instance \
+  run_example ./bigtable_instance_admin_snippets delete-instance \
       "${project_id}" "${INSTANCE}"
 
   # Verify that calling without a command produces the right exit status and

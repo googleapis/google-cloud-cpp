@@ -23,37 +23,37 @@ for the example on GitHub.
 
 The example uses the following headers:
 
-@snippet bigtable_samples_instance_admin.cc bigtable includes
+@snippet bigtable_instance_admin_snippets.cc bigtable includes
 
 ### Connect to the Cloud Bigtable instance admin endpoint.
 
-@snippet bigtable_samples_instance_admin.cc connect instance admin 
+@snippet bigtable_instance_admin_snippets.cc connect instance admin 
 
 ### Create a production instance and run basic instance-operations.
 
-@snippet bigtable_samples_instance_admin.cc run instance operations
+@snippet bigtable_instance_admin_snippets.cc run instance operations
 
 ### Create a Development Instance 
 
-@snippet bigtable_samples_instance_admin.cc create dev instance
+@snippet bigtable_instance_admin_snippets.cc create dev instance
 
 ### Delete an instance
 
-@snippet bigtable_samples_instance_admin.cc delete instance
+@snippet bigtable_instance_admin_snippets.cc delete instance
 
 ### Create an additional cluster on an existing instance
 
-@snippet bigtable_samples_instance_admin.cc create cluster
+@snippet bigtable_instance_admin_snippets.cc create cluster
 
 ### Delete a cluster
 
-@snippet bigtable_samples_instance_admin.cc delete cluster
+@snippet bigtable_instance_admin_snippets.cc delete cluster
 
 ### Put it all together
 
 Here is the full example
 
-@snippet bigtable_samples_instance_admin.cc all code
+@snippet bigtable_instance_admin_snippets.cc all code
 
 @see `bigtable::v0::InstanceAdmin` for additional operations to get, list, update,
 and delete instances.
