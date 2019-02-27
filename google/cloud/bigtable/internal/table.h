@@ -55,6 +55,8 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
   return InstanceName(std::move(client)) + "/tables/" + table_id;
 }
 
+class MutationBatcher;
+
 namespace internal {
 template <typename Request>
 void SetCommonTableOperationRequest(Request& request,
@@ -124,7 +126,6 @@ class UnwrapReadModifyWriteRowResponse {
  private:
   Functor callback_;
 };
-class MutationBatcher;
 
 }  // namespace internal
 
@@ -636,7 +637,7 @@ class Table {
 
  private:
   friend class NoexTableStreamingAsyncBulkApplyTest_SimpleTest_Test;
-  friend class internal::MutationBatcher;
+  friend class ::google::cloud::bigtable::MutationBatcher;
   /**
    * Make an asynchronous request to mutate a multiple rows and stream results.
    *
