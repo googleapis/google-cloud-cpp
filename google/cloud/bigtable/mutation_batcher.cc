@@ -72,7 +72,7 @@ std::pair<future<void>, future<Status>> MutationBatcher::AsyncApply(
 MutationBatcher::PendingSingleRowMutation::PendingSingleRowMutation(
     SingleRowMutation mut_arg, CompletionPromise&& completion_promise,
     AdmissionPromise&& admission_promise)
-    : mut(mut_arg),
+    : mut(std::move(mut_arg)),
       completion_promise(std::move(completion_promise)),
       admission_promise(std::move(admission_promise)) {
   ::google::bigtable::v2::MutateRowsRequest::Entry tmp;
