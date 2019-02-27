@@ -49,6 +49,10 @@ std::string SignUrlRequest::StringToSign() const {
     os << '/' << curl.MakeEscapedString(object_name()).get();
   }
   char const* sep = "?";
+  if (!sub_resource().empty()) {
+    os << sep << curl.MakeEscapedString(sub_resource()).get();
+    sep = "&";
+  }
   for (auto const& key_value : query_parameters_) {
     os << sep << key_value;
     sep = "&";

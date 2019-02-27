@@ -74,30 +74,6 @@ struct AddQueryParameterOption
   static std::string UrlEscape(std::string const& value);
 };
 
-inline AddQueryParameterOption WithAcl() {
-  return AddQueryParameterOption("acl");
-}
-
-inline AddQueryParameterOption WithBilling() {
-  return AddQueryParameterOption("billing");
-}
-
-inline AddQueryParameterOption WithCompose() {
-  return AddQueryParameterOption("compose");
-}
-
-inline AddQueryParameterOption WithCors() {
-  return AddQueryParameterOption("cors");
-}
-
-inline AddQueryParameterOption WithEncryption() {
-  return AddQueryParameterOption("encryption");
-}
-
-inline AddQueryParameterOption WithEncryptionConfig() {
-  return AddQueryParameterOption("encryptionConfig");
-}
-
 inline AddQueryParameterOption WithGeneration(std::uint64_t generation) {
   return AddQueryParameterOption(
       "generation=" +
@@ -110,16 +86,10 @@ inline AddQueryParameterOption WithGenerationMarker(std::uint64_t generation) {
       AddQueryParameterOption::UrlEscape(std::to_string(generation)));
 }
 
-inline AddQueryParameterOption WithLifecycle() {
-  return AddQueryParameterOption("lifecycle");
-}
-
-inline AddQueryParameterOption WithLocation() {
-  return AddQueryParameterOption("location");
-}
-
-inline AddQueryParameterOption WithLogging() {
-  return AddQueryParameterOption("logging");
+inline AddQueryParameterOption WithUserProject(
+    std::string const& user_project) {
+  return AddQueryParameterOption(
+      "userProject=" + AddQueryParameterOption::UrlEscape(user_project));
 }
 
 inline AddQueryParameterOption WithMarker(std::string const& marker) {
@@ -140,19 +110,46 @@ inline AddQueryParameterOption WithResponseContentType(
                                  AddQueryParameterOption::UrlEscape(type));
 }
 
-inline AddQueryParameterOption WithStorageClass() {
-  return AddQueryParameterOption("storageClass");
+/**
+ * Specify a sub-resource in a signed URL.
+ */
+struct SubResourceOption
+    : public internal::ComplexOption<SubResourceOption, std::string> {
+  using ComplexOption<SubResourceOption, std::string>::ComplexOption;
+  static char const* name() { return "query-parameter"; }
+};
+
+inline SubResourceOption WithAcl() { return SubResourceOption("acl"); }
+
+inline SubResourceOption WithBilling() { return SubResourceOption("billing"); }
+
+inline SubResourceOption WithCompose() { return SubResourceOption("compose"); }
+
+inline SubResourceOption WithCors() { return SubResourceOption("cors"); }
+
+inline SubResourceOption WithEncryption() {
+  return SubResourceOption("encryption");
 }
 
-inline AddQueryParameterOption WithTagging() {
-  return AddQueryParameterOption("tagging");
+inline SubResourceOption WithEncryptionConfig() {
+  return SubResourceOption("encryptionConfig");
 }
 
-inline AddQueryParameterOption WithUserProject(
-    std::string const& user_project) {
-  return AddQueryParameterOption(
-      "userProject=" + AddQueryParameterOption::UrlEscape(user_project));
+inline SubResourceOption WithLifecycle() {
+  return SubResourceOption("lifecycle");
 }
+
+inline SubResourceOption WithLocation() {
+  return SubResourceOption("location");
+}
+
+inline SubResourceOption WithLogging() { return SubResourceOption("logging"); }
+
+inline SubResourceOption WithStorageClass() {
+  return SubResourceOption("storageClass");
+}
+
+inline SubResourceOption WithTagging() { return SubResourceOption("tagging"); }
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
