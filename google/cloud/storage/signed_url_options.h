@@ -136,6 +136,26 @@ inline SubResourceOption WithStorageClass() {
 
 inline SubResourceOption WithTagging() { return SubResourceOption("tagging"); }
 
+/**
+ * Define the timestamp duration for a V4 signed URL.
+ */
+struct SignedUrlTimestamp
+    : public internal::ComplexOption<SignedUrlTimestamp,
+                                     std::chrono::system_clock::time_point> {
+  using ComplexOption<SignedUrlTimestamp,
+                      std::chrono::system_clock::time_point>::ComplexOption;
+  static char const* name() { return "x-good-date"; }
+};
+
+/**
+ * Define the duration for a V4 signed URL.
+ */
+struct SignedUrlDuration
+    : public internal::ComplexOption<SignedUrlDuration, std::chrono::seconds> {
+  using ComplexOption<SignedUrlDuration, std::chrono::seconds>::ComplexOption;
+  static char const* name() { return "x-goog-expires"; }
+};
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

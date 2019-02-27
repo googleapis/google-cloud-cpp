@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/internal/curl_handle.h"
+#include "google/cloud/storage/internal/format_time_point.h"
+#include "google/cloud/storage/internal/sha256_hash.h"
 #include <algorithm>
 #include <cctype>
 #include <sstream>
@@ -78,6 +80,127 @@ std::string V2SignUrlRequest::StringToSign() const {
 
 std::ostream& operator<<(std::ostream& os, V2SignUrlRequest const& r) {
   return os << "SingUrlRequest={" << r.StringToSign() << "}";
+}
+
+namespace {
+std::string QueryStringFromParameters(
+    CurlHandle& curl,
+    std::multimap<std::string, std::string> const& parameters) {
+  std::string result;
+  char const* sep = "";
+  for (auto const& qp : parameters) {
+    result += sep;
+    result += curl.MakeEscapedString(qp.first).get();
+    result += '=';
+    result += curl.MakeEscapedString(qp.second).get();
+    sep = "&";
+  }
+  return result;
+}
+
+std::string TrimHeaderValue(std::string const& value) {
+  std::string tmp = value;
+  tmp.erase(0, tmp.find_first_not_of(' '));
+  tmp = tmp.substr(0, tmp.find_last_not_of(' ') + 1);
+  auto end = std::unique(tmp.begin(), tmp.end(), [](char a, char b) {
+    if (a != b) {
+      return false;
+    }
+    return a == ' ';
+  });
+  tmp.erase(end, tmp.end());
+  return tmp;
+}
+}  // namespace
+
+std::string V4SignUrlRequest::CanonicalQueryString(
+    std::string const& client_id) const {
+  CurlHandle curl;
+  auto parameters = CanonicalQueryParameters(client_id);
+  return QueryStringFromParameters(curl, parameters);
+}
+
+std::string V4SignUrlRequest::CanonicalRequest(
+    std::string const& client_id) const {
+  std::ostringstream os;
+
+  os << verb() << "\n";
+  CurlHandle curl;
+  os << '/' << bucket_name();
+  if (!object_name().empty()) {
+    os << '/' << curl.MakeEscapedString(object_name()).get();
+  }
+  if (!sub_resource().empty()) {
+    os << '?' << curl.MakeEscapedString(sub_resource()).get();
+  }
+  os << "\n";
+
+  // Query parameters.
+  auto parameters = common_request_.query_parameters();
+  auto canonical_parameters = CanonicalQueryParameters(client_id);
+  // No .merge() until C++17, blegh.
+  parameters.insert(canonical_parameters.begin(), canonical_parameters.end());
+  os << QueryStringFromParameters(curl, parameters) << "\n";
+
+  // Headers
+  char const* sep = "";
+  for (auto&& kv : common_request_.extension_headers()) {
+    os << sep << kv.first << ":" << TrimHeaderValue(kv.second);
+    sep = "\n";
+  }
+  os << "\n" << SignedHeaders() << "\nUNSIGNED-PAYLOAD";
+
+  return std::move(os).str();
+}
+
+std::string V4SignUrlRequest::StringToSign(std::string const& client_id) const {
+  return "GOOG4-RSA-SHA256\n" + FormatV4SignedUrlTimestamp(timestamp_) + "\n" +
+         Scope() + "\n" + CanonicalRequestHash(client_id);
+}
+
+std::chrono::system_clock::time_point V4SignUrlRequest::DefaultTimestamp() {
+  return std::chrono::system_clock::now();
+}
+
+std::chrono::seconds V4SignUrlRequest::DefaultExpires() {
+  return std::chrono::seconds(7 * std::chrono::hours(24));
+}
+
+std::string V4SignUrlRequest::CanonicalRequestHash(
+    std::string const& client_id) const {
+  return HexEncode(Sha256Hash(CanonicalRequest(client_id)));
+}
+
+std::string V4SignUrlRequest::Scope() const {
+  return FormatV4SignedUrlScope(timestamp_) + "/auto/storage/goog4_request";
+}
+
+std::multimap<std::string, std::string>
+V4SignUrlRequest::CanonicalQueryParameters(std::string const& client_id) const {
+  return {
+      {"X-Goog-Algorithm", "GOOG4-RSA-SHA256"},
+      {"X-Goog-Credential", client_id + "/" + Scope()},
+      {"X-Goog-Date", FormatV4SignedUrlTimestamp(timestamp_)},
+      {"X-Goog-Expires", std::to_string(expires_.count())},
+      {"X-Goog-SignedHeaders", SignedHeaders()},
+  };
+}
+
+std::string V4SignUrlRequest::SignedHeaders() const {
+  std::string result;
+  char const* sep = "";
+  for (auto&& kv : common_request_.extension_headers()) {
+    result += sep;
+    result += kv.first;
+    sep = ";";
+  }
+  return result;
+}
+
+std::ostream& operator<<(std::ostream& os, V4SignUrlRequest const& r) {
+  return os << "V4SignUrlRequest={"
+            << r.CanonicalRequest("placeholder-client-id") << ","
+            << r.StringToSign("placeholder-client-id") << "}";
 }
 
 }  // namespace internal
