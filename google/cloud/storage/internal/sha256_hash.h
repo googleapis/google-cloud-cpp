@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_SHA256_HASH_H_
 
 #include "google/cloud/storage/version.h"
+#include <cstdint>
 #include <string>
 #include <vector>
 
