@@ -37,13 +37,17 @@ inline namespace BIGTABLE_CLIENT_NS {
  *
  * In order to maximize throughput when applying a lot of mutations to Cloud
  * Bigtable, one should pack the mutations in BulkMutations. This class helps
- * in doing so. Instead of operating on stateless `Table` object, one should
- * create a `MutationBatcher` and use its `AsyncApply` member function instead
- * of `Table::AsyncApply`. It has large internal buffers to accumulate the
- * `SingleRowMutations` into batches.
+ * in doing so. Create a `MutationBatcher` and use its `AsyncApply` member
+ * function to apply a large stream of mutations to the same `Table`. Objects
+ * of this class will efficiently create batches of `SingleRowMutations` and
+ * maintain multiple batches "in flight".
  *
- * Objects of this class also signal back-pressure to their users in case the
- * buffers fill up. This way, a simple flow control can be achieved.
+ * This class also offers an easy-to-use flow control mechanism to avoid
+ * unbounded growth in its internal buffers.
+ *
+ * Applications provide a CompletionQueue to (asynchronously) execute these
+ * operations. The application is responsible of executing the CompletionQueue
+ * event loop in one or more threads.
  */
 class MutationBatcher {
  public:
@@ -108,12 +112,11 @@ class MutationBatcher {
    * The *completion* future will report the mutation's status once it
    * completes.
    *
-   * The admission future should be used for flow control. In order to bound the
-   * memory usage used by `MutationBatcher`, one should not submit more
-   * mutations before the admission future is satisfied. Put another way, this
-   * future will be satisfied when the mutation is admitted to
-   * `MutationBatcher`'s internal buffers. In most cases this future will be
-   * already satisfied at this function's completion.
+   * The *admission* future should be used for flow control. In order to bound
+   * the memory usage used by `MutationBatcher`, one should not submit more
+   * mutations before the *admission* future is satisfied. Note that while the
+   * future is often already satisfied when the function returns, applications
+   * should not assume that this is always the case.
    *
    * One should not make assumptions on which future will be satisfied first.
    *
@@ -152,8 +155,8 @@ class MutationBatcher {
    */
   struct PendingSingleRowMutation {
     PendingSingleRowMutation(SingleRowMutation mut_arg,
-                             CompletionPromise&& completion_promise,
-                             AdmissionPromise&& admission_promise);
+                             CompletionPromise completion_promise,
+                             AdmissionPromise admission_promise);
 
     SingleRowMutation mut;
     size_t num_mutations;
