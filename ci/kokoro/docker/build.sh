@@ -31,13 +31,13 @@ elif [[ "${BUILD_NAME}" = "asan" ]]; then
   export CXX=clang++
   export CMAKE_FLAGS="-DSANITIZE_ADDRESS=yes"
 elif [[ "${BUILD_NAME}" = "centos-7" ]]; then
- # Compile under centos:7. This distro uses gcc-4.8.
- export DISTRO=centos
- export DISTRO_VERSION=7
+  # Compile under centos:7. This distro uses gcc-4.8.
+  export DISTRO=centos
+  export DISTRO_VERSION=7
 elif [[ "${BUILD_NAME}" = "noex" ]]; then
- # Compile with -fno-exceptions
- export DISTRO_VERSION=16.04
- export CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=no"
+  # Compile with -fno-exceptions
+  export DISTRO_VERSION=16.04
+  export CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=no"
 elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
   # Compile with the UndefinedBehaviorSanitizer enabled.
   export BUILD_TYPE=Debug
@@ -93,6 +93,10 @@ echo "Updating submodules."
 cd "${PROJECT_ROOT}"
 git submodule update --init
 echo "================================================================"
+
+echo "================================================================"
+export NCPU=$(nproc)
+echo "Building with ${NCPU} cores."
 
 echo "================================================================"
 echo "Creating Docker image with all the development tools."
