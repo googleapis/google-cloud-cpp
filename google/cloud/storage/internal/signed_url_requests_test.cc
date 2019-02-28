@@ -134,6 +134,56 @@ TEST(SignedUrlRequests, SubResourceMultiple) {
   EXPECT_EQ(expected_blob, request.StringToSign());
 }
 
+TEST(SignedUrlRequests, RepeatedHeader) {
+  SignUrlRequest request("PUT", "test-bucket", "test-object");
+  EXPECT_EQ("PUT", request.verb());
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ("test-object", request.object_name());
+
+  request.set_multiple_options(
+      WithTagging(), ExpirationTime(ParseRfc3339("2019-02-26T13:14:15Z")),
+      AddExtensionHeader("X-Goog-Meta-Reviewer", "test-meta-1"),
+      AddExtensionHeader("x-goog-meta-reviewer", "not-encoded- -?-+-/-:-&-"));
+
+  EXPECT_EQ("tagging", request.sub_resource());
+
+  // The magic seconds where found using:
+  //     date +%s -u --date=2019-02-26T13:14:15Z
+  //
+  std::string expected_blob = R"""(PUT
+
+
+1551186855
+x-goog-meta-reviewer:test-meta-1,not-encoded- -?-+-/-:-&-
+/test-bucket/test-object?tagging)""";
+
+  EXPECT_EQ(expected_blob, request.StringToSign());
+}
+
+TEST(SignedUrlRequests, EncodeQueryParameter) {
+  SignUrlRequest request("GET", "test-bucket", "test-object.txt");
+  EXPECT_EQ("GET", request.verb());
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ("test-object.txt", request.object_name());
+
+  request.set_multiple_options(
+      ExpirationTime(ParseRfc3339("2019-02-26T13:14:15Z")),
+      WithResponseContentType("text/html"));
+
+  EXPECT_EQ("", request.sub_resource());
+
+  // The magic seconds where found using:
+  //     date +%s -u --date=2019-02-26T13:14:15Z
+  //
+  std::string expected_blob = R"""(GET
+
+
+1551186855
+/test-bucket/test-object.txt?response-content-type=text%2Fhtml)""";
+
+  EXPECT_EQ(expected_blob, request.StringToSign());
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
