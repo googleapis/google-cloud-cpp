@@ -128,7 +128,7 @@ deploy:
   on:
       all_branches: true
       # Only deploy for master and release branches.
-      condition: $GENERATE_DOCS == "yes" || $TRAVIS_BRANCH =~ ^master|v[0-9]\.*$
+      condition: $TRAVIS_COMMIT_MESSAGE =~ \[generate-docs\] || $TRAVIS_BRANCH =~ ^master|v[0-9]\.*$
 
 notifications:
   email: false
