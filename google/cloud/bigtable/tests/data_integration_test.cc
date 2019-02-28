@@ -299,23 +299,17 @@ TEST_F(DataIntegrationTest, TableReadRowsNoRows) {
 TEST_F(DataIntegrationTest, TableReadRowsWrongTable) {
   std::string const table_id = RandomTableId();
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   bigtable::Table table(data_client_, table_id);
-#else
-  bigtable::noex::Table table(data_client_, table_id);
-#endif
 
   auto read1 =
       table.ReadRows(bigtable::RowSet(bigtable::RowRange::InfiniteRange()),
                      bigtable::Filter::PassAllFilter());
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(read1.begin(), std::runtime_error);
-#else
-  EXPECT_EQ(read1.begin(), read1.end());
-  grpc::Status status1 = read1.Finish();
-  EXPECT_FALSE(status1.ok());
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto it = read1.begin();
+  ASSERT_NE(read1.end(), it);
+  EXPECT_FALSE(*it);
+  ++it;
+  EXPECT_EQ(read1.end(), it);
 }
 
 TEST_F(DataIntegrationTest, TableCheckAndMutateRowPass) {
