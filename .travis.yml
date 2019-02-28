@@ -82,6 +82,7 @@ matrix:
 
 script:
   - ci/travis/build-linux.sh
+  - ci/travis/upload-docs.sh
 
 # We do not need to recursively extract the submodules. This saves some time in
 # the builds, the default install step then performs a lighter weight module
@@ -97,7 +98,6 @@ install:
 
 after_success:
   - ci/travis/upload-codecov.sh
-  - ci/travis/upload-docs.sh
   - ci/travis/dump-logs.sh
 
 after_failure:
@@ -115,6 +115,20 @@ before_cache:
   # Do not save the Bazel installation, reinstall each time, it fails to install
   # if the installation is in the cache.
   - rm -fr ${HOME}/.cache/bazel/_bazel_${USER}/install
+
+# Note: deployment is always skipped for pull requests.
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GH_TOKEN
+  keep-history: true
+  email: "google-cloud-cpp-bot@users.noreply.github.com"
+  name: "Google Cloud C++ Project Robot"
+  local-dir: docs-output
+  on:
+      all_branches: true
+      # Only deploy for master and release branches.
+      condition: "${GENERATE_DOCS:-}" == "yes" || $TRAVIS_BRANCH =~ ^master|v[0-9]\.*$
 
 notifications:
   email: false

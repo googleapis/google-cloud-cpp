@@ -21,16 +21,6 @@ if [[ -z "${PROJECT_ROOT+x}" ]]; then
 fi
 source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 
-if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then
-  echo "Skipping document generation as it is disabled for pull requests."
-  exit 0
-fi
-
-if [ "${GENERATE_DOCS:-}" != "yes" ]; then
-  echo "Skipping document generation as it is disabled for this build."
-  exit 0
-fi
-
 subdir=""
 case "${TRAVIS_BRANCH:-}" in
     master)
@@ -39,15 +29,7 @@ case "${TRAVIS_BRANCH:-}" in
     v[0-9]\.*)
       subdir=$(echo "${TRAVIS_BRANCH:-}" | sed -r -e 's/^v//' -e 's/^([0-9]+).([0-9]+).x/\1.\2.0/')
       ;;
-    *)
-      echo "Skipping document generation as it is only used in master and release branches."
-      exit 0
-      ;;
 esac
-
-# The usual way to host documentation in ${GIT_NAME}.github.io/${PROJECT_NAME}
-# is to create a branch (gh-pages) and post the documentation in that branch.
-# We first do some general git configuration:
 
 # Clone the gh-pages branch into a staging directory.
 readonly REPO_URL=$(git config remote.origin.url)
@@ -61,48 +43,24 @@ else
   git clone -b gh-pages "${REPO_URL}" github-io-staging
 fi
 
-# Remove any previous content in the subdirectory used for this release. We will
-# recover any unmodified files in a second.
+output="${PROJECT_ROOT}/docs-output"
+
+# Copy the build results.
+mkdir -p "${output}" || echo "${output} already exists"
+cp -r "${BUILD_OUTPUT}/google/cloud/bigtable/html/." "${output}/bigtable"
+cp -r "${BUILD_OUTPUT}/google/cloud/html/." "${output}/common"
+cp -r "${BUILD_OUTPUT}/google/cloud/firestore/html/." "${output}/firestore"
+cp -r "${BUILD_OUTPUT}/google/cloud/storage/html/." "${output}/storage"
+
 cd github-io-staging
-git rm -qfr --ignore-unmatch ${subdir}/google/cloud/bigtable
-git rm -qfr --ignore-unmatch ${subdir}/google/cloud/common
-git rm -qfr --ignore-unmatch ${subdir}/google/cloud/firestore
-git rm -qfr --ignore-unmatch ${subdir}/google/cloud/storage
-
-# Copy the build results into the gh-pages clone.
-mkdir -p "${subdir}" || echo "${subdir} already exists"
-cp -r "../${BUILD_OUTPUT}/google/cloud/bigtable/html/." "${subdir}/bigtable"
-cp -r "../${BUILD_OUTPUT}/google/cloud/html/." "${subdir}/common"
-cp -r "../${BUILD_OUTPUT}/google/cloud/firestore/html/." "${subdir}/firestore"
-cp -r "../${BUILD_OUTPUT}/google/cloud/storage/html/." "${subdir}/storage"
 if [ "${subdir}" != "latest" ]; then
-  cp -r latest/css "${subdir}"
-  cp -r latest/img "${subdir}"
-  cp -r latest/js "${subdir}"
+  cp -r latest/css "${output}"
+  cp -r latest/img "${output}"
+  cp -r latest/js "${output}"
 fi
-cp -r ../doc/landing/index.html "${subdir}"
-
-git config user.name "Google Cloud C++ Project Robot"
-git config user.email "google-cloud-cpp-bot@users.noreply.github.com"
-git add --all ${subdir}
+cp -r doc/landing/index.html "${output}"
 
 if git diff --quiet HEAD; then
   echo "Skipping documentation upload as there are no differences to upload."
   exit 0
 fi
-
-git commit -q -m"Automatically generated documentation"
-
-if [ "${REPO_URL:0:8}" != "https://" ]; then
-  echo "Repository is not in https:// format, attempting push to ${REPO_URL}"
-  git push
-  exit 0
-fi
-
-if [ -z "${GH_TOKEN:-}" ]; then
-  echo "Skipping documentation upload as GH_TOKEN is not configured."
-  exit 0
-fi
-
-readonly REPO_REF=${REPO_URL/https:\/\/}
-git push https://${GH_TOKEN}@${REPO_REF} gh-pages
