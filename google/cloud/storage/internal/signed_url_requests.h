@@ -41,8 +41,13 @@ class SignUrlRequestCommon {
   std::string const& bucket_name() const { return bucket_name_; }
   std::string const& object_name() const { return object_name_; }
   std::string const& sub_resource() const { return sub_resource_; }
+  std::map<std::string, std::string> const& extension_headers() const {
+    return extension_headers_;
+  }
+  std::multimap<std::string, std::string> const& query_parameters() const {
+    return query_parameters_;
+  }
 
- protected:
   void SetOption(SubResourceOption const& o) {
     if (!o.has_value()) {
       return;
@@ -59,6 +64,7 @@ class SignUrlRequestCommon {
     query_parameters_.insert(o.value());
   }
 
+ private:
   std::string verb_;
   std::string bucket_name_;
   std::string object_name_;
@@ -70,19 +76,25 @@ class SignUrlRequestCommon {
 /**
  * Requests the Google Cloud Storage service account for a project.
  */
-class SignUrlRequest : private SignUrlRequestCommon {
+class SignUrlRequest {
  public:
   SignUrlRequest() = default;
   explicit SignUrlRequest(std::string verb, std::string bucket_name,
                           std::string object_name)
-      : SignUrlRequestCommon(std::move(verb), std::move(bucket_name),
-                             std::move(object_name)),
+      : common_request_(std::move(verb), std::move(bucket_name),
+                        std::move(object_name)),
         expiration_time_(DefaultExpirationTime()) {}
 
-  using SignUrlRequestCommon::bucket_name;
-  using SignUrlRequestCommon::object_name;
-  using SignUrlRequestCommon::sub_resource;
-  using SignUrlRequestCommon::verb;
+  std::string const& verb() const { return common_request_.verb(); }
+  std::string const& bucket_name() const {
+    return common_request_.bucket_name();
+  }
+  std::string const& object_name() const {
+    return common_request_.object_name();
+  }
+  std::string const& sub_resource() const {
+    return common_request_.sub_resource();
+  }
 
   std::chrono::seconds expiration_time_as_seconds() const {
     return std::chrono::duration_cast<std::chrono::seconds>(
@@ -124,8 +136,19 @@ class SignUrlRequest : private SignUrlRequestCommon {
     expiration_time_ = o.value();
   }
 
-  using SignUrlRequestCommon::SetOption;
+  void SetOption(SubResourceOption const& o) {
+    common_request_.SetOption(o);
+  }
 
+  void SetOption(AddExtensionHeaderOption const& o) {
+    common_request_.SetOption(o);
+  }
+
+  void SetOption(AddQueryParameterOption const& o) {
+    common_request_.SetOption(o);
+  }
+
+  SignUrlRequestCommon common_request_;
   std::string md5_hash_value_;
   std::string content_type_;
   std::chrono::system_clock::time_point expiration_time_;

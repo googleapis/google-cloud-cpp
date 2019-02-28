@@ -52,7 +52,7 @@ std::string SignUrlRequest::StringToSign() const {
      << content_type_ << "\n"
      << expiration_time_as_seconds().count() << "\n";
 
-  for (auto const& kv : extension_headers_) {
+  for (auto const& kv : common_request_.extension_headers()) {
     os << kv.first << ":" << kv.second << "\n";
   }
 
@@ -66,7 +66,7 @@ std::string SignUrlRequest::StringToSign() const {
     os << sep << curl.MakeEscapedString(sub_resource()).get();
     sep = "&";
   }
-  for (auto const& kv : query_parameters_) {
+  for (auto const& kv : common_request_.query_parameters()) {
     os << sep << curl.MakeEscapedString(kv.first).get() << "="
        << curl.MakeEscapedString(kv.second).get();
     sep = "&";
