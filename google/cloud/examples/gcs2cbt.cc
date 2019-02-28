@@ -140,7 +140,7 @@ int main(int argc, char* argv[]) try {
   std::cout << "Starting " << thread_pool_size << " workers ..." << std::flush;
   google::cloud::bigtable::CompletionQueue cq;
   std::vector<std::thread> thread_pool;
-  for (int i = 0; i < static_cast<int>(thread_pool_size); ++i) {
+  for (size_t i = 0; i < thread_pool_size; ++i) {
     thread_pool.emplace_back([&cq] { cq.Run(); });
   }
   std::cout << " DONE\n";
