@@ -17,7 +17,6 @@
 
 #include "google/cloud/storage/internal/complex_option.h"
 #include <algorithm>
-#include <cctype>
 #include <chrono>
 #include <string>
 
@@ -44,70 +43,57 @@ struct AddExtensionHeaderOption
                                      std::pair<std::string, std::string>> {
   using ComplexOption<AddExtensionHeaderOption,
                       std::pair<std::string, std::string>>::ComplexOption;
+  AddExtensionHeaderOption(std::string header, std::string value)
+      : ComplexOption(std::make_pair(std::move(header), std::move(value))) {}
   static char const* name() { return "expiration_time"; }
 };
 
 inline AddExtensionHeaderOption AddExtensionHeader(std::string header,
                                                    std::string value) {
-  std::transform(
-      header.begin(), header.end(), header.begin(),
-      [](char c) -> char { return static_cast<char>(std::tolower(c)); });
-  return AddExtensionHeaderOption(
-      std::make_pair(std::move(header), std::move(value)));
+  return AddExtensionHeaderOption(std::move(header), std::move(value));
 }
 
 /**
  * Add a extension header to a signed URL.
  */
 struct AddQueryParameterOption
-    : public internal::ComplexOption<AddQueryParameterOption, std::string> {
-  using ComplexOption<AddQueryParameterOption, std::string>::ComplexOption;
+    : public internal::ComplexOption<AddQueryParameterOption,
+                                     std::pair<std::string, std::string>> {
+  using ComplexOption<AddQueryParameterOption,
+                      std::pair<std::string, std::string>>::ComplexOption;
+  AddQueryParameterOption(std::string key, std::string value)
+      : ComplexOption(std::make_pair(std::move(key), std::move(value))) {}
+  AddQueryParameterOption(char const* key, std::string value)
+      : ComplexOption(std::make_pair(std::string(key), std::move(value))) {}
   static char const* name() { return "query-parameter"; }
-
-  /**
-   * Escapes a string using URL encoding.
-   *
-   * This function acts as a compilation barrier because including
-   * internal/curl_wrappers.h in this header would expose that header (and the
-   * headers it depends on) in the public interface, and we want to avoid that.
-   */
-  static std::string UrlEscape(std::string const& value);
 };
 
 inline AddQueryParameterOption WithGeneration(std::uint64_t generation) {
-  return AddQueryParameterOption(
-      "generation=" +
-      AddQueryParameterOption::UrlEscape(std::to_string(generation)));
+  return AddQueryParameterOption("generation", std::to_string(generation));
 }
 
 inline AddQueryParameterOption WithGenerationMarker(std::uint64_t generation) {
-  return AddQueryParameterOption(
-      "generation-marker=" +
-      AddQueryParameterOption::UrlEscape(std::to_string(generation)));
+  return AddQueryParameterOption("generation-marker",
+                                 std::to_string(generation));
 }
 
-inline AddQueryParameterOption WithUserProject(
-    std::string const& user_project) {
-  return AddQueryParameterOption(
-      "userProject=" + AddQueryParameterOption::UrlEscape(user_project));
+inline AddQueryParameterOption WithUserProject(std::string user_project) {
+  return AddQueryParameterOption("userProject", std::move(user_project));
 }
 
-inline AddQueryParameterOption WithMarker(std::string const& marker) {
-  return AddQueryParameterOption("marker=" +
-                                 AddQueryParameterOption::UrlEscape(marker));
+inline AddQueryParameterOption WithMarker(std::string marker) {
+  return AddQueryParameterOption("marker", std::move(marker));
 }
 
 inline AddQueryParameterOption WithResponseContentDisposition(
-    std::string const& disposition) {
-  return AddQueryParameterOption(
-      "response-content-disposition=" +
-      AddQueryParameterOption::UrlEscape(disposition));
+    std::string disposition) {
+  return AddQueryParameterOption("response-content-disposition",
+                                 std::move(disposition));
 }
 
 inline AddQueryParameterOption WithResponseContentType(
     std::string const& type) {
-  return AddQueryParameterOption("response-content-type=" +
-                                 AddQueryParameterOption::UrlEscape(type));
+  return AddQueryParameterOption("response-content-type", type);
 }
 
 /**

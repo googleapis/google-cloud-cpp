@@ -53,12 +53,29 @@ std::string SignUrlRequest::StringToSign() const {
     os << sep << curl.MakeEscapedString(sub_resource()).get();
     sep = "&";
   }
-  for (auto const& key_value : query_parameters_) {
-    os << sep << key_value;
+  for (auto const& kv : query_parameters_) {
+    os << sep << curl.MakeEscapedString(kv.first).get() << "="
+       << curl.MakeEscapedString(kv.second).get();
     sep = "&";
   }
 
   return std::move(os).str();
+}
+
+void SignUrlRequest::SetOption(AddExtensionHeaderOption const& o) {
+  if (!o.has_value()) {
+    return;
+  }
+  auto kv = o.value();
+  // Normalize the header, they are not case sensitive.
+  std::transform(kv.first.begin(), kv.first.end(), kv.first.begin(),
+                 [](unsigned char c) { return std::tolower(c); });
+  auto res = extension_headers_.insert(kv);
+  if (!res.second) {
+    // The element already exists, we need to append:
+    res.first->second.push_back(',');
+    res.first->second.append(o.value().second);
+  }
 }
 
 std::ostream& operator<<(std::ostream& os, SignUrlRequest const& r) {

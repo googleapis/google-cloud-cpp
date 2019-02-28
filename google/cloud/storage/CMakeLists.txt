@@ -205,7 +205,6 @@ add_library(storage_client
             service_account.h
             service_account.cc
             signed_url_options.h
-            signed_url_options.cc
             storage_class.h
             upload_options.h
             version.h

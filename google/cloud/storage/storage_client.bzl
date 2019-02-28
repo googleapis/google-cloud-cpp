@@ -155,7 +155,6 @@ storage_client_srcs = [
     "object_rewriter.cc",
     "object_stream.cc",
     "service_account.cc",
-    "signed_url_options.cc",
     "version.cc",
     "well_known_headers.cc",
 ]

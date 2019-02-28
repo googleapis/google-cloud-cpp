@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/signed_url_options.h"
 #include "google/cloud/storage/well_known_parameters.h"
+#include <cctype>
 #include <iosfwd>
 #include <map>
 
@@ -50,54 +51,44 @@ class SignUrlRequest {
 
   template <typename H, typename... T>
   SignUrlRequest& set_multiple_options(H&& h, T&&... tail) {
-    set_option(std::forward<H>(h));
+    SetOption(std::forward<H>(h));
     return set_multiple_options(std::forward<T>(tail)...);
   }
 
   SignUrlRequest& set_multiple_options() { return *this; }
 
  private:
-  void set_option(MD5HashValue const& o) {
+  void SetOption(MD5HashValue const& o) {
     if (!o.has_value()) {
       return;
     }
     md5_hash_value_ = o.value();
   }
 
-  void set_option(ContentType const& o) {
+  void SetOption(ContentType const& o) {
     if (!o.has_value()) {
       return;
     }
     content_type_ = o.value();
   }
 
-  void set_option(ExpirationTime const& o) {
+  void SetOption(ExpirationTime const& o) {
     if (!o.has_value()) {
       return;
     }
     expiration_time_ = o.value();
   }
 
-  void set_option(AddExtensionHeaderOption const& o) {
+  void SetOption(AddExtensionHeaderOption const& o);
+
+  void SetOption(AddQueryParameterOption const& o) {
     if (!o.has_value()) {
       return;
     }
-    auto res = extension_headers_.insert(o.value());
-    if (!res.second) {
-      // The element already exists, we need to append:
-      res.first->second.push_back(',');
-      res.first->second.append(o.value().second);
-    }
+    query_parameters_.insert(o.value());
   }
 
-  void set_option(AddQueryParameterOption const& o) {
-    if (!o.has_value()) {
-      return;
-    }
-    query_parameters_.push_back(o.value());
-  }
-
-  void set_option(SubResourceOption const& o) {
+  void SetOption(SubResourceOption const& o) {
     if (!o.has_value()) {
       return;
     }
@@ -112,7 +103,7 @@ class SignUrlRequest {
   std::string content_type_;
   std::chrono::system_clock::time_point expiration_time_;
   std::map<std::string, std::string> extension_headers_;
-  std::vector<std::string> query_parameters_;
+  std::multimap<std::string, std::string> query_parameters_;
 };
 
 std::ostream& operator<<(std::ostream& os, SignUrlRequest const& r);
