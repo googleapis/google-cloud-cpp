@@ -194,7 +194,7 @@ class optional {
                        : static_cast<T>(std::forward<U>(default_value));
   }
 
-  operator bool() const { return has_value_; }
+  explicit operator bool() const { return has_value_; }
   bool has_value() const { return has_value_; }
 
   void reset() {
