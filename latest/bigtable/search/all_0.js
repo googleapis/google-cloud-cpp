@@ -61,5 +61,6 @@ var searchData=
   ['asyncupdateappprofile',['AsyncUpdateAppProfile',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a1dce371a401ff3c846ac2930018ae0de',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
   ['asyncupdatecluster',['AsyncUpdateCluster',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ac77cd4c285aa00de8f43e38482cb4c28',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
   ['asyncupdateinstance',['AsyncUpdateInstance',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a4e6474974b076a2c940d42b2780d18df',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
+  ['asyncwaitfornopendingrequests',['AsyncWaitForNoPendingRequests',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher.html#ab67ffc4d4b7c1501b94a73a1afff2387',1,'google::cloud::bigtable::v0::MutationBatcher']]],
   ['at',['at',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#aa87dbd1a3d2de367332be14d46aeab26',1,'google::cloud::v0::IamBindings']]]
 ];

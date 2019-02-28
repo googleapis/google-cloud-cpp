@@ -91,6 +91,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae495ce0af3e1c1566b9144c0d4e565f3"><td class="memItemLeft" align="right" valign="top">std::pair&lt; future&lt; void &gt;, future&lt; Status &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher.html#ae495ce0af3e1c1566b9144c0d4e565f3">AsyncApply</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;cq, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html">SingleRowMutation</a> mut)</td></tr>
 <tr class="memdesc:ae495ce0af3e1c1566b9144c0d4e565f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously apply mutation.  <a href="#ae495ce0af3e1c1566b9144c0d4e565f3">More...</a><br /></td></tr>
 <tr class="separator:ae495ce0af3e1c1566b9144c0d4e565f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab67ffc4d4b7c1501b94a73a1afff2387"><td class="memItemLeft" align="right" valign="top">future&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher.html#ab67ffc4d4b7c1501b94a73a1afff2387">AsyncWaitForNoPendingRequests</a> ()</td></tr>
+<tr class="memdesc:ab67ffc4d4b7c1501b94a73a1afff2387"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously wait until all submitted mutations complete.  <a href="#ab67ffc4d4b7c1501b94a73a1afff2387">More...</a><br /></td></tr>
+<tr class="separator:ab67ffc4d4b7c1501b94a73a1afff2387"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Objects of this class pack single row mutations into bulk mutations. </p>
@@ -178,8 +181,30 @@ Public Member Functions</h2></td></tr>
 <p>The <em>completion</em> future will report the mutation's status once it completes.</p>
 <p>The <em>admission</em> future should be used for flow control. In order to bound the memory usage used by <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher.html" title="Objects of this class pack single row mutations into bulk mutations. ">MutationBatcher</a></code>, one should not submit more mutations before the <em>admission</em> future is satisfied. Note that while the future is often already satisfied when the function returns, applications should not assume that this is always the case.</p>
 <p>One should not make assumptions on which future will be satisfied first.</p>
-<p>This quasi-synchronous example shows the intended use: </p><div class="fragment"><div class="line">bigtable::MutationBatcher batcher(bigtable::Table(...args...));</div><div class="line">bigtable::CompletionQueue cq;</div><div class="line">std::thread cq_runner([]() { cq.Run(); });</div><div class="line"></div><div class="line"><span class="keywordflow">while</span> (HasMoreMutations()) {</div><div class="line">  <span class="keyword">auto</span> admission_completion = batcher.AsyncApply(cq, GenerateMutation());</div><div class="line">  <span class="keyword">auto</span>&amp; admission_future = admission_completion.first;</div><div class="line">  <span class="keyword">auto</span>&amp; completion_future = admission_completion.second;</div><div class="line">  completion_future.then([](future&lt;Status&gt; completion_status) {</div><div class="line">      <span class="comment">// handle mutation completion asynchronously</span></div><div class="line">      });</div><div class="line">  <span class="comment">// Potentially slow down submission not to make buffers in</span></div><div class="line">  <span class="comment">// MutationBatcher grow unbounded.</span></div><div class="line">  admission_future.get();</div><div class="line">}</div><div class="line"><span class="comment">// wait for all mutations to complete</span></div><div class="line">cq.Shutdown();</div><div class="line">cq_runner.join();</div></div><!-- fragment --> 
+<p>This quasi-synchronous example shows the intended use: </p><div class="fragment"><div class="line">bigtable::MutationBatcher batcher(bigtable::Table(...args...));</div><div class="line">bigtable::CompletionQueue cq;</div><div class="line">std::thread cq_runner([]() { cq.Run(); });</div><div class="line"></div><div class="line"><span class="keywordflow">while</span> (HasMoreMutations()) {</div><div class="line">  <span class="keyword">auto</span> admission_completion = batcher.AsyncApply(cq, GenerateMutation());</div><div class="line">  <span class="keyword">auto</span>&amp; admission_future = admission_completion.first;</div><div class="line">  <span class="keyword">auto</span>&amp; completion_future = admission_completion.second;</div><div class="line">  completion_future.then([](future&lt;Status&gt; completion_status) {</div><div class="line">      <span class="comment">// handle mutation completion asynchronously</span></div><div class="line">      });</div><div class="line">  <span class="comment">// Potentially slow down submission not to make buffers in</span></div><div class="line">  <span class="comment">// MutationBatcher grow unbounded.</span></div><div class="line">  admission_future.get();</div><div class="line">}</div><div class="line"><span class="comment">// Wait for all mutations to complete</span></div><div class="line">batcher.AsyncWaitForNoPendingRequests().get();</div><div class="line">cq.Shutdown();</div><div class="line">cq_runner.join();</div></div><!-- fragment --> 
 <p class="definition">Definition at line <a class="el" href="mutation__batcher_8cc_source.html#l00034">34</a> of file <a class="el" href="mutation__batcher_8cc_source.html">mutation_batcher.cc</a>.</p>
+
+</div>
+</div>
+<a id="ab67ffc4d4b7c1501b94a73a1afff2387"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab67ffc4d4b7c1501b94a73a1afff2387">&#9670;&nbsp;</a></span>AsyncWaitForNoPendingRequests()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">future&lt; void &gt; google::cloud::bigtable::v0::MutationBatcher::AsyncWaitForNoPendingRequests </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Asynchronously wait until all submitted mutations complete. </p>
+<dl class="section return"><dt>Returns</dt><dd>a future which will be satisfied once all mutations submitted before calling this function finish; if there are no such operations, the returned future is already satisfied </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="mutation__batcher_8cc_source.html#l00073">73</a> of file <a class="el" href="mutation__batcher_8cc_source.html">mutation_batcher.cc</a>.</p>
 
 </div>
 </div>
