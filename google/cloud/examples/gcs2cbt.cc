@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/mutation_batcher.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/storage/client.h"
 #include <condition_variable>
@@ -32,62 +33,6 @@ namespace cbt = google::cloud::bigtable;
 namespace gcs = google::cloud::storage;
 
 namespace {
-template <typename T>
-class GenericCircularBuffer {
- public:
-  explicit GenericCircularBuffer(std::size_t size)
-      : buffer_(size), head_(0), tail_(0), empty_(true), is_shutdown_(false) {}
-
-  void Shutdown() {
-    std::unique_lock<std::mutex> lk(mu_);
-    is_shutdown_ = true;
-    lk.unlock();
-    cv_.notify_all();
-  }
-
-  bool Pop(T& next) {
-    std::unique_lock<std::mutex> lk(mu_);
-    cv_.wait(lk, [this]() { return !Empty() || is_shutdown_; });
-    if (!Empty()) {
-      next = std::move(buffer_[head_]);
-      ++head_;
-      if (head_ >= buffer_.size()) {
-        head_ = 0;
-      }
-      empty_ = head_ == tail_;
-      lk.unlock();
-      cv_.notify_all();
-      return true;
-    }
-    return !is_shutdown_;
-  }
-
-  void Push(T data) {
-    std::unique_lock<std::mutex> lk(mu_);
-    cv_.wait(lk, [this]() { return !Full(); });
-    buffer_[tail_] = std::move(data);
-    ++tail_;
-    if (tail_ >= buffer_.size()) {
-      tail_ = 0;
-    }
-    empty_ = false;
-    lk.unlock();
-    cv_.notify_all();
-  }
-
- private:
-  bool Empty() { return head_ == tail_ && empty_; }
-  bool Full() { return head_ == tail_ && !empty_; }
-
- private:
-  std::mutex mu_;
-  std::condition_variable cv_;
-  std::vector<T> buffer_;
-  std::size_t head_;
-  std::size_t tail_;
-  bool empty_;
-  bool is_shutdown_;
-};
 
 /**
  * Breakdown a CSV file line into fields.
@@ -100,8 +45,6 @@ class GenericCircularBuffer {
  */
 std::vector<std::string> ParseLine(long lineno, std::string const& line,
                                    char separator);
-
-using CircularBuffer = GenericCircularBuffer<cbt::BulkMutation>;
 
 struct Options {
   char separator;
@@ -180,11 +123,12 @@ int main(int argc, char* argv[]) try {
                        cbt::ClientOptions().set_connection_pool_size(
                            std::thread::hardware_concurrency())),
                    table_id);
+  cbt::MutationBatcher batcher(table);
 
   // How often do we print a progress marker ('.') in the reader thread.
   int const report_reader_progress_rate = 500000;
   // How often do we print a progress marker ('+') in the worker threads.
-  int const report_worker_progress_rate = 5;
+  int const report_worker_progress_rate = 500000;
   // The size of the thread pool pushing data to Cloud Bigtable
   std::size_t const thread_pool_size = []() -> std::size_t {
     if (std::thread::hardware_concurrency() != 0U) {
@@ -193,33 +137,11 @@ int main(int argc, char* argv[]) try {
     return 1;
   }();
 
-  // The size of the circular buffer. It is tempting to make it larger, but each
-  // element in the circular buffer can be a few MiB in size. We limit this to
-  // the number of threads, once it becomes that large all threads will have
-  // work to do after they finish their current work.
-  int const buffer_size = static_cast<int>(thread_pool_size);
-
-  // Create a circular buffer to communicate between the main thread that reads
-  // the file and the threads that upload the parsed lines to Cloud Bigtable.
-  CircularBuffer buffer(buffer_size);
-  // Then create a few threads, each one of which pulls mutations out of the
-  // circular buffer and then applies the mutation to the table.
-  auto read_buffer = [&buffer](cbt::Table table, int report_progress_rate) {
-    long count = 0;
-    cbt::BulkMutation mutation;
-    while (buffer.Pop(mutation)) {
-      table.BulkApply(std::move(mutation));
-      if (++count % report_progress_rate == 0) {
-        std::cout << '+' << std::flush;
-      }
-    }
-  };
-
   std::cout << "Starting " << thread_pool_size << " workers ..." << std::flush;
-  std::vector<std::future<void>> workers;
-  for (std::size_t i = 0; i != thread_pool_size; ++i) {
-    workers.push_back(std::async(std::launch::async, read_buffer, table,
-                                 report_worker_progress_rate));
+  google::cloud::bigtable::CompletionQueue cq;
+  std::vector<std::thread> thread_pool;
+  for (int i = 0; i < thread_pool_size; ++i) {
+    thread_pool.emplace_back([&cq] { cq.Run(); });
   }
   std::cout << " DONE\n";
 
@@ -242,12 +164,20 @@ int main(int argc, char* argv[]) try {
   std::cout << "Reading input file " << std::flush;
   auto start = std::chrono::steady_clock::now();
 
-  // We can only do about 100,000 Apply operations in each BulkApply (see the
-  // Cloud Bigtable bigtable.proto file for details), and each SingleRowMutation
-  // we create below has roughly headers.size() elements. So we want at most:
-  auto bulk_apply_size = static_cast<int>(100000 / headers.size());
-  cbt::BulkMutation bulk;
-  int count = 0;
+  std::atomic<int> apply_finished_count(0);
+  auto report_progress_callback =
+      [&apply_finished_count](
+          ::google::cloud::future<::google::cloud::Status> status_future) {
+        if ((apply_finished_count.fetch_add(1) + 1) %
+                report_worker_progress_rate ==
+            0) {
+          std::cout << '+' << std::flush;
+        }
+        auto status = status_future.get();
+        if (!status.ok()) {
+          std::cerr << "Apply failed: " << status;
+        }
+      };
   while (!is.eof()) {
     ++lineno;
     std::getline(is, line, '\n');
@@ -281,39 +211,24 @@ int main(int argc, char* argv[]) try {
     for (std::size_t i = 0; i != field_count; ++i) {
       mutation.emplace_back(cbt::SetCell(family, headers[i], ts, parsed[i]));
     }
-    bulk.emplace_back(std::move(mutation));
-    // If we have too many mutations in the bulk mutation it is time to push it
-    // to the queue, where one of the running threads will pick it up.
-    if (++count >= bulk_apply_size) {
-      buffer.Push(std::move(bulk));
-      bulk = {};
-      count = 0;
-    }
+    auto admission_and_completion = batcher.AsyncApply(cq, std::move(mutation));
+    admission_and_completion.second.then(report_progress_callback);
 
     if (lineno % report_reader_progress_rate == 0) {
       std::cout << '.' << std::flush;
     }
+
+    // Wait until there is space in buffers.
+    admission_and_completion.first.get();
   }
-  if (count != 0) {
-    buffer.Push(std::move(bulk));
-  }
+  batcher.AsyncWaitForNoPendingRequests().get();
   std::cout << " DONE\n";
 
   std::cout << "Waiting for worker threads " << std::flush;
   // Let the workers know that they can exit.
-  buffer.Shutdown();
-  int worker_count = 0;
-  for (auto& task : workers) {
-    // If there was an exception in any thread continue, and report any
-    // exceptions raised by other threads too.
-    try {
-      task.get();
-    } catch (std::exception const& ex) {
-      std::cerr << "Exception raised by worker " << worker_count << ": "
-                << ex.what() << "\n";
-    }
-    ++worker_count;
-    std::cout << '.' << std::flush;
+  cq.Shutdown();
+  for (auto& thread : thread_pool) {
+    thread.join();
   }
   std::cout << " DONE\n";
 
