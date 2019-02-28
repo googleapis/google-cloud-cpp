@@ -815,6 +815,100 @@ TEST_F(MutationBatcherTest, BatchReleasesSlotBeforeRetry) {
   EXPECT_EQ(0, NumOperationsOustanding());
 }
 
+// Test that waiting until all pending operations finish works in a simple case.
+TEST_F(MutationBatcherTest, WaitForNoPendingSimple) {
+  std::vector<SingleRowMutation> mutations(
+      {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")})});
+
+  ExpectInteraction({{{mutations[0]}, {ResultPiece({0}, {}, {})}}});
+
+  auto no_more_pending1 = batcher_->AsyncWaitForNoPendingRequests();
+  EXPECT_EQ(no_more_pending1.wait_for(1_ms), std::future_status::ready);
+  no_more_pending1.get();
+
+  auto state = Apply(mutations[0]);
+  EXPECT_TRUE(state->admitted);
+  EXPECT_FALSE(state->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  auto no_more_pending2 = batcher_->AsyncWaitForNoPendingRequests();
+  auto no_more_pending3 = batcher_->AsyncWaitForNoPendingRequests();
+  EXPECT_EQ(no_more_pending2.wait_for(1_ms), std::future_status::timeout);
+  EXPECT_EQ(no_more_pending3.wait_for(1_ms), std::future_status::timeout);
+
+  FinishSingleItemStream();
+
+  EXPECT_TRUE(state->completed);
+  EXPECT_EQ(0, NumOperationsOustanding());
+
+  EXPECT_EQ(no_more_pending2.wait_for(1_ms), std::future_status::ready);
+  EXPECT_EQ(no_more_pending3.wait_for(1_ms), std::future_status::ready);
+}
+
+// Test that pending and failed mutations are properly accounted.
+TEST_F(MutationBatcherTest, WaitForNoPendingEdgeCases) {
+  std::vector<SingleRowMutation> mutations(
+      {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo2", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo3", {bt::SetCell("fam", "col", 0_ms, "baz"),
+                                  bt::SetCell("fam", "col", 0_ms, "baz")})});
+
+  batcher_.reset(new MutationBatcher(
+      table_,
+      MutationBatcher::Options().SetMaxMutationsPerBatch(1).SetMaxBatches(1)));
+  ExpectInteraction({Exchange({mutations[0]}, {ResultPiece({}, {}, {0})}),
+                     Exchange({mutations[1]}, {ResultPiece({}, {}, {0})})});
+
+  auto state0 = Apply(mutations[0]);
+  EXPECT_TRUE(state0->admitted);
+  EXPECT_FALSE(state0->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  auto no_more_pending0 = batcher_->AsyncWaitForNoPendingRequests();
+  EXPECT_EQ(no_more_pending0.wait_for(1_ms), std::future_status::timeout);
+
+  auto state1 = Apply(mutations[1]);
+  EXPECT_TRUE(state1->admitted);
+  EXPECT_FALSE(state1->completed);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  auto no_more_pending1 = batcher_->AsyncWaitForNoPendingRequests();
+  EXPECT_EQ(no_more_pending0.wait_for(1_ms), std::future_status::timeout);
+  EXPECT_EQ(no_more_pending1.wait_for(1_ms), std::future_status::timeout);
+
+  auto state2 = Apply(mutations[2]);
+  EXPECT_TRUE(state2->admitted);
+  EXPECT_TRUE(state2->completed);
+  EXPECT_FALSE(state2->completion_status.ok());
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  auto no_more_pending2 = batcher_->AsyncWaitForNoPendingRequests();
+
+  EXPECT_EQ(no_more_pending0.wait_for(1_ms), std::future_status::timeout);
+  EXPECT_EQ(no_more_pending1.wait_for(1_ms), std::future_status::timeout);
+  EXPECT_EQ(no_more_pending2.wait_for(1_ms), std::future_status::timeout);
+
+  FinishSingleItemStream();
+
+  EXPECT_TRUE(state0->completed);
+  EXPECT_TRUE(state1->admitted);
+  EXPECT_EQ(1, NumOperationsOustanding());
+
+  EXPECT_EQ(no_more_pending0.wait_for(1_ms), std::future_status::timeout);
+  EXPECT_EQ(no_more_pending1.wait_for(1_ms), std::future_status::timeout);
+  EXPECT_EQ(no_more_pending2.wait_for(1_ms), std::future_status::timeout);
+
+  FinishSingleItemStream();
+
+  EXPECT_TRUE(state1->completed);
+  EXPECT_FALSE(state1->completion_status.ok());
+  EXPECT_EQ(0, NumOperationsOustanding());
+
+  EXPECT_EQ(no_more_pending0.wait_for(1_ms), std::future_status::ready);
+  EXPECT_EQ(no_more_pending1.wait_for(1_ms), std::future_status::ready);
+  EXPECT_EQ(no_more_pending2.wait_for(1_ms), std::future_status::ready);
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud

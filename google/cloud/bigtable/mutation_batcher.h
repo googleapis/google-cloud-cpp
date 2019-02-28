@@ -90,6 +90,7 @@ class MutationBatcher {
         options_(options),
         num_outstanding_batches_(),
         oustanding_size_(),
+        num_requests_pending_(),
         cur_batch_(std::make_shared<Batch>()) {}
 
   /**
@@ -137,7 +138,8 @@ class MutationBatcher {
    *   // MutationBatcher grow unbounded.
    *   admission_future.get();
    * }
-   * // wait for all mutations to complete
+   * // Wait for all mutations to complete
+   * batcher.AsyncWaitForNoPendingRequests().get();
    * cq.Shutdown();
    * cq_runner.join();
    * @endcode
@@ -145,9 +147,19 @@ class MutationBatcher {
   std::pair<future<void>, future<Status>> AsyncApply(CompletionQueue& cq,
                                                      SingleRowMutation mut);
 
+  /**
+   * Asynchronously wait until all submitted mutations complete.
+   *
+   * @return a future which will be satisfied once all mutations submitted
+   *     before calling this function finish; if there are no such operations,
+   *     the returned future is already satisfied
+   */
+  future<void> AsyncWaitForNoPendingRequests();
+
  private:
   using CompletionPromise = promise<Status>;
   using AdmissionPromise = promise<void>;
+  using NoMorePendingPromise = promise<void>;
   struct Batch;
 
   /**
@@ -272,14 +284,23 @@ class MutationBatcher {
 
   /**
    * Try to move mutations waiting in `pending_mutations_` to the currently
-   * constructed batch. Unlocks `lk`.
+   * constructed batch.
+   *
+   * @return the admission promises of the newly admitted mutations.
    */
-  void TryAdmit(CompletionQueue& cq, std::unique_lock<std::mutex>& lk);
+  std::vector<MutationBatcher::AdmissionPromise> TryAdmit(CompletionQueue& cq);
 
   /**
    * Append mutation `mut` to the currently constructed batch.
    */
   void Admit(PendingSingleRowMutation mut);
+
+  /**
+   * Satisfies passed admission promises and potentially the promises of no more
+   * pending requests. Unlocks `lk`.
+   */
+  void SatisfyPromises(std::vector<AdmissionPromise>,
+                       std::unique_lock<std::mutex>& lk);
 
   std::mutex mu_;
   Table table_;
@@ -289,6 +310,8 @@ class MutationBatcher {
   size_t num_outstanding_batches_;
   /// Size of admitted but uncompleted mutations.
   size_t oustanding_size_;
+  // Number of uncompleted SingleRowMutations (including not admitted).
+  size_t num_requests_pending_;
 
   /// Currently contructed batch of mutations.
   std::shared_ptr<Batch> cur_batch_;
@@ -299,6 +322,7 @@ class MutationBatcher {
    * these (likely no more than one).
    */
   std::queue<PendingSingleRowMutation> pending_mutations_;
+  std::vector<NoMorePendingPromise> no_more_pending_promises_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

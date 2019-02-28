@@ -50,23 +50,36 @@ std::pair<future<void>, future<Status>> MutationBatcher::AsyncApply(
     pending.mut.Clear();
     pending.completion_promise.set_value(
         internal::MakeStatusFromRpcError(mutation_status));
+    // No need to consider no_more_pending_promises because this operation
+    // didn't lower the number of pending operations.
     pending.admission_promise.set_value();
     return res;
   }
+  ++num_requests_pending_;
 
   if (!CanAppendToBatch(pending)) {
     pending_mutations_.push(std::move(pending));
     return res;
   }
-  AdmissionPromise admission_promise_to_satisfy(
+  std::vector<AdmissionPromise> admission_promises_to_satisfy;
+  admission_promises_to_satisfy.emplace_back(
       std::move(pending.admission_promise));
   Admit(std::move(pending));
   FlushIfPossible(cq);
-
-  lk.unlock();
-
-  admission_promise_to_satisfy.set_value();
+  SatisfyPromises(std::move(admission_promises_to_satisfy), lk);
   return res;
+}
+
+future<void> MutationBatcher::AsyncWaitForNoPendingRequests() {
+  std::unique_lock<std::mutex> lk(mu_);
+  if (num_requests_pending_ == 0) {
+    // TODO(#2112): Use make_satisfied_future<> once it's implemented.
+    promise<void> satisfied_promise;
+    satisfied_promise.set_value();
+    return satisfied_promise.get_future();
+  }
+  no_more_pending_promises_.emplace_back();
+  return no_more_pending_promises_.back().get_future();
 }
 
 MutationBatcher::PendingSingleRowMutation::PendingSingleRowMutation(
@@ -149,6 +162,7 @@ bool MutationBatcher::FlushIfPossible(CompletionQueue& cq) {
 void MutationBatcher::OnSuccessfulMutations(CompletionQueue& cq,
                                             MutationBatcher::Batch& batch,
                                             std::vector<int> indices) {
+  size_t const num_mutations = indices.size();
   size_t completed_size = 0;
 
   for (int idx : indices) {
@@ -161,12 +175,14 @@ void MutationBatcher::OnSuccessfulMutations(CompletionQueue& cq,
 
   std::unique_lock<std::mutex> lk(mu_);
   oustanding_size_ -= completed_size;
-  TryAdmit(cq, lk);  // unlocks the lock
+  num_requests_pending_ -= num_mutations;
+  SatisfyPromises(TryAdmit(cq), lk);  // unlocks the lock
 }
 
 void MutationBatcher::OnFailedMutations(CompletionQueue& cq,
                                         MutationBatcher::Batch& batch,
                                         std::vector<FailedMutation> failed) {
+  size_t const num_mutations = failed.size();
   size_t completed_size = 0;
 
   for (auto const& f : failed) {
@@ -184,7 +200,8 @@ void MutationBatcher::OnFailedMutations(CompletionQueue& cq,
 
   std::unique_lock<std::mutex> lk(mu_);
   oustanding_size_ -= completed_size;
-  TryAdmit(cq, lk);  // unlocks the lock
+  num_requests_pending_ -= num_mutations;
+  SatisfyPromises(TryAdmit(cq), lk);  // unlocks the lock
 }
 
 void MutationBatcher::OnBulkApplyAttemptFinished(
@@ -200,12 +217,12 @@ void MutationBatcher::OnBulkApplyAttemptFinished(
   std::unique_lock<std::mutex> lk(mu_);
   num_outstanding_batches_ -= 1;
   FlushIfPossible(cq);
-  TryAdmit(cq, lk);
+  SatisfyPromises(TryAdmit(cq), lk);  // unlocks the lock
 }
 
-void MutationBatcher::TryAdmit(CompletionQueue& cq,
-                               std::unique_lock<std::mutex>& lk) {
-  // Defer promises until we release the lock
+std::vector<MutationBatcher::AdmissionPromise> MutationBatcher::TryAdmit(
+    CompletionQueue& cq) {
+  // Defer satisfying promises until we release the lock.
   std::vector<AdmissionPromise> admission_promises;
 
   do {
@@ -217,15 +234,7 @@ void MutationBatcher::TryAdmit(CompletionQueue& cq,
       pending_mutations_.pop();
     }
   } while (FlushIfPossible(cq));
-
-  lk.unlock();
-
-  // Inform the user that we've admitted these mutations and there might be some
-  // space in the buffer finally.
-  for (auto& promise : admission_promises) {
-    grpc::Status status;
-    promise.set_value();
-  }
+  return admission_promises;
 }
 
 void MutationBatcher::Admit(PendingSingleRowMutation mut) {
@@ -235,6 +244,25 @@ void MutationBatcher::Admit(PendingSingleRowMutation mut) {
   cur_batch_->requests.emplace_back(std::move(mut.mut));
   cur_batch_->mutation_data.emplace(cur_batch_->last_idx++,
                                     Batch::MutationData(std::move(mut)));
+}
+
+void MutationBatcher::SatisfyPromises(
+    std::vector<AdmissionPromise> admission_promises,
+    std::unique_lock<std::mutex>& lk) {
+  std::vector<NoMorePendingPromise> no_more_pending_promises;
+  if (num_requests_pending_ == 0) {
+    no_more_pending_promises_.swap(no_more_pending_promises);
+  }
+  lk.unlock();
+
+  // Inform the user that we've admitted these mutations and there might be some
+  // space in the buffer finally.
+  for (auto& promise : admission_promises) {
+    promise.set_value();
+  }
+  for (auto& promise : no_more_pending_promises) {
+    promise.set_value();
+  }
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
