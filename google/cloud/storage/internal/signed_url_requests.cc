@@ -24,13 +24,24 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-SignUrlRequest::SignUrlRequest(std::string verb, std::string bucket_name,
-                               std::string object_name)
-    : verb_(std::move(verb)),
-      bucket_name_(std::move(bucket_name)),
-      object_name_(std::move(object_name)) {
-  expiration_time_ =
-      std::chrono::system_clock::now() + std::chrono::hours(7 * 24);
+void SignUrlRequestCommon::SetOption(AddExtensionHeaderOption const& o) {
+  if (!o.has_value()) {
+    return;
+  }
+  auto kv = o.value();
+  // Normalize the header, they are not case sensitive.
+  std::transform(kv.first.begin(), kv.first.end(), kv.first.begin(),
+                 [](unsigned char c) { return std::tolower(c); });
+  auto res = extension_headers_.insert(kv);
+  if (!res.second) {
+    // The element already exists, we need to append:
+    res.first->second.push_back(',');
+    res.first->second.append(o.value().second);
+  }
+}
+
+std::chrono::system_clock::time_point SignUrlRequest::DefaultExpirationTime() {
+  return std::chrono::system_clock::now() + std::chrono::hours(7 * 24);
 }
 
 std::string SignUrlRequest::StringToSign() const {
@@ -62,22 +73,6 @@ std::string SignUrlRequest::StringToSign() const {
   }
 
   return std::move(os).str();
-}
-
-void SignUrlRequest::SetOption(AddExtensionHeaderOption const& o) {
-  if (!o.has_value()) {
-    return;
-  }
-  auto kv = o.value();
-  // Normalize the header, they are not case sensitive.
-  std::transform(kv.first.begin(), kv.first.end(), kv.first.begin(),
-                 [](unsigned char c) { return std::tolower(c); });
-  auto res = extension_headers_.insert(kv);
-  if (!res.second) {
-    // The element already exists, we need to append:
-    res.first->second.push_back(',');
-    res.first->second.append(kv.second);
-  }
 }
 
 std::ostream& operator<<(std::ostream& os, SignUrlRequest const& r) {
