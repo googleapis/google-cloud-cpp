@@ -21,6 +21,16 @@ if [[ -z "${PROJECT_ROOT+x}" ]]; then
 fi
 source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 
+if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then
+  echo "Skipping document generation as it is disabled for pull requests."
+  exit 0
+fi
+
+if [ "${GENERATE_DOCS:-}" != "yes" ]; then
+  echo "Skipping document generation as it is disabled for this build."
+  exit 0
+fi
+
 subdir=""
 case "${TRAVIS_BRANCH:-}" in
     master)
@@ -28,6 +38,10 @@ case "${TRAVIS_BRANCH:-}" in
       ;;
     v[0-9]\.*)
       subdir=$(echo "${TRAVIS_BRANCH:-}" | sed -r -e 's/^v//' -e 's/^([0-9]+).([0-9]+).x/\1.\2.0/')
+      ;;
+    *)
+      echo "Skipping document generation as it is only used in master and release branches."
+      exit 0
       ;;
 esac
 
@@ -58,7 +72,7 @@ if [ "${subdir}" != "latest" ]; then
   cp -r latest/img "${output}"
   cp -r latest/js "${output}"
 fi
-cp -r doc/landing/index.html "${output}"
+cp -r ../doc/landing/index.html "${output}"
 
 if git diff --quiet HEAD; then
   echo "Skipping documentation upload as there are no differences to upload."
