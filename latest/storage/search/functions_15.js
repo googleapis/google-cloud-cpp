@@ -16,11 +16,11 @@ var searchData=
   ['withlifecycle',['WithLifecycle',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a5cb2c0f0735a411ff6bbe4aac4a9b06b',1,'google::cloud::storage::v0']]],
   ['withlocation',['WithLocation',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aa09370ca00f3f77307a6065a4df80ef6',1,'google::cloud::storage::v0']]],
   ['withlogging',['WithLogging',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aa2afbd229dacecc507988190f4f7af47',1,'google::cloud::storage::v0']]],
-  ['withmarker',['WithMarker',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a94ab61afd54c71917bc1240e9ae2bd8b',1,'google::cloud::storage::v0']]],
-  ['withresponsecontentdisposition',['WithResponseContentDisposition',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a314dc6e6806887b1257a971d709d2cfa',1,'google::cloud::storage::v0']]],
+  ['withmarker',['WithMarker',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a6fa3e49f6009f8dfdf2ebc65ae3470d2',1,'google::cloud::storage::v0']]],
+  ['withresponsecontentdisposition',['WithResponseContentDisposition',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a088399b5d12206cf7bee60c3fe97b490',1,'google::cloud::storage::v0']]],
   ['withresponsecontenttype',['WithResponseContentType',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a33ce20d9609b7bc00655a078f99b30bd',1,'google::cloud::storage::v0']]],
   ['withstorageclass',['WithStorageClass',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a6eace4d8df2bab5e06f79fb88724d193',1,'google::cloud::storage::v0']]],
   ['withtagging',['WithTagging',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a30af03ecbfda905fd2f32d08a85c3a13',1,'google::cloud::storage::v0']]],
-  ['withuserproject',['WithUserProject',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#ad4c682c925c996a35cc6ab0dff82a533',1,'google::cloud::storage::v0']]],
+  ['withuserproject',['WithUserProject',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aebb1dbcddbc19050f66ec120967863e6',1,'google::cloud::storage::v0']]],
   ['writeobject',['WriteObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ad55de30092d0f5159a6f6a7b55d5e38f',1,'google::cloud::storage::v0::Client']]]
 ];

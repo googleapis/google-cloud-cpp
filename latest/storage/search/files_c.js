@@ -4,7 +4,6 @@ var searchData=
   ['service_5faccount_2eh',['service_account.h',['../service__account_8h.html',1,'']]],
   ['service_5faccount_5fcredentials_2ecc',['service_account_credentials.cc',['../service__account__credentials_8cc.html',1,'']]],
   ['service_5faccount_5fcredentials_2eh',['service_account_credentials.h',['../service__account__credentials_8h.html',1,'']]],
-  ['signed_5furl_5foptions_2ecc',['signed_url_options.cc',['../signed__url__options_8cc.html',1,'']]],
   ['signed_5furl_5foptions_2eh',['signed_url_options.h',['../signed__url__options_8h.html',1,'']]],
   ['status_2ecc',['status.cc',['../../common/status_8cc.html',1,'']]],
   ['status_2eh',['status.h',['../../common/status_8h.html',1,'']]],
