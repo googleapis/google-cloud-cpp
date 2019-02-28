@@ -36,7 +36,7 @@ void SignUrlRequestCommon::SetOption(AddExtensionHeaderOption const& o) {
   if (!res.second) {
     // The element already exists, we need to append:
     res.first->second.push_back(',');
-    res.first->second.append(o.value().second);
+    res.first->second.append(kv.second);
   }
 }
 
