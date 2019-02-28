@@ -76,11 +76,11 @@ class SignUrlRequestCommon {
 /**
  * Requests the Google Cloud Storage service account for a project.
  */
-class SignUrlRequest {
+class V2SignUrlRequest {
  public:
-  SignUrlRequest() = default;
-  explicit SignUrlRequest(std::string verb, std::string bucket_name,
-                          std::string object_name)
+  V2SignUrlRequest() = default;
+  explicit V2SignUrlRequest(std::string verb, std::string bucket_name,
+                            std::string object_name)
       : common_request_(std::move(verb), std::move(bucket_name),
                         std::move(object_name)),
         expiration_time_(DefaultExpirationTime()) {}
@@ -105,12 +105,12 @@ class SignUrlRequest {
   std::string StringToSign() const;
 
   template <typename H, typename... T>
-  SignUrlRequest& set_multiple_options(H&& h, T&&... tail) {
+  V2SignUrlRequest& set_multiple_options(H&& h, T&&... tail) {
     SetOption(std::forward<H>(h));
     return set_multiple_options(std::forward<T>(tail)...);
   }
 
-  SignUrlRequest& set_multiple_options() { return *this; }
+  V2SignUrlRequest& set_multiple_options() { return *this; }
 
  private:
   static std::chrono::system_clock::time_point DefaultExpirationTime();
@@ -152,7 +152,7 @@ class SignUrlRequest {
   std::chrono::system_clock::time_point expiration_time_;
 };
 
-std::ostream& operator<<(std::ostream& os, SignUrlRequest const& r);
+std::ostream& operator<<(std::ostream& os, V2SignUrlRequest const& r);
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

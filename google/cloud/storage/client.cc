@@ -198,7 +198,8 @@ Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
   return Status();
 }
 
-StatusOr<std::string> Client::SignUrl(internal::SignUrlRequest const& request) {
+StatusOr<std::string> Client::SignUrl(
+    internal::V2SignUrlRequest const& request) {
   auto base_credentials = raw_client()->client_options().credentials();
   auto credentials = dynamic_cast<oauth2::ServiceAccountCredentials<>*>(
       base_credentials.get());
