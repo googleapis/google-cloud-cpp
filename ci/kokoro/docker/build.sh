@@ -85,21 +85,17 @@ source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
 echo "================================================================"
-printenv
-echo "================================================================"
-
-echo "================================================================"
-echo "Updating submodules."
+echo "Updating submodules $(date)."
 cd "${PROJECT_ROOT}"
 git submodule update --init
 echo "================================================================"
 
 echo "================================================================"
 export NCPU=$(nproc)
-echo "Building with ${NCPU} cores."
+echo "Building with ${NCPU} cores $(date)."
 
 echo "================================================================"
-echo "Creating Docker image with all the development tools."
+echo "Creating Docker image with all the development tools $(date)."
 # We do not want to print the log unless there is an error, so disable the -e
 # flag. Later, we will want to print out the emulator(s) logs *only* if there
 # is an error, so disabling from this point on is the right choice.
@@ -113,10 +109,11 @@ fi
 echo "================================================================"
 
 echo "================================================================"
-echo "Running the full build."
+echo "Running the full build $(date)."
 export NEEDS_CCACHE=no
 "${PROJECT_ROOT}/ci/travis/build-linux.sh"
 exit_status=$?
+echo "Build finished with ${exit_status} exit status $(date)."
 echo "================================================================"
 
 echo "================================================================"
