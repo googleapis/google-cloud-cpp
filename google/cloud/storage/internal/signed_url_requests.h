@@ -19,7 +19,6 @@
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/signed_url_options.h"
 #include "google/cloud/storage/well_known_parameters.h"
-#include <cctype>
 #include <iosfwd>
 #include <map>
 

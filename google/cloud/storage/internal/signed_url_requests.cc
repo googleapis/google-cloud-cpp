@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/internal/curl_handle.h"
+#include <algorithm>
+#include <cctype>
 #include <sstream>
 
 namespace google {
@@ -74,7 +76,7 @@ void SignUrlRequest::SetOption(AddExtensionHeaderOption const& o) {
   if (!res.second) {
     // The element already exists, we need to append:
     res.first->second.push_back(',');
-    res.first->second.append(o.value().second);
+    res.first->second.append(kv.second);
   }
 }
 

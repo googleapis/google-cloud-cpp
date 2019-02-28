@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_SIGNED_URL_OPTIONS_H_
 
 #include "google/cloud/storage/internal/complex_option.h"
-#include <algorithm>
 #include <chrono>
 #include <string>
 
