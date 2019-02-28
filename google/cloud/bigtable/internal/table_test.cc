@@ -189,8 +189,10 @@ commit_row: true
         return stream.release()->AsUniqueMocked();
       }));
 
-  auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter(), status);
-  EXPECT_TRUE(status.ok());
+  google::cloud::Status res_status;
+  auto result =
+      table_.ReadRow("r1", bigtable::Filter::PassAllFilter(), res_status);
+  EXPECT_STATUS_OK(res_status);
   EXPECT_TRUE(std::get<0>(result));
   auto row = std::get<1>(result);
   EXPECT_EQ("r1", row.row_key());
@@ -239,8 +241,10 @@ commit_row: true
   bigtable::AppProfileId app_profile_id("test-id");
   bigtable::noex::Table table =
       bigtable::noex::Table(client_, app_profile_id, kTableId);
-  auto result = table.ReadRow("r1", bigtable::Filter::PassAllFilter(), status);
-  EXPECT_TRUE(status.ok());
+  google::cloud::Status res_status;
+  auto result =
+      table.ReadRow("r1", bigtable::Filter::PassAllFilter(), res_status);
+  EXPECT_STATUS_OK(res_status);
   EXPECT_TRUE(std::get<0>(result));
   auto row = std::get<1>(result);
   EXPECT_EQ("r1", row.row_key());
@@ -263,9 +267,9 @@ TEST_F(NoexTableTest, ReadRowMissing) {
         EXPECT_EQ(table_.table_name(), req.table_name());
         return stream.release()->AsUniqueMocked();
       }));
-  grpc::Status status;
+  google::cloud::Status status;
   auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter(), status);
-  EXPECT_TRUE(status.ok());
+  EXPECT_STATUS_OK(status);
   EXPECT_FALSE(std::get<0>(result));
 }
 
@@ -288,7 +292,7 @@ TEST_F(NoexTableTest, ReadRowError) {
         EXPECT_EQ(table_.table_name(), req.table_name());
         return stream.release()->AsUniqueMocked();
       }));
-  grpc::Status status;
+  google::cloud::Status status;
   auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter(), status);
   EXPECT_FALSE(status.ok());
   EXPECT_FALSE(std::get<0>(result));
