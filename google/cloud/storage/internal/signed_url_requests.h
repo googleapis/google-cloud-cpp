@@ -136,9 +136,7 @@ class SignUrlRequest {
     expiration_time_ = o.value();
   }
 
-  void SetOption(SubResourceOption const& o) {
-    common_request_.SetOption(o);
-  }
+  void SetOption(SubResourceOption const& o) { common_request_.SetOption(o); }
 
   void SetOption(AddExtensionHeaderOption const& o) {
     common_request_.SetOption(o);
