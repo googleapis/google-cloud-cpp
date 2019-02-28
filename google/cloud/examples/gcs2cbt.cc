@@ -166,7 +166,7 @@ int main(int argc, char* argv[]) try {
 
   std::atomic<int> apply_finished_count(0);
   auto report_progress_callback =
-      [&apply_finished_count](
+      [=, &apply_finished_count](
           ::google::cloud::future<::google::cloud::Status> status_future) {
         if ((apply_finished_count.fetch_add(1) + 1) %
                 report_worker_progress_rate ==
