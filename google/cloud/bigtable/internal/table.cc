@@ -16,7 +16,6 @@
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include "google/cloud/internal/make_unique.h"
-#include <sstream>
 #include <thread>
 #include <type_traits>
 
@@ -142,31 +141,24 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
 }
 
 std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter,
-                                    grpc::Status& status) {
+                                    Status& status) {
   RowSet row_set(std::move(row_key));
   std::int64_t const rows_limit = 1;
   RowReader reader =
       ReadRows(std::move(row_set), rows_limit, std::move(filter));
   auto it = reader.begin();
   if (it == reader.end()) {
-    status = grpc::Status();
+    status = Status();
     return std::make_pair(false, Row("", {}));
   }
   if (!*it) {
-    // XXX status = it->status();
-    std::stringstream err;
-    err << it->status();
-    status = grpc::Status(grpc::StatusCode::UNKNOWN,
-                          "Don't know how to convert to google::cloud::Status "
-                          "to grpc::Status. Details: " +
-                              err.str());
+    status = it->status();
     return std::make_pair(false, Row("", {}));
   }
   auto result = std::make_pair(true, std::move(**it));
   if (++it != reader.end()) {
-    status =
-        grpc::Status(grpc::StatusCode::INTERNAL,
-                     "internal error - RowReader returned 2 rows in ReadRow()");
+    status = Status(StatusCode::kInternal,
+                    "internal error - RowReader returned 2 rows in ReadRow()");
     return std::make_pair(false, Row("", {}));
   }
   return result;
