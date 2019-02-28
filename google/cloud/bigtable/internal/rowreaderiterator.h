@@ -49,7 +49,8 @@ class RowReaderIterator {
   using reference = value_type&;
   //@}
 
-  RowReaderIterator(RowReader* owner, bool is_end);
+  RowReaderIterator(RowReader* owner);
+  RowReaderIterator();
 
   RowReaderIterator& operator++();
   RowReaderIterator operator++(int) {
@@ -58,18 +59,18 @@ class RowReaderIterator {
     return tmp;
   }
 
-  value_type const* operator->() const { return row_.operator->(); }
-  value_type* operator->() { return row_.operator->(); }
+  value_type const* operator->() const { return &row_; }
+  value_type* operator->() { return &row_; }
 
-  value_type const& operator*() const& { return *row_; }
-  value_type& operator*() & { return *row_; }
+  value_type const& operator*() const& { return row_; }
+  value_type& operator*() & { return row_; }
 #if GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
-  value_type const&& operator*() const&& { return *std::move(row_); }
+  value_type const&& operator*() const&& { return std::move(row_); }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
-  value_type&& operator*() && { return *std::move(row_); }
+  value_type&& operator*() && { return std::move(row_); }
   bool operator==(RowReaderIterator const& that) const {
     // All non-end iterators are equal.
-    return owner_ == that.owner_ && row_.has_value() == that.row_.has_value();
+    return owner_ == that.owner_;
   }
 
   bool operator!=(RowReaderIterator const& that) const {
@@ -78,15 +79,10 @@ class RowReaderIterator {
 
  private:
   void Advance();
+  /// nullptr indicates end()
   RowReader* owner_;
-  /**
-   * Current value of the iterator:
-   * - status: iterator pointing to a status rather than a row
-   * - value:
-   *   - non-empty: acutal row
-   *   - empty: end()
-   */
-  optional<StatusOr<Row>> row_;
+  /// Current value of the iterator.
+  StatusOr<Row> row_;
 };
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS

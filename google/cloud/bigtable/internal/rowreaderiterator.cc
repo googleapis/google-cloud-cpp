@@ -21,21 +21,20 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-RowReaderIterator::RowReaderIterator(RowReader* owner, bool is_end)
-    : owner_(owner), row_() {
-  if (!is_end) {
-    Advance();
-  }
+RowReaderIterator::RowReaderIterator(RowReader* owner) : owner_(owner) {
+  Advance();
 }
+
+RowReaderIterator::RowReaderIterator() : owner_() {}
 
 // Defined here because it needs to see the definition of RowReader
 RowReaderIterator& RowReaderIterator::operator++() {
-  if (row_ && !(*row_)) {
+  if (owner_ && !row_) {
     // If the iterator dereferences to a bad status, the next value is end().
-    row_.reset();
+    owner_ = nullptr;
     return *this;
   }
-  // TODO(#1402): GCP_ASSERT(row_);  // assert it's not end()
+  // TODO(#1402): GCP_ASSERT(owner_);  // assert it's not end()
   Advance();
   return *this;
 }
@@ -43,16 +42,16 @@ RowReaderIterator& RowReaderIterator::operator++() {
 void RowReaderIterator::Advance() {
   auto status_or_optional_row = owner_->Advance();
   if (!status_or_optional_row) {
-    row_.emplace(std::move(status_or_optional_row).status());
+    row_ = StatusOr<Row>(std::move(status_or_optional_row).status());
     return;
   }
   auto& optional_row = *status_or_optional_row;
   if (optional_row) {
-    row_.emplace(*std::move(optional_row));
+    row_ = *std::move(optional_row);
     return;
   }
   // Successful end()
-  row_.reset();
+  owner_ = nullptr;
 }
 
 }  // namespace internal

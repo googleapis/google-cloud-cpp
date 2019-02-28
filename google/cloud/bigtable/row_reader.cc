@@ -98,14 +98,12 @@ RowReader::RowReader(
 // The name must be all lowercase to work with range-for loops.
 // NOLINTNEXTLINE(readability-identifier-naming)
 RowReader::iterator RowReader::begin() {
-  return internal::RowReaderIterator(this, false);
+  return internal::RowReaderIterator(this);
 }
 
 // The name must be all lowercase to work with range-for loops.
 // NOLINTNEXTLINE(readability-identifier-naming)
-RowReader::iterator RowReader::end() {
-  return internal::RowReaderIterator(this, true);
-}
+RowReader::iterator RowReader::end() { return internal::RowReaderIterator(); }
 
 void RowReader::MakeRequest() {
   response_ = {};
