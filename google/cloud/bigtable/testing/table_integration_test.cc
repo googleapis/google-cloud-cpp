@@ -114,7 +114,8 @@ std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
       bigtable::RowSet(bigtable::RowRange::InfiniteRange()), std::move(filter));
   std::vector<bigtable::Cell> result;
   for (auto const& row : reader) {
-    std::copy(row.cells().begin(), row.cells().end(),
+    EXPECT_STATUS_OK(row);
+    std::copy(row->cells().begin(), row->cells().end(),
               std::back_inserter(result));
   }
   return result;
@@ -133,7 +134,8 @@ std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
                      rows_limit, std::move(filter));
   std::vector<bigtable::Cell> result;
   for (auto const& row : reader) {
-    std::copy(row.cells().begin(), row.cells().end(),
+    EXPECT_STATUS_OK(row);
+    std::copy(row->cells().begin(), row->cells().end(),
               std::back_inserter(result));
   }
   return result;
@@ -143,7 +145,8 @@ std::vector<bigtable::Cell> TableIntegrationTest::MoveCellsFromReader(
     bigtable::RowReader& reader) {
   std::vector<bigtable::Cell> result;
   for (auto const& row : reader) {
-    std::move(row.cells().begin(), row.cells().end(),
+    EXPECT_STATUS_OK(row);
+    std::move(row->cells().begin(), row->cells().end(),
               std::back_inserter(result));
   }
   return result;

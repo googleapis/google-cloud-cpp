@@ -122,42 +122,43 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut,
   return failures;
 }
 
-RowReader Table::ReadRows(RowSet row_set, Filter filter, bool raise_on_error) {
+RowReader Table::ReadRows(RowSet row_set, Filter filter) {
   return RowReader(client_, app_profile_id_, table_name_, std::move(row_set),
                    RowReader::NO_ROWS_LIMIT, std::move(filter),
                    rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
                    metadata_update_policy_,
                    google::cloud::internal::make_unique<
-                       bigtable::internal::ReadRowsParserFactory>(),
-                   raise_on_error);
+                       bigtable::internal::ReadRowsParserFactory>());
 }
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
-                          Filter filter, bool raise_on_error) {
+                          Filter filter) {
   return RowReader(client_, app_profile_id_, table_name_, std::move(row_set),
                    rows_limit, std::move(filter), rpc_retry_policy_->clone(),
                    rpc_backoff_policy_->clone(), metadata_update_policy_,
                    google::cloud::internal::make_unique<
-                       bigtable::internal::ReadRowsParserFactory>(),
-                   raise_on_error);
+                       bigtable::internal::ReadRowsParserFactory>());
 }
 
 std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter,
-                                    grpc::Status& status) {
+                                    Status& status) {
   RowSet row_set(std::move(row_key));
   std::int64_t const rows_limit = 1;
   RowReader reader =
       ReadRows(std::move(row_set), rows_limit, std::move(filter));
   auto it = reader.begin();
   if (it == reader.end()) {
-    status = reader.Finish();
+    status = Status();
     return std::make_pair(false, Row("", {}));
   }
-  auto result = std::make_pair(true, std::move(*it));
+  if (!*it) {
+    status = it->status();
+    return std::make_pair(false, Row("", {}));
+  }
+  auto result = std::make_pair(true, std::move(**it));
   if (++it != reader.end()) {
-    status =
-        grpc::Status(grpc::StatusCode::INTERNAL,
-                     "internal error - RowReader returned 2 rows in ReadRow()");
+    status = Status(StatusCode::kInternal,
+                    "internal error - RowReader returned 2 rows in ReadRow()");
     return std::make_pair(false, Row("", {}));
   }
   return result;

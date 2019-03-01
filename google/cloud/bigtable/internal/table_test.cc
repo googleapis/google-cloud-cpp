@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/mock_sample_row_keys_reader.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 
 namespace bigtable = google::cloud::bigtable;
@@ -188,8 +189,10 @@ commit_row: true
         return stream.release()->AsUniqueMocked();
       }));
 
-  auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter(), status);
-  EXPECT_TRUE(status.ok());
+  google::cloud::Status res_status;
+  auto result =
+      table_.ReadRow("r1", bigtable::Filter::PassAllFilter(), res_status);
+  EXPECT_STATUS_OK(res_status);
   EXPECT_TRUE(std::get<0>(result));
   auto row = std::get<1>(result);
   EXPECT_EQ("r1", row.row_key());
@@ -238,8 +241,10 @@ commit_row: true
   bigtable::AppProfileId app_profile_id("test-id");
   bigtable::noex::Table table =
       bigtable::noex::Table(client_, app_profile_id, kTableId);
-  auto result = table.ReadRow("r1", bigtable::Filter::PassAllFilter(), status);
-  EXPECT_TRUE(status.ok());
+  google::cloud::Status res_status;
+  auto result =
+      table.ReadRow("r1", bigtable::Filter::PassAllFilter(), res_status);
+  EXPECT_STATUS_OK(res_status);
   EXPECT_TRUE(std::get<0>(result));
   auto row = std::get<1>(result);
   EXPECT_EQ("r1", row.row_key());
@@ -262,9 +267,9 @@ TEST_F(NoexTableTest, ReadRowMissing) {
         EXPECT_EQ(table_.table_name(), req.table_name());
         return stream.release()->AsUniqueMocked();
       }));
-  grpc::Status status;
+  google::cloud::Status status;
   auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter(), status);
-  EXPECT_TRUE(status.ok());
+  EXPECT_STATUS_OK(status);
   EXPECT_FALSE(std::get<0>(result));
 }
 
@@ -287,7 +292,7 @@ TEST_F(NoexTableTest, ReadRowError) {
         EXPECT_EQ(table_.table_name(), req.table_name());
         return stream.release()->AsUniqueMocked();
       }));
-  grpc::Status status;
+  google::cloud::Status status;
   auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter(), status);
   EXPECT_FALSE(status.ok());
   EXPECT_FALSE(std::get<0>(result));
@@ -323,10 +328,9 @@ commit_row: true
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
-  EXPECT_EQ(it->row_key(), "r1");
+  ASSERT_STATUS_OK(*it);
+  EXPECT_EQ((*it)->row_key(), "r1");
   EXPECT_EQ(++it, reader.end());
-  status = reader.Finish();
-  EXPECT_TRUE(status.ok());
 }
 
 TEST_F(NoexTableTest, ReadRowsCanReadWithRetries) {
@@ -386,13 +390,13 @@ commit_row: true
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
-  EXPECT_EQ(it->row_key(), "r1");
+  ASSERT_STATUS_OK(*it);
+  EXPECT_EQ((*it)->row_key(), "r1");
   ++it;
   EXPECT_NE(it, reader.end());
-  EXPECT_EQ(it->row_key(), "r2");
+  ASSERT_STATUS_OK(*it);
+  EXPECT_EQ((*it)->row_key(), "r2");
   EXPECT_EQ(++it, reader.end());
-  status = reader.Finish();
-  EXPECT_TRUE(status.ok());
 }
 
 TEST_F(NoexTableTest, ReadRowsThrowsWhenTooManyErrors) {
@@ -415,9 +419,9 @@ TEST_F(NoexTableTest, ReadRowsThrowsWhenTooManyErrors) {
   auto reader =
       table.ReadRows(bigtable::RowSet(), bigtable::Filter::PassAllFilter());
 
-  reader.begin();
-  grpc::Status status = reader.Finish();
-  EXPECT_FALSE(status.ok());
+  auto it = reader.begin();
+  ASSERT_NE(reader.end(), it);
+  ASSERT_FALSE(*it);
 }
 
 /// @test Verify that Table::Apply() works in a simplest case.

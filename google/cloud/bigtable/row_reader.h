@@ -57,14 +57,6 @@ class RowReader {
             MetadataUpdatePolicy metadata_update_policy,
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
 
-  RowReader(std::shared_ptr<DataClient> client, bigtable::TableId table_name,
-            RowSet row_set, std::int64_t rows_limit, Filter filter,
-            std::unique_ptr<RPCRetryPolicy> retry_policy,
-            std::unique_ptr<RPCBackoffPolicy> backoff_policy,
-            MetadataUpdatePolicy metadata_update_policy,
-            std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
-            bool raise_on_error);
-
   RowReader(std::shared_ptr<DataClient> client,
             bigtable::AppProfileId app_profile_id, bigtable::TableId table_name,
             RowSet row_set, std::int64_t rows_limit, Filter filter,
@@ -72,15 +64,6 @@ class RowReader {
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
             MetadataUpdatePolicy metadata_update_policy,
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
-
-  RowReader(std::shared_ptr<DataClient> client,
-            bigtable::AppProfileId app_profile_id, bigtable::TableId table_name,
-            RowSet row_set, std::int64_t rows_limit, Filter filter,
-            std::unique_ptr<RPCRetryPolicy> retry_policy,
-            std::unique_ptr<RPCBackoffPolicy> backoff_policy,
-            MetadataUpdatePolicy metadata_update_policy,
-            std::unique_ptr<internal::ReadRowsParserFactory> parser_factory,
-            bool raise_on_error);
 
   RowReader(RowReader&& rhs) noexcept = default;
 
@@ -116,11 +99,6 @@ class RowReader {
    */
   void Cancel();
 
-  grpc::Status Finish() {
-    error_retrieved_ = true;
-    return status_;
-  }
-
  private:
   /**
    * Read and parse the next row in the response.
@@ -130,7 +108,7 @@ class RowReader {
    *
    * This call possibly blocks waiting for data until a full row is available.
    */
-  void Advance(internal::OptionalRow& row);
+  StatusOr<internal::OptionalRow> Advance();
 
   /// Called by Advance(), does not handle retries.
   grpc::Status AdvanceOrFail(internal::OptionalRow& row);
@@ -180,10 +158,6 @@ class RowReader {
   std::int64_t rows_count_;
   /// Holds the last read row key, for retries.
   std::string last_read_row_key_;
-
-  grpc::Status status_;
-  bool raise_on_error_;
-  bool error_retrieved_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

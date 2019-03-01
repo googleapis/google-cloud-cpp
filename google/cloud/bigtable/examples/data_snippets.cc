@@ -189,12 +189,15 @@ void ReadRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
         google::cloud::bigtable::Filter::Latest(1));
     // Read and print the rows.
     for (auto const& row : table.ReadRows(range, filter)) {
-      if (row.cells().size() != 1) {
+      if (!row) {
+        throw std::runtime_error(row.status().message());
+      }
+      if (row->cells().size() != 1) {
         std::ostringstream os;
-        os << "Unexpected number of cells in " << row.row_key();
+        os << "Unexpected number of cells in " << row->row_key();
         throw std::runtime_error(os.str());
       }
-      auto const& cell = row.cells().at(0);
+      auto const& cell = row->cells().at(0);
       std::cout << cell.row_key() << " = [" << cell.value() << "]\n";
     }
     std::cout << std::flush;
@@ -222,12 +225,15 @@ void ReadRowsWithLimit(google::cloud::bigtable::Table table, int argc,
         google::cloud::bigtable::Filter::Latest(1));
     // Read and print the first 5 rows in the range.
     for (auto const& row : table.ReadRows(range, 5, filter)) {
-      if (row.cells().size() != 1) {
+      if (!row) {
+        throw std::runtime_error(row.status().message());
+      }
+      if (row->cells().size() != 1) {
         std::ostringstream os;
-        os << "Unexpected number of cells in " << row.row_key();
+        os << "Unexpected number of cells in " << row->row_key();
         throw std::runtime_error(os.str());
       }
-      auto const& cell = row.cells().at(0);
+      auto const& cell = row->cells().at(0);
       std::cout << cell.row_key() << " = [" << cell.value() << "]\n";
     }
     std::cout << std::flush;
@@ -292,8 +298,11 @@ void ReadRowSet(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     auto filter = google::cloud::bigtable::Filter::Latest(1);
 
     for (auto& row : table.ReadRows(std::move(row_set), filter)) {
-      std::cout << row.row_key() << ":\n";
-      for (auto& cell : row.cells()) {
+      if (!row) {
+        throw std::runtime_error(row.status().message());
+      }
+      std::cout << row->row_key() << ":\n";
+      for (auto& cell : row->cells()) {
         std::cout << "\t" << cell.family_name() << ":"
                   << cell.column_qualifier() << "    @ "
                   << cell.timestamp().count() << "us\n"
@@ -326,8 +335,11 @@ void ReadRowSetPrefix(google::cloud::bigtable::Table table, int argc,
     auto filter = google::cloud::bigtable::Filter::Latest(1);
 
     for (auto& row : table.ReadRows(std::move(row_set), filter)) {
-      std::cout << row.row_key() << ":\n";
-      for (auto& cell : row.cells()) {
+      if (!row) {
+        throw std::runtime_error(row.status().message());
+      }
+      std::cout << row->row_key() << ":\n";
+      for (auto& cell : row->cells()) {
         std::cout << "\t" << cell.family_name() << ":"
                   << cell.column_qualifier() << "    @ "
                   << cell.timestamp().count() << "us\n"

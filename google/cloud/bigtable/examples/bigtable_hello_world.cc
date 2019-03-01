@@ -114,8 +114,11 @@ int main(int argc, char* argv[]) try {
   for (auto& row :
        table.ReadRows(google::cloud::bigtable::RowRange::InfiniteRange(),
                       google::cloud::bigtable::Filter::PassAllFilter())) {
-    std::cout << row.row_key() << ":\n";
-    for (auto& cell : row.cells()) {
+    if (!row) {
+      throw std::runtime_error(row.status().message());
+    }
+    std::cout << row->row_key() << ":\n";
+    for (auto& cell : row->cells()) {
       std::cout << "\t" << cell.family_name() << ":" << cell.column_qualifier()
                 << "    @ " << cell.timestamp().count() << "us\n"
                 << "\t\"" << cell.value() << '"' << "\n";
