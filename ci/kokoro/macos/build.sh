@@ -35,8 +35,8 @@ function sha256sum() { shasum -a 256 "$@" ; } && export -f sha256sum
 
 "${PROJECT_ROOT}/ci/install-bazel.sh" macos
 
-export PATH=$HOME/bin:$PATH
-echo "which bazel: $(which bazel)"
+readonly BAZEL_BIN="$HOME/bin/bazel"
+echo "Using Bazel in ${BAZEL_BIN}"
 
 # We need this environment variable because on macOS gRPC crashes if it cannot
 # find the credentials, even if you do not use them. Some of the unit tests do
@@ -49,7 +49,7 @@ export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
 
 # The -DGRPC_BAZEL_BUILD is needed because gRPC does not compile on macOS unless
 # it is set.
-bazel test \
+"${BAZEL_BIN}" test \
     --copt=-DGRPC_BAZEL_BUILD \
     --action_env=GOOGLE_APPLICATION_CREDENTIALS="${GOOGLE_APPLICATION_CREDENTIALS}" \
     --test_output=errors \
@@ -60,7 +60,7 @@ bazel test \
 echo
 echo "================================================================"
 echo "================================================================"
-bazel build \
+"${BAZEL_BIN}" build \
     --copt=-DGRPC_BAZEL_BUILD \
     --action_env=GOOGLE_APPLICATION_CREDENTIALS="${GOOGLE_APPLICATION_CREDENTIALS}" \
     --test_output=errors \
