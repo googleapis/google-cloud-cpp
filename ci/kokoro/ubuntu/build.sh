@@ -32,8 +32,8 @@ echo "Update or Install Bazel $(date)."
 echo "================================================================"
 "${PROJECT_ROOT}/ci/install-bazel.sh" linux
 
-export PATH=$HOME/bin:$PATH
-echo "which bazel: $(which bazel)"
+readonly BAZEL_BIN="$HOME/bin/bazel"
+echo "Using Bazel in ${BAZEL_BIN}"
 
 cat >>kokoro-bazelrc <<_EOF_
 # Set flags for uploading to BES without Remote Build Execution.
@@ -66,7 +66,7 @@ echo ${INVOCATION_ID} >> "${KOKORO_ARTIFACTS_DIR}/bazel_invocation_ids"
 echo "================================================================"
 echo "Compiling and running unit tests $(date)"
 echo "================================================================"
-bazel test \
+"${BAZEL_BIN}" test \
     --test_output=errors \
     --verbose_failures=true \
     --keep_going \
@@ -84,7 +84,7 @@ echo "Compiling all the code, including integration tests $(date)"
 echo "================================================================"
 # Then build everything else (integration tests, examples, etc). So we can run
 # them next.
-bazel build \
+"${BAZEL_BIN}" build \
     --test_output=errors \
     --verbose_failures=true \
     --keep_going \

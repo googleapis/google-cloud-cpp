@@ -28,13 +28,13 @@ echo "================================================================"
 # is a good time to do so.
 "${PROJECT_ROOT}/ci/install-bazel.sh" linux
 
-export PATH=$HOME/bin:$PATH
-echo "which bazel: $(which bazel)"
+readonly BAZEL_BIN="$HOME/bin/bazel"
+echo "Using Bazel in ${BAZEL_BIN}"
 
 echo "================================================================"
 echo "Compile the project in ci/test-install $(date)."
 echo "================================================================"
-(cd ci/test-install ; bazel build \
+(cd ci/test-install ; "${BAZEL_BIN}" build \
     --test_output=errors \
     --verbose_failures=true \
     --keep_going \
