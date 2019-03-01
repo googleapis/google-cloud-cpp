@@ -186,8 +186,8 @@ sudo zypper install -y cmake gcc gcc-c++ git libcurl-devel libopenssl-devel make
 
 ```bash
 sudo zypper refresh && \
-sudo zypper install -y cmake gcc gcc-c++ git libcurl-devel libopenssl-devel \
-        make tar wget
+sudo zypper install -y cmake gcc gcc-c++ git gzip libcurl-devel \
+        libopenssl-devel make tar wget
 ```
 
 ### Ubuntu (18.04 - Bionic Beaver)
