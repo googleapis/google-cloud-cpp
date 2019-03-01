@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/storage/internal/sha256_hash.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
@@ -127,8 +128,15 @@ class ServiceAccountCredentials : public Credentials {
                       text, info_.private_key, JwtSigningAlgorithms::RS256)));
   }
 
+  std::pair<Status, std::string> SignStringHex(std::string const& text) const {
+    using ::google::cloud::storage::internal::OpenSslUtils;
+    return std::make_pair(
+        Status(), internal::HexEncode(OpenSslUtils::SignStringWithPem(
+                      text, info_.private_key, JwtSigningAlgorithms::RS256)));
+  }
+
   /// Return the client id of these credentials.
-  std::string client_id() const { return info_.client_email; }
+  std::string const& client_id() const { return info_.client_email; }
 
  private:
   /**
