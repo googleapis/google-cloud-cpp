@@ -122,16 +122,14 @@ class ServiceAccountCredentials : public Credentials {
    *   credentials.
    */
   std::pair<Status, std::string> SignString(std::string const& text) const {
-    using ::google::cloud::storage::internal::OpenSslUtils;
     return std::make_pair(
-        Status(), OpenSslUtils::Base64Encode(OpenSslUtils::SignStringWithPem(
+        Status(), internal::Base64Encode(internal::SignStringWithPem(
                       text, info_.private_key, JwtSigningAlgorithms::RS256)));
   }
 
   std::pair<Status, std::string> SignStringHex(std::string const& text) const {
-    using ::google::cloud::storage::internal::OpenSslUtils;
     return std::make_pair(
-        Status(), internal::HexEncode(OpenSslUtils::SignStringWithPem(
+        Status(), internal::HexEncode(internal::SignStringWithPem(
                       text, info_.private_key, JwtSigningAlgorithms::RS256)));
   }
 
@@ -197,15 +195,11 @@ class ServiceAccountCredentials : public Credentials {
   std::string MakeJWTAssertion(storage::internal::nl::json const& header,
                                storage::internal::nl::json const& payload,
                                std::string const& pem_contents) {
-    using ::google::cloud::storage::internal::OpenSslUtils;
-    std::string encoded_header =
-        OpenSslUtils::UrlsafeBase64Encode(header.dump());
-    std::string encoded_payload =
-        OpenSslUtils::UrlsafeBase64Encode(payload.dump());
-    std::string encoded_signature =
-        OpenSslUtils::UrlsafeBase64Encode(OpenSslUtils::SignStringWithPem(
-            encoded_header + '.' + encoded_payload, pem_contents,
-            JwtSigningAlgorithms::RS256));
+    std::string encoded_header = internal::UrlsafeBase64Encode(header.dump());
+    std::string encoded_payload = internal::UrlsafeBase64Encode(payload.dump());
+    std::string encoded_signature = internal::UrlsafeBase64Encode(
+        internal::SignStringWithPem(encoded_header + '.' + encoded_payload,
+                                    pem_contents, JwtSigningAlgorithms::RS256));
     return encoded_header + '.' + encoded_payload + '.' + encoded_signature;
   }
 
