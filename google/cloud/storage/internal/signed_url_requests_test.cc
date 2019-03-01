@@ -304,6 +304,7 @@ TEST(V4SignedUrlRequests, CanonicalRequestFull) {
 X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=fake-client-id%2F20190201%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20190201T090000Z&X-Goog-Expires=10&X-Goog-SignedHeaders=cache-control%3Bcontent-type&generation=7&userProject=test-project
 cache-control:no-cache, max-age=3600
 content-type:application/octet-stream
+
 cache-control;content-type
 UNSIGNED-PAYLOAD)""";
 
@@ -316,7 +317,7 @@ UNSIGNED-PAYLOAD)""";
   std::string expected_string_to_sign = R"""(GOOG4-RSA-SHA256
 20190201T090000Z
 20190201/auto/storage/goog4_request
-71bda7afb2333399e662e9f73754258209687d38f26a4e6022a34ed014574d3b)""";
+b6d09f3be351906e01e472adaad90398a37c1c69bfe82ad5cb9ba32d66dac850)""";
 
   EXPECT_EQ(expected_string_to_sign, request.StringToSign("fake-client-id"));
 

@@ -113,6 +113,13 @@ std::string TrimHeaderValue(std::string const& value) {
 }
 }  // namespace
 
+void V4SignUrlRequest::AddMissingRequiredHeaders() {
+  auto const& headers = common_request_.extension_headers();
+  if (headers.count("host") == 0) {
+    SetOption(AddExtensionHeader("host", "storage.googleapis.com"));
+  }
+}
+
 std::string V4SignUrlRequest::CanonicalQueryString(
     std::string const& client_id) const {
   CurlHandle curl;
@@ -143,10 +150,8 @@ std::string V4SignUrlRequest::CanonicalRequest(
   os << QueryStringFromParameters(curl, parameters) << "\n";
 
   // Headers
-  char const* sep = "";
   for (auto&& kv : common_request_.extension_headers()) {
-    os << sep << kv.first << ":" << TrimHeaderValue(kv.second);
-    sep = "\n";
+    os << kv.first << ":" << TrimHeaderValue(kv.second) << "\n";
   }
   os << "\n" << SignedHeaders() << "\nUNSIGNED-PAYLOAD";
 

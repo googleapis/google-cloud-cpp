@@ -181,6 +181,9 @@ class V4SignUrlRequest {
   std::chrono::system_clock::time_point timestamp() const { return timestamp_; }
   std::chrono::seconds expires() const { return expires_; }
 
+  /// Add any headers that the application developer did not provide.
+  void AddMissingRequiredHeaders();
+
   /// Creates the query string with the required query parameters.
   std::string CanonicalQueryString(std::string const& client_id) const;
 
