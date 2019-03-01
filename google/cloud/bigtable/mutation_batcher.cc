@@ -190,7 +190,8 @@ void MutationBatcher::OnFailedMutations(CompletionQueue& cq,
     auto it = batch.mutation_data.find(idx);
     completed_size += it->second.request_size;
     it->second.completion_promise.set_value(
-        internal::MakeStatusFromRpcError(f.status()));
+        // internal::MakeStatusFromRpcError(f.status()));
+        f.status());
     // Release resources as early as possible.
     batch.mutation_data.erase(it);
   }

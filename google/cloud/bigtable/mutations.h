@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MUTATIONS_H_
 
 #include "google/cloud/bigtable/internal/conjunction.h"
+#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <google/bigtable/v2/bigtable.pb.h>
@@ -307,13 +308,13 @@ class SingleRowMutation {
  */
 class FailedMutation {
  public:
+  FailedMutation(SingleRowMutation mut, google::cloud::Status status, int index)
+      : mutation_(std::move(mut)), status_(status), original_index_(index) {}
+
   FailedMutation(SingleRowMutation mut, google::rpc::Status status, int index)
       : mutation_(std::move(mut)),
-        status_(ToGrpcStatus(status)),
+        status_(ToGCStatus(status)),
         original_index_(index) {}
-
-  FailedMutation(SingleRowMutation mut, google::cloud::Status status, int index)
-      : mutation_(std::move(mut)), gcstatus_(status), original_index_(index) {}
 
   FailedMutation(FailedMutation&&) = default;
   FailedMutation& operator=(FailedMutation&&) = default;
@@ -323,8 +324,7 @@ class FailedMutation {
   //@{
   /// @name accessors
   SingleRowMutation const& mutation() const { return mutation_; }
-  grpc::Status const& status() const { return status_; }
-  google::cloud::Status const& gcstatus() const { return gcstatus_; }
+  google::cloud::Status const& status() const { return status_; }
   int original_index() const { return original_index_; }
   //@}
 
@@ -332,12 +332,11 @@ class FailedMutation {
 
  private:
   static grpc::Status ToGrpcStatus(google::rpc::Status const& status);
+  static google::cloud::Status ToGCStatus(google::rpc::Status const& status);
 
  private:
   SingleRowMutation mutation_;
-  grpc::Status status_;
-  google::cloud::Status gcstatus_;
-
+  google::cloud::Status status_;
   int original_index_;
 };
 
@@ -440,7 +439,9 @@ class BulkMutation {
   // Add a failed mutation to the batch.
   BulkMutation& emplace_back(FailedMutation fm) {
     fm.mutation_.MoveTo(request_.add_entries());
-    fm.status_ = grpc::Status::OK;
+    // fm.status_ = grpc::Status::OK;
+    google::cloud::Status gcs;
+    fm.status_ = gcs;
     return *this;
   }
 

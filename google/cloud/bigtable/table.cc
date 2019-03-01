@@ -20,6 +20,7 @@
 #include <type_traits>
 
 namespace {
+/*
 [[noreturn]] void ReportPermanentFailures(
     char const* msg, grpc::Status const& status,
     std::vector<google::cloud::bigtable::FailedMutation> failures) {
@@ -39,6 +40,18 @@ namespace {
   std::abort();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
+*/
+
+[[noreturn]] void ReportPermanentFailures(
+    std::vector<google::cloud::bigtable::FailedMutation> failures) {
+  for (auto const& failed : failures) {
+    std::cerr << "Mutation " << failed.original_index() << " failed with"
+              << failed.status().message() << " [" << failed.status().code()
+              << "]\n";
+  }
+  std::cerr << "Aborting because exceptions are disabled.\n";
+  std::abort();
+}
 }  // namespace
 
 namespace google {
@@ -51,8 +64,10 @@ static_assert(std::is_copy_assignable<bigtable::Table>::value,
 Status Table::Apply(SingleRowMutation mut) {
   std::vector<FailedMutation> failures = impl_.Apply(std::move(mut));
   if (!failures.empty()) {
-    grpc::Status status = failures.front().status();
-    return bigtable::internal::MakeStatusFromRpcError(status);
+    // grpc::Status status = failures.front().status();
+    // return bigtable::internal::MakeStatusFromRpcError(status);
+    google::cloud::Status gc_status = failures.front().status();
+    return gc_status;
   }
   return google::cloud::Status{};
 }
@@ -78,7 +93,9 @@ void Table::BulkApply(BulkMutation mut) {
   std::vector<FailedMutation> failures =
       impl_.BulkApply(std::move(mut), status);
   if (!status.ok()) {
-    ReportPermanentFailures(status.error_message().c_str(), status, failures);
+    // ReportPermanentFailures(status.error_message().c_str(), status,
+    // failures);
+    ReportPermanentFailures(failures);
   }
 }
 
@@ -94,8 +111,13 @@ future<void> Table::AsyncBulkApply(BulkMutation mut, CompletionQueue& cq) {
     auto failures = f.get();
 
     if (!failures.empty()) {
-      grpc::Status status = failures.front().status();
-      ReportPermanentFailures(status.error_message().c_str(), status, failures);
+      /*
+    grpc::Status status = failures.front().status();
+    ReportPermanentFailures(status.error_message().c_str(), status, failures);
+   */
+      ReportPermanentFailures(failures);
+
+      google::cloud::Status gc_status = failures.front().status();
     }
   });
 
