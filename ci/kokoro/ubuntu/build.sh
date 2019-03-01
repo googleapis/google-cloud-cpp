@@ -16,12 +16,24 @@
 
 set -eu
 
+echo "================================================================"
+echo "Running Bazel build with integration tests against production $(date)."
+echo "================================================================"
+
 echo "Reading CI secret configuration parameters."
 source "${KOKORO_GFILE_DIR}/test-configuration.sh"
 
 echo "Running build and tests"
 cd "$(dirname $0)/../../.."
 readonly PROJECT_ROOT="${PWD}"
+
+echo "================================================================"
+echo "Update or Install Bazel $(date)."
+echo "================================================================"
+"${PROJECT_ROOT}/ci/install-bazel.sh" linux
+
+export PATH=$HOME/bin:$PATH
+echo "which bazel: $(which bazel)"
 
 cat >>kokoro-bazelrc <<_EOF_
 # Set flags for uploading to BES without Remote Build Execution.
@@ -45,12 +57,15 @@ export CXX=/usr/bin/g++-4.9
 
 # First build and run the unit tests.
 readonly INVOCATION_ID="$(python -c 'import uuid; print uuid.uuid4()')"
-echo "Configure and start Bazel: " ${INVOCATION_ID}
 echo "================================================================"
+echo "Configure and start Bazel: ${INVOCATION_ID} $(date)"
 echo "https://source.cloud.google.com/results/invocations/${INVOCATION_ID}"
 echo "================================================================"
 echo ${INVOCATION_ID} >> "${KOKORO_ARTIFACTS_DIR}/bazel_invocation_ids"
 
+echo "================================================================"
+echo "Compiling and running unit tests $(date)"
+echo "================================================================"
 bazel test \
     --test_output=errors \
     --verbose_failures=true \
@@ -64,8 +79,8 @@ echo "Copying artifacts"
 cp "$(bazel info output_base)/java.log" "${KOKORO_ARTIFACTS_DIR}/" || echo "java log copy failed."
 echo "End of copying."
 
-echo
 echo "================================================================"
+echo "Compiling all the code, including integration tests $(date)"
 echo "================================================================"
 # Then build everything else (integration tests, examples, etc). So we can run
 # them next.
@@ -76,11 +91,10 @@ bazel build \
     -- //google/cloud/...:all
 
 # The integration tests need further configuration and tools.
-echo
 echo "================================================================"
+echo "Download dependencies for integration tests $(date)."
 echo "================================================================"
 
-echo "Download dependencies for integration tests."
 # Download the gRPC `roots.pem` file. Somewhere inside the bowels of Bazel, this
 # file might exist, but my attempts at using it have failed.
 echo "    Getting roots.pem for gRPC."
@@ -102,16 +116,23 @@ ls -l "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
 
 echo
 echo "================================================================"
+echo "Running Google Cloud Bigtable Integration Tests $(date)"
 echo "================================================================"
-echo "Running Google Cloud Bigtable Integration Tests"
 (cd $(bazel info bazel-bin)/google/cloud/bigtable/tests && \
    "${PROJECT_ROOT}/google/cloud/bigtable/tests/run_integration_tests_production.sh")
 (cd $(bazel info bazel-bin)/google/cloud/bigtable/examples && \
    "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_examples_production.sh")
 
-echo "Running Google Cloud Storage Integration Tests"
+echo
+echo "================================================================"
+echo "Running Google Cloud Storage Integration Tests $(date)"
+echo "================================================================"
 (cd $(bazel info bazel-bin)/google/cloud/storage/tests && \
     "${PROJECT_ROOT}/google/cloud/storage/tests/run_integration_tests_production.sh")
 echo "Running Google Cloud Storage Examples"
 (cd $(bazel info bazel-bin)/google/cloud/storage/examples && \
     "${PROJECT_ROOT}/google/cloud/storage/examples/run_examples_production.sh")
+
+echo "================================================================"
+echo "Build completed $(date)"
+echo "================================================================"
