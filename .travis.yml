@@ -28,15 +28,6 @@ matrix:
       install: ci/install-retry.sh ci/install-bazel.sh linux
       script: ci/travis/build-bazel.sh
       if: repo =~ ^googleapis/ or head_repo =~ ^googleapis/
-    - # Install the google-cloud-cpp libraries and test that one can use the
-      # installed versions.
-      os: linux
-      compiler: clang
-      env:
-        TEST_INSTALL=yes
-        DISTRO=ubuntu-install
-        DISTRO_VERSION=18.04
-      if: repo =~ ^googleapis/ or head_repo =~ ^googleapis/
     - # Verify that we can compile shared libraries, and verify that the ABI is
       # not changing, or rather, that if there are changes the changes are
       # intentional.
@@ -57,7 +48,7 @@ matrix:
         BUILD_TYPE=Coverage
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
-    - # Compile with tests disabled.
+    - # Compile with tests disabled, run style checks and docs.
       os: linux
       compiler: gcc
       env:
