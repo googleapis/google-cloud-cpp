@@ -136,7 +136,7 @@ std::string OpenSslUtils::Base64Encode(std::string const& str) {
 std::string OpenSslUtils::Base64Encode(std::vector<std::uint8_t> const& bytes) {
 #ifdef OPENSSL_IS_BORINGSSL
   std::size_t encoded_size;
-  EVP_EncodedLength(&encoded_size, str.size());
+  EVP_EncodedLength(&encoded_size, bytes.size());
   std::vector<std::uint8_t> result(encoded_size);
   std::size_t out_size =
       EVP_EncodeBlock(result.data(), bytes.data(), bytes.size());
