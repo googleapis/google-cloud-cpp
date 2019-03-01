@@ -439,9 +439,7 @@ class BulkMutation {
   // Add a failed mutation to the batch.
   BulkMutation& emplace_back(FailedMutation fm) {
     fm.mutation_.MoveTo(request_.add_entries());
-    // fm.status_ = grpc::Status::OK;
-    google::cloud::Status gcs;
-    fm.status_ = gcs;
+    fm.status_ = google::cloud::Status();
     return *this;
   }
 

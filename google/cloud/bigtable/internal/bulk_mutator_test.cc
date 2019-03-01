@@ -271,8 +271,6 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
   ASSERT_EQ(1UL, failures.size());
   EXPECT_EQ(1, failures[0].original_index());
   EXPECT_EQ("bar", failures[0].mutation().row_key());
-  // EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE,
-  // failures[0].status().error_code());
   EXPECT_EQ(google::cloud::StatusCode::kOutOfRange,
             failures[0].status().code());
 }
@@ -414,14 +412,11 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
   ASSERT_EQ(2UL, failures.size());
   EXPECT_EQ(0, failures[0].original_index());
   EXPECT_EQ("foo", failures[0].mutation().row_key());
-  // EXPECT_EQ(grpc::StatusCode::UNAVAILABLE,
-  // failures[0].status().error_code());
   EXPECT_EQ(google::cloud::StatusCode::kUnavailable,
             failures[0].status().code());
 
   EXPECT_EQ(2, failures[1].original_index());
   EXPECT_EQ("baz", failures[1].mutation().row_key());
-  // EXPECT_EQ(grpc::StatusCode::UNKNOWN, failures[1].status().error_code());
   EXPECT_EQ(google::cloud::StatusCode::kUnknown, failures[1].status().code());
 }
 
@@ -476,7 +471,6 @@ TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
   ASSERT_EQ(1UL, failures.size());
   EXPECT_EQ(1, failures[0].original_index());
   EXPECT_EQ("bar", failures[0].mutation().row_key());
-  // EXPECT_EQ(grpc::StatusCode::UNKNOWN, failures[0].status().error_code());
   EXPECT_EQ(google::cloud::StatusCode::kUnknown, failures[0].status().code());
 }
 

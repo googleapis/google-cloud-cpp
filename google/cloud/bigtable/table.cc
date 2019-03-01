@@ -51,8 +51,7 @@ static_assert(std::is_copy_assignable<bigtable::Table>::value,
 Status Table::Apply(SingleRowMutation mut) {
   std::vector<FailedMutation> failures = impl_.Apply(std::move(mut));
   if (!failures.empty()) {
-    google::cloud::Status gc_status = failures.front().status();
-    return gc_status;
+    return failures.front().status();
   }
   return google::cloud::Status{};
 }
