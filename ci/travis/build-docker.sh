@@ -43,6 +43,10 @@ if [[ -z "${ccache_command}" ]]; then
   exit 1
 fi
 
+echo
+echo "${COLOR_YELLOW}Starting docker build $(date) with ${NCPU} cores${COLOR_RESET}"
+echo
+
 bootstrap_ccache="no"
 if [[ "${NEEDS_CCACHE:-}" = "no" ]]; then
   bootstrap_ccache="no"
@@ -152,6 +156,9 @@ if [ "${BUILD_TESTING:-}" != "no" ]; then
     echo "${COLOR_GREEN}Running integration tests for ${subdir}${COLOR_RESET}"
     (cd "${BUILD_OUTPUT}" && "${PROJECT_ROOT}/${subdir}/ci/run_integration_tests.sh")
   done
+  echo
+  echo "${COLOR_YELLOW}Completed unit and integration tests $(date)${COLOR_RESET}"
+  echo
 fi
 
 # Test the install rule and that the installation works.

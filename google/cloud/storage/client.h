@@ -2275,16 +2275,23 @@ class Client {
    *     requests that only affect a bucket.
    * @param options a list of optional parameters for the signed URL, this
    *     include: `ExpirationTime`, `MD5HashValue`, `ContentType`,
-   *     `AddExtensionHeaderOption`, and `AddQueryParameterOption`. The
-   *     `AddExtensionHeader()` function provides a simpler way to create
-   *     extension headers. Note that you can provides multiple values of this
-   *     option. Likewise, the following helper functions can create properly
-   *     formatted query parameters: `WithAcl()`, `WithBilling()`,
-   *     `WithCompose()`, `WithCors()`, `WithEncryption()`,
-   *     `WithEncryptionConfig()`,`WithGeneration()`, `WithGenerationMarker()`,
-   *     `WithLifecycle()`, `WithLocation()`, `WithLogging()`, `WithMarker()`,
-   *     `WithResponseContentDisposition()`, `WithResponseContentType()`,
-   *     `WithStorageClass()`, `WithTagging()`, `WithUserProject()`.
+   *     `AddExtensionHeaderOption`, `AddQueryParameterOption`, and
+   *     `AddSubResourceOption`. Note that only the last `AddSubResourceOption`
+   *     option has any effect.
+   *
+   * @par Helper Functions
+   *
+   * The following functions create a `AddSubResourceOption` with less
+   * opportunities for typos in the sub-resource name: `WithAcl()`,
+   * `WithBilling()`, `WithCompose()`, `WithCors()`, `WithEncryption()`,
+   * `WithEncryptionConfig()`, `WithLifecycle()`, `WithLocation()`,
+   * `WithLogging()`, `WithStorageClass()`, and `WithTagging()`.
+   *
+   * Likewise, the following helper functions can create properly formatted
+   * `AddExtensionHeaderOption` objects: `WithGeneration()`,
+   * `WithGenerationMarker()`, `WithMarker()`,
+   * `WithResponseContentDisposition()`, `WithResponseContentType()`, and
+   * `WithUserProject()`.
    *
    * @return the signed URL.
    *
@@ -2302,8 +2309,8 @@ class Client {
                                           std::string bucket_name,
                                           std::string object_name,
                                           Options&&... options) {
-    internal::SignUrlRequest request(std::move(verb), std::move(bucket_name),
-                                     std::move(object_name));
+    internal::V2SignUrlRequest request(std::move(verb), std::move(bucket_name),
+                                       std::move(object_name));
     request.set_multiple_options(std::forward<Options>(options)...);
     return SignUrl(request);
   }
@@ -2525,7 +2532,7 @@ class Client {
   Status DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
                           std::string const& file_name);
 
-  StatusOr<std::string> SignUrl(internal::SignUrlRequest const& request);
+  StatusOr<std::string> SignUrl(internal::V2SignUrlRequest const& request);
 
   std::shared_ptr<internal::RawClient> raw_client_;
 };

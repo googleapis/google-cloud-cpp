@@ -27,86 +27,132 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-/**
- * Requests the Google Cloud Storage service account for a project.
- */
-class SignUrlRequest {
+/// The common data for SignUrlRequests.
+class SignUrlRequestCommon {
  public:
-  SignUrlRequest() = default;
-  explicit SignUrlRequest(std::string verb, std::string bucket_name,
-                          std::string object_name);
+  SignUrlRequestCommon() = default;
+  SignUrlRequestCommon(std::string verb, std::string bucket_name,
+                       std::string object_name)
+      : verb_(std::move(verb)),
+        bucket_name_(std::move(bucket_name)),
+        object_name_(std::move(object_name)) {}
 
   std::string const& verb() const { return verb_; }
   std::string const& bucket_name() const { return bucket_name_; }
   std::string const& object_name() const { return object_name_; }
+  std::string const& sub_resource() const { return sub_resource_; }
+  std::map<std::string, std::string> const& extension_headers() const {
+    return extension_headers_;
+  }
+  std::multimap<std::string, std::string> const& query_parameters() const {
+    return query_parameters_;
+  }
+
+  void SetOption(SubResourceOption const& o) {
+    if (!o.has_value()) {
+      return;
+    }
+    sub_resource_ = o.value();
+  }
+
+  void SetOption(AddExtensionHeaderOption const& o);
+
+  void SetOption(AddQueryParameterOption const& o) {
+    if (!o.has_value()) {
+      return;
+    }
+    query_parameters_.insert(o.value());
+  }
+
+ private:
+  std::string verb_;
+  std::string bucket_name_;
+  std::string object_name_;
+  std::string sub_resource_;
+  std::map<std::string, std::string> extension_headers_;
+  std::multimap<std::string, std::string> query_parameters_;
+};
+
+/**
+ * Requests the Google Cloud Storage service account for a project.
+ */
+class V2SignUrlRequest {
+ public:
+  V2SignUrlRequest() = default;
+  explicit V2SignUrlRequest(std::string verb, std::string bucket_name,
+                            std::string object_name)
+      : common_request_(std::move(verb), std::move(bucket_name),
+                        std::move(object_name)),
+        expiration_time_(DefaultExpirationTime()) {}
+
+  std::string const& verb() const { return common_request_.verb(); }
+  std::string const& bucket_name() const {
+    return common_request_.bucket_name();
+  }
+  std::string const& object_name() const {
+    return common_request_.object_name();
+  }
+  std::string const& sub_resource() const {
+    return common_request_.sub_resource();
+  }
+
   std::chrono::seconds expiration_time_as_seconds() const {
     return std::chrono::duration_cast<std::chrono::seconds>(
         expiration_time_.time_since_epoch());
   }
 
-  /// Creates the blob to be signed.
+  /// Creates the string to be signed.
   std::string StringToSign() const;
 
   template <typename H, typename... T>
-  SignUrlRequest& set_multiple_options(H&& h, T&&... tail) {
-    set_option(std::forward<H>(h));
+  V2SignUrlRequest& set_multiple_options(H&& h, T&&... tail) {
+    SetOption(std::forward<H>(h));
     return set_multiple_options(std::forward<T>(tail)...);
   }
 
-  SignUrlRequest& set_multiple_options() { return *this; }
+  V2SignUrlRequest& set_multiple_options() { return *this; }
 
  private:
-  void set_option(MD5HashValue const& o) {
+  static std::chrono::system_clock::time_point DefaultExpirationTime();
+
+  void SetOption(MD5HashValue const& o) {
     if (!o.has_value()) {
       return;
     }
     md5_hash_value_ = o.value();
   }
 
-  void set_option(ContentType const& o) {
+  void SetOption(ContentType const& o) {
     if (!o.has_value()) {
       return;
     }
     content_type_ = o.value();
   }
 
-  void set_option(ExpirationTime const& o) {
+  void SetOption(ExpirationTime const& o) {
     if (!o.has_value()) {
       return;
     }
     expiration_time_ = o.value();
   }
 
-  void set_option(AddExtensionHeaderOption const& o) {
-    if (!o.has_value()) {
-      return;
-    }
-    auto res = extension_headers_.insert(o.value());
-    if (!res.second) {
-      // The element already exists, we need to append:
-      res.first->second.push_back(',');
-      res.first->second.append(o.value().second);
-    }
+  void SetOption(SubResourceOption const& o) { common_request_.SetOption(o); }
+
+  void SetOption(AddExtensionHeaderOption const& o) {
+    common_request_.SetOption(o);
   }
 
-  void set_option(AddQueryParameterOption const& o) {
-    if (!o.has_value()) {
-      return;
-    }
-    query_parameters_.push_back(o.value());
+  void SetOption(AddQueryParameterOption const& o) {
+    common_request_.SetOption(o);
   }
 
-  std::string verb_;
-  std::string bucket_name_;
-  std::string object_name_;
+  SignUrlRequestCommon common_request_;
   std::string md5_hash_value_;
   std::string content_type_;
   std::chrono::system_clock::time_point expiration_time_;
-  std::map<std::string, std::string> extension_headers_;
-  std::vector<std::string> query_parameters_;
 };
 
-std::ostream& operator<<(std::ostream& os, SignUrlRequest const& r);
+std::ostream& operator<<(std::ostream& os, V2SignUrlRequest const& r);
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

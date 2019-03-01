@@ -31,13 +31,13 @@ elif [[ "${BUILD_NAME}" = "asan" ]]; then
   export CXX=clang++
   export CMAKE_FLAGS="-DSANITIZE_ADDRESS=yes"
 elif [[ "${BUILD_NAME}" = "centos-7" ]]; then
- # Compile under centos:7. This distro uses gcc-4.8.
- export DISTRO=centos
- export DISTRO_VERSION=7
+  # Compile under centos:7. This distro uses gcc-4.8.
+  export DISTRO=centos
+  export DISTRO_VERSION=7
 elif [[ "${BUILD_NAME}" = "noex" ]]; then
- # Compile with -fno-exceptions
- export DISTRO_VERSION=16.04
- export CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=no"
+  # Compile with -fno-exceptions
+  export DISTRO_VERSION=16.04
+  export CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=no"
 elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
   # Compile with the UndefinedBehaviorSanitizer enabled.
   export BUILD_TYPE=Debug
@@ -85,17 +85,17 @@ source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
 echo "================================================================"
-printenv
-echo "================================================================"
-
-echo "================================================================"
-echo "Updating submodules."
+echo "Updating submodules $(date)."
 cd "${PROJECT_ROOT}"
 git submodule update --init
 echo "================================================================"
 
 echo "================================================================"
-echo "Creating Docker image with all the development tools."
+export NCPU=$(nproc)
+echo "Building with ${NCPU} cores $(date)."
+
+echo "================================================================"
+echo "Creating Docker image with all the development tools $(date)."
 # We do not want to print the log unless there is an error, so disable the -e
 # flag. Later, we will want to print out the emulator(s) logs *only* if there
 # is an error, so disabling from this point on is the right choice.
@@ -109,10 +109,11 @@ fi
 echo "================================================================"
 
 echo "================================================================"
-echo "Running the full build."
+echo "Running the full build $(date)."
 export NEEDS_CCACHE=no
 "${PROJECT_ROOT}/ci/travis/build-linux.sh"
 exit_status=$?
+echo "Build finished with ${exit_status} exit status $(date)."
 echo "================================================================"
 
 echo "================================================================"

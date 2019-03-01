@@ -73,6 +73,18 @@ TEST(FormatRfc3339Test, FractionalNanos) {
   }
 }
 
+TEST(FormatV4SignedUrlTimestampTest, Base) {
+  auto timestamp = ParseRfc3339("2019-08-02T01:02:03Z");
+  std::string actual = FormatV4SignedUrlTimestamp(timestamp);
+  EXPECT_EQ("20190802T010203Z", actual);
+}
+
+TEST(FormatV4SignedUrlScopeTest, Base) {
+  auto timestamp = ParseRfc3339("2019-08-02T01:02:03Z");
+  std::string actual = FormatV4SignedUrlScope(timestamp);
+  EXPECT_EQ("20190802", actual);
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

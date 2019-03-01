@@ -25,8 +25,8 @@ namespace {
 
 using ::testing::HasSubstr;
 
-TEST(SignedUrlRequests, Sign) {
-  SignUrlRequest request("GET", "test-bucket", "test-object");
+TEST(V2SignedUrlRequests, Sign) {
+  V2SignUrlRequest request("GET", "test-bucket", "test-object");
   EXPECT_EQ("GET", request.verb());
   EXPECT_EQ("test-bucket", request.bucket_name());
   EXPECT_EQ("test-object", request.object_name());
@@ -58,8 +58,8 @@ x-goog-meta-foo:bar,baz
   EXPECT_THAT(os.str(), HasSubstr(expected_blob));
 }
 
-TEST(SignedUrlRequests, SignEscaped) {
-  SignUrlRequest request("GET", "test-bucket", "test- -?-+-/-:-&-object");
+TEST(V2SignedUrlRequests, SignEscaped) {
+  V2SignUrlRequest request("GET", "test-bucket", "test- -?-+-/-:-&-object");
   EXPECT_EQ("GET", request.verb());
   EXPECT_EQ("test-bucket", request.bucket_name());
   EXPECT_EQ("test- -?-+-/-:-&-object", request.object_name());
@@ -81,6 +81,107 @@ TEST(SignedUrlRequests, SignEscaped) {
   std::ostringstream os;
   os << request;
   EXPECT_THAT(os.str(), HasSubstr(expected_blob));
+}
+
+TEST(V2SignedUrlRequests, SubResource) {
+  V2SignUrlRequest request("GET", "test-bucket", "test-object");
+  EXPECT_EQ("GET", request.verb());
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ("test-object", request.object_name());
+
+  request.set_multiple_options(
+      WithAcl(), ExpirationTime(ParseRfc3339("2019-02-26T13:14:15Z")));
+
+  EXPECT_EQ("acl", request.sub_resource());
+
+  // The magic seconds where found using:
+  //     date +%s -u --date=2019-02-26T13:14:15Z
+  //
+  std::string expected_blob = R"""(GET
+
+
+1551186855
+/test-bucket/test-object?acl)""";
+
+  EXPECT_EQ(expected_blob, request.StringToSign());
+
+  std::ostringstream os;
+  os << request;
+  EXPECT_THAT(os.str(), HasSubstr(expected_blob));
+}
+
+TEST(V2SignedUrlRequests, SubResourceMultiple) {
+  V2SignUrlRequest request("GET", "test-bucket", "");
+  EXPECT_EQ("GET", request.verb());
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ("", request.object_name());
+
+  request.set_multiple_options(
+      WithAcl(), WithBilling(),
+      ExpirationTime(ParseRfc3339("2019-02-26T13:14:15Z")));
+
+  EXPECT_EQ("billing", request.sub_resource());
+
+  // The magic seconds where found using:
+  //     date +%s -u --date=2019-02-26T13:14:15Z
+  //
+  std::string expected_blob = R"""(GET
+
+
+1551186855
+/test-bucket?billing)""";
+
+  EXPECT_EQ(expected_blob, request.StringToSign());
+}
+
+TEST(V2SignedUrlRequests, RepeatedHeader) {
+  V2SignUrlRequest request("PUT", "test-bucket", "test-object");
+  EXPECT_EQ("PUT", request.verb());
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ("test-object", request.object_name());
+
+  request.set_multiple_options(
+      WithTagging(), ExpirationTime(ParseRfc3339("2019-02-26T13:14:15Z")),
+      AddExtensionHeader("X-Goog-Meta-Reviewer", "test-meta-1"),
+      AddExtensionHeader("x-goog-meta-reviewer", "not-encoded- -?-+-/-:-&-"));
+
+  EXPECT_EQ("tagging", request.sub_resource());
+
+  // The magic seconds where found using:
+  //     date +%s -u --date=2019-02-26T13:14:15Z
+  //
+  std::string expected_blob = R"""(PUT
+
+
+1551186855
+x-goog-meta-reviewer:test-meta-1,not-encoded- -?-+-/-:-&-
+/test-bucket/test-object?tagging)""";
+
+  EXPECT_EQ(expected_blob, request.StringToSign());
+}
+
+TEST(V2SignedUrlRequests, EncodeQueryParameter) {
+  V2SignUrlRequest request("GET", "test-bucket", "test-object.txt");
+  EXPECT_EQ("GET", request.verb());
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ("test-object.txt", request.object_name());
+
+  request.set_multiple_options(
+      ExpirationTime(ParseRfc3339("2019-02-26T13:14:15Z")),
+      WithResponseContentType("text/html"));
+
+  EXPECT_EQ("", request.sub_resource());
+
+  // The magic seconds where found using:
+  //     date +%s -u --date=2019-02-26T13:14:15Z
+  //
+  std::string expected_blob = R"""(GET
+
+
+1551186855
+/test-bucket/test-object.txt?response-content-type=text%2Fhtml)""";
+
+  EXPECT_EQ(expected_blob, request.StringToSign());
 }
 
 }  // namespace

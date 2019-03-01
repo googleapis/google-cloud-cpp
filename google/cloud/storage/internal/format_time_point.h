@@ -42,6 +42,13 @@ namespace internal {
  */
 std::string FormatRfc3339(std::chrono::system_clock::time_point tp);
 
+/// Format a time point as required by V4 signed urls.
+std::string FormatV4SignedUrlTimestamp(
+    std::chrono::system_clock::time_point tp);
+
+/// Format a time point to use in the scope of a V4 signed url.
+std::string FormatV4SignedUrlScope(std::chrono::system_clock::time_point tp);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

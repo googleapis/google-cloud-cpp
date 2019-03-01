@@ -20,10 +20,40 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
+
+RowReaderIterator::RowReaderIterator(RowReader* owner) : owner_(owner) {
+  Advance();
+}
+
+RowReaderIterator::RowReaderIterator() : owner_() {}
+
 // Defined here because it needs to see the definition of RowReader
 RowReaderIterator& RowReaderIterator::operator++() {
-  owner_->Advance(row_);
+  if (owner_ != nullptr && !row_) {
+    // If the iterator dereferences to a bad status, the next value is end().
+    owner_ = nullptr;
+    return *this;
+  }
+  // TODO(#1402): GCP_ASSERT(owner_);  // assert it's not end()
+  Advance();
   return *this;
+}
+
+void RowReaderIterator::Advance() {
+  // clang-tidy complains that owner_ can be nullptr. It can indeed.
+  // NOLINTNEXTLINE(clang-analyzer-core.CallAndMessage)
+  auto status_or_optional_row = owner_->Advance();
+  if (!status_or_optional_row) {
+    row_ = StatusOr<Row>(std::move(status_or_optional_row).status());
+    return;
+  }
+  auto& optional_row = *status_or_optional_row;
+  if (optional_row) {
+    row_ = *std::move(optional_row);
+    return;
+  }
+  // Successful end()
+  owner_ = nullptr;
 }
 
 }  // namespace internal

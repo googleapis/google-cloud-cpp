@@ -97,8 +97,11 @@ int main(int argc, char* argv[]) try {
   std::cout << "Scanning all the data from " << table_id << "\n";
   for (auto& row : read.ReadRows(cbt::RowRange::InfiniteRange(),
                                  cbt::Filter::PassAllFilter())) {
-    std::cout << row.row_key() << ":\n";
-    for (auto& cell : row.cells()) {
+    if (!row) {
+      throw std::runtime_error(row.status().message());
+    }
+    std::cout << row->row_key() << ":\n";
+    for (auto& cell : row->cells()) {
       std::cout << "\t" << cell.family_name() << ":" << cell.column_qualifier()
                 << "    @ " << cell.timestamp().count() << "us\n"
                 << "\t\"" << cell.value() << '"' << "\n";

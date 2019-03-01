@@ -21,25 +21,29 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 TEST(SignedUrlOptions, QueryParamters) {
+  auto mp = [](char const* k, char const* v) {
+    return std::pair<std::string, std::string>(k, v);
+  };
   EXPECT_EQ("acl", WithAcl().value());
   EXPECT_EQ("billing", WithBilling().value());
   EXPECT_EQ("compose", WithCompose().value());
   EXPECT_EQ("cors", WithCors().value());
   EXPECT_EQ("encryption", WithEncryption().value());
   EXPECT_EQ("encryptionConfig", WithEncryptionConfig().value());
-  EXPECT_EQ("generation=12345", WithGeneration(12345U).value());
-  EXPECT_EQ("generation-marker=23456", WithGenerationMarker(23456U).value());
+  EXPECT_EQ(mp("generation", "12345"), WithGeneration(12345U).value());
+  EXPECT_EQ(mp("generation-marker", "23456"),
+            WithGenerationMarker(23456U).value());
   EXPECT_EQ("lifecycle", WithLifecycle().value());
   EXPECT_EQ("location", WithLocation().value());
   EXPECT_EQ("logging", WithLogging().value());
-  EXPECT_EQ("marker=abcd", WithMarker("abcd").value());
-  EXPECT_EQ("response-content-disposition=inline",
+  EXPECT_EQ(mp("marker", "abcd"), WithMarker("abcd").value());
+  EXPECT_EQ(mp("response-content-disposition", "inline"),
             WithResponseContentDisposition("inline").value());
-  EXPECT_EQ("response-content-type=text%2Fplain",
+  EXPECT_EQ(mp("response-content-type", "text/plain"),
             WithResponseContentType("text/plain").value());
   EXPECT_EQ("storageClass", WithStorageClass().value());
   EXPECT_EQ("tagging", WithTagging().value());
-  EXPECT_EQ("userProject=test-project",
+  EXPECT_EQ(mp("userProject", "test-project"),
             WithUserProject("test-project").value());
 }
 }  // namespace
