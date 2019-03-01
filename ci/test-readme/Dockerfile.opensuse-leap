@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DISTRO_VERSION=leap
-FROM opensuse:${DISTRO_VERSION}
+ARG DISTRO_VERSION=latest
+FROM opensuse/leap:${DISTRO_VERSION}
 
 ## [START INSTALL.md]
 
@@ -23,8 +23,8 @@ FROM opensuse:${DISTRO_VERSION}
 
 # ```bash
 RUN zypper refresh && \
-    zypper install -y cmake gcc gcc-c++ git libcurl-devel libopenssl-devel \
-        make tar wget
+    zypper install -y cmake gcc gcc-c++ git gzip libcurl-devel \
+        libopenssl-devel make tar wget
 # ```
 
 ## [END README.md]

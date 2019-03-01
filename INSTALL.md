@@ -128,7 +128,7 @@ Platform proto files.
 
 ```bash
 sudo zypper refresh && \
-sudo zypper install -y grpc-devel libcurl-devel pkg-config tar wget
+sudo zypper install -y grpc-devel gzip libcurl-devel pkg-config tar wget
 ```
 
 #### crc32c
@@ -176,8 +176,8 @@ Install the minimal development tools:
 
 ```bash
 sudo zypper refresh && \
-sudo zypper install -y cmake gcc gcc-c++ git libcurl-devel libopenssl-devel \
-        make tar wget
+sudo zypper install -y cmake gcc gcc-c++ git gzip libcurl-devel \
+        libopenssl-devel make tar wget
 ```
 
 #### crc32c
