@@ -2309,8 +2309,8 @@ class Client {
                                           std::string bucket_name,
                                           std::string object_name,
                                           Options&&... options) {
-    internal::SignUrlRequest request(std::move(verb), std::move(bucket_name),
-                                     std::move(object_name));
+    internal::V2SignUrlRequest request(std::move(verb), std::move(bucket_name),
+                                       std::move(object_name));
     request.set_multiple_options(std::forward<Options>(options)...);
     return SignUrl(request);
   }
@@ -2532,7 +2532,7 @@ class Client {
   Status DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
                           std::string const& file_name);
 
-  StatusOr<std::string> SignUrl(internal::SignUrlRequest const& request);
+  StatusOr<std::string> SignUrl(internal::V2SignUrlRequest const& request);
 
   std::shared_ptr<internal::RawClient> raw_client_;
 };

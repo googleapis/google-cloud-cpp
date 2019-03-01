@@ -25,8 +25,8 @@ namespace {
 
 using ::testing::HasSubstr;
 
-TEST(SignedUrlRequests, Sign) {
-  SignUrlRequest request("GET", "test-bucket", "test-object");
+TEST(V2SignedUrlRequests, Sign) {
+  V2SignUrlRequest request("GET", "test-bucket", "test-object");
   EXPECT_EQ("GET", request.verb());
   EXPECT_EQ("test-bucket", request.bucket_name());
   EXPECT_EQ("test-object", request.object_name());
@@ -58,8 +58,8 @@ x-goog-meta-foo:bar,baz
   EXPECT_THAT(os.str(), HasSubstr(expected_blob));
 }
 
-TEST(SignedUrlRequests, SignEscaped) {
-  SignUrlRequest request("GET", "test-bucket", "test- -?-+-/-:-&-object");
+TEST(V2SignedUrlRequests, SignEscaped) {
+  V2SignUrlRequest request("GET", "test-bucket", "test- -?-+-/-:-&-object");
   EXPECT_EQ("GET", request.verb());
   EXPECT_EQ("test-bucket", request.bucket_name());
   EXPECT_EQ("test- -?-+-/-:-&-object", request.object_name());
@@ -83,8 +83,8 @@ TEST(SignedUrlRequests, SignEscaped) {
   EXPECT_THAT(os.str(), HasSubstr(expected_blob));
 }
 
-TEST(SignedUrlRequests, SubResource) {
-  SignUrlRequest request("GET", "test-bucket", "test-object");
+TEST(V2SignedUrlRequests, SubResource) {
+  V2SignUrlRequest request("GET", "test-bucket", "test-object");
   EXPECT_EQ("GET", request.verb());
   EXPECT_EQ("test-bucket", request.bucket_name());
   EXPECT_EQ("test-object", request.object_name());
@@ -110,8 +110,8 @@ TEST(SignedUrlRequests, SubResource) {
   EXPECT_THAT(os.str(), HasSubstr(expected_blob));
 }
 
-TEST(SignedUrlRequests, SubResourceMultiple) {
-  SignUrlRequest request("GET", "test-bucket", "");
+TEST(V2SignedUrlRequests, SubResourceMultiple) {
+  V2SignUrlRequest request("GET", "test-bucket", "");
   EXPECT_EQ("GET", request.verb());
   EXPECT_EQ("test-bucket", request.bucket_name());
   EXPECT_EQ("", request.object_name());
@@ -134,8 +134,8 @@ TEST(SignedUrlRequests, SubResourceMultiple) {
   EXPECT_EQ(expected_blob, request.StringToSign());
 }
 
-TEST(SignedUrlRequests, RepeatedHeader) {
-  SignUrlRequest request("PUT", "test-bucket", "test-object");
+TEST(V2SignedUrlRequests, RepeatedHeader) {
+  V2SignUrlRequest request("PUT", "test-bucket", "test-object");
   EXPECT_EQ("PUT", request.verb());
   EXPECT_EQ("test-bucket", request.bucket_name());
   EXPECT_EQ("test-object", request.object_name());
@@ -160,8 +160,8 @@ x-goog-meta-reviewer:test-meta-1,not-encoded- -?-+-/-:-&-
   EXPECT_EQ(expected_blob, request.StringToSign());
 }
 
-TEST(SignedUrlRequests, EncodeQueryParameter) {
-  SignUrlRequest request("GET", "test-bucket", "test-object.txt");
+TEST(V2SignedUrlRequests, EncodeQueryParameter) {
+  V2SignUrlRequest request("GET", "test-bucket", "test-object.txt");
   EXPECT_EQ("GET", request.verb());
   EXPECT_EQ("test-bucket", request.bucket_name());
   EXPECT_EQ("test-object.txt", request.object_name());

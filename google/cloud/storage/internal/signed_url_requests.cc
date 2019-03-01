@@ -40,11 +40,12 @@ void SignUrlRequestCommon::SetOption(AddExtensionHeaderOption const& o) {
   }
 }
 
-std::chrono::system_clock::time_point SignUrlRequest::DefaultExpirationTime() {
+std::chrono::system_clock::time_point
+V2SignUrlRequest::DefaultExpirationTime() {
   return std::chrono::system_clock::now() + std::chrono::hours(7 * 24);
 }
 
-std::string SignUrlRequest::StringToSign() const {
+std::string V2SignUrlRequest::StringToSign() const {
   std::ostringstream os;
 
   os << verb() << "\n"
@@ -75,7 +76,7 @@ std::string SignUrlRequest::StringToSign() const {
   return std::move(os).str();
 }
 
-std::ostream& operator<<(std::ostream& os, SignUrlRequest const& r) {
+std::ostream& operator<<(std::ostream& os, V2SignUrlRequest const& r) {
   return os << "SingUrlRequest={" << r.StringToSign() << "}";
 }
 
