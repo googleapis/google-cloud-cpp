@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/signed_url_requests.h"
+#include "google/cloud/storage/internal/format_time_point.h"
 #include "google/cloud/storage/internal/parse_rfc3339.h"
 #include <gmock/gmock.h>
 
@@ -182,6 +183,147 @@ TEST(V2SignedUrlRequests, EncodeQueryParameter) {
 /test-bucket/test-object.txt?response-content-type=text%2Fhtml)""";
 
   EXPECT_EQ(expected_blob, request.StringToSign());
+}
+
+TEST(V4SignedUrlRequests, CanonicalQueryStringBasic) {
+  V4SignUrlRequest request("GET", "test-bucket", "test-object");
+  std::string const date = "2019-02-01T09:00:00Z";
+  auto const valid_for = std::chrono::seconds(10);
+  request.set_multiple_options(SignedUrlTimestamp(ParseRfc3339(date)),
+                               SignedUrlDuration(valid_for));
+
+  std::string expected =
+      "X-Goog-Algorithm=GOOG4-RSA-SHA256"
+      "&X-Goog-Credential=fake-client-id"
+      "%2F20190201%2Fauto%2Fstorage%2Fgoog4_request"
+      "&X-Goog-Date=20190201T090000Z"
+      "&X-Goog-Expires=10&X-Goog-SignedHeaders=";
+  std::string actual = request.CanonicalQueryString("fake-client-id");
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(V4SignedUrlRequests, CanonicalQueryStringSingleHeader) {
+  V4SignUrlRequest request("GET", "test-bucket", "test-object");
+  std::string const date = "2019-02-01T09:00:00Z";
+  auto const valid_for = std::chrono::seconds(10);
+  request.set_multiple_options(
+      SignedUrlTimestamp(ParseRfc3339(date)), SignedUrlDuration(valid_for),
+      AddExtensionHeader("host", "storage.googleapis.com"));
+
+  std::string expected =
+      "X-Goog-Algorithm=GOOG4-RSA-SHA256"
+      "&X-Goog-Credential=fake-client-id"
+      "%2F20190201%2Fauto%2Fstorage%2Fgoog4_request"
+      "&X-Goog-Date=20190201T090000Z"
+      "&X-Goog-Expires=10&X-Goog-SignedHeaders=host";
+  std::string actual = request.CanonicalQueryString("fake-client-id");
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(V4SignedUrlRequests, CanonicalQueryStringMultiHeader) {
+  V4SignUrlRequest request("GET", "test-bucket", "test-object");
+  std::string const date = "2019-02-01T09:00:00Z";
+  auto const valid_for = std::chrono::seconds(10);
+  request.set_multiple_options(
+      SignedUrlTimestamp(ParseRfc3339(date)), SignedUrlDuration(valid_for),
+      WithUserProject("test-project"),
+      AddExtensionHeader("host", "storage.googleapis.com"), WithGeneration(7),
+      AddExtensionHeader("Content-Type", "application/octet-stream"));
+
+  std::string expected =
+      "X-Goog-Algorithm=GOOG4-RSA-SHA256"
+      "&X-Goog-Credential=fake-client-id"
+      "%2F20190201%2Fauto%2Fstorage%2Fgoog4_request"
+      "&X-Goog-Date=20190201T090000Z"
+      "&X-Goog-Expires=10&X-Goog-SignedHeaders=content-type%3Bhost";
+  std::string actual = request.CanonicalQueryString("fake-client-id");
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(V4SignedUrlRequests, CanonicalRequestBasic) {
+  V4SignUrlRequest request("GET", "test-bucket", "test-object");
+  std::string const date = "2019-02-01T09:00:00Z";
+  auto const valid_for = std::chrono::seconds(10);
+  request.set_multiple_options(SignedUrlTimestamp(ParseRfc3339(date)),
+                               SignedUrlDuration(valid_for));
+
+  EXPECT_EQ("GET", request.verb());
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ("test-object", request.object_name());
+  EXPECT_EQ("", request.sub_resource());
+  EXPECT_EQ("20190201T090000Z",
+            FormatV4SignedUrlTimestamp(request.timestamp()));
+  EXPECT_EQ(valid_for, request.expires());
+
+  std::string expected_canonical_request = R"""(GET
+/test-bucket/test-object
+X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=fake-client-id%2F20190201%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20190201T090000Z&X-Goog-Expires=10&X-Goog-SignedHeaders=
+
+
+UNSIGNED-PAYLOAD)""";
+
+  EXPECT_EQ(expected_canonical_request,
+            request.CanonicalRequest("fake-client-id"));
+
+  // To obtain the magical SHA256 string below pipe the
+  // `expected_canonical_request` string to `openssl sha256 -hex`. Do *NOT*
+  // include a trailing newline in your command.
+  std::string expected_string_to_sign = R"""(GOOG4-RSA-SHA256
+20190201T090000Z
+20190201/auto/storage/goog4_request
+b4587b273770141b7b36c3a6b7c5bf7a3265ae0933d83785a6f78253fb0da70d)""";
+
+  EXPECT_EQ(expected_string_to_sign, request.StringToSign("fake-client-id"));
+
+  std::ostringstream os;
+  os << request;
+  EXPECT_THAT(os.str(), HasSubstr("/test-bucket/test-object"));
+}
+
+TEST(V4SignedUrlRequests, CanonicalRequestFull) {
+  V4SignUrlRequest request("GET", "test-bucket", "test-object");
+  std::string const date = "2019-02-01T09:00:00Z";
+  auto const valid_for = std::chrono::seconds(10);
+  request.set_multiple_options(
+      SignedUrlTimestamp(ParseRfc3339(date)), SignedUrlDuration(valid_for),
+      WithUserProject("test-project"), WithGeneration(7),
+      AddExtensionHeader("Content-Type", "application/octet-stream"),
+      AddExtensionHeader("Cache-Control", "    no-cache,    max-age=3600   "),
+      WithAcl());
+
+  EXPECT_EQ("GET", request.verb());
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ("test-object", request.object_name());
+  EXPECT_EQ("acl", request.sub_resource());
+  EXPECT_EQ("20190201T090000Z",
+            FormatV4SignedUrlTimestamp(request.timestamp()));
+  EXPECT_EQ(valid_for, request.expires());
+
+  std::string expected_canonical_request = R"""(GET
+/test-bucket/test-object?acl
+X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=fake-client-id%2F20190201%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20190201T090000Z&X-Goog-Expires=10&X-Goog-SignedHeaders=cache-control%3Bcontent-type&generation=7&userProject=test-project
+cache-control:no-cache, max-age=3600
+content-type:application/octet-stream
+
+cache-control;content-type
+UNSIGNED-PAYLOAD)""";
+
+  EXPECT_EQ(expected_canonical_request,
+            request.CanonicalRequest("fake-client-id"));
+
+  // To obtain the magical SHA256 string below pipe the
+  // `expected_canonical_request` string to `openssl sha256 -hex`. Do *NOT*
+  // include a trailing newline in your command.
+  std::string expected_string_to_sign = R"""(GOOG4-RSA-SHA256
+20190201T090000Z
+20190201/auto/storage/goog4_request
+b6d09f3be351906e01e472adaad90398a37c1c69bfe82ad5cb9ba32d66dac850)""";
+
+  EXPECT_EQ(expected_string_to_sign, request.StringToSign("fake-client-id"));
+
+  std::ostringstream os;
+  os << request;
+  EXPECT_THAT(os.str(), HasSubstr("/test-bucket/test-object"));
 }
 
 }  // namespace

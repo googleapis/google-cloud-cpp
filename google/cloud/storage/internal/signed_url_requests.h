@@ -74,7 +74,7 @@ class SignUrlRequestCommon {
 };
 
 /**
- * Requests the Google Cloud Storage service account for a project.
+ * Creates a V2 signed url.
  */
 class V2SignUrlRequest {
  public:
@@ -153,6 +153,103 @@ class V2SignUrlRequest {
 };
 
 std::ostream& operator<<(std::ostream& os, V2SignUrlRequest const& r);
+
+/**
+ * Creates a V4 signed url.
+ */
+class V4SignUrlRequest {
+ public:
+  V4SignUrlRequest() : expires_(0) {}
+  explicit V4SignUrlRequest(std::string verb, std::string bucket_name,
+                            std::string object_name)
+      : common_request_(std::move(verb), std::move(bucket_name),
+                        std::move(object_name)),
+        timestamp_(DefaultTimestamp()),
+        expires_(DefaultExpires()) {}
+
+  std::string const& verb() const { return common_request_.verb(); }
+  std::string const& bucket_name() const {
+    return common_request_.bucket_name();
+  }
+  std::string const& object_name() const {
+    return common_request_.object_name();
+  }
+  std::string const& sub_resource() const {
+    return common_request_.sub_resource();
+  }
+
+  std::chrono::system_clock::time_point timestamp() const { return timestamp_; }
+  std::chrono::seconds expires() const { return expires_; }
+
+  /// Add any headers that the application developer did not provide.
+  void AddMissingRequiredHeaders();
+
+  /// Creates the query string with the required query parameters.
+  std::string CanonicalQueryString(std::string const& client_id) const;
+
+  /**
+   * Creates the "canonical request" document.
+   *
+   * The "canonical request" is a string that encapsulates all the request
+   * parameters (verb, resource, query parameters, headers) that will be part
+   * of the signed document. This member function is mostly used for testing.
+   */
+  std::string CanonicalRequest(std::string const& client_id) const;
+
+  /// Creates the V4 string to be signed.
+  std::string StringToSign(std::string const& client_id) const;
+
+  template <typename H, typename... T>
+  V4SignUrlRequest& set_multiple_options(H&& h, T&&... tail) {
+    SetOption(std::forward<H>(h));
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+
+  V4SignUrlRequest& set_multiple_options() { return *this; }
+
+ private:
+  static std::chrono::system_clock::time_point DefaultTimestamp();
+  static std::chrono::seconds DefaultExpires();
+
+  void SetOption(SignedUrlTimestamp const& o) {
+    if (!o.has_value()) {
+      return;
+    }
+    timestamp_ = o.value();
+  }
+
+  void SetOption(SignedUrlDuration const& o) {
+    if (!o.has_value()) {
+      return;
+    }
+    expires_ = o.value();
+  }
+
+  void SetOption(SubResourceOption const& o) { common_request_.SetOption(o); }
+
+  void SetOption(AddExtensionHeaderOption const& o) {
+    common_request_.SetOption(o);
+  }
+
+  void SetOption(AddQueryParameterOption const& o) {
+    common_request_.SetOption(o);
+  }
+
+  std::string CanonicalRequestHash(std::string const& client_id) const;
+
+  std::string Scope() const;
+
+  std::multimap<std::string, std::string> CanonicalQueryParameters(
+      std::string const& client_id) const;
+
+  std::string SignedHeaders() const;
+
+  SignUrlRequestCommon common_request_;
+  std::chrono::system_clock::time_point timestamp_;
+  std::chrono::seconds expires_;
+};
+
+std::ostream& operator<<(std::ostream& os, V4SignUrlRequest const& r);
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
