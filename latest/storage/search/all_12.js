@@ -86,6 +86,7 @@ var searchData=
   ['shared_5fstate_5ftype',['shared_state_type',['../../common/classgoogle_1_1cloud_1_1v0_1_1future.html#aeefec768087538e0caa46d1311400765',1,'google::cloud::v0::future::shared_state_type()'],['../../common/classgoogle_1_1cloud_1_1v0_1_1future_3_01void_01_4.html#a991ff47d781b2f3be663c4207c49816c',1,'google::cloud::v0::future&lt; void &gt;::shared_state_type()']]],
   ['signed_5furl_5foptions_2eh',['signed_url_options.h',['../signed__url__options_8h.html',1,'']]],
   ['signstring',['SignString',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1ServiceAccountCredentials.html#a221f3586580a2d20f542e4bfe2d35564',1,'google::cloud::storage::v0::oauth2::ServiceAccountCredentials']]],
+  ['signstringhex',['SignStringHex',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1ServiceAccountCredentials.html#a88919fca3efaafd89d9dab396b0d9a0e',1,'google::cloud::storage::v0::oauth2::ServiceAccountCredentials']]],
   ['size',['size',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#acd144e4a1daa8edaf849b7dae6338879',1,'google::cloud::v0::IamBindings::size()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#aa3bc2d054c4f030bcbe4a781f4271925',1,'google::cloud::storage::v0::ObjectMetadata::size()']]],
   ['sourceencryptionkey',['SourceEncryptionKey',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1SourceEncryptionKey.html',1,'google::cloud::storage::v0']]],
   ['sourcegeneration',['SourceGeneration',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1SourceGeneration.html',1,'google::cloud::storage::v0']]],
