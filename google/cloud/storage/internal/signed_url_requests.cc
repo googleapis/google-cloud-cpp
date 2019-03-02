@@ -102,12 +102,8 @@ std::string TrimHeaderValue(std::string const& value) {
   std::string tmp = value;
   tmp.erase(0, tmp.find_first_not_of(' '));
   tmp = tmp.substr(0, tmp.find_last_not_of(' ') + 1);
-  auto end = std::unique(tmp.begin(), tmp.end(), [](char a, char b) {
-    if (a != b) {
-      return false;
-    }
-    return a == ' ';
-  });
+  auto end = std::unique(tmp.begin(), tmp.end(),
+                         [](char a, char b) { return a == ' ' && b == ' '; });
   tmp.erase(end, tmp.end());
   return tmp;
 }
@@ -115,7 +111,7 @@ std::string TrimHeaderValue(std::string const& value) {
 
 void V4SignUrlRequest::AddMissingRequiredHeaders() {
   auto const& headers = common_request_.extension_headers();
-  if (headers.count("host") == 0) {
+  if (headers.find("host") == headers.end()) {
     SetOption(AddExtensionHeader("host", "storage.googleapis.com"));
   }
 }
