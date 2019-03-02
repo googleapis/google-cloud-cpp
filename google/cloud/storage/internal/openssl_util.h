@@ -53,6 +53,11 @@ struct OpenSslUtils {
   static std::string Base64Encode(std::string const& str);
 
   /**
+   * Encodes a string using Base64.
+   */
+  static std::string Base64Encode(std::vector<std::uint8_t> const& bytes);
+
+  /**
    * Transforms a string in-place, removing trailing occurrences of a character.
    *
    * Warning: this was written with the intent of operating on a string
@@ -67,8 +72,12 @@ struct OpenSslUtils {
 
   /**
    * Signs a string with the private key from a PEM container.
+   *
+   * @return Returns the signature as an *unencoded* byte array. The caller
+   *   might want to use `Base64Encode()` or `HexEncode()` to convert this byte
+   *   array to a format more suitable for transmission over HTTP.
    */
-  static std::string SignStringWithPem(
+  static std::vector<std::uint8_t> SignStringWithPem(
       std::string const& str, std::string const& pem_contents,
       storage::oauth2::JwtSigningAlgorithms alg) {
     using ::google::cloud::storage::oauth2::JwtSigningAlgorithms;
@@ -153,8 +162,7 @@ struct OpenSslUtils {
       handle_openssl_failure("Could not finalize PEM digest (2/2).");
     }
 
-    return std::string(signed_str.begin(),
-                       signed_str.begin() + signed_str_size);
+    return {signed_str.begin(), signed_str.end()};
   }
 
   /**
@@ -164,6 +172,15 @@ struct OpenSslUtils {
    * -  Replace '/' with '_'
    * -  Right-trim '=' characters
    */
+  static std::string UrlsafeBase64Encode(
+      std::vector<std::uint8_t> const& bytes) {
+    std::string b64str = Base64Encode(bytes);
+    std::replace(b64str.begin(), b64str.end(), '+', '-');
+    std::replace(b64str.begin(), b64str.end(), '/', '_');
+    RightTrim(b64str, '=');
+    return b64str;
+  }
+
   static std::string UrlsafeBase64Encode(std::string const& str) {
     std::string b64str = Base64Encode(str);
     std::replace(b64str.begin(), b64str.end(), '+', '-');
