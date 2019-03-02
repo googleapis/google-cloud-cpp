@@ -137,14 +137,16 @@ void BulkMutator::FinishRequest() {
       pending_annotations_.push_back(annotation);
     } else {
       // These are most likely an effect of a broken stream. We do not know
-      // their error code, and we cannot retry them. Report them as UNKNOWN in
+      // their error code, and we cannot retry them. Report them as kUnknown in
       // the failure list.
-      google::rpc::Status status;
-      status.set_code(grpc::StatusCode::UNKNOWN);
-      status.set_message(
+
+      std::string const message =
           "Never got a confirmation for this mutation. Most likely stream was "
           "broken before its status was sent. It's not idempotent, so we can't "
-          "retry it.");
+          "retry it.";
+
+      google::cloud::Status status(google::cloud::StatusCode::kUnknown,
+                                   message);
       failures_.emplace_back(
           FailedMutation(SingleRowMutation(std::move(original)), status,
                          annotation.original_index));
@@ -163,12 +165,13 @@ std::vector<FailedMutation> BulkMutator::ExtractFinalFailures() {
   std::vector<FailedMutation> result(std::move(failures_));
   // These are most likely an effect of a broken stream. We do not know
   // their error code and there are not going to be any more retries. Report
-  // them as UNKNOWN in the failure list.
-  google::rpc::Status status;
-  status.set_code(grpc::StatusCode::UNKNOWN);
-  status.set_message(
+  // them as kUnknown in the failure list.
+  std::string const message =
       "Never got a confirmation for this mutation. Most likely stream was "
-      "broken before its status was sent.");
+      "broken before its status was sent.";
+
+  google::cloud::Status status(google::cloud::StatusCode::kUnknown, message);
+
   int idx = 0;
   for (auto& mutation : *pending_mutations_.mutable_entries()) {
     int original_index = pending_annotations_[idx++].original_index;

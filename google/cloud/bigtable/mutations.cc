@@ -71,6 +71,12 @@ grpc::Status FailedMutation::ToGrpcStatus(google::rpc::Status const& status) {
                       status.message(), details);
 }
 
+google::cloud::Status FailedMutation::ToGCStatus(
+    google::rpc::Status const& status) {
+  grpc::Status grpc_status = FailedMutation::ToGrpcStatus(status);
+  return bigtable::internal::MakeStatusFromRpcError(grpc_status);
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud

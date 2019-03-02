@@ -32,8 +32,8 @@ namespace {
             << status.error_code() << "] - " << status.error_details() << "\n";
   for (auto const& failed : failures) {
     std::cerr << "Mutation " << failed.original_index() << " failed with"
-              << failed.status().error_message() << " ["
-              << failed.status().error_code() << "]\n";
+              << failed.status().message() << " [" << failed.status().code()
+              << "]\n";
   }
   std::cerr << "Aborting because exceptions are disabled.\n";
   std::abort();
@@ -51,8 +51,7 @@ static_assert(std::is_copy_assignable<bigtable::Table>::value,
 Status Table::Apply(SingleRowMutation mut) {
   std::vector<FailedMutation> failures = impl_.Apply(std::move(mut));
   if (!failures.empty()) {
-    grpc::Status status = failures.front().status();
-    return bigtable::internal::MakeStatusFromRpcError(status);
+    return failures.front().status();
   }
   return google::cloud::Status{};
 }
@@ -93,9 +92,10 @@ future<void> Table::AsyncBulkApply(BulkMutation mut, CompletionQueue& cq) {
   auto final = resultfm.then([](future<std::vector<FailedMutation>> f) {
     auto failures = f.get();
 
-    if (!failures.empty()) {
-      grpc::Status status = failures.front().status();
-      ReportPermanentFailures(status.error_message().c_str(), status, failures);
+    for (auto const& failed : failures) {
+      std::cerr << "Mutation " << failed.original_index() << " failed with"
+                << failed.status().message() << " [" << failed.status().code()
+                << "]\n";
     }
   });
 
