@@ -22,8 +22,10 @@ include(external/protobuf)
 if (NOT TARGET gprc_project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
-    set(GOOGLE_CLOUD_CPP_GRPC_URL
-        "https://github.com/grpc/grpc/archive/046e3e4ab5cdb867bda7a5c40fd9b0ac84ad0ff8.tar.gz")
+    set(
+        GOOGLE_CLOUD_CPP_GRPC_URL
+        "https://github.com/grpc/grpc/archive/046e3e4ab5cdb867bda7a5c40fd9b0ac84ad0ff8.tar.gz"
+        )
     set(GOOGLE_CLOUD_CPP_GRPC_SHA256
         "9a0ee9f59df481e2516deb59e3ccd1f973b023dab0e1be41cd30db56aea4b6cc")
 
