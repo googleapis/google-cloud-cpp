@@ -54,7 +54,7 @@ def google_cloud_cpp_deps():
     if "com_github_grpc_grpc" not in native.existing_rules():
         http_archive(
             name = "com_github_grpc_grpc",
-            strip_prefix = "grpc-1.19.0",
+            strip_prefix = "grpc-046e3e4ab5cdb867bda7a5c40fd9b0ac84ad0ff8",
             urls = [
                 "https://github.com/grpc/grpc/archive/046e3e4ab5cdb867bda7a5c40fd9b0ac84ad0ff8.tar.gz",
                 "https://mirror.bazel.build/github.com/grpc/grpc/archive/046e3e4ab5cdb867bda7a5c40fd9b0ac84ad0ff8.tar.gz",
