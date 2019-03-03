@@ -26,7 +26,7 @@ elif [[ "$1" = "macos" ]] || [[ "$1" = "osx" ]]; then
   readonly PLATFORM="darwin-x86_64"
 fi
 
-readonly BAZEL_VERSION=0.22.0
+readonly BAZEL_VERSION=0.20.0
 readonly GITHUB_DL="https://github.com/bazelbuild/bazel/releases/download"
 readonly SCRIPT_NAME="bazel-${BAZEL_VERSION}-installer-${PLATFORM}.sh"
 wget -q "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}"
