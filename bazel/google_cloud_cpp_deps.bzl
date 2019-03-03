@@ -56,10 +56,10 @@ def google_cloud_cpp_deps():
             name = "com_github_grpc_grpc",
             strip_prefix = "grpc-1.19.0",
             urls = [
-                "https://github.com/grpc/grpc/archive/v1.19.0.tar.gz",
-                "https://mirror.bazel.build/github.com/grpc/grpc/archive/v1.19.0.tar.gz",
+                "https://github.com/grpc/grpc/archive/046e3e4ab5cdb867bda7a5c40fd9b0ac84ad0ff8.tar.gz",
+                "https://mirror.bazel.build/github.com/grpc/grpc/archive/046e3e4ab5cdb867bda7a5c40fd9b0ac84ad0ff8.tar.gz",
             ],
-            sha256 = "1d54cd95ed276c42c276e0a3df8ab33ee41968b73af14023c03a19db48f82e73",
+            sha256 = "9a0ee9f59df481e2516deb59e3ccd1f973b023dab0e1be41cd30db56aea4b6cc",
         )
 
     # Load OpenCensus.
