@@ -54,24 +54,24 @@ def google_cloud_cpp_deps():
     if "com_github_grpc_grpc" not in native.existing_rules():
         http_archive(
             name = "com_github_grpc_grpc",
-            strip_prefix = "grpc-1.17.2",
+            strip_prefix = "grpc-1.19.0",
             urls = [
-                "https://github.com/grpc/grpc/archive/v1.17.2.tar.gz",
-                "https://mirror.bazel.build/github.com/grpc/grpc/archive/v1.17.2.tar.gz",
+                "https://github.com/grpc/grpc/archive/v1.19.0.tar.gz",
+                "https://mirror.bazel.build/github.com/grpc/grpc/archive/v1.19.0.tar.gz",
             ],
-            sha256 = "34ed95b727e7c6fcbf85e5eb422e962788e21707b712fdb4caf931553c2c6dbc",
+            sha256 = "1d54cd95ed276c42c276e0a3df8ab33ee41968b73af14023c03a19db48f82e73",
         )
 
     # Load OpenCensus.
     if "io_opencensus_cpp" not in native.existing_rules():
         http_archive(
             name = "io_opencensus_cpp",
-            strip_prefix = "opencensus-cpp-893e0835a45d749221f049d0d167e157b67b6d9c",
+            strip_prefix = "opencensus-cpp-fdf0f308b1631bb4a942e32ba5d22536a6170274",
             urls = [
                 "https://github.com/census-instrumentation/opencensus-cpp/archive" +
-                "/893e0835a45d749221f049d0d167e157b67b6d9c.tar.gz",
+                "/fdf0f308b1631bb4a942e32ba5d22536a6170274.tar.gz",
             ],
-            sha256 = "8e2bddd3ea6d747a8c4255c73dcea1b9fcdf1560f3bb9ff96bcb20d4d207235e",
+            sha256 = "c3a0a760759420645699140f0f7124605177a12ce0b8a2379946973771473c5d",
         )
 
     # We need libcurl for the Google Cloud Storage client.
