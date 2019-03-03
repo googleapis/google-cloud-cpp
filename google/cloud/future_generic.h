@@ -198,6 +198,16 @@ class promise final : private internal::promise_base<T> {
   using internal::promise_base<T>::set_exception;
 };
 
+/// Create a future<void> that is immediately ready.
+template <typename T>
+inline future<typename internal::make_ready_return<T>::type> make_ready_future(
+    T&& t) {
+  using V = typename internal::make_ready_return<T>::type;
+  promise<V> p;
+  p.set_value(std::forward<T>(t));
+  return p.get_future();
+}
+
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

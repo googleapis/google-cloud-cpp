@@ -184,6 +184,13 @@ class promise<void> final : private internal::promise_base<void> {
   using promise_base<void>::set_exception;
 };
 
+/// Create a future<void> that is immediately ready.
+inline future<void> make_ready_future() {
+  promise<void> p;
+  p.set_value();
+  return p.get_future();
+}
+
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

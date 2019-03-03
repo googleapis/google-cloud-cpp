@@ -549,6 +549,15 @@ TEST(FutureTestVoid, conform_2_3_11_c) {
   ExpectFutureError([&] { f.is_ready(); }, std::future_errc::no_state);
 }
 
+/// @test Verify conformance with section 2.10 of the Concurrency TS.
+TEST(FutureTestVoid, conform_2_10_4) {
+  future<void> f = make_ready_future();
+  EXPECT_TRUE(f.valid());
+  EXPECT_EQ(std::future_status::ready, f.wait_for(0_ms));
+  f.get();
+  SUCCEED();
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
