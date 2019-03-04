@@ -461,6 +461,9 @@ class BulkMutation {
   /// Return the number of mutations in this set.
   size_t size() const { return request_.entries().size(); }
 
+  /// Return the estimated size in bytes of all the mutations in this set.
+  size_t estimated_size_in_bytes() const { return request_.ByteSizeLong(); }
+
  private:
   template <typename... M>
   void emplace_many(SingleRowMutation first, M&&... tail) {
