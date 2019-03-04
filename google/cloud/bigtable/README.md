@@ -21,7 +21,24 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.7.x - TBD
+### v0.8.x - TBD
+
+### v0.7.x - 2019-03
+
+* Updates to use StatusOr<>.
+* Add streaming to (Async)BulkMutator.
+* Make MutationBatcher public API.
+* Add synchronization to MutationBatcher::Batch.
+* Add MutationBatcher::AsyncWaitForNoPendingRequests.
+* Add bigtable::Cell constructors without labels argument.
+* Implementation of RowSet example using discontinuous keys.
+* List{Instances,Clusters} return failed_locations.
+* First version of Apply batching.
+* Keep Apply callbacks in MutationData.
+* Eliminate BatchFinishedCallback.
+* Make InstanceAdmin emulator thread-safe.
+* Use random port for Bigtable emulator.
+* Increase timeouts for CompletionQueue tests.
 
 ### v0.6.x - 2019-02
 
