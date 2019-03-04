@@ -89,7 +89,7 @@ void Table::BulkApply(BulkMutation mut) {
 struct AsyncBulkApplyCb {
   void operator()(CompletionQueue&,
                   std::vector<FailedMutation>& failed_mutations,
-                  grpc::Status& status) {
+                  grpc::Status&) {
     res_promise.set_value(std::move(failed_mutations));
   }
   promise<std::vector<FailedMutation>> res_promise;
