@@ -203,6 +203,8 @@ template <typename T>
 inline future<typename internal::make_ready_return<T>::type> make_ready_future(
     T&& t) {
   using V = typename internal::make_ready_return<T>::type;
+  // TODO(#1410) - Implement specializations of future<R&> and promise<R&>.
+  static_assert(!std::is_reference<V>::value, "future<R&> is not implemented");
   promise<V> p;
   p.set_value(std::forward<T>(t));
   return p.get_future();

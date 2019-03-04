@@ -550,7 +550,7 @@ TEST(FutureTestInt, conform_2_3_11_c) {
 }
 
 /// @test Verify conformance with section 2.10 of the Concurrency TS.
-TEST(FutureTestInt, conform_2_10_4_2_a) {
+TEST(FutureTestString, conform_2_10_4_2_a) {
   // When T is a simple value type we get back T.
   future<std::string> f = make_ready_future(std::string("42"));
   EXPECT_TRUE(f.valid());
@@ -559,7 +559,7 @@ TEST(FutureTestInt, conform_2_10_4_2_a) {
 }
 
 /// @test Verify conformance with section 2.10 of the Concurrency TS.
-TEST(FutureTestInt, conform_2_10_4_2_b) {
+TEST(FutureTestString, conform_2_10_4_2_b) {
   // When T is a reference we get std::decay<T>::type.
   std::string value("42");
   std::string& sref = value;
@@ -567,6 +567,23 @@ TEST(FutureTestInt, conform_2_10_4_2_b) {
   EXPECT_TRUE(f.valid());
   EXPECT_EQ(std::future_status::ready, f.wait_for(0_ms));
   EXPECT_EQ("42", f.get());
+}
+
+//// @test Verify conformance with section 2.10 of the Concurrency TS.
+TEST(FutureTestString, conform_2_10_4_2_c) {
+#if 1
+  using V =
+      internal::make_ready_return<std::reference_wrapper<std::string>>::type;
+  static_assert(std::is_same<V, std::string&>::value, "Expected std::string&");
+#else
+  // TODO(#1410) - Implement future<R&> specialization.
+  // When T is a reference wrapper get R&.
+  std::string value("42");
+  future<std::string&> f = make_ready_future(std::ref(value));
+  EXPECT_TRUE(f.valid());
+  EXPECT_EQ(std::future_status::ready, f.wait_for(0_ms));
+  EXPECT_EQ("42", f.get());
+#endif  // 1
 }
 
 }  // namespace
