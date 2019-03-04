@@ -138,7 +138,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_async_snippets.cc async create table
    */
-  future<google::bigtable::admin::v2::Table> AsyncCreateTable(
+  future<StatusOr<google::bigtable::admin::v2::Table>> AsyncCreateTable(
       CompletionQueue& cq, std::string table_id, TableConfig config);
 
   /**
@@ -206,7 +206,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_async_snippets.cc async get table
    */
-  future<google::bigtable::admin::v2::Table> AsyncGetTable(
+  future<StatusOr<google::bigtable::admin::v2::Table>> AsyncGetTable(
       CompletionQueue& cq, std::string const& table_id,
       google::bigtable::admin::v2::Table::View view);
 

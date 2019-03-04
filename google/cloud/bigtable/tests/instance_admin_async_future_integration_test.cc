@@ -126,11 +126,12 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   // Make an asynchronous request, but immediately block because this is just a
   // test.
   auto instance_list = instance_admin_->AsyncListInstances(cq).get();
-  EXPECT_TRUE(instance_list.failed_locations.empty())
+  ASSERT_STATUS_OK(instance_list);
+  EXPECT_TRUE(instance_list->failed_locations.empty())
       << "The Cloud Bigtable service (or emulator) reports that it could not"
       << " retrieve the information for some locations. This is typically due"
       << " to an outage or some other transient condition.";
-  ASSERT_FALSE(IsInstancePresent(instance_list.instances, instance_id))
+  ASSERT_FALSE(IsInstancePresent(instance_list->instances, instance_id))
       << "Instance (" << instance_id << ") already exists."
       << " This is unexpected, as the instance ids are"
       << " generated at random.";
@@ -139,16 +140,17 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   auto config = IntegrationTestConfig(instance_id);
   auto instance = instance_admin_->CreateInstance(config).get();
   auto async_instances_current = instance_admin_->AsyncListInstances(cq).get();
+  ASSERT_STATUS_OK(async_instances_current);
   EXPECT_TRUE(
-      IsInstancePresent(async_instances_current.instances, instance->name()));
+      IsInstancePresent(async_instances_current->instances, instance->name()));
 
   // Get instance
-  google::cloud::future<btadmin::Instance> fut =
+  google::cloud::future<google::cloud::StatusOr<btadmin::Instance>> fut =
       instance_admin_->AsyncGetInstance(cq, instance_id);
   auto instance_check = fut.get();
   auto const npos = std::string::npos;
-  EXPECT_NE(npos, instance_check.name().find(instance_admin_->project_name()));
-  EXPECT_NE(npos, instance_check.name().find(instance_id));
+  EXPECT_NE(npos, instance_check->name().find(instance_admin_->project_name()));
+  EXPECT_NE(npos, instance_check->name().find(instance_id));
 
   // update instance
   google::cloud::StatusOr<btadmin::Instance> instance_copy;
@@ -165,10 +167,11 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   // Delete instance
   ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
   auto instances_after_delete = instance_admin_->AsyncListInstances(cq).get();
-  EXPECT_TRUE(IsInstancePresent(async_instances_current.instances,
+  ASSERT_STATUS_OK(instances_after_delete);
+  EXPECT_TRUE(IsInstancePresent(async_instances_current->instances,
                                 instance_copy->name()));
   EXPECT_FALSE(
-      IsInstancePresent(instances_after_delete.instances, instance->name()));
+      IsInstancePresent(instances_after_delete->instances, instance->name()));
 
   cq.Shutdown();
   pool.join();
@@ -195,11 +198,12 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   // Make an asynchronous request, but immediately block because this is just a
   // test.
   auto clusters_list_before = instance_admin_->AsyncListClusters(cq, id).get();
-  EXPECT_TRUE(clusters_list_before.failed_locations.empty())
+  ASSERT_STATUS_OK(clusters_list_before);
+  EXPECT_TRUE(clusters_list_before->failed_locations.empty())
       << "The Cloud Bigtable service (or emulator) reports that it could not"
       << " retrieve the information for some locations. This is typically due"
       << " to an outage or some other transient condition.";
-  ASSERT_FALSE(IsIdOrNamePresentInClusterList(clusters_list_before.clusters,
+  ASSERT_FALSE(IsIdOrNamePresentInClusterList(clusters_list_before->clusters,
                                               cluster_id_str));
   // create cluster
   bigtable::ClusterId cluster_id(cluster_id_str);
@@ -210,23 +214,25 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
           .get();
   ASSERT_FALSE(cluster->name().empty());
   auto clusters_list_after = instance_admin_->AsyncListClusters(cq, id).get();
-  EXPECT_TRUE(clusters_list_after.failed_locations.empty())
+  ASSERT_STATUS_OK(clusters_list_after);
+  EXPECT_TRUE(clusters_list_after->failed_locations.empty())
       << "The Cloud Bigtable service (or emulator) reports that it could not"
       << " retrieve the information for some locations. This is typically due"
       << " to an outage or some other transient condition.";
   EXPECT_FALSE(
-      IsClusterPresent(clusters_list_before.clusters, cluster->name()));
-  EXPECT_TRUE(IsClusterPresent(clusters_list_after.clusters, cluster->name()));
-  EXPECT_TRUE(IsIdOrNamePresentInClusterList(clusters_list_after.clusters,
+      IsClusterPresent(clusters_list_before->clusters, cluster->name()));
+  EXPECT_TRUE(IsClusterPresent(clusters_list_after->clusters, cluster->name()));
+  EXPECT_TRUE(IsIdOrNamePresentInClusterList(clusters_list_after->clusters,
                                              cluster_id_str));
 
   // Get cluster
-  google::cloud::future<btadmin::Cluster> fut =
+  google::cloud::future<google::cloud::StatusOr<btadmin::Cluster>> fut =
       instance_admin_->AsyncGetCluster(cq, instance_id, cluster_id);
   auto cluster_check = fut.get();
+  ASSERT_STATUS_OK(cluster_check);
   std::string cluster_name_prefix =
       instance_admin_->project_name() + "/instances/" + id + "/clusters/";
-  EXPECT_EQ(cluster_name_prefix + cluster_id.get(), cluster_check.name());
+  EXPECT_EQ(cluster_name_prefix + cluster_id.get(), cluster_check->name());
 
   // Update cluster
   google::cloud::StatusOr<btadmin::Cluster> cluster_copy;
@@ -249,15 +255,16 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
                                                   std::move(cluster_id)));
   auto clusters_list_after_delete =
       instance_admin_->AsyncListClusters(cq, id).get();
+  ASSERT_STATUS_OK(clusters_list_after_delete);
   ASSERT_STATUS_OK(instance_admin_->DeleteInstance(id));
   EXPECT_TRUE(
-      IsClusterPresent(clusters_list_after.clusters,
+      IsClusterPresent(clusters_list_after->clusters,
                        instance_details->name() + "/clusters/" + id + "-cl2"));
   EXPECT_FALSE(
-      IsClusterPresent(clusters_list_after_delete.clusters,
+      IsClusterPresent(clusters_list_after_delete->clusters,
                        instance_details->name() + "/clusters/" + id + "-cl2"));
   EXPECT_FALSE(
-      IsClusterPresent(clusters_list_after_delete.clusters, cluster->name()));
+      IsClusterPresent(clusters_list_after_delete->clusters, cluster->name()));
   cq.Shutdown();
   pool.join();
 }
@@ -290,16 +297,17 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAllClustersTest) {
   // Make an asynchronous request, but immediately block because this is just a
   // test.
   auto clusters_list = instance_admin_->AsyncListClusters(cq).get();
-  for (auto const& cluster : clusters_list.clusters) {
+  ASSERT_STATUS_OK(clusters_list);
+  for (auto const& cluster : clusters_list->clusters) {
     EXPECT_NE(std::string::npos,
               cluster.name().find(instance_admin_->project_name()));
   }
-  EXPECT_FALSE(clusters_list.clusters.empty());
+  EXPECT_FALSE(clusters_list->clusters.empty());
 
   EXPECT_TRUE(
-      IsIdOrNamePresentInClusterList(clusters_list.clusters, instance1_name));
+      IsIdOrNamePresentInClusterList(clusters_list->clusters, instance1_name));
   EXPECT_TRUE(
-      IsIdOrNamePresentInClusterList(clusters_list.clusters, instance2_name));
+      IsIdOrNamePresentInClusterList(clusters_list->clusters, instance2_name));
 
   ASSERT_STATUS_OK(instance_admin_->DeleteInstance(id1));
   ASSERT_STATUS_OK(instance_admin_->DeleteInstance(id2));

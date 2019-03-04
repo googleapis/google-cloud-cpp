@@ -46,16 +46,25 @@ void AsyncGetInstance(cbt::InstanceAdmin instance_admin,
   //! [async get instance]
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id) {
-    google::cloud::future<google::bigtable::admin::v2::Instance> future =
-        instance_admin.AsyncGetInstance(cq, instance_id);
+    google::cloud::future<
+        google::cloud::StatusOr<google::bigtable::admin::v2::Instance>>
+        future = instance_admin.AsyncGetInstance(cq, instance_id);
 
     auto final = future.then(
-        [](google::cloud::future<google::bigtable::admin::v2::Instance> f) {
+        [](google::cloud::future<
+            google::cloud::StatusOr<google::bigtable::admin::v2::Instance>>
+               f) {
           auto instance = f.get();
+          if (!instance) {
+            std::cout << "Fetching instance details failed with: "
+                      << instance.status() << "\n";
+            return instance.status();
+          }
           std::string instance_detail;
-          google::protobuf::TextFormat::PrintToString(instance,
+          google::protobuf::TextFormat::PrintToString(*instance,
                                                       &instance_detail);
           std::cout << "GetInstance details : " << instance_detail << "\n";
+          return google::cloud::Status();
         });
 
     final.get();
@@ -73,24 +82,34 @@ void AsyncListInstances(cbt::InstanceAdmin instance_admin,
 
   //! [async list instances]
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq) {
-    google::cloud::future<google::cloud::bigtable::v0::InstanceList> future =
-        instance_admin.AsyncListInstances(cq);
+    google::cloud::future<
+        google::cloud::StatusOr<google::cloud::bigtable::v0::InstanceList>>
+        future = instance_admin.AsyncListInstances(cq);
 
     auto final = future.then(
-        [](google::cloud::future<google::cloud::bigtable::v0::InstanceList> f) {
+        [](google::cloud::future<
+            google::cloud::StatusOr<google::cloud::bigtable::v0::InstanceList>>
+               f) {
           auto instance_list = f.get();
-          for (const auto& instance : instance_list.instances) {
+          if (!instance_list) {
+            std::cout << "Listing instances failed with: "
+                      << instance_list.status() << "\n";
+            return instance_list.status();
+          }
+          for (const auto& instance : instance_list->instances) {
             std::cout << instance.name() << "\n";
           }
-          if (!instance_list.failed_locations.empty()) {
+          if (!instance_list->failed_locations.empty()) {
             std::cout << "The Cloud Bigtable service reports that it could not "
                          "retrieve data for the following zones:\n";
-            for (const auto& failed_location : instance_list.failed_locations) {
+            for (const auto& failed_location :
+                 instance_list->failed_locations) {
               std::cout << failed_location << "\n";
             }
             std::cout << "This is typically a transient condition, try again "
                          "later.\n";
           }
+          return google::cloud::Status();
         });
     final.get();
   }
@@ -110,15 +129,25 @@ void AsyncGetCluster(cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
     google::cloud::bigtable::InstanceId instance_id1(instance_id);
     google::cloud::bigtable::ClusterId cluster_id1(cluster_id);
 
-    google::cloud::future<google::bigtable::admin::v2::Cluster> future =
-        instance_admin.AsyncGetCluster(cq, instance_id1, cluster_id1);
+    google::cloud::future<
+        google::cloud::StatusOr<google::bigtable::admin::v2::Cluster>>
+        future = instance_admin.AsyncGetCluster(cq, instance_id1, cluster_id1);
 
     auto final = future.then(
-        [](google::cloud::future<google::bigtable::admin::v2::Cluster> f) {
+        [](google::cloud::future<
+            google::cloud::StatusOr<google::bigtable::admin::v2::Cluster>>
+               f) {
           auto cluster = f.get();
+          if (!cluster) {
+            std::cout << "Fetching cluster details failed with: "
+                      << cluster.status() << "\n";
+            return cluster.status();
+          }
           std::string cluster_detail;
-          google::protobuf::TextFormat::PrintToString(cluster, &cluster_detail);
+          google::protobuf::TextFormat::PrintToString(*cluster,
+                                                      &cluster_detail);
           std::cout << "GetCluster details : " << cluster_detail << "\n";
+          return google::cloud::Status();
         });
 
     final.get();
@@ -136,25 +165,34 @@ void AsyncListClusters(cbt::InstanceAdmin instance_admin,
   //! [async list clusters]
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id) {
-    google::cloud::future<google::cloud::bigtable::v0::ClusterList> future =
-        instance_admin.AsyncListClusters(cq, instance_id);
+    google::cloud::future<
+        google::cloud::StatusOr<google::cloud::bigtable::v0::ClusterList>>
+        future = instance_admin.AsyncListClusters(cq, instance_id);
 
     auto final = future.then(
-        [](google::cloud::future<google::cloud::bigtable::v0::ClusterList> f) {
+        [](google::cloud::future<
+            google::cloud::StatusOr<google::cloud::bigtable::v0::ClusterList>>
+               f) {
           auto cluster_list = f.get();
+          if (!cluster_list) {
+            std::cout << "Listing clusters failed with: "
+                      << cluster_list.status() << "\n";
+            return cluster_list.status();
+          }
           std::cout << "Cluster Name List\n";
-          for (const auto& cluster : cluster_list.clusters) {
+          for (const auto& cluster : cluster_list->clusters) {
             std::cout << cluster.name() << "\n";
           }
-          if (!cluster_list.failed_locations.empty()) {
+          if (!cluster_list->failed_locations.empty()) {
             std::cout << "The Cloud Bigtable service reports that it could not "
                          "retrieve data for the following zones:\n";
-            for (const auto& failed_location : cluster_list.failed_locations) {
+            for (const auto& failed_location : cluster_list->failed_locations) {
               std::cout << failed_location << "\n";
             }
             std::cout << "This is typically a transient condition, try again "
                          "later.\n";
           }
+          return google::cloud::Status();
         });
 
     final.get();
@@ -172,25 +210,34 @@ void AsyncListAllClusters(cbt::InstanceAdmin instance_admin,
 
   //! [async list all clusters]
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq) {
-    google::cloud::future<google::cloud::bigtable::v0::ClusterList> future =
-        instance_admin.AsyncListClusters(cq);
+    google::cloud::future<
+        google::cloud::StatusOr<google::cloud::bigtable::v0::ClusterList>>
+        future = instance_admin.AsyncListClusters(cq);
 
     auto final = future.then(
-        [](google::cloud::future<google::cloud::bigtable::v0::ClusterList> f) {
+        [](google::cloud::future<
+            google::cloud::StatusOr<google::cloud::bigtable::v0::ClusterList>>
+               f) {
           auto cluster_list = f.get();
+          if (!cluster_list) {
+            std::cout << "Listing clusters failed with: "
+                      << cluster_list.status() << "\n";
+            return cluster_list.status();
+          }
           std::cout << "Cluster Name List\n";
-          for (const auto& cluster : cluster_list.clusters) {
+          for (const auto& cluster : cluster_list->clusters) {
             std::cout << cluster.name() << "\n";
           }
-          if (!cluster_list.failed_locations.empty()) {
+          if (!cluster_list->failed_locations.empty()) {
             std::cout << "The Cloud Bigtable service reports that it could not "
                          "retrieve data for the following zones:\n";
-            for (const auto& failed_location : cluster_list.failed_locations) {
+            for (const auto& failed_location : cluster_list->failed_locations) {
               std::cout << failed_location << "\n";
             }
             std::cout << "This is typically a transient condition, try again "
                          "later.\n";
           }
+          return google::cloud::Status();
         });
 
     final.get();

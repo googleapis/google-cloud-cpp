@@ -184,7 +184,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async list instances
    */
-  future<InstanceList> AsyncListInstances(CompletionQueue& cq);
+  future<StatusOr<InstanceList>> AsyncListInstances(CompletionQueue& cq);
 
   /**
    * Return the details of @p instance_id.
@@ -219,7 +219,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async get instance
    */
-  future<google::bigtable::admin::v2::Instance> AsyncGetInstance(
+  future<StatusOr<google::bigtable::admin::v2::Instance>> AsyncGetInstance(
       CompletionQueue& cq, std::string const& instance_id);
 
   /**
@@ -283,7 +283,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc list clusters
    */
-  future<ClusterList> AsyncListClusters(CompletionQueue& cq);
+  future<StatusOr<ClusterList>> AsyncListClusters(CompletionQueue& cq);
 
   /**
    * Query (asynchronously) the list of clusters in an instance.
@@ -307,8 +307,8 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc list clusters
    */
-  future<ClusterList> AsyncListClusters(CompletionQueue& cq,
-                                        std::string const& instance_id);
+  future<StatusOr<ClusterList>> AsyncListClusters(
+      CompletionQueue& cq, std::string const& instance_id);
 
   /**
    * Update an existing cluster of Cloud Bigtable.
@@ -385,7 +385,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async get cluster
    */
-  future<google::bigtable::admin::v2::Cluster> AsyncGetCluster(
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> AsyncGetCluster(
       CompletionQueue& cq, bigtable::InstanceId const& instance_id,
       bigtable::ClusterId const& cluster_id);
 

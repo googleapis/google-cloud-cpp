@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/async_future_from_callback.h"
 #include "google/cloud/bigtable/grpc_error.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -27,7 +28,7 @@ using ::testing::HasSubstr;
 
 TEST(AsyncFutureFromCallbackGeneric, Simple) {
   CompletionQueue cq;
-  promise<int> p;
+  promise<StatusOr<int>> p;
   auto fut = p.get_future();
   auto callback = MakeAsyncFutureFromCallback(std::move(p), __func__);
   EXPECT_FALSE(fut.is_ready());
@@ -36,12 +37,14 @@ TEST(AsyncFutureFromCallbackGeneric, Simple) {
   callback(cq, value, status);
 
   ASSERT_TRUE(fut.is_ready());
-  EXPECT_EQ(42, fut.get());
+  StatusOr<int> res = fut.get();
+  ASSERT_STATUS_OK(res);
+  EXPECT_EQ(42, *res);
 }
 
 TEST(AsyncFutureFromCallbackGeneric, Failure) {
   CompletionQueue cq;
-  promise<int> p;
+  promise<StatusOr<int>> p;
   auto fut = p.get_future();
   auto callback = MakeAsyncFutureFromCallback(std::move(p), __func__);
   EXPECT_FALSE(fut.is_ready());
@@ -50,21 +53,15 @@ TEST(AsyncFutureFromCallbackGeneric, Failure) {
   callback(cq, value, status);
 
   ASSERT_TRUE(fut.is_ready());
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { fut.get(); } catch (GRpcError const& ex) {
-    EXPECT_EQ(grpc::StatusCode::UNAVAILABLE, ex.error_code());
-    EXPECT_THAT(ex.what(), HasSubstr("try again"));
-    throw;
-  },
-               GRpcError);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(fut.get(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  StatusOr<int> res = fut.get();
+  ASSERT_FALSE(res);
+  ASSERT_EQ(StatusCode::kUnavailable, res.status().code());
+  ASSERT_EQ("TestBody: try again", res.status().message());
 }
 
 TEST(AsyncFutureFromCallbackVoid, Simple) {
   CompletionQueue cq;
-  promise<void> p;
+  promise<Status> p;
   auto fut = p.get_future();
   auto callback = MakeAsyncFutureFromCallback(std::move(p), __func__);
   EXPECT_FALSE(fut.is_ready());
@@ -73,13 +70,12 @@ TEST(AsyncFutureFromCallbackVoid, Simple) {
   callback(cq, value, status);
 
   ASSERT_TRUE(fut.is_ready());
-  fut.get();
-  SUCCEED();
+  ASSERT_STATUS_OK(fut.get());
 }
 
 TEST(AsyncFutureFromCallbackVoid, Failure) {
   CompletionQueue cq;
-  promise<void> p;
+  promise<Status> p;
   auto fut = p.get_future();
   auto callback = MakeAsyncFutureFromCallback(std::move(p), __func__);
   EXPECT_FALSE(fut.is_ready());
@@ -88,16 +84,10 @@ TEST(AsyncFutureFromCallbackVoid, Failure) {
   callback(cq, value, status);
 
   ASSERT_TRUE(fut.is_ready());
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { fut.get(); } catch (GRpcError const& ex) {
-    EXPECT_EQ(grpc::StatusCode::UNAVAILABLE, ex.error_code());
-    EXPECT_THAT(ex.what(), HasSubstr("try again"));
-    throw;
-  },
-               GRpcError);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(fut.get(), "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  Status res_status = fut.get();
+  ASSERT_FALSE(res_status.ok());
+  ASSERT_EQ(StatusCode::kUnavailable, res_status.code());
+  ASSERT_EQ("TestBody: try again", res_status.message());
 }
 
 }  // namespace

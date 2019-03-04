@@ -69,7 +69,7 @@ void AsyncApply(cbt::Table table, cbt::CompletionQueue cq,
       mutation.emplace_back(google::cloud::bigtable::SetCell(
           "fam", "col3", "value4-" + std::to_string(i)));
 
-      google::cloud::future<void> fut =
+      google::cloud::future<google::cloud::Status> fut =
           table.AsyncApply(std::move(mutation), cq);
       fut.get();
     }
@@ -112,7 +112,8 @@ void AsyncBulkApply(cbt::Table table, cbt::CompletionQueue cq,
       bulk.emplace_back(std::move(mutation));
     }
 
-    google::cloud::future<void> fut = table.AsyncBulkApply(std::move(bulk), cq);
+    google::cloud::future<std::vector<google::cloud::bigtable::FailedMutation>>
+        fut = table.AsyncBulkApply(std::move(bulk), cq);
 
     fut.get();
   }
