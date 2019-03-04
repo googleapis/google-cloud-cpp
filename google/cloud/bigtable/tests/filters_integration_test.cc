@@ -357,7 +357,11 @@ TEST_F(FilterIntegrationTest, RowSample) {
     bulk.emplace_back(bigtable::SingleRowMutation(
         row_key, bigtable::SetCell("family1", "col", 4_ms, "foo")));
   }
-  table.BulkApply(std::move(bulk));
+  auto failures = table.BulkApply(std::move(bulk));
+  for (auto f : failures) {
+    ASSERT_STATUS_OK(f.status());
+  }
+  ASSERT_TRUE(failures.empty());
 
   // We want to check that the sampling rate was "more or less" the prescribed
   // value.  We use 5% as the allowed error, this is arbitrary.  If we wanted to
@@ -572,7 +576,11 @@ void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
     }
   }
   mutation.emplace_back(std::move(complex));
-  table.BulkApply(std::move(mutation));
+  auto failures = table.BulkApply(std::move(mutation));
+  for (auto f : failures) {
+    ASSERT_STATUS_OK(f.status());
+  }
+  ASSERT_TRUE(failures.empty());
 }
 
 bool UsingCloudBigtableEmulator() {

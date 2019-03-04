@@ -230,18 +230,13 @@ class Table {
    *     row can change (or create) multiple cells, across different columns and
    *     column families.
    *
-   * @throws PermanentMutationFailure based on how the retry policy
-   *     handles error conditions.  Note that not idempotent mutations that
-   *     are not reported as successful or failed by the server are not sent
-   *     to the server more than once, and are reported back with a OK status
-   *     in the exception. The exception contains a copy of the original
-   *     mutations, in case the application wants to retry, log, or otherwise
-   *     handle the failed mutations.
+   * @return a list of failed mutations.
    *
    * @par Example
    * @snippet data_snippets.cc bulk apply
    */
-  void BulkApply(BulkMutation mut);
+   
+  std::vector<FailedMutation> BulkApply(BulkMutation mut);
 
   /**
    * Makes asyncronous attempts to apply mutations to multiple rows.

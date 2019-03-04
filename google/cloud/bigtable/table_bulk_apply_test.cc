@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/internal/make_unique.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 
 namespace btproto = google::bigtable::v2;
@@ -54,9 +55,13 @@ TEST_F(TableBulkApplyTest, Simple) {
   EXPECT_CALL(*client_, MutateRows(_, _))
       .WillOnce(Invoke(reader.release()->MakeMockReturner()));
 
-  table_.BulkApply(bt::BulkMutation(
+  auto failures = table_.BulkApply(bt::BulkMutation(
       bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
       bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
+  for (auto f : failures) {
+    ASSERT_STATUS_OK(f.status());
+  }
+  ASSERT_TRUE(failures.empty());
   SUCCEED();
 }
 
@@ -94,15 +99,20 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
       .WillOnce(Invoke(r1.release()->MakeMockReturner()))
       .WillOnce(Invoke(r2.release()->MakeMockReturner()));
 
-  table_.BulkApply(bt::BulkMutation(
+  auto failures = table_.BulkApply(bt::BulkMutation(
       bt::SingleRowMutation("foo",
                             {bigtable::SetCell("fam", "col", 0_ms, "baz")}),
       bt::SingleRowMutation("bar",
                             {bigtable::SetCell("fam", "col", 0_ms, "qux")})));
+  for (auto f : failures) {
+    ASSERT_STATUS_OK(f.status());
+  }
+  ASSERT_TRUE(failures.empty());
+
   SUCCEED();
 }
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+//#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify that Table::BulkApply() handles permanent failures.
 TEST_F(TableBulkApplyTest, PermanentFailure) {
   auto r1 = google::cloud::internal::make_unique<MockMutateRowsReader>();
@@ -126,14 +136,16 @@ TEST_F(TableBulkApplyTest, PermanentFailure) {
   EXPECT_CALL(*client_, MutateRows(_, _))
       .WillOnce(Invoke(r1.release()->MakeMockReturner()));
 
-  EXPECT_THROW(table_.BulkApply(bt::BulkMutation(
-                   bt::SingleRowMutation(
-                       "foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-                   bt::SingleRowMutation(
-                       "bar", {bt::SetCell("fam", "col", 0_ms, "qux")}))),
-               std::exception);
+  auto failures = table_.BulkApply(bt::BulkMutation(
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
+
+  EXPECT_FALSE(failures.empty());
+  for (auto f : failures) {
+    EXPECT_FALSE(f.status().ok());
+  }
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+//#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /// @test Verify that Table::BulkApply() handles a terminated stream.
 TEST_F(TableBulkApplyTest, CanceledStream) {
@@ -172,13 +184,18 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
       .WillOnce(Invoke(r1.release()->MakeMockReturner()))
       .WillOnce(Invoke(r2.release()->MakeMockReturner()));
 
-  table_.BulkApply(bt::BulkMutation(
+  auto failures = table_.BulkApply(bt::BulkMutation(
       bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
       bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
+
+  for (auto f : failures) {
+    ASSERT_STATUS_OK(f.status());
+  }
+  ASSERT_TRUE(failures.empty());
   SUCCEED();
 }
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+//#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify that Table::BulkApply() reports correctly on too many errors.
 TEST_F(TableBulkApplyTest, TooManyFailures) {
   // Create a table with specific policies so we can test the behavior
@@ -220,12 +237,14 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
       .WillOnce(Invoke(create_cancelled_stream))
       .WillOnce(Invoke(create_cancelled_stream));
 
-  EXPECT_THROW(custom_table.BulkApply(bt::BulkMutation(
-                   bt::SingleRowMutation(
-                       "foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-                   bt::SingleRowMutation(
-                       "bar", {bt::SetCell("fam", "col", 0_ms, "qux")}))),
-               std::exception);
+  auto failures = custom_table.BulkApply(bt::BulkMutation(
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
+
+  EXPECT_FALSE(failures.empty());
+  for (auto f : failures) {
+    EXPECT_FALSE(f.status().ok());
+  }
 }
 
 /// @test Verify that Table::BulkApply() retries only idempotent mutations.
@@ -255,7 +274,7 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
       .WillOnce(Invoke(r2.release()->MakeMockReturner()));
 
   try {
-    table_.BulkApply(bt::BulkMutation(
+    auto failures = table_.BulkApply(bt::BulkMutation(
         bt::SingleRowMutation("is-idempotent",
                               {bt::SetCell("fam", "col", 0_ms, "qux")}),
         bt::SingleRowMutation("not-idempotent",
@@ -283,7 +302,7 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
       .WillOnce(Invoke(reader.release()->MakeMockReturner()));
 
   try {
-    table_.BulkApply(bt::BulkMutation(
+    auto failures = table_.BulkApply(bt::BulkMutation(
         bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
         bt::SingleRowMutation("bar",
                               {bt::SetCell("fam", "col", 0_ms, "qux")})));
@@ -297,4 +316,4 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
     FAIL() << "unexpected exception of unknown type raised";
   }
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+//#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

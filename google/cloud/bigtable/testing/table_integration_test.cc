@@ -169,7 +169,11 @@ void TableIntegrationTest::CreateCells(
   for (auto& kv : mutations) {
     bulk.emplace_back(std::move(kv.second));
   }
-  table.BulkApply(std::move(bulk));
+  auto failures = table.BulkApply(std::move(bulk));
+  for (auto f : failures) {
+    ASSERT_STATUS_OK(f.status());
+  }
+  ASSERT_TRUE(failures.empty());
 }
 
 std::vector<bigtable::Cell> TableIntegrationTest::GetCellsIgnoringTimestamp(

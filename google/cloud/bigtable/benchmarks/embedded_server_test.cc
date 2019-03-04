@@ -98,7 +98,11 @@ TEST(EmbeddedServer, TableBulkApply) {
       "row2", {bigtable::SetCell("fam", "col", milliseconds(0), "val")}));
 
   EXPECT_EQ(0, server->mutate_rows_count());
-  table.BulkApply(std::move(bulk));
+  auto failures = table.BulkApply(std::move(bulk));
+  for (auto f : failures) {
+    EXPECT_STATUS_OK(f.status());
+  }
+  EXPECT_TRUE(failures.empty());
   EXPECT_EQ(1, server->mutate_rows_count());
 
   server->Shutdown();

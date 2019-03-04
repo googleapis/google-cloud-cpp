@@ -170,7 +170,11 @@ TEST_F(DataAsyncIntegrationTest, SampleRowKeys) {
       bulk.emplace_back(std::move(mutation));
       ++rowid;
     }
-    sync_table.BulkApply(std::move(bulk));
+    auto failures = sync_table.BulkApply(std::move(bulk));
+    for (auto f : failures) {
+      ASSERT_STATUS_OK(f.status());
+    }
+    EXPECT_TRUE(failures.empty());
   }
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
