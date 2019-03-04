@@ -51,9 +51,6 @@ class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
     }
     ASSERT_NE(0, bulk.size());
     auto failures = table.BulkApply(std::move(bulk));
-    for (auto f : failures) {
-      ASSERT_STATUS_OK(f.status());
-    }
     ASSERT_TRUE(failures.empty());
   }
 };

@@ -358,9 +358,6 @@ TEST_F(FilterIntegrationTest, RowSample) {
         row_key, bigtable::SetCell("family1", "col", 4_ms, "foo")));
   }
   auto failures = table.BulkApply(std::move(bulk));
-  for (auto f : failures) {
-    ASSERT_STATUS_OK(f.status());
-  }
   ASSERT_TRUE(failures.empty());
 
   // We want to check that the sampling rate was "more or less" the prescribed
@@ -577,9 +574,6 @@ void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
   }
   mutation.emplace_back(std::move(complex));
   auto failures = table.BulkApply(std::move(mutation));
-  for (auto f : failures) {
-    ASSERT_STATUS_OK(f.status());
-  }
   ASSERT_TRUE(failures.empty());
 }
 

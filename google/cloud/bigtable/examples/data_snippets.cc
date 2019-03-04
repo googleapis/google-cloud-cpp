@@ -129,9 +129,11 @@ void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
       bulk.emplace_back(std::move(mutation));
     }
     auto failures = table.BulkApply(std::move(bulk));
-    for (auto f : failures) {
-      std::cerr << "Operation " << f.original_index() << " failed with "
-                << f.status().message() << "\n";
+    if (!failures.empty()) {
+      auto status = failures.front().status();
+      if (!status.ok()) {
+        throw std::runtime_error(status.message());
+      }
     }
   }
   //! [bulk apply]

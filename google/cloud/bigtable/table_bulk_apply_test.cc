@@ -104,15 +104,10 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
                             {bigtable::SetCell("fam", "col", 0_ms, "baz")}),
       bt::SingleRowMutation("bar",
                             {bigtable::SetCell("fam", "col", 0_ms, "qux")})));
-  for (auto f : failures) {
-    ASSERT_STATUS_OK(f.status());
-  }
   ASSERT_TRUE(failures.empty());
-
   SUCCEED();
 }
 
-//#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify that Table::BulkApply() handles permanent failures.
 TEST_F(TableBulkApplyTest, PermanentFailure) {
   auto r1 = google::cloud::internal::make_unique<MockMutateRowsReader>();
@@ -139,13 +134,8 @@ TEST_F(TableBulkApplyTest, PermanentFailure) {
   auto failures = table_.BulkApply(bt::BulkMutation(
       bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
       bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
-
   EXPECT_FALSE(failures.empty());
-  for (auto f : failures) {
-    EXPECT_FALSE(f.status().ok());
-  }
 }
-//#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /// @test Verify that Table::BulkApply() handles a terminated stream.
 TEST_F(TableBulkApplyTest, CanceledStream) {
@@ -187,15 +177,10 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
   auto failures = table_.BulkApply(bt::BulkMutation(
       bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
       bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
-
-  for (auto f : failures) {
-    ASSERT_STATUS_OK(f.status());
-  }
   ASSERT_TRUE(failures.empty());
   SUCCEED();
 }
 
-//#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 /// @test Verify that Table::BulkApply() reports correctly on too many errors.
 TEST_F(TableBulkApplyTest, TooManyFailures) {
   // Create a table with specific policies so we can test the behavior
@@ -240,11 +225,7 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
   auto failures = custom_table.BulkApply(bt::BulkMutation(
       bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
       bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
-
   EXPECT_FALSE(failures.empty());
-  for (auto f : failures) {
-    EXPECT_FALSE(f.status().ok());
-  }
 }
 
 /// @test Verify that Table::BulkApply() retries only idempotent mutations.
@@ -273,21 +254,12 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
       .WillOnce(Invoke(r1.release()->MakeMockReturner()))
       .WillOnce(Invoke(r2.release()->MakeMockReturner()));
 
-  try {
-    auto failures = table_.BulkApply(bt::BulkMutation(
-        bt::SingleRowMutation("is-idempotent",
-                              {bt::SetCell("fam", "col", 0_ms, "qux")}),
-        bt::SingleRowMutation("not-idempotent",
-                              {bt::SetCell("fam", "col", "baz")})));
-  } catch (bt::PermanentMutationFailure const& ex) {
-    ASSERT_EQ(1UL, ex.failures().size());
-    EXPECT_EQ(1, ex.failures()[0].original_index());
-    EXPECT_EQ("not-idempotent", ex.failures()[0].mutation().row_key());
-  } catch (std::exception const& ex) {
-    FAIL() << "unexpected std::exception raised: " << ex.what();
-  } catch (...) {
-    FAIL() << "unexpected exception of unknown type raised";
-  }
+  auto failures = table_.BulkApply(bt::BulkMutation(
+      bt::SingleRowMutation("is-idempotent",
+                            {bt::SetCell("fam", "col", 0_ms, "qux")}),
+      bt::SingleRowMutation("not-idempotent",
+                            {bt::SetCell("fam", "col", "baz")})));
+  EXPECT_FALSE(failures.empty());
 }
 
 /// @test Verify that Table::BulkApply() works when the RPC fails.
@@ -301,19 +273,8 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
   EXPECT_CALL(*client_, MutateRows(_, _))
       .WillOnce(Invoke(reader.release()->MakeMockReturner()));
 
-  try {
-    auto failures = table_.BulkApply(bt::BulkMutation(
-        bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-        bt::SingleRowMutation("bar",
-                              {bt::SetCell("fam", "col", 0_ms, "qux")})));
-  } catch (bt::PermanentMutationFailure const& ex) {
-    EXPECT_EQ(2UL, ex.failures().size());
-    EXPECT_EQ(grpc::StatusCode::FAILED_PRECONDITION, ex.status().error_code());
-    EXPECT_EQ("no such table", ex.status().error_message());
-  } catch (std::exception const& ex) {
-    FAIL() << "unexpected std::exception raised: " << ex.what();
-  } catch (...) {
-    FAIL() << "unexpected exception of unknown type raised";
-  }
+  auto failures = table_.BulkApply(bt::BulkMutation(
+      bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
+  EXPECT_FALSE(failures.empty());
 }
-//#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

@@ -230,12 +230,9 @@ class Table {
    *     row can change (or create) multiple cells, across different columns and
    *     column families.
    *
-   * @return a list of failed mutations.
-   *
    * @par Example
    * @snippet data_snippets.cc bulk apply
    */
-   
   std::vector<FailedMutation> BulkApply(BulkMutation mut);
 
   /**

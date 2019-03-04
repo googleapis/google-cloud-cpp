@@ -99,9 +99,6 @@ TEST(EmbeddedServer, TableBulkApply) {
 
   EXPECT_EQ(0, server->mutate_rows_count());
   auto failures = table.BulkApply(std::move(bulk));
-  for (auto f : failures) {
-    EXPECT_STATUS_OK(f.status());
-  }
   EXPECT_TRUE(failures.empty());
   EXPECT_EQ(1, server->mutate_rows_count());
 

@@ -52,6 +52,10 @@ future<void> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
 
 std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
   grpc::Status status;
+
+  // We do not no need to check status.ok() anymore as
+  // FailedMutation class has now a google::cloud::Status member
+  // which can be accessed via status()
   std::vector<FailedMutation> failures =
       impl_.BulkApply(std::move(mut), status);
 

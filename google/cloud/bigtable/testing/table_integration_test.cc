@@ -170,9 +170,6 @@ void TableIntegrationTest::CreateCells(
     bulk.emplace_back(std::move(kv.second));
   }
   auto failures = table.BulkApply(std::move(bulk));
-  for (auto f : failures) {
-    ASSERT_STATUS_OK(f.status());
-  }
   ASSERT_TRUE(failures.empty());
 }
 
