@@ -13,9 +13,17 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/internal/throw_delegate.h"
+#include <openssl/bio.h>
+#include <openssl/buffer.h>
+#include <openssl/evp.h>
+#include <openssl/opensslv.h>
+#include <openssl/pem.h>
 #ifdef OPENSSL_IS_BORINGSSL
 #include <openssl/base64.h>
 #endif  // OPENSSL_IS_BORINGSSL
+#include <memory>
+#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -38,6 +46,7 @@ inline std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_free)> GetDigestCtx() {
 };
 #endif
 
+#ifndef OPENSSL_IS_BORINGSSL
 std::unique_ptr<BIO, decltype(&BIO_free_all)>
 MakeBioChainForBase64Transcoding() {
   auto base64_io = std::unique_ptr<BIO, decltype(&BIO_free)>(
@@ -60,6 +69,7 @@ MakeBioChainForBase64Transcoding() {
   BIO_set_flags(static_cast<BIO*>(bio_chain.get()), BIO_FLAGS_BASE64_NO_NL);
   return bio_chain;
 }
+#endif  // OPENSSL_IS_BORINGSSL
 }  // namespace
 
 std::string Base64Decode(std::string const& str) {

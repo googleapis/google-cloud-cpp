@@ -15,18 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OPENSSL_UTIL_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OPENSSL_UTIL_H_
 
-#include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/version.h"
-#include <openssl/bio.h>
-#include <openssl/buffer.h>
-#include <openssl/evp.h>
-#include <openssl/opensslv.h>
-#include <openssl/pem.h>
 #include <algorithm>
-#include <iostream>
-#include <memory>
-#include <sstream>
 #include <vector>
 
 namespace google {
@@ -46,7 +37,7 @@ std::string Base64Decode(std::string const& str);
 std::string Base64Encode(std::string const& str);
 
 /**
- * Encodes a string using Base64.
+ * Encodes a byte array using Base64.
  */
 std::string Base64Encode(std::vector<std::uint8_t> const& bytes);
 
@@ -75,7 +66,7 @@ inline void RightTrim(std::string& str, char trim_ch) {
 }
 
 /**
- * Returns a Base64-encoded version of the given a string, using the URL- and
+ * Returns a Base64-encoded version of the given byte array, using the URL- and
  * filesystem-safe alphabet, making these adjustments:
  * -  Replace '+' with '-'
  * -  Replace '/' with '_'
@@ -89,6 +80,13 @@ inline std::string UrlsafeBase64Encode(std::vector<std::uint8_t> const& bytes) {
   return b64str;
 }
 
+/**
+ * Returns a Base64-encoded version of the given string, using the URL- and
+ * filesystem-safe alphabet, making these adjustments:
+ * -  Replace '+' with '-'
+ * -  Replace '/' with '_'
+ * -  Right-trim '=' characters
+ */
 inline std::string UrlsafeBase64Encode(std::string const& str) {
   std::string b64str = Base64Encode(str);
   std::replace(b64str.begin(), b64str.end(), '+', '-');
