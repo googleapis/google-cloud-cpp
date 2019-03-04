@@ -53,45 +53,21 @@ std::vector<std::uint8_t> SignStringWithPem(
     storage::oauth2::JwtSigningAlgorithms alg);
 
 /**
- * Transforms a string in-place, removing trailing occurrences of a character.
- *
- * Warning: this was written with the intent of operating on a string
- * containing ASCII-encoded (8-bit) characters (e.g. removing trailing '='
- * characters from a Base64-encoded string) and may not function correctly
- * for strings containing Unicode characters.
- */
-inline void RightTrim(std::string& str, char trim_ch) {
-  auto end_pos = str.find_last_not_of(trim_ch);
-  if (std::string::npos != end_pos) str.resize(end_pos + 1);
-}
-
-/**
- * Returns a Base64-encoded version of the given byte array, using the URL- and
+ * Returns a Base64-encoded version of @p bytes. Using the URL- and
  * filesystem-safe alphabet, making these adjustments:
  * -  Replace '+' with '-'
  * -  Replace '/' with '_'
  * -  Right-trim '=' characters
  */
-inline std::string UrlsafeBase64Encode(std::vector<std::uint8_t> const& bytes) {
+template <typename Collection>
+inline std::string UrlsafeBase64Encode(Collection const& bytes) {
   std::string b64str = Base64Encode(bytes);
   std::replace(b64str.begin(), b64str.end(), '+', '-');
   std::replace(b64str.begin(), b64str.end(), '/', '_');
-  RightTrim(b64str, '=');
-  return b64str;
-}
-
-/**
- * Returns a Base64-encoded version of the given string, using the URL- and
- * filesystem-safe alphabet, making these adjustments:
- * -  Replace '+' with '-'
- * -  Replace '/' with '_'
- * -  Right-trim '=' characters
- */
-inline std::string UrlsafeBase64Encode(std::string const& str) {
-  std::string b64str = Base64Encode(str);
-  std::replace(b64str.begin(), b64str.end(), '+', '-');
-  std::replace(b64str.begin(), b64str.end(), '/', '_');
-  RightTrim(b64str, '=');
+  auto end_pos = b64str.find_last_not_of('=');
+  if (std::string::npos != end_pos) {
+    b64str.resize(end_pos + 1);
+  }
   return b64str;
 }
 
