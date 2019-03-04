@@ -95,24 +95,27 @@ echo "================================================================"
 echo "Download dependencies for integration tests $(date)."
 echo "================================================================"
 
+export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
+
 # Download the gRPC `roots.pem` file. Somewhere inside the bowels of Bazel, this
 # file might exist, but my attempts at using it have failed.
 echo "    Getting roots.pem for gRPC."
 wget -q https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem
-echo "    Getting cbt tool"
-export GOPATH="${KOKORO_ROOT}/golang"
-go get -u cloud.google.com/go/bigtable/cmd/cbt
-echo "End of download."
-
-export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
 export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="$PWD/roots.pem"
-
 # If this file does not exist gRPC blocks trying to connect, so it is better
 # to break the build early (the ls command breaks and the build stops) if that
 # is the case.
 echo "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH = ${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
 ls -l "$(dirname "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}")"
 ls -l "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
+
+echo "    Getting cbt tool"
+wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-233.0.0-linux-x86_64.tar.gz
+sha256sum google-cloud-sdk-233.0.0-linux-x86_64.tar.gz | \
+    grep -q '^a04ff6c4dcfc59889737810174b5d3c702f7a0a20e5ffcec3a5c3fccc59c3b7a '
+tar x -C "${HOME}" -f google-cloud-sdk-233.0.0-linux-x86_64.tar.gz
+"${HOME}/google-cloud-sdk/bin/gcloud" --quiet components install cbt
+export CBT="${HOME}/google-cloud-sdk/bin/cbt"
 
 echo
 echo "================================================================"
