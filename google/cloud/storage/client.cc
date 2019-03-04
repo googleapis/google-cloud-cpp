@@ -265,7 +265,7 @@ https://cloud.google.com/storage/docs/authentication
   os << "?" << request.CanonicalQueryString(credentials->client_id())
      << "&X-Goog-Signature=" << signature;
 
-  return std::move(os).str();
+  return os.str();
 }
 
 }  // namespace STORAGE_CLIENT_NS

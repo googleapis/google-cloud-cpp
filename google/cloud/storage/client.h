@@ -2319,7 +2319,7 @@ class Client {
   }
 
   /**
-   * Create a V2 signed URL for the given parameters.
+   * Create a V4 signed URL for the given parameters.
    *
    * @note By default URLs created with this function expire after 7 days.
    *
