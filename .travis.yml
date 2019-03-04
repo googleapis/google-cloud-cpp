@@ -20,14 +20,6 @@ language: cpp
 # TODO(#62) - enable a SANITIZE_MEMORY=yes build when we eliminate the false positives
 matrix:
   include:
-    - # Compile on Travis' native environment with Bazel
-      os: linux
-      compiler: gcc
-      env:
-        TEST_BAZEL_AS_DEPENDENCY=yes
-      install: ci/install-retry.sh ci/install-bazel.sh linux
-      script: ci/travis/build-bazel.sh
-      if: repo =~ ^googleapis/ or head_repo =~ ^googleapis/
     - # Verify that we can compile shared libraries, and verify that the ABI is
       # not changing, or rather, that if there are changes the changes are
       # intentional.
