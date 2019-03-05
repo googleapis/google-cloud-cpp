@@ -61,12 +61,11 @@ MakeBioChainForBase64Transcoding() {
   }
   auto bio_chain = std::unique_ptr<BIO, decltype(&BIO_free_all)>(
       // Output from a b64 encoder should go to an in-memory sink.
-      BIO_push(static_cast<BIO*>(base64_io.release()),
-               static_cast<BIO*>(mem_io.release())),
+      BIO_push(base64_io.release(), mem_io.release()),
       // Make sure we free all resources in this chain upon destruction.
       &BIO_free_all);
   // Don't use newlines as a signal for when to flush buffers.
-  BIO_set_flags(static_cast<BIO*>(bio_chain.get()), BIO_FLAGS_BASE64_NO_NL);
+  BIO_set_flags(bio_chain.get(), BIO_FLAGS_BASE64_NO_NL);
   return bio_chain;
 }
 #endif  // OPENSSL_IS_BORINGSSL
@@ -84,12 +83,11 @@ std::string Base64Encode(std::uint8_t const* bytes, std::size_t bytes_size) {
   int retval = 0;
 
   while (true) {
-    retval = BIO_write(static_cast<BIO*>(bio_chain.get()), bytes,
-                       static_cast<int>(bytes_size));
+    retval = BIO_write(bio_chain.get(), bytes, static_cast<int>(bytes_size));
     if (retval > 0) {
       break;  // Positive value == successful write.
     }
-    if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
+    if (!BIO_should_retry(bio_chain.get())) {
       std::ostringstream err_builder;
       err_builder << "Permanent error in " << __func__ << ": "
                   << "BIO_write returned non-retryable value of " << retval;
@@ -99,11 +97,11 @@ std::string Base64Encode(std::uint8_t const* bytes, std::size_t bytes_size) {
   // Tell the b64 encoder that we're done writing data, thus prompting it to
   // add trailing '=' characters for padding if needed.
   while (true) {
-    retval = BIO_flush(static_cast<BIO*>(bio_chain.get()));
+    retval = BIO_flush(bio_chain.get());
     if (retval > 0) {
       break;  // Positive value == successful flush.
     }
-    if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
+    if (!BIO_should_retry(bio_chain.get())) {
       std::ostringstream err_builder;
       err_builder << "Permanent error in " << __func__ << ": "
                   << "BIO_flush returned non-retryable value of " << retval;
@@ -113,7 +111,7 @@ std::string Base64Encode(std::uint8_t const* bytes, std::size_t bytes_size) {
 
   // This buffer belongs to the BIO chain and is freed upon its destruction.
   BUF_MEM* buf_mem;
-  BIO_get_mem_ptr(static_cast<BIO*>(bio_chain.get()), &buf_mem);
+  BIO_get_mem_ptr(bio_chain.get(), &buf_mem);
   // Return a string copy of the buffer's bytes, as the buffer will be freed
   // upon this method's exit.
   return std::string(buf_mem->data, buf_mem->length);
@@ -144,8 +142,7 @@ std::string Base64Decode(std::string const& str) {
   using UniqueBioChainPtr = std::unique_ptr<BIO, decltype(&BIO_free_all)>;
   using UniqueBioPtr = std::unique_ptr<BIO, decltype(&BIO_free)>;
 
-  UniqueBioPtr source(BIO_new_mem_buf(const_cast<char*>(str.data()),
-                                      static_cast<int>(str.size())),
+  UniqueBioPtr source(BIO_new_mem_buf(str.data(), static_cast<int>(str.size())),
                       &BIO_free);
   if (!source) {
     std::ostringstream os;
@@ -221,7 +218,7 @@ std::vector<std::uint8_t> SignStringWithPem(
   }
 
   auto pem_buffer = std::unique_ptr<BIO, decltype(&BIO_free)>(
-      BIO_new_mem_buf(const_cast<char*>(pem_contents.c_str()),
+      BIO_new_mem_buf(pem_contents.data(),
                       static_cast<int>(pem_contents.length())),
       &BIO_free);
   if (!pem_buffer) {
@@ -230,7 +227,7 @@ std::vector<std::uint8_t> SignStringWithPem(
 
   auto private_key = std::unique_ptr<EVP_PKEY, decltype(&EVP_PKEY_free)>(
       PEM_read_bio_PrivateKey(
-          static_cast<BIO*>(pem_buffer.get()),
+          pem_buffer.get(),
           nullptr,  // EVP_PKEY **x
           nullptr,  // pem_password_cb *cb -- a custom callback.
           // void *u -- this represents the password for the PEM (only
@@ -244,17 +241,16 @@ std::vector<std::uint8_t> SignStringWithPem(
 
   int const digest_sign_success_code = 1;
   if (digest_sign_success_code !=
-      EVP_DigestSignInit(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
+      EVP_DigestSignInit(digest_ctx.get(),
                          nullptr,  // EVP_PKEY_CTX **pctx
                          digest_type,
                          nullptr,  // ENGINE *e
-                         static_cast<EVP_PKEY*>(private_key.get()))) {
+                         private_key.get())) {
     handle_openssl_failure("Could not initialize PEM digest.");
   }
 
   if (digest_sign_success_code !=
-      EVP_DigestSignUpdate(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
-                           str.c_str(), str.length())) {
+      EVP_DigestSignUpdate(digest_ctx.get(), str.data(), str.length())) {
     handle_openssl_failure("Could not update PEM digest.");
   }
 
@@ -263,16 +259,16 @@ std::vector<std::uint8_t> SignStringWithPem(
   // with the resulting buffer's size. This allows us to then call it again,
   // with the correct buffer and size, which actually populates the buffer.
   if (digest_sign_success_code !=
-      EVP_DigestSignFinal(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
+      EVP_DigestSignFinal(digest_ctx.get(),
                           nullptr,  // unsigned char *sig
                           &signed_str_size)) {
     handle_openssl_failure("Could not finalize PEM digest (1/2).");
   }
 
   std::vector<unsigned char> signed_str(signed_str_size);
-  if (digest_sign_success_code !=
-      EVP_DigestSignFinal(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
-                          signed_str.data(), &signed_str_size)) {
+  if (digest_sign_success_code != EVP_DigestSignFinal(digest_ctx.get(),
+                                                      signed_str.data(),
+                                                      &signed_str_size)) {
     handle_openssl_failure("Could not finalize PEM digest (2/2).");
   }
 
