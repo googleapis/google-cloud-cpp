@@ -84,7 +84,7 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
  public:
   explicit AsyncUnaryRpcFuture() : sync_(false) {}
 
-  future<StatusOr<Response>> get_future() { return promise_.get_future(); }
+  future<StatusOr<Response>> GetFuture() { return promise_.get_future(); }
 
   /// Prepare the operation to receive the response and start the RPC.
   template <typename AsyncFunctionType>
@@ -105,7 +105,7 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
   }
 
  private:
-  bool Notify(CompletionQueue& cq, bool ok) override {
+  bool Notify(CompletionQueue&, bool ok) override {
     // Make sure changes to the member variables are visible.
     static_cast<void>(sync_.load(std::memory_order_acquire));
     if (!ok) {

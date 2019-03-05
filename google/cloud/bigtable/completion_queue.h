@@ -102,14 +102,14 @@ class CompletionQueue {
         std::make_shared<internal::AsyncUnaryRpcFuture<Request, Response>>();
     void* tag = impl_->RegisterOperation(op);
     op->Start(async_call, std::move(context), request, &impl_->cq(), tag);
-    return op->get_future();
+    return op->GetFuture();
   }
 
   //@{
   /**
    * @name Obsolete. Callback-based APIs. To be removed after cleaning up.
    *
-   * TODO(coryan) - Remove these member functions.
+   * TODO(#2145) - Remove these member functions.
    */
   /**
    * Create a timer that fires at @p deadline.
@@ -120,6 +120,8 @@ class CompletionQueue {
    * @param functor the value of the functor.
    * @return an asynchronous operation wrapping the functor and timer, can be
    *   used to cancel the pending timer.
+   *
+   * TODO(#2145) - Remove these member functions.
    */
   template <typename Functor,
             typename std::enable_if<
@@ -152,6 +154,8 @@ class CompletionQueue {
    * @param functor the value of the functor.
    * @return an asynchronous operation wrapping the functor and timer, can be
    *   used to cancel the pending timer.
+   *
+   * TODO(#2145) - Remove these member functions.
    */
   template <typename Rep, typename Period, typename Functor,
             typename std::enable_if<
@@ -186,6 +190,8 @@ class CompletionQueue {
    *
    * @return an AsyncOperation instance that can be used to request cancelation
    *   of the pending operation.
+   *
+   * TODO(#2145) - Remove these member functions.
    */
   template <
       typename Client, typename MemberFunction, typename Request,
@@ -244,6 +250,8 @@ class CompletionQueue {
    *
    * @return an AsyncOperation instance that can be used to request cancelation
    *   of the pending operation.
+   *
+   * TODO(#2145) - Remove these member functions.
    */
   template <typename Client, typename MemberFunction, typename Request,
             typename DataFunctor, typename FinishedFunctor,

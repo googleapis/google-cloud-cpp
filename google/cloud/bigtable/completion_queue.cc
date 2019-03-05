@@ -19,7 +19,6 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 namespace {
 /**
  * Wrap a timer callback into an `AsyncOperation`.
@@ -38,9 +37,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   explicit AsyncTimerFuture(std::unique_ptr<grpc::Alarm> alarm)
       : alarm_(std::move(alarm)) {}
 
-  future<AsyncTimerResult> get_future() {
-    return promise_.get_future();
-  }
+  future<AsyncTimerResult> GetFuture() { return promise_.get_future(); }
 
   void Set(grpc::CompletionQueue& cq,
            std::chrono::system_clock::time_point deadline, void* tag) {
@@ -59,7 +56,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   }
 
  private:
-  bool Notify(CompletionQueue& cq, bool ok) override {
+  bool Notify(CompletionQueue&, bool ok) override {
     std::unique_lock<std::mutex> lk(mu_);
     alarm_.reset();
     timer_.cancelled = !ok;
@@ -77,7 +74,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   std::unique_ptr<grpc::Alarm> alarm_;
 };
 
-}
+}  // namespace
 
 CompletionQueue::CompletionQueue() : impl_(new internal::CompletionQueueImpl) {}
 
@@ -90,7 +87,7 @@ google::cloud::future<AsyncTimerResult> CompletionQueue::MakeDeadlineTimer(
   auto op = std::make_shared<AsyncTimerFuture>(impl_->CreateAlarm());
   void* tag = impl_->RegisterOperation(op);
   op->Set(impl_->cq(), deadline, tag);
-  return op->get_future();
+  return op->GetFuture();
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
