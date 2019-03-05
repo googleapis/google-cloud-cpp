@@ -202,6 +202,25 @@ struct then_helper {
   using state_t = future_shared_state<result_t>;
 };
 
+template <typename T, typename U>
+struct make_ready_helper {
+  using type = typename std::decay<T>::type;
+};
+
+template <typename T, typename X>
+struct make_ready_helper<T, std::reference_wrapper<X>> {
+  using type = X&;
+};
+
+/**
+ * Compute the return type of make_ready_future<T>.
+ */
+template <typename T>
+struct make_ready_return {
+  using type =
+      typename make_ready_helper<T, typename std::decay<T>::type>::type;
+};
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
