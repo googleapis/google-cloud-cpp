@@ -23,6 +23,7 @@ namespace internal {
 namespace {
 
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 TEST(HmacKeyRequestsTest, ParseFailure) {
   auto actual = internal::HmacKeyMetadataParser::FromString("{123");
@@ -32,6 +33,85 @@ TEST(HmacKeyRequestsTest, ParseFailure) {
 TEST(HmacKeyRequestsTest, ParseEmpty) {
   auto actual = internal::HmacKeyMetadataParser::FromString("{}");
   EXPECT_TRUE(actual.ok());
+}
+
+TEST(HmacKeyRequestsTest, Create) {
+  CreateHmacKeyRequest request("test-project-id", "test-service-account");
+  EXPECT_EQ("test-project-id", request.project_id());
+  EXPECT_EQ("test-service-account", request.service_account());
+
+  std::ostringstream os;
+  os << request;
+  auto str = os.str();
+  EXPECT_THAT(str, HasSubstr("CreateHmacKeyRequest"));
+  EXPECT_THAT(str, HasSubstr("test-project-id"));
+  EXPECT_THAT(str, HasSubstr("test-service-account"));
+}
+
+TEST(HmacKeyRequestsTest, ParseCreateResponse) {
+  std::string const resource_text = R"""({
+      "accessId": "test-access-id",
+      "etag": "XYZ=",
+      "id": "test-id-123",
+      "kind": "storage#hmacKey",
+      "projectId": "test-project-id",
+      "serviceAccountEmail": "test-service-account-email",
+      "state": "ACTIVE",
+      "timeCreated": "2019-03-01T12:13:14Z"
+})""";
+  nl::json const json_object{
+      {"kind", "storage#hmacKeyCreate"},
+      // To generate the secret use:
+      //   echo -n "test-secret" | openssl base64
+      {"secretKey", "dGVzdC1zZWNyZXQ="},
+      {"resource", nl::json::parse(resource_text)},
+  };
+
+  std::string const text = json_object.dump();
+
+  auto actual =
+      CreateHmacKeyResponse::FromHttpResponse(HttpResponse{200, text, {}})
+          .value();
+  EXPECT_EQ("dGVzdC1zZWNyZXQ=", actual.secret);
+  auto expected_resource =
+      HmacKeyMetadataParser::FromString(resource_text).value();
+  EXPECT_THAT(expected_resource, actual.resource);
+}
+
+TEST(HmacKeyRequestsTest, ParseCreateResponseFailure) {
+  std::string text = R"""({123)""";
+
+  auto actual =
+      CreateHmacKeyResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
+}
+
+TEST(HmacKeyRequestsTest, ParseCreateResponseFailureInResource) {
+  std::string text = R"""({"resource": "invalid-resource" })""";
+
+  auto actual =
+      CreateHmacKeyResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
+}
+
+TEST(HmacKeyRequestsTest, CreateResponseIOStream) {
+  std::string const text = R"""({
+      "secret": "dGVzdC1zZWNyZXQ=",
+      "resource": {
+        "accessId": "test-access-id"
+      }
+})""";
+
+  auto parsed =
+      CreateHmacKeyResponse::FromHttpResponse(HttpResponse{200, text, {}})
+          .value();
+
+  std::ostringstream os;
+  os << parsed;
+  std::string actual = std::move(os).str();
+  EXPECT_THAT(actual, HasSubstr("test-access-id"));
+  // We do not want the secrets accidentally leaked to the log.
+  EXPECT_THAT(actual, Not(HasSubstr("dGVzdC1zZWNyZXQ=")));
 }
 
 }  // namespace
