@@ -459,7 +459,12 @@ class BulkMutation {
   bool empty() const { return request_.entries().empty(); }
 
   /// Return the number of mutations in this set.
-  size_t size() const { return request_.entries().size(); }
+  std::size_t size() const { return request_.entries().size(); }
+
+  /// Return the estimated size in bytes of all the mutations in this set.
+  std::size_t estimated_size_in_bytes() const {
+    return request_.ByteSizeLong();
+  }
 
  private:
   template <typename... M>
