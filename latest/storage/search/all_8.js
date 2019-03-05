@@ -2,6 +2,7 @@ var searchData=
 [
   ['bucketaccesscontrolparser',['BucketAccessControlParser',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketAccessControl.html#a4c4d435dcf5bf90eb3b3b0be5b32d508',1,'google::cloud::storage::v0::BucketAccessControl']]],
   ['bucketmetadataparser',['BucketMetadataParser',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a38710c39b6f97fa11ec2ee0bce43317d',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['hmackeymetadataparser',['HmacKeyMetadataParser',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1HmacKeyMetadata.html#ac126d333257d6bc9aaa4b90aa3a9b790',1,'google::cloud::storage::v0::HmacKeyMetadata']]],
   ['iam_5fbinding_2eh',['iam_binding.h',['../../common/iam__binding_8h.html',1,'']]],
   ['iam_5fbindings_2ecc',['iam_bindings.cc',['../../common/iam__bindings_8cc.html',1,'']]],
   ['iam_5fbindings_2eh',['iam_bindings.h',['../../common/iam__bindings_8h.html',1,'']]],
@@ -12,7 +13,7 @@ var searchData=
   ['iambinding',['IamBinding',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBinding.html',1,'google::cloud::v0::IamBinding'],['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBinding.html#a6b5030fb6c58bd21503893c1045c1618',1,'google::cloud::v0::IamBinding::IamBinding()']]],
   ['iambindings',['IamBindings',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html',1,'google::cloud::v0::IamBindings'],['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#af702c99d9ea9cefb2ef2421d04715f48',1,'google::cloud::v0::IamBindings::IamBindings()=default'],['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a36c058032de6d0ff10d98104975efa82',1,'google::cloud::v0::IamBindings::IamBindings(std::vector&lt; IamBinding &gt; bindings)'],['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a643f51217eeb6b8275a759a3ea7e6a13',1,'google::cloud::v0::IamBindings::IamBindings(std::string const &amp;role, std::set&lt; std::string &gt; const &amp;members)']]],
   ['iampolicy',['IamPolicy',['../../common/structgoogle_1_1cloud_1_1v0_1_1IamPolicy.html',1,'google::cloud::v0']]],
-  ['id',['id',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#aa92a5069c76822c1f65eac63b60e7113',1,'google::cloud::storage::v0::NotificationMetadata']]],
+  ['id',['id',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1HmacKeyMetadata.html#a73e2ec79dcc4523e0de0f0c3a178df1f',1,'google::cloud::storage::v0::HmacKeyMetadata::id()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#aa92a5069c76822c1f65eac63b60e7113',1,'google::cloud::storage::v0::NotificationMetadata::id()']]],
   ['idempotency_5fpolicy_2ecc',['idempotency_policy.cc',['../idempotency__policy_8cc.html',1,'']]],
   ['idempotency_5fpolicy_2eh',['idempotency_policy.h',['../idempotency__policy_8h.html',1,'']]],
   ['idempotencypolicy',['IdempotencyPolicy',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html',1,'google::cloud::storage::v0']]],
