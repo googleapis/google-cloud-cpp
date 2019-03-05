@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_COMPLETION_QUEUE_IMPL_H_
 
 #include "google/cloud/bigtable/async_operation.h"
+#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/throw_delegate.h"
