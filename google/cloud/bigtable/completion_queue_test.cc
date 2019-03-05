@@ -62,7 +62,9 @@ TEST(CompletionQueueTest, LifeCycleFuture) {
 
   promise<bool> promise;
   cq.MakeRelativeTimer(2_ms).then(
-      [&](future<AsyncTimerResult>) { promise.set_value(true); });
+      [&](future<std::chrono::system_clock::time_point>) {
+        promise.set_value(true);
+      });
 
   auto f = promise.get_future();
   auto status = f.wait_for(500_ms);

@@ -41,12 +41,14 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   explicit AsyncTimerFuture(std::unique_ptr<grpc::Alarm> alarm)
       : alarm_(std::move(alarm)) {}
 
-  future<AsyncTimerResult> GetFuture() { return promise_.get_future(); }
+  future<std::chrono::system_clock::time_point> GetFuture() {
+    return promise_.get_future();
+  }
 
   void Set(grpc::CompletionQueue& cq,
            std::chrono::system_clock::time_point deadline, void* tag) {
     std::unique_lock<std::mutex> lk(mu_);
-    timer_.deadline = deadline;
+    deadline_ = deadline;
     if (alarm_) {
       alarm_->Set(&cq, deadline, tag);
     }
@@ -60,12 +62,11 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   }
 
  private:
-  bool Notify(CompletionQueue&, bool ok) override {
+  bool Notify(CompletionQueue&, bool) override {
     std::unique_lock<std::mutex> lk(mu_);
     alarm_.reset();
-    timer_.cancelled = !ok;
     lk.unlock();
-    promise_.set_value(timer_);
+    promise_.set_value(deadline_);
     return true;
   }
 
@@ -73,8 +74,8 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   // We need to make sure that `if (alarm_) { alarm_->Cancel(); }` is atomic.
   // Without the mutex it is not because `Notify` resets `alarm_`.
   std::mutex mu_;
-  promise<AsyncTimerResult> promise_;
-  AsyncTimerResult timer_;
+  promise<std::chrono::system_clock::time_point> promise_;
+  std::chrono::system_clock::time_point deadline_;
   std::unique_ptr<grpc::Alarm> alarm_;
 };
 
@@ -86,7 +87,8 @@ void CompletionQueue::Run() { impl_->Run(*this); }
 
 void CompletionQueue::Shutdown() { impl_->Shutdown(); }
 
-google::cloud::future<AsyncTimerResult> CompletionQueue::MakeDeadlineTimer(
+google::cloud::future<std::chrono::system_clock::time_point>
+CompletionQueue::MakeDeadlineTimer(
     std::chrono::system_clock::time_point deadline) {
   auto op = std::make_shared<AsyncTimerFuture>(impl_->CreateAlarm());
   void* tag = impl_->RegisterOperation(op);

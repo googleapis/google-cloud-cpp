@@ -47,11 +47,11 @@ class CompletionQueue {
    * Create a timer that fires at @p deadline.
    *
    * @param deadline when should the timer expire.
-   * @return a future that becomes satisfied after @p deadline or when the timer
-   *   is cancelled.
+   *
+   * @return a future that becomes satisfied after @p deadline.
    */
-  google::cloud::future<AsyncTimerResult> MakeDeadlineTimer(
-      std::chrono::system_clock::time_point deadline);
+  google::cloud::future<std::chrono::system_clock::time_point>
+  MakeDeadlineTimer(std::chrono::system_clock::time_point deadline);
 
   /**
    * Create a timer that fires after the @p duration.
@@ -66,12 +66,13 @@ class CompletionQueue {
    *     `std::chrono::duration<>` (in brief, the length of the tick in seconds,
    *     expressed as a `std::ratio<>`), for our purposes it is simply a formal
    *     parameter.
+   *
    * @param duration when should the timer expire relative to the current time.
-   * @return a future that becomes satisfied after @p duration time has elapsed
-   *   or when the timer is cancelled.
+   *
+   * @return a future that becomes satisfied after @p duration time has elapsed.
    */
   template <typename Rep, typename Period>
-  future<AsyncTimerResult> MakeRelativeTimer(
+  future<std::chrono::system_clock::time_point> MakeRelativeTimer(
       std::chrono::duration<Rep, Period> duration) {
     return MakeDeadlineTimer(std::chrono::system_clock::now() + duration);
   }
