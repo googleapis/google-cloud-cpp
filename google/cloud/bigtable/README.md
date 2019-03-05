@@ -21,7 +21,20 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.7.x - TBD
+### v0.8.x - TBD
+
+### v0.7.x - 2019-03
+
+* **Breaking change**: Return `StatusOr<>` from `TableAdmin` and `InstanceAdmin`
+  operations to signal errors.
+* Add streaming to `(Async)BulkMutator`.
+* Implement a helper class (`MutationBatcher`) to automatically batch and manage
+  outstanding bulk mutations.
+* Add `bigtable::Cell` constructors without labels argument.
+* Implementation of `RowSet` example using discontinuous keys.
+* `List{Instances,Clusters}` return `failed_locations`.
+* First version of async `Apply` batching.
+* Keep `Apply` callbacks in `MutationData`.
 
 ### v0.6.x - 2019-02
 
