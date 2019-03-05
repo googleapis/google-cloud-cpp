@@ -16,7 +16,7 @@
 
 # This should be included from the top level CMakeLists file
 set(BIGTABLE_CLIENT_VERSION_MAJOR 0)
-set(BIGTABLE_CLIENT_VERSION_MINOR 7)
+set(BIGTABLE_CLIENT_VERSION_MINOR 8)
 set(BIGTABLE_CLIENT_VERSION_PATCH 0)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Bigtable C++ Client")
