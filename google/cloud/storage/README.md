@@ -24,14 +24,11 @@ the reference guide includes a quick start guide.
 
 ### v0.5.x - 2019-03
 
-* Add new functions for SHA256 hashes.
-* Add support for V4 signed URLs.
 * Properly handle subresources in V2 signed URLs.
-* Allow specifying non-default credential scopes and subject.
+* Allow specifying non-default `ServiceAccountCredentials` scope and subject.
 * Add `make install` instructions.
-* Change the storage examples to throw a std::runtime_error on failure.
+* Change the storage examples to throw a `std::runtime_error` on failure.
 * Add Bucket Policy Only samples.
-* Run storage testbench on unused port.
 
 ### v0.4.x - 2019-02
 
