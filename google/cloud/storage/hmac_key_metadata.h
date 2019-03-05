@@ -39,7 +39,10 @@ struct HmacKeyMetadataParser;
  * authenticate with GCS. GCS will use the service account permissions to
  * determine if the request is authorized.
  *
- * TODO(...) - Update documentation when links are available.
+ * @warning This is a non-GA feature of Google Cloud Storage. The APIs are
+ *    subject to change without notice.
+ *
+ * TODO(#2148) - Update documentation when links are available.
  *
  * @see https://cloud.google.com/storage/ for general information on Google
  *     Cloud Storage .

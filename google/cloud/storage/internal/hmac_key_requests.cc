@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,7 +35,10 @@ StatusOr<HmacKeyMetadata> HmacKeyMetadataParser::FromJson(
   result.project_id_ = json.value("projectId", "");
   result.service_account_email_ = json.value("serviceAccountEmail", "");
   result.state_ = json.value("state", "");
-  result.time_created_ = internal::ParseRfc3339(json.value("timeCreated", ""));
+  if (json.count("timeCreated") != 0) {
+    result.time_created_ =
+        internal::ParseRfc3339(json.value("timeCreated", ""));
+  }
   return result;
 }
 
