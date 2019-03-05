@@ -206,6 +206,13 @@ Functions</h2></td></tr>
 <tr class="separator:a0ab40d59b9947402c1c1f9bc299c7f4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f7f70db312f10022f868b7ef8d41be5"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1v0.html#a2f7f70db312f10022f868b7ef8d41be5">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1v0_1_1Status.html">Status</a> const &amp;rhs)</td></tr>
 <tr class="separator:a2f7f70db312f10022f868b7ef8d41be5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ef9ac1f5c1c80ae778485237561ff4e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a0ef9ac1f5c1c80ae778485237561ff4e"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1future.html">future</a>&lt; typename internal::make_ready_return&lt; T &gt;::type &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1v0.html#a0ef9ac1f5c1c80ae778485237561ff4e">make_ready_future</a> (T &amp;&amp;t)</td></tr>
+<tr class="memdesc:a0ef9ac1f5c1c80ae778485237561ff4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="classgoogle_1_1cloud_1_1v0_1_1future_3_01void_01_4.html" title="Implement ISO/IEC TS 19571:2016 future for void. ">future&lt;void&gt;</a> that is immediately ready.  <a href="#a0ef9ac1f5c1c80ae778485237561ff4e">More...</a><br /></td></tr>
+<tr class="separator:a0ef9ac1f5c1c80ae778485237561ff4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d29299230b3b47e9443b5f94c4abd2e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1future.html">future</a>&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1v0.html#a6d29299230b3b47e9443b5f94c4abd2e">make_ready_future</a> ()</td></tr>
+<tr class="memdesc:a6d29299230b3b47e9443b5f94c4abd2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="classgoogle_1_1cloud_1_1v0_1_1future_3_01void_01_4.html" title="Implement ISO/IEC TS 19571:2016 future for void. ">future&lt;void&gt;</a> that is immediately ready.  <a href="#a6d29299230b3b47e9443b5f94c4abd2e">More...</a><br /></td></tr>
+<tr class="separator:a6d29299230b3b47e9443b5f94c4abd2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf27bf714b6385f2c3639f7ddb12f9f4"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:aaf27bf714b6385f2c3639f7ddb12f9f4"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html">optional</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1v0.html#aaf27bf714b6385f2c3639f7ddb12f9f4">make_optional</a> (T &amp;&amp;t)</td></tr>
 <tr class="separator:aaf27bf714b6385f2c3639f7ddb12f9f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -415,6 +422,67 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00270">270</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+
+</div>
+</div>
+<a id="a6d29299230b3b47e9443b5f94c4abd2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d29299230b3b47e9443b5f94c4abd2e">&#9670;&nbsp;</a></span>make_ready_future() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1future.html">future</a>&lt;void&gt; google::cloud::v0::make_ready_future </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a <a class="el" href="classgoogle_1_1cloud_1_1v0_1_1future_3_01void_01_4.html" title="Implement ISO/IEC TS 19571:2016 future for void. ">future&lt;void&gt;</a> that is immediately ready. </p>
+
+<p class="definition">Definition at line <a class="el" href="future__void_8h_source.html#l00188">188</a> of file <a class="el" href="future__void_8h_source.html">future_void.h</a>.</p>
+
+</div>
+</div>
+<a id="a0ef9ac1f5c1c80ae778485237561ff4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ef9ac1f5c1c80ae778485237561ff4e">&#9670;&nbsp;</a></span>make_ready_future() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1future.html">future</a>&lt;typename internal::make_ready_return&lt;T&gt;::type&gt; google::cloud::v0::make_ready_future </td>
+          <td>(</td>
+          <td class="paramtype">T &amp;&amp;&#160;</td>
+          <td class="paramname"><em>t</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a <a class="el" href="classgoogle_1_1cloud_1_1v0_1_1future_3_01void_01_4.html" title="Implement ISO/IEC TS 19571:2016 future for void. ">future&lt;void&gt;</a> that is immediately ready. </p>
+
+<p class="definition">Definition at line <a class="el" href="future__generic_8h_source.html#l00203">203</a> of file <a class="el" href="future__generic_8h_source.html">future_generic.h</a>.</p>
 
 </div>
 </div>
