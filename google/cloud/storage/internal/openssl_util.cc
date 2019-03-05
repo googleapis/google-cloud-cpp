@@ -93,33 +93,26 @@ std::string Base64Encode(std::uint8_t const* bytes, std::size_t bytes_size) {
   auto mem_io = std::unique_ptr<BIO, decltype(&BIO_free)>(BIO_new(BIO_s_mem()),
                                                           &BIO_free);
   auto bio_chain = PushBase64Transcoding(std::move(mem_io));
-  int retval = 0;
 
-  while (true) {
-    retval = BIO_write(bio_chain.get(), bytes, static_cast<int>(bytes_size));
-    if (retval > 0) {
-      break;  // Positive value == successful write.
-    }
-    if (!BIO_should_retry(bio_chain.get())) {
-      std::ostringstream err_builder;
-      err_builder << "Permanent error in " << __func__ << ": "
-                  << "BIO_write returned non-retryable value of " << retval;
-      google::cloud::internal::ThrowRuntimeError(err_builder.str());
-    }
+  // These BIO_*() operations are guaranteed not to block, consult the NOTES in:
+  //   https://www.openssl.org/docs/man1.1.1/man3/BIO_s_mem.html
+  // for details.
+  int retval = BIO_write(bio_chain.get(), bytes, static_cast<int>(bytes_size));
+  if (retval <= 0) {
+    std::ostringstream err_builder;
+    err_builder << "Permanent error in " << __func__ << ": "
+                << "BIO_write returned non-retryable value of " << retval;
+    google::cloud::internal::ThrowRuntimeError(err_builder.str());
   }
+
   // Tell the b64 encoder that we're done writing data, thus prompting it to
   // add trailing '=' characters for padding if needed.
-  while (true) {
-    retval = BIO_flush(bio_chain.get());
-    if (retval > 0) {
-      break;  // Positive value == successful flush.
-    }
-    if (!BIO_should_retry(bio_chain.get())) {
-      std::ostringstream err_builder;
-      err_builder << "Permanent error in " << __func__ << ": "
-                  << "BIO_flush returned non-retryable value of " << retval;
-      google::cloud::internal::ThrowRuntimeError(err_builder.str());
-    }
+  retval = BIO_flush(bio_chain.get());
+  if (retval <= 0) {
+    std::ostringstream err_builder;
+    err_builder << "Permanent error in " << __func__ << ": "
+                << "BIO_flush returned non-retryable value of " << retval;
+    google::cloud::internal::ThrowRuntimeError(err_builder.str());
   }
 
   // This buffer belongs to the BIO chain and is freed upon its destruction.
