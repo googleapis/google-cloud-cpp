@@ -13,9 +13,17 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/internal/throw_delegate.h"
+#include <openssl/bio.h>
+#include <openssl/buffer.h>
+#include <openssl/evp.h>
+#include <openssl/opensslv.h>
+#include <openssl/pem.h>
 #ifdef OPENSSL_IS_BORINGSSL
 #include <openssl/base64.h>
 #endif  // OPENSSL_IS_BORINGSSL
+#include <memory>
+#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -23,7 +31,48 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-std::string OpenSslUtils::Base64Decode(std::string const& str) {
+namespace {
+// The name of the function to free an EVP_MD_CTX changed in OpenSSL 1.1.0.
+#if (OPENSSL_VERSION_NUMBER < 0x10100000L)  // Older than version 1.1.0.
+inline std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_destroy)>
+GetDigestCtx() {
+  return std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_destroy)>(
+      EVP_MD_CTX_create(), &EVP_MD_CTX_destroy);
+};
+#else
+inline std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_free)> GetDigestCtx() {
+  return std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_free)>(
+      EVP_MD_CTX_new(), &EVP_MD_CTX_free);
+};
+#endif
+
+#ifndef OPENSSL_IS_BORINGSSL
+std::unique_ptr<BIO, decltype(&BIO_free_all)>
+MakeBioChainForBase64Transcoding() {
+  auto base64_io = std::unique_ptr<BIO, decltype(&BIO_free)>(
+      BIO_new(BIO_f_base64()), &BIO_free);
+  auto mem_io = std::unique_ptr<BIO, decltype(&BIO_free)>(BIO_new(BIO_s_mem()),
+                                                          &BIO_free);
+  if (!(base64_io && mem_io)) {
+    std::ostringstream err_builder;
+    err_builder << "Permanent error in " << __func__ << ": "
+                << "Could not allocate BIO* for Base64 encoding.";
+    google::cloud::internal::ThrowRuntimeError(err_builder.str());
+  }
+  auto bio_chain = std::unique_ptr<BIO, decltype(&BIO_free_all)>(
+      // Output from a b64 encoder should go to an in-memory sink.
+      BIO_push(static_cast<BIO*>(base64_io.release()),
+               static_cast<BIO*>(mem_io.release())),
+      // Make sure we free all resources in this chain upon destruction.
+      &BIO_free_all);
+  // Don't use newlines as a signal for when to flush buffers.
+  BIO_set_flags(static_cast<BIO*>(bio_chain.get()), BIO_FLAGS_BASE64_NO_NL);
+  return bio_chain;
+}
+#endif  // OPENSSL_IS_BORINGSSL
+}  // namespace
+
+std::string Base64Decode(std::string const& str) {
 #ifdef OPENSSL_IS_BORINGSSL
   std::size_t decoded_size;
   EVP_DecodedLength(&decoded_size, str.size());
@@ -82,7 +131,7 @@ std::string OpenSslUtils::Base64Decode(std::string const& str) {
 #endif  // OPENSSL_IS_BORINGSSL
 }
 
-std::string OpenSslUtils::Base64Encode(std::string const& str) {
+std::string Base64Encode(std::string const& str) {
 #ifdef OPENSSL_IS_BORINGSSL
   std::size_t encoded_size;
   EVP_EncodedLength(&encoded_size, str.size());
@@ -133,7 +182,7 @@ std::string OpenSslUtils::Base64Encode(std::string const& str) {
 #endif  // OPENSSL_IS_BORINGSSL
 }
 
-std::string OpenSslUtils::Base64Encode(std::vector<std::uint8_t> const& bytes) {
+std::string Base64Encode(std::vector<std::uint8_t> const& bytes) {
 #ifdef OPENSSL_IS_BORINGSSL
   std::size_t encoded_size;
   EVP_EncodedLength(&encoded_size, bytes.size());
@@ -181,6 +230,96 @@ std::string OpenSslUtils::Base64Encode(std::vector<std::uint8_t> const& bytes) {
   // upon this method's exit.
   return std::string(buf_mem->data, buf_mem->length);
 #endif  // OPENSSL_IS_BORINGSSL
+}
+
+std::vector<std::uint8_t> SignStringWithPem(
+    std::string const& str, std::string const& pem_contents,
+    storage::oauth2::JwtSigningAlgorithms alg) {
+  using ::google::cloud::storage::oauth2::JwtSigningAlgorithms;
+
+  // We check for failures several times, so we shorten this into a lambda
+  // to avoid bloating the code with alloc/init checks.
+  const char* func_name = __func__;  // Avoid using the lambda name instead.
+  auto handle_openssl_failure = [&func_name](const char* error_msg) -> void {
+    std::ostringstream err_builder;
+    err_builder << "Permanent error in " << func_name
+                << " (failed to sign string with PEM key):\n"
+                << error_msg;
+    google::cloud::internal::ThrowRuntimeError(err_builder.str());
+  };
+
+  auto digest_ctx = GetDigestCtx();
+  if (!digest_ctx) {
+    handle_openssl_failure("Could not create context for OpenSSL digest.");
+  }
+
+  EVP_MD const* digest_type = nullptr;
+  switch (alg) {
+    case JwtSigningAlgorithms::RS256:
+      digest_type = EVP_sha256();
+      break;
+  }
+  if (digest_type == nullptr) {
+    handle_openssl_failure("Could not find specified digest in OpenSSL.");
+  }
+
+  auto pem_buffer = std::unique_ptr<BIO, decltype(&BIO_free)>(
+      BIO_new_mem_buf(const_cast<char*>(pem_contents.c_str()),
+                      static_cast<int>(pem_contents.length())),
+      &BIO_free);
+  if (!pem_buffer) {
+    handle_openssl_failure("Could not create PEM buffer.");
+  }
+
+  auto private_key = std::unique_ptr<EVP_PKEY, decltype(&EVP_PKEY_free)>(
+      PEM_read_bio_PrivateKey(
+          static_cast<BIO*>(pem_buffer.get()),
+          nullptr,  // EVP_PKEY **x
+          nullptr,  // pem_password_cb *cb -- a custom callback.
+          // void *u -- this represents the password for the PEM (only
+          // applicable for formats such as PKCS12 (.p12 files) that use
+          // a password, which we don't currently support.
+          nullptr),
+      &EVP_PKEY_free);
+  if (!private_key) {
+    handle_openssl_failure("Could not parse PEM to get private key.");
+  }
+
+  int const digest_sign_success_code = 1;
+  if (digest_sign_success_code !=
+      EVP_DigestSignInit(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
+                         nullptr,  // EVP_PKEY_CTX **pctx
+                         digest_type,
+                         nullptr,  // ENGINE *e
+                         static_cast<EVP_PKEY*>(private_key.get()))) {
+    handle_openssl_failure("Could not initialize PEM digest.");
+  }
+
+  if (digest_sign_success_code !=
+      EVP_DigestSignUpdate(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
+                           str.c_str(), str.length())) {
+    handle_openssl_failure("Could not update PEM digest.");
+  }
+
+  std::size_t signed_str_size = 0;
+  // Calling this method with a nullptr buffer will populate our size var
+  // with the resulting buffer's size. This allows us to then call it again,
+  // with the correct buffer and size, which actually populates the buffer.
+  if (digest_sign_success_code !=
+      EVP_DigestSignFinal(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
+                          nullptr,  // unsigned char *sig
+                          &signed_str_size)) {
+    handle_openssl_failure("Could not finalize PEM digest (1/2).");
+  }
+
+  std::vector<unsigned char> signed_str(signed_str_size);
+  if (digest_sign_success_code !=
+      EVP_DigestSignFinal(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
+                          signed_str.data(), &signed_str_size)) {
+    handle_openssl_failure("Could not finalize PEM digest (2/2).");
+  }
+
+  return {signed_str.begin(), signed_str.end()};
 }
 
 }  // namespace internal
