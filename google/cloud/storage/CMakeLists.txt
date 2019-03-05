@@ -86,6 +86,8 @@ add_library(storage_client
             download_options.h
             hashing_options.h
             hashing_options.cc
+            hmac_key_metadata.h
+            hmac_key_metadata.cc
             idempotency_policy.h
             idempotency_policy.cc
             internal/access_control_common.h
@@ -133,6 +135,8 @@ add_library(storage_client
             internal/generic_request.h
             internal/hash_validator.h
             internal/hash_validator.cc
+            internal/hmac_key_requests.h
+            internal/hmac_key_requests.cc
             internal/http_response.h
             internal/http_response.cc
             internal/logging_client.h
@@ -305,6 +309,7 @@ if (BUILD_TESTING)
         client_test.cc
         client_write_object_test.cc
         hashing_options_test.cc
+        hmac_key_metadata_test.cc
         idempotency_policy_test.cc
         internal/access_control_common_test.cc
         internal/binary_data_as_debug_string_test.cc
