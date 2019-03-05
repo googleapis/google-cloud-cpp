@@ -14,9 +14,47 @@
 # limitations under the License.
 """Implement a class to simulate projects (service accounts and HMAC keys)."""
 
+import base64
 import error_response
 import flask
+import random
 import testbench_utils
+import time
+
+
+class ServiceAccount(object):
+    """Represent a service account and its HMAC keys."""
+    key_id_generator = 20000
+
+    @classmethod
+    def next_key_id(cls):
+        cls.key_id_generator += 1
+        return 'key-id-%d' % cls.key_id_generator
+
+    def __init__(self, email):
+        self.email = email
+        self.keys = {}
+
+    def insert_key(self, project_id):
+        """Insert a new HMAC key to the service account."""
+        key_id = ServiceAccount.next_key_id()
+        secret_key = ''.join([
+            random.choice("abcdefghijklmnopqrstuvwxyz0123456789") for _ in range(40)])
+        now = time.gmtime(time.time())
+        timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
+        return self.keys.setdefault(key_id, {
+            "kind": "storage#hmacKeyCreate",
+            "secretKey": base64.b64encode(secret_key),
+            "resource": {
+                "accessId": key_id,
+                "id": key_id,
+                "kind": "storage#hmacKey",
+                "projectId": project_id,
+                "serviceAccountEmail": self.email,
+                "state": "ACTIVE",
+                "timeCreated": timestamp,
+            }
+        })
 
 
 class GcsProject(object):
@@ -31,12 +69,18 @@ class GcsProject(object):
     def __init__(self, project_id):
         self.project_id = project_id
         self.project_number = GcsProject.next_project_number()
+        self.service_accounts = {}
 
     def service_account_email(self):
         """Return the GCS service account email for this project."""
         username = 'service-%d' % self.project_number
         domain = 'gs-project-accounts.iam.gserviceaccount.com'
         return '%s@%s' % (username, domain)
+
+    def insert_hmac_key(self, service_account):
+        """Insert a new HMAC key (or an error)."""
+        sa = self.service_accounts.setdefault(service_account, ServiceAccount(service_account))
+        return sa.insert_key(self.project_id)
 
 
 PROJECTS_HANDLER_PATH = '/storage/v1/projects'
@@ -47,19 +91,37 @@ projects.debug = True
 VALID_PROJECTS = {}
 
 
-@projects.route('/<project_id>/serviceAccount')
-def projects_get(project_id):
-    """Implement the `Projects.serviceAccount: get` API."""
+def get_project(project_id):
+    """Find a project and return the GcsProject object."""
     # Dynamically create the projects. The GCS testbench does not have functions
     # to create projects, nor do we want to create such functions. The point is
     # to test the GCS client library, not the IAM client library.
-    project = VALID_PROJECTS.setdefault(project_id, GcsProject(project_id))
+    return VALID_PROJECTS.setdefault(project_id, GcsProject(project_id))
+
+
+@projects.route('/<project_id>/serviceAccount')
+def projects_get(project_id):
+    """Implement the `Projects.serviceAccount: get` API."""
+    project = get_project(project_id)
     email = project.service_account_email()
     return testbench_utils.filtered_response(
         flask.request, {
             'kind': 'storage#serviceAccount',
             'email_address': email
         })
+
+
+@projects.route('/<project_id>/hmacKeys', methods=['POST'])
+def hmac_keys_insert(project_id):
+    """Implement the `HmacKeys: insert` API."""
+    project = get_project(project_id)
+    service_account = flask.request.args.get('serviceAccount')
+    if service_account is None:
+        raise error_response.ErrorResponse(
+            'serviceAccount is a required parameter', status_code=400)
+    return testbench_utils.filtered_response(
+        flask.request,
+        project.insert_hmac_key(service_account))
 
 
 def get_projects_app():
