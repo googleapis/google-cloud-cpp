@@ -31,14 +31,15 @@ if [ "${CHECK_ABI:-}" != "yes" ]; then
 fi
 
 exit_status=0
-for library in google_cloud_cpp_common bigtable_client; do
+for library in storage_client google_cloud_cpp_common bigtable_client; do
   echo
   echo "${COLOR_YELLOW}Checking ABI for ${library} library.${COLOR_RESET}"
   libdir="$(pkg-config ${library} --variable=libdir)"
   includedir="$(pkg-config ${library} --variable=includedir)"
   version="$(pkg-config ${library} --modversion)"
   new_dump_file="${library}.actual.abi.dump"
-  old_dump_file="${PROJECT_ROOT}/ci/test-abi/${library}.expected.abi.dump"
+  old_dump_file="${library}.expected.abi.dump"
+  reference_file="${PROJECT_ROOT}/ci/test-abi/${old_dump_file}.gz"
   abi-dumper "${libdir}/lib${library}.so" \
       -public-headers "${includedir}" \
       -lver "${version}" \
@@ -47,8 +48,10 @@ for library in google_cloud_cpp_common bigtable_client; do
   # We want to collect the data for as many libraries as possible, do not exit
   # on the first error.0
   set +e
-  (cd "${BUILD_OUTPUT}" ; abi-compliance-checker \
-      -l ${library} -old "${old_dump_file}" -new "${new_dump_file}")
+
+  (cd "${BUILD_OUTPUT}" ; zcat "${reference_file}" >"${old_dump_file}" ; \
+   abi-compliance-checker \
+       -l ${library} -old "${old_dump_file}" -new "${new_dump_file}")
   if [[ $? != 0 ]]; then
     exit_status=1
   fi
