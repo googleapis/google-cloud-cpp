@@ -181,7 +181,7 @@ std::string Base64Decode(std::string const& str) {
 }
 
 std::string Base64Encode(std::string const& str) {
-  return Base64Encode(reinterpret_cast<std::uint8_t const*>(str.data()),
+  return Base64Encode(reinterpret_cast<unsigned char const*>(str.data()),
                       str.size());
 }
 
