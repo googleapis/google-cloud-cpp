@@ -68,16 +68,20 @@ class AsyncGrpcOperation : public AsyncOperation {
 /**
  * Wrap a unary RPC callback into a `AsyncOperation`.
  *
- * Applications (or more likely other components in the client library) will
- * associate callbacks of many different types with a completion queue. This
- * class is created by the completion queue implementation to type-erase the
- * callbacks, and thus be able to treat them homogenously in the completion
- * queue. Note that this class lives in the `internal` namespace and thus is
- * not intended for general use.
+ * This class is used by the implementation of `CompletionQueue` to associate
+ * a future with an asynchronous unary RPC call. gRPC requires applications to
+ * provide a `grpc::ClientContext` object, an object of the response type, and a
+ * `grpc::Status` object to make an asynchronous RPC. The lifetime of these
+ * objects must be at least as long as the duration of the asynchronous call.
+ * Furthermore, the application must provide a unique `void*` that is associated
+ * with the RPC.
+ *
+ * This class is used in the implementation of `CompletionQueue` to hold the
+ * objects mentioned above. Furthermore, when the operation is completed, it
+ * transfers the result to satisfy the future associated with the RPC.
  *
  * @tparam Request the type of the RPC request.
  * @tparam Response the type of the RPC response.
- * @tparam Functor the callback type.
  */
 template <typename Request, typename Response>
 class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
@@ -480,7 +484,14 @@ using CheckRunAsyncCallback =
     google::cloud::internal::is_invocable<Functor, CompletionQueue&>;
 
 /**
- * A meta function to extract the ResponseType from an AsyncCall return type.
+ * A meta function to extract the `ResponseType` from an AsyncCall return type.
+ *
+ * This meta function extracts, if possible, the response type from an
+ * asynchronous RPC callable. These callables return a
+ * `std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<T>>` and we are
+ * interested in the `T` type.
+ *
+ * This is the generic version, implementing the "not matched" path.
  */
 template <typename ReturnType>
 struct AsyncCallResponseTypeUnwrap : public std::false_type {
@@ -489,6 +500,13 @@ struct AsyncCallResponseTypeUnwrap : public std::false_type {
 
 /**
  * A meta function to extract the ResponseType from an AsyncCall return type.
+ *
+ * This meta function extracts, if possible, the response type from an
+ * asynchronous RPC callable. These callables return a
+ * `std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<T>>` and we are
+ * interested in the `T` type.
+ *
+ * This is the generic version, implementing the "not matched" path.
  */
 template <typename ResponseType>
 struct AsyncCallResponseTypeUnwrap<
@@ -498,7 +516,8 @@ struct AsyncCallResponseTypeUnwrap<
 };
 
 /**
- * A meta function to determine the `ResponseType` from an async callable.
+ * A meta function to determine the `ResponseType` from an asynchronous RPC
+ * callable.
  *
  * Asynchronous calls have the form:
  *

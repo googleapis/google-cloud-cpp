@@ -83,7 +83,8 @@ class CompletionQueue {
    * @param request the contents of the request.
    * @param context an initialized request context to make the call.
    *
-   * @tparam AsyncCallType the type of @a async_call. It must meet the
+   * @tparam AsyncCallType the type of @a async_call. It must meet be invocable
+   *     with `(grpc::ClientContext*,
    *     requirements for `internal::CheckAsyncUnaryRpcSignature<>`.
    * @tparam Request the type of the request parameter in the gRPC.
    *

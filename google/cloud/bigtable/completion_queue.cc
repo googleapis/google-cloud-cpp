@@ -21,16 +21,20 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 /**
- * Wrap a timer callback into an `AsyncOperation`.
+ * Wrap a gRPC timer into an `AsyncOperation`.
  *
  * Applications (or more likely, other components in the client library) will
- * associate callbacks of many different types with a completion queue. This
- * class is created by the completion queue implementation to type-erase the
- * callbacks, and thus be able to treat them homogenously in the completion
- * queue. Note that this class lives in the `internal` namespace and thus is
- * not intended for general use.
+ * associate timers with a completion queue. gRPC timers require applications to
+ * create a unique `grpc::Alarm` object for each timer, and then to associate
+ * them with the completion queue using a `void*` tag.
  *
- * @tparam Functor the callback type.
+ * This class collaborates with our wrapper for `CompletionQueue` to associate
+ * a `future<AsyncTimerResult>` for each timer. This class takes care of
+ * allocating the `grpc::Alarm`, creating a unique `void*` associated with the
+ * timer, and satisfying the future when the timer expires.
+ *
+ * Note that this class is an implementation detail, hidden from the application
+ * developers.
  */
 class AsyncTimerFuture : public internal::AsyncGrpcOperation {
  public:
