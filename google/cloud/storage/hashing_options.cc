@@ -30,14 +30,14 @@ std::string ComputeMD5Hash(std::string const& payload) {
 
   std::string hash(MD5_DIGEST_LENGTH, ' ');
   MD5_Final(reinterpret_cast<unsigned char*>(&hash[0]), &md5);
-  return internal::OpenSslUtils::Base64Encode(hash);
+  return internal::Base64Encode(hash);
 }
 
 std::string ComputeCrc32cChecksum(std::string const& payload) {
   auto checksum = crc32c::Extend(
       0, reinterpret_cast<std::uint8_t const*>(payload.data()), payload.size());
   std::string const hash = google::cloud::internal::EncodeBigEndian(checksum);
-  return internal::OpenSslUtils::Base64Encode(hash);
+  return internal::Base64Encode(hash);
 }
 
 }  // namespace STORAGE_CLIENT_NS
