@@ -125,19 +125,19 @@ std::string Base64Encode(std::uint8_t const* bytes, std::size_t bytes_size) {
 }
 }  // namespace
 
-std::string Base64Decode(std::string const& str) {
+std::vector<std::uint8_t> Base64Decode(std::string const& str) {
 #ifdef OPENSSL_IS_BORINGSSL
   std::size_t decoded_size;
   EVP_DecodedLength(&decoded_size, str.size());
-  std::string result(decoded_size, '\0');
-  EVP_DecodeBase64(
-      reinterpret_cast<std::uint8_t*>(&result[0]), &decoded_size, result.size(),
-      reinterpret_cast<std::uint8_t const*>(str.data()), str.size());
+  std::vector<std::uint8_t> result(decoded_size);
+  EVP_DecodeBase64(result.data(), &decoded_size, result.size(),
+                   reinterpret_cast<std::uint8_t const*>(str.data()),
+                   str.size());
   result.resize(decoded_size);
   return result;
 #else
   if (str.empty()) {
-    return std::string{};
+    return {};
   }
 
   std::unique_ptr<BIO, decltype(&BIO_free)> source(
@@ -147,12 +147,12 @@ std::string Base64Decode(std::string const& str) {
   // We could compute the exact buffer size by looking at the number of padding
   // characters (=) at the end of str, but we will get the exact length later,
   // so simply compute a buffer that is big enough.
-  std::string result(str.size() * 3 / 4, ' ');
+  std::vector<std::uint8_t> result(str.size() * 3 / 4);
 
   // We do not retry, just make one call because the full stream is blocking.
   // Note that the number of bytes to read is the number of bytes we fetch from
   // the *source*, not the number of bytes that we have available in `result`.
-  int len = BIO_read(bio.get(), &result[0], static_cast<int>(str.size()));
+  int len = BIO_read(bio.get(), result.data(), static_cast<int>(str.size()));
   if (len < 0) {
     std::ostringstream os;
     os << "Error parsing Base64 string [" << len << "], string=<" << str << ">";

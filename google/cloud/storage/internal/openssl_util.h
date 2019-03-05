@@ -29,7 +29,7 @@ namespace internal {
 /**
  * Decodes a Base64-encoded string.
  */
-std::string Base64Decode(std::string const& str);
+std::vector<std::uint8_t> Base64Decode(std::string const& str);
 
 /**
  * Encodes a string using Base64.
