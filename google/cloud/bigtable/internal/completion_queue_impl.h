@@ -16,8 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_COMPLETION_QUEUE_IMPL_H_
 
 #include "google/cloud/bigtable/async_operation.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/status_or.h"
 #include <grpcpp/alarm.h>
 #include <grpcpp/support/async_stream.h>
 #include <grpcpp/support/async_unary_call.h>
@@ -60,6 +62,84 @@ class AsyncGrpcOperation : public AsyncOperation {
    *   response, it would return true only after the stream is finished).
    */
   virtual bool Notify(CompletionQueue& cq, bool ok) = 0;
+};
+
+/**
+ * Wrap a unary RPC callback into a `AsyncOperation`.
+ *
+ * Applications (or more likely other components in the client library) will
+ * associate callbacks of many different types with a completion queue. This
+ * class is created by the completion queue implementation to type-erase the
+ * callbacks, and thus be able to treat them homogenously in the completion
+ * queue. Note that this class lives in the `internal` namespace and thus is
+ * not intended for general use.
+ *
+ * @tparam Request the type of the RPC request.
+ * @tparam Response the type of the RPC response.
+ * @tparam Functor the callback type.
+ */
+template <typename Request, typename Response>
+class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
+ public:
+  explicit AsyncUnaryRpcFuture() : sync_(false) {}
+
+  future<StatusOr<Response>> get_future() { return promise_.get_future(); }
+
+  /// Prepare the operation to receive the response and start the RPC.
+  template <typename AsyncFunctionType>
+  void Start(AsyncFunctionType async_call,
+             std::unique_ptr<grpc::ClientContext> context,
+             Request const& request, grpc::CompletionQueue* cq, void* tag) {
+    context_ = std::move(context);
+    // Make sure context_ is visible in other threads.
+    sync_.store(0, std::memory_order_release);
+    auto rpc = async_call(context_.get(), request, cq);
+    rpc->Finish(&response_, &status_, tag);
+  }
+
+  void Cancel() override {
+    // Make sure context_ is visible in this thread.
+    static_cast<void>(sync_.load(std::memory_order_acquire));
+    context_->TryCancel();
+  }
+
+ private:
+  bool Notify(CompletionQueue& cq, bool ok) override {
+    // Make sure changes to the member variables are visible.
+    static_cast<void>(sync_.load(std::memory_order_acquire));
+    if (!ok) {
+      // This would mean a bug in gRPC. The documentation states that Finish()
+      // always returns `true` for unary RPCs.
+      promise_.set_value(::google::cloud::Status(
+          google::cloud::StatusCode::kUnknown, "Finish() returned false"));
+      return true;
+    }
+    if (!status_.ok()) {
+      // Convert the error to a `google::cloud::Status` and satisfy the future.
+      promise_.set_value(MakeStatusFromRpcError(status_));
+      return true;
+    }
+    // Success, use `response_` to satisfy the future.
+    promise_.set_value(std::move(response_));
+    return true;
+  }
+
+  // While only one thread changes (or reads) the state of this class at a time,
+  // we need to ensure that the state changes are visible to other threads. An
+  // atomic is (in principle) a lighter weight mechanism to satisfy the memory
+  // order constraints.
+  std::atomic<bool> sync_;
+
+  // These are the parameters for the RPC, most of them have obvious semantics.
+  // `context_` is stored as a `unique_ptr` because (a) we need to receive it
+  // as a parameter, otherwise the caller could not set timeouts, metadata, or
+  // any other attributes, and (b) there is no move or assignment operator for
+  // `grpc::ClientContext`.
+  std::unique_ptr<grpc::ClientContext> context_;
+  grpc::Status status_;
+  Response response_;
+
+  promise<StatusOr<Response>> promise_;
 };
 
 /**
@@ -397,6 +477,46 @@ struct CheckAsyncUnaryStreamRpcSignature<
 template <typename Functor>
 using CheckRunAsyncCallback =
     google::cloud::internal::is_invocable<Functor, CompletionQueue&>;
+
+/**
+ * A meta function to extract the ResponseType from an AsyncCall return type.
+ */
+template <typename ReturnType>
+struct AsyncCallResponseTypeUnwrap : public std::false_type {
+  using type = void;
+};
+
+/**
+ * A meta function to extract the ResponseType from an AsyncCall return type.
+ */
+template <typename ResponseType>
+struct AsyncCallResponseTypeUnwrap<
+    std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<ResponseType>>>
+    : public std::true_type {
+  using type = ResponseType;
+};
+
+/**
+ * A meta function to determine the `ResponseType` from an async callable.
+ *
+ * Asynchronous calls have the form:
+ *
+ * @code
+ *   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<ResponseType>>(
+ *      grpc::ClientContext*,
+ *      RequestType const&,
+ *      grpc::CompletionQueue*
+ *   );
+ * @endcode
+ *
+ * This meta-function extracts the `ResponseType` given the type of a callable
+ * and the `RequestType`.
+ */
+template <typename AsyncCallType, typename RequestType>
+using AsyncCallResponseType = AsyncCallResponseTypeUnwrap<
+    typename google::cloud::internal::invoke_result_t<
+        AsyncCallType, grpc::ClientContext*, RequestType const&,
+        grpc::CompletionQueue*>>;
 
 /**
  * The implementation details for `CompletionQueue`.

@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
 #include "google/cloud/internal/make_unique.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <gmock/gmock.h>
@@ -47,6 +48,24 @@ TEST(CompletionQueueTest, LifeCycle) {
   auto f = promise.get_future();
   auto status = f.wait_for(500_ms);
   EXPECT_EQ(std::future_status::ready, status);
+
+  cq.Shutdown();
+  t.join();
+}
+
+TEST(CompletionQueueTest, LifeCycleFuture) {
+  CompletionQueue cq;
+
+  std::thread t([&cq]() { cq.Run(); });
+
+  promise<bool> promise;
+  cq.MakeRelativeTimer(2_ms).then(
+      [&](future<AsyncTimerResult>) { promise.set_value(true); });
+
+  auto f = promise.get_future();
+  auto status = f.wait_for(500_ms);
+  EXPECT_EQ(std::future_status::ready, status);
+  EXPECT_TRUE(f.get());
 
   cq.Shutdown();
   t.join();
@@ -101,6 +120,7 @@ class MockClientAsyncReaderInterface
   MOCK_METHOD2(Finish, void(grpc::Status*, void*));
   MOCK_METHOD2_T(Read, void(Response*, void*));
 };
+
 /// @test Verify that completion queues can create async operations.
 TEST(CompletionQueueTest, AyncRpcSimple) {
   MockClient client;
@@ -143,6 +163,55 @@ TEST(CompletionQueueTest, AyncRpcSimple) {
   impl->SimulateCompletion(cq, op.get(), true);
   EXPECT_TRUE(completion_called);
 
+  EXPECT_TRUE(impl->empty());
+}
+
+/// @test Verify that completion queues can create async operations.
+TEST(CompletionQueueTest, AyncRpcSimpleFuture) {
+  MockClient client;
+
+  auto reader =
+      google::cloud::internal::make_unique<testing::MockAsyncApplyReader>();
+  EXPECT_CALL(*reader, Finish(_, _, _))
+      .WillOnce(
+          Invoke([](btproto::MutateRowResponse*, grpc::Status* status, void*) {
+            *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+          }));
+
+  EXPECT_CALL(client, AsyncMutateRow(_, _, _))
+      .WillOnce(Invoke([&reader](grpc::ClientContext*,
+                                 btproto::MutateRowRequest const&,
+                                 grpc::CompletionQueue*) {
+        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+            // This is safe, see comments in MockAsyncResponseReader.
+            btproto::MutateRowResponse>>(reader.get());
+      }));
+
+  auto impl = std::make_shared<testing::MockCompletionQueue>();
+  bigtable::CompletionQueue cq(impl);
+
+  // In this unit test we do not need to initialize the request parameter.
+  btproto::MutateRowRequest request;
+  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+
+  future<void> f =
+      cq.MakeUnaryRpc(
+            [&client](grpc::ClientContext* context,
+                      btproto::MutateRowRequest const& request,
+                      grpc::CompletionQueue* cq) {
+              return client.AsyncMutateRow(context, request, cq);
+            },
+            request, std::move(context))
+          .then([](future<StatusOr<btproto::MutateRowResponse>> fut) {
+            auto response = fut.get();
+            ASSERT_STATUS_OK(response);
+            EXPECT_EQ("mocked-status", response.status().message());
+          });
+
+  EXPECT_EQ(1U, impl->size());
+  impl->SimulateCompletion(cq, true);
+
+  ASSERT_EQ(std::future_status::ready, f.wait_for(0_ms));
   EXPECT_TRUE(impl->empty());
 }
 

@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_COMPLETION_QUEUE_H_
 
 #include "google/cloud/bigtable/internal/completion_queue_impl.h"
+#include "google/cloud/future.h"
+#include "google/cloud/status_or.h"
 
 namespace google {
 namespace cloud {
@@ -41,6 +43,74 @@ class CompletionQueue {
   /// Terminate the completion queue event loop.
   void Shutdown();
 
+  /**
+   * Create a timer that fires at @p deadline.
+   *
+   * @param deadline when should the timer expire.
+   * @return a future that becomes satisfied after @p deadline or when the timer
+   *   is cancelled.
+   */
+  google::cloud::future<AsyncTimerResult> MakeDeadlineTimer(
+      std::chrono::system_clock::time_point deadline);
+
+  /**
+   * Create a timer that fires after the @p duration.
+   *
+   * @tparam Rep a placeholder to match the Rep tparam for @p duration type,
+   *     the semantics of this template parameter are documented in
+   *     `std::chrono::duration<>` (in brief, the underlying arithmetic type
+   *     used to store the number of ticks), for our purposes it is simply a
+   *     formal parameter.
+   * @tparam Period a placeholder to match the Period tparam for @p duration
+   *     type, the semantics of this template parameter are documented in
+   *     `std::chrono::duration<>` (in brief, the length of the tick in seconds,
+   *     expressed as a `std::ratio<>`), for our purposes it is simply a formal
+   *     parameter.
+   * @param duration when should the timer expire relative to the current time.
+   * @return a future that becomes satisfied after @p duration time has elapsed
+   *   or when the timer is cancelled.
+   */
+  template <typename Rep, typename Period>
+  future<AsyncTimerResult> MakeRelativeTimer(
+      std::chrono::duration<Rep, Period> duration) {
+    return MakeDeadlineTimer(std::chrono::system_clock::now() + duration);
+  }
+
+  /**
+   * Make an asynchronous unary RPC.
+   *
+   * @param async_call a callable to start the asynchronous RPC.
+   * @param request the contents of the request.
+   * @param context an initialized request context to make the call.
+   *
+   * @tparam AsyncCallType the type of @a async_call. It must meet the
+   *     requirements for `internal::CheckAsyncUnaryRpcSignature<>`.
+   * @tparam Request the type of the request parameter in the gRPC.
+   *
+   * @return an AsyncOperation instance that can be used to request cancelation
+   *   of the pending operation.
+   */
+  template <
+      typename AsyncCallType, typename Request,
+      typename Sig = internal::AsyncCallResponseType<AsyncCallType, Request>,
+      typename Response = typename Sig::type,
+      typename std::enable_if<Sig::value, int>::type = 0>
+  future<StatusOr<Response>> MakeUnaryRpc(
+      AsyncCallType async_call, Request const& request,
+      std::unique_ptr<grpc::ClientContext> context) {
+    auto op =
+        std::make_shared<internal::AsyncUnaryRpcFuture<Request, Response>>();
+    void* tag = impl_->RegisterOperation(op);
+    op->Set(async_call, std::move(context), request, &impl_->cq(), tag);
+    return op->get_future();
+  }
+
+  //@{
+  /**
+   * @name Obsolete. Callback-based APIs. To be removed after cleaning up.
+   *
+   * TODO(coryan) - Remove these member functions.
+   */
   /**
    * Create a timer that fires at @p deadline.
    *
@@ -204,6 +274,8 @@ class CompletionQueue {
     op->Set(client, call, std::move(context), request, &impl_->cq(), tag);
     return op;
   }
+
+  //@}
 
   /**
    * Asynchronously run a functor on a thread `Run()`ning the `CompletionQueue`.
