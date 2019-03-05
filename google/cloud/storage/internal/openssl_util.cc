@@ -70,6 +70,55 @@ MakeBioChainForBase64Transcoding() {
   return bio_chain;
 }
 #endif  // OPENSSL_IS_BORINGSSL
+
+std::string Base64Encode(std::uint8_t const* bytes, std::size_t bytes_size) {
+#ifdef OPENSSL_IS_BORINGSSL
+  std::size_t encoded_size;
+  EVP_EncodedLength(&encoded_size, bytes_size);
+  std::vector<std::uint8_t> result(encoded_size);
+  std::size_t out_size = EVP_EncodeBlock(result.data(), bytes, bytes_size);
+  result.resize(out_size);
+  return {result.begin(), result.end()};
+#else
+  auto bio_chain = MakeBioChainForBase64Transcoding();
+  int retval = 0;
+
+  while (true) {
+    retval = BIO_write(static_cast<BIO*>(bio_chain.get()), bytes,
+                       static_cast<int>(bytes_size));
+    if (retval > 0) {
+      break;  // Positive value == successful write.
+    }
+    if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
+      std::ostringstream err_builder;
+      err_builder << "Permanent error in " << __func__ << ": "
+                  << "BIO_write returned non-retryable value of " << retval;
+      google::cloud::internal::ThrowRuntimeError(err_builder.str());
+    }
+  }
+  // Tell the b64 encoder that we're done writing data, thus prompting it to
+  // add trailing '=' characters for padding if needed.
+  while (true) {
+    retval = BIO_flush(static_cast<BIO*>(bio_chain.get()));
+    if (retval > 0) {
+      break;  // Positive value == successful flush.
+    }
+    if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
+      std::ostringstream err_builder;
+      err_builder << "Permanent error in " << __func__ << ": "
+                  << "BIO_flush returned non-retryable value of " << retval;
+      google::cloud::internal::ThrowRuntimeError(err_builder.str());
+    }
+  }
+
+  // This buffer belongs to the BIO chain and is freed upon its destruction.
+  BUF_MEM* buf_mem;
+  BIO_get_mem_ptr(static_cast<BIO*>(bio_chain.get()), &buf_mem);
+  // Return a string copy of the buffer's bytes, as the buffer will be freed
+  // upon this method's exit.
+  return std::string(buf_mem->data, buf_mem->length);
+#endif  // OPENSSL_IS_BORINGSSL
+}
 }  // namespace
 
 std::string Base64Decode(std::string const& str) {
@@ -132,104 +181,12 @@ std::string Base64Decode(std::string const& str) {
 }
 
 std::string Base64Encode(std::string const& str) {
-#ifdef OPENSSL_IS_BORINGSSL
-  std::size_t encoded_size;
-  EVP_EncodedLength(&encoded_size, str.size());
-  std::string result(encoded_size, '\0');
-  std::size_t out_size = EVP_EncodeBlock(
-      reinterpret_cast<std::uint8_t*>(&result[0]),
-      reinterpret_cast<std::uint8_t const*>(str.data()), str.size());
-  result.resize(out_size);
-  return result;
-#else
-  auto bio_chain = MakeBioChainForBase64Transcoding();
-  int retval = 0;
-
-  while (true) {
-    retval = BIO_write(static_cast<BIO*>(bio_chain.get()), str.c_str(),
-                       static_cast<int>(str.length()));
-    if (retval > 0) {
-      break;  // Positive value == successful write.
-    }
-    if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
-      std::ostringstream err_builder;
-      err_builder << "Permanent error in " << __func__ << ": "
-                  << "BIO_write returned non-retryable value of " << retval;
-      google::cloud::internal::ThrowRuntimeError(err_builder.str());
-    }
-  }
-  // Tell the b64 encoder that we're done writing data, thus prompting it to
-  // add trailing '=' characters for padding if needed.
-  while (true) {
-    retval = BIO_flush(static_cast<BIO*>(bio_chain.get()));
-    if (retval > 0) {
-      break;  // Positive value == successful flush.
-    }
-    if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
-      std::ostringstream err_builder;
-      err_builder << "Permanent error in " << __func__ << ": "
-                  << "BIO_flush returned non-retryable value of " << retval;
-      google::cloud::internal::ThrowRuntimeError(err_builder.str());
-    }
-  }
-
-  // This buffer belongs to the BIO chain and is freed upon its destruction.
-  BUF_MEM* buf_mem;
-  BIO_get_mem_ptr(static_cast<BIO*>(bio_chain.get()), &buf_mem);
-  // Return a string copy of the buffer's bytes, as the buffer will be freed
-  // upon this method's exit.
-  return std::string(buf_mem->data, buf_mem->length);
-#endif  // OPENSSL_IS_BORINGSSL
+  return Base64Encode(reinterpret_cast<std::uint8_t const*>(str.data()),
+                      str.size());
 }
 
 std::string Base64Encode(std::vector<std::uint8_t> const& bytes) {
-#ifdef OPENSSL_IS_BORINGSSL
-  std::size_t encoded_size;
-  EVP_EncodedLength(&encoded_size, bytes.size());
-  std::vector<std::uint8_t> result(encoded_size);
-  std::size_t out_size =
-      EVP_EncodeBlock(result.data(), bytes.data(), bytes.size());
-  result.resize(out_size);
-  return {result.begin(), result.end()};
-#else
-  auto bio_chain = MakeBioChainForBase64Transcoding();
-  int retval = 0;
-
-  while (true) {
-    retval = BIO_write(static_cast<BIO*>(bio_chain.get()), bytes.data(),
-                       static_cast<int>(bytes.size()));
-    if (retval > 0) {
-      break;  // Positive value == successful write.
-    }
-    if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
-      std::ostringstream err_builder;
-      err_builder << "Permanent error in " << __func__ << ": "
-                  << "BIO_write returned non-retryable value of " << retval;
-      google::cloud::internal::ThrowRuntimeError(err_builder.str());
-    }
-  }
-  // Tell the b64 encoder that we're done writing data, thus prompting it to
-  // add trailing '=' characters for padding if needed.
-  while (true) {
-    retval = BIO_flush(static_cast<BIO*>(bio_chain.get()));
-    if (retval > 0) {
-      break;  // Positive value == successful flush.
-    }
-    if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
-      std::ostringstream err_builder;
-      err_builder << "Permanent error in " << __func__ << ": "
-                  << "BIO_flush returned non-retryable value of " << retval;
-      google::cloud::internal::ThrowRuntimeError(err_builder.str());
-    }
-  }
-
-  // This buffer belongs to the BIO chain and is freed upon its destruction.
-  BUF_MEM* buf_mem;
-  BIO_get_mem_ptr(static_cast<BIO*>(bio_chain.get()), &buf_mem);
-  // Return a string copy of the buffer's bytes, as the buffer will be freed
-  // upon this method's exit.
-  return std::string(buf_mem->data, buf_mem->length);
-#endif  // OPENSSL_IS_BORINGSSL
+  return Base64Encode(bytes.data(), bytes.size());
 }
 
 std::vector<std::uint8_t> SignStringWithPem(
