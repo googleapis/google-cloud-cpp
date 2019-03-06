@@ -14,7 +14,6 @@
 # limitations under the License.
 """Implement a class to simulate projects (service accounts and HMAC keys)."""
 
-
 import error_response
 import flask
 import testbench_utils
