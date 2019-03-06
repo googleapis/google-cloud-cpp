@@ -22,7 +22,16 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.5.x - TBD
+### v0.6.x - TBD
+
+### v0.5.x - 2019-03
+
+* **Breaking change**: Make `google::cloud::optional::operator bool()` explicit.
+* Add `google::cloud::optional` value conversions that match `std::optional`.
+* Stop using grpc's `DO_NOT_USE` enum.
+* Remove ciso646 includes to force traditional spellings.
+* Change `std::endl` -> `"\n"`.
+* Enforce formatting of `.cc` files.
 
 ### v0.4.x - 2019-02
 

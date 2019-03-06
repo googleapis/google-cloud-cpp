@@ -47,12 +47,23 @@ inline std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_free)> GetDigestCtx() {
 #endif
 
 #ifndef OPENSSL_IS_BORINGSSL
-std::unique_ptr<BIO, decltype(&BIO_free_all)>
-MakeBioChainForBase64Transcoding() {
+/**
+ * Build a BIO chain for Base 64 encoding and decoding.
+ *
+ * BIO chains are a OpenSSL abstraction to perform I/O (including from memory
+ * buffers) with transformations. This function takes a BIO object and builds a
+ * chain that:
+ *
+ * - For writes, it performs Base 64 encoding and then writes the encoded data
+ *   into @p mem_io.
+ * - For reads, it extracts data from @p mem_io and then decodes it using
+ *   Base64.
+ *
+ */
+std::unique_ptr<BIO, decltype(&BIO_free_all)> PushBase64Transcoding(
+    std::unique_ptr<BIO, decltype(&BIO_free)> mem_io) {
   auto base64_io = std::unique_ptr<BIO, decltype(&BIO_free)>(
       BIO_new(BIO_f_base64()), &BIO_free);
-  auto mem_io = std::unique_ptr<BIO, decltype(&BIO_free)>(BIO_new(BIO_s_mem()),
-                                                          &BIO_free);
   if (!(base64_io && mem_io)) {
     std::ostringstream err_builder;
     err_builder << "Permanent error in " << __func__ << ": "
@@ -61,15 +72,57 @@ MakeBioChainForBase64Transcoding() {
   }
   auto bio_chain = std::unique_ptr<BIO, decltype(&BIO_free_all)>(
       // Output from a b64 encoder should go to an in-memory sink.
-      BIO_push(static_cast<BIO*>(base64_io.release()),
-               static_cast<BIO*>(mem_io.release())),
+      BIO_push(base64_io.release(), mem_io.release()),
       // Make sure we free all resources in this chain upon destruction.
       &BIO_free_all);
   // Don't use newlines as a signal for when to flush buffers.
-  BIO_set_flags(static_cast<BIO*>(bio_chain.get()), BIO_FLAGS_BASE64_NO_NL);
+  BIO_set_flags(bio_chain.get(), BIO_FLAGS_BASE64_NO_NL);
   return bio_chain;
 }
 #endif  // OPENSSL_IS_BORINGSSL
+
+std::string Base64Encode(std::uint8_t const* bytes, std::size_t bytes_size) {
+#ifdef OPENSSL_IS_BORINGSSL
+  std::size_t encoded_size;
+  EVP_EncodedLength(&encoded_size, bytes_size);
+  std::vector<std::uint8_t> result(encoded_size);
+  std::size_t out_size = EVP_EncodeBlock(result.data(), bytes, bytes_size);
+  result.resize(out_size);
+  return {result.begin(), result.end()};
+#else
+  auto mem_io = std::unique_ptr<BIO, decltype(&BIO_free)>(BIO_new(BIO_s_mem()),
+                                                          &BIO_free);
+  auto bio_chain = PushBase64Transcoding(std::move(mem_io));
+
+  // These BIO_*() operations are guaranteed not to block, consult the NOTES in:
+  //   https://www.openssl.org/docs/man1.1.1/man3/BIO_s_mem.html
+  // for details.
+  int retval = BIO_write(bio_chain.get(), bytes, static_cast<int>(bytes_size));
+  if (retval <= 0) {
+    std::ostringstream err_builder;
+    err_builder << "Permanent error in " << __func__ << ": "
+                << "BIO_write returned non-retryable value of " << retval;
+    google::cloud::internal::ThrowRuntimeError(err_builder.str());
+  }
+
+  // Tell the b64 encoder that we're done writing data, thus prompting it to
+  // add trailing '=' characters for padding if needed.
+  retval = BIO_flush(bio_chain.get());
+  if (retval <= 0) {
+    std::ostringstream err_builder;
+    err_builder << "Permanent error in " << __func__ << ": "
+                << "BIO_flush returned non-retryable value of " << retval;
+    google::cloud::internal::ThrowRuntimeError(err_builder.str());
+  }
+
+  // This buffer belongs to the BIO chain and is freed upon its destruction.
+  BUF_MEM* buf_mem;
+  BIO_get_mem_ptr(bio_chain.get(), &buf_mem);
+  // Return a string copy of the buffer's bytes, as the buffer will be freed
+  // upon this method's exit.
+  return std::string(buf_mem->data, buf_mem->length);
+#endif  // OPENSSL_IS_BORINGSSL
+}
 }  // namespace
 
 std::string Base64Decode(std::string const& str) {
@@ -87,34 +140,14 @@ std::string Base64Decode(std::string const& str) {
     return std::string{};
   }
 
+  std::unique_ptr<BIO, decltype(&BIO_free)> source(
+      BIO_new_mem_buf(str.data(), static_cast<int>(str.size())), &BIO_free);
+  auto bio = PushBase64Transcoding(std::move(source));
+
   // We could compute the exact buffer size by looking at the number of padding
   // characters (=) at the end of str, but we will get the exact length later,
   // so simply compute a buffer that is big enough.
   std::string result(str.size() * 3 / 4, ' ');
-
-  using UniqueBioChainPtr = std::unique_ptr<BIO, decltype(&BIO_free_all)>;
-  using UniqueBioPtr = std::unique_ptr<BIO, decltype(&BIO_free)>;
-
-  UniqueBioPtr source(BIO_new_mem_buf(const_cast<char*>(str.data()),
-                                      static_cast<int>(str.size())),
-                      &BIO_free);
-  if (!source) {
-    std::ostringstream os;
-    os << __func__ << ": cannot create BIO for source string=<" << str << ">";
-    google::cloud::internal::ThrowRuntimeError(os.str());
-  }
-  UniqueBioPtr filter(BIO_new(BIO_f_base64()), &BIO_free);
-  if (!filter) {
-    std::ostringstream os;
-    os << __func__ << ": cannot create BIO for Base64 decoding";
-    google::cloud::internal::ThrowRuntimeError(os.str());
-  }
-
-  // Based on the documentation this never fails, so we can transfer ownership
-  // of `filter` and `source` and do not need to check the result.
-  UniqueBioChainPtr bio(BIO_push(filter.release(), source.release()),
-                        &BIO_free_all);
-  BIO_set_flags(bio.get(), BIO_FLAGS_BASE64_NO_NL);
 
   // We do not retry, just make one call because the full stream is blocking.
   // Note that the number of bytes to read is the number of bytes we fetch from
@@ -132,104 +165,12 @@ std::string Base64Decode(std::string const& str) {
 }
 
 std::string Base64Encode(std::string const& str) {
-#ifdef OPENSSL_IS_BORINGSSL
-  std::size_t encoded_size;
-  EVP_EncodedLength(&encoded_size, str.size());
-  std::string result(encoded_size, '\0');
-  std::size_t out_size = EVP_EncodeBlock(
-      reinterpret_cast<std::uint8_t*>(&result[0]),
-      reinterpret_cast<std::uint8_t const*>(str.data()), str.size());
-  result.resize(out_size);
-  return result;
-#else
-  auto bio_chain = MakeBioChainForBase64Transcoding();
-  int retval = 0;
-
-  while (true) {
-    retval = BIO_write(static_cast<BIO*>(bio_chain.get()), str.c_str(),
-                       static_cast<int>(str.length()));
-    if (retval > 0) {
-      break;  // Positive value == successful write.
-    }
-    if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
-      std::ostringstream err_builder;
-      err_builder << "Permanent error in " << __func__ << ": "
-                  << "BIO_write returned non-retryable value of " << retval;
-      google::cloud::internal::ThrowRuntimeError(err_builder.str());
-    }
-  }
-  // Tell the b64 encoder that we're done writing data, thus prompting it to
-  // add trailing '=' characters for padding if needed.
-  while (true) {
-    retval = BIO_flush(static_cast<BIO*>(bio_chain.get()));
-    if (retval > 0) {
-      break;  // Positive value == successful flush.
-    }
-    if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
-      std::ostringstream err_builder;
-      err_builder << "Permanent error in " << __func__ << ": "
-                  << "BIO_flush returned non-retryable value of " << retval;
-      google::cloud::internal::ThrowRuntimeError(err_builder.str());
-    }
-  }
-
-  // This buffer belongs to the BIO chain and is freed upon its destruction.
-  BUF_MEM* buf_mem;
-  BIO_get_mem_ptr(static_cast<BIO*>(bio_chain.get()), &buf_mem);
-  // Return a string copy of the buffer's bytes, as the buffer will be freed
-  // upon this method's exit.
-  return std::string(buf_mem->data, buf_mem->length);
-#endif  // OPENSSL_IS_BORINGSSL
+  return Base64Encode(reinterpret_cast<unsigned char const*>(str.data()),
+                      str.size());
 }
 
 std::string Base64Encode(std::vector<std::uint8_t> const& bytes) {
-#ifdef OPENSSL_IS_BORINGSSL
-  std::size_t encoded_size;
-  EVP_EncodedLength(&encoded_size, bytes.size());
-  std::vector<std::uint8_t> result(encoded_size);
-  std::size_t out_size =
-      EVP_EncodeBlock(result.data(), bytes.data(), bytes.size());
-  result.resize(out_size);
-  return {result.begin(), result.end()};
-#else
-  auto bio_chain = MakeBioChainForBase64Transcoding();
-  int retval = 0;
-
-  while (true) {
-    retval = BIO_write(static_cast<BIO*>(bio_chain.get()), bytes.data(),
-                       static_cast<int>(bytes.size()));
-    if (retval > 0) {
-      break;  // Positive value == successful write.
-    }
-    if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
-      std::ostringstream err_builder;
-      err_builder << "Permanent error in " << __func__ << ": "
-                  << "BIO_write returned non-retryable value of " << retval;
-      google::cloud::internal::ThrowRuntimeError(err_builder.str());
-    }
-  }
-  // Tell the b64 encoder that we're done writing data, thus prompting it to
-  // add trailing '=' characters for padding if needed.
-  while (true) {
-    retval = BIO_flush(static_cast<BIO*>(bio_chain.get()));
-    if (retval > 0) {
-      break;  // Positive value == successful flush.
-    }
-    if (!BIO_should_retry(static_cast<BIO*>(bio_chain.get()))) {
-      std::ostringstream err_builder;
-      err_builder << "Permanent error in " << __func__ << ": "
-                  << "BIO_flush returned non-retryable value of " << retval;
-      google::cloud::internal::ThrowRuntimeError(err_builder.str());
-    }
-  }
-
-  // This buffer belongs to the BIO chain and is freed upon its destruction.
-  BUF_MEM* buf_mem;
-  BIO_get_mem_ptr(static_cast<BIO*>(bio_chain.get()), &buf_mem);
-  // Return a string copy of the buffer's bytes, as the buffer will be freed
-  // upon this method's exit.
-  return std::string(buf_mem->data, buf_mem->length);
-#endif  // OPENSSL_IS_BORINGSSL
+  return Base64Encode(bytes.data(), bytes.size());
 }
 
 std::vector<std::uint8_t> SignStringWithPem(
@@ -264,7 +205,7 @@ std::vector<std::uint8_t> SignStringWithPem(
   }
 
   auto pem_buffer = std::unique_ptr<BIO, decltype(&BIO_free)>(
-      BIO_new_mem_buf(const_cast<char*>(pem_contents.c_str()),
+      BIO_new_mem_buf(pem_contents.data(),
                       static_cast<int>(pem_contents.length())),
       &BIO_free);
   if (!pem_buffer) {
@@ -273,7 +214,7 @@ std::vector<std::uint8_t> SignStringWithPem(
 
   auto private_key = std::unique_ptr<EVP_PKEY, decltype(&EVP_PKEY_free)>(
       PEM_read_bio_PrivateKey(
-          static_cast<BIO*>(pem_buffer.get()),
+          pem_buffer.get(),
           nullptr,  // EVP_PKEY **x
           nullptr,  // pem_password_cb *cb -- a custom callback.
           // void *u -- this represents the password for the PEM (only
@@ -287,17 +228,16 @@ std::vector<std::uint8_t> SignStringWithPem(
 
   int const digest_sign_success_code = 1;
   if (digest_sign_success_code !=
-      EVP_DigestSignInit(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
+      EVP_DigestSignInit(digest_ctx.get(),
                          nullptr,  // EVP_PKEY_CTX **pctx
                          digest_type,
                          nullptr,  // ENGINE *e
-                         static_cast<EVP_PKEY*>(private_key.get()))) {
+                         private_key.get())) {
     handle_openssl_failure("Could not initialize PEM digest.");
   }
 
   if (digest_sign_success_code !=
-      EVP_DigestSignUpdate(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
-                           str.c_str(), str.length())) {
+      EVP_DigestSignUpdate(digest_ctx.get(), str.data(), str.length())) {
     handle_openssl_failure("Could not update PEM digest.");
   }
 
@@ -306,16 +246,16 @@ std::vector<std::uint8_t> SignStringWithPem(
   // with the resulting buffer's size. This allows us to then call it again,
   // with the correct buffer and size, which actually populates the buffer.
   if (digest_sign_success_code !=
-      EVP_DigestSignFinal(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
+      EVP_DigestSignFinal(digest_ctx.get(),
                           nullptr,  // unsigned char *sig
                           &signed_str_size)) {
     handle_openssl_failure("Could not finalize PEM digest (1/2).");
   }
 
   std::vector<unsigned char> signed_str(signed_str_size);
-  if (digest_sign_success_code !=
-      EVP_DigestSignFinal(static_cast<EVP_MD_CTX*>(digest_ctx.get()),
-                          signed_str.data(), &signed_str_size)) {
+  if (digest_sign_success_code != EVP_DigestSignFinal(digest_ctx.get(),
+                                                      signed_str.data(),
+                                                      &signed_str_size)) {
     handle_openssl_failure("Could not finalize PEM digest (2/2).");
   }
 

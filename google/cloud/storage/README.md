@@ -20,7 +20,15 @@ the reference guide includes a quick start guide.
 
 ## Release Notes
 
-### v0.5.x - TBD
+### v0.6.x - TBD
+
+### v0.5.x - 2019-03
+
+* Properly handle subresources in V2 signed URLs.
+* Allow specifying non-default `ServiceAccountCredentials` scope and subject.
+* Add `make install` instructions.
+* Change the storage examples to throw a `std::runtime_error` on failure.
+* Add Bucket Policy Only samples.
 
 ### v0.4.x - 2019-02
 

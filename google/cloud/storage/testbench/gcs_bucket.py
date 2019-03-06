@@ -14,7 +14,6 @@
 # limitations under the License.
 """Implement a class to simulate GCS buckets."""
 
-
 import base64
 import error_response
 import flask

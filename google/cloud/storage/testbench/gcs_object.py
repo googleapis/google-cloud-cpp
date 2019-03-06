@@ -14,7 +14,6 @@
 # limitations under the License.
 """Implement a class to simulate GCS objects."""
 
-
 import base64
 import crc32c
 import error_response

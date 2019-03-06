@@ -20,6 +20,7 @@ import error_response
 import flask
 import gcs_bucket
 import gcs_object
+import gcs_project
 import httpbin
 import json
 import os
@@ -610,18 +611,6 @@ def objects_acl_patch(bucket_name, object_name, entity):
     return testbench_utils.filtered_response(flask.request, acl)
 
 
-@gcs.route('/projects/<project_id>/serviceAccount')
-def projects_get(project_id):
-    """Implement the `Projects.serviceAccount: get` API."""
-    return testbench_utils.filtered_response(
-        flask.request, {
-            'kind':
-            'storage#serviceAccount',
-            'email_address':
-            'service-123456789@gs-project-accounts.iam.gserviceaccount.com'
-        })
-
-
 # Define the WSGI application to handle bucket requests.
 UPLOAD_HANDLER_PATH = '/upload/storage/v1'
 upload = flask.Flask(__name__)
@@ -757,12 +746,17 @@ def xmlapi_put_object(bucket_name, object_name):
     return response
 
 
+# Define the WSGI application to handle HMAC key requests
+(PROJECTS_HANDLER_PATH, projects_app) = gcs_project.get_projects_app()
+
+
 application = wsgi.DispatcherMiddleware(
     root, {
         '/httpbin': httpbin.app,
         GCS_HANDLER_PATH: gcs,
         UPLOAD_HANDLER_PATH: upload,
         XMLAPI_HANDLER_PATH: xmlapi,
+        PROJECTS_HANDLER_PATH: projects_app,
     })
 
 
