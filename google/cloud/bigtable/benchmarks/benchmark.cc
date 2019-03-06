@@ -272,9 +272,7 @@ BenchmarkResult Benchmark::PopulateTableShard(bigtable::Table& table,
         auto failures = table.BulkApply(std::move(bulk));
         if (!failures.empty()) {
           auto status = failures.front().status();
-          if (!status.ok()) {
-            throw std::runtime_error(status.message());
-          }
+          throw std::runtime_error(status.message());
         }
       });
       result.row_count += bulk_size;
@@ -292,9 +290,7 @@ BenchmarkResult Benchmark::PopulateTableShard(bigtable::Table& table,
       auto failures = table.BulkApply(std::move(bulk));
       if (!failures.empty()) {
         auto status = failures.front().status();
-        if (!status.ok()) {
-          throw std::runtime_error(status.message());
-        }
+        throw std::runtime_error(status.message());
       }
     });
     result.row_count += bulk_size;
