@@ -16,9 +16,12 @@
 
 set -eu
 
-readonly BINDIR="$(dirname $0)"
-source "${BINDIR}/colors.sh"
-readonly PROJECT_ROOT="$(cd ${BINDIR}/..; pwd)"
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname $0)/.."; pwd)"
+fi
+source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
+source "${PROJECT_ROOT}/ci/define-dump-log.sh"
+source "${PROJECT_ROOT}/ci/colors.sh"
 
 if [ "${CHECK_ABI:-}" != "yes" ]; then
   echo
@@ -27,20 +30,29 @@ if [ "${CHECK_ABI:-}" != "yes" ]; then
   exit 0
 fi
 
-readonly IMAGE="cached-${DISTRO}-${DISTRO_VERSION}"
+exit_status=0
 for library in google_cloud_cpp_common bigtable_client; do
   echo
   echo "${COLOR_YELLOW}Checking ABI for ${library} library.${COLOR_RESET}"
   libdir="$(pkg-config ${library} --variable=libdir)"
   includedir="$(pkg-config ${library} --variable=includedir)"
   version="$(pkg-config ${library} --modversion)"
-  new_dump_file="${PROJECT_ROOT}/build-output/${IMAGE}/${library}.actual.abi.dump"
+  new_dump_file="${library}.actual.abi.dump"
   old_dump_file="${PROJECT_ROOT}/ci/test-abi/${library}.expected.abi.dump"
   abi-dumper "${libdir}/lib${library}.so" \
       -public-headers "${includedir}" \
       -lver "${version}" \
-      -o ${new_dump_file}
-  (cd "build-output/${IMAGE}" ; abi-compliance-checker -l ${library} \
-      -old "${old_dump_file}" \
-      -new "${new_dump_file}")
+      -o "${BUILD_OUTPUT}/${new_dump_file}"
+
+  # We want to collect the data for as many libraries as possible, do not exit
+  # on the first error.0
+  set +e
+  (cd "${BUILD_OUTPUT}" ; abi-compliance-checker \
+      -l ${library} -old "${old_dump_file}" -new "${new_dump_file}")
+  if [[ $? != 0 ]]; then
+    exit_status=1
+  fi
+  set -e
 done
+
+exit ${exit_status}
