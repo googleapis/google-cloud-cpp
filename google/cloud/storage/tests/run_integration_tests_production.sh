@@ -23,6 +23,12 @@ set -eu
 #   tests should have read/write access to this bucket.
 # - STORAGE_REGION_ID: the name of of Google Cloud Storage region, ideally close
 #   to the VMs running the integration tests.
+# - SERVICE_ACCOUNT: a valid service account in ${PROJECT_ID}. It is used to
+#   test HMAC keys, new keys will be created in this account.
+# - TOPIC_NAME: a valid Cloud Pub/Sub topic name, configured to accept
+#   publications from the GCS service account in ${PROJECT_ID}. It is used to
+#   create Cloud Pub/Sub notifications, but no notifications are actually sent
+#   to it.
 
 echo
 echo "Running storage::internal::CurlResumableUploadSession integration tests."

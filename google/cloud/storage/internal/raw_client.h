@@ -23,6 +23,7 @@
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/default_object_acl_requests.h"
 #include "google/cloud/storage/internal/empty_response.h"
+#include "google/cloud/storage/internal/hmac_key_requests.h"
 #include "google/cloud/storage/internal/notification_requests.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/object_requests.h"
@@ -146,6 +147,8 @@ class RawClient {
   //@{
   virtual StatusOr<ServiceAccount> GetServiceAccount(
       GetProjectServiceAccountRequest const&) = 0;
+  virtual StatusOr<CreateHmacKeyResponse> CreateHmacKey(
+      CreateHmacKeyRequest const&) = 0;
   //@}
 
   //@{

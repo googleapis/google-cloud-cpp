@@ -19,6 +19,7 @@
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/storage/hmac_key_metadata.h"
 #include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
@@ -2251,6 +2252,81 @@ class Client {
     auto const& project_id = raw_client_->client_options().project_id();
     return GetServiceAccountForProject(project_id,
                                        std::forward<Options>(options)...);
+  }
+
+  /**
+   * Create a new HMAC key in a given project.
+   *
+   * @warning This GCS feature is not GA, it is subject to change without
+   *     notice.
+   *
+   * @param project_id the name of the project where you want to create the
+   *     service account.
+   * @param service_account the service account email where you want to create
+   *     the new HMAC key.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Only the standard options apply in this case.
+   *
+   * @return This operation returns the new HMAC key metadata *and* the HMAC key
+   *   secret (encoded as a base64 string). This is the only request that
+   *   returns the secret.
+   *
+   * @par Idempotency
+   * This operation is not idempotent. Retrying the operation will create a new
+   * key each time.
+   *
+   * @par Example
+   *
+   *
+   * @see https://cloud.google.com/iam/docs/service-accounts for general
+   *     information on Google Cloud Platform service accounts.
+   */
+  template <typename... Options>
+  StatusOr<std::pair<HmacKeyMetadata, std::string>> CreateHmacKeyForProject(
+      std::string project_id, std::string service_account,
+      Options&&... options) {
+    internal::CreateHmacKeyRequest request(std::move(project_id),
+                                           std::move(service_account));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    auto result = raw_client_->CreateHmacKey(request);
+    if (!result) {
+      return result.status();
+    }
+    return std::make_pair(std::move(result.value().resource),
+                          std::move(result.value().secret));
+  }
+
+  /**
+   * Create a new HMAC key associated in the default project.
+   *
+   * @warning This GCS feature is not GA, it is subject to change without
+   *     notice.
+   *
+   * @param service_account the service account email where you want to create
+   *     the new HMAC key.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Only the standard options apply in this case.
+   *
+   * @return This operation returns the new HMAC key metadata *and* the HMAC key
+   *   secret (encoded as a base64 string). This is the only request that
+   *   returns the secret.
+   *
+   * @par Idempotency
+   * This operation is not idempotent. Retrying the operation will create a new
+   * key each time.
+   *
+   * @par Example
+   *
+   *
+   * @see https://cloud.google.com/iam/docs/service-accounts for general
+   *     information on Google Cloud Platform service accounts.
+   */
+  template <typename... Options>
+  StatusOr<std::pair<HmacKeyMetadata, std::string>> CreateHmacKey(
+      std::string service_account, Options&&... options) {
+    auto const& project_id = raw_client_->client_options().project_id();
+    return CreateHmacKeyForProject(project_id, std::move(service_account),
+                                   std::forward<Options>(options)...);
   }
   //@}
 
