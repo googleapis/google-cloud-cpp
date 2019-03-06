@@ -131,7 +131,7 @@ std::vector<std::uint8_t> Base64Decode(std::string const& str) {
   EVP_DecodedLength(&decoded_size, str.size());
   std::vector<std::uint8_t> result(decoded_size);
   EVP_DecodeBase64(result.data(), &decoded_size, result.size(),
-                   reinterpret_cast<std::uint8_t const*>(str.data()),
+                   reinterpret_cast<unsigned char const*>(str.data()),
                    str.size());
   result.resize(decoded_size);
   return result;
