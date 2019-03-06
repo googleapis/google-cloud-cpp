@@ -63,3 +63,9 @@ cc_binary(
     srcs = ["storage_quickstart.cc"],
     deps = ["//google/cloud/storage:storage_client"],
 )
+
+cc_binary(
+    name = "storage_service_account_samples",
+    srcs = ["storage_service_account_samples.cc"],
+    deps = ["//google/cloud/storage:storage_client"],
+)

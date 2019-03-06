@@ -63,8 +63,6 @@ run_all_bucket_examples() {
   run_example ./storage_bucket_samples get-bucket-labels \
       "${bucket_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
-  run_example ./storage_bucket_samples get-service-account-for-project \
-      "${PROJECT_ID}"
 
   # Run the examples where the project id is obtained from the environment:
   export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
@@ -73,12 +71,34 @@ run_all_bucket_examples() {
   run_example ./storage_bucket_samples get-bucket-metadata "${bucket_name}"
   run_example ./storage_bucket_samples get-bucket-metadata "${bucket_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
-  run_example ./storage_bucket_samples get-service-account
   unset GOOGLE_CLOUD_PROJECT
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
   run_example_usage ./storage_bucket_samples
+}
+
+################################################
+# Run all examples about service accounts.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+#   PROJECT_ID: the Google Cloud Project used for the test.
+# Arguments:
+#   None
+# Returns:
+#   None
+################################################
+run_all_service_account_examples() {
+  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+
+  run_example ./storage_service_account_samples \
+      get-service-account-for-project "${PROJECT_ID}"
+
+  # Run the examples where the project id is obtained from the environment:
+  export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
+  run_example ./storage_service_account_samples get-service-account
+  unset GOOGLE_CLOUD_PROJECT
 }
 
 ################################################
@@ -1011,6 +1031,7 @@ run_all_storage_examples() {
   run_all_notification_examples "${TOPIC_NAME}"
   run_all_cmek_examples "${STORAGE_CMEK_KEY}"
   run_all_bucket_iam_examples
+  run_all_service_account_examples
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
   if [ "${EXIT_STATUS}" = "0" ]; then
