@@ -89,8 +89,7 @@ class CompletionQueue {
    *     requirements for `internal::CheckAsyncUnaryRpcSignature<>`.
    * @tparam Request the type of the request parameter in the gRPC.
    *
-   * @return an AsyncOperation instance that can be used to request cancelation
-   *   of the pending operation.
+   * @return a future that becomes satisfied when the operation completes.
    */
   template <
       typename AsyncCallType, typename Request,
