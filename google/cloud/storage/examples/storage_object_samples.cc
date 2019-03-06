@@ -1399,7 +1399,7 @@ void CreateGetSignedUrlV2(google::cloud::storage::Client client, int& argc,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
-  //! [sign url v2]
+  //! [sign url v2] [START storage_generate_signed_url_v2]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
@@ -1416,7 +1416,7 @@ void CreateGetSignedUrlV2(google::cloud::storage::Client client, int& argc,
               << "You can use this URL with any user agent, for example:\n"
               << "curl '" << *signed_url << "'\n";
   }
-  //! [sign url v2]
+  //! [sign url v2] [END storage_generate_signed_url_v2]
   (std::move(client), bucket_name, object_name);
 }
 
@@ -1457,7 +1457,7 @@ void CreateGetSignedUrlV4(google::cloud::storage::Client client, int& argc,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
-  //! [sign url v4] [START storage_generate_signed_url]
+  //! [sign url v4] [START storage_generate_signed_url_v4]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
@@ -1473,7 +1473,7 @@ void CreateGetSignedUrlV4(google::cloud::storage::Client client, int& argc,
               << "You can use this URL with any user agent, for example:\n"
               << "curl '" << *signed_url << "'\n";
   }
-  //! [sign url v4] [END storage_generate_signed_url]
+  //! [sign url v4] [END storage_generate_signed_url_v4]
   (std::move(client), bucket_name, object_name);
 }
 
