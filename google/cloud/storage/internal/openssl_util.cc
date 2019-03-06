@@ -47,12 +47,23 @@ inline std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_free)> GetDigestCtx() {
 #endif
 
 #ifndef OPENSSL_IS_BORINGSSL
-std::unique_ptr<BIO, decltype(&BIO_free_all)>
-MakeBioChainForBase64Transcoding() {
+/**
+ * Build a BIO chain for Base 64 encoding and decoding.
+ *
+ * BIO chains are a OpenSSL abstraction to perform I/O (including from memory
+ * buffers) with transformations. This function takes a BIO object and builds a
+ * chain that:
+ *
+ * - For writes, it performs Base 64 encoding and then writes the encoded data
+ *   into @p mem_io.
+ * - For reads, it extracts data from @p mem_io and then decodes it using
+ *   Base64.
+ *
+ */
+std::unique_ptr<BIO, decltype(&BIO_free_all)> PushBase64Transcoding(
+    std::unique_ptr<BIO, decltype(&BIO_free)> mem_io) {
   auto base64_io = std::unique_ptr<BIO, decltype(&BIO_free)>(
       BIO_new(BIO_f_base64()), &BIO_free);
-  auto mem_io = std::unique_ptr<BIO, decltype(&BIO_free)>(BIO_new(BIO_s_mem()),
-                                                          &BIO_free);
   if (!(base64_io && mem_io)) {
     std::ostringstream err_builder;
     err_builder << "Permanent error in " << __func__ << ": "
@@ -79,7 +90,9 @@ std::string Base64Encode(std::uint8_t const* bytes, std::size_t bytes_size) {
   result.resize(out_size);
   return {result.begin(), result.end()};
 #else
-  auto bio_chain = MakeBioChainForBase64Transcoding();
+  auto mem_io = std::unique_ptr<BIO, decltype(&BIO_free)>(BIO_new(BIO_s_mem()),
+                                                          &BIO_free);
+  auto bio_chain = PushBase64Transcoding(std::move(mem_io));
   int retval = 0;
 
   while (true) {
@@ -134,33 +147,14 @@ std::string Base64Decode(std::string const& str) {
     return std::string{};
   }
 
+  std::unique_ptr<BIO, decltype(&BIO_free)> source(
+      BIO_new_mem_buf(str.data(), static_cast<int>(str.size())), &BIO_free);
+  auto bio = PushBase64Transcoding(std::move(source));
+
   // We could compute the exact buffer size by looking at the number of padding
   // characters (=) at the end of str, but we will get the exact length later,
   // so simply compute a buffer that is big enough.
   std::string result(str.size() * 3 / 4, ' ');
-
-  using UniqueBioChainPtr = std::unique_ptr<BIO, decltype(&BIO_free_all)>;
-  using UniqueBioPtr = std::unique_ptr<BIO, decltype(&BIO_free)>;
-
-  UniqueBioPtr source(BIO_new_mem_buf(str.data(), static_cast<int>(str.size())),
-                      &BIO_free);
-  if (!source) {
-    std::ostringstream os;
-    os << __func__ << ": cannot create BIO for source string=<" << str << ">";
-    google::cloud::internal::ThrowRuntimeError(os.str());
-  }
-  UniqueBioPtr filter(BIO_new(BIO_f_base64()), &BIO_free);
-  if (!filter) {
-    std::ostringstream os;
-    os << __func__ << ": cannot create BIO for Base64 decoding";
-    google::cloud::internal::ThrowRuntimeError(os.str());
-  }
-
-  // Based on the documentation this never fails, so we can transfer ownership
-  // of `filter` and `source` and do not need to check the result.
-  UniqueBioChainPtr bio(BIO_push(filter.release(), source.release()),
-                        &BIO_free_all);
-  BIO_set_flags(bio.get(), BIO_FLAGS_BASE64_NO_NL);
 
   // We do not retry, just make one call because the full stream is blocking.
   // Note that the number of bytes to read is the number of bytes we fetch from
