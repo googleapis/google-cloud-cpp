@@ -366,8 +366,12 @@ When you apply a new ACL to an object, GCS adds <code>OWNER</code> permission to
 <tr><td colspan="2"><div class="groupHeader">Signed URL support operations.</div></td></tr>
 <tr class="memitem:ae15d05c54c2e9094719514a5856e1cc6"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
 <tr class="memitem:ae15d05c54c2e9094719514a5856e1cc6"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; std::string &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ae15d05c54c2e9094719514a5856e1cc6">CreateV2SignedUrl</a> (std::string verb, std::string bucket_name, std::string object_name, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:ae15d05c54c2e9094719514a5856e1cc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a signed URL for the given parameters.  <a href="#ae15d05c54c2e9094719514a5856e1cc6">More...</a><br /></td></tr>
+<tr class="memdesc:ae15d05c54c2e9094719514a5856e1cc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a V2 signed URL for the given parameters.  <a href="#ae15d05c54c2e9094719514a5856e1cc6">More...</a><br /></td></tr>
 <tr class="separator:ae15d05c54c2e9094719514a5856e1cc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af59ea1092e8a67d9a261031effb9c6a9"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:af59ea1092e8a67d9a261031effb9c6a9"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; std::string &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#af59ea1092e8a67d9a261031effb9c6a9">CreateV4SignedUrl</a> (std::string verb, std::string bucket_name, std::string object_name, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:af59ea1092e8a67d9a261031effb9c6a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a V4 signed URL for the given parameters.  <a href="#af59ea1092e8a67d9a261031effb9c6a9">More...</a><br /></td></tr>
+<tr class="separator:af59ea1092e8a67d9a261031effb9c6a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Pub/Sub operations.</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>Cloud Pub/Sub Notifications sends information about changes to objects in your buckets to Cloud Pub/Sub, where the information is added to a Cloud Pub/Sub topic of your choice in the form of messages.</p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/pubsub-notifications">https://cloud.google.com/storage/docs/pubsub-notifications</a> for more information about Cloud Pub/Sub in the context of GCS. </dd></dl>
@@ -1116,7 +1120,7 @@ template&lt;typename... Options&gt; </div>
 <dd>
 <a href="https://cloud.google.com/pubsub/">https://cloud.google.com/pubsub/</a> for general information on Google Cloud Pub/Sub service. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02392">2392</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02457">2457</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
 
 </div>
 </div>
@@ -1243,7 +1247,7 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Create a signed URL for the given parameters. </p>
+<p>Create a V2 signed URL for the given parameters. </p>
 <dl class="section note"><dt>Note</dt><dd>By default URLs created with this function expire after 7 days.</dd>
 <dd>
 The application must ensure that any URL created with this function is a valid request via the XML API. For example, the options for bucket requests may include a sub-resource (e.g. <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a9be0682b16170f98450ef1254c97d280">WithBilling()</a></code>) but not all sub-resources are valid for objects. Likewise, only a single sub-resource may be retrieved in each request.</dd></dl>
@@ -1261,11 +1265,87 @@ The application must ensure that any URL created with this function is a valid r
 <p>Likewise, the following helper functions can create properly formatted <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddExtensionHeaderOption.html" title="Add a extension header to a signed URL. ">AddExtensionHeaderOption</a></code> objects: <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#abfec87e91c994bb6e515b34dbb0ee2b5">WithGeneration()</a></code>, <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aaba7aa9a3b47be6e2f3b40a90e45bf8f">WithGenerationMarker()</a></code>, <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a6fa3e49f6009f8dfdf2ebc65ae3470d2">WithMarker()</a></code>, <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a088399b5d12206cf7bee60c3fe97b490">WithResponseContentDisposition()</a></code>, <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a33ce20d9609b7bc00655a078f99b30bd">WithResponseContentType()</a></code>, and <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aebb1dbcddbc19050f66ec120967863e6">WithUserProject()</a></code>.</p>
 <dl class="section return"><dt>Returns</dt><dd>the signed URL.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  using ::google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name) {</div><div class="line">    StatusOr&lt;std::string&gt; signed_url = client.CreateV2SignedUrl(</div><div class="line">        <span class="stringliteral">&quot;GET&quot;</span>, std::move(bucket_name), std::move(object_name),</div><div class="line">        gcs::ExpirationTime(std::chrono::system_clock::now() +</div><div class="line">                            std::chrono::minutes(15)));</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (!signed_url) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(signed_url.status().message());</div><div class="line">    }</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The signed url is: &quot;</span> &lt;&lt; *signed_url &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;You can use this URL with any user agent, for example:\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;curl &#39;&quot;</span> &lt;&lt; *signed_url &lt;&lt; <span class="stringliteral">&quot;&#39;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  using ::google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name) {</div><div class="line">    StatusOr&lt;std::string&gt; signed_url = client.CreateV2SignedUrl(</div><div class="line">        <span class="stringliteral">&quot;PUT&quot;</span>, std::move(bucket_name), std::move(object_name),</div><div class="line">        gcs::ExpirationTime(std::chrono::system_clock::now() +</div><div class="line">                            std::chrono::minutes(15)),</div><div class="line">        gcs::ContentType(<span class="stringliteral">&quot;application/octet-stream&quot;</span>));</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (!signed_url) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(signed_url.status().message());</div><div class="line">    }</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The signed url is: &quot;</span> &lt;&lt; *signed_url &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;You can use this URL with any user agent, for example:\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;curl -X PUT -H &#39;Content-Type: application/octet-stream&#39;&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; --upload-file my-file &#39;&quot;</span> &lt;&lt; *signed_url &lt;&lt; <span class="stringliteral">&quot;&#39;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/access-control/signed-urls">https://cloud.google.com/storage/docs/access-control/signed-urls</a> for a general description of signed URLs and how they can be used.</dd>
 <dd>
 <a href="https://cloud.google.com/storage/docs/xml-api/overview">https://cloud.google.com/storage/docs/xml-api/overview</a> for a detailed description of the XML API. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02308">2308</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02311">2311</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+
+</div>
+</div>
+<a id="af59ea1092e8a67d9a261031effb9c6a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af59ea1092e8a67d9a261031effb9c6a9">&#9670;&nbsp;</a></span>CreateV4SignedUrl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Options&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">StatusOr&lt;std::string&gt; google::cloud::storage::v0::Client::CreateV4SignedUrl </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>verb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>bucket_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>object_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Options &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a V4 signed URL for the given parameters. </p>
+<dl class="section note"><dt>Note</dt><dd>By default URLs created with this function expire after 7 days.</dd>
+<dd>
+The application must ensure that any URL created with this function is a valid request via the XML API. For example, the options for bucket requests may include a sub-resource (e.g. <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a9be0682b16170f98450ef1254c97d280">WithBilling()</a></code>) but not all sub-resources are valid for objects. Likewise, only a single sub-resource may be retrieved in each request.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">verb</td><td>the operation allowed through this signed URL, <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>HEAD</code>, etc. are valid values. </td></tr>
+    <tr><td class="paramname">bucket_name</td><td>the name of the bucket. </td></tr>
+    <tr><td class="paramname">object_name</td><td>the name of the object, note that the object may not exist for signed URLs that upload new objects. Use an empty string for requests that only affect a bucket. </td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional parameters for the signed URL, this include: <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SignedUrlTimestamp.html" title="Define the timestamp duration for a V4 signed URL. ">SignedUrlTimestamp</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SignedUrlDuration.html" title="Define the duration for a V4 signed URL. ">SignedUrlDuration</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1MD5HashValue.html" title="Provide a pre-computed MD5 hash value to an upload or download request. ">MD5HashValue</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ContentType.html" title="Set the MIME content type of an object. ">ContentType</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddExtensionHeaderOption.html" title="Add a extension header to a signed URL. ">AddExtensionHeaderOption</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html" title="Add a extension header to a signed URL. ">AddQueryParameterOption</a></code>, and <code>AddSubResourceOption</code>. Note that only the last <code>AddSubResourceOption</code> option has any effect.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Helper Functions</dt><dd></dd></dl>
+<p>The following functions create a <code>AddSubResourceOption</code> with less opportunities for typos in the sub-resource name: <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a833874f3ecc9da491459eb69f208b324">WithAcl()</a></code>, <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a9be0682b16170f98450ef1254c97d280">WithBilling()</a></code>, <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a04307527695477eae5221c998a966bb3">WithCompose()</a></code>, <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a0373b2537cf47d2a053bbf380e0abcc8">WithCors()</a></code>, <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#ac985a3085d72f7dba07459ad74085d09">WithEncryption()</a></code>, <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a5e03ac79a2c1d1e3b4ffda200993bc1c">WithEncryptionConfig()</a></code>, <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a5cb2c0f0735a411ff6bbe4aac4a9b06b">WithLifecycle()</a></code>, <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aa09370ca00f3f77307a6065a4df80ef6">WithLocation()</a></code>, <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aa2afbd229dacecc507988190f4f7af47">WithLogging()</a></code>, <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a6eace4d8df2bab5e06f79fb88724d193">WithStorageClass()</a></code>, and <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a30af03ecbfda905fd2f32d08a85c3a13">WithTagging()</a></code>.</p>
+<p>Likewise, the following helper functions can create properly formatted <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddExtensionHeaderOption.html" title="Add a extension header to a signed URL. ">AddExtensionHeaderOption</a></code> objects: <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#abfec87e91c994bb6e515b34dbb0ee2b5">WithGeneration()</a></code>, <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aaba7aa9a3b47be6e2f3b40a90e45bf8f">WithGenerationMarker()</a></code>, <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a6fa3e49f6009f8dfdf2ebc65ae3470d2">WithMarker()</a></code>, <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a088399b5d12206cf7bee60c3fe97b490">WithResponseContentDisposition()</a></code>, <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a33ce20d9609b7bc00655a078f99b30bd">WithResponseContentType()</a></code>, and <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aebb1dbcddbc19050f66ec120967863e6">WithUserProject()</a></code>.</p>
+<dl class="section return"><dt>Returns</dt><dd>the signed URL.</dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  using ::google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name) {</div><div class="line">    StatusOr&lt;std::string&gt; signed_url = client.CreateV4SignedUrl(</div><div class="line">        <span class="stringliteral">&quot;GET&quot;</span>, std::move(bucket_name), std::move(object_name),</div><div class="line">        gcs::SignedUrlDuration(std::chrono::minutes(15)));</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (!signed_url) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(signed_url.status().message());</div><div class="line">    }</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The signed url is: &quot;</span> &lt;&lt; *signed_url &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;You can use this URL with any user agent, for example:\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;curl &#39;&quot;</span> &lt;&lt; *signed_url &lt;&lt; <span class="stringliteral">&quot;&#39;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  using ::google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string bucket_name, std::string object_name) {</div><div class="line">    StatusOr&lt;std::string&gt; signed_url = client.CreateV4SignedUrl(</div><div class="line">        <span class="stringliteral">&quot;PUT&quot;</span>, std::move(bucket_name), std::move(object_name),</div><div class="line">        gcs::SignedUrlDuration(std::chrono::minutes(15)),</div><div class="line">        <a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aca1486b27694404d1667d43a68e030b0">gcs::AddExtensionHeader</a>(<span class="stringliteral">&quot;content-type&quot;</span>, <span class="stringliteral">&quot;application/octet-stream&quot;</span>));</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (!signed_url) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(signed_url.status().message());</div><div class="line">    }</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The signed url is: &quot;</span> &lt;&lt; *signed_url &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;You can use this URL with any user agent, for example:\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;curl -X PUT -H &#39;Content-Type: application/octet-stream&#39;&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot; --upload-file my-file &#39;&quot;</span> &lt;&lt; *signed_url &lt;&lt; <span class="stringliteral">&quot;&#39;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/access-control/signed-urls">https://cloud.google.com/storage/docs/access-control/signed-urls</a> for a general description of signed URLs and how they can be used.</dd>
+<dd>
+<a href="https://cloud.google.com/storage/docs/xml-api/overview">https://cloud.google.com/storage/docs/xml-api/overview</a> for a detailed description of the XML API. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02373">2373</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
 
 </div>
 </div>
@@ -1499,7 +1579,7 @@ template&lt;typename... Options&gt; </div>
 <dd>
 <a href="https://cloud.google.com/pubsub/">https://cloud.google.com/pubsub/</a> for general information on Google Cloud Pub/Sub service. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02464">2464</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02529">2529</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
 
 </div>
 </div>
@@ -1980,7 +2060,7 @@ template&lt;typename... Options&gt; </div>
 <dd>
 <a href="https://cloud.google.com/pubsub/">https://cloud.google.com/pubsub/</a> for general information on Google Cloud Pub/Sub service. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02428">2428</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02493">2493</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
 
 </div>
 </div>
@@ -2514,7 +2594,7 @@ template&lt;typename... Options&gt; </div>
 <dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and is always idempotent.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  using ::google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string bucket_name) {</div><div class="line">    StatusOr&lt;std::vector&lt;gcs::NotificationMetadata&gt;&gt; items =</div><div class="line">        client.ListNotifications(bucket_name);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (!items) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(items.status().message());</div><div class="line">    }</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Notifications for bucket=&quot;</span> &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (gcs::NotificationMetadata <span class="keyword">const</span>&amp; notification : *items) {</div><div class="line">      std::cout &lt;&lt; notification &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02347">2347</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02412">2412</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
 
 </div>
 </div>
