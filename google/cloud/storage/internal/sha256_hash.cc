@@ -23,10 +23,17 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-std::vector<std::uint8_t> Sha256Hash(std::string const& str) {
+namespace {
+template <typename Byte,
+          typename std::enable_if<sizeof(Byte) == 1, int>::type = 0>
+std::vector<std::uint8_t> Sha256Hash(Byte const* data, std::size_t count) {
   SHA256_CTX sha256;
   SHA256_Init(&sha256);
-  SHA256_Update(&sha256, str.data(), str.size());
+  static_assert(std::numeric_limits<unsigned char>::digits == 8,
+                "This function assumes that a 'char' uses a single byte,"
+                " because the argument to SHA256_Update() must be 'count bytes"
+                " at data'.");
+  SHA256_Update(&sha256, data, count);
 
   unsigned char hash[SHA256_DIGEST_LENGTH];
   SHA256_Final(hash, &sha256);
@@ -35,6 +42,15 @@ std::vector<std::uint8_t> Sha256Hash(std::string const& str) {
   // by `SHA256_Final()` are 8-bit values, and (b) because if `std::uint8_t`
   // exists it must be large enough to fit an `unsigned char`.
   return {hash, hash + sizeof(hash)};
+}
+}  // namespace
+
+std::vector<std::uint8_t> Sha256Hash(std::string const& str) {
+  return Sha256Hash(str.data(), str.size());
+}
+
+std::vector<std::uint8_t> Sha256Hash(std::vector<std::uint8_t> const& bytes) {
+  return Sha256Hash(bytes.data(), bytes.size());
 }
 
 std::string HexEncode(std::vector<std::uint8_t> const& bytes) {
