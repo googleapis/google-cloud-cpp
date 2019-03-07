@@ -56,6 +56,10 @@ class ServiceAccount(object):
             }
         })
 
+    def key_items(self):
+        """Return the keys in this service account as a list of JSON objects."""
+        return [k.get('resource') for k in self.keys.values()]
+
 
 class GcsProject(object):
     """Represent a GCS project."""
@@ -81,6 +85,10 @@ class GcsProject(object):
         """Insert a new HMAC key (or an error)."""
         sa = self.service_accounts.setdefault(service_account, ServiceAccount(service_account))
         return sa.insert_key(self.project_id)
+
+    def service_account(self, service_account_email):
+        """Return a ServiceAccount object given its email."""
+        return self.service_accounts.get(service_account_email)
 
 
 PROJECTS_HANDLER_PATH = '/storage/v1/projects'
@@ -122,6 +130,36 @@ def hmac_keys_insert(project_id):
     return testbench_utils.filtered_response(
         flask.request,
         project.insert_hmac_key(service_account))
+
+
+@projects.route('/<project_id>/hmacKeys')
+def hmac_keys_list(project_id):
+    """Implement the 'HmacKeys: list' API: return the HMAC keys in a project."""
+    # Lookup the bucket, if this fails the bucket does not exist, and this
+    # function should return an error.
+    project = get_project(project_id)
+    result = {
+        'kind': 'storage#hmacKeys',
+        'next_page_token': '',
+        'items': []
+    }
+
+    state_filter = lambda x: x.get('state') != 'DELETED'
+    if flask.request.args.get('deleted') == 'true':
+        state_filter = lambda x: True
+
+    items = []
+    if flask.request.args.get('serviceAccount'):
+        sa = flask.request.args.get('serviceAccount')
+        service_account = project.service_account(sa)
+        if service_account:
+            items = service_account.key_items()
+    else:
+        for sa in project.service_accounts.values():
+            items.extend(sa.key_items())
+
+    result['items'] = [i for i in items if state_filter(i)]
+    return testbench_utils.filtered_response(flask.request, result)
 
 
 def get_projects_app():
