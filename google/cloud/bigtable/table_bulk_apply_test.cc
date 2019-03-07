@@ -58,9 +58,6 @@ TEST_F(TableBulkApplyTest, Simple) {
   auto failures = table_.BulkApply(bt::BulkMutation(
       bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
       bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
-  for (auto f : failures) {
-    ASSERT_STATUS_OK(f.status());
-  }
   ASSERT_TRUE(failures.empty());
   SUCCEED();
 }
@@ -262,11 +259,7 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
   EXPECT_EQ(1UL, failures.size());
   EXPECT_EQ(1, failures.front().original_index());
   EXPECT_EQ("not-idempotent", failures.front().mutation().row_key());
-  EXPECT_EQ(
-      "Never got a confirmation for this mutation. Most likely stream was "
-      "broken before its status was sent. It's not idempotent, so we can't "
-      "retry it.",
-      failures.front().status().message());
+  EXPECT_FALSE(failures.front().status().ok());
   EXPECT_FALSE(failures.empty());
 }
 
@@ -285,9 +278,6 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
       bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
       bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
   EXPECT_EQ(2UL, failures.size());
-  EXPECT_EQ(
-      "Never got a confirmation for this mutation. Most likely stream was "
-      "broken before its status was sent.",
-      failures.front().status().message());
+  EXPECT_FALSE(failures.front().status().ok());
   EXPECT_FALSE(failures.empty());
 }
