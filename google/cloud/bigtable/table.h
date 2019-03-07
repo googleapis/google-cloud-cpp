@@ -219,7 +219,7 @@ class Table {
    * @snippet data_async_snippets.cc async-apply
    */
 
-  future<void> AsyncApply(SingleRowMutation mut, CompletionQueue& cq);
+  future<Status> AsyncApply(SingleRowMutation mut, CompletionQueue& cq);
 
   /**
    * Attempts to apply mutations to multiple rows.
@@ -258,7 +258,8 @@ class Table {
    * @par Example
    * @snippet data_async_snippets.cc bulk async-bulk-apply
    */
-  future<void> AsyncBulkApply(BulkMutation mut, CompletionQueue& cq);
+  future<std::vector<FailedMutation>> AsyncBulkApply(BulkMutation mut,
+                                                     CompletionQueue& cq);
 
   /**
    * Reads a set of rows from the table.

@@ -40,9 +40,10 @@ StatusOr<InstanceList> InstanceAdmin::ListInstances() {
   return result;
 }
 
-future<InstanceList> InstanceAdmin::AsyncListInstances(CompletionQueue& cq) {
-  promise<InstanceList> instance_list_promise;
-  future<InstanceList> result = instance_list_promise.get_future();
+future<StatusOr<InstanceList>> InstanceAdmin::AsyncListInstances(
+    CompletionQueue& cq) {
+  promise<StatusOr<InstanceList>> instance_list_promise;
+  future<StatusOr<InstanceList>> result = instance_list_promise.get_future();
 
   impl_.AsyncListInstances(
       cq, internal::MakeAsyncFutureFromCallback(
@@ -151,9 +152,9 @@ StatusOr<btadmin::Instance> InstanceAdmin::GetInstance(
   return result;
 }
 
-future<btadmin::Instance> InstanceAdmin::AsyncGetInstance(
+future<StatusOr<btadmin::Instance>> InstanceAdmin::AsyncGetInstance(
     CompletionQueue& cq, std::string const& instance_id) {
-  promise<btadmin::Instance> p;
+  promise<StatusOr<btadmin::Instance>> p;
   auto result = p.get_future();
 
   impl_.AsyncGetInstance(
@@ -181,10 +182,10 @@ StatusOr<btadmin::Cluster> InstanceAdmin::GetCluster(
   return result;
 }
 
-future<btadmin::Cluster> InstanceAdmin::AsyncGetCluster(
+future<StatusOr<btadmin::Cluster>> InstanceAdmin::AsyncGetCluster(
     CompletionQueue& cq, bigtable::InstanceId const& instance_id,
     bigtable::ClusterId const& cluster_id) {
-  promise<btadmin::Cluster> p;
+  promise<StatusOr<btadmin::Cluster>> p;
   auto result = p.get_future();
 
   impl_.AsyncGetCluster(
@@ -209,13 +210,14 @@ StatusOr<ClusterList> InstanceAdmin::ListClusters(
   return result;
 }
 
-future<ClusterList> InstanceAdmin::AsyncListClusters(CompletionQueue& cq) {
+future<StatusOr<ClusterList>> InstanceAdmin::AsyncListClusters(
+    CompletionQueue& cq) {
   return AsyncListClusters(cq, "-");
 }
 
-future<ClusterList> InstanceAdmin::AsyncListClusters(
+future<StatusOr<ClusterList>> InstanceAdmin::AsyncListClusters(
     CompletionQueue& cq, std::string const& instance_id) {
-  promise<ClusterList> p;
+  promise<StatusOr<ClusterList>> p;
   auto result = p.get_future();
 
   impl_.AsyncListClusters(

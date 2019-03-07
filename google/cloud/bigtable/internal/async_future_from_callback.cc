@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc.
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,33 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_GRPC_ERROR_DELEGATE_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_GRPC_ERROR_DELEGATE_H_
-
-#include "google/cloud/bigtable/version.h"
-#include "google/cloud/status.h"
-#include <grpcpp/grpcpp.h>
+#include "google/cloud/bigtable/internal/async_future_from_callback.h"
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
-/**
- * Creates a google::cloud::Status from a grpc::Status.
- */
-google::cloud::Status MakeStatusFromRpcError(grpc::Status const& status);
 
-/**
- * Creates a google::cloud::Status from a grpc::StatusCode and description.
- */
-google::cloud::Status MakeStatusFromRpcError(grpc::StatusCode code,
-                                             std::string what);
+AsyncFutureFromCallback<void> MakeAsyncFutureFromCallback(promise<Status> p,
+                                                          const char* w) {
+  return AsyncFutureFromCallback<void>(std::move(p), w);
+}
 
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_GRPC_ERROR_DELEGATE_H_

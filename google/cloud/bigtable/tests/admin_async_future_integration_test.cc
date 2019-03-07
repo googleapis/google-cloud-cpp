@@ -82,15 +82,17 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetDeleteTableTest) {
 
   future<void> chain =
       table_admin_->AsyncCreateTable(cq, table_id, table_config)
-          .then([&](future<btadmin::Table> fut) {
-            btadmin::Table result = fut.get();
-            EXPECT_THAT(result.name(), ::testing::HasSubstr(table_id));
+          .then([&](future<StatusOr<btadmin::Table>> fut) {
+            StatusOr<btadmin::Table> result = fut.get();
+            EXPECT_STATUS_OK(result);
+            EXPECT_THAT(result->name(), ::testing::HasSubstr(table_id));
 
             return table_admin_->AsyncGetTable(cq, table_id,
                                                btadmin::Table::FULL);
           })
-          .then([&](future<btadmin::Table> fut) {
-            btadmin::Table get_result = fut.get();
+          .then([&](future<StatusOr<btadmin::Table>> fut) {
+            StatusOr<btadmin::Table> get_result = fut.get();
+            EXPECT_STATUS_OK(get_result);
 
             auto count_matching_families = [](btadmin::Table const& table,
                                               std::string const& name) {
@@ -102,8 +104,8 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetDeleteTableTest) {
               }
               return count;
             };
-            EXPECT_EQ(1, count_matching_families(get_result, "fam"));
-            EXPECT_EQ(1, count_matching_families(get_result, "foo"));
+            EXPECT_EQ(1, count_matching_families(*get_result, "fam"));
+            EXPECT_EQ(1, count_matching_families(*get_result, "foo"));
           });
 
   chain.get();

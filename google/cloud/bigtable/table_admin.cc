@@ -43,9 +43,10 @@ StatusOr<btadmin::Table> TableAdmin::CreateTable(std::string table_id,
   return result;
 }
 
-future<google::bigtable::admin::v2::Table> TableAdmin::AsyncCreateTable(
-    CompletionQueue& cq, std::string table_id, TableConfig config) {
-  promise<google::bigtable::admin::v2::Table> p;
+future<StatusOr<google::bigtable::admin::v2::Table>>
+TableAdmin::AsyncCreateTable(CompletionQueue& cq, std::string table_id,
+                             TableConfig config) {
+  promise<StatusOr<google::bigtable::admin::v2::Table>> p;
   auto result = p.get_future();
 
   impl_.AsyncCreateTable(
@@ -56,10 +57,10 @@ future<google::bigtable::admin::v2::Table> TableAdmin::AsyncCreateTable(
   return result;
 }
 
-future<google::bigtable::admin::v2::Table> TableAdmin::AsyncGetTable(
+future<StatusOr<google::bigtable::admin::v2::Table>> TableAdmin::AsyncGetTable(
     CompletionQueue& cq, std::string const& table_id,
     btadmin::Table::View view) {
-  promise<google::bigtable::admin::v2::Table> p;
+  promise<StatusOr<google::bigtable::admin::v2::Table>> p;
   auto result = p.get_future();
 
   impl_.AsyncGetTable(

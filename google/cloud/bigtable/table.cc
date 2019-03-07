@@ -56,17 +56,22 @@ Status Table::Apply(SingleRowMutation mut) {
   return google::cloud::Status{};
 }
 
-future<void> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
-  promise<google::bigtable::v2::MutateRowResponse> p;
-  future<google::bigtable::v2::MutateRowResponse> result = p.get_future();
+future<Status> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
+  promise<StatusOr<google::bigtable::v2::MutateRowResponse>> p;
+  future<StatusOr<google::bigtable::v2::MutateRowResponse>> result =
+      p.get_future();
 
   impl_.AsyncApply(
       cq, internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncApply"),
       std::move(mut));
 
-  auto final =
-      result.then([](future<google::bigtable::v2::MutateRowResponse> f) {
+  auto final = result.then(
+      [](future<StatusOr<google::bigtable::v2::MutateRowResponse>> f) {
         auto mutate_row_response = f.get();
+        if (mutate_row_response) {
+          return Status();
+        }
+        return mutate_row_response.status();
       });
 
   return final;
@@ -81,25 +86,22 @@ void Table::BulkApply(BulkMutation mut) {
   }
 }
 
-future<void> Table::AsyncBulkApply(BulkMutation mut, CompletionQueue& cq) {
-  promise<std::vector<FailedMutation>> pfm;
-  future<std::vector<FailedMutation>> resultfm = pfm.get_future();
-  impl_.AsyncBulkApply(
-      cq,
-      internal::MakeAsyncFutureFromCallback(std::move(pfm), "AsyncBulkApply"),
-      std::move(mut));
+struct AsyncBulkApplyCb {
+  void operator()(CompletionQueue&,
+                  std::vector<FailedMutation>& failed_mutations,
+                  grpc::Status&) {
+    res_promise.set_value(std::move(failed_mutations));
+  }
+  promise<std::vector<FailedMutation>> res_promise;
+};
 
-  auto final = resultfm.then([](future<std::vector<FailedMutation>> f) {
-    auto failures = f.get();
+future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut,
+                                                          CompletionQueue& cq) {
+  AsyncBulkApplyCb cb;
+  future<std::vector<FailedMutation>> resultfm = cb.res_promise.get_future();
+  impl_.AsyncBulkApply(cq, std::move(cb), std::move(mut));
 
-    for (auto const& failed : failures) {
-      std::cerr << "Mutation " << failed.original_index() << " failed with"
-                << failed.status().message() << " [" << failed.status().code()
-                << "]\n";
-    }
-  });
-
-  return final;
+  return resultfm;
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {

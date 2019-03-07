@@ -43,8 +43,9 @@ void AsyncCreateTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
   //! [async create table]
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {
-    google::cloud::future<google::bigtable::admin::v2::Table> future =
-        admin.AsyncCreateTable(
+    google::cloud::future<
+        google::cloud::StatusOr<google::bigtable::admin::v2::Table>>
+        future = admin.AsyncCreateTable(
             cq, table_id,
             google::cloud::bigtable::TableConfig(
                 {{"fam", google::cloud::bigtable::GcRule::MaxNumVersions(10)},
@@ -53,9 +54,15 @@ void AsyncCreateTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
                 {}));
 
     auto final = future.then(
-        [](google::cloud::future<google::bigtable::admin::v2::Table> f) {
+        [](google::cloud::future<
+            google::cloud::StatusOr<google::bigtable::admin::v2::Table>>
+               f) {
           auto table = f.get();
-          std::cout << "Table created as " << table.name() << "\n";
+          if (!table) {
+            throw std::runtime_error(table.status().message());
+          }
+          std::cout << "Table created as " << table->name() << "\n";
+          return google::cloud::Status();
         });
     final.get();  // block to keep sample small and correct.
   }
@@ -72,21 +79,28 @@ void AsyncGetTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
   //! [async get table]
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {
-    google::cloud::future<google::bigtable::admin::v2::Table> future =
-        admin.AsyncGetTable(cq, table_id,
-                            google::bigtable::admin::v2::Table::FULL);
+    google::cloud::future<
+        google::cloud::StatusOr<google::bigtable::admin::v2::Table>>
+        future = admin.AsyncGetTable(cq, table_id,
+                                     google::bigtable::admin::v2::Table::FULL);
 
     auto final = future.then(
-        [](google::cloud::future<google::bigtable::admin::v2::Table> f) {
+        [](google::cloud::future<
+            google::cloud::StatusOr<google::bigtable::admin::v2::Table>>
+               f) {
           auto table = f.get();
-          std::cout << table.name() << "\n";
-          for (auto const& family : table.column_families()) {
+          if (!table) {
+            throw std::runtime_error(table.status().message());
+          }
+          std::cout << table->name() << "\n";
+          for (auto const& family : table->column_families()) {
             std::string const& family_name = family.first;
             std::string gc_rule;
             google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
                                                         &gc_rule);
             std::cout << "\t" << family_name << "\t\t" << gc_rule << "\n";
           }
+          return google::cloud::Status();
         });
 
     final.get();
