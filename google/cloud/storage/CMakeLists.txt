@@ -159,6 +159,7 @@ add_library(storage_client
             internal/parse_rfc3339.h
             internal/parse_rfc3339.cc
             internal/patch_builder.h
+            internal/range_from_pagination.h
             internal/raw_client.h
             internal/raw_client_wrapper_utils.h
             internal/resumable_upload_session.h

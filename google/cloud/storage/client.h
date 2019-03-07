@@ -265,8 +265,13 @@ class Client {
   template <typename... Options>
   ListBucketsReader ListBucketsForProject(std::string const& project_id,
                                           Options&&... options) {
-    return ListBucketsReader(raw_client_, project_id,
-                             std::forward<Options>(options)...);
+    internal::ListBucketsRequest request(project_id);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    auto client = raw_client_;
+    return ListBucketsReader(request,
+                             [client](internal::ListBucketsRequest const& r) {
+                               return client->ListBuckets(r);
+                             });
   }
 
   /**
@@ -838,8 +843,13 @@ class Client {
   template <typename... Options>
   ListObjectsReader ListObjects(std::string const& bucket_name,
                                 Options&&... options) {
-    return ListObjectsReader(raw_client_, bucket_name,
-                             std::forward<Options>(options)...);
+    internal::ListObjectsRequest request(bucket_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    auto client = raw_client_;
+    return ListObjectsReader(request,
+                             [client](internal::ListObjectsRequest const& r) {
+                               return client->ListObjects(r);
+                             });
   }
 
   /**

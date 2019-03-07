@@ -80,7 +80,9 @@ TEST(ListObjectsReaderTest, Basic) {
       .WillOnce(Invoke(create_mock(1)))
       .WillOnce(Invoke(create_mock(2)));
 
-  ListObjectsReader reader(mock, "foo-bar-baz", Prefix("dir/"));
+  ListObjectsReader reader(
+      ListObjectsRequest("foo-bar-baz").set_multiple_options(Prefix("dir/")),
+      [mock](ListObjectsRequest const& r) { return mock->ListObjects(r); });
   std::vector<ObjectMetadata> actual;
   for (auto&& object : reader) {
     ASSERT_STATUS_OK(object);
@@ -94,7 +96,9 @@ TEST(ListObjectsReaderTest, Empty) {
   EXPECT_CALL(*mock, ListObjects(_))
       .WillOnce(Return(make_status_or(ListObjectsResponse{})));
 
-  ListObjectsReader reader(mock, "foo-bar-baz", Prefix("dir/"));
+  ListObjectsReader reader(
+      ListObjectsRequest("foo-bar-baz").set_multiple_options(Prefix("dir/")),
+      [mock](ListObjectsRequest const& r) { return mock->ListObjects(r); });
   auto count = std::distance(reader.begin(), reader.end());
   EXPECT_EQ(0U, count);
 }
@@ -127,7 +131,9 @@ TEST(ListObjectsReaderTest, PermanentFailure) {
         return StatusOr<ListObjectsResponse>(PermanentError());
       }));
 
-  ListObjectsReader reader(mock, "test-bucket");
+  ListObjectsReader reader(
+      ListObjectsRequest("test-bucket"),
+      [mock](ListObjectsRequest const& r) { return mock->ListObjects(r); });
   std::vector<ObjectMetadata> actual;
   bool has_status_or_error = false;
   for (auto&& object : reader) {
@@ -177,7 +183,9 @@ TEST(ListObjectsReaderTest, IteratorCompare) {
   EXPECT_CALL(*mock2, ListObjects(_))
       .WillOnce(Invoke(create_mock(0, page_count)));
 
-  ListObjectsReader reader1(mock1, "foo-bar-baz", Prefix("dir/"));
+  ListObjectsReader reader1(
+      ListObjectsRequest("foo-bar-baz").set_multiple_options(Prefix("dir/")),
+      [mock1](ListObjectsRequest const& r) { return mock1->ListObjects(r); });
   ListObjectsIterator a1 = reader1.begin();
   ListObjectsIterator b1 = a1;
   ListObjectsIterator e1 = reader1.end();
@@ -189,7 +197,9 @@ TEST(ListObjectsReaderTest, IteratorCompare) {
   ++b1;
   EXPECT_EQ(b1, e1);
 
-  ListObjectsReader reader2(mock2, "foo-bar-baz", Prefix("dir/"));
+  ListObjectsReader reader2(
+      ListObjectsRequest("foo-bar-baz").set_multiple_options(Prefix("dir/")),
+      [mock2](ListObjectsRequest const& r) { return mock2->ListObjects(r); });
   ListObjectsIterator a2 = reader2.begin();
 
   // Verify that iterators from different streams, even when pointing to the
