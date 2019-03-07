@@ -118,6 +118,7 @@ var searchData=
   ['storage_5fobject_5facl_5fsamples_2ecc',['storage_object_acl_samples.cc',['../storage__object__acl__samples_8cc.html',1,'']]],
   ['storage_5fobject_5fsamples_2ecc',['storage_object_samples.cc',['../storage__object__samples_8cc.html',1,'']]],
   ['storage_5fquickstart_2ecc',['storage_quickstart.cc',['../storage__quickstart_8cc.html',1,'']]],
+  ['storage_5fservice_5faccount_5fsamples_2ecc',['storage_service_account_samples.cc',['../storage__service__account__samples_8cc.html',1,'']]],
   ['storage_5fthroughput_5fbenchmark_2ecc',['storage_throughput_benchmark.cc',['../storage__throughput__benchmark_8cc.html',1,'']]],
   ['stream',['Stream',['../../common/classgoogle_1_1cloud_1_1v0_1_1Logger.html#a4b9eacec5fc783554d7ffaefd5282cd1',1,'google::cloud::v0::Logger::Stream()'],['../../common/classgoogle_1_1cloud_1_1v0_1_1Logger_3_01false_01_4.html#a5ca7d7218740aa1e526f4c119f340c43',1,'google::cloud::v0::Logger&lt; false &gt;::Stream()'],['../../common/classgoogle_1_1cloud_1_1v0_1_1Logger_3_01false_01_4.html#a5ca7d7218740aa1e526f4c119f340c43',1,'google::cloud::v0::Logger&lt; false &gt;::Stream()']]],
   ['strictidempotencypolicy',['StrictIdempotencyPolicy',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1StrictIdempotencyPolicy.html',1,'google::cloud::storage::v0::StrictIdempotencyPolicy'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1StrictIdempotencyPolicy.html#a708a6a8b4828256418b7d54a1b973f27',1,'google::cloud::storage::v0::StrictIdempotencyPolicy::StrictIdempotencyPolicy()']]],
