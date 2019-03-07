@@ -44,7 +44,7 @@ for library in bigtable_client google_cloud_cpp_common storage_client; do
   reference_file="${PROJECT_ROOT}/ci/test-abi/${old_dump_file}.gz"
   abi-dumper "${libdir}/lib${library}.so" \
       -public-headers "${includedir}" \
-      -lver "${version}" \
+      -lver "current" \
       -o "${BUILD_OUTPUT}/${new_dump_file}"
 
   # We want to collect the data for as many libraries as possible, do not exit
