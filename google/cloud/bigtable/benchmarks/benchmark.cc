@@ -268,8 +268,13 @@ BenchmarkResult Benchmark::PopulateTableShard(bigtable::Table& table,
     }
     bulk.emplace_back(std::move(mutation));
     if (++bulk_size >= kBulkSize) {
-      auto t = TimeOperation(
-          [&table, &bulk]() { table.BulkApply(std::move(bulk)); });
+      auto t = TimeOperation([&table, &bulk]() {
+        auto failures = table.BulkApply(std::move(bulk));
+        if (!failures.empty()) {
+          auto status = failures.front().status();
+          throw std::runtime_error(status.message());
+        }
+      });
       result.row_count += bulk_size;
       result.operations.emplace_back(t);
       bulk = {};
@@ -281,8 +286,13 @@ BenchmarkResult Benchmark::PopulateTableShard(bigtable::Table& table,
     }
   }
   if (bulk_size != 0) {
-    auto t =
-        TimeOperation([&table, &bulk]() { table.BulkApply(std::move(bulk)); });
+    auto t = TimeOperation([&table, &bulk]() {
+      auto failures = table.BulkApply(std::move(bulk));
+      if (!failures.empty()) {
+        auto status = failures.front().status();
+        throw std::runtime_error(status.message());
+      }
+    });
     result.row_count += bulk_size;
     result.operations.emplace_back(t);
   }

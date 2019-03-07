@@ -97,7 +97,8 @@ void DataIntegrationTest::BulkApply(bigtable::Table& table,
   for (auto& kv : mutations) {
     bulk.emplace_back(std::move(kv.second));
   }
-  table.BulkApply(std::move(bulk));
+  auto failures = table.BulkApply(std::move(bulk));
+  ASSERT_TRUE(failures.empty());
 }
 }  // anonymous namespace
 
@@ -519,7 +520,8 @@ TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
       bulk.emplace_back(std::move(mutation));
       ++rowid;
     }
-    table.BulkApply(std::move(bulk));
+    auto failures = table.BulkApply(std::move(bulk));
+    ASSERT_TRUE(failures.empty());
   }
   auto samples = table.SampleRows<std::vector>();
   ASSERT_STATUS_OK(samples);

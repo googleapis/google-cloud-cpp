@@ -19,28 +19,6 @@
 #include <thread>
 #include <type_traits>
 
-namespace {
-[[noreturn]] void ReportPermanentFailures(
-    char const* msg, grpc::Status const& status,
-    std::vector<google::cloud::bigtable::FailedMutation> failures) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  throw google::cloud::bigtable::PermanentMutationFailure(msg, status,
-                                                          std::move(failures));
-#else
-  std::cerr << msg << "\n"
-            << "Status: " << status.error_message() << " ["
-            << status.error_code() << "] - " << status.error_details() << "\n";
-  for (auto const& failed : failures) {
-    std::cerr << "Mutation " << failed.original_index() << " failed with"
-              << failed.status().message() << " [" << failed.status().code()
-              << "]\n";
-  }
-  std::cerr << "Aborting because exceptions are disabled.\n";
-  std::abort();
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-}  // namespace
-
 namespace google {
 namespace cloud {
 namespace bigtable {
@@ -77,13 +55,16 @@ future<Status> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
   return final;
 }
 
-void Table::BulkApply(BulkMutation mut) {
+std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
   grpc::Status status;
+
+  // We do not no need to check status.ok() anymore as
+  // FailedMutation class has now a google::cloud::Status member
+  // which can be accessed via status()
   std::vector<FailedMutation> failures =
       impl_.BulkApply(std::move(mut), status);
-  if (!status.ok()) {
-    ReportPermanentFailures(status.error_message().c_str(), status, failures);
-  }
+
+  return failures;
 }
 
 struct AsyncBulkApplyCb {
