@@ -76,7 +76,7 @@ install:
   # The git default is to recurse, override it because we do not need to and
   # that saves time.
   - git submodule update --init
-  - ci/install-retry.sh ci/travis/install-linux.sh >build-output/install-linux.log 2>&1
+  - travis_wait 20 /bin/sh -c "ci/install-retry.sh ci/travis/install-linux.sh >build-output/install-linux.log 2>&1"
 
 after_success:
   - ci/travis/upload-codecov.sh
