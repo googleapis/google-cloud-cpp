@@ -15,10 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLIENT_OPTIONS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLIENT_OPTIONS_H_
 
-#include "google/cloud/bigtable/internal/client_options_defaults.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/status.h"
-#include "google/cloud/status_or.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {
@@ -105,15 +103,13 @@ class ClientOptions {
     return connection_pool_name_;
   }
 
-  /// Set the size of the connection pool.
-  ClientOptions& set_connection_pool_size(std::size_t size) {
-    if (size == 0) {
-      connection_pool_size_ = BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE;
-      return *this;
-    }
-    connection_pool_size_ = size;
-    return *this;
-  }
+  /* Set the size of the connection pool.
+   *
+   * Specifying 0 for @p size will set the size of the connection pool to
+   * default.
+   */
+  ClientOptions& SetConnectionPoolSize(std::size_t size);
+
   std::size_t connection_pool_size() const { return connection_pool_size_; }
 
   /// Return the current credentials.
@@ -174,8 +170,6 @@ class ClientOptions {
    *     tick in seconds, expressed as a `std::ratio<>`), for our purposes it
    *     is simply a formal parameter.
    *
-   * @return status of the operation.
-   *
    * @see
    * [std::chrono::duration<>](http://en.cppreference.com/w/cpp/chrono/duration)
    *     for more details.
@@ -193,7 +187,8 @@ class ClientOptions {
 
     if (ft_ms.count() > std::numeric_limits<int>::max()) {
       return google::cloud::Status(google::cloud::StatusCode::kOutOfRange,
-                                   "Duration Exceeds Range for int");
+                                   "The supplied duration is larger than the "
+                                   "maximum value allowed by gRPC (INT_MAX)");
     }
     auto fallback_timeout_ms = static_cast<int>(ft_ms.count());
     channel_arguments_.SetGrpclbFallbackTimeout(fallback_timeout_ms);

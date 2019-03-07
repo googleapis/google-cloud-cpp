@@ -19,7 +19,7 @@ namespace bigtable = google::cloud::bigtable;
 
 TEST(AdminClientTest, Default) {
   auto admin_client = bigtable::CreateDefaultAdminClient(
-      "test-project", bigtable::ClientOptions().set_connection_pool_size(1));
+      "test-project", bigtable::ClientOptions().SetConnectionPoolSize(1));
   ASSERT_TRUE(admin_client);
   EXPECT_EQ("test-project", admin_client->project());
 
