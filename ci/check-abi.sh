@@ -31,7 +31,9 @@ if [ "${CHECK_ABI:-}" != "yes" ]; then
 fi
 
 exit_status=0
-for library in storage_client google_cloud_cpp_common bigtable_client; do
+# We are keeping the library list alphabetical for now, there is no preferred
+# order otherwise.
+for library in bigtable_client google_cloud_cpp_common storage_client; do
   echo
   echo "${COLOR_YELLOW}Checking ABI for ${library} library.${COLOR_RESET}"
   libdir="$(pkg-config ${library} --variable=libdir)"
