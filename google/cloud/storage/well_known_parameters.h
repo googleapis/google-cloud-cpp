@@ -15,9 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_WELL_KNOWN_PARAMETERS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_WELL_KNOWN_PARAMETERS_H_
 
+#include "google/cloud/internal/ios_flags_saver.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/storage/version.h"
 #include <cstdint>
+#include <iomanip>
 #include <string>
 
 namespace google {
@@ -54,6 +56,16 @@ std::ostream& operator<<(std::ostream& os,
   }
   return os << rhs.parameter_name() << "=<not set>";
 }
+
+template <typename P>
+std::ostream& operator<<(std::ostream& os,
+                         WellKnownParameter<P, bool> const& rhs) {
+  if (rhs.has_value()) {
+    google::cloud::internal::IosFlagsSaver saver(os);
+    return os << rhs.parameter_name() << "=" << std::boolalpha << rhs.value();
+  }
+  return os << rhs.parameter_name() << "=<not set>";
+}
 }  // namespace internal
 
 /**
@@ -66,6 +78,14 @@ struct ContentEncoding
     : public internal::WellKnownParameter<ContentEncoding, std::string> {
   using WellKnownParameter<ContentEncoding, std::string>::WellKnownParameter;
   static char const* well_known_parameter_name() { return "contentEncoding"; }
+};
+
+/**
+ * Included deleted HMAC keys in list requests.
+ */
+struct Deleted : public internal::WellKnownParameter<Deleted, bool> {
+  using WellKnownParameter<Deleted, bool>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "deleted"; }
 };
 
 /**
@@ -420,6 +440,16 @@ struct Projection
 struct QuotaUser : public internal::WellKnownParameter<QuotaUser, std::string> {
   using WellKnownParameter<QuotaUser, std::string>::WellKnownParameter;
   static char const* well_known_parameter_name() { return "quotaUser"; }
+};
+
+/**
+ * Only list HMAC keys belonging to a specific Service Account.
+ */
+struct ServiceAccountFilter
+    : public internal::WellKnownParameter<ServiceAccountFilter, std::string> {
+  using WellKnownParameter<ServiceAccountFilter,
+                           std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "serviceAccount"; }
 };
 
 /**

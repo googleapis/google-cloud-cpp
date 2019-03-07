@@ -62,6 +62,39 @@ struct CreateHmacKeyResponse {
 
 std::ostream& operator<<(std::ostream& os, CreateHmacKeyResponse const& r);
 
+/// Represents a request to call the `HmacKeys: list` API.
+class ListHmacKeysRequest
+    : public GenericRequest<ListHmacKeysRequest, Deleted, MaxResults,
+                            ServiceAccountFilter, UserProject> {
+ public:
+  explicit ListHmacKeysRequest(std::string project_id)
+      : project_id_(std::move(project_id)) {}
+
+  std::string const& project_id() const { return project_id_; }
+  std::string const& page_token() const { return page_token_; }
+  ListHmacKeysRequest& set_page_token(std::string page_token) {
+    page_token_ = std::move(page_token);
+    return *this;
+  }
+
+ private:
+  std::string project_id_;
+  std::string page_token_;
+};
+
+std::ostream& operator<<(std::ostream& os, ListHmacKeysRequest const& r);
+
+/// Represents a response to the `HmacKeys: list` API.
+struct ListHmacKeysResponse {
+  static StatusOr<ListHmacKeysResponse> FromHttpResponse(
+      HttpResponse const& response);
+
+  std::string next_page_token;
+  std::vector<HmacKeyMetadata> items;
+};
+
+std::ostream& operator<<(std::ostream& os, ListHmacKeysResponse const& r);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
