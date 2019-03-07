@@ -48,6 +48,38 @@ StatusOr<HmacKeyMetadata> HmacKeyMetadataParser::FromString(
   return FromJson(json);
 }
 
+std::ostream& operator<<(std::ostream& os, CreateHmacKeyRequest const& r) {
+  return os << "CreateHmacKeyRequest={project_id=" << r.project_id()
+            << ", service_account=" << r.service_account() << "}";
+}
+
+StatusOr<CreateHmacKeyResponse> CreateHmacKeyResponse::FromHttpResponse(
+    HttpResponse const& response) {
+  auto json =
+      storage::internal::nl::json::parse(response.payload, nullptr, false);
+  if (!json.is_object()) {
+    return Status(StatusCode::kInvalidArgument, __func__);
+  }
+
+  CreateHmacKeyResponse result;
+  result.kind = json.value("kind", "");
+  result.secret = json.value("secretKey", "");
+  if (json.count("resource") != 0) {
+    auto resource = HmacKeyMetadataParser::FromJson(json["resource"]);
+    if (!resource) {
+      return std::move(resource).status();
+    }
+    result.resource = *std::move(resource);
+  }
+  return result;
+}
+
+std::ostream& operator<<(std::ostream& os, CreateHmacKeyResponse const& r) {
+  return os << "CreateHmacKeyResponse={resource=" << r.resource
+            << ", secret=[censored]"
+            << "}";
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
