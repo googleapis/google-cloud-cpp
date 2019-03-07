@@ -64,7 +64,7 @@ TEST(ServiceAccountIntegrationTest, Get) {
   ASSERT_STATUS_OK(client_options);
   Client client_with_default(client_options->set_project_id(project_id));
   StatusOr<ServiceAccount> a2 = client_with_default.GetServiceAccount();
-  ASSERT_STATUS_OK(a1);
+  ASSERT_STATUS_OK(a2);
   EXPECT_FALSE(a2->email_address().empty());
 
   EXPECT_EQ(*a1, *a2);

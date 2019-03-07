@@ -2292,8 +2292,8 @@ class Client {
     if (!result) {
       return result.status();
     }
-    return std::make_pair(std::move(result.value().resource),
-                          std::move(result.value().secret));
+    return std::make_pair(std::move(result->resource),
+                          std::move(result->secret));
   }
 
   /**
