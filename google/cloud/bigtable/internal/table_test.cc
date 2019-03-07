@@ -816,7 +816,6 @@ TEST_F(NoexTableTest, BulkApplyRetryOnlyIdempotent) {
   EXPECT_FALSE(result.empty());
   EXPECT_EQ(1UL, result.size());
   EXPECT_EQ(1, result[0].original_index());
-  EXPECT_EQ("not-idempotent", result[0].mutation().row_key());
 }
 
 /// @test Verify that Table::BulkApply() works when the RPC fails.

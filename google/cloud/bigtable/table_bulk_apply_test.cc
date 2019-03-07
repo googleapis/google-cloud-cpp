@@ -258,7 +258,6 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
                             {bt::SetCell("fam", "col", "baz")})));
   EXPECT_EQ(1UL, failures.size());
   EXPECT_EQ(1, failures.front().original_index());
-  EXPECT_EQ("not-idempotent", failures.front().mutation().row_key());
   EXPECT_FALSE(failures.front().status().ok());
   EXPECT_FALSE(failures.empty());
 }

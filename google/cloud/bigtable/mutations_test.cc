@@ -149,11 +149,10 @@ TEST(MutationsTest, FailedMutation) {
   status.add_details()->PackFrom(retry);
   status.add_details()->PackFrom(debug_info);
 
-  bigtable::FailedMutation fm(std::move(mut), std::move(status), 27);
+  bigtable::FailedMutation fm(std::move(status), 27);
   EXPECT_EQ(google::cloud::StatusCode::kFailedPrecondition, fm.status().code());
   EXPECT_EQ("something failed", fm.status().message());
   EXPECT_FALSE(fm.status().message().empty());
-  EXPECT_EQ("foo", fm.mutation().row_key());
   EXPECT_EQ(27, fm.original_index());
 }
 
