@@ -378,6 +378,11 @@ TEST_P(CurlClientTest, GetServiceAccount) {
   TestCorrectFailureStatus(status_or_foo.status());
 }
 
+TEST_P(CurlClientTest, ListHmacKeyRequest) {
+  auto result = client_->ListHmacKeys(ListHmacKeysRequest("project_id"));
+  TestCorrectFailureStatus(result.status());
+}
+
 TEST_P(CurlClientTest, CreateHmacKeyRequest) {
   auto result = client_->CreateHmacKey(
       CreateHmacKeyRequest("project_id", "service-account"));

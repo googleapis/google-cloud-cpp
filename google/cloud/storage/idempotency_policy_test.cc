@@ -529,6 +529,12 @@ TEST(StrictIdempotencyPolicyTest, GetProjectServiceAccount) {
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
+TEST(StrictIdempotencyPolicyTest, ListHmacKeys) {
+  StrictIdempotencyPolicy policy;
+  internal::ListHmacKeysRequest request("test-project-id");
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
 TEST(StrictIdempotencyPolicyTest, CreateHmacKey) {
   StrictIdempotencyPolicy policy;
   internal::CreateHmacKeyRequest request("test-project-id",

@@ -147,6 +147,8 @@ class RawClient {
   //@{
   virtual StatusOr<ServiceAccount> GetServiceAccount(
       GetProjectServiceAccountRequest const&) = 0;
+  virtual StatusOr<ListHmacKeysResponse> ListHmacKeys(
+      ListHmacKeysRequest const&) = 0;
   virtual StatusOr<CreateHmacKeyResponse> CreateHmacKey(
       CreateHmacKeyRequest const&) = 0;
   //@}

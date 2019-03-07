@@ -158,6 +158,8 @@ class IdempotencyPolicy {
   virtual bool IsIdempotent(
       internal::GetProjectServiceAccountRequest const& request) const = 0;
   virtual bool IsIdempotent(
+      internal::ListHmacKeysRequest const& request) const = 0;
+  virtual bool IsIdempotent(
       internal::CreateHmacKeyRequest const& request) const = 0;
   //@}
 
@@ -282,6 +284,8 @@ class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
   bool IsIdempotent(
       internal::GetProjectServiceAccountRequest const& request) const override;
   bool IsIdempotent(
+      internal::ListHmacKeysRequest const& request) const override;
+  bool IsIdempotent(
       internal::CreateHmacKeyRequest const& request) const override;
   //@}
 
@@ -405,6 +409,8 @@ class StrictIdempotencyPolicy : public IdempotencyPolicy {
   //@{
   bool IsIdempotent(
       internal::GetProjectServiceAccountRequest const& request) const override;
+  bool IsIdempotent(
+      internal::ListHmacKeysRequest const& request) const override;
   bool IsIdempotent(
       internal::CreateHmacKeyRequest const& request) const override;
   //@}

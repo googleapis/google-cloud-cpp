@@ -998,6 +998,19 @@ StatusOr<ServiceAccount> CurlClient::GetServiceAccount(
       builder.BuildRequest().MakeRequest(std::string{}));
 }
 
+StatusOr<ListHmacKeysResponse> CurlClient::ListHmacKeys(
+    ListHmacKeysRequest const& request) {
+  CurlRequestBuilder builder(
+      storage_endpoint_ + "/projects/" + request.project_id() + "/hmacKeys",
+      storage_factory_);
+  auto status = SetupBuilder(builder, request, "GET");
+  if (!status.ok()) {
+    return status;
+  }
+  return ParseFromHttpResponse<ListHmacKeysResponse>(
+      builder.BuildRequest().MakeRequest(std::string{}));
+}
+
 StatusOr<CreateHmacKeyResponse> CurlClient::CreateHmacKey(
     CreateHmacKeyRequest const& request) {
   CurlRequestBuilder builder(
