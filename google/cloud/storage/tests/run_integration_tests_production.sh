@@ -72,4 +72,4 @@ echo "Running GCS Projects.serviceAccount integration tests."
 
 echo
 echo "Running GCS Projects.serviceAccount integration tests."
-./service_account_integration_test "${PROJECT_ID}"
+./service_account_integration_test "${PROJECT_ID}" "${SERVICE_ACCOUNT}"
