@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/status.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
 #include <gmock/gmock.h>
 #include <cstdlib>
@@ -167,7 +168,8 @@ TEST(ClientOptionsTest, DefaultConnectionPoolSize) {
 TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutMS) {
   // Test milliseconds are set properly to channel_arguments
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  client_options_object.SetGrpclbFallbackTimeout(std::chrono::milliseconds(5));
+  ASSERT_STATUS_OK(client_options_object.SetGrpclbFallbackTimeout(
+      std::chrono::milliseconds(5)));
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
   ASSERT_EQ(4UL, test_args.num_args);
@@ -184,8 +186,8 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutSec) {
   // Test seconds are converted into milliseconds
   bigtable::ClientOptions client_options_object_second =
       bigtable::ClientOptions();
-  client_options_object_second.SetGrpclbFallbackTimeout(
-      std::chrono::seconds(5));
+  ASSERT_STATUS_OK(client_options_object_second.SetGrpclbFallbackTimeout(
+      std::chrono::seconds(5)));
   grpc::ChannelArguments c_args_second =
       client_options_object_second.channel_arguments();
   grpc_channel_args test_args_second = c_args_second.c_channel_args();

@@ -174,6 +174,8 @@ class ClientOptions {
    *     tick in seconds, expressed as a `std::ratio<>`), for our purposes it
    *     is simply a formal parameter.
    *
+   * @return status of the operation.
+   *
    * @see
    * [std::chrono::duration<>](http://en.cppreference.com/w/cpp/chrono/duration)
    *     for more details.
