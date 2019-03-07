@@ -2206,7 +2206,7 @@ class Client {
    * This is a read-only operation and is always idempotent.
    *
    * @par Example
-   * @snippet storage_bucket_samples.cc get service account for project
+   * @snippet storage_service_account_samples.cc get service account for project
    *
    * @see https://cloud.google.com/iam/docs/service-accounts for general
    *     information on Google Cloud Platform service accounts.
@@ -2241,7 +2241,7 @@ class Client {
    * This is a read-only operation and is always idempotent.
    *
    * @par Example
-   * @snippet storage_bucket_samples.cc get service account
+   * @snippet storage_service_account_samples.cc get service account
    *
    * @see https://cloud.google.com/iam/docs/service-accounts for general
    *     information on Google Cloud Platform service accounts.

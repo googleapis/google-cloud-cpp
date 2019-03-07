@@ -52,3 +52,8 @@ target_link_libraries(storage_quickstart
                       storage_client
                       storage_common_options
                       google_cloud_cpp_common_options)
+
+add_executable(storage_service_account_samples
+               storage_service_account_samples.cc)
+target_link_libraries(storage_service_account_samples storage_client
+                      storage_common_options)
