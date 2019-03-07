@@ -29,6 +29,9 @@ namespace internal {
 /// Return the SHA256 hash (as raw bytes) of @p str.
 std::vector<std::uint8_t> Sha256Hash(std::string const& str);
 
+/// Return the SHA256 hash (as raw bytes) of @p bytes.
+std::vector<std::uint8_t> Sha256Hash(std::vector<std::uint8_t> const& bytes);
+
 /// Return @p bytes encoded as a lowercase hexadecimal string.
 std::string HexEncode(std::vector<std::uint8_t> const& bytes);
 

@@ -775,54 +775,6 @@ void DeleteObjectRequesterPays(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name, billed_project);
 }
 
-void GetServiceAccount(google::cloud::storage::Client client, int& argc,
-                       char* argv[]) {
-  if (argc != 1) {
-    throw Usage{"get-service-account"};
-  }
-  //! [get service account] [START storage_get_service_account]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client) {
-    StatusOr<gcs::ServiceAccount> service_account_details =
-        client.GetServiceAccount();
-
-    if (!service_account_details) {
-      throw std::runtime_error(service_account_details.status().message());
-    }
-    std::cout << "The service account details are " << *service_account_details
-              << "\n";
-  }
-  //! [get service account] [END storage_get_service_account]
-  (std::move(client));
-}
-
-void GetServiceAccountForProject(google::cloud::storage::Client client,
-                                 int& argc, char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"get-service-account-for-project <project-id>"};
-  }
-  auto project_id = ConsumeArg(argc, argv);
-  //! [get service account for project]
-  // [START storage_get_service_account_for_project]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string project_id) {
-    StatusOr<gcs::ServiceAccount> service_account_details =
-        client.GetServiceAccountForProject(project_id);
-
-    if (!service_account_details) {
-      throw std::runtime_error(service_account_details.status().message());
-    }
-
-    std::cout << "The service account details for project " << project_id
-              << " are " << *service_account_details << "\n";
-  }
-  // [END storage_get_service_account_for_project]
-  //! [get service account for project]
-  (std::move(client), project_id);
-}
-
 void GetDefaultEventBasedHold(google::cloud::storage::Client client, int& argc,
                               char* argv[]) {
   if (argc != 2) {
@@ -1133,8 +1085,6 @@ int main(int argc, char* argv[]) try {
       {"write-object-requester-pays", &WriteObjectRequesterPays},
       {"read-object-requester-pays", &ReadObjectRequesterPays},
       {"delete-object-requester-pays", &DeleteObjectRequesterPays},
-      {"get-service-account", &GetServiceAccount},
-      {"get-service-account-for-project", &GetServiceAccountForProject},
       {"get-default-event-based-hold", &GetDefaultEventBasedHold},
       {"enable-default-event-based-hold", &EnableDefaultEventBasedHold},
       {"disable-default-event-based-hold", &DisableDefaultEventBasedHold},
