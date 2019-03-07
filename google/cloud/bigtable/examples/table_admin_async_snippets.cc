@@ -59,9 +59,7 @@ void AsyncCreateTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
                f) {
           auto table = f.get();
           if (!table) {
-            std::cout << "Table creation failed with: " << table.status()
-                      << "\n";
-            return table.status();
+            throw std::runtime_error(table.status().message());
           }
           std::cout << "Table created as " << table->name() << "\n";
           return google::cloud::Status();
@@ -92,9 +90,7 @@ void AsyncGetTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
                f) {
           auto table = f.get();
           if (!table) {
-            std::cout << "Fetching table details failed with: "
-                      << table.status() << "\n";
-            return table.status();
+            throw std::runtime_error(table.status().message());
           }
           std::cout << table->name() << "\n";
           for (auto const& family : table->column_families()) {

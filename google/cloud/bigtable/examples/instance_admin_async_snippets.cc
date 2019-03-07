@@ -56,9 +56,7 @@ void AsyncGetInstance(cbt::InstanceAdmin instance_admin,
                f) {
           auto instance = f.get();
           if (!instance) {
-            std::cout << "Fetching instance details failed with: "
-                      << instance.status() << "\n";
-            return instance.status();
+            throw std::runtime_error(instance.status().message());
           }
           std::string instance_detail;
           google::protobuf::TextFormat::PrintToString(*instance,
@@ -92,9 +90,7 @@ void AsyncListInstances(cbt::InstanceAdmin instance_admin,
                f) {
           auto instance_list = f.get();
           if (!instance_list) {
-            std::cout << "Listing instances failed with: "
-                      << instance_list.status() << "\n";
-            return instance_list.status();
+            throw std::runtime_error(instance_list.status().message());
           }
           for (const auto& instance : instance_list->instances) {
             std::cout << instance.name() << "\n";
@@ -139,9 +135,7 @@ void AsyncGetCluster(cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
                f) {
           auto cluster = f.get();
           if (!cluster) {
-            std::cout << "Fetching cluster details failed with: "
-                      << cluster.status() << "\n";
-            return cluster.status();
+            throw std::runtime_error(cluster.status().message());
           }
           std::string cluster_detail;
           google::protobuf::TextFormat::PrintToString(*cluster,
@@ -175,9 +169,7 @@ void AsyncListClusters(cbt::InstanceAdmin instance_admin,
                f) {
           auto cluster_list = f.get();
           if (!cluster_list) {
-            std::cout << "Listing clusters failed with: "
-                      << cluster_list.status() << "\n";
-            return cluster_list.status();
+            throw std::runtime_error(cluster_list.status().message());
           }
           std::cout << "Cluster Name List\n";
           for (const auto& cluster : cluster_list->clusters) {
@@ -220,9 +212,7 @@ void AsyncListAllClusters(cbt::InstanceAdmin instance_admin,
                f) {
           auto cluster_list = f.get();
           if (!cluster_list) {
-            std::cout << "Listing clusters failed with: "
-                      << cluster_list.status() << "\n";
-            return cluster_list.status();
+            throw std::runtime_error(cluster_list.status().message());
           }
           std::cout << "Cluster Name List\n";
           for (const auto& cluster : cluster_list->clusters) {
