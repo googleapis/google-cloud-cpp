@@ -169,11 +169,12 @@ std::vector<FailedMutation> BulkMutator::ExtractFinalFailures() {
 
   google::cloud::Status status(google::cloud::StatusCode::kUnknown, message);
 
-  int size = pending_mutations_.mutable_entries()->size();
-  for (int idx = 0; idx != size; ++idx) {
+  int idx = 0;
+  for (auto const mutation : *pending_mutations_.mutable_entries()) {
     int original_index = pending_annotations_[idx++].original_index;
     result.emplace_back(status, original_index);
   }
+
   return result;
 }
 
