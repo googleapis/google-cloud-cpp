@@ -13,8 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/readrowsparser.h"
+#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/row.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <google/protobuf/text_format.h>
 #include <gtest/gtest.h>
 #include <numeric>
@@ -191,24 +194,28 @@ class AcceptanceTest : public ::testing::Test {
     return chunks;
   }
 
-  void FeedChunks(std::vector<ReadRowsResponse_CellChunk> chunks) {
+  google::cloud::Status FeedChunks(
+      std::vector<ReadRowsResponse_CellChunk> chunks) {
     grpc::Status status;
     for (auto const& chunk : chunks) {
       parser_.HandleChunk(chunk, status);
       if (!status.ok()) {
-        google::cloud::internal::ThrowRuntimeError(status.error_message());
+        return google::cloud::bigtable::internal::MakeStatusFromRpcError(
+            status);
       }
       if (parser_.HasNext()) {
         rows_.emplace_back(parser_.Next(status));
         if (!status.ok()) {
-          google::cloud::internal::ThrowRuntimeError(status.error_message());
+          return google::cloud::bigtable::internal::MakeStatusFromRpcError(
+              status);
         }
       }
     }
     parser_.HandleEndOfStream(status);
     if (!status.ok()) {
-      google::cloud::internal::ThrowRuntimeError(status.error_message());
+      return google::cloud::bigtable::internal::MakeStatusFromRpcError(status);
     }
+    return google::cloud::Status{};
   }
 
  private:
