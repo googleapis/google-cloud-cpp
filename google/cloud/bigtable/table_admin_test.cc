@@ -845,8 +845,8 @@ TEST_F(TableAdminTest, SnapshotTableSimple) {
       }));
 
   std::string expected_text = R"""(
-	      name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
-	)""";
+              name: 'projects/the-project/instances/the-instance/clusters/the-cluster/snapshots/random-snapshot'
+        )""";
 
   btadmin::Snapshot expected;
   ASSERT_TRUE(

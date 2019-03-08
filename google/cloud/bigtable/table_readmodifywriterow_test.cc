@@ -111,48 +111,48 @@ TEST_F(TableReadModifyWriteTest, MultipleIncrementAmountTest) {
   std::string const column_id1 = "colid1";
   std::string const column_id2 = "colid2";
   std::string const request_text = R"""(
-			table_name: "projects/foo-project/instances/bar-instance/tables/baz-table"
-			row_key: "row-key"
-			rules {
-			  family_name: "family1"
-			  column_qualifier: "colid1"
-			  increment_amount: 1000
-			}
-			rules {
-			  family_name: "family1"
-			  column_qualifier: "colid2"
-			  increment_amount: 200
-			}
-			rules {
-			  family_name: "family2"
-			  column_qualifier: "colid2"
-			  increment_amount: 400
-			}
-			)""";
+                        table_name: "projects/foo-project/instances/bar-instance/tables/baz-table"
+                        row_key: "row-key"
+                        rules {
+                          family_name: "family1"
+                          column_qualifier: "colid1"
+                          increment_amount: 1000
+                        }
+                        rules {
+                          family_name: "family1"
+                          column_qualifier: "colid2"
+                          increment_amount: 200
+                        }
+                        rules {
+                          family_name: "family2"
+                          column_qualifier: "colid2"
+                          increment_amount: 400
+                        }
+                        )""";
 
   std::string const response_text = R"""(
-			row {
-			  key: "response-row-key"
-			  families {
-			    name: "response-family1"
-			    columns {
-			      qualifier: "response-colid1"
-			      cells {
-			        value: "1200"
-			      }
-			    }
-			  }
-			  families {
-			    name: "response-family2"
-			    columns {
-			      qualifier: "response-colid2"
-			      cells {
-			        value: "400"
-			      }
-			    }
-			  }
-			}
-			)""";
+                        row {
+                          key: "response-row-key"
+                          families {
+                            name: "response-family1"
+                            columns {
+                              qualifier: "response-colid1"
+                              cells {
+                                value: "1200"
+                              }
+                            }
+                          }
+                          families {
+                            name: "response-family2"
+                            columns {
+                              qualifier: "response-colid2"
+                              cells {
+                                value: "400"
+                              }
+                            }
+                          }
+                        }
+                        )""";
 
   auto mock_read_modify_write_row =
       create_rules_lambda(request_text, response_text);
@@ -185,48 +185,48 @@ TEST_F(TableReadModifyWriteTest, MultipleMixedRuleTest) {
   std::string const column_id1 = "colid1";
   std::string const column_id2 = "colid2";
   std::string const request_text = R"""(
-			table_name: "projects/foo-project/instances/bar-instance/tables/baz-table"
-			row_key: "row-key"
-			rules {
-			  family_name: "family1"
-			  column_qualifier: "colid1"
-			  increment_amount: 1000
-			}
-			rules {
-			  family_name: "family1"
-			  column_qualifier: "colid2"
-			  append_value: "value_string"
-			}
-			rules {
-			  family_name: "family2"
-			  column_qualifier: "colid2"
-			  increment_amount: 400
-			}
-			)""";
+                        table_name: "projects/foo-project/instances/bar-instance/tables/baz-table"
+                        row_key: "row-key"
+                        rules {
+                          family_name: "family1"
+                          column_qualifier: "colid1"
+                          increment_amount: 1000
+                        }
+                        rules {
+                          family_name: "family1"
+                          column_qualifier: "colid2"
+                          append_value: "value_string"
+                        }
+                        rules {
+                          family_name: "family2"
+                          column_qualifier: "colid2"
+                          increment_amount: 400
+                        }
+                        )""";
 
   std::string const response_text = R"""(
-			row {
-			  key: "response-row-key"
-			  families {
-			    name: "response-family1"
-			    columns {
-			      qualifier: "response-colid1"
-			      cells {
-			        value: "1200"
-			      }
-			    }
-			  }
-			  families {
-			    name: "response-family2"
-			    columns {
-			      qualifier: "response-colid2"
-			      cells {
-			        value: "value_string"
-			      }
-			    }
-			  }
-			}
-			)""";
+                        row {
+                          key: "response-row-key"
+                          families {
+                            name: "response-family1"
+                            columns {
+                              qualifier: "response-colid1"
+                              cells {
+                                value: "1200"
+                              }
+                            }
+                          }
+                          families {
+                            name: "response-family2"
+                            columns {
+                              qualifier: "response-colid2"
+                              cells {
+                                value: "value_string"
+                              }
+                            }
+                          }
+                        }
+                        )""";
 
   auto mock_read_modify_write_row =
       create_rules_lambda(request_text, response_text);
