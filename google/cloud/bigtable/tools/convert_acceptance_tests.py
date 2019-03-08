@@ -15,9 +15,9 @@
 """Generate C++ unit tests from JSON acceptance tests.
 
 The Bigtable Client ReadRows acceptance tests are specified in the
-file `read-rows-acceptance-test.json` fromread-rows-acceptance-test.json
+file `read-rows-acceptance-test.json` from
 
-  https://github.com/googleapis/cloud-bigtable-client
+  https://github.com/GoogleCloudPlatform/cloud-bigtable-client
 
 This script reads the JSON test cases and writes out C++ source code
 in googletest style to run as unit tests for the ReadRows response
