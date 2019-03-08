@@ -118,11 +118,11 @@ int main(int argc, char* argv[]) try {
 
   // Create a connection to Cloud Bigtable and an object to manipulate the
   // specific table used in this demo.
-  cbt::Table table(
-      cbt::CreateDefaultDataClient(project_id, instance_id,
-                                   cbt::ClientOptions().SetConnectionPoolSize(
-                                       std::thread::hardware_concurrency())),
-      table_id);
+  cbt::Table table(cbt::CreateDefaultDataClient(
+                       project_id, instance_id,
+                       cbt::ClientOptions().set_connection_pool_size(
+                           std::thread::hardware_concurrency())),
+                   table_id);
   cbt::MutationBatcher batcher(table);
 
   // How often do we print a progress marker ('.') in the reader thread.

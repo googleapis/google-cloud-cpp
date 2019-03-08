@@ -108,7 +108,7 @@ class ClientOptions {
    * Specifying 0 for @p size will set the size of the connection pool to
    * default.
    */
-  ClientOptions& SetConnectionPoolSize(std::size_t size);
+  ClientOptions& set_connection_pool_size(std::size_t size);
 
   std::size_t connection_pool_size() const { return connection_pool_size_; }
 

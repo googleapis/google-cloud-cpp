@@ -43,7 +43,7 @@ Benchmark::Benchmark(BenchmarkSetup const& setup)
   } else {
     client_options_ = bigtable::ClientOptions();
   }
-  client_options_.SetConnectionPoolSize(
+  client_options_.set_connection_pool_size(
       static_cast<std::size_t>(setup_.thread_count()));
 }
 

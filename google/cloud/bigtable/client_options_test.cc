@@ -152,14 +152,14 @@ TEST(ClientOptionsTest, EditConnectionPoolName) {
 
 TEST(ClientOptionsTest, EditConnectionPoolSize) {
   bigtable::ClientOptions client_options_object;
-  auto& returned = client_options_object.SetConnectionPoolSize(42);
+  auto& returned = client_options_object.set_connection_pool_size(42);
   EXPECT_EQ(&returned, &client_options_object);
   EXPECT_EQ(42UL, returned.connection_pool_size());
 }
 
 TEST(ClientOptionsTest, ResetToDefaultConnectionPoolSize) {
   bigtable::ClientOptions client_options_object;
-  auto& returned = client_options_object.SetConnectionPoolSize(0);
+  auto& returned = client_options_object.set_connection_pool_size(0);
   EXPECT_EQ(&returned, &client_options_object);
   EXPECT_EQ(BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE,
             returned.connection_pool_size());
