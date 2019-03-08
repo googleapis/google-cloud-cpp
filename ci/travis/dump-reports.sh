@@ -47,6 +47,6 @@ find "${BUILD_OUTPUT}" -name 'compat_report.html' \
     -exec bash -c 'dump_report "{}"' \; 2>/dev/null || \
   echo "No ABI compability reports found."
 
-find scan-build-output/ -name 'compat_report.html' \
+find scan-build-output/ -name '*.html' \
     -exec bash -c 'dump_report "{}"' \; 2>/dev/null || \
   echo "No static analysis reports found."
