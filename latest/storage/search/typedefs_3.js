@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['iterator',['iterator',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a9159aae889feb422690db6859c2108f6',1,'google::cloud::v0::IamBindings::iterator()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#ab31328af451b194cb24b08844579daac',1,'google::cloud::storage::v0::ListBucketsReader::iterator()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsReader.html#acebd53d13f76ad782c4c76a34ff0f369',1,'google::cloud::storage::v0::ListObjectsReader::iterator()']]],
-  ['iterator_5fcategory',['iterator_category',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html#a313d4a988acdf819bf3f98cd057bc86d',1,'google::cloud::storage::v0::ListBucketsIterator::iterator_category()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsIterator.html#a0afd613517e9e8821e655f730184c800',1,'google::cloud::storage::v0::ListObjectsIterator::iterator_category()']]]
+  ['limitederrorcountretrypolicy',['LimitedErrorCountRetryPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a0162c1f831f7b500df5a1d2da0d23be4',1,'google::cloud::storage::v0']]],
+  ['limitedtimeretrypolicy',['LimitedTimeRetryPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a06fcac3a7cae1a4c981f6d1a3d0caf42',1,'google::cloud::storage::v0']]],
+  ['listbucketsiterator',['ListBucketsIterator',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a1e8ed9638757aa016985eaa4d82a847c',1,'google::cloud::storage::v0']]],
+  ['listbucketsreader',['ListBucketsReader',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a640b86aff0a1014da00f2f74cc16ee13',1,'google::cloud::storage::v0']]],
+  ['listobjectsiterator',['ListObjectsIterator',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a237937932820912eba3527dfa4f54c3d',1,'google::cloud::storage::v0']]],
+  ['listobjectsreader',['ListObjectsReader',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#ae0bfde7559ea407cfd02b1832e24d015',1,'google::cloud::storage::v0']]]
 ];

@@ -61,27 +61,18 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
 <div class="title">list_buckets_reader.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;google/cloud/storage/internal/bucket_requests.h&quot;</code><br />
+<code>#include &quot;google/cloud/storage/internal/range_from_pagination.h&quot;</code><br />
 <code>#include &quot;google/cloud/storage/internal/raw_client.h&quot;</code><br />
-<code>#include &lt;iterator&gt;</code><br />
 </div>
 <p><a href="list__buckets__reader_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html">google::cloud::storage::v0::ListBucketsIterator</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a C++ iterator for listing buckets.  <a href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html">google::cloud::storage::v0::ListBucketsReader</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the result of listing a set of Buckets.  <a href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacegoogle"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle.html">google</a></td></tr>
@@ -94,6 +85,13 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacegoogle_1_1cloud_1_1storage_1_1v0"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html">google::cloud::storage::v0</a></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud_1_1storage_1_1v0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Google Cloud Storage C++ client APIs inlined, versioned namespace. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a640b86aff0a1014da00f2f74cc16ee13"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a640b86aff0a1014da00f2f74cc16ee13">google::cloud::storage::v0::ListBucketsReader</a> = internal::PaginationRange&lt; BucketMetadata, internal::ListBucketsRequest, internal::ListBucketsResponse &gt;</td></tr>
+<tr class="separator:a640b86aff0a1014da00f2f74cc16ee13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e8ed9638757aa016985eaa4d82a847c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a1e8ed9638757aa016985eaa4d82a847c">google::cloud::storage::v0::ListBucketsIterator</a> = ListBucketsReader::iterator</td></tr>
+<tr class="separator:a1e8ed9638757aa016985eaa4d82a847c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -251,18 +251,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html">LifecycleRuleCondition</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement a wrapper for Lifecycle Conditions.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1LifecycleRuleCondition.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html">ListBucketsIterator</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a C++ iterator for listing buckets.  <a href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html">ListBucketsReader</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the result of listing a set of Buckets.  <a href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsIterator.html">ListObjectsIterator</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a C++ iterator for listing objects.  <a href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsIterator.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsReader.html">ListObjectsReader</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the result of listing a set of Objects.  <a href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsReader.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1MaxBytesRewrittenPerCall.html">MaxBytesRewrittenPerCall</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Limit the number of bytes rewritten in a <code>Objects: rewrite</code> step.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1MaxBytesRewrittenPerCall.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -358,6 +346,14 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a640b86aff0a1014da00f2f74cc16ee13"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a640b86aff0a1014da00f2f74cc16ee13">ListBucketsReader</a> = internal::PaginationRange&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a>, internal::ListBucketsRequest, internal::ListBucketsResponse &gt;</td></tr>
+<tr class="separator:a640b86aff0a1014da00f2f74cc16ee13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e8ed9638757aa016985eaa4d82a847c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a1e8ed9638757aa016985eaa4d82a847c">ListBucketsIterator</a> = ListBucketsReader::iterator</td></tr>
+<tr class="separator:a1e8ed9638757aa016985eaa4d82a847c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0bfde7559ea407cfd02b1832e24d015"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#ae0bfde7559ea407cfd02b1832e24d015">ListObjectsReader</a> = internal::PaginationRange&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a>, internal::ListObjectsRequest, internal::ListObjectsResponse &gt;</td></tr>
+<tr class="separator:ae0bfde7559ea407cfd02b1832e24d015"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a237937932820912eba3527dfa4f54c3d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a237937932820912eba3527dfa4f54c3d">ListObjectsIterator</a> = ListObjectsReader::iterator</td></tr>
+<tr class="separator:a237937932820912eba3527dfa4f54c3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acaace8f5837e18aadc16056c76b4a415"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#acaace8f5837e18aadc16056c76b4a415">RetryPolicy</a> = google::cloud::internal::RetryPolicy&lt; Status, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1internal_1_1StatusTraits.html">internal::StatusTraits</a> &gt;</td></tr>
 <tr class="memdesc:acaace8f5837e18aadc16056c76b4a415"><td class="mdescLeft">&#160;</td><td class="mdescRight">The retry policy base class.  <a href="#acaace8f5837e18aadc16056c76b4a415">More...</a><br /></td></tr>
 <tr class="separator:acaace8f5837e18aadc16056c76b4a415"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -772,6 +768,70 @@ Functions</h2></td></tr>
 <p>Keep retrying until some time has expired. </p>
 
 <p class="definition">Definition at line <a class="el" href="retry__policy_8h_source.html#l00044">44</a> of file <a class="el" href="retry__policy_8h_source.html">retry_policy.h</a>.</p>
+
+</div>
+</div>
+<a id="a1e8ed9638757aa016985eaa4d82a847c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e8ed9638757aa016985eaa4d82a847c">&#9670;&nbsp;</a></span>ListBucketsIterator</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a1e8ed9638757aa016985eaa4d82a847c">google::cloud::storage::v0::ListBucketsIterator</a> = typedef ListBucketsReader::iterator</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="list__buckets__reader_8h_source.html#l00030">30</a> of file <a class="el" href="list__buckets__reader_8h_source.html">list_buckets_reader.h</a>.</p>
+
+</div>
+</div>
+<a id="a640b86aff0a1014da00f2f74cc16ee13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a640b86aff0a1014da00f2f74cc16ee13">&#9670;&nbsp;</a></span>ListBucketsReader</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a640b86aff0a1014da00f2f74cc16ee13">google::cloud::storage::v0::ListBucketsReader</a> = typedef internal::PaginationRange&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html">BucketMetadata</a>, internal::ListBucketsRequest, internal::ListBucketsResponse&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="list__buckets__reader_8h_source.html#l00028">28</a> of file <a class="el" href="list__buckets__reader_8h_source.html">list_buckets_reader.h</a>.</p>
+
+</div>
+</div>
+<a id="a237937932820912eba3527dfa4f54c3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a237937932820912eba3527dfa4f54c3d">&#9670;&nbsp;</a></span>ListObjectsIterator</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a237937932820912eba3527dfa4f54c3d">google::cloud::storage::v0::ListObjectsIterator</a> = typedef ListObjectsReader::iterator</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="list__objects__reader_8h_source.html#l00032">32</a> of file <a class="el" href="list__objects__reader_8h_source.html">list_objects_reader.h</a>.</p>
+
+</div>
+</div>
+<a id="ae0bfde7559ea407cfd02b1832e24d015"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0bfde7559ea407cfd02b1832e24d015">&#9670;&nbsp;</a></span>ListObjectsReader</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#ae0bfde7559ea407cfd02b1832e24d015">google::cloud::storage::v0::ListObjectsReader</a> = typedef internal::PaginationRange&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html">ObjectMetadata</a>, internal::ListObjectsRequest, internal::ListObjectsResponse&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="list__objects__reader_8h_source.html#l00030">30</a> of file <a class="el" href="list__objects__reader_8h_source.html">list_objects_reader.h</a>.</p>
 
 </div>
 </div>

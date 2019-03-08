@@ -1,7 +1,7 @@
 var searchData=
 [
   ['backendcount',['BackendCount',['../../common/classgoogle_1_1cloud_1_1v0_1_1LogSink.html#ab169b4a4e7920707757787142c4bda02',1,'google::cloud::v0::LogSink']]],
-  ['begin',['begin',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#aee6bb90a41aa973e37f6d69d81147c1c',1,'google::cloud::v0::IamBindings::begin()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsReader.html#a6bad7171015ee092d9a124b39139c167',1,'google::cloud::storage::v0::ListBucketsReader::begin()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsReader.html#a6444af24857f5dbcdaafe9a14e76c3ab',1,'google::cloud::storage::v0::ListObjectsReader::begin()']]],
+  ['begin',['begin',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#aee6bb90a41aa973e37f6d69d81147c1c',1,'google::cloud::v0::IamBindings']]],
   ['billing',['billing',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a2f2d0d920e3d3dccb3df90aeded87bf8',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['billing_5fas_5foptional',['billing_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#afc8037964e65062725a81bbe255af263',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['bindings',['bindings',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a494c1f66c64993db2b79c92c2f601660',1,'google::cloud::v0::IamBindings']]],

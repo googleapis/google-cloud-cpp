@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pointer',['pointer',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html#ac56ddab96f5448d6fe0682dd467dcf8b',1,'google::cloud::storage::v0::ListBucketsIterator::pointer()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsIterator.html#a7fd5490bd41105af653c80c3c25691cb',1,'google::cloud::storage::v0::ListObjectsIterator::pointer()']]]
+  ['shared_5fstate_5ftype',['shared_state_type',['../../common/classgoogle_1_1cloud_1_1v0_1_1future.html#aeefec768087538e0caa46d1311400765',1,'google::cloud::v0::future::shared_state_type()'],['../../common/classgoogle_1_1cloud_1_1v0_1_1future_3_01void_01_4.html#a991ff47d781b2f3be663c4207c49816c',1,'google::cloud::v0::future&lt; void &gt;::shared_state_type()']]]
 ];

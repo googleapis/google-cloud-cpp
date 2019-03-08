@@ -18,7 +18,6 @@ var searchData=
   ['deleteobjectacl',['DeleteObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ab93ee8017989e9c40ef58491558f353f',1,'google::cloud::storage::v0::Client']]],
   ['destinationkmskeyname',['DestinationKmsKeyName',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1DestinationKmsKeyName.html',1,'google::cloud::storage::v0']]],
   ['destinationpredefinedacl',['DestinationPredefinedAcl',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1DestinationPredefinedAcl.html',1,'google::cloud::storage::v0']]],
-  ['difference_5ftype',['difference_type',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListBucketsIterator.html#af21904ef1be5aebef06119e40c9ee11a',1,'google::cloud::storage::v0::ListBucketsIterator::difference_type()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ListObjectsIterator.html#af4c343b713957dfe7784cf2ffa94e729',1,'google::cloud::storage::v0::ListObjectsIterator::difference_type()']]],
   ['disable_5fversioning',['disable_versioning',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a34b65c5ba1bfad8408aa145f96b78ec0',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['disablecrc32cchecksum',['DisableCrc32cChecksum',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1DisableCrc32cChecksum.html',1,'google::cloud::storage::v0']]],
   ['disablemd5hash',['DisableMD5Hash',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1DisableMD5Hash.html',1,'google::cloud::storage::v0']]],
