@@ -49,15 +49,14 @@ void AppCode(Bucket b, FixedArgument1 foo, FixedArgument2 bar) {
 
 **Consequences**: The advantages of this approach include:
 
-- It is easier to use parameters in an API, it does not require to create a new
-  bucket or object or client handle just for changing the parameters in one
-  request.
+-   It is easier to use parameters in an API, it does not require to create a
+    new bucket or object or client handle just for changing the parameters in
+    one request.
 
 The downsides include:
 
-- All APIs become templates, we should be careful not to create massive header
-  files that are slow to compile.
-- It is harder to overload APIs.
-- It is not clear how other optional parameters of the APIs, such as timeouts,
-  fit with this structure.
- 
+-   All APIs become templates, we should be careful not to create massive header
+    files that are slow to compile.
+-   It is harder to overload APIs.
+-   It is not clear how other optional parameters of the APIs, such as timeouts,
+    fit with this structure.

@@ -25,9 +25,9 @@ post-increment *semantics* are needed.
 
 ## Where to put `const`
 
-Put the const on the right of what it modifies, as in `std::string const&`.
-This simplifies the rules for const making it *always* modify what is on its
-left. This is sometimes referred to as ["east const"][east-const-link].
+Put the const on the right of what it modifies, as in `std::string const&`. This
+simplifies the rules for const making it *always* modify what is on its left.
+This is sometimes referred to as ["east const"][east-const-link].
 
 [link to GSG's section on using const](https://google.github.io/styleguide/cppguide.html#Use_of_const)
 
@@ -51,18 +51,19 @@ string const & str;  // BAD
 
 ## Enumerator Names
 
-Enumerators (for both scoped and unscoped enums) should be named like: `ENUM_NAME`.
+Enumerators (for both scoped and unscoped enums) should be named like:
+`ENUM_NAME`.
 
 [link to GSG's section on enumerator names](https://google.github.io/styleguide/cppguide.html#Enumerator_Names)
 
 ## Order of Includes
 
 Order includes from local to global to minimize implicit dependencies between
-headers. That is, start with the `.h` file that corresponds to the current
-`.cc` file (also do this for the corresonding unit test file), followed by
-other `.h` files from the same project, followed by includes from external
-projects, followed by C++ standard library headers, followed by C system
-headers. For example:
+headers. That is, start with the `.h` file that corresponds to the current `.cc`
+file (also do this for the corresonding unit test file), followed by other `.h`
+files from the same project, followed by includes from external projects,
+followed by C++ standard library headers, followed by C system headers. For
+example:
 
 ```C++
 // Within the file google/cloud/x/foo.cc
@@ -102,7 +103,8 @@ Every file should contain license boilerplate, for new files use:
 // limitations under the License.
 ```
 
-where `YYYY` is the year when the file is being introduced. Do not change existing files boilerplate.
+where `YYYY` is the year when the file is being introduced. Do not change
+existing files boilerplate.
 
 ## Doxygen Comments
 

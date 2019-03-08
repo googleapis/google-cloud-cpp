@@ -12,8 +12,8 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 [![Kokoro CI status][kokoro-centos-7-shield]][kokoro-centos-7-link]
 [![Codecov Coverage status][codecov-shield]][codecov-link]
 
-- [Google Cloud Platform Documentation][cloud-platform-docs]
-- [Client Library Documentation][client-library-docs]
+-   [Google Cloud Platform Documentation][cloud-platform-docs]
+-   [Client Library Documentation][client-library-docs]
 
 [travis-shield]: https://img.shields.io/travis/googleapis/google-cloud-cpp/master.svg?label=travis
 [travis-link]: https://travis-ci.com/googleapis/google-cloud-cpp/builds
@@ -40,32 +40,32 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 This library supports the following Google Cloud Platform services with clients
 at the [Beta](#versioning) quality level:
 
-- [Google Cloud Bigtable](google/cloud/bigtable/README.md#readme)
-- [Google Cloud Storage](google/cloud/storage/README.md#readme)
+-   [Google Cloud Bigtable](google/cloud/bigtable/README.md#readme)
+-   [Google Cloud Storage](google/cloud/storage/README.md#readme)
 
 ## Table of Contents
 
-- [Requirements](#requirements)
-  - [Compiler](#compiler)
-  - [Build Tools](#build-tools)
-  - [Libraries](#libraries)
-  - [Tests](#tests)
-- [Install Dependencies](#install-dependencies)
-  - [CentOS (7)](#centos-7)
-  - [Debian (Stretch)](#debian-stretch)
-  - [Fedora (29)](#fedora-29)
-  - [OpenSuSE (Tumbleweed)](#opensuse-tumbleweed)
-  - [OpenSuSE (Leap)](#opensuse-leap)
-  - [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804---bionic-beaver)
-  - [Ubuntu (16.04 - Xenial Xerus)](#ubuntu-1604---xenial-xerus)
-  - [Ubuntu (14.04 - Trusty Tahr)](#ubuntu-1404---trusty-tahr)
-  - [macOS (using brew)](#macos-using-brew)
-  - [Windows](#windows-using-vcpkg)
-- [Build](#build)
-  - [Linux](#linux)
-  - [macOS](#macOS)
-  - [Windows](#windows)
-- [Install](#install)
+-   [Requirements](#requirements)
+    -   [Compiler](#compiler)
+    -   [Build Tools](#build-tools)
+    -   [Libraries](#libraries)
+    -   [Tests](#tests)
+-   [Install Dependencies](#install-dependencies)
+    -   [CentOS (7)](#centos-7)
+    -   [Debian (Stretch)](#debian-stretch)
+    -   [Fedora (29)](#fedora-29)
+    -   [OpenSuSE (Tumbleweed)](#opensuse-tumbleweed)
+    -   [OpenSuSE (Leap)](#opensuse-leap)
+    -   [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804---bionic-beaver)
+    -   [Ubuntu (16.04 - Xenial Xerus)](#ubuntu-1604---xenial-xerus)
+    -   [Ubuntu (14.04 - Trusty Tahr)](#ubuntu-1404---trusty-tahr)
+    -   [macOS (using brew)](#macos-using-brew)
+    -   [Windows](#windows-using-vcpkg)
+-   [Build](#build)
+    -   [Linux](#linux)
+    -   [macOS](#macOS)
+    -   [Windows](#windows)
+-   [Install](#install)
 
 ## Requirements
 
@@ -73,23 +73,23 @@ at the [Beta](#versioning) quality level:
 
 The Google Cloud C++ libraries are tested with the following compilers:
 
-| Compiler    | Minimum Version |
-| ----------- | --------------- |
-| GCC         | 4.8 |
-| Clang       | 3.8 |
-| MSVC++      | 14.1 |
-| Apple Clang | 8.1 |
+Compiler    | Minimum Version
+----------- | ---------------
+GCC         | 4.8
+Clang       | 3.8
+MSVC++      | 14.1
+Apple Clang | 8.1
 
 #### Build Tools
 
 The Google Cloud C++ Client Libraries can be built with
-[CMake](https://cmake.org) or [Bazel](https://bazel.io).  The minimal versions
-of these tools we test with are:
+[CMake](https://cmake.org) or [Bazel](https://bazel.io). The minimal versions of
+these tools we test with are:
 
-| Tool       | Minimum Version |
-| ---------- | --------------- |
-| CMake      | 3.5 |
-| Bazel      | 0.20.0 |
+Tool  | Minimum Version
+----- | ---------------
+CMake | 3.5
+Bazel | 0.20.0
 
 #### Libraries
 
@@ -97,10 +97,10 @@ The libraries also depend on gRPC, libcurl, and the dependencies of those
 libraries. The Google Cloud C++ Client libraries are tested with the following
 versions of these dependencies:
 
-| Library | Minimum version |
-| ------- | --------------- |
-| gRPC    | v1.17.x |
-| libcurl | 7.47.0  |
+Library | Minimum version
+------- | ---------------
+gRPC    | v1.17.x
+libcurl | 7.47.0
 
 #### Tests
 
@@ -247,11 +247,11 @@ make -j $(nproc)
 sudo make install
 ```
 
-Note that by default OpenSSL installs itself in `/usr/local/ssl`. Installing
-on a more conventional location, such as `/usr/local` or `/usr`, can break
-many programs in your system. OpenSSL 1.0.2 is actually incompatible with
-with OpenSSL 1.0.0 which is the version expected by the programs already
-installed by Ubuntu 14.04.
+Note that by default OpenSSL installs itself in `/usr/local/ssl`. Installing on
+a more conventional location, such as `/usr/local` or `/usr`, can break many
+programs in your system. OpenSSL 1.0.2 is actually incompatible with with
+OpenSSL 1.0.0 which is the version expected by the programs already installed by
+Ubuntu 14.04.
 
 In any case, as the library installs itself in this non-standard location, we
 also need to configure CMake and other build program to find this version of
@@ -305,7 +305,8 @@ cmake --build build-output -- -j 4
 (cd build-output && ctest --output-on-failure)
 ```
 
-You will find compiled binaries in `build-output/` respective to their source paths.
+You will find compiled binaries in `build-output/` respective to their source
+paths.
 
 #### macOS
 
@@ -322,7 +323,8 @@ cmake --build build-output -- -j 4
 (cd build-output && ctest --output-on-failure)
 ```
 
-You will find compiled binaries in `build-output/` respective to their source paths.
+You will find compiled binaries in `build-output/` respective to their source
+paths.
 
 #### Windows
 
@@ -362,7 +364,7 @@ Use `vcpkg` to download and install `google-cloud-cpp`'s dependencies:
 
 ```console
 .\vcpkg.exe install openssl:x64-windows-static ^
-    grpc:x64-windows-static ^ 
+    grpc:x64-windows-static ^
     curl:x64-windows-static ^
     gtest:x64-windows-static ^
     crc32c:x64-windows-static
@@ -410,14 +412,14 @@ cd build-output
 ctest --output-on-failure
 ```
 
-You will find compiled binaries in `build-output\` respective to their
-source directories.
+You will find compiled binaries in `build-output\` respective to their source
+directories.
 
 ### Install
 
-By default `google-cloud-cpp` downloads and compiles all its dependencies.
-The default configuration disables the `install` target, because the version of
-the dependencies downloaded by `google-cloud-cpp` may conflict with the versions
+By default `google-cloud-cpp` downloads and compiles all its dependencies. The
+default configuration disables the `install` target, because the version of the
+dependencies downloaded by `google-cloud-cpp` may conflict with the versions
 already installed in your system, or with the versions you want to use for
 development.
 
@@ -427,8 +429,8 @@ it.
 
 Installing the dependencies themselves may be as simple as using the package
 manager for your platform, or may require manually downloading, compiling, and
-installing said dependencies.  The [INSTALL.md](INSTALL.md) file describes how
-to successfully install `google-cloud-cpp` on several platforms.
+installing said dependencies. The [INSTALL.md](INSTALL.md) file describes how to
+successfully install `google-cloud-cpp` on several platforms.
 
 ## Versioning
 
@@ -438,8 +440,8 @@ backwards-incompatible changes at any time.
 
 **GA**: Libraries defined at a GA quality level are expected to be stable and
 all updates in the libraries are guaranteed to be backwards-compatible. Any
-backwards-incompatible changes will lead to the major version increment
-(1.x.y -> 2.0.0).
+backwards-incompatible changes will lead to the major version increment (1.x.y
+-> 2.0.0).
 
 **Beta**: Libraries defined at a Beta quality level are expected to be mostly
 stable and we're working towards their release candidate. We will address issues
@@ -459,4 +461,3 @@ properly format your code.
 ## Licensing
 
 Apache 2.0; see [`LICENSE`](LICENSE) for details.
-

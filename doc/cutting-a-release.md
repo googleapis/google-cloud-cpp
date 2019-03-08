@@ -1,8 +1,8 @@
 # Creating a new release of google-cloud-cpp
 
-Unless there are no changes, we create releases for `google-cloud-cpp` every
-4 weeks, or if there is a major announcement or change to the status of one
-of the libraries (like reaching the "Alpha" or "Beta" milestone).
+Unless there are no changes, we create releases for `google-cloud-cpp` every 4
+weeks, or if there is a major announcement or change to the status of one of the
+libraries (like reaching the "Alpha" or "Beta" milestone).
 
 The intended audience of this document are developers in the `google-cloud-cpp`
 project that need to create a new release. The audience is expected to be
@@ -11,13 +11,13 @@ familiar with the project itself, [git][git-docs], [GitHub][github-guides],
 
 ## Preparing for a release
 
-First you should collect and update the release notes for the project. Prepare
-a pull request (PR) with the necessary changes to the README files in each
+First you should collect and update the release notes for the project. Prepare a
+pull request (PR) with the necessary changes to the README files in each
 project.
 
-Assuming you are working on your own fork of the `google-cloud-cpp` project,
-and `upstream` points to the `googleapis/google-cloud-cpp` remote,
-these commands should be useful in identifying important changes:
+Assuming you are working on your own fork of the `google-cloud-cpp` project, and
+`upstream` points to the `googleapis/google-cloud-cpp` remote, these commands
+should be useful in identifying important changes:
 
 ```bash
 # Summarize the output of this into google/cloud/bigtable/README.md
@@ -105,8 +105,8 @@ git checkout gh-pages
 git pull
 ```
 
-Change the value of the meta tag's `URL=` parameter to refer to the
-`index.html` file in the directory matching the new release version number.
+Change the value of the meta tag's `URL=` parameter to refer to the `index.html`
+file in the directory matching the new release version number.
 
 ```
 git commit -am "Update documentation to ${RELEASE}"
@@ -119,22 +119,21 @@ the instructions above. You may now remove this directory.
 ## Bump the version numbers in `master`
 
 Working in your fork of `gooogle-cloud-cpp`: bump the version numbers to the
-*next* version (i.e., one version past the release you just did above), and
-send the PR for review against `master`. For an example, look at
+*next* version (i.e., one version past the release you just did above), and send
+the PR for review against `master`. For an example, look at
 [#1962](https://github.com/googleapis/google-cloud-cpp/pull/1962)
 
 ## Create a pre-release tag
 
 Create a pre-release using
-[GitHub](https://github.com/googleapis/google-cloud-cpp/releases/new).
-Make sure you reference the `v0.N.x` branch, set a tag name like `v0.N.0-pre1`,
-and check the `pre-release` checkbox.
+[GitHub](https://github.com/googleapis/google-cloud-cpp/releases/new). Make sure
+you reference the `v0.N.x` branch, set a tag name like `v0.N.0-pre1`, and check
+the `pre-release` checkbox.
 
 Copy the relevant release notes into the description of the release.
 
-After you create the release, capture the SHA256 checksums of the
-tarball and zip files, and edit the notes to include them. These
-commands might be handy:
+After you create the release, capture the SHA256 checksums of the tarball and
+zip files, and edit the notes to include them. These commands might be handy:
 
 ```bash
 TAG=v0.6.0-pre1 # change this to the actual pre-release tag
@@ -144,8 +143,8 @@ wget -q -O - https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.zip |
 
 ## Have the pre-release tag reviewed
 
-Talk to your colleagues, make sure the pre-release tag looks Okay. There are
-(at the moment), no tests beyond the CI build for the branch.
+Talk to your colleagues, make sure the pre-release tag looks Okay. There are (at
+the moment), no tests beyond the CI build for the branch.
 
 If there are any changes to the code in the branch you need to create a new
 pre-release, and iterate until you are satisfied with the code.
@@ -155,8 +154,8 @@ pre-release, and iterate until you are satisfied with the code.
 Edit the pre-release, change the name, change the tag, uncheck the pre-release
 checkbox and publish.
 
-After you publish, remember to update the SHA256 sums, they change, as
-the tarball and zip files include the tag as part of the file paths.
+After you publish, remember to update the SHA256 sums, they change, as the
+tarball and zip files include the tag as part of the file paths.
 
 ```sh
 TAG=v0.6.0 # change this to the actual release tag
@@ -172,20 +171,21 @@ release branch naming conventions may require you to change these settings.
 Please note that we use more strict settings for release branches than for
 `master`, in particular:
 
-* We require at least one review, but stale reviews are dismissed.
-* The `Require status checks to pass before merging` option is set.
-  This prevents merges into the release branches that break the build.
-  * The `Require branches to be up to date before merging` sub-option
-    is set. This prevents two merges that do not conflict, but nevertheless
-    break if both are pushed, to actually merge.
-  * The `Kokoro Ubuntu`, `Kokoro Windows`, `cla/google`, and
-    `continuous-integration/travis-ci` checks are required to pass.
+*   We require at least one review, but stale reviews are dismissed.
+*   The `Require status checks to pass before merging` option is set. This
+    prevents merges into the release branches that break the build.
 
-* The `Include administrators` checkbox is turned on, we want to stop ourselves
-  from making mistakes.
+    *   The `Require branches to be up to date before merging` sub-option is
+        set. This prevents two merges that do not conflict, but nevertheless
+        break if both are pushed, to actually merge.
+    *   The `Kokoro Ubuntu`, `Kokoro Windows`, `cla/google`, and
+        `continuous-integration/travis-ci` checks are required to pass.
 
-* Turn on the `Restrict who can push to matching branches`. Only Google team
-  members should be pushing to release branches.
+*   The `Include administrators` checkbox is turned on, we want to stop
+    ourselves from making mistakes.
+
+*   Turn on the `Restrict who can push to matching branches`. Only Google team
+    members should be pushing to release branches.
 
 [git-docs]: https://git-scm.com/doc
 [github-guides]: https://guides.github.com/

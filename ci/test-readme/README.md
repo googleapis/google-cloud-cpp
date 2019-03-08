@@ -9,9 +9,9 @@ they install development tools, such as code formatters, and drivers for the
 integration tests. The instructions in the README and INSTALL files are intended
 to be minimal and to the point.
 
-Verifying these instructions manually is very tedious, instead, we use
-Docker as a scripting language to execute these instructions, and then
-automatically reformat the "script" as markdown.
+Verifying these instructions manually is very tedious, instead, we use Docker as
+a scripting language to execute these instructions, and then automatically
+reformat the "script" as markdown.
 
 ## HOWTO: Generate the INSTALL.md file.
 

@@ -7,9 +7,9 @@ Install the dependencies needed for your distribution. The top-level
 to compile `google-cloud-cpp`. But for active development you may want to
 install additional tools to run the unit and integration tests.
 
-These instructions will describe how to install these tools for
-Ubuntu 18.04 (Bionic Beaver). For other distributions you may consult the
-Dockerfile used by the integration tests. For example, 
+These instructions will describe how to install these tools for Ubuntu 18.04
+(Bionic Beaver). For other distributions you may consult the Dockerfile used by
+the integration tests. For example,
 [Dockerfile.ubuntu](../ci/travis/Dockerfile.ubuntu), or
 [Dockerfile.fedora](../ci/travis/Dockerfile.fedora).
 
@@ -41,8 +41,8 @@ sudo chmod 755 /usr/bin/buildifier
 
 Install cmake_format to automatically format the CMake list files. We pin this
 tool to a specific version because the formatting changes when the "latest"
-version is updated, and we do not want the builds to break just
-because some third party changed something.
+version is updated, and we do not want the builds to break just because some
+third party changed something.
 
 ```console
 sudo apt install -y python python-pip
@@ -62,10 +62,9 @@ Add the pip directory to your PATH:
 export PATH=$PATH:$HOME/.local/bin
 ```
 
-You need to install the Google Cloud SDK. These instructions work for a GCE
-VM, but you may need to adapt them for your environment. Check the instructions
-on the
-[Google Cloud SDK website](https://cloud.google.com/sdk/) for alternatives.
+You need to install the Google Cloud SDK. These instructions work for a GCE VM,
+but you may need to adapt them for your environment. Check the instructions on
+the [Google Cloud SDK website](https://cloud.google.com/sdk/) for alternatives.
 
 ```console
 wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-233.0.0-linux-x86_64.tar.gz
@@ -78,8 +77,8 @@ $HOME/google-cloud-sdk/bin/gcloud --quiet components install cbt bigtable
 
 ### Clone and compile `google-cloud-cpp`
 
-You may need to create a new key pair to connect to GitHub.  Search the web
-for how to do this.  Then you can clone the code:
+You may need to create a new key pair to connect to GitHub. Search the web for
+how to do this. Then you can clone the code:
 
 ```console
 cd $HOME
@@ -91,7 +90,7 @@ git submodule update --init
 And compile the code using:
 
 ```console
-cmake -H. -B.build 
+cmake -H. -B.build
 cmake --build .build -- -j $(nproc)
 ```
 
@@ -119,14 +118,14 @@ env -C .build \
 ### Installing Docker
 
 You may want to [install Docker](https://docs.docker.com/engine/installation/),
-this will allow you to use the build scripts to test on multiple platforms,
-as described in [CONTRIBUTING.md](../CONTRIBUTING.md).
+this will allow you to use the build scripts to test on multiple platforms, as
+described in [CONTRIBUTING.md](../CONTRIBUTING.md).
 
 ## Windows
 
-If you mainly use Windows as your development environment, you need to install
-a number of tools.  We use [Chocolatey](https://www.chocolatey.com) to drive the
-installation, so you would need to install it first.  This needs to be executed
+If you mainly use Windows as your development environment, you need to install a
+number of tools. We use [Chocolatey](https://www.chocolatey.com) to drive the
+installation, so you would need to install it first. This needs to be executed
 in a `cmd.exe` shell, running as the `Administrator`:
 
 ```console
@@ -134,17 +133,17 @@ in a `cmd.exe` shell, running as the `Administrator`:
 (New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 ```
 
-Then you can install the dependencies in the same shell:
-```console
+Then you can install the dependencies in the same shell: ```console
+
 > choco install -y cmake git cmake.portable activeperl ninja golang yasm putty
-> choco install -y visualstudio2017community visualstudio2017-workload-nativedesktop microsoft-build-tools
-```
+> choco install -y visualstudio2017community
+> visualstudio2017-workload-nativedesktop microsoft-build-tools ```
 
 ### Connecting to GitHub with PuTTY
 
-This short recipe is offered to setup your SSH keys quickly using PuTTY.  If
-you prefer another SSH client for Windows, please search the Internet for a
-tutorial on how to configure it.
+This short recipe is offered to setup your SSH keys quickly using PuTTY. If you
+prefer another SSH client for Windows, please search the Internet for a tutorial
+on how to configure it.
 
 First, generate a private/public key pair with `puttygen`:
 
@@ -177,11 +176,10 @@ and do not forget to setup the `GIT_SSH` environment variable:
 
 ### Download and compile `vcpkg`
 
-The previous installation should create a
-`Developer Command Prompt for VS 2017` entry in your "Windows" menu, use that
-entry to create a new shell.
-In that shell, install `vcpkg` the Microsoft-supported ports for many Open
-Source projects:
+The previous installation should create a `Developer Command Prompt for VS 2017`
+entry in your "Windows" menu, use that entry to create a new shell. In that
+shell, install `vcpkg` the Microsoft-supported ports for many Open Source
+projects:
 
 ```console
 > cd \Users\%USERNAME%
@@ -200,8 +198,8 @@ installing `google-cloud-cpp` itself:
 
 ### Clone and compile `google-cloud-cpp`
 
-You may need to create a new key pair to connect to GitHub.  Search the web
-for how to do this.  Then you can clone the code:
+You may need to create a new key pair to connect to GitHub. Search the web for
+how to do this. Then you can clone the code:
 
 ```console
 > cd \Users\%USERNAME%
@@ -341,7 +339,7 @@ Reset the password for your account:
 $ gcloud compute --project "${PROJECT_ID}" reset-windows-password --zone "${ZONE}" "${VM}"
 ```
 
-Save that password in some kind of password manager.  Then connect to the VM
-using your favorite RDP client.  The Google Cloud Compute Engine
+Save that password in some kind of password manager. Then connect to the VM
+using your favorite RDP client. The Google Cloud Compute Engine
 [documentation](https://cloud.google.com/compute/docs/quickstart-windows)
 suggests some third-party clients that may be useful.

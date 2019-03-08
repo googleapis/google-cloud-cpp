@@ -1,5 +1,5 @@
 Answering these questions before submitting your bug report will help us give
-you a quicker answer.  Thank you!
+you a quicker answer. Thank you!
 
 If one or more of these questions are not applicable, feel free to remove them.
 
@@ -7,16 +7,16 @@ If one or more of these questions are not applicable, feel free to remove them.
 
 If the problem is with the service exposed by the `google-cloud-cpp` APIs
 instead of the client libraries you may consider opening a support request
-instead.  The `google-cloud-cpp` developers cannot help you troubleshoot
-problems with the service itself.
+instead. The `google-cloud-cpp` developers cannot help you troubleshoot problems
+with the service itself.
 
 ### What component of `google-cloud-cpp` is this related to?
 
 Remove the ones that do not apply.
 
-- Cloud Bigtable.
-- Cloud Storage (under development).
-- Cloud Firestore (commnunity supported).
+-   Cloud Bigtable.
+-   Cloud Storage (under development).
+-   Cloud Firestore (commnunity supported).
 
 ### What version of `google-cloud-cpp` are you using?
 

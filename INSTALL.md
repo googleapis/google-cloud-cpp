@@ -11,8 +11,8 @@ This document provides instructions to install the dependencies of
 google-cloud-cpp.
 
 **If** all the dependencies of `google-cloud-cpp` are installed and provide
-CMake support files, then compiling and installing the libraries
-requires two commands:
+CMake support files, then compiling and installing the libraries requires two
+commands:
 
 ```bash
 cmake -H. -Bbuild-output-for-install \
@@ -20,20 +20,22 @@ cmake -H. -Bbuild-output-for-install \
 cmake --build build-output-for-install --target install
 ```
 
-Unfortunately getting your system to this state may require multiple steps,
-the following sections describe how to install `google-cloud-cpp` on several
+Unfortunately getting your system to this state may require multiple steps, the
+following sections describe how to install `google-cloud-cpp` on several
 platforms.
 
 ### Required Libraries
 
 `google-cloud-cpp` directly depends on the following libraries:
 
-| Library | Minimum version | Description |
-| ------- | --------------: | ----------- |
-| gRPC    | 1.17.x | gRPC++ for Cloud Bigtable |
-| libcurl | 7.47.0  | HTTP client library for the Google Cloud Storage client |
-| crc32c  | 1.0.6 | Hardware-accelerated CRC32C implementation |
-| OpenSSL | 1.0.2 | Crypto functions for Google Cloud Storage authentication |
+| Library | Minimum version | Description                                      |
+| ------- | --------------: | ------------------------------------------------ |
+| gRPC    | 1.17.x          | gRPC++ for Cloud Bigtable                        |
+| libcurl | 7.47.0          | HTTP client library for the Google Cloud Storage |
+:         :                 : client                                           :
+| crc32c  | 1.0.6           | Hardware-accelerated CRC32C implementation       |
+| OpenSSL | 1.0.2           | Crypto functions for Google Cloud Storage        |
+:         :                 : authentication                                   :
 
 Note that these libraries may also depend on other libraries. The following
 instructions include steps to install these indirect dependencies too.
@@ -46,14 +48,14 @@ these dependencies.
 
 ## Table of Contents
 
-- [Fedora 29](#fedora-29)
-- [openSUSE (Tumbleweed)](#opensuse-tumbleweed)
-- [openSUSE (Leap)](#opensuse-leap)
-- [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804---bionic-beaver)
-- [Ubuntu (16.04 - Xenial Xerus)](#ubuntu-1604---xenial-xerus)
-- [Ubuntu (16.04 - Trusty Tahr)](#ubuntu-1404---trusty-tahr)
-- [Debian (Stretch)](#debian-stretch)
-- [CentOS 7](#centos-7)
+-   [Fedora 29](#fedora-29)
+-   [openSUSE (Tumbleweed)](#opensuse-tumbleweed)
+-   [openSUSE (Leap)](#opensuse-leap)
+-   [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804---bionic-beaver)
+-   [Ubuntu (16.04 - Xenial Xerus)](#ubuntu-1604---xenial-xerus)
+-   [Ubuntu (16.04 - Trusty Tahr)](#ubuntu-1404---trusty-tahr)
+-   [Debian (Stretch)](#debian-stretch)
+-   [CentOS 7](#centos-7)
 
 ### Fedora (29)
 
@@ -65,8 +67,8 @@ sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig zlib-devel
 ```
 
 Fedora includes packages for gRPC, libcurl, and OpenSSL that are recent enough
-for `google-cloud-cpp`. Install these packages and additional development
-tools to compile the dependencies:
+for `google-cloud-cpp`. Install these packages and additional development tools
+to compile the dependencies:
 
 ```bash
 sudo dnf makecache && \
@@ -96,8 +98,8 @@ sudo ldconfig
 
 #### google-cloud-cpp
 
-We can now compile and install `google-cloud-cpp`. Note that we use
-`pkg-config` to discover the options for gRPC and protobuf:
+We can now compile and install `google-cloud-cpp`. Note that we use `pkg-config`
+to discover the options for gRPC and protobuf:
 
 ```bash
 cd $HOME/google-cloud-cpp
@@ -111,7 +113,6 @@ cd $HOME/google-cloud-cpp/build-output
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
-
 
 ### OpenSUSE (Tumbleweed)
 
@@ -153,8 +154,8 @@ sudo ldconfig
 
 #### google-cloud-cpp
 
-We can now compile and install `google-cloud-cpp`. Note that we use
-`pkg-config` to discover the options for gRPC and protobuf:
+We can now compile and install `google-cloud-cpp`. Note that we use `pkg-config`
+to discover the options for gRPC and protobuf:
 
 ```bash
 cd $HOME/google-cloud-cpp
@@ -168,7 +169,6 @@ cd $HOME/google-cloud-cpp/build-output
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
-
 
 ### OpenSUSE (Leap)
 
@@ -222,9 +222,8 @@ sudo ldconfig
 
 #### c-ares
 
-Recent versions of gRPC require c-ares >= 1.11, while OpenSUSE Leap
-distributes c-ares-1.9. We need some additional development tools to compile
-this library:
+Recent versions of gRPC require c-ares >= 1.11, while OpenSUSE Leap distributes
+c-ares-1.9. We need some additional development tools to compile this library:
 
 ```bash
 sudo zypper refresh && \
@@ -271,8 +270,8 @@ sudo ldconfig
 
 #### google-cloud-cpp
 
-We can now compile and install `google-cloud-cpp`. Note that we use
-`pkg-config` to discover the options for gRPC and protobuf:
+We can now compile and install `google-cloud-cpp`. Note that we use `pkg-config`
+to discover the options for gRPC and protobuf:
 
 ```bash
 cd $HOME/google-cloud-cpp
@@ -286,7 +285,6 @@ cd $HOME/google-cloud-cpp/build-output
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
-
 
 ### Ubuntu (18.04 - Bionic Beaver)
 
@@ -371,7 +369,6 @@ ctest --output-on-failure
 sudo cmake --build . --target install
 ```
 
-
 ### Ubuntu (16.04 - Xenial Xerus)
 
 Install the minimal development tools:
@@ -425,17 +422,15 @@ sudo ldconfig
 
 #### c-ares
 
-Recent versions of gRPC require c-ares >= 1.11, while Ubuntu-16.04
-distributes c-ares-1.10. We need some additional development tools to compile
-this library:
+Recent versions of gRPC require c-ares >= 1.11, while Ubuntu-16.04 distributes
+c-ares-1.10. We need some additional development tools to compile this library:
 
 ```bash
 sudo apt update && \
 sudo apt install -y automake libtool
 ```
 
-After installing these tools we can manually install a newer version
-of c-ares:
+After installing these tools we can manually install a newer version of c-ares:
 
 ```bash
 cd $HOME/Downloads
@@ -479,7 +474,6 @@ ctest --output-on-failure
 sudo cmake --build . --target install
 ```
 
-
 ### Ubuntu (14.04 - Trusty Tahr)
 
 Install the minimal development tools.
@@ -506,11 +500,11 @@ make -j $(nproc)
 sudo make install
 ```
 
-Note that by default OpenSSL installs itself in `/usr/local/ssl`. Installing
-on a more conventional location, such as `/usr/local` or `/usr`, can break
-many programs in your system. OpenSSL 1.0.2 is actually incompatible with
-with OpenSSL 1.0.0 which is the version expected by the programs already
-installed by Ubuntu 14.04.
+Note that by default OpenSSL installs itself in `/usr/local/ssl`. Installing on
+a more conventional location, such as `/usr/local` or `/usr`, can break many
+programs in your system. OpenSSL 1.0.2 is actually incompatible with with
+OpenSSL 1.0.0 which is the version expected by the programs already installed by
+Ubuntu 14.04.
 
 In any case, as the library installs itself in this non-standard location, we
 also need to configure CMake and other build program to find this version of
@@ -579,17 +573,15 @@ sudo ldconfig
 
 #### c-ares
 
-Recent versions of gRPC require c-ares >= 1.11, while Ubuntu-16.04
-distributes c-ares-1.10. We need some additional development tools to compile
-this library:
+Recent versions of gRPC require c-ares >= 1.11, while Ubuntu-16.04 distributes
+c-ares-1.10. We need some additional development tools to compile this library:
 
 ```bash
 sudo apt update && \
 sudo apt install -y automake libtool
 ```
 
-After installing these tools we can manually install a newer version
-of c-ares:
+After installing these tools we can manually install a newer version of c-ares:
 
 ```bash
 cd $HOME/Downloads
@@ -617,8 +609,8 @@ sudo make install
 
 #### google-cloud-cpp
 
-We can now compile and install `google-cloud-cpp`. Note that we use
-`pkg-config` to discover the options for gRPC and protobuf:
+We can now compile and install `google-cloud-cpp`. Note that we use `pkg-config`
+to discover the options for gRPC and protobuf:
 
 ```bash
 echo
@@ -637,7 +629,6 @@ cd $HOME/google-cloud-cpp/build-output
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
-
 
 ### Debian (Stretch)
 
@@ -730,7 +721,6 @@ ctest --output-on-failure
 sudo cmake --build . --target install
 ```
 
-
 ### CentOS (7)
 
 First install the development tools and OpenSSL.
@@ -789,8 +779,8 @@ sudo ldconfig
 
 #### c-ares
 
-Recent versions of gRPC require c-ares >= 1.11, while CentOS-7
-distributes c-ares-1.10. Manually install a newer version:
+Recent versions of gRPC require c-ares >= 1.11, while CentOS-7 distributes
+c-ares-1.10. Manually install a newer version:
 
 ```bash
 cd $HOME/Downloads
@@ -835,4 +825,3 @@ cd $HOME/Downloads/google-cloud-cpp/build-output
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
-
