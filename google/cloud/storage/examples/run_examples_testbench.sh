@@ -30,6 +30,7 @@ start_testbench
 # can use the same testbench.
 readonly PROJECT_ID="fake-project-$(date +%s)-${RANDOM}"
 readonly BUCKET_NAME="fake-bucket-$(date +%s)-${RANDOM}"
+readonly BUCKET_PREFIX="fake-prefix-$(date +%s)-${RANDOM}"
 readonly DESTINATION_BUCKET_NAME="destination-bucket-$(date +%s)-${RANDOM}"
 readonly TOPIC_NAME="fake-topic-$(date +%s)-${RANDOM}"
 readonly STORAGE_CMEK_KEY="projects/${PROJECT_ID}/locations/global/keyRings/fake-key-ring/cryptoKeys/fake-key"
