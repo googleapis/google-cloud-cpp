@@ -50,6 +50,8 @@ var searchData=
   ['createdefaultclient',['CreateDefaultClient',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a89f22db73c8d5362079084d8ba4f8792',1,'google::cloud::storage::v0::Client']]],
   ['createdefaultclientoptions',['CreateDefaultClientOptions',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a204d6f78e533f249df9368ddc2f3f3ef',1,'google::cloud::storage::v0::ClientOptions']]],
   ['createdefaultobjectacl',['CreateDefaultObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a09ed1d2b39a52815637e9cf9747a60a8',1,'google::cloud::storage::v0::Client']]],
+  ['createhmackey',['CreateHmacKey',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a4da657c9f7342a62ea537bf67f204060',1,'google::cloud::storage::v0::Client']]],
+  ['createhmackeyforproject',['CreateHmacKeyForProject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a62a8e4725c2c08cef2070161115d3a69',1,'google::cloud::storage::v0::Client']]],
   ['createkeyfromgenerator',['CreateKeyFromGenerator',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#abca1cce326f7aa9912580588c4517e70',1,'google::cloud::storage::v0']]],
   ['createnotification',['CreateNotification',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a8a7ff9cf88d5e91d27c17e3e0def9e47',1,'google::cloud::storage::v0::Client']]],
   ['createobjectacl',['CreateObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#af40ca462c1c93310c96f35ebf20e9fe7',1,'google::cloud::storage::v0::Client']]],
