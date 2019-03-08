@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_OPTIONS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_OPTIONS_H_
 
-#include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include <memory>
 

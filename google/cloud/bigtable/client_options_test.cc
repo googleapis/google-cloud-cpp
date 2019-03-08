@@ -13,7 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/client_options.h"
+#include "google/cloud/bigtable/internal/client_options_defaults.h"
 #include "google/cloud/internal/setenv.h"
+#include "google/cloud/status.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
 #include <gmock/gmock.h>
 #include <cstdlib>
@@ -154,21 +157,19 @@ TEST(ClientOptionsTest, EditConnectionPoolSize) {
   EXPECT_EQ(42UL, returned.connection_pool_size());
 }
 
-TEST(ClientOptionsTest, InvalidConnectionPoolSize) {
+TEST(ClientOptionsTest, ResetToDefaultConnectionPoolSize) {
   bigtable::ClientOptions client_options_object;
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(client_options_object.set_connection_pool_size(0),
-               std::range_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(client_options_object.set_connection_pool_size(0),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto& returned = client_options_object.set_connection_pool_size(0);
+  EXPECT_EQ(&returned, &client_options_object);
+  EXPECT_EQ(BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE,
+            returned.connection_pool_size());
 }
 
 TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutMS) {
   // Test milliseconds are set properly to channel_arguments
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  client_options_object.SetGrpclbFallbackTimeout(std::chrono::milliseconds(5));
+  ASSERT_STATUS_OK(client_options_object.SetGrpclbFallbackTimeout(
+      std::chrono::milliseconds(5)));
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
   grpc_channel_args test_args = c_args.c_channel_args();
   ASSERT_EQ(4UL, test_args.num_args);
@@ -185,8 +186,8 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutSec) {
   // Test seconds are converted into milliseconds
   bigtable::ClientOptions client_options_object_second =
       bigtable::ClientOptions();
-  client_options_object_second.SetGrpclbFallbackTimeout(
-      std::chrono::seconds(5));
+  ASSERT_STATUS_OK(client_options_object_second.SetGrpclbFallbackTimeout(
+      std::chrono::seconds(5)));
   grpc::ChannelArguments c_args_second =
       client_options_object_second.channel_arguments();
   grpc_channel_args test_args_second = c_args_second.c_channel_args();
@@ -195,17 +196,16 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutSec) {
             grpc::string(test_args_second.args[3].key));
 }
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutException) {
-  // Test if fallback_timeout exceeds int range then throw out_of_range
-  // exception
+  // Test if fallback_timeout exceeds int range and StatusCode
+  // matches kOutOfRange
   bigtable::ClientOptions client_options_object_third =
       bigtable::ClientOptions();
-  EXPECT_THROW(client_options_object_third.SetGrpclbFallbackTimeout(
-                   std::chrono::hours(999)),
-               std::range_error);
+  EXPECT_EQ(client_options_object_third
+                .SetGrpclbFallbackTimeout(std::chrono::hours(999))
+                .code(),
+            google::cloud::StatusCode::kOutOfRange);
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 TEST(ClientOptionsTest, SetCompressionAlgorithm) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();

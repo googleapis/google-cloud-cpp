@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLIENT_OPTIONS_H_
 
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/status.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {
@@ -103,15 +103,13 @@ class ClientOptions {
     return connection_pool_name_;
   }
 
-  /// Set the size of the connection pool.
-  ClientOptions& set_connection_pool_size(std::size_t size) {
-    if (size == 0) {
-      google::cloud::internal::ThrowRangeError(
-          "ClientOptions::set_connection_pool_size requires size > 0");
-    }
-    connection_pool_size_ = size;
-    return *this;
-  }
+  /* Set the size of the connection pool.
+   *
+   * Specifying 0 for @p size will set the size of the connection pool to
+   * default.
+   */
+  ClientOptions& set_connection_pool_size(std::size_t size);
+
   std::size_t connection_pool_size() const { return connection_pool_size_; }
 
   /// Return the current credentials.
@@ -152,11 +150,6 @@ class ClientOptions {
    * Set the grpclb fallback timeout with the timestamp @p fallback_timeout
    * for the channel.
    *
-   * @throws std::range_error if the @p fallback_timeout parameter is too large.
-   *     Currently gRPC uses `int` to represent the timeout, and it is expressed
-   *     in milliseconds. Therefore, the maximum timeout is about 50 days on
-   *     platforms where `int` is a 32-bit number.
-   *
    * For example:
    *
    * @code
@@ -187,17 +180,19 @@ class ClientOptions {
    *
    */
   template <typename Rep, typename Period>
-  void SetGrpclbFallbackTimeout(
+  google::cloud::Status SetGrpclbFallbackTimeout(
       std::chrono::duration<Rep, Period> fallback_timeout) {
     std::chrono::milliseconds ft_ms =
         std::chrono::duration_cast<std::chrono::milliseconds>(fallback_timeout);
 
     if (ft_ms.count() > std::numeric_limits<int>::max()) {
-      google::cloud::internal::ThrowRangeError(
-          "Duration Exceeds Range for int");
+      return google::cloud::Status(google::cloud::StatusCode::kOutOfRange,
+                                   "The supplied duration is larger than the "
+                                   "maximum value allowed by gRPC (INT_MAX)");
     }
     auto fallback_timeout_ms = static_cast<int>(ft_ms.count());
     channel_arguments_.SetGrpclbFallbackTimeout(fallback_timeout_ms);
+    return google::cloud::Status();
   }
 
   /**
