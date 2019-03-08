@@ -24,9 +24,7 @@ source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 HAS_REPORTS=0
 
 # If w3m is installed there is nothing to do.
-if type w3m >/dev/null 2>&1; then
-  /bin/true
-else
+if ! type w3m >/dev/null 2>&1; then
   # Try to install a HTML renderer, if this fails the script will exit.
   # Note that this runs on the Travis VM, under Ubuntu, so the command
   # to install things is well-known:
