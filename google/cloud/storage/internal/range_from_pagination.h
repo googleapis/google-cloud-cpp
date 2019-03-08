@@ -62,19 +62,23 @@ class PaginationIterator {
 
   friend bool operator==(PaginationIterator const& lhs,
                          PaginationIterator const& rhs) {
-    // All end iterators are equal.
-    if (lhs.owner_ == nullptr) {
-      return rhs.owner_ == nullptr;
-    }
     // Iterators on different streams are always different.
     if (lhs.owner_ != rhs.owner_) {
       return false;
     }
+    // All end iterators are equal.
+    if (lhs.owner_ == nullptr) {
+      return true;
+    }
     // Iterators on the same stream are equal if they point to the same object.
     if (lhs.value_.ok() && rhs.value_.ok()) {
-      return lhs.value_.value() == rhs.value_.value();
+      return *lhs.value_ == *rhs.value_;
     }
-    return lhs.value_.status() == rhs.value_.status();
+    // If one is an error and the other is not then they must be different,
+    // because only one iterator per range can have an error status. For the
+    // same reason, if both have an error they both are pointing to the same
+    // element.
+    return lhs.value_.ok() == rhs.value_.ok();
   }
 
   friend bool operator!=(PaginationIterator const& lhs,
@@ -138,7 +142,7 @@ class PaginationRange {
         "Cannot iterating past the end of ListObjectReader");
     if (current_page_.end() == current_) {
       if (on_last_page_) {
-        return iterator(nullptr, StatusOr<T>(past_the_end_error));
+        return iterator(nullptr, past_the_end_error);
       }
       request_.set_page_token(std::move(next_page_token_));
       auto response = next_page_loader_(request_);
