@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/override_default_project.h"
 #include <iosfwd>
 
 namespace google {
@@ -33,18 +34,21 @@ struct HmacKeyMetadataParser {
 };
 
 /// Represents a request to create a call the `HmacKeys: insert` API.
-class CreateHmacKeyRequest : public GenericRequest<CreateHmacKeyRequest> {
+class CreateHmacKeyRequest
+    : public GenericRequest<CreateHmacKeyRequest, OverrideDefaultProject> {
  public:
   CreateHmacKeyRequest() = default;
   CreateHmacKeyRequest(std::string project_id, std::string service_account)
-      : project_id_(std::move(project_id)),
-        service_account_(std::move(service_account)) {}
+      : service_account_(std::move(service_account)) {
+    set_option(OverrideDefaultProject(std::move(project_id)));
+  }
 
-  std::string const& project_id() const { return project_id_; }
+  std::string project_id() const {
+    return GetOption<OverrideDefaultProject>().value();
+  }
   std::string const& service_account() const { return service_account_; }
 
  private:
-  std::string project_id_;
   std::string service_account_;
 };
 
@@ -65,12 +69,16 @@ std::ostream& operator<<(std::ostream& os, CreateHmacKeyResponse const& r);
 /// Represents a request to call the `HmacKeys: list` API.
 class ListHmacKeysRequest
     : public GenericRequest<ListHmacKeysRequest, Deleted, MaxResults,
-                            ServiceAccountFilter, UserProject> {
+                            OverrideDefaultProject, ServiceAccountFilter,
+                            UserProject> {
  public:
-  explicit ListHmacKeysRequest(std::string project_id)
-      : project_id_(std::move(project_id)) {}
+  explicit ListHmacKeysRequest(std::string project_id) {
+    set_option(OverrideDefaultProject(std::move(project_id)));
+  }
 
-  std::string const& project_id() const { return project_id_; }
+  std::string project_id() const {
+    return GetOption<OverrideDefaultProject>().value();
+  }
   std::string const& page_token() const { return page_token_; }
   ListHmacKeysRequest& set_page_token(std::string page_token) {
     page_token_ = std::move(page_token);
@@ -78,7 +86,6 @@ class ListHmacKeysRequest
   }
 
  private:
-  std::string project_id_;
   std::string page_token_;
 };
 

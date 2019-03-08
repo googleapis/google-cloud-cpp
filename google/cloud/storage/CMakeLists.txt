@@ -208,6 +208,7 @@ add_library(storage_client
             object_rewriter.cc
             object_stream.h
             object_stream.cc
+            override_default_project.h
             retry_policy.h
             service_account.h
             service_account.cc
