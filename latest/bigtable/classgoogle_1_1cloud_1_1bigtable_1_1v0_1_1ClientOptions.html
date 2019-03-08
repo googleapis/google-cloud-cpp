@@ -103,9 +103,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4ff88219eba1498f2d570c7f1d4ccfdf"><td class="memItemLeft" align="right" valign="top">std::string const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#a4ff88219eba1498f2d570c7f1d4ccfdf">connection_pool_name</a> () const</td></tr>
 <tr class="memdesc:a4ff88219eba1498f2d570c7f1d4ccfdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the name of the connection pool.  <a href="#a4ff88219eba1498f2d570c7f1d4ccfdf">More...</a><br /></td></tr>
 <tr class="separator:a4ff88219eba1498f2d570c7f1d4ccfdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92468ce1727ea5c1619515713361d6d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html">ClientOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#a92468ce1727ea5c1619515713361d6d9">set_connection_pool_size</a> (std::size_t size)</td></tr>
-<tr class="memdesc:a92468ce1727ea5c1619515713361d6d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the size of the connection pool.  <a href="#a92468ce1727ea5c1619515713361d6d9">More...</a><br /></td></tr>
-<tr class="separator:a92468ce1727ea5c1619515713361d6d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af19d9cfd84099eb38d05926223617a09"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html">ClientOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#af19d9cfd84099eb38d05926223617a09">set_connection_pool_size</a> (std::size_t size)</td></tr>
+<tr class="separator:af19d9cfd84099eb38d05926223617a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae8980b3ed9b22795ee04ab8bde9d574"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#aae8980b3ed9b22795ee04ab8bde9d574">connection_pool_size</a> () const</td></tr>
 <tr class="separator:aae8980b3ed9b22795ee04ab8bde9d574"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec5e9af53b551e2118ebbb170ba51f9f"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; grpc::ChannelCredentials &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#aec5e9af53b551e2118ebbb170ba51f9f">credentials</a> () const</td></tr>
@@ -122,10 +121,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7b983a96130ccfd167a268b2ee936c38"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#a7b983a96130ccfd167a268b2ee936c38">SetCompressionAlgorithm</a> (grpc_compression_algorithm algorithm)</td></tr>
 <tr class="memdesc:a7b983a96130ccfd167a268b2ee936c38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set compression algorithm for channel.  <a href="#a7b983a96130ccfd167a268b2ee936c38">More...</a><br /></td></tr>
 <tr class="separator:a7b983a96130ccfd167a268b2ee936c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7f098a4a64680ec85b4ebc6468542cc"><td class="memTemplParams" colspan="2">template&lt;typename Rep , typename Period &gt; </td></tr>
-<tr class="memitem:ac7f098a4a64680ec85b4ebc6468542cc"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#ac7f098a4a64680ec85b4ebc6468542cc">SetGrpclbFallbackTimeout</a> (std::chrono::duration&lt; Rep, Period &gt; fallback_timeout)</td></tr>
-<tr class="memdesc:ac7f098a4a64680ec85b4ebc6468542cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the grpclb fallback timeout with the timestamp <code>fallback_timeout</code> for the channel.  <a href="#ac7f098a4a64680ec85b4ebc6468542cc">More...</a><br /></td></tr>
-<tr class="separator:ac7f098a4a64680ec85b4ebc6468542cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbd156f399c7554d17bcd858c03a057c"><td class="memTemplParams" colspan="2">template&lt;typename Rep , typename Period &gt; </td></tr>
+<tr class="memitem:acbd156f399c7554d17bcd858c03a057c"><td class="memTemplItemLeft" align="right" valign="top">google::cloud::Status&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#acbd156f399c7554d17bcd858c03a057c">SetGrpclbFallbackTimeout</a> (std::chrono::duration&lt; Rep, Period &gt; fallback_timeout)</td></tr>
+<tr class="memdesc:acbd156f399c7554d17bcd858c03a057c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the grpclb fallback timeout with the timestamp <code>fallback_timeout</code> for the channel.  <a href="#acbd156f399c7554d17bcd858c03a057c">More...</a><br /></td></tr>
+<tr class="separator:acbd156f399c7554d17bcd858c03a057c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4aa0f7a1e3e6be1cff7ea25266d1c54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#ab4aa0f7a1e3e6be1cff7ea25266d1c54">SetUserAgentPrefix</a> (grpc::string const &amp;user_agent_prefix)</td></tr>
 <tr class="memdesc:ab4aa0f7a1e3e6be1cff7ea25266d1c54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the string to prepend to the user agent.  <a href="#ab4aa0f7a1e3e6be1cff7ea25266d1c54">More...</a><br /></td></tr>
 <tr class="separator:ab4aa0f7a1e3e6be1cff7ea25266d1c54"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -286,7 +285,7 @@ The <a href="https://cloud.google.com/bigtable/docs/emulator">documentation</a> 
 
 <p>Access all the channel arguments. </p>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00128">128</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00126">126</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
@@ -342,7 +341,7 @@ The <a href="https://cloud.google.com/bigtable/docs/emulator">documentation</a> 
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00115">115</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00113">113</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
@@ -371,7 +370,7 @@ The <a href="https://cloud.google.com/bigtable/docs/emulator">documentation</a> 
 
 <p>Return the current credentials. </p>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00118">118</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00116">116</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
@@ -458,7 +457,7 @@ The <a href="https://cloud.google.com/bigtable/docs/emulator">documentation</a> 
 
 <p>Set all the channel arguments. </p>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00133">133</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00131">131</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
@@ -493,33 +492,23 @@ The <a href="https://cloud.google.com/bigtable/docs/emulator">documentation</a> 
 
 </div>
 </div>
-<a id="a92468ce1727ea5c1619515713361d6d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92468ce1727ea5c1619515713361d6d9">&#9670;&nbsp;</a></span>set_connection_pool_size()</h2>
+<a id="af19d9cfd84099eb38d05926223617a09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af19d9cfd84099eb38d05926223617a09">&#9670;&nbsp;</a></span>set_connection_pool_size()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html">ClientOptions</a>&amp; google::cloud::bigtable::v0::ClientOptions::set_connection_pool_size </td>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html">ClientOptions</a> &amp; google::cloud::bigtable::v0::ClientOptions::set_connection_pool_size </td>
           <td>(</td>
           <td class="paramtype">std::size_t&#160;</td>
           <td class="paramname"><em>size</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Set the size of the connection pool. </p>
-
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00107">107</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00075">75</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
 
 </div>
 </div>
@@ -578,7 +567,7 @@ The <a href="https://cloud.google.com/bigtable/docs/emulator">documentation</a> 
 <p>Set compression algorithm for channel. </p>
 <p>Please see the docs for grpc::ChannelArguments::SetCompressionAlgorithm() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00147">147</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00145">145</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
@@ -606,12 +595,12 @@ The <a href="https://cloud.google.com/bigtable/docs/emulator">documentation</a> 
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00121">121</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00119">119</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
-<a id="ac7f098a4a64680ec85b4ebc6468542cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7f098a4a64680ec85b4ebc6468542cc">&#9670;&nbsp;</a></span>SetGrpclbFallbackTimeout()</h2>
+<a id="acbd156f399c7554d17bcd858c03a057c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbd156f399c7554d17bcd858c03a057c">&#9670;&nbsp;</a></span>SetGrpclbFallbackTimeout()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -622,7 +611,7 @@ template&lt;typename Rep , typename Period &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void google::cloud::bigtable::v0::ClientOptions::SetGrpclbFallbackTimeout </td>
+          <td class="memname">google::cloud::Status google::cloud::bigtable::v0::ClientOptions::SetGrpclbFallbackTimeout </td>
           <td>(</td>
           <td class="paramtype">std::chrono::duration&lt; Rep, Period &gt;&#160;</td>
           <td class="paramname"><em>fallback_timeout</em></td><td>)</td>
@@ -637,14 +626,8 @@ template&lt;typename Rep , typename Period &gt; </div>
 </div><div class="memdoc">
 
 <p>Set the grpclb fallback timeout with the timestamp <code>fallback_timeout</code> for the channel. </p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::range_error</td><td>if the <code>fallback_timeout</code> parameter is too large. Currently gRPC uses <code>int</code> to represent the timeout, and it is expressed in milliseconds. Therefore, the maximum timeout is about 50 days on platforms where <code>int</code> is a 32-bit number.</td></tr>
-  </table>
-  </dd>
-</dl>
 <p>For example:</p>
-<div class="fragment"><div class="line">bigtable::ClientOptions::SetGrpclbFallbackTimeout(</div><div class="line">    std::chrono::milliseconds(5000))</div><div class="line">bigtable::<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#ab6b2cc130d68ec3fbd770ffff9eb1d83">ClientOptions</a>::<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#ac7f098a4a64680ec85b4ebc6468542cc">SetGrpclbFallbackTimeout</a>(</div><div class="line">    <a class="code" href="namespacestd.html">std</a>::chrono::seconds(5))</div></div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
+<div class="fragment"><div class="line">bigtable::ClientOptions::SetGrpclbFallbackTimeout(</div><div class="line">    std::chrono::milliseconds(5000))</div><div class="line">bigtable::<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#ab6b2cc130d68ec3fbd770ffff9eb1d83">ClientOptions</a>::<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#acbd156f399c7554d17bcd858c03a057c">SetGrpclbFallbackTimeout</a>(</div><div class="line">    <a class="code" href="namespacestd.html">std</a>::chrono::seconds(5))</div></div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Rep</td><td>a placeholder to match the Rep tparam for <code>fallback_timeout</code>, the semantics of this template parameter are documented in <code>std::chrono::duration&lt;&gt;</code> (in brief, the underlying arithmetic type used to store the number of ticks), for our purposes it is simply a formal parameter. </td></tr>
     <tr><td class="paramname">Period</td><td>a placeholder to match the Period tparam for <code>fallback_timeout</code>, the semantics of this template parameter are documented in <code>std::chrono::duration&lt;&gt;</code> (in brief, the length of the tick in seconds, expressed as a <code>std::ratio&lt;&gt;</code>), for our purposes it is simply a formal parameter.</td></tr>
@@ -654,7 +637,7 @@ template&lt;typename Rep , typename Period &gt; </div>
 <dl class="section see"><dt>See also</dt><dd><a href="http://en.cppreference.com/w/cpp/chrono/duration">std::chrono::duration&lt;&gt;</a> for more details.</dd></dl>
 <p>Please see the docs for grpc::ChannelArguments::SetGrpclbFallbackTimeout() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00190">190</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00183">183</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
@@ -685,7 +668,7 @@ template&lt;typename Rep , typename Period &gt; </div>
 <p>Set LB policy name. </p>
 <p>Please see the docs for grpc::ChannelArguments::SetLoadBalancingPolicyName() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00260">260</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00255">255</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
@@ -717,7 +700,7 @@ template&lt;typename Rep , typename Period &gt; </div>
 <p>-1 means unlimited.</p>
 <p>Please see the docs for grpc::ChannelArguments::SetMaxReceiveMessageSize() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00235">235</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00230">230</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
@@ -749,7 +732,7 @@ template&lt;typename Rep , typename Period &gt; </div>
 <p>-1 means unlimited.</p>
 <p>Please see the docs for grpc::ChannelArguments::SetMaxSendMessageSize() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00247">247</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00242">242</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
@@ -780,7 +763,7 @@ template&lt;typename Rep , typename Period &gt; </div>
 <p>Set the buffer pool to be attached to the constructed channel. </p>
 <p>Please see the docs for grpc::ChannelArguments::SetResourceQuota() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00223">223</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00218">218</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
@@ -811,7 +794,7 @@ template&lt;typename Rep , typename Period &gt; </div>
 <p>Set service config in JSON form. </p>
 <p>Please see the docs for grpc::ChannelArguments::SetServiceConfigJSON() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00272">272</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00267">267</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
@@ -842,7 +825,7 @@ template&lt;typename Rep , typename Period &gt; </div>
 <p>Set target name override for SSL host name checking. </p>
 <p>Please see the docs for grpc::ChannelArguments::SetSslTargetNameOverride() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00284">284</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00279">279</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
@@ -873,7 +856,7 @@ template&lt;typename Rep , typename Period &gt; </div>
 <p>Set the string to prepend to the user agent. </p>
 <p>Please see the docs for grpc::ChannelArguments::SetUserAgentPrefix() on <a href="https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html">https://grpc.io/grpc/cpp/classgrpc_1_1_channel_arguments.html</a> for more details. </p>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00211">211</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00206">206</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
@@ -902,7 +885,7 @@ template&lt;typename Rep , typename Period &gt; </div>
 
 <p>Return the user agent prefix used by the library. </p>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00074">74</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00084">84</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
 
 </div>
 </div>
@@ -927,7 +910,7 @@ template&lt;typename Rep , typename Period &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00294">294</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00289">289</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
@@ -953,7 +936,7 @@ template&lt;typename Rep , typename Period &gt; </div>
 
 <p>Return the current endpoint for instance admin RPCs. </p>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00293">293</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00288">288</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
