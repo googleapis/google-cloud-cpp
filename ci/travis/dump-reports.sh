@@ -44,9 +44,9 @@ export -f dump_report
 # are copied into the scan-build-output directory by the build-docker.sh script.
 
 find "${BUILD_OUTPUT}" -name 'compat_report.html' \
-    -exec bash -c 'dump_report "{}"' \; 2>/dev/null || \
+    -exec bash -c "dump_report '{}'" \; 2>/dev/null || \
   echo "No ABI compability reports found."
 
 find scan-build-output/ -name '*.html' \
-    -exec bash -c 'dump_report "{}"' \; 2>/dev/null || \
+    -exec bash -c "dump_report '{}'" \; 2>/dev/null || \
   echo "No static analysis reports found."
