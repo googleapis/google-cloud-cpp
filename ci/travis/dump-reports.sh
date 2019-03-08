@@ -21,8 +21,6 @@ if [[ -z "${PROJECT_ROOT+x}" ]]; then
 fi
 source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 
-HAS_REPORTS=0
-
 # If w3m is installed there is nothing to do.
 if ! type w3m >/dev/null 2>&1; then
   # Try to install a HTML renderer, if this fails the script will exit.
@@ -34,7 +32,6 @@ fi
 function dump_report() {
   local filename="$1"
 
-  HAS_REPORTS=1
   echo
   echo "================ ${filename} ================"
   w3m -dump "${filename}"
@@ -46,13 +43,10 @@ export -f dump_report
 # the two things that produce them. Note that the Clang static analysis reports
 # are copied into the scan-build-output directory by the build-docker.sh script.
 
-find "${BUILD_OUTPUT}" -name 'compat_report.html' -print0 2>/dev/null | \
-    xargs -0 -I{} bash -c 'dump_report "{}"'
+find "${BUILD_OUTPUT}" -name 'compat_report.html' \
+    -exec bash -c 'dump_report "{}"' \; 2>/dev/null || \
+  echo "No ABI compability reports found."
 
-find scan-build-output/ -name '*.html' -print0 2>/dev/null | \
-    xargs -0 -I{} bash -c 'dump_report "{}"'
-
-if [[ "${HAS_REPORTS}" = 0 ]]; then
-  echo "No analysis reports found, exit scripts with success."
-  exit 0
-fi
+find scan-build-output/ -name 'compat_report.html' \
+    -exec bash -c 'dump_report "{}"' \; 2>/dev/null || \
+  echo "No static analysis reports found."
