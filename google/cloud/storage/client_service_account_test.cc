@@ -96,6 +96,55 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccountPermanentFailure) {
       "GetServiceAccount");
 }
 
+TEST_F(ServiceAccountTest, CreateHmacKey) {
+  internal::CreateHmacKeyResponse expected =
+      internal::CreateHmacKeyResponse::FromHttpResponse(
+          internal::HttpResponse{
+              200,
+              R"""({"secretKey": "dGVzdC1zZWNyZXQ=", "resource": {}})""",
+              {}})
+          .value();
+
+  EXPECT_CALL(*mock, CreateHmacKey(_))
+      .WillOnce(
+          Return(StatusOr<internal::CreateHmacKeyResponse>(TransientError())))
+      .WillOnce(Invoke([&expected](internal::CreateHmacKeyRequest const& r) {
+        EXPECT_EQ("test-project", r.project_id());
+        EXPECT_EQ("test-service-account", r.service_account());
+
+        return make_status_or(expected);
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock)};
+
+  StatusOr<std::pair<HmacKeyMetadata, std::string>> actual =
+      client.CreateHmacKeyForProject("test-project", "test-service-account");
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(expected.resource, actual->first);
+  EXPECT_EQ(expected.secret, actual->second);
+}
+
+TEST_F(ServiceAccountTest, CreateHmacKeyTooManyFailures) {
+  testing::TooManyFailuresStatusTest<internal::CreateHmacKeyResponse>(
+      mock, EXPECT_CALL(*mock, CreateHmacKey(_)),
+      [](Client& client) {
+        return client
+            .CreateHmacKeyForProject("test-project", "test-service-account")
+            .status();
+      },
+      "CreateHmacKey");
+}
+
+TEST_F(ServiceAccountTest, CreateHmacKeyPermanentFailure) {
+  testing::PermanentFailureStatusTest<internal::CreateHmacKeyResponse>(
+      *client, EXPECT_CALL(*mock, CreateHmacKey(_)),
+      [](Client& client) {
+        return client
+            .CreateHmacKeyForProject("test-project", "test-service-account")
+            .status();
+      },
+      "CreateHmacKey");
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

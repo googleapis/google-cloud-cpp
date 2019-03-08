@@ -132,6 +132,8 @@ class RetryClient : public RawClient {
 
   StatusOr<ServiceAccount> GetServiceAccount(
       GetProjectServiceAccountRequest const&) override;
+  StatusOr<CreateHmacKeyResponse> CreateHmacKey(
+      CreateHmacKeyRequest const&) override;
 
   StatusOr<ListNotificationsResponse> ListNotifications(
       ListNotificationsRequest const&) override;

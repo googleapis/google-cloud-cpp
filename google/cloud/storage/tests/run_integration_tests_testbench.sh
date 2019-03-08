@@ -28,6 +28,7 @@ export PROJECT_ID="fake-project-$(date +%s)"
 export BUCKET_NAME="fake-bucket-$(date +%s)"
 export TOPIC_NAME="projects/${PROJECT_ID}/topics/fake-topic-$(date +%s)"
 export LOCATION="fake-region1"
+readonly SERVICE_ACCOUNT="fake-service-account@example.com"
 
 echo
 echo "Running Storage integration tests against local servers."
@@ -91,7 +92,7 @@ echo "Running GCS multi-threaded integration test."
 
 echo
 echo "Running GCS Projects.serviceAccount integration tests."
-./service_account_integration_test "${PROJECT_ID}"
+./service_account_integration_test "${PROJECT_ID}" "${SERVICE_ACCOUNT}"
 
 # The tests were successful, so disable dumping of test bench log during
 # shutdown.

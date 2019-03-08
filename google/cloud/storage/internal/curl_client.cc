@@ -998,6 +998,20 @@ StatusOr<ServiceAccount> CurlClient::GetServiceAccount(
       builder.BuildRequest().MakeRequest(std::string{}));
 }
 
+StatusOr<CreateHmacKeyResponse> CurlClient::CreateHmacKey(
+    CreateHmacKeyRequest const& request) {
+  CurlRequestBuilder builder(
+      storage_endpoint_ + "/projects/" + request.project_id() + "/hmacKeys",
+      storage_factory_);
+  auto status = SetupBuilder(builder, request, "POST");
+  if (!status.ok()) {
+    return status;
+  }
+  builder.AddQueryParameter("serviceAccount", request.service_account());
+  return ParseFromHttpResponse<CreateHmacKeyResponse>(
+      builder.BuildRequest().MakeRequest(std::string{}));
+}
+
 StatusOr<ListNotificationsResponse> CurlClient::ListNotifications(
     ListNotificationsRequest const& request) {
   // Assume the bucket name is validated by the caller.
