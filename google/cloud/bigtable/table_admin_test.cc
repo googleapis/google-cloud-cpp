@@ -1235,7 +1235,7 @@ TEST_F(TableAdminTest, CreateTableFromSnapshot_Simple) {
           }));
 
   std::string expected_text = R"(
-        name: 'the-instance'        
+        name: 'the-instance'
   )";
   auto mock_successs = [](grpc::ClientContext* ctx,
                           google::longrunning::GetOperationRequest const&,

@@ -69,7 +69,7 @@ function run_all_instance_admin_examples {
   run_example ./bigtable_instance_admin_snippets create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"
   run_example ./bigtable_instance_admin_snippets list-instances \
-      "${project_id}"     
+      "${project_id}"
   run_example ./bigtable_instance_admin_snippets get-instance \
       "${project_id}" "${INSTANCE}"
   run_example ./bigtable_instance_admin_snippets list-clusters \
@@ -337,7 +337,7 @@ function run_all_data_async_examples {
   run_example ./table_admin_snippets create-table "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_async_snippets async-apply "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_async_snippets async-bulk-apply "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./table_admin_snippets delete-table "${project_id}" "${instance_id}" "${TABLE}" 
+  run_example ./table_admin_snippets delete-table "${project_id}" "${instance_id}" "${TABLE}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
@@ -464,4 +464,3 @@ run_hello_app_profile_example() {
   # some kind of Usage message.
   run_example_usage ./bigtable_hello_app_profile
 }
-

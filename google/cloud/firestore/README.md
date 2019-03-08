@@ -16,7 +16,7 @@ This library support Google Cloud Firestore at the
 
 ## Documentation
 
-Full documentation, including a [quick start guide][quickstart-link] 
+Full documentation, including a [quick start guide][quickstart-link]
 is available [online][doxygen-link].
 
 ## Release Notes
@@ -24,4 +24,3 @@ is available [online][doxygen-link].
 ### v0.0.1 - 2018-05
 
 * This release implements FieldPath class for Google Cloud Firestore.
-

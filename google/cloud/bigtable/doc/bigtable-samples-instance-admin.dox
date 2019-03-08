@@ -27,13 +27,13 @@ The example uses the following headers:
 
 ### Connect to the Cloud Bigtable instance admin endpoint.
 
-@snippet bigtable_instance_admin_snippets.cc connect instance admin 
+@snippet bigtable_instance_admin_snippets.cc connect instance admin
 
 ### Create a production instance and run basic instance-operations.
 
 @snippet bigtable_instance_admin_snippets.cc run instance operations
 
-### Create a Development Instance 
+### Create a Development Instance
 
 @snippet bigtable_instance_admin_snippets.cc create dev instance
 

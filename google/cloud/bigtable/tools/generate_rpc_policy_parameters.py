@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-""" 
+"""
 Generates a header file configuring the default retry policy parameters from the GAPIC YAML config files.
 
 GAPIC defines default values for the retry policies in the client library.

@@ -362,7 +362,7 @@ Use `vcpkg` to download and install `google-cloud-cpp`'s dependencies:
 
 ```console
 .\vcpkg.exe install openssl:x64-windows-static ^
-    grpc:x64-windows-static ^ 
+    grpc:x64-windows-static ^
     curl:x64-windows-static ^
     gtest:x64-windows-static ^
     crc32c:x64-windows-static
@@ -459,4 +459,3 @@ properly format your code.
 ## Licensing
 
 Apache 2.0; see [`LICENSE`](LICENSE) for details.
-

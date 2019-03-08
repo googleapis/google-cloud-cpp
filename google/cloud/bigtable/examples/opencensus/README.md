@@ -24,11 +24,11 @@ bazel build "//google/cloud/bigtable/...:all"
 This example uses:
  * The OpenCensus gRPC plugin to instrument the Bigtable gRPC calls.
  * The Stackdriver exporter to export stats and traces.
- * Debugging exporters to print stats and traces to stdout.        
- 
+ * Debugging exporters to print stats and traces to stdout.
+
 Usage:
 
-```    
+```
 bigtable_opencensus <project_id> <instance_id> <table_id>
 ```
 

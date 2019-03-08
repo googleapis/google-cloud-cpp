@@ -26,7 +26,7 @@ The example uses the following headers:
 
 ### Connect to the Cloud Bigtable data client endpoint.
 
-@snippet data_snippets.cc connect data 
+@snippet data_snippets.cc connect data
 
 ### Use ReadModifyWrite to increament a value and append a string to a value.
 

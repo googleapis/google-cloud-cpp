@@ -60,4 +60,3 @@ The downsides include:
 - It is harder to overload APIs.
 - It is not clear how other optional parameters of the APIs, such as timeouts,
   fit with this structure.
- 
