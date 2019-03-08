@@ -68,9 +68,11 @@ $(function() {
 <div class="title">well_known_parameters.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="elRef" doxygen="/v/build-output/ubuntu-18.04-gcc-Release/google/cloud/cloud.tag:../common/" href="../common/optional_8h.html">google/cloud/optional.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;google/cloud/internal/ios_flags_saver.h&quot;</code><br />
+<code>#include &quot;<a class="elRef" doxygen="/v/build-output/ubuntu-18.04-gcc-Release/google/cloud/cloud.tag:../common/" href="../common/optional_8h.html">google/cloud/optional.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="version_8h_source.html">google/cloud/storage/version.h</a>&quot;</code><br />
 <code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;iomanip&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 </div>
 <p><a href="well__known__parameters_8h_source.html">Go to the source code of this file.</a></p>
@@ -82,6 +84,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ContentEncoding.html">google::cloud::storage::v0::ContentEncoding</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the contentEncoding option for object uploads.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ContentEncoding.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1Deleted.html">google::cloud::storage::v0::Deleted</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Included deleted HMAC keys in list requests.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1Deleted.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1DestinationKmsKeyName.html">google::cloud::storage::v0::DestinationKmsKeyName</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the Customer-Managed Encryption Key (CMEK) for an rewrite.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1DestinationKmsKeyName.html#details">More...</a><br /></td></tr>
@@ -143,6 +148,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1QuotaUser.html">google::cloud::storage::v0::QuotaUser</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the user for this operation for quota enforcement purposes.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1QuotaUser.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccountFilter.html">google::cloud::storage::v0::ServiceAccountFilter</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Only list HMAC keys belonging to a specific Service Account.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccountFilter.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SourceGeneration.html">google::cloud::storage::v0::SourceGeneration</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the generation for the source object in copy operations.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SourceGeneration.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -173,6 +181,9 @@ Functions</h2></td></tr>
 <tr class="memitem:aebce6c408adaab836950dec7d6cb8d18"><td class="memTemplParams" colspan="2">template&lt;typename P , typename T &gt; </td></tr>
 <tr class="memitem:aebce6c408adaab836950dec7d6cb8d18"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1internal.html#aebce6c408adaab836950dec7d6cb8d18">google::cloud::storage::v0::internal::operator&lt;&lt;</a> (std::ostream &amp;os, WellKnownParameter&lt; P, T &gt; const &amp;rhs)</td></tr>
 <tr class="separator:aebce6c408adaab836950dec7d6cb8d18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a418d443037a8eda8964953bfd69a4e"><td class="memTemplParams" colspan="2">template&lt;typename P &gt; </td></tr>
+<tr class="memitem:a5a418d443037a8eda8964953bfd69a4e"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1internal.html#a5a418d443037a8eda8964953bfd69a4e">google::cloud::storage::v0::internal::operator&lt;&lt;</a> (std::ostream &amp;os, WellKnownParameter&lt; P, bool &gt; const &amp;rhs)</td></tr>
+<tr class="separator:a5a418d443037a8eda8964953bfd69a4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
