@@ -59,49 +59,6 @@ static_assert(
     "++it when it is of ListBucketsReader::iterator type must be a "
     "ListBucketsReader::iterator &>");
 
-ListBucketsIterator::ListBucketsIterator(ListBucketsReader* owner,
-                                         value_type value)
-    : owner_(owner), value_(std::move(value)) {}
-
-ListBucketsIterator& ListBucketsIterator::operator++() {
-  *this = owner_->GetNext();
-  return *this;
-}
-
-// NOLINTNEXTLINE(readability-identifier-naming)
-ListBucketsReader::iterator ListBucketsReader::begin() { return GetNext(); }
-
-ListBucketsReader::iterator ListBucketsReader::GetNext() {
-  static Status const past_the_end_error(
-      StatusCode::kFailedPrecondition,
-      "Cannot iterating past the end of ListObjectReader");
-  if (current_buckets_.end() == current_) {
-    if (on_last_page_) {
-      return ListBucketsIterator(nullptr,
-                                 StatusOr<BucketMetadata>(past_the_end_error));
-    }
-    request_.set_page_token(std::move(next_page_token_));
-    auto response = client_->ListBuckets(request_);
-    if (!response.ok()) {
-      next_page_token_.clear();
-      current_buckets_.clear();
-      on_last_page_ = true;
-      current_ = current_buckets_.begin();
-      return ListBucketsIterator(this, std::move(response).status());
-    }
-    next_page_token_ = std::move(response->next_page_token);
-    current_buckets_ = std::move(response->items);
-    current_ = current_buckets_.begin();
-    if (next_page_token_.empty()) {
-      on_last_page_ = true;
-    }
-    if (current_buckets_.end() == current_) {
-      return ListBucketsIterator(nullptr, past_the_end_error);
-    }
-  }
-  return ListBucketsIterator(this, std::move(*current_++));
-}
-
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

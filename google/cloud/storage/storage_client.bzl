@@ -63,6 +63,7 @@ storage_client_hdrs = [
     "internal/object_streambuf.h",
     "internal/parse_rfc3339.h",
     "internal/patch_builder.h",
+    "internal/range_from_pagination.h",
     "internal/raw_client.h",
     "internal/raw_client_wrapper_utils.h",
     "internal/resumable_upload_session.h",
