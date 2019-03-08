@@ -334,7 +334,7 @@ void GetBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
     throw Usage{"get-bucket-default-kms-key <bucket-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
-  //! [get bucket default kms key] [START storage_get_bucket_default_kms_key]
+  //! [get bucket default kms key] [START storage_bucket_get_default_kms_key]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
@@ -353,7 +353,7 @@ void GetBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
     std::cout << "The default KMS key for bucket " << meta->name()
               << " is: " << meta->encryption().default_kms_key_name << "\n";
   }
-  //! [get bucket default kms key] [END storage_get_bucket_default_kms_key]
+  //! [get bucket default kms key] [END storage_bucket_get_default_kms_key]
   (std::move(client), bucket_name);
 }
 
