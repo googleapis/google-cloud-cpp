@@ -24,6 +24,7 @@
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/list_buckets_reader.h"
+#include "google/cloud/storage/list_hmac_keys_reader.h"
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/notification_event_type.h"
 #include "google/cloud/storage/notification_payload_format.h"
@@ -2265,7 +2266,40 @@ class Client {
   }
 
   /**
-   * Create a new HMAC key in a given project.
+   * List the available HMAC keys.
+   *
+   * @warning This GCS feature is not GA, it is subject to change without
+   *     notice.
+   *
+   * @param options a list of optional query parameters and/or request headers.
+   *     In addition to the options common to all requests, this operation
+   *     accepts `Deleted` `MaxResults`, `OverrideDefaultProject`,
+   *     `ServiceAccountFilter`, and `UserProject`.
+   *
+   * @return A range to iterate over the available HMAC keys.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @par Example
+   *
+   * @see https://cloud.google.com/iam/docs/service-accounts for general
+   *     information on Google Cloud Platform service accounts.
+   */
+  template <typename... Options>
+  ListHmacKeysReader ListHmacKeys(Options&&... options) {
+    auto const& project_id = raw_client_->client_options().project_id();
+    internal::ListHmacKeysRequest request(project_id);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    auto client = raw_client_;
+    return ListHmacKeysReader(request,
+                              [client](internal::ListHmacKeysRequest const& r) {
+                                return client->ListHmacKeys(r);
+                              });
+  }
+
+  /**
+   * Create a new HMAC key.
    *
    * @warning This GCS feature is not GA, it is subject to change without
    *     notice.
@@ -2304,6 +2338,7 @@ class Client {
     return std::make_pair(std::move(result->resource),
                           std::move(result->secret));
   }
+
   //@}
 
   //@{

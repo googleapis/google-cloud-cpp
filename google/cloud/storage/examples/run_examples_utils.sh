@@ -113,6 +113,10 @@ run_all_service_account_examples() {
   export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
   run_example ./storage_service_account_samples \
       create-hmac-key "${SERVICE_ACCOUNT}"
+  run_example ./storage_service_account_samples \
+      list-hmac-keys
+  run_example ./storage_service_account_samples \
+      list-hmac-keys-with-service-account "${SERVICE_ACCOUNT}"
   unset GOOGLE_CLOUD_PROJECT
 }
 
