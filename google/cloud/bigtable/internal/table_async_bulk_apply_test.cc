@@ -126,7 +126,6 @@ TEST_F(NoexTableAsyncBulkApplyTest, IdempotencyAndRetries) {
                                             std::vector<FailedMutation>& failed,
                                             grpc::Status& status) {
                           EXPECT_EQ(1U, failed.size());
-                          EXPECT_EQ("baz", failed[0].mutation().row_key());
                           EXPECT_TRUE(status.ok());
                           mutator_finished = true;
                         },

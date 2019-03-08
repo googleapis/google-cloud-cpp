@@ -308,13 +308,11 @@ class SingleRowMutation {
  */
 class FailedMutation {
  public:
-  FailedMutation(SingleRowMutation mut, google::cloud::Status status, int index)
-      : mutation_(std::move(mut)), status_(status), original_index_(index) {}
+  FailedMutation(google::cloud::Status status, int index)
+      : status_(status), original_index_(index) {}
 
-  FailedMutation(SingleRowMutation mut, google::rpc::Status status, int index)
-      : mutation_(std::move(mut)),
-        status_(ToGCStatus(status)),
-        original_index_(index) {}
+  FailedMutation(google::rpc::Status status, int index)
+      : status_(ToGCStatus(status)), original_index_(index) {}
 
   FailedMutation(FailedMutation&&) = default;
   FailedMutation& operator=(FailedMutation&&) = default;
@@ -323,7 +321,6 @@ class FailedMutation {
 
   //@{
   /// @name accessors
-  SingleRowMutation const& mutation() const { return mutation_; }
   google::cloud::Status const& status() const { return status_; }
   int original_index() const { return original_index_; }
   //@}
@@ -335,7 +332,6 @@ class FailedMutation {
   static google::cloud::Status ToGCStatus(google::rpc::Status const& status);
 
  private:
-  SingleRowMutation mutation_;
   google::cloud::Status status_;
   int original_index_;
 };
@@ -438,7 +434,6 @@ class BulkMutation {
 
   // Add a failed mutation to the batch.
   BulkMutation& emplace_back(FailedMutation fm) {
-    fm.mutation_.MoveTo(request_.add_entries());
     fm.status_ = google::cloud::Status();
     return *this;
   }

@@ -71,8 +71,7 @@ std::vector<FailedMutation> Table::Apply(SingleRowMutation mut) {
       google::rpc::Status rpc_status;
       rpc_status.set_code(status.error_code());
       rpc_status.set_message(status.error_message());
-      failures.emplace_back(SingleRowMutation(std::move(request)), rpc_status,
-                            0);
+      failures.emplace_back(rpc_status, 0);
       status = grpc::Status(
           status.error_code(),
           "Permanent (or too many transient) errors in Table::Apply()");
