@@ -80,6 +80,34 @@ std::ostream& operator<<(std::ostream& os, CreateHmacKeyResponse const& r) {
             << "}";
 }
 
+std::ostream& operator<<(std::ostream& os, ListHmacKeysRequest const& r) {
+  os << "ListHmacKeysRequest={bucket_name=" << r.project_id();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
+StatusOr<ListHmacKeysResponse> ListHmacKeysResponse::FromHttpResponse(
+    HttpResponse const& response) {
+  auto json =
+      storage::internal::nl::json::parse(response.payload, nullptr, false);
+  if (!json.is_object()) {
+    return Status(StatusCode::kInvalidArgument, __func__);
+  }
+
+  ListHmacKeysResponse result;
+  result.next_page_token = json.value("nextPageToken", "");
+
+  for (auto const& kv : json["items"].items()) {
+    auto parsed = internal::HmacKeyMetadataParser::FromJson(kv.value());
+    if (!parsed.ok()) {
+      return std::move(parsed).status();
+    }
+    result.items.emplace_back(std::move(*parsed));
+  }
+
+  return result;
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

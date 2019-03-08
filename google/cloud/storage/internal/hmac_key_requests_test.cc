@@ -114,6 +114,74 @@ TEST(HmacKeyRequestsTest, CreateResponseIOStream) {
   EXPECT_THAT(actual, Not(HasSubstr("dGVzdC1zZWNyZXQ=")));
 }
 
+TEST(HmacKeysRequestsTest, List) {
+  ListHmacKeysRequest request("test-project-id");
+  request.set_multiple_options(ServiceAccountFilter("test-service-account"),
+                               Deleted(true));
+  EXPECT_EQ("test-project-id", request.project_id());
+
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("test-project-id"));
+  EXPECT_THAT(actual, HasSubstr("serviceAccount=test-service-account"));
+  EXPECT_THAT(actual, HasSubstr("deleted=true"));
+}
+
+TEST(HmacKeysRequestsTest, ParseListResponse) {
+  std::string key1_text = R"""({
+      "accessId": "test-access-id-1",
+      "etag": "XYZ=",
+      "id": "test-id-1",
+      "kind": "storage#hmacKey",
+      "projectId": "test-project-id",
+      "serviceAccountEmail": "test-service-account-email",
+      "state": "ACTIVE",
+      "timeCreated": "2019-03-01T12:13:14Z"
+})""";
+  std::string key2_text = R"""({
+      "accessId": "test-access-id-2",
+      "etag": "XYZ=",
+      "id": "test-id-2",
+      "kind": "storage#hmacKey",
+      "projectId": "test-project-id",
+      "serviceAccountEmail": "test-service-account-email",
+      "state": "ACTIVE",
+      "timeCreated": "2019-03-02T12:13:14Z"
+})""";
+  std::string text = R"""({
+      "kind": "storage#hmacKeys",
+      "nextPageToken": "some-token-42",
+      "items":
+)""";
+  text += "[" + key1_text + "," + key2_text + "]}";
+
+  auto key1 = internal::HmacKeyMetadataParser::FromString(key1_text).value();
+  auto key2 = internal::HmacKeyMetadataParser::FromString(key2_text).value();
+
+  auto actual =
+      ListHmacKeysResponse::FromHttpResponse(HttpResponse{200, text, {}})
+          .value();
+  EXPECT_EQ("some-token-42", actual.next_page_token);
+  EXPECT_THAT(actual.items, ::testing::ElementsAre(key1, key2));
+}
+
+TEST(HmacKeysRequestsTest, ParseListResponseFailure) {
+  std::string text = R"""({123)""";
+
+  auto actual =
+      ListHmacKeysResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
+}
+
+TEST(HmacKeysRequestsTest, ParseListResponseFailureInItems) {
+  std::string text = R"""({"items": [ "invalid-item" ]})""";
+
+  auto actual =
+      ListHmacKeysResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  EXPECT_FALSE(actual.ok());
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
