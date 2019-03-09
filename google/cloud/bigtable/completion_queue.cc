@@ -79,7 +79,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   std::mutex mu_;
   promise<std::chrono::system_clock::time_point> promise_;
   std::chrono::system_clock::time_point deadline_;
-  std::unique_ptr<grpc::Alarm> alarm_; // GUARDED_BY(mu_)
+  std::unique_ptr<grpc::Alarm> alarm_;  // GUARDED_BY(mu_)
 };
 
 }  // namespace
