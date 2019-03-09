@@ -47,6 +47,8 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
 
   void Set(grpc::CompletionQueue& cq,
            std::chrono::system_clock::time_point deadline, void* tag) {
+    // We need to protect the critical section here because as soon as
+    // `Set()` is called another thread might try to read and modify `alarm_`.
     std::unique_lock<std::mutex> lk(mu_);
     deadline_ = deadline;
     if (alarm_) {
@@ -55,6 +57,8 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   }
 
   void Cancel() override {
+    // We need to protect the critical section here because another thread may
+    // call Notify() and modify `alarm_`.
     std::unique_lock<std::mutex> lk(mu_);
     if (alarm_) {
       alarm_->Cancel();
@@ -63,20 +67,19 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
 
  private:
   bool Notify(CompletionQueue&, bool) override {
+    // We need to protect this critical section where the alarm_ is reset so
+    // other threads can safely access the changes.
     std::unique_lock<std::mutex> lk(mu_);
-    alarm_.reset();
+    alarm_ = nullptr;
     lk.unlock();
     promise_.set_value(deadline_);
     return true;
   }
 
-  // It might not be clear why the mutex is needed.
-  // We need to make sure that `if (alarm_) { alarm_->Cancel(); }` is atomic.
-  // Without the mutex it is not because `Notify` resets `alarm_`.
   std::mutex mu_;
   promise<std::chrono::system_clock::time_point> promise_;
   std::chrono::system_clock::time_point deadline_;
-  std::unique_ptr<grpc::Alarm> alarm_;
+  std::unique_ptr<grpc::Alarm> alarm_; // GUARDED_BY(mu_)
 };
 
 }  // namespace

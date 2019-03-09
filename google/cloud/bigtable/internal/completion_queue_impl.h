@@ -129,10 +129,15 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
     return true;
   }
 
-  // While only one thread changes (or reads) the state of this class at a time,
-  // we need to ensure that the state changes are visible to other threads. An
-  // atomic is (in principle) a lighter weight mechanism to satisfy the memory
-  // order constraints.
+  // Only Start() and Notify() change and read the state of this class. The
+  // way we use gRPC guarantees that the thread calling Notify() does not call
+  // until Start() returns. However, there is no guarantee that there are
+  // synchronization primitives used in between the two calls (all the work
+  // in gRPC could be I/O work without the need for synchronization). The
+  // changes in Start() may not be visible to the thread calling some
+  // *dependency-ordered-before* primitive. An atomic is (in principle) a
+  // lighter weight mechanism than a full mutex to satisfy the memory order
+  // constraints.
   std::atomic<bool> sync_;
 
   // These are the parameters for the RPC, most of them have obvious semantics.
@@ -491,22 +496,24 @@ using CheckRunAsyncCallback =
  * `std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<T>>` and we are
  * interested in the `T` type.
  *
- * This is the generic version, implementing the "not matched" path.
+ * This is the generic version, implementing the "does not match the expected
+ * type" path.
  */
-template <typename ReturnType>
+template <typename ResponseType>
 struct AsyncCallResponseTypeUnwrap : public std::false_type {
   using type = void;
 };
 
 /**
- * A meta function to extract the ResponseType from an AsyncCall return type.
+ * A meta function to extract the `ResponseType` from an AsyncCall return type.
  *
  * This meta function extracts, if possible, the response type from an
  * asynchronous RPC callable. These callables return a
  * `std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<T>>` and we are
  * interested in the `T` type.
  *
- * This is the generic version, implementing the "not matched" path.
+ * This is the specialization implementing the "matched with the expected type"
+ * path.
  */
 template <typename ResponseType>
 struct AsyncCallResponseTypeUnwrap<
