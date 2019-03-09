@@ -16,7 +16,7 @@ This library support Google Cloud Bigtable at the
 
 ## Documentation
 
-Full documentation, including a [quick start guide][quickstart-link] 
+Full documentation, including a [quick start guide][quickstart-link]
 is available [online][doxygen-link].
 
 ## Release Notes

@@ -56,7 +56,7 @@ to use most of the time. The disadvantage of this approach include:
 * As applications change over time and they start filtering different fields
   the code may assume that the value of a field is valid, but it has a default
   value. With optionals the application should crash during testing, or may
-  be programmed defensively since the start. 
+  be programmed defensively since the start.
 * It also requires more thought designing the classes a field has different
   semantics for "not there" vs. "the default value".
 

@@ -6,7 +6,7 @@ referenced from the Doxygen landing page as "Hello World".
 ## Table of Contents
 
 - [Before you begin](#before-you-begin)
-  - [Compile the Examples](#compile-the-examples)  
+  - [Compile the Examples](#compile-the-examples)
   - [Run the Examples](#run-the-examples)
 - [Samples](#samples)
   - [Hello World](#hello-world)
@@ -136,13 +136,13 @@ $ ./bigtable_samples
 Usage: bigtable_samples <command> <project_id> <instance_id> <table_id> [arguments]
 
 Examples:
-  bigtable_samples run my-project my-instance my-table 
+  bigtable_samples run my-project my-instance my-table
   table_admin_snippets create-table my-project my-instance my-table
   table_admin_snippets list-tables my-project my-instance
   table_admin_snippets get-table my-project my-instance my-table
   table_admin_snippets modify-table my-project my-instance my-table
   table_admin_snippets drop-all-rows my-project my-instance my-table
-  table_admin_snippets delete-table my-project my-instance my-table  
+  table_admin_snippets delete-table my-project my-instance my-table
 ```
 #### Run admin table samples
 After configuring gRPC, you can run the examples using:

@@ -27,7 +27,7 @@ Some of these libraries have dependencies themselves:
 * One of the forks of [OpenSSL](https://www.openssl.org/source/), such as
   [BoringSSL](https://github.com/google/boringssl) or
   [LibreSSL](https://www.libressl.org/) is a dependency for both gRPC and
-  libcurl. 
+  libcurl.
 
 This document describes how the direct dependencies of `google-cloud-cpp`
 included in CMake files.
@@ -72,7 +72,7 @@ them), and it may or may not have installed config files for `find_package()`.
 We will support four different configurations for gRPC:
 
 1. [`vcpkg`](https://github.com/Microsoft/vcpkg) packages gRPC, and provides
-   targets (`gRPC::gprc++` and `gRPC::grpc`) for CMake.  
+   targets (`gRPC::gprc++` and `gRPC::grpc`) for CMake.
    When `GOOGLE_CLOUD_CPP_GRPC_PROVIDER` is set to `vcpkg` we will enable
    these targets using `find_package()`.  We will also use `find_package()` to
    find the `protobuf` library.  The package introduces a
@@ -90,13 +90,13 @@ We will support four different configurations for gRPC:
    based on the `pkg-config` parameters. Note that on CMake-3.6 and higher the
    `Protobuf` CMake module automatically introduces `protobuf::libprotobuf`. We
    are targeting CMake-3.5, which does not offer this feature.
-   
+
 1. `package`: When `GOOGLE_CLOUD_CPP_GRPC_PROVIDER` is set to `package` we
     will use `find_package(... grpc)` to find the gRPC libraries. Note that gRPC
     installs the necessary CMake support files when compiled with CMake, but not
     when compiled and installed with GNU Make, so we cannot assume these support
     files always exist.
-    
+
 1. `external`: When `GOOGLE_CLOUD_CPP_GRPC_PROVIDER` is set to `module`
    (the default) we will simply add the `third_party/grpc` subdirectory to
    the CMake build.
@@ -105,7 +105,7 @@ We will support four different configurations for gRPC:
 
 gRPC has many submodules.  When this document was written, they include:
 [benchmark](https://github.com/google/benchmark),
-[bloaty](https://github.com/google/bloaty), 
+[bloaty](https://github.com/google/bloaty),
 [boringssl](https://github.com/google/boringssl),
 [boring-ssl-with-bazel](https://github.com/google/boringssl/tree/master-with-bazel),
 [c-ares](https://github.com/c-ares/c-ares),
@@ -152,8 +152,8 @@ library will need to be updated too.
 `google-cloud-cpp` defines a `GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER`
 configuration option to control where to find all the dependencies. The macro
  can take the following values:
- 
- 
+
+
 * `external` implies that all the sources should be downloaded using the
 `ExternalProject` CMake module.
 * `package` implies that all the dependencies are already installed and can be
@@ -194,7 +194,7 @@ we will:
 * Most builds will compile the dependencies from source, as external projects.
   This is how the `google-cloud-cpp` developers use the system and we expect
   that many of the users will too.
-  
+
 * One or more of the builds install all the dependencies and then use `package`.
 
 * On Windows, we already use installed dependencies via `vcpkg`: compiling from

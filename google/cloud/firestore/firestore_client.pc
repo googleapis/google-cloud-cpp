@@ -19,7 +19,7 @@ includedir=${prefix}/include
 
 Name: The Cloud Firestore C++ Client Library
 Description: Provides C++ APIs to access the Cloud Firestore.
-Version: 
+Version:
 
 Libs: -L${libdir} -lfirestore_client
 Cflags: -I${includedir}

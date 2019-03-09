@@ -119,7 +119,7 @@ files, you can simply run `clang-format` manually:
 $ clang-format -i <file>....
 ```
 
-Reformatting all the files in a specific directory should be safe too, for 
+Reformatting all the files in a specific directory should be safe too, for
 example:
 
 ```console

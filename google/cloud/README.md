@@ -7,7 +7,7 @@
 [quickstart-link]: http://googleapis.github.io/google-cloud-cpp/
 
 This directory contains the following C++ client libraries:
- 
+
 * [Cloud Bigtable](bigtable/README.md)
 * [Google Cloud Storage](storage/README.md)
 
@@ -17,7 +17,7 @@ not intended for direct use by consumers of the C++ client libraries.
 
 ## Documentation
 
-Documentation for the common utilities is  
+Documentation for the common utilities is
 is available [online][doxygen-link].
 
 ## Release Notes
@@ -53,7 +53,7 @@ is available [online][doxygen-link].
 
 * Implement `google::cloud::future<T>` and `google::cloud::promise<T>` based on
   ISO/IEC TS 19571:2016, the "C++ Extensions for Concurrency" technical
-  specification, also known as "futures with continuations". 
+  specification, also known as "futures with continuations".
 
 ### v0.1.x - 2018-11
 
