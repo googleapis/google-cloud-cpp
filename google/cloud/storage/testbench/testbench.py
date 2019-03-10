@@ -386,7 +386,7 @@ def objects_list(bucket_name):
 
 
 @gcs.route(
-    '/b/<source_bucket>/o/<source_object>/copyTo/b/<destination_bucket>/o/<destination_object>',
+    '/b/<source_bucket>/o/<path:source_object>/copyTo/b/<destination_bucket>/o/<path:destination_object>',
     methods=['POST'])
 def objects_copy(source_bucket, source_object, destination_bucket,
                  destination_object):
@@ -415,7 +415,7 @@ def objects_copy(source_bucket, source_object, destination_bucket,
 
 
 @gcs.route(
-    '/b/<source_bucket>/o/<source_object>/rewriteTo/b/<destination_bucket>/o/<destination_object>',
+    '/b/<source_bucket>/o/<path:source_object>/rewriteTo/b/<destination_bucket>/o/<path:destination_object>',
     methods=['POST'])
 def objects_rewrite(source_bucket, source_object, destination_bucket,
                     destination_object):
@@ -434,7 +434,7 @@ def objects_rewrite(source_bucket, source_object, destination_bucket,
     return testbench_utils.filtered_response(flask.request, response)
 
 
-@gcs.route('/b/<bucket_name>/o/<object_name>')
+@gcs.route('/b/<bucket_name>/o/<path:object_name>')
 def objects_get(bucket_name, object_name):
     """Implement the 'Objects: get' API.  Read objects or their metadata."""
     _, blob = testbench_utils.lookup_object(bucket_name, object_name)
@@ -472,7 +472,7 @@ def objects_get(bucket_name, object_name):
     return response
 
 
-@gcs.route('/b/<bucket_name>/o/<object_name>', methods=['DELETE'])
+@gcs.route('/b/<bucket_name>/o/<path:object_name>', methods=['DELETE'])
 def objects_delete(bucket_name, object_name):
     """Implement the 'Objects: delete' API.  Delete objects."""
     object_path, blob = testbench_utils.lookup_object(bucket_name, object_name)
@@ -483,7 +483,7 @@ def objects_delete(bucket_name, object_name):
     return testbench_utils.filtered_response(flask.request, {})
 
 
-@gcs.route('/b/<bucket_name>/o/<object_name>', methods=['PUT'])
+@gcs.route('/b/<bucket_name>/o/<path:object_name>', methods=['PUT'])
 def objects_update(bucket_name, object_name):
     """Implement the 'Objects: update' API: update an existing Object."""
     _, blob = testbench_utils.lookup_object(bucket_name, object_name)
@@ -492,7 +492,7 @@ def objects_update(bucket_name, object_name):
     return json.dumps(revision.metadata)
 
 
-@gcs.route('/b/<bucket_name>/o/<object_name>/compose', methods=['POST'])
+@gcs.route('/b/<bucket_name>/o/<path:object_name>/compose', methods=['POST'])
 def objects_compose(bucket_name, object_name):
     """Implement the 'Objects: compose' API: concatenate Objects."""
     payload = json.loads(flask.request.data)
@@ -536,7 +536,7 @@ def objects_compose(bucket_name, object_name):
     return testbench_utils.filtered_response(flask.request, current_version.metadata)
 
 
-@gcs.route('/b/<bucket_name>/o/<object_name>', methods=['PATCH'])
+@gcs.route('/b/<bucket_name>/o/<path:object_name>', methods=['PATCH'])
 def objects_patch(bucket_name, object_name):
     """Implement the 'Objects: patch' API: update an existing Object."""
     _, blob = testbench_utils.lookup_object(bucket_name, object_name)
@@ -545,7 +545,7 @@ def objects_patch(bucket_name, object_name):
     return json.dumps(revision.metadata)
 
 
-@gcs.route('/b/<bucket_name>/o/<object_name>/acl')
+@gcs.route('/b/<bucket_name>/o/<path:object_name>/acl')
 def objects_acl_list(bucket_name, object_name):
     """Implement the 'ObjectAccessControls: list' API."""
     _, blob = testbench_utils.lookup_object(bucket_name, object_name)
@@ -557,7 +557,7 @@ def objects_acl_list(bucket_name, object_name):
     return testbench_utils.filtered_response(flask.request, result)
 
 
-@gcs.route('/b/<bucket_name>/o/<object_name>/acl', methods=['POST'])
+@gcs.route('/b/<bucket_name>/o/<path:object_name>/acl', methods=['POST'])
 def objects_acl_create(bucket_name, object_name):
     """Implement the 'ObjectAccessControls: create' API."""
     _, blob = testbench_utils.lookup_object(bucket_name, object_name)
@@ -570,7 +570,7 @@ def objects_acl_create(bucket_name, object_name):
             payload.get('entity', ''), payload.get('role', '')))
 
 
-@gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['DELETE'])
+@gcs.route('/b/<bucket_name>/o/<path:object_name>/acl/<entity>', methods=['DELETE'])
 def objects_acl_delete(bucket_name, object_name, entity):
     """Implement the 'ObjectAccessControls: delete' API."""
     _, blob = testbench_utils.lookup_object(bucket_name, object_name)
@@ -580,7 +580,7 @@ def objects_acl_delete(bucket_name, object_name, entity):
     return testbench_utils.filtered_response(flask.request, {})
 
 
-@gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>')
+@gcs.route('/b/<bucket_name>/o/<path:object_name>/acl/<entity>')
 def objects_acl_get(bucket_name, object_name, entity):
     """Implement the 'ObjectAccessControls: get' API."""
     _, blob = testbench_utils.lookup_object(bucket_name, object_name)
@@ -590,7 +590,7 @@ def objects_acl_get(bucket_name, object_name, entity):
     return testbench_utils.filtered_response(flask.request, acl)
 
 
-@gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['PUT'])
+@gcs.route('/b/<bucket_name>/o/<path:object_name>/acl/<entity>', methods=['PUT'])
 def objects_acl_update(bucket_name, object_name, entity):
     """Implement the 'ObjectAccessControls: update' API."""
     _, blob = testbench_utils.lookup_object(bucket_name, object_name)
@@ -601,7 +601,7 @@ def objects_acl_update(bucket_name, object_name, entity):
     return testbench_utils.filtered_response(flask.request, acl)
 
 
-@gcs.route('/b/<bucket_name>/o/<object_name>/acl/<entity>', methods=['PATCH'])
+@gcs.route('/b/<bucket_name>/o/<path:object_name>/acl/<entity>', methods=['PATCH'])
 def objects_acl_patch(bucket_name, object_name, entity):
     """Implement the 'ObjectAccessControls: patch' API."""
     _, blob = testbench_utils.lookup_object(bucket_name, object_name)
