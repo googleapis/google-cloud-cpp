@@ -275,16 +275,15 @@ run_all_default_object_acl_examples() {
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
 #   bucket_name: the name of the bucket to run the examples against.
-#   bucket_prefix: the prefix used to filter objects in the examples.
 # Returns:
 #   None
 ################################################
 run_all_object_examples() {
   local bucket_name=$1
-  local bucket_prefix=$2
-  shift 2
+  shift
 
   local object_name="object-$(date +%s)-${RANDOM}.txt"
+  local bucket_prefix="prefix-$(date +%s)-${RANDOM}.txt"
   local composed_object_name="composed-object-$(date +%s)-${RANDOM}.txt"
   local copied_object_name="copied-object-$(date +%s)-${RANDOM}.txt"
   local multipart_object_name="multipart-object-$(date +%s)-${RANDOM}.txt"
@@ -292,6 +291,10 @@ run_all_object_examples() {
   run_example ./storage_object_samples insert-object \
       "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
   run_example ./storage_object_samples list-objects "${bucket_name}"
+  run_example ./storage_object_samples insert-object \
+      "${bucket_name}" "${bucket_prefix}/object-1.txt" "media-for-object-1"
+  run_example ./storage_object_samples insert-object \
+      "${bucket_name}" "${bucket_prefix}/object-2.txt" "media-for-object-2"
   run_example ./storage_object_samples list-objects-with-prefix \
       "${bucket_name}" "${bucket_prefix}"
   run_example ./storage_object_samples get-object-metadata \
@@ -318,6 +321,10 @@ run_all_object_examples() {
       "${bucket_name}" "${copied_object_name}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${copied_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${bucket_prefix}/object-2.txt"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${bucket_prefix}/object-1.txt"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
 
@@ -999,7 +1006,6 @@ run_quickstart() {
 # Globals:
 #   PROJECT_ID: the id of a GCP project, do not use a project number.
 #   BUCKET_NAME: the name of the bucket to use in the examples.
-#   BUCKET_PREFIX: the prefix used to filter objects in the examples.
 #   DESTINATION_BUCKET_NAME: a different bucket to test object rewrites
 #   TOPIC_NAME: a Cloud Pub/Sub topic configured to receive notifications
 #       from GCS.
@@ -1022,7 +1028,7 @@ run_all_storage_examples() {
   run_all_bucket_acl_examples
   run_all_default_object_acl_examples
   run_all_requester_pays_examples
-  run_all_object_examples "${BUCKET_NAME}" "${BUCKET_PREFIX}"
+  run_all_object_examples "${BUCKET_NAME}"
   run_upload_and_download_examples "${BUCKET_NAME}"
   run_resumable_file_upload_examples "${BUCKET_NAME}"
   run_resumable_write_object_examples "${BUCKET_NAME}"

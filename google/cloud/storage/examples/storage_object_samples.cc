@@ -77,7 +77,7 @@ void ListObjectsWithPrefix(google::cloud::storage::Client client, int& argc,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto bucket_prefix = ConsumeArg(argc, argv);
-  //! [list objects] [START storage_list_files_with_prefix]
+  //! [list objects with prefix] [START storage_list_files_with_prefix]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string bucket_prefix) {
     for (auto&& object_metadata :
@@ -90,7 +90,7 @@ void ListObjectsWithPrefix(google::cloud::storage::Client client, int& argc,
                 << ", object_name=" << object_metadata->name() << "\n";
     }
   }
-  //! [list objects] [END storage_list_files_with_prefix]
+  //! [list objects with prefix] [END storage_list_files_with_prefix]
   (std::move(client), bucket_name, bucket_prefix);
 }
 
