@@ -146,7 +146,7 @@ void ListHmacKeysWithServiceAccount(google::cloud::storage::Client client,
     }
   }
   //! [list hmac keys with service account]
-  (std::move(client), argv[0]);
+  (std::move(client), argv[1]);
 }
 
 void CreateHmacKey(google::cloud::storage::Client client, int& argc,
