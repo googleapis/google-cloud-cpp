@@ -52,6 +52,26 @@ TEST(CompletionQueueTest, LifeCycle) {
   t.join();
 }
 
+TEST(CompletionQueueTest, LifeCycleFuture) {
+  CompletionQueue cq;
+
+  std::thread t([&cq]() { cq.Run(); });
+
+  promise<bool> promise;
+  cq.MakeRelativeTimer(2_ms).then(
+      [&promise](future<std::chrono::system_clock::time_point>) {
+        promise.set_value(true);
+      });
+
+  auto f = promise.get_future();
+  auto status = f.wait_for(500_ms);
+  EXPECT_EQ(std::future_status::ready, status);
+  EXPECT_TRUE(f.get());
+
+  cq.Shutdown();
+  t.join();
+}
+
 /// @test Verify that we can cancel alarms.
 TEST(CompletionQueueTest, CancelAlarm) {
   bigtable::CompletionQueue cq;
