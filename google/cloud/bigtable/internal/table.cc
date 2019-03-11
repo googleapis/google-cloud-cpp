@@ -139,6 +139,30 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                        bigtable::internal::ReadRowsParserFactory>());
 }
 
+std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter,
+                                    Status& status) {
+  RowSet row_set(std::move(row_key));
+  std::int64_t const rows_limit = 1;
+  RowReader reader =
+      ReadRows(std::move(row_set), rows_limit, std::move(filter));
+  auto it = reader.begin();
+  if (it == reader.end()) {
+    status = Status();
+    return std::make_pair(false, Row("", {}));
+  }
+  if (!*it) {
+    status = it->status();
+    return std::make_pair(false, Row("", {}));
+  }
+  auto result = std::make_pair(true, std::move(**it));
+  if (++it != reader.end()) {
+    status = Status(StatusCode::kInternal,
+                    "internal error - RowReader returned 2 rows in ReadRow()");
+    return std::make_pair(false, Row("", {}));
+  }
+  return result;
+}
+
 bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
                               std::vector<Mutation> true_mutations,
                               std::vector<Mutation> false_mutations,

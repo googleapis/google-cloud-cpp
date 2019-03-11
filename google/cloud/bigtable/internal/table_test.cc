@@ -152,6 +152,152 @@ TEST_F(NoexTableTest, MoveAssignment) {
   EXPECT_EQ(expected, dest.table_name());
 }
 
+TEST_F(NoexTableTest, ReadRowSimple) {
+  using namespace ::testing;
+  namespace btproto = ::google::bigtable::v2;
+  grpc::Status status;
+  auto response =
+      bigtable::testing::internal::ReadRowsResponseFromString(R"(
+chunks {
+row_key: "r1"
+    family_name { value: "fam" }
+    qualifier { value: "col" }
+timestamp_micros: 42000
+value: "value"
+commit_row: true
+}
+)",
+                                                              status);
+  EXPECT_TRUE(status.ok());
+
+  auto stream = google::cloud::internal::make_unique<MockReadRowsReader>();
+  EXPECT_CALL(*stream, Read(_))
+      .WillOnce(Invoke([&response](btproto::ReadRowsResponse* r) {
+        *r = response;
+        return true;
+      }))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+
+  EXPECT_CALL(*client_, ReadRows(_, _))
+      .WillOnce(Invoke([&stream, this](grpc::ClientContext*,
+                                       btproto::ReadRowsRequest const& req) {
+        EXPECT_EQ(1, req.rows().row_keys_size());
+        EXPECT_EQ("r1", req.rows().row_keys(0));
+        EXPECT_EQ(1, req.rows_limit());
+        EXPECT_EQ(table_.table_name(), req.table_name());
+        return stream.release()->AsUniqueMocked();
+      }));
+
+  google::cloud::Status res_status;
+  auto result =
+      table_.ReadRow("r1", bigtable::Filter::PassAllFilter(), res_status);
+  EXPECT_STATUS_OK(res_status);
+  EXPECT_TRUE(std::get<0>(result));
+  auto row = std::get<1>(result);
+  EXPECT_EQ("r1", row.row_key());
+}
+
+TEST_F(NoexTableTest, ReadRow_AppProfileId) {
+  using namespace ::testing;
+  namespace btproto = ::google::bigtable::v2;
+  grpc::Status status;
+  auto response =
+      bigtable::testing::internal::ReadRowsResponseFromString(R"(
+chunks {
+row_key: "r1"
+    family_name { value: "fam" }
+    qualifier { value: "col" }
+timestamp_micros: 42000
+value: "value"
+commit_row: true
+}
+)",
+                                                              status);
+  EXPECT_TRUE(status.ok());
+
+  auto stream = google::cloud::internal::make_unique<MockReadRowsReader>();
+  EXPECT_CALL(*stream, Read(_))
+      .WillOnce(Invoke([&response](btproto::ReadRowsResponse* r) {
+        *r = response;
+        return true;
+      }))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+
+  std::string expected_id = "test-id";
+  EXPECT_CALL(*client_, ReadRows(_, _))
+      .WillOnce(Invoke(
+          [&stream, expected_id, this](grpc::ClientContext*,
+                                       btproto::ReadRowsRequest const& req) {
+            EXPECT_EQ(1, req.rows().row_keys_size());
+            EXPECT_EQ("r1", req.rows().row_keys(0));
+            EXPECT_EQ(1, req.rows_limit());
+            EXPECT_EQ(table_.table_name(), req.table_name());
+            EXPECT_EQ(expected_id, req.app_profile_id());
+            return stream.release()->AsUniqueMocked();
+          }));
+
+  bigtable::AppProfileId app_profile_id("test-id");
+  bigtable::noex::Table table =
+      bigtable::noex::Table(client_, app_profile_id, kTableId);
+  google::cloud::Status res_status;
+  auto result =
+      table.ReadRow("r1", bigtable::Filter::PassAllFilter(), res_status);
+  EXPECT_STATUS_OK(res_status);
+  EXPECT_TRUE(std::get<0>(result));
+  auto row = std::get<1>(result);
+  EXPECT_EQ("r1", row.row_key());
+}
+
+TEST_F(NoexTableTest, ReadRowMissing) {
+  using namespace ::testing;
+  namespace btproto = ::google::bigtable::v2;
+
+  auto stream = google::cloud::internal::make_unique<MockReadRowsReader>();
+  EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
+  EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+
+  EXPECT_CALL(*client_, ReadRows(_, _))
+      .WillOnce(Invoke([&stream, this](grpc::ClientContext*,
+                                       btproto::ReadRowsRequest const& req) {
+        EXPECT_EQ(1, req.rows().row_keys_size());
+        EXPECT_EQ("r1", req.rows().row_keys(0));
+        EXPECT_EQ(1, req.rows_limit());
+        EXPECT_EQ(table_.table_name(), req.table_name());
+        return stream.release()->AsUniqueMocked();
+      }));
+  google::cloud::Status status;
+  auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter(), status);
+  EXPECT_STATUS_OK(status);
+  EXPECT_FALSE(std::get<0>(result));
+}
+
+TEST_F(NoexTableTest, ReadRowError) {
+  using namespace ::testing;
+  namespace btproto = ::google::bigtable::v2;
+
+  auto stream = google::cloud::internal::make_unique<MockReadRowsReader>();
+  EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
+  EXPECT_CALL(*stream, Finish())
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::INTERNAL, "Internal Error")));
+
+  EXPECT_CALL(*client_, ReadRows(_, _))
+      .WillOnce(Invoke([&stream, this](grpc::ClientContext*,
+                                       btproto::ReadRowsRequest const& req) {
+        EXPECT_EQ(1, req.rows().row_keys_size());
+        EXPECT_EQ("r1", req.rows().row_keys(0));
+        EXPECT_EQ(1, req.rows_limit());
+        EXPECT_EQ(table_.table_name(), req.table_name());
+        return stream.release()->AsUniqueMocked();
+      }));
+  google::cloud::Status status;
+  auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter(), status);
+  EXPECT_FALSE(status.ok());
+  EXPECT_FALSE(std::get<0>(result));
+}
+
 TEST_F(NoexTableTest, ReadRowsCanReadOneRow) {
   grpc::Status status;
   auto response =
