@@ -58,10 +58,10 @@ StatusOr<ObjectMetadata> Client::UploadFileSimple(
     std::string const& file_name, internal::InsertObjectMediaRequest request) {
   std::ifstream is(file_name);
   if (!is.is_open()) {
-    std::string msg = __func__;
-    msg += ": cannot open source file ";
-    msg += file_name;
-    google::cloud::internal::ThrowRuntimeError(msg);
+    std::ostringstream os;
+    os << __func__ << "(" << request << ", " << file_name
+       << "): cannot open upload file source";
+    return Status(StatusCode::kNotFound, std::move(os).str());
   }
 
   std::string payload(std::istreambuf_iterator<char>{is}, {});
@@ -91,10 +91,10 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
 
   std::ifstream source(file_name);
   if (!source.is_open()) {
-    std::string msg = __func__;
-    msg += ": cannot open source file ";
-    msg += file_name;
-    return Status(StatusCode::kNotFound, std::move(msg));
+    std::ostringstream os;
+    os << __func__ << "(" << request << ", " << file_name
+       << "): cannot open upload file source";
+    return Status(StatusCode::kNotFound, std::move(os).str());
   }
   // This function only works for regular files, and the `storage::Client`
   // class checks before calling it.
@@ -160,23 +160,24 @@ Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
   // Open the download stream and immediately raise an exception on failure.
   ObjectReadStream stream(std::move(streambuf));
 
-  auto report_error = [&](char const* func, char const* what) {
+  auto report_error = [&request, file_name](char const* func, char const* what,
+                                            Status const& status) {
     std::ostringstream msg;
     msg << func << "(" << request << ", " << file_name << "): " << what
-        << " - status.message=" << stream.status().message();
-    return Status(stream.status().code(), std::move(msg).str());
+        << " - status.message=" << status.message();
+    return Status(status.code(), std::move(msg).str());
   };
   if (!stream.status().ok()) {
-    return report_error(__func__, "cannot open destination file");
+    return report_error(__func__, "cannot open download source object",
+                        stream.status());
   }
 
   // Open the destination file, and immediate raise an exception on failure.
   std::ofstream os(file_name);
   if (!os.is_open()) {
-    std::ostringstream msg;
-    msg << __func__ << "(" << request << ", " << file_name << "): "
-        << "cannot open destination file";
-    return Status(StatusCode::kInvalidArgument, std::move(msg).str());
+    return report_error(
+        __func__, "cannot open download destination file",
+        Status(StatusCode::kInvalidArgument, "ofstream::open()"));
   }
 
   std::string buffer;
@@ -187,13 +188,12 @@ Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
   } while (os.good() && stream.good());
   os.close();
   if (!os.good()) {
-    std::ostringstream msg;
-    msg << __func__ << "(" << request << ", " << file_name << "): "
-        << "cannot close destination file";
-    return Status(StatusCode::kUnknown, std::move(msg).str());
+    return report_error(__func__, "cannot close download destination file",
+                        Status(StatusCode::kUnknown, "ofstream::close()"));
   }
   if (!stream.status().ok()) {
-    return report_error(__func__, "error in download stream");
+    return report_error(__func__, "error reading download source object",
+                        stream.status());
   }
   return Status();
 }
