@@ -710,6 +710,46 @@ run_temporary_hold_examples() {
 }
 
 ################################################
+# Run the examples showing how to use object versioning.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+# Arguments:
+#   bucket_name: the name of the bucket to run the examples against.
+# Returns:
+#   None
+################################################
+run_object_versioning_examples() {
+  local bucket_name=$1
+  shift
+
+  local object_name="object-$(date +%s)-${RANDOM}.txt"
+  local copied_object_name="object-$(date +%s)-${RANDOM}.txt"
+  run_example ./storage_bucket_samples enable-object-versioning \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples get-object-versioning \
+      "${bucket_name}"
+  run_example ./storage_object_samples insert-object \
+      "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
+  # Create an archived version of our object.
+  run_example ./storage_object_samples insert-object \
+      "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
+  run_example ./storage_object_samples copy-versioned-object \
+      "${bucket_name}" "${object_name}" \
+      "${bucket_name}" "${copied_object_name}" "2"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${copied_object_name}"
+  run_example ./storage_object_samples delete-versioned-object \
+      "${bucket_name}" "${object_name}" "2"
+  run_example ./storage_bucket_samples disable-object-versioning \
+      "${bucket_name}"
+  # TODO (#2174): Uncomment this once it's figured out why the precondition
+  # fails.
+  # run_example ./storage_object_samples delete-object \
+  #     "${bucket_name}" "${object_name}"
+}
+
+################################################
 # Run all Customer-managed Encryption Keys examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -1055,6 +1095,7 @@ run_all_storage_examples() {
   run_all_public_object_examples "${BUCKET_NAME}"
   run_event_based_hold_examples "${BUCKET_NAME}"
   run_temporary_hold_examples "${BUCKET_NAME}"
+  run_object_versioning_examples "${BUCKET_NAME}"
   run_all_signed_url_v2_examples "${BUCKET_NAME}"
   run_all_signed_url_v4_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"

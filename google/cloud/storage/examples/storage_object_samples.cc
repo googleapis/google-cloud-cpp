@@ -87,11 +87,35 @@ void ListObjectsWithPrefix(google::cloud::storage::Client client, int& argc,
       }
 
       std::cout << "bucket_name=" << object_metadata->bucket()
-                << ", object_name=" << object_metadata->name() << "\n";
+          << ", object_name=" << object_metadata->name() << "\n";
     }
   }
   //! [list objects with prefix] [END storage_list_files_with_prefix]
   (std::move(client), bucket_name, bucket_prefix);
+}
+
+void ListVersionedObjects(google::cloud::storage::Client client, int& argc,
+                          char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"list-versioned-objects <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [list versioned objects] [START storage_list_versioned_files]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name) {
+    for (auto&& object_metadata :
+         client.ListObjects(bucket_name, gcs::Versions{true})) {
+      if (!object_metadata) {
+        throw std::runtime_error(object_metadata.status().message());
+      }
+
+      std::cout << "bucket_name=" << object_metadata->bucket()
+                << ", object_name=" << object_metadata->name()
+                << ", generation=" << object_metadata->generation() << "\n";
+    }
+  }
+  //! [list versioned objects] [END storage_list_versioned_files]
+  (std::move(client), bucket_name);
 }
 
 void InsertObject(google::cloud::storage::Client client, int& argc,
@@ -278,6 +302,47 @@ void CopyObject(google::cloud::storage::Client client, int& argc,
    destination_bucket_name, destination_object_name);
 }
 
+void CopyVersionedObject(google::cloud::storage::Client client, int& argc,
+                         char* argv[]) {
+  if (argc != 6) {
+    throw Usage{
+        "copy-versioned-object <source-bucket-name> <source-object-name>"
+        " <destination-bucket-name> <destination-object-name> "
+        "<source-object-generation>"};
+  }
+  auto source_bucket_name = ConsumeArg(argc, argv);
+  auto source_object_name = ConsumeArg(argc, argv);
+  auto destination_bucket_name = ConsumeArg(argc, argv);
+  auto destination_object_name = ConsumeArg(argc, argv);
+  auto source_object_generation = std::stoull(ConsumeArg(argc, argv));
+  //! [copy versioned object] [START storage_copy_versioned_file]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string source_bucket_name,
+     std::string source_object_name, std::string destination_bucket_name,
+     std::string destination_object_name,
+     std::uint64_t source_object_generation) {
+    StatusOr<gcs::ObjectMetadata> new_copy_meta =
+        client.CopyObject(source_bucket_name, source_object_name,
+                          destination_bucket_name, destination_object_name,
+                          gcs::SourceGeneration{source_object_generation});
+
+    if (!new_copy_meta) {
+      throw std::runtime_error(new_copy_meta.status().message());
+    }
+
+    std::cout << "Successfully copied " << source_object_name << " generation "
+              << source_object_generation << " in bucket " << source_bucket_name
+              << " to bucket " << new_copy_meta->bucket() << " with name "
+              << new_copy_meta->name()
+              << ".\nThe full metadata after the copy is: " << *new_copy_meta
+              << "\n";
+  }
+  //! [copy versioned object] [END storage_copy_versioned_file]
+  (std::move(client), source_bucket_name, source_object_name,
+   destination_bucket_name, destination_object_name, source_object_generation);
+}
+
 void CopyEncryptedObject(google::cloud::storage::Client client, int& argc,
                          char* argv[]) {
   if (argc != 6) {
@@ -417,6 +482,33 @@ void DeleteObject(google::cloud::storage::Client client, int& argc,
   }
   //! [delete object] [END storage_delete_file]
   (std::move(client), bucket_name, object_name);
+}
+
+void DeleteVersionedObject(google::cloud::storage::Client client, int& argc,
+                           char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "delete-versioned-object <bucket-name> <object-name> <object-version>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto object_version = std::stoull(ConsumeArg(argc, argv));
+  //! [delete versioned object] [START storage_delete_versioned_file]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::uint64_t object_version) {
+    google::cloud::Status status = client.DeleteObject(
+        bucket_name, object_name, gcs::Generation{object_version});
+
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
+    }
+
+    std::cout << "Deleted " << object_name << " generation " << object_version
+              << " in bucket " << bucket_name << "\n";
+  }
+  //! [delete versioned object] [END storage_delete_versioned_file]
+  (std::move(client), bucket_name, object_name, object_version);
 }
 
 void WriteObject(google::cloud::storage::Client client, int& argc,
@@ -1548,16 +1640,19 @@ int main(int argc, char* argv[]) try {
   std::map<std::string, CommandType> commands = {
       {"list-objects", &ListObjects},
       {"list-objects-with-prefix", &ListObjectsWithPrefix},
+      {"list-versioned-objects", &ListVersionedObjects},
       {"insert-object", &InsertObject},
       {"insert-object-strict-idempotency", &InsertObjectStrictIdempotency},
       {"insert-object-modified-retry", &InsertObjectModifiedRetry},
       {"insert-object-multipart", &InsertObjectMultipart},
       {"copy-object", &CopyObject},
+      {"copy-versioned-object", &CopyVersionedObject},
       {"copy-encrypted-object", &CopyEncryptedObject},
       {"get-object-metadata", &GetObjectMetadata},
       {"read-object", &ReadObject},
       {"read-object-range", &ReadObjectRange},
       {"delete-object", &DeleteObject},
+      {"delete-versioned-object", &DeleteVersionedObject},
       {"write-object", &WriteObject},
       {"write-large-object", &WriteLargeObject},
       {"start-resumable-upload", &StartResumableUpload},

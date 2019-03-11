@@ -880,6 +880,119 @@ void DisableDefaultEventBasedHold(google::cloud::storage::Client client,
   (std::move(client), bucket_name);
 }
 
+void GetObjectVersioning(google::cloud::storage::Client client, int& argc,
+                         char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"get-object-versioning <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [get object versioning] [START storage_get_object_versioning]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name) {
+    StatusOr<gcs::BucketMetadata> bucket_metadata =
+        client.GetBucketMetadata(bucket_name);
+
+    if (!bucket_metadata) {
+      throw std::runtime_error(bucket_metadata.status().message());
+    }
+
+    if (bucket_metadata->versioning().has_value()) {
+      std::cout << "Object versioning for bucket " << bucket_name << " is "
+                << (bucket_metadata->versioning()->enabled ? "enabled"
+                                                           : "disabled")
+                << "\n";
+    } else {
+      std::cout << "Object versioning for bucket " << bucket_name
+                << " is disabled.\n";
+    }
+  }
+  //! [get object versioning] [END storage_get_object_versioning]
+  (std::move(client), bucket_name);
+}
+
+void EnableObjectVersioning(google::cloud::storage::Client client, int& argc,
+                            char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"enable-object-versioning <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [enable object versioning] [START storage_enable_object_versioning]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name) {
+    StatusOr<gcs::BucketMetadata> original =
+        client.GetBucketMetadata(bucket_name);
+
+    if (!original) {
+      throw std::runtime_error(original.status().message());
+    }
+
+    StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetVersioning(
+            gcs::BucketVersioning{true}),
+        gcs::IfMetagenerationMatch(original->metageneration()));
+
+    if (!patched_metadata) {
+      throw std::runtime_error(patched_metadata.status().message());
+    }
+
+    if (patched_metadata->versioning().has_value()) {
+      std::cout << "Object versioning for bucket " << bucket_name << " is "
+                << (patched_metadata->versioning()->enabled ? "enabled"
+                                                            : "disabled")
+                << "\n";
+    } else {
+      std::cout << "Object versioning for bucket " << bucket_name
+                << " is disabled.\n";
+    }
+  }
+  //! [enable object versioning] [END storage_enable_object_versioning]
+  (std::move(client), bucket_name);
+}
+
+void DisableObjectVersioning(google::cloud::storage::Client client, int& argc,
+                             char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"disable-object-versioning <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [disable object versioning] [START storage_disable_object_versioning]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name) {
+    StatusOr<gcs::BucketMetadata> original =
+        client.GetBucketMetadata(bucket_name);
+
+    if (!original) {
+      throw std::runtime_error(original.status().message());
+    }
+
+    StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetVersioning(
+            gcs::BucketVersioning{false}),
+        gcs::IfMetagenerationMatch(original->metageneration()));
+
+    if (!patched_metadata) {
+      throw std::runtime_error(patched_metadata.status().message());
+    }
+
+    if (patched_metadata->versioning().has_value()) {
+      std::cout << "Object versioning for bucket " << bucket_name << " is "
+                << (patched_metadata->versioning()->enabled ? "enabled"
+                                                            : "disabled")
+                << "\n";
+    } else {
+      std::cout << "Object versioning for bucket " << bucket_name
+                << " is disabled.\n";
+    }
+  }
+  //! [disable object versioning] [END storage_disable_object_versioning]
+  (std::move(client), bucket_name);
+}
+
 void GetRetentionPolicy(google::cloud::storage::Client client, int& argc,
                         char* argv[]) {
   if (argc != 2) {
@@ -1088,6 +1201,9 @@ int main(int argc, char* argv[]) try {
       {"get-default-event-based-hold", &GetDefaultEventBasedHold},
       {"enable-default-event-based-hold", &EnableDefaultEventBasedHold},
       {"disable-default-event-based-hold", &DisableDefaultEventBasedHold},
+      {"get-object-versioning", &GetObjectVersioning},
+      {"enable-object-versioning", &EnableObjectVersioning},
+      {"disable-object-versioning", &DisableObjectVersioning},
       {"get-retention-policy", &GetRetentionPolicy},
       {"set-retention-policy", &SetRetentionPolicy},
       {"remove-retention-policy", &RemoveRetentionPolicy},
