@@ -156,6 +156,8 @@ class CurlClient : public RawClient,
 
   StatusOr<ServiceAccount> GetServiceAccount(
       GetProjectServiceAccountRequest const&) override;
+  StatusOr<ListHmacKeysResponse> ListHmacKeys(
+      ListHmacKeysRequest const&) override;
   StatusOr<CreateHmacKeyResponse> CreateHmacKey(
       CreateHmacKeyRequest const&) override;
 

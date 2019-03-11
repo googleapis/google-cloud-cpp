@@ -73,6 +73,13 @@ elif [[ "${BUILD_NAME}" = "no-tests" ]]; then
   # is too high.
   export BUILD_TESTING=no
   export CMAKE_FLAGS=-DBUILD_TESTING=OFF
+elif [[ "${BUILD_NAME}" = "check-abi" ]]; then
+  export CHECK_ABI=yes
+  export TEST_INSTALL=yes
+  export CMAKE_FLAGS=-DBUILD_SHARED_LIBS=yes
+  export BUILD_TYPE=Debug
+  export DISTRO=ubuntu-install
+  export DISTRO_VERSION=18.04
 else
   echo "Unknown BUILD_NAME (${BUILD_NAME}). Fix the Kokoro .cfg file."
   exit 1
@@ -120,6 +127,10 @@ echo "================================================================"
 
 echo "================================================================"
 "${PROJECT_ROOT}/ci/travis/dump-logs.sh"
+echo "================================================================"
+
+echo "================================================================"
+"${PROJECT_ROOT}/ci/travis/dump-reports.sh"
 echo "================================================================"
 
 exit ${exit_status}
