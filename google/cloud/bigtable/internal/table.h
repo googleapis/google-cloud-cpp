@@ -314,9 +314,6 @@ class Table {
 
   RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter);
 
-  std::pair<bool, Row> ReadRow(std::string row_key, Filter filter,
-                               Status& status);
-
   /**
    * Reads a limited set of rows from the table asynchronously.
    *
