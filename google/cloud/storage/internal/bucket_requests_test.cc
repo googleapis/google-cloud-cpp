@@ -147,7 +147,7 @@ TEST(ListBucketsResponseTest, ParseFailure) {
   EXPECT_FALSE(actual.ok());
 }
 
-TEST(ListBucketsResponseTestt, ParseFailureInItems) {
+TEST(ListBucketsResponseTest, ParseFailureInItems) {
   std::string text = R"""({"items": [ "invalid-item" ]})""";
 
   auto actual =
