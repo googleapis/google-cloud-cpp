@@ -177,6 +177,8 @@ add_library(storage_client
             lifecycle_rule.cc
             list_buckets_reader.h
             list_buckets_reader.cc
+            list_hmac_keys_reader.h
+            list_hmac_keys_reader.cc
             list_objects_reader.h
             list_objects_reader.cc
             notification_event_type.h
@@ -344,6 +346,7 @@ if (BUILD_TESTING)
         internal/signed_url_requests_test.cc
         lifecycle_rule_test.cc
         list_buckets_reader_test.cc
+        list_hmac_keys_reader_test.cc
         list_objects_reader_test.cc
         oauth2/anonymous_credentials_test.cc
         oauth2/authorized_user_credentials_test.cc

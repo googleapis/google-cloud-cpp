@@ -182,6 +182,27 @@ TEST(HmacKeysRequestsTest, ParseListResponseFailureInItems) {
   EXPECT_FALSE(actual.ok());
 }
 
+TEST(HmacKeysRequestsTest, ListResponseOStream) {
+  std::string text = R"""({
+      "kind": "storage#hmacKeys",
+      "nextPageToken": "some-token-42",
+      "items": [
+        {"accessId": "test-access-id-1"},
+        {"accessId": "test-access-id-2"}
+      ]
+})""";
+
+  auto parsed =
+      ListHmacKeysResponse::FromHttpResponse(HttpResponse{200, text, {}})
+          .value();
+  std::ostringstream os;
+  os << parsed;
+  auto actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("some-token-42"));
+  EXPECT_THAT(actual, HasSubstr("test-access-id-1"));
+  EXPECT_THAT(actual, HasSubstr("test-access-id-2"));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

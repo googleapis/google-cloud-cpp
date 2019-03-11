@@ -318,6 +318,11 @@ StatusOr<ServiceAccount> LoggingClient::GetServiceAccount(
   return MakeCall(*client_, &RawClient::GetServiceAccount, request, __func__);
 }
 
+StatusOr<ListHmacKeysResponse> LoggingClient::ListHmacKeys(
+    ListHmacKeysRequest const& request) {
+  return MakeCall(*client_, &RawClient::ListHmacKeys, request, __func__);
+}
+
 StatusOr<CreateHmacKeyResponse> LoggingClient::CreateHmacKey(
     CreateHmacKeyRequest const& request) {
   return MakeCall(*client_, &RawClient::CreateHmacKey, request, __func__);
