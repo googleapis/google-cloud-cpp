@@ -133,8 +133,8 @@ class DeleteHmacKeyRequest
     : public GenericHmacKeyRequest<DeleteHmacKeyRequest> {
  public:
   explicit DeleteHmacKeyRequest(std::string project_id, std::string access_id)
-  : GenericHmacKeyRequest(std::move(project_id)),
-  access_id_(std::move(access_id)) {}
+      : GenericHmacKeyRequest(std::move(project_id)),
+        access_id_(std::move(access_id)) {}
 
   std::string const& access_id() const { return access_id_; }
 

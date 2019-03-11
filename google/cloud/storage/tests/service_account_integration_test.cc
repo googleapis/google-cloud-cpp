@@ -89,7 +89,7 @@ TEST(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
   EXPECT_FALSE(key->second.empty());
 }
 
-TEST(ServiceAccountIntegrationTest, CreateHmacKey) {
+TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   if (!UsingTestbench()) {
     // Temporarily disabled outside the testbench because the test does not
     // cleanup after itself.
@@ -107,6 +107,11 @@ TEST(ServiceAccountIntegrationTest, CreateHmacKey) {
   ASSERT_STATUS_OK(key);
 
   EXPECT_FALSE(key->second.empty());
+
+  StatusOr<HmacKeyMetadata> deleted_key = client.DeleteHmacKey(
+      key->first.access_id(), OverrideDefaultProject(project_id));
+  ASSERT_STATUS_OK(deleted_key);
+  EXPECT_EQ(HmacKeyMetadata::state_deleted(), deleted_key->state());
 }
 
 TEST(ServiceAccountIntegrationTest, ListHmacKeys) {
