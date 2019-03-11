@@ -112,7 +112,7 @@ std::ostream& operator<<(std::ostream& os, ListHmacKeysResponse const& r) {
   os << "ListHmacKeysResponse={next_page_token=" << r.next_page_token
      << ", items={";
   std::copy(r.items.begin(), r.items.end(),
-            std::ostream_iterator<HmacKeyMetadata>(os, "\n  "));
+            std::ostream_iterator<HmacKeyMetadata>(os, ", "));
   return os << "}}";
 }
 
