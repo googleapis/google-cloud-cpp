@@ -128,6 +128,22 @@ struct ListHmacKeysResponse {
 
 std::ostream& operator<<(std::ostream& os, ListHmacKeysResponse const& r);
 
+/// Represents a request to call the `HmacKeys: delete` API.
+class DeleteHmacKeyRequest
+    : public GenericHmacKeyRequest<DeleteHmacKeyRequest> {
+ public:
+  explicit DeleteHmacKeyRequest(std::string project_id, std::string access_id)
+  : GenericHmacKeyRequest(std::move(project_id)),
+  access_id_(std::move(access_id)) {}
+
+  std::string const& access_id() const { return access_id_; }
+
+ private:
+  std::string access_id_;
+};
+
+std::ostream& operator<<(std::ostream& os, DeleteHmacKeyRequest const& r);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

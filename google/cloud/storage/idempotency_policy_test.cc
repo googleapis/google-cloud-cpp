@@ -542,6 +542,13 @@ TEST(StrictIdempotencyPolicyTest, CreateHmacKey) {
   EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
+TEST(StrictIdempotencyPolicyTest, DeleteHmacKey) {
+  StrictIdempotencyPolicy policy;
+  internal::CreateHmacKeyRequest request("test-project-id",
+                                         "test-service-account");
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
 TEST(StrictIdempotencyPolicyTest, ListNotification) {
   StrictIdempotencyPolicy policy;
   internal::ListNotificationsRequest request("test-bucket-name");
