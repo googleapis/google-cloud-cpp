@@ -167,7 +167,7 @@ Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
     return Status(stream.status().code(), std::move(msg).str());
   };
   if (!stream.status().ok()) {
-    return report_error(__func__, "cannot open destination file");
+    return report_error(__func__, "cannot open download file");
   }
 
   // Open the destination file, and immediate raise an exception on failure.
