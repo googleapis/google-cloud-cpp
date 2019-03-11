@@ -46,7 +46,7 @@ class ServiceAccount(object):
             "kind": "storage#hmacKeyCreate",
             "secretKey": base64.b64encode(secret_key),
             "resource": {
-                "accessId": key_id,
+                "accessId": "%s:%s" % (self.email, key_id),
                 "id": key_id,
                 "kind": "storage#hmacKey",
                 "projectId": project_id,
@@ -59,6 +59,19 @@ class ServiceAccount(object):
     def key_items(self):
         """Return the keys in this service account as a list of JSON objects."""
         return [k.get('resource') for k in self.keys.values()]
+
+    def delete_key(self, key_id):
+        """Delete an existing HMAC key from the service account."""
+        key = self.keys.pop(key_id)
+        if key is None:
+            raise error_response.ErrorResponse(
+                'Cannot find key for key ' % key_id, status_code=404)
+        resource = key.get('resource')
+        if resource is None:
+            raise error_response.ErrorResponse(
+                'Missing resource for HMAC key ' % key_id, status_code=500)
+        resource['state'] = 'DELETED'
+        return resource
 
 
 class GcsProject(object):
@@ -89,6 +102,15 @@ class GcsProject(object):
     def service_account(self, service_account_email):
         """Return a ServiceAccount object given its email."""
         return self.service_accounts.get(service_account_email)
+
+    def delete_hmac_key(self, access_id):
+        """Remove a key from the project."""
+        (service_account, key_id) = access_id.split(':', 2)
+        sa = self.service_accounts.get(service_account)
+        if sa is None:
+            raise error_response.ErrorResponse(
+                'Cannot find service account for key=' % access_id, status_code=404)
+        return sa.delete_key(key_id)
 
 
 PROJECTS_HANDLER_PATH = '/storage/v1/projects'
@@ -160,6 +182,14 @@ def hmac_keys_list(project_id):
 
     result['items'] = [i for i in items if state_filter(i)]
     return testbench_utils.filtered_response(flask.request, result)
+
+
+@projects.route('/<project_id>/hmacKeys/<access_id>', methods=['DELETE'])
+def hmac_keys_delete(project_id, access_id):
+    """Implement the `HmacKeys: delete` API."""
+    project = get_project(project_id)
+    return testbench_utils.filtered_response(
+        flask.request, project.delete_hmac_key(access_id))
 
 
 def get_projects_app():
