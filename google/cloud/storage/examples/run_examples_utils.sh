@@ -283,7 +283,7 @@ run_all_object_examples() {
   shift
 
   local object_name="object-$(date +%s)-${RANDOM}.txt"
-  local bucket_prefix="prefix-$(date +%s)-${RANDOM}.txt"
+  local bucket_prefix="prefix-$(date +%s)-${RANDOM}"
   local composed_object_name="composed-object-$(date +%s)-${RANDOM}.txt"
   local copied_object_name="copied-object-$(date +%s)-${RANDOM}.txt"
   local multipart_object_name="multipart-object-$(date +%s)-${RANDOM}.txt"
