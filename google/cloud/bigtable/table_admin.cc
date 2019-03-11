@@ -43,7 +43,8 @@ StatusOr<btadmin::Table> TableAdmin::CreateTable(std::string table_id,
   request.set_parent(instance_name());
   request.set_table_id(std::move(table_id));
 
-  // This API is not idempotent, lets call it without retry
+  // This is a non-idempotent API, use the correct retry loop for this type of
+  // operation.
   auto result = ClientUtils::MakeNonIdemponentCall(
       *(impl_.client_), impl_.rpc_retry_policy_->clone(),
       impl_.metadata_update_policy_, &AdminClient::CreateTable, request,

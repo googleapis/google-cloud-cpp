@@ -236,6 +236,65 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
   EXPECT_THAT(status.error_message(), HasSubstr("try-again"));
 }
 
+/// @test Verify that `bigtable::TableAdmin::Create` works in the easy case.
+TEST_F(TableAdminTest, CreateTableSimple) {
+  using namespace ::testing;
+  using namespace google::cloud::testing_util::chrono_literals;
+
+  bigtable::noex::TableAdmin tested(client_, "the-instance");
+
+  std::string expected_text = R"""(
+parent: 'projects/the-project/instances/the-instance'
+table_id: 'new-table'
+    table {
+        column_families {
+        key: 'f1'
+            value { gc_rule { max_num_versions: 1 }}
+        }
+        column_families {
+        key: 'f2'
+            value { gc_rule { max_age { seconds: 1 }}}
+        }
+    granularity: TIMESTAMP_GRANULARITY_UNSPECIFIED
+    }
+    initial_splits { key: 'a' }
+    initial_splits { key: 'c' }
+    initial_splits { key: 'p' }
+    )""";
+  auto mock_create_table =
+      MockRpcFactory<btadmin::CreateTableRequest, btadmin::Table>::Create(
+          expected_text);
+  EXPECT_CALL(*client_, CreateTable(_, _, _))
+      .WillOnce(Invoke(mock_create_table));
+
+  // After all the setup, make the actual call we want to test.
+  using GC = bigtable::GcRule;
+  bigtable::TableConfig config(
+      {{"f1", GC::MaxNumVersions(1)}, {"f2", GC::MaxAge(1_s)}},
+      {"a", "c", "p"});
+  grpc::Status status;
+  tested.CreateTable("new-table", std::move(config), status);
+  EXPECT_TRUE(status.ok());
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::CreateTable` supports
+ * only one try and let client know request status.
+ */
+TEST_F(TableAdminTest, CreateTableFailure) {
+  using namespace ::testing;
+
+  bigtable::noex::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*client_, CreateTable(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+  grpc::Status status;
+  // After all the setup, make the actual call we want to test.
+  tested.CreateTable("other-table", bigtable::TableConfig(), status);
+  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status.error_message(), HasSubstr("uh oh"));
+}
+
 /**
  * @test Verify that Copy Constructor and assignment operator
  * copies all properties.

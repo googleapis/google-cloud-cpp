@@ -99,6 +99,18 @@ class TableAdmin {
   std::string const& instance_id() const { return instance_id_; }
   std::string const& instance_name() const { return instance_name_; }
 
+  //@{
+  /**
+   * @name No exception versions of TableAdmin::*
+   *
+   * These functions provide the same functionality as their counterparts in the
+   * `bigtable::TableAdmin` class, but do not raise exceptions on errors,
+   * instead they return the error on the status parameter.
+   */
+  google::bigtable::admin::v2::Table CreateTable(std::string table_id,
+                                                 TableConfig config,
+                                                 grpc::Status& status);
+
   /**
    * Make an asynchronous request to create the table.
    *
