@@ -363,13 +363,9 @@ When you apply a new ACL to an object, GCS adds <code>OWNER</code> permission to
 <tr class="memitem:a8efe362cc08396f24eb52f7e1fb79419"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html">ServiceAccount</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a8efe362cc08396f24eb52f7e1fb79419">GetServiceAccount</a> (Options &amp;&amp;... options)</td></tr>
 <tr class="memdesc:a8efe362cc08396f24eb52f7e1fb79419"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the GCS service account for the default project.  <a href="#a8efe362cc08396f24eb52f7e1fb79419">More...</a><br /></td></tr>
 <tr class="separator:a8efe362cc08396f24eb52f7e1fb79419"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62a8e4725c2c08cef2070161115d3a69"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
-<tr class="memitem:a62a8e4725c2c08cef2070161115d3a69"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; std::pair&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1HmacKeyMetadata.html">HmacKeyMetadata</a>, std::string &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a62a8e4725c2c08cef2070161115d3a69">CreateHmacKeyForProject</a> (std::string project_id, std::string service_account, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:a62a8e4725c2c08cef2070161115d3a69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new HMAC key in a given project.  <a href="#a62a8e4725c2c08cef2070161115d3a69">More...</a><br /></td></tr>
-<tr class="separator:a62a8e4725c2c08cef2070161115d3a69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4da657c9f7342a62ea537bf67f204060"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
 <tr class="memitem:a4da657c9f7342a62ea537bf67f204060"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; std::pair&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1HmacKeyMetadata.html">HmacKeyMetadata</a>, std::string &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a4da657c9f7342a62ea537bf67f204060">CreateHmacKey</a> (std::string service_account, Options &amp;&amp;... options)</td></tr>
-<tr class="memdesc:a4da657c9f7342a62ea537bf67f204060"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new HMAC key associated in the default project.  <a href="#a4da657c9f7342a62ea537bf67f204060">More...</a><br /></td></tr>
+<tr class="memdesc:a4da657c9f7342a62ea537bf67f204060"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new HMAC key in a given project.  <a href="#a4da657c9f7342a62ea537bf67f204060">More...</a><br /></td></tr>
 <tr class="separator:a4da657c9f7342a62ea537bf67f204060"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Signed URL support operations.</div></td></tr>
 <tr class="memitem:ae15d05c54c2e9094719514a5856e1cc6"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
@@ -1092,73 +1088,12 @@ template&lt;typename... Options&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Create a new HMAC key associated in the default project. </p>
-<dl class="section warning"><dt>Warning</dt><dd>This GCS feature is not GA, it is subject to change without notice.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">service_account</td><td>the service account email where you want to create the new HMAC key. </td></tr>
-    <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. Only the standard options apply in this case.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>This operation returns the new HMAC key metadata <em>and</em> the HMAC key secret (encoded as a base64 string). This is the only request that returns the secret.</dd></dl>
-<dl class="section user"><dt>Idempotency</dt><dd>This operation is not idempotent. Retrying the operation will create a new key each time.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><a class="el" href="storage__service__account__samples_8cc.html">storage_service_account_samples.cc</a> create hmac key</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/iam/docs/service-accounts">https://cloud.google.com/iam/docs/service-accounts</a> for general information on Google Cloud Platform service accounts. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02335">2335</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
-
-</div>
-</div>
-<a id="a62a8e4725c2c08cef2070161115d3a69"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62a8e4725c2c08cef2070161115d3a69">&#9670;&nbsp;</a></span>CreateHmacKeyForProject()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... Options&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">StatusOr&lt;std::pair&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1HmacKeyMetadata.html">HmacKeyMetadata</a>, std::string&gt; &gt; google::cloud::storage::v0::Client::CreateHmacKeyForProject </td>
-          <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>project_id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>service_account</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Options &amp;&amp;...&#160;</td>
-          <td class="paramname"><em>options</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
 <p>Create a new HMAC key in a given project. </p>
 <dl class="section warning"><dt>Warning</dt><dd>This GCS feature is not GA, it is subject to change without notice.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">project_id</td><td>the name of the project where you want to create the service account. </td></tr>
     <tr><td class="paramname">service_account</td><td>the service account email where you want to create the new HMAC key. </td></tr>
-    <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. Only the standard options apply in this case.</td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional query parameters and/or request headers. In addition to the options common to all requests, this operation accepts <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1OverrideDefaultProject.html" title="Override the default project. ">OverrideDefaultProject</a></code>.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1167,7 +1102,7 @@ template&lt;typename... Options&gt; </div>
 <dl class="section user"><dt>Example</dt><dd><a class="el" href="storage__service__account__samples_8cc.html">storage_service_account_samples.cc</a> create hmac key project</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/iam/docs/service-accounts">https://cloud.google.com/iam/docs/service-accounts</a> for general information on Google Cloud Platform service accounts. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02295">2295</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02294">2294</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
 
 </div>
 </div>
@@ -1243,7 +1178,7 @@ template&lt;typename... Options&gt; </div>
 <dd>
 <a href="https://cloud.google.com/pubsub/">https://cloud.google.com/pubsub/</a> for general information on Google Cloud Pub/Sub service. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02543">2543</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02509">2509</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
 
 </div>
 </div>
@@ -1393,7 +1328,7 @@ The application must ensure that any URL created with this function is a valid r
 <dd>
 <a href="https://cloud.google.com/storage/docs/xml-api/overview">https://cloud.google.com/storage/docs/xml-api/overview</a> for a detailed description of the XML API. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02397">2397</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02363">2363</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
 
 </div>
 </div>
@@ -1468,7 +1403,7 @@ The application must ensure that any URL created with this function is a valid r
 <dd>
 <a href="https://cloud.google.com/storage/docs/xml-api/overview">https://cloud.google.com/storage/docs/xml-api/overview</a> for a detailed description of the XML API. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02459">2459</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02425">2425</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
 
 </div>
 </div>
@@ -1702,7 +1637,7 @@ template&lt;typename... Options&gt; </div>
 <dd>
 <a href="https://cloud.google.com/pubsub/">https://cloud.google.com/pubsub/</a> for general information on Google Cloud Pub/Sub service. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02615">2615</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02581">2581</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
 
 </div>
 </div>
@@ -2183,7 +2118,7 @@ template&lt;typename... Options&gt; </div>
 <dd>
 <a href="https://cloud.google.com/pubsub/">https://cloud.google.com/pubsub/</a> for general information on Google Cloud Pub/Sub service. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02579">2579</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02545">2545</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
 
 </div>
 </div>
@@ -2717,7 +2652,7 @@ template&lt;typename... Options&gt; </div>
 <dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and is always idempotent.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  using ::google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client, std::string bucket_name) {</div><div class="line">    StatusOr&lt;std::vector&lt;gcs::NotificationMetadata&gt;&gt; items =</div><div class="line">        client.ListNotifications(bucket_name);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (!items) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(items.status().message());</div><div class="line">    }</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Notifications for bucket=&quot;</span> &lt;&lt; bucket_name &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (gcs::NotificationMetadata <span class="keyword">const</span>&amp; notification : *items) {</div><div class="line">      std::cout &lt;&lt; notification &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02498">2498</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02464">2464</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
 
 </div>
 </div>
