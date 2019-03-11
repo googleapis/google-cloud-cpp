@@ -2286,7 +2286,7 @@ class Client {
    * key each time.
    *
    * @par Example
-   *
+   * storage_service_account_samples.cc create hmac key project
    *
    * @see https://cloud.google.com/iam/docs/service-accounts for general
    *     information on Google Cloud Platform service accounts.
@@ -2326,7 +2326,7 @@ class Client {
    * key each time.
    *
    * @par Example
-   *
+   * storage_service_account_samples.cc create hmac key
    *
    * @see https://cloud.google.com/iam/docs/service-accounts for general
    *     information on Google Cloud Platform service accounts.

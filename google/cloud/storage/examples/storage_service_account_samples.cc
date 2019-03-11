@@ -92,11 +92,60 @@ void GetServiceAccountForProject(google::cloud::storage::Client client,
   (std::move(client), project_id);
 }
 
+void CreateHmacKey(google::cloud::storage::Client client, int& argc,
+                   char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"create-hmac-key <service-account-email>"};
+  }
+  //! [create hmac key] [START storage_create_hmac_key]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string service_account_email) {
+    StatusOr<std::pair<gcs::HmacKeyMetadata, std::string>> hmac_key_details =
+        client.CreateHmacKey(service_account_email);
+
+    if (!hmac_key_details) {
+      throw std::runtime_error(hmac_key_details.status().message());
+    }
+    std::cout << "The base64 encoded secret is: " << hmac_key_details->second
+              << "\nDo not miss that secret, there is no API to recover it."
+              << "\nThe HMAC key metadata is: " << hmac_key_details->first
+              << "\n";
+  }
+  //! [create hmac key] [END storage_create_hmac_key]
+  (std::move(client), argv[1]);
+}
+
+void CreateHmacKeyForProject(google::cloud::storage::Client client, int& argc,
+                             char* argv[]) {
+  if (argc != 3) {
+    throw Usage{
+        "create-hmac-key-for-project <project-id> <service-account-email>"};
+  }
+  //! [create hmac key project]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string project_id,
+     std::string service_account_email) {
+    StatusOr<std::pair<gcs::HmacKeyMetadata, std::string>> hmac_key_details =
+        client.CreateHmacKeyForProject(project_id, service_account_email);
+
+    if (!hmac_key_details) {
+      throw std::runtime_error(hmac_key_details.status().message());
+    }
+    std::cout << "The base64 encoded secret is: " << hmac_key_details->second
+              << "\nDo not miss that secret, there is no API to recover it."
+              << "\nThe HMAC key metadata is: " << hmac_key_details->first
+              << "\n";
+  }
+  //! [create hmac key project]
+  (std::move(client), argv[1], argv[2]);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
   // Create a client to communicate with Google Cloud Storage.
-  //! [create client]
   google::cloud::StatusOr<google::cloud::storage::Client> client =
       google::cloud::storage::Client::CreateDefaultClient();
   if (!client) {
@@ -104,13 +153,14 @@ int main(int argc, char* argv[]) try {
               << "\n";
     return 1;
   }
-  //! [create client]
 
   using CommandType =
       std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"get-service-account", &GetServiceAccount},
       {"get-service-account-for-project", &GetServiceAccountForProject},
+      {"create-hmac-key-for-project", &CreateHmacKeyForProject},
+      {"create-hmac-key", &CreateHmacKey},
   };
   for (auto&& kv : commands) {
     try {

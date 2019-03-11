@@ -99,6 +99,21 @@ run_all_service_account_examples() {
   export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
   run_example ./storage_service_account_samples get-service-account
   unset GOOGLE_CLOUD_PROJECT
+
+  if [[ -z "${CLOUD_STORAGE_TESTBENCH_ENDPOINT:-}" ]]; then
+    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
+        " HMAC key examples skipped because they are not enabled in production."
+    return
+  fi
+
+  run_example ./storage_service_account_samples \
+      create-hmac-key-for-project "${PROJECT_ID}" "${SERVICE_ACCOUNT}"
+
+  # Run the examples using the environment to get the project id:
+  export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
+  run_example ./storage_service_account_samples \
+      create-hmac-key "${SERVICE_ACCOUNT}"
+  unset GOOGLE_CLOUD_PROJECT
 }
 
 ################################################
