@@ -128,7 +128,8 @@ void CreateHmacKeyForProject(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string project_id,
      std::string service_account_email) {
     StatusOr<std::pair<gcs::HmacKeyMetadata, std::string>> hmac_key_details =
-        client.CreateHmacKeyForProject(project_id, service_account_email);
+        client.CreateHmacKey(service_account_email,
+                             gcs::OverrideDefaultProject(project_id));
 
     if (!hmac_key_details) {
       throw std::runtime_error(hmac_key_details.status().message());

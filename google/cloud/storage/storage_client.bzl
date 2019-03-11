@@ -92,6 +92,7 @@ storage_client_hdrs = [
     "object_metadata.h",
     "object_rewriter.h",
     "object_stream.h",
+    "override_default_project.h",
     "retry_policy.h",
     "service_account.h",
     "signed_url_options.h",

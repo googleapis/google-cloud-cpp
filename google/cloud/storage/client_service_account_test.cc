@@ -117,7 +117,8 @@ TEST_F(ServiceAccountTest, CreateHmacKey) {
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
   StatusOr<std::pair<HmacKeyMetadata, std::string>> actual =
-      client.CreateHmacKeyForProject("test-project", "test-service-account");
+      client.CreateHmacKey("test-service-account",
+                           OverrideDefaultProject("test-project"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected.resource, actual->first);
   EXPECT_EQ(expected.secret, actual->second);
@@ -127,9 +128,7 @@ TEST_F(ServiceAccountTest, CreateHmacKeyTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::CreateHmacKeyResponse>(
       mock, EXPECT_CALL(*mock, CreateHmacKey(_)),
       [](Client& client) {
-        return client
-            .CreateHmacKeyForProject("test-project", "test-service-account")
-            .status();
+        return client.CreateHmacKey("test-service-account").status();
       },
       "CreateHmacKey");
 }
@@ -138,9 +137,7 @@ TEST_F(ServiceAccountTest, CreateHmacKeyPermanentFailure) {
   testing::PermanentFailureStatusTest<internal::CreateHmacKeyResponse>(
       *client, EXPECT_CALL(*mock, CreateHmacKey(_)),
       [](Client& client) {
-        return client
-            .CreateHmacKeyForProject("test-project", "test-service-account")
-            .status();
+        return client.CreateHmacKey("test-service-account").status();
       },
       "CreateHmacKey");
 }

@@ -82,8 +82,8 @@ TEST(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  StatusOr<std::pair<HmacKeyMetadata, std::string>> key =
-      client->CreateHmacKeyForProject(project_id, service_account);
+  StatusOr<std::pair<HmacKeyMetadata, std::string>> key = client->CreateHmacKey(
+      service_account, OverrideDefaultProject(project_id));
   ASSERT_STATUS_OK(key);
 
   EXPECT_FALSE(key->second.empty());
