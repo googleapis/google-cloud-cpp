@@ -32,18 +32,6 @@ static_assert(std::is_copy_assignable<bigtable::noex::TableAdmin>::value,
 /// Shortcuts to avoid typing long names over and over.
 using ClientUtils = bigtable::internal::noex::UnaryClientUtils<AdminClient>;
 
-btadmin::Table TableAdmin::CreateTable(std::string table_id, TableConfig config,
-                                       grpc::Status& status) {
-  auto request = std::move(config).as_proto();
-  request.set_parent(instance_name());
-  request.set_table_id(std::move(table_id));
-
-  // This API is not idempotent, lets call it without retry
-  return ClientUtils::MakeNonIdemponentCall(
-      *client_, rpc_retry_policy_->clone(), metadata_update_policy_,
-      &AdminClient::CreateTable, request, "CreateTable", status);
-}
-
 std::vector<btadmin::Table> TableAdmin::ListTables(btadmin::Table::View view,
                                                    grpc::Status& status) {
   // Copy the policies in effect for the operation.

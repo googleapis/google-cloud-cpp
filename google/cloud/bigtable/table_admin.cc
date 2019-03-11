@@ -32,11 +32,23 @@ static_assert(std::is_copy_constructible<bigtable::TableAdmin>::value,
 static_assert(std::is_copy_assignable<bigtable::TableAdmin>::value,
               "bigtable::TableAdmin must be assignable");
 
+/// Shortcuts to avoid typing long names over and over.
+using ClientUtils = bigtable::internal::noex::UnaryClientUtils<AdminClient>;
+
 StatusOr<btadmin::Table> TableAdmin::CreateTable(std::string table_id,
                                                  TableConfig config) {
   grpc::Status status;
-  auto result =
-      impl_.CreateTable(std::move(table_id), std::move(config), status);
+
+  auto request = std::move(config).as_proto();
+  request.set_parent(instance_name());
+  request.set_table_id(std::move(table_id));
+
+  // This API is not idempotent, lets call it without retry
+  auto result = ClientUtils::MakeNonIdemponentCall(
+      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+      impl_.metadata_update_policy_, &AdminClient::CreateTable, request,
+      "CreateTable", status);
+
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
