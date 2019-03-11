@@ -190,3 +190,8 @@ Please note that we use more strict settings for release branches than for
 [git-docs]: https://git-scm.com/doc
 [github-guides]: https://guides.github.com/
 [github-branch-settings]: https://github.com/googleapis/google-cloud-cpp/settings/branches
+
+## Push the release to Microsoft vcpkg
+
+Nudge coryan@ to send a PR to
+[vcpkg](https://github.com/Microsoft/vcpkg/tree/master/ports/google-cloud-cpp).
