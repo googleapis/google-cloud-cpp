@@ -36,15 +36,19 @@ TEST(HmacKeyRequestsTest, ParseEmpty) {
 }
 
 TEST(HmacKeyRequestsTest, Create) {
-  CreateHmacKeyRequest request("test-project-id", "test-service-account");
-  EXPECT_EQ("test-project-id", request.project_id());
+  CreateHmacKeyRequest request("", "test-service-account");
+  EXPECT_EQ("", request.project_id());
   EXPECT_EQ("test-service-account", request.service_account());
+  request.set_multiple_options(OverrideDefaultProject("test-project-id"),
+                               UserIp("test-user-ip"));
+  EXPECT_EQ("test-project-id", request.project_id());
 
   std::ostringstream os;
   os << request;
   auto str = os.str();
   EXPECT_THAT(str, HasSubstr("CreateHmacKeyRequest"));
   EXPECT_THAT(str, HasSubstr("test-project-id"));
+  EXPECT_THAT(str, HasSubstr("test-user-ip"));
   EXPECT_THAT(str, HasSubstr("test-service-account"));
 }
 
@@ -116,14 +120,16 @@ TEST(HmacKeyRequestsTest, CreateResponseIOStream) {
 
 TEST(HmacKeysRequestsTest, List) {
   ListHmacKeysRequest request("test-project-id");
-  request.set_multiple_options(ServiceAccountFilter("test-service-account"),
-                               Deleted(true));
   EXPECT_EQ("test-project-id", request.project_id());
+  request.set_multiple_options(ServiceAccountFilter("test-service-account"),
+                               Deleted(true),
+                               OverrideDefaultProject("override-project-id"));
+  EXPECT_EQ("override-project-id", request.project_id());
 
   std::ostringstream os;
   os << request;
   std::string actual = os.str();
-  EXPECT_THAT(actual, HasSubstr("test-project-id"));
+  EXPECT_THAT(actual, HasSubstr("override-project-id"));
   EXPECT_THAT(actual, HasSubstr("serviceAccount=test-service-account"));
   EXPECT_THAT(actual, HasSubstr("deleted=true"));
 }

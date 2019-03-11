@@ -49,8 +49,10 @@ StatusOr<HmacKeyMetadata> HmacKeyMetadataParser::FromString(
 }
 
 std::ostream& operator<<(std::ostream& os, CreateHmacKeyRequest const& r) {
-  return os << "CreateHmacKeyRequest={project_id=" << r.project_id()
-            << ", service_account=" << r.service_account() << "}";
+  os << "CreateHmacKeyRequest={project_id=" << r.project_id()
+     << ", service_account=" << r.service_account();
+  r.DumpOptions(os, ", ");
+  return os << "}";
 }
 
 StatusOr<CreateHmacKeyResponse> CreateHmacKeyResponse::FromHttpResponse(

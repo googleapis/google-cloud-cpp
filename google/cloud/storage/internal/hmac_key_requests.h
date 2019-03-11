@@ -33,19 +33,50 @@ struct HmacKeyMetadataParser {
   static StatusOr<HmacKeyMetadata> FromString(std::string const& payload);
 };
 
+template <typename Derived, typename... Options>
+class GenericHmacKeyRequest : public GenericRequest<Derived, Options...> {
+ public:
+  GenericHmacKeyRequest() = default;
+  GenericHmacKeyRequest(std::string project_id)
+      : project_id_(std::move(project_id)) {}
+
+  std::string const& project_id() const { return project_id_; }
+
+  //@{
+  /**
+   * @name Handle request options.
+   *
+   * Modify the default implementation from GenericRequest. We want to set the
+   * `project_id_` member variable when the option is `OverrideDefaultProject`.
+   */
+  template <typename H, typename... T>
+  Derived& set_multiple_options(H&& h, T&&... tail) {
+    set_option(std::forward<H>(h));
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+
+  Derived& set_multiple_options() { return *static_cast<Derived*>(this); }
+
+  using GenericRequest<Derived, Options...>::set_option;
+  void set_option(OverrideDefaultProject const& o) {
+    if (o.has_value()) {
+      project_id_ = o.value();
+    }
+  }
+
+ private:
+  std::string project_id_;
+};
+
 /// Represents a request to create a call the `HmacKeys: insert` API.
 class CreateHmacKeyRequest
-    : public GenericRequest<CreateHmacKeyRequest, OverrideDefaultProject> {
+    : public GenericHmacKeyRequest<CreateHmacKeyRequest> {
  public:
   CreateHmacKeyRequest() = default;
   CreateHmacKeyRequest(std::string project_id, std::string service_account)
-      : service_account_(std::move(service_account)) {
-    set_option(OverrideDefaultProject(std::move(project_id)));
-  }
+      : GenericHmacKeyRequest(std::move(project_id)),
+        service_account_(std::move(service_account)) {}
 
-  std::string project_id() const {
-    return GetOption<OverrideDefaultProject>().value();
-  }
   std::string const& service_account() const { return service_account_; }
 
  private:
@@ -68,17 +99,12 @@ std::ostream& operator<<(std::ostream& os, CreateHmacKeyResponse const& r);
 
 /// Represents a request to call the `HmacKeys: list` API.
 class ListHmacKeysRequest
-    : public GenericRequest<ListHmacKeysRequest, Deleted, MaxResults,
-                            OverrideDefaultProject, ServiceAccountFilter,
-                            UserProject> {
+    : public GenericHmacKeyRequest<ListHmacKeysRequest, Deleted, MaxResults,
+                                   ServiceAccountFilter, UserProject> {
  public:
-  explicit ListHmacKeysRequest(std::string project_id) {
-    set_option(OverrideDefaultProject(std::move(project_id)));
-  }
+  explicit ListHmacKeysRequest(std::string project_id)
+      : GenericHmacKeyRequest(std::move(project_id)) {}
 
-  std::string project_id() const {
-    return GetOption<OverrideDefaultProject>().value();
-  }
   std::string const& page_token() const { return page_token_; }
   ListHmacKeysRequest& set_page_token(std::string page_token) {
     page_token_ = std::move(page_token);
