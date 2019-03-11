@@ -314,14 +314,14 @@ void CopyVersionedObject(google::cloud::storage::Client client, int& argc,
   auto source_object_name = ConsumeArg(argc, argv);
   auto destination_bucket_name = ConsumeArg(argc, argv);
   auto destination_object_name = ConsumeArg(argc, argv);
-  auto source_object_generation = std::stoull(ConsumeArg(argc, argv));
+  auto source_object_generation = std::stoll(ConsumeArg(argc, argv));
   //! [copy versioned object] [START storage_copy_versioned_file]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string source_bucket_name,
      std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name,
-     std::uint64_t source_object_generation) {
+     std::int64_t source_object_generation) {
     StatusOr<gcs::ObjectMetadata> new_copy_meta =
         client.CopyObject(source_bucket_name, source_object_name,
                           destination_bucket_name, destination_object_name,
@@ -492,11 +492,11 @@ void DeleteVersionedObject(google::cloud::storage::Client client, int& argc,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
-  auto object_version = std::stoull(ConsumeArg(argc, argv));
+  auto object_version = std::stoll(ConsumeArg(argc, argv));
   //! [delete versioned object] [START storage_delete_versioned_file]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::uint64_t object_version) {
+     std::int64_t object_version) {
     google::cloud::Status status = client.DeleteObject(
         bucket_name, object_name, gcs::Generation{object_version});
 
