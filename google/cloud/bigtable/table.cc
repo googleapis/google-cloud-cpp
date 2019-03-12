@@ -96,10 +96,22 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
 
 StatusOr<std::pair<bool, Row>> Table::ReadRow(std::string row_key,
                                               Filter filter) {
-  Status status;
-  auto result = impl_.ReadRow(std::move(row_key), std::move(filter), status);
-  if (!status.ok()) {
-    return status;
+  RowSet row_set(std::move(row_key));
+  std::int64_t const rows_limit = 1;
+  RowReader reader =
+      ReadRows(std::move(row_set), rows_limit, std::move(filter));
+
+  auto it = reader.begin();
+  if (it == reader.end()) {
+    return std::make_pair(false, Row("", {}));
+  }
+  if (!*it) {
+    return it->status();
+  }
+  auto result = std::make_pair(true, std::move(**it));
+  if (++it != reader.end()) {
+    return Status(StatusCode::kInternal,
+                  "internal error - RowReader returned 2 rows in ReadRow()");
   }
   return result;
 }
