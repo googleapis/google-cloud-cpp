@@ -135,6 +135,12 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   EXPECT_EQ(access_id, get_details->access_id());
   EXPECT_EQ(key->first, *get_details);
 
+  StatusOr<HmacKeyMetadata> update_details = client.UpdateHmacKey(
+      access_id,
+      HmacKeyMetadata().set_state("INACTIVE").set_etag(get_details->etag()));
+  ASSERT_STATUS_OK(update_details);
+  EXPECT_EQ("INACTIVE", update_details->state());
+
   StatusOr<HmacKeyMetadata> deleted_key =
       client.DeleteHmacKey(key->first.access_id());
   ASSERT_STATUS_OK(deleted_key);
