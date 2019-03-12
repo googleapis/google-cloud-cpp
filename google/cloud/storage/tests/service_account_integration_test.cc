@@ -109,6 +109,34 @@ TEST(ServiceAccountIntegrationTest, CreateHmacKey) {
   EXPECT_FALSE(key->second.empty());
 }
 
+TEST(ServiceAccountIntegrationTest, ListHmacKeys) {
+  if (!UsingTestbench()) {
+    // Temporarily disabled outside the testbench because the test does not
+    // cleanup after itself.
+    return;
+  }
+
+  auto project_id = ServiceAccountTestEnvironment::project_id();
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  auto service_account = ServiceAccountTestEnvironment::service_account();
+  ASSERT_STATUS_OK(client_options);
+
+  Client client(client_options->set_project_id(project_id));
+  StatusOr<std::pair<HmacKeyMetadata, std::string>> key =
+      client.CreateHmacKey(service_account);
+  ASSERT_STATUS_OK(key);
+  EXPECT_FALSE(key->second.empty());
+
+  bool found = false;
+  for (auto&& k : client.ListHmacKeys(OverrideDefaultProject(project_id))) {
+    ASSERT_STATUS_OK(key);
+    if (k->access_id() == key->first.access_id()) {
+      found = true;
+    }
+  }
+  EXPECT_TRUE(found);
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

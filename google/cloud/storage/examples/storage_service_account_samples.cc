@@ -92,6 +92,63 @@ void GetServiceAccountForProject(google::cloud::storage::Client client,
   (std::move(client), project_id);
 }
 
+void ListHmacKeys(google::cloud::storage::Client client, int& argc,
+                  char* argv[]) {
+  if (argc != 1) {
+    throw Usage{"list-hmac-keys"};
+  }
+  //! [list hmac keys] [START storage_list_hmac_keys]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client) {
+    int count = 0;
+    gcs::ListHmacKeysReader hmac_keys_list = client.ListHmacKeys();
+    for (auto&& hmac_key_metadata : hmac_keys_list) {
+      if (!hmac_key_metadata) {
+        throw std::runtime_error(hmac_key_metadata.status().message());
+      }
+      std::cout << "service_account_email = "
+                << hmac_key_metadata->service_account_email()
+                << "\naccess_id = " << hmac_key_metadata->access_id() << "\n";
+      ++count;
+    }
+    if (count == 0) {
+      std::cout << "No HMAC keys in default project\n";
+    }
+  }
+  //! [list hmac keys] [END storage_list_hmac_keys]
+  (std::move(client));
+}
+
+void ListHmacKeysWithServiceAccount(google::cloud::storage::Client client,
+                                    int& argc, char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"list-hmac-keys-with-service-account <service-account>"};
+  }
+  //! [list hmac keys with service account]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string service_account) {
+    int count = 0;
+    gcs::ListHmacKeysReader hmac_keys_list =
+        client.ListHmacKeys(gcs::ServiceAccountFilter(service_account));
+    for (auto&& hmac_key_metadata : hmac_keys_list) {
+      if (!hmac_key_metadata) {
+        throw std::runtime_error(hmac_key_metadata.status().message());
+      }
+      std::cout << "service_account_email = "
+                << hmac_key_metadata->service_account_email()
+                << "\naccess_id = " << hmac_key_metadata->access_id() << "\n";
+      ++count;
+    }
+    if (count == 0) {
+      std::cout << "No HMAC keys in default project\n";
+    }
+  }
+  //! [list hmac keys with service account]
+  (std::move(client), argv[1]);
+}
+
 void CreateHmacKey(google::cloud::storage::Client client, int& argc,
                    char* argv[]) {
   if (argc != 2) {
@@ -160,6 +217,8 @@ int main(int argc, char* argv[]) try {
   std::map<std::string, CommandType> commands = {
       {"get-service-account", &GetServiceAccount},
       {"get-service-account-for-project", &GetServiceAccountForProject},
+      {"list-hmac-keys", &ListHmacKeys},
+      {"list-hmac-keys-with-service-account", &ListHmacKeysWithServiceAccount},
       {"create-hmac-key-for-project", &CreateHmacKeyForProject},
       {"create-hmac-key", &CreateHmacKey},
   };
