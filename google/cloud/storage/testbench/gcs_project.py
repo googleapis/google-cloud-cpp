@@ -88,6 +88,15 @@ class ServiceAccount(object):
                 'Missing resource for HMAC key ' % key_id, status_code=500)
         return resource
 
+    def _check_etag(self, key_resource, etag, where):
+        """Verify that ETag values match the current ETag."""
+        expected = key_resource.get('etag')
+        if etag is None or etag == expected:
+            return
+        raise error_response.ErrorResponse(
+            'Mismatched ETag for `HmacKeys: update` in %s expected %s, got %s' % (
+                where, expected, etag), status_code=400)
+
     def update_key(self, key_id, payload):
         """Get an existing HMAC key from the service account."""
         key = self.keys.get(key_id)
@@ -98,11 +107,10 @@ class ServiceAccount(object):
         if resource is None:
             raise error_response.ErrorResponse(
                 'Missing resource for HMAC key %s ' % key_id, status_code=500)
-        if payload.get('etag') is not None \
-                and payload.get('etag') != resource.get('etag'):
-            raise error_response.ErrorResponse(
-                'Mismatched ETag in `HmacKeys: update` request %s' % key_id,
-                status_code=400)
+        self._check_etag(resource, payload.get('etag'), 'payload')
+        self._check_etag(
+            resource, flask.request.headers.get('if-match-etag'), 'header')
+
         state = payload.get('state')
         if state not in ('ACTIVE', 'INACTIVE'):
             raise error_response.ErrorResponse(

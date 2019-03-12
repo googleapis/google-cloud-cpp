@@ -562,11 +562,20 @@ TEST(StrictIdempotencyPolicyTest, UpdateHmacKey) {
   EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
-TEST(StrictIdempotencyPolicyTest, UpdateHmacKeyIfMatchEtag) {
+TEST(StrictIdempotencyPolicyTest, UpdateHmacKeyWithEtag) {
   StrictIdempotencyPolicy policy;
   internal::UpdateHmacKeyRequest request(
       "test-project-id", "test-access-id",
       HmacKeyMetadata().set_state("INACTIVE").set_etag("ABC="));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, UpdateHmacKeyIfMatchEtag) {
+  StrictIdempotencyPolicy policy;
+  internal::UpdateHmacKeyRequest request(
+    "test-project-id", "test-access-id",
+    HmacKeyMetadata().set_state("INACTIVE"));
+  request.set_multiple_options(IfMatchEtag("ABC="));
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
