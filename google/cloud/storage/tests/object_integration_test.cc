@@ -253,13 +253,18 @@ TEST_F(ObjectIntegrationTest, ListObjectsVersions) {
   auto bucket_name = ObjectTestEnvironment::bucket_name();
   // This test requires the bucket to be configured with versioning. The buckets
   // used by the CI build are already configured with versioning enabled. The
-  // bucket created in the testbench also has versioning. Regardless, check here
-  // first to produce a better error message if there is a configuration
-  // problem.
+  // bucket created in the testbench also has versioning. Regardless, set the
+  // bucket to the desired state, which will produce a better error message if
+  // there is a configuration problem.
   auto bucket_meta = client->GetBucketMetadata(bucket_name);
   ASSERT_STATUS_OK(bucket_meta);
-  ASSERT_TRUE(bucket_meta->versioning().has_value());
-  ASSERT_TRUE(bucket_meta->versioning().value().enabled);
+  auto updated_meta = client->PatchBucket(
+      bucket_name,
+      BucketMetadataPatchBuilder().SetVersioning(BucketVersioning{true}),
+      IfMetagenerationMatch(bucket_meta->metageneration()));
+  ASSERT_STATUS_OK(updated_meta);
+  ASSERT_TRUE(updated_meta->versioning().has_value());
+  ASSERT_TRUE(updated_meta->versioning().value().enabled);
 
   auto create_object_with_3_versions = [&client, &bucket_name, this] {
     auto object_name = MakeRandomObjectName();
