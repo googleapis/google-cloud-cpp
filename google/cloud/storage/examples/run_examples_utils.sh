@@ -729,24 +729,23 @@ run_object_versioning_examples() {
       "${bucket_name}"
   run_example ./storage_bucket_samples get-object-versioning \
       "${bucket_name}"
-  run_example ./storage_object_samples insert-object \
-      "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
-  # Create an archived version of our object.
-  run_example ./storage_object_samples insert-object \
-      "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
+  local archived_generation
+  archived_generation=$(./storage_object_samples insert-object \
+      "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media" | \
+      sed -n 's/.*, generation=\([0-9]*\).*/\1/p')
+  local live_generation
+  live_generation=$(./storage_object_samples insert-object \
+      "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media" | \
+      sed -n 's/.*, generation=\([0-9]*\).*/\1/p')
   run_example ./storage_object_samples copy-versioned-object \
       "${bucket_name}" "${object_name}" \
-      "${bucket_name}" "${copied_object_name}" "2"
-  run_example ./storage_object_samples delete-object \
-      "${bucket_name}" "${copied_object_name}"
+      "${bucket_name}" "${copied_object_name}" "${archived_generation}"
   run_example ./storage_object_samples delete-versioned-object \
-      "${bucket_name}" "${object_name}" "2"
+     "${bucket_name}" "${object_name}" "${archived_generation}"
+  run_example ./storage_object_samples delete-versioned-object \
+     "${bucket_name}" "${object_name}" "${live_generation}"
   run_example ./storage_bucket_samples disable-object-versioning \
-      "${bucket_name}"
-  # TODO (#2174): Uncomment this once it's figured out why the precondition
-  # fails.
-  # run_example ./storage_object_samples delete-object \
-  #     "${bucket_name}" "${object_name}"
+     "${bucket_name}"
 }
 
 ################################################

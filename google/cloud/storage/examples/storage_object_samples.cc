@@ -87,7 +87,7 @@ void ListObjectsWithPrefix(google::cloud::storage::Client client, int& argc,
       }
 
       std::cout << "bucket_name=" << object_metadata->bucket()
-          << ", object_name=" << object_metadata->name() << "\n";
+                << ", object_name=" << object_metadata->name() << "\n";
     }
   }
   //! [list objects with prefix] [END storage_list_files_with_prefix]
