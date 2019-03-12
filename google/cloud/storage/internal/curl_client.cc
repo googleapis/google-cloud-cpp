@@ -1025,6 +1025,20 @@ StatusOr<CreateHmacKeyResponse> CurlClient::CreateHmacKey(
       builder.BuildRequest().MakeRequest(std::string{}));
 }
 
+StatusOr<HmacKeyMetadata> CurlClient::DeleteHmacKey(
+    DeleteHmacKeyRequest const& request) {
+  CurlRequestBuilder builder(storage_endpoint_ + "/projects/" +
+                                 request.project_id() + "/hmacKeys/" +
+                                 request.access_id(),
+                             storage_factory_);
+  auto status = SetupBuilder(builder, request, "DELETE");
+  if (!status.ok()) {
+    return status;
+  }
+  return CheckedFromString<HmacKeyMetadataParser>(
+      builder.BuildRequest().MakeRequest(std::string{}));
+}
+
 StatusOr<ListNotificationsResponse> CurlClient::ListNotifications(
     ListNotificationsRequest const& request) {
   // Assume the bucket name is validated by the caller.

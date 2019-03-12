@@ -533,6 +533,15 @@ StatusOr<CreateHmacKeyResponse> RetryClient::CreateHmacKey(
                   &RawClient::CreateHmacKey, request, __func__);
 }
 
+StatusOr<HmacKeyMetadata> RetryClient::DeleteHmacKey(
+    DeleteHmacKeyRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
+                  &RawClient::DeleteHmacKey, request, __func__);
+}
+
 StatusOr<ListNotificationsResponse> RetryClient::ListNotifications(
     ListNotificationsRequest const& request) {
   auto retry_policy = retry_policy_->clone();

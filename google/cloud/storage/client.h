@@ -2282,6 +2282,10 @@ class Client {
    * This is a read-only operation and is always idempotent.
    *
    * @par Example
+   * storage_service_account_samples.cc list hmac keys
+   *
+   * @par Example
+   * storage_service_account_samples.cc list hmac keys with service account
    *
    * @see https://cloud.google.com/iam/docs/service-accounts for general
    *     information on Google Cloud Platform service accounts.
@@ -2319,6 +2323,9 @@ class Client {
    * key each time.
    *
    * @par Example
+   * storage_service_account_samples.cc create hmac key
+   *
+   * @par Example
    * storage_service_account_samples.cc create hmac key project
    *
    * @see https://cloud.google.com/iam/docs/service-accounts for general
@@ -2339,6 +2346,38 @@ class Client {
                           std::move(result->secret));
   }
 
+  /**
+   * Delete a HMAC key in a given project.
+   *
+   * @warning This GCS feature is not GA, it is subject to change without
+   *     notice.
+   *
+   * @param access_id the HMAC key `access_id()` that you want to delete.  Each
+   *     HMAC key is assigned an `access_id()` attribute at creation time.
+   * @param options a list of optional query parameters and/or request headers.
+   *     In addition to the options common to all requests, this operation
+   *     accepts `OverrideDefaultProject`.
+   *
+   * @return This operation returns the new HMAC key metadata.
+   *
+   * @par Idempotency
+   * This operation is always idempotent. An access id identifies a single HMAC
+   * key, calling the operation multiple times can succeed only once.
+   *
+   * @par Example
+   * storage_service_account_samples.cc delete hmac key
+   *
+   * @see https://cloud.google.com/iam/docs/service-accounts for general
+   *     information on Google Cloud Platform service accounts.
+   */
+  template <typename... Options>
+  StatusOr<HmacKeyMetadata> DeleteHmacKey(std::string access_id,
+                                          Options&&... options) {
+    auto const& project_id = raw_client_->client_options().project_id();
+    internal::DeleteHmacKeyRequest request(project_id, std::move(access_id));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->DeleteHmacKey(request);
+  }
   //@}
 
   //@{

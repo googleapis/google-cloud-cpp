@@ -200,6 +200,29 @@ void CreateHmacKeyForProject(google::cloud::storage::Client client, int& argc,
   (std::move(client), argv[1], argv[2]);
 }
 
+void DeleteHmacKey(google::cloud::storage::Client client, int& argc,
+                   char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"delete-hmac-key <access-id>"};
+  }
+  //! [delete hmac key] [START storage_delete_hmac_key]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string access_id) {
+    StatusOr<gcs::HmacKeyMetadata> hmac_key_details =
+        client.DeleteHmacKey(access_id);
+
+    if (!hmac_key_details) {
+      throw std::runtime_error(hmac_key_details.status().message());
+    }
+    std::cout << "The key is deleted, though it may still appear"
+              << " in ListHmacKeys() results."
+              << "\nThe HMAC key metadata is: " << &hmac_key_details << "\n";
+  }
+  //! [delete hmac key] [END storage_delete_hmac_key]
+  (std::move(client), argv[1]);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -221,6 +244,7 @@ int main(int argc, char* argv[]) try {
       {"list-hmac-keys-with-service-account", &ListHmacKeysWithServiceAccount},
       {"create-hmac-key-for-project", &CreateHmacKeyForProject},
       {"create-hmac-key", &CreateHmacKey},
+      {"delete-hmac-key", &DeleteHmacKey},
   };
   for (auto&& kv : commands) {
     try {

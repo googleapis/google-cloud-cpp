@@ -83,7 +83,7 @@ std::ostream& operator<<(std::ostream& os, CreateHmacKeyResponse const& r) {
 }
 
 std::ostream& operator<<(std::ostream& os, ListHmacKeysRequest const& r) {
-  os << "ListHmacKeysRequest={bucket_name=" << r.project_id();
+  os << "ListHmacKeysRequest={project_id=" << r.project_id();
   r.DumpOptions(os, ", ");
   return os << "}";
 }
@@ -118,6 +118,12 @@ std::ostream& operator<<(std::ostream& os, ListHmacKeysResponse const& r) {
   return os << "}}";
 }
 
+std::ostream& operator<<(std::ostream& os, DeleteHmacKeyRequest const& r) {
+  os << "DeleteHmacKeyRequest={project_id=" << r.project_id()
+     << ", access_id=" << r.access_id();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

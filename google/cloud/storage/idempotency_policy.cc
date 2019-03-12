@@ -205,6 +205,10 @@ bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
     internal::CreateHmacKeyRequest const&) const {
   return true;
 }
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::DeleteHmacKeyRequest const&) const {
+  return true;
+}
 
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
     internal::ListNotificationsRequest const&) const {
@@ -472,6 +476,11 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::CreateHmacKeyRequest const&) const {
   return false;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::DeleteHmacKeyRequest const&) const {
+  return true;
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(

@@ -117,6 +117,15 @@ run_all_service_account_examples() {
       list-hmac-keys
   run_example ./storage_service_account_samples \
       list-hmac-keys-with-service-account "${SERVICE_ACCOUNT}"
+  # Parse the output to delete all the keys created in this service account.
+  for access_id in $(
+      ./storage_service_account_samples \
+          list-hmac-keys-with-service-account "${SERVICE_ACCOUNT}" | \
+          sed -n 's;^access_id = \(.*\);\1;p'); do
+    run_example ./storage_service_account_samples \
+        delete-hmac-key "${access_id}"
+  done
+
   unset GOOGLE_CLOUD_PROJECT
 }
 
