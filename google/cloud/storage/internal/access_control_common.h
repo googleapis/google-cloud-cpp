@@ -39,12 +39,12 @@ struct ProjectTeam {
 
 inline bool operator==(ProjectTeam const& lhs, ProjectTeam const& rhs) {
   return std::tie(lhs.project_number, lhs.team) ==
-         std::tie(lhs.project_number, lhs.team);
+         std::tie(rhs.project_number, rhs.team);
 }
 
 inline bool operator<(ProjectTeam const& lhs, ProjectTeam const& rhs) {
   return std::tie(lhs.project_number, lhs.team) <
-         std::tie(lhs.project_number, lhs.team);
+         std::tie(rhs.project_number, rhs.team);
 }
 
 inline bool operator!=(ProjectTeam const& lhs, ProjectTeam const& rhs) {

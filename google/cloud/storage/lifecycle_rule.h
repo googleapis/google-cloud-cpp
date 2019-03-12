@@ -41,13 +41,13 @@ struct LifecycleRuleAction {
 inline bool operator==(LifecycleRuleAction const& lhs,
                        LifecycleRuleAction const& rhs) {
   return std::tie(lhs.type, lhs.storage_class) ==
-         std::tie(lhs.type, lhs.storage_class);
+         std::tie(rhs.type, rhs.storage_class);
 }
 
 inline bool operator<(LifecycleRuleAction const& lhs,
                       LifecycleRuleAction const& rhs) {
   return std::tie(lhs.type, lhs.storage_class) <
-         std::tie(lhs.type, lhs.storage_class);
+         std::tie(rhs.type, rhs.storage_class);
 }
 
 inline bool operator!=(LifecycleRuleAction const& lhs,
