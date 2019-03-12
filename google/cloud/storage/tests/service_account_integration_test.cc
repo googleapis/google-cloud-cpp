@@ -178,6 +178,10 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUDFailures) {
       client.GetHmacKey("invalid-access-id", OverrideDefaultProject(""));
   EXPECT_FALSE(get_status) << "value=" << *get_status;
 
+  StatusOr<HmacKeyMetadata> update_status = client.UpdateHmacKey(
+      "invalid-access-id", HmacKeyMetadata(), OverrideDefaultProject(""));
+  EXPECT_FALSE(update_status) << "value=" << *update_status;
+
   auto range = client.ListHmacKeys(OverrideDefaultProject(""));
   auto begin = range.begin();
   EXPECT_NE(begin, range.end());

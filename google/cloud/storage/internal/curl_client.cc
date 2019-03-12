@@ -1053,6 +1053,28 @@ StatusOr<HmacKeyMetadata> CurlClient::GetHmacKey(
       builder.BuildRequest().MakeRequest(std::string{}));
 }
 
+StatusOr<HmacKeyMetadata> CurlClient::UpdateHmacKey(
+    UpdateHmacKeyRequest const& request) {
+  CurlRequestBuilder builder(storage_endpoint_ + "/projects/" +
+                                 request.project_id() + "/hmacKeys/" +
+                                 request.access_id(),
+                             storage_factory_);
+  auto status = SetupBuilder(builder, request, "POST");
+  if (!status.ok()) {
+    return status;
+  }
+  nl::json payload;
+  if (!request.resource().state().empty()) {
+    payload["state"] = request.resource().state();
+  }
+  if (!request.resource().etag().empty()) {
+    payload["etag"] = request.resource().etag();
+  }
+  builder.AddHeader("Content-Type: application/json");
+  return CheckedFromString<HmacKeyMetadataParser>(
+      builder.BuildRequest().MakeRequest(payload.dump()));
+}
+
 StatusOr<ListNotificationsResponse> CurlClient::ListNotifications(
     ListNotificationsRequest const& request) {
   // Assume the bucket name is validated by the caller.

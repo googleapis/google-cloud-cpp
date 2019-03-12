@@ -338,6 +338,11 @@ StatusOr<HmacKeyMetadata> LoggingClient::GetHmacKey(
   return MakeCall(*client_, &RawClient::GetHmacKey, request, __func__);
 }
 
+StatusOr<HmacKeyMetadata> LoggingClient::UpdateHmacKey(
+    UpdateHmacKeyRequest const& request) {
+  return MakeCall(*client_, &RawClient::UpdateHmacKey, request, __func__);
+}
+
 StatusOr<ListNotificationsResponse> LoggingClient::ListNotifications(
     ListNotificationsRequest const& request) {
   return MakeCall(*client_, &RawClient::ListNotifications, request, __func__);

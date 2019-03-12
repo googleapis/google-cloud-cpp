@@ -154,6 +154,8 @@ class RawClient {
   virtual StatusOr<HmacKeyMetadata> DeleteHmacKey(
       DeleteHmacKeyRequest const&) = 0;
   virtual StatusOr<HmacKeyMetadata> GetHmacKey(GetHmacKeyRequest const&) = 0;
+  virtual StatusOr<HmacKeyMetadata> UpdateHmacKey(
+      UpdateHmacKeyRequest const&) = 0;
   //@}
 
   //@{
