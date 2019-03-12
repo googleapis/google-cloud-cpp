@@ -24,6 +24,7 @@ var searchData=
   ['listbucketsiterator',['ListBucketsIterator',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a1e8ed9638757aa016985eaa4d82a847c',1,'google::cloud::storage::v0']]],
   ['listbucketsreader',['ListBucketsReader',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a640b86aff0a1014da00f2f74cc16ee13',1,'google::cloud::storage::v0']]],
   ['listdefaultobjectacl',['ListDefaultObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a3e2d8e0446b97e2d9583e9ad4a309670',1,'google::cloud::storage::v0::Client']]],
+  ['listhmackeys',['ListHmacKeys',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a01bf6147775e115f1e25df1ba3f52ee7',1,'google::cloud::storage::v0::Client']]],
   ['listhmackeysiterator',['ListHmacKeysIterator',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a9bbc80bfafd76ac1f9d96ec6fc9af3c2',1,'google::cloud::storage::v0']]],
   ['listhmackeysreader',['ListHmacKeysReader',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a2a6cff2b26bb488924966e22bc09ab67',1,'google::cloud::storage::v0']]],
   ['listnotifications',['ListNotifications',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a7e224615f5a68af7e8acbf183fd98ddb',1,'google::cloud::storage::v0::Client']]],

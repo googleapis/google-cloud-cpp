@@ -9,6 +9,7 @@ var searchData=
   ['listbuckets',['ListBuckets',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ad2b12e1262905f3c66e910bb944b237c',1,'google::cloud::storage::v0::Client']]],
   ['listbucketsforproject',['ListBucketsForProject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a2e084a0359a2ebac0000fe41b7f4ea56',1,'google::cloud::storage::v0::Client']]],
   ['listdefaultobjectacl',['ListDefaultObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a3e2d8e0446b97e2d9583e9ad4a309670',1,'google::cloud::storage::v0::Client']]],
+  ['listhmackeys',['ListHmacKeys',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a01bf6147775e115f1e25df1ba3f52ee7',1,'google::cloud::storage::v0::Client']]],
   ['listnotifications',['ListNotifications',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a7e224615f5a68af7e8acbf183fd98ddb',1,'google::cloud::storage::v0::Client']]],
   ['listobjectacl',['ListObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a6b8b97aedf09200a73d21e1b8b816cf8',1,'google::cloud::storage::v0::Client']]],
   ['listobjects',['ListObjects',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a6f18342a0d51ecb3a95aa5e121eee0f5',1,'google::cloud::storage::v0::Client']]],
