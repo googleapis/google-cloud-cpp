@@ -86,26 +86,73 @@ future<StatusOr<google::bigtable::admin::v2::Table>> TableAdmin::AsyncGetTable(
 StatusOr<std::vector<btadmin::Table>> TableAdmin::ListTables(
     btadmin::Table::View view) {
   grpc::Status status;
-  auto result = impl_.ListTables(view, status);
-  if (!status.ok()) {
-    return internal::MakeStatusFromRpcError(status);
-  }
+
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = impl_.rpc_retry_policy_->clone();
+  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+
+  // Build the RPC request, try to minimize copying.
+  std::vector<btadmin::Table> result;
+  std::string page_token;
+  do {
+    btadmin::ListTablesRequest request;
+    request.set_page_token(std::move(page_token));
+    request.set_parent(instance_name());
+    request.set_view(view);
+
+    auto response = ClientUtils::MakeCall(
+        *(impl_.client_), *rpc_policy, *backoff_policy,
+        impl_.metadata_update_policy_, &AdminClient::ListTables, request,
+        "TableAdmin", status, true);
+
+    if (!status.ok()) {
+      return internal::MakeStatusFromRpcError(status);
+    }
+
+    for (auto& x : *response.mutable_tables()) {
+      result.emplace_back(std::move(x));
+    }
+    page_token = std::move(*response.mutable_next_page_token());
+  } while (!page_token.empty());
   return result;
 }
 
 StatusOr<btadmin::Table> TableAdmin::GetTable(std::string const& table_id,
                                               btadmin::Table::View view) {
   grpc::Status status;
-  auto result = impl_.GetTable(table_id, status, view);
+  btadmin::GetTableRequest request;
+  request.set_name(TableName(table_id));
+  request.set_view(view);
+
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, table_id);
+
+  auto result = ClientUtils::MakeCall(
+      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+      impl_.rpc_backoff_policy_->clone(), metadata_update_policy,
+      &AdminClient::GetTable, request, "GetTable", status, true);
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
+
   return result;
 }
 
 Status TableAdmin::DeleteTable(std::string const& table_id) {
   grpc::Status status;
-  impl_.DeleteTable(table_id, status);
+  btadmin::DeleteTableRequest request;
+  request.set_name(TableName(table_id));
+
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, table_id);
+
+  // This is a non-idempotent API, use the correct retry loop for this type of
+  // operation.
+  ClientUtils::MakeNonIdemponentCall(
+      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+      metadata_update_policy, &AdminClient::DeleteTable, request, "DeleteTable",
+      status);
+
   return internal::MakeStatusFromRpcError(status);
 }
 
