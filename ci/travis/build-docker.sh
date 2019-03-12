@@ -162,7 +162,7 @@ if [ "${BUILD_TESTING:-}" != "no" ]; then
 fi
 
 # Test the install rule and that the installation works.
-if [ "${TEST_INSTALL:-}" = "yes" ]; then
+if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   echo
   echo "${COLOR_YELLOW}Testing install rule.${COLOR_RESET}"
   cmake --build "${BUILD_OUTPUT}" --target install

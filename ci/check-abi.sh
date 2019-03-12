@@ -23,7 +23,7 @@ source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 source "${PROJECT_ROOT}/ci/colors.sh"
 
-if [ "${CHECK_ABI:-}" != "yes" ]; then
+if [[ "${CHECK_ABI:-}" != "yes" ]]; then
   echo
   echo "${COLOR_YELLOW}Skipping ABI check as it is disabled for this build." \
       "${COLOR_RESET}"
@@ -58,6 +58,13 @@ for library in bigtable_client google_cloud_cpp_common storage_client; do
     exit_status=1
   fi
   set -e
+
+  if [[ "${UPDATE_ABI}" = "yes" ]]; then
+    abi-dumper "${libdir}/lib${library}.so" \
+        -public-headers "${includedir}" \
+        -lver "reference" -o "${BUILD_OUTPUT}/${new_dump_file}"
+    gzip -c "${BUILD_OUTPUT}/${new_dump_file}" >"${reference_file}"
+  fi
 done
 
 exit ${exit_status}

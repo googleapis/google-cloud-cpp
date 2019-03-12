@@ -60,6 +60,7 @@ sudo docker run \
      --env BUILD_TESTING="${BUILD_TESTING:-}" \
      --env USE_LIBCXX="${USE_LIBCXX:-}" \
      --env CHECK_ABI="${CHECK_ABI:-}" \
+     --env UPDATE_ABI="${UPDATE_ABI:-}" \
      --env CHECK_STYLE="${CHECK_STYLE:-}" \
      --env SCAN_BUILD="${SCAN_BUILD:-}" \
      --env GENERATE_DOCS="${GENERATE_DOCS:-}" \
