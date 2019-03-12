@@ -54,12 +54,12 @@ def google_cloud_cpp_deps():
     if "com_github_grpc_grpc" not in native.existing_rules():
         http_archive(
             name = "com_github_grpc_grpc",
-            strip_prefix = "grpc-1.17.2",
+            strip_prefix = "grpc-1.19.1",
             urls = [
-                "https://github.com/grpc/grpc/archive/v1.17.2.tar.gz",
-                "https://mirror.bazel.build/github.com/grpc/grpc/archive/v1.17.2.tar.gz",
+                "https://github.com/grpc/grpc/archive/v1.19.1.tar.gz",
+                "https://mirror.bazel.build/github.com/grpc/grpc/archive/v1.19.1.tar.gz",
             ],
-            sha256 = "34ed95b727e7c6fcbf85e5eb422e962788e21707b712fdb4caf931553c2c6dbc",
+            sha256 = "f869c648090e8bddaa1260a271b1089caccbe735bf47ac9cd7d44d35a02fb129",
         )
 
     # Load OpenCensus.
