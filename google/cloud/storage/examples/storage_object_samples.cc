@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/storage/well_known_parameters.h"
 #include <fstream>
 #include <functional>
 #include <iostream>
@@ -67,6 +68,30 @@ void ListObjects(google::cloud::storage::Client client, int& argc,
   }
   //! [list objects] [END storage_list_files]
   (std::move(client), bucket_name);
+}
+
+void ListObjectsWithPrefix(google::cloud::storage::Client client, int& argc,
+                           char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"list-objects-with-prefix <bucket-name> <prefix>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto bucket_prefix = ConsumeArg(argc, argv);
+  //! [list objects with prefix] [START storage_list_files_with_prefix]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string bucket_prefix) {
+    for (auto&& object_metadata :
+         client.ListObjects(bucket_name, gcs::Prefix(bucket_prefix))) {
+      if (!object_metadata) {
+        throw std::runtime_error(object_metadata.status().message());
+      }
+
+      std::cout << "bucket_name=" << object_metadata->bucket()
+                << ", object_name=" << object_metadata->name() << "\n";
+    }
+  }
+  //! [list objects with prefix] [END storage_list_files_with_prefix]
+  (std::move(client), bucket_name, bucket_prefix);
 }
 
 void InsertObject(google::cloud::storage::Client client, int& argc,
@@ -1522,6 +1547,7 @@ int main(int argc, char* argv[]) try {
       std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"list-objects", &ListObjects},
+      {"list-objects-with-prefix", &ListObjectsWithPrefix},
       {"insert-object", &InsertObject},
       {"insert-object-strict-idempotency", &InsertObjectStrictIdempotency},
       {"insert-object-modified-retry", &InsertObjectModifiedRetry},

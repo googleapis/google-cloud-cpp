@@ -302,6 +302,7 @@ run_all_object_examples() {
   shift
 
   local object_name="object-$(date +%s)-${RANDOM}.txt"
+  local bucket_prefix="prefix-$(date +%s)-${RANDOM}"
   local composed_object_name="composed-object-$(date +%s)-${RANDOM}.txt"
   local copied_object_name="copied-object-$(date +%s)-${RANDOM}.txt"
   local multipart_object_name="multipart-object-$(date +%s)-${RANDOM}.txt"
@@ -309,6 +310,12 @@ run_all_object_examples() {
   run_example ./storage_object_samples insert-object \
       "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
   run_example ./storage_object_samples list-objects "${bucket_name}"
+  run_example ./storage_object_samples insert-object \
+      "${bucket_name}" "${bucket_prefix}/object-1.txt" "media-for-object-1"
+  run_example ./storage_object_samples insert-object \
+      "${bucket_name}" "${bucket_prefix}/object-2.txt" "media-for-object-2"
+  run_example ./storage_object_samples list-objects-with-prefix \
+      "${bucket_name}" "${bucket_prefix}"
   run_example ./storage_object_samples get-object-metadata \
       "${bucket_name}" "${object_name}"
   run_example ./storage_object_samples read-object \
@@ -333,6 +340,10 @@ run_all_object_examples() {
       "${bucket_name}" "${copied_object_name}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${copied_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${bucket_prefix}/object-2.txt"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${bucket_prefix}/object-1.txt"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
 
