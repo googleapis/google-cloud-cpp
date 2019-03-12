@@ -73,6 +73,18 @@ class ServiceAccount(object):
         resource['state'] = 'DELETED'
         return resource
 
+    def get_key(self, key_id):
+        """Get an existing HMAC key from the service account."""
+        key = self.keys.get(key_id)
+        if key is None:
+            raise error_response.ErrorResponse(
+                'Cannot find key for key ' % key_id, status_code=404)
+        resource = key.get('resource')
+        if resource is None:
+            raise error_response.ErrorResponse(
+                'Missing resource for HMAC key ' % key_id, status_code=500)
+        return resource
+
 
 class GcsProject(object):
     """Represent a GCS project."""
@@ -111,6 +123,15 @@ class GcsProject(object):
             raise error_response.ErrorResponse(
                 'Cannot find service account for key=' % access_id, status_code=404)
         return sa.delete_key(key_id)
+
+    def get_hmac_key(self, access_id):
+        """Get an existing key in the project."""
+        (service_account, key_id) = access_id.split(':', 2)
+        sa = self.service_accounts.get(service_account)
+        if sa is None:
+            raise error_response.ErrorResponse(
+                'Cannot find service account for key=' % access_id, status_code=404)
+        return sa.get_key(key_id)
 
 
 PROJECTS_HANDLER_PATH = '/storage/v1/projects'
@@ -190,6 +211,14 @@ def hmac_keys_delete(project_id, access_id):
     project = get_project(project_id)
     return testbench_utils.filtered_response(
         flask.request, project.delete_hmac_key(access_id))
+
+
+@projects.route('/<project_id>/hmacKeys/<access_id>')
+def hmac_keys_get(project_id, access_id):
+    """Implement the `HmacKeys: delete` API."""
+    project = get_project(project_id)
+    return testbench_utils.filtered_response(
+        flask.request, project.get_hmac_key(access_id))
 
 
 def get_projects_app():
