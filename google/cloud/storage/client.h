@@ -2282,6 +2282,10 @@ class Client {
    * This is a read-only operation and is always idempotent.
    *
    * @par Example
+   * storage_service_account_samples.cc list hmac keys
+   *
+   * @par Example
+   * storage_service_account_samples.cc list hmac keys with service account
    *
    * @see https://cloud.google.com/iam/docs/service-accounts for general
    *     information on Google Cloud Platform service accounts.
@@ -2317,6 +2321,9 @@ class Client {
    * @par Idempotency
    * This operation is not idempotent. Retrying the operation will create a new
    * key each time.
+   *
+   * @par Example
+   * storage_service_account_samples.cc create hmac key
    *
    * @par Example
    * storage_service_account_samples.cc create hmac key project
@@ -2358,6 +2365,7 @@ class Client {
    * key, calling the operation multiple times can succeed only once.
    *
    * @par Example
+   * storage_service_account_samples.cc delete hmac key
    *
    * @see https://cloud.google.com/iam/docs/service-accounts for general
    *     information on Google Cloud Platform service accounts.
