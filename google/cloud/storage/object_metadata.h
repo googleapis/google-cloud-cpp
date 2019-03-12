@@ -50,13 +50,13 @@ std::ostream& operator<<(std::ostream& os, ComposeSourceObject const& r);
 inline bool operator==(CustomerEncryption const& lhs,
                        CustomerEncryption const& rhs) {
   return std::tie(lhs.encryption_algorithm, lhs.key_sha256) ==
-         std::tie(rhs.encryption_algorithm, lhs.key_sha256);
+         std::tie(rhs.encryption_algorithm, rhs.key_sha256);
 }
 
 inline bool operator<(CustomerEncryption const& lhs,
                       CustomerEncryption const& rhs) {
   return std::tie(lhs.encryption_algorithm, lhs.key_sha256) <
-         std::tie(rhs.encryption_algorithm, lhs.key_sha256);
+         std::tie(rhs.encryption_algorithm, rhs.key_sha256);
 }
 
 inline bool operator!=(CustomerEncryption const& lhs,
