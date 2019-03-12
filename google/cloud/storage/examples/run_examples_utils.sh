@@ -753,11 +753,13 @@ run_object_versioning_examples() {
       "${bucket_name}" "${object_name}" \
       "${bucket_name}" "${copied_object_name}" "${archived_generation}"
   run_example ./storage_object_samples delete-versioned-object \
-     "${bucket_name}" "${object_name}" "${archived_generation}"
+      "${bucket_name}" "${object_name}" "${archived_generation}"
   run_example ./storage_object_samples delete-versioned-object \
-     "${bucket_name}" "${object_name}" "${live_generation}"
+      "${bucket_name}" "${object_name}" "${live_generation}"
   run_example ./storage_bucket_samples disable-object-versioning \
-     "${bucket_name}"
+      "${bucket_name}"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${copied_object_name}"
 
   run_example ./storage_bucket_samples delete-bucket \
       "${bucket_name}"
