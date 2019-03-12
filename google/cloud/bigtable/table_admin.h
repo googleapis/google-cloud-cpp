@@ -425,6 +425,11 @@ class TableAdmin {
   StatusOr<std::vector<::google::bigtable::admin::v2::Snapshot>> ListSnapshots(
       bigtable::ClusterId const& cluster_id = bigtable::ClusterId("-"));
 
+  /// Return the fully qualified name of a table in this object's instance.
+  std::string TableName(std::string const& table_id) const {
+    return instance_name() + "/tables/" + table_id;
+  }
+
  private:
   /**
    * Implements the polling loop for `WaitForConsistencyCheck` on a
