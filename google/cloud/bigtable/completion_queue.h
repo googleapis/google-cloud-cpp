@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_COMPLETION_QUEUE_H_
 
 #include "google/cloud/bigtable/internal/completion_queue_impl.h"
+#include "google/cloud/future.h"
 
 namespace google {
 namespace cloud {
@@ -44,12 +45,54 @@ class CompletionQueue {
   /**
    * Create a timer that fires at @p deadline.
    *
+   * @param deadline when should the timer expire.
+   *
+   * @return a future that becomes satisfied after @p deadline.
+   */
+  google::cloud::future<std::chrono::system_clock::time_point>
+  MakeDeadlineTimer(std::chrono::system_clock::time_point deadline);
+
+  /**
+   * Create a timer that fires after the @p duration.
+   *
+   * @tparam Rep a placeholder to match the Rep tparam for @p duration type,
+   *     the semantics of this template parameter are documented in
+   *     `std::chrono::duration<>` (in brief, the underlying arithmetic type
+   *     used to store the number of ticks), for our purposes it is simply a
+   *     formal parameter.
+   * @tparam Period a placeholder to match the Period tparam for @p duration
+   *     type, the semantics of this template parameter are documented in
+   *     `std::chrono::duration<>` (in brief, the length of the tick in seconds,
+   *     expressed as a `std::ratio<>`), for our purposes it is simply a formal
+   *     parameter.
+   *
+   * @param duration when should the timer expire relative to the current time.
+   *
+   * @return a future that becomes satisfied after @p duration time has elapsed.
+   */
+  template <typename Rep, typename Period>
+  future<std::chrono::system_clock::time_point> MakeRelativeTimer(
+      std::chrono::duration<Rep, Period> duration) {
+    return MakeDeadlineTimer(std::chrono::system_clock::now() + duration);
+  }
+
+  //@{
+  /**
+   * @name Obsolete. Callback-based APIs. To be removed after cleaning up.
+   *
+   * TODO(#2145) - Remove these member functions.
+   */
+  /**
+   * Create a timer that fires at @p deadline.
+   *
    * @tparam Functor the functor to call when the timer expires and/or it is
    *   canceled.  It must satisfy the `void(AsyncOperation&,bool)` signature.
    * @param deadline when should the timer expire.
    * @param functor the value of the functor.
    * @return an asynchronous operation wrapping the functor and timer, can be
    *   used to cancel the pending timer.
+   *
+   * TODO(#2145) - Remove these member functions.
    */
   template <typename Functor,
             typename std::enable_if<
@@ -82,6 +125,8 @@ class CompletionQueue {
    * @param functor the value of the functor.
    * @return an asynchronous operation wrapping the functor and timer, can be
    *   used to cancel the pending timer.
+   *
+   * TODO(#2145) - Remove these member functions.
    */
   template <typename Rep, typename Period, typename Functor,
             typename std::enable_if<
@@ -116,6 +161,8 @@ class CompletionQueue {
    *
    * @return an AsyncOperation instance that can be used to request cancelation
    *   of the pending operation.
+   *
+   * TODO(#2145) - Remove these member functions.
    */
   template <
       typename Client, typename MemberFunction, typename Request,
@@ -174,6 +221,8 @@ class CompletionQueue {
    *
    * @return an AsyncOperation instance that can be used to request cancelation
    *   of the pending operation.
+   *
+   * TODO(#2145) - Remove these member functions.
    */
   template <typename Client, typename MemberFunction, typename Request,
             typename DataFunctor, typename FinishedFunctor,
@@ -204,6 +253,8 @@ class CompletionQueue {
     op->Set(client, call, std::move(context), request, &impl_->cq(), tag);
     return op;
   }
+
+  //@}
 
   /**
    * Asynchronously run a functor on a thread `Run()`ning the `CompletionQueue`.
