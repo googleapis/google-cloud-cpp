@@ -254,7 +254,7 @@ TEST_F(ObjectIntegrationTest, ListObjectsVersions) {
   // This test requires the bucket to be configured with versioning. The buckets
   // used by the CI build are already configured with versioning enabled. The
   // bucket created in the testbench also has versioning. Regardless, set the
-  // bucket the desired state, that would produce a better error message if
+  // bucket to the desired state, which will produce a better error message if
   // there is a configuration problem.
   auto bucket_meta = client->GetBucketMetadata(bucket_name);
   ASSERT_STATUS_OK(bucket_meta);
