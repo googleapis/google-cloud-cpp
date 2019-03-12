@@ -258,7 +258,8 @@ TEST_F(ObjectIntegrationTest, ListObjectsVersions) {
   // there is a configuration problem.
   auto bucket_meta = client->GetBucketMetadata(bucket_name);
   ASSERT_STATUS_OK(bucket_meta);
-  auto updated_meta = client->PatchBucket(bucket_name,
+  auto updated_meta = client->PatchBucket(
+      bucket_name,
       BucketMetadataPatchBuilder().SetVersioning(BucketVersioning{true}),
       IfMetagenerationMatch(bucket_meta->metageneration()));
   ASSERT_STATUS_OK(updated_meta);
