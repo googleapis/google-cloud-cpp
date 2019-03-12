@@ -102,44 +102,48 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   ASSERT_STATUS_OK(client_options);
 
   Client client(client_options->set_project_id(project_id));
+
+  auto get_current_access_ids = [&client, &project_id, &service_account]() {
+    std::vector<std::string> access_ids;
+    auto range = client.ListHmacKeys(OverrideDefaultProject(project_id),
+                                     ServiceAccountFilter(service_account));
+    std::transform(
+        range.begin(), range.end(), std::back_inserter(access_ids),
+        [](StatusOr<HmacKeyMetadata> x) { return x.value().access_id(); });
+    return access_ids;
+  };
+
+  auto initial_access_ids = get_current_access_ids();
+
   StatusOr<std::pair<HmacKeyMetadata, std::string>> key =
       client.CreateHmacKey(service_account);
   ASSERT_STATUS_OK(key);
 
   EXPECT_FALSE(key->second.empty());
+  auto access_id = key->first.access_id();
+
+  using ::testing::Contains;
+  using ::testing::Not;
+  EXPECT_THAT(initial_access_ids, Not(Contains(access_id)));
+
+  auto post_create_access_ids = get_current_access_ids();
+  EXPECT_THAT(post_create_access_ids, Contains(access_id));
 
   StatusOr<HmacKeyMetadata> deleted_key = client.DeleteHmacKey(
       key->first.access_id(), OverrideDefaultProject(project_id));
   ASSERT_STATUS_OK(deleted_key);
   EXPECT_EQ(HmacKeyMetadata::state_deleted(), deleted_key->state());
-}
 
-TEST(ServiceAccountIntegrationTest, ListHmacKeys) {
-  if (!UsingTestbench()) {
-    // Temporarily disabled outside the testbench because the test does not
-    // cleanup after itself.
-    return;
+  auto post_delete_access_ids = get_current_access_ids();
+  EXPECT_THAT(post_delete_access_ids, Not(Contains(access_id)));
+
+  // Delete all HmacKeys for the test service account, it is just good practice
+  // to cleanup after ourselves.
+  for (auto const& id : post_delete_access_ids) {
+    StatusOr<HmacKeyMetadata> d =
+        client.DeleteHmacKey(id, OverrideDefaultProject(project_id));
+    ASSERT_STATUS_OK(d);
   }
-
-  auto project_id = ServiceAccountTestEnvironment::project_id();
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  auto service_account = ServiceAccountTestEnvironment::service_account();
-  ASSERT_STATUS_OK(client_options);
-
-  Client client(client_options->set_project_id(project_id));
-  StatusOr<std::pair<HmacKeyMetadata, std::string>> key =
-      client.CreateHmacKey(service_account);
-  ASSERT_STATUS_OK(key);
-  EXPECT_FALSE(key->second.empty());
-
-  bool found = false;
-  for (auto&& k : client.ListHmacKeys(OverrideDefaultProject(project_id))) {
-    ASSERT_STATUS_OK(key);
-    if (k->access_id() == key->first.access_id()) {
-      found = true;
-    }
-  }
-  EXPECT_TRUE(found);
 }
 
 }  // namespace
