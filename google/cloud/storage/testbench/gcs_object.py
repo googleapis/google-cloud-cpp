@@ -380,6 +380,7 @@ class GcsObject(object):
         if generation is None:
             generation = self.generation
         self.revisions.pop(int(generation))
+        self.generation -= 1
         if len(self.revisions) == 0:
             self.generation = None
             return True
