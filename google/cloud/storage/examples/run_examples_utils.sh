@@ -724,13 +724,16 @@ run_temporary_hold_examples() {
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
+#   None
 # Returns:
 #   None
 ################################################
 run_object_versioning_examples() {
-  local bucket_name=$1
-  shift
+  # Create the bucket to avoid changing the configuration for "${BUCKET_NAME}"
+  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+
+  run_example ./storage_bucket_samples create-bucket-for-project \
+      "${bucket_name}" "${PROJECT_ID}"
 
   local object_name="object-$(date +%s)-${RANDOM}.txt"
   local copied_object_name="object-$(date +%s)-${RANDOM}.txt"
@@ -755,6 +758,9 @@ run_object_versioning_examples() {
      "${bucket_name}" "${object_name}" "${live_generation}"
   run_example ./storage_bucket_samples disable-object-versioning \
      "${bucket_name}"
+
+  run_example ./storage_bucket_samples delete-bucket \
+      "${bucket_name}"
 }
 
 ################################################
@@ -1103,7 +1109,7 @@ run_all_storage_examples() {
   run_all_public_object_examples "${BUCKET_NAME}"
   run_event_based_hold_examples "${BUCKET_NAME}"
   run_temporary_hold_examples "${BUCKET_NAME}"
-  run_object_versioning_examples "${BUCKET_NAME}"
+  run_object_versioning_examples
   run_all_signed_url_v2_examples "${BUCKET_NAME}"
   run_all_signed_url_v4_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
