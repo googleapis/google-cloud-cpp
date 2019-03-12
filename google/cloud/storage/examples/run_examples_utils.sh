@@ -117,6 +117,14 @@ run_all_service_account_examples() {
       list-hmac-keys
   run_example ./storage_service_account_samples \
       list-hmac-keys-with-service-account "${SERVICE_ACCOUNT}"
+  # Use any of the HMAC keys to test `get-hmac-key`.
+  local access_id
+  access_id=$(
+      ./storage_service_account_samples \
+          list-hmac-keys-with-service-account "${SERVICE_ACCOUNT}" | \
+          sed -n 's;^access_id = \(.*\);\1;p' | head -1)
+  run_example ./storage_service_account_samples \
+      get-hmac-key "${access_id}"
   # Parse the output to delete all the keys created in this service account.
   for access_id in $(
       ./storage_service_account_samples \

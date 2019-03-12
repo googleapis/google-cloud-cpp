@@ -2378,6 +2378,38 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteHmacKey(request);
   }
+
+  /**
+   * Get an existing HMAC key in a given project.
+   *
+   * @warning This GCS feature is not GA, it is subject to change without
+   *     notice.
+   *
+   * @param access_id the HMAC key `access_id()` that you want to delete.  Each
+   *     HMAC key is assigned an `access_id()` attribute at creation time.
+   * @param options a list of optional query parameters and/or request headers.
+   *     In addition to the options common to all requests, this operation
+   *     accepts `OverrideDefaultProject`.
+   *
+   * @return This operation returns the new HMAC key metadata.
+   *
+   * @par Idempotency
+   * This is a read-only operation and therefore it is always idempotent.
+   *
+   * @par Example
+   * storage_service_account_samples.cc get hmac key
+   *
+   * @see https://cloud.google.com/iam/docs/service-accounts for general
+   *     information on Google Cloud Platform service accounts.
+   */
+  template <typename... Options>
+  StatusOr<HmacKeyMetadata> GetHmacKey(std::string access_id,
+                                       Options&&... options) {
+    auto const& project_id = raw_client_->client_options().project_id();
+    internal::GetHmacKeyRequest request(project_id, std::move(access_id));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->GetHmacKey(request);
+  }
   //@}
 
   //@{

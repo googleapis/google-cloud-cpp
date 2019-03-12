@@ -129,8 +129,14 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   auto post_create_access_ids = get_current_access_ids();
   EXPECT_THAT(post_create_access_ids, Contains(access_id));
 
-  StatusOr<HmacKeyMetadata> deleted_key = client.DeleteHmacKey(
-      key->first.access_id(), OverrideDefaultProject(project_id));
+  StatusOr<HmacKeyMetadata> get_details = client.GetHmacKey(access_id);
+  ASSERT_STATUS_OK(get_details);
+
+  EXPECT_EQ(access_id, get_details->access_id());
+  EXPECT_EQ(key->first, *get_details);
+
+  StatusOr<HmacKeyMetadata> deleted_key =
+      client.DeleteHmacKey(key->first.access_id());
   ASSERT_STATUS_OK(deleted_key);
   EXPECT_EQ(HmacKeyMetadata::state_deleted(), deleted_key->state());
 
@@ -140,10 +146,42 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   // Delete all HmacKeys for the test service account, it is just good practice
   // to cleanup after ourselves.
   for (auto const& id : post_delete_access_ids) {
-    StatusOr<HmacKeyMetadata> d =
-        client.DeleteHmacKey(id, OverrideDefaultProject(project_id));
+    StatusOr<HmacKeyMetadata> d = client.DeleteHmacKey(id);
     ASSERT_STATUS_OK(d);
   }
+}
+
+TEST(ServiceAccountIntegrationTest, HmacKeyCRUDFailures) {
+  if (!UsingTestbench()) {
+    // Temporarily disabled outside the testbench because the test does not
+    // cleanup after itself.
+    return;
+  }
+
+  auto project_id = ServiceAccountTestEnvironment::project_id();
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  auto service_account = ServiceAccountTestEnvironment::service_account();
+  ASSERT_STATUS_OK(client_options);
+
+  Client client(client_options->set_project_id(project_id));
+
+  // Test failures in the HmacKey operations by using an invalid project id:
+  StatusOr<HmacKeyMetadata> create_status =
+      client.DeleteHmacKey("invalid-access-id", OverrideDefaultProject(""));
+  EXPECT_FALSE(create_status) << "value=" << *create_status;
+
+  StatusOr<HmacKeyMetadata> deleted_status =
+      client.DeleteHmacKey("invalid-access-id", OverrideDefaultProject(""));
+  EXPECT_FALSE(deleted_status) << "value=" << *deleted_status;
+
+  StatusOr<HmacKeyMetadata> get_status =
+      client.GetHmacKey("invalid-access-id", OverrideDefaultProject(""));
+  EXPECT_FALSE(get_status) << "value=" << *get_status;
+
+  auto range = client.ListHmacKeys(OverrideDefaultProject(""));
+  auto begin = range.begin();
+  EXPECT_NE(begin, range.end());
+  EXPECT_FALSE(*begin) << "value=" << **begin;
 }
 
 }  // namespace
