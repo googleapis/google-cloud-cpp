@@ -53,6 +53,10 @@ class HmacKeyMetadata {
 
   std::string const& access_id() const { return access_id_; }
   std::string const& etag() const { return etag_; }
+  HmacKeyMetadata& set_etag(std::string v) {
+    etag_ = std::move(v);
+    return *this;
+  }
 
   std::string const& id() const { return id_; }
   std::string const& kind() const { return kind_; }
@@ -62,6 +66,10 @@ class HmacKeyMetadata {
     return service_account_email_;
   }
   std::string const& state() const { return state_; }
+  HmacKeyMetadata& set_state(std::string v) {
+    state_ = std::move(v);
+    return *this;
+  }
   std::chrono::system_clock::time_point time_created() const {
     return time_created_;
   }

@@ -213,6 +213,10 @@ bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
     internal::GetHmacKeyRequest const&) const {
   return true;
 }
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::UpdateHmacKeyRequest const&) const {
+  return true;
+}
 
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
     internal::ListNotificationsRequest const&) const {
@@ -490,6 +494,11 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::GetHmacKeyRequest const&) const {
   return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::UpdateHmacKeyRequest const& request) const {
+  return !request.resource().etag().empty();
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(
