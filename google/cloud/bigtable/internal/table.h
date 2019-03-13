@@ -56,6 +56,7 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
 }
 
 class MutationBatcher;
+class Table;
 
 namespace internal {
 template <typename Request>
@@ -636,6 +637,7 @@ class Table {
  private:
   friend class NoexTableStreamingAsyncBulkApplyTest_SimpleTest_Test;
   friend class ::google::cloud::bigtable::MutationBatcher;
+  friend class ::google::cloud::bigtable::Table;
   /**
    * Make an asynchronous request to mutate a multiple rows and stream results.
    *

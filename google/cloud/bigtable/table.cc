@@ -16,13 +16,16 @@
 #include "google/cloud/bigtable/internal/async_future_from_callback.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include <thread>
 #include <type_traits>
 
+namespace btproto = ::google::bigtable::v2;
 namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+using ClientUtils = bigtable::internal::noex::UnaryClientUtils<DataClient>;
 static_assert(std::is_copy_assignable<bigtable::Table>::value,
               "bigtable::Table must be CopyAssignable");
 
@@ -86,12 +89,24 @@ future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut,
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {
-  return impl_.ReadRows(std::move(row_set), std::move(filter));
+  return RowReader(impl_.client_, impl_.app_profile_id_, impl_.table_name_,
+                   std::move(row_set), RowReader::NO_ROWS_LIMIT,
+                   std::move(filter), impl_.rpc_retry_policy_->clone(),
+                   impl_.rpc_backoff_policy_->clone(),
+                   impl_.metadata_update_policy_,
+                   google::cloud::internal::make_unique<
+                       bigtable::internal::ReadRowsParserFactory>());
 }
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                           Filter filter) {
-  return impl_.ReadRows(std::move(row_set), rows_limit, std::move(filter));
+  return RowReader(impl_.client_, impl_.app_profile_id_, impl_.table_name_,
+                   std::move(row_set), rows_limit, std::move(filter),
+                   impl_.rpc_retry_policy_->clone(),
+                   impl_.rpc_backoff_policy_->clone(),
+                   impl_.metadata_update_policy_,
+                   google::cloud::internal::make_unique<
+                       bigtable::internal::ReadRowsParserFactory>());
 }
 
 StatusOr<std::pair<bool, Row>> Table::ReadRow(std::string row_key,
@@ -120,13 +135,30 @@ StatusOr<bool> Table::CheckAndMutateRow(std::string row_key, Filter filter,
                                         std::vector<Mutation> true_mutations,
                                         std::vector<Mutation> false_mutations) {
   grpc::Status status;
-  bool value = impl_.CheckAndMutateRow(std::move(row_key), std::move(filter),
-                                       std::move(true_mutations),
-                                       std::move(false_mutations), status);
+  btproto::CheckAndMutateRowRequest request;
+  request.set_row_key(std::move(row_key));
+  bigtable::internal::SetCommonTableOperationRequest<
+      btproto::CheckAndMutateRowRequest>(request, impl_.app_profile_id_.get(),
+                                         impl_.table_name_.get());
+  *request.mutable_predicate_filter() = std::move(filter).as_proto();
+  for (auto& m : true_mutations) {
+    *request.add_true_mutations() = std::move(m.op);
+  }
+  for (auto& m : false_mutations) {
+    *request.add_false_mutations() = std::move(m.op);
+  }
+  bool const is_idempotent =
+      impl_.idempotent_mutation_policy_->is_idempotent(request);
+  auto response = ClientUtils::MakeCall(
+      *impl_.client_, impl_.rpc_retry_policy_->clone(),
+      impl_.rpc_backoff_policy_->clone(), impl_.metadata_update_policy_,
+      &DataClient::CheckAndMutateRow, request, "Table::CheckAndMutateRow",
+      status, is_idempotent);
+
   if (!status.ok()) {
     return bigtable::internal::MakeStatusFromRpcError(status);
   }
-  return value;
+  return response.predicate_matched();
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
