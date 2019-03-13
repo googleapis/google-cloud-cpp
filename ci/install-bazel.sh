@@ -18,12 +18,12 @@ set -eu
 
 readonly PLATFORM=$(uname -s | tr '[:upper:]' '[:lower:]')
 # Ensures that the platform is one that we expect
-grep -P "linux|darwin" <<<"${PLATFORM}" > /dev/null
+test "${PLATFORM}" = "linux" -o "${PLATFORM}" = "darwin"
 
 # Gets the latest version number of bazel from the GitHub JSON API.
 readonly BAZEL_VERSION=$(
   curl -sL "https://api.github.com/repos/bazelbuild/bazel/releases/latest" \
-    | grep -P '"tag_name":' \
+    | grep '"tag_name":' \
     | cut -f4 -d\"
 )
 test -n "${BAZEL_VERSION}"
