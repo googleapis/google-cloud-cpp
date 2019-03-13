@@ -342,9 +342,11 @@ class GcsObject(object):
         """
         self.bucket_name = bucket_name
         self.name = name
-        # Define the current generation for the object, will use this as a
-        # simple counter to increment on each object change.
-        self.generation = 0
+        # A counter to create new generation numbers for the object revisions.
+        self.generation_generator = 0
+        # The value of the current generation, not that 0 is special, it is not
+        # a valid generation and it is used to indicate "no generation yet".
+        self.current_generation = 0
         self.revisions = {}
         self.rewrite_token_generator = 0
         self.rewrite_operations = {}
@@ -378,13 +380,12 @@ class GcsObject(object):
         """
         generation = request.args.get('generation')
         if generation is None:
-            generation = self.generation
+            generation = self.current_generation
         self.revisions.pop(int(generation))
         if len(self.revisions) == 0:
-            self.generation = None
+            self.current_generation = None
             return True
-        if generation == self.generation:
-            self.generation = sorted(self.revisions.keys())[-1]
+        self.current_generation = sorted(self.revisions.keys())[-1]
         return False
 
     @classmethod
@@ -468,29 +469,29 @@ class GcsObject(object):
         return self.revisions.get(generation, None)
 
     def get_latest(self):
-        return self.revisions.get(self.generation, None)
+        return self.revisions.get(self.current_generation, None)
 
     def check_preconditions_by_value(
             self, generation_match, generation_not_match, metageneration_match,
             metageneration_not_match):
         """Verify that the given precondition values are met."""
         if (generation_match is not None
-                and int(generation_match) != self.generation):
+                and int(generation_match) != self.current_generation):
             raise error_response.ErrorResponse(
                 'Precondition Failed', status_code=412)
         # This object does not exist (yet), testing in this case is special.
         if (generation_not_match is not None
-                and int(generation_not_match) == self.generation):
+                and int(generation_not_match) == self.current_generation):
             raise error_response.ErrorResponse(
                 'Precondition Failed', status_code=412)
 
-        if self.generation == 0:
+        if self.current_generation == 0:
             if (metageneration_match is not None
                     or metageneration_not_match is not None):
                 raise error_response.ErrorResponse(
                     'Precondition Failed', status_code=412)
         else:
-            current = self.revisions.get(self.generation)
+            current = self.revisions.get(self.current_generation)
             if current is None:
                 raise error_response.ErrorResponse(
                     'Object not found', status_code=404)
@@ -543,12 +544,13 @@ class GcsObject(object):
         :param revision: GcsObjectVersion the new revision to insert.
         :rtype:NoneType
         """
-        update = {self.generation: revision}
+        update = {self.generation_generator: revision}
         bucket = testbench_utils.lookup_bucket(self.bucket_name)
         if not bucket.versioning_enabled():
             self.revisions = update
         else:
             self.revisions.update(update)
+        self.current_generation = self.generation_generator
 
     def insert(self, gcs_url, request):
         """Insert a new revision based on the give flask request.
@@ -559,10 +561,10 @@ class GcsObject(object):
         :rtype: GcsObjectVersion
         """
         media = testbench_utils.extract_media(request)
-        self.generation += 1
+        self.generation_generator += 1
         revision = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation, request,
-            media)
+            gcs_url, self.bucket_name, self.name, self.generation_generator,
+            request, media)
         meta = revision.metadata.setdefault('metadata', {})
         meta['x_testbench_upload'] = 'simple'
         self._insert_revision(revision)
@@ -636,10 +638,10 @@ class GcsObject(object):
         # Set the contentType in the resource from the header. Note that if both
         # are set they have the same value.
         resource.setdefault('contentType', media_headers.get('content-type'))
-        self.generation += 1
+        self.generation_generator += 1
         revision = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation, request,
-            media_body)
+            gcs_url, self.bucket_name, self.name, self.generation_generator,
+            request, media_body)
         meta = revision.metadata.setdefault('metadata', {})
         meta['x_testbench_upload'] = 'multipart'
         meta['x_testbench_md5'] = resource.get('md5Hash', '')
@@ -659,10 +661,10 @@ class GcsObject(object):
         :return: the newly created object version.
         :rtype: GcsObjectVersion
         """
-        self.generation += 1
+        self.generation_generator += 1
         revision = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation, request,
-            media)
+            gcs_url, self.bucket_name, self.name, self.generation_generator,
+            request, media)
         meta = revision.metadata.setdefault('metadata', {})
         meta['x_testbench_upload'] = 'resumable'
         meta['x_testbench_md5'] = resource.get('md5Hash', '')
@@ -681,7 +683,7 @@ class GcsObject(object):
         :rtype: GcsObjectVersion
         """
         media = testbench_utils.extract_media(request)
-        self.generation += 1
+        self.generation_generator += 1
         goog_hash = request.headers.get('x-goog-hash')
         md5hash = None
         crc32c = None
@@ -692,8 +694,8 @@ class GcsObject(object):
                 if hash.startswith('crc32c='):
                     crc32c = hash[7:]
         revision = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation, request,
-            media)
+            gcs_url, self.bucket_name, self.name, self.generation_generator,
+            request, media)
         meta = revision.metadata.setdefault('metadata', {})
         meta['x_testbench_upload'] = 'xml'
         if md5hash is not None:
@@ -719,11 +721,11 @@ class GcsObject(object):
         :return: the newly created object version.
         :rtype: GcsObjectVersion
         """
-        self.generation += 1
+        self.generation_generator += 1
         source_revision.validate_encryption_for_read(request)
         revision = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation, request,
-            source_revision.media)
+            gcs_url, self.bucket_name, self.name, self.generation_generator,
+            request, source_revision.media)
         revision.reset_predefined_acl(
             request.args.get('destinationPredefinedAcl'))
         metadata = json.loads(request.data)
@@ -740,10 +742,10 @@ class GcsObject(object):
         :return: the newly created object version.
         :rtype: GcsObjectVersion
         """
-        self.generation += 1
+        self.generation_generator += 1
         revision = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation, request,
-            composed_media)
+            gcs_url, self.bucket_name, self.name, self.generation_generator,
+            request, composed_media)
         revision.reset_predefined_acl(
             request.args.get('destinationPredefinedAcl'))
         payload = json.loads(request.data)
@@ -803,7 +805,7 @@ class GcsObject(object):
         """Create a new rewrite token for `Objects: rewrite`."""
         generation = request.args.get('sourceGeneration')
         if generation is None:
-            generation = self.generation
+            generation = self.generation_generator
         else:
             generation = int(generation)
 
@@ -834,10 +836,10 @@ class GcsObject(object):
         """
         media = source.media
         self.check_preconditions(request)
-        self.generation += 1
+        self.generation_generator += 1
         revision = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation, request,
-            media)
+            gcs_url, self.bucket_name, self.name, self.generation_generator,
+            request, media)
         revision.update_from_metadata(body)
         self._insert_revision(revision)
         return revision
