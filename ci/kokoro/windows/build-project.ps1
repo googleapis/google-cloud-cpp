@@ -29,6 +29,9 @@ $CONFIG = $env:CONFIG
 $PROVIDER = $env:PROVIDER
 $GENERATOR = "Ninja"
 
+Write-Host
+Get-Date -Format o
+Write-Host "Running git submodule update --init"
 git submodule update --init
 if ($LastExitCode) {
     throw "git submodule failed with exit code $LastExitCode"
@@ -40,13 +43,6 @@ $cmake_flags=@("-G$GENERATOR", "-DCMAKE_BUILD_TYPE=$CONFIG", "-H.", "-Bbuild-out
 # This script expects vcpkg to be installed in ..\vcpkg, discover the full
 # path to that directory:
 $dir = Split-Path (Get-Item -Path ".\" -Verbose).FullName
-
-# Run the vcpkg integration.
-$integrate = "$dir\vcpkg\vcpkg.exe integrate install"
-Invoke-Expression $integrate
-if ($LastExitCode) {
-    throw "vcpkg integrate failed with exit code $LastExitCode"
-}
 
 # Setup the environment for vcpkg:
 $cmake_flags += "-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=$PROVIDER"
