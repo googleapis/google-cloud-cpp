@@ -544,9 +544,14 @@ TEST(StrictIdempotencyPolicyTest, CreateHmacKey) {
 
 TEST(StrictIdempotencyPolicyTest, DeleteHmacKey) {
   StrictIdempotencyPolicy policy;
-  internal::CreateHmacKeyRequest request("test-project-id",
-                                         "test-service-account");
-  EXPECT_FALSE(policy.IsIdempotent(request));
+  internal::DeleteHmacKeyRequest request("test-project-id", "test-access-id");
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, GetHmacKey) {
+  StrictIdempotencyPolicy policy;
+  internal::GetHmacKeyRequest request("test-project-id", "test-access-id");
+  EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, ListNotification) {

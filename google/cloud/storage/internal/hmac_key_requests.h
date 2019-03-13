@@ -144,6 +144,21 @@ class DeleteHmacKeyRequest
 
 std::ostream& operator<<(std::ostream& os, DeleteHmacKeyRequest const& r);
 
+/// Represents a request to call the `HmacKeys: get` API.
+class GetHmacKeyRequest : public GenericHmacKeyRequest<GetHmacKeyRequest> {
+ public:
+  explicit GetHmacKeyRequest(std::string project_id, std::string access_id)
+      : GenericHmacKeyRequest(std::move(project_id)),
+        access_id_(std::move(access_id)) {}
+
+  std::string const& access_id() const { return access_id_; }
+
+ private:
+  std::string access_id_;
+};
+
+std::ostream& operator<<(std::ostream& os, GetHmacKeyRequest const& r);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

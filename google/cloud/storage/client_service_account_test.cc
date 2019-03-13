@@ -183,6 +183,47 @@ TEST_F(ServiceAccountTest, DeleteHmacKeyPermanentFailure) {
       "DeleteHmacKey");
 }
 
+TEST_F(ServiceAccountTest, GetHmacKey) {
+  HmacKeyMetadata expected =
+      internal::HmacKeyMetadataParser::FromString(
+          R"""({"accessId": "test-access-id-1", "state": "ACTIVE"})""")
+          .value();
+
+  EXPECT_CALL(*mock, GetHmacKey(_))
+      .WillOnce(Return(StatusOr<HmacKeyMetadata>(TransientError())))
+      .WillOnce(Invoke([&expected](internal::GetHmacKeyRequest const& r) {
+        EXPECT_EQ("test-project", r.project_id());
+        EXPECT_EQ("test-access-id-1", r.access_id());
+
+        return make_status_or(expected);
+      }));
+  Client client{std::shared_ptr<internal::RawClient>(mock)};
+
+  StatusOr<HmacKeyMetadata> actual = client.GetHmacKey(
+      "test-access-id-1", OverrideDefaultProject("test-project"));
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(expected.access_id(), actual->access_id());
+  EXPECT_EQ(expected.state(), actual->state());
+}
+
+TEST_F(ServiceAccountTest, GetHmacKeyTooManyFailures) {
+  testing::TooManyFailuresStatusTest<HmacKeyMetadata>(
+      mock, EXPECT_CALL(*mock, GetHmacKey(_)),
+      [](Client& client) {
+        return client.GetHmacKey("test-access-id").status();
+      },
+      "GetHmacKey");
+}
+
+TEST_F(ServiceAccountTest, GetHmacKeyPermanentFailure) {
+  testing::PermanentFailureStatusTest<HmacKeyMetadata>(
+      *client, EXPECT_CALL(*mock, GetHmacKey(_)),
+      [](Client& client) {
+        return client.GetHmacKey("test-access-id").status();
+      },
+      "GetHmacKey");
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

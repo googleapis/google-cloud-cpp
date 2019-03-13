@@ -333,6 +333,11 @@ StatusOr<HmacKeyMetadata> LoggingClient::DeleteHmacKey(
   return MakeCall(*client_, &RawClient::DeleteHmacKey, request, __func__);
 }
 
+StatusOr<HmacKeyMetadata> LoggingClient::GetHmacKey(
+    GetHmacKeyRequest const& request) {
+  return MakeCall(*client_, &RawClient::GetHmacKey, request, __func__);
+}
+
 StatusOr<ListNotificationsResponse> LoggingClient::ListNotifications(
     ListNotificationsRequest const& request) {
   return MakeCall(*client_, &RawClient::ListNotifications, request, __func__);

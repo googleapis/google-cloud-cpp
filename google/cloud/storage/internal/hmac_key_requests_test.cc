@@ -225,6 +225,22 @@ TEST(HmacKeysRequestsTest, Delete) {
   EXPECT_THAT(actual, HasSubstr("test-user-ip"));
 }
 
+TEST(HmacKeysRequestsTest, Get) {
+  GetHmacKeyRequest request("test-project-id", "test-access-id");
+  EXPECT_EQ("test-project-id", request.project_id());
+  EXPECT_EQ("test-access-id", request.access_id());
+  request.set_multiple_options(UserIp("test-user-ip"),
+                               OverrideDefaultProject("override-project-id"));
+  EXPECT_EQ("override-project-id", request.project_id());
+
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("override-project-id"));
+  EXPECT_THAT(actual, HasSubstr("test-access-id"));
+  EXPECT_THAT(actual, HasSubstr("test-user-ip"));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
