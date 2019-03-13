@@ -135,6 +135,12 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   EXPECT_EQ(access_id, get_details->access_id());
   EXPECT_EQ(key->first, *get_details);
 
+  StatusOr<HmacKeyMetadata> update_details = client.UpdateHmacKey(
+      access_id,
+      HmacKeyMetadata().set_state("INACTIVE").set_etag(get_details->etag()));
+  ASSERT_STATUS_OK(update_details);
+  EXPECT_EQ("INACTIVE", update_details->state());
+
   StatusOr<HmacKeyMetadata> deleted_key =
       client.DeleteHmacKey(key->first.access_id());
   ASSERT_STATUS_OK(deleted_key);
@@ -177,6 +183,10 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUDFailures) {
   StatusOr<HmacKeyMetadata> get_status =
       client.GetHmacKey("invalid-access-id", OverrideDefaultProject(""));
   EXPECT_FALSE(get_status) << "value=" << *get_status;
+
+  StatusOr<HmacKeyMetadata> update_status = client.UpdateHmacKey(
+      "invalid-access-id", HmacKeyMetadata(), OverrideDefaultProject(""));
+  EXPECT_FALSE(update_status) << "value=" << *update_status;
 
   auto range = client.ListHmacKeys(OverrideDefaultProject(""));
   auto begin = range.begin();

@@ -138,6 +138,7 @@ class RetryClient : public RawClient {
       CreateHmacKeyRequest const&) override;
   StatusOr<HmacKeyMetadata> DeleteHmacKey(DeleteHmacKeyRequest const&) override;
   StatusOr<HmacKeyMetadata> GetHmacKey(GetHmacKeyRequest const&) override;
+  StatusOr<HmacKeyMetadata> UpdateHmacKey(UpdateHmacKeyRequest const&) override;
 
   StatusOr<ListNotificationsResponse> ListNotifications(
       ListNotificationsRequest const&) override;

@@ -159,6 +159,26 @@ class GetHmacKeyRequest : public GenericHmacKeyRequest<GetHmacKeyRequest> {
 
 std::ostream& operator<<(std::ostream& os, GetHmacKeyRequest const& r);
 
+/// Represents a request to call the `HmacKeys: update` API.
+class UpdateHmacKeyRequest
+    : public GenericHmacKeyRequest<UpdateHmacKeyRequest> {
+ public:
+  explicit UpdateHmacKeyRequest(std::string project_id, std::string access_id,
+                                HmacKeyMetadata resource)
+      : GenericHmacKeyRequest(std::move(project_id)),
+        access_id_(std::move(access_id)),
+        resource_(std::move(resource)) {}
+
+  std::string const& access_id() const { return access_id_; }
+  HmacKeyMetadata const& resource() const { return resource_; }
+
+ private:
+  std::string access_id_;
+  HmacKeyMetadata resource_;
+};
+
+std::ostream& operator<<(std::ostream& os, UpdateHmacKeyRequest const& r);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

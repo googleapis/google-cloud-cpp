@@ -244,6 +244,36 @@ void GetHmacKey(google::cloud::storage::Client client, int& argc,
   (std::move(client), argv[1]);
 }
 
+void UpdateHmacKey(google::cloud::storage::Client client, int& argc,
+                   char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"update-hmac-key <access-id> <state>"};
+  }
+  //! [update hmac key] [START storage_update_hmac_key]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string access_id, std::string state) {
+    StatusOr<gcs::HmacKeyMetadata> current_metadata =
+        client.GetHmacKey(access_id);
+    if (!current_metadata) {
+      throw std::runtime_error(current_metadata.status().message());
+    }
+
+    StatusOr<gcs::HmacKeyMetadata> updated_metadata = client.UpdateHmacKey(
+        access_id, gcs::HmacKeyMetadata()
+                       .set_state(std::move(state))
+                       .set_etag(current_metadata->etag()));
+
+    if (!updated_metadata) {
+      throw std::runtime_error(updated_metadata.status().message());
+    }
+    std::cout << "The updated HMAC key metadata is: " << *updated_metadata
+              << "\n";
+  }
+  //! [update hmac key] [END storage_update_hmac_key]
+  (std::move(client), argv[1], argv[2]);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -267,6 +297,7 @@ int main(int argc, char* argv[]) try {
       {"create-hmac-key", &CreateHmacKey},
       {"delete-hmac-key", &DeleteHmacKey},
       {"get-hmac-key", &GetHmacKey},
+      {"update-hmac-key", &UpdateHmacKey},
   };
   for (auto&& kv : commands) {
     try {

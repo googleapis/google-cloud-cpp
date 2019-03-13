@@ -2410,6 +2410,44 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetHmacKey(request);
   }
+
+  /**
+   * Update an existing HMAC key in a given project.
+   *
+   * @warning This GCS feature is not GA, it is subject to change without
+   *     notice.
+   *
+   * @param access_id the HMAC key `access_id()` that you want to delete.  Each
+   *     HMAC key is assigned an `access_id()` attribute at creation time.
+   * @param resource the desired changes to the HMAC key resource. Only the
+   *     `state` field may be changed. The `etag` field may be set but it is
+   *     only used as a pre-condition, the application cannot set the `etag`.
+   * @param options a list of optional query parameters and/or request headers.
+   *     In addition to the options common to all requests, this operation
+   *     accepts `OverrideDefaultProject`.
+   *
+   * @return This operation returns the new HMAC key metadata.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if the `etag` attribute in @p resource
+   * is set, or if the `IfMatchEtag` option is set.
+   *
+   * @par Example
+   * storage_service_account_samples.cc update hmac key
+   *
+   * @see https://cloud.google.com/iam/docs/service-accounts for general
+   *     information on Google Cloud Platform service accounts.
+   */
+  template <typename... Options>
+  StatusOr<HmacKeyMetadata> UpdateHmacKey(std::string access_id,
+                                          HmacKeyMetadata resource,
+                                          Options&&... options) {
+    auto const& project_id = raw_client_->client_options().project_id();
+    internal::UpdateHmacKeyRequest request(project_id, std::move(access_id),
+                                           std::move(resource));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->UpdateHmacKey(request);
+  }
   //@}
 
   //@{

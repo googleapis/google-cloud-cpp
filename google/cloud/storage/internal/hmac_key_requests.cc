@@ -132,6 +132,13 @@ std::ostream& operator<<(std::ostream& os, GetHmacKeyRequest const& r) {
   return os << "}";
 }
 
+std::ostream& operator<<(std::ostream& os, UpdateHmacKeyRequest const& r) {
+  os << "UpdateHmacKeyRequest={project_id=" << r.project_id()
+     << ", access_id=" << r.access_id() << ", resource=" << r.resource();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

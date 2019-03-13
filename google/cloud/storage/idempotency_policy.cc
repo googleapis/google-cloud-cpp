@@ -213,6 +213,10 @@ bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
     internal::GetHmacKeyRequest const&) const {
   return true;
 }
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::UpdateHmacKeyRequest const&) const {
+  return true;
+}
 
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
     internal::ListNotificationsRequest const&) const {
@@ -490,6 +494,13 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::GetHmacKeyRequest const&) const {
   return true;
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::UpdateHmacKeyRequest const& request) const {
+  // The plan of record is to support `If-Match-Etag` headers *and* the `etag`
+  // attribute on the payload as preconditions for `HmacKeys: update`.
+  return !request.resource().etag().empty() || request.HasOption<IfMatchEtag>();
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(

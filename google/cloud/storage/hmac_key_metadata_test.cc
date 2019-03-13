@@ -73,6 +73,26 @@ TEST(HmacKeyMetadataTest, IOStream) {
   EXPECT_THAT(actual, HasSubstr("2019-03-01T12:13:14Z"));
 }
 
+/// @test Verify we can change the state in a HmacKeyMetadata.
+TEST(HmacKeyMetadataTest, SetState) {
+  auto expected = CreateHmacKeyMetadataForTest();
+  auto copy = expected;
+  copy.set_state("INACTIVE");
+  EXPECT_EQ("INACTIVE", copy.state());
+  EXPECT_NE(expected.state(), copy.state());
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can change the state in a HmacKeyMetadata.
+TEST(HmacKeyMetadataTest, SetETag) {
+  auto expected = CreateHmacKeyMetadataForTest();
+  auto copy = expected;
+  copy.set_etag("ABC=");
+  EXPECT_EQ("ABC=", copy.etag());
+  EXPECT_NE(expected.etag(), copy.etag());
+  EXPECT_NE(expected, copy);
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
