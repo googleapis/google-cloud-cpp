@@ -7,6 +7,7 @@ var searchData=
   ['getbucketiampolicy',['GetBucketIamPolicy',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a8d0a35e550d682a750dd3a4f24fd054f',1,'google::cloud::storage::v0::Client']]],
   ['getbucketmetadata',['GetBucketMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aad461a2097a6159169223afb700a4112',1,'google::cloud::storage::v0::Client']]],
   ['getdefaultobjectacl',['GetDefaultObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#afc9f8e449de697b13f83ee1d4e08d808',1,'google::cloud::storage::v0::Client']]],
+  ['gethmackey',['GetHmacKey',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a84b7cfe7744e154dbd1d56c8e5270710',1,'google::cloud::storage::v0::Client']]],
   ['getnotification',['GetNotification',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a6140dee0cd3f1fe538612bcdb7304f81',1,'google::cloud::storage::v0::Client']]],
   ['getobjectacl',['GetObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a8a8b32a2b001851d8bd7956a826f05f9',1,'google::cloud::storage::v0::Client']]],
   ['getobjectmetadata',['GetObjectMetadata',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#ae7a1d66157dbb09777466b0e35d8dc33',1,'google::cloud::storage::v0::Client']]],

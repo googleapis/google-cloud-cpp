@@ -179,6 +179,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5018dd6f564cd3d0597d270f4ab635be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d1c00b27c2b5cd67bfac8189e58e437"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StrictIdempotencyPolicy.html#a8d1c00b27c2b5cd67bfac8189e58e437">IsIdempotent</a> (internal::DeleteHmacKeyRequest const &amp;request) const override</td></tr>
 <tr class="separator:a8d1c00b27c2b5cd67bfac8189e58e437"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37379d1abbfbd1c751ef784042e11e4e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StrictIdempotencyPolicy.html#a37379d1abbfbd1c751ef784042e11e4e">IsIdempotent</a> (internal::GetHmacKeyRequest const &amp;request) const override</td></tr>
+<tr class="separator:a37379d1abbfbd1c751ef784042e11e4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b8b3cdebe289db8e58a2d42cf8bf7ac"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StrictIdempotencyPolicy.html#a5b8b3cdebe289db8e58a2d42cf8bf7ac">IsIdempotent</a> (internal::ListNotificationsRequest const &amp;request) const override</td></tr>
 <tr class="separator:a5b8b3cdebe289db8e58a2d42cf8bf7ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91b4888e432581246753553e3f8c7936"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1StrictIdempotencyPolicy.html#a91b4888e432581246753553e3f8c7936">IsIdempotent</a> (internal::CreateNotificationRequest const &amp;request) const override</td></tr>
@@ -191,7 +193,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html" title="Define the interface for the idempotency policy. ">IdempotencyPolicy</a> that only retries strictly idempotent requests. </p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8h_source.html#l00311">311</a> of file <a class="el" href="idempotency__policy_8h_source.html">idempotency_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8h_source.html#l00314">314</a> of file <a class="el" href="idempotency__policy_8h_source.html">idempotency_policy.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a708a6a8b4828256418b7d54a1b973f27"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a708a6a8b4828256418b7d54a1b973f27">&#9670;&nbsp;</a></span>StrictIdempotencyPolicy()</h2>
@@ -246,12 +248,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a5899f74eef496b938b2488d44a46175a">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00230">230</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00234">234</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="aca0a75966b87af927a0905000b53a756"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca0a75966b87af927a0905000b53a756">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[1/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aca0a75966b87af927a0905000b53a756">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[1/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -276,12 +278,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a28d5534d5ea24baea4726eb53f38a640">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00234">234</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00238">238</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="ab19bf9b0ab4f56635c8899aa34d5d778"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab19bf9b0ab4f56635c8899aa34d5d778">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[2/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab19bf9b0ab4f56635c8899aa34d5d778">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[2/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -306,12 +308,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a242c14d9cb0b397758bc21b4cd00f794">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00240">240</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00244">244</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="ac19c594926f1924445544e575383ab17"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac19c594926f1924445544e575383ab17">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[3/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac19c594926f1924445544e575383ab17">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[3/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -336,12 +338,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a3cccbd345bef7720974961820c44da90">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00247">247</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00251">251</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a7d4870721c83e99729d64eb4a9cf52f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7d4870721c83e99729d64eb4a9cf52f3">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[4/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d4870721c83e99729d64eb4a9cf52f3">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[4/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -366,12 +368,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a8492fe3006ea70fd41352b10be870555">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00253">253</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00257">257</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a73a95cf2b926ed2b2ccba26417bdfe7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a73a95cf2b926ed2b2ccba26417bdfe7f">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[5/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a73a95cf2b926ed2b2ccba26417bdfe7f">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[5/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -396,12 +398,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a59565de0b8072d833b271f3d20aec307">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00259">259</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00263">263</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a56c93487f32fb6eb2f77005bb5576c0e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a56c93487f32fb6eb2f77005bb5576c0e">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[6/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a56c93487f32fb6eb2f77005bb5576c0e">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[6/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -426,12 +428,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#aca26d9711e2770bf8183b90d3cbeb97c">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00265">265</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00269">269</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="aa34e66e0e88cc91a160b1a9f36868625"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa34e66e0e88cc91a160b1a9f36868625">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[7/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa34e66e0e88cc91a160b1a9f36868625">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[7/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -456,12 +458,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#afe3f2d7cd75f082d8277144bfb5f27ec">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00271">271</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00275">275</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a41e24fa8de255328634fa0b531887a68"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41e24fa8de255328634fa0b531887a68">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[8/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a41e24fa8de255328634fa0b531887a68">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[8/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -486,12 +488,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#ad6f428033b034f6a3bdf127cfab0518b">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00276">276</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00280">280</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a10f44310ab69f5c226b84c2b715c7015"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a10f44310ab69f5c226b84c2b715c7015">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[9/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a10f44310ab69f5c226b84c2b715c7015">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[9/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -516,12 +518,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a645a8fafdc88842080aa9d48d2a70b10">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00281">281</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00285">285</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="acb9b208d301f434f71380bcd34459738"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb9b208d301f434f71380bcd34459738">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[10/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acb9b208d301f434f71380bcd34459738">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[10/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -546,12 +548,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#ae65aaffb20dde88bb31595bb0ba8da24">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00286">286</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00290">290</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a661a2c194d7acd0e0fb003eb4136aff9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a661a2c194d7acd0e0fb003eb4136aff9">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[11/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a661a2c194d7acd0e0fb003eb4136aff9">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[11/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -576,12 +578,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a6635dcf5cb5edee3cab7abc1fcf62a1c">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00292">292</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00296">296</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a3117e7b97453eee6f4c3fbb1dd49413e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3117e7b97453eee6f4c3fbb1dd49413e">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[12/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3117e7b97453eee6f4c3fbb1dd49413e">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[12/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -606,12 +608,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#ad748f5c63714783e8f667049170b296a">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00297">297</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00301">301</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a8db0e570aeb419c8844d6d33926a4243"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8db0e570aeb419c8844d6d33926a4243">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[13/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8db0e570aeb419c8844d6d33926a4243">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[13/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -636,12 +638,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a1f65d10141a4fd943053df18d48980e5">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00306">306</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00310">310</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a65213401c20410fd9d6a284a0fbcccb6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65213401c20410fd9d6a284a0fbcccb6">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[14/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a65213401c20410fd9d6a284a0fbcccb6">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[14/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -666,12 +668,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#ad14941ee84aaa2cbdbf85f098bf093c3">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00311">311</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00315">315</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a8c6f5da935cc42b7771a076bc03bd4b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c6f5da935cc42b7771a076bc03bd4b8">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[15/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c6f5da935cc42b7771a076bc03bd4b8">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[15/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -696,12 +698,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a3210ad37a26d704b7ee72303f6841b6f">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00316">316</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00320">320</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a180b911e4f99aeb75e43fe65ab795d06"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a180b911e4f99aeb75e43fe65ab795d06">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[16/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a180b911e4f99aeb75e43fe65ab795d06">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[16/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -726,12 +728,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a63816039d2e71d15fac13f1f9ccfa54e">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00321">321</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00325">325</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="ae239930040893f686fb475f4c1a56f98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae239930040893f686fb475f4c1a56f98">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[17/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae239930040893f686fb475f4c1a56f98">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[17/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -756,12 +758,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#aded91b6dd8c9a080b97a39d4012262e8">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00326">326</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00330">330</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="af7b39b71127e63a5605b15e5f354bd73"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af7b39b71127e63a5605b15e5f354bd73">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[18/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af7b39b71127e63a5605b15e5f354bd73">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[18/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -786,12 +788,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#aaf6f85bd0efd5a2619fc535d5214ebc2">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00332">332</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00336">336</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a9d55ce329400094594c26021627955ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d55ce329400094594c26021627955ab">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[19/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d55ce329400094594c26021627955ab">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[19/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -816,12 +818,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a64b601cad351963cbead47b93f15fbf9">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00338">338</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00342">342</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a91ad80bb70a10eaabaecbf87f0edf74b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91ad80bb70a10eaabaecbf87f0edf74b">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[20/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a91ad80bb70a10eaabaecbf87f0edf74b">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[20/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -846,12 +848,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#ac05b8e52ad854f6b4cdffe2d0e4b3f71">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00344">344</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00348">348</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a7ae2eea0fe727193ad082c6321002083"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ae2eea0fe727193ad082c6321002083">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[21/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ae2eea0fe727193ad082c6321002083">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[21/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -876,12 +878,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#ae1c489f13bb6dc564ce97b886562a4d2">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00353">353</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00357">357</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="ac5ad6c42b945d4a05f3142852fd43072"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5ad6c42b945d4a05f3142852fd43072">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[22/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5ad6c42b945d4a05f3142852fd43072">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[22/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -906,12 +908,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a0589fd7fa350df692bcef956bb6e3a3e">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00362">362</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00366">366</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="ab55139a330ff4dd6783d9998aeb54fc2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab55139a330ff4dd6783d9998aeb54fc2">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[23/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab55139a330ff4dd6783d9998aeb54fc2">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[23/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -936,12 +938,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a47c7dfc1b503315189a9598d86217a75">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00371">371</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00375">375</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a02f3ff41e571cdca892c7d4f3232e3e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02f3ff41e571cdca892c7d4f3232e3e1">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[24/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a02f3ff41e571cdca892c7d4f3232e3e1">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[24/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -966,12 +968,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a0e49752dacf88d558aceb760da71a82b">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00376">376</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00380">380</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="afc64f5748c41a6d76751cf7634d690b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc64f5748c41a6d76751cf7634d690b1">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[25/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afc64f5748c41a6d76751cf7634d690b1">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[25/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -996,12 +998,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a1a08012e8c05524e04a86dd1eeff78f2">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00381">381</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00385">385</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a235626196b88fbb7b48b012e705b8758"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a235626196b88fbb7b48b012e705b8758">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[26/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a235626196b88fbb7b48b012e705b8758">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[26/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1026,12 +1028,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a9d5887f1e055838bde591d774b050361">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00386">386</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00390">390</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a5082349af421155d33967704d4514995"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5082349af421155d33967704d4514995">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[27/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5082349af421155d33967704d4514995">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[27/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1056,12 +1058,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a7bfb1e9a0375d3ff8de355f6d28b7da1">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00391">391</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00395">395</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a93973c8d2b9fd4144e6d47bfb5fc2b95"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a93973c8d2b9fd4144e6d47bfb5fc2b95">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[28/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a93973c8d2b9fd4144e6d47bfb5fc2b95">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[28/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1086,12 +1088,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a912373f8a4124ee2cff8599740c3be5e">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00396">396</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00400">400</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a380548478786740690dc60e0dbf9a2bb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a380548478786740690dc60e0dbf9a2bb">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[29/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a380548478786740690dc60e0dbf9a2bb">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[29/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1116,12 +1118,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a926d64b79b78a9e77764e0607496369d">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00401">401</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00405">405</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a559de7054e13d7efac716a9f985fde54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a559de7054e13d7efac716a9f985fde54">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[30/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a559de7054e13d7efac716a9f985fde54">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[30/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1146,12 +1148,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#aaa8e3f8fb67e52f100eede29a793070a">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00406">406</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00410">410</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a218376052ed1813e377c8f0214c28f2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a218376052ed1813e377c8f0214c28f2e">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[31/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a218376052ed1813e377c8f0214c28f2e">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[31/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1176,12 +1178,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a9e8005a83f73dbe8371cd7f31a188415">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00411">411</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00415">415</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="ad02384d9c87775397a7755b61b55a60f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad02384d9c87775397a7755b61b55a60f">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[32/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad02384d9c87775397a7755b61b55a60f">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[32/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1206,12 +1208,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a165fc9341c1efe9b9b5d0349d5361e0f">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00416">416</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00420">420</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="ab7920970b6b8189a39a22c3b9b7b31ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab7920970b6b8189a39a22c3b9b7b31ca">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[33/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7920970b6b8189a39a22c3b9b7b31ca">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[33/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1236,12 +1238,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#ae5f1b6c20cc94c058af0f5d705f8aa99">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00421">421</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00425">425</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="ab0e1babc0520c1228c49fad8a62250dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0e1babc0520c1228c49fad8a62250dc">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[34/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0e1babc0520c1228c49fad8a62250dc">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[34/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1266,12 +1268,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#acfbfac1e2bc37a5d088591cb63ac2423">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00426">426</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00430">430</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a76b06c0344ad80418a2d4e285a91fdb2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a76b06c0344ad80418a2d4e285a91fdb2">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[35/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a76b06c0344ad80418a2d4e285a91fdb2">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[35/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1296,12 +1298,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a728c4826a60717b928c2c72c2120451b">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00431">431</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00435">435</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a1a0544d1419db15b9f4b24c3e63e57d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a0544d1419db15b9f4b24c3e63e57d1">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[36/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a0544d1419db15b9f4b24c3e63e57d1">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[36/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1326,12 +1328,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a3619a7cfbf001591868feb65bf8d111e">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00436">436</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00440">440</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="aef0d69f29aee6166080695a580e1819a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef0d69f29aee6166080695a580e1819a">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[37/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aef0d69f29aee6166080695a580e1819a">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[37/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1356,12 +1358,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a8981616d2b0a968e04e41a23878eef66">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00441">441</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00445">445</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a7bd36bc4f75d4e3db5e6cd66b4d40369"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7bd36bc4f75d4e3db5e6cd66b4d40369">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[38/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7bd36bc4f75d4e3db5e6cd66b4d40369">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[38/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1386,12 +1388,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#abac4abe7d72fb29d650f9527506ae137">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00446">446</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00450">450</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="ac052a549e556e3be87d8ebbb5ca37c77"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac052a549e556e3be87d8ebbb5ca37c77">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[39/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac052a549e556e3be87d8ebbb5ca37c77">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[39/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1416,12 +1418,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#ab03cd014ae09308504b1983e03141588">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00451">451</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00455">455</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="ace814fe478b4e54339c3c44b28a44aca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace814fe478b4e54339c3c44b28a44aca">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[40/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ace814fe478b4e54339c3c44b28a44aca">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[40/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1446,12 +1448,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a5ae7a3884eb277d47cc20f4df631a732">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00456">456</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00460">460</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a81b39d6be1cafcfceb1362a2cbae54b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81b39d6be1cafcfceb1362a2cbae54b4">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[41/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a81b39d6be1cafcfceb1362a2cbae54b4">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[41/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1476,12 +1478,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a65d12c247a05ffce5477204b3f094506">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00461">461</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00465">465</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="aa59b2290c9c2feb3062c122bc752f540"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa59b2290c9c2feb3062c122bc752f540">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[42/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa59b2290c9c2feb3062c122bc752f540">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[42/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1506,12 +1508,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#ab7b180890da2fea558621fa39cb3828a">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00466">466</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00470">470</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a2153a052912026b60d99fb49dd6b4609"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2153a052912026b60d99fb49dd6b4609">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[43/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2153a052912026b60d99fb49dd6b4609">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[43/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1536,12 +1538,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a2051291b177d5ebad82bed100fe498ed">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00471">471</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00475">475</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a5018dd6f564cd3d0597d270f4ab635be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5018dd6f564cd3d0597d270f4ab635be">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[44/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5018dd6f564cd3d0597d270f4ab635be">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[44/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1566,12 +1568,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a9abe84f329ffc2250de41a6262355dd1">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00476">476</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00480">480</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a8d1c00b27c2b5cd67bfac8189e58e437"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8d1c00b27c2b5cd67bfac8189e58e437">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[45/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d1c00b27c2b5cd67bfac8189e58e437">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[45/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1596,12 +1598,42 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a7b806de99acbeb68fad8b50b3b84c059">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00481">481</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00485">485</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+
+</div>
+</div>
+<a id="a37379d1abbfbd1c751ef784042e11e4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37379d1abbfbd1c751ef784042e11e4e">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[46/50]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool google::cloud::storage::v0::StrictIdempotencyPolicy::IsIdempotent </td>
+          <td>(</td>
+          <td class="paramtype">internal::GetHmacKeyRequest const &amp;&#160;</td>
+          <td class="paramname"><em>request</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a2ddcbf1e9e7b40cf5cdab3575b08c4ea">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00490">490</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a5b8b3cdebe289db8e58a2d42cf8bf7ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b8b3cdebe289db8e58a2d42cf8bf7ac">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[46/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b8b3cdebe289db8e58a2d42cf8bf7ac">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[47/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1626,12 +1658,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#aac48515081793c85279f69a35a42140c">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00486">486</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00495">495</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a91b4888e432581246753553e3f8c7936"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91b4888e432581246753553e3f8c7936">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[47/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a91b4888e432581246753553e3f8c7936">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[48/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1656,12 +1688,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#a254352d600814d514a3a87ad2223182f">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00491">491</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00500">500</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="a55eba7e5e5b7d032970e0212e9805834"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55eba7e5e5b7d032970e0212e9805834">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[48/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a55eba7e5e5b7d032970e0212e9805834">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[49/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1686,12 +1718,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#ad6a505352000fcec1e657bac04d64262">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00496">496</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00505">505</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
 <a id="aaead0f21f223ffa6f899917165e9a690"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaead0f21f223ffa6f899917165e9a690">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[49/49]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aaead0f21f223ffa6f899917165e9a690">&#9670;&nbsp;</a></span>IsIdempotent() <span class="overload">[50/50]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1716,7 +1748,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1IdempotencyPolicy.html#ac4950d3433a757a894a329547a9e26a3">google::cloud::storage::v0::IdempotencyPolicy</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00501">501</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="idempotency__policy_8cc_source.html#l00510">510</a> of file <a class="el" href="idempotency__policy_8cc_source.html">idempotency_policy.cc</a>.</p>
 
 </div>
 </div>
