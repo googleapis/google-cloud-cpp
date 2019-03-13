@@ -573,8 +573,8 @@ TEST(StrictIdempotencyPolicyTest, UpdateHmacKeyWithEtag) {
 TEST(StrictIdempotencyPolicyTest, UpdateHmacKeyIfMatchEtag) {
   StrictIdempotencyPolicy policy;
   internal::UpdateHmacKeyRequest request(
-    "test-project-id", "test-access-id",
-    HmacKeyMetadata().set_state("INACTIVE"));
+      "test-project-id", "test-access-id",
+      HmacKeyMetadata().set_state("INACTIVE"));
   request.set_multiple_options(IfMatchEtag("ABC="));
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
