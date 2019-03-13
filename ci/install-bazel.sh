@@ -16,24 +16,26 @@
 
 set -eu
 
-if [[ $# -lt 1 ]]; then
-  echo "Usage: $0 <linux|osx>"
-fi
+readonly PLATFORM=$(uname -s | tr '[:upper:]' '[:lower:]')
+# Ensures that the platform is one that we expect
+grep -P "linux|darwin" <<<"${PLATFORM}" > /dev/null
 
-if [[ "$1" = "linux" ]]; then
-  readonly PLATFORM="linux-x86_64"
-elif [[ "$1" = "macos" ]] || [[ "$1" = "osx" ]]; then
-  readonly PLATFORM="darwin-x86_64"
-fi
+# Gets the latest version number of bazel from the GitHub JSON API.
+readonly BAZEL_VERSION=$(
+  curl -sL "https://api.github.com/repos/bazelbuild/bazel/releases/latest" \
+    | grep -P '"tag_name":' \
+    | cut -f4 -d\"
+)
+test -n "${BAZEL_VERSION}"
 
-readonly BAZEL_VERSION=0.20.0
 readonly GITHUB_DL="https://github.com/bazelbuild/bazel/releases/download"
-readonly SCRIPT_NAME="bazel-${BAZEL_VERSION}-installer-${PLATFORM}.sh"
+readonly SCRIPT_NAME="bazel-${BAZEL_VERSION}-installer-${PLATFORM}-x86_64.sh"
 wget -q "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}"
 wget -q "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}.sha256"
 
-# We want to protect against accidents, not malice, so downloading the checksum
-# and the file from the same source is Okay.
+# We want to protect against accidents (i.e., we don't want to download and
+# execute a 404 page), not malice, so downloading the checksum and the file
+# from the same source is Okay.
 sha256sum --check "${SCRIPT_NAME}.sha256"
 
 chmod +x "${SCRIPT_NAME}"
