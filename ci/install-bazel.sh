@@ -16,9 +16,8 @@
 
 set -eu
 
-readonly PLATFORM=$(uname -s | tr '[:upper:]' '[:lower:]')
-# Ensures that the platform is one that we expect
-test "${PLATFORM}" = "linux" -o "${PLATFORM}" = "darwin"
+readonly PLATFORM=$(printf "%s-%s\n" "$(uname -s)" "$(uname -m)" \
+  |  tr '[:upper:]' '[:lower:]')
 
 # Gets the latest version number of bazel from the GitHub JSON API.
 readonly BAZEL_VERSION=$(
@@ -29,7 +28,7 @@ readonly BAZEL_VERSION=$(
 test -n "${BAZEL_VERSION}"
 
 readonly GITHUB_DL="https://github.com/bazelbuild/bazel/releases/download"
-readonly SCRIPT_NAME="bazel-${BAZEL_VERSION}-installer-${PLATFORM}-x86_64.sh"
+readonly SCRIPT_NAME="bazel-${BAZEL_VERSION}-installer-${PLATFORM}.sh"
 wget -q "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}"
 wget -q "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}.sha256"
 
