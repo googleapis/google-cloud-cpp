@@ -337,8 +337,8 @@ Studio 2017". If you have not, install [Chocolatey](https://www.chocolatey.com)
 using this command as the administrator:
 
 ```console
-@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -Command "iex (
-(New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -Command ^
+ "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 ```
 
 Then you can easily install the necessary development tools.
@@ -347,6 +347,7 @@ Then you can easily install the necessary development tools.
 choco install -y cmake cmake.portable ninja visualstudio2017community
 choco install -y visualstudio2017-workload-nativedesktop
 choco install -y microsoft-build-tools
+choco install -y git
 ```
 
 Then clone and compile `vcpkg`:
