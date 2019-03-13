@@ -3,6 +3,7 @@ var searchData=
   ['updatebucket',['UpdateBucket',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aeafcd6f543c55eade26544a9cde8e6c6',1,'google::cloud::storage::v0::Client']]],
   ['updatebucketacl',['UpdateBucketAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a8f1d83a6d8703ce457827ae274f35112',1,'google::cloud::storage::v0::Client']]],
   ['updatedefaultobjectacl',['UpdateDefaultObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#af0cc3774c205d86ebba8f83a4714ad64',1,'google::cloud::storage::v0::Client']]],
+  ['updatehmackey',['UpdateHmacKey',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aee332ec6d4864ac8da93bfc9e0285282',1,'google::cloud::storage::v0::Client']]],
   ['updateobject',['UpdateObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a6e8c495cc20cfeadb81995c3a77e37ab',1,'google::cloud::storage::v0::Client']]],
   ['updateobjectacl',['UpdateObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a3f7d5ee8958d7912552af525c1be3574',1,'google::cloud::storage::v0::Client']]],
   ['upload_5fbuffer_5fsize',['upload_buffer_size',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a6c11783bcb3579f6c7453aaa9151893d',1,'google::cloud::storage::v0::ClientOptions']]],
