@@ -14,9 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+Write-Host
+Write-Host "choco sources"
+Get-Date -Format o
+
 choco sources list
 
 # Ignore errors
+Write-Host
+Write-Host "choco install"
+Get-Date -Format o
 choco install --no-progress -y cmake
 
 # Ignore errors
@@ -24,3 +31,7 @@ choco install --no-progress -y cmake.portable
 
 # Ignore errors
 choco install --no-progress -y ninja
+
+Write-Host
+Write-Host "Post choco install"
+Get-Date -Format o
