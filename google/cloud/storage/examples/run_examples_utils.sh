@@ -126,9 +126,9 @@ run_all_service_account_examples() {
   run_example ./storage_service_account_samples \
       get-hmac-key "${access_id}"
   run_example ./storage_service_account_samples \
-      get-hmac-key "${access_id}" "INACTIVE"
+      update-hmac-key "${access_id}" "INACTIVE"
   run_example ./storage_service_account_samples \
-      get-hmac-key "${access_id}" "ACTIVE"
+      update-hmac-key "${access_id}" "ACTIVE"
   # Parse the output to delete all the keys created in this service account.
   for access_id in $(
       ./storage_service_account_samples \
