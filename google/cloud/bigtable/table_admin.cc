@@ -56,29 +56,63 @@ StatusOr<btadmin::Table> TableAdmin::CreateTable(std::string table_id,
   return result;
 }
 
-future<StatusOr<google::bigtable::admin::v2::Table>>
-TableAdmin::AsyncCreateTable(CompletionQueue& cq, std::string table_id,
-                             TableConfig config) {
-  promise<StatusOr<google::bigtable::admin::v2::Table>> p;
+future<StatusOr<btadmin::Table>> TableAdmin::AsyncCreateTable(
+    CompletionQueue& cq, std::string table_id, TableConfig config) {
+  promise<StatusOr<btadmin::Table>> p;
   auto result = p.get_future();
 
-  impl_.AsyncCreateTable(
-      cq,
-      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncCreateTable"),
-      std::move(table_id), std::move(config));
+  auto request = std::move(config).as_proto();
+  request.set_parent(instance_name());
+  request.set_table_id(std::move(table_id));
+
+  static_assert(internal::ExtractMemberFunctionType<decltype(
+                    &AdminClient::AsyncCreateTable)>::value,
+                "Cannot extract member function type");
+  using MemberFunction = typename internal::ExtractMemberFunctionType<decltype(
+      &AdminClient::AsyncCreateTable)>::MemberFunction;
+
+  using Retry = internal::AsyncRetryUnaryRpc<
+      AdminClient, MemberFunction, internal::ConstantIdempotencyPolicy,
+      internal::AsyncFutureFromCallback<btadmin::Table>>;
+
+  auto retry = std::make_shared<Retry>(
+      __func__, impl_.rpc_retry_policy_->clone(),
+      impl_.rpc_backoff_policy_->clone(),
+      internal::ConstantIdempotencyPolicy(false), impl_.metadata_update_policy_,
+      impl_.client_, &AdminClient::AsyncCreateTable, std::move(request),
+      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncCreateTable"));
+  retry->Start(cq);
 
   return result;
 }
 
-future<StatusOr<google::bigtable::admin::v2::Table>> TableAdmin::AsyncGetTable(
+future<StatusOr<btadmin::Table>> TableAdmin::AsyncGetTable(
     CompletionQueue& cq, std::string const& table_id,
     btadmin::Table::View view) {
-  promise<StatusOr<google::bigtable::admin::v2::Table>> p;
+  promise<StatusOr<btadmin::Table>> p;
   auto result = p.get_future();
 
-  impl_.AsyncGetTable(
-      cq, internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetTable"),
-      table_id, view);
+  btadmin::GetTableRequest request;
+  request.set_name(TableName(table_id));
+  request.set_view(view);
+
+  static_assert(internal::ExtractMemberFunctionType<decltype(
+                    &AdminClient::AsyncGetTable)>::value,
+                "Cannot extract member function type");
+  using MemberFunction = typename internal::ExtractMemberFunctionType<decltype(
+      &AdminClient::AsyncGetTable)>::MemberFunction;
+
+  using Retry = internal::AsyncRetryUnaryRpc<
+      AdminClient, MemberFunction, internal::ConstantIdempotencyPolicy,
+      internal::AsyncFutureFromCallback<btadmin::Table>>;
+
+  auto retry = std::make_shared<Retry>(
+      __func__, impl_.rpc_retry_policy_->clone(),
+      impl_.rpc_backoff_policy_->clone(),
+      internal::ConstantIdempotencyPolicy(true), impl_.metadata_update_policy_,
+      impl_.client_, &AdminClient::AsyncGetTable, std::move(request),
+      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetTable"));
+  retry->Start(cq);
 
   return result;
 }
