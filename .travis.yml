@@ -20,19 +20,6 @@ language: cpp
 # TODO(#62) - enable a SANITIZE_MEMORY=yes build when we eliminate the false positives
 matrix:
   include:
-    - # Verify that we can compile shared libraries, and verify that the ABI is
-      # not changing, or rather, that if there are changes the changes are
-      # intentional.
-      os: linux
-      compiler: gcc
-      env:
-        CHECK_ABI=yes
-        TEST_INSTALL=yes
-        CMAKE_FLAGS=-DBUILD_SHARED_LIBS=yes
-        BUILD_TYPE=Debug
-        DISTRO=ubuntu-install
-        DISTRO_VERSION=18.04
-      if: repo =~ ^googleapis/ or head_repo =~ ^googleapis/
     - # Generate code coverage information and upload to codecov.io.
       os: linux
       compiler: gcc
@@ -49,18 +36,6 @@ matrix:
         GENERATE_DOCS=yes
         CMAKE_FLAGS=-DBUILD_TESTING=OFF
         DISTRO=ubuntu
-        DISTRO_VERSION=18.04
-  allow_failures:
-    - # For the moment, allow failures in the ABI check builds.
-      # TODO(#694) - remove this when the ABI is declared stable.
-      os: linux
-      compiler: gcc
-      env:
-        CHECK_ABI=yes
-        TEST_INSTALL=yes
-        CMAKE_FLAGS=-DBUILD_SHARED_LIBS=yes
-        BUILD_TYPE=Debug
-        DISTRO=ubuntu-install
         DISTRO_VERSION=18.04
 
 script:
