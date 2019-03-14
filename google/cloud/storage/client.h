@@ -2282,10 +2282,10 @@ class Client {
    * This is a read-only operation and is always idempotent.
    *
    * @par Example
-   * storage_service_account_samples.cc list hmac keys
+   * @snippet storage_service_account_samples.cc list hmac keys
    *
    * @par Example
-   * storage_service_account_samples.cc list hmac keys with service account
+   * @snippet storage_service_account_samples.cc list hmac keys with service account
    *
    * @see https://cloud.google.com/iam/docs/service-accounts for general
    *     information on Google Cloud Platform service accounts.
@@ -2323,10 +2323,10 @@ class Client {
    * key each time.
    *
    * @par Example
-   * storage_service_account_samples.cc create hmac key
+   * @snippet storage_service_account_samples.cc create hmac key
    *
    * @par Example
-   * storage_service_account_samples.cc create hmac key project
+   * @snippet storage_service_account_samples.cc create hmac key project
    *
    * @see https://cloud.google.com/iam/docs/service-accounts for general
    *     information on Google Cloud Platform service accounts.
@@ -2365,7 +2365,7 @@ class Client {
    * key, calling the operation multiple times can succeed only once.
    *
    * @par Example
-   * storage_service_account_samples.cc delete hmac key
+   * @snippet storage_service_account_samples.cc delete hmac key
    *
    * @see https://cloud.google.com/iam/docs/service-accounts for general
    *     information on Google Cloud Platform service accounts.
@@ -2397,7 +2397,7 @@ class Client {
    * This is a read-only operation and therefore it is always idempotent.
    *
    * @par Example
-   * storage_service_account_samples.cc get hmac key
+   * @snippet storage_service_account_samples.cc get hmac key
    *
    * @see https://cloud.google.com/iam/docs/service-accounts for general
    *     information on Google Cloud Platform service accounts.
@@ -2433,7 +2433,7 @@ class Client {
    * is set, or if the `IfMatchEtag` option is set.
    *
    * @par Example
-   * storage_service_account_samples.cc update hmac key
+   * @snippet storage_service_account_samples.cc update hmac key
    *
    * @see https://cloud.google.com/iam/docs/service-accounts for general
    *     information on Google Cloud Platform service accounts.

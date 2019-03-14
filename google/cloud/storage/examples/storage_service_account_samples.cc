@@ -142,7 +142,8 @@ void ListHmacKeysWithServiceAccount(google::cloud::storage::Client client,
       ++count;
     }
     if (count == 0) {
-      std::cout << "No HMAC keys in default project\n";
+      std::cout << "No HMAC keys for service account " << service_account
+                << " in default project\n";
     }
   }
   //! [list hmac keys with service account]
