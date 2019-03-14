@@ -16,21 +16,14 @@
 
 set -eu
 
-readonly PLATFORM=$(printf "%s-%s\n" "$(uname -s)" "$(uname -m)" \
+readonly PLATFORM=$(printf "%s-%s" "$(uname -s)" "$(uname -m)" \
   |  tr '[:upper:]' '[:lower:]')
 
-# Gets the latest version number of bazel from the GitHub JSON API.
-readonly BAZEL_VERSION=$(
-  curl -sL "https://api.github.com/repos/bazelbuild/bazel/releases/latest" \
-    | grep '"tag_name":' \
-    | cut -f4 -d\"
-)
-test -n "${BAZEL_VERSION}"
-
+readonly BAZEL_VERSION="0.23.2"
 readonly GITHUB_DL="https://github.com/bazelbuild/bazel/releases/download"
 readonly SCRIPT_NAME="bazel-${BAZEL_VERSION}-installer-${PLATFORM}.sh"
-curl -sLO "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}"
-curl -sLO "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}.sha256"
+wget -q "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}"
+wget -q "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}.sha256"
 
 # We want to protect against accidents (i.e., we don't want to download and
 # execute a 404 page), not malice, so downloading the checksum and the file
