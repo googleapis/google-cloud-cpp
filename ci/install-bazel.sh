@@ -16,24 +16,18 @@
 
 set -eu
 
-if [[ $# -lt 1 ]]; then
-  echo "Usage: $0 <linux|osx>"
-fi
+readonly PLATFORM=$(printf "%s-%s" "$(uname -s)" "$(uname -m)" \
+  |  tr '[:upper:]' '[:lower:]')
 
-if [[ "$1" = "linux" ]]; then
-  readonly PLATFORM="linux-x86_64"
-elif [[ "$1" = "macos" ]] || [[ "$1" = "osx" ]]; then
-  readonly PLATFORM="darwin-x86_64"
-fi
-
-readonly BAZEL_VERSION=0.20.0
+readonly BAZEL_VERSION="0.23.2"
 readonly GITHUB_DL="https://github.com/bazelbuild/bazel/releases/download"
 readonly SCRIPT_NAME="bazel-${BAZEL_VERSION}-installer-${PLATFORM}.sh"
 wget -q "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}"
 wget -q "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}.sha256"
 
-# We want to protect against accidents, not malice, so downloading the checksum
-# and the file from the same source is Okay.
+# We want to protect against accidents (i.e., we don't want to download and
+# execute a 404 page), not malice, so downloading the checksum and the file
+# from the same source is Okay.
 sha256sum --check "${SCRIPT_NAME}.sha256"
 
 chmod +x "${SCRIPT_NAME}"

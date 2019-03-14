@@ -33,7 +33,7 @@ echo
 # thing:
 function sha256sum() { shasum -a 256 "$@" ; } && export -f sha256sum
 
-"${PROJECT_ROOT}/ci/install-bazel.sh" macos
+"${PROJECT_ROOT}/ci/install-bazel.sh"
 
 readonly BAZEL_BIN="$HOME/bin/bazel"
 echo "Using Bazel in ${BAZEL_BIN}"

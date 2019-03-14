@@ -30,7 +30,7 @@ readonly PROJECT_ROOT="${PWD}"
 echo "================================================================"
 echo "Update or Install Bazel $(date)."
 echo "================================================================"
-"${PROJECT_ROOT}/ci/install-bazel.sh" linux
+"${PROJECT_ROOT}/ci/install-bazel.sh"
 
 readonly BAZEL_BIN="$HOME/bin/bazel"
 echo "Using Bazel in ${BAZEL_BIN}"

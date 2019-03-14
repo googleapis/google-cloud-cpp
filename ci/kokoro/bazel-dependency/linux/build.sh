@@ -26,7 +26,7 @@ echo "================================================================"
 # We ping the version of Bazel because we do not want all our builds to break
 # when Kokoro updates Bazel. We rather upgrade our tooling when *we* decide it
 # is a good time to do so.
-"${PROJECT_ROOT}/ci/install-bazel.sh" linux
+"${PROJECT_ROOT}/ci/install-bazel.sh"
 
 readonly BAZEL_BIN="$HOME/bin/bazel"
 echo "Using Bazel in ${BAZEL_BIN}"
