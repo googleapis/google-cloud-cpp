@@ -30,21 +30,21 @@ using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 
-optional<std::string> flag_project_id;
-optional<std::string> flag_bucket_name;
-optional<std::string> flag_topic_name;
+char const* flag_project_id;
+char const* flag_bucket_name;
+char const* flag_topic_name;
 
 class BucketIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   std::string MakeEntityName() {
     // We always use the viewers for the project because it is known to exist.
-    return "project-viewers-" + *flag_project_id;
+    return "project-viewers-" + std::string(flag_project_id);
   }
 };
 
 TEST_F(BucketIntegrationTest, BasicCRUD) {
-  auto project_id = *flag_project_id;
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -129,7 +129,7 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, FullPatch) {
-  auto project_id = *flag_project_id;
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -273,7 +273,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
 
 // @test Verify that we can set the iam_configuration() in a Bucket.
 TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
-  auto project_id = *flag_project_id;
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -305,7 +305,7 @@ TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
 }
 
 TEST_F(BucketIntegrationTest, GetMetadata) {
-  auto bucket_name = *flag_bucket_name;
+  std::string bucket_name = flag_bucket_name;
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
@@ -317,7 +317,7 @@ TEST_F(BucketIntegrationTest, GetMetadata) {
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataFields) {
-  auto bucket_name = *flag_bucket_name;
+  std::string bucket_name = flag_bucket_name;
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
@@ -329,7 +329,7 @@ TEST_F(BucketIntegrationTest, GetMetadataFields) {
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatch_Success) {
-  auto bucket_name = *flag_bucket_name;
+  std::string bucket_name = flag_bucket_name;
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
@@ -347,7 +347,7 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatch_Success) {
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatch_Failure) {
-  auto bucket_name = *flag_bucket_name;
+  std::string bucket_name = flag_bucket_name;
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
@@ -364,7 +364,7 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatch_Failure) {
 }
 
 TEST_F(BucketIntegrationTest, AccessControlCRUD) {
-  auto project_id = *flag_project_id;
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -444,7 +444,7 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
-  auto project_id = *flag_project_id;
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -521,7 +521,7 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, NotificationsCRUD) {
-  auto project_id = *flag_project_id;
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -539,12 +539,12 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
       << ">. This is unexpected because the bucket name is chosen at random.";
 
   auto create = client->CreateNotification(
-      bucket_name, *flag_topic_name, payload_format::JsonApiV1(),
+      bucket_name, flag_topic_name, payload_format::JsonApiV1(),
       NotificationMetadata().append_event_type(event_type::ObjectFinalize()));
   ASSERT_STATUS_OK(create);
 
   EXPECT_EQ(payload_format::JsonApiV1(), create->payload_format());
-  EXPECT_THAT(create->topic(), HasSubstr(*flag_topic_name));
+  EXPECT_THAT(create->topic(), HasSubstr(flag_topic_name));
 
   current_notifications = client->ListNotifications(bucket_name);
   ASSERT_STATUS_OK(current_notifications);
@@ -576,7 +576,7 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, IamCRUD) {
-  auto project_id = *flag_project_id;
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -632,7 +632,7 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, BucketLock) {
-  auto project_id = *flag_project_id;
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -660,7 +660,7 @@ TEST_F(BucketIntegrationTest, BucketLock) {
 }
 
 TEST_F(BucketIntegrationTest, BucketLockFailure) {
-  auto project_id = *flag_project_id;
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
