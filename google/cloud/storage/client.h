@@ -2285,7 +2285,7 @@ class Client {
    * @snippet storage_service_account_samples.cc list hmac keys
    *
    * @par Example
-   * @snippet storage_service_account_samples.cc list hmac keys with service account
+   * @snippet storage_service_account_samples.cc list hmac keys service account
    *
    * @see https://cloud.google.com/iam/docs/service-accounts for general
    *     information on Google Cloud Platform service accounts.

@@ -125,7 +125,7 @@ void ListHmacKeysWithServiceAccount(google::cloud::storage::Client client,
   if (argc != 2) {
     throw Usage{"list-hmac-keys-with-service-account <service-account>"};
   }
-  //! [list hmac keys with service account]
+  //! [list hmac keys service account]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string service_account) {
@@ -146,7 +146,7 @@ void ListHmacKeysWithServiceAccount(google::cloud::storage::Client client,
                 << " in default project\n";
     }
   }
-  //! [list hmac keys with service account]
+  //! [list hmac keys service account]
   (std::move(client), argv[1]);
 }
 
