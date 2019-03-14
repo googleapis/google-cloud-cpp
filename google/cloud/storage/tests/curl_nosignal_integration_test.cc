@@ -39,7 +39,7 @@ class CurlNoSignalIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 Status UploadFiles(std::string const& media,
-                 std::vector<std::string> const& names) {
+                   std::vector<std::string> const& names) {
   auto bucket_name = FLAG_bucket_name;
   StatusOr<Client> client = Client::CreateDefaultClient();
   if (!client) {
@@ -49,9 +49,8 @@ Status UploadFiles(std::string const& media,
   for (auto const& object_name : names) {
     // Raise on error so the errors are reported to the thread that launched
     // this function.
-    auto meta = client
-                              ->InsertObject(bucket_name, object_name, media,
-                                             IfGenerationMatch(0), Fields(""));
+    auto meta = client->InsertObject(bucket_name, object_name, media,
+                                     IfGenerationMatch(0), Fields(""));
     if (!meta) {
       return meta.status();
     }
