@@ -173,7 +173,6 @@ if (BUILD_TESTING)
                 testing_util/custom_google_mock_main.cc
                 testing_util/init_google_mock.h
                 testing_util/init_google_mock.cc
-                testing_util/simple_flags.h
                 testing_util/testing_types.h
                 testing_util/testing_types.cc)
     target_link_libraries(google_cloud_cpp_testing
