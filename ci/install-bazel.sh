@@ -29,8 +29,8 @@ test -n "${BAZEL_VERSION}"
 
 readonly GITHUB_DL="https://github.com/bazelbuild/bazel/releases/download"
 readonly SCRIPT_NAME="bazel-${BAZEL_VERSION}-installer-${PLATFORM}.sh"
-wget -q "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}"
-wget -q "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}.sha256"
+curl -sLO "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}"
+curl -sLO "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}.sha256"
 
 # We want to protect against accidents (i.e., we don't want to download and
 # execute a 404 page), not malice, so downloading the checksum and the file
