@@ -343,10 +343,11 @@ class GcsObject(object):
         self.bucket_name = bucket_name
         self.name = name
         # A counter to create new generation numbers for the object revisions.
+        # Note that 0 is an invalid generation number. The application can use
+        # ifGenerationMatch=0 as a pre-condition that means "object does not
+        # exist".
         self.generation_generator = 0
-        # The value of the current generation, not that 0 is special, it is not
-        # a valid generation and it is used to indicate "no generation yet".
-        self.current_generation = 0
+        self.current_generation = None
         self.revisions = {}
         self.rewrite_token_generator = 0
         self.rewrite_operations = {}
@@ -378,9 +379,9 @@ class GcsObject(object):
         :return: True if the object entry in the Bucket should be deleted.
         :rtype: bool
         """
-        generation = request.args.get('generation')
+        generation = request.args.get('generation') or self.current_generation
         if generation is None:
-            generation = self.current_generation
+            return True
         self.revisions.pop(int(generation))
         if len(self.revisions) == 0:
             self.current_generation = None
@@ -475,35 +476,37 @@ class GcsObject(object):
             self, generation_match, generation_not_match, metageneration_match,
             metageneration_not_match):
         """Verify that the given precondition values are met."""
+        current_generation = self.current_generation or 0
         if (generation_match is not None
-                and int(generation_match) != self.current_generation):
+                and int(generation_match) != current_generation):
             raise error_response.ErrorResponse(
                 'Precondition Failed', status_code=412)
         # This object does not exist (yet), testing in this case is special.
         if (generation_not_match is not None
-                and int(generation_not_match) == self.current_generation):
+                and int(generation_not_match) == current_generation):
             raise error_response.ErrorResponse(
                 'Precondition Failed', status_code=412)
 
-        if self.current_generation == 0:
+        if self.current_generation is None:
             if (metageneration_match is not None
                     or metageneration_not_match is not None):
                 raise error_response.ErrorResponse(
                     'Precondition Failed', status_code=412)
-        else:
-            current = self.revisions.get(self.current_generation)
-            if current is None:
-                raise error_response.ErrorResponse(
-                    'Object not found', status_code=404)
-            metageneration = current.metadata.get('metageneration')
-            if (metageneration_not_match is not None
-                    and int(metageneration_not_match) == metageneration):
-                raise error_response.ErrorResponse(
-                    'Precondition Failed', status_code=412)
-            if (metageneration_match is not None
-                    and int(metageneration_match) != metageneration):
-                raise error_response.ErrorResponse(
-                    'Precondition Failed', status_code=412)
+            return
+
+        current = self.revisions.get(current_generation)
+        if current is None:
+            raise error_response.ErrorResponse(
+                'Object not found', status_code=404)
+        metageneration = current.metadata.get('metageneration')
+        if (metageneration_not_match is not None
+                and int(metageneration_not_match) == metageneration):
+            raise error_response.ErrorResponse(
+                'Precondition Failed', status_code=412)
+        if (metageneration_match is not None
+                and int(metageneration_match) != metageneration):
+            raise error_response.ErrorResponse(
+                'Precondition Failed', status_code=412)
 
     def check_preconditions(
             self,
