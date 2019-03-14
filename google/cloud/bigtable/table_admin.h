@@ -454,6 +454,22 @@ class TableAdmin {
       bigtable::SnapshotId const& snapshot_id, std::string table_id);
 
  private:
+  std::unique_ptr<RPCRetryPolicy> clone_rpc_retry_policy() {
+    return impl_.rpc_retry_policy_->clone();
+  }
+
+  std::unique_ptr<RPCBackoffPolicy> clone_rpc_backoff_policy() {
+    return impl_.rpc_backoff_policy_->clone();
+  }
+
+  MetadataUpdatePolicy clone_metadata_update_policy() {
+    return impl_.metadata_update_policy_;
+  }
+
+  std::unique_ptr<PollingPolicy> clone_polling_policy() {
+    return impl_.polling_policy_->clone();
+  }
+
   noex::TableAdmin impl_;
 };
 
