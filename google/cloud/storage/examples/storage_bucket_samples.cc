@@ -608,8 +608,8 @@ void GetBucketLifecycleManagement(google::cloud::storage::Client client,
     }
     std::cout << "\n";
   }
-  //! [storage_view_bucket_lifecycle_management]
   // [END storage_view_bucket_lifecycle_management]
+  //! [storage_view_bucket_lifecycle_management]
   (std::move(client), bucket_name);
 }
 
@@ -652,8 +652,8 @@ void EnableBucketLifecycleManagement(google::cloud::storage::Client client,
     }
     std::cout << "\n";
   }
-  //! [storage_enable_bucket_lifecycle_management]
   // [END storage_enable_bucket_lifecycle_management]
+  //! [storage_enable_bucket_lifecycle_management]
   (std::move(client), bucket_name);
 }
 
@@ -678,8 +678,8 @@ void DisableBucketLifecycleManagement(google::cloud::storage::Client client,
     std::cout << "Successfully disabled bucket lifecycle management for bucket "
               << updated_metadata->name() << ".\n";
   }
-  //! [storage_disable_bucket_lifecycle_management]
   // [END storage_disable_bucket_lifecycle_management]
+  //! [storage_disable_bucket_lifecycle_management]
   (std::move(client), bucket_name);
 }
 
