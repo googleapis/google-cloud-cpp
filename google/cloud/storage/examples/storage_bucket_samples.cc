@@ -576,6 +576,117 @@ void RemoveBucketLabel(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, label_key);
 }
 
+void GetBucketLifecycleManagement(google::cloud::storage::Client client,
+                                  int& argc, char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"get-bucket-lifecycle-management <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [view_bucket_lifecycle_management] [START
+  //! storage_view_bucket_lifecycle_management]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name) {
+    StatusOr<gcs::BucketMetadata> updated_metadata =
+        client.GetBucketMetadata(bucket_name);
+
+    if (!updated_metadata) {
+      throw std::runtime_error(updated_metadata.status().message());
+    }
+
+    if (updated_metadata->has_lifecycle() &&
+        not updated_metadata->lifecycle().rule.empty()) {
+      std::cout << "Bucket lifecycle management is enabled for bucket "
+                << updated_metadata->name() << ".\n";
+      std::cout << "The bucket lifecycle rules are";
+      for (auto const& kv : updated_metadata->lifecycle().rule) {
+        std::cout << "\n " << kv.condition() << ", " << kv.action();
+      }
+      std::cout << "\n";
+    } else {
+      std::cout << "Bucket lifecycle management is not enabled for bucket "
+                << updated_metadata->name() << ".\n";
+    }
+  }
+  //! [storage_view_bucket_lifecycle_management] [END
+  //! storage_view_bucket_lifecycle_management]
+  (std::move(client), bucket_name);
+}
+
+void EnableBucketLifecycleManagement(google::cloud::storage::Client client,
+                                     int& argc, char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"enable-bucket-lifecycle-management <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [enable_bucket_lifecycle_management] [START
+  //! storage_enable_bucket_lifecycle_management]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name) {
+    gcs::BucketLifecycle bucket_lifecycle_rules = gcs::BucketLifecycle{
+        {gcs::LifecycleRule(gcs::LifecycleRule::ConditionConjunction(
+                                gcs::LifecycleRule::MaxAge(30),
+                                gcs::LifecycleRule::IsLive(true)),
+                            gcs::LifecycleRule::Delete())}};
+
+    StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetLifecycle(bucket_lifecycle_rules));
+
+    if (!updated_metadata) {
+      throw std::runtime_error(updated_metadata.status().message());
+    }
+
+    if (updated_metadata->has_lifecycle() &&
+        not updated_metadata->lifecycle().rule.empty()) {
+      std::cout
+          << "Successfully enabled bucket lifecycle management for bucket "
+          << updated_metadata->name() << ".\n";
+      std::cout << "The bucket lifecycle rules are";
+      for (auto const& kv : updated_metadata->lifecycle().rule) {
+        std::cout << "\n " << kv.condition() << ", " << kv.action();
+      }
+      std::cout << "\n";
+    } else {
+      std::cout << "Bucket lifecycle management is not enabled for bucket "
+                << updated_metadata->name() << ".\n";
+    }
+  }
+  //! [storage_enable_bucket_lifecycle_management] [END
+  //! storage_enable_bucket_lifecycle_management]
+  (std::move(client), bucket_name);
+}
+
+void DisableBucketLifecycleManagement(google::cloud::storage::Client client,
+                                      int& argc, char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"disable-bucket-lifecycle-management <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [disable_bucket_lifecycle_management] [START
+  //! storage_disable_bucket_lifecycle_management]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name) {
+    gcs::BucketLifecycle bucket_lifecycle_rules = gcs::BucketLifecycle{};
+
+    StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetLifecycle(bucket_lifecycle_rules));
+
+    if (!updated_metadata) {
+      throw std::runtime_error(updated_metadata.status().message());
+    }
+
+    std::cout << "Successfully disabled bucket lifecycle management for bucket "
+              << updated_metadata->name() << ".\n";
+  }
+  //! [storage_disable_bucket_lifecycle_management] [END
+  //! storage_disable_bucket_lifecycle_management]
+  (std::move(client), bucket_name);
+}
+
 void GetBilling(google::cloud::storage::Client client, int& argc,
                 char* argv[]) {
   if (argc != 2) {
@@ -1192,6 +1303,10 @@ int main(int argc, char* argv[]) try {
       {"add-bucket-label", &AddBucketLabel},
       {"get-bucket-labels", &GetBucketLabels},
       {"remove-bucket-label", &RemoveBucketLabel},
+      {"get-bucket-lifecycle-management", &GetBucketLifecycleManagement},
+      {"enable-bucket-lifecycle-management", &EnableBucketLifecycleManagement},
+      {"disable-bucket-lifecycle-management",
+       &DisableBucketLifecycleManagement},
       {"get-billing", &GetBilling},
       {"enable-requester-pays", &EnableRequesterPays},
       {"disable-requester-pays", &DisableRequesterPays},
