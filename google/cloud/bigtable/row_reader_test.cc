@@ -117,6 +117,7 @@ class RetryPolicyMock : public bigtable::RPCRetryPolicy {
   bool OnFailure(grpc::Status const& status) override {
     return OnFailureHook(status);
   }
+  bool OnFailure(google::cloud::Status const& status) override { return true; }
 };
 
 class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
@@ -130,6 +131,10 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
                std::chrono::milliseconds(grpc::Status const& s));
   std::chrono::milliseconds OnCompletion(grpc::Status const& s) override {
     return OnCompletionHook(s);
+  }
+  std::chrono::milliseconds OnCompletion(
+      google::cloud::Status const& s) override {
+    return std::chrono::milliseconds(0);
   }
 };
 

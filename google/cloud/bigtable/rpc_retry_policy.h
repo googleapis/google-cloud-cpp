@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/internal/rpc_policy_parameters.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/status.h"
 #include <grpcpp/grpcpp.h>
 #include <chrono>
 #include <memory>
@@ -28,6 +29,22 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /// An adapter to use `grpc::Status` with the `google::cloud::*Policies`.
 struct SafeGrpcRetry {
+  static inline bool IsTransientFailure(google::cloud::StatusCode code) {
+    return code == StatusCode::kAborted || code == StatusCode::kUnavailable ||
+           code == StatusCode::kDeadlineExceeded;
+  }
+
+  static inline bool IsOk(google::cloud::Status const& status) {
+    return status.ok();
+  }
+  static inline bool IsTransientFailure(google::cloud::Status const& status) {
+    return IsTransientFailure(status.code());
+  }
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return !IsOk(status) && !IsTransientFailure(status);
+  }
+
+  // TODO(coryan) - remove ::grpc::Status version.
   // Sometimes we need to use google::protobuf::rpc::Status, in which case this
   // is a easier function
   static inline bool IsTransientFailure(grpc::StatusCode code) {
@@ -35,7 +52,6 @@ struct SafeGrpcRetry {
            code == grpc::StatusCode::UNAVAILABLE ||
            code == grpc::StatusCode::DEADLINE_EXCEEDED;
   }
-
   static inline bool IsOk(grpc::Status const& status) { return status.ok(); }
   static inline bool IsTransientFailure(grpc::Status const& status) {
     return IsTransientFailure(status.error_code());
@@ -85,8 +101,14 @@ class RPCRetryPolicy {
    *
    * @return true if the RPC operation should be retried.
    */
+  virtual bool OnFailure(google::cloud::Status const& status) = 0;
+  // TODO(coryan) - remove ::grpc::Status version.
   virtual bool OnFailure(grpc::Status const& status) = 0;
 
+  static bool IsPermanentFailure(google::cloud::Status const& status) {
+    return SafeGrpcRetry::IsPermanentFailure(status);
+  }
+  // TODO(coryan) - remove ::grpc::Status version.
   static bool IsPermanentFailure(grpc::Status const& status) {
     return SafeGrpcRetry::IsPermanentFailure(status);
   }
@@ -106,12 +128,13 @@ class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
 
   std::unique_ptr<RPCRetryPolicy> clone() const override;
   void Setup(grpc::ClientContext& context) const override;
+  bool OnFailure(google::cloud::Status const& status) override;
+  // TODO(coryan) - remove ::grpc::Status version.
   bool OnFailure(grpc::Status const& status) override;
 
  private:
-  using Impl =
-      google::cloud::internal::LimitedErrorCountRetryPolicy<grpc::Status,
-                                                            SafeGrpcRetry>;
+  using Impl = google::cloud::internal::LimitedErrorCountRetryPolicy<
+      google::cloud::Status, SafeGrpcRetry>;
   Impl impl_;
 };
 
@@ -127,11 +150,14 @@ class LimitedTimeRetryPolicy : public RPCRetryPolicy {
 
   std::unique_ptr<RPCRetryPolicy> clone() const override;
   void Setup(grpc::ClientContext& context) const override;
+  bool OnFailure(google::cloud::Status const& status) override;
+  // TODO(coryan) - remove ::grpc::Status version.
   bool OnFailure(grpc::Status const& status) override;
 
  private:
-  using Impl = google::cloud::internal::LimitedTimeRetryPolicy<grpc::Status,
-                                                               SafeGrpcRetry>;
+  using Impl =
+      google::cloud::internal::LimitedTimeRetryPolicy<google::cloud::Status,
+                                                      SafeGrpcRetry>;
   Impl impl_;
 };
 
