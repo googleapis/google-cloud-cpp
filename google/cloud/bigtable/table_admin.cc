@@ -160,8 +160,19 @@ StatusOr<btadmin::Table> TableAdmin::ModifyColumnFamilies(
     std::string const& table_id,
     std::vector<ColumnFamilyModification> modifications) {
   grpc::Status status;
-  auto result =
-      impl_.ModifyColumnFamilies(table_id, std::move(modifications), status);
+
+  btadmin::ModifyColumnFamiliesRequest request;
+  request.set_name(TableName(table_id));
+  for (auto& m : modifications) {
+    *request.add_modifications() = std::move(m).as_proto();
+  }
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, table_id);
+  auto result = ClientUtils::MakeNonIdemponentCall(
+      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+      metadata_update_policy, &AdminClient::ModifyColumnFamilies, request,
+      "ModifyColumnFamilies", status);
+
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
@@ -171,13 +182,31 @@ StatusOr<btadmin::Table> TableAdmin::ModifyColumnFamilies(
 Status TableAdmin::DropRowsByPrefix(std::string const& table_id,
                                     std::string row_key_prefix) {
   grpc::Status status;
-  impl_.DropRowsByPrefix(table_id, std::move(row_key_prefix), status);
+  btadmin::DropRowRangeRequest request;
+  request.set_name(TableName(table_id));
+  request.set_row_key_prefix(std::move(row_key_prefix));
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, table_id);
+  ClientUtils::MakeNonIdemponentCall(
+      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+      metadata_update_policy, &AdminClient::DropRowRange, request,
+      "DropRowByPrefix", status);
+
   return internal::MakeStatusFromRpcError(status);
 }
 
 Status TableAdmin::DropAllRows(std::string const& table_id) {
   grpc::Status status;
-  impl_.DropAllRows(table_id, status);
+  btadmin::DropRowRangeRequest request;
+  request.set_name(TableName(table_id));
+  request.set_delete_all_data_from_table(true);
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, table_id);
+  ClientUtils::MakeNonIdemponentCall(
+      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+      metadata_update_policy, &AdminClient::DropRowRange, request,
+      "DropAllRows", status);
+
   return internal::MakeStatusFromRpcError(status);
 }
 
@@ -240,34 +269,76 @@ StatusOr<btadmin::Snapshot> TableAdmin::GetSnapshot(
 StatusOr<ConsistencyToken> TableAdmin::GenerateConsistencyToken(
     std::string const& table_id) {
   grpc::Status status;
-  std::string token = impl_.GenerateConsistencyToken(table_id, status);
+  btadmin::GenerateConsistencyTokenRequest request;
+  request.set_name(TableName(table_id));
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, table_id);
+
+  auto response = ClientUtils::MakeCall(
+      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+      impl_.rpc_backoff_policy_->clone(), metadata_update_policy,
+      &AdminClient::GenerateConsistencyToken, request,
+      "GenerateConsistencyToken", status, true);
+
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
-  return ConsistencyToken(token);
+  return ConsistencyToken(*response.mutable_consistency_token());
 }
 
 StatusOr<Consistency> TableAdmin::CheckConsistency(
     bigtable::TableId const& table_id,
     bigtable::ConsistencyToken const& consistency_token) {
   grpc::Status status;
-  bool consistent = impl_.CheckConsistency(table_id, consistency_token, status);
+  btadmin::CheckConsistencyRequest request;
+  request.set_name(TableName(table_id.get()));
+  request.set_consistency_token(consistency_token.get());
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, table_id.get());
+
+  auto response = ClientUtils::MakeCall(
+      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+      impl_.rpc_backoff_policy_->clone(), metadata_update_policy,
+      &AdminClient::CheckConsistency, request, "CheckConsistency", status,
+      true);
+
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
-  return consistent ? Consistency::kConsistent : Consistency::kInconsistent;
+
+  return response.consistent() ? Consistency::kConsistent
+                               : Consistency::kInconsistent;
 }
 
 StatusOr<bool> TableAdmin::WaitForConsistencyCheckImpl(
     bigtable::TableId const& table_id,
     bigtable::ConsistencyToken const& consistency_token) {
   grpc::Status status;
-  bool consistent =
-      impl_.WaitForConsistencyCheckHelper(table_id, consistency_token, status);
-  if (!status.ok()) {
-    return bigtable::internal::MakeStatusFromRpcError(status);
-  }
-  return consistent;
+  btadmin::CheckConsistencyRequest request;
+  request.set_name(TableName(table_id.get()));
+  request.set_consistency_token(consistency_token.get());
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, table_id.get());
+
+  // TODO(#1918) - make use of polling policy deadlines
+  auto polling_policy = impl_.polling_policy_->clone();
+  do {
+    auto response = ClientUtils::MakeCall(
+        *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+        impl_.rpc_backoff_policy_->clone(), metadata_update_policy,
+        &AdminClient::CheckConsistency, request, "CheckConsistency", status,
+        true);
+
+    if (status.ok()) {
+      if (response.consistent()) {
+        return true;
+      }
+    } else if (polling_policy->IsPermanentError(status)) {
+      return bigtable::internal::MakeStatusFromRpcError(status);
+    }
+  } while (!polling_policy->Exhausted());
+
+  return bigtable::internal::MakeStatusFromRpcError(status);
 }
 
 Status TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
