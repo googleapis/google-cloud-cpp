@@ -137,6 +137,8 @@ TEST(CompletionQueueTest, AyncRpcSimple) {
   auto reader = google::cloud::internal::make_unique<ReaderType>();
   EXPECT_CALL(*reader, Finish(_, _, _))
       .WillOnce(Invoke([](btadmin::Table* table, grpc::Status* status, void*) {
+        // Initialize a value to make sure it is carried all the way back to
+        // the caller.
         table->set_name("fake/table/name/response");
         *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
       }));
@@ -154,7 +156,8 @@ TEST(CompletionQueueTest, AyncRpcSimple) {
   auto impl = std::make_shared<testing::MockCompletionQueue>();
   bigtable::CompletionQueue cq(impl);
 
-  // In this unit test we do not need to initialize the request parameter.
+  // Do some basic initialization of the request to verify the values get
+  // carried to the mock.
   btadmin::GetTableRequest request;
   request.set_name("fake/table/name/request");
   auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
