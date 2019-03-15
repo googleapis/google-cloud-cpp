@@ -28,6 +28,7 @@ namespace {
 using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::HasSubstr;
 
+// Initialized in main() below.
 char const* flag_bucket_name;
 
 class ObjectResumableWriteIntegrationTest

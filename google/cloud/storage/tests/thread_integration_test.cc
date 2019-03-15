@@ -29,6 +29,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 using ObjectNameList = std::vector<std::string>;
 
+// Initialized in main() below.
 char const* flag_project_id;
 char const* flag_location;
 

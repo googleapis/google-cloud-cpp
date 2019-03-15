@@ -26,6 +26,7 @@ namespace {
 
 using ::testing::HasSubstr;
 
+// Initialized in main() below.
 char const* flag_project_id;
 char const* flag_service_account;
 

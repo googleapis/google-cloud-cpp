@@ -27,6 +27,8 @@ namespace bigtable = google::cloud::bigtable;
 using testing::HasSubstr;
 
 namespace {
+
+// Initialized in main() below.
 char const* flag_project_id;
 
 class InstanceAdminIntegrationTest : public ::testing::Test {

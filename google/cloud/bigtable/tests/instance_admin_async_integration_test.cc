@@ -23,6 +23,8 @@ namespace bigtable = google::cloud::bigtable;
 using testing::HasSubstr;
 
 namespace {
+
+// Initialized in main() below.
 char const* flag_project_id;
 char const* flag_zone;
 char const* flag_replication_zone;

@@ -32,6 +32,7 @@ using ::google::cloud::storage::testing::CountMatchingEntities;
 using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::HasSubstr;
 
+// Initialized in main() below.
 char const* flag_project_id;
 char const* flag_bucket_name;
 

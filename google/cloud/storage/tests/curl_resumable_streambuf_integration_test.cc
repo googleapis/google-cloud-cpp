@@ -30,6 +30,7 @@ namespace {
 
 using ::testing::HasSubstr;
 
+// Initialized in main() below.
 char const* flag_bucket_name;
 
 class CurlResumableStreambufIntegrationTest
