@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/optional.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
@@ -30,6 +29,7 @@ using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 
+// Initialized in main() below.
 char const* flag_project_id;
 char const* flag_bucket_name;
 char const* flag_topic_name;

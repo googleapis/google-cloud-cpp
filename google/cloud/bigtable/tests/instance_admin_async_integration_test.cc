@@ -23,34 +23,17 @@ namespace bigtable = google::cloud::bigtable;
 using testing::HasSubstr;
 
 namespace {
-class InstanceTestEnvironment : public ::testing::Environment {
- public:
-  explicit InstanceTestEnvironment(std::string project, std::string zone,
-                                   std::string replication_zone) {
-    project_id_ = std::move(project);
-    zone_ = std::move(zone);
-    replication_zone_ = std::move(replication_zone);
-  }
 
-  static std::string const& project_id() { return project_id_; }
-  static std::string const& zone() { return zone_; }
-  static std::string const& replication_zone() { return replication_zone_; }
-
- private:
-  static std::string project_id_;
-  static std::string zone_;
-  static std::string replication_zone_;
-};
-
-std::string InstanceTestEnvironment::project_id_;
-std::string InstanceTestEnvironment::zone_;
-std::string InstanceTestEnvironment::replication_zone_;
+// Initialized in main() below.
+char const* flag_project_id;
+char const* flag_zone;
+char const* flag_replication_zone;
 
 class InstanceAdminAsyncIntegrationTest : public ::testing::Test {
  protected:
   void SetUp() override {
     instance_admin_client_ = bigtable::CreateDefaultInstanceAdminClient(
-        InstanceTestEnvironment::project_id(), bigtable::ClientOptions());
+        flag_project_id, bigtable::ClientOptions());
     instance_admin_ =
         google::cloud::internal::make_unique<bigtable::InstanceAdmin>(
             instance_admin_client_);
@@ -82,8 +65,7 @@ bool IsClusterPresent(std::vector<btadmin::Cluster> const& clusters,
 }
 
 bigtable::InstanceConfig IntegrationTestConfig(
-    std::string const& id,
-    std::string const& zone = InstanceTestEnvironment::zone(),
+    std::string const& id, std::string const& zone = flag_zone,
     bigtable::InstanceConfig::InstanceType instance_type =
         bigtable::InstanceConfig::DEVELOPMENT,
     int32_t serve_node = 0) {
@@ -187,9 +169,8 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
 
   // create instance prerequisites for cluster operations
   bigtable::InstanceId instance_id(id);
-  auto instance_config =
-      IntegrationTestConfig(id, InstanceTestEnvironment::zone(),
-                            bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance_config = IntegrationTestConfig(
+      id, flag_zone, bigtable::InstanceConfig::PRODUCTION, 3);
 
   google::cloud::bigtable::CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
@@ -226,9 +207,8 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
       << " generated at random.";
   bigtable::ClusterId cluster_id(cluster_id_str);
   std::promise<btadmin::Cluster> create_promise;
-  auto cluster_config =
-      bigtable::ClusterConfig(InstanceTestEnvironment::replication_zone(), 3,
-                              bigtable::ClusterConfig::HDD);
+  auto cluster_config = bigtable::ClusterConfig(flag_replication_zone, 3,
+                                                bigtable::ClusterConfig::HDD);
   admin.AsyncCreateCluster(
       cq,
       [&create_promise](google::cloud::bigtable::CompletionQueue&,
@@ -564,11 +544,9 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  std::string const project_id = argv[1];
-  std::string const zone = argv[2];
-  std::string const replication_zone = argv[3];
-  (void)::testing::AddGlobalTestEnvironment(
-      new InstanceTestEnvironment(project_id, zone, replication_zone));
+  flag_project_id = argv[1];
+  flag_zone = argv[2];
+  flag_replication_zone = argv[3];
 
   return RUN_ALL_TESTS();
 }

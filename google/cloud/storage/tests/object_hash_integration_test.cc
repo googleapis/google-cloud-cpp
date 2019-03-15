@@ -33,24 +33,9 @@ using ::google::cloud::storage::testing::CountMatchingEntities;
 using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::HasSubstr;
 
-/// Store the project and instance captured from the command-line arguments.
-class ObjectHashTestEnvironment : public ::testing::Environment {
- public:
-  ObjectHashTestEnvironment(std::string project, std::string instance) {
-    project_id_ = std::move(project);
-    bucket_name_ = std::move(instance);
-  }
-
-  static std::string const& project_id() { return project_id_; }
-  static std::string const& bucket_name() { return bucket_name_; }
-
- private:
-  static std::string project_id_;
-  static std::string bucket_name_;
-};
-
-std::string ObjectHashTestEnvironment::project_id_;
-std::string ObjectHashTestEnvironment::bucket_name_;
+// Initialized in main() below.
+char const* flag_project_id;
+char const* flag_bucket_name;
 
 class ObjectHashIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
@@ -67,7 +52,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashXML) {
   Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
-  auto bucket_name = ObjectHashTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
@@ -96,7 +81,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
   Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
-  auto bucket_name = ObjectHashTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
@@ -138,7 +123,7 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashXML) {
   Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
-  auto bucket_name = ObjectHashTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
@@ -168,7 +153,7 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
   Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
-  auto bucket_name = ObjectHashTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
@@ -207,7 +192,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadXML) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectHashTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
@@ -233,7 +218,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadJSON) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectHashTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
@@ -260,7 +245,7 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadXML) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectHashTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
@@ -288,7 +273,7 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadJSON) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectHashTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
@@ -316,7 +301,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteXML) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectHashTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
@@ -343,7 +328,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteJSON) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectHashTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
@@ -369,7 +354,7 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingWriteXML) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectHashTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
@@ -395,7 +380,7 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingWriteJSON) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectHashTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
@@ -426,7 +411,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectHashTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
@@ -471,7 +456,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectHashTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
@@ -517,7 +502,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteXML) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectHashTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create a stream to upload an object.
@@ -548,7 +533,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectHashTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create a stream to upload an object.
@@ -587,11 +572,8 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  std::string const project_id = argv[1];
-  std::string const bucket_name = argv[2];
-  (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::storage::ObjectHashTestEnvironment(project_id,
-                                                            bucket_name));
+  google::cloud::storage::flag_project_id = argv[1];
+  google::cloud::storage::flag_bucket_name = argv[2];
 
   return RUN_ALL_TESTS();
 }

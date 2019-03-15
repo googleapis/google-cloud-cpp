@@ -31,24 +31,9 @@ using ::google::cloud::storage::testing::CountMatchingEntities;
 using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::HasSubstr;
 
-/// Store the project and instance captured from the command-line arguments.
-class ObjectChecksumTestEnvironment : public ::testing::Environment {
- public:
-  ObjectChecksumTestEnvironment(std::string project, std::string instance) {
-    project_id_ = std::move(project);
-    bucket_name_ = std::move(instance);
-  }
-
-  static std::string const& project_id() { return project_id_; }
-  static std::string const& bucket_name() { return bucket_name_; }
-
- private:
-  static std::string project_id_;
-  static std::string bucket_name_;
-};
-
-std::string ObjectChecksumTestEnvironment::project_id_;
-std::string ObjectChecksumTestEnvironment::bucket_name_;
+// Initialized in main() below.
+char const* flag_project_id;
+char const* flag_bucket_name;
 
 class ObjectChecksumIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
@@ -62,7 +47,7 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32c) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
@@ -89,7 +74,7 @@ TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32c) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
@@ -116,7 +101,7 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32cFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
@@ -132,7 +117,7 @@ TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32cFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
@@ -148,7 +133,7 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithComputedCrc32c) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
@@ -178,7 +163,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertXML) {
   Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
-  auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
@@ -207,7 +192,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertJSON) {
   Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
-  auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
@@ -247,7 +232,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadXML) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
@@ -273,7 +258,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadJSON) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
@@ -300,7 +285,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteXML) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
@@ -327,7 +312,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteJSON) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
@@ -359,7 +344,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
@@ -406,7 +391,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
@@ -453,7 +438,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteXML) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create a stream to upload an object.
@@ -485,7 +470,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectChecksumTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create a stream to upload an object.
@@ -523,11 +508,8 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  std::string const project_id = argv[1];
-  std::string const bucket_name = argv[2];
-  (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::storage::ObjectChecksumTestEnvironment(project_id,
-                                                                bucket_name));
+  google::cloud::storage::flag_project_id = argv[1];
+  google::cloud::storage::flag_bucket_name = argv[2];
 
   return RUN_ALL_TESTS();
 }

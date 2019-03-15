@@ -28,25 +28,15 @@ namespace bigtable = google::cloud::bigtable;
 using testing::HasSubstr;
 
 namespace {
-class InstanceTestEnvironment : public ::testing::Environment {
- public:
-  explicit InstanceTestEnvironment(std::string project) {
-    project_id_ = std::move(project);
-  }
 
-  static std::string const& project_id() { return project_id_; }
-
- private:
-  static std::string project_id_;
-};
-
-std::string InstanceTestEnvironment::project_id_;
+// Initialized in main() below.
+char const* flag_project_id;
 
 class InstanceAdminAsyncFutureIntegrationTest : public ::testing::Test {
  protected:
   void SetUp() override {
     auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
-        InstanceTestEnvironment::project_id(), bigtable::ClientOptions());
+        flag_project_id, bigtable::ClientOptions());
     instance_admin_ =
         google::cloud::internal::make_unique<bigtable::InstanceAdmin>(
             instance_admin_client);
@@ -327,9 +317,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  std::string const project_id = argv[1];
-  (void)::testing::AddGlobalTestEnvironment(
-      new InstanceTestEnvironment(project_id));
+  flag_project_id = argv[1];
 
   return RUN_ALL_TESTS();
 }

@@ -30,19 +30,8 @@ namespace {
 
 using ::testing::HasSubstr;
 
-class ResumableStreambufTestEnvironment : public ::testing::Environment {
- public:
-  ResumableStreambufTestEnvironment(std::string instance) {
-    bucket_name_ = std::move(instance);
-  }
-
-  static std::string const& bucket_name() { return bucket_name_; }
-
- private:
-  static std::string bucket_name_;
-};
-
-std::string ResumableStreambufTestEnvironment::bucket_name_;
+// Initialized in main() below.
+char const* flag_bucket_name;
 
 class CurlResumableStreambufIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -50,7 +39,7 @@ class CurlResumableStreambufIntegrationTest
   void CheckUpload(int line_count, int line_size) {
     StatusOr<Client> client = Client::CreateDefaultClient();
     ASSERT_STATUS_OK(client);
-    auto bucket_name = ResumableStreambufTestEnvironment::bucket_name();
+    std::string bucket_name = flag_bucket_name;
     auto object_name = MakeRandomObjectName();
 
     ResumableUploadRequest request(bucket_name, object_name);
@@ -115,10 +104,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  std::string const bucket_name = argv[1];
-  (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::storage::internal::ResumableStreambufTestEnvironment(
-          bucket_name));
+  google::cloud::storage::internal::flag_bucket_name = argv[1];
 
   return RUN_ALL_TESTS();
 }
