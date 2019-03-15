@@ -18,7 +18,6 @@ set(storage_client_integration_tests
     bucket_integration_test.cc
     curl_upload_request_integration_test.cc
     curl_download_request_integration_test.cc
-    curl_nosignal_integration_test.cc
     curl_request_integration_test.cc
     curl_resumable_streambuf_integration_test.cc
     curl_resumable_upload_session_integration_test.cc
@@ -57,6 +56,15 @@ foreach (fname ${storage_client_integration_tests})
                                   nlohmann_json
                                   storage_common_options)
 endforeach ()
+
+add_executable(curl_nosignal_integration_test curl_nosignal_integration_test.cc)
+target_link_libraries(curl_nosignal_integration_test PRIVATE
+    storage_client
+    google_cloud_cpp_common
+    CURL::CURL
+    Threads::Threads
+    nlohmann_json
+    storage_common_options)
 
 include(CreateBazelConfig)
 export_list_to_bazel("storage_client_integration_tests.bzl"
