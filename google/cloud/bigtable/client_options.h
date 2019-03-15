@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/status.h"
 #include <grpcpp/grpcpp.h>
+#include <grpcpp/resource_quota.h>
 
 namespace google {
 namespace cloud {
