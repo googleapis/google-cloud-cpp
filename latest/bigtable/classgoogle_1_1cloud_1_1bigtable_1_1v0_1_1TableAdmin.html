@@ -452,7 +452,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the consistency status for the table.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string table_id_param,</div><div class="line">     std::string consistency_token_param) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#ac33187c954cf3e096931b5e805c5e24a">google::cloud::bigtable::TableId</a> table_id(table_id_param);</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a61a54b74718a8210ac873ab7ad813f88">google::cloud::bigtable::ConsistencyToken</a> consistency_token(</div><div class="line">        consistency_token_param);</div><div class="line">    <span class="keyword">auto</span> result = admin.CheckConsistency(table_id, consistency_token);</div><div class="line">    <span class="keywordflow">if</span> (!result) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(result.status().message());</div><div class="line">    }</div><div class="line">    <span class="keywordflow">if</span> (*result == google::cloud::bigtable::Consistency::kConsistent) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Table is consistent\n&quot;</span>;</div><div class="line">    } <span class="keywordflow">else</span> {</div><div class="line">      std::cout</div><div class="line">          &lt;&lt; <span class="stringliteral">&quot;Table is not yet consistent, Please Try again Later with the &quot;</span></div><div class="line">             <span class="stringliteral">&quot;same Token!&quot;</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; std::flush;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00250">250</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00289">289</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -547,7 +547,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str,</div><div class="line">     std::string snapshot_id_str, std::string table_id) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a73d20496d86761052e55848775b1e30b">google::cloud::bigtable::ClusterId</a> cluster_id(cluster_id_str);</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#abe486b71e585f7c014633813866b9c18">google::cloud::bigtable::SnapshotId</a> snapshot_id(snapshot_id_str);</div><div class="line">    <span class="keyword">auto</span> future =</div><div class="line">        admin.CreateTableFromSnapshot(cluster_id, snapshot_id, table_id);</div><div class="line">    <span class="keyword">auto</span> table = future.get();</div><div class="line">    <span class="keywordflow">if</span> (!table) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(table.status().message());</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Table created :&quot;</span> &lt;&lt; table-&gt;name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00280">280</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00351">351</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -588,7 +588,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str,</div><div class="line">     std::string snapshot_id_str) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a73d20496d86761052e55848775b1e30b">google::cloud::bigtable::ClusterId</a> cluster_id(cluster_id_str);</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#abe486b71e585f7c014633813866b9c18">google::cloud::bigtable::SnapshotId</a> snapshot_id(snapshot_id_str);</div><div class="line">    google::cloud::Status status =</div><div class="line">        admin.DeleteSnapshot(cluster_id, snapshot_id);</div><div class="line">    <span class="keywordflow">if</span> (!status.ok()) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(status.message());</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00273">273</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00344">344</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -647,7 +647,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {</div><div class="line">    google::cloud::Status status = admin.DropAllRows(table_id);</div><div class="line">    <span class="keywordflow">if</span> (!status.ok()) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(status.message());</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00178">178</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00198">198</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -687,7 +687,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {</div><div class="line">    google::cloud::Status status =</div><div class="line">        admin.DropRowsByPrefix(table_id, <span class="stringliteral">&quot;key-00004&quot;</span>);</div><div class="line">    <span class="keywordflow">if</span> (!status.ok()) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(status.message());</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00171">171</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00182">182</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -717,7 +717,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the consistency token for table.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {</div><div class="line">    <span class="keyword">auto</span> token = admin.GenerateConsistencyToken(table_id);</div><div class="line">    <span class="keywordflow">if</span> (!token) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(token.status().message());</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;generated token is : &quot;</span> &lt;&lt; token-&gt;get() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00240">240</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00269">269</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -759,7 +759,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the information about the snapshot.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str,</div><div class="line">     std::string snapshot_id_str) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a73d20496d86761052e55848775b1e30b">google::cloud::bigtable::ClusterId</a> cluster_id(cluster_id_str);</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#abe486b71e585f7c014633813866b9c18">google::cloud::bigtable::SnapshotId</a> snapshot_id(snapshot_id_str);</div><div class="line">    <span class="keyword">auto</span> snapshot = admin.GetSnapshot(cluster_id, snapshot_id);</div><div class="line">    <span class="keywordflow">if</span> (!snapshot) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(snapshot.status().message());</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;GetSnapshot name : &quot;</span> &lt;&lt; snapshot-&gt;name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00229">229</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00258">258</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -890,7 +890,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>vector containing the snapshots for the given cluster.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a73d20496d86761052e55848775b1e30b">google::cloud::bigtable::ClusterId</a> cluster_id(cluster_id_str);</div><div class="line"></div><div class="line">    <span class="keyword">auto</span> snapshot_list = admin.ListSnapshots(cluster_id);</div><div class="line">    <span class="keywordflow">if</span> (!snapshot_list) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(snapshot_list.status().message());</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Snapshot Name List\n&quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; snapshot : *snapshot_list) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Snapshot Name:&quot;</span> &lt;&lt; snapshot.name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00323">323</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00394">394</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -1073,7 +1073,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future that becomes satisfied when (a) the operation has completed successfully, in which case it returns a proto with the Snapshot details, (b) the operation has failed, in which case the future contains an exception (typically <code>bigtable::GrpcError</code>) with the details of the failure, or (c) the state of the operation is unknown after the time allocated by the retry policies has expired, in which case the future contains an exception of type <code>bigtable::PollTimeout</code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00184">184</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00213">213</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
