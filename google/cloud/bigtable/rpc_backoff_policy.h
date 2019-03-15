@@ -64,7 +64,7 @@ class RPCBackoffPolicy {
    * Return the delay after an RPC operation has completed.
    *
    * @return true the delay before trying the operation again.
-   * @param s the status returned by the last RPC operation.
+   * @param status the status returned by the last RPC operation.
    */
   virtual std::chrono::milliseconds OnCompletion(
       google::cloud::Status const& status) = 0;
