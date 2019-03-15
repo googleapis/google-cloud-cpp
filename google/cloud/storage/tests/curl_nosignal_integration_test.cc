@@ -20,6 +20,7 @@
 #include <gmock/gmock.h>
 #include <chrono>
 #include <future>
+#include <fstream>
 
 namespace google {
 namespace cloud {
@@ -30,6 +31,7 @@ namespace {
 using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
+using ms = std::chrono::milliseconds;
 
 /// Store the options captured from the command-line arguments.
 std::string FLAG_bucket_name;
@@ -37,6 +39,23 @@ std::chrono::seconds FLAG_idle_duration;
 
 class CurlNoSignalIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
+
+void ConfigureWorkingResolver() {
+  std::ofstream("/etc/resolv.conf") << R"""(
+# Created for the crazy NOSIGNAL test, sorry.
+search google.com
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+)""";
+}
+
+void ConfigureBrokenResolver() {
+  std::ofstream("/etc/resolv.conf") << R"""(
+# Created for the crazy NOSIGNAL test, sorry.
+search google.com
+nameserver 71.114.67.58
+)""";
+}
 
 Status UploadFiles(std::string const& media,
                    std::vector<std::string> const& names) {
@@ -52,8 +71,13 @@ Status UploadFiles(std::string const& media,
     auto meta = client->InsertObject(bucket_name, object_name, media,
                                      IfGenerationMatch(0), Fields(""));
     if (!meta) {
-      return meta.status();
+      std::cerr << "Error uploading " << object_name << std::endl;
     }
+    std::this_thread::sleep_for(ms(250));
+    // Ignore any errors...
+    //    if (!meta) {
+    //      return meta.status();
+    //    }
   }
   return Status();
 }
@@ -71,6 +95,12 @@ Status DownloadFiles(int iterations, std::vector<std::string> const& names) {
     return client.status();
   }
 
+  std::ofstream("/etc/resolv.conf") << R"""(
+# Created for the crazy NOSIGNAL test, sorry.
+search corp.google.com prod.google.com prodz.google.com google.com nyc.corp.google.com
+nameserver 71.114.67.58
+)""";
+
   std::random_device rd;
   std::mt19937_64 gen(rd());
   // Recall that both ends of `std::uniform_int_distribution` are inclusive.
@@ -78,11 +108,14 @@ Status DownloadFiles(int iterations, std::vector<std::string> const& names) {
 
   for (int i = 0; i != iterations; ++i) {
     auto object_name = names.at(pick_name(gen));
-    auto stream = client->ReadObject(bucket_name, object_name);
-    std::string actual(std::istreambuf_iterator<char>{stream}, {});
-    if (!stream.status().ok()) {
-      return stream.status();
+    try {
+      auto stream = client->ReadObject(bucket_name, object_name);
+      std::string actual(std::istreambuf_iterator<char>{stream}, {});
+    } catch(std::exception const& ex) {
+      std::cerr << "Exception raised while downloading " << object_name
+      << ex.what() << std::endl;
     }
+    std::this_thread::sleep_for(ms(250));
   }
   return Status();
 }
@@ -93,7 +126,7 @@ TEST_F(CurlNoSignalIntegrationTest, UploadDownloadThenIdle) {
   int const thread_count = 16;
   int const objects_per_thread = 40;
   int const object_count = thread_count * objects_per_thread;
-  int const download_iterations = 2 * objects_per_thread;
+  int const download_iterations = 1000 * objects_per_thread;
   int const object_size = 4 * 1024 * 1024;
   int const line_size = 128;
 
@@ -107,6 +140,8 @@ TEST_F(CurlNoSignalIntegrationTest, UploadDownloadThenIdle) {
     WriteRandomLines(capture, discard, object_size / line_size, line_size);
     return std::move(capture).str();
   }();
+
+  ConfigureWorkingResolver();
 
   std::vector<std::future<Status>> uploads;
   auto names_block_begin = object_names.begin();
@@ -128,6 +163,7 @@ TEST_F(CurlNoSignalIntegrationTest, UploadDownloadThenIdle) {
   std::cout << " DONE\n" << std::flush;
 
   // Go idle for FLAG_idle_duration.
+  ConfigureBrokenResolver();
   std::this_thread::sleep_for(FLAG_idle_duration);
 
   std::vector<std::future<Status>> downloads;
@@ -144,6 +180,7 @@ TEST_F(CurlNoSignalIntegrationTest, UploadDownloadThenIdle) {
   std::cout << " DONE\n" << std::flush;
 
   // Go idle for FLAG_idle_duration.
+  ConfigureWorkingResolver();
   std::this_thread::sleep_for(FLAG_idle_duration);
 
   StatusOr<Client> client = Client::CreateDefaultClient();
