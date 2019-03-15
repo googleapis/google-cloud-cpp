@@ -99,7 +99,7 @@ versions of these dependencies:
 
 | Library | Minimum version |
 | ------- | --------------- |
-| gRPC    | v1.17.x |
+| gRPC    | v1.19.1 |
 | libcurl | 7.47.0  |
 
 #### Tests
