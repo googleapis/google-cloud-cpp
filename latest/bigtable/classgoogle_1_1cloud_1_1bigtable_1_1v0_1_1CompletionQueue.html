@@ -96,6 +96,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a617e50a94e75f87894ebd32566306812"><td class="memTemplItemLeft" align="right" valign="top">future&lt; std::chrono::system_clock::time_point &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#a617e50a94e75f87894ebd32566306812">MakeRelativeTimer</a> (std::chrono::duration&lt; Rep, Period &gt; duration)</td></tr>
 <tr class="memdesc:a617e50a94e75f87894ebd32566306812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a timer that fires after the <code>duration</code>.  <a href="#a617e50a94e75f87894ebd32566306812">More...</a><br /></td></tr>
 <tr class="separator:a617e50a94e75f87894ebd32566306812"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe5c8a290d929825043e90db14242f3a"><td class="memTemplParams" colspan="2">template&lt;typename AsyncCallType , typename Request , typename Sig  = internal::AsyncCallResponseType&lt;AsyncCallType, Request&gt;, typename Response  = typename Sig::type, typename std::enable_if&lt; Sig::value, int &gt;::type  = 0&gt; </td></tr>
+<tr class="memitem:abe5c8a290d929825043e90db14242f3a"><td class="memTemplItemLeft" align="right" valign="top">future&lt; StatusOr&lt; Response &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#abe5c8a290d929825043e90db14242f3a">MakeUnaryRpc</a> (AsyncCallType async_call, Request const &amp;request, std::unique_ptr&lt; grpc::ClientContext &gt; context)</td></tr>
+<tr class="memdesc:abe5c8a290d929825043e90db14242f3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an asynchronous unary RPC.  <a href="#abe5c8a290d929825043e90db14242f3a">More...</a><br /></td></tr>
+<tr class="separator:abe5c8a290d929825043e90db14242f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aceb2b5f549e8331522f25c306d5c430f"><td class="memTemplParams" colspan="2">template&lt;typename Functor , typename std::enable_if&lt; internal::CheckRunAsyncCallback&lt; Functor &gt;::value, int &gt;::type  = 0&gt; </td></tr>
 <tr class="memitem:aceb2b5f549e8331522f25c306d5c430f"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html">AsyncOperation</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#aceb2b5f549e8331522f25c306d5c430f">RunAsync</a> (Functor &amp;&amp;functor)</td></tr>
 <tr class="memdesc:aceb2b5f549e8331522f25c306d5c430f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously run a functor on a thread <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#abb9bbf1fd0ffadb30470f649c7240f07" title="Run the completion queue event loop. ">Run()</a></code>ning the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html" title="Call the functor associated with asynchronous operations when they complete. ">CompletionQueue</a></code>.  <a href="#aceb2b5f549e8331522f25c306d5c430f">More...</a><br /></td></tr>
@@ -123,7 +127,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Call the functor associated with asynchronous operations when they complete. </p>
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00028">28</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00029">29</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a73890ff278f4a37365a94d998d3541aa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a73890ff278f4a37365a94d998d3541aa">&#9670;&nbsp;</a></span>CompletionQueue() <span class="overload">[1/2]</span></h2>
@@ -168,7 +172,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00031">31</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00032">32</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
 
 </div>
 </div>
@@ -255,7 +259,7 @@ template&lt;typename Functor , typename std::enable_if&lt; internal::CheckTimerC
 <dl class="section return"><dt>Returns</dt><dd>an asynchronous operation wrapping the functor and timer, can be used to cancel the pending timer.</dd></dl>
 <p>TODO(#2145) - Remove these member functions. </p>
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00100">100</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00135">135</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
 
 </div>
 </div>
@@ -301,7 +305,7 @@ template&lt;typename Rep , typename Period &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future that becomes satisfied after <code>duration</code> time has elapsed. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00074">74</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00075">75</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
 
 </div>
 </div>
@@ -360,12 +364,76 @@ template&lt;typename Rep , typename Period , typename Functor , typename std::en
 <dl class="section return"><dt>Returns</dt><dd>an asynchronous operation wrapping the functor and timer, can be used to cancel the pending timer.</dd></dl>
 <p>TODO(#2145) - Remove these member functions. </p>
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00134">134</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00169">169</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
+
+</div>
+</div>
+<a id="abe5c8a290d929825043e90db14242f3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe5c8a290d929825043e90db14242f3a">&#9670;&nbsp;</a></span>MakeUnaryRpc() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename AsyncCallType , typename Request , typename Sig  = internal::AsyncCallResponseType&lt;AsyncCallType, Request&gt;, typename Response  = typename Sig::type, typename std::enable_if&lt; Sig::value, int &gt;::type  = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">future&lt;StatusOr&lt;Response&gt; &gt; google::cloud::bigtable::v0::CompletionQueue::MakeUnaryRpc </td>
+          <td>(</td>
+          <td class="paramtype">AsyncCallType&#160;</td>
+          <td class="paramname"><em>async_call</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Request const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; grpc::ClientContext &gt;&#160;</td>
+          <td class="paramname"><em>context</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Make an asynchronous unary RPC. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">async_call</td><td>a callable to start the asynchronous RPC. </td></tr>
+    <tr><td class="paramname">request</td><td>the contents of the request. </td></tr>
+    <tr><td class="paramname">context</td><td>an initialized request context to make the call.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">AsyncCallType</td><td>the type of <em>async_call</em>. It must be invocable with <code>(grpc::ClientContext*, RequestType const&amp;, grpc::CompletionQueue*)</code>. Furthermore, it should return a <code>std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt;Response&gt;&gt;&gt;</code>. These requirements are verified by <code>internal::CheckAsyncUnaryRpcSignature&lt;&gt;</code>, and this function is excluded from overload resolution if the parameters do not meet these requirements. </td></tr>
+    <tr><td class="paramname">Request</td><td>the type of the request parameter in the gRPC.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a future that becomes satisfied when the operation completes. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00104">104</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
 
 </div>
 </div>
 <a id="af6eeef14a79b2413928f1200730d9d7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af6eeef14a79b2413928f1200730d9d7e">&#9670;&nbsp;</a></span>MakeUnaryRpc()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af6eeef14a79b2413928f1200730d9d7e">&#9670;&nbsp;</a></span>MakeUnaryRpc() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -441,7 +509,7 @@ template&lt;typename Client , typename MemberFunction , typename Request , typen
 <dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html" title="Represents a pending asynchronous operation. ">AsyncOperation</a> instance that can be used to request cancelation of the pending operation.</dd></dl>
 <p>TODO(#2145) - Remove these member functions. </p>
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00176">176</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00211">211</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
 
 </div>
 </div>
@@ -530,7 +598,7 @@ template&lt;typename Client , typename MemberFunction , typename Request , typen
 <dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncOperation.html" title="Represents a pending asynchronous operation. ">AsyncOperation</a> instance that can be used to request cancelation of the pending operation.</dd></dl>
 <p>TODO(#2145) - Remove these member functions. </p>
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00241">241</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00276">276</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
 
 </div>
 </div>
@@ -597,7 +665,7 @@ template&lt;typename Functor , typename std::enable_if&lt; internal::CheckRunAsy
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>an asynchronous operation wrapping the functor; it can be used for cancelling but it makes little sense given that it will be completed straight away </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00272">272</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="completion__queue_8h_source.html#l00307">307</a> of file <a class="el" href="completion__queue_8h_source.html">completion_queue.h</a>.</p>
 
 </div>
 </div>
