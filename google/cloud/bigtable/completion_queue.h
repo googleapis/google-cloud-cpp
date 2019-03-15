@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/internal/completion_queue_impl.h"
 #include "google/cloud/future.h"
+#include "google/cloud/status_or.h"
 
 namespace google {
 namespace cloud {
@@ -74,6 +75,40 @@ class CompletionQueue {
   future<std::chrono::system_clock::time_point> MakeRelativeTimer(
       std::chrono::duration<Rep, Period> duration) {
     return MakeDeadlineTimer(std::chrono::system_clock::now() + duration);
+  }
+
+  /**
+   * Make an asynchronous unary RPC.
+   *
+   * @param async_call a callable to start the asynchronous RPC.
+   * @param request the contents of the request.
+   * @param context an initialized request context to make the call.
+   *
+   * @tparam AsyncCallType the type of @a async_call. It must be invocable with
+   *     `(grpc::ClientContext*, RequestType const&, grpc::CompletionQueue*)`.
+   *     Furthermore, it should return a
+   *     `std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<Response>>>`.
+   *     These requirements are verified by
+   *     `internal::CheckAsyncUnaryRpcSignature<>`, and this function is
+   *     excluded from overload resolution if the parameters do not meet these
+   *     requirements.
+   * @tparam Request the type of the request parameter in the gRPC.
+   *
+   * @return a future that becomes satisfied when the operation completes.
+   */
+  template <
+      typename AsyncCallType, typename Request,
+      typename Sig = internal::AsyncCallResponseType<AsyncCallType, Request>,
+      typename Response = typename Sig::type,
+      typename std::enable_if<Sig::value, int>::type = 0>
+  future<StatusOr<Response>> MakeUnaryRpc(
+      AsyncCallType async_call, Request const& request,
+      std::unique_ptr<grpc::ClientContext> context) {
+    auto op =
+        std::make_shared<internal::AsyncUnaryRpcFuture<Request, Response>>();
+    void* tag = impl_->RegisterOperation(op);
+    op->Start(async_call, std::move(context), request, &impl_->cq(), tag);
+    return op->GetFuture();
   }
 
   //@{
