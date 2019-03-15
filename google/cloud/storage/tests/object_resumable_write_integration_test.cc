@@ -28,20 +28,7 @@ namespace {
 using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::HasSubstr;
 
-/// Store the project and instance captured from the command-line arguments.
-class ObjectResumableWriteTestEnvironment : public ::testing::Environment {
- public:
-  ObjectResumableWriteTestEnvironment(std::string bucket_name) {
-    bucket_name_ = std::move(bucket_name);
-  }
-
-  static std::string const& bucket_name() { return bucket_name_; }
-
- private:
-  static std::string bucket_name_;
-};
-
-std::string ObjectResumableWriteTestEnvironment::bucket_name_;
+char const* flag_bucket_name;
 
 class ObjectResumableWriteIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
@@ -55,7 +42,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -108,7 +95,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -137,7 +124,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -176,7 +163,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectResumableWriteTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
@@ -220,10 +207,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  std::string const bucket_name = argv[1];
-  (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::storage::ObjectResumableWriteTestEnvironment(
-          bucket_name));
+  google::cloud::storage::flag_bucket_name = argv[1];
 
   return RUN_ALL_TESTS();
 }

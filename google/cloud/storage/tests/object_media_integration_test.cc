@@ -36,24 +36,8 @@ using ::google::cloud::storage::testing::CountMatchingEntities;
 using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::HasSubstr;
 
-/// Store the project and instance captured from the command-line arguments.
-class ObjectMediaTestEnvironment : public ::testing::Environment {
- public:
-  ObjectMediaTestEnvironment(std::string project, std::string instance) {
-    project_id_ = std::move(project);
-    bucket_name_ = std::move(instance);
-  }
-
-  static std::string const& project_id() { return project_id_; }
-  static std::string const& bucket_name() { return bucket_name_; }
-
- private:
-  static std::string project_id_;
-  static std::string bucket_name_;
-};
-
-std::string ObjectMediaTestEnvironment::project_id_;
-std::string ObjectMediaTestEnvironment::bucket_name_;
+char const* flag_project_id;
+char const* flag_bucket_name;
 
 class ObjectMediaIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
@@ -67,7 +51,7 @@ TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomObjectName();
 
@@ -100,7 +84,7 @@ TEST_F(ObjectMediaIntegrationTest, JsonDownloadFile) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomObjectName();
 
@@ -133,7 +117,7 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomObjectName();
 
@@ -146,7 +130,7 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotOpenFile) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
   StatusOr<ObjectMetadata> meta =
       client->InsertObject(bucket_name, object_name, LoremIpsum(),
@@ -169,7 +153,7 @@ TEST_F(ObjectMediaIntegrationTest, DownloadFileCannotWriteToFile) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
   StatusOr<ObjectMetadata> meta =
       client->InsertObject(bucket_name, object_name, LoremIpsum(),
@@ -201,7 +185,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFile) {
   ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -236,7 +220,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileEmpty) {
   ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create a file with the contents to upload.
@@ -266,7 +250,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileMissingFileFailure) {
   ASSERT_STATUS_OK(client);
 
   auto file_name = MakeRandomObjectName();
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   StatusOr<ObjectMetadata> meta = client->UploadFile(
@@ -281,7 +265,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileUploadFailure) {
   ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create the file.
@@ -313,7 +297,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileNonRegularWarning) {
   ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   ASSERT_NE(-1, mkfifo(file_name.c_str(), 0777));
@@ -353,7 +337,7 @@ TEST_F(ObjectMediaIntegrationTest, XmlUploadFile) {
   ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -400,7 +384,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableBySize) {
   ASSERT_STATUS_OK(client_options);
   Client client(client_options->set_maximum_simple_upload_size(0));
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -440,7 +424,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableByOption) {
   ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -482,7 +466,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableQuantum) {
   ASSERT_STATUS_OK(client_options);
   Client client(client_options->set_maximum_simple_upload_size(0));
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -523,7 +507,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableNonQuantum) {
   ASSERT_STATUS_OK(client_options);
   Client client(client_options->set_maximum_simple_upload_size(0));
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -581,7 +565,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomObjectName();
 
@@ -621,7 +605,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // This produces a 64 KiB text object, normally applications should download
@@ -663,7 +647,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectMediaTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // This produces a 64 KiB text object, normally applications should download
@@ -716,11 +700,8 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  std::string const project_id = argv[1];
-  std::string const bucket_name = argv[2];
-  (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::storage::ObjectMediaTestEnvironment(project_id,
-                                                             bucket_name));
+  google::cloud::storage::flag_project_id = argv[1];
+  google::cloud::storage::flag_bucket_name = argv[2];
 
   return RUN_ALL_TESTS();
 }

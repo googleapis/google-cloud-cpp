@@ -26,25 +26,8 @@ namespace {
 
 using ::testing::HasSubstr;
 
-/// Store the project and instance captured from the command-line arguments.
-class ServiceAccountTestEnvironment : public ::testing::Environment {
- public:
-  ServiceAccountTestEnvironment(std::string project,
-                                std::string service_account) {
-    project_id_ = std::move(project);
-    service_account_ = std::move(service_account);
-  }
-
-  static std::string const& project_id() { return project_id_; }
-  static std::string const& service_account() { return service_account_; }
-
- private:
-  static std::string project_id_;
-  static std::string service_account_;
-};
-
-std::string ServiceAccountTestEnvironment::project_id_;
-std::string ServiceAccountTestEnvironment::service_account_;
+char const* flag_project_id;
+char const* flag_service_account;
 
 bool UsingTestbench() {
   return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
@@ -52,7 +35,7 @@ bool UsingTestbench() {
 }
 
 TEST(ServiceAccountIntegrationTest, Get) {
-  auto project_id = ServiceAccountTestEnvironment::project_id();
+  std::string project_id = flag_project_id;
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
@@ -77,8 +60,8 @@ TEST(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
     return;
   }
 
-  auto project_id = ServiceAccountTestEnvironment::project_id();
-  auto service_account = ServiceAccountTestEnvironment::service_account();
+  std::string project_id = flag_project_id;
+  std::string service_account = flag_service_account;
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
@@ -96,9 +79,9 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
     return;
   }
 
-  auto project_id = ServiceAccountTestEnvironment::project_id();
+  std::string project_id = flag_project_id;
   auto client_options = ClientOptions::CreateDefaultClientOptions();
-  auto service_account = ServiceAccountTestEnvironment::service_account();
+  std::string service_account = flag_service_account;
   ASSERT_STATUS_OK(client_options);
 
   Client client(client_options->set_project_id(project_id));
@@ -164,9 +147,9 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUDFailures) {
     return;
   }
 
-  auto project_id = ServiceAccountTestEnvironment::project_id();
+  std::string project_id = flag_project_id;
   auto client_options = ClientOptions::CreateDefaultClientOptions();
-  auto service_account = ServiceAccountTestEnvironment::service_account();
+  std::string service_account = flag_service_account;
   ASSERT_STATUS_OK(client_options);
 
   Client client(client_options->set_project_id(project_id));
@@ -212,11 +195,8 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  std::string const project_id = argv[1];
-  std::string const service_account = argv[2];
-  (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::storage::ServiceAccountTestEnvironment(
-          project_id, service_account));
+  google::cloud::storage::flag_project_id = argv[1];
+  google::cloud::storage::flag_service_account = argv[2];
 
   return RUN_ALL_TESTS();
 }

@@ -27,35 +27,13 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-/// Store the project and instance captured from the command-line arguments.
-class ThreadTestEnvironment : public ::testing::Environment {
- public:
-  ThreadTestEnvironment(std::string project, std::string location) {
-    project_id_ = std::move(project);
-    location_ = std::move(location);
-  }
+using ObjectNameList = std::vector<std::string>;
 
-  static std::string const& project_id() { return project_id_; }
-  static std::string const& location() { return location_; }
-
- private:
-  static std::string project_id_;
-  static std::string location_;
-};
-
-std::string ThreadTestEnvironment::project_id_;
-std::string ThreadTestEnvironment::location_;
+char const* flag_project_id;
+char const* flag_location;
 
 class ThreadIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {
- protected:
-  std::string MakeEntityName() {
-    // We always use the viewers for the project because it is known to exist.
-    return "project-viewers-" + ThreadTestEnvironment::project_id();
-  }
-};
-
-using ObjectNameList = std::vector<std::string>;
+    : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 /**
  * Divides @p source in to @p count groups of approximately equal size.
@@ -110,7 +88,7 @@ void DeleteObjects(std::string const& bucket_name, ObjectNameList group) {
 }  // anonymous namespace
 
 TEST_F(ThreadIntegrationTest, Unshared) {
-  auto project_id = ThreadTestEnvironment::project_id();
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -119,7 +97,7 @@ TEST_F(ThreadIntegrationTest, Unshared) {
       bucket_name, project_id,
       BucketMetadata()
           .set_storage_class(storage_class::Regional())
-          .set_location(ThreadTestEnvironment::location())
+          .set_location(flag_location)
           .disable_versioning(),
       PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
       Projection("full"));
@@ -188,7 +166,7 @@ TEST_F(ThreadIntegrationTest, ReuseConnections) {
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
 
-  auto project_id = ThreadTestEnvironment::project_id();
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
 
   auto id = LogSink::Instance().AddBackend(log_backend);
@@ -196,7 +174,7 @@ TEST_F(ThreadIntegrationTest, ReuseConnections) {
       bucket_name, project_id,
       BucketMetadata()
           .set_storage_class(storage_class::Regional())
-          .set_location(ThreadTestEnvironment::location())
+          .set_location(flag_location)
           .disable_versioning(),
       PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
       Projection("full"));
@@ -270,10 +248,8 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  std::string const project_id = argv[1];
-  std::string const location = argv[2];
-  (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::storage::ThreadTestEnvironment(project_id, location));
+  google::cloud::storage::flag_project_id = argv[1];
+  google::cloud::storage::flag_location = argv[2];
 
   return RUN_ALL_TESTS();
 }

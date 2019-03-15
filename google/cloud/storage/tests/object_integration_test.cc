@@ -32,31 +32,15 @@ using ::google::cloud::storage::testing::CountMatchingEntities;
 using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::HasSubstr;
 
-/// Store the project and instance captured from the command-line arguments.
-class ObjectTestEnvironment : public ::testing::Environment {
- public:
-  ObjectTestEnvironment(std::string project, std::string instance) {
-    project_id_ = std::move(project);
-    bucket_name_ = std::move(instance);
-  }
-
-  static std::string const& project_id() { return project_id_; }
-  static std::string const& bucket_name() { return bucket_name_; }
-
- private:
-  static std::string project_id_;
-  static std::string bucket_name_;
-};
-
-std::string ObjectTestEnvironment::project_id_;
-std::string ObjectTestEnvironment::bucket_name_;
+char const* flag_project_id;
+char const* flag_bucket_name;
 
 class ObjectIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   std::string MakeEntityName() {
     // We always use the viewers for the project because it is known to exist.
-    return "project-viewers-" + ObjectTestEnvironment::project_id();
+    return "project-viewers-" + std::string(flag_project_id);
   }
 };
 
@@ -65,7 +49,7 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
 
   auto objects = client->ListObjects(bucket_name);
   std::vector<ObjectMetadata> initial_list;
@@ -176,7 +160,7 @@ TEST_F(ObjectIntegrationTest, FullPatch) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
   // Create the object, but only if it does not exist already.
   StatusOr<ObjectMetadata> original =
@@ -250,7 +234,7 @@ TEST_F(ObjectIntegrationTest, ListObjectsVersions) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   // This test requires the bucket to be configured with versioning. The buckets
   // used by the CI build are already configured with versioning enabled. The
   // bucket created in the testbench also has versioning. Regardless, set the
@@ -322,7 +306,7 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
@@ -348,7 +332,7 @@ TEST_F(ObjectIntegrationTest, EncryptedReadWrite) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
@@ -380,7 +364,7 @@ TEST_F(ObjectIntegrationTest, ReadNotFound) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create a iostream to read the object back.
@@ -398,7 +382,7 @@ TEST_F(ObjectIntegrationTest, StreamingWrite) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
@@ -430,7 +414,7 @@ TEST_F(ObjectIntegrationTest, StreamingWriteAutoClose) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -456,7 +440,7 @@ TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
@@ -490,7 +474,7 @@ TEST_F(ObjectIntegrationTest, XmlReadWrite) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
@@ -516,7 +500,7 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
@@ -589,7 +573,7 @@ TEST_F(ObjectIntegrationTest, WriteWithContentType) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -614,7 +598,7 @@ TEST_F(ObjectIntegrationTest, GetObjectMetadataFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
@@ -626,7 +610,7 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
@@ -661,7 +645,7 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailureNoex) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
@@ -706,7 +690,7 @@ TEST_F(ObjectIntegrationTest, DeleteObjectFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
@@ -718,7 +702,7 @@ TEST_F(ObjectIntegrationTest, UpdateObjectFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
@@ -731,7 +715,7 @@ TEST_F(ObjectIntegrationTest, PatchObjectFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
@@ -744,7 +728,7 @@ TEST_F(ObjectIntegrationTest, ListAccessControlFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
@@ -756,7 +740,7 @@ TEST_F(ObjectIntegrationTest, CreateAccessControlFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
   auto entity_name = MakeEntityName();
 
@@ -770,7 +754,7 @@ TEST_F(ObjectIntegrationTest, GetAccessControlFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
   auto entity_name = MakeEntityName();
 
@@ -783,7 +767,7 @@ TEST_F(ObjectIntegrationTest, UpdateAccessControlFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
   auto entity_name = MakeEntityName();
 
@@ -798,7 +782,7 @@ TEST_F(ObjectIntegrationTest, PatchAccessControlFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
   auto entity_name = MakeEntityName();
 
@@ -813,7 +797,7 @@ TEST_F(ObjectIntegrationTest, DeleteAccessControlFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
-  auto bucket_name = ObjectTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
   auto entity_name = MakeEntityName();
 
@@ -840,11 +824,8 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  std::string const project_id = argv[1];
-  std::string const bucket_name = argv[2];
-  (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::storage::ObjectTestEnvironment(project_id,
-                                                        bucket_name));
+  google::cloud::storage::flag_project_id = argv[1];
+  google::cloud::storage::flag_bucket_name = argv[2];
 
   return RUN_ALL_TESTS();
 }

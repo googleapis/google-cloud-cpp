@@ -27,19 +27,7 @@ namespace {
 
 using ::testing::HasSubstr;
 
-class ResumableUploadTestEnvironment : public ::testing::Environment {
- public:
-  ResumableUploadTestEnvironment(std::string instance) {
-    bucket_name_ = std::move(instance);
-  }
-
-  static std::string const& bucket_name() { return bucket_name_; }
-
- private:
-  static std::string bucket_name_;
-};
-
-std::string ResumableUploadTestEnvironment::bucket_name_;
+char const* flag_bucket_name;
 
 class CurlResumableUploadIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
@@ -48,7 +36,7 @@ TEST_F(CurlResumableUploadIntegrationTest, Simple) {
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
   auto client = CurlClient::Create(*client_options);
-  auto bucket_name = ResumableUploadTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   ResumableUploadRequest request(bucket_name, object_name);
@@ -80,7 +68,7 @@ TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
   auto client = CurlClient::Create(*client_options);
-  auto bucket_name = ResumableUploadTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   ResumableUploadRequest request(bucket_name, object_name);
@@ -118,7 +106,7 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
   auto client = CurlClient::Create(*client_options);
-  auto bucket_name = ResumableUploadTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   ResumableUploadRequest request(bucket_name, object_name);
@@ -176,10 +164,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  std::string const bucket_name = argv[1];
-  (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::storage::internal::ResumableUploadTestEnvironment(
-          bucket_name));
+  google::cloud::storage::internal::flag_bucket_name = argv[1];
 
   return RUN_ALL_TESTS();
 }
