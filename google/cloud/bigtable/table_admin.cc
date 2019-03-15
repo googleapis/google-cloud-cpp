@@ -280,7 +280,6 @@ StatusOr<ConsistencyToken> TableAdmin::GenerateConsistencyToken(
       &AdminClient::GenerateConsistencyToken, request,
       "GenerateConsistencyToken", status, true);
 
-  std::string token = impl_.GenerateConsistencyToken(table_id, status);
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
@@ -306,6 +305,7 @@ StatusOr<Consistency> TableAdmin::CheckConsistency(
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
+
   return response.consistent() ? Consistency::kConsistent
                                : Consistency::kInconsistent;
 }
@@ -334,14 +334,11 @@ StatusOr<bool> TableAdmin::WaitForConsistencyCheckImpl(
         return true;
       }
     } else if (polling_policy->IsPermanentError(status)) {
-      return false;
+      return bigtable::internal::MakeStatusFromRpcError(status);
     }
   } while (!polling_policy->Exhausted());
 
-  if (!status.ok()) {
-    return bigtable::internal::MakeStatusFromRpcError(status);
-  }
-  return false;
+  return bigtable::internal::MakeStatusFromRpcError(status);
 }
 
 Status TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
