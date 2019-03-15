@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/optional.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
@@ -29,41 +30,21 @@ using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 
-/// Store the project and instance captured from the command-line arguments.
-class BucketTestEnvironment : public ::testing::Environment {
- public:
-  BucketTestEnvironment(std::string project, std::string instance,
-                        std::string topic) {
-    project_id_ = std::move(project);
-    bucket_name_ = std::move(instance);
-    topic_ = std::move(topic);
-  }
-
-  static std::string const& project_id() { return project_id_; }
-  static std::string const& bucket_name() { return bucket_name_; }
-  static std::string const& topic() { return topic_; }
-
- private:
-  static std::string project_id_;
-  static std::string bucket_name_;
-  static std::string topic_;
-};
-
-std::string BucketTestEnvironment::project_id_;
-std::string BucketTestEnvironment::bucket_name_;
-std::string BucketTestEnvironment::topic_;
+char const* flag_project_id;
+char const* flag_bucket_name;
+char const* flag_topic_name;
 
 class BucketIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   std::string MakeEntityName() {
     // We always use the viewers for the project because it is known to exist.
-    return "project-viewers-" + BucketTestEnvironment::project_id();
+    return "project-viewers-" + std::string(flag_project_id);
   }
 };
 
 TEST_F(BucketIntegrationTest, BasicCRUD) {
-  auto project_id = BucketTestEnvironment::project_id();
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -148,7 +129,7 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, FullPatch) {
-  auto project_id = BucketTestEnvironment::project_id();
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -292,7 +273,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
 
 // @test Verify that we can set the iam_configuration() in a Bucket.
 TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
-  auto project_id = BucketTestEnvironment::project_id();
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -324,7 +305,7 @@ TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
 }
 
 TEST_F(BucketIntegrationTest, GetMetadata) {
-  auto bucket_name = BucketTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
@@ -336,7 +317,7 @@ TEST_F(BucketIntegrationTest, GetMetadata) {
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataFields) {
-  auto bucket_name = BucketTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
@@ -348,7 +329,7 @@ TEST_F(BucketIntegrationTest, GetMetadataFields) {
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatch_Success) {
-  auto bucket_name = BucketTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
@@ -366,7 +347,7 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatch_Success) {
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatch_Failure) {
-  auto bucket_name = BucketTestEnvironment::bucket_name();
+  std::string bucket_name = flag_bucket_name;
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
 
@@ -383,7 +364,7 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatch_Failure) {
 }
 
 TEST_F(BucketIntegrationTest, AccessControlCRUD) {
-  auto project_id = BucketTestEnvironment::project_id();
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -463,7 +444,7 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
-  auto project_id = BucketTestEnvironment::project_id();
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -540,7 +521,7 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, NotificationsCRUD) {
-  auto project_id = BucketTestEnvironment::project_id();
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -558,12 +539,12 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
       << ">. This is unexpected because the bucket name is chosen at random.";
 
   auto create = client->CreateNotification(
-      bucket_name, BucketTestEnvironment::topic(), payload_format::JsonApiV1(),
+      bucket_name, flag_topic_name, payload_format::JsonApiV1(),
       NotificationMetadata().append_event_type(event_type::ObjectFinalize()));
   ASSERT_STATUS_OK(create);
 
   EXPECT_EQ(payload_format::JsonApiV1(), create->payload_format());
-  EXPECT_THAT(create->topic(), HasSubstr(BucketTestEnvironment::topic()));
+  EXPECT_THAT(create->topic(), HasSubstr(flag_topic_name));
 
   current_notifications = client->ListNotifications(bucket_name);
   ASSERT_STATUS_OK(current_notifications);
@@ -595,7 +576,7 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, IamCRUD) {
-  auto project_id = BucketTestEnvironment::project_id();
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -651,7 +632,7 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, BucketLock) {
-  auto project_id = BucketTestEnvironment::project_id();
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -679,7 +660,7 @@ TEST_F(BucketIntegrationTest, BucketLock) {
 }
 
 TEST_F(BucketIntegrationTest, BucketLockFailure) {
-  auto project_id = BucketTestEnvironment::project_id();
+  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -954,12 +935,9 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  std::string const project_id = argv[1];
-  std::string const bucket_name = argv[2];
-  std::string const topic = argv[3];
-  (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::storage::BucketTestEnvironment(project_id, bucket_name,
-                                                        topic));
+  google::cloud::storage::flag_project_id = argv[1];
+  google::cloud::storage::flag_bucket_name = argv[2];
+  google::cloud::storage::flag_topic_name = argv[3];
 
   return RUN_ALL_TESTS();
 }
