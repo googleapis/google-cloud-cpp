@@ -430,6 +430,18 @@ class TableAdmin {
     return instance_name() + "/tables/" + table_id;
   }
 
+  /// Return the fully qualified name of a snapshot.
+  std::string SnapshotName(bigtable::ClusterId const& cluster_id,
+                           bigtable::SnapshotId const& snapshot_id) {
+    return instance_name() + "/clusters/" + cluster_id.get() + "/snapshots/" +
+           snapshot_id.get();
+  }
+
+  /// Return the fully qualified name of a Cluster.
+  std::string ClusterName(bigtable::ClusterId const& cluster_id) {
+    return instance_name() + "/clusters/" + cluster_id.get();
+  }
+
  private:
   /**
    * Implements the polling loop for `WaitForConsistencyCheck` on a

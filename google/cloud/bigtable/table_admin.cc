@@ -259,7 +259,15 @@ StatusOr<btadmin::Snapshot> TableAdmin::GetSnapshot(
     bigtable::ClusterId const& cluster_id,
     bigtable::SnapshotId const& snapshot_id) {
   grpc::Status status;
-  auto result = impl_.GetSnapshot(cluster_id, snapshot_id, status);
+  btadmin::GetSnapshotRequest request;
+  request.set_name(SnapshotName(cluster_id, snapshot_id));
+
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, cluster_id, snapshot_id);
+  auto result = ClientUtils::MakeCall(
+      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+      impl_.rpc_backoff_policy_->clone(), metadata_update_policy,
+      &AdminClient::GetSnapshot, request, "GetSnapshot", status, true);
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
@@ -344,7 +352,18 @@ StatusOr<bool> TableAdmin::WaitForConsistencyCheckImpl(
 Status TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
                                   bigtable::SnapshotId const& snapshot_id) {
   grpc::Status status;
-  impl_.DeleteSnapshot(cluster_id, snapshot_id, status);
+  btadmin::DeleteSnapshotRequest request;
+  request.set_name(SnapshotName(cluster_id, snapshot_id));
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, cluster_id, snapshot_id);
+
+  // This is a non-idempotent API, use the correct retry loop for this type of
+  // operation.
+  ClientUtils::MakeNonIdemponentCall(
+      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+      metadata_update_policy, &AdminClient::DeleteSnapshot, request,
+      "DeleteSnapshot", status);
+
   return internal::MakeStatusFromRpcError(status);
 }
 
@@ -393,12 +412,37 @@ StatusOr<btadmin::Table> TableAdmin::CreateTableFromSnapshotImpl(
 StatusOr<std::vector<::google::bigtable::admin::v2::Snapshot>>
 TableAdmin::ListSnapshots(bigtable::ClusterId const& cluster_id) {
   grpc::Status status;
-  auto res = impl_.ListSnapshots(status, cluster_id);
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = impl_.rpc_retry_policy_->clone();
+  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::PARENT, cluster_id);
+  std::vector<google::bigtable::admin::v2::Snapshot> result;
+  std::string page_token;
+  do {
+    btadmin::ListSnapshotsRequest request;
+    request.set_parent(ClusterName(cluster_id));
+    request.set_page_size(0);
+    request.set_page_token(page_token);
+
+    auto response = ClientUtils::MakeCall(
+        *(impl_.client_), *rpc_policy, *backoff_policy, metadata_update_policy,
+        &AdminClient::ListSnapshots, request, "ListSnapshotsImpl", status,
+        true);
+    if (!status.ok()) {
+      break;
+    }
+
+    auto& snapshots = *response.mutable_snapshots();
+    std::move(snapshots.begin(), snapshots.end(), std::back_inserter(result));
+    page_token = std::move(*response.mutable_next_page_token());
+  } while (!page_token.empty());
 
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
-  return res;
+  return result;
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
