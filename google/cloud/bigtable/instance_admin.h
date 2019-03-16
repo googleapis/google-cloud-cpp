@@ -86,6 +86,14 @@ class InstanceAdmin {
     return impl_.InstanceName(instance_id);
   }
 
+  /// Return the fully qualified name of the given cluster_id in give
+  /// instance_id.
+  std::string ClusterName(bigtable::InstanceId const& instance_id,
+                          bigtable::ClusterId const& cluster_id) const {
+    return project_name() + "/instances/" + instance_id.get() + "/clusters/" +
+           cluster_id.get();
+  }
+
   /**
    * Create a new instance of Cloud Bigtable.
    *

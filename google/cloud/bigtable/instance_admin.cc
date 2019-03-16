@@ -31,12 +31,49 @@ inline namespace BIGTABLE_CLIENT_NS {
 static_assert(std::is_copy_assignable<bigtable::InstanceAdmin>::value,
               "bigtable::InstanceAdmin must be CopyAssignable");
 
+using ClientUtils =
+    bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;
+
 StatusOr<InstanceList> InstanceAdmin::ListInstances() {
   grpc::Status status;
-  auto result = impl_.ListInstances(status);
+  InstanceList result;
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = impl_.rpc_retry_policy_->clone();
+  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+
+  // Build the RPC request, try to minimize copying.
+  std::unordered_set<std::string> unique_failed_locations;
+  std::string page_token;
+  do {
+    btadmin::ListInstancesRequest request;
+    request.set_page_token(std::move(page_token));
+    request.set_parent(project_name());
+
+    auto response = ClientUtils::MakeCall(
+        *(impl_.client_), *rpc_policy, *backoff_policy,
+        impl_.metadata_update_policy_, &InstanceAdminClient::ListInstances,
+        request, "InstanceAdmin::ListInstances", status, true);
+    if (!status.ok()) {
+      break;
+    }
+
+    auto& instances = *response.mutable_instances();
+    std::move(instances.begin(), instances.end(),
+              std::back_inserter(result.instances));
+    auto& failed_locations = *response.mutable_failed_locations();
+    std::move(
+        failed_locations.begin(), failed_locations.end(),
+        std::inserter(unique_failed_locations, unique_failed_locations.end()));
+
+    page_token = std::move(*response.mutable_next_page_token());
+  } while (!page_token.empty());
+
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
+
+  std::move(unique_failed_locations.begin(), unique_failed_locations.end(),
+            std::back_inserter(result.failed_locations));
   return result;
 }
 
@@ -145,7 +182,19 @@ InstanceAdmin::UpdateInstanceImpl(InstanceUpdateConfig instance_update_config) {
 StatusOr<btadmin::Instance> InstanceAdmin::GetInstance(
     std::string const& instance_id) {
   grpc::Status status;
-  auto result = impl_.GetInstance(instance_id, status);
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = impl_.rpc_retry_policy_->clone();
+  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+
+  btadmin::GetInstanceRequest request;
+  // Setting instance name.
+  request.set_name(project_name() + "/instances/" + instance_id);
+
+  // Call RPC call to get response
+  auto result = ClientUtils::MakeCall(
+      *(impl_.client_), *rpc_policy, *backoff_policy,
+      impl_.metadata_update_policy_, &InstanceAdminClient::GetInstance, request,
+      "InstanceAdmin::GetInstance", status, true);
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
@@ -167,7 +216,14 @@ future<StatusOr<btadmin::Instance>> InstanceAdmin::AsyncGetInstance(
 
 Status InstanceAdmin::DeleteInstance(std::string const& instance_id) {
   grpc::Status status;
-  impl_.DeleteInstance(instance_id, status);
+  btadmin::DeleteInstanceRequest request;
+  request.set_name(InstanceName(instance_id));
+
+  // This API is not idempotent, lets call it without retry
+  ClientUtils::MakeNonIdemponentCall(
+      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+      impl_.metadata_update_policy_, &InstanceAdminClient::DeleteInstance,
+      request, "InstanceAdmin::DeleteInstance", status);
   return internal::MakeStatusFromRpcError(status);
 }
 
@@ -175,7 +231,16 @@ StatusOr<btadmin::Cluster> InstanceAdmin::GetCluster(
     bigtable::InstanceId const& instance_id,
     bigtable::ClusterId const& cluster_id) {
   grpc::Status status;
-  auto result = impl_.GetCluster(instance_id, cluster_id, status);
+  auto rpc_policy = impl_.rpc_retry_policy_->clone();
+  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+
+  btadmin::GetClusterRequest request;
+  request.set_name(ClusterName(instance_id, cluster_id));
+
+  auto result = ClientUtils::MakeCall(
+      *(impl_.client_), *rpc_policy, *backoff_policy,
+      impl_.metadata_update_policy_, &InstanceAdminClient::GetCluster, request,
+      "InstanceAdmin::GetCluster", status, true);
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
@@ -203,10 +268,44 @@ StatusOr<ClusterList> InstanceAdmin::ListClusters() {
 StatusOr<ClusterList> InstanceAdmin::ListClusters(
     std::string const& instance_id) {
   grpc::Status status;
-  auto result = impl_.ListClusters(instance_id, status);
+  ClusterList result;
+  std::unordered_set<std::string> unique_failed_locations;
+  std::string page_token;
+
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = impl_.rpc_retry_policy_->clone();
+  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+
+  do {
+    // Build the RPC request, try to minimize copying.
+    btadmin::ListClustersRequest request;
+    request.set_page_token(std::move(page_token));
+    request.set_parent(InstanceName(instance_id));
+
+    auto response = ClientUtils::MakeCall(
+        *(impl_.client_), *rpc_policy, *backoff_policy,
+        impl_.metadata_update_policy_, &InstanceAdminClient::ListClusters,
+        request, "InstanceAdmin::ListClusters", status, true);
+    if (!status.ok()) {
+      break;
+    }
+
+    auto& clusters = *response.mutable_clusters();
+    std::move(clusters.begin(), clusters.end(),
+              std::back_inserter(result.clusters));
+    auto& failed_locations = *response.mutable_failed_locations();
+    std::move(
+        failed_locations.begin(), failed_locations.end(),
+        std::inserter(unique_failed_locations, unique_failed_locations.end()));
+    page_token = std::move(*response.mutable_next_page_token());
+  } while (!page_token.empty());
+
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
+
+  std::move(unique_failed_locations.begin(), unique_failed_locations.end(),
+            std::back_inserter(result.failed_locations));
   return result;
 }
 
@@ -269,7 +368,17 @@ StatusOr<google::bigtable::admin::v2::Cluster> InstanceAdmin::UpdateClusterImpl(
 Status InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
                                     bigtable::ClusterId const& cluster_id) {
   grpc::Status status;
-  impl_.DeleteCluster(instance_id, cluster_id, status);
+  btadmin::DeleteClusterRequest request;
+  request.set_name(ClusterName(instance_id, cluster_id));
+
+  MetadataUpdatePolicy metadata_update_policy(
+      ClusterName(instance_id, cluster_id), MetadataParamTypes::NAME);
+
+  // This API is not idempotent, lets call it without retry
+  ClientUtils::MakeNonIdemponentCall(
+      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+      metadata_update_policy, &InstanceAdminClient::DeleteCluster, request,
+      "InstanceAdmin::DeleteCluster", status);
   return internal::MakeStatusFromRpcError(status);
 }
 
