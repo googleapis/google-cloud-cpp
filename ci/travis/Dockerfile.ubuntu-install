@@ -140,10 +140,10 @@ RUN ldconfig
 # Install gRPC. Note that we use the system's zlib and ssl libraries.
 # For similar reasons to c-ares (see above), we need two install steps.
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/grpc/grpc/archive/v1.16.1.tar.gz
-RUN tar -xf v1.16.1.tar.gz
+RUN wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
+RUN tar -xf v1.19.1.tar.gz
 RUN ls -l
-WORKDIR /var/tmp/build/grpc-1.16.1
+WORKDIR /var/tmp/build/grpc-1.19.1
 RUN ls -l
 RUN cmake \
       -DCMAKE_BUILD_TYPE="Release" \

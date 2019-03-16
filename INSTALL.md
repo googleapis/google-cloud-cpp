@@ -30,7 +30,7 @@ platforms.
 
 | Library | Minimum version | Description |
 | ------- | --------------: | ----------- |
-| gRPC    | 1.19.1 | gRPC++ for Cloud Bigtable |
+| gRPC    | 1.16.x | gRPC++ for Cloud Bigtable |
 | libcurl | 7.47.0  | HTTP client library for the Google Cloud Storage client |
 | crc32c  | 1.0.6 | Hardware-accelerated CRC32C implementation |
 | OpenSSL | 1.0.2 | Crypto functions for Google Cloud Storage authentication |
