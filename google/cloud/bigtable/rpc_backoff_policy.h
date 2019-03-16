@@ -64,8 +64,11 @@ class RPCBackoffPolicy {
    * Return the delay after an RPC operation has completed.
    *
    * @return true the delay before trying the operation again.
-   * @param s the status returned by the last RPC operation.
+   * @param status the status returned by the last RPC operation.
    */
+  virtual std::chrono::milliseconds OnCompletion(
+      google::cloud::Status const& status) = 0;
+  // TODO(coryan) - remove ::grpc::Status version.
   virtual std::chrono::milliseconds OnCompletion(grpc::Status const& s) = 0;
 };
 
@@ -85,6 +88,9 @@ class ExponentialBackoffPolicy : public RPCBackoffPolicy {
 
   std::unique_ptr<RPCBackoffPolicy> clone() const override;
   void Setup(grpc::ClientContext& context) const override;
+  std::chrono::milliseconds OnCompletion(
+      google::cloud::Status const& status) override;
+  // TODO(coryan) - remove ::grpc::Status version.
   std::chrono::milliseconds OnCompletion(grpc::Status const& status) override;
 
  private:

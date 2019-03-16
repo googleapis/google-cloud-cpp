@@ -102,6 +102,11 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
     return OnCompletionHook(s);
   }
 
+  std::chrono::milliseconds OnCompletion(
+      google::cloud::Status const& s) override {
+    return std::chrono::milliseconds(0);
+  }
+
   std::unique_ptr<RPCBackoffPolicy> clone() const override {
     return std::unique_ptr<RPCBackoffPolicy>();
   }
@@ -118,6 +123,11 @@ class SharedBackoffPolicyMock : public bigtable::RPCBackoffPolicy {
 
   std::chrono::milliseconds OnCompletion(grpc::Status const& s) override {
     return state_->OnCompletion(s);
+  }
+
+  std::chrono::milliseconds OnCompletion(
+      google::cloud::Status const& s) override {
+    return std::chrono::milliseconds(0);
   }
 
   std::unique_ptr<RPCBackoffPolicy> clone() const override {
