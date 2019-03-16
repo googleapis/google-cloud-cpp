@@ -72,7 +72,6 @@ elif [[ "${BUILD_NAME}" = "no-tests" ]]; then
   # package maintainers, where the cost of running the tests for a fixed version
   # is too high.
   export BUILD_TESTING=no
-  export CMAKE_FLAGS=-DBUILD_TESTING=OFF
 elif [[ "${BUILD_NAME}" = "check-abi" ]] || [[ "${BUILD_NAME}" = "update-abi" ]]; then
   export CHECK_ABI=yes
   export TEST_INSTALL=yes

@@ -34,7 +34,6 @@ matrix:
         BUILD_TESTING=no
         CHECK_STYLE=yes
         GENERATE_DOCS=yes
-        CMAKE_FLAGS=-DBUILD_TESTING=OFF
         DISTRO=ubuntu
         DISTRO_VERSION=18.04
 
