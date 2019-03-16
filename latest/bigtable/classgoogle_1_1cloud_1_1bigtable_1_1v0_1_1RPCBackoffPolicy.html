@@ -87,8 +87,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5738f8d8ec968a64a1e27401da9b7853"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html#a5738f8d8ec968a64a1e27401da9b7853">Setup</a> (grpc::ClientContext &amp;context) const =0</td></tr>
 <tr class="memdesc:a5738f8d8ec968a64a1e27401da9b7853"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the ClientContext for the next call.  <a href="#a5738f8d8ec968a64a1e27401da9b7853">More...</a><br /></td></tr>
 <tr class="separator:a5738f8d8ec968a64a1e27401da9b7853"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ab0f697720410c0eb68fcfbc55afaaa"><td class="memItemLeft" align="right" valign="top">virtual std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html#a7ab0f697720410c0eb68fcfbc55afaaa">OnCompletion</a> (google::cloud::Status const &amp;status)=0</td></tr>
+<tr class="memdesc:a7ab0f697720410c0eb68fcfbc55afaaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the delay after an RPC operation has completed.  <a href="#a7ab0f697720410c0eb68fcfbc55afaaa">More...</a><br /></td></tr>
+<tr class="separator:a7ab0f697720410c0eb68fcfbc55afaaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c4929b7879dfe40723de8788c4f6a05"><td class="memItemLeft" align="right" valign="top">virtual std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html#a4c4929b7879dfe40723de8788c4f6a05">OnCompletion</a> (grpc::Status const &amp;s)=0</td></tr>
-<tr class="memdesc:a4c4929b7879dfe40723de8788c4f6a05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the delay after an RPC operation has completed.  <a href="#a4c4929b7879dfe40723de8788c4f6a05">More...</a><br /></td></tr>
 <tr class="separator:a4c4929b7879dfe40723de8788c4f6a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -153,8 +155,45 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a7ab0f697720410c0eb68fcfbc55afaaa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ab0f697720410c0eb68fcfbc55afaaa">&#9670;&nbsp;</a></span>OnCompletion() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::chrono::milliseconds google::cloud::bigtable::v0::RPCBackoffPolicy::OnCompletion </td>
+          <td>(</td>
+          <td class="paramtype">google::cloud::Status const &amp;&#160;</td>
+          <td class="paramname"><em>status</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the delay after an RPC operation has completed. </p>
+<dl class="section return"><dt>Returns</dt><dd>true the delay before trying the operation again. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">status</td><td>the status returned by the last RPC operation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ExponentialBackoffPolicy.html#ac488a7ba7e0a52b0fda2398e27787464">google::cloud::bigtable::v0::ExponentialBackoffPolicy</a>.</p>
+
+</div>
+</div>
 <a id="a4c4929b7879dfe40723de8788c4f6a05"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c4929b7879dfe40723de8788c4f6a05">&#9670;&nbsp;</a></span>OnCompletion()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c4929b7879dfe40723de8788c4f6a05">&#9670;&nbsp;</a></span>OnCompletion() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -176,15 +215,6 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Return the delay after an RPC operation has completed. </p>
-<dl class="section return"><dt>Returns</dt><dd>true the delay before trying the operation again. </dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">s</td><td>the status returned by the last RPC operation. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 <p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ExponentialBackoffPolicy.html#a93476db0882751b870a97fc64af06b1b">google::cloud::bigtable::v0::ExponentialBackoffPolicy</a>.</p>
 
