@@ -407,6 +407,11 @@ run_all_object_examples() {
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${encrypted_object_name}"
 
+  local key="$(./storage_object_samples generate-encryption-key |
+      grep 'Base64 encoded key' | awk '{print $5}')"
+  run_example ./storage_object_samples write-encrypted-object \
+      "${bucket_name}" "${encrypted_object_name}" "${key}"
+
   local object_name_strict="object-strict-$(date +%s)-${RANDOM}.txt"
   run_example ./storage_object_samples insert-object-strict-idempotency \
       "${bucket_name}" "${object_name_strict}" \
@@ -803,6 +808,18 @@ run_all_cmek_examples() {
 
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
+
+  local key="$(./storage_object_samples generate-encryption-key |
+      grep 'Base64 encoded key' | awk '{print $5}')"
+  run_example ./storage_object_samples write-encrypted-object \
+      "${bucket_name}" "${encrypted_object_name}" "${key}"
+  run_example ./storage_object_samples object-csek-to-cmek \
+      "${bucket_name}" "${encrypted_object_name}" "${key}"
+  run_example ./storage_object_samples read-object \
+      "${bucket_name}" "${object_name}"
+
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${encrypted_object_name}"
 
   run_example ./storage_bucket_samples get-bucket-default-kms-key \
       "${bucket_name}"
