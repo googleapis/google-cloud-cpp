@@ -294,7 +294,6 @@ after cloning this repo:
 #### Linux
 
 ```bash
-git submodule update --init
 # Add -DBUILD_TESTING=OFF to disable tests
 cmake -H. -Bbuild-output
 
@@ -310,7 +309,6 @@ You will find compiled binaries in `build-output/` respective to their source pa
 #### macOS
 
 ```bash
-git submodule update --init
 export OPENSSL_ROOT_DIR=/usr/local/opt/libressl
 # Add -DBUILD_TESTING=OFF to disable tests
 cmake -H. -Bbuild-output
@@ -375,7 +373,6 @@ Now clone `google-cloud-cpp`:
 ```console
 cd ..
 git clone https://github.com/googleapis/google-cloud-cpp.git
-git submodule update --init
 cd google-cloud-cpp
 ```
 

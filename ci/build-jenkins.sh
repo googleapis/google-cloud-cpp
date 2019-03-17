@@ -16,7 +16,6 @@
 
 set -eu
 
-git submodule update --init
 cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild-output
 cmake --build build-output -- -j $(nproc)
 
