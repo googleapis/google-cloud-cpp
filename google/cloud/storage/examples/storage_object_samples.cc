@@ -1332,6 +1332,43 @@ void RotateEncryptionKey(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name, old_key_base64, new_key_base64);
 }
 
+void ObjectCsekToCmek(google::cloud::storage::Client client, int& argc,
+                      char* argv[]) {
+  if (argc != 5) {
+    throw Usage{
+        "object-csek-to-cmek <bucket-name> <object-name>"
+        " <old-csek-encryption-key> <new-cmek-encryption-key-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto old_csek_key_base64 = ConsumeArg(argc, argv);
+  auto new_cmek_key_name = ConsumeArg(argc, argv);
+
+  //! [object csek to cmek] [START storage_object_csek_to_cmek]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string old_csek_key_base64, std::string new_cmek_key_name) {
+    StatusOr<gcs::ObjectMetadata> object_metadata =
+        client.RewriteObjectBlocking(
+            bucket_name, object_name, bucket_name, object_name,
+            gcs::SourceEncryptionKey::FromBase64Key(old_csek_key_base64),
+            gcs::DestinationKmsKeyName(new_cmek_key_name));
+
+    if (!object_metadata) {
+      throw std::runtime_error(object_metadata.status().message());
+    }
+
+    std::cout << "Changed object " << object_metadata->name() << " in bucket "
+              << object_metadata->bucket()
+              << " from using CSEK to CMEK key.\nFull Metadata: "
+              << *object_metadata << "\n";
+  }
+  //! [object csek to cmek] [END storage_object_csek_to_cmek]
+  (std::move(client), bucket_name, object_name, old_csek_key_base64,
+   new_cmek_key_name);
+}
+
 void RenameObject(google::cloud::storage::Client client, int& argc,
                   char* argv[]) {
   if (argc != 4) {
@@ -1677,6 +1714,7 @@ int main(int argc, char* argv[]) try {
       {"rewrite-object-token", &RewriteObjectToken},
       {"rewrite-object-resume", &RewriteObjectResume},
       {"rotate-encryption-key", &RotateEncryptionKey},
+      {"object-csek-to-cmek", &ObjectCsekToCmek},
       {"rename-object", &RenameObject},
       {"set-event-based-hold", &SetObjectEventBasedHold},
       {"release-event-based-hold", &ReleaseObjectEventBasedHold},

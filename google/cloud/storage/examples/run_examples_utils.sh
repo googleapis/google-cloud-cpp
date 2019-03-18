@@ -791,6 +791,7 @@ run_all_cmek_examples() {
   local cmek=$1
 
   local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local encrypted_object_name="enc-obj-$(date +%s)-${RANDOM}.txt"
   local object_name="object-$(date +%s)-${RANDOM}.txt"
 
   run_example ./storage_bucket_samples create-bucket-for-project \
@@ -803,6 +804,18 @@ run_all_cmek_examples() {
 
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
+
+  local key="$(./storage_object_samples generate-encryption-key |
+      grep 'Base64 encoded key' | awk '{print $5}')"
+  run_example ./storage_object_samples write-encrypted-object \
+      "${bucket_name}" "${encrypted_object_name}" "${key}"
+  run_example ./storage_object_samples object-csek-to-cmek \
+      "${bucket_name}" "${encrypted_object_name}" "${key}" "${cmek}"
+  run_example ./storage_object_samples read-object \
+      "${bucket_name}" "${object_name}"
+
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${encrypted_object_name}"
 
   run_example ./storage_bucket_samples get-bucket-default-kms-key \
       "${bucket_name}"
