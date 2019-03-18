@@ -99,8 +99,9 @@ echo "Running GCS Projects.serviceAccount integration tests."
 ./service_account_integration_test "${PROJECT_ID}" "${SERVICE_ACCOUNT}"
 
 echo
-echo "Running Storage integration tests against local servers."
+echo "Running storage::internal::ClientSignUrl integration test."
 ./client_sign_url_integration_test "${TEST_ACCOUNT_FILE}" "${TEST_DATA_FILE}"
+
 # The tests were successful, so disable dumping of test bench log during
 # shutdown.
 TESTBENCH_DUMP_LOG=no

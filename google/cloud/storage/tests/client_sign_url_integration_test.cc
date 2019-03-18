@@ -28,30 +28,11 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-
-using ::google::cloud::storage::testing::TestPermanentFailure;
-
 using ::testing::HasSubstr;
 
-/// Store the file names captured from the command-line arguments.
-class ObjectTestEnvironment : public ::testing::Environment {
- public:
-  ObjectTestEnvironment(std::string account_file_name,
-                        std::string data_file_name) {
-    account_file_name_ = std::move(account_file_name);
-    all_file_name_ = std::move(data_file_name);
-  }
-
-  static std::string const& account_file_name() { return account_file_name_; }
-  static std::string const& data_file_name() { return all_file_name_; }
-
- private:
-  static std::string account_file_name_;
-  static std::string all_file_name_;
-};
-
-std::string ObjectTestEnvironment::account_file_name_;
-std::string ObjectTestEnvironment::all_file_name_;
+// Initialized in main() below.
+char const* account_file_name_;
+char const* data_file_name_;
 
 class ObjectIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
@@ -62,51 +43,33 @@ TEST_F(ObjectIntegrationTest, V4SignGet) {
 
   // This is a dummy service account JSON file that is inactive. It's fine for
   // it to be public.
-  std::string accountFile = ObjectTestEnvironment::account_file_name();
-  std::string dataFile = ObjectTestEnvironment::data_file_name();
+  std::string account_file = account_file_name_;
+  std::string data_file = data_file_name_;
 
-  std::ifstream ifs(accountFile);
-
-  if (!ifs.is_open()) {
-    // If the file does not exist, or
-    // if we were unable to open it for some other reason.
-    std::cout << "Cannot open credentials file " + accountFile + '\n';
-    return;
-  }
-  nl::json jsonObj;
-  jsonObj = nl::json::parse(ifs);
-
-  // Turn json object into a string
-  std::string file_contents = jsonObj.dump();
-  std::string kJsonKeyfileContentsForV4 = file_contents;
-
-  auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
-      kJsonKeyfileContentsForV4);
+  auto creds =
+      oauth2::CreateServiceAccountCredentialsFromJsonFilePath(account_file);
 
   ASSERT_STATUS_OK(creds);
   Client client(*creds);
 
-  std::ifstream ifstr(dataFile);
-
+  std::ifstream ifstr(data_file);
   if (!ifstr.is_open()) {
     // If the file does not exist, or
     // if we were unable to open it for some other reason.
-    std::cout << "Cannot open credentials file " + dataFile + '\n';
+    std::cout << "Cannot open credentials file " + data_file + '\n';
     return;
   }
 
-  nl::json jArray;
-  nl::json jObj;
-  jArray = nl::json::parse(ifstr);
+  nl::json json_array;
+  json_array = nl::json::parse(ifstr);
 
-  for (nl::json::iterator it = jArray.begin(); it != jArray.end(); ++it) {
-    jObj = *it;
-    if (jObj["method"] == "GET") {
-      std::string const method_name = jObj["method"];  // GET
-      std::string const bucket_name = jObj["bucket"];
-      std::string const object_name = jObj["object"];
-      std::string const date = jObj["timestamp"];
-      int validInt = jObj["expiration"];
+  for (auto const& j_obj : json_array) {
+    if (j_obj["method"] == "GET") {
+      std::string const method_name = j_obj["method"];  // GET
+      std::string const bucket_name = j_obj["bucket"];
+      std::string const object_name = j_obj["object"];
+      std::string const date = j_obj["timestamp"];
+      int validInt = j_obj["expiration"];
       auto const valid_for = std::chrono::seconds(validInt);
 
       auto actual = client.CreateV4SignedUrl(
@@ -119,72 +82,54 @@ TEST_F(ObjectIntegrationTest, V4SignGet) {
       EXPECT_THAT(*actual, HasSubstr(bucket_name));
       EXPECT_THAT(*actual, HasSubstr(object_name));
 
-      std::string const expected = jObj["expectedUrl"];
+      std::string const expected = j_obj["expectedUrl"];
       EXPECT_EQ(expected, *actual);
       return;
     }
   }
 }
 
-TEST_F(ObjectIntegrationTest, V4SignPut) {
+TEST_F(ObjectIntegrationTest, V4SignPost) {
   // This test uses a disabled key to create a V4 Signed URL for a GET
   // operation. The bucket name was generated at random too.
 
   // This is a dummy service account JSON file that is inactive. It's fine for
   // it to be public.
-  std::string accountFile = ObjectTestEnvironment::account_file_name();
-  std::string dataFile = ObjectTestEnvironment::data_file_name();
+  std::string account_file = account_file_name_;
+  std::string data_file = data_file_name_;
 
-  std::ifstream ifs(accountFile);
-
-  if (!ifs.is_open()) {
-    // If the file does not exist, or
-    // if we were unable to open it for some other reason.
-    std::cout << "Cannot open credentials file " + accountFile + '\n';
-    return;
-  }
-  nl::json jsonObj;
-  jsonObj = nl::json::parse(ifs);
-
-  // Turn json object into a string
-  std::string file_contents = jsonObj.dump();
-  std::string kJsonKeyfileContentsForV4 = file_contents;
-
-  auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
-      kJsonKeyfileContentsForV4);
+  auto creds =
+      oauth2::CreateServiceAccountCredentialsFromJsonFilePath(account_file);
 
   ASSERT_STATUS_OK(creds);
   Client client(*creds);
 
-  std::ifstream ifstr(dataFile);
-
+  std::ifstream ifstr(data_file);
   if (!ifstr.is_open()) {
     // If the file does not exist, or
     // if we were unable to open it for some other reason.
-    std::cout << "Cannot open credentials file " + dataFile + '\n';
+    std::cout << "Cannot open credentials file " + data_file + '\n';
     return;
   }
 
-  nl::json jArray;
-  nl::json jObj;
-  jArray = nl::json::parse(ifstr);
+  nl::json json_array;
+  json_array = nl::json::parse(ifstr);
 
-  for (nl::json::iterator it = jArray.begin(); it != jArray.end(); ++it) {
-    jObj = *it;
-    if (jObj["method"] == "POST") {
-      std::string const method_name = jObj["method"];  // POST
-      std::string const bucket_name = jObj["bucket"];
-      std::string const object_name = jObj["object"];
-      std::string const date = jObj["timestamp"];
+  for (auto const& j_obj : json_array) {
+    if (j_obj["method"] == "POST") {
+      std::string const method_name = j_obj["method"];  // POST
+      std::string const bucket_name = j_obj["bucket"];
+      std::string const object_name = j_obj["object"];
+      std::string const date = j_obj["timestamp"];
 
       std::string key_name;
       std::string header_name;
-      for (auto& x : jObj["headers"].items()) {
+      for (auto& x : j_obj["headers"].items()) {
         key_name = x.key();
         header_name = x.value()[0];
       }
 
-      int validInt = jObj["expiration"];
+      int validInt = j_obj["expiration"];
       auto const valid_for = std::chrono::seconds(validInt);
 
       auto actual = client.CreateV4SignedUrl(
@@ -195,16 +140,16 @@ TEST_F(ObjectIntegrationTest, V4SignPut) {
           AddExtensionHeader(key_name, header_name));
 
       ASSERT_STATUS_OK(actual);
-
       EXPECT_THAT(*actual, HasSubstr(bucket_name));
       EXPECT_THAT(*actual, HasSubstr(object_name));
 
-      std::string const expected = jObj["expectedUrl"];
+      std::string const expected = j_obj["expectedUrl"];
       EXPECT_EQ(expected, *actual);
       return;
     }
   }
 }
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
@@ -223,11 +168,8 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  std::string const account_file_name = argv[1];
-  std::string const data_file_name = argv[2];
-  (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::storage::ObjectTestEnvironment(account_file_name,
-                                                        data_file_name));
+  google::cloud::storage::account_file_name_ = argv[1];
+  google::cloud::storage::data_file_name_ = argv[2];
 
   return RUN_ALL_TESTS();
 }
