@@ -180,28 +180,25 @@ TEST(AsyncRetryUnaryRpcTest, TooManyTransientFailures) {
 
   EXPECT_CALL(client, AsyncGetTable(_, _, _))
       .WillOnce(Invoke([&r1](grpc::ClientContext*,
-                                   btadmin::GetTableRequest const& request,
-                                   grpc::CompletionQueue*) {
+                             btadmin::GetTableRequest const& request,
+                             grpc::CompletionQueue*) {
         EXPECT_EQ("fake/table/name/request", request.name());
         return std::unique_ptr<
-            grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>(
-            r1.get());
+            grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>(r1.get());
       }))
       .WillOnce(Invoke([&r2](grpc::ClientContext*,
                              btadmin::GetTableRequest const& request,
                              grpc::CompletionQueue*) {
         EXPECT_EQ("fake/table/name/request", request.name());
         return std::unique_ptr<
-            grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>(
-            r2.get());
+            grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>(r2.get());
       }))
       .WillOnce(Invoke([&r3](grpc::ClientContext*,
                              btadmin::GetTableRequest const& request,
                              grpc::CompletionQueue*) {
         EXPECT_EQ("fake/table/name/request", request.name());
         return std::unique_ptr<
-            grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>(
-            r3.get());
+            grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>(r3.get());
       }));
 
   auto impl = std::make_shared<testing::MockCompletionQueue>();

@@ -87,7 +87,8 @@ future<StatusOr<google::bigtable::admin::v2::Table>> TableAdmin::AsyncGetTable(
                google::bigtable::admin::v2::GetTableRequest const& request,
                grpc::CompletionQueue* cq) {
         return client->AsyncGetTable(context, request, cq);
-      }, std::move(request), cq);
+      },
+      std::move(request), cq);
 }
 
 StatusOr<std::vector<btadmin::Table>> TableAdmin::ListTables(

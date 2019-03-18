@@ -343,8 +343,7 @@ future<StatusOr<ResponseType>> StartRetryAsyncUnaryRpc(
                                 std::move(rpc_backoff_policy),
                                 std::move(idempotent_policy),
                                 std::move(metadata_update_policy),
-                                std::move(async_call),
-                                std::move(request),
+                                std::move(async_call), std::move(request),
                                 std::move(cq));
 }
 
