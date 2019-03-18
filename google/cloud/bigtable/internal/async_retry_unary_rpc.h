@@ -230,11 +230,11 @@ class RetryAsyncUnaryRpcFuture {
       std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
       IdempotencyPolicy idempotent_policy,
       MetadataUpdatePolicy metadata_update_policy, AsyncCallType async_call,
-      Request&& request, CompletionQueue cq) {
+      Request request, CompletionQueue cq) {
     std::shared_ptr<RetryAsyncUnaryRpcFuture> self(new RetryAsyncUnaryRpcFuture(
         location, std::move(rpc_retry_policy), std::move(rpc_backoff_policy),
         std::move(idempotent_policy), std::move(metadata_update_policy),
-        async_call, std::forward<Request>(request)));
+        async_call, std::move(request)));
     auto future = self->final_result_.get_future();
     self->StartIteration(self, cq);
     return future;
@@ -249,7 +249,7 @@ class RetryAsyncUnaryRpcFuture {
                            std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
                            IdempotencyPolicy idempotent_policy,
                            MetadataUpdatePolicy metadata_update_policy,
-                           AsyncCallType async_call, Request&& request)
+                           AsyncCallType async_call, Request request)
       : location_(location),
         rpc_retry_policy_(std::move(rpc_retry_policy)),
         rpc_backoff_policy_(std::move(rpc_backoff_policy)),
@@ -325,6 +325,28 @@ class RetryAsyncUnaryRpcFuture {
 
   promise<StatusOr<Response>> final_result_;
 };
+
+template <
+    typename AsyncCallType, typename RequestType, typename IdempotencyPolicy,
+    typename Sig = internal::AsyncCallResponseType<AsyncCallType, RequestType>,
+    typename ResponseType = typename Sig::type,
+    typename std::enable_if<Sig::value, int>::type validate_parameters = 0>
+future<StatusOr<ResponseType>> StartRetryAsyncUnaryRpc(
+    char const* location, std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
+    std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+    IdempotencyPolicy idempotent_policy,
+    MetadataUpdatePolicy metadata_update_policy, AsyncCallType async_call,
+    RequestType request, CompletionQueue cq) {
+  return RetryAsyncUnaryRpcFuture<
+      AsyncCallType, RequestType,
+      IdempotencyPolicy>::Start(location, std::move(rpc_retry_policy),
+                                std::move(rpc_backoff_policy),
+                                std::move(idempotent_policy),
+                                std::move(metadata_update_policy),
+                                std::move(async_call),
+                                std::move(request),
+                                std::move(cq));
+}
 
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
