@@ -84,7 +84,6 @@ TEST_F(ObjectIntegrationTest, V4SignGet) {
 
       std::string const expected = j_obj["expectedUrl"];
       EXPECT_EQ(expected, *actual);
-      return;
     }
   }
 }
@@ -145,7 +144,6 @@ TEST_F(ObjectIntegrationTest, V4SignPost) {
 
       std::string const expected = j_obj["expectedUrl"];
       EXPECT_EQ(expected, *actual);
-      return;
     }
   }
 }
