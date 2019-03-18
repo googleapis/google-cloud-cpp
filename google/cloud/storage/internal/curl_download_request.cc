@@ -119,6 +119,7 @@ void CurlDownloadRequest::ResetOptions() {
   handle_.SetOption(CURLOPT_URL, url_.c_str());
   handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
   handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
+  handle_.SetOption(CURLOPT_NOSIGNAL, 1);
   if (!payload_.empty()) {
     handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload_.length());
     handle_.SetOption(CURLOPT_POSTFIELDS, payload_.c_str());

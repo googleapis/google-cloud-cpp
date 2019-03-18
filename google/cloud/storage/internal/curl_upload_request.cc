@@ -102,6 +102,7 @@ void CurlUploadRequest::ResetOptions() {
   handle_.SetOption(CURLOPT_URL, url_.c_str());
   handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
   handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
+  handle_.SetOption(CURLOPT_NOSIGNAL, 1);
   handle_.SetWriterCallback(
       [this](void* ptr, std::size_t size, std::size_t nmemb) {
         this->response_payload_.append(static_cast<char*>(ptr), size * nmemb);
