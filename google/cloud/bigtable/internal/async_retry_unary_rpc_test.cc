@@ -104,6 +104,60 @@ TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
   EXPECT_EQ("fake/table/name/response", result->name());
 }
 
+TEST(AsyncRetryUnaryRpcTest, PermanentFailure) {
+  using namespace google::cloud::testing_util::chrono_literals;
+
+  MockClient client;
+
+  using ReaderType =
+  ::google::cloud::bigtable::testing::MockAsyncResponseReader<
+      btadmin::Table>;
+  auto reader = google::cloud::internal::make_unique<ReaderType>();
+  EXPECT_CALL(*reader, Finish(_, _, _))
+      .WillOnce(Invoke([](btadmin::Table* table, grpc::Status* status, void*) {
+        *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh");
+      }));
+
+  EXPECT_CALL(client, AsyncGetTable(_, _, _))
+      .WillOnce(Invoke([&reader](grpc::ClientContext*,
+                                 btadmin::GetTableRequest const& request,
+                                 grpc::CompletionQueue*) {
+        EXPECT_EQ("fake/table/name/request", request.name());
+        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+            // This is safe, see comments in MockAsyncResponseReader.
+            btadmin::Table>>(reader.get());
+      }));
+
+  auto impl = std::make_shared<testing::MockCompletionQueue>();
+  bigtable::CompletionQueue cq(impl);
+
+  // Do some basic initialization of the request to verify the values get
+  // carried to the mock.
+  btadmin::GetTableRequest request;
+  request.set_name("fake/table/name/request");
+
+  auto fut = StartRetryAsyncUnaryRpc(
+      __func__, LimitedErrorCountRetryPolicy(3).clone(),
+      ExponentialBackoffPolicy(10_us, 40_us).clone(),
+      ConstantIdempotencyPolicy(true),
+      MetadataUpdatePolicy("resource", MetadataParamTypes::RESOURCE),
+      [&client](grpc::ClientContext* context,
+                btadmin::GetTableRequest const& request,
+                grpc::CompletionQueue* cq) {
+        return client.AsyncGetTable(context, request, cq);
+      },
+      request, cq);
+
+  EXPECT_EQ(1U, impl->size());
+  impl->SimulateCompletion(cq, true);
+
+  EXPECT_TRUE(impl->empty());
+  EXPECT_EQ(std::future_status::ready, fut.wait_for(0_us));
+  auto result = fut.get();
+  EXPECT_FALSE(result);
+  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
