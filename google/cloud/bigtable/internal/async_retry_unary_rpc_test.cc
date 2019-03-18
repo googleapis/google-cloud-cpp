@@ -15,8 +15,8 @@
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
-#include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <gmock/gmock.h>
 #include <thread>
@@ -110,8 +110,8 @@ TEST(AsyncRetryUnaryRpcTest, PermanentFailure) {
   MockClient client;
 
   using ReaderType =
-  ::google::cloud::bigtable::testing::MockAsyncResponseReader<
-      btadmin::Table>;
+      ::google::cloud::bigtable::testing::MockAsyncResponseReader<
+          btadmin::Table>;
   auto reader = google::cloud::internal::make_unique<ReaderType>();
   EXPECT_CALL(*reader, Finish(_, _, _))
       .WillOnce(Invoke([](btadmin::Table* table, grpc::Status* status, void*) {
@@ -156,6 +156,93 @@ TEST(AsyncRetryUnaryRpcTest, PermanentFailure) {
   auto result = fut.get();
   EXPECT_FALSE(result);
   EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+}
+
+TEST(AsyncRetryUnaryRpcTest, TooManyTransientFailures) {
+  using namespace google::cloud::testing_util::chrono_literals;
+
+  MockClient client;
+
+  using ReaderType =
+      ::google::cloud::bigtable::testing::MockAsyncResponseReader<
+          btadmin::Table>;
+
+  auto finish_failure = [](btadmin::Table* table, grpc::Status* status, void*) {
+    *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
+
+  auto r1 = google::cloud::internal::make_unique<ReaderType>();
+  EXPECT_CALL(*r1, Finish(_, _, _)).WillOnce(Invoke(finish_failure));
+  auto r2 = google::cloud::internal::make_unique<ReaderType>();
+  EXPECT_CALL(*r2, Finish(_, _, _)).WillOnce(Invoke(finish_failure));
+  auto r3 = google::cloud::internal::make_unique<ReaderType>();
+  EXPECT_CALL(*r3, Finish(_, _, _)).WillOnce(Invoke(finish_failure));
+
+  EXPECT_CALL(client, AsyncGetTable(_, _, _))
+      .WillOnce(Invoke([&r1](grpc::ClientContext*,
+                                   btadmin::GetTableRequest const& request,
+                                   grpc::CompletionQueue*) {
+        EXPECT_EQ("fake/table/name/request", request.name());
+        return std::unique_ptr<
+            grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>(
+            r1.get());
+      }))
+      .WillOnce(Invoke([&r2](grpc::ClientContext*,
+                             btadmin::GetTableRequest const& request,
+                             grpc::CompletionQueue*) {
+        EXPECT_EQ("fake/table/name/request", request.name());
+        return std::unique_ptr<
+            grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>(
+            r2.get());
+      }))
+      .WillOnce(Invoke([&r3](grpc::ClientContext*,
+                             btadmin::GetTableRequest const& request,
+                             grpc::CompletionQueue*) {
+        EXPECT_EQ("fake/table/name/request", request.name());
+        return std::unique_ptr<
+            grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>(
+            r3.get());
+      }));
+
+  auto impl = std::make_shared<testing::MockCompletionQueue>();
+  bigtable::CompletionQueue cq(impl);
+
+  // Do some basic initialization of the request to verify the values get
+  // carried to the mock.
+  btadmin::GetTableRequest request;
+  request.set_name("fake/table/name/request");
+
+  auto fut = StartRetryAsyncUnaryRpc(
+      __func__, LimitedErrorCountRetryPolicy(2).clone(),
+      ExponentialBackoffPolicy(10_us, 40_us).clone(),
+      ConstantIdempotencyPolicy(true),
+      MetadataUpdatePolicy("resource", MetadataParamTypes::RESOURCE),
+      [&client](grpc::ClientContext* context,
+                btadmin::GetTableRequest const& request,
+                grpc::CompletionQueue* cq) {
+        return client.AsyncGetTable(context, request, cq);
+      },
+      request, cq);
+
+  // Because the maximum number of failures is 2 we expect 3 calls (the 3rd
+  // failure is the "too many" case). In between the calls there are timers
+  // executed, but there is no timer after the 3rd failure.
+  EXPECT_EQ(1U, impl->size());  // simulate the call completing
+  impl->SimulateCompletion(cq, true);
+  EXPECT_EQ(1U, impl->size());  // simulate the timer completing
+  impl->SimulateCompletion(cq, true);
+  EXPECT_EQ(1U, impl->size());  // simulate the call completing
+  impl->SimulateCompletion(cq, true);
+  EXPECT_EQ(1U, impl->size());  // simulate the timer completing
+  impl->SimulateCompletion(cq, true);
+  EXPECT_EQ(1U, impl->size());  // simulate the call completing
+  impl->SimulateCompletion(cq, true);
+  EXPECT_TRUE(impl->empty());
+
+  EXPECT_EQ(std::future_status::ready, fut.wait_for(0_us));
+  auto result = fut.get();
+  EXPECT_FALSE(result);
+  EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
 }
 
 }  // namespace
