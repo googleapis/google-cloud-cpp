@@ -30,11 +30,47 @@ static_assert(std::is_copy_assignable<bigtable::Table>::value,
               "bigtable::Table must be CopyAssignable");
 
 Status Table::Apply(SingleRowMutation mut) {
-  std::vector<FailedMutation> failures = impl_.Apply(std::move(mut));
-  if (!failures.empty()) {
-    return failures.front().status();
+  // Copy the policies in effect for this operation.  Many policy classes change
+  // their state as the operation makes progress (or fails to make progress), so
+  // we need fresh instances.
+  auto rpc_policy = impl_.rpc_retry_policy_->clone();
+  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+  auto idempotent_policy = impl_.idempotent_mutation_policy_->clone();
+
+  // Build the RPC request, try to minimize copying.
+  btproto::MutateRowRequest request;
+  bigtable::internal::SetCommonTableOperationRequest<btproto::MutateRowRequest>(
+      request, impl_.app_profile_id_.get(), impl_.table_name_.get());
+  mut.MoveTo(request);
+
+  bool const is_idempotent =
+      std::all_of(request.mutations().begin(), request.mutations().end(),
+                  [&idempotent_policy](btproto::Mutation const& m) {
+                    return idempotent_policy->is_idempotent(m);
+                  });
+
+  btproto::MutateRowResponse response;
+  grpc::Status status;
+  while (true) {
+    grpc::ClientContext client_context;
+    rpc_policy->Setup(client_context);
+    backoff_policy->Setup(client_context);
+    impl_.metadata_update_policy_.Setup(client_context);
+    status = impl_.client_->MutateRow(&client_context, request, &response);
+
+    if (status.ok()) {
+      return google::cloud::Status{};
+    }
+    // It is up to the policy to terminate this loop, it could run
+    // forever, but that would be a bad policy (pun intended).
+    if (!rpc_policy->OnFailure(status) || !is_idempotent) {
+      return bigtable::internal::MakeStatusFromRpcError(
+          status.error_code(),
+          "Permanent (or too many transient) errors in Table::Apply()");
+    }
+    auto delay = backoff_policy->OnCompletion(status);
+    std::this_thread::sleep_for(delay);
   }
-  return google::cloud::Status{};
 }
 
 future<Status> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
@@ -61,11 +97,29 @@ future<Status> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
 std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
   grpc::Status status;
 
-  // We do not no need to check status.ok() anymore as
-  // FailedMutation class has now a google::cloud::Status member
-  // which can be accessed via status()
-  std::vector<FailedMutation> failures =
-      impl_.BulkApply(std::move(mut), status);
+  // Copy the policies in effect for this operation.  Many policy classes change
+  // their state as the operation makes progress (or fails to make progress), so
+  // we need fresh instances.
+  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+  auto retry_policy = impl_.rpc_retry_policy_->clone();
+  auto idemponent_policy = impl_.idempotent_mutation_policy_->clone();
+
+  bigtable::internal::BulkMutator mutator(impl_.app_profile_id_,
+                                          impl_.table_name_, *idemponent_policy,
+                                          std::move(mut));
+  while (mutator.HasPendingMutations()) {
+    grpc::ClientContext client_context;
+    backoff_policy->Setup(client_context);
+    retry_policy->Setup(client_context);
+    impl_.metadata_update_policy_.Setup(client_context);
+    status = mutator.MakeOneRequest(*impl_.client_, client_context);
+    if (!status.ok() && !retry_policy->OnFailure(status)) {
+      break;
+    }
+    auto delay = backoff_policy->OnCompletion(status);
+    std::this_thread::sleep_for(delay);
+  }
+  auto failures = mutator.ExtractFinalFailures();
 
   return failures;
 }
