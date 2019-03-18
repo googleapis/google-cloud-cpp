@@ -30,7 +30,7 @@ platforms.
 
 | Library | Minimum version | Description |
 | ------- | --------------: | ----------- |
-| gRPC    | 1.17.x | gRPC++ for Cloud Bigtable |
+| gRPC    | 1.16.x | gRPC++ for Cloud Bigtable |
 | libcurl | 7.47.0  | HTTP client library for the Google Cloud Storage client |
 | crc32c  | 1.0.6 | Hardware-accelerated CRC32C implementation |
 | OpenSSL | 1.0.2 | Crypto functions for Google Cloud Storage authentication |
@@ -258,9 +258,9 @@ Then gRPC can be manually installed using:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.17.2.tar.gz
-tar -xf v1.17.2.tar.gz
-cd $HOME/Downloads/grpc-1.17.2
+wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
+tar -xf v1.19.1.tar.gz
+cd $HOME/Downloads/grpc-1.19.1
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
 export PATH=/usr/local/bin:${PATH}
@@ -346,9 +346,9 @@ the Google Cloud Platform APIs:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.17.2.tar.gz
-tar -xf v1.17.2.tar.gz
-cd $HOME/Downloads/grpc-1.17.2
+wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
+tar -xf v1.19.1.tar.gz
+cd $HOME/Downloads/grpc-1.19.1
 make -j $(nproc)
 sudo make install
 sudo ldconfig
@@ -454,9 +454,9 @@ library manually:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.17.2.tar.gz
-tar -xf v1.17.2.tar.gz
-cd $HOME/Downloads/grpc-1.17.2
+wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
+tar -xf v1.19.1.tar.gz
+cd $HOME/Downloads/grpc-1.19.1
 make -j $(nproc)
 sudo make install
 sudo ldconfig
@@ -608,9 +608,9 @@ library:
 ```bash
 export PKG_CONFIG_PATH=/usr/local/ssl/lib/pkgconfig:/usr/local/curl/lib/pkgconfig
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.17.2.tar.gz
-tar -xf v1.17.2.tar.gz
-cd $HOME/Downloads/grpc-1.17.2
+wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
+tar -xf v1.19.1.tar.gz
+cd $HOME/Downloads/grpc-1.19.1
 make -j $(nproc)
 sudo make install
 ```
@@ -705,9 +705,9 @@ the Google Cloud Platform APIs:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.17.2.tar.gz
-tar -xf v1.17.2.tar.gz
-cd $HOME/Downloads/grpc-1.17.2
+wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
+tar -xf v1.19.1.tar.gz
+cd $HOME/Downloads/grpc-1.19.1
 make -j $(nproc)
 sudo make install
 sudo ldconfig
@@ -808,9 +808,9 @@ Can be manually installed using:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.17.2.tar.gz
-tar -xf v1.17.2.tar.gz
-cd $HOME/Downloads/grpc-1.17.2
+wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
+tar -xf v1.19.1.tar.gz
+cd $HOME/Downloads/grpc-1.19.1
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
 export PATH=/usr/local/bin:${PATH}
