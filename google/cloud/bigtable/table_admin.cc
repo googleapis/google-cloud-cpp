@@ -78,21 +78,16 @@ future<StatusOr<google::bigtable::admin::v2::Table>> TableAdmin::AsyncGetTable(
   request.set_name(TableName(table_id));
   request.set_view(view);
 
+  // Copy the client because we lack C++14 extended lambda captures.
   auto client = impl_.client_;
-  auto async_call =
+  return internal::StartRetryAsyncUnaryRpc(
+      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      internal::ConstantIdempotencyPolicy(true), clone_metadata_update_policy(),
       [client](grpc::ClientContext* context,
                google::bigtable::admin::v2::GetTableRequest const& request,
                grpc::CompletionQueue* cq) {
         return client->AsyncGetTable(context, request, cq);
-      };
-
-  return internal::RetryAsyncUnaryRpcFuture<
-      decltype(async_call), google::bigtable::admin::v2::GetTableRequest,
-      internal::ConstantIdempotencyPolicy>::
-      Start(__func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-            internal::ConstantIdempotencyPolicy(true),
-            clone_metadata_update_policy(), std::move(async_call),
-            std::move(request), cq);
+      }, std::move(request), cq);
 }
 
 StatusOr<std::vector<btadmin::Table>> TableAdmin::ListTables(
