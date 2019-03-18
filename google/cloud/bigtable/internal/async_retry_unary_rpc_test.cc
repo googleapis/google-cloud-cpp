@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <gmock/gmock.h>
 #include <thread>
@@ -98,6 +99,9 @@ TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
 
   EXPECT_TRUE(impl->empty());
   EXPECT_EQ(std::future_status::ready, fut.wait_for(0_us));
+  auto result = fut.get();
+  ASSERT_STATUS_OK(result);
+  EXPECT_EQ("fake/table/name/response", result->name());
 }
 
 }  // namespace
