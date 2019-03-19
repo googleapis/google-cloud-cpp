@@ -221,8 +221,8 @@ class RetryAsyncUnaryRpcFuture {
    * @param cq the completion queue where the retry loop is executed.
    * @return a future that becomes satisfied when (a) one of the retry attempts
    *     is successful, or (b) one of the retry attempts fails with a
-   *     retryable error, or (c) one of the retry attempts fails with a
-   *     non-retryable error, but the request is non-idempotent, or (d) the
+   *     non-retryable error, or (c) one of the retry attempts fails with a
+   *     retryable error, but the request is non-idempotent, or (d) the
    *     retry policy is expired.
    */
   static future<StatusOr<Response>> Start(
@@ -341,8 +341,8 @@ class RetryAsyncUnaryRpcFuture {
  *
  * @return a future that becomes satisfied when (a) one of the retry attempts
  *     is successful, or (b) one of the retry attempts fails with a
- *     retryable error, or (c) one of the retry attempts fails with a
- *     non-retryable error, but the request is non-idempotent, or (d) the
+ *     non-retryable error, or (c) one of the retry attempts fails with a
+ *     retryable error, but the request is non-idempotent, or (d) the
  *     retry policy is expired.
  */
 template <
