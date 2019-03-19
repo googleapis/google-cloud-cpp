@@ -109,6 +109,33 @@ void AsyncGetTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
   (std::move(admin), std::move(cq), argv[1]);
 }
 
+void AsyncDeleteTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
+                      std::vector<std::string> argv) {
+  if (argv.size() != 2U) {
+    throw Usage{"async-delete-table: <project-id> <instance-id> <table-id>"};
+  }
+
+  //! [async delete table]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {
+    google::cloud::future<google::cloud::Status> future =
+        admin.AsyncDeleteTable(cq, table_id);
+
+    auto final =
+        future.then([table_id](google::cloud::future<google::cloud::Status> f) {
+          auto status = f.get();
+          if (!status.ok()) {
+            throw std::runtime_error(status.message());
+          }
+          std::cout << "Successfully deleted table: " << table_id << "\n";
+        });
+
+    final.get();
+  }
+  //! [async delete table]
+  (std::move(admin), std::move(cq), argv[1]);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -119,6 +146,7 @@ int main(int argc, char* argv[]) try {
   std::map<std::string, CommandType> commands = {
       {"async-create-table", &AsyncCreateTable},
       {"async-get-table", &AsyncGetTable},
+      {"async-delete-table", &AsyncDeleteTable},
   };
 
   google::cloud::bigtable::CompletionQueue cq;

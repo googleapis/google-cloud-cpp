@@ -106,6 +106,12 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetDeleteTableTest) {
             };
             EXPECT_EQ(1, count_matching_families(*get_result, "fam"));
             EXPECT_EQ(1, count_matching_families(*get_result, "foo"));
+
+            return table_admin_->AsyncDeleteTable(cq, table_id);
+          })
+          .then([&](future<Status> fut) {
+            Status delete_result = fut.get();
+            EXPECT_STATUS_OK(delete_result);
           });
 
   chain.get();

@@ -164,6 +164,32 @@ Status TableAdmin::DeleteTable(std::string const& table_id) {
   return internal::MakeStatusFromRpcError(status);
 }
 
+future<Status> TableAdmin::AsyncDeleteTable(CompletionQueue& cq,
+                                            std::string const& table_id) {
+  grpc::Status status;
+  btadmin::DeleteTableRequest request;
+  request.set_name(TableName(table_id));
+
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, table_id);
+
+  auto client = impl_.client_;
+  return internal::StartRetryAsyncUnaryRpc(
+             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             internal::ConstantIdempotencyPolicy(true),
+             clone_metadata_update_policy(),
+             [client](
+                 grpc::ClientContext* context,
+                 google::bigtable::admin::v2::DeleteTableRequest const& request,
+                 grpc::CompletionQueue* cq) {
+               return client->AsyncDeleteTable(context, request, cq);
+             },
+             std::move(request), cq)
+      .then([](future<StatusOr<google::protobuf::Empty>> r) {
+        return r.get().status();
+      });
+}
+
 StatusOr<btadmin::Table> TableAdmin::ModifyColumnFamilies(
     std::string const& table_id,
     std::vector<ColumnFamilyModification> modifications) {

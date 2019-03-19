@@ -255,6 +255,8 @@ function run_all_table_admin_async_examples {
       "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_async_snippets async-get-table \
       "${project_id}" "${INSTANCE}" "${TABLE}"
+ run_example ./table_admin_async_snippets async-delete-table \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
