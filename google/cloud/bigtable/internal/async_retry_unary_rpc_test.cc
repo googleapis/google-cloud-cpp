@@ -61,7 +61,7 @@ TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
         // Initialize a value to make sure it is carried all the way back to
         // the caller.
         table->set_name("fake/table/name/response");
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+        *status = grpc::Status::OK;
       }));
 
   EXPECT_CALL(client, AsyncGetTable(_, _, _))

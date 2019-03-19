@@ -222,8 +222,8 @@ class RetryAsyncUnaryRpcFuture {
    * @return a future that becomes satisfied when (a) one of the retry attempts
    *     is successful, or (b) one of the retry attempts fails with a
    *     retryable error, or (c) one of the retry attempts fails with a
-   *     retryable error, but the request is non-idempotent, or (d) the retry
-   *     policy is expired.
+   *     non-retryable error, but the request is non-idempotent, or (d) the
+   *     retry policy is expired.
    */
   static future<StatusOr<Response>> Start(
       char const* location, std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
@@ -259,58 +259,55 @@ class RetryAsyncUnaryRpcFuture {
         request_(std::move(request)) {}
 
   /// The callback for a completed request, successful or not.
-  void OnCompletion(std::shared_ptr<RetryAsyncUnaryRpcFuture> self,
-                    CompletionQueue cq, StatusOr<Response> result) {
+  static void OnCompletion(std::shared_ptr<RetryAsyncUnaryRpcFuture> self,
+                           CompletionQueue cq, StatusOr<Response> result) {
     if (result) {
-      final_result_.set_value(std::move(result));
+      self->final_result_.set_value(std::move(result));
       return;
     }
-    if (!idempotent_policy_.is_idempotent()) {
-      Status detailed_status(
-          result.status().code(),
-          FullErrorMessage("non-idempotent operation failed", result.status()));
-      final_result_.set_value(std::move(detailed_status));
+    if (!self->idempotent_policy_.is_idempotent()) {
+      self->final_result_.set_value(self->DetailedStatus(
+          "non-idempotent operation failed", result.status()));
       return;
     }
-    if (!rpc_retry_policy_->OnFailure(result.status())) {
-      std::string full_message =
-          FullErrorMessage(RPCRetryPolicy::IsPermanentFailure(result.status())
-                               ? "permanent error"
-                               : "too many transient errors",
-                           result.status());
-      Status detailed_status(result.status().code(), full_message);
-      final_result_.set_value(std::move(detailed_status));
+    if (!self->rpc_retry_policy_->OnFailure(result.status())) {
+      char const* context = RPCRetryPolicy::IsPermanentFailure(result.status())
+                                ? "permanent error"
+                                : "too many transient errors";
+      self->final_result_.set_value(
+          self->DetailedStatus(context, result.status()));
       return;
     }
-    cq.MakeRelativeTimer(rpc_backoff_policy_->OnCompletion(result.status()))
+    cq.MakeRelativeTimer(
+          self->rpc_backoff_policy_->OnCompletion(result.status()))
         .then([self, cq](future<std::chrono::system_clock::time_point>) {
           self->StartIteration(self, cq);
         });
   }
 
   /// The callback to start another iteration of the retry loop.
-  void StartIteration(std::shared_ptr<RetryAsyncUnaryRpcFuture> self,
-                      CompletionQueue cq) {
+  static void StartIteration(std::shared_ptr<RetryAsyncUnaryRpcFuture> self,
+                             CompletionQueue cq) {
     auto context =
         ::google::cloud::internal::make_unique<grpc::ClientContext>();
     self->rpc_retry_policy_->Setup(*context);
     self->rpc_backoff_policy_->Setup(*context);
     self->metadata_update_policy_.Setup(*context);
 
-    cq.MakeUnaryRpc(async_call_, request_, std::move(context))
+    cq.MakeUnaryRpc(self->async_call_, self->request_, std::move(context))
         .then([self, cq](future<StatusOr<Response>> fut) {
           self->OnCompletion(self, cq, fut.get());
         });
   }
 
   /// Generate an error message
-  std::string FullErrorMessage(char const* where, Status const& status) {
+  Status DetailedStatus(char const* context, Status const& status) {
     std::string full_message = location_;
     full_message += "(" + metadata_update_policy_.value() + ") ";
-    full_message += where;
+    full_message += context;
     full_message += ", last error=";
     full_message += status.message();
-    return full_message;
+    return Status(status.code(), std::move(full_message));
   }
 
   char const* location_;
@@ -326,6 +323,28 @@ class RetryAsyncUnaryRpcFuture {
   promise<StatusOr<Response>> final_result_;
 };
 
+/**
+ * Automatically deduce the type for `RetryAsyncUnaryRpc` and start the
+ * asynchronous retry loop.
+ *
+ * @param location typically the name of the function that created this
+ *     asynchronous retry loop.
+ * @param rpc_retry_policy controls the number of retries, and what errors are
+ *     considered retryable.
+ * @param rpc_backoff_policy determines the wait time between retries.
+ * @param idempotent_policy determines if a request is retryable.
+ * @param metadata_update_policy controls how to update the metadata fields in
+ *     the request.
+ * @param async_call the callable to start a new asynchronous operation.
+ * @param request the parameters of the request.
+ * @param cq the completion queue where the retry loop is executed.
+ *
+ * @return a future that becomes satisfied when (a) one of the retry attempts
+ *     is successful, or (b) one of the retry attempts fails with a
+ *     retryable error, or (c) one of the retry attempts fails with a
+ *     non-retryable error, but the request is non-idempotent, or (d) the
+ *     retry policy is expired.
+ */
 template <
     typename AsyncCallType, typename RequestType, typename IdempotencyPolicy,
     typename Sig = internal::AsyncCallResponseType<AsyncCallType, RequestType>,
