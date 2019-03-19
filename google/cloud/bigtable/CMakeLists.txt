@@ -335,6 +335,7 @@ if (BUILD_TESTING)
         internal/async_retry_multi_page_test.cc
         internal/async_retry_op_test.cc
         internal/async_retry_unary_rpc_and_poll_test.cc
+        internal/async_retry_unary_rpc_test.cc
         internal/bulk_mutator_test.cc
         internal/table_async_check_and_mutate_row_test.cc
         internal/instance_admin_test.cc
