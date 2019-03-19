@@ -64,7 +64,7 @@ TEST_F(ObjectIntegrationTest, V4SignGet) {
   json_array = nl::json::parse(ifstr);
 
   for (auto const& j_obj : json_array) {
-    if (j_obj["method"] == "GET") {
+    if (j_obj["method"] == "GET" && j_obj["description"] == "Simple GET") {
       std::string const method_name = j_obj["method"];  // GET
       std::string const bucket_name = j_obj["bucket"];
       std::string const object_name = j_obj["object"];
