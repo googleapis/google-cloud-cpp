@@ -385,7 +385,16 @@ Status InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
 StatusOr<btadmin::AppProfile> InstanceAdmin::CreateAppProfile(
     bigtable::InstanceId const& instance_id, AppProfileConfig config) {
   grpc::Status status;
-  auto result = impl_.CreateAppProfile(instance_id, std::move(config), status);
+  auto request = std::move(config).as_proto();
+  request.set_parent(InstanceName(instance_id.get()));
+
+  // This is a non-idempotent API, use the correct retry loop for this type of
+  // operation.
+  auto result = ClientUtils::MakeNonIdemponentCall(
+      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+      impl_.metadata_update_policy_, &InstanceAdminClient::CreateAppProfile,
+      request, "InstanceAdmin::CreateAppProfile", status);
+
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
@@ -396,7 +405,16 @@ StatusOr<btadmin::AppProfile> InstanceAdmin::GetAppProfile(
     bigtable::InstanceId const& instance_id,
     bigtable::AppProfileId const& profile_id) {
   grpc::Status status;
-  auto result = impl_.GetAppProfile(instance_id, profile_id, status);
+  btadmin::GetAppProfileRequest request;
+  request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
+                   profile_id.get());
+
+  auto result = ClientUtils::MakeCall(
+      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+      impl_.rpc_backoff_policy_->clone(), impl_.metadata_update_policy_,
+      &InstanceAdminClient::GetAppProfile, request,
+      "InstanceAdmin::GetAppProfile", status, true);
+
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
@@ -414,7 +432,32 @@ std::future<StatusOr<btadmin::AppProfile>> InstanceAdmin::UpdateAppProfile(
 StatusOr<std::vector<btadmin::AppProfile>> InstanceAdmin::ListAppProfiles(
     std::string const& instance_id) {
   grpc::Status status;
-  auto result = impl_.ListAppProfiles(instance_id, status);
+  std::vector<btadmin::AppProfile> result;
+  std::string page_token;
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = impl_.rpc_retry_policy_->clone();
+  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+
+  do {
+    // Build the RPC request, try to minimize copying.
+    btadmin::ListAppProfilesRequest request;
+    request.set_page_token(std::move(page_token));
+    request.set_parent(InstanceName(instance_id));
+
+    auto response = ClientUtils::MakeCall(
+        *(impl_.client_), *rpc_policy, *backoff_policy,
+        impl_.metadata_update_policy_, &InstanceAdminClient::ListAppProfiles,
+        request, "InstanceAdmin::ListAppProfiles", status, true);
+    if (!status.ok()) {
+      break;
+    }
+
+    for (auto& x : *response.mutable_app_profiles()) {
+      result.emplace_back(std::move(x));
+    }
+    page_token = std::move(*response.mutable_next_page_token());
+  } while (!page_token.empty());
+
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
@@ -425,7 +468,16 @@ Status InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
                                        bigtable::AppProfileId const& profile_id,
                                        bool ignore_warnings) {
   grpc::Status status;
-  impl_.DeleteAppProfile(instance_id, profile_id, ignore_warnings, status);
+  btadmin::DeleteAppProfileRequest request;
+  request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
+                   profile_id.get());
+  request.set_ignore_warnings(ignore_warnings);
+
+  ClientUtils::MakeNonIdemponentCall(
+      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+      impl_.metadata_update_policy_, &InstanceAdminClient::DeleteAppProfile,
+      request, "InstanceAdmin::DeleteAppProfile", status);
+
   return internal::MakeStatusFromRpcError(status);
 }
 
@@ -473,8 +525,18 @@ StatusOr<btadmin::AppProfile> InstanceAdmin::UpdateAppProfileImpl(
     bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
     AppProfileUpdateConfig config) {
   grpc::Status status;
-  auto operation = impl_.UpdateAppProfile(
-      std::move(instance_id), std::move(profile_id), std::move(config), status);
+  auto request = std::move(config).as_proto();
+  request.mutable_app_profile()->set_name(
+      InstanceName(instance_id.get() + "/appProfiles/" + profile_id.get()));
+
+  // This is a non-idempotent API, use the correct retry loop for this type of
+  // operation.
+  auto operation = ClientUtils::MakeCall(
+      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
+      impl_.rpc_backoff_policy_->clone(), impl_.metadata_update_policy_,
+      &InstanceAdminClient::UpdateAppProfile, request,
+      "InstanceAdmin::UpdateAppProfile", status, true);
+
   if (!status.ok()) {
     return bigtable::internal::MakeStatusFromRpcError(status);
   }
@@ -493,37 +555,98 @@ StatusOr<btadmin::AppProfile> InstanceAdmin::UpdateAppProfileImpl(
 StatusOr<google::cloud::IamPolicy> InstanceAdmin::GetIamPolicy(
     std::string const& instance_id) {
   grpc::Status status;
-  auto result = impl_.GetIamPolicy(instance_id, status);
+  auto rpc_policy = impl_.rpc_retry_policy_->clone();
+  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+
+  ::google::iam::v1::GetIamPolicyRequest request;
+  request.set_resource(InstanceName(instance_id));
+
+  MetadataUpdatePolicy metadata_update_policy(project_name(),
+                                              MetadataParamTypes::RESOURCE);
+
+  auto proto = ClientUtils::MakeCall(
+      *(impl_.client_), *rpc_policy, *backoff_policy, metadata_update_policy,
+      &InstanceAdminClient::GetIamPolicy, request,
+      "InstanceAdmin::GetIamPolicy", status, true);
 
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
-  return result;
+
+  return ProtoToWrapper(std::move(proto));
 }
 
 StatusOr<google::cloud::IamPolicy> InstanceAdmin::SetIamPolicy(
     std::string const& instance_id,
     google::cloud::IamBindings const& iam_bindings, std::string const& etag) {
   grpc::Status status;
-  auto result = impl_.SetIamPolicy(instance_id, iam_bindings, etag, status);
+  auto rpc_policy = impl_.rpc_retry_policy_->clone();
+  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+
+  ::google::iam::v1::Policy policy;
+  policy.set_etag(etag);
+  auto role_bindings = iam_bindings.bindings();
+  for (auto& binding : role_bindings) {
+    auto new_binding = policy.add_bindings();
+    new_binding->set_role(binding.first);
+    for (auto& member : binding.second) {
+      new_binding->add_members(member);
+    }
+  }
+
+  ::google::iam::v1::SetIamPolicyRequest request;
+  request.set_resource(InstanceName(instance_id));
+  *request.mutable_policy() = std::move(policy);
+
+  MetadataUpdatePolicy metadata_update_policy(project_name(),
+                                              MetadataParamTypes::RESOURCE);
+
+  auto proto = ClientUtils::MakeCall(
+      *(impl_.client_), *rpc_policy, *backoff_policy, metadata_update_policy,
+      &InstanceAdminClient::SetIamPolicy, request,
+      "InstanceAdmin::SetIamPolicy", status, true);
 
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
-  return result;
+
+  return ProtoToWrapper(std::move(proto));
 }
 
 StatusOr<std::vector<std::string>> InstanceAdmin::TestIamPermissions(
     std::string const& instance_id,
     std::vector<std::string> const& permissions) {
   grpc::Status status;
-  auto result = impl_.TestIamPermissions(instance_id, permissions, status);
+  ::google::iam::v1::TestIamPermissionsRequest request;
+  request.set_resource(InstanceName(instance_id));
+
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = impl_.rpc_retry_policy_->clone();
+  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+
+  for (auto& permission : permissions) {
+    request.add_permissions(permission);
+  }
+
+  MetadataUpdatePolicy metadata_update_policy(project_name(),
+                                              MetadataParamTypes::RESOURCE);
+
+  auto response = ClientUtils::MakeCall(
+      *(impl_.client_), *rpc_policy, *backoff_policy, metadata_update_policy,
+      &InstanceAdminClient::TestIamPermissions, request,
+      "InstanceAdmin::TestIamPermissions", status, true);
+
+  std::vector<std::string> resource_permissions;
+
+  for (auto& permission : *response.mutable_permissions()) {
+    resource_permissions.push_back(permission);
+  }
 
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
 
-  return result;
+  return resource_permissions;
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

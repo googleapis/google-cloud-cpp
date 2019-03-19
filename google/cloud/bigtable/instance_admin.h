@@ -549,6 +549,20 @@ class InstanceAdmin {
       AppProfileUpdateConfig config);
 
  private:
+  static inline google::cloud::IamPolicy ProtoToWrapper(
+      google::iam::v1::Policy proto) {
+    google::cloud::IamPolicy result;
+    result.version = proto.version();
+    result.etag = std::move(*proto.mutable_etag());
+    for (auto& binding : *proto.mutable_bindings()) {
+      for (auto& member : *binding.mutable_members()) {
+        result.bindings.AddMember(binding.role(), std::move(member));
+      }
+    }
+
+    return result;
+  }
+
   noex::InstanceAdmin impl_;
 };
 
