@@ -73,9 +73,8 @@ TEST_F(NoexTableAsyncBulkApplyTest, IdempotencyAndRetries) {
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r, void*) {}));
 
   EXPECT_CALL(*reader1, Finish(_, _))
-      .WillOnce(Invoke([](grpc::Status* status, void*) {
-        *status = grpc::Status::OK;
-      }));
+      .WillOnce(Invoke(
+          [](grpc::Status* status, void*) { *status = grpc::Status::OK; }));
 
   // reader2 will confirm only the first mutation (the only one); the mutation
   // which used to be first should now be confirmed and the mutation which used
@@ -95,9 +94,8 @@ TEST_F(NoexTableAsyncBulkApplyTest, IdempotencyAndRetries) {
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r, void*) {}));
 
   EXPECT_CALL(*reader2, Finish(_, _))
-      .WillOnce(Invoke([](grpc::Status* status, void*) {
-        *status = grpc::Status::OK;
-      }));
+      .WillOnce(Invoke(
+          [](grpc::Status* status, void*) { *status = grpc::Status::OK; }));
 
   EXPECT_CALL(*client_, AsyncMutateRows(_, _, _, _))
       .WillOnce(Invoke([&reader_deleter1](grpc::ClientContext*,
@@ -294,9 +292,8 @@ TEST_F(NoexTableAsyncBulkApplyTest, CancelledInTimer) {
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r, void*) {}));
 
   EXPECT_CALL(*reader1, Finish(_, _))
-      .WillOnce(Invoke([](grpc::Status* status, void*) {
-        *status = grpc::Status::OK;
-      }));
+      .WillOnce(Invoke(
+          [](grpc::Status* status, void*) { *status = grpc::Status::OK; }));
 
   EXPECT_CALL(*client_, AsyncMutateRows(_, _, _, _))
       .WillOnce(Invoke([&reader_deleter1](grpc::ClientContext*,

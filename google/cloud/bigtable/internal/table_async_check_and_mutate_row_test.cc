@@ -153,9 +153,8 @@ TEST_F(NoexTableAsyncCheckAndMutateRowTest, RetryFailure) {
       google::cloud::internal::make_unique<MockAsyncCheckAndMutateRowReader>();
   EXPECT_CALL(*reader_2, Finish(_, _, _))
       .WillOnce(Invoke([](btproto::CheckAndMutateRowResponse* response,
-                          grpc::Status* status, void*) {
-        *status = grpc::Status::OK;
-      }));
+                          grpc::Status* status,
+                          void*) { *status = grpc::Status::OK; }));
 
   EXPECT_CALL(*client_, AsyncCheckAndMutateRow(_, _, _))
       .WillOnce(Invoke([&reader_1](grpc::ClientContext*,

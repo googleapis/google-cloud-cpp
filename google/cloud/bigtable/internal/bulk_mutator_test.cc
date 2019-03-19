@@ -509,9 +509,8 @@ TEST(MultipleRowsMutatorTest, SimpleAsync) {
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r, void*) {}));
 
   EXPECT_CALL(*reader, Finish(_, _))
-      .WillOnce(Invoke([](grpc::Status* status, void*) {
-        *status = grpc::Status::OK;
-      }));
+      .WillOnce(Invoke(
+          [](grpc::Status* status, void*) { *status = grpc::Status::OK; }));
 
   EXPECT_CALL(*client, AsyncMutateRows(_, _, _, _))
       .WillOnce(Invoke([&reader_deleter](grpc::ClientContext*,
