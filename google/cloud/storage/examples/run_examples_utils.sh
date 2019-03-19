@@ -799,6 +799,8 @@ run_all_cmek_examples() {
 
   run_example ./storage_object_samples write-object-with-kms-key \
       "${bucket_name}" "${object_name}" "${cmek}"
+  run_example ./storage_object_samples get-object-kms-key \
+      "${bucket_name}" "${object_name}"
   run_example ./storage_object_samples read-object \
       "${bucket_name}" "${object_name}"
 

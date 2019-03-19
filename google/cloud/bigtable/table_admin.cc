@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/internal/async_future_from_callback.h"
+#include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/poll_longrunning_operation.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
@@ -73,14 +74,21 @@ TableAdmin::AsyncCreateTable(CompletionQueue& cq, std::string table_id,
 future<StatusOr<google::bigtable::admin::v2::Table>> TableAdmin::AsyncGetTable(
     CompletionQueue& cq, std::string const& table_id,
     btadmin::Table::View view) {
-  promise<StatusOr<google::bigtable::admin::v2::Table>> p;
-  auto result = p.get_future();
+  google::bigtable::admin::v2::GetTableRequest request{};
+  request.set_name(TableName(table_id));
+  request.set_view(view);
 
-  impl_.AsyncGetTable(
-      cq, internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetTable"),
-      table_id, view);
-
-  return result;
+  // Copy the client because we lack C++14 extended lambda captures.
+  auto client = impl_.client_;
+  return internal::StartRetryAsyncUnaryRpc(
+      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      internal::ConstantIdempotencyPolicy(true), clone_metadata_update_policy(),
+      [client](grpc::ClientContext* context,
+               google::bigtable::admin::v2::GetTableRequest const& request,
+               grpc::CompletionQueue* cq) {
+        return client->AsyncGetTable(context, request, cq);
+      },
+      std::move(request), cq);
 }
 
 StatusOr<std::vector<btadmin::Table>> TableAdmin::ListTables(
