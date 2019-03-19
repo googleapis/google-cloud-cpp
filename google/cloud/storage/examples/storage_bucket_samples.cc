@@ -582,8 +582,7 @@ void GetBucketLifecycleManagement(google::cloud::storage::Client client,
     throw Usage{"get-bucket-lifecycle-management <bucket-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
-  //! [view_bucket_lifecycle_management]
-  // [START storage_view_bucket_lifecycle_management]
+  //! [view_lifecycle_management] [START storage_view_lifecycle_management]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
@@ -608,8 +607,7 @@ void GetBucketLifecycleManagement(google::cloud::storage::Client client,
     }
     std::cout << "\n";
   }
-  // [END storage_view_bucket_lifecycle_management]
-  //! [storage_view_bucket_lifecycle_management]
+  //! [view_lifecycle_management] [END storage_view_lifecycle_management]
   (std::move(client), bucket_name);
 }
 
@@ -993,7 +991,7 @@ void GetObjectVersioning(google::cloud::storage::Client client, int& argc,
     throw Usage{"get-object-versioning <bucket-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
-  //! [get object versioning] [START storage_get_object_versioning]
+  //! [view_versioning_status] [START storage_view_versioning_status]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
@@ -1014,7 +1012,7 @@ void GetObjectVersioning(google::cloud::storage::Client client, int& argc,
                 << " is disabled.\n";
     }
   }
-  //! [get object versioning] [END storage_get_object_versioning]
+  //! [view_versioning_status] [END storage_view_versioning_status]
   (std::move(client), bucket_name);
 }
 
@@ -1024,7 +1022,7 @@ void EnableObjectVersioning(google::cloud::storage::Client client, int& argc,
     throw Usage{"enable-object-versioning <bucket-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
-  //! [enable object versioning] [START storage_enable_object_versioning]
+  //! [enable versioning] [START storage_enable_versioning]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
@@ -1055,7 +1053,7 @@ void EnableObjectVersioning(google::cloud::storage::Client client, int& argc,
                 << " is disabled.\n";
     }
   }
-  //! [enable object versioning] [END storage_enable_object_versioning]
+  //! [enable versioning] [END storage_enable_versioning]
   (std::move(client), bucket_name);
 }
 
@@ -1065,7 +1063,7 @@ void DisableObjectVersioning(google::cloud::storage::Client client, int& argc,
     throw Usage{"disable-object-versioning <bucket-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
-  //! [disable object versioning] [START storage_disable_object_versioning]
+  //! [disable versioning] [START storage_disable_versioning]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
@@ -1096,7 +1094,7 @@ void DisableObjectVersioning(google::cloud::storage::Client client, int& argc,
                 << " is disabled.\n";
     }
   }
-  //! [disable object versioning] [END storage_disable_object_versioning]
+  //! [disable versioning] [END storage_disable_versioning]
   (std::move(client), bucket_name);
 }
 

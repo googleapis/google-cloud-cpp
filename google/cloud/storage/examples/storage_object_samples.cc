@@ -315,7 +315,8 @@ void CopyVersionedObject(google::cloud::storage::Client client, int& argc,
   auto destination_bucket_name = ConsumeArg(argc, argv);
   auto destination_object_name = ConsumeArg(argc, argv);
   auto source_object_generation = std::stoll(ConsumeArg(argc, argv));
-  //! [copy versioned object] [START storage_copy_versioned_file]
+  //! [copy_file_archived_generation]
+  // [START storage_copy_file_archived_generation]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string source_bucket_name,
@@ -338,7 +339,8 @@ void CopyVersionedObject(google::cloud::storage::Client client, int& argc,
               << ".\nThe full metadata after the copy is: " << *new_copy_meta
               << "\n";
   }
-  //! [copy versioned object] [END storage_copy_versioned_file]
+  // [END storage_copy_file_archived_generation]
+  //! [copy_file_archived_generation]
   (std::move(client), source_bucket_name, source_object_name,
    destination_bucket_name, destination_object_name, source_object_generation);
 }
@@ -493,7 +495,8 @@ void DeleteVersionedObject(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
   auto object_version = std::stoll(ConsumeArg(argc, argv));
-  //! [delete versioned object] [START storage_delete_versioned_file]
+  //! [delete versioned object]
+  // [START storage_delete_file_archived_generation]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::int64_t object_version) {
@@ -507,7 +510,8 @@ void DeleteVersionedObject(google::cloud::storage::Client client, int& argc,
     std::cout << "Deleted " << object_name << " generation " << object_version
               << " in bucket " << bucket_name << "\n";
   }
-  //! [delete versioned object] [END storage_delete_versioned_file]
+  // [END storage_delete_file_archived_generation]
+  //! [delete_file_archived_generation]
   (std::move(client), bucket_name, object_name, object_version);
 }
 
@@ -896,7 +900,7 @@ void ReadObjectUnauthenticated(google::cloud::storage::Client client, int& argc,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
-  //! [read object unauthenticated]
+  //! [download_public_file] [START storage_download_public_file]
   namespace gcs = google::cloud::storage;
   [](std::string bucket_name, std::string object_name) {
     // Create a client that does not authenticate with the server.
@@ -912,7 +916,7 @@ void ReadObjectUnauthenticated(google::cloud::storage::Client client, int& argc,
     }
     std::cout << "The object has " << count << " lines\n";
   }
-  //! [read object unauthenticated]
+  //! [download_public_file] [END storage_download_public_file]
   (bucket_name, object_name);
 }
 
