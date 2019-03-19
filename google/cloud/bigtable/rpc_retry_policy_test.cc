@@ -62,7 +62,7 @@ TEST(LimitedTimeRetryPolicy, Simple) {
 /// @test A simple test for grpc::StatusCode::OK is not Permanent Error.
 TEST(LimitedTimeRetryPolicy, PermanentFailureCheck) {
   bigtable::LimitedTimeRetryPolicy tested(kLimitedTimeTestPeriod);
-  EXPECT_FALSE(tested.IsPermanentFailure(grpc::Status::OK))
+  EXPECT_FALSE(tested.IsPermanentFailure(grpc::Status::OK));
   EXPECT_FALSE(tested.IsPermanentFailure(CreateTransientError()));
   EXPECT_TRUE(tested.IsPermanentFailure(CreatePermanentError()));
 }

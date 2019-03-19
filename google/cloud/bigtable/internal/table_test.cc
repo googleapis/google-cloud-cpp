@@ -917,7 +917,6 @@ TEST_F(NoexTableTest, CheckAndMutateRowFailureRetry) {
       {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
       {bigtable::SetCell("fam", "col", 0_ms, "it was false")}, status);
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(status.error_message(), HasSubstr("success"));
 }
 
 /// @test Verify that Table::SampleRows<T>() works for default parameter.
