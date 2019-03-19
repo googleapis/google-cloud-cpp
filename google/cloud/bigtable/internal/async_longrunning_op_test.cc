@@ -64,7 +64,7 @@ TEST_F(NoexAsyncLongrunningOpTest, Simple) {
         response->set_allocated_response(any.release());
         response->set_name("qwerty");
         response->set_done(true);
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+        *status = grpc::Status::OK;
       }));
 
   EXPECT_CALL(*client, AsyncGetOperation(_, _, _))
@@ -86,7 +86,6 @@ TEST_F(NoexAsyncLongrunningOpTest, Simple) {
                            grpc::Status const& status) {
     EXPECT_TRUE(status.ok());
     EXPECT_EQ("asdfgh", response.name());
-    EXPECT_EQ("mocked-status", status.error_message());
     user_op_called = true;
   };
   using OpType = internal::AsyncPollLongrunningOp<
@@ -211,7 +210,10 @@ TEST_P(NoexAsyncLongrunningOpRetryTest, OneRetry) {
                                 grpc::Status* status, void*) {
         response->set_name("qwerty");
         response->set_done(false);
-        *status = grpc::Status(config.first_rpc_error_code, "mocked-status");
+        *status =
+            config.first_rpc_error_code != grpc::StatusCode::OK
+                ? grpc::Status(config.first_rpc_error_code, "mocked-status")
+                : grpc::Status::OK;
       }))
       .WillOnce(Invoke([&config](google::longrunning::Operation* response,
                                  grpc::Status* status, void*) {
@@ -234,7 +236,7 @@ TEST_P(NoexAsyncLongrunningOpRetryTest, OneRetry) {
           error->set_message("something is broken");
           response->set_allocated_error(error.release());
         }
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+        *status = grpc::Status::OK;
       }));
 
   EXPECT_CALL(*client, AsyncGetOperation(_, _, _))
@@ -268,7 +270,6 @@ TEST_P(NoexAsyncLongrunningOpRetryTest, OneRetry) {
     EXPECT_EQ(config.whole_op_error_code, status.error_code());
     if (status.ok()) {
       EXPECT_EQ("asdfgh", response.name());
-      EXPECT_EQ("mocked-status", status.error_message());
     }
     user_op_called = true;
   };

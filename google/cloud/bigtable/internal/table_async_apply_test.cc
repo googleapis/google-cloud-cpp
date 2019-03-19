@@ -60,7 +60,7 @@ TEST_F(NoexTableAsyncApplyTest, SuccessAfterOneRetry) {
       .WillOnce(Invoke([&r2_called](btproto::MutateRowResponse* r,
                                     grpc::Status* status, void* tag) {
         r2_called = true;
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+        *status = grpc::Status::OK;
       }));
 
   // Because there is a transient failure, we expect two calls.
@@ -121,7 +121,6 @@ TEST_F(NoexTableAsyncApplyTest, SuccessAfterOneRetry) {
   EXPECT_TRUE(impl->empty());
 
   EXPECT_TRUE(capture_status.ok());
-  EXPECT_EQ("mocked-status", capture_status.error_message());
 }
 
 /// @test Verify that noes::Table::AsyncApply() fails on a permanent error.

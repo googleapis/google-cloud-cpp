@@ -140,7 +140,7 @@ TEST(CompletionQueueTest, AyncRpcSimple) {
         // Initialize a value to make sure it is carried all the way back to
         // the caller.
         table->set_name("fake/table/name/response");
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+        *status = grpc::Status::OK;
       }));
 
   EXPECT_CALL(client, AsyncGetTable(_, _, _))
@@ -168,7 +168,6 @@ TEST(CompletionQueueTest, AyncRpcSimple) {
       [&completion_called](CompletionQueue& cq, btadmin::Table& response,
                            grpc::Status& status) {
         EXPECT_TRUE(status.ok());
-        EXPECT_EQ("mocked-status", status.error_message());
         EXPECT_EQ("fake/table/name/response", response.name());
         completion_called = true;
       });
@@ -306,7 +305,7 @@ TEST(CompletionQueueTest, AsyncRpcSimpleStream) {
       }));
   EXPECT_CALL(*reader, Finish(_, _))
       .WillOnce(Invoke([](grpc::Status* status, void*) {
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+        *status = grpc::Status::OK;
       }));
 
   EXPECT_CALL(client, AsyncMutateRows(_, _, _, _))
@@ -337,7 +336,6 @@ TEST(CompletionQueueTest, AsyncRpcSimpleStream) {
       [&completion_called](CompletionQueue&, grpc::ClientContext&,
                            grpc::Status& result) {
         EXPECT_TRUE(result.ok());
-        EXPECT_EQ("mocked-status", result.error_message());
         completion_called = true;
       });
   // Initially stream is in CREATING state

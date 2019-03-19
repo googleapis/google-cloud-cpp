@@ -152,7 +152,7 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
 
       EXPECT_CALL(*reader, Finish(_, _))
           .WillOnce(Invoke([](grpc::Status* status, void*) {
-            *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+            *status = grpc::Status::OK;
           }));
 
       EXPECT_CALL(*client_, AsyncMutateRows(_, _, _, _))

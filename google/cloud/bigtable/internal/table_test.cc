@@ -908,7 +908,7 @@ TEST_F(NoexTableTest, CheckAndMutateRowFailureRetry) {
   EXPECT_CALL(*client_, CheckAndMutateRow(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::OK, "success")));
+      .WillOnce(Return(grpc::Status::OK));
   grpc::Status status;
   bigtable::noex::Table table(client_, kTableId,
                               bigtable::AlwaysRetryMutationPolicy());

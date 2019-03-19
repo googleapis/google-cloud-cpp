@@ -56,7 +56,7 @@ TEST_F(NoexAsyncCheckConsistencyTest, Simple) {
       .WillOnce(Invoke([](btproto::CheckConsistencyResponse* response,
                           grpc::Status* status, void*) {
         response->set_consistent(true);
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+        *status = grpc::Status::OK;
       }));
 
   EXPECT_CALL(*client, AsyncCheckConsistency(_, _, _))
@@ -75,7 +75,6 @@ TEST_F(NoexAsyncCheckConsistencyTest, Simple) {
                                          grpc::Status const& status) {
     EXPECT_TRUE(response);
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ("mocked-status", status.error_message());
     user_op_called = true;
   };
   using OpType = internal::AsyncPollCheckConsistency<decltype(user_callback)>;
@@ -115,14 +114,14 @@ TEST_P(NoexAsyncCheckConsistencyRetryTest, OneRetry) {
                            btproto::CheckConsistencyResponse* response,
                            grpc::Status* status, void*) {
         response->set_consistent(false);
-        *status = grpc::Status(fail_first_rpc ? grpc::StatusCode::UNAVAILABLE
-                                              : grpc::StatusCode::OK,
-                               "mocked-status");
+        *status = fail_first_rpc ? grpc::Status(grpc::StatusCode::UNAVAILABLE,
+                                                "mocked-status")
+                                 : grpc::Status::OK;
       }))
       .WillOnce(Invoke([](btproto::CheckConsistencyResponse* response,
                           grpc::Status* status, void*) {
         response->set_consistent(true);
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+        *status = grpc::Status::OK;
       }));
 
   EXPECT_CALL(*client, AsyncCheckConsistency(_, _, _))
@@ -150,7 +149,6 @@ TEST_P(NoexAsyncCheckConsistencyRetryTest, OneRetry) {
   auto user_callback = [&user_op_called](CompletionQueue& cq, bool response,
                                          grpc::Status const& status) {
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ("mocked-status", status.error_message());
     EXPECT_TRUE(response);
     user_op_called = true;
   };
@@ -231,8 +229,10 @@ TEST_P(NoexAsyncCheckConsistencyEndToEnd, EndToEnd) {
           Invoke([config](btproto::GenerateConsistencyTokenResponse* response,
                           grpc::Status* status, void*) {
             response->set_consistency_token("qwerty");
-            *status =
-                grpc::Status(config.generate_token_error_code, "mocked-status");
+            *status = config.generate_token_error_code != grpc::StatusCode::OK
+                          ? grpc::Status(config.generate_token_error_code,
+                                         "mocked-status")
+                          : grpc::Status::OK;
           }));
   auto check_consistency_reader =
       google::cloud::internal::make_unique<MockAsyncCheckConsistencyReader>();
@@ -241,8 +241,10 @@ TEST_P(NoexAsyncCheckConsistencyEndToEnd, EndToEnd) {
         .WillOnce(Invoke([config](btproto::CheckConsistencyResponse* response,
                                   grpc::Status* status, void*) {
           response->set_consistent(config.check_consistency_finished);
-          *status = grpc::Status(config.check_consistency_error_code,
-                                 "mocked-status");
+          *status = config.check_consistency_error_code != grpc::StatusCode::OK
+                        ? grpc::Status(config.check_consistency_error_code,
+                                       "mocked-status")
+                        : grpc::Status::OK;
         }));
   }
 
@@ -408,8 +410,10 @@ TEST_P(NoexAsyncCheckConsistencyCancel, Cancellations) {
           Invoke([config](btproto::GenerateConsistencyTokenResponse* response,
                           grpc::Status* status, void*) {
             response->set_consistency_token("qwerty");
-            *status =
-                grpc::Status(config.generate_token_error_code, "mocked-status");
+            *status = config.generate_token_error_code != grpc::StatusCode::OK
+                          ? grpc::Status(config.generate_token_error_code,
+                                         "mocked-status")
+                          : grpc::Status::OK;
           }));
   auto check_consistency_reader =
       google::cloud::internal::make_unique<MockAsyncCheckConsistencyReader>();
@@ -418,8 +422,10 @@ TEST_P(NoexAsyncCheckConsistencyCancel, Cancellations) {
         .WillOnce(Invoke([config](btproto::CheckConsistencyResponse* response,
                                   grpc::Status* status, void*) {
           response->set_consistent(true);
-          *status = grpc::Status(config.check_consistency_error_code,
-                                 "mocked-status");
+          *status = config.check_consistency_error_code != grpc::StatusCode::OK
+                        ? grpc::Status(config.check_consistency_error_code,
+                                       "mocked-status")
+                        : grpc::Status::OK;
         }));
   }
 

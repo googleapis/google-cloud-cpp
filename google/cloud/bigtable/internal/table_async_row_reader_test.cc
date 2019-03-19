@@ -60,7 +60,7 @@ TEST_F(NoexTableAsyncReadRowsTest, Simple) {
 
   EXPECT_CALL(*reader1, Finish(_, _))
       .WillOnce(Invoke([](grpc::Status* status, void*) {
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+        *status = grpc::Status::OK;
       }));
 
   EXPECT_CALL(*client_, AsyncReadRows(_, _, _, _))
@@ -89,7 +89,6 @@ TEST_F(NoexTableAsyncReadRowsTest, Simple) {
                                          grpc::Status const& status) {
                          EXPECT_TRUE(response);
                          EXPECT_TRUE(status.ok());
-                         EXPECT_EQ("mocked-status", status.error_message());
                          done_op_called = true;
                        },
                        bt::RowSet(), bt::RowReader::NO_ROWS_LIMIT,
@@ -159,7 +158,7 @@ TEST_F(NoexTableAsyncReadRowsTest, ReadRowsWithRetry) {
 
   EXPECT_CALL(*reader2, Finish(_, _))
       .WillOnce(Invoke([](grpc::Status* status, void*) {
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+        *status = grpc::Status::OK;
       }));
 
   EXPECT_CALL(*client_, AsyncReadRows(_, _, _, _))
@@ -197,7 +196,6 @@ TEST_F(NoexTableAsyncReadRowsTest, ReadRowsWithRetry) {
                                          grpc::Status const& status) {
                          EXPECT_TRUE(response);
                          EXPECT_TRUE(status.ok());
-                         EXPECT_EQ("mocked-status", status.error_message());
                          done_op_called = true;
                        },
                        bt::RowSet(bt::RowRange::Range("0000", "0005")),

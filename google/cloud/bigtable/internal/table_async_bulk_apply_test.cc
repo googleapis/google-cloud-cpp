@@ -74,7 +74,7 @@ TEST_F(NoexTableAsyncBulkApplyTest, IdempotencyAndRetries) {
 
   EXPECT_CALL(*reader1, Finish(_, _))
       .WillOnce(Invoke([](grpc::Status* status, void*) {
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+        *status = grpc::Status::OK;
       }));
 
   // reader2 will confirm only the first mutation (the only one); the mutation
@@ -96,7 +96,7 @@ TEST_F(NoexTableAsyncBulkApplyTest, IdempotencyAndRetries) {
 
   EXPECT_CALL(*reader2, Finish(_, _))
       .WillOnce(Invoke([](grpc::Status* status, void*) {
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+        *status = grpc::Status::OK;
       }));
 
   EXPECT_CALL(*client_, AsyncMutateRows(_, _, _, _))
@@ -295,7 +295,7 @@ TEST_F(NoexTableAsyncBulkApplyTest, CancelledInTimer) {
 
   EXPECT_CALL(*reader1, Finish(_, _))
       .WillOnce(Invoke([](grpc::Status* status, void*) {
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+        *status = grpc::Status::OK;
       }));
 
   EXPECT_CALL(*client_, AsyncMutateRows(_, _, _, _))

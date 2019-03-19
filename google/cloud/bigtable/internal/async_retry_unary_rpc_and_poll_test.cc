@@ -90,8 +90,10 @@ TEST_P(AsyncRetryUnaryRpcAndPollResEndToEnd, EndToEnd) {
       .WillOnce(Invoke([config](longrunning::Operation* response,
                                 grpc::Status* status, void*) {
         response->set_name("create_cluster_op_1");
-        *status =
-            grpc::Status(config.create_clutester_error_code, "mocked-status");
+        *status = config.create_clutester_error_code != grpc::StatusCode::OK
+                      ? grpc::Status(config.create_clutester_error_code,
+                                     "mocked-status")
+                      : grpc::Status::OK;
       }));
   auto get_operation_reader =
       google::cloud::internal::make_unique<MockAsyncLongrunningOpReader>();
@@ -100,7 +102,10 @@ TEST_P(AsyncRetryUnaryRpcAndPollResEndToEnd, EndToEnd) {
         .WillOnce(Invoke([config](longrunning::Operation* response,
                                   grpc::Status* status, void*) {
           if (!config.polling_finished) {
-            *status = grpc::Status(config.polling_error_code, "mocked-status");
+            *status =
+                config.polling_error_code != grpc::StatusCode::OK
+                    ? grpc::Status(config.polling_error_code, "mocked-status")
+                    : grpc::Status::OK;
             return;
           }
           response->set_done(true);
@@ -310,8 +315,10 @@ TEST_P(AsyncRetryUnaryRpcAndPollResCancel, Cancellations) {
       .WillOnce(Invoke([config](longrunning::Operation* response,
                                 grpc::Status* status, void*) {
         response->set_name("create_cluster_op_1");
-        *status =
-            grpc::Status(config.create_clutester_error_code, "mocked-status");
+        *status = config.create_clutester_error_code != grpc::StatusCode::OK
+                      ? grpc::Status(config.create_clutester_error_code,
+                                     "mocked-status")
+                      : grpc::Status::OK;
       }));
   auto get_operation_reader =
       google::cloud::internal::make_unique<MockAsyncLongrunningOpReader>();
@@ -321,7 +328,10 @@ TEST_P(AsyncRetryUnaryRpcAndPollResCancel, Cancellations) {
                                   grpc::Status* status, void*) {
           response->set_done(true);
           if (config.polling_error_code != grpc::StatusCode::OK) {
-            *status = grpc::Status(config.polling_error_code, "mocked-status");
+            *status =
+                config.polling_error_code != grpc::StatusCode::OK
+                    ? grpc::Status(config.polling_error_code, "mocked-status")
+                    : grpc::Status::OK;
           } else {
             btproto::Cluster response_content;
             response_content.set_name("my_newly_created_cluster");
