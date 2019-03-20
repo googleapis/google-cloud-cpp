@@ -61,9 +61,8 @@ TEST_F(NoexTableAsyncSampleRowKeysTest, DefaultParameterTest) {
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r, void*) {}));
 
   EXPECT_CALL(*reader1, Finish(_, _))
-      .WillOnce(Invoke([](grpc::Status* status, void*) {
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
-      }));
+      .WillOnce(Invoke(
+          [](grpc::Status* status, void*) { *status = grpc::Status::OK; }));
 
   EXPECT_CALL(*client_, AsyncSampleRowKeys(_, _, _, _))
       .WillOnce(
@@ -150,9 +149,8 @@ TEST_F(NoexTableAsyncSampleRowKeysTest, RetryWorks) {
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r, void*) {}));
 
   EXPECT_CALL(*reader2, Finish(_, _))
-      .WillOnce(Invoke([](grpc::Status* status, void*) {
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
-      }));
+      .WillOnce(Invoke(
+          [](grpc::Status* status, void*) { *status = grpc::Status::OK; }));
 
   EXPECT_CALL(*client_, AsyncSampleRowKeys(_, _, _, _))
       .WillOnce(

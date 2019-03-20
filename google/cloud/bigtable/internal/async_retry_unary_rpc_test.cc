@@ -242,6 +242,58 @@ TEST(AsyncRetryUnaryRpcTest, TooManyTransientFailures) {
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
 }
 
+TEST(AsyncRetryUnaryRpcTest, VoidReturnImmediatelySucceeds) {
+  using namespace google::cloud::testing_util::chrono_literals;
+
+  MockClient client;
+
+  using ReaderType =
+      ::google::cloud::bigtable::testing::MockAsyncResponseReader<
+          google::protobuf::Empty>;
+  auto reader = google::cloud::internal::make_unique<ReaderType>();
+  EXPECT_CALL(*reader, Finish(_, _, _))
+      .WillOnce(Invoke([](google::protobuf::Empty*, grpc::Status* status,
+                          void*) { *status = grpc::Status::OK; }));
+
+  EXPECT_CALL(client, AsyncDeleteTable(_, _, _))
+      .WillOnce(Invoke([&reader](grpc::ClientContext*,
+                                 btadmin::DeleteTableRequest const& request,
+                                 grpc::CompletionQueue*) {
+        EXPECT_EQ("fake/table/name/request", request.name());
+        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+            // This is safe, see comments in MockAsyncResponseReader.
+            google::protobuf::Empty>>(reader.get());
+      }));
+
+  auto impl = std::make_shared<testing::MockCompletionQueue>();
+  bigtable::CompletionQueue cq(impl);
+
+  // Do some basic initialization of the request to verify the values get
+  // carried to the mock.
+  btadmin::DeleteTableRequest request;
+  request.set_name("fake/table/name/request");
+
+  future<StatusOr<google::protobuf::Empty>> fut = StartRetryAsyncUnaryRpc(
+      __func__, LimitedErrorCountRetryPolicy(3).clone(),
+      ExponentialBackoffPolicy(10_us, 40_us).clone(),
+      ConstantIdempotencyPolicy(true),
+      MetadataUpdatePolicy("resource", MetadataParamTypes::RESOURCE),
+      [&client](grpc::ClientContext* context,
+                btadmin::DeleteTableRequest const& request,
+                grpc::CompletionQueue* cq) {
+        return client.AsyncDeleteTable(context, request, cq);
+      },
+      request, cq);
+
+  EXPECT_EQ(1U, impl->size());
+  impl->SimulateCompletion(cq, true);
+
+  EXPECT_TRUE(impl->empty());
+  EXPECT_EQ(std::future_status::ready, fut.wait_for(0_us));
+  auto result = fut.get();
+  ASSERT_STATUS_OK(result);
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS

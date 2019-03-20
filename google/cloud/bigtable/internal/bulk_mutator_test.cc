@@ -509,9 +509,8 @@ TEST(MultipleRowsMutatorTest, SimpleAsync) {
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r, void*) {}));
 
   EXPECT_CALL(*reader, Finish(_, _))
-      .WillOnce(Invoke([](grpc::Status* status, void*) {
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
-      }));
+      .WillOnce(Invoke(
+          [](grpc::Status* status, void*) { *status = grpc::Status::OK; }));
 
   EXPECT_CALL(*client, AsyncMutateRows(_, _, _, _))
       .WillOnce(Invoke([&reader_deleter](grpc::ClientContext*,
@@ -534,7 +533,6 @@ TEST(MultipleRowsMutatorTest, SimpleAsync) {
   mutator.Start(cq, std::move(context),
                 [&](CompletionQueue&, grpc::Status& status) {
                   EXPECT_TRUE(status.ok());
-                  EXPECT_EQ("mocked-status", status.error_message());
                   mutator_finished = true;
                 });
   impl->SimulateCompletion(cq, true);

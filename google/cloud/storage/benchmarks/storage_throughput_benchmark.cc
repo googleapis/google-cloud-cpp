@@ -328,9 +328,8 @@ TestResult ReadOnce(gcs::Client client, std::string const& bucket_name,
   }
   std::size_t total_size = 0;
   constexpr auto report = kThroughputReportIntervalInChunks * kChunkSize;
-  while (!stream.eof()) {
-    char buf[4096];
-    stream.read(buf, sizeof(buf));
+  char buf[4096];
+  while (stream.read(buf, sizeof(buf))) {
     if (stream.gcount() == 0) {
       continue;
     }

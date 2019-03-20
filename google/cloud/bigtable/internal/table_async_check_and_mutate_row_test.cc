@@ -51,7 +51,7 @@ TEST_F(NoexTableAsyncCheckAndMutateRowTest, Simple) {
       .WillOnce(Invoke([](btproto::CheckAndMutateRowResponse* response,
                           grpc::Status* status, void*) {
         response->set_predicate_matched(true);
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
+        *status = grpc::Status::OK;
       }));
 
   EXPECT_CALL(*client_, AsyncCheckAndMutateRow(_, _, _))
@@ -86,7 +86,6 @@ TEST_F(NoexTableAsyncCheckAndMutateRowTest, Simple) {
   EXPECT_TRUE(impl->empty());
 
   EXPECT_TRUE(capture_status.ok());
-  EXPECT_EQ("mocked-status", capture_status.error_message());
 }
 
 /// @test Verify that Table::CheckAndMutateRow() works on failure.
@@ -154,9 +153,8 @@ TEST_F(NoexTableAsyncCheckAndMutateRowTest, RetryFailure) {
       google::cloud::internal::make_unique<MockAsyncCheckAndMutateRowReader>();
   EXPECT_CALL(*reader_2, Finish(_, _, _))
       .WillOnce(Invoke([](btproto::CheckAndMutateRowResponse* response,
-                          grpc::Status* status, void*) {
-        *status = grpc::Status(grpc::StatusCode::OK, "mocked-status");
-      }));
+                          grpc::Status* status,
+                          void*) { *status = grpc::Status::OK; }));
 
   EXPECT_CALL(*client_, AsyncCheckAndMutateRow(_, _, _))
       .WillOnce(Invoke([&reader_1](grpc::ClientContext*,
@@ -206,7 +204,6 @@ TEST_F(NoexTableAsyncCheckAndMutateRowTest, RetryFailure) {
   EXPECT_TRUE(impl->empty());
 
   EXPECT_TRUE(capture_status.ok());
-  EXPECT_THAT(capture_status.error_message(), HasSubstr("mocked-status"));
 }
 
 }  // namespace

@@ -908,7 +908,7 @@ TEST_F(NoexTableTest, CheckAndMutateRowFailureRetry) {
   EXPECT_CALL(*client_, CheckAndMutateRow(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::OK, "success")));
+      .WillOnce(Return(grpc::Status::OK));
   grpc::Status status;
   bigtable::noex::Table table(client_, kTableId,
                               bigtable::AlwaysRetryMutationPolicy());
@@ -917,7 +917,6 @@ TEST_F(NoexTableTest, CheckAndMutateRowFailureRetry) {
       {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
       {bigtable::SetCell("fam", "col", 0_ms, "it was false")}, status);
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(status.error_message(), HasSubstr("success"));
 }
 
 /// @test Verify that Table::SampleRows<T>() works for default parameter.
