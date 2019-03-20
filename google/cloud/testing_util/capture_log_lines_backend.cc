@@ -15,6 +15,9 @@ void CaptureLogLinesBackend::Process(LogRecord const& lr) {
   while (!is.eof()) {
     std::string line;
     std::getline(is, line);
+    if (!is) {
+      break;
+    }
     log_lines.emplace_back(std::move(line));
   }
 }

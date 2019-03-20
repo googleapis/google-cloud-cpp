@@ -181,6 +181,9 @@ int main(int argc, char* argv[]) try {
   while (!is.eof()) {
     ++lineno;
     std::getline(is, line, '\n');
+    if (!is) {
+      break;
+    }
     if (line.empty()) {
       break;
     }
@@ -252,6 +255,9 @@ std::vector<std::string> ParseLine(long lineno, std::string const& line,
   while (!tokens.eof()) {
     std::string tk;
     std::getline(tokens, tk, separator);
+    if (!tokens) {
+      break;
+    }
     result.emplace_back(std::move(tk));
   }
   return result;

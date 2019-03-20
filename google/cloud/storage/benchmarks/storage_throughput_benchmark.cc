@@ -331,6 +331,9 @@ TestResult ReadOnce(gcs::Client client, std::string const& bucket_name,
   while (!stream.eof()) {
     char buf[4096];
     stream.read(buf, sizeof(buf));
+    if (!stream) {
+      break;
+    }
     if (stream.gcount() == 0) {
       continue;
     }

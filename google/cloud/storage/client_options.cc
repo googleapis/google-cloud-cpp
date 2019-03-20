@@ -105,6 +105,9 @@ void ClientOptions::SetupFromEnvironment() {
     while (!is.eof()) {
       std::string token;
       std::getline(is, token, ',');
+      if (!is) {
+        break;
+      }
       enabled.emplace(std::move(token));
     }
     if (enabled.end() != enabled.find("http")) {

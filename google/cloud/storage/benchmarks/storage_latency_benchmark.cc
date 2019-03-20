@@ -306,6 +306,9 @@ IterationResult ReadOnce(gcs::Client client, std::string const& bucket_name,
   while (!stream.eof()) {
     char buf[4096];
     stream.read(buf, sizeof(buf));
+    if (!stream) {
+      break;
+    }
     total_size += stream.gcount();
   }
   auto elapsed = std::chrono::steady_clock::now() - start;
