@@ -63,30 +63,6 @@ elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
                 "Expected protobuf::libprotobuf target created by FindProtobuf")
     endif ()
 
-    if (VCPKG_TARGET_TRIPLET MATCHES "-static$" AND MSVC)
-        # Replace the runtime flags because all the dependencies are linked
-        # statically in this case.
-        message(STATUS " RELEASE=${CMAKE_CXX_FLAGS_RELEASE}")
-        message(STATUS " DEBUG=${CMAKE_CXX_FLAGS_DEBUG}")
-        foreach (flag_var
-                 CMAKE_CXX_FLAGS
-                 CMAKE_CXX_FLAGS_DEBUG
-                 CMAKE_CXX_FLAGS_RELEASE
-                 CMAKE_CXX_FLAGS_MINSIZEREL
-                 CMAKE_CXX_FLAGS_RELWITHDEBINFO)
-            if (${flag_var} MATCHES "/MD")
-                string(REGEX
-                       REPLACE "/MD"
-                               "/MT"
-                               ${flag_var}
-                               "${${flag_var}}")
-            endif ()
-        endforeach (flag_var)
-        message(STATUS " RELEASE=${CMAKE_CXX_FLAGS_RELEASE}")
-        message(STATUS " DEBUG=${CMAKE_CXX_FLAGS_DEBUG}")
-        message(STATUS " DEFAULT=${CMAKE_CXX_FLAGS}")
-    endif ()
-
     # The necessary compiler options and definitions are not defined by the
     # targets, we need to add them.
     if (WIN32)
