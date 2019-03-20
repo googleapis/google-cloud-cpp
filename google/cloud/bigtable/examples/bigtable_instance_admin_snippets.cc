@@ -46,7 +46,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
             << command_usage << "\n";
 }
 
-//! [create instance]
+//! [create instance] [START bigtable_create_instance]
 void CreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                     int argc, char* argv[]) {
   if (argc != 3) {
@@ -81,7 +81,7 @@ void CreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   }
   std::cout << "TIMEOUT\n";
 }
-//! [create instance]
+//! [create instance] [END bigtable_create_instance]
 
 //! [create dev instance]
 void CreateDevInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
@@ -173,7 +173,7 @@ void ListInstances(google::cloud::bigtable::InstanceAdmin instance_admin,
 }
 //! [list instances]
 
-//! [get instance]
+//! [get instance] [START bigtable_get_instance]
 void GetInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                  int argc, char* argv[]) {
   if (argc != 2) {
@@ -188,9 +188,9 @@ void GetInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   google::protobuf::TextFormat::PrintToString(*instance, &instance_detail);
   std::cout << "GetInstance details : " << instance_detail << "\n";
 }
-//! [get instance]
+//! [get instance] [END bigtable_get_instance]
 
-//! [delete instance]
+//! [delete instance] [START bigtable_del_instance]
 void DeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                     int argc, char* argv[]) {
   if (argc != 2) {
@@ -202,9 +202,9 @@ void DeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
     throw std::runtime_error(status.message());
   }
 }
-//! [delete instance]
+//! [delete instance] [END bigtable_del_instance]
 
-//! [create cluster]
+//! [create cluster] [START bigtable_create_cluster]
 // Before creating cluster, need to create a production instance first,
 // then create cluster on it.
 void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
@@ -224,7 +224,7 @@ void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
       instance_admin.CreateCluster(cluster_config, instance_id, cluster_id);
   std::cout << "Cluster Created " << cluster_id.get() << "\n";
 }
-//! [create cluster]
+//! [create cluster] [END bigtable_create_cluster]
 
 //! [list clusters]
 void ListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
@@ -252,7 +252,7 @@ void ListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
 }
 //! [list clusters]
 
-//! [list all clusters]
+//! [list all clusters] [START bigtable_get_clusters]
 void ListAllClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
                      int argc, char* argv[]) {
   if (argc != 1) {
@@ -276,7 +276,7 @@ void ListAllClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
     }
   }
 }
-//! [list all clusters]
+//! [list all clusters] [END bigtable_get_clusters]
 
 //! [update cluster]
 void UpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
@@ -308,7 +308,7 @@ void UpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
 }
 //! [update cluster]
 
-//! [get cluster]
+//! [get cluster] [START bigtable_get_cluster]
 void GetCluster(google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
                 char* argv[]) {
   if (argc != 3) {
@@ -324,9 +324,9 @@ void GetCluster(google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
   google::protobuf::TextFormat::PrintToString(*cluster, &cluster_detail);
   std::cout << "GetCluster details : " << cluster_detail << "\n";
 }
-//! [get cluster]
+//! [get cluster] [END bigtable_get_cluster]
 
-//! [delete cluster]
+//! [delete cluster] [START bigtable_delete_cluster]
 void DeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                    int argc, char* argv[]) {
   if (argc != 3) {
@@ -340,7 +340,7 @@ void DeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
     throw std::runtime_error(status.message());
   }
 }
-//! [delete cluster]
+//! [delete cluster] [END bigtable_delete_cluster]
 
 //! [run instance operations]
 void RunInstanceOperations(
@@ -419,7 +419,7 @@ void RunInstanceOperations(
 }
 //! [run instance operations]
 
-//! [create app profile]
+//! [create app profile] [START bigtable_create_app_profile]
 void CreateAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
                       int argc, char* argv[]) {
   if (argc != 3) {
@@ -435,7 +435,7 @@ void CreateAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
   }
   std::cout << "New profile created with name=" << profile->name() << "\n";
 }
-//! [create app profile]
+//! [create app profile] [END bigtable_create_app_profile]
 
 //! [create app profile cluster]
 void CreateAppProfileCluster(
@@ -459,7 +459,7 @@ void CreateAppProfileCluster(
 }
 //! [create app profile cluster]
 
-//! [get app profile]
+//! [get app profile] [START bigtable_get_app_profile]
 void GetAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
                    int argc, char* argv[]) {
   if (argc != 3) {
@@ -475,7 +475,7 @@ void GetAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
   google::protobuf::TextFormat::PrintToString(*profile, &detail);
   std::cout << "Application Profile details=" << detail << "\n";
 }
-//! [get app profile]
+//! [get app profile] [END bigtable_get_app_profile]
 
 //! [update app profile description]
 void UpdateAppProfileDescription(
@@ -556,7 +556,7 @@ void UpdateAppProfileRoutingSingleCluster(
 }
 //! [update app profile routing]
 
-//! [list app profiles]
+//! [list app profiles] [START bigtable_get_app_profiles]
 void ListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
                      int argc, char* argv[]) {
   if (argc != 2) {
@@ -575,9 +575,9 @@ void ListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
     std::cout << detail << "\n";
   }
 }
-//! [list app profiles]
+//! [list app profiles] [END bigtable_get_app_profiles]
 
-//! [delete app profile]
+//! [delete app profile] [START bigtable_delete_app_profile]
 void DeleteAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
                       int argc, char* argv[]) {
   std::string basic_usage =
@@ -610,7 +610,7 @@ void DeleteAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
   }
   std::cout << "Application Profile deleted\n";
 }
-//! [delete app profile]
+//! [delete app profile] [END bigtable_delete_app_profile]
 
 //! [get iam policy]
 void GetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,

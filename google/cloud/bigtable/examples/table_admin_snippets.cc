@@ -57,7 +57,7 @@ void CreateTable(google::cloud::bigtable::TableAdmin admin, int argc,
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
-  //! [create table]
+  //! [create table] [START bigtable_create_table]
   [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
     auto schema = admin.CreateTable(
         table_id,
@@ -67,7 +67,7 @@ void CreateTable(google::cloud::bigtable::TableAdmin admin, int argc,
               google::cloud::bigtable::GcRule::MaxAge(std::chrono::hours(72))}},
             {}));
   }
-  //! [create table]
+  //! [create table] [END bigtable_create_table]
   (std::move(admin), table_id);
 }
 
@@ -77,7 +77,7 @@ void ListTables(google::cloud::bigtable::TableAdmin admin, int argc,
     throw Usage{"list-tables: <project-id> <instance-id>"};
   }
 
-  //! [list tables]
+  //! [list tables] [START bigtable_get_tables]
   [](google::cloud::bigtable::TableAdmin admin) {
     auto tables =
         admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
@@ -89,7 +89,7 @@ void ListTables(google::cloud::bigtable::TableAdmin admin, int argc,
       std::cout << table.name() << "\n";
     }
   }
-  //! [list tables]
+  //! [list tables] [END bigtable_get_tables]
   (std::move(admin));
 }
 
