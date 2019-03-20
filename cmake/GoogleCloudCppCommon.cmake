@@ -47,6 +47,9 @@ include(GNUInstallDirs)
 # Discover and add targets for the GTest::gtest and GTest::gmock libraries.
 include(IncludeGMock)
 
+# Pick the right MSVC runtime libraries.
+include(SelectMSVCRuntime)
+
 if (${CMAKE_VERSION} VERSION_LESS "3.9")
 
     # Old versions of CMake have really poor support for Doxygen generation.
