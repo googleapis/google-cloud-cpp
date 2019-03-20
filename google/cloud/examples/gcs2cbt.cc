@@ -178,12 +178,9 @@ int main(int argc, char* argv[]) try {
           std::cerr << "Apply failed: " << status;
         }
       };
-  while (!is.eof()) {
+  while (std::getline(is, line, '\n')) {
     ++lineno;
-    std::getline(is, line, '\n');
-    if (!is) {
-      break;
-    }
+
     if (line.empty()) {
       break;
     }
@@ -252,13 +249,9 @@ std::vector<std::string> ParseLine(long lineno, std::string const& line,
 
   // Extract the fields one at a time using a std::istringstream.
   std::istringstream tokens(line);
-  while (!tokens.eof()) {
-    std::string tk;
-    std::getline(tokens, tk, separator);
-    if (!tokens) {
-      break;
-    }
-    result.emplace_back(std::move(tk));
+  std::string tk;
+  while (std::getline(tokens, tk, separator)) {
+    result.emplace_back(tk);
   }
   return result;
 } catch (std::exception const& ex) {

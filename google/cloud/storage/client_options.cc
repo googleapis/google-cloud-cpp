@@ -102,13 +102,9 @@ void ClientOptions::SetupFromEnvironment() {
   if (tracing.has_value()) {
     std::set<std::string> enabled;
     std::istringstream is{*tracing};
-    while (!is.eof()) {
-      std::string token;
-      std::getline(is, token, ',');
-      if (!is) {
-        break;
-      }
-      enabled.emplace(std::move(token));
+    std::string token;
+    while (std::getline(is, token, ',')) {
+      enabled.emplace(token);
     }
     if (enabled.end() != enabled.find("http")) {
       GCP_LOG(INFO) << "Enabling logging for http";
