@@ -225,6 +225,24 @@ class TableAdmin {
   Status DeleteTable(std::string const& table_id);
 
   /**
+   * Start a request to asynchronously delete a table.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param table_id the id of the table within the instance associated with
+   *     this object. The full name of the table is
+   *     `this->instance_name() + "/tables/" + table_id`
+   *
+   * @return status of the operation.
+   *
+   * @par Example
+   * @snippet table_admin_async_snippets.cc async delete table
+   */
+  future<Status> AsyncDeleteTable(CompletionQueue& cq,
+                                  std::string const& table_id);
+
+  /**
    * Modify the schema for an existing table.
    *
    * @param table_id the id of the table within the instance associated with
