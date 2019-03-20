@@ -1102,10 +1102,8 @@ run_static_website_configuration_examples() {
   run_example ./storage_bucket_samples create-bucket-for-project \
       "${bucket_name}" "${PROJECT_ID}"
 
-  local main_page_suffix="main-page-$(date +%s)-${RANDOM}.html"
-  local not_found_page="not-found-$(date +%s)-${RANDOM}.html"
   run_example ./storage_bucket_samples set-static-website-configuration \
-      "${bucket_name}" "${main_page_suffix}" "${not_found_page}"
+      "${bucket_name}" "main-page.html" "not-found.html"
   run_example ./storage_bucket_samples get-static-website-configuration \
       "${bucket_name}"
   run_example ./storage_bucket_samples remove-static-website-configuration \
