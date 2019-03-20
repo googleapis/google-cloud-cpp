@@ -86,7 +86,9 @@ elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
             ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Release
             ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Debug)
     mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
-    add_executable(gRPC::grpc_cpp_plugin IMPORTED)
+    if (NOT TARGET gRPC::grpc_cpp_plugin)
+        add_executable(gRPC::grpc_cpp_plugin IMPORTED)
+    endif ()
     set_property(TARGET gRPC::grpc_cpp_plugin
                  PROPERTY IMPORTED_LOCATION ${PROTOC_GRPCPP_PLUGIN_EXECUTABLE})
 
