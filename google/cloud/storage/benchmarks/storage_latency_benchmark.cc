@@ -303,9 +303,8 @@ IterationResult ReadOnce(gcs::Client client, std::string const& bucket_name,
                                gcs::IfGenerationNotMatch(0));
   }
   std::size_t total_size = 0;
-  while (!stream.eof()) {
-    char buf[4096];
-    stream.read(buf, sizeof(buf));
+  char buf[4096];
+  while (stream.read(buf, sizeof(buf))) {
     total_size += stream.gcount();
   }
   auto elapsed = std::chrono::steady_clock::now() - start;

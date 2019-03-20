@@ -148,10 +148,9 @@ class CaptureSendHeaderBackend : public LogBackend {
   void Process(LogRecord const& lr) override {
     // Break the records in lines, because we will analyze the output per line.
     std::istringstream is(lr.message);
-    while (!is.eof()) {
-      std::string line;
-      std::getline(is, line);
-      log_lines.emplace_back(std::move(line));
+    std::string line;
+    while (std::getline(is, line)) {
+      log_lines.emplace_back(line);
     }
   }
 

@@ -12,10 +12,9 @@ namespace testing_util {
 void CaptureLogLinesBackend::Process(LogRecord const& lr) {
   // Break the records in lines, it is easier to analyze them as such.
   std::istringstream is(lr.message);
-  while (!is.eof()) {
-    std::string line;
-    std::getline(is, line);
-    log_lines.emplace_back(std::move(line));
+  std::string line;
+  while (std::getline(is, line)) {
+    log_lines.emplace_back(line);
   }
 }
 
