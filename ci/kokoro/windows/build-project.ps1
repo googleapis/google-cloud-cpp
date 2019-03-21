@@ -29,14 +29,6 @@ $CONFIG = $env:CONFIG
 $PROVIDER = $env:PROVIDER
 $GENERATOR = "Ninja"
 
-Write-Host
-Get-Date -Format o
-Write-Host "Running git submodule update --init"
-git submodule update --init
-if ($LastExitCode) {
-    throw "git submodule failed with exit code $LastExitCode"
-}
-
 # By default assume "module", use the configuration parameters and build in the `build-output` directory.
 $cmake_flags=@("-G$GENERATOR", "-DCMAKE_BUILD_TYPE=$CONFIG", "-H.", "-Bbuild-output")
 
