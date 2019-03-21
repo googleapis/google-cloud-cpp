@@ -16,6 +16,8 @@ include(CMakeFindDependencyMacro)
 find_dependency(CURL)
 find_dependency(Crc32c)
 find_dependency(google_cloud_cpp_common)
+find_dependency(OpenSSL)
+find_dependency(ZLIB)
 
 # Some versions of FindCURL do not define CURL::CURL, so we define it ourselves.
 if (NOT TARGET CURL::CURL)
