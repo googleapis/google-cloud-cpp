@@ -14,6 +14,8 @@
 # limitations under the License.
 # ~~~
 
+include(external/googleapis)
+
 # This should be included from the top level CMakeLists file
 set(BIGTABLE_CLIENT_VERSION_MAJOR 0)
 set(BIGTABLE_CLIENT_VERSION_MINOR 8)
@@ -58,66 +60,11 @@ google_cloud_cpp_add_common_options(bigtable_common_options)
 list(APPEND PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis"
             "${PROJECT_SOURCE_DIR}")
 
-# Sometimes (this happens often with vcpkg) protobuf is installed in a non-
-# standard directory. We need to find out where, and then add that directory to
-# the search path for protos.
-find_path(PROTO_INCLUDE_DIR google/protobuf/descriptor.proto)
-if (PROTO_INCLUDE_DIR)
-    list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
-endif ()
-
-# Include the functions to compile proto files.
-include(CompileProtos)
-protobuf_generate_cpp(
-    PROTO_SOURCES
-    PROTO_HDRS
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_instance_admin.proto
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_table_admin.proto
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/common.proto
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/instance.proto
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/table.proto
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/v2/bigtable.proto
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/v2/data.proto
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/iam/v1/iam_policy.proto
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/iam/v1/policy.proto
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/longrunning/operations.proto
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/rpc/status.proto
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/rpc/error_details.proto
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/api/annotations.proto
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/api/auth.proto
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/api/http.proto)
-grpc_generate_cpp(
-    GRPCPP_SOURCES
-    GRPCPP_HDRS
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_instance_admin.proto
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/admin/v2/bigtable_table_admin.proto
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/bigtable/v2/bigtable.proto
-    ${PROJECT_THIRD_PARTY_DIR}/googleapis/google/longrunning/operations.proto)
+include(external/googleapis)
 
 # Create a library with the generated files from the relevant protos.
-add_library(bigtable_protos
-            ${PROTO_SOURCES}
-            ${PROTO_HDRS}
-            ${GRPCPP_SOURCES}
-            ${GRPCPP_HDRS})
-target_link_libraries(bigtable_protos
-                      gRPC::grpc++
-                      gRPC::grpc
-                      protobuf::libprotobuf
-                      bigtable_common_options)
-target_include_directories(bigtable_protos
-                           PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
-                                  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                                  $<INSTALL_INTERFACE:include>)
-target_compile_options(bigtable_protos
-                       PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-set_target_properties(
-    bigtable_protos
-    PROPERTIES
-        VERSION
-        ${BIGTABLE_CLIENT_VERSION_MAJOR}.${BIGTABLE_CLIENT_VERSION_MINOR}.${BIGTABLE_CLIENT_VERSION_PATCH}
-        SOVERSION
-        ${BIGTABLE_CLIENT_VERSION_MAJOR})
+add_library(bigtable_protos INTERFACE)
+target_link_libraries(bigtable_protos INTERFACE googleapis-c++::bigtable_protos)
 add_library(bigtable::protos ALIAS bigtable_protos)
 
 # Enable unit tests
@@ -463,9 +410,6 @@ if ("${GOOGLE_CLOUD_CPP_BIGTABLE_ENABLE_INSTALL}")
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
-    # Install proto generated files into include/google.
-    google_cloud_cpp_install_headers(bigtable_protos include)
-
     # Export the CMake targets to make it easy to create configuration files.
     install(EXPORT bigtable-targets
             DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client")
@@ -485,7 +429,8 @@ if ("${GOOGLE_CLOUD_CPP_BIGTABLE_ENABLE_INSTALL}")
     set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Bigtable C++ Client Library")
     set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
         "Provides C++ APIs to access Google Cloud Bigtable.")
-    set(GOOGLE_CLOUD_CPP_PC_LIBS "-lbigtable_client -lbigtable_protos")
+    set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common googleapis")
+    set(GOOGLE_CLOUD_CPP_PC_LIBS "-lbigtable_client")
 
     # Create and install the pkg-config files.
     configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"

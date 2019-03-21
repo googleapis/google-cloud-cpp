@@ -165,7 +165,7 @@ fi
 if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   echo
   echo "${COLOR_YELLOW}Testing install rule.${COLOR_RESET}"
-  cmake --build "${BUILD_OUTPUT}" --target install
+  cmake --build "${BUILD_OUTPUT}" --target install || echo "FAILED"
   echo
   echo "${COLOR_YELLOW}Test installed libraries using cmake(1).${COLOR_RESET}"
   readonly TEST_INSTALL_DIR="${PROJECT_ROOT}/ci/test-install"
