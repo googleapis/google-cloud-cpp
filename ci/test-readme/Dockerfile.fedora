@@ -74,8 +74,7 @@ RUN ldconfig
 
 # #### google-cloud-cpp
 
-# We can now compile and install `google-cloud-cpp`. Note that we use
-# `pkg-config` to discover the options for gRPC and protobuf:
+# We can now compile and install `google-cloud-cpp`.
 
 # ```bash
 WORKDIR /home/build/google-cloud-cpp

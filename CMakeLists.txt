@@ -159,17 +159,3 @@ add_custom_target(doxygen-docs)
 
 # Add subprojects here.
 add_subdirectory(google/cloud)
-
-include(GNUInstallDirs)
-install(FILES
-        "cmake/FindProtobufTargets.cmake"
-        DESTINATION
-        "${CMAKE_INSTALL_LIBDIR}/cmake/ProtobufTargets")
-install(FILES
-        "cmake/FindgRPC.cmake"
-        DESTINATION
-        "${CMAKE_INSTALL_LIBDIR}/cmake/gRPC")
-install(FILES
-        "cmake/PkgConfigHelper.cmake"
-        DESTINATION
-        "${CMAKE_INSTALL_LIBDIR}/cmake/PkgConfigHelper")

@@ -170,21 +170,14 @@ RUN make install
 
 # #### google-cloud-cpp
 
-# We can now compile and install `google-cloud-cpp`. Note that we use
-# `pkg-config` to discover the options for gRPC and protobuf:
+# We can now compile and install `google-cloud-cpp`.
 
 # ```bash
-RUN echo
-RUN pkg-config --modversion libcurl
-RUN pkg-config --libs libcurl
-RUN pkg-config --cflags libcurl
 WORKDIR /home/build/google-cloud-cpp
 COPY . /home/build/google-cloud-cpp
 RUN cmake -H. -Bbuild-output \
     -DCMAKE_FIND_ROOT_PATH="/usr/local/curl;/usr/local/ssl" \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
-    -DGOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER=pkg-config \
-    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 RUN cmake --build build-output -- -j $(nproc)
 WORKDIR /home/build/google-cloud-cpp/build-output
@@ -198,3 +191,9 @@ RUN cmake --build . --target install
 WORKDIR /home/build/test-install-plain-make
 COPY ci/test-install /home/build/test-install-plain-make
 RUN make
+
+WORKDIR /home/build/test-install-cmake
+ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
+COPY ci/test-install /home/build/test-install-cmake
+RUN cmake -H. -B.build
+RUN cmake --build .build -- -j $(nproc)

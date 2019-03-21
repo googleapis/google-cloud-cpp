@@ -78,7 +78,7 @@ endif ()
 find_package(PkgConfig QUIET)
 if (NOT gRPC_FOUND AND PkgConfig_FOUND)
     # Could not find gRPC using a *Config.cmake file, try using `pkg-config`.
-    include(PkgConfigHelper)
+    include(${CMAKE_CURRENT_LIST_DIR}/PkgConfigHelper.cmake)
 
     # Find the core gRPC C library using pkg-config. If this is not found we
     # abort.

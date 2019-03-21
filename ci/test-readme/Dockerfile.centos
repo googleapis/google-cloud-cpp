@@ -122,15 +122,13 @@ RUN ldconfig
 
 # #### google-cloud-cpp
 
-# Finally we can install `google-cloud-cpp`. Note that we use `pkg-config` to
-# discover the options for gRPC:
+# Finally we can install `google-cloud-cpp`.
 
 # ```bash
 WORKDIR /var/tmp/build/google-cloud-cpp
 COPY . /var/tmp/build/google-cloud-cpp
 RUN cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
-    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 RUN cmake --build build-output -- -j $(nproc)
 WORKDIR /var/tmp/build/google-cloud-cpp/build-output
@@ -144,3 +142,9 @@ RUN cmake --build . --target install
 WORKDIR /home/build/test-install-plain-make
 COPY ci/test-install /home/build/test-install-plain-make
 RUN make
+
+WORKDIR /home/build/test-install-cmake
+ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
+COPY ci/test-install /home/build/test-install-cmake
+RUN cmake -H. -B.build
+RUN cmake --build .build -- -j $(nproc)
