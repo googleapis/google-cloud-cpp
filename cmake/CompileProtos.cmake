@@ -146,11 +146,11 @@ function (GRPC_GENERATE_CPP_BASE SRCS HDRS MHDRS WITH_MOCK)
             COMMAND
                 $<TARGET_FILE:protobuf::protoc>
                 ARGS
-                --plugin=protoc-gen-grpc=$<TARGET_FILE:grpc_cpp_plugin>
+                --plugin=protoc-gen-grpc=$<TARGET_FILE:gRPC::grpc_cpp_plugin>
                 --grpc_out=${GRPC_OUT_EXTRA}${CMAKE_CURRENT_BINARY_DIR}
                 --cpp_out=${CMAKE_CURRENT_BINARY_DIR} ${_protobuf_include_path}
                                                       ${FIL}
-            DEPENDS ${FIL} protobuf::protoc grpc_cpp_plugin
+            DEPENDS ${FIL} protobuf::protoc gRPC::grpc_cpp_plugin
             COMMENT "Running gRPC++ protocol buffer compiler on ${FIL}"
             VERBATIM)
     endforeach ()
