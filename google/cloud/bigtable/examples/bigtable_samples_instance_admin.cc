@@ -60,7 +60,7 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
           project_id, google::cloud::bigtable::ClientOptions()));
   // [END connect_instance_admin]
 
-  // [START bigtable_check_instance_exists]
+  // [START bigtable_check_instance_exists] [START bigtable_exists_instance]
   std::cout << "\nCheck Instance exists:\n";
   auto instances = instance_admin.ListInstances();
   if (!instances) {
@@ -83,7 +83,7 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
     }
     std::cerr << ". Continuing anyway\n";
   }
-  // [END bigtable_check_instance_exists]
+  // [END bigtable_check_instance_exists] [END bigtable_exists_instance]
 
   // Create instance if does not exists
   if (!instance_exists) {
