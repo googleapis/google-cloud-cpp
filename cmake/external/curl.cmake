@@ -26,14 +26,7 @@ if (NOT TARGET curl_project)
     set(GOOGLE_CLOUD_CPP_CURL_SHA256
         "e9c37986337743f37fd14fe8737f246e97aec94b39d1b71e8a5973f72a9fc4f5")
 
-    if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
-        OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
-        if (DEFINED ENV{GOOGLE_CLOUD_CPP_NCPU})
-            set(PARALLEL "--" "-j" "$ENV{GOOGLE_CLOUD_CPP_NCPU}")
-        endif ()
-    else()
-        set(PARALLEL "")
-    endif ()
+    set_external_project_build_parallel_level(PARALLEL)
 
     # When passing a semi-colon delimited list to ExternalProject_Add, we need
     # to escape the semi-colon. Quoting does not work and escaping the semi-

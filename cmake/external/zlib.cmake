@@ -22,14 +22,7 @@ if (NOT TARGET zlib_project)
     set(GOOGLE_CLOUD_CPP_ZLIB_SHA256
         "629380c90a77b964d896ed37163f5c3a34f6e6d897311f1df2a7016355c45eff")
 
-    if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
-        OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
-        if (DEFINED ENV{GOOGLE_CLOUD_CPP_NCPU})
-            set(PARALLEL "--" "-j" "$ENV{GOOGLE_CLOUD_CPP_NCPU}")
-        endif ()
-    else()
-        set(PARALLEL "")
-    endif ()
+    set_external_project_build_parallel_level(PARALLEL)
 
     create_external_project_library_byproduct_list(zlib_byproducts "z")
 

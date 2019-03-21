@@ -134,3 +134,22 @@ function (create_external_project_library_byproduct_list var_name)
 
     set(${var_name} ${_decorated_byproduct_names} PARENT_SCOPE)
 endfunction ()
+
+function (set_external_project_build_parallel_level var_name)
+    if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
+        OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
+        if (DEFINED ENV{GOOGLE_CLOUD_CPP_NCPU})
+            set(${var_name}
+                "--"
+                "-j"
+                "$ENV{GOOGLE_CLOUD_CPP_NCPU}"
+                PARENT_SCOPE)
+        else()
+            include(ProcessorCount)
+            processorcount(NCPU)
+            set(${var_name} "--" "-j" "${NCPU}" PARENT_SCOPE)
+        endif ()
+    else()
+        set(${var_name} "" PARENT_SCOPE)
+    endif ()
+endfunction ()
