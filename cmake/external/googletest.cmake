@@ -26,10 +26,11 @@ if (NOT TARGET googletest_project)
     set(GOOGLE_CLOUD_CPP_GOOGLETEST_SHA256
         "8d9aa381a6885fe480b7d0ce8ef747a0b8c6ee92f99d74ab07e3503434007cb0")
 
-    if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles")
-        include(ProcessorCount)
-        processorcount(NCPU)
-        set(PARALLEL "--" "-j" "${NCPU}")
+    if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
+        OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
+        if (DEFINED ENV{GOOGLE_CLOUD_CPP_NCPU})
+            set(PARALLEL "--" "-j" "$ENV{GOOGLE_CLOUD_CPP_NCPU}")
+        endif ()
     else()
         set(PARALLEL "")
     endif ()

@@ -26,9 +26,9 @@ if (NOT TARGET c_ares_project)
 
     if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
         OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
-        include(ProcessorCount)
-        processorcount(NCPU)
-        set(PARALLEL "--" "-j" "${NCPU}")
+        if (DEFINED ENV{GOOGLE_CLOUD_CPP_NCPU})
+            set(PARALLEL "--" "-j" "$ENV{GOOGLE_CLOUD_CPP_NCPU}")
+        endif ()
     else()
         set(PARALLEL "")
     endif ()

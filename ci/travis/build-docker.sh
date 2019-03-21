@@ -125,7 +125,7 @@ fi
 # scan-build disabled we compile everything, to test the build as most
 # developers will experience it.
 echo "${COLOR_YELLOW}Started build at: $(date)${COLOR_RESET}"
-${CMAKE_COMMAND} --build "${BUILD_OUTPUT}" -- -j ${NCPU}
+env GOOGLE_CLOUD_CPP_NCPU=${NCPU} ${CMAKE_COMMAND} --build "${BUILD_OUTPUT}" -- -j ${NCPU}
 echo "${COLOR_YELLOW}Finished build at: $(date)${COLOR_RESET}"
 
 # If ccache is enabled we want to zero out the statistics because otherwise
