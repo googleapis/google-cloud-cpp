@@ -77,11 +77,13 @@ endif ()
 
 find_package(PkgConfig QUIET)
 if (NOT gRPC_FOUND AND PkgConfig_FOUND)
-    # Could not gRPC using a *Config.cmake file, try using `pkg-config`.
+    # Could not find gRPC using a *Config.cmake file, try using `pkg-config`.
     include(PkgConfigHelper)
 
     # Find the core gRPC C library using pkg-config. If this is not found we
-    # basically abort.
+    # abort.
+    #
+    # TODO(#2275) - we should remote the REQUIRED option and continue.
     pkg_check_modules(gRPC_c REQUIRED grpc)
     add_library(gRPC::grpc INTERFACE IMPORTED)
     set_library_properties_from_pkg_config(gRPC::grpc gRPC_c)
@@ -90,7 +92,10 @@ if (NOT gRPC_FOUND AND PkgConfig_FOUND)
                  PROPERTY INTERFACE_LINK_LIBRARIES protobuf::libprotobuf)
 
     # Try to find the gRPC C++ library using pkg-config. We do this one last
-    # because we want the values of gRPC_FOUND and gRPC_VERSION used here.
+    # because we want the values of gRPC_FOUND and gRPC_VERSION returned by this
+    # search as the final result (if it succeeds).
+    #
+    # TODO(#2275) - we should remote the REQUIRED option and continue.
     pkg_check_modules(gRPC REQUIRED grpc++>=1.16)
     add_library(gRPC::grpc++ INTERFACE IMPORTED)
     set_library_properties_from_pkg_config(gRPC::grpc++ gRPC)
@@ -109,8 +114,8 @@ if (NOT gRPC_FOUND AND PkgConfig_FOUND)
 endif ()
 
 if (NOT gRPC_FOUND)
-    # Could not gRPC using the CMake-config files or using `pkg-config`, try
-    # finding headers and libraries.
+    # Could not find gRPC using the CMake-config files or using `pkg-config`,
+    # try finding headers and libraries.
     #
     # TODO(#2275) - use find_library() and find_path() to find gRPC::*.
 endif ()
