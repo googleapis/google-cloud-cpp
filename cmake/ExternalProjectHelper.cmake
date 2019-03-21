@@ -138,12 +138,8 @@ endfunction ()
 function (set_external_project_build_parallel_level var_name)
     if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
         OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
-        if (DEFINED ENV{GOOGLE_CLOUD_CPP_NCPU})
-            set(${var_name}
-                "--"
-                "-j"
-                "$ENV{GOOGLE_CLOUD_CPP_NCPU}"
-                PARENT_SCOPE)
+        if (DEFINED ENV{NCPU})
+            set(${var_name} "--" "-j" "$ENV{NCPU}" PARENT_SCOPE)
         else()
             include(ProcessorCount)
             processorcount(NCPU)
