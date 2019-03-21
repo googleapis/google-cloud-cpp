@@ -22,14 +22,7 @@ if (NOT TARGET crc32c_project)
     set(GOOGLE_CLOUD_CPP_CRC32C_SHA256
         "6b3b1d861bb8307658b2407bc7a4c59e566855ef5368a60b35c893551e4788e9")
 
-    if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
-        OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
-        include(ProcessorCount)
-        processorcount(NCPU)
-        set(PARALLEL "--" "-j" "${NCPU}")
-    else()
-        set(PARALLEL "")
-    endif ()
+    set_external_project_build_parallel_level(PARALLEL)
 
     create_external_project_library_byproduct_list(crc32c_byproducts "crc32c")
 
