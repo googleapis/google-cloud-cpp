@@ -61,9 +61,13 @@ if (gRPC_DEBUG)
                    "gRPC_USE_STATIC_LIBS = ${gRPC_USE_STATIC_LIBS}")
 endif ()
 
-# gRPC always requires Protobuf and thread support.
+# gRPC always requires Thread support.
 find_package(Threads REQUIRED)
-find_package(ProtobufTargets REQUIRED)
+
+# Load the module to find protobuf with proper targets. Do not use
+# `find_package()` because we (have to) install this module in non-standard
+# locations.
+include(${CMAKE_CURRENT_LIST_DIR}/FindProtobufTargets.cmake)
 
 # First try to use the `gRPCConfig.cmake` or `grpc-config.cmake` file if it was
 # installed. This is common on systems (or package managers) where gRPC was
