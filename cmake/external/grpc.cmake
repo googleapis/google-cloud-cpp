@@ -27,14 +27,7 @@ if (NOT TARGET gprc_project)
     set(GOOGLE_CLOUD_CPP_GRPC_SHA256
         "f869c648090e8bddaa1260a271b1089caccbe735bf47ac9cd7d44d35a02fb129")
 
-    if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
-        OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
-        include(ProcessorCount)
-        processorcount(NCPU)
-        set(PARALLEL "--" "-j" "${NCPU}")
-    else()
-        set(PARALLEL "")
-    endif ()
+    set_external_project_build_parallel_level(PARALLEL)
 
     # When passing a semi-colon delimited list to ExternalProject_Add, we need
     # to escape the semi-colon. Quoting does not work and escaping the semi-
@@ -133,9 +126,10 @@ if (NOT TARGET gprc_project)
     add_dependencies(protoc protobuf_project)
     set_executable_name_for_external_project(protoc protoc)
 
-    add_executable(grpc_cpp_plugin IMPORTED)
-    add_dependencies(grpc_cpp_plugin grpc_project)
-    set_executable_name_for_external_project(grpc_cpp_plugin grpc_cpp_plugin)
+    add_executable(gRPC::grpc_cpp_plugin IMPORTED)
+    add_dependencies(gRPC::grpc_cpp_plugin grpc_project)
+    set_executable_name_for_external_project(gRPC::grpc_cpp_plugin
+                                             grpc_cpp_plugin)
 
     list(APPEND PROTOBUF_IMPORT_DIRS "${PROJECT_BINARY_DIR}/external/include")
 endif ()

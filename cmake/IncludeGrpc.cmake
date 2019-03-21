@@ -17,6 +17,9 @@
 # gRPC always requires thread support.
 find_package(Threads REQUIRED)
 
+# gRPC depends on protobuf, so include that too.
+include(IncludeProtobuf)
+
 # Configure the gRPC dependency, this can be found as a submodule, package, or
 # installed with pkg-config support.
 set(GOOGLE_CLOUD_CPP_GRPC_PROVIDER ${GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER}
@@ -27,129 +30,10 @@ set_property(CACHE GOOGLE_CLOUD_CPP_GRPC_PROVIDER
                       "package"
                       "pkg-config")
 
-# Additional compile-time definitions for WIN32.  We need to manually set these
-# because Protobuf / gRPC do not (always) set them.
-set(GOOGLE_CLOUD_CPP_WIN32_DEFINITIONS
-    _WIN32_WINNT=0x600
-    _SCL_SECURE_NO_WARNINGS
-    _CRT_SECURE_NO_WARNINGS
-    _WINSOCK_DEPRECATED_NO_WARNINGS)
-# While the previous definitions are applicable to all compilers on Windows, the
-# following options are specific to MSVC, they would not apply to MinGW:
-set(GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS
-    /wd4005
-    /wd4065
-    /wd4068
-    /wd4146
-    /wd4244
-    /wd4267
-    /wd4291
-    /wd4506
-    /wd4800
-    /wd4838
-    /wd4996)
-
-# gRPC depends on protobuf, so include that too.
-include(IncludeProtobuf)
-
 if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "external")
     include(external/grpc)
-elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
+elseif(("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
+       OR
+       ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config"))
     find_package(gRPC REQUIRED gRPC>=1.16)
-
-    if (NOT TARGET protobuf::libprotobuf)
-        message(
-            FATAL_ERROR
-                "Expected protobuf::libprotobuf target created by FindProtobuf")
-    endif ()
-
-    if (VCPKG_TARGET_TRIPLET MATCHES "-static$" AND MSVC)
-        # Replace the runtime flags because all the dependencies are linked
-        # statically in this case.
-        message(STATUS " RELEASE=${CMAKE_CXX_FLAGS_RELEASE}")
-        message(STATUS " DEBUG=${CMAKE_CXX_FLAGS_DEBUG}")
-        foreach (flag_var
-                 CMAKE_CXX_FLAGS
-                 CMAKE_CXX_FLAGS_DEBUG
-                 CMAKE_CXX_FLAGS_RELEASE
-                 CMAKE_CXX_FLAGS_MINSIZEREL
-                 CMAKE_CXX_FLAGS_RELWITHDEBINFO)
-            if (${flag_var} MATCHES "/MD")
-                string(REGEX
-                       REPLACE "/MD"
-                               "/MT"
-                               ${flag_var}
-                               "${${flag_var}}")
-            endif ()
-        endforeach (flag_var)
-        message(STATUS " RELEASE=${CMAKE_CXX_FLAGS_RELEASE}")
-        message(STATUS " DEBUG=${CMAKE_CXX_FLAGS_DEBUG}")
-        message(STATUS " DEFAULT=${CMAKE_CXX_FLAGS}")
-    endif ()
-
-    # The necessary compiler options and definitions are not defined by the
-    # targets, we need to add them.
-    if (WIN32)
-        set_property(TARGET protobuf::libprotobuf
-                     APPEND
-                     PROPERTY INTERFACE_COMPILE_DEFINITIONS
-                              ${GOOGLE_CLOUD_CPP_WIN32_DEFINITIONS})
-    endif (WIN32)
-    if (MSVC)
-        set_property(TARGET protobuf::libprotobuf
-                     APPEND
-                     PROPERTY INTERFACE_COMPILE_OPTIONS
-                              ${GOOGLE_CLOUD_CPP_MSVC_COMPILE_OPTIONS})
-    endif (MSVC)
-
-    find_program(
-        PROTOC_GRPCPP_PLUGIN_EXECUTABLE
-        NAMES grpc_cpp_plugin
-        DOC "The Google Protocol Buffers Compiler"
-        PATHS
-            ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Release
-            ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Debug)
-    mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
-    add_executable(grpc_cpp_plugin IMPORTED)
-    set_property(TARGET grpc_cpp_plugin
-                 PROPERTY IMPORTED_LOCATION ${PROTOC_GRPCPP_PLUGIN_EXECUTABLE})
-
-    if ("${Protobuf_IMPORT_DIRS}" STREQUAL "")
-        list(APPEND PROTOBUF_IMPORT_DIRS ${Protobuf_INCLUDE_DIRS})
-    else()
-        list(APPEND PROTOBUF_IMPORT_DIRS ${Protobuf_IMPORT_DIRS})
-    endif ()
-
-elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config")
-
-    # Use pkg-config to find the libraries.
-    find_package(PkgConfig REQUIRED)
-    include(PkgConfigHelper)
-
-    pkg_check_modules(gRPC REQUIRED grpc>=1.16)
-    add_library(gRPC::grpc INTERFACE IMPORTED)
-    set_library_properties_from_pkg_config(gRPC::grpc gRPC)
-    set_property(TARGET gRPC::grpc
-                 APPEND
-                 PROPERTY INTERFACE_LINK_LIBRARIES protobuf::libprotobuf)
-
-    pkg_check_modules(gRPC++ REQUIRED grpc++>=1.16)
-    add_library(gRPC::grpc++ INTERFACE IMPORTED)
-    set_library_properties_from_pkg_config(gRPC::grpc++ gRPC++)
-    set_property(TARGET gRPC::grpc++
-                 APPEND
-                 PROPERTY INTERFACE_LINK_LIBRARIES gRPC::grpc)
-
-    find_program(
-        PROTOC_GRPCPP_PLUGIN_EXECUTABLE
-        NAMES grpc_cpp_plugin
-        DOC "The Google Protocol Buffers Compiler"
-        PATHS
-            ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Release
-            ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Debug)
-    mark_as_advanced(PROTOC_GRPCPP_PLUGIN_EXECUTABLE)
-    add_executable(grpc_cpp_plugin IMPORTED)
-    set_property(TARGET grpc_cpp_plugin
-                 PROPERTY IMPORTED_LOCATION ${PROTOC_GRPCPP_PLUGIN_EXECUTABLE})
-
 endif ()

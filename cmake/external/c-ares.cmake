@@ -24,14 +24,7 @@ if (NOT TARGET c_ares_project)
     set(GOOGLE_CLOUD_CPP_C_ARES_SHA256
         "62dd12f0557918f89ad6f5b759f0bf4727174ae9979499f5452c02be38d9d3e8")
 
-    if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
-        OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
-        include(ProcessorCount)
-        processorcount(NCPU)
-        set(PARALLEL "--" "-j" "${NCPU}")
-    else()
-        set(PARALLEL "")
-    endif ()
+    set_external_project_build_parallel_level(PARALLEL)
 
     create_external_project_library_byproduct_list(c_ares_byproducts
                                                    ALWAYS_SHARED "cares")
