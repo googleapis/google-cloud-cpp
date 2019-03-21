@@ -46,7 +46,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
             << command_usage << "\n";
 }
 
-//! [create instance] [START bigtable_create_instance]
+//! [create instance]
 void CreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                     int argc, char* argv[]) {
   if (argc != 3) {
@@ -81,7 +81,7 @@ void CreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   }
   std::cout << "TIMEOUT\n";
 }
-//! [create instance] [END bigtable_create_instance]
+//! [create instance]
 
 //! [create dev instance]
 void CreateDevInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
@@ -190,7 +190,7 @@ void GetInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
 }
 //! [get instance] [END bigtable_get_instance]
 
-//! [delete instance] [START bigtable_del_instance]
+//! [delete instance]
 void DeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                     int argc, char* argv[]) {
   if (argc != 2) {
@@ -202,7 +202,7 @@ void DeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
     throw std::runtime_error(status.message());
   }
 }
-//! [delete instance] [END bigtable_del_instance]
+//! [delete instance]
 
 //! [create cluster] [START bigtable_create_cluster]
 // Before creating cluster, need to create a production instance first,
