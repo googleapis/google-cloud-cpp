@@ -77,7 +77,7 @@ void ListTables(google::cloud::bigtable::TableAdmin admin, int argc,
     throw Usage{"list-tables: <project-id> <instance-id>"};
   }
 
-  //! [list tables] [START bigtable_get_tables]
+  //! [list tables] [START bigtable_list_tables]
   [](google::cloud::bigtable::TableAdmin admin) {
     auto tables =
         admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
@@ -89,7 +89,7 @@ void ListTables(google::cloud::bigtable::TableAdmin admin, int argc,
       std::cout << table.name() << "\n";
     }
   }
-  //! [list tables] [END bigtable_get_tables]
+  //! [list tables] [END bigtable_list_tables]
   (std::move(admin));
 }
 
