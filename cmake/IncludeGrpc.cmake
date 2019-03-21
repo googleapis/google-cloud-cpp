@@ -25,15 +25,10 @@ include(IncludeProtobuf)
 set(GOOGLE_CLOUD_CPP_GRPC_PROVIDER ${GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER}
     CACHE STRING "How to find the gRPC library")
 set_property(CACHE GOOGLE_CLOUD_CPP_GRPC_PROVIDER
-             PROPERTY STRINGS
-                      "external"
-                      "package"
-                      "pkg-config")
+             PROPERTY STRINGS "external" "package")
 
 if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "external")
     include(external/grpc)
-elseif(("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
-       OR
-       ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "pkg-config"))
+elseif("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "package")
     find_package(gRPC REQUIRED gRPC>=1.16)
 endif ()

@@ -29,10 +29,7 @@ else()
         CACHE STRING "How to find the libcurl.")
 endif ()
 set_property(CACHE GOOGLE_CLOUD_CPP_CURL_PROVIDER
-             PROPERTY STRINGS
-                      "external"
-                      "package"
-                      "pkg-config")
+             PROPERTY STRINGS "external" "package")
 
 if ("${GOOGLE_CLOUD_CPP_CURL_PROVIDER}" STREQUAL "external")
     include(external/curl)
