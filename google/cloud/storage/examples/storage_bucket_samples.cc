@@ -1391,14 +1391,15 @@ void RemoveStaticWebsiteConfiguration(google::cloud::storage::Client client,
 
 void SetCorsConfiguration(google::cloud::storage::Client client, int& argc,
                           char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"set-cors-configuration <bucket-name>"};
+  if (argc != 3) {
+    throw Usage{"set-cors-configuration <bucket-name> <origin>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
+  auto origin = ConsumeArg(argc, argv);
   //! [cors configuration] [START storage_cors_configuration]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string bucket_name, std::string origin) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
@@ -1407,8 +1408,8 @@ void SetCorsConfiguration(google::cloud::storage::Client client, int& argc,
     }
 
     std::vector<gcs::CorsEntry> cors_configuration;
-    cors_configuration.emplace_back(gcs::CorsEntry{
-        3600, {"GET"}, {"http://origin1.example.com"}, {"Content-Type"}});
+    cors_configuration.emplace_back(
+        gcs::CorsEntry{3600, {"GET"}, {origin}, {"Content-Type"}});
 
     StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
         bucket_name,
@@ -1432,7 +1433,7 @@ void SetCorsConfiguration(google::cloud::storage::Client client, int& argc,
     }
   }
   //! [cors configuration] [END storage_cors_configuration]
-  (std::move(client), bucket_name);
+  (std::move(client), bucket_name, origin);
 }
 }  // anonymous namespace
 
