@@ -57,7 +57,7 @@ sudo docker run \
      --env NCPU="${NCPU:-2}" \
      --env NEEDS_CCACHE="${NEEDS_CCACHE:=yes}" \
      --env BUILD_TYPE="${BUILD_TYPE:-Release}" \
-     --env BUILD_TESTING="${BUILD_TESTING:-}" \
+     --env BUILD_TESTING="${BUILD_TESTING:=yes}" \
      --env USE_LIBCXX="${USE_LIBCXX:-}" \
      --env CHECK_ABI="${CHECK_ABI:-}" \
      --env UPDATE_ABI="${UPDATE_ABI:-}" \

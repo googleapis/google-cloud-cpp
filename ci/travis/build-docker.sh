@@ -67,7 +67,7 @@ echo "${COLOR_YELLOW}Started CMake config at: $(date)${COLOR_RESET}"
 echo "travis_fold:start:configure-cmake"
 # Tweak configuration for TEST_INSTALL=yes and SCAN_BUILD=yes builds.
 cmake_install_flags=""
-if [ "${BUILD_TESTING:-}" != "yes" ]; then
+if [ "${BUILD_TESTING:-}" = "no" ]; then
   cmake_install_flags="${cmake_install_flags} -DBUILD_TESTING=OFF"
 fi
 
@@ -146,7 +146,7 @@ if [ -n "${ccache_command}" ]; then
   "${ccache_command}" --zero-stats --cleanup --max-size="${max_size}"
 fi
 
-if [ "${BUILD_TESTING:-}" != "no" ]; then
+if [ "${BUILD_TESTING:-}" = "yes" ]; then
   # Run the tests and output any failures.
   echo
   echo "${COLOR_YELLOW}Running unit and integration tests $(date)${COLOR_RESET}"
