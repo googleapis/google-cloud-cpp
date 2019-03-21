@@ -1132,8 +1132,6 @@ run_cors_configuration_examples() {
 
   run_example ./storage_bucket_samples set-cors-configuration \
       "${bucket_name}"
-  run_example ./storage_bucket_samples get-cors-configuration \
-      "${bucket_name}"
 
   run_example ./storage_bucket_samples delete-bucket \
       "${bucket_name}"
