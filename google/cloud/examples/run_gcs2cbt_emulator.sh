@@ -36,10 +36,10 @@ start_emulators
 # Reset the trap to kill both the GCS testbench and storage emulator.
 trap kill_emulator_and_testbench EXIT
 
-readonly PROJECT_ID="fake-project-$(date +%s)-${RANDOM}"
-readonly INSTANCE_ID="in-$(date +%s)-${RANDOM}"
+readonly PROJECT_ID="fake-project-${RANDOM}-${RANDOM}"
+readonly INSTANCE_ID="in-${RANDOM}-${RANDOM}"
 readonly ZONE_ID="fake-zone"
-readonly BUCKET_NAME="fake-bucket-$(date +%s)-${RANDOM}"
+readonly BUCKET_NAME="fake-bucket-${RANDOM}-${RANDOM}"
 readonly TABLE="csv-table-${RANDOM}"
 
 run_example ../bigtable/examples/table_admin_snippets \

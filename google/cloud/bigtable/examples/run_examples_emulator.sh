@@ -26,8 +26,8 @@ echo "Running Bigtable Example programs"
 start_emulators
 
 # Use a (likely unique) project id for the emulator.
-readonly PROJECT_ID="project-$(date +%s)"
-readonly INSTANCE_ID="in-$(date +%s)-${RANDOM}"
+readonly PROJECT_ID="project-${RANDOM}-${RANDOM}"
+readonly INSTANCE_ID="in-${RANDOM}-${RANDOM}"
 readonly ZONE_ID="fake-zone"
 readonly REPLICATION_ZONE_ID="fake-zone-2"
 

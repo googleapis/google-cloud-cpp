@@ -27,13 +27,13 @@ echo "Starting Google Cloud Storage testbench."
 start_testbench
 
 # Define a fake region to run the benchmarks on:
-FAKE_REGION="fake-region-$(date +%s)-${RANDOM}"
+FAKE_REGION="fake-region-${RANDOM}-${RANDOM}"
 
 # We use the same driver scripts that we use for the examples, the main
 # point here is to run the benchmarks for short periods of time to smoke test
 # them. We are not trying to validate the output is correct, or the performance
 # has not changed.
-export GOOGLE_CLOUD_PROJECT="fake-project-$(date +%s)-${RANDOM}"
+export GOOGLE_CLOUD_PROJECT="fake-project-${RANDOM}-${RANDOM}"
 run_example ./storage_latency_benchmark \
       --duration=1 \
       --object-count=10 \
