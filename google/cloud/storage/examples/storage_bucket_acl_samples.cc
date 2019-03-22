@@ -242,6 +242,33 @@ void PatchBucketAclNoRead(google::cloud::storage::Client client, int& argc,
   //! [patch bucket acl no-read]
   (std::move(client), bucket_name, entity, role);
 }
+
+void AddBucketOwner(google::cloud::storage::Client client, int& argc,
+                    char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"add-bucket-owner <bucket-name> <entity>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  //! [add bucket owner] [START storage_add_bucket_owner]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name, std::string entity) {
+    StatusOr<gcs::BucketAccessControl> patched_acl =
+        client.PatchBucketAcl(bucket_name, entity,
+                              gcs::BucketAccessControlPatchBuilder().set_role(
+                                  gcs::BucketAccessControl::ROLE_OWNER()));
+
+    if (!patched_acl) {
+      throw std::runtime_error(patched_acl.status().message());
+    }
+
+    std::cout << "ACL entry for " << patched_acl->entity() << " in bucket "
+              << patched_acl->bucket() << " is now " << *patched_acl << "\n";
+  }
+  //! [add bucket owner] [END storage_add_bucket_owner]
+  (std::move(client), bucket_name, entity);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -265,6 +292,7 @@ int main(int argc, char* argv[]) try {
       {"update-bucket-acl", &UpdateBucketAcl},
       {"patch-bucket-acl", &PatchBucketAcl},
       {"patch-bucket-acl-no-read", &PatchBucketAclNoRead},
+      {"add-bucket-owner", &AddBucketOwner},
   };
   for (auto&& kv : commands) {
     try {
