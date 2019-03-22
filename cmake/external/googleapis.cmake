@@ -103,6 +103,7 @@ if (NOT TARGET googleapis_project)
                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                    -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
+                   -DCMAKE_SKIP_INSTALL_RPATH=ON
                    -DgRPC_DEBUG=ON
                    -Dprotobuf_DEBUG=ON
                    -DGOOGLE_CLOUD_CPP_USE_LIBCXX=${GOOGLE_CLOUD_CPP_USE_LIBCXX}
