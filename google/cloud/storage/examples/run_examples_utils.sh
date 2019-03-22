@@ -1125,7 +1125,7 @@ run_static_website_configuration_examples() {
 ################################################
 run_cors_configuration_examples() {
   # Create the bucket to avoid changing the configuration for "${BUCKET_NAME}"
-  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
 
   run_example ./storage_bucket_samples create-bucket-for-project \
       "${bucket_name}" "${PROJECT_ID}"
