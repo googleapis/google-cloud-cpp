@@ -445,9 +445,6 @@ if ("${GOOGLE_CLOUD_CPP_BIGTABLE_ENABLE_INSTALL}")
     install(
         FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config-version.cmake"
-              "${PROJECT_SOURCE_DIR}/cmake/FindProtobufTargets.cmake"
-              "${PROJECT_SOURCE_DIR}/cmake/PkgConfigHelper.cmake"
-              "${PROJECT_SOURCE_DIR}/cmake/FindgRPC.cmake"
               DESTINATION
               "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client")
 endif ()
