@@ -148,13 +148,14 @@ class ObjectIntegrationTest
         std::string key_name;
 
         // Check for the keys of the headers field
-        for (auto const& x : j_obj["headers"].items()) {
+        for (auto& x : j_obj["headers"].items()) {
           // The keys are being outputted in alphabetical order
           // not in the order they are in the file
           key_name = x.key();
           std::vector<std::string> value_array;
-          for (auto const& f : x.value()) {
-            value_array.emplace_back(f);
+          for (auto& value : x.value()) {
+            std::string value_name = value;
+            value_array.emplace_back(value_name);
           }
           headers.emplace_back(key_name, value_array);
         }
