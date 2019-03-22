@@ -20,6 +20,8 @@
 #include <thread>
 #include <type_traits>
 
+#include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
+
 namespace btproto = ::google::bigtable::v2;
 namespace google {
 namespace cloud {
@@ -74,24 +76,38 @@ Status Table::Apply(SingleRowMutation mut) {
 }
 
 future<Status> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
-  promise<StatusOr<google::bigtable::v2::MutateRowResponse>> p;
-  future<StatusOr<google::bigtable::v2::MutateRowResponse>> result =
-      p.get_future();
+  google::bigtable::v2::MutateRowRequest request;
+  internal::SetCommonTableOperationRequest<
+      google::bigtable::v2::MutateRowRequest>(
+      request, impl_.app_profile_id_.get(), impl_.table_name_.get());
+  mut.MoveTo(request);
+  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
 
-  impl_.AsyncApply(
-      cq, internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncApply"),
-      std::move(mut));
+  // Determine if all the mutations are idempotent. The idempotency of the
+  // mutations won't change as the retry loop executes, so we can just compute
+  // it once and use a constant value for the loop.
 
-  auto final = result.then(
-      [](future<StatusOr<google::bigtable::v2::MutateRowResponse>> f) {
-        auto mutate_row_response = f.get();
-        if (mutate_row_response) {
-          return Status();
-        }
-        return mutate_row_response.status();
+  auto idempotent_mutation_policy = clone_idempotent_mutation_policy();
+  bool const is_idempotent = std::all_of(
+      request.mutations().begin(), request.mutations().end(),
+      [&idempotent_mutation_policy](google::bigtable::v2::Mutation const& m) {
+        return idempotent_mutation_policy->is_idempotent(m);
       });
 
-  return final;
+  auto client = impl_.client_;
+  return internal::StartRetryAsyncUnaryRpc(
+             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             internal::ConstantIdempotencyPolicy(is_idempotent),
+             clone_metadata_update_policy(),
+             [client](grpc::ClientContext* context,
+                      google::bigtable::v2::MutateRowRequest const& request,
+                      grpc::CompletionQueue* cq) {
+               return client->AsyncMutateRow(context, request, cq);
+             },
+             std::move(request), cq)
+      .then([](future<StatusOr<google::bigtable::v2::MutateRowResponse>> r) {
+        return r.get().status();
+      });
 }
 
 std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
