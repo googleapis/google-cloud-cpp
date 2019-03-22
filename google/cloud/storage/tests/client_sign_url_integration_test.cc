@@ -125,7 +125,7 @@ class ObjectIntegrationTest
 
   std::string TimestampToRfc3339(std::string ts) {
     if (ts.size() != 16) {
-      throw "The timestamp is not in the correct format!";
+      return "";
     }
     return ts.substr(0, 4) + '-' + ts.substr(4, 2) + '-' + ts.substr(6, 2) +
            'T' + ts.substr(9, 2) + ':' + ts.substr(11, 2) + ':' +
