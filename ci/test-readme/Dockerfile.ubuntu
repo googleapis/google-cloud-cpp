@@ -123,7 +123,6 @@ COPY ci/test-install /home/build/test-install-plain-make
 RUN make
 
 WORKDIR /home/build/test-install-cmake
-ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 COPY ci/test-install /home/build/test-install-cmake
-RUN cmake -H. -B.build
+RUN env -u PKG_CONFIG_PATH cmake -H. -B.build
 RUN cmake --build .build -- -j $(nproc)
