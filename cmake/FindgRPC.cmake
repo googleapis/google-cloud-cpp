@@ -150,9 +150,12 @@ function (_gRPC_find_library name filename)
         select_library_configurations(${name})
 
         if (gRPC_DEBUG)
-            message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
+            message(
+                STATUS
+                    "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
                     "${name} ${filename} RELEASE=${${name}_LIBRARY}"
-                    " DEBUG=${${name}_LIBRARY_DEBUG} DEFAULT=${${name}_LIBRARY}")
+                    " DEBUG=${${name}_LIBRARY_DEBUG} DEFAULT=${${name}_LIBRARY}"
+                )
         endif ()
 
         set(${name}_LIBRARY "${${name}_LIBRARY}" PARENT_SCOPE)
@@ -173,8 +176,8 @@ if (_gRPC_USE_STATIC_LIBS)
     endif ()
 endif ()
 
-_gRPC_find_library(_gRPC_grpc grpc)
-_gRPC_find_library(_gRPC_grpc++ grpc++)
+_grpc_find_library(_gRPC_grpc grpc)
+_grpc_find_library(_gRPC_grpc++ grpc++)
 
 if (NOT _gRPC_INCLUDE_DIR)
     find_path(_gRPC_INCLUDE_DIR grpcpp/grpcpp.h)
@@ -183,11 +186,11 @@ endif ()
 
 if (gRPC_DEBUG)
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-            " _gRPC_grpc_LIBRARY = ${_gRPC_grpc_LIBRARY}")
+                   " _gRPC_grpc_LIBRARY = ${_gRPC_grpc_LIBRARY}")
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-            " _gRPC_grpc++_LIBRARY = ${_gRPC_grpc++_LIBRARY}")
+                   " _gRPC_grpc++_LIBRARY = ${_gRPC_grpc++_LIBRARY}")
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-            " _gRPC_INCLUDE_DIR = ${_gRPC_INCLUDE_DIR}")
+                   " _gRPC_INCLUDE_DIR = ${_gRPC_INCLUDE_DIR}")
 endif ()
 
 if (_gRPC_grpc_LIBRARY)
@@ -261,21 +264,22 @@ if (_gRPC_grpc++_LIBRARY)
             # gRPC++ requires C++11, but only CMake-3.8 introduced a target
             # compiler feature to meet that requirement.
             set_property(TARGET gRPC::grpc++
-                    APPEND
-                    PROPERTY INTERFACE_COMPILE_FEATURES
-                    cxx_std_11)
-        elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+                         APPEND
+                         PROPERTY INTERFACE_COMPILE_FEATURES cxx_std_11)
+        elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
             # CMake 3.5 is still alive and kicking in some older distros, use
             # the compiler-specific versions in these cases.
             set_property(TARGET gRPC::grpc++
-                    APPEND
-                    PROPERTY INTERFACE_COMPILE_OPTIONS "-std=c++11")
-        elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+                         APPEND
+                         PROPERTY INTERFACE_COMPILE_OPTIONS "-std=c++11")
+        elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
             set_property(TARGET gRPC::grpc++
-                    APPEND
-                    PROPERTY INTERFACE_COMPILE_OPTIONS "-std=c++11")
-        else ()
-            message(WARNING "gRPC::grpc++ requires C++11, but this module"
+                         APPEND
+                         PROPERTY INTERFACE_COMPILE_OPTIONS "-std=c++11")
+        else()
+            message(
+                WARNING
+                    "gRPC::grpc++ requires C++11, but this module"
                     " (${CMAKE_CURRENT_LIST_FILE})"
                     " cannot enable it for the library target in your CMake and"
                     " compiler versions. You need to enable C++11 in the"
@@ -287,7 +291,7 @@ endif ()
 
 # Restore original find library prefixes
 if (_gRPC_USE_STATIC_LIBS)
-    set(CMAKE_FIND_LIBRARY_PREFIXES  "${_gRPC_ORIG_FIND_LIBRARY_PREFIXES}")
+    set(CMAKE_FIND_LIBRARY_PREFIXES "${_gRPC_ORIG_FIND_LIBRARY_PREFIXES}")
 endif ()
 
 file(WRITE "${CMAKE_BINARY_DIR}/get_gRPC_version.cc" [====[
@@ -314,17 +318,18 @@ file(REMOVE "${CMAKE_BINARY_DIR}/get_gRPC_version.cc")
 _grpc_fix_grpc_cpp_plugin_target()
 
 if (gRPC_DEBUG)
-    foreach (_var _gRPC_CPP_PLUGIN_EXECUTABLE
-            _gRPC_VERSION_RAW
-            _gRPC_GET_VERSION_STATUS
-            _gRPC_GET_VERSION_COMPILE_STATUS
-            _gRPC_GET_VERSION_COMPILE_OUTPUT
-            _gRPC_grpc_LIBRARY
-            _gRPC_grpc++_LIBRARY
-            _gRPC_INCLUDE_DIR)
+    foreach (_var
+             _gRPC_CPP_PLUGIN_EXECUTABLE
+             _gRPC_VERSION_RAW
+             _gRPC_GET_VERSION_STATUS
+             _gRPC_GET_VERSION_COMPILE_STATUS
+             _gRPC_GET_VERSION_COMPILE_OUTPUT
+             _gRPC_grpc_LIBRARY
+             _gRPC_grpc++_LIBRARY
+             _gRPC_INCLUDE_DIR)
         message(
-                STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                "${_var} = ${${_var}}")
+            STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
+                   "${_var} = ${${_var}}")
     endforeach ()
     unset(_var)
 endif ()
