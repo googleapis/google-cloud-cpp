@@ -72,27 +72,30 @@ include(${CMAKE_CURRENT_LIST_DIR}/FindProtobufTargets.cmake)
 
 # The gRPC::grpc_cpp_plugin target is sometimes defined, but without a
 # IMPORTED_LOCATION
-function(_grpc_fix_grpc_cpp_plugin_target)
+function (_grpc_fix_grpc_cpp_plugin_target)
     # The target may already exist, do not create it again if it does.
     if (NOT TARGET gRPC::grpc_cpp_plugin)
         add_executable(gRPC::grpc_cpp_plugin IMPORTED)
     endif ()
     get_target_property(_gRPC_CPP_PLUGIN_EXECUTABLE gRPC::grpc_cpp_plugin
-            IMPORTED_LOCATION)
-    message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-            "LOCATION=${_gRPC_CPP_PLUGIN_EXECUTABLE}")
+                        IMPORTED_LOCATION)
+    if (gRPC_DEBUG)
+        message(
+            STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
+                   "LOCATION=${_gRPC_CPP_PLUGIN_EXECUTABLE}")
+    endif ()
     # Even if the target exists, gRPC CMake support files do not define the
     # executable for the imported target (at least they do not in v1.19.1), so
     # we need to define it ourselves.
     if (NOT _gRPC_CPP_PLUGIN_EXECUTABLE)
         find_program(_gRPC_CPP_PLUGIN_EXECUTABLE
-                NAMES grpc_cpp_plugin
-                DOC "The gRPC C++ plugin for protoc")
+                     NAMES grpc_cpp_plugin
+                     DOC "The gRPC C++ plugin for protoc")
         if (_gRPC_CPP_PLUGIN_EXECUTABLE)
             mark_as_advanced(_gRPC_CPP_PLUGIN_EXECUTABLE)
             set_property(TARGET gRPC::grpc_cpp_plugin
-                    PROPERTY IMPORTED_LOCATION
-                    ${_gRPC_CPP_PLUGIN_EXECUTABLE})
+                         PROPERTY IMPORTED_LOCATION
+                                  ${_gRPC_CPP_PLUGIN_EXECUTABLE})
         else()
             set(gRPC_FOUND "grpc_cpp_plugin-NOTFOUND")
         endif ()
@@ -101,15 +104,15 @@ endfunction ()
 
 # The gRPC::* targets sometimes lack the right definitions to compile cleanly on
 # WIN32
-function(_grpc_fix_grpc_target_definitions)
+function (_grpc_fix_grpc_target_definitions)
     # Including gRPC headers without this definition results in a build error.
     if (WIN32)
         set_property(TARGET gRPC::grpc
-                APPEND
-                PROPERTY INTERFACE_COMPILE_DEFINITIONS _WIN32_WINNT=0x600)
+                     APPEND
+                     PROPERTY INTERFACE_COMPILE_DEFINITIONS _WIN32_WINNT=0x600)
         set_property(TARGET gRPC::grpc++
-                APPEND
-                PROPERTY INTERFACE_COMPILE_DEFINITIONS _WIN32_WINNT=0x600)
+                     APPEND
+                     PROPERTY INTERFACE_COMPILE_DEFINITIONS _WIN32_WINNT=0x600)
     endif ()
 endfunction ()
 
@@ -120,7 +123,7 @@ find_package(gRPC NO_MODULE QUIET)
 
 if (gRPC_DEBUG)
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-            "gRPC_FOUND = ${gRPC_FOUND}")
+                   "gRPC_FOUND = ${gRPC_FOUND}")
 endif ()
 
 if (gRPC_FOUND)
@@ -183,11 +186,11 @@ endif ()
 if (gRPC_FOUND)
     _grpc_fix_grpc_cpp_plugin_target()
     _grpc_fix_grpc_target_definitions()
-    message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
+    if (gRPC_DEBUG)
+        message(
+            STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
                    "LOCATION=${_gRPC_CPP_PLUGIN_EXECUTABLE}")
+    endif ()
 endif ()
 
-find_package_handle_standard_args(gRPC
-        REQUIRED_VARS
-        gRPC_FOUND
-        gRPC_VERSION)
+find_package_handle_standard_args(gRPC REQUIRED_VARS gRPC_FOUND gRPC_VERSION)
