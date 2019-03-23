@@ -62,9 +62,9 @@ function run_all_instance_admin_examples {
   fi
 
   # Create a (very likely unique) instance name.
-  local -r INSTANCE="in-$(date +%s)"
-  local -r DEV_INSTANCE="in-$(date +%s)-dev"
-  local -r RUN_INSTANCE="in-$(date +%s)-run"
+  local -r INSTANCE="in-${RANDOM}-${RANDOM}"
+  local -r DEV_INSTANCE="in-${RANDOM}-${RANDOM}-dev"
+  local -r RUN_INSTANCE="in-${RANDOM}-${RANDOM}-run"
 
   run_example ./bigtable_instance_admin_snippets create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"
@@ -169,7 +169,7 @@ function run_all_instance_admin_async_examples {
   fi
 
   # Create a (very likely unique) instance name.
-  local -r INSTANCE="in-$(date +%s)"
+  local -r INSTANCE="in-${RANDOM}-${RANDOM}"
 
   run_example ./bigtable_instance_admin_snippets create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"
@@ -208,7 +208,7 @@ function run_all_table_admin_examples {
   EMULATOR_LOG="emulator.log"
 
   # Create a (very likely unique) instance name.
-  local -r INSTANCE="in-$(date +%s)"
+  local -r INSTANCE="in-${RANDOM}-${RANDOM}"
 
   # Use the same table in all the tests.
   local -r TABLE="sample-table-for-admin-${RANDOM}"
@@ -292,11 +292,11 @@ run_all_data_examples() {
 
   # Use a different table for the full example test, if we use the same table
   # as the other tests this can fail with timeouts.
-  local -r FULL_TABLE="data-ex-full-$(date +%s)-${RANDOM}"
+  local -r FULL_TABLE="data-ex-full-${RANDOM}-${RANDOM}"
   run_example ./bigtable_samples run-full-example "${project_id}" "${instance_id}" "${FULL_TABLE}"
 
   # Use the same table in all the tests.
-  local -r TABLE="data-ex-tbl-$(date +%s)-${RANDOM}"
+  local -r TABLE="data-ex-tbl-${RANDOM}-${RANDOM}"
   local -r PREFIX="root/0/1/"
   local -r ROW_KEY_1="root/0/0/1"
   local -r ROW_KEY_2="root/0/1/0"
@@ -335,7 +335,7 @@ function run_all_data_async_examples {
   EMULATOR_LOG="instance-admin-emulator.log"
 
   # Use the same table in all the tests.
-  local -r TABLE="data-ex-tbl-$(date +%s)-${RANDOM}"
+  local -r TABLE="data-ex-tbl-${RANDOM}-${RANDOM}"
   run_example ./table_admin_snippets create-table "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_async_snippets async-apply "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_async_snippets async-bulk-apply "${project_id}" "${instance_id}" "${TABLE}"

@@ -33,8 +33,8 @@ source "${PROJECT_ROOT}/ci/define-example-runner.sh"
 #   None
 ################################################
 run_all_bucket_examples() {
-  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
-  local object_name="object-$(date +%s)-${RANDOM}.txt"
+  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
+  local object_name="object-${RANDOM}-${RANDOM}.txt"
 
   run_example ./storage_bucket_samples list-buckets-for-project \
       "${PROJECT_ID}"
@@ -90,7 +90,7 @@ run_all_bucket_examples() {
 #   None
 ################################################
 run_all_service_account_examples() {
-  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
 
   run_example ./storage_service_account_samples \
       get-service-account-for-project "${PROJECT_ID}"
@@ -153,8 +153,8 @@ run_all_service_account_examples() {
 #   None
 ################################################
 run_all_requester_pays_examples() {
-  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
-  local object_name="object-$(date +%s)-${RANDOM}.txt"
+  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
+  local object_name="object-${RANDOM}-${RANDOM}.txt"
 
   run_example ./storage_bucket_samples create-bucket-for-project \
       "${bucket_name}" "${PROJECT_ID}"
@@ -186,7 +186,7 @@ run_all_requester_pays_examples() {
 #   None
 ################################################
 run_default_event_based_hold_examples() {
-  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
 
   run_example ./storage_bucket_samples create-bucket-for-project \
       "${bucket_name}" "${PROJECT_ID}"
@@ -211,7 +211,7 @@ run_default_event_based_hold_examples() {
 #   None
 ################################################
 run_retention_policy_examples() {
-  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
 
   run_example ./storage_bucket_samples create-bucket-for-project \
       "${bucket_name}" "${PROJECT_ID}"
@@ -241,7 +241,7 @@ run_retention_policy_examples() {
 run_all_bucket_acl_examples() {
   # Use a fresh bucket to avoid flaky tests due to other tests also making
   # changes on the bucket.
-  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
   run_example ./storage_bucket_samples create-bucket-for-project \
       "${bucket_name}" "${PROJECT_ID}"
 
@@ -281,7 +281,7 @@ run_all_bucket_acl_examples() {
 run_all_default_object_acl_examples() {
   # Use a fresh bucket to avoid flaky tests due to other tests also making
   # changes on the bucket.
-  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
   run_example ./storage_bucket_samples create-bucket-for-project \
       "${bucket_name}" "${PROJECT_ID}"
 
@@ -322,11 +322,11 @@ run_all_object_examples() {
   local bucket_name=$1
   shift
 
-  local object_name="object-$(date +%s)-${RANDOM}.txt"
-  local bucket_prefix="prefix-$(date +%s)-${RANDOM}"
-  local composed_object_name="composed-object-$(date +%s)-${RANDOM}.txt"
-  local copied_object_name="copied-object-$(date +%s)-${RANDOM}.txt"
-  local multipart_object_name="multipart-object-$(date +%s)-${RANDOM}.txt"
+  local object_name="object-${RANDOM}-${RANDOM}.txt"
+  local bucket_prefix="prefix-${RANDOM}-${RANDOM}"
+  local composed_object_name="composed-object-${RANDOM}-${RANDOM}.txt"
+  local copied_object_name="copied-object-${RANDOM}-${RANDOM}.txt"
+  local multipart_object_name="multipart-object-${RANDOM}-${RANDOM}.txt"
 
   run_example ./storage_object_samples insert-object \
       "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
@@ -374,9 +374,9 @@ run_all_object_examples() {
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${multipart_object_name}"
 
-  local encrypted_object_name="enc-obj-$(date +%s)-${RANDOM}.txt"
-  local encrypted_composed_object_name="composed-enc-obj-$(date +%s)-${RANDOM}.txt"
-  local encrypted_copied_object_name="copied-enc-obj-$(date +%s)-${RANDOM}.txt"
+  local encrypted_object_name="enc-obj-${RANDOM}-${RANDOM}.txt"
+  local encrypted_composed_object_name="composed-enc-obj-${RANDOM}-${RANDOM}.txt"
+  local encrypted_copied_object_name="copied-enc-obj-${RANDOM}-${RANDOM}.txt"
 
   local key="$(./storage_object_samples generate-encryption-key |
       grep 'Base64 encoded key' | awk '{print $5}')"
@@ -407,14 +407,14 @@ run_all_object_examples() {
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${encrypted_object_name}"
 
-  local object_name_strict="object-strict-$(date +%s)-${RANDOM}.txt"
+  local object_name_strict="object-strict-${RANDOM}-${RANDOM}.txt"
   run_example ./storage_object_samples insert-object-strict-idempotency \
       "${bucket_name}" "${object_name_strict}" \
       "a-string-to-serve-as-object-media"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name_strict}"
 
-  local object_name_retry="object-retry-$(date +%s)-${RANDOM}.txt"
+  local object_name_retry="object-retry-${RANDOM}-${RANDOM}.txt"
   run_example ./storage_object_samples insert-object-modified-retry \
       "${bucket_name}" "${object_name_retry}" \
       "a-string-to-serve-as-object-media"
@@ -436,7 +436,7 @@ run_upload_and_download_examples() {
   local bucket_name=$1
   shift
 
-  local object_name="uploaded-$(date +%s)-${RANDOM}.txt"
+  local object_name="uploaded-${RANDOM}-${RANDOM}.txt"
   local upload_file_name="$(mktemp -t "upload.XXXXXX")"
   local download_file_name="$(mktemp -t "download.XXXXXX")"
   cat > "${upload_file_name}" <<_EOF_
@@ -472,7 +472,7 @@ run_resumable_file_upload_examples() {
   local bucket_name=$1
   shift
 
-  local object_name="uploaded-resumable-$(date +%s)-${RANDOM}.txt"
+  local object_name="uploaded-resumable-${RANDOM}-${RANDOM}.txt"
   local upload_file_name="$(mktemp -t "upload.XXXXXX")"
   local download_file_name="$(mktemp -t "download.XXXXXX")"
   cat > "${upload_file_name}" <<_EOF_
@@ -508,7 +508,7 @@ run_resumable_write_object_examples() {
   local bucket_name=$1
   shift
 
-  local object_name="resumable-upload-$(date +%s)-${RANDOM}.txt"
+  local object_name="resumable-upload-${RANDOM}-${RANDOM}.txt"
 
   # We need to capture the output, so the usual `run_example` helper does not
   # help here :-)
@@ -551,8 +551,8 @@ run_rewrite_object_example() {
   local target_bucket_name=$2
   shift 2
 
-  local source_object_name="rewrite-source-object-$(date +%s)-${RANDOM}.txt"
-  local target_object_name="rewrite-target-object-$(date +%s)-${RANDOM}.txt"
+  local source_object_name="rewrite-source-object-${RANDOM}-${RANDOM}.txt"
+  local target_object_name="rewrite-target-object-${RANDOM}-${RANDOM}.txt"
   run_example ./storage_object_samples insert-object \
       "${source_bucket_name}" "${source_object_name}" \
       "a-string-to-serve-as-object-media"
@@ -580,8 +580,8 @@ run_rename_object_example() {
   local source_bucket_name=$1
   shift
 
-  local source_object_name="rename-source-object-$(date +%s)-${RANDOM}.txt"
-  local target_object_name="rename-target-object-$(date +%s)-${RANDOM}.txt"
+  local source_object_name="rename-source-object-${RANDOM}-${RANDOM}.txt"
+  local target_object_name="rename-target-object-${RANDOM}-${RANDOM}.txt"
   run_example ./storage_object_samples insert-object \
       "${source_bucket_name}" "${source_object_name}" \
       "a-string-to-serve-as-object-media-in-rename-example"
@@ -609,8 +609,8 @@ run_resume_rewrite_example() {
   local target_bucket_name=$2
   shift 2
 
-  local source_object_name="rewrite-resume-source-object-$(date +%s)-${RANDOM}.txt"
-  local target_object_name="rewrite-resume-target-object-$(date +%s)-${RANDOM}.txt"
+  local source_object_name="rewrite-resume-source-object-${RANDOM}-${RANDOM}.txt"
+  local target_object_name="rewrite-resume-target-object-${RANDOM}-${RANDOM}.txt"
   run_example ./storage_object_samples write-large-object \
       "${source_bucket_name}" "${source_object_name}" "16"
   local msg=$(./storage_object_samples rewrite-object-token \
@@ -669,7 +669,7 @@ run_all_public_object_examples() {
   local bucket_name=$1
   shift
 
-  local object_name="object-$(date +%s)-${RANDOM}.txt"
+  local object_name="object-${RANDOM}-${RANDOM}.txt"
   run_example ./storage_object_samples insert-object \
       "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
   run_example ./storage_object_samples make-object-public \
@@ -694,7 +694,7 @@ run_event_based_hold_examples() {
   local bucket_name=$1
   shift
 
-  local object_name="object-$(date +%s)-${RANDOM}.txt"
+  local object_name="object-${RANDOM}-${RANDOM}.txt"
   run_example ./storage_object_samples insert-object \
       "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
   run_example ./storage_object_samples set-event-based-hold \
@@ -719,7 +719,7 @@ run_temporary_hold_examples() {
   local bucket_name=$1
   shift
 
-  local object_name="object-$(date +%s)-${RANDOM}.txt"
+  local object_name="object-${RANDOM}-${RANDOM}.txt"
   run_example ./storage_object_samples insert-object \
       "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
   run_example ./storage_object_samples set-temporary-hold \
@@ -742,13 +742,13 @@ run_temporary_hold_examples() {
 ################################################
 run_object_versioning_examples() {
   # Create the bucket to avoid changing the configuration for "${BUCKET_NAME}"
-  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
 
   run_example ./storage_bucket_samples create-bucket-for-project \
       "${bucket_name}" "${PROJECT_ID}"
 
-  local object_name="object-$(date +%s)-${RANDOM}.txt"
-  local copied_object_name="object-$(date +%s)-${RANDOM}.txt"
+  local object_name="object-${RANDOM}-${RANDOM}.txt"
+  local copied_object_name="object-${RANDOM}-${RANDOM}.txt"
   run_example ./storage_bucket_samples enable-object-versioning \
       "${bucket_name}"
   run_example ./storage_bucket_samples get-object-versioning \
@@ -790,9 +790,9 @@ run_object_versioning_examples() {
 run_all_cmek_examples() {
   local cmek=$1
 
-  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
-  local encrypted_object_name="enc-obj-$(date +%s)-${RANDOM}.txt"
-  local object_name="object-$(date +%s)-${RANDOM}.txt"
+  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
+  local encrypted_object_name="enc-obj-${RANDOM}-${RANDOM}.txt"
+  local object_name="object-${RANDOM}-${RANDOM}.txt"
 
   run_example ./storage_bucket_samples create-bucket-for-project \
       "${bucket_name}" "${PROJECT_ID}"
@@ -846,7 +846,7 @@ run_all_signed_url_v2_examples() {
   local bucket_name=$1
   shift
 
-  local object_name="object-$(date +%s)-${RANDOM}.txt"
+  local object_name="object-${RANDOM}-${RANDOM}.txt"
 
   if [[ -n "${CLOUD_STORAGE_TESTBENCH_ENDPOINT:-}" ]]; then
     echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
@@ -913,7 +913,7 @@ run_all_signed_url_v4_examples() {
   local bucket_name=$1
   shift
 
-  local object_name="object-$(date +%s)-${RANDOM}.txt"
+  local object_name="object-${RANDOM}-${RANDOM}.txt"
 
   if [[ -n "${CLOUD_STORAGE_TESTBENCH_ENDPOINT:-}" ]]; then
     echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
@@ -980,7 +980,7 @@ run_all_object_acl_examples() {
   local bucket_name=$1
   shift
 
-  local object_name="object-$(date +%s)-${RANDOM}.txt"
+  local object_name="object-${RANDOM}-${RANDOM}.txt"
 
   # We need to create an object to run the examples on.
   run_example ./storage_object_samples insert-object \
@@ -1020,7 +1020,7 @@ run_all_object_acl_examples() {
 #   None
 ################################################
 run_all_notification_examples() {
-  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
   local topic_name=$1
   shift
 
@@ -1064,7 +1064,7 @@ run_all_notification_examples() {
 run_all_bucket_iam_examples() {
   # Use a fresh bucket to avoid flaky tests due to other tests also making
   # changes on the bucket.
-  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
   run_example ./storage_bucket_samples create-bucket-for-project \
       "${bucket_name}" "${PROJECT_ID}"
 
@@ -1097,7 +1097,7 @@ run_all_bucket_iam_examples() {
 ################################################
 run_static_website_configuration_examples() {
   # Create the bucket to avoid changing the configuration for "${BUCKET_NAME}"
-  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
 
   run_example ./storage_bucket_samples create-bucket-for-project \
       "${bucket_name}" "${PROJECT_ID}"
@@ -1125,7 +1125,7 @@ run_static_website_configuration_examples() {
 ################################################
 run_cors_configuration_examples() {
   # Create the bucket to avoid changing the configuration for "${BUCKET_NAME}"
-  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
 
   run_example ./storage_bucket_samples create-bucket-for-project \
       "${bucket_name}" "${PROJECT_ID}"
@@ -1149,7 +1149,7 @@ run_cors_configuration_examples() {
 #   None
 ################################################
 run_quickstart() {
-  local bucket_name="cloud-cpp-test-bucket-$(date +%s)-${RANDOM}-${RANDOM}"
+  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
 
   ./storage_quickstart "${bucket_name}" "${PROJECT_ID}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
