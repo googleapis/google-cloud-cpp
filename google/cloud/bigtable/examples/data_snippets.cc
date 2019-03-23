@@ -62,7 +62,7 @@ void Apply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     throw Usage{"apply: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [apply]
+  //! [apply] [START bigtable_create_row]
   [](google::cloud::bigtable::Table table) {
     // Write several rows with some trivial data.
     for (int i = 0; i != 20; ++i) {
@@ -92,7 +92,7 @@ void Apply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
       }
     }
   }
-  //! [apply]
+  //! [apply] [END bigtable_create_row]
   (std::move(table));
 }
 
@@ -101,7 +101,7 @@ void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     throw Usage{"bulk-apply: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [bulk apply]
+  //! [bulk apply] [START bigtable_insert_rows] [START bigtable_mutate_rows]
   [](google::cloud::bigtable::Table table) {
     // Write several rows in a single operation, each row has some trivial data.
     google::cloud::bigtable::BulkMutation bulk;
@@ -134,7 +134,7 @@ void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
       throw std::runtime_error(status.message());
     }
   }
-  //! [bulk apply]
+  //! [bulk apply] [END bigtable_insert_rows] [END bigtable_mutate_rows]
   (std::move(table));
 }
 
@@ -143,7 +143,7 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     throw Usage{"read-row: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [read row]
+  //! [read row] [START bigtable_get_row] [START bigtable_row_exists]
   [](google::cloud::bigtable::Table table) {
     // Filter the results, only include the latest value on each cell.
     auto filter = google::cloud::bigtable::Filter::Latest(1);
@@ -171,7 +171,7 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     }
     std::cout << std::flush;
   }
-  //! [read row]
+  //! [read row] [END bigtable_get_row] [END bigtable_row_exists]
   (std::move(table));
 }
 
@@ -180,7 +180,7 @@ void ReadRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     throw Usage{"read-rows: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [read rows]
+  //! [read rows] [START bigtable_get_rows] [START bigtable_table_readstream]
   [](google::cloud::bigtable::Table table) {
     // Create the range of rows to read.
     auto range =
@@ -206,7 +206,7 @@ void ReadRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     }
     std::cout << std::flush;
   }
-  //! [read rows]
+  //! [read rows] [END bigtable_get_rows] [END bigtable_table_readstream]
   (std::move(table));
 }
 
@@ -362,7 +362,7 @@ void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
     throw Usage{"check-and-mutate: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [check and mutate]
+  //! [check and mutate] [START bigtable_row_filter]
   [](google::cloud::bigtable::Table table) {
     // Check if the latest value of the flip-flop column is "on".
     auto predicate = google::cloud::bigtable::Filter::Chain(
@@ -384,7 +384,7 @@ void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
       throw std::runtime_error(mut.status().message());
     }
   }
-  //! [check and mutate]
+  //! [check and mutate] [END bigtable_row_filter]
   (std::move(table));
 }
 
@@ -394,7 +394,8 @@ void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
     throw Usage{"read-modify-write: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [read modify write]
+  //! [read modify write] [START bigtable_row_increment] [START
+  //! bigtable_create_rules]
   [](google::cloud::bigtable::Table table) {
     auto row = table.ReadModifyWriteRow(
         MAGIC_ROW_KEY,
@@ -408,7 +409,8 @@ void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
     }
     std::cout << row->row_key() << "\n";
   }
-  //! [read modify write]
+  //! [read modify write] [END bigtable_row_increment] [END
+  //! bigtable_create_rules]
   (std::move(table));
 }
 
@@ -417,7 +419,7 @@ void SampleRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     throw Usage{"sample-rows: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [sample row keys]
+  //! [sample row keys] [START bigtable_sample_row_keys]
   [](google::cloud::bigtable::Table table) {
     auto samples = table.SampleRows<>();
     if (!samples) {
@@ -429,7 +431,7 @@ void SampleRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     }
     std::cout << std::flush;
   }
-  //! [sample row keys]
+  //! [sample row keys] [END bigtable_sample_row_keys]
   (std::move(table));
 }
 
