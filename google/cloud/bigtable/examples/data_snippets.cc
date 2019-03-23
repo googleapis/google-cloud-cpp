@@ -101,7 +101,7 @@ void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     throw Usage{"bulk-apply: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [bulk apply] [START bigtable_insert_rows] [START bigtable_mutate_rows]
+  //! [bulk apply] [START bigtable_insert_rows]
   [](google::cloud::bigtable::Table table) {
     // Write several rows in a single operation, each row has some trivial data.
     google::cloud::bigtable::BulkMutation bulk;
@@ -134,7 +134,7 @@ void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
       throw std::runtime_error(status.message());
     }
   }
-  //! [bulk apply] [END bigtable_insert_rows] [END bigtable_mutate_rows]
+  //! [bulk apply] [END bigtable_insert_rows]
   (std::move(table));
 }
 
@@ -143,7 +143,7 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     throw Usage{"read-row: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [read row] [START bigtable_get_row] [START bigtable_row_exists]
+  //! [read row] [START bigtable_get_row]
   [](google::cloud::bigtable::Table table) {
     // Filter the results, only include the latest value on each cell.
     auto filter = google::cloud::bigtable::Filter::Latest(1);
@@ -171,7 +171,7 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     }
     std::cout << std::flush;
   }
-  //! [read row] [END bigtable_get_row] [END bigtable_row_exists]
+  //! [read row] [END bigtable_get_row]
   (std::move(table));
 }
 
