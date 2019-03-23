@@ -194,5 +194,5 @@ RUN make
 
 WORKDIR /home/build/test-install-cmake
 COPY ci/test-install /home/build/test-install-cmake
-RUN env -u PKG_CONFIG_PATH cmake -H. -B.build
+RUN cmake -H. -B.build -DCMAKE_FIND_ROOT_PATH="/usr/local/curl;/usr/local/ssl"
 RUN cmake --build .build -- -j $(nproc)
