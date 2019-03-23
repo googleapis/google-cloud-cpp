@@ -53,123 +53,145 @@ class FailingCredentials : public Credentials {
 class CurlClientTest : public ::testing::Test,
                        public ::testing::WithParamInterface<std::string> {
  protected:
-  CurlClientTest()
-      : expected_status_code_(),
-        endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT") {}
+  CurlClientTest() : endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT") {}
   ~CurlClientTest() override { endpoint_.TearDown(); }
 
   void SetUp() override {
     std::string const error_type = GetParam();
     if (error_type == "credentials-failure") {
       client_ = CurlClient::Create(std::make_shared<FailingCredentials>());
-      expected_status_code_ = STATUS_ERROR_CODE;
-      expected_status_substr_ = STATUS_ERROR_MSG;
+      // We know exactly what error to expect, so setup the assertions to be
+      // very strict.
+      check_status_ = [](Status const& actual) {
+        EXPECT_EQ(STATUS_ERROR_CODE, actual.code());
+        EXPECT_THAT(actual.message(), HasSubstr(STATUS_ERROR_MSG));
+      };
     } else if (error_type == "libcurl-failure") {
       google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
                                       "http://localhost:0");
       client_ =
           CurlClient::Create(ClientOptions(oauth2::CreateAnonymousCredentials())
                                  .set_endpoint("http://localhost:0"));
-      expected_status_code_ = StatusCode::kUnavailable;
-      expected_status_substr_ = "CURL error";
+      // We do not know what libcurl will return. Some kind of error, but varies
+      // by version of libcurl. Just make sure it is an error and the CURL
+      // details are included in the error message.
+      check_status_ = [](Status const& actual) {
+        EXPECT_FALSE(actual.ok());
+        EXPECT_THAT(actual.message(), HasSubstr("CURL error"));
+      };
     } else {
       FAIL() << "Invalid test parameter value: " << error_type
              << ", expected either credentials-failure or libcurl-failure";
     }
   }
 
+  void CheckStatus(Status const& actual) { check_status_(actual); }
+
   void TearDown() override { client_.reset(); }
 
-  void TestCorrectFailureStatus(Status const& status) {
-    EXPECT_EQ(expected_status_code_, status.code());
-    EXPECT_THAT(status.message(), HasSubstr(expected_status_substr_));
-  }
-
   std::shared_ptr<CurlClient> client_;
-  StatusCode expected_status_code_;
-  std::string expected_status_substr_;
+  std::function<void(Status const& status)> check_status_;
   testing_util::EnvironmentVariableRestore endpoint_;
 };
 
 TEST_P(CurlClientTest, UploadChunk) {
-  // Use http://localhost:0 to force a libcurl failure
-  auto status_or_foo = client_->UploadChunk(UploadChunkRequest(
-      "http://localhost:0/invalid-session-id", 0U, std::string{}, 0U));
-  TestCorrectFailureStatus(status_or_foo.status());
+  // Use an invalid port (0) to force a libcurl failure
+  auto actual =
+      client_
+          ->UploadChunk(UploadChunkRequest(
+              "http://localhost:0/invalid-session-id", 0U, std::string{}, 0U))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, QueryResumableUpload) {
   // Use http://localhost:0 to force a libcurl failure
-  auto status_or_foo = client_->QueryResumableUpload(
-      QueryResumableUploadRequest("http://localhost:0/invalid-session-id"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->QueryResumableUpload(QueryResumableUploadRequest(
+                        "http://localhost:9/invalid-session-id"))
+                    .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ListBuckets) {
-  auto status_or_foo = client_->ListBuckets(ListBucketsRequest{"project_id"});
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_->ListBuckets(ListBucketsRequest{"project_id"}).status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CreateBucket) {
-  auto status_or_foo = client_->CreateBucket(
-      CreateBucketRequest("bkt", BucketMetadata().set_name("bkt")));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->CreateBucket(CreateBucketRequest(
+                        "bkt", BucketMetadata().set_name("bkt")))
+                    .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, GetBucketMetadata) {
-  auto status_or_foo =
-      client_->GetBucketMetadata(GetBucketMetadataRequest("bkt"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->GetBucketMetadata(GetBucketMetadataRequest("bkt")).status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, DeleteBucket) {
-  auto status_or_foo = client_->DeleteBucket(DeleteBucketRequest("bkt"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_->DeleteBucket(DeleteBucketRequest("bkt")).status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, UpdateBucket) {
-  auto status_or_foo = client_->UpdateBucket(
-      UpdateBucketRequest(BucketMetadata().set_name("bkt")));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_
+          ->UpdateBucket(UpdateBucketRequest(BucketMetadata().set_name("bkt")))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, PatchBucket) {
-  auto status_or_foo = client_->PatchBucket(
-      PatchBucketRequest("bkt", BucketMetadata().set_name("bkt"),
-                         BucketMetadata().set_name("bkt")));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->PatchBucket(PatchBucketRequest(
+                        "bkt", BucketMetadata().set_name("bkt"),
+                        BucketMetadata().set_name("bkt")))
+                    .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, GetBucketIamPolicy) {
-  auto status_or_foo =
-      client_->GetBucketIamPolicy(GetBucketIamPolicyRequest("bkt"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->GetBucketIamPolicy(GetBucketIamPolicyRequest("bkt")).status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, SetBucketIamPolicy) {
-  auto status_or_foo = client_->SetBucketIamPolicy(
-      SetBucketIamPolicyRequest("bkt", google::cloud::IamPolicy{}));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->SetBucketIamPolicy(SetBucketIamPolicyRequest(
+                        "bkt", google::cloud::IamPolicy{}))
+                    .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, TestBucketIamPermissions) {
-  auto status_or_foo = client_->TestBucketIamPermissions(
-      TestBucketIamPermissionsRequest("bkt", {}));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_
+          ->TestBucketIamPermissions(TestBucketIamPermissionsRequest("bkt", {}))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, LockBucketRetentionPolicy) {
-  auto status_or_foo = client_->LockBucketRetentionPolicy(
-      LockBucketRetentionPolicyRequest("bkt", 0U));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->LockBucketRetentionPolicy(
+                        LockBucketRetentionPolicyRequest("bkt", 0U))
+                    .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, InsertObjectMediaSimple) {
-  auto status_or_foo = client_->InsertObjectMedia(
-      InsertObjectMediaRequest("bkt", "obj", "contents")
-          .set_multiple_options(DisableMD5Hash(true),
-                                DisableCrc32cChecksum(true)));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->InsertObjectMedia(
+                        InsertObjectMediaRequest("bkt", "obj", "contents")
+                            .set_multiple_options(DisableMD5Hash(true),
+                                                  DisableCrc32cChecksum(true)))
+                    .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, InsertObjectMediaMultipart) {
@@ -178,22 +200,27 @@ TEST_P(CurlClientTest, InsertObjectMediaMultipart) {
     // TODO(#1735) - enable this test when ObjectWriteStream uses StatusOr.
     return;
   }
-  auto status_or_foo = client_->InsertObjectMedia(
-      InsertObjectMediaRequest("bkt", "obj", "contents"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->InsertObjectMedia(
+                        InsertObjectMediaRequest("bkt", "obj", "contents"))
+                    .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, InsertObjectMediaXml) {
-  auto status_or_foo = client_->InsertObjectMedia(
-      InsertObjectMediaRequest("bkt", "obj", "contents")
-          .set_multiple_options(Fields("")));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_
+          ->InsertObjectMedia(InsertObjectMediaRequest("bkt", "obj", "contents")
+                                  .set_multiple_options(Fields("")))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, GetObjectMetadata) {
-  auto status_or_foo =
-      client_->GetObjectMetadata(GetObjectMetadataRequest("bkt", "obj"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->GetObjectMetadata(GetObjectMetadataRequest("bkt", "obj"))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ReadObject) {
@@ -202,9 +229,9 @@ TEST_P(CurlClientTest, ReadObject) {
     // TODO(#1736) - enable this test when ObjectReadStream uses StatusOr.
     return;
   }
-  auto status_or_foo =
-      client_->ReadObject(ReadObjectRangeRequest("bkt", "obj"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->ReadObject(ReadObjectRangeRequest("bkt", "obj")).status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, WriteObject) {
@@ -213,204 +240,247 @@ TEST_P(CurlClientTest, WriteObject) {
     // TODO(#1735) - enable this test when ObjectWriteStream uses StatusOr.
     return;
   }
-  auto status_or_foo =
-      client_->WriteObject(InsertObjectStreamingRequest("bkt", "obj"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->WriteObject(InsertObjectStreamingRequest("bkt", "obj")).status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ListObjects) {
-  auto status_or_foo = client_->ListObjects(ListObjectsRequest("bkt"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_->ListObjects(ListObjectsRequest("bkt")).status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, DeleteObject) {
-  auto status_or_foo = client_->DeleteObject(DeleteObjectRequest("bkt", "obj"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->DeleteObject(DeleteObjectRequest("bkt", "obj")).status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, UpdateObject) {
-  auto status_or_foo = client_->UpdateObject(
-      UpdateObjectRequest("bkt", "obj", ObjectMetadata()));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->UpdateObject(UpdateObjectRequest("bkt", "obj", ObjectMetadata()))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, PatchObject) {
-  auto status_or_foo = client_->PatchObject(
-      PatchObjectRequest("bkt", "obj", ObjectMetadata(), ObjectMetadata()));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->PatchObject(PatchObjectRequest(
+                        "bkt", "obj", ObjectMetadata(), ObjectMetadata()))
+                    .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ComposeObject) {
-  auto status_or_foo =
-      client_->ComposeObject(ComposeObjectRequest("bkt", {}, "obj"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->ComposeObject(ComposeObjectRequest("bkt", {}, "obj")).status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ListBucketAcl) {
-  auto status_or_foo = client_->ListBucketAcl(ListBucketAclRequest("bkt"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_->ListBucketAcl(ListBucketAclRequest("bkt")).status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CopyObject) {
-  auto status_or_foo =
-      client_->CopyObject(CopyObjectRequest("bkt", "obj1", "bkt", "obj2"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->CopyObject(CopyObjectRequest("bkt", "obj1", "bkt", "obj2"))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CreateBucketAcl) {
-  auto status_or_foo =
-      client_->CreateBucketAcl(CreateBucketAclRequest("bkt", "entity", "role"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->CreateBucketAcl(CreateBucketAclRequest("bkt", "entity", "role"))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, GetBucketAcl) {
-  auto status_or_foo =
-      client_->GetBucketAcl(GetBucketAclRequest("bkt", "entity"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->GetBucketAcl(GetBucketAclRequest("bkt", "entity")).status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, DeleteBucketAcl) {
-  auto status_or_foo =
-      client_->DeleteBucketAcl(DeleteBucketAclRequest("bkt", "entity"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->DeleteBucketAcl(DeleteBucketAclRequest("bkt", "entity"))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, UpdateBucketAcl) {
-  auto status_or_foo =
-      client_->UpdateBucketAcl(UpdateBucketAclRequest("bkt", "entity", "role"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->UpdateBucketAcl(UpdateBucketAclRequest("bkt", "entity", "role"))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, PatchBucketAcl) {
-  auto status_or_foo = client_->PatchBucketAcl(PatchBucketAclRequest(
-      "bkt", "entity", BucketAccessControl(), BucketAccessControl()));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_
+          ->PatchBucketAcl(PatchBucketAclRequest(
+              "bkt", "entity", BucketAccessControl(), BucketAccessControl()))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ListObjectAcl) {
-  auto status_or_foo =
-      client_->ListObjectAcl(ListObjectAclRequest("bkt", "obj"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->ListObjectAcl(ListObjectAclRequest("bkt", "obj")).status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CreateObjectAcl) {
-  auto status_or_foo = client_->CreateObjectAcl(
-      CreateObjectAclRequest("bkt", "obj", "entity", "role"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->CreateObjectAcl(
+                        CreateObjectAclRequest("bkt", "obj", "entity", "role"))
+                    .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, DeleteObjectAcl) {
-  auto status_or_foo =
-      client_->DeleteObjectAcl(DeleteObjectAclRequest("bkt", "obj", "entity"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->DeleteObjectAcl(DeleteObjectAclRequest("bkt", "obj", "entity"))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, GetObjectAcl) {
-  auto status_or_foo =
-      client_->GetObjectAcl(GetObjectAclRequest("bkt", "obj", "entity"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->GetObjectAcl(GetObjectAclRequest("bkt", "obj", "entity"))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, UpdateObjectAcl) {
-  auto status_or_foo = client_->UpdateObjectAcl(
-      UpdateObjectAclRequest("bkt", "obj", "entity", "role"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->UpdateObjectAcl(
+                        UpdateObjectAclRequest("bkt", "obj", "entity", "role"))
+                    .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, PatchObjectAcl) {
-  auto status_or_foo = client_->PatchObjectAcl(PatchObjectAclRequest(
-      "bkt", "obj", "entity", ObjectAccessControl(), ObjectAccessControl()));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->PatchObjectAcl(PatchObjectAclRequest(
+                        "bkt", "obj", "entity", ObjectAccessControl(),
+                        ObjectAccessControl()))
+                    .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, RewriteObject) {
-  auto status_or_foo = client_->RewriteObject(
-      RewriteObjectRequest("bkt", "obj", "bkt2", "obj2", "token"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->RewriteObject(RewriteObjectRequest("bkt", "obj", "bkt2",
+                                                         "obj2", "token"))
+                    .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CreateResumableSession) {
-  auto status_or_foo = client_->CreateResumableSession(
-      ResumableUploadRequest("test-bucket", "test-object"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->CreateResumableSession(
+                        ResumableUploadRequest("test-bucket", "test-object"))
+                    .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ListDefaultObjectAcl) {
-  auto status_or_foo =
-      client_->ListDefaultObjectAcl(ListDefaultObjectAclRequest("bkt"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->ListDefaultObjectAcl(ListDefaultObjectAclRequest("bkt"))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CreateDefaultObjectAcl) {
-  auto status_or_foo = client_->CreateDefaultObjectAcl(
-      CreateDefaultObjectAclRequest("bkt", "entity", "role"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->CreateDefaultObjectAcl(
+                        CreateDefaultObjectAclRequest("bkt", "entity", "role"))
+                    .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, DeleteDefaultObjectAcl) {
-  auto status_or_foo = client_->DeleteDefaultObjectAcl(
-      DeleteDefaultObjectAclRequest("bkt", "entity"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->DeleteDefaultObjectAcl(
+                        DeleteDefaultObjectAclRequest("bkt", "entity"))
+                    .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, GetDefaultObjectAcl) {
-  auto status_or_foo =
-      client_->GetDefaultObjectAcl(GetDefaultObjectAclRequest("bkt", "entity"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->GetDefaultObjectAcl(GetDefaultObjectAclRequest("bkt", "entity"))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, UpdateDefaultObjectAcl) {
-  auto status_or_foo = client_->UpdateDefaultObjectAcl(
-      UpdateDefaultObjectAclRequest("bkt", "entity", "role"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->UpdateDefaultObjectAcl(
+                        UpdateDefaultObjectAclRequest("bkt", "entity", "role"))
+                    .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, PatchDefaultObjectAcl) {
-  auto status_or_foo =
-      client_->PatchDefaultObjectAcl(PatchDefaultObjectAclRequest(
-          "bkt", "entity", ObjectAccessControl(), ObjectAccessControl()));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_
+          ->PatchDefaultObjectAcl(PatchDefaultObjectAclRequest(
+              "bkt", "entity", ObjectAccessControl(), ObjectAccessControl()))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, GetServiceAccount) {
-  auto status_or_foo =
-      client_->GetServiceAccount(GetProjectServiceAccountRequest("project_id"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->GetServiceAccount(GetProjectServiceAccountRequest("project_id"))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ListHmacKeyRequest) {
-  auto result = client_->ListHmacKeys(ListHmacKeysRequest("project_id"));
-  TestCorrectFailureStatus(result.status());
+  auto status =
+      client_->ListHmacKeys(ListHmacKeysRequest("project_id")).status();
+  CheckStatus(status);
 }
 
 TEST_P(CurlClientTest, CreateHmacKeyRequest) {
-  auto result = client_->CreateHmacKey(
-      CreateHmacKeyRequest("project_id", "service-account"));
-  TestCorrectFailureStatus(result.status());
+  auto actual =
+      client_
+          ->CreateHmacKey(CreateHmacKeyRequest("project_id", "service-account"))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ListNotifications) {
-  auto status_or_foo =
-      client_->ListNotifications(ListNotificationsRequest("bkt"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->ListNotifications(ListNotificationsRequest("bkt")).status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CreateNotification) {
-  auto status_or_foo = client_->CreateNotification(
-      CreateNotificationRequest("bkt", NotificationMetadata()));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->CreateNotification(CreateNotificationRequest(
+                        "bkt", NotificationMetadata()))
+                    .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, GetNotification) {
-  auto status_or_foo = client_->GetNotification(
-      GetNotificationRequest("bkt", "notification_id"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual =
+      client_->GetNotification(GetNotificationRequest("bkt", "notification_id"))
+          .status();
+  CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, DeleteNotification) {
-  auto status_or_foo = client_->DeleteNotification(
-      DeleteNotificationRequest("bkt", "notification_id"));
-  TestCorrectFailureStatus(status_or_foo.status());
+  auto actual = client_
+                    ->DeleteNotification(
+                        DeleteNotificationRequest("bkt", "notification_id"))
+                    .status();
+  CheckStatus(actual);
 }
 
 INSTANTIATE_TEST_SUITE_P(CredentialsFailure, CurlClientTest,
