@@ -166,6 +166,9 @@ class CurlHandle {
   /// Flushes any debug data using GCP_LOG().
   void FlushDebug(char const* where);
 
+  /// Convert a CURLE_* error code to a google::cloud::Status().
+  static Status AsStatus(CURLcode e, char const* where);
+
  private:
   explicit CurlHandle(CurlPtr ptr) : handle_(std::move(ptr)) {}
 
@@ -174,7 +177,6 @@ class CurlHandle {
   friend class CurlUploadRequest;
   friend class CurlRequestBuilder;
 
-  Status AsStatus(CURLcode e, char const* where);
   [[noreturn]] void ThrowSetOptionError(CURLcode e, CURLoption opt, long param);
   [[noreturn]] void ThrowSetOptionError(CURLcode e, CURLoption opt,
                                         char const* param);
