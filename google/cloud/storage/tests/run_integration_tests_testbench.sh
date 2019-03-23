@@ -24,9 +24,9 @@ source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
 
 # Create most likely unique names for the project and bucket so multiple tests
 # can use the same testbench.
-export PROJECT_ID="fake-project-$(date +%s)"
-export BUCKET_NAME="fake-bucket-$(date +%s)"
-export TOPIC_NAME="projects/${PROJECT_ID}/topics/fake-topic-$(date +%s)"
+export PROJECT_ID="fake-project-${RANDOM}-${RANDOM}"
+export BUCKET_NAME="fake-bucket-${RANDOM}-${RANDOM}"
+export TOPIC_NAME="projects/${PROJECT_ID}/topics/fake-topic-${RANDOM}-${RANDOM}"
 export LOCATION="fake-region1"
 readonly SERVICE_ACCOUNT="fake-service-account@example.com"
 
