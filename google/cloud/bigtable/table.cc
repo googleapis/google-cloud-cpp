@@ -14,13 +14,12 @@
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/internal/async_future_from_callback.h"
+#include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include <thread>
 #include <type_traits>
-
-#include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 
 namespace btproto = ::google::bigtable::v2;
 namespace google {
@@ -86,7 +85,6 @@ future<Status> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
   // Determine if all the mutations are idempotent. The idempotency of the
   // mutations won't change as the retry loop executes, so we can just compute
   // it once and use a constant value for the loop.
-
   auto idempotent_mutation_policy = clone_idempotent_mutation_policy();
   bool const is_idempotent = std::all_of(
       request.mutations().begin(), request.mutations().end(),

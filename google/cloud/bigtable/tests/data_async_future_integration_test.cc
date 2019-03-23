@@ -47,12 +47,14 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
 
-  auto fut_void = table.AsyncApply(std::move(mut), cq);
+  auto fut = table.AsyncApply(std::move(mut), cq);
 
   // Block until the asynchronous operation completes. This is not what one
   // would do in a real application (the synchronous API is better in that
   // case), but we need to wait before checking the results.
-  fut_void.get();
+  Status status = fut.get();
+  EXPECT_STATUS_OK(status);
+  EXPECT_TRUE(status.ok());
 
   // Validate that the newly created cells are actually in the server.
   std::vector<bigtable::Cell> expected{{row_key, family, "cc1", 1000, "v1000"},
