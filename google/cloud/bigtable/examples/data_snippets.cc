@@ -394,8 +394,7 @@ void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
     throw Usage{"read-modify-write: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [read modify write] [START bigtable_row_increment] [START
-  //! bigtable_create_rules]
+  //! [read modify write] [START bigtable_row_increment]
   [](google::cloud::bigtable::Table table) {
     auto row = table.ReadModifyWriteRow(
         MAGIC_ROW_KEY,
@@ -409,8 +408,7 @@ void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
     }
     std::cout << row->row_key() << "\n";
   }
-  //! [read modify write] [END bigtable_row_increment] [END
-  //! bigtable_create_rules]
+  //! [read modify write] [END bigtable_row_increment]
   (std::move(table));
 }
 
