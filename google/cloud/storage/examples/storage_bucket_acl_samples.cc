@@ -269,6 +269,54 @@ void AddBucketOwner(google::cloud::storage::Client client, int& argc,
   //! [add bucket owner] [END storage_add_bucket_owner]
   (std::move(client), bucket_name, entity);
 }
+
+void RemoveBucketOwner(google::cloud::storage::Client client, int& argc,
+                       char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"remove-bucket-owner <bucket-name> <entity>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  //! [remove bucket owner] [START storage_remove_bucket_owner]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name, std::string entity) {
+    StatusOr<gcs::BucketMetadata> original_metadata =
+        client.GetBucketMetadata(bucket_name, gcs::Projection::Full());
+
+    if (!original_metadata) {
+      throw std::runtime_error(original_metadata.status().message());
+    }
+
+    std::vector<gcs::BucketAccessControl> original_acl =
+        original_metadata->acl();
+    auto it = std::find_if(original_acl.begin(), original_acl.end(),
+                           [entity](const gcs::BucketAccessControl& entry) {
+                             return entry.entity() == entity &&
+                                    entry.role() ==
+                                        gcs::BucketAccessControl::ROLE_OWNER();
+                           });
+
+    if (it == original_acl.end()) {
+      std::cout << "Could not find entity " << entity
+                << " with role OWNER in bucket " << bucket_name << "\n";
+      return;
+    }
+
+    gcs::BucketAccessControl owner = *it;
+    google::cloud::Status status =
+        client.DeleteBucketAcl(bucket_name, owner.entity());
+
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
+    }
+
+    std::cout << "Deleted ACL entry for " << owner.entity() << " in bucket "
+              << bucket_name << "\n";
+  }
+  //! [remove bucket owner] [END storage_remove_bucket_owner]
+  (std::move(client), bucket_name, entity);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -293,6 +341,7 @@ int main(int argc, char* argv[]) try {
       {"patch-bucket-acl", &PatchBucketAcl},
       {"patch-bucket-acl-no-read", &PatchBucketAclNoRead},
       {"add-bucket-owner", &AddBucketOwner},
+      {"remove-bucket-owner", &RemoveBucketOwner},
   };
   for (auto&& kv : commands) {
     try {

@@ -262,6 +262,8 @@ run_all_bucket_acl_examples() {
 
   run_example ./storage_bucket_acl_samples add-bucket-owner \
       "${bucket_name}" allAuthenticatedUsers
+  run_example ./storage_bucket_acl_samples remove-bucket-owner \
+      "${bucket_name}" allAuthenticatedUsers
 
   run_example ./storage_bucket_samples delete-bucket \
       "${bucket_name}"
