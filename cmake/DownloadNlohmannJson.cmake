@@ -28,3 +28,29 @@ message("JSON_SHA256 = ${JSON_SHA256}")
 message("DEST = ${DEST}")
 file(DOWNLOAD "${JSON_URL}" "${DEST}/json.hpp"
      EXPECTED_HASH SHA256=${JSON_SHA256})
+
+# Remove the definitions of `operator""_json()` and `operator""_json_pointer`. I
+# know it looks ugly to remove specific lines, but we know the contents of the
+# file exactly (there is a SHA256 hash of it above).
+file(READ "${DEST}/json.hpp" JSON_HPP_CONTENT)
+string(
+    REPLACE
+        [==[
+inline nlohmann::json operator "" _json(const char* s, std::size_t n)
+{
+    return nlohmann::json::parse(s, s + n);
+}
+]==]
+        "" JSON_HPP_CONTENT "${JSON_HPP_CONTENT}")
+string(REPLACE
+        [==[
+inline nlohmann::json::json_pointer operator "" _json_pointer(const char* s, std::size_t n)
+{
+    return nlohmann::json::json_pointer(std::string(s, n));
+}
+]==]
+        ""
+        JSON_HPP_CONTENT
+        "${JSON_HPP_CONTENT}")
+
+file(WRITE "${DEST}/json.hpp" "${JSON_HPP_CONTENT}")
