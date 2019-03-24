@@ -151,7 +151,45 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
   }
   std::ostringstream os;
   os << where << "() - CURL error [" << e << "]=" << curl_easy_strerror(e);
-  return Status(StatusCode::kUnknown, std::move(os).str());
+  // Map the CURLE* errors using the documentation on:
+  //   https://curl.haxx.se/libcurl/c/libcurl-errors.html
+  StatusCode code;
+  switch (e) {
+    case CURLE_COULDNT_RESOLVE_PROXY:
+    case CURLE_COULDNT_RESOLVE_HOST:
+    case CURLE_COULDNT_CONNECT:
+      code = StatusCode::kUnavailable;
+      break;
+    case CURLE_REMOTE_ACCESS_DENIED:
+      code = StatusCode::kPermissionDenied;
+      break;
+    case CURLE_OPERATION_TIMEDOUT:
+      code = StatusCode::kDeadlineExceeded;
+      break;
+    case CURLE_RANGE_ERROR:
+      // This is defined as "the server does not *support or *accept* range
+      // requests", so it means something stronger than "your range value is
+      // not valid".
+      code = StatusCode::kUnimplemented;
+      break;
+    case CURLE_BAD_DOWNLOAD_RESUME:
+      code = StatusCode::kInvalidArgument;
+      break;
+    case CURLE_ABORTED_BY_CALLBACK:
+      code = StatusCode::kAborted;
+      break;
+    case CURLE_REMOTE_FILE_NOT_FOUND:
+      code = StatusCode::kNotFound;
+      break;
+    default:
+      // There are ~82 error codes, some are not applicable (CURLE_FTP*), some
+      // of them are not available on all versions, and some are explicitly
+      // marked as obsolete. Instead of listing all of them, just default to
+      // kUnknown.
+      code = StatusCode::kUnknown;
+      break;
+  }
+  return Status(code, std::move(os).str());
 }
 
 void CurlHandle::ThrowSetOptionError(CURLcode e, CURLoption opt, long param) {
