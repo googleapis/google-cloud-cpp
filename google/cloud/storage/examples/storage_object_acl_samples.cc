@@ -260,6 +260,83 @@ void PatchObjectAclNoRead(gcs::Client client, int& argc, char* argv[]) {
   (std::move(client), bucket_name, object_name, entity, role);
 }
 
+void AddObjectOwner(gcs::Client client, int& argc, char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"add-object-owner <bucket-name> <object-name> <entity>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  //! [add file owner] [START storage_add_file_owner]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string entity) {
+    StatusOr<gcs::ObjectAccessControl> patched_acl =
+        client.CreateObjectAcl(bucket_name, object_name, entity,
+                               gcs::ObjectAccessControl::ROLE_OWNER());
+
+    if (!patched_acl) {
+      throw std::runtime_error(patched_acl.status().message());
+    }
+
+    std::cout << "ACL entry for " << patched_acl->entity() << " in object "
+              << patched_acl->object() << " in bucket " << patched_acl->bucket()
+              << " is now " << *patched_acl << "\n";
+  }
+  //! [add file owner] [END storage_add_file_owner]
+  (std::move(client), bucket_name, object_name, entity);
+}
+
+void RemoveObjectOwner(gcs::Client client, int& argc, char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"remove-object-owner <bucket-name> <object-name> <entity>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto entity = ConsumeArg(argc, argv);
+  //! [remove file owner] [START storage_remove_file_owner]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string entity) {
+    StatusOr<gcs::ObjectMetadata> original_metadata = client.GetObjectMetadata(
+        bucket_name, object_name, gcs::Projection::Full());
+
+    if (!original_metadata) {
+      throw std::runtime_error(original_metadata.status().message());
+    }
+
+    std::vector<gcs::ObjectAccessControl> original_acl =
+        original_metadata->acl();
+    auto it = std::find_if(original_acl.begin(), original_acl.end(),
+                           [entity](const gcs::ObjectAccessControl& entry) {
+                             return entry.entity() == entity &&
+                                    entry.role() ==
+                                        gcs::ObjectAccessControl::ROLE_OWNER();
+                           });
+
+    if (it == original_acl.end()) {
+      std::cout << "Could not find entity " << entity << " for file "
+                << object_name << " with role OWNER in bucket " << bucket_name
+                << "\n";
+      return;
+    }
+
+    gcs::ObjectAccessControl owner = *it;
+    google::cloud::Status status =
+        client.DeleteObjectAcl(bucket_name, object_name, owner.entity());
+
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
+    }
+
+    std::cout << "Deleted ACL entry for " << owner.entity() << " for file "
+              << object_name << " in bucket " << bucket_name << "\n";
+  }
+  //! [remove file owner] [END storage_remove_file_owner]
+  (std::move(client), bucket_name, object_name, entity);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -282,6 +359,8 @@ int main(int argc, char* argv[]) try {
       {"update-object-acl", &UpdateObjectAcl},
       {"patch-object-acl", &PatchObjectAcl},
       {"patch-object-acl-no-read", &PatchObjectAclNoRead},
+      {"add-object-owner", &AddObjectOwner},
+      {"remove-object-owner", &RemoveObjectOwner},
   };
   for (auto&& kv : commands) {
     try {
