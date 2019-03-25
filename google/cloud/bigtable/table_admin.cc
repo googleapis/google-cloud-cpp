@@ -57,18 +57,23 @@ StatusOr<btadmin::Table> TableAdmin::CreateTable(std::string table_id,
   return result;
 }
 
-future<StatusOr<google::bigtable::admin::v2::Table>>
-TableAdmin::AsyncCreateTable(CompletionQueue& cq, std::string table_id,
-                             TableConfig config) {
-  promise<StatusOr<google::bigtable::admin::v2::Table>> p;
-  auto result = p.get_future();
+future<StatusOr<btadmin::Table>> TableAdmin::AsyncCreateTable(
+    CompletionQueue& cq, std::string table_id, TableConfig config) {
+  btadmin::CreateTableRequest request = std::move(config).as_proto();
+  request.set_parent(instance_name());
+  request.set_table_id(std::move(table_id));
 
-  impl_.AsyncCreateTable(
-      cq,
-      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncCreateTable"),
-      std::move(table_id), std::move(config));
-
-  return result;
+  auto client = impl_.client_;
+  return internal::StartRetryAsyncUnaryRpc(
+      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      internal::ConstantIdempotencyPolicy(false),
+      clone_metadata_update_policy(),
+      [client](grpc::ClientContext* context,
+               btadmin::CreateTableRequest const& request,
+               grpc::CompletionQueue* cq) {
+        return client->AsyncCreateTable(context, request, cq);
+      },
+      std::move(request), cq);
 }
 
 future<StatusOr<google::bigtable::admin::v2::Table>> TableAdmin::AsyncGetTable(

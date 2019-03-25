@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include <iostream>
 
@@ -32,6 +33,16 @@ int main() {
 #ifdef LIBCURL_VERSION
 #error "LIBCURL should not be included by storage public headers"
 #endif  // OPENSSL_VERSION_NUMBER
+
+  // When we include the storage headers we do not want to leave the include
+  // guards for nlohmann::json defined, that stops our users from including
+  // similar headers.
+#ifdef NLOHMANN_JSON_FWD_HPP
+#error "NLOHMANN_JSON_FWD_HPP should not be left defined."
+#endif  // NLOHMANN_JSON_FWD_HPP
+#ifdef NLOHMANN_JSON_HPP
+#error "NLOHMANN_JSON_HPP should not be left defined."
+#endif  // NLOHMANN_JSON_HPP
 
   std::cout << "PASSED: this is a compile-time test\n";
   return 0;

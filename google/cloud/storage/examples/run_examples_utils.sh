@@ -71,6 +71,10 @@ run_all_bucket_examples() {
   run_example ./storage_bucket_samples get-bucket-metadata "${bucket_name}"
   run_example ./storage_bucket_samples get-bucket-metadata "${bucket_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
+
+  run_example ./storage_bucket_samples create-bucket-with-storage-class-location \
+      "${bucket_name}" "STANDARD" "US"
+  run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
   unset GOOGLE_CLOUD_PROJECT
 
   # Verify that calling without a command produces the right exit status and
@@ -1004,6 +1008,13 @@ run_all_object_acl_examples() {
   run_example ./storage_object_acl_samples patch-object-acl-no-read \
       "${bucket_name}" "${object_name}" allAuthenticatedUsers OWNER
   run_example ./storage_object_acl_samples delete-object-acl \
+      "${bucket_name}" "${object_name}" allAuthenticatedUsers
+
+  run_example ./storage_object_acl_samples add-object-owner \
+      "${bucket_name}" "${object_name}" allAuthenticatedUsers
+  run_example ./storage_object_acl_samples get-object-acl \
+      "${bucket_name}" "${object_name}" allAuthenticatedUsers
+  run_example ./storage_object_acl_samples remove-object-owner \
       "${bucket_name}" "${object_name}" allAuthenticatedUsers
 
   run_example ./storage_object_samples delete-object \
