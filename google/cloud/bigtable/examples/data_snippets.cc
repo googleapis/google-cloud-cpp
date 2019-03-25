@@ -464,6 +464,33 @@ void SampleRowsCollections(google::cloud::bigtable::Table table, int argc,
   (std::move(table));
 }
 
+void GetFamily(google::cloud::bigtable::Table table, int argc, char* argv[]) {
+  if (argc != 1) {
+    throw Usage{"read-rows: <project-id> <instance-id> <table-id>"};
+  }
+
+  //! [bigtable_get_family]
+  [](google::cloud::bigtable::Table table) {
+    // Create the range of rows to read.
+    auto range = google::cloud::bigtable::RowRange::InfiniteRange();
+
+    // Filter the results, only get the latest value
+    auto filter = google::cloud::bigtable::Filter::Latest(1);
+
+    // Read and print the family name.
+    for (auto const& row : table.ReadRows(range, filter)) {
+      if (!row) {
+        throw std::runtime_error(row.status().message());
+      }
+      auto const& cell = row->cells().at(0);
+      std::cout << cell.family_name() << "\n";
+      break;
+    }
+    std::cout << std::flush;
+  }
+  //! [bigtable_get_family]
+  (std::move(table));
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -483,6 +510,7 @@ int main(int argc, char* argv[]) try {
       {"read-modify-write", &ReadModifyWrite},
       {"sample-rows", &SampleRows},
       {"sample-rows-collections", &SampleRowsCollections},
+      {"get-family", &GetFamily},
   };
 
   {

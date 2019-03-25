@@ -324,6 +324,7 @@ run_all_data_examples() {
   run_example ./data_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets get-family "${project_id}" "${instance_id}" "${TABLE}"  
   run_example ./table_admin_snippets delete-table "${project_id}" "${instance_id}" "${TABLE}"
 }
 
