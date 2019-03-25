@@ -166,12 +166,10 @@ void CreateBucketWithStorageClassLocation(google::cloud::storage::Client client,
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string storage_class,
      std::string location) {
-    gcs::BucketMetadata bucket_metadata_parameters;
-    bucket_metadata_parameters.set_storage_class(storage_class);
-    bucket_metadata_parameters.set_location(location);
-
     StatusOr<gcs::BucketMetadata> bucket_metadata =
-        client.CreateBucket(bucket_name, bucket_metadata_parameters);
+        client.CreateBucket(bucket_name, gcs::BucketMetadata()
+                                             .set_storage_class(storage_class)
+                                             .set_location(location));
 
     if (!bucket_metadata) {
       throw std::runtime_error(bucket_metadata.status().message());
