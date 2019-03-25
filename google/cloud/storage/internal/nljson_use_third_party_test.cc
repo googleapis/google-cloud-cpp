@@ -13,18 +13,19 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/internal/nlohmann_json.hpp"
 #include <gtest/gtest.h>
 
-/// @test Verify that we can compile against the nlohmann::json library.
-TEST(NlJsonTest, Simple) {
-  google::cloud::storage::internal::nl::json json = {
+/// @test Verify third-parties can include their own lohmann::json headers.
+TEST(NlJsonUseThirdPartTest, Simple) {
+  ::nlohmann::json object = {
       {"pi", 3.141},
       {"happy", true},
       {"nothing", nullptr},
       {"answer", {{"everything", 42}}},
       {"list", {1, 0, 2}},
       {"object", {{"currency", "USD"}, {"value", 42.99}}}};
-  EXPECT_NEAR(3.141, json["pi"], 0.001);
-  EXPECT_EQ("USD", json["object"]["currency"]);
-  EXPECT_EQ(1, json["list"][0]);
+  EXPECT_NEAR(3.141, object["pi"], 0.001);
+  EXPECT_EQ("USD", object["object"]["currency"]);
+  EXPECT_EQ(1, object["list"][0]);
 }

@@ -42,7 +42,7 @@ genrule(
     name = "nlohmann_json_include_hierarchy",
     srcs = ["@com_github_nlohmann_json_single_header//file"],
     outs = ["google/cloud/storage/internal/nlohmann_json.hpp"],
-    cmd = "cp $< $@ && echo GENDIR=$(GENDIR) @=$(@) S=$<",
+    cmd = "sed '20213,20247d' $< >$@",
 )
 
 cc_library(
