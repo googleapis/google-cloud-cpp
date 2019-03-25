@@ -2,6 +2,7 @@ var searchData=
 [
   ['updatebucket',['UpdateBucket',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aeafcd6f543c55eade26544a9cde8e6c6',1,'google::cloud::storage::v0::Client']]],
   ['updatebucketacl',['UpdateBucketAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a8f1d83a6d8703ce457827ae274f35112',1,'google::cloud::storage::v0::Client']]],
+  ['updated',['updated',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1HmacKeyMetadata.html#a4a9a7a0e0f904e693faddb6815ab3084',1,'google::cloud::storage::v0::HmacKeyMetadata']]],
   ['updatedefaultobjectacl',['UpdateDefaultObjectAcl',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#af0cc3774c205d86ebba8f83a4714ad64',1,'google::cloud::storage::v0::Client']]],
   ['updatehmackey',['UpdateHmacKey',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#aee332ec6d4864ac8da93bfc9e0285282',1,'google::cloud::storage::v0::Client']]],
   ['updateobject',['UpdateObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a6e8c495cc20cfeadb81995c3a77e37ab',1,'google::cloud::storage::v0::Client']]],
