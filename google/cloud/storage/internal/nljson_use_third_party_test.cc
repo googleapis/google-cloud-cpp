@@ -13,7 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/nljson.h"
+
+// Verify that we can #include the nljson.h header before a third-party includes
+// json.hpp directly. We want to support both users that include nlohmann::json
+// first (which is what nljson_use_after_third_party_test.cc checks), and users
+// that include our headers first (which is what this program tests).
+// We simulate the nlohmann::json include by including nlohmann_json.hpp
 #include "google/cloud/storage/internal/nlohmann_json.hpp"
+// Create a separate include block to prevent clang-format from reordering.
+
 #include <gtest/gtest.h>
 
 /// @test Verify third-parties can include their own lohmann::json headers.
