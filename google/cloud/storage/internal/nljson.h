@@ -32,13 +32,20 @@
  * @see https://github.com/nlohmann/json.git
  */
 
+// Remove the include guards because third-parties may have included their own
+// version of nlohmann::json. This is safe because google/cloud/storage always
+// includes the nlohmann::json through this header, so after the first time our
+// own include guards are enough.
+#undef NLOHMANN_JSON_HPP
+#undef NLOHMANN_JSON_FWD_HPP
+
 #define nlohmann google_cloud_storage_internal_nlohmann_3_4_0
 #include "google/cloud/storage/internal/nlohmann_json.hpp"
 
 // Remove the include guards so third-parties can include their own version of
-// nlohmann::jso. This is safe because google/cloud/storage always includes
+// nlohmann::json. This is safe because google/cloud/storage always includes
 // the nlohmann::json through this header, so after the first time our own
-// include guards are enough
+// include guards are enough.
 #undef NLOHMANN_JSON_HPP
 #undef NLOHMANN_JSON_FWD_HPP
 
