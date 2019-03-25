@@ -150,6 +150,39 @@ void CreateBucketForProject(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, project_id);
 }
 
+void CreateBucketWithStorageClassLocation(google::cloud::storage::Client client,
+                                          int& argc, char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "create-bucket-with-storage-class-location <bucket-name> "
+        "<storage-class> <location>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto storage_class = ConsumeArg(argc, argv);
+  auto location = ConsumeArg(argc, argv);
+  //! [create bucket class location]
+  // [START storage_create_bucket_class_location]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name, std::string storage_class,
+     std::string location) {
+    StatusOr<gcs::BucketMetadata> bucket_metadata =
+        client.CreateBucket(bucket_name, gcs::BucketMetadata()
+                                             .set_storage_class(storage_class)
+                                             .set_location(location));
+
+    if (!bucket_metadata) {
+      throw std::runtime_error(bucket_metadata.status().message());
+    }
+
+    std::cout << "Bucket " << bucket_metadata->name() << " created."
+              << "\nFull Metadata: " << *bucket_metadata << "\n";
+  }
+  // [END storage_create_bucket_class_location]
+  //! [create bucket class location]
+  (std::move(client), bucket_name, storage_class, location);
+}
+
 void GetBucketMetadata(google::cloud::storage::Client client, int& argc,
                        char* argv[]) {
   if (argc != 2) {
@@ -1456,6 +1489,8 @@ int main(int argc, char* argv[]) try {
       {"list-buckets-for-project", &ListBucketsForProject},
       {"create-bucket", &CreateBucket},
       {"create-bucket-for-project", &CreateBucketForProject},
+      {"create-bucket-with-storage-class-location",
+       &CreateBucketWithStorageClassLocation},
       {"get-bucket-metadata", &GetBucketMetadata},
       {"delete-bucket", &DeleteBucket},
       {"change-default-storage-class", &ChangeDefaultStorageClass},

@@ -71,6 +71,10 @@ run_all_bucket_examples() {
   run_example ./storage_bucket_samples get-bucket-metadata "${bucket_name}"
   run_example ./storage_bucket_samples get-bucket-metadata "${bucket_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
+
+  run_example ./storage_bucket_samples create-bucket-with-storage-class-location \
+      "${bucket_name}" "STANDARD" "US"
+  run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
   unset GOOGLE_CLOUD_PROJECT
 
   # Verify that calling without a command produces the right exit status and
