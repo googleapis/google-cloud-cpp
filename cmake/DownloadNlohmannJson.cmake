@@ -23,34 +23,66 @@ set(JSON_URL
 set(
     JSON_SHA256 63da6d1f22b2a7bb9e4ff7d6b255cf691a161ff49532dcc45d398a53e295835f
     )
-message("JSON_URL = ${JSON_URL}")
-message("JSON_SHA256 = ${JSON_SHA256}")
-message("DEST = ${DEST}")
-file(DOWNLOAD "${JSON_URL}" "${DEST}/json.hpp"
-     EXPECTED_HASH SHA256=${JSON_SHA256})
 
-# Remove the definitions of `operator""_json()` and `operator""_json_pointer`. I
-# know it looks ugly to remove specific lines, but we know the contents of the
-# file exactly (there is a SHA256 hash of it above).
-file(READ "${DEST}/json.hpp" JSON_HPP_CONTENT)
-string(
-    REPLACE
-        [==[
+# Use a function to avoid filling up the global namespace with local variables.
+function (_download_json_hpp)
+    set(sleep_seconds 2)
+    foreach (attempt 1 2 3 4 5)
+        math(EXPR sleep_seconds "2 * ${sleep_seconds}")
+        if (NOT attempt EQUAL 1)
+            message(
+                STATUS
+                    "Will retry after ${sleep_seconds} seconds (attempt #${attempt})."
+                )
+            execute_process(COMMAND "${CMAKE_COMMAND}" -E sleep
+                                    "${sleep_seconds}")
+        endif ()
+        file(DOWNLOAD "${JSON_URL}" "${DEST}/json.hpp" STATUS download_status)
+        list(GET download_status 0 download_error_code)
+        if (download_error_code EQUAL 0)
+            break()
+        endif ()
+    endforeach ()
+
+    if (NOT download_error_code EQUAL 0)
+        message(
+            FATAL_ERROR
+                "Could not download ${JSON_URL} after multiple attempts."
+                " status=${download_status}")
+    endif ()
+
+    file(SHA256 "${DEST}/json.hpp" actual_json_hpp_sha256)
+    if (NOT "${JSON_SHA256}" STREQUAL "${actual_json_hpp_sha256}")
+        message(FATAL_ERROR "Mismatch digest for downloaded json.hpp file."
+                            "\n  expected hash: [${JSON_SHA256}]"
+                            "\n    actual hash: [${actual_json_hpp_sha256}]")
+    endif ()
+    # Remove the definitions of `operator""_json()` and
+    # `operator""_json_pointer`. I know it looks ugly to remove specific lines,
+    # but we know the contents of the file exactly (there is a SHA256 hash of it
+    # above).
+    file(READ "${DEST}/json.hpp" JSON_HPP_CONTENT)
+    string(
+        REPLACE
+            [==[
 inline nlohmann::json operator "" _json(const char* s, std::size_t n)
 {
     return nlohmann::json::parse(s, s + n);
 }
 ]==]
-        "" JSON_HPP_CONTENT "${JSON_HPP_CONTENT}")
-string(REPLACE
-        [==[
+            "" JSON_HPP_CONTENT "${JSON_HPP_CONTENT}")
+    string(REPLACE
+            [==[
 inline nlohmann::json::json_pointer operator "" _json_pointer(const char* s, std::size_t n)
 {
     return nlohmann::json::json_pointer(std::string(s, n));
 }
 ]==]
-        ""
-        JSON_HPP_CONTENT
-        "${JSON_HPP_CONTENT}")
+            ""
+            JSON_HPP_CONTENT
+            "${JSON_HPP_CONTENT}")
 
-file(WRITE "${DEST}/json.hpp" "${JSON_HPP_CONTENT}")
+    file(WRITE "${DEST}/json.hpp" "${JSON_HPP_CONTENT}")
+endfunction ()
+
+_download_json_hpp()
