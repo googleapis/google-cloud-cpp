@@ -43,7 +43,7 @@ We support two different modes to compile the library with CMake:
 
 Bazel builds are basically external project builds.
 
-When compiline with external projects we create [targets][cmake-doc-targets]
+When compiling with external projects we create [targets][cmake-doc-targets]
 that have the same names (and roles) as the `Find<Package>` module creates when
 the dependency is installed. For example, when protobuf is installed and 
 discovered via `find_package()` the module for protobuf introduces a
@@ -116,7 +116,7 @@ how it is compiled it may have installed CMake-config files. All CMake versions
 we support (>=3.5) provide a `FindProtobuf` module, but this module does not
 create the correct imported targets until CMake-3.9, and the protobuf compiler
 does not get an imported target until CMake-3.10.
- 
+
 1. `external`: When `GOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER` is set to `external`
    (the default) we will compile gRPC as an external project and install it
    in `<BUILD_DIR>/external`.
@@ -186,7 +186,7 @@ we:
   Compiling from source can be (a) so slow that we go over the time allocated in
   the CI build, and (b) the build may require patching the dependencies, as the
   `vcpkg` ports do.
-  
+
 * On MacOS, we are only building with Bazel at this time.
 
 * We also have two Bazel builds for Linux:
