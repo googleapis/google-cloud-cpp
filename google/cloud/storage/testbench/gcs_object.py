@@ -406,10 +406,11 @@ class GcsObject(object):
         writeable_keys = {
             'acl', 'cacheControl', 'contentDisposition', 'contentEncoding',
             'contentLanguage', 'contentType', 'eventBasedHold', 'metadata',
-            'temporaryHold'
+            'temporaryHold', 'storageClass'
         }
         for key in metadata.keys():
             if key not in writeable_keys:
+                print("\n\nDEBUG DO NOT MERGE removing %s\n\n" % key)
                 metadata.pop(key, None)
         return metadata
 

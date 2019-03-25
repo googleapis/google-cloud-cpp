@@ -205,6 +205,10 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   std::uint64_t size() const { return size_; }
 
   using CommonMetadata::storage_class;
+  ObjectMetadata& set_storage_class(std::string v) {
+    CommonMetadata::set_storage_class(std::move(v));
+    return *this;
+  }
 
   bool temporary_hold() const { return temporary_hold_; }
   ObjectMetadata& set_temporary_hold(bool v) {

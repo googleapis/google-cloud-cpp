@@ -442,6 +442,15 @@ TEST(ObjectMetadataTest, SetEventBasedHold) {
   EXPECT_NE(expected, copy);
 }
 
+/// @test Verify we can change the storageClass field.
+TEST(ObjectMetadataTest, SetStorageClass) {
+  auto expected = CreateObjectMetadataForTest();
+  auto copy = expected;
+  copy.set_content_type("NEARLINE");
+  EXPECT_EQ("NEARLINE", copy.content_type());
+  EXPECT_NE(expected, copy);
+}
+
 /// @test Verify we can delete metadata fields.
 TEST(ObjectMetadataTest, DeleteMetadata) {
   auto expected = CreateObjectMetadataForTest();
