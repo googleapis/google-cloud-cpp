@@ -466,7 +466,7 @@ void SampleRowsCollections(google::cloud::bigtable::Table table, int argc,
 
 void GetFamily(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   if (argc != 1) {
-    throw Usage{"read-rows: <project-id> <instance-id> <table-id>"};
+    throw Usage{"get-family: <project-id> <instance-id> <table-id>"};
   }
 
   //! [bigtable_get_family]
