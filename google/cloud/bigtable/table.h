@@ -379,6 +379,22 @@ class Table {
  private:
   friend class MutationBatcher;
   noex::Table impl_;
+
+  std::unique_ptr<RPCRetryPolicy> clone_rpc_retry_policy() {
+    return impl_.rpc_retry_policy_->clone();
+  }
+
+  std::unique_ptr<RPCBackoffPolicy> clone_rpc_backoff_policy() {
+    return impl_.rpc_backoff_policy_->clone();
+  }
+
+  MetadataUpdatePolicy clone_metadata_update_policy() {
+    return impl_.metadata_update_policy_;
+  }
+
+  std::unique_ptr<IdempotentMutationPolicy> clone_idempotent_mutation_policy() {
+    return impl_.idempotent_mutation_policy_->clone();
+  }
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

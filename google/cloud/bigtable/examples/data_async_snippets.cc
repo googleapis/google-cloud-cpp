@@ -71,7 +71,10 @@ void AsyncApply(cbt::Table table, cbt::CompletionQueue cq,
 
       google::cloud::future<google::cloud::Status> fut =
           table.AsyncApply(std::move(mutation), cq);
-      fut.get();
+      google::cloud::Status status = fut.get();
+      if (!status.ok()) {
+        throw std::runtime_error(status.message());
+      }
     }
   }
   //! [async-apply]
