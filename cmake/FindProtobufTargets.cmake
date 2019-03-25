@@ -70,7 +70,8 @@ Example:
 
 if (protobuf_DEBUG)
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                   "protobuf_USE_STATIC_LIBS = ${protobuf_USE_STATIC_LIBS}")
+                   "protobuf_USE_STATIC_LIBS = ${protobuf_USE_STATIC_LIBS}"
+                   " ProtobufTargets = ${ProtobufTargets_FOUND}")
 endif ()
 
 # Always load thread support, even on Windows.
