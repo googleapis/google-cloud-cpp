@@ -26,7 +26,7 @@ std::ostream& operator<<(std::ostream& os, HmacKeyMetadata const& rhs) {
             << ", service_account_email=" << rhs.service_account_email()
             << ", state=" << rhs.state()
             << ", time_created=" << internal::FormatRfc3339(rhs.time_created())
-            << "}";
+            << ", updated=" << internal::FormatRfc3339(rhs.updated()) << "}";
 }
 
 }  // namespace STORAGE_CLIENT_NS
