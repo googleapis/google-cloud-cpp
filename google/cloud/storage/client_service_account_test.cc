@@ -120,7 +120,7 @@ TEST_F(ServiceAccountTest, CreateHmacKey) {
       client.CreateHmacKey("test-service-account",
                            OverrideDefaultProject("test-project"));
   ASSERT_STATUS_OK(actual);
-  EXPECT_EQ(expected.resource, actual->first);
+  EXPECT_EQ(expected.metadata, actual->first);
   EXPECT_EQ(expected.secret, actual->second);
 }
 

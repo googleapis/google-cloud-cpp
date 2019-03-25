@@ -39,6 +39,9 @@ StatusOr<HmacKeyMetadata> HmacKeyMetadataParser::FromJson(
     result.time_created_ =
         internal::ParseRfc3339(json.value("timeCreated", ""));
   }
+  if (json.count("updated") != 0) {
+    result.updated_ = internal::ParseRfc3339(json.value("updated", ""));
+  }
   return result;
 }
 
@@ -66,18 +69,18 @@ StatusOr<CreateHmacKeyResponse> CreateHmacKeyResponse::FromHttpResponse(
   CreateHmacKeyResponse result;
   result.kind = json.value("kind", "");
   result.secret = json.value("secretKey", "");
-  if (json.count("resource") != 0) {
-    auto resource = HmacKeyMetadataParser::FromJson(json["resource"]);
+  if (json.count("metadata") != 0) {
+    auto resource = HmacKeyMetadataParser::FromJson(json["metadata"]);
     if (!resource) {
       return std::move(resource).status();
     }
-    result.resource = *std::move(resource);
+    result.metadata = *std::move(resource);
   }
   return result;
 }
 
 std::ostream& operator<<(std::ostream& os, CreateHmacKeyResponse const& r) {
-  return os << "CreateHmacKeyResponse={resource=" << r.resource
+  return os << "CreateHmacKeyResponse={metadata=" << r.metadata
             << ", secret=[censored]"
             << "}";
 }
