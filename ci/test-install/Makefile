@@ -18,35 +18,31 @@
 # nor is it a general solution on how to build Makefiles for google-cloud-cpp.
 # It is simply a minimal file to test the installed pkg-config support files.
 
-# This is hard-coded because it is intended for a test, applications typically
-# have their own configuration files.
+# The CXX, CXXFLAGS and CXXLD variables are hard-coded because it is intended
+# for a test, applications typically have their own configuration files.
 CXX=g++
 CXXFLAGS=-std=c++11
 CXXLD=$(CXX)
 
-
 all: bigtable_install_test storage_install_test
 
-CBT_DEPS := bigtable_client google_cloud_cpp_common grpc++ grpc zlib openssl libcares protobuf
+## Configuration variables to compile and link against the Cloud Bigtable C++
+## client library.
+CBT_DEPS := bigtable_client
 CBT_CXXFLAGS   := $(shell pkg-config $(CBT_DEPS) --cflags)
 CBT_CXXLDFLAGS := $(shell pkg-config $(CBT_DEPS) --libs-only-L)
-# gRPC does not install a full complement of pkg-config files:
-#   https://github.com/grpc/grpc/issues/15166
-# so we need to "guess" that -lgpr and -laddress_sorting will be needed.
-CBT_LIBS := \
-    $(shell pkg-config $(CBT_DEPS) --libs-only-l) \
-    -lgpr -laddress_sorting \
-    $(shell pkg-config libcares --libs-only-l)
+CBT_LIBS       := $(shell pkg-config $(CBT_DEPS) --libs-only-l)
 
 bigtable_install_test: bigtable_install_test.cc
 	$(CXXLD) $(CXXFLAGS) $(CBT_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
 
 
-GCS_DEPS := storage_client google_cloud_cpp_common libcurl openssl
+## Configuration variables to compile and link against the Google Cloud Storage
+## C++ client library.
+GCS_DEPS := storage_client
 GCS_CXXFLAGS   := $(shell pkg-config $(GCS_DEPS) --cflags)
 GCS_CXXLDFLAGS := $(shell pkg-config $(GCS_DEPS) --libs-only-L)
-# CRC32C does not have pkg-config(1) files, so link it explicitly.
-GCS_LIBS := $(shell pkg-config $(GCS_DEPS) --libs-only-l) -lcrc32c
+GCS_LIBS       := $(shell pkg-config $(GCS_DEPS) --libs-only-l)
 
 storage_install_test: storage_install_test.cc
 	$(CXXLD) $(CXXFLAGS) $(GCS_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(GCS_LIBS)
