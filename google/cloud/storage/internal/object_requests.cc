@@ -103,9 +103,61 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromString(
   return FromJson(json);
 }
 
+internal::nl::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta) {
+  using ::google::cloud::storage::internal::nl::json;
+  json metadata_as_json({});
+  if (!meta.acl().empty()) {
+    for (ObjectAccessControl const& a : meta.acl()) {
+      json entry;
+      SetIfNotEmpty(entry, "entity", a.entity());
+      SetIfNotEmpty(entry, "role", a.role());
+      metadata_as_json["acl"].emplace_back(std::move(entry));
+    }
+  }
+
+  SetIfNotEmpty(metadata_as_json, "cacheControl", meta.cache_control());
+  SetIfNotEmpty(metadata_as_json, "contentDisposition",
+                meta.content_disposition());
+  SetIfNotEmpty(metadata_as_json, "contentEncoding", meta.content_encoding());
+  SetIfNotEmpty(metadata_as_json, "contentLanguage", meta.content_language());
+  SetIfNotEmpty(metadata_as_json, "contentType", meta.content_type());
+
+  if (meta.event_based_hold()) {
+    metadata_as_json["eventBasedHold"] = true;
+  }
+
+  SetIfNotEmpty(metadata_as_json, "name", meta.name());
+  SetIfNotEmpty(metadata_as_json, "storageClass", meta.storage_class());
+
+  if (!meta.metadata().empty()) {
+    json meta_as_json;
+    for (auto const& kv : meta.metadata()) {
+      meta_as_json[kv.first] = kv.second;
+    }
+    metadata_as_json["metadata"] = std::move(meta_as_json);
+  }
+
+  return metadata_as_json;
+}
+
+internal::nl::json ObjectMetadataJsonForCopy(ObjectMetadata const& meta) {
+  return ObjectMetadataJsonForCompose(meta);
+}
+
+internal::nl::json ObjectMetadataJsonForInsert(ObjectMetadata const& meta) {
+  auto json = ObjectMetadataJsonForCompose(meta);
+  SetIfNotEmpty(json, "crc32c", meta.crc32c());
+  SetIfNotEmpty(json, "md5Hash", meta.md5_hash());
+  return json;
+}
+
+internal::nl::json ObjectMetadataJsonForRewrite(ObjectMetadata const& meta) {
+  return ObjectMetadataJsonForCompose(meta);
+}
+
 internal::nl::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta) {
   using ::google::cloud::storage::internal::nl::json;
-  json metadata_as_json;
+  json metadata_as_json({});
   if (!meta.acl().empty()) {
     for (ObjectAccessControl const& a : meta.acl()) {
       json entry;
@@ -133,56 +185,6 @@ internal::nl::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta) {
   }
 
   return metadata_as_json;
-}
-
-std::string ObjectMetadataJsonPayloadForUpdate(ObjectMetadata const& meta) {
-  auto json = ObjectMetadataJsonForUpdate(meta);
-  return json.empty() ? "{}" : json.dump();
-}
-
-internal::nl::json ObjectMetadataJsonPayloadForCompose(
-    ObjectMetadata const& meta) {
-  using ::google::cloud::storage::internal::nl::json;
-  json metadata_as_json;
-  if (!meta.acl().empty()) {
-    for (ObjectAccessControl const& a : meta.acl()) {
-      json entry;
-      SetIfNotEmpty(entry, "entity", a.entity());
-      SetIfNotEmpty(entry, "role", a.role());
-      metadata_as_json["acl"].emplace_back(std::move(entry));
-    }
-  }
-
-  SetIfNotEmpty(metadata_as_json, "cacheControl", meta.cache_control());
-  SetIfNotEmpty(metadata_as_json, "contentDisposition",
-                meta.content_disposition());
-  SetIfNotEmpty(metadata_as_json, "contentEncoding", meta.content_encoding());
-  SetIfNotEmpty(metadata_as_json, "contentLanguage", meta.content_language());
-  SetIfNotEmpty(metadata_as_json, "contentType", meta.content_type());
-  SetIfNotEmpty(metadata_as_json, "crc32c", meta.crc32c());
-  SetIfNotEmpty(metadata_as_json, "md5Hash", meta.md5_hash());
-  SetIfNotEmpty(metadata_as_json, "name", meta.name());
-  SetIfNotEmpty(metadata_as_json, "storageClass", meta.storage_class());
-
-  if (!meta.metadata().empty()) {
-    json meta_as_json;
-    for (auto const& kv : meta.metadata()) {
-      meta_as_json[kv.first] = kv.second;
-    }
-    metadata_as_json["metadata"] = std::move(meta_as_json);
-  }
-
-  return metadata_as_json;
-}
-
-std::string ObjectMetadataJsonPayloadForCopy(ObjectMetadata const& meta) {
-  auto json = ObjectMetadataJsonForUpdate(meta);
-  // TODO(#564) - add checksums if applicable.
-  // Only crc32c and md5Hash are writeable fields that could be included in a
-  // copy but are not included in an update.  The server has the checksums for
-  // a copy though, so it does not seem necessary to send them. When we
-  // implement #564 we should revisit this decision.
-  return json.empty() ? "{}" : json.dump();
 }
 
 std::ostream& operator<<(std::ostream& os, ListObjectsRequest const& r) {
@@ -350,8 +352,8 @@ std::string ComposeObjectRequest::JsonPayload() const {
   compose_object_payload_json["kind"] = "storage#composeRequest";
   json destination_metadata_payload;
   if (HasOption<WithObjectMetadata>()) {
-    destination_metadata_payload = ObjectMetadataJsonPayloadForCompose(
-        GetOption<WithObjectMetadata>().value());
+    destination_metadata_payload =
+        ObjectMetadataJsonForCompose(GetOption<WithObjectMetadata>().value());
   }
   if (!destination_metadata_payload.is_null()) {
     compose_object_payload_json["destination"] = destination_metadata_payload;

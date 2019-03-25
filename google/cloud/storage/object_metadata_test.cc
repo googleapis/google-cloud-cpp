@@ -183,12 +183,159 @@ TEST(ObjectMetadataTest, IOStream) {
   EXPECT_THAT(actual, HasSubstr("temporary_hold=true"));
 }
 
-/// @test Verify we can convert a ObjectMetadata object to a JSON string.
-TEST(ObjectMetadataTest, UpdatePayload) {
+/// @test Verify that ObjectMetadataJsonForCompose works as expected.
+TEST(ObjectMetadataTest, JsonForComposeEmpty) {
+  internal::nl::json actual = ObjectMetadataJsonForCopy(ObjectMetadata());
+  internal::nl::json expected({});
+  EXPECT_EQ(expected, actual);
+}
+
+/// @test Verify the ObjectMetadataJsonForCompose() works as expected.
+TEST(ObjectMetadataTest, JsonForCompose) {
+  auto actual = ObjectMetadataJsonForCompose(CreateObjectMetadataForTest());
+
+  internal::nl::json expected = {
+      {"acl",
+       internal::nl::json{
+           {{"entity", "user-qux"}, {"role", "OWNER"}},
+           {{"entity", "user-quux"}, {"role", "READER"}},
+       }},
+      {"cacheControl", "no-cache"},
+      {"contentDisposition", "a-disposition"},
+      {"contentEncoding", "an-encoding"},
+      {"contentLanguage", "a-language"},
+      {"contentType", "application/octet-stream"},
+      {"eventBasedHold", true},
+      {"metadata",
+       internal::nl::json{
+           {"foo", "bar"},
+           {"baz", "qux"},
+       }},
+      {"name", "baz"},
+      {"storageClass", "STANDARD"},
+  };
+  EXPECT_EQ(expected, actual)
+      << "diff=" << internal::nl::json::diff(expected, actual);
+}
+
+/// @test Verify that ObjectMetadataJsonForCopy works as expected.
+TEST(ObjectMetadataTest, JsonForCopyEmpty) {
+  internal::nl::json actual = ObjectMetadataJsonForCopy(ObjectMetadata());
+  internal::nl::json expected({});
+  EXPECT_EQ(expected, actual);
+}
+
+/// @test Verify the ObjectMetadataJsonForCopy() works as expected.
+TEST(ObjectMetadataTest, JsonForCopy) {
+  auto actual = ObjectMetadataJsonForCopy(CreateObjectMetadataForTest());
+
+  internal::nl::json expected = {
+      {"acl",
+       internal::nl::json{
+           {{"entity", "user-qux"}, {"role", "OWNER"}},
+           {{"entity", "user-quux"}, {"role", "READER"}},
+       }},
+      {"cacheControl", "no-cache"},
+      {"contentDisposition", "a-disposition"},
+      {"contentEncoding", "an-encoding"},
+      {"contentLanguage", "a-language"},
+      {"contentType", "application/octet-stream"},
+      {"eventBasedHold", true},
+      {"metadata",
+       internal::nl::json{
+           {"foo", "bar"},
+           {"baz", "qux"},
+       }},
+      {"name", "baz"},
+      {"storageClass", "STANDARD"},
+  };
+  EXPECT_EQ(expected, actual)
+      << "diff=" << internal::nl::json::diff(expected, actual);
+}
+
+/// @test Verify that ObjectMetadataJsonForInsert works as expected.
+TEST(ObjectMetadataTest, JsonForInsertEmpty) {
+  internal::nl::json actual = ObjectMetadataJsonForInsert(ObjectMetadata());
+  internal::nl::json expected({});
+  EXPECT_EQ(expected, actual);
+}
+
+/// @test Verify the ObjectMetadataJsonForInsert() works as expected.
+TEST(ObjectMetadataTest, JsonForInsert) {
+  auto actual = ObjectMetadataJsonForInsert(CreateObjectMetadataForTest());
+
+  internal::nl::json expected = {
+      {"acl",
+       internal::nl::json{
+           {{"entity", "user-qux"}, {"role", "OWNER"}},
+           {{"entity", "user-quux"}, {"role", "READER"}},
+       }},
+      {"cacheControl", "no-cache"},
+      {"contentDisposition", "a-disposition"},
+      {"contentEncoding", "an-encoding"},
+      {"contentLanguage", "a-language"},
+      {"contentType", "application/octet-stream"},
+      {"crc32c", "deadbeef"},
+      {"eventBasedHold", true},
+      {"md5Hash", "deaderBeef="},
+      {"metadata",
+       internal::nl::json{
+           {"foo", "bar"},
+           {"baz", "qux"},
+       }},
+      {"name", "baz"},
+      {"storageClass", "STANDARD"},
+  };
+  EXPECT_EQ(expected, actual)
+      << "diff=" << internal::nl::json::diff(expected, actual);
+}
+
+/// @test Verify that ObjectMetadataJsonForRewrite works as expected.
+TEST(ObjectMetadataTest, JsonForRewriteEmpty) {
+  internal::nl::json actual = ObjectMetadataJsonForRewrite(ObjectMetadata());
+  internal::nl::json expected({});
+  EXPECT_EQ(expected, actual);
+}
+
+/// @test Verify the ObjectMetadataJsonForRewrite() works as expected.
+TEST(ObjectMetadataTest, JsonForRewrite) {
+  auto actual = ObjectMetadataJsonForRewrite(CreateObjectMetadataForTest());
+
+  internal::nl::json expected = {
+      {"acl",
+       internal::nl::json{
+           {{"entity", "user-qux"}, {"role", "OWNER"}},
+           {{"entity", "user-quux"}, {"role", "READER"}},
+       }},
+      {"cacheControl", "no-cache"},
+      {"contentDisposition", "a-disposition"},
+      {"contentEncoding", "an-encoding"},
+      {"contentLanguage", "a-language"},
+      {"contentType", "application/octet-stream"},
+      {"eventBasedHold", true},
+      {"metadata",
+       internal::nl::json{
+           {"foo", "bar"},
+           {"baz", "qux"},
+       }},
+      {"name", "baz"},
+      {"storageClass", "STANDARD"},
+  };
+  EXPECT_EQ(expected, actual)
+      << "diff=" << internal::nl::json::diff(expected, actual);
+}
+
+/// @test Verify that ObjectMetadataJsonForUpdate works as expected.
+TEST(ObjectMetadataTest, JsonForUpdateEmpty) {
+  internal::nl::json actual = ObjectMetadataJsonForUpdate(ObjectMetadata());
+  internal::nl::json expected({{"eventBasedHold", false}});
+  EXPECT_EQ(expected, actual);
+}
+
+/// @test Verify that ObjectMetadataJsonForUpdate works as expected.
+TEST(ObjectMetadataTest, JsonForUpdate) {
   auto tested = CreateObjectMetadataForTest();
-  auto actual_string = ObjectMetadataJsonPayloadForUpdate(tested);
-  // Verify that the produced string can be parsed as a JSON object.
-  internal::nl::json actual = internal::nl::json::parse(actual_string);
+  internal::nl::json actual = ObjectMetadataJsonForUpdate(tested);
 
   // Create a JSON object with only the writeable fields, because this is what
   // will be encoded in JsonPayloadForUpdate(). Before adding a new field,
@@ -211,7 +358,8 @@ TEST(ObjectMetadataTest, UpdatePayload) {
            {"baz", "qux"},
        }},
   };
-  EXPECT_EQ(expected, actual);
+  EXPECT_EQ(expected, actual)
+      << "diff=" << internal::nl::json::diff(expected, actual);
 }
 
 /// @test Verify we can make changes to one Acl in ObjectMetadata.
