@@ -1006,6 +1006,13 @@ run_all_object_acl_examples() {
   run_example ./storage_object_acl_samples delete-object-acl \
       "${bucket_name}" "${object_name}" allAuthenticatedUsers
 
+  run_example ./storage_object_acl_samples add-object-owner \
+      "${bucket_name}" "${object_name}" allAuthenticatedUsers
+  run_example ./storage_object_acl_samples get-object-acl \
+      "${bucket_name}" "${object_name}" allAuthenticatedUsers
+  run_example ./storage_object_acl_samples remove-object-owner \
+      "${bucket_name}" "${object_name}" allAuthenticatedUsers
+
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
 
