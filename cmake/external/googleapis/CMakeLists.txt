@@ -161,5 +161,8 @@ configure_file(
     "config-version.cmake.in" "googleapis-config-version.cmake" @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis-config.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/googleapis-config-version.cmake"
+              "${PROJECT_SOURCE_DIR}/FindgRPC.cmake"
+              "${PROJECT_SOURCE_DIR}/FindProtobufTargets.cmake"
+              "${PROJECT_SOURCE_DIR}/PkgConfigHelper.cmake"
               DESTINATION
               "${CMAKE_INSTALL_LIBDIR}/cmake/googleapis")
