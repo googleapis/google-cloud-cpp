@@ -147,7 +147,7 @@ set(
 set(GOOGLE_CLOUD_CPP_PC_NAME "The Google APIS C++ Proto Library")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Platforms.")
-set(GOOGLE_CLOUD_CPP_PC_REQUIRES "grpc++ grpc openssl protobuf")
+set(GOOGLE_CLOUD_CPP_PC_REQUIRES "grpc++ grpc openssl protobuf zlib libcares")
 set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogleapis_cpp_bigtable_protos")
 
 # Create and install the pkg-config files.
