@@ -22,10 +22,7 @@ find_package(Threads REQUIRED)
 set(GOOGLE_CLOUD_CPP_CRC32C_PROVIDER ${GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER}
     CACHE STRING "How to find the Crc32c library")
 set_property(CACHE GOOGLE_CLOUD_CPP_CRC32C_PROVIDER
-             PROPERTY STRINGS
-                      "external"
-                      "package"
-                      "pkg-config")
+             PROPERTY STRINGS "external" "package")
 
 if (TARGET Crc32c::crc32c)
     # Crc32c::crc32c is already defined, do not define it again.

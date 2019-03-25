@@ -96,15 +96,12 @@ sudo ldconfig
 
 #### google-cloud-cpp
 
-We can now compile and install `google-cloud-cpp`. Note that we use
-`pkg-config` to discover the options for gRPC and protobuf:
+We can now compile and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
 cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
-    -DGOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER=pkg-config \
-    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build build-output -- -j $(nproc)
 cd $HOME/google-cloud-cpp/build-output
@@ -119,7 +116,8 @@ Install the minimal development tools:
 
 ```bash
 sudo zypper refresh && \
-sudo zypper install -y cmake gcc gcc-c++ git libcurl-devel libopenssl-devel make
+sudo zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
+        libcurl-devel libopenssl-devel make tar wget
 ```
 
 OpenSUSE:tumbleweed provides packages for gRPC, libcurl, and protobuf, and the
@@ -153,15 +151,12 @@ sudo ldconfig
 
 #### google-cloud-cpp
 
-We can now compile and install `google-cloud-cpp`. Note that we use
-`pkg-config` to discover the options for gRPC and protobuf:
+We can now compile and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
 cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
-    -DGOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER=pkg-config \
-    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build build-output -- -j $(nproc)
 cd $HOME/google-cloud-cpp/build-output
@@ -176,8 +171,8 @@ Install the minimal development tools:
 
 ```bash
 sudo zypper refresh && \
-sudo zypper install -y cmake gcc gcc-c++ git gzip libcurl-devel \
-        libopenssl-devel make tar wget
+sudo zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
+        libcurl-devel libopenssl-devel make tar wget
 ```
 
 #### crc32c
@@ -271,15 +266,12 @@ sudo ldconfig
 
 #### google-cloud-cpp
 
-We can now compile and install `google-cloud-cpp`. Note that we use
-`pkg-config` to discover the options for gRPC and protobuf:
+We can now compile and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
 cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
-    -DGOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER=pkg-config \
-    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build build-output -- -j $(nproc)
 cd $HOME/google-cloud-cpp/build-output
@@ -356,14 +348,12 @@ sudo ldconfig
 
 #### google-cloud-cpp
 
-Finally we can install `google-cloud-cpp`. Note that we use `pkg-config` to
-discover the options for gRPC:
+Finally we can install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
 cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
-    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build build-output -- -j $(nproc)
 cd $HOME/google-cloud-cpp/build-output
@@ -464,14 +454,12 @@ sudo ldconfig
 
 #### google-cloud-cpp
 
-Finally we can install `google-cloud-cpp`. Note that we use `pkg-config` to
-discover the options for gRPC:
+Finally we can install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
 cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
-    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build build-output -- -j $(nproc)
 cd $HOME/google-cloud-cpp/build-output
@@ -617,20 +605,13 @@ sudo make install
 
 #### google-cloud-cpp
 
-We can now compile and install `google-cloud-cpp`. Note that we use
-`pkg-config` to discover the options for gRPC and protobuf:
+We can now compile and install `google-cloud-cpp`.
 
 ```bash
-echo
-pkg-config --modversion libcurl
-pkg-config --libs libcurl
-pkg-config --cflags libcurl
 cd $HOME/google-cloud-cpp
 cmake -H. -Bbuild-output \
     -DCMAKE_FIND_ROOT_PATH="/usr/local/curl;/usr/local/ssl" \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
-    -DGOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER=pkg-config \
-    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build build-output -- -j $(nproc)
 cd $HOME/google-cloud-cpp/build-output
@@ -715,14 +696,12 @@ sudo ldconfig
 
 #### google-cloud-cpp
 
-Finally we can install `google-cloud-cpp`. Note that we use `pkg-config` to
-discover the options for gRPC:
+Finally we can install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
 cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
-    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build build-output -- -j $(nproc)
 cd $HOME/google-cloud-cpp/build-output
@@ -821,14 +800,12 @@ sudo ldconfig
 
 #### google-cloud-cpp
 
-Finally we can install `google-cloud-cpp`. Note that we use `pkg-config` to
-discover the options for gRPC:
+Finally we can install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/Downloads/google-cloud-cpp
 cmake -H. -Bbuild-output \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
-    -DGOOGLE_CLOUD_CPP_GRPC_PROVIDER=pkg-config \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build build-output -- -j $(nproc)
 cd $HOME/Downloads/google-cloud-cpp/build-output
