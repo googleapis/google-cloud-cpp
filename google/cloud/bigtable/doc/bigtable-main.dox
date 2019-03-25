@@ -93,26 +93,36 @@ cc_binary(
 
 #### Integrating with CMake
 
-@note This assumes that you have downloaded and installed the dependencies of
-  the library. Please check the top-level README on [GitHub][github-link] for
-  details.
-
-Compile and install the library using the normal cycle:
-
-```
-cd google-cloud-cpp
-cmake -H. -Bbuild-output
-cmake --build build-output/google/cloud/bigtable -- -j $(nproc)
-cmake --build build-output/google/cloud/bigtable --target install
-```
-
-Now that the library is installed, you can use it in your CMake list files:
+Follow the instructions on the top-level INSTALL.md file on
+[GitHub][github-link] for details on how to compile and install the library for
+your platform and distribution. Once the library is installed, you can use it in
+your `CMakeLists.txt` file as any other package:
 
 ```
-find_package(bigtable_client 0.2.0 REQUIRED)
+cmake_minimum_required(VERSION 3.5)
+find_package(bigtable_client REQUIRED)
 
 add_executable(my_program my_program.cc)
 target_link_libraries(my_program bigtable_client)
+```
+
+#### Integrating with Make
+
+The installation instructions on the top-level INSTALL.md file on
+[GitHub][github-link] also create `pkg-config` support files for application
+developers that prefer to use `Make` as their build system. Once the library
+is installed, you can use it in your `Makefile` as any other `pkg-config`
+module:
+
+```
+CBT_DEPS := bigtable_client
+CBT_CXXFLAGS   := $(shell pkg-config $(CBT_DEPS) --cflags)
+CBT_CXXLDFLAGS := $(shell pkg-config $(CBT_DEPS) --libs-only-L)
+CBT_LIBS       := $(shell pkg-config $(CBT_DEPS) --libs-only-l)
+
+# A target using the Cloud Bigtable C++ client library.
+bigtable_install_test: bigtable_install_test.cc
+	$(CXXLD) $(CXXFLAGS) $(CBT_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
 ```
 
 ## Next Steps

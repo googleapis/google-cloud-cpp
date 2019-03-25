@@ -108,3 +108,97 @@ echo "### Debian (Stretch)"
 echo
 echo "### CentOS (7)"
 "${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.centos"
+
+cat <<'END_OF_POSTSCRIPT'
+
+# Integrating `google-cloud-cpp` with CMake.
+
+Once you have installed `google-cloud-cpp` you can use the libraries from
+your own projects using `find_package()` in your `CMakeLists.txt` file:
+
+```CMake
+cmake_minimum_required(VERSION 3.5)
+
+find_package(storage_client REQUIRED)
+
+add_executable(my_program my_program.cc)
+target_link_libraries(my_program storage_client)
+```
+
+You can use a similar `CMakeLists.txt` to use the Cloud Bigtable C++ client:
+
+```CMake
+cmake_minimum_required(VERSION 3.5)
+
+find_package(bigtable_client REQUIRED)
+
+add_executable(my_program my_program.cc)
+target_link_libraries(my_program bigtable_client)
+```
+
+# Integrating `google-cloud-cpp` with Make and `pkg-config`.
+
+Once you have installed `google-cloud-cpp` you can use the libraries in your
+own projects using `pkg-config` and `Make`:
+
+```Makefile
+GCS_CXXFLAGS   := $(shell pkg-config storage_client --cflags)
+GCS_CXXLDFLAGS := $(shell pkg-config storage_client --libs-only-L)
+GCS_LIBS := $(shell pkg-config storage_client --libs-only-l) -lcrc32c
+
+my_storage_program: my_storage_program.cc
+	$(CXXLD) $(CXXFLAGS) $(GCS_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(GCS_LIBS)
+```
+
+You can use a similar `Makefile` to link against the Cloud Bigtable client:
+
+```Makefile
+CBT_CXXFLAGS   := $(shell pkg-config bigtable_client --cflags)
+CBT_CXXLDFLAGS := $(shell pkg-config bigtable_client --libs-only-L)
+CBT_LIBS := $(shell pkg-config bigtable_client --libs-only-l) -lcrc32c
+
+my_storage_program: my_storage_program.cc
+	$(CXXLD) $(CXXFLAGS) $(CBT_CXXFLAGS) $(CBT_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
+```
+
+# Integrating `google-cloud-cpp` with Bazel.
+
+If you use `Bazel` for your builds then add the following commands to your
+`WORKSPACE` file:
+
+```Bazel
+# Update the version and SHA256 digest as needed.
+http_archive(
+    name = "com_github_googleapis_google_cloud_cpp",
+    url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.7.0.tar.gz",
+    sha256 = "06bc735a117ec7ea92ea580e7f2ffa4b1cd7539e0e04f847bf500588d7f0fe90",
+)
+
+load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+google_cloud_cpp_deps()
+```
+
+Then you can link the libraries from your `BUILD` files:
+
+```BUILD
+cc_binary(
+    name = "bigtable_install_test",
+    srcs = [
+        "bigtable_install_test.cc",
+    ],
+    deps = [
+        "@com_github_googleapis_google_cloud_cpp//google/cloud/bigtable:bigtable_client",
+    ],
+)
+
+cc_binary(
+    name = "storage_install_test",
+    srcs = [
+        "storage_install_test.cc",
+    ],
+    deps = [
+        "@com_github_googleapis_google_cloud_cpp//google/cloud/storage:storage_client",
+    ],
+)
+```
+END_OF_POSTSCRIPT
