@@ -81,10 +81,15 @@ future<StatusOr<InstanceList>> InstanceAdmin::AsyncListInstances(
     CompletionQueue& cq) {
   promise<StatusOr<InstanceList>> instance_list_promise;
   future<StatusOr<InstanceList>> result = instance_list_promise.get_future();
+  auto client = impl_.client_;
+  auto op = std::make_shared<internal::AsyncRetryListInstances<
+      internal::AsyncFutureFromCallback<InstanceList>>>(
+      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      clone_metadata_update_policy(), client, project_name(),
+      internal::MakeAsyncFutureFromCallback(std::move(instance_list_promise),
+                                            "AsyncListInstances"));
+  op->Start(cq);
 
-  impl_.AsyncListInstances(
-      cq, internal::MakeAsyncFutureFromCallback(
-              std::move(instance_list_promise), "AsyncListInstances"));
   return result;
 }
 
@@ -203,15 +208,20 @@ StatusOr<btadmin::Instance> InstanceAdmin::GetInstance(
 
 future<StatusOr<btadmin::Instance>> InstanceAdmin::AsyncGetInstance(
     CompletionQueue& cq, std::string const& instance_id) {
-  promise<StatusOr<btadmin::Instance>> p;
-  auto result = p.get_future();
+  btadmin::GetInstanceRequest request;
+  // Setting instance name.
+  request.set_name(project_name() + "/instances/" + instance_id);
 
-  impl_.AsyncGetInstance(
-      cq,
-      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetInstance"),
-      instance_id);
-
-  return result;
+  auto client = impl_.client_;
+  return internal::StartRetryAsyncUnaryRpc(
+      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      internal::ConstantIdempotencyPolicy(true), clone_metadata_update_policy(),
+      [client](grpc::ClientContext* context,
+               btadmin::GetInstanceRequest const& request,
+               grpc::CompletionQueue* cq) {
+        return client->AsyncGetInstance(context, request, cq);
+      },
+      std::move(request), cq);
 }
 
 Status InstanceAdmin::DeleteInstance(std::string const& instance_id) {
@@ -252,13 +262,19 @@ future<StatusOr<btadmin::Cluster>> InstanceAdmin::AsyncGetCluster(
     bigtable::ClusterId const& cluster_id) {
   promise<StatusOr<btadmin::Cluster>> p;
   auto result = p.get_future();
-
-  impl_.AsyncGetCluster(
-      cq,
-      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncGetCluster"),
-      instance_id, cluster_id);
-
-  return result;
+  btadmin::GetClusterRequest request;
+  // Setting cluster name.
+  request.set_name(ClusterName(instance_id, cluster_id));
+  auto client = impl_.client_;
+  return internal::StartRetryAsyncUnaryRpc(
+      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      internal::ConstantIdempotencyPolicy(true), clone_metadata_update_policy(),
+      [client](grpc::ClientContext* context,
+               btadmin::GetClusterRequest const& request,
+               grpc::CompletionQueue* cq) {
+        return client->AsyncGetCluster(context, request, cq);
+      },
+      std::move(request), cq);
 }
 
 StatusOr<ClusterList> InstanceAdmin::ListClusters() {
@@ -318,11 +334,14 @@ future<StatusOr<ClusterList>> InstanceAdmin::AsyncListClusters(
     CompletionQueue& cq, std::string const& instance_id) {
   promise<StatusOr<ClusterList>> p;
   auto result = p.get_future();
+  auto client = impl_.client_;
+  auto op = std::make_shared<internal::AsyncRetryListClusters<
+      internal::AsyncFutureFromCallback<ClusterList>>>(
+      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      clone_metadata_update_policy(), client, InstanceName(instance_id),
+      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncListClusters"));
+  op->Start(cq);
 
-  impl_.AsyncListClusters(
-      cq,
-      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncListClusters"),
-      instance_id);
   return result;
 }
 
