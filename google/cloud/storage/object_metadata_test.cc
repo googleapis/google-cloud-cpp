@@ -185,12 +185,12 @@ TEST(ObjectMetadataTest, IOStream) {
 
 /// @test Verify that ObjectMetadataJsonForCompose works as expected.
 TEST(ObjectMetadataTest, JsonForComposeEmpty) {
-  internal::nl::json actual = ObjectMetadataJsonForCopy(ObjectMetadata());
+  internal::nl::json actual = ObjectMetadataJsonForCompose(ObjectMetadata());
   internal::nl::json expected({});
   EXPECT_EQ(expected, actual);
 }
 
-/// @test Verify the ObjectMetadataJsonForCompose() works as expected.
+/// @test Verify that ObjectMetadataJsonForCompose() works as expected.
 TEST(ObjectMetadataTest, JsonForCompose) {
   auto actual = ObjectMetadataJsonForCompose(CreateObjectMetadataForTest());
 
@@ -225,7 +225,7 @@ TEST(ObjectMetadataTest, JsonForCopyEmpty) {
   EXPECT_EQ(expected, actual);
 }
 
-/// @test Verify the ObjectMetadataJsonForCopy() works as expected.
+/// @test Verify that ObjectMetadataJsonForCopy() works as expected.
 TEST(ObjectMetadataTest, JsonForCopy) {
   auto actual = ObjectMetadataJsonForCopy(CreateObjectMetadataForTest());
 
@@ -260,7 +260,7 @@ TEST(ObjectMetadataTest, JsonForInsertEmpty) {
   EXPECT_EQ(expected, actual);
 }
 
-/// @test Verify the ObjectMetadataJsonForInsert() works as expected.
+/// @test Verify that ObjectMetadataJsonForInsert() works as expected.
 TEST(ObjectMetadataTest, JsonForInsert) {
   auto actual = ObjectMetadataJsonForInsert(CreateObjectMetadataForTest());
 
@@ -297,7 +297,7 @@ TEST(ObjectMetadataTest, JsonForRewriteEmpty) {
   EXPECT_EQ(expected, actual);
 }
 
-/// @test Verify the ObjectMetadataJsonForRewrite() works as expected.
+/// @test Verify thhat ObjectMetadataJsonForRewrite() works as expected.
 TEST(ObjectMetadataTest, JsonForRewrite) {
   auto actual = ObjectMetadataJsonForRewrite(CreateObjectMetadataForTest());
 
