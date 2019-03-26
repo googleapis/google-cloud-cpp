@@ -30,11 +30,12 @@ HmacKeyMetadata CreateHmacKeyMetadataForTest() {
       "accessId": "test-access-id",
       "etag": "XYZ=",
       "id": "test-id-123",
-      "kind": "storage#hmacKey",
+      "kind": "storage#hmacKeyMetadata",
       "projectId": "test-project-id",
       "serviceAccountEmail": "test-service-account-email",
       "state": "ACTIVE",
-      "timeCreated": "2019-03-01T12:13:14Z"
+      "timeCreated": "2019-03-01T12:13:14Z",
+      "updated": "2019-03-02T12:13:14Z"
 })""";
   return internal::HmacKeyMetadataParser::FromString(text).value();
 }
@@ -46,12 +47,13 @@ TEST(HmacKeyMetadataTest, Parser) {
   EXPECT_EQ("test-access-id", hmac.access_id());
   EXPECT_EQ("XYZ=", hmac.etag());
   EXPECT_EQ("test-id-123", hmac.id());
-  EXPECT_EQ("storage#hmacKey", hmac.kind());
+  EXPECT_EQ("storage#hmacKeyMetadata", hmac.kind());
   EXPECT_EQ("test-project-id", hmac.project_id());
   EXPECT_EQ("test-service-account-email", hmac.service_account_email());
   EXPECT_EQ(HmacKeyMetadata::state_active(), hmac.state());
   EXPECT_EQ("2019-03-01T12:13:14Z",
             internal::FormatRfc3339(hmac.time_created()));
+  EXPECT_EQ("2019-03-02T12:13:14Z", internal::FormatRfc3339(hmac.updated()));
 
   EXPECT_EQ("ACTIVE", HmacKeyMetadata::state_active());
   EXPECT_EQ("INACTIVE", HmacKeyMetadata::state_inactive());
@@ -71,6 +73,7 @@ TEST(HmacKeyMetadataTest, IOStream) {
   EXPECT_THAT(actual, HasSubstr("test-service-account-email"));
   EXPECT_THAT(actual, HasSubstr("ACTIVE"));
   EXPECT_THAT(actual, HasSubstr("2019-03-01T12:13:14Z"));
+  EXPECT_THAT(actual, HasSubstr("2019-03-02T12:13:14Z"));
 }
 
 /// @test Verify we can change the state in a HmacKeyMetadata.

@@ -91,7 +91,7 @@ struct CreateHmacKeyResponse {
       HttpResponse const& response);
 
   std::string kind;
-  HmacKeyMetadata resource;
+  HmacKeyMetadata metadata;
   std::string secret;
 };
 

@@ -57,18 +57,19 @@ TEST(HmacKeyRequestsTest, ParseCreateResponse) {
       "accessId": "test-access-id",
       "etag": "XYZ=",
       "id": "test-id-123",
-      "kind": "storage#hmacKey",
+      "kind": "storage#hmacKeyMetadata",
       "projectId": "test-project-id",
       "serviceAccountEmail": "test-service-account-email",
       "state": "ACTIVE",
-      "timeCreated": "2019-03-01T12:13:14Z"
+      "timeCreated": "2019-03-01T12:13:14Z",
+      "updated": "2019-03-02T12:13:14Z"
 })""";
   nl::json const json_object{
-      {"kind", "storage#hmacKeyCreate"},
+      {"kind", "storage#hmacKey"},
       // To generate the secret use:
       //   echo -n "test-secret" | openssl base64
       {"secretKey", "dGVzdC1zZWNyZXQ="},
-      {"resource", nl::json::parse(resource_text)},
+      {"metadata", nl::json::parse(resource_text)},
   };
 
   std::string const text = json_object.dump();
@@ -79,7 +80,7 @@ TEST(HmacKeyRequestsTest, ParseCreateResponse) {
   EXPECT_EQ("dGVzdC1zZWNyZXQ=", actual.secret);
   auto expected_resource =
       HmacKeyMetadataParser::FromString(resource_text).value();
-  EXPECT_THAT(expected_resource, actual.resource);
+  EXPECT_THAT(expected_resource, actual.metadata);
 }
 
 TEST(HmacKeyRequestsTest, ParseCreateResponseFailure) {
@@ -91,7 +92,7 @@ TEST(HmacKeyRequestsTest, ParseCreateResponseFailure) {
 }
 
 TEST(HmacKeyRequestsTest, ParseCreateResponseFailureInResource) {
-  std::string text = R"""({"resource": "invalid-resource" })""";
+  std::string text = R"""({"metadata": "invalid-metadata" })""";
 
   auto actual =
       CreateHmacKeyResponse::FromHttpResponse(HttpResponse{200, text, {}});
@@ -101,7 +102,7 @@ TEST(HmacKeyRequestsTest, ParseCreateResponseFailureInResource) {
 TEST(HmacKeyRequestsTest, CreateResponseIOStream) {
   std::string const text = R"""({
       "secret": "dGVzdC1zZWNyZXQ=",
-      "resource": {
+      "metadata": {
         "accessId": "test-access-id"
       }
 })""";
@@ -156,7 +157,7 @@ TEST(HmacKeysRequestsTest, ParseListResponse) {
       "timeCreated": "2019-03-02T12:13:14Z"
 })""";
   std::string text = R"""({
-      "kind": "storage#hmacKeys",
+      "kind": "storage#hmacKeysMetadata",
       "nextPageToken": "some-token-42",
       "items":
 )""";
@@ -190,7 +191,7 @@ TEST(HmacKeysRequestsTest, ParseListResponseFailureInItems) {
 
 TEST(HmacKeysRequestsTest, ListResponseOStream) {
   std::string text = R"""({
-      "kind": "storage#hmacKeys",
+      "kind": "storage#hmacKeysMetadata",
       "nextPageToken": "some-token-42",
       "items": [
         {"accessId": "test-access-id-1"},

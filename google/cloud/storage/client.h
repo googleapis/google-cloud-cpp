@@ -2342,7 +2342,7 @@ class Client {
     if (!result) {
       return result.status();
     }
-    return std::make_pair(std::move(result->resource),
+    return std::make_pair(std::move(result->metadata),
                           std::move(result->secret));
   }
 

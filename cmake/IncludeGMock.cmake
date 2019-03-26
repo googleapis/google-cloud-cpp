@@ -29,10 +29,7 @@ find_package(Threads REQUIRED)
 set(GOOGLE_CLOUD_CPP_GMOCK_PROVIDER ${GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER}
     CACHE STRING "How to find the googlemock library")
 set_property(CACHE GOOGLE_CLOUD_CPP_GMOCK_PROVIDER
-             PROPERTY STRINGS
-                      "external"
-                      "package"
-                      "pkg-config")
+             PROPERTY STRINGS "external" "package")
 
 function (create_googletest_aliases)
     # FindGTest() is a standard CMake module. It, unfortunately, *only* creates
@@ -111,36 +108,4 @@ elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "package")
                                      "GTest::gmock;Threads::Threads"
                                      INTERFACE_INCLUDE_DIRECTORIES
                                      "${GMOCK_INCLUDE_DIRS}")
-
-elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "pkg-config")
-
-    # Use pkg-config to find the libraries.
-    find_package(PkgConfig REQUIRED)
-
-    # Load the helper function to convert pkg-config(1) output into target
-    # properties.
-    include(PkgConfigHelper)
-
-    pkg_check_modules(gtest_pc REQUIRED gtest)
-    add_library(GTest::gtest INTERFACE IMPORTED)
-    set_library_properties_from_pkg_config(GTest::gtest gtest_pc)
-    set_property(TARGET GTest::gtest
-                 APPEND
-                 PROPERTY INTERFACE_LINK_LIBRARIES Threads::Threads)
-
-    pkg_check_modules(gmock_pc REQUIRED gmock)
-    add_library(GTest::gmock INTERFACE IMPORTED)
-    set_library_properties_from_pkg_config(GTest::gmock gmock_pc)
-    set_property(TARGET GTest::gmock
-                 APPEND
-                 PROPERTY INTERFACE_LINK_LIBRARIES
-                          "GTest::test;Threads::Threads")
-
-    pkg_check_modules(gmock_main_pc REQUIRED gmock_main)
-    add_library(GTest::gmock_main INTERFACE IMPORTED)
-    set_library_properties_from_pkg_config(GTest::gmock_main gmock_pc)
-    set_property(TARGET GTest::gmock_main
-                 APPEND
-                 PROPERTY INTERFACE_LINK_LIBRARIES
-                          "GTest::gmock;GTest::gtest;Threads::Threads")
 endif ()
