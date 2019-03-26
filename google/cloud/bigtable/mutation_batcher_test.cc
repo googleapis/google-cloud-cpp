@@ -160,7 +160,7 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
                                btproto::MutateRowsRequest const& r,
                                grpc::CompletionQueue*, void*) {
             EXPECT_EQ(exchange.req.size(), r.entries_size());
-            for (size_t i = 0; i < exchange.req.size(); ++i) {
+            for (std::size_t i = 0; i != exchange.req.size(); ++i) {
               google::bigtable::v2::MutateRowsRequest::Entry expected;
               SingleRowMutation tmp(exchange.req[i]);
               tmp.MoveTo(&expected);
@@ -168,7 +168,9 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
               std::string delta;
               google::protobuf::util::MessageDifferencer differencer;
               differencer.ReportDifferencesToString(&delta);
-              EXPECT_TRUE(differencer.Compare(expected, r.entries(i))) << delta;
+              EXPECT_TRUE(
+                  differencer.Compare(expected, r.entries(static_cast<int>(i))))
+                  << delta;
             }
             return std::unique_ptr<
                 MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>(
@@ -228,7 +230,7 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
     return MutationStates(std::move(res));
   }
 
-  int NumOperationsOustanding() { return cq_impl_->size(); }
+  std::size_t NumOperationsOutstanding() { return cq_impl_->size(); }
 
   std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
   CompletionQueue cq_;
@@ -240,11 +242,11 @@ TEST(OptionsTest, Trivial) {
                                      .SetMaxMutationsPerBatch(1)
                                      .SetMaxSizePerBatch(2)
                                      .SetMaxBatches(3)
-                                     .SetMaxOustandingSize(4);
+                                     .SetMaxOutstandingSize(4);
   ASSERT_EQ(1, opt.max_mutations_per_batch);
   ASSERT_EQ(2, opt.max_size_per_batch);
   ASSERT_EQ(3, opt.max_batches);
-  ASSERT_EQ(4, opt.max_oustanding_size);
+  ASSERT_EQ(4, opt.max_outstanding_size);
 }
 
 TEST_F(MutationBatcherTest, TrivialTest) {
@@ -256,12 +258,12 @@ TEST_F(MutationBatcherTest, TrivialTest) {
   auto state = Apply(mutations[0]);
   EXPECT_TRUE(state->admitted);
   EXPECT_FALSE(state->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishSingleItemStream();
 
   EXPECT_TRUE(state->completed);
-  EXPECT_EQ(0, NumOperationsOustanding());
+  EXPECT_EQ(0U, NumOperationsOutstanding());
 }
 
 TEST_F(MutationBatcherTest, BatchIsFlushedImmediately) {
@@ -273,7 +275,7 @@ TEST_F(MutationBatcherTest, BatchIsFlushedImmediately) {
                                                  .SetMaxMutationsPerBatch(10)
                                                  .SetMaxSizePerBatch(2000)
                                                  .SetMaxBatches(1)
-                                                 .SetMaxOustandingSize(4000)));
+                                                 .SetMaxOutstandingSize(4000)));
 
   ExpectInteraction(
       {Exchange({mutations[0]}, {ResultPiece({0}, {}, {})}),
@@ -282,23 +284,23 @@ TEST_F(MutationBatcherTest, BatchIsFlushedImmediately) {
   auto state0 = Apply(mutations[0]);
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   auto state1 = ApplyMany(mutations.begin() + 1, mutations.end());
   EXPECT_TRUE(state1.AllAdmitted());
   EXPECT_TRUE(state1.NoneCompleted());
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishSingleItemStream();
 
   EXPECT_TRUE(state0->completed);
   EXPECT_TRUE(state1.NoneCompleted());
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishSingleItemStream();
 
   EXPECT_TRUE(state1.AllCompleted());
-  EXPECT_EQ(0, NumOperationsOustanding());
+  EXPECT_EQ(0U, NumOperationsOutstanding());
 }
 
 class MutationBatcherBoolParamTest : public MutationBatcherTest,
@@ -327,7 +329,7 @@ TEST_P(MutationBatcherBoolParamTest, PerBatchLimitsAreObeyed) {
                                              MutationSize(mutations[3]) - 1)
                                           : 2000)
                   .SetMaxBatches(1)
-                  .SetMaxOustandingSize(4000)));
+                  .SetMaxOutstandingSize(4000)));
 
   ExpectInteraction(
       {Exchange({mutations[0]}, {ResultPiece({0}, {}, {})}),
@@ -342,7 +344,7 @@ TEST_P(MutationBatcherBoolParamTest, PerBatchLimitsAreObeyed) {
 
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   auto immediatelly_admitted =
       ApplyMany(mutations.begin() + 1, mutations.begin() + 3);
@@ -352,7 +354,7 @@ TEST_P(MutationBatcherBoolParamTest, PerBatchLimitsAreObeyed) {
   EXPECT_TRUE(immediatelly_admitted.NoneCompleted());
   EXPECT_FALSE(initially_not_admitted->admitted);
   EXPECT_FALSE(initially_not_admitted->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishSingleItemStream();
 
@@ -360,18 +362,18 @@ TEST_P(MutationBatcherBoolParamTest, PerBatchLimitsAreObeyed) {
   EXPECT_TRUE(immediatelly_admitted.NoneCompleted());
   EXPECT_FALSE(initially_not_admitted->completed);
   EXPECT_TRUE(initially_not_admitted->admitted);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishSingleItemStream();
 
   EXPECT_TRUE(immediatelly_admitted.AllCompleted());
   EXPECT_FALSE(initially_not_admitted->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishSingleItemStream();
 
   EXPECT_TRUE(initially_not_admitted->completed);
-  EXPECT_EQ(0, NumOperationsOustanding());
+  EXPECT_EQ(0U, NumOperationsOutstanding());
 }
 
 INSTANTIATE_TEST_CASE_P(SizeOrNumMutationsLimit, MutationBatcherBoolParamTest,
@@ -394,7 +396,7 @@ TEST_F(MutationBatcherTest, RequestsWithManyMutationsAreRejected) {
   EXPECT_TRUE(state->admitted);
   EXPECT_TRUE(state->completed);
   EXPECT_FALSE(state->completion_status.ok());
-  EXPECT_EQ(0, NumOperationsOustanding());
+  EXPECT_EQ(0U, NumOperationsOutstanding());
 }
 
 TEST_F(MutationBatcherTest, LargeMutationsAreRejected) {
@@ -409,7 +411,7 @@ TEST_F(MutationBatcherTest, LargeMutationsAreRejected) {
   EXPECT_TRUE(state->admitted);
   EXPECT_TRUE(state->completed);
   EXPECT_FALSE(state->completion_status.ok());
-  EXPECT_EQ(0, NumOperationsOustanding());
+  EXPECT_EQ(0U, NumOperationsOutstanding());
 }
 
 TEST_F(MutationBatcherTest, RequestsWithNoMutationsAreRejected) {
@@ -419,7 +421,7 @@ TEST_F(MutationBatcherTest, RequestsWithNoMutationsAreRejected) {
   EXPECT_TRUE(state->admitted);
   EXPECT_TRUE(state->completed);
   EXPECT_FALSE(state->completion_status.ok());
-  EXPECT_EQ(0, NumOperationsOustanding());
+  EXPECT_EQ(0U, NumOperationsOutstanding());
 }
 
 TEST_F(MutationBatcherTest, ErrorsArePropagated) {
@@ -437,23 +439,23 @@ TEST_F(MutationBatcherTest, ErrorsArePropagated) {
   auto state0 = Apply(mutations[0]);
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   auto state1 = ApplyMany(mutations.begin() + 1, mutations.end());
   EXPECT_TRUE(state1.AllAdmitted());
   EXPECT_TRUE(state1.NoneCompleted());
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishSingleItemStream();
 
   EXPECT_TRUE(state0->completed);
   EXPECT_TRUE(state1.NoneCompleted());
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishSingleItemStream();
 
   EXPECT_TRUE(state1.AllCompleted());
-  EXPECT_EQ(0, NumOperationsOustanding());
+  EXPECT_EQ(0U, NumOperationsOutstanding());
   EXPECT_STATUS_OK(state1.states_[0]->completion_status);
   EXPECT_FALSE(state1.states_[1]->completion_status.ok());
 }
@@ -482,22 +484,22 @@ TEST_F(MutationBatcherTest, SmallMutationsDontSkipPending) {
   auto state0 = Apply(mutations[0]);
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   auto state1 = Apply(mutations[1]);
   EXPECT_TRUE(state1->admitted);
   EXPECT_FALSE(state1->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   auto state2 = Apply(mutations[2]);
   EXPECT_FALSE(state2->admitted);
   EXPECT_FALSE(state2->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   auto state3 = Apply(mutations[3]);
   EXPECT_FALSE(state3->admitted);
   EXPECT_FALSE(state3->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishSingleItemStream();
 
@@ -507,7 +509,7 @@ TEST_F(MutationBatcherTest, SmallMutationsDontSkipPending) {
   EXPECT_FALSE(state3->completed);
   EXPECT_TRUE(state2->admitted);
   EXPECT_FALSE(state3->admitted);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishSingleItemStream();
 
@@ -515,18 +517,18 @@ TEST_F(MutationBatcherTest, SmallMutationsDontSkipPending) {
   EXPECT_FALSE(state2->completed);
   EXPECT_FALSE(state3->completed);
   EXPECT_TRUE(state3->admitted);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishSingleItemStream();
 
   EXPECT_TRUE(state2->completed);
   EXPECT_FALSE(state3->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishSingleItemStream();
 
   EXPECT_TRUE(state3->completed);
-  EXPECT_EQ(0, NumOperationsOustanding());
+  EXPECT_EQ(0U, NumOperationsOutstanding());
 }
 
 TEST_F(MutationBatcherTest, StreamingWorks) {
@@ -561,7 +563,7 @@ TEST_F(MutationBatcherTest, StreamingWorks) {
   auto state0 = Apply(mutations[0]);
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   auto state1 = Apply(mutations[1]);
   auto state2 = Apply(mutations[2]);
@@ -575,7 +577,7 @@ TEST_F(MutationBatcherTest, StreamingWorks) {
   EXPECT_FALSE(state2->completed);
   EXPECT_FALSE(state3->completed);
   EXPECT_FALSE(state4->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishSingleItemStream();
   EXPECT_TRUE(state0->completed);
@@ -584,14 +586,14 @@ TEST_F(MutationBatcherTest, StreamingWorks) {
   EXPECT_FALSE(state2->completed);
   EXPECT_FALSE(state3->completed);
   EXPECT_FALSE(state4->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   OpenStream();
   EXPECT_FALSE(state1->completed);
   EXPECT_FALSE(state2->completed);
   EXPECT_FALSE(state3->completed);
   EXPECT_FALSE(state4->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   // First mutation succeed in the first response piece.
   ReadPiece();
@@ -600,7 +602,7 @@ TEST_F(MutationBatcherTest, StreamingWorks) {
   EXPECT_FALSE(state2->completed);
   EXPECT_FALSE(state3->completed);
   EXPECT_FALSE(state4->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   // Second mutation fails transiently in the second response
   // piece. That means nothing should happen.
@@ -608,7 +610,7 @@ TEST_F(MutationBatcherTest, StreamingWorks) {
   EXPECT_FALSE(state2->completed);
   EXPECT_FALSE(state3->completed);
   EXPECT_FALSE(state4->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   // Third mutation fails permanently and fourth succeds in
   // the third
@@ -619,28 +621,28 @@ TEST_F(MutationBatcherTest, StreamingWorks) {
   EXPECT_FALSE(state3->completion_status.ok());
   EXPECT_TRUE(state4->completed);
   EXPECT_STATUS_OK(state4->completion_status);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishStream();
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
   EXPECT_FALSE(state2->completed);
 
   FinishTimer();
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
   EXPECT_FALSE(state2->completed);
 
   OpenStream();
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
   EXPECT_FALSE(state2->completed);
 
   // The retried mutation should finish.
   ReadPiece();
   EXPECT_TRUE(state2->completed);
   EXPECT_STATUS_OK(state2->completion_status);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishStream();
-  EXPECT_EQ(0, NumOperationsOustanding());
+  EXPECT_EQ(0U, NumOperationsOutstanding());
 }
 
 TEST_F(MutationBatcherTest, MutationsAreAdmittedMidStream) {
@@ -658,7 +660,7 @@ TEST_F(MutationBatcherTest, MutationsAreAdmittedMidStream) {
   ASSERT_EQ(mutation_size, MutationSize(mutations[4]));
 
   batcher_.reset(new MutationBatcher(
-      table_, MutationBatcher::Options().SetMaxBatches(1).SetMaxOustandingSize(
+      table_, MutationBatcher::Options().SetMaxBatches(1).SetMaxOutstandingSize(
                   2 * mutation_size)));
 
   ExpectInteraction(
@@ -674,7 +676,7 @@ TEST_F(MutationBatcherTest, MutationsAreAdmittedMidStream) {
   auto state0 = Apply(mutations[0]);
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   auto state1 = Apply(mutations[1]);
   auto state2 = Apply(mutations[2]);
@@ -688,7 +690,7 @@ TEST_F(MutationBatcherTest, MutationsAreAdmittedMidStream) {
   EXPECT_FALSE(state2->completed);
   EXPECT_FALSE(state3->completed);
   EXPECT_FALSE(state4->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishSingleItemStream();
   EXPECT_TRUE(state0->completed);
@@ -700,7 +702,7 @@ TEST_F(MutationBatcherTest, MutationsAreAdmittedMidStream) {
   EXPECT_FALSE(state2->completed);
   EXPECT_FALSE(state3->completed);
   EXPECT_FALSE(state4->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   OpenStream();
   EXPECT_FALSE(state3->admitted);
@@ -709,7 +711,7 @@ TEST_F(MutationBatcherTest, MutationsAreAdmittedMidStream) {
   EXPECT_FALSE(state2->completed);
   EXPECT_FALSE(state3->completed);
   EXPECT_FALSE(state4->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   ReadPiece();
   // The whole batch didn't finish, but the mutation did, so we can admit some
@@ -721,7 +723,7 @@ TEST_F(MutationBatcherTest, MutationsAreAdmittedMidStream) {
   EXPECT_FALSE(state2->completed);
   EXPECT_FALSE(state3->completed);
   EXPECT_FALSE(state4->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   ReadPiece();
   // The whole batch didn't finish, but the mutation did, so we can admit some
@@ -731,17 +733,17 @@ TEST_F(MutationBatcherTest, MutationsAreAdmittedMidStream) {
   EXPECT_FALSE(state2->completion_status.ok());
   EXPECT_FALSE(state3->completed);
   EXPECT_FALSE(state4->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishStream();
   EXPECT_FALSE(state3->completed);
   EXPECT_FALSE(state4->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishSingleItemStream();
   EXPECT_TRUE(state3->completed);
   EXPECT_TRUE(state4->completed);
-  EXPECT_EQ(0, NumOperationsOustanding());
+  EXPECT_EQ(0U, NumOperationsOutstanding());
 }
 
 TEST_F(MutationBatcherTest, BatchReleasesSlotBeforeRetry) {
@@ -766,52 +768,52 @@ TEST_F(MutationBatcherTest, BatchReleasesSlotBeforeRetry) {
   auto state0 = Apply(mutations[0]);
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   auto state1 = Apply(mutations[1]);
   EXPECT_TRUE(state1->admitted);
   EXPECT_FALSE(state1->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   FinishSingleItemStream();
   // First mutation should now be postponed on a timer, but second mutation
   // should have been let in, hence there are 2 operations on the completion
   // queue.
-  EXPECT_EQ(2, NumOperationsOustanding());
+  EXPECT_EQ(2U, NumOperationsOutstanding());
 
   // This is going to finish the timer (and schedule the second attempt of first
   // mutation) and open the stream for the second batch.
   cq_impl_->SimulateCompletion(cq_, true);
-  EXPECT_EQ(2, NumOperationsOustanding());
+  EXPECT_EQ(2U, NumOperationsOutstanding());
   EXPECT_FALSE(state0->completed);
   EXPECT_FALSE(state1->completed);
 
   // This is going to open the stream for the first batch and read the only
   // result piece for the second batch.
   cq_impl_->SimulateCompletion(cq_, true);
-  EXPECT_EQ(2, NumOperationsOustanding());
+  EXPECT_EQ(2U, NumOperationsOutstanding());
   EXPECT_TRUE(state1->completed);
   EXPECT_FALSE(state0->completed);
 
   // This is going to finish streams for both batches
   cq_impl_->SimulateCompletion(cq_, false);
-  EXPECT_EQ(2, NumOperationsOustanding());
+  EXPECT_EQ(2U, NumOperationsOutstanding());
   EXPECT_FALSE(state0->completed);
   cq_impl_->SimulateCompletion(cq_, true);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
   EXPECT_FALSE(state0->completed);
 
   // This is going to finish the timer for the second retry of the first batch
   // and definitely finish the second batch.
   cq_impl_->SimulateCompletion(cq_, true);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
   EXPECT_FALSE(state0->completed);
 
   // Now we've got only the first batch in the completion queue, so we might
   // easily finish it.
   FinishSingleItemStream();
   EXPECT_TRUE(state0->completed);
-  EXPECT_EQ(0, NumOperationsOustanding());
+  EXPECT_EQ(0U, NumOperationsOutstanding());
 }
 
 // Test that waiting until all pending operations finish works in a simple case.
@@ -828,7 +830,7 @@ TEST_F(MutationBatcherTest, WaitForNoPendingSimple) {
   auto state = Apply(mutations[0]);
   EXPECT_TRUE(state->admitted);
   EXPECT_FALSE(state->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   auto no_more_pending2 = batcher_->AsyncWaitForNoPendingRequests();
   auto no_more_pending3 = batcher_->AsyncWaitForNoPendingRequests();
@@ -838,7 +840,7 @@ TEST_F(MutationBatcherTest, WaitForNoPendingSimple) {
   FinishSingleItemStream();
 
   EXPECT_TRUE(state->completed);
-  EXPECT_EQ(0, NumOperationsOustanding());
+  EXPECT_EQ(0U, NumOperationsOutstanding());
 
   EXPECT_EQ(no_more_pending2.wait_for(1_ms), std::future_status::ready);
   EXPECT_EQ(no_more_pending3.wait_for(1_ms), std::future_status::ready);
@@ -861,7 +863,7 @@ TEST_F(MutationBatcherTest, WaitForNoPendingEdgeCases) {
   auto state0 = Apply(mutations[0]);
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   auto no_more_pending0 = batcher_->AsyncWaitForNoPendingRequests();
   EXPECT_EQ(no_more_pending0.wait_for(1_ms), std::future_status::timeout);
@@ -869,7 +871,7 @@ TEST_F(MutationBatcherTest, WaitForNoPendingEdgeCases) {
   auto state1 = Apply(mutations[1]);
   EXPECT_TRUE(state1->admitted);
   EXPECT_FALSE(state1->completed);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   auto no_more_pending1 = batcher_->AsyncWaitForNoPendingRequests();
   EXPECT_EQ(no_more_pending0.wait_for(1_ms), std::future_status::timeout);
@@ -879,7 +881,7 @@ TEST_F(MutationBatcherTest, WaitForNoPendingEdgeCases) {
   EXPECT_TRUE(state2->admitted);
   EXPECT_TRUE(state2->completed);
   EXPECT_FALSE(state2->completion_status.ok());
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   auto no_more_pending2 = batcher_->AsyncWaitForNoPendingRequests();
 
@@ -891,7 +893,7 @@ TEST_F(MutationBatcherTest, WaitForNoPendingEdgeCases) {
 
   EXPECT_TRUE(state0->completed);
   EXPECT_TRUE(state1->admitted);
-  EXPECT_EQ(1, NumOperationsOustanding());
+  EXPECT_EQ(1U, NumOperationsOutstanding());
 
   EXPECT_EQ(no_more_pending0.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(no_more_pending1.wait_for(1_ms), std::future_status::timeout);
@@ -901,7 +903,7 @@ TEST_F(MutationBatcherTest, WaitForNoPendingEdgeCases) {
 
   EXPECT_TRUE(state1->completed);
   EXPECT_FALSE(state1->completion_status.ok());
-  EXPECT_EQ(0, NumOperationsOustanding());
+  EXPECT_EQ(0U, NumOperationsOutstanding());
 
   EXPECT_EQ(no_more_pending0.wait_for(1_ms), std::future_status::ready);
   EXPECT_EQ(no_more_pending1.wait_for(1_ms), std::future_status::ready);

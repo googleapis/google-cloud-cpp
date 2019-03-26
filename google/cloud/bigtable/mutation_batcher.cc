@@ -29,7 +29,7 @@ MutationBatcher::Options::Options()
       // miscalculations don't tip us over.
       max_size_per_batch(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH * 9LL / 10),
       max_batches(8),
-      max_oustanding_size(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH * 6) {}
+      max_outstanding_size(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH * 6) {}
 
 std::pair<future<void>, future<Status>> MutationBatcher::AsyncApply(
     CompletionQueue& cq, SingleRowMutation mut) {
@@ -123,7 +123,8 @@ grpc::Status MutationBatcher::IsValid(PendingSingleRowMutation& mut) const {
 }
 
 bool MutationBatcher::HasSpaceFor(PendingSingleRowMutation const& mut) const {
-  return oustanding_size_ + mut.request_size <= options_.max_oustanding_size &&
+  return outstanding_size_ + mut.request_size <=
+             options_.max_outstanding_size &&
          cur_batch_->requests_size + mut.request_size <=
              options_.max_size_per_batch &&
          cur_batch_->num_mutations + mut.num_mutations <=
@@ -174,7 +175,7 @@ void MutationBatcher::OnSuccessfulMutations(CompletionQueue& cq,
   }
 
   std::unique_lock<std::mutex> lk(mu_);
-  oustanding_size_ -= completed_size;
+  outstanding_size_ -= completed_size;
   num_requests_pending_ -= num_mutations;
   SatisfyPromises(TryAdmit(cq), lk);  // unlocks the lock
 }
@@ -198,7 +199,7 @@ void MutationBatcher::OnFailedMutations(CompletionQueue& cq,
   failed.shrink_to_fit();
 
   std::unique_lock<std::mutex> lk(mu_);
-  oustanding_size_ -= completed_size;
+  outstanding_size_ -= completed_size;
   num_requests_pending_ -= num_mutations;
   SatisfyPromises(TryAdmit(cq), lk);  // unlocks the lock
 }
@@ -237,7 +238,7 @@ std::vector<MutationBatcher::AdmissionPromise> MutationBatcher::TryAdmit(
 }
 
 void MutationBatcher::Admit(PendingSingleRowMutation mut) {
-  oustanding_size_ += mut.request_size;
+  outstanding_size_ += mut.request_size;
   cur_batch_->requests_size += mut.request_size;
   cur_batch_->num_mutations += mut.num_mutations;
   cur_batch_->requests.emplace_back(std::move(mut.mut));
