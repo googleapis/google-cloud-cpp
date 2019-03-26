@@ -14,7 +14,8 @@ rpm, vcpkg).
 will not test binary distributions of our code. And we will not host configs
 for binary distributions, since that would involve hosting files which we do
 not test. However, we will do our best to make our code easily packageable by
-others in a wide variety of formats. For more context, see #333.
+others in a wide variety of formats. For more context, see
+[#333](https://github.com/googleapis/google-cloud-cpp/issues/333).
 
 **Consequences**: This decision will shield from endorsing any particular
 binary package management system. Other individuals who want to build and
