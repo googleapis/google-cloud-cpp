@@ -55,6 +55,16 @@ endif ()
 # users to add more common options without having to touch the code.
 add_library(bigtable_common_options INTERFACE)
 google_cloud_cpp_add_common_options(bigtable_common_options)
+if (MSVC)
+    #
+    # We turn off 4996 because some protobuf types derive from std::iterator,
+    # turn off the warnings about this being deprecated in C++17.
+    #
+    # We turn off 4244 because protobuf headers convert from `int64` to
+    # `RepeatedPtrField< T>::size_type`, which is really `int` and that may
+    # cause loss of data. But we only run on 64-bit platforms.
+    target_compile_options(bigtable_common_options INTERFACE /wd4996 /wd4244)
+endif ()
 
 # Configure the location of proto files, particulary the googleapis protos.
 list(APPEND PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis"
