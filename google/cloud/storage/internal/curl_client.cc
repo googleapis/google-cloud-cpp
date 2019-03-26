@@ -211,8 +211,10 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
   builder.AddHeader("Content-Type: application/json; charset=UTF-8");
   std::string request_payload;
   if (request.template HasOption<WithObjectMetadata>()) {
-    request_payload = ObjectMetadataJsonPayloadForUpdate(
-        request.template GetOption<WithObjectMetadata>().value());
+    request_payload =
+        ObjectMetadataJsonForInsert(
+            request.template GetOption<WithObjectMetadata>().value())
+            .dump();
   }
   builder.AddHeader("Content-Length: " +
                     std::to_string(request_payload.size()));
@@ -510,8 +512,9 @@ StatusOr<ObjectMetadata> CurlClient::CopyObject(
   builder.AddHeader("Content-Type: application/json");
   std::string json_payload("{}");
   if (request.HasOption<WithObjectMetadata>()) {
-    json_payload = ObjectMetadataJsonPayloadForCopy(
-        request.GetOption<WithObjectMetadata>().value());
+    json_payload = ObjectMetadataJsonForCopy(
+                       request.GetOption<WithObjectMetadata>().value())
+                       .dump();
   }
   return CheckedFromString<ObjectMetadataParser>(
       builder.BuildRequest().MakeRequest(json_payload));
@@ -672,8 +675,9 @@ StatusOr<RewriteObjectResponse> CurlClient::RewriteObject(
   builder.AddHeader("Content-Type: application/json");
   std::string json_payload("{}");
   if (request.HasOption<WithObjectMetadata>()) {
-    json_payload = ObjectMetadataJsonPayloadForCopy(
-        request.GetOption<WithObjectMetadata>().value());
+    json_payload = ObjectMetadataJsonForRewrite(
+                       request.GetOption<WithObjectMetadata>().value())
+                       .dump();
   }
   auto response = builder.BuildRequest().MakeRequest(json_payload);
   if (!response.ok()) {
@@ -1377,7 +1381,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
 
   nl::json metadata = nl::json::object();
   if (request.HasOption<WithObjectMetadata>()) {
-    metadata = ObjectMetadataJsonForUpdate(
+    metadata = ObjectMetadataJsonForInsert(
         request.GetOption<WithObjectMetadata>().value());
   }
   if (request.HasOption<MD5HashValue>()) {
