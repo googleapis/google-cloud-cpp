@@ -81,14 +81,14 @@ GCS_CXXLDFLAGS := $(shell pkg-config storage_client --libs-only-L)
 GCS_LIBS       := $(shell pkg-config storage_client --libs-only-l)
 
 my_storage_program: my_storage_program.cc
-	$(CXX) $(CXXFLAGS) $(GCS_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(GCS_LIBS)
+        $(CXX) $(CXXFLAGS) $(GCS_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(GCS_LIBS)
 
 CBT_CXXFLAGS   := $(shell pkg-config bigtable_client --cflags)
 CBT_CXXLDFLAGS := $(shell pkg-config bigtable_client --libs-only-L)
 CBT_LIBS       := $(shell pkg-config bigtable_client --libs-only-l)
 
 my_bigtable_program: my_bigtable_program.cc
-	$(CXX) $(CXXFLAGS) $(CBT_CXXFLAGS) $(CBT_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
+        $(CXX) $(CXXFLAGS) $(CBT_CXXFLAGS) $(CBT_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
 ```
 
 ## Using `google-cloud-cpp` in Bazel-based projects.
