@@ -348,6 +348,8 @@ run_all_object_examples() {
       "${bucket_name}" "${bucket_prefix}"
   run_example ./storage_object_samples get-object-metadata \
       "${bucket_name}" "${object_name}"
+  run_example ./storage_object_samples change-object-storage-class \
+      "${bucket_name}" "${object_name}" "NEARLINE"
   run_example ./storage_object_samples read-object \
       "${bucket_name}" "${object_name}"
   run_example ./storage_object_samples write-object \
