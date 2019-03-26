@@ -1,7 +1,7 @@
 **Title**: We will not distribute/own/maintain binary packages, but we will
 support others doing so within reason.
 
-**Status**: in review
+**Status**: accepted
 
 **Context**: Compiling google-cloud-cpp from source is not always possible nor
 desired by all users. Some users may want to install a binary package that
