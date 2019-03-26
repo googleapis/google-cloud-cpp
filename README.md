@@ -2,35 +2,31 @@
 
 C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 
-| Platforms | Status |
-| :-------- | ------ |
-| Linux   | [![Kokoro CI status][kokoro-ubuntu-shield]][kokoro-ubuntu-link] |
-| macOS   | [![Kokoro CI status][kokoro-macos-shield]][kokoro-macos-link] |
-| Windows | [![Kokoro CI status][kokoro-windows-shield]][kokoro-windows-link] |
-
-| Linux distributions | Status |
-| :------------------ | ------ |
-| CentOS 7 | [![Kokoro install centos status][kokoro-install-centos-shield]][kokoro-install-centos-link] |
-| Debian 9 | [![Kokoro install debian status][kokoro-install-debian-shield]][kokoro-install-debian-link] |
-| Fedora 29 | [![Kokoro install fedora status][kokoro-install-fedora-shield]][kokoro-install-fedora-link] |
-| openSUSE (Tumbleweed) | [![Kokoro install opensuse status][kokoro-install-opensuse-shield]][kokoro-install-opensuse-link] |
-| openSUSE (Leap) | [![Kokoro install opensuse-leap status][kokoro-install-opensuse-leap-shield]][kokoro-install-opensuse-leap-link] |
-| Ubuntu 18.04 | [![Kokoro install ubuntu status][kokoro-install-ubuntu-shield]][kokoro-install-ubuntu-link] |
-| Ubuntu 16.04 | [![Kokoro install ubuntu-xenial status][kokoro-install-ubuntu-xenial-shield]][kokoro-install-ubuntu-xenial-link] |
-| Ubuntu 14.04 | [![Kokoro install ubuntu-trusty status][kokoro-install-ubuntu-trusty-shield]][kokoro-install-ubuntu-trusty-link] |
-
-| Special Builds | Status |
-| :------------- | ------ |
-| Code Coverage  | [![Codecov Coverage status][codecov-shield]][codecov-link] |
-| ASAN           | [![Kokoro CI status][kokoro-asan-shield]][kokoro-asan-link] |
-| UBSAN          | [![Kokoro CI status][kokoro-ubsan-shield]][kokoro-ubsan-link] |
-| -fno-exceptions | [![Kokoro CI status][kokoro-noex-shield]][kokoro-noex-link] |
-| gcc-4.8         | [![Kokoro CI status][kokoro-centos-7-shield]][kokoro-centos-7-link] |
-| clang-tidy | [![Kokoro CI status][kokoro-clang-tidy-shield]][kokoro-clang-tidy-link] |
-| libc++ | [![Kokoro CI status][kokoro-libcxx-shield]][kokoro-libcxx-link] |
-| API Breakage Check | [![Kokoro CI status][kokoro-check-abi-shield]][kokoro-check-abi-link] |
-| Build as Shared Libraries | [![Kokoro CI status][kokoro-shared-shield]][kokoro-shared-link] | 
-| Travis (clang-format) | [![Travis CI status][travis-shield]][travis-link] |
+<!-- Core Results -->
+[![Kokoro CI status][kokoro-ubuntu-shield]][kokoro-ubuntu-link]
+[![Kokoro CI status][kokoro-macos-shield]][kokoro-macos-link]
+[![Kokoro CI status][kokoro-windows-shield]][kokoro-windows-link]
+[![Codecov Coverage status][codecov-shield]][codecov-link]
+<!-- Test Install Instructions -->
+[![Kokoro install centos status][kokoro-install-centos-shield]][kokoro-install-centos-link]
+[![Kokoro install debian status][kokoro-install-debian-shield]][kokoro-install-debian-link]
+[![Kokoro install fedora status][kokoro-install-fedora-shield]][kokoro-install-fedora-link]
+[![Kokoro install opensuse status][kokoro-install-opensuse-shield]][kokoro-install-opensuse-link]
+[![Kokoro install opensuse-leap status][kokoro-install-opensuse-leap-shield]][kokoro-install-opensuse-leap-link]
+[![Kokoro install ubuntu status][kokoro-install-ubuntu-shield]][kokoro-install-ubuntu-link]
+[![Kokoro install ubuntu-xenial status][kokoro-install-ubuntu-xenial-shield]][kokoro-install-ubuntu-xenial-link]
+[![Kokoro install ubuntu-trusty status][kokoro-install-ubuntu-trusty-shield]][kokoro-install-ubuntu-trusty-link]
+<!-- Special Builds -->
+[![Kokoro CI status][kokoro-asan-shield]][kokoro-asan-link]
+[![Kokoro CI status][kokoro-ubsan-shield]][kokoro-ubsan-link]
+[![Kokoro CI status][kokoro-noex-shield]][kokoro-noex-link]
+[![Kokoro CI status][kokoro-centos-7-shield]][kokoro-centos-7-link]
+[![Kokoro CI status][kokoro-clang-tidy-shield]][kokoro-clang-tidy-link]
+[![Kokoro CI status][kokoro-libcxx-shield]][kokoro-libcxx-link]
+[![Kokoro CI status][kokoro-check-abi-shield]][kokoro-check-abi-link]
+[![Kokoro CI status][kokoro-shared-shield]][kokoro-shared-link] 
+[![Travis CI status][travis-shield]][travis-link]
+[![Kokoro CI status][kokoro-bazel-shield]][kokoro-bazel-link]
 
 - [Google Cloud Platform Documentation][cloud-platform-docs]
 - [Client Library Documentation][client-library-docs]
@@ -59,6 +55,8 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 [kokoro-libcxx-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-libcxx-link.html
 [kokoro-shared-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-shared.svg
 [kokoro-shared-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-shared-link.html
+[kokoro-bazel-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-bazel-dependency-linux.svg
+[kokoro-bazel-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-bazel-dependency-linux-link.html
 
 [codecov-shield]: https://codecov.io/gh/googleapis/google-cloud-cpp/branch/master/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/googleapis/google-cloud-cpp
