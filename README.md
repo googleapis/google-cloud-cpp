@@ -2,12 +2,13 @@
 
 C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 
-<!-- Core Results -->
+**Core Results:**
 [![Kokoro CI status][kokoro-ubuntu-shield]][kokoro-ubuntu-link]
 [![Kokoro CI status][kokoro-macos-shield]][kokoro-macos-link]
 [![Kokoro CI status][kokoro-windows-shield]][kokoro-windows-link]
 [![Codecov Coverage status][codecov-shield]][codecov-link]
-<!-- Test Install Instructions -->
+
+**Test Install Instructions:**
 [![Kokoro install centos status][kokoro-install-centos-shield]][kokoro-install-centos-link]
 [![Kokoro install debian status][kokoro-install-debian-shield]][kokoro-install-debian-link]
 [![Kokoro install fedora status][kokoro-install-fedora-shield]][kokoro-install-fedora-link]
@@ -16,7 +17,8 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 [![Kokoro install ubuntu status][kokoro-install-ubuntu-shield]][kokoro-install-ubuntu-link]
 [![Kokoro install ubuntu-xenial status][kokoro-install-ubuntu-xenial-shield]][kokoro-install-ubuntu-xenial-link]
 [![Kokoro install ubuntu-trusty status][kokoro-install-ubuntu-trusty-shield]][kokoro-install-ubuntu-trusty-link]
-<!-- Special Builds -->
+
+**Special Builds:**
 [![Kokoro CI status][kokoro-asan-shield]][kokoro-asan-link]
 [![Kokoro CI status][kokoro-ubsan-shield]][kokoro-ubsan-link]
 [![Kokoro CI status][kokoro-noex-shield]][kokoro-noex-link]
