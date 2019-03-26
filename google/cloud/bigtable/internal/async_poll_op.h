@@ -243,15 +243,23 @@ class AsyncPollOp
                 std::move(operation))) {}
 };
 
-/// SFINAE extractor of `T` from `future<StatusOr<optional<T>>>`, false branch.
+/// SFINAE matcher for `future<StatusOr<optional<T>>>`, false branch.
 template <typename Future>
-struct ResponseFromFutureStatusOrOptionalResponse : public std::false_type {};
+struct MatchesFutureStatusOrOptionalResponse : public std::false_type {};
 
-/// SFINAE extractor of `T` from `future<StatusOr<optional<T>>>`, true branch.
+/// SFINAE matcher for `future<StatusOr<optional<T>>>`, true branch.
 template <typename R>
-struct ResponseFromFutureStatusOrOptionalResponse<future<StatusOr<optional<R>>>>
-    : public std::true_type {
-  using type = R;
+struct MatchesFutureStatusOrOptionalResponse<future<StatusOr<optional<R>>>>
+    : public std::true_type {};
+
+/// Extractor of `T` from `future<StatusOr<optional<T>>>`
+template <typename T>
+struct ResponseFromFutureStatusOrOptionalResponse;
+
+template <typename T>
+struct ResponseFromFutureStatusOrOptionalResponse<
+    future<StatusOr<optional<T>>>> {
+  using type = T;
 };
 
 /**
@@ -270,13 +278,13 @@ struct PollableOperationRequestTraits {
   static_assert(::google::cloud::internal::is_invocable<
                     Operation, CompletionQueue&,
                     std::unique_ptr<grpc::ClientContext>>::value,
-                "A pollable operation needs to be incovable with "
+                "A pollable operation needs to be invocable with "
                 "(CompletionQueue&, std::unique_ptr<grpc::ClientContext>)");
   /// The type of what `Operation` returns.
   using ReturnType = typename google::cloud::internal::invoke_result_t<
       Operation, CompletionQueue&, std::unique_ptr<grpc::ClientContext>>;
   static_assert(
-      ResponseFromFutureStatusOrOptionalResponse<ReturnType>::value,
+      MatchesFutureStatusOrOptionalResponse<ReturnType>::value,
       "A pollable operation should return future<StatusOr<optional<T>>>");
   /// `T`, assuming that `Operation` returns `future<StatusOr<optional<T>>>`
   using ResponseType =
@@ -291,10 +299,11 @@ StartAsyncPollOp(char const* location,
                  MetadataUpdatePolicy metadata_update_policy,
                  CompletionQueue cq, Operation operation);
 
-// Implementation of StartAsyncPollOp. Refer to it for its purpose.
+/**
+ * The state machine created by StartAsyncPollOp().
+ */
 template <typename Operation>
-class PollAsyncOpFuture
-    : public std::enable_shared_from_this<PollAsyncOpFuture<Operation>> {
+class PollAsyncOpFuture {
  private:
   /// Convenience alias for the value we are polling.
   using Response =
@@ -314,9 +323,10 @@ class PollAsyncOpFuture
         operation_(std::move(operation)) {}
 
   /// The callback for a completed request, successful or not.
-  void OnCompletion(StatusOr<optional<Response>> result) {
+  static void OnCompletion(std::shared_ptr<PollAsyncOpFuture> self,
+                           StatusOr<optional<Response>> result) {
     if (result && *result) {
-      final_result_.set_value(**std::move(result));
+      self->final_result_.set_value(**std::move(result));
       return;
     }
     // TODO(#1475) remove this hack.
@@ -326,38 +336,37 @@ class PollAsyncOpFuture
     // order to work around it in this particular class we keep the invariant
     // that a call to OnFailure() always preceeds a call to WaitPeriod(). That
     // way the policy can react differently to successful requests.
-    bool const allowed_to_retry = polling_policy_->OnFailure(result.status());
+    bool const allowed_to_retry =
+        self->polling_policy_->OnFailure(result.status());
     if (!result && !allowed_to_retry) {
-      final_result_.set_value(
-          DetailedStatus(polling_policy_->IsPermanentError(result.status())
-                             ? "permanent error"
-                             : "too many transient errors",
-                         result.status()));
+      self->final_result_.set_value(self->DetailedStatus(
+          self->polling_policy_->IsPermanentError(result.status())
+              ? "permanent error"
+              : "too many transient errors",
+          result.status()));
       return;
     }
-    if (polling_policy_->Exhausted()) {
-      final_result_.set_value(DetailedStatus("polling policy exhausted",
-                                             Status(StatusCode::kUnknown, "")));
+    if (self->polling_policy_->Exhausted()) {
+      self->final_result_.set_value(self->DetailedStatus(
+          "polling policy exhausted", Status(StatusCode::kUnknown, "")));
       return;
     }
-    auto self = this->shared_from_this();
-    cq_.MakeRelativeTimer(polling_policy_->WaitPeriod())
+    self->cq_.MakeRelativeTimer(self->polling_policy_->WaitPeriod())
         .then([self](future<std::chrono::system_clock::time_point>) {
-          self->StartIteration();
+          StartIteration(self);
         });
   }
 
   /// The callback to start another iteration of the retry loop.
-  void StartIteration() {
+  static void StartIteration(std::shared_ptr<PollAsyncOpFuture> self) {
     auto context =
         ::google::cloud::internal::make_unique<grpc::ClientContext>();
-    polling_policy_->Setup(*context);
-    metadata_update_policy_.Setup(*context);
+    self->polling_policy_->Setup(*context);
+    self->metadata_update_policy_.Setup(*context);
 
-    auto self = this->shared_from_this();
-    operation_(cq_, std::move(context))
+    self->operation_(self->cq_, std::move(context))
         .then([self](future<StatusOr<optional<Response>>> fut) {
-          self->OnCompletion(fut.get());
+          OnCompletion(self, fut.get());
         });
   }
 
@@ -412,7 +421,7 @@ StartAsyncPollOp(char const* location,
       new PollAsyncOpFuture<Operation>(location, std::move(polling_policy),
                                        std::move(metadata_update_policy),
                                        std::move(cq), std::move(operation)));
-  req->StartIteration();
+  req->StartIteration(req);
   return req->final_result_.get_future();
 }
 

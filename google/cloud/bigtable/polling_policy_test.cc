@@ -21,6 +21,9 @@
 #include <chrono>
 #include <thread>
 
+namespace google {
+namespace cloud {
+namespace bigtable {
 namespace {
 
 /// Create a grpc::Status with a status code for permanent errors.
@@ -28,9 +31,7 @@ grpc::Status CreatePermanentError() {
   return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "failed");
 }
 
-namespace bigtable = google::cloud::bigtable;
-namespace cloud = google::cloud;
-using namespace google::cloud::testing_util::chrono_literals;
+using namespace testing_util::chrono_literals;
 auto const kLimitedTimeTestPeriod = 50_ms;
 auto const kLimitedTimeTolerance = 10_ms;
 
@@ -40,8 +41,8 @@ auto const kLimitedTimeTolerance = 10_ms;
  *
  * This eliminates some amount of code duplication in the following tests.
  */
-void CheckLimitedTime(bigtable::PollingPolicy& tested) {
-  google::cloud::testing_util::CheckPredicateBecomesFalse(
+void CheckLimitedTime(PollingPolicy& tested) {
+  testing_util::CheckPredicateBecomesFalse(
       [&tested] {
         return tested.OnFailure(
             grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"));
@@ -50,51 +51,49 @@ void CheckLimitedTime(bigtable::PollingPolicy& tested) {
       kLimitedTimeTolerance);
 }
 
-}  // anonymous namespace
-
 /// @test A simple test for the LimitedTimeRetryPolicy.
 TEST(GenericPollingPolicy, Simple) {
-  bigtable::LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
-  bigtable::ExponentialBackoffPolicy backoff(
-      bigtable::internal::kBigtableLimits);
-  bigtable::GenericPollingPolicy<> tested(retry, backoff);
+  LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
+  ExponentialBackoffPolicy backoff(internal::kBigtableLimits);
+  GenericPollingPolicy<> tested(retry, backoff);
   CheckLimitedTime(tested);
 }
 
 /// @test Test cloning for LimitedTimeRetryPolicy.
 TEST(GenericPollingPolicy, Clone) {
-  bigtable::LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
-  bigtable::ExponentialBackoffPolicy backoff(
-      bigtable::internal::kBigtableLimits);
-  bigtable::GenericPollingPolicy<> original(retry, backoff);
+  LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
+  ExponentialBackoffPolicy backoff(internal::kBigtableLimits);
+  GenericPollingPolicy<> original(retry, backoff);
   auto tested = original.clone();
   CheckLimitedTime(*tested);
 }
 
 /// @test Verify that non-retryable errors cause an immediate failure.
 TEST(GenericPollingPolicy, OnNonRetryable) {
-  bigtable::LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
-  bigtable::ExponentialBackoffPolicy backoff(
-      bigtable::internal::kBigtableLimits);
-  bigtable::GenericPollingPolicy<> tested(retry, backoff);
-  EXPECT_FALSE(static_cast<bigtable::PollingPolicy&>(tested).OnFailure(
-      CreatePermanentError()));
+  LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
+  ExponentialBackoffPolicy backoff(internal::kBigtableLimits);
+  GenericPollingPolicy<> tested(retry, backoff);
+  EXPECT_FALSE(
+      static_cast<PollingPolicy&>(tested).OnFailure(CreatePermanentError()));
   EXPECT_FALSE(tested.OnFailure(
-      bigtable::internal::MakeStatusFromRpcError(CreatePermanentError())));
+      internal::MakeStatusFromRpcError(CreatePermanentError())));
 }
 
 /// @test Verify that IsPermanentError works.
 TEST(GenericPollingPolicy, IsPermanentError) {
-  bigtable::LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
-  bigtable::ExponentialBackoffPolicy backoff(
-      bigtable::internal::kBigtableLimits);
-  bigtable::GenericPollingPolicy<> tested(retry, backoff);
-  EXPECT_TRUE(tested.IsPermanentError(
-      cloud::Status(cloud::StatusCode::kPermissionDenied, "")));
-  EXPECT_FALSE(tested.IsPermanentError(
-      cloud::Status(cloud::StatusCode::kUnavailable, "")));
-  EXPECT_TRUE(static_cast<bigtable::PollingPolicy&>(tested).IsPermanentError(
+  LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
+  ExponentialBackoffPolicy backoff(internal::kBigtableLimits);
+  GenericPollingPolicy<> tested(retry, backoff);
+  EXPECT_TRUE(
+      tested.IsPermanentError(Status(StatusCode::kPermissionDenied, "")));
+  EXPECT_FALSE(tested.IsPermanentError(Status(StatusCode::kUnavailable, "")));
+  EXPECT_TRUE(static_cast<PollingPolicy&>(tested).IsPermanentError(
       grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "")));
-  EXPECT_FALSE(static_cast<bigtable::PollingPolicy&>(tested).IsPermanentError(
+  EXPECT_FALSE(static_cast<PollingPolicy&>(tested).IsPermanentError(
       grpc::Status(grpc::StatusCode::UNAVAILABLE, "")));
 }
+
+}  // anonymous namespace
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

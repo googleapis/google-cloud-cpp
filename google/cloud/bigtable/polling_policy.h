@@ -48,7 +48,7 @@ class PollingPolicy {
   /**
    * Return true if `status` represents a permanent error that cannot be
    * retried.
-   * TODO(dopiera): remove grpc::Status version.
+   * TODO(#2344): remove grpc::Status version.
    */
   virtual bool IsPermanentError(grpc::Status const& status) {
     return IsPermanentError(internal::MakeStatusFromRpcError(status));
@@ -62,7 +62,7 @@ class PollingPolicy {
 
   /**
    * Handle an RPC failure.
-   * TODO(dopiera): remove grpc::Status version.
+   * TODO(#2344): remove grpc::Status version.
    *
    * @return true if the RPC operation should be retried.
    */

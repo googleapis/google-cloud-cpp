@@ -794,7 +794,7 @@ class NoexTableAsyncPollOpImmediateFinishFutureTest
         cq_(cq_impl_),
         metadata_update_policy_(kTableId, MetadataParamTypes::TABLE_NAME) {}
 
-  future<StatusOr<int>> Start(bool noRetires) {
+  future<StatusOr<int>> StartImpl(bool simulateRetries) {
     internal::RPCPolicyParameters const kNoRetries = {
         std::chrono::hours(0),
         std::chrono::hours(0),
@@ -803,8 +803,8 @@ class NoexTableAsyncPollOpImmediateFinishFutureTest
 
     auto user_future = internal::StartAsyncPollOp(
         __func__,
-        bigtable::DefaultPollingPolicy(noRetires ? kNoRetries
-                                                 : internal::kBigtableLimits),
+        bigtable::DefaultPollingPolicy(
+            simulateRetries ? kNoRetries : internal::kBigtableLimits),
         std::move(metadata_update_policy_), cq_,
         [this](CompletionQueue& cq,
                std::unique_ptr<grpc::ClientContext> context) {
@@ -815,6 +815,10 @@ class NoexTableAsyncPollOpImmediateFinishFutureTest
     return user_future;
   }
 
+  future<StatusOr<int>> StartWithRetries() { return StartImpl(true); }
+
+  future<StatusOr<int>> StartWithoutRetries() { return StartImpl(true); }
+
   std::shared_ptr<testing::MockCompletionQueue> cq_impl_;
   CompletionQueue cq_;
   MetadataUpdatePolicy metadata_update_policy_;
@@ -822,7 +826,7 @@ class NoexTableAsyncPollOpImmediateFinishFutureTest
 };
 
 TEST_F(NoexTableAsyncPollOpImmediateFinishFutureTest, ImmediateSuccess) {
-  auto user_future = Start(false);  // no retries
+  auto user_future = StartWithoutRetries();
   attempt_promise_.set_value(optional<int>(42));
   auto res = user_future.get();
   ASSERT_STATUS_OK(res);
@@ -832,7 +836,7 @@ TEST_F(NoexTableAsyncPollOpImmediateFinishFutureTest, ImmediateSuccess) {
 
 TEST_F(NoexTableAsyncPollOpImmediateFinishFutureTest,
        PolicyExhaustedOnSuccess) {
-  auto user_future = Start(true);               // no retries
+  auto user_future = StartWithoutRetries();
   attempt_promise_.set_value(optional<int>());  // no value
   auto res = user_future.get();
   ASSERT_EQ(StatusCode::kUnknown, res.status().code());
@@ -841,7 +845,7 @@ TEST_F(NoexTableAsyncPollOpImmediateFinishFutureTest,
 
 TEST_F(NoexTableAsyncPollOpImmediateFinishFutureTest,
        PolicyExhaustedOnFailure) {
-  auto user_future = Start(true);  // no retries
+  auto user_future = StartWithoutRetries();
   attempt_promise_.set_value(Status(StatusCode::kUnavailable, "oh no"));
   auto res = user_future.get();
   ASSERT_EQ(StatusCode::kUnavailable, res.status().code());
@@ -849,7 +853,7 @@ TEST_F(NoexTableAsyncPollOpImmediateFinishFutureTest,
 }
 
 TEST_F(NoexTableAsyncPollOpImmediateFinishFutureTest, PermanentFailure) {
-  auto user_future = Start(false);
+  auto user_future = StartWithoutRetries();
   attempt_promise_.set_value(Status(StatusCode::kPermissionDenied, "oh no"));
   auto res = user_future.get();
   ASSERT_EQ(StatusCode::kPermissionDenied, res.status().code());
