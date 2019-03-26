@@ -446,8 +446,8 @@ TEST(ObjectMetadataTest, SetEventBasedHold) {
 TEST(ObjectMetadataTest, SetStorageClass) {
   auto expected = CreateObjectMetadataForTest();
   auto copy = expected;
-  copy.set_content_type("NEARLINE");
-  EXPECT_EQ("NEARLINE", copy.content_type());
+  copy.set_storage_class("NEARLINE");
+  EXPECT_EQ("NEARLINE", copy.storage_class());
   EXPECT_NE(expected, copy);
 }
 

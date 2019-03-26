@@ -410,7 +410,6 @@ class GcsObject(object):
         }
         for key in metadata.keys():
             if key not in writeable_keys:
-                print("\n\nDEBUG DO NOT MERGE removing %s\n\n" % key)
                 metadata.pop(key, None)
         return metadata
 
