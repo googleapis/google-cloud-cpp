@@ -794,7 +794,7 @@ class NoexTableAsyncPollOpImmediateFinishFutureTest
         cq_(cq_impl_),
         metadata_update_policy_(kTableId, MetadataParamTypes::TABLE_NAME) {}
 
-  future<StatusOr<int>> StartImpl(bool simulateRetries) {
+  future<StatusOr<int>> StartImpl(bool simulate_retries) {
     internal::RPCPolicyParameters const kNoRetries = {
         std::chrono::hours(0),
         std::chrono::hours(0),
@@ -804,7 +804,7 @@ class NoexTableAsyncPollOpImmediateFinishFutureTest
     auto user_future = internal::StartAsyncPollOp(
         __func__,
         bigtable::DefaultPollingPolicy(
-            simulateRetries ? kNoRetries : internal::kBigtableLimits),
+            simulate_retries ? internal::kBigtableLimits : kNoRetries),
         std::move(metadata_update_policy_), cq_,
         [this](CompletionQueue& cq,
                std::unique_ptr<grpc::ClientContext> context) {
@@ -817,7 +817,7 @@ class NoexTableAsyncPollOpImmediateFinishFutureTest
 
   future<StatusOr<int>> StartWithRetries() { return StartImpl(true); }
 
-  future<StatusOr<int>> StartWithoutRetries() { return StartImpl(true); }
+  future<StatusOr<int>> StartWithoutRetries() { return StartImpl(false); }
 
   std::shared_ptr<testing::MockCompletionQueue> cq_impl_;
   CompletionQueue cq_;
@@ -826,7 +826,7 @@ class NoexTableAsyncPollOpImmediateFinishFutureTest
 };
 
 TEST_F(NoexTableAsyncPollOpImmediateFinishFutureTest, ImmediateSuccess) {
-  auto user_future = StartWithoutRetries();
+  auto user_future = StartWithRetries();
   attempt_promise_.set_value(optional<int>(42));
   auto res = user_future.get();
   ASSERT_STATUS_OK(res);
@@ -853,7 +853,7 @@ TEST_F(NoexTableAsyncPollOpImmediateFinishFutureTest,
 }
 
 TEST_F(NoexTableAsyncPollOpImmediateFinishFutureTest, PermanentFailure) {
-  auto user_future = StartWithoutRetries();
+  auto user_future = StartWithRetries();
   attempt_promise_.set_value(Status(StatusCode::kPermissionDenied, "oh no"));
   auto res = user_future.get();
   ASSERT_EQ(StatusCode::kPermissionDenied, res.status().code());
