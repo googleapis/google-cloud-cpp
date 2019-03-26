@@ -469,7 +469,7 @@ void GetFamily(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     throw Usage{"get-family: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [bigtable_get_family]
+  //! [get family] [START bigtable_get_family]
   [](google::cloud::bigtable::Table table) {
     // Create the range of rows to read.
     auto range = google::cloud::bigtable::RowRange::InfiniteRange();
@@ -488,7 +488,7 @@ void GetFamily(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     }
     std::cout << std::flush;
   }
-  //! [bigtable_get_family]
+  //! [get family] [END bigtable_get_family]
   (std::move(table));
 }
 }  // anonymous namespace
