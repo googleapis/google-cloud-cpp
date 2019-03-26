@@ -467,7 +467,8 @@ if ("${GOOGLE_CLOUD_CPP_STORAGE_ENABLE_INSTALL}")
     set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Storage C++ Client Library")
     set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
         "Provides C++ APIs to access Google Cloud Storage.")
-    set(GOOGLE_CLOUD_CPP_PC_LIBS "-lstorage_client")
+    set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common libcurl openssl")
+    set(GOOGLE_CLOUD_CPP_PC_LIBS "-lstorage_client -lcrc32c")
 
     # Create and install the pkg-config files.
     configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
