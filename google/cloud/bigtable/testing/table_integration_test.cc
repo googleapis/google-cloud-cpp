@@ -78,7 +78,8 @@ std::string TableTestEnvironment::RandomTableId() {
   // proto files.
   constexpr int kMaxTableIdLength = 50;
   static std::string const prefix = "table-";
-  return CreateRandomId(prefix, kMaxTableIdLength - prefix.length());
+  return CreateRandomId(prefix,
+                        static_cast<int>(kMaxTableIdLength - prefix.length()));
 }
 
 std::string TableTestEnvironment::RandomInstanceId() {
@@ -86,7 +87,8 @@ std::string TableTestEnvironment::RandomInstanceId() {
   // proto files.
   constexpr int kMaxInstanceIdLenth = 33;
   static std::string const prefix = "instance-";
-  return CreateRandomId(prefix, kMaxInstanceIdLenth - prefix.length());
+  return CreateRandomId(
+      prefix, static_cast<int>(kMaxInstanceIdLenth - prefix.length()));
 }
 
 void TableIntegrationTest::SetUp() {
