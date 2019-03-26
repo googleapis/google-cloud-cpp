@@ -86,10 +86,10 @@ std::string TableTestEnvironment::RandomTableId() {
 std::string TableTestEnvironment::RandomInstanceId() {
   // This value was discovered by trial and error, it is not documented in the
   // proto files.
-  constexpr int kMaxInstanceIdLenth = 33;
+  constexpr int kMaxInstanceIdLength = 33;
   static char const prefix[] = "instance-";
-  static_assert(kMaxInstanceIdLenth > sizeof(prefix), "prefix is too long");
-  constexpr int sample_count = kMaxInstanceIdLenth - sizeof(prefix) + 1;
+  static_assert(kMaxInstanceIdLength > sizeof(prefix), "prefix is too long");
+  constexpr int sample_count = kMaxInstanceIdLength - sizeof(prefix) + 1;
   return CreateRandomId(prefix, sample_count);
 }
 
