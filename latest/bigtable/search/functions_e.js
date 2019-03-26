@@ -29,7 +29,7 @@ var searchData=
   ['setloadbalancingpolicyname',['SetLoadBalancingPolicyName',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#a536c1153d6839e05833820d551afb700',1,'google::cloud::bigtable::v0::ClientOptions']]],
   ['setmaxbatches',['SetMaxBatches',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#a557c3ee0637d8fe6ef54c2af4cba373e',1,'google::cloud::bigtable::v0::MutationBatcher::Options']]],
   ['setmaxmutationsperbatch',['SetMaxMutationsPerBatch',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#ae81a75eb2dda59a8b0edda6e5bf4f4f9',1,'google::cloud::bigtable::v0::MutationBatcher::Options']]],
-  ['setmaxoustandingsize',['SetMaxOustandingSize',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#a3c0a84af0253392a58ac96fe28d21777',1,'google::cloud::bigtable::v0::MutationBatcher::Options']]],
+  ['setmaxoutstandingsize',['SetMaxOutstandingSize',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#a00b6ff08be53bcbf632873b4d2bb6d26',1,'google::cloud::bigtable::v0::MutationBatcher::Options']]],
   ['setmaxreceivemessagesize',['SetMaxReceiveMessageSize',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#a5cb6b3491cbc4a3e37eb318e86c5b3da',1,'google::cloud::bigtable::v0::ClientOptions']]],
   ['setmaxsendmessagesize',['SetMaxSendMessageSize',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#a3f974fbc3942b1d4052eff0bffb33487',1,'google::cloud::bigtable::v0::ClientOptions']]],
   ['setmaxsizeperbatch',['SetMaxSizePerBatch',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#a9432d72da13ffc745a95411bf8b0f1ae',1,'google::cloud::bigtable::v0::MutationBatcher::Options']]],

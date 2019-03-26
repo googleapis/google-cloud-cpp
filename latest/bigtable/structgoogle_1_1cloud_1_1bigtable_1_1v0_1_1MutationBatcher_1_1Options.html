@@ -91,9 +91,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a557c3ee0637d8fe6ef54c2af4cba373e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html">Options</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#a557c3ee0637d8fe6ef54c2af4cba373e">SetMaxBatches</a> (size_t max_batches_arg)</td></tr>
 <tr class="memdesc:a557c3ee0637d8fe6ef54c2af4cba373e"><td class="mdescLeft">&#160;</td><td class="mdescRight">There will be no more RPCs outstanding (except for retries) than this.  <a href="#a557c3ee0637d8fe6ef54c2af4cba373e">More...</a><br /></td></tr>
 <tr class="separator:a557c3ee0637d8fe6ef54c2af4cba373e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c0a84af0253392a58ac96fe28d21777"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html">Options</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#a3c0a84af0253392a58ac96fe28d21777">SetMaxOustandingSize</a> (size_t max_oustanding_size_arg)</td></tr>
-<tr class="memdesc:a3c0a84af0253392a58ac96fe28d21777"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher.html" title="Objects of this class pack single row mutations into bulk mutations. ">MutationBatcher</a> will at most admit mutations of this total size.  <a href="#a3c0a84af0253392a58ac96fe28d21777">More...</a><br /></td></tr>
-<tr class="separator:a3c0a84af0253392a58ac96fe28d21777"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00b6ff08be53bcbf632873b4d2bb6d26"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html">Options</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#a00b6ff08be53bcbf632873b4d2bb6d26">SetMaxOutstandingSize</a> (size_t max_outstanding_size_arg)</td></tr>
+<tr class="memdesc:a00b6ff08be53bcbf632873b4d2bb6d26"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher.html" title="Objects of this class pack single row mutations into bulk mutations. ">MutationBatcher</a> will at most admit mutations of this total size.  <a href="#a00b6ff08be53bcbf632873b4d2bb6d26">More...</a><br /></td></tr>
+<tr class="separator:a00b6ff08be53bcbf632873b4d2bb6d26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -103,8 +103,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a99d51d16f105dfa28f7a111eae459164"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a082558dbe35a369b914e787e56617646"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#a082558dbe35a369b914e787e56617646">max_batches</a></td></tr>
 <tr class="separator:a082558dbe35a369b914e787e56617646"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e39d8e384d2efa3dfbd408890405e8e"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#a3e39d8e384d2efa3dfbd408890405e8e">max_oustanding_size</a></td></tr>
-<tr class="separator:a3e39d8e384d2efa3dfbd408890405e8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f5897098546f725addda3ed140067a6"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#a5f5897098546f725addda3ed140067a6">max_outstanding_size</a></td></tr>
+<tr class="separator:a5f5897098546f725addda3ed140067a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Configuration for <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher.html" title="Objects of this class pack single row mutations into bulk mutations. ">MutationBatcher</a></code>. </p>
@@ -191,8 +191,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a3c0a84af0253392a58ac96fe28d21777"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c0a84af0253392a58ac96fe28d21777">&#9670;&nbsp;</a></span>SetMaxOustandingSize()</h2>
+<a id="a00b6ff08be53bcbf632873b4d2bb6d26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00b6ff08be53bcbf632873b4d2bb6d26">&#9670;&nbsp;</a></span>SetMaxOutstandingSize()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -201,10 +201,10 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html">Options</a>&amp; google::cloud::bigtable::v0::MutationBatcher::Options::SetMaxOustandingSize </td>
+          <td class="memname"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html">Options</a>&amp; google::cloud::bigtable::v0::MutationBatcher::Options::SetMaxOutstandingSize </td>
           <td>(</td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>max_oustanding_size_arg</em></td><td>)</td>
+          <td class="paramname"><em>max_outstanding_size_arg</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -284,14 +284,14 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a3e39d8e384d2efa3dfbd408890405e8e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e39d8e384d2efa3dfbd408890405e8e">&#9670;&nbsp;</a></span>max_oustanding_size</h2>
+<a id="a5f5897098546f725addda3ed140067a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f5897098546f725addda3ed140067a6">&#9670;&nbsp;</a></span>max_outstanding_size</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t google::cloud::bigtable::v0::MutationBatcher::Options::max_oustanding_size</td>
+          <td class="memname">size_t google::cloud::bigtable::v0::MutationBatcher::Options::max_outstanding_size</td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -10,7 +10,7 @@ var searchData=
   ['makeunarystreamrpc',['MakeUnaryStreamRpc',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#af099d92f80eb4a239a2fe55b55fa802e',1,'google::cloud::bigtable::v0::CompletionQueue']]],
   ['max_5fbatches',['max_batches',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#a082558dbe35a369b914e787e56617646',1,'google::cloud::bigtable::v0::MutationBatcher::Options']]],
   ['max_5fmutations_5fper_5fbatch',['max_mutations_per_batch',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#abd89168940071a8f91784c91ca3c3b1c',1,'google::cloud::bigtable::v0::MutationBatcher::Options']]],
-  ['max_5foustanding_5fsize',['max_oustanding_size',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#a3e39d8e384d2efa3dfbd408890405e8e',1,'google::cloud::bigtable::v0::MutationBatcher::Options']]],
+  ['max_5foutstanding_5fsize',['max_outstanding_size',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#a5f5897098546f725addda3ed140067a6',1,'google::cloud::bigtable::v0::MutationBatcher::Options']]],
   ['max_5fsize_5fper_5fbatch',['max_size_per_batch',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Options.html#a99d51d16f105dfa28f7a111eae459164',1,'google::cloud::bigtable::v0::MutationBatcher::Options']]],
   ['maxage',['MaxAge',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1GcRule.html#a5115d55f92e64a20e051f998d1083bcd',1,'google::cloud::bigtable::v0::GcRule']]],
   ['maxnumversions',['MaxNumVersions',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1GcRule.html#ac8c1f17114b5e0308e6fb0d985c5f00c',1,'google::cloud::bigtable::v0::GcRule']]],
