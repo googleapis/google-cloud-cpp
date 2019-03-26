@@ -8,7 +8,7 @@ prefer to compile their dependencies once and install them in `/usr/local/` or a
 similar directory.
 
 This document provides instructions to install the dependencies of
-google-cloud-cpp.
+`google-cloud-cpp`.
 
 **If** all the dependencies of `google-cloud-cpp` are installed and provide
 CMake support files, then compiling and installing the libraries
@@ -24,7 +24,96 @@ Unfortunately getting your system to this state may require multiple steps,
 the following sections describe how to install `google-cloud-cpp` on several
 platforms.
 
-### Required Libraries
+## Using `google-cloud-cpp` in CMake-based projects.
+
+Once you have installed `google-cloud-cpp` you can use the libraries from
+your own projects using `find_package()` in your `CMakeLists.txt` file:
+
+```CMake
+cmake_minimum_required(VERSION 3.5)
+
+find_package(storage_client REQUIRED)
+
+add_executable(my_program my_program.cc)
+target_link_libraries(my_program storage_client)
+```
+
+You can use a similar `CMakeLists.txt` to use the Cloud Bigtable C++ client:
+
+```CMake
+cmake_minimum_required(VERSION 3.5)
+
+find_package(bigtable_client REQUIRED)
+
+add_executable(my_program my_program.cc)
+target_link_libraries(my_program bigtable_client)
+```
+
+## Using `google-cloud-cpp` in Make-based projects.
+
+Once you have installed `google-cloud-cpp` you can use the libraries in your
+own Make-based projects using `pkg-config`:
+
+```Makefile
+GCS_CXXFLAGS   := $(shell pkg-config storage_client --cflags)
+GCS_CXXLDFLAGS := $(shell pkg-config storage_client --libs-only-L)
+GCS_LIBS       := $(shell pkg-config storage_client --libs-only-l)
+
+my_storage_program: my_storage_program.cc
+        $(CXX) $(CXXFLAGS) $(GCS_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(GCS_LIBS)
+
+CBT_CXXFLAGS   := $(shell pkg-config bigtable_client --cflags)
+CBT_CXXLDFLAGS := $(shell pkg-config bigtable_client --libs-only-L)
+CBT_LIBS       := $(shell pkg-config bigtable_client --libs-only-l)
+
+my_bigtable_program: my_bigtable_program.cc
+        $(CXX) $(CXXFLAGS) $(CBT_CXXFLAGS) $(CBT_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
+```
+
+## Using `google-cloud-cpp` in Bazel-based projects.
+
+If you use `Bazel` for your builds you do not need to install
+`google-cloud-cpp`. We provide a Starlark function to automatically download and
+compile `google-cloud-cpp` as part of you Bazel build. Add the following
+commands to your `WORKSPACE` file:
+
+```Python
+# Update the version and SHA256 digest as needed.
+http_archive(
+    name = "com_github_googleapis_google_cloud_cpp",
+    url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.7.0.tar.gz",
+    sha256 = "06bc735a117ec7ea92ea580e7f2ffa4b1cd7539e0e04f847bf500588d7f0fe90",
+)
+
+load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+google_cloud_cpp_deps()
+```
+
+Then you can link the libraries from your `BUILD` files:
+
+```Python
+cc_binary(
+    name = "bigtable_install_test",
+    srcs = [
+        "bigtable_install_test.cc",
+    ],
+    deps = [
+        "@com_github_googleapis_google_cloud_cpp//google/cloud/bigtable:bigtable_client",
+    ],
+)
+
+cc_binary(
+    name = "storage_install_test",
+    srcs = [
+        "storage_install_test.cc",
+    ],
+    deps = [
+        "@com_github_googleapis_google_cloud_cpp//google/cloud/storage:storage_client",
+    ],
+)
+```
+
+## Required Libraries
 
 `google-cloud-cpp` directly depends on the following libraries:
 
