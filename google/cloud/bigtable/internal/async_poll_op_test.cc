@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_sample_row_keys_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <future>
 #include <thread>
@@ -784,6 +785,143 @@ INSTANTIATE_TEST_SUITE_P(
         // being fired. In this scenario the timer reports an OK status, but we
         // should still return CANCELLED to the user.
         false));
+
+class NoexTableAsyncPollOpImmediateFinishFutureTest
+    : public bigtable::testing::internal::TableTestFixture {
+ public:
+  NoexTableAsyncPollOpImmediateFinishFutureTest()
+      : cq_impl_(std::make_shared<bigtable::testing::MockCompletionQueue>()),
+        cq_(cq_impl_),
+        metadata_update_policy_(kTableId, MetadataParamTypes::TABLE_NAME) {}
+
+  future<StatusOr<int>> Start(bool noRetires) {
+    internal::RPCPolicyParameters const kNoRetries = {
+        std::chrono::hours(0),
+        std::chrono::hours(0),
+        std::chrono::hours(0),
+    };
+
+    auto user_future = internal::StartAsyncPollOp(
+        __func__,
+        bigtable::DefaultPollingPolicy(noRetires ? kNoRetries
+                                                 : internal::kBigtableLimits),
+        std::move(metadata_update_policy_), cq_,
+        [this](CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context) {
+          return attempt_promise_.get_future();
+        });
+
+    EXPECT_EQ(std::future_status::timeout, user_future.wait_for(1_ms));
+    return user_future;
+  }
+
+  std::shared_ptr<testing::MockCompletionQueue> cq_impl_;
+  CompletionQueue cq_;
+  MetadataUpdatePolicy metadata_update_policy_;
+  promise<StatusOr<optional<int>>> attempt_promise_;
+};
+
+TEST_F(NoexTableAsyncPollOpImmediateFinishFutureTest, ImmediateSuccess) {
+  auto user_future = Start(false);  // no retries
+  attempt_promise_.set_value(optional<int>(42));
+  auto res = user_future.get();
+  ASSERT_STATUS_OK(res);
+  EXPECT_EQ(42, *res);
+  EXPECT_TRUE(cq_impl_->empty());
+}
+
+TEST_F(NoexTableAsyncPollOpImmediateFinishFutureTest,
+       PolicyExhaustedOnSuccess) {
+  auto user_future = Start(true);               // no retries
+  attempt_promise_.set_value(optional<int>());  // no value
+  auto res = user_future.get();
+  ASSERT_EQ(StatusCode::kUnknown, res.status().code());
+  EXPECT_TRUE(cq_impl_->empty());
+}
+
+TEST_F(NoexTableAsyncPollOpImmediateFinishFutureTest,
+       PolicyExhaustedOnFailure) {
+  auto user_future = Start(true);  // no retries
+  attempt_promise_.set_value(Status(StatusCode::kUnavailable, "oh no"));
+  auto res = user_future.get();
+  ASSERT_EQ(StatusCode::kUnavailable, res.status().code());
+  EXPECT_TRUE(cq_impl_->empty());
+}
+
+TEST_F(NoexTableAsyncPollOpImmediateFinishFutureTest, PermanentFailure) {
+  auto user_future = Start(false);
+  attempt_promise_.set_value(Status(StatusCode::kPermissionDenied, "oh no"));
+  auto res = user_future.get();
+  ASSERT_EQ(StatusCode::kPermissionDenied, res.status().code());
+  EXPECT_TRUE(cq_impl_->empty());
+}
+
+class NoexTableAsyncPollOpOneRetryFutureTest
+    : public bigtable::testing::internal::TableTestFixture {
+ public:
+  NoexTableAsyncPollOpOneRetryFutureTest()
+      : cq_impl_(std::make_shared<bigtable::testing::MockCompletionQueue>()),
+        cq_(cq_impl_),
+        metadata_update_policy_(kTableId, MetadataParamTypes::TABLE_NAME),
+        polling_policy_(
+            bigtable::DefaultPollingPolicy(internal::kBigtableLimits)),
+        user_future_(internal::StartAsyncPollOp(
+            __func__, bigtable::DefaultPollingPolicy(internal::kBigtableLimits),
+            std::move(metadata_update_policy_), cq_,
+            [this](CompletionQueue& cq,
+                   std::unique_ptr<grpc::ClientContext> context) {
+              attempt_promises_.emplace_back();
+              return attempt_promises_.back().get_future();
+            })) {
+    EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
+    EXPECT_EQ(1U, attempt_promises_.size());
+  }
+
+  std::shared_ptr<testing::MockCompletionQueue> cq_impl_;
+  CompletionQueue cq_;
+  MetadataUpdatePolicy metadata_update_policy_;
+  std::unique_ptr<PollingPolicy> polling_policy_;
+  std::vector<promise<StatusOr<optional<int>>>> attempt_promises_;
+  future<StatusOr<int>> user_future_;
+};
+
+TEST_F(NoexTableAsyncPollOpOneRetryFutureTest, PollNotFinishedThenOk) {
+  attempt_promises_.back().set_value(optional<int>());
+  EXPECT_EQ(1U, cq_impl_->size());  // It's the timer
+  EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
+
+  cq_impl_->SimulateCompletion(cq_, true);
+
+  EXPECT_TRUE(cq_impl_->empty());
+  ASSERT_EQ(2U, attempt_promises_.size());
+  EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
+
+  attempt_promises_.back().set_value(optional<int>(42));
+
+  EXPECT_TRUE(cq_impl_->empty());
+  auto res = user_future_.get();
+  ASSERT_STATUS_OK(res);
+  EXPECT_EQ(42, *res);
+}
+
+TEST_F(NoexTableAsyncPollOpOneRetryFutureTest, TransientFailureThenOk) {
+  attempt_promises_.back().set_value(Status(StatusCode::kUnavailable, "oh no"));
+  EXPECT_EQ(1U, cq_impl_->size());  // It's the timer
+  EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
+
+  cq_impl_->SimulateCompletion(cq_, true);
+
+  EXPECT_TRUE(cq_impl_->empty());
+  ASSERT_EQ(2U, attempt_promises_.size());
+  EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
+
+  attempt_promises_.back().set_value(optional<int>(42));
+
+  EXPECT_TRUE(cq_impl_->empty());
+  auto res = user_future_.get();
+  ASSERT_STATUS_OK(res);
+  EXPECT_EQ(42, *res);
+}
 
 }  // namespace
 }  // namespace noex

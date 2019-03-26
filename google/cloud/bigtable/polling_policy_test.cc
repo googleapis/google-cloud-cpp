@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/polling_policy.h"
+#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/status.h"
 #include "google/cloud/testing_util/check_predicate_becomes_false.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <gtest/gtest.h>
@@ -27,6 +29,7 @@ grpc::Status CreatePermanentError() {
 }
 
 namespace bigtable = google::cloud::bigtable;
+namespace cloud = google::cloud;
 using namespace google::cloud::testing_util::chrono_literals;
 auto const kLimitedTimeTestPeriod = 50_ms;
 auto const kLimitedTimeTolerance = 10_ms;
@@ -74,5 +77,24 @@ TEST(GenericPollingPolicy, OnNonRetryable) {
   bigtable::ExponentialBackoffPolicy backoff(
       bigtable::internal::kBigtableLimits);
   bigtable::GenericPollingPolicy<> tested(retry, backoff);
-  EXPECT_FALSE(tested.OnFailure(CreatePermanentError()));
+  EXPECT_FALSE(static_cast<bigtable::PollingPolicy&>(tested).OnFailure(
+      CreatePermanentError()));
+  EXPECT_FALSE(tested.OnFailure(
+      bigtable::internal::MakeStatusFromRpcError(CreatePermanentError())));
+}
+
+/// @test Verify that IsPermanentError works.
+TEST(GenericPollingPolicy, IsPermanentError) {
+  bigtable::LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
+  bigtable::ExponentialBackoffPolicy backoff(
+      bigtable::internal::kBigtableLimits);
+  bigtable::GenericPollingPolicy<> tested(retry, backoff);
+  EXPECT_TRUE(tested.IsPermanentError(
+      cloud::Status(cloud::StatusCode::kPermissionDenied, "")));
+  EXPECT_FALSE(tested.IsPermanentError(
+      cloud::Status(cloud::StatusCode::kUnavailable, "")));
+  EXPECT_TRUE(static_cast<bigtable::PollingPolicy&>(tested).IsPermanentError(
+      grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "")));
+  EXPECT_FALSE(static_cast<bigtable::PollingPolicy&>(tested).IsPermanentError(
+      grpc::Status(grpc::StatusCode::UNAVAILABLE, "")));
 }
