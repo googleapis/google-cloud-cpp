@@ -7,6 +7,7 @@ var searchData=
   ['asynclistclusters',['AsyncListClusters',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ab143ea77ae32f6534bb1c9b53adde458',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
   ['asynclistinstances',['AsyncListInstances',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a9d27c2366963b79082d2e4bb91a57696',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
   ['asynclongrunningop',['AsyncLongrunningOp',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a8d5a4fc00abb8ad116f602b8c69e8f3c',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
+  ['asynclongrunningoperation',['AsyncLongrunningOperation',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#ac8a6a93316ffcb8f6ac8eb4e2fb91680',1,'google::cloud::bigtable::v0::AdminClient']]],
   ['asyncrowreader',['AsyncRowReader',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#a8993950296ab26ccacf50fa8b7c2bf53',1,'google::cloud::bigtable::v0::DataClient']]],
   ['asyncsamplerowkeys',['AsyncSampleRowKeys',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#aa9826633017730ceef62b4c2589da43d',1,'google::cloud::bigtable::v0::DataClient']]],
   ['bulkmutator',['BulkMutator',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#a11832689f7ea53c6447c901e8a442139',1,'google::cloud::bigtable::v0::DataClient']]],

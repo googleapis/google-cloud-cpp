@@ -157,6 +157,9 @@ Friends</h2></td></tr>
 <tr class="separator:af14cc753ddef0e763fc448d5fdef81b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a17714b04ba1f05a18eab249848f44fd7"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a17714b04ba1f05a18eab249848f44fd7">internal::AsyncCheckConsistency</a></td></tr>
 <tr class="separator:a17714b04ba1f05a18eab249848f44fd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8a6a93316ffcb8f6ac8eb4e2fb91680"><td class="memTemplParams" colspan="2">template&lt;typename Client , typename Response &gt; </td></tr>
+<tr class="memitem:ac8a6a93316ffcb8f6ac8eb4e2fb91680"><td class="memTemplItemLeft" align="right" valign="top">class&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#ac8a6a93316ffcb8f6ac8eb4e2fb91680">internal::AsyncLongrunningOperation</a></td></tr>
+<tr class="separator:ac8a6a93316ffcb8f6ac8eb4e2fb91680"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac6ca2ef57a06cd4abec05c00662b116"><td class="memTemplParams" colspan="2">template&lt;typename ResultType , typename ClientType &gt; </td></tr>
 <tr class="memitem:aac6ca2ef57a06cd4abec05c00662b116"><td class="memTemplItemLeft" align="right" valign="top">ResultType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#aac6ca2ef57a06cd4abec05c00662b116">internal::PollLongRunningOperation</a> (std::shared_ptr&lt; ClientType &gt; client, std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1PollingPolicy.html">PollingPolicy</a> &gt; polling_policy, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MetadataUpdatePolicy.html">MetadataUpdatePolicy</a> metadata_update_policy, google::longrunning::Operation &amp;operation, char const *error_message, grpc::Status &amp;status)</td></tr>
 <tr class="separator:aac6ca2ef57a06cd4abec05c00662b116"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,7 +169,7 @@ Friends</h2></td></tr>
 <p>This class is used by the Cloud Bigtable wrappers to access Cloud Bigtable. Multiple <code>bigtable::TableAdmin</code> objects may share a connection via a single <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs. ">AdminClient</a></code> object. The <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs. ">AdminClient</a></code> object is configured at construction time, this configuration includes the credentials, access endpoints, default timeouts, and other gRPC configuration options. This is an interface class because it is also used as a dependency injection point in some of the tests.</p>
 <dl class="section user"><dt>Cost</dt><dd>Applications should avoid unnecessarily creating new objects of type <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs. ">AdminClient</a></code>. Creating a new object of this type typically requires connecting to the Cloud Bigtable servers, and performing the authentication workflows with Google Cloud Platform. These operations can take many milliseconds, therefore applications should try to reuse the same <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs. ">AdminClient</a></code> instances when possible. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="admin__client_8h_source.html#l00057">57</a> of file <a class="el" href="admin__client_8h_source.html">admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="admin__client_8h_source.html#l00059">59</a> of file <a class="el" href="admin__client_8h_source.html">admin_client.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3492f855e37639a8f0a3151877caf7b6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3492f855e37639a8f0a3151877caf7b6">&#9670;&nbsp;</a></span>~AdminClient()</h2>
@@ -1306,7 +1309,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="admin__client_8h_source.html#l00088">88</a> of file <a class="el" href="admin__client_8h_source.html">admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="admin__client_8h_source.html#l00090">90</a> of file <a class="el" href="admin__client_8h_source.html">admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -1330,7 +1333,33 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="admin__client_8h_source.html#l00089">89</a> of file <a class="el" href="admin__client_8h_source.html">admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="admin__client_8h_source.html#l00091">91</a> of file <a class="el" href="admin__client_8h_source.html">admin_client.h</a>.</p>
+
+</div>
+</div>
+<a id="ac8a6a93316ffcb8f6ac8eb4e2fb91680"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8a6a93316ffcb8f6ac8eb4e2fb91680">&#9670;&nbsp;</a></span>internal::AsyncLongrunningOperation</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Client , typename Response &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1internal_1_1AsyncLongrunningOperation.html">internal::AsyncLongrunningOperation</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="admin__client_8h_source.html#l00100">100</a> of file <a class="el" href="admin__client_8h_source.html">admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -1416,7 +1445,7 @@ template&lt;typename ResultType , typename ClientType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="admin__client_8h_source.html#l00087">87</a> of file <a class="el" href="admin__client_8h_source.html">admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="admin__client_8h_source.html#l00089">89</a> of file <a class="el" href="admin__client_8h_source.html">admin_client.h</a>.</p>
 
 </div>
 </div>
@@ -1440,7 +1469,7 @@ template&lt;typename ResultType , typename ClientType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="admin__client_8h_source.html#l00086">86</a> of file <a class="el" href="admin__client_8h_source.html">admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="admin__client_8h_source.html#l00088">88</a> of file <a class="el" href="admin__client_8h_source.html">admin_client.h</a>.</p>
 
 </div>
 </div>
