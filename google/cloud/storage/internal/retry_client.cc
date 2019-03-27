@@ -46,8 +46,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::google::cloud::storage::internal::raw_client_wrapper_utils::
-    CheckSignature;
+using ::google::cloud::storage::internal::raw_client_wrapper_utils::Signature;
 
 /**
  * Calls a client operation with retries borrowing the RPC policies.
@@ -65,13 +64,11 @@ using ::google::cloud::storage::internal::raw_client_wrapper_utils::
  * @throw std::exception with a description of the last error.
  */
 template <typename MemberFunction>
-typename std::enable_if<
-    CheckSignature<MemberFunction>::value,
-    typename CheckSignature<MemberFunction>::ReturnType>::type
-MakeCall(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
-         bool is_idempotent, RawClient& client, MemberFunction function,
-         typename CheckSignature<MemberFunction>::RequestType const& request,
-         char const* error_message) {
+typename Signature<MemberFunction>::ReturnType MakeCall(
+    RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
+    bool is_idempotent, RawClient& client, MemberFunction function,
+    typename Signature<MemberFunction>::RequestType const& request,
+    char const* error_message) {
   Status last_status;
   auto error = [&last_status](std::string const& msg) {
     return Status(last_status.code(), msg);

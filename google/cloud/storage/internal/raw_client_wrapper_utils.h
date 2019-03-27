@@ -33,49 +33,36 @@ namespace internal {
  * meta-functions defined here.
  */
 namespace raw_client_wrapper_utils {
-/**
- * Checks the expected signature for a `RawClient` member function.
- */
-template <typename Request, typename Response>
-using DesiredSignature = StatusOr<Response> (
-    google::cloud::storage::internal::RawClient::*)(Request const&);
 
 /**
- * Determines if @p T is a pointer to member function with the expected
- * signature for a `RawClient` member function.
+ * Metafunction to determine if @p F is a pointer to member function with the
+ * expected signature for a `RawClient` member function.
  *
  * This is the generic case, where the type does not match the expected
- * signature.  The class derives from `std::false_type`, so
- * `CheckSignature<T>::%value` is `false`.
+ * signature and so member type aliases do not exist.
  *
- * @tparam T the type to check against the expected signature.
+ * @tparam F the type to check against the expected signature.
  */
-template <typename T>
-struct CheckSignature : public std::false_type {
-  /// Must define ReturnType because it is used in std::enable_if<>.
-  using ReturnType = void;
-};
+template <typename F>
+struct Signature {};
 
 /**
- * Determines if a type is a pointer to member function with the expected
- * signature.
+ * Partial specialization for the above `Signature` metafunction.
  *
- * This is the case where the type actually matches the expected signature.
- * This class derives from `std::true_type`, so `CheckSignature<T>::%value` is
- * `true`.  The class also extracts the request and response types used in the
+ * This is the case where the type actually matches the expected signature. The
+ * class also extracts the request and response types used in the
  * implementation of `CallWithRetry()`.
  *
  * @tparam Request the RPC request type.
  * @tparam Response the RPC response type.
  */
 template <typename Request, typename Response>
-struct CheckSignature<DesiredSignature<Request, Response>>
-    : public std::true_type {
-  using ResponseType = Response;
+struct Signature<StatusOr<Response> (
+    google::cloud::storage::internal::RawClient::*)(Request const&)> {
   using RequestType = Request;
-  using MemberFunctionType = DesiredSignature<Request, Response>;
-  using ReturnType = StatusOr<ResponseType>;
+  using ReturnType = StatusOr<Response>;
 };
+
 }  // namespace raw_client_wrapper_utils
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
