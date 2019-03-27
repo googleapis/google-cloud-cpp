@@ -200,8 +200,21 @@ class AsyncLongrunningOperation {
 
   // The semantics of the value returned by the future is as follows:
   // - outer status is the attempt's status (e.g. couldn't reach CBT)
-  // - the option is empty if the poll has not finished
+  // - the `optional<>` is empty if the poll has not finished
   // - the inner StatusOr is the overall result of the longrunning operation
+  //
+  // The reason for such an obscure return value is that we want to use it in
+  // `StartAsyncPollOp`. `StartAsyncPollOp` needs to differentiate between
+  // (a) errors while trying to communicate with CBT from (b) final errors of
+  // the polled operation and (c) successfully checking that the longrunning
+  // operation has not yet finished. For that reason, for (a) we communicate
+  // errors in the outer `StatusOr<>`, for (b) in the inner `StatusOr<>` and for
+  // (c) via an empty `optional<>`.
+  //
+  // One could argue that it could be `future<StatusOr<optional<Response>>>`
+  // instead.  However, if the final error from the longrunning operation was a
+  // retriable error, `StartAsyncPollOp` would keep querying that operation.
+  // That would be incorrect, hence the extra `StatusOr<>`.
   future<StatusOr<optional<StatusOr<Response>>>> operator()(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context) {
     if (operation_.done()) {
@@ -256,15 +269,16 @@ class AsyncLongrunningOperation {
 };
 
 /**
- * Poll until a longrunning operation is complete or polling policy exhausted.
+ * Poll until a longrunning operation is complete or the polling policy
+ * exhausted.
  *
  * @param location typically the name of the function that created this
- *     asynchronous retry loop.
- * @param polling_policy controls how often the server is queried
+ *     asynchronous polling loop.
+ * @param polling_policy controls how often the server is queried.
  * @param metadata_update_policy controls how to update the metadata fields in
  *     the request.
  * @param client the client on which AsyncGetOperation is executed to get the
- *     status of the longrunning operation
+ *     status of the longrunning operation.
  * @param cq the completion queue where the retry loop is executed.
  * @param operation the initial state of the operation; it might already be
  *     finished, in which case the returned future will be already satisfied.
@@ -285,7 +299,7 @@ future<StatusOr<Response>> StartAsyncLongrunningOp(
       .then([](future<StatusOr<StatusOr<Response>>> fut) -> StatusOr<Response> {
         auto res = fut.get();
         if (!res) {
-          // failed to get status about the longrunning opertaion
+          // failed to get status about the longrunning operation
           return res.status();
         }
         // longrunning operation finished

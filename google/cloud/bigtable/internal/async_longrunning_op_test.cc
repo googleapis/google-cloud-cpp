@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/async_longrunning_op.h"
-#include "google/bigtable/v2/bigtable.pb.h"
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/internal/table_admin.h"
 #include "google/cloud/bigtable/testing/internal_table_test_fixture.h"
@@ -24,6 +23,7 @@
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include <google/bigtable/v2/bigtable.pb.h>
 #include <gmock/gmock.h>
 #include <thread>
 
@@ -41,7 +41,6 @@ using namespace ::testing;
 using MockAsyncLongrunningOpReader =
     google::cloud::bigtable::testing::MockAsyncResponseReader<
         google::longrunning::Operation>;
-using google::bigtable::v2::SampleRowKeysResponse;
 
 class NoexAsyncLongrunningOpTest : public ::testing::Test {};
 
@@ -333,45 +332,35 @@ INSTANTIATE_TEST_SUITE_P(
                       // second attempt.
                       grpc::StatusCode::FAILED_PRECONDITION}));
 
-void AttemptFailed(google::longrunning::Operation&, grpc::Status& status) {
-  status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "oh no");
-}
+}  // namespace
+}  // namespace noex
 
-void OperationNotFinished(google::longrunning::Operation& response,
-                          grpc::Status& status) {
-  status = grpc::Status();
-  response.set_name("qwerty");
-  response.set_done(false);
-}
+namespace {
+
+using namespace google::cloud::testing_util::chrono_literals;
+using namespace ::testing;
+using google::bigtable::v2::SampleRowKeysResponse;
+using MockAsyncLongrunningOpReader =
+    google::cloud::bigtable::testing::MockAsyncResponseReader<
+        google::longrunning::Operation>;
 
 void OperationFinishedSuccessfully(google::longrunning::Operation& response,
                                    grpc::Status& status) {
   status = grpc::Status();
-  response.set_name("qwerty");
+  response.set_name("test_operation_id");
   response.set_done(true);
   google::bigtable::v2::SampleRowKeysResponse response_content;
-  response_content.set_row_key("asdfgh");
+  response_content.set_row_key("test_response");
   auto any = google::cloud::internal::make_unique<google::protobuf::Any>();
   any->PackFrom(response_content);
   response.set_allocated_response(any.release());
 }
 
-void OperationFinishedWithError(google::longrunning::Operation& response,
-                                grpc::Status& status) {
-  status = grpc::Status();
-  response.set_name("qwerty");
-  response.set_done(true);
-  auto error = google::cloud::internal::make_unique<google::rpc::Status>();
-  error->set_code(grpc::StatusCode::PERMISSION_DENIED);
-  error->set_message("something is broken");
-  response.set_allocated_error(error.release());
-}
-
-class NoexAsyncLongrunningOpFutureTest
+class AsyncLongrunningOpFutureTest
     : public bigtable::testing::internal::TableTestFixture,
       public WithParamInterface<bool> {};
 
-TEST_P(NoexAsyncLongrunningOpFutureTest, EndToEnd) {
+TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
   auto const success = GetParam();
   auto client = std::make_shared<testing::MockAdminClient>();
   auto cq_impl = std::make_shared<testing::MockCompletionQueue>();
@@ -395,14 +384,14 @@ TEST_P(NoexAsyncLongrunningOpFutureTest, EndToEnd) {
                      grpc::ClientContext*,
                      google::longrunning::GetOperationRequest const& request,
                      grpc::CompletionQueue*) {
-            EXPECT_EQ("qwerty", request.name());
+            EXPECT_EQ("test_operation_id", request.name());
             // This is safe, see comments in MockAsyncResponseReader.
             return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                 google::longrunning::Operation>>(longrunning_reader.get());
           }));
 
   google::longrunning::Operation op_arg;
-  op_arg.set_name("qwerty");
+  op_arg.set_name("test_operation_id");
   auto polling_policy =
       bigtable::DefaultPollingPolicy(internal::kBigtableLimits);
   MetadataUpdatePolicy metadata_update_policy(
@@ -422,14 +411,14 @@ TEST_P(NoexAsyncLongrunningOpFutureTest, EndToEnd) {
   EXPECT_TRUE(cq_impl->empty());
   if (success) {
     ASSERT_STATUS_OK(res);
-    EXPECT_EQ("asdfgh", res->row_key());
+    EXPECT_EQ("test_response", res->row_key());
   } else {
     ASSERT_FALSE(res);
     EXPECT_EQ(StatusCode::kPermissionDenied, res.status().code());
   }
 }
 
-INSTANTIATE_TEST_SUITE_P(EndToEnd, NoexAsyncLongrunningOpFutureTest,
+INSTANTIATE_TEST_SUITE_P(EndToEnd, AsyncLongrunningOpFutureTest,
                          ::testing::Values(
                              // We succeeded to contact the service.
                              true,
@@ -471,7 +460,7 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
             [this](grpc::ClientContext*,
                    google::longrunning::GetOperationRequest const& request,
                    grpc::CompletionQueue*) {
-              EXPECT_EQ("qwerty", request.name());
+              EXPECT_EQ("test_operation_id", request.name());
               // This is safe, see comments in MockAsyncResponseReader.
               return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::longrunning::Operation>>(longrunning_reader_.get());
@@ -499,21 +488,28 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
 
 TEST_F(AsyncLongrunningOperationTest, Success) {
   google::longrunning::Operation op;
-  op.set_name("qwerty");
+  op.set_name("test_operation_id");
 
-  auto res = SimulateCall(OperationFinishedSuccessfully, op);
+  StatusOr<optional<StatusOr<SampleRowKeysResponse>>> res =
+      SimulateCall(OperationFinishedSuccessfully, op);
 
   ASSERT_STATUS_OK(res);
   ASSERT_TRUE(*res);
   ASSERT_STATUS_OK(**res);
-  EXPECT_EQ("asdfgh", (**res)->row_key());
+  EXPECT_EQ("test_response", (**res)->row_key());
 }
 
 TEST_F(AsyncLongrunningOperationTest, Unfinished) {
   google::longrunning::Operation op;
-  op.set_name("qwerty");
+  op.set_name("test_operation_id");
 
-  auto res = SimulateCall(OperationNotFinished, op);
+  StatusOr<optional<StatusOr<SampleRowKeysResponse>>> res = SimulateCall(
+      [](google::longrunning::Operation& response, grpc::Status& status) {
+        status = grpc::Status();
+        response.set_name("test_operation_id");
+        response.set_done(false);
+      },
+      op);
 
   ASSERT_STATUS_OK(res);
   ASSERT_FALSE(*res);
@@ -521,9 +517,20 @@ TEST_F(AsyncLongrunningOperationTest, Unfinished) {
 
 TEST_F(AsyncLongrunningOperationTest, FinishedFailure) {
   google::longrunning::Operation op;
-  op.set_name("qwerty");
+  op.set_name("test_operation_id");
 
-  auto res = SimulateCall(OperationFinishedWithError, op);
+  StatusOr<optional<StatusOr<SampleRowKeysResponse>>> res = SimulateCall(
+      [](google::longrunning::Operation& response, grpc::Status& status) {
+        status = grpc::Status();
+        response.set_name("test_operation_id");
+        response.set_done(true);
+        auto error =
+            google::cloud::internal::make_unique<google::rpc::Status>();
+        error->set_code(grpc::StatusCode::PERMISSION_DENIED);
+        error->set_message("something is broken");
+        response.set_allocated_error(error.release());
+      },
+      op);
 
   ASSERT_STATUS_OK(res);
   ASSERT_TRUE(*res);
@@ -533,9 +540,13 @@ TEST_F(AsyncLongrunningOperationTest, FinishedFailure) {
 
 TEST_F(AsyncLongrunningOperationTest, PollExhausted) {
   google::longrunning::Operation op;
-  op.set_name("qwerty");
+  op.set_name("test_operation_id");
 
-  auto res = SimulateCall(AttemptFailed, op);
+  StatusOr<optional<StatusOr<SampleRowKeysResponse>>> res = SimulateCall(
+      [](google::longrunning::Operation&, grpc::Status& status) {
+        status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "oh no");
+      },
+      op);
 
   ASSERT_FALSE(res);
   ASSERT_EQ(StatusCode::kUnavailable, res.status().code());
@@ -551,16 +562,15 @@ TEST_F(AsyncLongrunningOperationTest, ImmediateSuccess) {
       operation(client_, std::move(op));
   auto fut = operation(cq_, std::move(context_));
   EXPECT_TRUE(cq_impl_->empty());
-  auto res = fut.get();
+  StatusOr<optional<StatusOr<SampleRowKeysResponse>>> res = fut.get();
 
   ASSERT_STATUS_OK(res);
   ASSERT_TRUE(*res);
   ASSERT_STATUS_OK(**res);
-  EXPECT_EQ("asdfgh", (**res)->row_key());
+  EXPECT_EQ("test_response", (**res)->row_key());
 }
 
 }  // namespace
-}  // namespace noex
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
