@@ -491,6 +491,38 @@ void GetFamily(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   //! [get family] [END bigtable_get_family]
   (std::move(table));
 }
+
+void DeleteAllCells(google::cloud::bigtable::Table table, int argc,
+                    char* argv[]) {
+  if (argc != 1) {
+    throw Usage{"get-family: <project-id> <instance-id> <table-id>"};
+  }
+
+  //! [delete all cells] [START bigtable_delete_all_cells]
+  [](google::cloud::bigtable::Table table) {
+    auto range = google::cloud::bigtable::RowRange::InfiniteRange();
+
+    // Filter the results, only get the latest value
+    auto filter = google::cloud::bigtable::Filter::Latest(1);
+
+    for (auto const& row : table.ReadRows(range, filter)) {
+      if (!row) {
+        throw std::runtime_error(row.status().message());
+      }
+
+      std::string row_key = row->row_key();
+      auto status = table.Apply(google::cloud::bigtable::SingleRowMutation(
+          row_key, google::cloud::bigtable::DeleteFromRow()));
+
+      if (!status.ok()) {
+        throw std::runtime_error(status.message());
+      }
+      break;
+    }
+  }
+  //! [delete all cells] [END bigtable_delete_all_cells]
+  (std::move(table));
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -511,7 +543,7 @@ int main(int argc, char* argv[]) try {
       {"sample-rows", &SampleRows},
       {"sample-rows-collections", &SampleRowsCollections},
       {"get-family", &GetFamily},
-  };
+      {"delete-all-cells", &DeleteAllCells}};
 
   {
     // Force each command to generate its Usage string, so we can provide a good
