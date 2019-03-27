@@ -169,7 +169,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Asynchronously apply mutation. </p>
-<p>The mutation will most likely be batched together with others to optimize for throughput. As a result, latency is likely to be worse than <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a0a5fc541ea2468fe6c1945be8f975f72" title="Makes asycronous attempts to apply the mutation to a row. ">Table::AsyncApply</a></code>.</p>
+<p>The mutation will most likely be batched together with others to optimize for throughput. As a result, latency is likely to be worse than <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a0a5fc541ea2468fe6c1945be8f975f72" title="Makes asynchronous attempts to apply the mutation to a row. ">Table::AsyncApply</a></code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">mut</td><td>the mutation. Note that this function takes ownership (and then discards) the data in the mutation. In general, a <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html" title="Represent a single row mutation. ">SingleRowMutation</a></code> can be used to modify and/or delete multiple cells, across different columns and column families. </td></tr>

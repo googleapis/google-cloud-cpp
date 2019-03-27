@@ -392,6 +392,7 @@ template&lt;typename... Policies&gt; </div>
 </div><div class="memdoc">
 
 <p>Query (asynchronously) the list of clusters in a project. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This is an early version of the asynchronous APIs for Cloud Bigtable. These APIs might be changed in backward-incompatible ways. It is not subject to any SLA or deprecation policy.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>In some circumstances Cloud Bigtable may be unable to obtain the full list of clusters, typically because some transient failure has made specific zones unavailable. In this cases the service returns a separate list of <code>failed_locations</code> that represent the unavailable zones. Applications may want to retry the operation after the transient conditions have cleared.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -465,6 +466,7 @@ template&lt;typename... Policies&gt; </div>
 </div><div class="memdoc">
 
 <p>Query (asynchronously) the list of instances in the project. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This is an early version of the asynchronous APIs for Cloud Bigtable. These APIs might be changed in backward-incompatible ways. It is not subject to any SLA or deprecation policy.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>In some circumstances Cloud Bigtable may be unable to obtain the full list of instances, typically because some transient failure has made specific zones unavailable. In this cases the service returns a separate list of <code>failed_locations</code> that represent the unavailable zones. Applications may want to retry the operation after the transient conditions have cleared.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

@@ -134,9 +134,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad42381459dacf2f570de738430a33b68"><td class="memItemLeft" align="right" valign="top">Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#ad42381459dacf2f570de738430a33b68">DropAllRows</a> (std::string const &amp;table_id)</td></tr>
 <tr class="memdesc:ad42381459dacf2f570de738430a33b68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all the rows in a table.  <a href="#ad42381459dacf2f570de738430a33b68">More...</a><br /></td></tr>
 <tr class="separator:ad42381459dacf2f570de738430a33b68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21b7576179feae954a8b60f415f759d3"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::vector&lt;::google::bigtable::admin::v2::Snapshot &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a21b7576179feae954a8b60f415f759d3">ListSnapshots</a> (bigtable::ClusterId const &amp;cluster_id=bigtable::ClusterId(&quot;-&quot;))</td></tr>
-<tr class="memdesc:a21b7576179feae954a8b60f415f759d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">List snapshots in the given instance.  <a href="#a21b7576179feae954a8b60f415f759d3">More...</a><br /></td></tr>
-<tr class="separator:a21b7576179feae954a8b60f415f759d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c2380e03d58c6c4865e88b0b402cbcd"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a0c2380e03d58c6c4865e88b0b402cbcd">TableName</a> (std::string const &amp;table_id) const</td></tr>
 <tr class="memdesc:a0c2380e03d58c6c4865e88b0b402cbcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the fully qualified name of a table in this object's instance.  <a href="#a0c2380e03d58c6c4865e88b0b402cbcd">More...</a><br /></td></tr>
 <tr class="separator:a0c2380e03d58c6c4865e88b0b402cbcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -161,6 +158,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a331630fc76951acae9d6e9dc94bf188a"><td class="memItemLeft" align="right" valign="top">std::future&lt; StatusOr&lt; google::bigtable::admin::v2::Table &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a331630fc76951acae9d6e9dc94bf188a">CreateTableFromSnapshot</a> (bigtable::ClusterId const &amp;cluster_id, bigtable::SnapshotId const &amp;snapshot_id, std::string table_id)</td></tr>
 <tr class="memdesc:a331630fc76951acae9d6e9dc94bf188a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create table from snapshot.  <a href="#a331630fc76951acae9d6e9dc94bf188a">More...</a><br /></td></tr>
 <tr class="separator:a331630fc76951acae9d6e9dc94bf188a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21b7576179feae954a8b60f415f759d3"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::vector&lt;::google::bigtable::admin::v2::Snapshot &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a21b7576179feae954a8b60f415f759d3">ListSnapshots</a> (bigtable::ClusterId const &amp;cluster_id=bigtable::ClusterId(&quot;-&quot;))</td></tr>
+<tr class="memdesc:a21b7576179feae954a8b60f415f759d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">List snapshots in the given instance.  <a href="#a21b7576179feae954a8b60f415f759d3">More...</a><br /></td></tr>
+<tr class="separator:a21b7576179feae954a8b60f415f759d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the API to administer tables in a Cloud Bigtable instance. </p>
@@ -390,6 +390,7 @@ template&lt;typename... Policies&gt; </div>
 </div><div class="memdoc">
 
 <p>Start a request to asynchronously delete a table. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This is an early version of the asynchronous APIs for Cloud Bigtable. These APIs might be changed in backward-incompatible ways. It is not subject to any SLA or deprecation policy.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">cq</td><td>the completion queue that will execute the asynchronous calls, the application must ensure that one or more threads are blocked on <code>cq.Run()</code>. </td></tr>
@@ -532,7 +533,7 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a Cluster. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00459">459</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00469">469</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -961,6 +962,7 @@ template&lt;typename... Policies&gt; </div>
 </div><div class="memdoc">
 
 <p>List snapshots in the given instance. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This is a private alpha release of Cloud Bigtable snapshots. This feature is not currently available to most Cloud Bigtable customers. This feature might be changed in backward-incompatible ways and is not recommended for production use. It is not subject to any SLA or deprecation policy.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">cluster_id</td><td>the name of the cluster for which snapshots should be listed. </td></tr>
@@ -1138,7 +1140,7 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a snapshot. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00452">452</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00462">462</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -1223,7 +1225,7 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a table in this object's instance. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00447">447</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00457">457</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -1278,7 +1280,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string table_id_param) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#ac33187c954cf3e096931b5e805c5e24a">google::cloud::bigtable::TableId</a> table_id(table_id_param);</div><div class="line">    <span class="keyword">auto</span> consistency_token(admin.GenerateConsistencyToken(table_id.get()));</div><div class="line">    <span class="keywordflow">if</span> (!consistency_token) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(consistency_token.status().message());</div><div class="line">    }</div><div class="line">    <span class="keyword">auto</span> result = admin.WaitForConsistencyCheck(table_id, *consistency_token);</div><div class="line">    <span class="keywordflow">if</span> (result.get()) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Table is consistent\n&quot;</span>;</div><div class="line">    } <span class="keywordflow">else</span> {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Table is not consistent\n&quot;</span>;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00314">314</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00318">318</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
