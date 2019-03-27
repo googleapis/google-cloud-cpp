@@ -30,6 +30,8 @@ class TableAdmin;
 namespace internal {
 class AsyncAwaitConsistency;
 class AsyncCheckConsistency;
+template <typename Client, typename Response>
+class AsyncLongrunningOperation;
 }  // namespace internal
 namespace noex {
 class TableAdmin;
@@ -94,6 +96,8 @@ class AdminClient {
       MetadataUpdatePolicy metadata_update_policy,
       google::longrunning::Operation& operation, char const* error_message,
       grpc::Status& status);
+  template <typename Client, typename Response>
+  friend class internal::AsyncLongrunningOperation;
   //@{
   /// @name The `google.bigtable.admin.v2.TableAdmin` operations.
   virtual grpc::Status CreateTable(
