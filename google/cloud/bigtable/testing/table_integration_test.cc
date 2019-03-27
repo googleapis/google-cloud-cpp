@@ -110,9 +110,9 @@ void TableIntegrationTest::SetUp() {
       TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
       ClientOptions());
 
-  // We cannot use `DropAllRows()` to cleanup the table because the integration
-  // tests against production sometimes use all the "'DropRowRangeGroup' and
-  // limit 'USER-100s'" quota. Instead we delete the rows by using a
+  // In production, we cannot use `DropAllRows()` to cleanup the table because
+  // the integration tests sometimes use all the "'DropRowRangeGroup'" quota.
+  // Instead we delete the rows, when possible, using BulkApply().
   BulkMutation bulk;
   auto table = GetTable();
   // Bigtable does not support more than 100,000 mutations in a BulkMutation,
