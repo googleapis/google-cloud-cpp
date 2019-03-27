@@ -143,7 +143,7 @@ endif ()
 if (protobuf_DEBUG)
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
                    "ProtobufTargets_FOUND = ${ProtobufTargets_FOUND}"
-                   "ProtobufTargets_VERSION = ${ProtobufTargets_VERSION}")
+                   " ProtobufTargets_VERSION = ${ProtobufTargets_VERSION}")
 endif ()
 
 # We also should try to find the protobuf C++ plugin for the protocol buffers
