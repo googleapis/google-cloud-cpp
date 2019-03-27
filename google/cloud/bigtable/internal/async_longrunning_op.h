@@ -185,6 +185,114 @@ class AsyncPollLongrunningOp
                                                  std::move(operation))) {}
 };
 
+/**
+ * The operation passed to StartAsyncPollOp to implement longrunning operations.
+ */
+template <typename Client, typename Response>
+class AsyncLongrunningOperation {
+ public:
+  AsyncLongrunningOperation(std::shared_ptr<Client> client,
+                            google::longrunning::Operation operation)
+      : client_(std::move(client)), operation_(std::move(operation)) {}
+
+  AsyncLongrunningOperation(AsyncLongrunningOperation const&) = delete;
+  AsyncLongrunningOperation(AsyncLongrunningOperation&&) = default;
+
+  // The semantics of the value returned by the future is as follows:
+  // - outer status is the attempt's status (e.g. couldn't reach CBT)
+  // - the option is empty if the poll has not finished
+  // - the inner StatusOr is the overall result of the longrunning operation
+  future<StatusOr<optional<StatusOr<Response>>>> operator()(
+      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context) {
+    if (operation_.done()) {
+      // The operation supplied in the ctor can be already completed. In such a
+      // case, we shouldn't send the RPC - we already have the response.
+      return make_ready_future<StatusOr<optional<StatusOr<Response>>>>(
+          FinalResult());
+    }
+    google::longrunning::GetOperationRequest request;
+    request.set_name(operation_.name());
+    return cq
+        .MakeUnaryRpc(
+            [this](grpc::ClientContext* context,
+                   google::longrunning::GetOperationRequest const& request,
+                   grpc::CompletionQueue* cq) {
+              return client_->AsyncGetOperation(context, request, cq);
+            },
+            std::move(request), std::move(context))
+        .then([this](future<StatusOr<google::longrunning::Operation>> fut)
+                  -> StatusOr<optional<StatusOr<Response>>> {
+          auto res = fut.get();
+          if (!res) {
+            return res.status();
+          }
+          operation_.Swap(&(*res));
+          if (!operation_.done()) {
+            return optional<StatusOr<Response>>();
+          }
+          return FinalResult();
+        });
+  }
+
+ private:
+  StatusOr<optional<StatusOr<Response>>> FinalResult() {
+    if (operation_.has_error()) {
+      return optional<StatusOr<Response>>(
+          Status(static_cast<StatusCode>(operation_.error().code()),
+                 operation_.error().message()));
+    } else {
+      Response res;
+      if (!operation_.response().UnpackTo(&res)) {
+        return optional<StatusOr<Response>>(
+            Status(StatusCode::kInternal,
+                   "Longrunning operation's result didn't parse."));
+      }
+      return optional<StatusOr<Response>>(std::move(res));
+    }
+  }
+
+  std::shared_ptr<Client> client_;
+  google::longrunning::Operation operation_;
+};
+
+/**
+ * Poll until a longrunning operation is complete or polling policy exhausted.
+ *
+ * @param location typically the name of the function that created this
+ *     asynchronous retry loop.
+ * @param polling_policy controls how often the server is queried
+ * @param metadata_update_policy controls how to update the metadata fields in
+ *     the request.
+ * @param client the client on which AsyncGetOperation is executed to get the
+ *     status of the longrunning operation
+ * @param cq the completion queue where the retry loop is executed.
+ * @param operation the initial state of the operation; it might already be
+ *     finished, in which case the returned future will be already satisfied.
+ *
+ * @return a future which is satisfied when either (a) the longrunning operation
+ *     completed, (b) there is a permanent error contacting the service or (c)
+ *     polling was stopped because `polling_policy` was exhausted.
+ */
+template <typename Client, typename Response>
+future<StatusOr<Response>> StartAsyncLongrunningOp(
+    char const* location, std::unique_ptr<PollingPolicy> polling_policy,
+    MetadataUpdatePolicy metadata_update_policy, std::shared_ptr<Client> client,
+    CompletionQueue cq, google::longrunning::Operation operation) {
+  return StartAsyncPollOp(location, std::move(polling_policy),
+                          std::move(metadata_update_policy), std::move(cq),
+                          AsyncLongrunningOperation<Client, Response>(
+                              std::move(client), std::move(operation)))
+      .then([](future<StatusOr<StatusOr<Response>>> fut) -> StatusOr<Response> {
+        auto res = fut.get();
+        if (!res) {
+          // failed to get status about the longrunning opertaion
+          return res.status();
+        }
+        // longrunning operation finished
+        return *std::move(res);
+      });
+}
+
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
