@@ -1756,7 +1756,7 @@ class Client {
    * This is a read-only operation and is always idempotent.
    *
    * @par Example
-   * @snippet storage_object_acl_samples.cc get object acl
+   * @snippet storage_object_acl_samples.cc print file acl for user
    *
    * @see https://cloud.google.com/storage/docs/access-control/lists#scopes for
    *     the format of the @p entity parameters.
