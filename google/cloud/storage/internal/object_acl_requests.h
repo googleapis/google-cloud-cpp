@@ -47,7 +47,7 @@ std::ostream& operator<<(std::ostream& os, ListObjectAclRequest const& r);
 /// Represents a response to the `ObjectAccessControls: list` API.
 struct ListObjectAclResponse {
   static StatusOr<ListObjectAclResponse> FromHttpResponse(
-      HttpResponse&& response);
+      const std::string& payload);
 
   std::vector<ObjectAccessControl> items;
 };

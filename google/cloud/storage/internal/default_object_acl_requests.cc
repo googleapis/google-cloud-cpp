@@ -30,8 +30,8 @@ std::ostream& operator<<(std::ostream& os,
 }
 
 StatusOr<ListDefaultObjectAclResponse>
-ListDefaultObjectAclResponse::FromHttpResponse(HttpResponse&& response) {
-  auto json = nl::json::parse(response.payload, nullptr, false);
+ListDefaultObjectAclResponse::FromHttpResponse(std::string const& payload) {
+  auto json = nl::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }

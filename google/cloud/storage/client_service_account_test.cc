@@ -99,10 +99,7 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccountPermanentFailure) {
 TEST_F(ServiceAccountTest, CreateHmacKey) {
   internal::CreateHmacKeyResponse expected =
       internal::CreateHmacKeyResponse::FromHttpResponse(
-          internal::HttpResponse{
-              200,
-              R"""({"secretKey": "dGVzdC1zZWNyZXQ=", "resource": {}})""",
-              {}})
+          R"""({"secretKey": "dGVzdC1zZWNyZXQ=", "resource": {}})""")
           .value();
 
   EXPECT_CALL(*mock, CreateHmacKey(_))

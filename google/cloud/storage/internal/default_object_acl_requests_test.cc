@@ -49,9 +49,7 @@ TEST(DefaultObjectAclRequestTest, ListResponse) {
           "role": "READER"
       }]})""";
 
-  auto actual = ListDefaultObjectAclResponse::FromHttpResponse(
-                    HttpResponse{200, text, {}})
-                    .value();
+  auto actual = ListDefaultObjectAclResponse::FromHttpResponse(text).value();
   ASSERT_EQ(2UL, actual.items.size());
   EXPECT_EQ("user-test-user-1", actual.items.at(0).entity());
   EXPECT_EQ("OWNER", actual.items.at(0).role());
@@ -71,8 +69,7 @@ TEST(DefaultObjectAclRequestTest, ListResponseFailure) {
   std::string text = R"""({123)""";
 
   StatusOr<ListDefaultObjectAclResponse> actual =
-      ListDefaultObjectAclResponse::FromHttpResponse(
-          HttpResponse{200, text, {}});
+      ListDefaultObjectAclResponse::FromHttpResponse(text);
   EXPECT_FALSE(actual.ok());
 }
 
@@ -80,8 +77,7 @@ TEST(DefaultObjectAclRequestTest, ListResponseParseFailureElements) {
   std::string text = R"""({"items": ["invalid-item"]})""";
 
   StatusOr<ListDefaultObjectAclResponse> actual =
-      ListDefaultObjectAclResponse::FromHttpResponse(
-          HttpResponse{200, text, {}});
+      ListDefaultObjectAclResponse::FromHttpResponse(text);
   EXPECT_FALSE(actual.ok());
 }
 

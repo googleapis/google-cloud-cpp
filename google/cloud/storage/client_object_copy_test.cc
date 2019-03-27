@@ -211,8 +211,7 @@ TEST_F(ObjectCopyTest, RewriteObject) {
             "done": false,
             "rewriteToken": "abcd-test-token-0"
         })""";
-        return internal::RewriteObjectResponse::FromHttpResponse(
-            internal::HttpResponse{200, response, {}});
+        return internal::RewriteObjectResponse::FromHttpResponse(response);
       }))
       .WillOnce(Invoke([](internal::RewriteObjectRequest const& r) {
         EXPECT_EQ("test-source-bucket-name", r.source_bucket());
@@ -228,8 +227,7 @@ TEST_F(ObjectCopyTest, RewriteObject) {
             "done": false,
             "rewriteToken": "abcd-test-token-2"
         })""";
-        return internal::RewriteObjectResponse::FromHttpResponse(
-            internal::HttpResponse{200, response, {}});
+        return internal::RewriteObjectResponse::FromHttpResponse(response);
       }))
       .WillOnce(Invoke([](internal::RewriteObjectRequest const& r) {
         EXPECT_EQ("test-source-bucket-name", r.source_bucket());
@@ -249,8 +247,7 @@ TEST_F(ObjectCopyTest, RewriteObject) {
                "name": "test-destination-object-name"
             }
         })""";
-        return internal::RewriteObjectResponse::FromHttpResponse(
-            internal::HttpResponse{200, response, {}});
+        return internal::RewriteObjectResponse::FromHttpResponse(response);
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};

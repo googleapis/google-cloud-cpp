@@ -66,7 +66,7 @@ std::ostream& operator<<(std::ostream& os, ListBucketsRequest const& r);
 
 struct ListBucketsResponse {
   static StatusOr<ListBucketsResponse> FromHttpResponse(
-      HttpResponse&& response);
+      const std::string& payload);
 
   std::string next_page_token;
   std::vector<BucketMetadata> items;
@@ -263,7 +263,7 @@ std::ostream& operator<<(std::ostream& os,
 
 struct TestBucketIamPermissionsResponse {
   static StatusOr<TestBucketIamPermissionsResponse> FromHttpResponse(
-      HttpResponse const& response);
+      std::string const& payload);
 
   std::vector<std::string> permissions;
 };

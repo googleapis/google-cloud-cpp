@@ -51,7 +51,7 @@ std::ostream& operator<<(std::ostream& os, ListBucketAclRequest const& r);
 /// Represents a response to the `BucketAccessControl: list` API.
 struct ListBucketAclResponse {
   static StatusOr<ListBucketAclResponse> FromHttpResponse(
-      HttpResponse&& response);
+      const std::string& payload);
 
   std::vector<BucketAccessControl> items;
 };

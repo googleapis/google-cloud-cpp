@@ -59,9 +59,8 @@ std::ostream& operator<<(std::ostream& os, CreateHmacKeyRequest const& r) {
 }
 
 StatusOr<CreateHmacKeyResponse> CreateHmacKeyResponse::FromHttpResponse(
-    HttpResponse const& response) {
-  auto json =
-      storage::internal::nl::json::parse(response.payload, nullptr, false);
+    std::string const& payload) {
+  auto json = storage::internal::nl::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
@@ -92,9 +91,8 @@ std::ostream& operator<<(std::ostream& os, ListHmacKeysRequest const& r) {
 }
 
 StatusOr<ListHmacKeysResponse> ListHmacKeysResponse::FromHttpResponse(
-    HttpResponse const& response) {
-  auto json =
-      storage::internal::nl::json::parse(response.payload, nullptr, false);
+    std::string const& payload) {
+  auto json = storage::internal::nl::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
