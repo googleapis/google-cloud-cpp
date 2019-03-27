@@ -227,6 +227,10 @@ class TableAdmin {
   /**
    * Start a request to asynchronously delete a table.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
@@ -429,10 +433,15 @@ class TableAdmin {
                           bigtable::SnapshotId const& snapshot_id,
                           std::string table_id);
 
-  //@}
-
   /**
    * List snapshots in the given instance.
+   *
+   * @warning This is a private alpha release of Cloud Bigtable snapshots. This
+   * feature is not currently available to most Cloud Bigtable customers. This
+   * feature might be changed in backward-incompatible ways and is not
+   * recommended for production use. It is not subject to any SLA or deprecation
+   * policy.
+   *
    * @param cluster_id the name of the cluster for which snapshots should be
    * listed.
    * @return vector containing the snapshots for the given cluster.
@@ -442,6 +451,7 @@ class TableAdmin {
    */
   StatusOr<std::vector<::google::bigtable::admin::v2::Snapshot>> ListSnapshots(
       bigtable::ClusterId const& cluster_id = bigtable::ClusterId("-"));
+  //@}
 
   /// Return the fully qualified name of a table in this object's instance.
   std::string TableName(std::string const& table_id) const {

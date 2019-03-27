@@ -104,8 +104,6 @@ if (NOT TARGET googleapis_project)
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                    -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
                    -DCMAKE_SKIP_INSTALL_RPATH=ON
-                   -DgRPC_DEBUG=ON
-                   -Dprotobuf_DEBUG=ON
                    -DGOOGLE_CLOUD_CPP_USE_LIBCXX=${GOOGLE_CLOUD_CPP_USE_LIBCXX}
                    ${_googleapis_toolchain_flag}
                    ${_googleapis_triplet_flag}
@@ -115,9 +113,9 @@ if (NOT TARGET googleapis_project)
                       ${PARALLEL}
         BUILD_BYPRODUCTS ${googleapis_byproducts}
         LOG_DOWNLOAD ON
-        LOG_CONFIGURE OFF
-        LOG_BUILD OFF
-        LOG_INSTALL OFF)
+        LOG_CONFIGURE ON
+        LOG_BUILD ON
+        LOG_INSTALL ON)
 
     unset(_googleapis_toolchain_flag)
     unset(_googleapis_triplet_flag)

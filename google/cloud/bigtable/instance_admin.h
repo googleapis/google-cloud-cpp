@@ -174,6 +174,10 @@ class InstanceAdmin {
   /**
    * Query (asynchronously) the list of instances in the project.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
    * @note In some circumstances Cloud Bigtable may be unable to obtain the full
    *   list of instances, typically because some transient failure has made
    *   specific zones unavailable. In this cases the service returns a separate
@@ -272,6 +276,10 @@ class InstanceAdmin {
 
   /**
    * Query (asynchronously) the list of clusters in a project.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
    *
    * @note In some circumstances Cloud Bigtable may be unable to obtain the full
    *   list of clusters, typically because some transient failure has made

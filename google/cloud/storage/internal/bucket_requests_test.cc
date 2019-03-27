@@ -133,9 +133,7 @@ TEST(ListBucketsResponseTest, Parse) {
   auto b1 = internal::BucketMetadataParser::FromString(bucket1).value();
   auto b2 = internal::BucketMetadataParser::FromString(bucket2).value();
 
-  auto actual =
-      ListBucketsResponse::FromHttpResponse(HttpResponse{200, text, {}})
-          .value();
+  auto actual = ListBucketsResponse::FromHttpResponse(text).value();
   EXPECT_EQ("some-token-42", actual.next_page_token);
   EXPECT_THAT(actual.items, ::testing::ElementsAre(b1, b2));
 }
@@ -143,15 +141,14 @@ TEST(ListBucketsResponseTest, Parse) {
 TEST(ListBucketsResponseTest, ParseFailure) {
   std::string text("{123");
   StatusOr<ListBucketsResponse> actual =
-      ListBucketsResponse::FromHttpResponse(HttpResponse{200, text, {}});
+      ListBucketsResponse::FromHttpResponse(text);
   EXPECT_FALSE(actual.ok());
 }
 
 TEST(ListBucketsResponseTest, ParseFailureInItems) {
   std::string text = R"""({"items": [ "invalid-item" ]})""";
 
-  auto actual =
-      ListBucketsResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  auto actual = ListBucketsResponse::FromHttpResponse(text);
   EXPECT_FALSE(actual.ok());
 }
 
@@ -881,9 +878,8 @@ TEST(BucketRequestsTest, TestIamPermissionsResponse) {
           "storage.objects.update"
       ]})""";
 
-  auto actual = TestBucketIamPermissionsResponse::FromHttpResponse(
-                    HttpResponse{200, text, {}})
-                    .value();
+  auto actual =
+      TestBucketIamPermissionsResponse::FromHttpResponse(text).value();
   EXPECT_THAT(actual.permissions,
               ElementsAre("storage.buckets.get", "storage.buckets.setIamPolicy",
                           "storage.objects.update"));
@@ -899,17 +895,15 @@ TEST(BucketRequestsTest, TestIamPermissionsResponse) {
 TEST(ListBucketsResponseTest, TestIamPermissionsResponseParseFailure) {
   std::string text("{123");
   StatusOr<TestBucketIamPermissionsResponse> actual =
-      TestBucketIamPermissionsResponse::FromHttpResponse(
-          HttpResponse{200, text, {}});
+      TestBucketIamPermissionsResponse::FromHttpResponse(text);
   EXPECT_FALSE(actual.ok());
 }
 
 TEST(BucketRequestsTest, TestIamPermissionsResponseEmpty) {
   std::string text = R"""({})""";
 
-  auto actual = TestBucketIamPermissionsResponse::FromHttpResponse(
-                    HttpResponse{200, text, {}})
-                    .value();
+  auto actual =
+      TestBucketIamPermissionsResponse::FromHttpResponse(text).value();
   EXPECT_TRUE(actual.permissions.empty());
 }
 

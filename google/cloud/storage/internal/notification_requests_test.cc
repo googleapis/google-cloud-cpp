@@ -100,9 +100,7 @@ TEST(NotificationRequestTest, ListResponse) {
           "topic": "test-topic-2"
       }]})""";
 
-  auto actual =
-      ListNotificationsResponse::FromHttpResponse(HttpResponse{200, text, {}})
-          .value();
+  auto actual = ListNotificationsResponse::FromHttpResponse(text).value();
   ASSERT_EQ(2UL, actual.items.size());
   EXPECT_EQ("test-notification-id-1", actual.items.at(0).id());
   EXPECT_EQ("test-topic-1", actual.items.at(0).topic());
@@ -122,7 +120,7 @@ TEST(NotificationRequestTest, ListResponseParseFailure) {
   std::string text = R"""({123)""";
 
   StatusOr<ListNotificationsResponse> actual =
-      ListNotificationsResponse::FromHttpResponse(HttpResponse{200, text, {}});
+      ListNotificationsResponse::FromHttpResponse(text);
   EXPECT_FALSE(actual.ok());
 }
 
@@ -134,7 +132,7 @@ TEST(NotificationRequestTest, ListResponseParseFailureListElements) {
       }, "invalid-element"]})""";
 
   StatusOr<ListNotificationsResponse> actual =
-      ListNotificationsResponse::FromHttpResponse(HttpResponse{200, text, {}});
+      ListNotificationsResponse::FromHttpResponse(text);
   EXPECT_FALSE(actual.ok());
 }
 

@@ -76,7 +76,7 @@ std::ostream& operator<<(std::ostream& os, ListObjectsRequest const& r);
 
 struct ListObjectsResponse {
   static StatusOr<ListObjectsResponse> FromHttpResponse(
-      HttpResponse&& response);
+      std::string const& payload);
 
   std::string next_page_token;
   std::vector<ObjectMetadata> items;
@@ -351,7 +351,7 @@ std::ostream& operator<<(std::ostream& os, RewriteObjectRequest const& r);
 /// Holds an `Objects: rewrite` response.
 struct RewriteObjectResponse {
   static StatusOr<RewriteObjectResponse> FromHttpResponse(
-      HttpResponse const& response);
+      std::string const& payload);
 
   std::uint64_t total_bytes_rewritten;
   std::uint64_t object_size;

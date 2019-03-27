@@ -74,9 +74,7 @@ TEST(HmacKeyRequestsTest, ParseCreateResponse) {
 
   std::string const text = json_object.dump();
 
-  auto actual =
-      CreateHmacKeyResponse::FromHttpResponse(HttpResponse{200, text, {}})
-          .value();
+  auto actual = CreateHmacKeyResponse::FromHttpResponse(text).value();
   EXPECT_EQ("dGVzdC1zZWNyZXQ=", actual.secret);
   auto expected_resource =
       HmacKeyMetadataParser::FromString(resource_text).value();
@@ -86,16 +84,14 @@ TEST(HmacKeyRequestsTest, ParseCreateResponse) {
 TEST(HmacKeyRequestsTest, ParseCreateResponseFailure) {
   std::string text = R"""({123)""";
 
-  auto actual =
-      CreateHmacKeyResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  auto actual = CreateHmacKeyResponse::FromHttpResponse(text);
   EXPECT_FALSE(actual.ok());
 }
 
 TEST(HmacKeyRequestsTest, ParseCreateResponseFailureInResource) {
   std::string text = R"""({"metadata": "invalid-metadata" })""";
 
-  auto actual =
-      CreateHmacKeyResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  auto actual = CreateHmacKeyResponse::FromHttpResponse(text);
   EXPECT_FALSE(actual.ok());
 }
 
@@ -107,9 +103,7 @@ TEST(HmacKeyRequestsTest, CreateResponseIOStream) {
       }
 })""";
 
-  auto parsed =
-      CreateHmacKeyResponse::FromHttpResponse(HttpResponse{200, text, {}})
-          .value();
+  auto parsed = CreateHmacKeyResponse::FromHttpResponse(text).value();
 
   std::ostringstream os;
   os << parsed;
@@ -166,9 +160,7 @@ TEST(HmacKeysRequestsTest, ParseListResponse) {
   auto key1 = internal::HmacKeyMetadataParser::FromString(key1_text).value();
   auto key2 = internal::HmacKeyMetadataParser::FromString(key2_text).value();
 
-  auto actual =
-      ListHmacKeysResponse::FromHttpResponse(HttpResponse{200, text, {}})
-          .value();
+  auto actual = ListHmacKeysResponse::FromHttpResponse(text).value();
   EXPECT_EQ("some-token-42", actual.next_page_token);
   EXPECT_THAT(actual.items, ::testing::ElementsAre(key1, key2));
 }
@@ -176,16 +168,14 @@ TEST(HmacKeysRequestsTest, ParseListResponse) {
 TEST(HmacKeysRequestsTest, ParseListResponseFailure) {
   std::string text = R"""({123)""";
 
-  auto actual =
-      ListHmacKeysResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  auto actual = ListHmacKeysResponse::FromHttpResponse(text);
   EXPECT_FALSE(actual.ok());
 }
 
 TEST(HmacKeysRequestsTest, ParseListResponseFailureInItems) {
   std::string text = R"""({"items": [ "invalid-item" ]})""";
 
-  auto actual =
-      ListHmacKeysResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  auto actual = ListHmacKeysResponse::FromHttpResponse(text);
   EXPECT_FALSE(actual.ok());
 }
 
@@ -199,9 +189,7 @@ TEST(HmacKeysRequestsTest, ListResponseOStream) {
       ]
 })""";
 
-  auto parsed =
-      ListHmacKeysResponse::FromHttpResponse(HttpResponse{200, text, {}})
-          .value();
+  auto parsed = ListHmacKeysResponse::FromHttpResponse(text).value();
   std::ostringstream os;
   os << parsed;
   auto actual = os.str();

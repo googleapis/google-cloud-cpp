@@ -206,7 +206,11 @@ class Table {
   Status Apply(SingleRowMutation mut);
 
   /**
-   * Makes asycronous attempts to apply the mutation to a row.
+   * Makes asynchronous attempts to apply the mutation to a row.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
    *
    * @param mut the mutation. Note that this function takes ownership
    * (and then discards) the data in the mutation.  In general, a
@@ -237,7 +241,11 @@ class Table {
   std::vector<FailedMutation> BulkApply(BulkMutation mut);
 
   /**
-   * Makes asyncronous attempts to apply mutations to multiple rows.
+   * Makes asynchronous attempts to apply mutations to multiple rows.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
    *
    * @param mut the mutations, note that this function takes
    *     ownership (and then discards) the data in the mutation. In general, a

@@ -48,9 +48,7 @@ TEST(BucketAclRequestTest, ListResponse) {
           "role": "READER"
       }]})""";
 
-  auto actual =
-      ListBucketAclResponse::FromHttpResponse(HttpResponse{200, text, {}})
-          .value();
+  auto actual = ListBucketAclResponse::FromHttpResponse(text).value();
   ASSERT_EQ(2UL, actual.items.size());
   EXPECT_EQ("user-test-user-1", actual.items.at(0).entity());
   EXPECT_EQ("OWNER", actual.items.at(0).role());
@@ -70,7 +68,7 @@ TEST(BucketAclRequestTest, ListResponseParseFailure) {
   std::string text = "{123";
 
   StatusOr<ListBucketAclResponse> actual =
-      ListBucketAclResponse::FromHttpResponse(HttpResponse{200, text, {}});
+      ListBucketAclResponse::FromHttpResponse(text);
   EXPECT_FALSE(actual.ok());
 }
 
@@ -78,7 +76,7 @@ TEST(BucketAclRequestTest, ListResponseParseFailureElements) {
   std::string text = R"""({"items": ["invalid-item"]})""";
 
   StatusOr<ListBucketAclResponse> actual =
-      ListBucketAclResponse::FromHttpResponse(HttpResponse{200, text, {}});
+      ListBucketAclResponse::FromHttpResponse(text);
   EXPECT_FALSE(actual.ok());
 }
 

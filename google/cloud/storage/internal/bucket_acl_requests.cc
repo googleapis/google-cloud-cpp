@@ -47,9 +47,9 @@ std::ostream& operator<<(std::ostream& os, ListBucketAclRequest const& r) {
 }
 
 StatusOr<ListBucketAclResponse> ListBucketAclResponse::FromHttpResponse(
-    HttpResponse&& response) {
+    std::string const& payload) {
   ListBucketAclResponse result;
-  auto json = nl::json::parse(response.payload, nullptr, false);
+  auto json = nl::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }

@@ -111,9 +111,7 @@ TEST(ObjectRequestsTest, ParseListResponse) {
   auto o1 = internal::ObjectMetadataParser::FromString(object1).value();
   auto o2 = internal::ObjectMetadataParser::FromString(object2).value();
 
-  auto actual =
-      ListObjectsResponse::FromHttpResponse(HttpResponse{200, text, {}})
-          .value();
+  auto actual = ListObjectsResponse::FromHttpResponse(text).value();
   EXPECT_EQ("some-token-42", actual.next_page_token);
   EXPECT_THAT(actual.items, ::testing::ElementsAre(o1, o2));
 }
@@ -121,16 +119,14 @@ TEST(ObjectRequestsTest, ParseListResponse) {
 TEST(ObjectRequestsTest, ParseListResponseFailure) {
   std::string text = R"""({123)""";
 
-  auto actual =
-      ListObjectsResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  auto actual = ListObjectsResponse::FromHttpResponse(text);
   EXPECT_FALSE(actual.ok());
 }
 
 TEST(ObjectRequestsTest, ParseListResponseFailureInItems) {
   std::string text = R"""({"items": [ "invalid-item" ]})""";
 
-  auto actual =
-      ListObjectsResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  auto actual = ListObjectsResponse::FromHttpResponse(text);
   EXPECT_FALSE(actual.ok());
 }
 
@@ -395,9 +391,7 @@ TEST(ObjectRequestsTest, RewriteObjectResponse) {
   auto expected_resource =
       internal::ObjectMetadataParser::FromString(object1).value();
 
-  auto actual =
-      RewriteObjectResponse::FromHttpResponse(HttpResponse{200, text, {}})
-          .value();
+  auto actual = RewriteObjectResponse::FromHttpResponse(text).value();
   EXPECT_EQ(7U, actual.total_bytes_rewritten);
   EXPECT_EQ(42U, actual.object_size);
   EXPECT_FALSE(actual.done);
@@ -417,16 +411,14 @@ TEST(ObjectRequestsTest, RewriteObjectResponse) {
 TEST(ObjectRequestsTest, RewriteObjectResponseFailure) {
   std::string text = R"""({123)""";
 
-  auto actual =
-      RewriteObjectResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  auto actual = RewriteObjectResponse::FromHttpResponse(text);
   EXPECT_FALSE(actual.ok());
 }
 
 TEST(ObjectRequestsTest, RewriteObjectResponseFailureInResource) {
   std::string text = R"""({"resource": "invalid-resource"})""";
 
-  auto actual =
-      RewriteObjectResponse::FromHttpResponse(HttpResponse{200, text, {}});
+  auto actual = RewriteObjectResponse::FromHttpResponse(text);
   EXPECT_FALSE(actual.ok());
 }
 

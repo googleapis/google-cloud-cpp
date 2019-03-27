@@ -58,41 +58,21 @@ namespace noex {
 template <typename ClientType>
 struct UnaryClientUtils {
   /**
-   * Determine if @p T is a pointer to member function with the expected
-   * signature for `MakeCall()`.
+   * A metafunction to determine if @p F is a pointer to member function with
+   * the signature expected by `MakeCall()`. If it is, member aliases for
+   * `RequestType` and `ResponseType` will be defined to the types used in `F`.
    *
-   * This is the generic case, where the type does not match the expected
-   * signature.  The class derives from `std::false_type`, so
-   * `CheckSignature<T>::%value` is `false`.
-   *
-   * @tparam T the type to check against the expected signature.
+   * @tparam F the type to check against the expected signature.
    */
-  template <typename T>
-  struct CheckSignature : public std::false_type {
-    /// Must define ResponseType because it is used in std::enable_if<>.
-    using ResponseType = void;
-  };
+  template <typename F>
+  struct Signature {};
 
-  /**
-   * Determine if a type is a pointer to member function with the correct
-   * signature for `MakeCall()`.
-   *
-   * This is the case where the type actually matches the expected signature.
-   * This class derives from `std::true_type`, so `CheckSignature<T>::%value` is
-   * `true`.  The class also extracts the request and response types used in the
-   * implementation of `CallWithRetry()`.
-   *
-   * @tparam Request the RPC request type.
-   * @tparam Response the RPC response type.
-   */
+  // Partial specialization for the `Signature` metafunction.
   template <typename Request, typename Response>
-  struct CheckSignature<grpc::Status (ClientType::*)(grpc::ClientContext*,
-                                                     Request const&, Response*)>
-      : public std::true_type {
+  struct Signature<grpc::Status (ClientType::*)(grpc::ClientContext*,
+                                                Request const&, Response*)> {
     using RequestType = Request;
     using ResponseType = Response;
-    using MemberFunctionType = grpc::Status (ClientType::*)(
-        grpc::ClientContext*, Request const&, Response*);
   };
 
   /**
@@ -101,11 +81,6 @@ struct UnaryClientUtils {
    * Given a pointer to member function in the grpc StubInterface class this
    * generic function calls it with retries until success or until the RPC
    * policies determine that this is an error.
-   *
-   * We use std::enable_if<> to stop signature errors at compile-time.  The
-   * `CheckSignature` meta function returns `false` if given a type that is not
-   * a pointer to member with the right signature, that disables this function
-   * altogether, and the developer gets a nice-ish error message.
    *
    * @tparam MemberFunction the signature of the member function.
    * @param client the object that holds the gRPC stub.
@@ -121,17 +96,13 @@ struct UnaryClientUtils {
    * @throw std::exception with a description of the last RPC error.
    */
   template <typename MemberFunction>
-  static typename std::enable_if<
-      CheckSignature<MemberFunction>::value,
-      typename CheckSignature<MemberFunction>::ResponseType>::type
-  MakeCall(ClientType& client,
-           std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
-           std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
-           bigtable::MetadataUpdatePolicy const& metadata_update_policy,
-           MemberFunction function,
-           typename CheckSignature<MemberFunction>::RequestType const& request,
-           char const* error_message, grpc::Status& status,
-           bool retry_on_failure) {
+  static typename Signature<MemberFunction>::ResponseType MakeCall(
+      ClientType& client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
+      std::unique_ptr<bigtable::RPCBackoffPolicy> backoff_policy,
+      bigtable::MetadataUpdatePolicy const& metadata_update_policy,
+      MemberFunction function,
+      typename Signature<MemberFunction>::RequestType const& request,
+      char const* error_message, grpc::Status& status, bool retry_on_failure) {
     return MakeCall(client, *rpc_policy, *backoff_policy,
                     metadata_update_policy, function, request, error_message,
                     status, retry_on_failure);
@@ -159,17 +130,14 @@ struct UnaryClientUtils {
    * @throw std::exception with a description of the last RPC error.
    */
   template <typename MemberFunction>
-  static typename std::enable_if<
-      CheckSignature<MemberFunction>::value,
-      typename CheckSignature<MemberFunction>::ResponseType>::type
-  MakeCall(ClientType& client, bigtable::RPCRetryPolicy& rpc_policy,
-           bigtable::RPCBackoffPolicy& backoff_policy,
-           bigtable::MetadataUpdatePolicy const& metadata_update_policy,
-           MemberFunction function,
-           typename CheckSignature<MemberFunction>::RequestType const& request,
-           char const* error_message, grpc::Status& status,
-           bool retry_on_failure) {
-    typename CheckSignature<MemberFunction>::ResponseType response;
+  static typename Signature<MemberFunction>::ResponseType MakeCall(
+      ClientType& client, bigtable::RPCRetryPolicy& rpc_policy,
+      bigtable::RPCBackoffPolicy& backoff_policy,
+      bigtable::MetadataUpdatePolicy const& metadata_update_policy,
+      MemberFunction function,
+      typename Signature<MemberFunction>::RequestType const& request,
+      char const* error_message, grpc::Status& status, bool retry_on_failure) {
+    typename Signature<MemberFunction>::ResponseType response;
     do {
       grpc::ClientContext client_context;
       rpc_policy.Setup(client_context);
@@ -201,11 +169,6 @@ struct UnaryClientUtils {
    * generic function calls it with retries until success or until the RPC
    * policies determine that this is an error.
    *
-   * We use std::enable_if<> to stop signature errors at compile-time.  The
-   * `CheckSignature` meta function returns `false` if given a type that is not
-   * a pointer to member with the right signature, that disables this function
-   * altogether, and the developer gets a nice-ish error message.
-   *
    * @tparam MemberFunction the signature of the member function.
    * @param client the object that holds the gRPC stub.
    * @param rpc_policy the policy to control timeouts.
@@ -218,16 +181,13 @@ struct UnaryClientUtils {
    * @throw std::exception with a description of the last RPC error.
    */
   template <typename MemberFunction>
-  static typename std::enable_if<
-      CheckSignature<MemberFunction>::value,
-      typename CheckSignature<MemberFunction>::ResponseType>::type
-  MakeNonIdemponentCall(
+  static typename Signature<MemberFunction>::ResponseType MakeNonIdemponentCall(
       ClientType& client, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_policy,
       bigtable::MetadataUpdatePolicy const& metadata_update_policy,
       MemberFunction function,
-      typename CheckSignature<MemberFunction>::RequestType const& request,
+      typename Signature<MemberFunction>::RequestType const& request,
       char const* error_message, grpc::Status& status) {
-    typename CheckSignature<MemberFunction>::ResponseType response;
+    typename Signature<MemberFunction>::ResponseType response;
 
     grpc::ClientContext client_context;
 

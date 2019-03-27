@@ -194,9 +194,8 @@ std::ostream& operator<<(std::ostream& os, ListObjectsRequest const& r) {
 }
 
 StatusOr<ListObjectsResponse> ListObjectsResponse::FromHttpResponse(
-    HttpResponse&& response) {
-  auto json =
-      storage::internal::nl::json::parse(response.payload, nullptr, false);
+    std::string const& payload) {
+  auto json = storage::internal::nl::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }
@@ -476,8 +475,8 @@ std::ostream& operator<<(std::ostream& os, RewriteObjectRequest const& r) {
 }
 
 StatusOr<RewriteObjectResponse> RewriteObjectResponse::FromHttpResponse(
-    HttpResponse const& response) {
-  nl::json object = nl::json::parse(response.payload, nullptr, false);
+    std::string const& payload) {
+  nl::json object = nl::json::parse(payload, nullptr, false);
   if (!object.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
   }

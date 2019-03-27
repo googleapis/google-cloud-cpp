@@ -47,7 +47,7 @@ std::ostream& operator<<(std::ostream& os,
 /// Represents a response to the `DefaultObjectAccessControls: list` API.
 struct ListDefaultObjectAclResponse {
   static StatusOr<ListDefaultObjectAclResponse> FromHttpResponse(
-      HttpResponse&& response);
+      std::string const& payload);
 
   std::vector<ObjectAccessControl> items;
 };
