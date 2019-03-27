@@ -39,59 +39,8 @@ char const* data_file_name_;
 class ObjectIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
-  std::string trimmedString(std::string data_file) {
-    std::ifstream ifstr(data_file);
-    if (!ifstr.is_open()) {
-      // If the file does not exist, or
-      // if we were unable to open it for some other reason.
-      std::cout << "Cannot open credentials file " + data_file + '\n';
-      return "";
-    }
-
-    std::string from_file((std::istreambuf_iterator<char>(ifstr)),
-                          std::istreambuf_iterator<char>());
-
-    // int from_file_len = from_file.length();
-    size_t from_file_len = from_file.size();
-    std::string trimmed;
-    char const slash = '/';
-
-    // Check whether a character is
-    // within //.............\n
-    bool check_comment = false;
-
-    for (std::string::size_type i = 0; i < from_file_len; i++) {
-      // Check for //
-      if (i == 0 && from_file[i] == slash && from_file[i + 1] == slash) {
-        i++;
-        check_comment = true;
-      }
-
-      // Check for the end of the commented line \n
-      else if (check_comment == true && from_file[i] == '\n') {
-        i++;
-        check_comment = false;
-      }
-
-      // Check for // only and not for ://
-      // Do not want to remove https://
-      if (from_file[i] == slash && from_file[i + 1] == slash &&
-          from_file[i - 1] != ':') {
-        i++;
-        check_comment = true;
-      }
-
-      else if (check_comment == false) {
-        trimmed += from_file[i];
-      }
-    }
-    return trimmed;
-  }
-
-  // Converts
-  // ""20190201T090000Z",
-  // to the following format
-  // "2019-02-01T09:00:00Z"
+  // Converts ""20190201T090000Z",
+  // to  "2019-02-01T09:00:00Z"
   std::string TimestampToRfc3339(std::string ts) {
     if (ts.size() != 16) {
       return "";
@@ -101,21 +50,16 @@ class ObjectIntegrationTest
            ts.substr(13, 2) + 'Z';
   }
 
-  std::vector<std::pair<std::string, std::vector<std::string>>> ExtractHeaders(
+  std::vector<std::pair<std::string, std::string>> ExtractHeaders(
       nl::json j_obj) {
-    std::vector<std::pair<std::string, std::vector<std::string>>> headers;
+    std::vector<std::pair<std::string, std::string>> headers;
 
     for (auto& header : j_obj.items()) {
       std::string header_key = header.key();
 
       if (header_key == "headers") {
-        // The size of the headers obj, how many keys it has.
-        // 1 one key
-        // 2 two keys or 3 keys
-        // Each key has an array of 1 or more strings
-
         std::string key_name;
-
+        std::string value_name;
         // Check for the keys of the headers field
         for (auto& x : j_obj["headers"].items()) {
           // The keys are being outputted in alphabetical order
@@ -123,23 +67,19 @@ class ObjectIntegrationTest
 
           //  Inside the file
           //        "headers": {
-          //            "foo": [ "foo-value" ],
-          //            "BAR": [ "BAR-value" ]
+          //            "foo":  "foo-value" ,
+          //            "BAR":  "BAR-value"
           //        },
 
           // Output by nlohman library
           //        "headers": {
-          //            "BAR": [ "BAR-value" ],
-          //            "foo": [ "foo-value" ]
+          //            "BAR":  "BAR-value" ,
+          //            "foo":  "foo-value"
           //        },
 
           key_name = x.key();
-          std::vector<std::string> value_array;
-          for (auto& value : x.value()) {
-            std::string value_name = value;
-            value_array.emplace_back(value_name);
-          }
-          headers.emplace_back(key_name, value_array);
+          value_name = x.value();
+          headers.emplace_back(key_name, value_name);
         }
       }
     }
@@ -147,20 +87,21 @@ class ObjectIntegrationTest
   }
 };
 
-// Testing all the objects in the json file
-// Objects with headers and without headers
-
 TEST_F(ObjectIntegrationTest, V4SignJson) {
   // This is a dummy service account JSON file that is inactive. It's fine for
   // it to be public.
   std::string account_file = account_file_name_;
   std::string data_file = data_file_name_;
 
-  auto trimmed_string = trimmedString(data_file);
-  if (trimmed_string.size() == 0) {
+  std::ifstream ifstr(data_file);
+  if (!ifstr.is_open()) {
+    // If the file does not exist, or
+    // if we were unable to open it for some other reason.
+    std::cout << "Cannot open credentials file " + data_file + '\n';
     return;
   }
-  nl::json json_array = nl::json::parse(trimmed_string);
+  // nl::json json_array;
+  nl::json json_array = nl::json::parse(ifstr);
   auto creds =
       oauth2::CreateServiceAccountCredentialsFromJsonFilePath(account_file);
 
@@ -179,7 +120,7 @@ TEST_F(ObjectIntegrationTest, V4SignJson) {
     std::string const expected = j_obj["expectedUrl"];
 
     // Extract headers for each object
-    std::vector<std::pair<std::string, std::vector<std::string>>> headers =
+    std::vector<std::pair<std::string, std::string>> headers =
         ExtractHeaders(j_obj);
 
     if (headers.size() == 0) {
@@ -196,24 +137,17 @@ TEST_F(ObjectIntegrationTest, V4SignJson) {
         EXPECT_THAT(*actual, HasSubstr(object_name));
         EXPECT_EQ(expected, *actual);
       }
-    }
-
-    // headers.front().second.size() == 1 means
-    // key : [value]
-    // not
-    // key : [value1, value2, .. ]
-    else if (headers.size() > 0 && headers.front().second.size() == 1) {
+    } else if (headers.size() > 0) {
       if (headers.size() == 1) {
         std::cout << "Headers 1  "
                   << "Description: " << j_obj["description"] << '\n';
-        if (headers.front().second.at(0) != "ignored") {
+        if (headers.front().second != "ignored") {
           actual = client.CreateV4SignedUrl(
               method_name, bucket_name, object_name,
               SignedUrlTimestamp(internal::ParseRfc3339(date)),
               SignedUrlDuration(valid_for),
               AddExtensionHeader("host", "storage.googleapis.com"),
-              AddExtensionHeader(headers.at(0).first,
-                                 headers.at(0).second.at(0)));
+              AddExtensionHeader(headers.at(0).first, headers.at(0).second));
         }
       } else if (headers.size() == 2) {
         std::cout << "Headers 2  "
@@ -225,9 +159,8 @@ TEST_F(ObjectIntegrationTest, V4SignJson) {
             SignedUrlTimestamp(internal::ParseRfc3339(date)),
             SignedUrlDuration(valid_for),
             AddExtensionHeader("host", "storage.googleapis.com"),
-            AddExtensionHeader(headers.at(1).first, headers.at(1).second.at(0)),
-            AddExtensionHeader(headers.at(0).first,
-                               headers.at(0).second.at(0)));
+            AddExtensionHeader(headers.at(1).first, headers.at(1).second),
+            AddExtensionHeader(headers.at(0).first, headers.at(0).second));
       } else if (headers.size() == 3) {
         std::cout << "Headers 3  "
                   << "Description: " << j_obj["description"] << '\n';
@@ -237,10 +170,9 @@ TEST_F(ObjectIntegrationTest, V4SignJson) {
             SignedUrlTimestamp(internal::ParseRfc3339(date)),
             SignedUrlDuration(valid_for),
             AddExtensionHeader("host", "storage.googleapis.com"),
-            AddExtensionHeader(headers.at(1).first, headers.at(1).second.at(0)),
-            AddExtensionHeader(headers.at(2).first, headers.at(2).second.at(0)),
-            AddExtensionHeader(headers.at(0).first,
-                               headers.at(0).second.at(0)));
+            AddExtensionHeader(headers.at(1).first, headers.at(1).second),
+            AddExtensionHeader(headers.at(2).first, headers.at(2).second),
+            AddExtensionHeader(headers.at(0).first, headers.at(0).second));
       }
       ASSERT_STATUS_OK(actual);
       EXPECT_THAT(*actual, HasSubstr(bucket_name));
@@ -251,7 +183,7 @@ TEST_F(ObjectIntegrationTest, V4SignJson) {
   }
 }
 
-TEST_F(ObjectIntegrationTest, V4SignWithHeaders) {
+TEST_F(ObjectIntegrationTest, V4SignJsonHeaders) {
   // This test uses a disabled key to create a V4 Signed URL for a GET
   // operation. The bucket name was generated at random too.
 
@@ -267,12 +199,15 @@ TEST_F(ObjectIntegrationTest, V4SignWithHeaders) {
   Client client(*creds);
   StatusOr<std::string> actual;
 
-  auto trimmed_string = trimmedString(data_file);
-  if (trimmed_string.size() == 0) {
+  std::ifstream ifstr(data_file);
+  if (!ifstr.is_open()) {
+    // If the file does not exist, or
+    // if we were unable to open it for some other reason.
+    std::cout << "Cannot open credentials file " + data_file + '\n';
     return;
   }
-
-  nl::json json_array = nl::json::parse(trimmed_string);
+  // nl::json json_array;
+  nl::json json_array = nl::json::parse(ifstr);
 
   for (auto const& j_obj : json_array) {
     std::string const method_name = j_obj["method"];
@@ -285,90 +220,61 @@ TEST_F(ObjectIntegrationTest, V4SignWithHeaders) {
 
     // Check for headers field in each j_obj
     for (auto& header : j_obj.items()) {
-      int array_size_per_key = 0;
-
       if (header.key() == "headers") {
-        // The size of the headers obj, how many keys it has.
-        // 1 one key
-        // 2 two keys or 3 keys
-        // Each key has an array of 1 or more strings
-
         std::string key_name;
         std::string header_name;
+        std::vector<std::pair<std::string, std::string>> headers;
 
-        std::vector<std::string> key_vector;
-        std::vector<std::string> value_vector;
-
-        // Check for the keys of the headers field
         for (auto& x : j_obj["headers"].items()) {
           // Each key
           key_name = x.key();
-          key_vector.emplace_back(key_name);
-
-          // Each key has an array as value
-          array_size_per_key = x.value().size();
-
-          // Only one value per key : key : [value]
-          header_name = x.value()[0];
-          value_vector.emplace_back(header_name);
+          header_name = x.value();
+          headers.emplace_back(key_name, header_name);
         }
 
-        // Only headers with key : [ value ]
-        //              not  key : [ value1, value2 ]
-
-        // All the fields in the header that have only one value per key
-        if (array_size_per_key == 1) {
-          // std::cout << "Description: "
-          //          << " " << j_obj["description"] << '\n';
-
-          // Check size of keys
-          // key : [ value]
-          if (key_vector.size() == 1) {
+        if (headers.size() > 0) {
+          // 1 key:value pair
+          if (headers.size() == 1) {
             std::cout << "Headers 1  "
                       << "Description: " << j_obj["description"] << '\n';
-
             actual = client.CreateV4SignedUrl(
                 method_name, bucket_name, object_name,
                 SignedUrlTimestamp(internal::ParseRfc3339(date)),
                 SignedUrlDuration(valid_for),
                 AddExtensionHeader("host", "storage.googleapis.com"),
-                AddExtensionHeader(key_vector.at(0), value_vector.at(0)));
+                AddExtensionHeader(headers.at(0).first, headers.at(0).second));
           }
-
-          // 2     key : [value] 	pairs
-          else if (key_vector.size() == 2) {
+          // 2 key:value pairs
+          else if (headers.size() == 2) {
             std::cout << "Headers 2  "
                       << "Description: " << j_obj["description"] << '\n';
-
             actual = client.CreateV4SignedUrl(
                 method_name, bucket_name, object_name,
                 SignedUrlTimestamp(internal::ParseRfc3339(date)),
                 SignedUrlDuration(valid_for),
                 AddExtensionHeader("host", "storage.googleapis.com"),
-                AddExtensionHeader(key_vector.at(0), value_vector.at(0)),
-                AddExtensionHeader(key_vector.at(1), value_vector.at(1)));
-
+                AddExtensionHeader(headers.at(0).first, headers.at(0).second),
+                AddExtensionHeader(headers.at(1).first, headers.at(1).second));
           }
 
-          // 3 key : [value ] pairs
-          else if (key_vector.size() == 3) {
+          // 3 key:value pairs
+          else if (headers.size() == 3) {
             std::cout << "Headers 3  "
                       << "Description: " << j_obj["description"] << '\n';
-
             actual = client.CreateV4SignedUrl(
                 method_name, bucket_name, object_name,
                 SignedUrlTimestamp(internal::ParseRfc3339(date)),
                 SignedUrlDuration(valid_for),
                 AddExtensionHeader("host", "storage.googleapis.com"),
-                AddExtensionHeader(key_vector.at(0), value_vector.at(0)),
-                AddExtensionHeader(key_vector.at(1), value_vector.at(1)),
-                AddExtensionHeader(key_vector.at(2), value_vector.at(2)));
+                AddExtensionHeader(headers.at(0).first, headers.at(0).second),
+                AddExtensionHeader(headers.at(1).first, headers.at(1).second),
+                AddExtensionHeader(headers.at(2).first, headers.at(2).second));
           }
-
           ASSERT_STATUS_OK(actual);
           EXPECT_THAT(*actual, HasSubstr(bucket_name));
           EXPECT_THAT(*actual, HasSubstr(object_name));
           EXPECT_EQ(expected, *actual);
+          EXPECT_LT(headers.size(), 4);
         }
       }
     }
