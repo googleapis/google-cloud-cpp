@@ -26,8 +26,7 @@ namespace internal {
 
 namespace {
 
-using ::google::cloud::storage::internal::raw_client_wrapper_utils::
-    Signature;
+using ::google::cloud::storage::internal::raw_client_wrapper_utils::Signature;
 
 /**
  * Logs the input and results of each `RawClient` operation.
