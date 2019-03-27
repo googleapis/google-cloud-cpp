@@ -66,7 +66,7 @@ std::ostream& operator<<(std::ostream& os, ListBucketsRequest const& r);
 
 struct ListBucketsResponse {
   static StatusOr<ListBucketsResponse> FromHttpResponse(
-      const std::string& payload);
+      std::string const& payload);
 
   std::string next_page_token;
   std::vector<BucketMetadata> items;

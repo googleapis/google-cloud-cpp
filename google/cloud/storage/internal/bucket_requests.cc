@@ -379,7 +379,7 @@ std::ostream& operator<<(std::ostream& os, ListBucketsRequest const& r) {
 }
 
 StatusOr<ListBucketsResponse> ListBucketsResponse::FromHttpResponse(
-    const std::string& payload) {
+    std::string const& payload) {
   auto json = storage::internal::nl::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);
@@ -659,7 +659,7 @@ std::ostream& operator<<(std::ostream& os,
 }
 
 StatusOr<TestBucketIamPermissionsResponse>
-TestBucketIamPermissionsResponse::FromHttpResponse(const std::string& payload) {
+TestBucketIamPermissionsResponse::FromHttpResponse(std::string const& payload) {
   TestBucketIamPermissionsResponse result;
   auto json = nl::json::parse(payload, nullptr, false);
   if (!json.is_object()) {

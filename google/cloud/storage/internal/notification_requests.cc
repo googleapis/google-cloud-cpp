@@ -64,7 +64,7 @@ std::ostream& operator<<(std::ostream& os, ListNotificationsRequest const& r) {
 }
 
 StatusOr<ListNotificationsResponse> ListNotificationsResponse::FromHttpResponse(
-    const std::string& payload) {
+    std::string const& payload) {
   auto json = nl::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
     return Status(StatusCode::kInvalidArgument, __func__);

@@ -150,7 +150,7 @@ StatusOr<ReturnType> ParseFromHttpResponse(StatusOr<HttpResponse> response) {
   if (response->status_code >= 300) {
     return AsStatus(*response);
   }
-  return ReturnType::FromHttpResponse(std::move(response)->payload);
+  return ReturnType::FromHttpResponse(response->payload);
 }
 
 }  // namespace
@@ -724,8 +724,7 @@ StatusOr<ListBucketAclResponse> CurlClient::ListBucketAcl(
   if (response->status_code >= 300) {
     return AsStatus(*response);
   }
-  return internal::ListBucketAclResponse::FromHttpResponse(
-      std::move(response)->payload);
+  return internal::ListBucketAclResponse::FromHttpResponse(response->payload);
 }
 
 StatusOr<BucketAccessControl> CurlClient::GetBucketAcl(
