@@ -151,8 +151,6 @@ long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
                   bigtable::AppProfileId app_profile_id,
                   std::string const& table_id,
                   std::chrono::seconds test_duration) {
-  long total_ops = 0;
-
   BenchmarkResult partial = {};
 
   auto data_client = benchmark.MakeDataClient();
@@ -176,8 +174,7 @@ long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
   std::ostringstream msg;
   benchmark.PrintLatencyResult(msg, "long", "Partial::Op", partial);
   std::cout << msg.str() << std::flush;
-  total_ops = partial.operations.size();
-  return total_ops;
+  return static_cast<long>(partial.operations.size());
 }
 
 }  // anonymous namespace

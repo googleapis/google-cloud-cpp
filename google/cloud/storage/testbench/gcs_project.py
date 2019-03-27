@@ -47,7 +47,7 @@ class ServiceAccount(object):
             'kind': 'storage#hmacKeyCreate',
             'secretKey': base64.b64encode(secret_key),
             'generator': 1,
-            'resource': {
+            'metadata': {
                 'accessId': '%s:%s' % (self.email, key_id),
                 'etag': base64.b64encode('%d' % 1),
                 'id': key_id,
@@ -56,12 +56,13 @@ class ServiceAccount(object):
                 'serviceAccountEmail': self.email,
                 'state': 'ACTIVE',
                 'timeCreated': timestamp,
+                'updated': timestamp
             }
         })
 
     def key_items(self):
         """Return the keys in this service account as a list of JSON objects."""
-        return [k.get('resource') for k in self.keys.values()]
+        return [k.get('metadata') for k in self.keys.values()]
 
     def delete_key(self, key_id):
         """Delete an existing HMAC key from the service account."""
@@ -69,7 +70,7 @@ class ServiceAccount(object):
         if key is None:
             raise error_response.ErrorResponse(
                 'Cannot find key for key ' % key_id, status_code=404)
-        resource = key.get('resource')
+        resource = key.get('metadata')
         if resource is None:
             raise error_response.ErrorResponse(
                 'Missing resource for HMAC key ' % key_id, status_code=500)
@@ -82,11 +83,11 @@ class ServiceAccount(object):
         if key is None:
             raise error_response.ErrorResponse(
                 'Cannot find key for key ' % key_id, status_code=404)
-        resource = key.get('resource')
-        if resource is None:
+        metadata = key.get('metadata')
+        if metadata is None:
             raise error_response.ErrorResponse(
                 'Missing resource for HMAC key ' % key_id, status_code=500)
-        return resource
+        return metadata
 
     def _check_etag(self, key_resource, etag, where):
         """Verify that ETag values match the current ETag."""
@@ -103,27 +104,29 @@ class ServiceAccount(object):
         if key is None:
             raise error_response.ErrorResponse(
                 'Cannot find key for key %s ' % key_id, status_code=404)
-        resource = key.get('resource')
-        if resource is None:
+        metadata = key.get('metadata')
+        if metadata is None:
             raise error_response.ErrorResponse(
-                'Missing resource for HMAC key %s ' % key_id, status_code=500)
-        self._check_etag(resource, payload.get('etag'), 'payload')
+                'Missing metadata for HMAC key %s ' % key_id, status_code=500)
+        self._check_etag(metadata, payload.get('etag'), 'payload')
         self._check_etag(
-            resource, flask.request.headers.get('if-match-etag'), 'header')
+            metadata, flask.request.headers.get('if-match-etag'), 'header')
 
         state = payload.get('state')
         if state not in ('ACTIVE', 'INACTIVE'):
             raise error_response.ErrorResponse(
                 'Invalid state `HmacKeys: update` request %s' % key_id,
                 status_code=400)
-        if resource.get('state') == 'DELETED':
+        if metadata.get('state') == 'DELETED':
             raise error_response.ErrorResponse(
                 'Cannot restore DELETED key in `HmacKeys: update` request %s' % key_id,
                 status_code=400)
         key['generator'] += 1
-        resource['state'] = state
-        resource['etag'] = base64.b64encode('%d' % key['generator'])
-        return resource
+        metadata['state'] = state
+        metadata['etag'] = base64.b64encode('%d' % key['generator'])
+        now = time.gmtime(time.time())
+        metadata['updated'] = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
+        return metadata
 
 
 class GcsProject(object):
@@ -231,7 +234,7 @@ def hmac_keys_list(project_id):
     # function should return an error.
     project = get_project(project_id)
     result = {
-        'kind': 'storage#hmacKeys',
+        'kind': 'storage#hmacKeysMetadata',
         'next_page_token': '',
         'items': []
     }

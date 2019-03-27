@@ -129,11 +129,7 @@ production use.
 ]===]")
 
 set_property(CACHE GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
-             PROPERTY STRINGS
-                      "external"
-                      "package"
-                      "vcpkg"
-                      "pkg-config")
+             PROPERTY STRINGS "external" "package")
 
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)

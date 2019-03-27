@@ -2,15 +2,33 @@
 
 C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 
-[![Travis CI status][travis-shield]][travis-link]
+**Core Results:**
 [![Kokoro CI status][kokoro-ubuntu-shield]][kokoro-ubuntu-link]
-[![Kokoro CI status][kokoro-windows-shield]][kokoro-windows-link]
 [![Kokoro CI status][kokoro-macos-shield]][kokoro-macos-link]
+[![Kokoro CI status][kokoro-windows-shield]][kokoro-windows-link]
+[![Codecov Coverage status][codecov-shield]][codecov-link]
+
+**Test Install Instructions:**
+[![Kokoro install centos status][kokoro-install-centos-shield]][kokoro-install-centos-link]
+[![Kokoro install debian status][kokoro-install-debian-shield]][kokoro-install-debian-link]
+[![Kokoro install fedora status][kokoro-install-fedora-shield]][kokoro-install-fedora-link]
+[![Kokoro install opensuse status][kokoro-install-opensuse-shield]][kokoro-install-opensuse-link]
+[![Kokoro install opensuse-leap status][kokoro-install-opensuse-leap-shield]][kokoro-install-opensuse-leap-link]
+[![Kokoro install ubuntu status][kokoro-install-ubuntu-shield]][kokoro-install-ubuntu-link]
+[![Kokoro install ubuntu-xenial status][kokoro-install-ubuntu-xenial-shield]][kokoro-install-ubuntu-xenial-link]
+[![Kokoro install ubuntu-trusty status][kokoro-install-ubuntu-trusty-shield]][kokoro-install-ubuntu-trusty-link]
+
+**Special Builds:**
 [![Kokoro CI status][kokoro-asan-shield]][kokoro-asan-link]
-[![Kokoro CI status][kokoro-ubsan-shield]][kokoro-asan-link]
+[![Kokoro CI status][kokoro-ubsan-shield]][kokoro-ubsan-link]
 [![Kokoro CI status][kokoro-noex-shield]][kokoro-noex-link]
 [![Kokoro CI status][kokoro-centos-7-shield]][kokoro-centos-7-link]
-[![Codecov Coverage status][codecov-shield]][codecov-link]
+[![Kokoro CI status][kokoro-clang-tidy-shield]][kokoro-clang-tidy-link]
+[![Kokoro CI status][kokoro-libcxx-shield]][kokoro-libcxx-link]
+[![Kokoro CI status][kokoro-check-abi-shield]][kokoro-check-abi-link]
+[![Kokoro CI status][kokoro-shared-shield]][kokoro-shared-link] 
+[![Travis CI status][travis-shield]][travis-link]
+[![Kokoro CI status][kokoro-bazel-shield]][kokoro-bazel-link]
 
 - [Google Cloud Platform Documentation][cloud-platform-docs]
 - [Client Library Documentation][client-library-docs]
@@ -31,6 +49,17 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 [kokoro-noex-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-noex-link.html
 [kokoro-centos-7-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-centos-7.svg
 [kokoro-centos-7-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-centos-7-link.html
+[kokoro-check-abi-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-check-abi.svg
+[kokoro-check-abi-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-check-abi-link.html
+[kokoro-clang-tidy-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-clang-tidy.svg
+[kokoro-clang-tidy-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-clang-tidy-link.html
+[kokoro-libcxx-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-libcxx.svg
+[kokoro-libcxx-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-libcxx-link.html
+[kokoro-shared-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-shared.svg
+[kokoro-shared-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-shared-link.html
+[kokoro-bazel-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-bazel-dependency-linux.svg
+[kokoro-bazel-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-bazel-dependency-linux-link.html
+
 [codecov-shield]: https://codecov.io/gh/googleapis/google-cloud-cpp/branch/master/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/googleapis/google-cloud-cpp
 [cloud-platform]: https://cloud.google.com/
@@ -165,7 +194,7 @@ sudo dnf makecache && \
 sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig zlib-devel
 ```
 
-### OpenSUSE (Tumbleweed)
+### openSUSE (Tumbleweed)
 
 [![Kokoro install opensuse status][kokoro-install-opensuse-shield]][kokoro-install-opensuse-link]
 

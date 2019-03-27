@@ -33,11 +33,21 @@ struct ObjectMetadataParser {
   static StatusOr<ObjectMetadata> FromString(std::string const& payload);
 };
 
+//@{
+/**
+ * @name Create the correct JSON payload depending on the operation.
+ *
+ * Depending on the specific operation being performed the JSON object sent to
+ * the server needs to exclude different fields. We handle this by having
+ * different functions for each operation, though their implementations are
+ * shared.
+ */
+internal::nl::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta);
+internal::nl::json ObjectMetadataJsonForCopy(ObjectMetadata const& meta);
+internal::nl::json ObjectMetadataJsonForInsert(ObjectMetadata const& meta);
+internal::nl::json ObjectMetadataJsonForRewrite(ObjectMetadata const& meta);
 internal::nl::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta);
-std::string ObjectMetadataJsonPayloadForUpdate(ObjectMetadata const& meta);
-internal::nl::json ObjectMetadataJsonPayloadForCompose(
-    ObjectMetadata const& meta);
-std::string ObjectMetadataJsonPayloadForCopy(ObjectMetadata const& meta);
+//@}
 
 /**
  * Represents a request to the `Objects: list` API.
@@ -240,7 +250,7 @@ class UpdateObjectRequest
 
   /// Returns the request as the JSON API payload.
   std::string json_payload() const {
-    return ObjectMetadataJsonPayloadForUpdate(metadata_);
+    return ObjectMetadataJsonForUpdate(metadata_).dump();
   }
 
   ObjectMetadata const& metadata() const { return metadata_; }

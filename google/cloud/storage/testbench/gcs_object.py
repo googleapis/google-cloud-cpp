@@ -406,7 +406,7 @@ class GcsObject(object):
         writeable_keys = {
             'acl', 'cacheControl', 'contentDisposition', 'contentEncoding',
             'contentLanguage', 'contentType', 'eventBasedHold', 'metadata',
-            'temporaryHold'
+            'temporaryHold', 'storageClass'
         }
         for key in metadata.keys():
             if key not in writeable_keys:

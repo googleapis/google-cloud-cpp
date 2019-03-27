@@ -175,28 +175,38 @@ cc_binary(
 
 #### Integrating with CMake
 
-@note This assumes that you have downloaded and installed the dependencies of
-  the library. Please check the top-level README on [GitHub][github-link] for
-  details.
-
-Compile and install the library using the normal cycle:
-
-```
-cd google-cloud-cpp
-cmake -H. -Bbuild-output
-cmake --build build-output/google/cloud/storage -- -j $(nproc)
-cmake --build build-output/google/cloud/storage --target install
-```
-
-Now that the library is installed, you can use it in your CMake list files:
+Follow the instructions on the top-level INSTALL.md file on
+[GitHub][github-link] for details on how to compile and install the library for
+your platform and distribution. Once the library is installed, you can use it in
+your `CMakeLists.txt` file like any other package:
 
 ```
-find_package(Threads REQUIRED)
-find_package(CURL REQUIRED)
-find_package(storage_client 0.4.0 REQUIRED)
+cmake_minimum_required(VERSION 3.5)
+find_package(storage_client REQUIRED)
 
 add_executable(my_program my_program.cc)
 target_link_libraries(my_program storage_client)
+```
+
+#### Integrating with Make
+
+The installation instructions on the top-level INSTALL.md file on
+[GitHub][github-link] also create `pkg-config` support files for application
+developers that prefer to use `Make` as their build system. Once the library
+is installed, you can use it in your `Makefile` like any other `pkg-config`
+module:
+
+```
+# Configuration variables to compile and link against the Google Cloud Storage
+# C++ client library.
+GCS_DEPS := storage_client
+GCS_CXXFLAGS   := $(shell pkg-config $(GCS_DEPS) --cflags)
+GCS_CXXLDFLAGS := $(shell pkg-config $(GCS_DEPS) --libs-only-L)
+GCS_LIBS       := $(shell pkg-config $(GCS_DEPS) --libs-only-l)
+
+# A target using the Google Cloud Storage C++ client library.
+storage_install_test: storage_install_test.cc
+	$(CXX) $(CXXFLAGS) $(GCS_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(GCS_LIBS)
 ```
 
 ### Error Handling

@@ -73,6 +73,7 @@ class HmacKeyMetadata {
   std::chrono::system_clock::time_point time_created() const {
     return time_created_;
   }
+  std::chrono::system_clock::time_point updated() const { return updated_; }
 
   static std::string state_active() { return "ACTIVE"; }
   static std::string state_inactive() { return "INACTIVE"; }
@@ -91,17 +92,20 @@ class HmacKeyMetadata {
   std::string service_account_email_;
   std::string state_;
   std::chrono::system_clock::time_point time_created_;
+  std::chrono::system_clock::time_point updated_;
 };
 
 inline bool operator==(HmacKeyMetadata const& lhs, HmacKeyMetadata const& rhs) {
   auto lhs_time_created = lhs.time_created();
   auto rhs_time_created = rhs.time_created();
+  auto lhs_updated = lhs.updated();
+  auto rhs_updated = rhs.updated();
   return std::tie(lhs.id(), lhs.access_id(), lhs.etag(), lhs.kind(),
                   lhs.project_id(), lhs.service_account_email(), lhs.state(),
-                  lhs_time_created) ==
+                  lhs_time_created, lhs_updated) ==
          std::tie(rhs.id(), rhs.access_id(), rhs.etag(), rhs.kind(),
                   rhs.project_id(), rhs.service_account_email(), rhs.state(),
-                  rhs_time_created);
+                  rhs_time_created, rhs_updated);
 }
 
 inline bool operator!=(HmacKeyMetadata const& lhs, HmacKeyMetadata const& rhs) {

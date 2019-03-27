@@ -20,10 +20,11 @@
 #include "google/cloud/testing_util/chrono_literals.h"
 
 namespace bigtable = google::cloud::bigtable;
-using testing::_;
-using testing::Invoke;
-using testing::Return;
-using testing::SetArgPointee;
+using ::testing::_;
+using ::testing::DoAll;
+using ::testing::Invoke;
+using ::testing::Return;
+using ::testing::SetArgPointee;
 using namespace google::cloud::testing_util::chrono_literals;
 namespace btproto = google::bigtable::v2;
 

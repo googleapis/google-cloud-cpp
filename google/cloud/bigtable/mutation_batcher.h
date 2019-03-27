@@ -74,22 +74,22 @@ class MutationBatcher {
     }
 
     /// MutationBatcher will at most admit mutations of this total size.
-    Options& SetMaxOustandingSize(size_t max_oustanding_size_arg) {
-      max_oustanding_size = max_oustanding_size_arg;
+    Options& SetMaxOutstandingSize(size_t max_outstanding_size_arg) {
+      max_outstanding_size = max_outstanding_size_arg;
       return *this;
     }
 
     size_t max_mutations_per_batch;
     size_t max_size_per_batch;
     size_t max_batches;
-    size_t max_oustanding_size;
+    size_t max_outstanding_size;
   };
 
   MutationBatcher(Table table, Options options = Options())
       : table_(std::move(table)),
         options_(options),
         num_outstanding_batches_(),
-        oustanding_size_(),
+        outstanding_size_(),
         num_requests_pending_(),
         cur_batch_(std::make_shared<Batch>()) {}
 
@@ -215,8 +215,8 @@ class MutationBatcher {
             num_mutations(pending.num_mutations),
             request_size(pending.request_size) {}
       CompletionPromise completion_promise;
-      int num_mutations;
-      int request_size;
+      std::size_t num_mutations;
+      std::size_t request_size;
     };
 
     std::mutex mu_;
@@ -309,7 +309,7 @@ class MutationBatcher {
   /// Num batches sent but not completed.
   size_t num_outstanding_batches_;
   /// Size of admitted but uncompleted mutations.
-  size_t oustanding_size_;
+  size_t outstanding_size_;
   // Number of uncompleted SingleRowMutations (including not admitted).
   size_t num_requests_pending_;
 

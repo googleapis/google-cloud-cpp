@@ -22,15 +22,10 @@ find_package(Threads REQUIRED)
 set(GOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER ${GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER}
     CACHE STRING "How to find protobuf libraries and compiler")
 set_property(CACHE GOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER
-             PROPERTY STRINGS
-                      "external"
-                      "package"
-                      "pkg-config")
+             PROPERTY STRINGS "external" "package")
 
 if ("${GOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER}" STREQUAL "external")
     include(external/protobuf)
-elseif(("${GOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER}" STREQUAL "package")
-       OR
-       ("${GOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER}" STREQUAL "pkg-config"))
+elseif("${GOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER}" STREQUAL "package")
     find_package(ProtobufTargets REQUIRED protobuf>=3.5)
 endif ()

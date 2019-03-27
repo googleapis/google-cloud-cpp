@@ -519,7 +519,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableNonQuantum) {
                 "This test assumes the chunk quantum is a multiple of 256; it "
                 "needs fixing");
   auto desired_size = (5 * internal::UploadChunkRequest::kChunkSizeQuantum / 2);
-  WriteRandomLines(os, expected, desired_size / 128, 128);
+  WriteRandomLines(os, expected, static_cast<int>(desired_size / 128), 128);
   os.close();
 
   StatusOr<ObjectMetadata> meta = client.UploadFile(

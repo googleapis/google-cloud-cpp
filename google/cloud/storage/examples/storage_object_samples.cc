@@ -1301,6 +1301,41 @@ void RewriteObjectResume(google::cloud::storage::Client client, int& argc,
    destination_bucket_name, destination_object_name, rewrite_token);
 }
 
+void ChangeObjectStorageClass(google::cloud::storage::Client client, int& argc,
+                              char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "change-object-storage-class <bucket-name> <object-name> "
+        "<storage-class>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  auto storage_class = ConsumeArg(argc, argv);
+  //! [change file storage class]
+  // [START storage_change_file_storage_class]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name, std::string object_name,
+     std::string storage_class) {
+    StatusOr<gcs::ObjectMetadata> object_metadata =
+        client.RewriteObjectBlocking(
+            bucket_name, object_name, bucket_name, object_name,
+            gcs::WithObjectMetadata(
+                gcs::ObjectMetadata().set_storage_class(storage_class)));
+
+    if (!object_metadata) {
+      throw std::runtime_error(object_metadata.status().message());
+    }
+
+    std::cout << "Changed storage class of object " << object_metadata->name()
+              << " in bucket " << object_metadata->bucket() << " to "
+              << object_metadata->storage_class() << "\n";
+  }
+  // [END storage_change_file_storage_class]
+  //! [change file storage class]
+  (std::move(client), bucket_name, object_name, storage_class);
+}
+
 void RotateEncryptionKey(google::cloud::storage::Client client, int& argc,
                          char* argv[]) {
   if (argc != 5) {
@@ -1744,6 +1779,7 @@ int main(int argc, char* argv[]) try {
       {"rewrite-object-non-blocking", &RewriteObjectNonBlocking},
       {"rewrite-object-token", &RewriteObjectToken},
       {"rewrite-object-resume", &RewriteObjectResume},
+      {"change-object-storage-class", &ChangeObjectStorageClass},
       {"rotate-encryption-key", &RotateEncryptionKey},
       {"object-csek-to-cmek", &ObjectCsekToCmek},
       {"get-object-kms-key", &GetObjectKmsKey},
