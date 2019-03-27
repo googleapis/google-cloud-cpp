@@ -60,12 +60,14 @@ struct UnaryClientUtils {
   /**
    * A metafunction to determine if @p F is a pointer to member function with
    * the signature expected by `MakeCall()`. If it is, member aliases for
-   * `RequestType` and `ResponseType` will be defined to the types used in `F` 
+   * `RequestType` and `ResponseType` will be defined to the types used in `F`.
    *
    * @tparam F the type to check against the expected signature.
    */
   template <typename F>
   struct Signature {};
+
+  // Partial specialization for the `Signature` metafunction.
   template <typename Request, typename Response>
   struct Signature<grpc::Status (ClientType::*)(grpc::ClientContext*,
                                                 Request const&, Response*)> {
