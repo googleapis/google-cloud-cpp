@@ -27,7 +27,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::storage::internal::raw_client_wrapper_utils::
-    CheckSignature;
+    Signature;
 
 /**
  * Logs the input and results of each `RawClient` operation.
@@ -40,12 +40,10 @@ using ::google::cloud::storage::internal::raw_client_wrapper_utils::
  * @return the result from making the call;
  */
 template <typename MemberFunction>
-static typename std::enable_if<
-    CheckSignature<MemberFunction>::value,
-    typename CheckSignature<MemberFunction>::ReturnType>::type
-MakeCall(RawClient& client, MemberFunction function,
-         typename CheckSignature<MemberFunction>::RequestType const& request,
-         char const* context) {
+static typename Signature<MemberFunction>::ReturnType MakeCall(
+    RawClient& client, MemberFunction function,
+    typename Signature<MemberFunction>::RequestType const& request,
+    char const* context) {
   GCP_LOG(INFO) << context << "() << " << request;
   auto response = (client.*function)(request);
   if (response.ok()) {
@@ -70,13 +68,10 @@ MakeCall(RawClient& client, MemberFunction function,
  * @return the result from making the call;
  */
 template <typename MemberFunction>
-static typename std::enable_if<
-    CheckSignature<MemberFunction>::value,
-    typename CheckSignature<MemberFunction>::ReturnType>::type
-MakeCallNoResponseLogging(
+static typename Signature<MemberFunction>::ReturnType MakeCallNoResponseLogging(
     google::cloud::storage::internal::RawClient& client,
     MemberFunction function,
-    typename CheckSignature<MemberFunction>::RequestType const& request,
+    typename Signature<MemberFunction>::RequestType const& request,
     char const* context) {
   GCP_LOG(INFO) << context << "() << " << request;
   return (client.*function)(request);
