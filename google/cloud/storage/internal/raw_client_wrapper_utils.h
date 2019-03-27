@@ -33,26 +33,24 @@ namespace internal {
  * meta-functions defined here.
  */
 namespace raw_client_wrapper_utils {
+
 /**
- * Determines if @p F is a pointer to member function with the expected
- * signature for a `RawClient` member function.
+ * Metafunction to determine if @p F is a pointer to member function with the
+ * expected signature for a `RawClient` member function.
  *
  * This is the generic case, where the type does not match the expected
- * signature.  The class derives from `std::false_type`, so
- * `Signature<T>::%value` is `false`.
+ * signature and so member type aliases do not exist.
  *
  * @tparam F the type to check against the expected signature.
  */
-template <typename T>
+template <typename F>
 struct Signature {};
 
 /**
- * Determines if a type is a pointer to member function with the expected
- * signature.
+ * Partial specialization for the above `Signature` metafunction.
  *
- * This is the case where the type actually matches the expected signature.
- * This class derives from `std::true_type`, so `Signature<T>::%value` is
- * `true`.  The class also extracts the request and response types used in the
+ * This is the case where the type actually matches the expected signature. The
+ * class also extracts the request and response types used in the
  * implementation of `CallWithRetry()`.
  *
  * @tparam Request the RPC request type.
@@ -64,6 +62,7 @@ struct Signature<StatusOr<Response> (
   using RequestType = Request;
   using ReturnType = StatusOr<Response>;
 };
+
 }  // namespace raw_client_wrapper_utils
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
