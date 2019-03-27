@@ -88,7 +88,7 @@ std::ostream& operator<<(std::ostream& os, CreateHmacKeyRequest const& r);
 /// The response from a `HmacKeys: insert` API.
 struct CreateHmacKeyResponse {
   static StatusOr<CreateHmacKeyResponse> FromHttpResponse(
-      HttpResponse const& response);
+      std::string const& payload);
 
   std::string kind;
   HmacKeyMetadata metadata;
@@ -120,7 +120,7 @@ std::ostream& operator<<(std::ostream& os, ListHmacKeysRequest const& r);
 /// Represents a response to the `HmacKeys: list` API.
 struct ListHmacKeysResponse {
   static StatusOr<ListHmacKeysResponse> FromHttpResponse(
-      HttpResponse const& response);
+      std::string const& payload);
 
   std::string next_page_token;
   std::vector<HmacKeyMetadata> items;

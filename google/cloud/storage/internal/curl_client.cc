@@ -150,7 +150,7 @@ StatusOr<ReturnType> ParseFromHttpResponse(StatusOr<HttpResponse> response) {
   if (response->status_code >= 300) {
     return AsStatus(*response);
   }
-  return ReturnType::FromHttpResponse(std::move(*response));
+  return ReturnType::FromHttpResponse(response->payload);
 }
 
 }  // namespace
@@ -451,7 +451,7 @@ StatusOr<TestBucketIamPermissionsResponse> CurlClient::TestBucketIamPermissions(
   if (response->status_code >= 300) {
     return AsStatus(*response);
   }
-  return TestBucketIamPermissionsResponse::FromHttpResponse(*response);
+  return TestBucketIamPermissionsResponse::FromHttpResponse(response->payload);
 }
 
 StatusOr<BucketMetadata> CurlClient::LockBucketRetentionPolicy(
@@ -688,7 +688,7 @@ StatusOr<RewriteObjectResponse> CurlClient::RewriteObject(
   }
   // This one does not use the common "ParseFromHttpResponse" function because
   // it takes different arguments.
-  return RewriteObjectResponse::FromHttpResponse(*response);
+  return RewriteObjectResponse::FromHttpResponse(response->payload);
 }
 
 StatusOr<std::unique_ptr<ResumableUploadSession>>
@@ -724,8 +724,7 @@ StatusOr<ListBucketAclResponse> CurlClient::ListBucketAcl(
   if (response->status_code >= 300) {
     return AsStatus(*response);
   }
-  return internal::ListBucketAclResponse::FromHttpResponse(
-      *std::move(response));
+  return internal::ListBucketAclResponse::FromHttpResponse(response->payload);
 }
 
 StatusOr<BucketAccessControl> CurlClient::GetBucketAcl(
