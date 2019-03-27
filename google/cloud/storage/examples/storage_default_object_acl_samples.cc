@@ -73,12 +73,12 @@ void ListDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
 void CreateDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
                             char* argv[]) {
   if (argc != 4) {
-    throw Usage{"create-bucket-acl <bucket-name> <entity> <role>"};
+    throw Usage{"create-default-object-acl <bucket-name> <entity> <role>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto entity = ConsumeArg(argc, argv);
   auto role = ConsumeArg(argc, argv);
-  //! [create default object acl] [START storage_add_default_owner]
+  //! [add bucket default owner] [START storage_add_bucket_default_owner]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string entity,
@@ -96,7 +96,7 @@ void CreateDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
               << default_object_acl->bucket() << "\n"
               << "Full attributes: " << *default_object_acl << "\n";
   }
-  //! [create default object acl] [END storage_add_default_owner]
+  //! [add bucket default owner] [END storage_add_bucket_default_owner]
   (std::move(client), bucket_name, entity, role);
 }
 

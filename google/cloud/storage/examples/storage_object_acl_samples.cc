@@ -134,7 +134,7 @@ void GetObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
   auto entity = ConsumeArg(argc, argv);
-  //! [get object acl] [START storage_print_file_acl]
+  //! [print file acl for user] [START storage_print_file_acl_for_user]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
@@ -150,7 +150,7 @@ void GetObjectAcl(gcs::Client client, int& argc, char* argv[]) {
               << acl->object() << " in bucket " << acl->bucket() << " is "
               << *acl << "\n";
   }
-  //! [get object acl] [END storage_print_file_acl]
+  //! [print file acl for user] [END storage_print_file_acl_for_user]
   (std::move(client), bucket_name, object_name, entity);
 }
 
