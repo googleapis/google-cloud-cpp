@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/testing/table_integration_test.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/init_google_mock.h"
@@ -37,10 +36,6 @@ class DataIntegrationTest : public bigtable::testing::TableIntegrationTest {
   std::string const family3 = "family3";
   std::string const family4 = "family4";
 };
-
-bool UsingCloudBigtableEmulator() {
-  return google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST").has_value();
-}
 
 }  // anonymous namespace
 
@@ -251,22 +246,31 @@ TEST_F(DataIntegrationTest, TableReadRowsPartialRows) {
       {row_key2, family4, "c1", 1000, "data3"}};
 
   // Some equivalent ways of reading just the first two rows
-  auto read1 =
-      table.ReadRows(bigtable::RowSet(bigtable::RowRange::InfiniteRange()), 2,
-                     bigtable::Filter::PassAllFilter());
-  CheckEqualUnordered(expected, MoveCellsFromReader(read1));
+  {
+    SCOPED_TRACE(table.table_name() + " ReadRows(key1, key2)");
+    bigtable::RowSet rows;
+    rows.Append(row_key1);
+    rows.Append(row_key2);
+    auto reader =
+        table.ReadRows(std::move(rows), bigtable::Filter::PassAllFilter());
+    CheckEqualUnordered(expected, MoveCellsFromReader(reader));
+  }
 
-  bigtable::RowSet rs2;
-  rs2.Append(row_key1);
-  rs2.Append(row_key2);
-  auto read2 =
-      table.ReadRows(std::move(rs2), bigtable::Filter::PassAllFilter());
-  CheckEqualUnordered(expected, MoveCellsFromReader(read2));
+  {
+    SCOPED_TRACE(table.table_name() + " ReadRows(, limit = 2, )");
+    auto reader =
+        table.ReadRows(bigtable::RowSet(bigtable::RowRange::InfiniteRange()), 2,
+                       bigtable::Filter::PassAllFilter());
+    CheckEqualUnordered(expected, MoveCellsFromReader(reader));
+  }
 
-  bigtable::RowSet rs3(bigtable::RowRange::Closed(row_key1, row_key2));
-  auto read3 =
-      table.ReadRows(std::move(rs3), bigtable::Filter::PassAllFilter());
-  CheckEqualUnordered(expected, MoveCellsFromReader(read3));
+  {
+    SCOPED_TRACE(table.table_name() + " ReadRows([key1, key2], ...)");
+    bigtable::RowSet rows(bigtable::RowRange::Closed(row_key1, row_key2));
+    auto reader =
+        table.ReadRows(std::move(rows), bigtable::Filter::PassAllFilter());
+    CheckEqualUnordered(expected, MoveCellsFromReader(reader));
+  }
 }
 
 TEST_F(DataIntegrationTest, TableReadRowsNoRows) {
