@@ -105,7 +105,38 @@ void TableIntegrationTest::SetUp() {
       TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
       ClientOptions());
 
-  ASSERT_STATUS_OK(table_admin_->DropAllRows(TableTestEnvironment::table_id()));
+  // We cannot use `DropAllRows()` to cleanup the table because the integration
+  // tests against production sometimes use all the "'DropRowRangeGroup' and
+  // limit 'USER-100s'" quota. Instead we delete the rows by using a
+  BulkMutation bulk;
+  auto table = GetTable();
+  // Bigtable does not support more than 100,000 mutations in a BulkMutation,
+  // if we had that many rows then just fallback on DropAllRows(). Most tests
+  // only have a small number of rows, so this is a good strategy to save
+  // DropAllRows() quota, and should be fast in most cases.
+  std::size_t const maximum_mutations = 100000;
+
+  for (auto const& row :
+       table.ReadRows(RowRange::InfiniteRange(), Filter::PassAllFilter())) {
+    if (not row) {
+      break;
+    }
+    bulk.emplace_back(
+        SingleRowMutation(row->row_key(), bigtable::DeleteFromRow()));
+    if (bulk.size() > maximum_mutations) {
+      break;
+    }
+  }
+
+  if (bulk.size() > maximum_mutations) {
+    ASSERT_STATUS_OK(
+        table_admin_->DropAllRows(TableTestEnvironment::table_id()));
+  } else {
+    auto failures = table.BulkApply(std::move(bulk));
+    for (auto&& f : failures) {
+      ASSERT_STATUS_OK(f.status());
+    }
+  }
 }
 
 bigtable::Table TableIntegrationTest::GetTable() {
