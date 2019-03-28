@@ -79,6 +79,10 @@ class TableTestEnvironment : public ::testing::Environment {
 
   static std::string const& table_id() { return table_id_; }
 
+  static bool UsingCloudBigtableEmulator() {
+    return using_cloud_bigtable_emulator_;
+  }
+
  private:
   static std::string project_id_;
   static std::string instance_id_;
@@ -89,6 +93,8 @@ class TableTestEnvironment : public ::testing::Environment {
   static google::cloud::internal::DefaultPRNG generator_;
 
   static std::string table_id_;
+
+  static bool using_cloud_bigtable_emulator_;
 };
 
 /**
@@ -144,6 +150,11 @@ class TableIntegrationTest : public ::testing::Test {
    * the tests, we run each test with a randomly selected table name.
    */
   std::string RandomTableId();
+
+  /// Some tests cannot run on the emulator.
+  bool UsingCloudBigtableEmulator() const {
+    return TableTestEnvironment::UsingCloudBigtableEmulator();
+  }
 
  protected:
   std::shared_ptr<bigtable::AdminClient> admin_client_;
