@@ -30,6 +30,10 @@ export TOPIC_NAME="projects/${PROJECT_ID}/topics/fake-topic-${RANDOM}-${RANDOM}"
 export LOCATION="fake-region1"
 readonly SERVICE_ACCOUNT="fake-service-account@example.com"
 
+
+readonly TEST_ACCOUNT_FILE="${PROJECT_ROOT}/google/cloud/storage/tests/UrlSignerV4TestAccount.json"
+readonly TEST_DATA_FILE="${PROJECT_ROOT}/google/cloud/storage/tests/UrlSignerV4TestData.json"
+
 echo
 echo "Running Storage integration tests against local servers."
 start_testbench
@@ -93,6 +97,10 @@ echo "Running GCS multi-threaded integration test."
 echo
 echo "Running GCS Projects.serviceAccount integration tests."
 ./service_account_integration_test "${PROJECT_ID}" "${SERVICE_ACCOUNT}"
+
+echo
+echo "Running storage::internal::ClientSignUrl integration test."
+./client_sign_url_integration_test "${TEST_ACCOUNT_FILE}" "${TEST_DATA_FILE}"
 
 # The tests were successful, so disable dumping of test bench log during
 # shutdown.
