@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_POLICY_DOCUMENT_CONDITION_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_POLICY_DOCUMENT_CONDITION_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_POLICY_DOCUMENT_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_POLICY_DOCUMENT_H_
 
 #include <string>
 #include <utility>
@@ -23,7 +23,9 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-namespace internal {}  // namespace internal
+namespace internal {
+struct PolicyDocumentParser;
+}  // namespace internal
 
 struct PolicyDocumentEntry {
   std::vector<std::string> elements;
@@ -65,6 +67,7 @@ std::ostream& operator<<(std::ostream& os, PolicyDocumentEntry const& rhs);
  * @see https://cloud.google.com/storage/docs/xml-api/post-object#policydocument
  */
 struct PolicyDocumentCondition {
+ public:
   explicit PolicyDocumentCondition(PolicyDocumentEntry entry)
       : entry_(std::move(entry)) {}
 
@@ -79,6 +82,14 @@ struct PolicyDocumentCondition {
     PolicyDocumentEntry result;
     result.elements.emplace_back("eq");
     result.elements.emplace_back(std::string("$") + field);
+    result.elements.emplace_back(value);
+    return result;
+  }
+
+  static PolicyDocumentEntry ExactMatchObject(std::string const& field,
+                                              std::string const& value) {
+    PolicyDocumentEntry result;
+    result.elements.emplace_back(field);
     result.elements.emplace_back(value);
     return result;
   }
@@ -103,6 +114,10 @@ struct PolicyDocumentCondition {
   //@}
 
  private:
+  friend struct internal::PolicyDocumentParser;
+
+  PolicyDocumentCondition() = default;
+
   PolicyDocumentEntry entry_;
 };
 
@@ -142,4 +157,4 @@ std::ostream& operator<<(std::ostream& os, PolicyDocumentCondition const& rhs);
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_POLICY_DOCUMENT_CONDITION_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_POLICY_DOCUMENT_H_

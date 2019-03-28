@@ -22,6 +22,7 @@
 #include "google/cloud/storage/internal/patch_builder.h"
 #include "google/cloud/storage/lifecycle_rule.h"
 #include "google/cloud/storage/object_access_control.h"
+#include "google/cloud/storage/policy_document.h"
 #include <map>
 #include <tuple>
 #include <utility>
@@ -225,6 +226,12 @@ inline bool operator>=(BucketIamConfiguration const& lhs,
 //@}
 
 std::ostream& operator<<(std::ostream& os, BucketIamConfiguration const& rhs);
+
+/**
+ */
+struct PolicyDocument {
+  std::vector<PolicyDocumentCondition> conditions;
+};
 
 /**
  * The Object Lifecycle configuration for a Bucket.

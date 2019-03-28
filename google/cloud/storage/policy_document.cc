@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/policy_document_condition.h"
+#include "google/cloud/storage/policy_document.h"
 #include <algorithm>
 #include <iostream>
 #include <numeric>

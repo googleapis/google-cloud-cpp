@@ -159,6 +159,8 @@ add_library(storage_client
             internal/parse_rfc3339.h
             internal/parse_rfc3339.cc
             internal/patch_builder.h
+            internal/policy_document_requests.h
+            internal/policy_document_requests.cc
             internal/range_from_pagination.h
             internal/raw_client.h
             internal/raw_client_wrapper_utils.h
@@ -208,6 +210,8 @@ add_library(storage_client
             object_rewriter.cc
             object_stream.h
             object_stream.cc
+            policy_document.h
+            policy_document.cc
             override_default_project.h
             retry_policy.h
             service_account.h
@@ -360,6 +364,7 @@ if (BUILD_TESTING)
         object_access_control_test.cc
         object_metadata_test.cc
         object_test.cc
+        policy_document_test.cc
         notification_metadata_test.cc
         retry_policy_test.cc
         service_account_test.cc

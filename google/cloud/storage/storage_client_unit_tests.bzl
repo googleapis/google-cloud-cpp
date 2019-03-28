@@ -77,6 +77,7 @@ storage_client_unit_tests = [
     "object_access_control_test.cc",
     "object_metadata_test.cc",
     "object_test.cc",
+    "policy_document_test.cc",
     "notification_metadata_test.cc",
     "retry_policy_test.cc",
     "service_account_test.cc",
