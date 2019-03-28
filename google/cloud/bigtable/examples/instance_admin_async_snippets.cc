@@ -243,7 +243,7 @@ void AsyncDeleteInstance(cbt::InstanceAdmin instance_admin,
     throw Usage{"async-delete-instance: <project-id> <instance-id> "};
   }
 
-  //! [async delete instance] [START bigtable_async_delete_instance]
+  //! [async-delete-instance] [START bigtable_async_delete_instance]
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id) {
     google::cloud::future<google::cloud::Status> fut =
@@ -258,7 +258,7 @@ void AsyncDeleteInstance(cbt::InstanceAdmin instance_admin,
     }
     std::cout << " Done\n";
   }
-  //! [async delete instance] [END bigtable_async_delete_instance]
+  //! [async-delete-instance] [END bigtable_async_delete_instance]
   (std::move(instance_admin), std::move(cq), argv[1]);
 }
 }  // anonymous namespace
