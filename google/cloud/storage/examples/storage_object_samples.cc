@@ -1704,7 +1704,7 @@ void CreatePutSignedUrlV4(google::cloud::storage::Client client, int& argc,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
-  //! [create put signed url v4]
+  //! [create put signed url v4] [START storage_generate_upload_signed_url_v4]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
@@ -1722,7 +1722,7 @@ void CreatePutSignedUrlV4(google::cloud::storage::Client client, int& argc,
               << "curl -X PUT -H 'Content-Type: application/octet-stream'"
               << " --upload-file my-file '" << *signed_url << "'\n";
   }
-  //! [create put signed url v4]
+  //! [create put signed url v4] [END storage_generate_upload_signed_url_v4]
   (std::move(client), bucket_name, object_name);
 }
 
