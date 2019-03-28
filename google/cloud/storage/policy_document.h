@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_POLICY_DOCUMENT_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_POLICY_DOCUMENT_H_
 
+#include <chrono>
 #include <string>
 #include <utility>
 #include <vector>
@@ -152,6 +153,14 @@ inline bool operator>=(PolicyDocumentCondition const& lhs,
 }
 
 std::ostream& operator<<(std::ostream& os, PolicyDocumentCondition const& rhs);
+
+/**
+ */
+struct PolicyDocument {
+  std::chrono::system_clock::time_point expiration_time;
+  std::vector<PolicyDocumentCondition> conditions;
+};
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

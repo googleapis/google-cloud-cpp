@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/storage/hmac_key_metadata.h"
 #include "google/cloud/storage/internal/logging_client.h"
+#include "google/cloud/storage/internal/policy_document_requests.h"
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/list_buckets_reader.h"
@@ -31,6 +32,7 @@
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/object_rewriter.h"
 #include "google/cloud/storage/object_stream.h"
+#include "google/cloud/storage/policy_document.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/upload_options.h"
 
@@ -2577,6 +2579,13 @@ class Client {
   }
   //@}
 
+  StatusOr<std::string> CreateSignedPolicyDocument(std::string bucket_name,
+                                                   PolicyDocument document) {
+    internal::PolicyDocumentRequest request(std::move(bucket_name),
+                                            std::move(document));
+    return SignPolicyDocument(std::move(request));
+  }
+
   //@{
   /**
    * @name Pub/Sub operations.
@@ -2795,6 +2804,9 @@ class Client {
 
   StatusOr<std::string> SignUrlV2(internal::V2SignUrlRequest const& request);
   StatusOr<std::string> SignUrlV4(internal::V4SignUrlRequest request);
+
+  StatusOr<std::string> SignPolicyDocument(
+      internal::PolicyDocumentRequest const& request);
 
   std::shared_ptr<internal::RawClient> raw_client_;
 };

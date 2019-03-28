@@ -228,12 +228,6 @@ inline bool operator>=(BucketIamConfiguration const& lhs,
 std::ostream& operator<<(std::ostream& os, BucketIamConfiguration const& rhs);
 
 /**
- */
-struct PolicyDocument {
-  std::vector<PolicyDocumentCondition> conditions;
-};
-
-/**
  * The Object Lifecycle configuration for a Bucket.
  *
  * @see https://cloud.google.com/storage/docs/managing-lifecycles for general

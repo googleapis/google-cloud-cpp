@@ -31,6 +31,29 @@ struct PolicyDocumentParser {
   static StatusOr<PolicyDocument> FromJson(internal::nl::json const& json);
   static StatusOr<PolicyDocument> FromString(std::string const& text);
 };
+
+class PolicyDocumentRequest {
+ public:
+  PolicyDocumentRequest() = default;
+  explicit PolicyDocumentRequest(std::string bucket_name,
+                                 PolicyDocument document)
+      : bucket_name_(bucket_name), document_(document) {}
+
+  std::string const& bucket_name() const { return bucket_name_; }
+
+  PolicyDocument const& policy_document() const { return document_; }
+
+  std::chrono::seconds expiration_time_as_seconds() const {
+    return std::chrono::duration_cast<std::chrono::seconds>(
+        document_.expiration_time.time_since_epoch());
+  }
+
+  std::string StringToSign() const;
+
+ private:
+  std::string bucket_name_;
+  PolicyDocument document_;
+};
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -13,14 +13,39 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/policy_document_requests.h"
+#include "google/cloud/storage/internal/format_time_point.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/internal/openssl_util.h"
+#include <sstream>
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-namespace {}  // namespace
+
+std::string PolicyDocumentRequest::StringToSign() const {
+  using internal::nl::json;
+  auto document = policy_document();
+
+  json j;
+  j["expiration"] = internal::FormatRfc3339(document.expiration_time);
+
+  for (auto const& kv : document.conditions) {
+    PolicyDocumentEntry condition = kv.entry();
+    auto elements = kv.entry().elements;
+
+    if (elements.size() == 2) {
+      json object;
+      object[elements.at(0)] = elements.at(1);
+      j["conditions"].push_back(object);
+    } else {
+      j["conditions"].push_back(elements);
+    }
+  }
+
+  return std::move(j).dump();
+}
 
 StatusOr<PolicyDocument> PolicyDocumentParser::FromJson(
     internal::nl::json const& json) {
@@ -28,6 +53,12 @@ StatusOr<PolicyDocument> PolicyDocumentParser::FromJson(
     return Status(StatusCode::kInvalidArgument, __func__);
   }
   PolicyDocument result;
+
+  if (json.count("expiration") != 0) {
+    result.expiration_time =
+        internal::ParseRfc3339(json["expiration"].get<std::string>());
+  }
+
   /* This ugly code needs to account for entries like:
    *
    *  {"acl": "bucket-owner-read" }
