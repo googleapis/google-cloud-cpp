@@ -96,11 +96,6 @@ TEST_F(ObjectIntegrationTest, V4SignJson) {
           SignedUrlTimestamp(internal::ParseRfc3339(date)),
           SignedUrlDuration(valid_for),
           AddExtensionHeader("host", "storage.googleapis.com"));
-
-      // TODO(#2350) - when that bug is fixed we can remove this if() block.
-      if (object_name == "") {
-        continue;
-      }
     } else if (headers.size() == 1) {
       actual = client.CreateV4SignedUrl(
           method_name, bucket_name, object_name,
