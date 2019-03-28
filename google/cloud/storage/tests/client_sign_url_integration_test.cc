@@ -60,8 +60,7 @@ class ObjectIntegrationTest
         // Check for the keys of the headers field
         for (auto& x : j_obj["headers"].items()) {
           // The keys are returned in alphabetical order by nlohmann::json, but
-          // the order does not matter when creating signed urls. in
-          // alphabetical order
+          // the order does not matter when creating signed urls.
           key_name = x.key();
           value_name = x.value();
           headers.emplace_back(key_name, value_name);
