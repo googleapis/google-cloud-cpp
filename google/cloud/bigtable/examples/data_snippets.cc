@@ -494,30 +494,19 @@ void GetFamily(google::cloud::bigtable::Table table, int argc, char* argv[]) {
 
 void DeleteAllCells(google::cloud::bigtable::Table table, int argc,
                     char* argv[]) {
-  if (argc != 1) {
-    throw Usage{"get-family: <project-id> <instance-id> <table-id>"};
+  if (argc != 2) {
+    throw Usage{
+        "delete-all-cells: <project-id> <instance-id> <table-id> <row-key>"};
   }
+  std::string row_key = ConsumeArg(argc, argv);
 
   //! [delete all cells] [START bigtable_delete_all_cells]
-  [](google::cloud::bigtable::Table table) {
-    auto range = google::cloud::bigtable::RowRange::InfiniteRange();
+  [row_key](google::cloud::bigtable::Table table) {
+    auto status = table.Apply(google::cloud::bigtable::SingleRowMutation(
+        row_key, google::cloud::bigtable::DeleteFromRow()));
 
-    // Filter the results, only get the latest value
-    auto filter = google::cloud::bigtable::Filter::Latest(1);
-
-    for (auto const& row : table.ReadRows(range, filter)) {
-      if (!row) {
-        throw std::runtime_error(row.status().message());
-      }
-
-      std::string row_key = row->row_key();
-      auto status = table.Apply(google::cloud::bigtable::SingleRowMutation(
-          row_key, google::cloud::bigtable::DeleteFromRow()));
-
-      if (!status.ok()) {
-        throw std::runtime_error(status.message());
-      }
-      break;
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
     }
   }
   //! [delete all cells] [END bigtable_delete_all_cells]
