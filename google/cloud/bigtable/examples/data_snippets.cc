@@ -498,10 +498,10 @@ void DeleteAllCells(google::cloud::bigtable::Table table, int argc,
     throw Usage{
         "delete-all-cells: <project-id> <instance-id> <table-id> <row-key>"};
   }
-  std::string row_key = ConsumeArg(argc, argv);
+  auto row_key = ConsumeArg(argc, argv);
 
   //! [delete all cells] [START bigtable_delete_all_cells]
-  [row_key](google::cloud::bigtable::Table table) {
+  [](google::cloud::bigtable::Table table, std::string row_key) {
     auto status = table.Apply(google::cloud::bigtable::SingleRowMutation(
         row_key, google::cloud::bigtable::DeleteFromRow()));
 
@@ -510,7 +510,7 @@ void DeleteAllCells(google::cloud::bigtable::Table table, int argc,
     }
   }
   //! [delete all cells] [END bigtable_delete_all_cells]
-  (std::move(table));
+  (std::move(table), row_key);
 }
 }  // anonymous namespace
 
