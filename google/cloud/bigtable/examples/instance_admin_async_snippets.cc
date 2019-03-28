@@ -236,6 +236,31 @@ void AsyncListAllClusters(cbt::InstanceAdmin instance_admin,
   (std::move(instance_admin), std::move(cq));
 }
 
+void AsyncDeleteInstance(cbt::InstanceAdmin instance_admin,
+                         cbt::CompletionQueue cq,
+                         std::vector<std::string> argv) {
+  if (argv.size() != 2U) {
+    throw Usage{"async-delete-instance: <project-id> <instance-id> "};
+  }
+
+  //! [async delete instance] [START bigtable_async_delete_instance]
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
+     std::string instance_id) {
+    google::cloud::future<google::cloud::Status> fut =
+        instance_admin.AsyncDeleteInstance(instance_id, cq);
+
+    google::cloud::Status status = fut.get();
+
+    std::cout << status.message() << '\n';
+
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
+    }
+    std::cout << " Done\n";
+  }
+  //! [async delete instance] [END bigtable_async_delete_instance]
+  (std::move(instance_admin), std::move(cq), argv[1]);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -248,7 +273,8 @@ int main(int argc, char* argv[]) try {
       {"async-get-cluster", &AsyncGetCluster},
       {"async-list-instances", &AsyncListInstances},
       {"async-list-clusters", &AsyncListClusters},
-      {"async-list-all-clusters", &AsyncListAllClusters}};
+      {"async-list-all-clusters", &AsyncListAllClusters},
+      {"async-delete-instance", &AsyncDeleteInstance}};
 
   google::cloud::bigtable::CompletionQueue cq;
 

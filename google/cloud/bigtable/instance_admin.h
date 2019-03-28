@@ -245,6 +245,24 @@ class InstanceAdmin {
   Status DeleteInstance(std::string const& instance_id);
 
   /**
+   * Makes an asynchronous request to delete an instance.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param instance_id the id of the instance in the project to be deleted.
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   *
+   * @par Example
+   * @snippet instance_admin_async_snippets.cc async-delete-instance
+   */
+  future<Status> AsyncDeleteInstance(std::string const& instance_id,
+                                     CompletionQueue& cq);
+
+  /**
    * Obtain the list of clusters in an instance.
    *
    * @note In some circumstances Cloud Bigtable may be unable to obtain the full

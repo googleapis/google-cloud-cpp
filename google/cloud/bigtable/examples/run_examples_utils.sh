@@ -187,7 +187,7 @@ function run_all_instance_admin_async_examples {
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
   run_example ./bigtable_instance_admin_snippets delete-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
-  run_example ./bigtable_instance_admin_snippets delete-instance \
+  run_example ./instance_admin_async_snippets async-delete-instance \
       "${project_id}" "${INSTANCE}"
 
   # Verify that calling without a command produces the right exit status and
