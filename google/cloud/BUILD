@@ -38,6 +38,10 @@ sed -e "s;@CMAKE_CXX_COMPILER_ID@;$(C_COMPILER);" \
     -e "s;@GOOGLE_CLOUD_CPP_IS_RELEASE@;%s;" \
     -e "s;@GOOGLE_CLOUD_CPP_GIT_HEAD@;$${V};" < $< > $@
   """ % (GOOGLE_CLOUD_CPP_IS_RELEASE),
+    toolchains = [
+        "@bazel_tools//tools/cpp:current_cc_toolchain",
+        "@bazel_tools//tools/cpp:cc_flags",
+    ],
 )
 
 genrule(
