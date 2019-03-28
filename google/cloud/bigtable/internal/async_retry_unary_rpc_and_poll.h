@@ -195,6 +195,124 @@ class AsyncRetryAndPollUnaryRpc
   Functor callback_;
 };
 
+/**
+ * A functor used as a continuation to poll for result of a longrunning
+ * operation.
+ *
+ * A simple lambda cannot be used instead because it can't capture the polling
+ * policy, because it's a std::unique_ptr<>, hence, non-copyable.
+ */
+template <typename Client, typename Response>
+class PollAfterRetryFunctor {
+ public:
+  PollAfterRetryFunctor(char const* location,
+                        std::unique_ptr<PollingPolicy> polling_policy,
+                        MetadataUpdatePolicy metadata_update_policy,
+                        std::shared_ptr<Client> client, CompletionQueue cq)
+      : location_(location),
+        polling_policy_(std::move(polling_policy)),
+        metadata_update_policy_(std::move(metadata_update_policy)),
+        client_(std::move(client)),
+        cq_(std::move(cq)) {}
+
+  future<StatusOr<Response>> operator()(
+      future<StatusOr<google::longrunning::Operation>> fut) {
+    auto res = fut.get();
+    if (!res) {
+      return make_ready_future<StatusOr<Response>>(res.status());
+    }
+    return StartAsyncLongrunningOp<Client, Response>(
+        location_, std::move(polling_policy_),
+        std::move(metadata_update_policy_), std::move(client_), std::move(cq_),
+        *std::move(res));
+  }
+
+ private:
+  char const* location_;
+  std::unique_ptr<PollingPolicy> polling_policy_;
+  MetadataUpdatePolicy metadata_update_policy_;
+  std::shared_ptr<Client> client_;
+  CompletionQueue cq_;
+};
+
+/**
+ * Asynchronously start a longrunning operation (with retries) and poll its
+ * result.
+ *
+ * @param location typically the name of the function that created this
+ *     asynchronous retry loop.
+ * @param polling_policy controls how often the server is queried.
+ * @param rpc_retry_policy controls the number of retries, and what errors are
+ *     considered retryable.
+ * @param rpc_backoff_policy determines the wait time between retries.
+ * @param idempotent_policy determines if a request is retryable.
+ * @param metadata_update_policy controls how to update the metadata fields in
+ *     the request.
+ * @param client the client on which `AsyncGetOperation` is called to query
+ *     the longrunning operation's status.
+ * @param async_call the callable to start a new asynchronous operation.
+ * @param request the parameters of the request.
+ * @param cq the completion queue where the retry loop is executed.
+ *
+ * @return a future that becomes satisfied when either the retried RPC or
+ *     polling for the longrunning operation's results fail despite retries or
+ *     after both the initial RPC and the polling for the result of the
+ *     longrunning operation it initiated complete successfully.
+ */
+template <
+    typename AsyncCallType, typename RequestType, typename IdempotencyPolicy,
+    typename Client, typename Response,
+    typename Sig = internal::AsyncCallResponseType<AsyncCallType, RequestType>,
+    typename std::enable_if<Sig::value, int>::type validate_async_call_type = 0,
+    typename std::enable_if<
+        std::is_same<typename Sig::type, google::longrunning::Operation>::value,
+        int>::type async_call_returns_operation = 0>
+future<StatusOr<Response>> AsyncStartPollAfterRetryUnaryRpc(
+    char const* location, std::unique_ptr<PollingPolicy> polling_policy,
+    std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
+    std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+    IdempotencyPolicy idempotent_policy,
+    MetadataUpdatePolicy metadata_update_policy, std::shared_ptr<Client> client,
+    AsyncCallType async_call, RequestType request, CompletionQueue cq) {
+  PollAfterRetryFunctor<Client, Response> poll_functor(
+      location, std::move(polling_policy), metadata_update_policy, client, cq);
+  return StartRetryAsyncUnaryRpc(
+             location, std::move(rpc_retry_policy),
+             std::move(rpc_backoff_policy), std::move(idempotent_policy),
+             std::move(metadata_update_policy), std::move(async_call),
+             std::move(request), std::move(cq))
+      .then(std::move(poll_functor));
+}
+
+/**
+ * A wrapper around AsyncStartPollAfterRetryUnaryRpc binding the `Response`
+ * template parameter.
+ *
+ * This allows the user to not have to type most of the template parameters by
+ * hand and simply write:
+ * `AsyncPollAfterRetryUnaryRpcStarter<ResponseType>()(...args...);`
+ */
+template <typename Response>
+struct AsyncPollAfterRetryUnaryRpcStarter {
+  template <typename AsyncCallType, typename RequestType,
+            typename IdempotencyPolicy, typename Client>
+  future<StatusOr<Response>> operator()(
+      char const* location, std::unique_ptr<PollingPolicy> polling_policy,
+      std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
+      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+      IdempotencyPolicy idempotent_policy,
+      MetadataUpdatePolicy metadata_update_policy,
+      std::shared_ptr<Client> client, AsyncCallType async_call,
+      RequestType request, CompletionQueue cq) {
+    return AsyncStartPollAfterRetryUnaryRpc<
+        AsyncCallType, RequestType, IdempotencyPolicy, Client, Response>(
+        location, std::move(polling_policy), std::move(rpc_retry_policy),
+        std::move(rpc_backoff_policy), std::move(idempotent_policy),
+        std::move(metadata_update_policy), std::move(client),
+        std::move(async_call), std::move(request), std::move(cq));
+  }
+};
+
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

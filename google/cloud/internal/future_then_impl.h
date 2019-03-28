@@ -104,7 +104,7 @@ typename internal::then_helper<F, T>::future_t future<T>::then_impl(
   // Because we need to support C++11, we use a local class instead of a lambda,
   // as support for move+capture in lambdas is a C++14 feature.
   struct adapter {
-    explicit adapter(F&& func) : functor(func) {}
+    explicit adapter(F&& func) : functor(std::forward<F>(func)) {}
 
     auto operator()(std::shared_ptr<local_state_type> state)
         -> std::shared_ptr<internal::future_shared_state<result_t>> {
