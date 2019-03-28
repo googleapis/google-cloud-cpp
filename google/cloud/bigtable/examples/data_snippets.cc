@@ -491,6 +491,27 @@ void GetFamily(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   //! [get family] [END bigtable_get_family]
   (std::move(table));
 }
+
+void DeleteAllCells(google::cloud::bigtable::Table table, int argc,
+                    char* argv[]) {
+  if (argc != 2) {
+    throw Usage{
+        "delete-all-cells: <project-id> <instance-id> <table-id> <row-key>"};
+  }
+  auto row_key = ConsumeArg(argc, argv);
+
+  //! [delete all cells] [START bigtable_delete_all_cells]
+  [](google::cloud::bigtable::Table table, std::string row_key) {
+    auto status = table.Apply(google::cloud::bigtable::SingleRowMutation(
+        row_key, google::cloud::bigtable::DeleteFromRow()));
+
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
+    }
+  }
+  //! [delete all cells] [END bigtable_delete_all_cells]
+  (std::move(table), row_key);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -511,7 +532,7 @@ int main(int argc, char* argv[]) try {
       {"sample-rows", &SampleRows},
       {"sample-rows-collections", &SampleRowsCollections},
       {"get-family", &GetFamily},
-  };
+      {"delete-all-cells", &DeleteAllCells}};
 
   {
     // Force each command to generate its Usage string, so we can provide a good
