@@ -51,21 +51,11 @@ class ObjectIntegrationTest
       nl::json j_obj) {
     std::vector<std::pair<std::string, std::string>> headers;
 
-    for (auto& header : j_obj.items()) {
-      std::string header_key = header.key();
-
-      if (header_key == "headers") {
-        std::string key_name;
-        std::string value_name;
-        // Check for the keys of the headers field
-        for (auto& x : j_obj["headers"].items()) {
-          // The keys are returned in alphabetical order by nlohmann::json, but
-          // the order does not matter when creating signed urls.
-          key_name = x.key();
-          value_name = x.value();
-          headers.emplace_back(key_name, value_name);
-        }
-      }
+    // Check for the keys of the headers field
+    for (auto& x : j_obj["headers"].items()) {
+      // The keys are returned in alphabetical order by nlohmann::json, but
+      // the order does not matter when creating signed urls.
+      headers.emplace_back(x.key(), x.value());
     }
     return headers;
   }
@@ -107,21 +97,18 @@ TEST_F(ObjectIntegrationTest, V4SignJson) {
           SignedUrlDuration(valid_for),
           AddExtensionHeader("host", "storage.googleapis.com"));
 
-      // TODO(#2350)
+      // TODO(#2350) - when that bug is fixed we can remove this if() block.
       if (object_name == "") {
         continue;
       }
     } else if (headers.size() == 1) {
-      if (headers.front().second != "ignored") {
-        actual = client.CreateV4SignedUrl(
-            method_name, bucket_name, object_name,
-            SignedUrlTimestamp(internal::ParseRfc3339(date)),
-            SignedUrlDuration(valid_for),
-            AddExtensionHeader("host", "storage.googleapis.com"),
-            AddExtensionHeader(headers.at(0).first, headers.at(0).second));
-      }
+      actual = client.CreateV4SignedUrl(
+          method_name, bucket_name, object_name,
+          SignedUrlTimestamp(internal::ParseRfc3339(date)),
+          SignedUrlDuration(valid_for),
+          AddExtensionHeader("host", "storage.googleapis.com"),
+          AddExtensionHeader(headers.at(0).first, headers.at(0).second));
     } else if (headers.size() == 2) {
-      // For some reason the function outputs them as a map
       actual = client.CreateV4SignedUrl(
           method_name, bucket_name, object_name,
           SignedUrlTimestamp(internal::ParseRfc3339(date)),
