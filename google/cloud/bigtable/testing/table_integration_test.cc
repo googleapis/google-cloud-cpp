@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/testing/table_integration_test.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <google/protobuf/text_format.h>
@@ -33,8 +34,12 @@ std::string TableTestEnvironment::zone_;
 std::string TableTestEnvironment::replication_zone_;
 google::cloud::internal::DefaultPRNG TableTestEnvironment::generator_;
 std::string TableTestEnvironment::table_id_;
+bool TableTestEnvironment::using_cloud_bigtable_emulator_;
 
 void TableTestEnvironment::SetUp() {
+  using_cloud_bigtable_emulator_ =
+      google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST").has_value();
+
   generator_ = google::cloud::internal::MakeDefaultPRNG();
 
   auto admin_client = bigtable::CreateDefaultAdminClient(
@@ -105,7 +110,43 @@ void TableIntegrationTest::SetUp() {
       TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
       ClientOptions());
 
-  ASSERT_STATUS_OK(table_admin_->DropAllRows(TableTestEnvironment::table_id()));
+  // In production, we cannot use `DropAllRows()` to cleanup the table because
+  // the integration tests sometimes consume all the 'DropRowRangeGroup' quota.
+  // Instead we delete the rows, when possible, using BulkApply().
+  BulkMutation bulk;
+  auto table = GetTable();
+  // Bigtable does not support more than 100,000 mutations in a BulkMutation.
+  // If we had that many rows then just fallback on DropAllRows(). Most tests
+  // only have a small number of rows, so this is a good strategy to save
+  // DropAllRows() quota, and should be fast in most cases.
+  std::size_t const maximum_mutations = 100000;
+
+  for (auto const& row :
+       table.ReadRows(RowRange::InfiniteRange(), Filter::PassAllFilter())) {
+    if (!row) {
+      break;
+    }
+    bulk.emplace_back(
+        SingleRowMutation(row->row_key(), bigtable::DeleteFromRow()));
+    if (bulk.size() > maximum_mutations) {
+      break;
+    }
+  }
+
+  // The version of the emulator distributed with the Cloud SDK does not handle
+  // deleted rows correctly:
+  //   https://github.com/googleapis/google-cloud-go/issues/1240
+  // This has been fixed at HEAD, but the changes have not made it to a version
+  // we can use yet. So just use DropAllRows() in that case.
+  if (bulk.size() > maximum_mutations || UsingCloudBigtableEmulator()) {
+    ASSERT_STATUS_OK(
+        table_admin_->DropAllRows(TableTestEnvironment::table_id()));
+    return;
+  }
+  auto failures = table.BulkApply(std::move(bulk));
+  for (auto&& f : failures) {
+    ASSERT_STATUS_OK(f.status());
+  }
 }
 
 bigtable::Table TableIntegrationTest::GetTable() {

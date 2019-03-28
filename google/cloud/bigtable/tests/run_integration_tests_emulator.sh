@@ -25,7 +25,7 @@ start_emulators
 # The project and instance do not matter for the Cloud Bigtable emulator.
 # Use a unique project name to allow multiple runs of the test with
 # an externally launched emulator.
-readonly NONCE="${RANDOM}-{RANDOM}"
+readonly NONCE="${RANDOM}-${RANDOM}"
 readonly PROJECT_ID="emulated-${NONCE}"
 
 echo
