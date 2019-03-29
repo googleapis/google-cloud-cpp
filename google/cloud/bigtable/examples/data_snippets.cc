@@ -494,25 +494,58 @@ void GetFamily(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   (std::move(table));
 }
 
-void DeleteAllCells(google::cloud::bigtable::Table table, int argc,
-                    char* argv[]) {
-  if (argc != 2) {
+void DeleteFamilyCells(google::cloud::bigtable::Table table, int argc,
+                       char* argv[]) {
+  if (argc != 3) {
     throw Usage{
-        "delete-all-cells: <project-id> <instance-id> <table-id> <row-key>"};
+        "delete-family-cells: <project-id> <instance-id> <table-id> "
+        "<row-key> <family-name>"};
   }
   auto row_key = ConsumeArg(argc, argv);
+  auto family_name = ConsumeArg(argc, argv);
 
-  //! [delete all cells] [START bigtable_delete_all_cells]
-  [](google::cloud::bigtable::Table table, std::string row_key) {
+  //! [delete family cells] [START bigtable_delete_family_cells]
+  [](google::cloud::bigtable::Table table, std::string row_key,
+     std::string family_name) {
+    // Delete all cells within a family.
     auto status = table.Apply(google::cloud::bigtable::SingleRowMutation(
-        row_key, google::cloud::bigtable::DeleteFromRow()));
+        row_key, google::cloud::bigtable::DeleteFromFamily(family_name)));
 
     if (!status.ok()) {
       throw std::runtime_error(status.message());
     }
   }
-  //! [delete all cells] [END bigtable_delete_all_cells]
-  (std::move(table), row_key);
+  //! [delete family cells] [END bigtable_delete_family_cells]
+  (std::move(table), row_key, family_name);
+}
+
+void DeleteSelectiveFamilyCells(google::cloud::bigtable::Table table, int argc,
+                                char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "delete-selective-family-cells: <project-id> <instance-id> <table-id> "
+        "<row-key> <family-name> <column-name>"};
+  }
+  auto row_key = ConsumeArg(argc, argv);
+  auto family_name = ConsumeArg(argc, argv);
+  auto column_name = ConsumeArg(argc, argv);
+
+  //! [delete selective family cells] [START
+  //! bigtable_delete_selective_family_cells]
+  [](google::cloud::bigtable::Table table, std::string row_key,
+     std::string family_name, std::string column_name) {
+    // Delete selective cell within a family.
+    auto status = table.Apply(google::cloud::bigtable::SingleRowMutation(
+        row_key,
+        google::cloud::bigtable::DeleteFromColumn(family_name, column_name)));
+
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
+    }
+  }
+  //! [delete selective family cells] [END
+  //! bigtable_delete_selective_family_cells]
+  (std::move(table), row_key, family_name, column_name);
 }
 }  // anonymous namespace
 
@@ -534,7 +567,8 @@ int main(int argc, char* argv[]) try {
       {"sample-rows", &SampleRows},
       {"sample-rows-collections", &SampleRowsCollections},
       {"get-family", &GetFamily},
-      {"delete-all-cells", &DeleteAllCells}};
+      {"delete-family-cells", &DeleteFamilyCells},
+      {"delete-selective-family-cells", &DeleteSelectiveFamilyCells}};
 
   {
     // Force each command to generate its Usage string, so we can provide a good

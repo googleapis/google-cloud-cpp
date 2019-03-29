@@ -300,6 +300,9 @@ run_all_data_examples() {
   local -r PREFIX="root/0/1/"
   local -r ROW_KEY_1="root/0/0/1"
   local -r ROW_KEY_2="root/0/1/0"
+  local -r ROW_KEY_3="key-000007"
+  local -r COLUMN_NAME="col2"
+  local -r FAMILY_NAME="fam"
 
   run_example ./table_admin_snippets create-table "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets apply "${project_id}" "${instance_id}" "${TABLE}"
@@ -326,6 +329,10 @@ run_all_data_examples() {
   run_example ./data_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets get-family "${project_id}" "${instance_id}" "${TABLE}"  
   run_example ./data_snippets delete-all-cells "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_1}"
+  run_example ./data_snippets delete-family-cells \
+  "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_2}" "${FAMILY_NAME}"
+  run_example ./data_snippets delete-selective-family-cells \
+  "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_2}" "${FAMILY_NAME}" "{COLUMN_NAME}"
   run_example ./table_admin_snippets delete-table "${project_id}" "${instance_id}" "${TABLE}"
 }
 
