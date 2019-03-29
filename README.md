@@ -118,7 +118,7 @@ of these tools we test with are:
 | Tool       | Minimum Version |
 | ---------- | --------------- |
 | CMake      | 3.5 |
-| Bazel      | 0.20.0 |
+| Bazel      | 0.24.0 |
 
 #### Libraries
 
