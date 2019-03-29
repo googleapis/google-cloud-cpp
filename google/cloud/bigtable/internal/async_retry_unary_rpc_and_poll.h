@@ -260,8 +260,8 @@ class PollAfterRetryFunctor {
  *     longrunning operation it initiated complete successfully.
  */
 template <
-    typename AsyncCallType, typename RequestType, typename IdempotencyPolicy,
-    typename Client, typename Response,
+    typename Response, typename AsyncCallType, typename RequestType,
+    typename IdempotencyPolicy, typename Client,
     typename Sig = internal::AsyncCallResponseType<AsyncCallType, RequestType>,
     typename std::enable_if<Sig::value, int>::type validate_async_call_type = 0,
     typename std::enable_if<
@@ -283,35 +283,6 @@ future<StatusOr<Response>> AsyncStartPollAfterRetryUnaryRpc(
              std::move(request), std::move(cq))
       .then(std::move(poll_functor));
 }
-
-/**
- * A wrapper around AsyncStartPollAfterRetryUnaryRpc binding the `Response`
- * template parameter.
- *
- * This allows the user to not have to type most of the template parameters by
- * hand and simply write:
- * `AsyncPollAfterRetryUnaryRpcStarter<ResponseType>()(...args...);`
- */
-template <typename Response>
-struct AsyncPollAfterRetryUnaryRpcStarter {
-  template <typename AsyncCallType, typename RequestType,
-            typename IdempotencyPolicy, typename Client>
-  future<StatusOr<Response>> operator()(
-      char const* location, std::unique_ptr<PollingPolicy> polling_policy,
-      std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-      IdempotencyPolicy idempotent_policy,
-      MetadataUpdatePolicy metadata_update_policy,
-      std::shared_ptr<Client> client, AsyncCallType async_call,
-      RequestType request, CompletionQueue cq) {
-    return AsyncStartPollAfterRetryUnaryRpc<
-        AsyncCallType, RequestType, IdempotencyPolicy, Client, Response>(
-        location, std::move(polling_policy), std::move(rpc_retry_policy),
-        std::move(rpc_backoff_policy), std::move(idempotent_policy),
-        std::move(metadata_update_policy), std::move(client),
-        std::move(async_call), std::move(request), std::move(cq));
-  }
-};
 
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS

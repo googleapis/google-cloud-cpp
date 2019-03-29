@@ -588,7 +588,7 @@ class AsyncStartPollAfterRetryUnaryRpcTest
   future<StatusOr<btproto::Cluster>> SimulateCreateCluster() {
     btproto::CreateClusterRequest request;
     request.set_cluster_id("my_newly_created_cluster");
-    auto fut = internal::AsyncPollAfterRetryUnaryRpcStarter<btproto::Cluster>()(
+    auto fut = internal::AsyncStartPollAfterRetryUnaryRpc<btproto::Cluster>(
         __func__, std::move(polling_policy), std::move(rpc_retry_policy),
         std::move(rpc_backoff_policy),
         internal::ConstantIdempotencyPolicy(false),
