@@ -588,8 +588,8 @@ int main(int argc, char* argv[]) try {
       {"sample-rows", &SampleRows},
       {"sample-rows-collections", &SampleRowsCollections},
       {"get-family", &GetFamily},
-      {"delete-all-cells", &DeleteAllCells}.{"delete-family-cells",
-                                             &DeleteFamilyCells},
+      {"delete-all-cells", &DeleteAllCells},
+      {"delete-family-cells", &DeleteFamilyCells},
       {"delete-selective-family-cells", &DeleteSelectiveFamilyCells}};
 
   {
