@@ -262,11 +262,7 @@ class PollAfterRetryFunctor {
 template <
     typename Response, typename AsyncCallType, typename RequestType,
     typename IdempotencyPolicy, typename Client,
-    typename Sig = internal::AsyncCallResponseType<AsyncCallType, RequestType>,
-    typename std::enable_if<Sig::value, int>::type validate_async_call_type = 0,
-    typename std::enable_if<
-        std::is_same<typename Sig::type, google::longrunning::Operation>::value,
-        int>::type async_call_returns_operation = 0>
+    typename Sig = internal::AsyncCallResponseType<AsyncCallType, RequestType>>
 future<StatusOr<Response>> AsyncStartPollAfterRetryUnaryRpc(
     char const* location, std::unique_ptr<PollingPolicy> polling_policy,
     std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
@@ -276,6 +272,9 @@ future<StatusOr<Response>> AsyncStartPollAfterRetryUnaryRpc(
     AsyncCallType async_call, RequestType request, CompletionQueue cq) {
   PollAfterRetryFunctor<Client, Response> poll_functor(
       location, std::move(polling_policy), metadata_update_policy, client, cq);
+  static_assert(
+      std::is_same<typename Sig::type, google::longrunning::Operation>::value,
+      "async_call should return a google::longrunning::Operation");
   return StartRetryAsyncUnaryRpc(
              location, std::move(rpc_retry_policy),
              std::move(rpc_backoff_policy), std::move(idempotent_policy),
