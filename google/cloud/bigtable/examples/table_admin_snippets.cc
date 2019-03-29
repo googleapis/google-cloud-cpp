@@ -179,14 +179,14 @@ void DropAllRows(google::cloud::bigtable::TableAdmin admin, int argc,
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
-  //! [drop all rows] [START bigtable_del_rows]
+  //! [drop all rows] [START bigtable_truncate_table]
   [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
     google::cloud::Status status = admin.DropAllRows(table_id);
     if (!status.ok()) {
       throw std::runtime_error(status.message());
     }
   }
-  //! [drop all rows] [END bigtable_del_rows]
+  //! [drop all rows] [END bigtable_truncate_table]
   (std::move(admin), table_id);
 }
 
@@ -197,7 +197,7 @@ void DropRowsByPrefix(google::cloud::bigtable::TableAdmin admin, int argc,
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
-  //! [drop rows by prefix]
+  //! [drop rows by prefix] [START bigtable_delete_rows_prefix]
   [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
     google::cloud::Status status =
         admin.DropRowsByPrefix(table_id, "key-00004");
@@ -205,7 +205,7 @@ void DropRowsByPrefix(google::cloud::bigtable::TableAdmin admin, int argc,
       throw std::runtime_error(status.message());
     }
   }
-  //! [drop rows by prefix]
+  //! [drop rows by prefix] [END bigtable_delete_rows_prefix]
   (std::move(admin), table_id);
 }
 

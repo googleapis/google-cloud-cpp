@@ -503,7 +503,7 @@ void UpdateAppProfileDescription(
 }
 //! [update app profile description]
 
-//! [update app profile routing any]
+//! [update app profile routing any] [START bigtable_update_app_profile]
 void UpdateAppProfileRoutingAny(
     google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
     char* argv[]) {
@@ -527,7 +527,7 @@ void UpdateAppProfileRoutingAny(
   google::protobuf::TextFormat::PrintToString(*profile, &detail);
   std::cout << "Application Profile details=" << detail << "\n";
 }
-//! [update app profile routing any]
+//! [update app profile routing any] [END bigtable_update_app_profile]
 
 //! [update app profile routing]
 void UpdateAppProfileRoutingSingleCluster(

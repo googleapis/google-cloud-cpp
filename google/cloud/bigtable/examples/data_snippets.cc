@@ -101,7 +101,7 @@ void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     throw Usage{"bulk-apply: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [bulk apply] [START bigtable_insert_rows]
+  //! [bulk apply] [START bigtable_mutate_insert_rows]
   [](google::cloud::bigtable::Table table) {
     // Write several rows in a single operation, each row has some trivial data.
     google::cloud::bigtable::BulkMutation bulk;
@@ -134,7 +134,7 @@ void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
       throw std::runtime_error(status.message());
     }
   }
-  //! [bulk apply] [END bigtable_insert_rows]
+  //! [bulk apply] [END bigtable_mutate_insert_rows]
   (std::move(table));
 }
 
@@ -143,7 +143,7 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     throw Usage{"read-row: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [read row] [START bigtable_get_row]
+  //! [read row] [START bigtable_get_row] [START bigtable_read_error]
   [](google::cloud::bigtable::Table table) {
     // Filter the results, only include the latest value on each cell.
     auto filter = google::cloud::bigtable::Filter::Latest(1);
@@ -171,7 +171,7 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     }
     std::cout << std::flush;
   }
-  //! [read row] [END bigtable_get_row]
+  //! [read row] [END bigtable_get_row] [END bigtable_read_error]
   (std::move(table));
 }
 
@@ -181,6 +181,7 @@ void ReadRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   }
 
   //! [read rows] [START bigtable_get_rows] [START bigtable_table_readstream]
+  // [START bigtable_read_range]
   [](google::cloud::bigtable::Table table) {
     // Create the range of rows to read.
     auto range =
@@ -206,6 +207,7 @@ void ReadRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     }
     std::cout << std::flush;
   }
+  // [END bigtable_read_range]
   //! [read rows] [END bigtable_get_rows] [END bigtable_table_readstream]
   (std::move(table));
 }
@@ -216,7 +218,7 @@ void ReadRowsWithLimit(google::cloud::bigtable::Table table, int argc,
     throw Usage{"read-rows-with-limit: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [read rows with limit]
+  //! [read rows with limit] [START bigtable_read_filter]
   [](google::cloud::bigtable::Table table) {
     // Create the range of rows to read.
     auto range =
@@ -242,7 +244,7 @@ void ReadRowsWithLimit(google::cloud::bigtable::Table table, int argc,
     }
     std::cout << std::flush;
   }
-  //! [read rows with limit]
+  //! [read rows with limit] [END bigtable_read_filter]
   (std::move(table));
 }
 
@@ -328,7 +330,7 @@ void ReadRowSetPrefix(google::cloud::bigtable::Table table, int argc,
 
   std::string prefix = ConsumeArg(argc, argv);
 
-  //! [read rowset prefix]
+  //! [read rowset prefix] [START bigtable_read_prefix_list]
   [&prefix](google::cloud::bigtable::Table table) {
     namespace cbt = google::cloud::bigtable;
     auto row_set = cbt::RowSet();
@@ -352,7 +354,7 @@ void ReadRowSetPrefix(google::cloud::bigtable::Table table, int argc,
     }
     std::cout << std::flush;
   }
-  //! [read rowset prefix]
+  //! [read rowset prefix] [END bigtable_read_prefix_list]
   (std::move(table));
 }
 
@@ -417,7 +419,7 @@ void SampleRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     throw Usage{"sample-rows: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [sample row keys] [START bigtable_sample_row_keys]
+  //! [sample row keys] [START bigtable_table_sample_splits]
   [](google::cloud::bigtable::Table table) {
     auto samples = table.SampleRows<>();
     if (!samples) {
@@ -429,7 +431,7 @@ void SampleRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     }
     std::cout << std::flush;
   }
-  //! [sample row keys] [END bigtable_sample_row_keys]
+  //! [sample row keys] [END bigtable_table_sample_splits]
   (std::move(table));
 }
 
@@ -469,7 +471,7 @@ void GetFamily(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     throw Usage{"get-family: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [get family] [START bigtable_get_family]
+  //! [get family] [START bigtable_get_family] [START bigtable_family_ref]
   [](google::cloud::bigtable::Table table) {
     // Create the range of rows to read.
     auto range = google::cloud::bigtable::RowRange::InfiniteRange();
@@ -488,7 +490,7 @@ void GetFamily(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     }
     std::cout << std::flush;
   }
-  //! [get family] [END bigtable_get_family]
+  //! [get family] [END bigtable_get_family] [END bigtable_family_ref]
   (std::move(table));
 }
 
