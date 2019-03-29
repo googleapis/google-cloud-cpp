@@ -551,8 +551,8 @@ void DeleteSelectiveFamilyCells(google::cloud::bigtable::Table table, int argc,
   auto family_name = ConsumeArg(argc, argv);
   auto column_name = ConsumeArg(argc, argv);
 
-  //! [delete selective family cells] [START
-  //! bigtable_delete_selective_family_cells]
+  //! [delete selective family cells]
+  // [START bigtable_delete_selective_family_cells]
   [](google::cloud::bigtable::Table table, std::string row_key,
      std::string family_name, std::string column_name) {
     // Delete selective cell within a family.
@@ -564,8 +564,9 @@ void DeleteSelectiveFamilyCells(google::cloud::bigtable::Table table, int argc,
       throw std::runtime_error(status.message());
     }
   }
-  //! [delete selective family cells] [END
-  //! bigtable_delete_selective_family_cells]
+  // [END bigtable_delete_selective_family_cells]
+  //! [delete selective family cells]
+
   (std::move(table), row_key, family_name, column_name);
 }
 }  // anonymous namespace

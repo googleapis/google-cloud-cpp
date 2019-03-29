@@ -332,7 +332,7 @@ run_all_data_examples() {
   run_example ./data_snippets delete-family-cells \
   "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_2}" "${FAMILY_NAME}"
   run_example ./data_snippets delete-selective-family-cells \
-  "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_2}" "${FAMILY_NAME}" "{COLUMN_NAME}"
+  "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_2}" "${FAMILY_NAME}" "${COLUMN_NAME}"
   run_example ./table_admin_snippets delete-table "${project_id}" "${instance_id}" "${TABLE}"
 }
 
