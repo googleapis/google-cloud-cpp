@@ -155,7 +155,10 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   EXPECT_EQ(updated_display_name, instance_after_update->display_name());
 
   // Delete instance
-  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
+  // Make an asynchronous request, but immediately block because this is just a
+  // test.
+  auto status = instance_admin_->AsyncDeleteInstance(instance_id, cq).get();
+  ASSERT_STATUS_OK(status);
   auto instances_after_delete = instance_admin_->AsyncListInstances(cq).get();
   ASSERT_STATUS_OK(instances_after_delete);
   EXPECT_TRUE(IsInstancePresent(async_instances_current->instances,
@@ -246,7 +249,10 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   auto clusters_list_after_delete =
       instance_admin_->AsyncListClusters(cq, id).get();
   ASSERT_STATUS_OK(clusters_list_after_delete);
-  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(id));
+  // Make an asynchronous request, but immediately block because this is just a
+  // test.
+  auto status = instance_admin_->AsyncDeleteInstance(id, cq).get();
+  ASSERT_STATUS_OK(status);
   EXPECT_TRUE(
       IsClusterPresent(clusters_list_after->clusters,
                        instance_details->name() + "/clusters/" + id + "-cl2"));
@@ -299,8 +305,8 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAllClustersTest) {
   EXPECT_TRUE(
       IsIdOrNamePresentInClusterList(clusters_list->clusters, instance2_name));
 
-  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(id1));
-  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(id2));
+  ASSERT_STATUS_OK(instance_admin_->AsyncDeleteInstance(id1, cq).get());
+  ASSERT_STATUS_OK(instance_admin_->AsyncDeleteInstance(id2, cq).get());
 
   cq.Shutdown();
   pool.join();
