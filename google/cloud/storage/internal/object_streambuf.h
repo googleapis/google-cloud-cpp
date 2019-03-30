@@ -51,7 +51,7 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
 };
 
 /**
- * A read stream in a permanent error status.
+ * A read stream in a permanent error state.
  */
 class ObjectReadErrorStreambuf : public ObjectReadStreambuf {
  public:

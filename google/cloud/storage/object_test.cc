@@ -419,7 +419,7 @@ TEST_F(ObjectTest, ReadObjectTooManyFailures) {
 }
 
 TEST_F(ObjectTest, ReadObjectPermanentFailure) {
-  // We cannot use google::cloud::storage::testing::TooManyFailuresStatusTest,
+  // We cannot use google::cloud::storage::testing::PermanentFailureStatusTest,
   // because that assumes the type returned by the RawClient operation is
   // copyable.
   using ReturnType = std::unique_ptr<internal::ObjectReadStreambuf>;
