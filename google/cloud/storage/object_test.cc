@@ -27,6 +27,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
 using ::testing::HasSubstr;
@@ -391,6 +392,54 @@ TEST_F(ObjectTest, PatchObjectPermanentFailure) {
       },
       "PatchObject");
 }
+
+TEST_F(ObjectTest, ReadObjectTooManyFailures) {
+  // We cannot use google::cloud::storage::testing::TooManyFailuresStatusTest,
+  // because that assumes the type returned by the RawClient operation is
+  // copyable.
+  using ReturnType = std::unique_ptr<internal::ObjectReadStreambuf>;
+
+  // A storage::Client with a simple to test policy.
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  auto transient_error = [](internal::ReadObjectRangeRequest const&) {
+    return StatusOr<ReturnType>(TransientError());
+  };
+  EXPECT_CALL(*mock, ReadObject(_))
+      .WillOnce(Invoke(transient_error))
+      .WillOnce(Invoke(transient_error))
+      .WillOnce(Invoke(transient_error));
+
+  Status status =
+      client.ReadObject("test-bucket-name", "test-object-name").status();
+  EXPECT_EQ(TransientError().code(), status.code());
+  EXPECT_THAT(status.message(), HasSubstr("Retry policy exhausted"));
+  EXPECT_THAT(status.message(), HasSubstr("ReadObject"));
+}
+
+TEST_F(ObjectTest, ReadObjectPermanentFailure) {
+  // We cannot use google::cloud::storage::testing::TooManyFailuresStatusTest,
+  // because that assumes the type returned by the RawClient operation is
+  // copyable.
+  using ReturnType = std::unique_ptr<internal::ObjectReadStreambuf>;
+
+  // A storage::Client with a simple to test policy.
+  Client client{std::shared_ptr<internal::RawClient>(mock),
+                LimitedErrorCountRetryPolicy(2)};
+
+  auto permanent_error = [](internal::ReadObjectRangeRequest const&) {
+    return StatusOr<ReturnType>(PermanentError());
+  };
+  EXPECT_CALL(*mock, ReadObject(_)).WillOnce(Invoke(permanent_error));
+
+  Status status =
+      client.ReadObject("test-bucket-name", "test-object-name").status();
+  EXPECT_EQ(PermanentError().code(), status.code());
+  EXPECT_THAT(status.message(), HasSubstr("Permanent error"));
+  EXPECT_THAT(status.message(), HasSubstr("ReadObject"));
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

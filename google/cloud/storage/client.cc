@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/internal/filesystem.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/storage/internal/curl_handle.h"
@@ -43,6 +44,19 @@ StatusOr<Client> Client::CreateDefaultClient() {
     return StatusOr<Client>(opts.status());
   }
   return StatusOr<Client>(Client(*opts));
+}
+
+ObjectReadStream Client::ReadObjectImpl(
+    internal::ReadObjectRangeRequest const& request) {
+  auto streambuf = raw_client_->ReadObject(request);
+  if (!streambuf) {
+    ObjectReadStream error_stream(
+        google::cloud::internal::make_unique<
+            internal::ObjectReadErrorStreambuf>(std::move(streambuf.status())));
+    error_stream.setstate(std::ios::badbit | std::ios::eofbit);
+    return error_stream;
+  }
+  return ObjectReadStream(*std::move(streambuf));
 }
 
 bool Client::UseSimpleUpload(std::string const& file_name) const {
