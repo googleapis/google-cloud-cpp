@@ -2592,7 +2592,7 @@ class Client {
    * consumed by, for example a web application, that will construct an HTML
    * form containing these fields and later POST'ed to GCS.
    *
-   * @param policy_document the policy document.
+   * @param document the policy document.
    *
    * @return the signed policy document.
    *
@@ -2603,7 +2603,7 @@ class Client {
    * `ExactMatch()`, `ContentLengthRange()`.
    *
    * @par Example
-   * @snippet storage_bucket_samples.cc sign policy document
+   * @snippet storage_bucket_samples.cc create signed policy document
    *
    * @see
    * https://cloud.google.com/storage/docs/xml-api/post-object#policydocument

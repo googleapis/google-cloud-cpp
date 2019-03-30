@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/policy_document.h"
 #include "google/cloud/storage/bucket_metadata.h"
+#include "google/cloud/storage/internal/format_time_point.h"
 #include "google/cloud/storage/internal/parse_rfc3339.h"
 #include "google/cloud/storage/internal/policy_document_request.h"
 #include <gmock/gmock.h>
@@ -127,6 +128,21 @@ TEST(PolicyDocumentTests, PolicyDocumentStreaming) {
             "PolicyDocumentCondition=[bucket, travel-maps], "
             "PolicyDocumentCondition=[eq, $Content-Type, image/jpeg], "
             "PolicyDocumentCondition=[content-length-range, 0, 1000000]]}");
+}
+
+/// @test Verify that PolicyDocumentResult streaming operator works as expected.
+TEST(PolicyDocumentTests, PolicyDocumentResultStreaming) {
+  PolicyDocumentResult result = {"foo@foo.com",
+                                 internal::ParseRfc3339("2010-06-16T11:11:11Z"),
+                                 "asdfasdfasdf", "asdfasdfasdf"};
+  std::ostringstream os;
+  os << result;
+  auto actual = os.str();
+  EXPECT_EQ(actual,
+            "PolicyDocumentResult={access_id=foo@foo.com"
+            ", expiration=" +
+                internal::FormatRfc3339(result.expiration) +
+                ", policy=asdfasdfasdf, signature=asdfasdfasdf}");
 }
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
