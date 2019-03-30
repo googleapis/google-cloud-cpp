@@ -223,14 +223,18 @@ TEST_P(CurlClientTest, GetObjectMetadata) {
   CheckStatus(actual);
 }
 
-TEST_P(CurlClientTest, ReadObject) {
-  std::string const error_type = GetParam();
-  if (error_type != "credentials-failure") {
-    // TODO(#1736) - enable this test when ObjectReadStream uses StatusOr.
-    return;
-  }
+TEST_P(CurlClientTest, ReadObjectXml) {
   auto actual =
       client_->ReadObject(ReadObjectRangeRequest("bkt", "obj")).status();
+  CheckStatus(actual);
+}
+
+TEST_P(CurlClientTest, ReadObjectJson) {
+  auto actual =
+      client_
+          ->ReadObject(ReadObjectRangeRequest("bkt", "obj")
+                           .set_multiple_options(IfGenerationNotMatch(0)))
+          .status();
   CheckStatus(actual);
 }
 
