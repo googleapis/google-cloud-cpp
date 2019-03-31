@@ -683,6 +683,30 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
   EXPECT_STATUS_OK(status);
 }
 
+TEST_F(ObjectMediaIntegrationTest, ConnectionFailure) {
+  Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
+                    .set_endpoint("http://localhost:0"),
+                LimitedErrorCountRetryPolicy(2)};
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  // We force the library to use the JSON API by adding the
+  // `IfGenerationNotMatch()` parameter, both JSON and XML use the same code to
+  // download, but controlling the endpoint for JSON is easier.
+  auto stream =
+      client.ReadObject(bucket_name, object_name, IfGenerationNotMatch(0));
+  std::size_t bytes_read = 0;
+  char buffer[4096];
+  while (stream.read(buffer, sizeof(buffer))) {
+    bytes_read += stream.gcount();
+  }
+  EXPECT_EQ(0, bytes_read);
+  EXPECT_TRUE(stream.bad());
+  EXPECT_FALSE(stream.status().ok());
+  EXPECT_EQ(StatusCode::kUnavailable, stream.status().code());
+}
+
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -176,11 +176,11 @@ StatusOr<int> CurlDownloadRequest::PerformWork() {
     // transfer either failed or was successful. Pull all the messages out of
     // the info queue until we get the message about our handle.
     int remaining;
-    do {
-      auto msg = curl_multi_info_read(multi_.get(), &remaining);
+    while (auto msg = curl_multi_info_read(multi_.get(), &remaining)) {
       if (msg->easy_handle != handle_.handle_.get()) {
-        // Throw an exception if the handle is not the right one. This should
-        // never happen, but better to give some meaningful error in this case.
+        // Return an error if this is the wrong handle. This should never
+        // happen, if it does we are using the libcurl API incorrectly. But it
+        // is better to give a meaningful error message in this case.
         std::ostringstream os;
         os << __func__ << " unknown handle returned by curl_multi_info_read()"
            << ", msg.msg=[" << msg->msg << "]"
@@ -188,12 +188,23 @@ StatusOr<int> CurlDownloadRequest::PerformWork() {
            << "]=" << curl_easy_strerror(msg->data.result);
         return Status(StatusCode::kUnknown, std::move(os).str());
       }
-      GCP_LOG(DEBUG) << __func__ << "(): msg.msg=[" << msg->msg << "], "
-                     << " result=[" << msg->data.result
-                     << "]=" << curl_easy_strerror(msg->data.result);
-      // The transfer is done, set the state flags appropriately.
+      status = CurlHandle::AsStatus(msg->data.result, __func__);
+      GCP_LOG(DEBUG) << __func__ << "() status=" << status
+                     << ", remaining=" << remaining
+                     << ", running_handles=" << running_handles
+                     << ", closing=" << closing_ << ", closed=" << curl_closed_;
+      // Whatever the status is, the transfer is done.
       curl_closed_ = true;
-    } while (remaining > 0);
+      // Ignore errors when closing the handle. They are expected because
+      // libcurl may have received a block of data, but the WriteCallback()
+      // (see above) tells libcurl that it cannot receive more data.
+      if (closing_) {
+        continue;
+      }
+      if (!status.ok()) {
+        return status;
+      }
+    }
   }
   return running_handles;
 }
