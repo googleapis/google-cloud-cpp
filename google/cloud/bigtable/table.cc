@@ -135,6 +135,16 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
   }
   auto failures = mutator.ExtractFinalFailures();
 
+  if (!status.ok()) {
+    google::cloud::Status status_new =
+        bigtable::internal::MakeStatusFromRpcError(status);
+    std::vector<FailedMutation> failures_new;
+    for (auto const& f : failures) {
+      failures_new.emplace_back(status_new, f.original_index());
+    }
+    return failures_new;
+  }
+
   return failures;
 }
 
