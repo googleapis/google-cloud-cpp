@@ -340,6 +340,7 @@ if (BUILD_TESTING)
         internal/notification_requests_test.cc
         internal/object_acl_requests_test.cc
         internal/object_requests_test.cc
+        internal/object_streambuf_test.cc
         internal/parse_rfc3339_test.cc
         internal/patch_builder_test.cc
         internal/retry_client_test.cc

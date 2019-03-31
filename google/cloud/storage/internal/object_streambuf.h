@@ -51,6 +51,33 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
 };
 
 /**
+ * A read stream in a permanent error state.
+ */
+class ObjectReadErrorStreambuf : public ObjectReadStreambuf {
+ public:
+  explicit ObjectReadErrorStreambuf(Status status)
+      : status_(std::move(status)) {}
+
+  void Close() override {}
+  bool IsOpen() const override { return false; }
+  Status const& status() const override { return status_; }
+  std::string const& received_hash() const override { return received_hash_; }
+  std::string const& computed_hash() const override { return computed_hash_; }
+  std::multimap<std::string, std::string> const& headers() const override {
+    return headers_;
+  }
+
+ protected:
+  int_type underflow() override { return traits_type::eof(); }
+
+ private:
+  Status status_;
+  std::string received_hash_;
+  std::string computed_hash_;
+  std::multimap<std::string, std::string> headers_;
+};
+
+/**
  * Defines a compilation barrier for libcurl.
  *
  * We do not want to expose the libcurl objects through `ObjectWriteStream`,
