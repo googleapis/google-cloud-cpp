@@ -94,8 +94,8 @@ class CurlDownloadRequest {
 
  private:
   friend class CurlRequestBuilder;
-  /// Set the underlying CurlHandle options initially.
-  Status SetOptions();
+  /// Set the underlying CurlHandle options on a new CurlDownloadRequest.
+  void SetOptions();
 
   /// Reset the underlying CurlHandle options after a move operation.
   void ResetOptions();

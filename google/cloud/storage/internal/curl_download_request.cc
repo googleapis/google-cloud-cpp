@@ -105,10 +105,15 @@ StatusOr<HttpResponse> CurlDownloadRequest::GetMore(std::string& buffer) {
   return HttpResponse{100, {}, {}};
 }
 
-Status CurlDownloadRequest::SetOptions() {
+void CurlDownloadRequest::SetOptions() {
   ResetOptions();
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
-  return AsStatus(error, __func__);
+  if (error != CURLM_OK) {
+    // This indicates that we are using the API incorrectly, the application
+    // can not recover from these problems, raising an exception is the
+    // "Right Thing"[tm] here.
+    google::cloud::internal::ThrowStatus(AsStatus(error, __func__));
+  }
 }
 
 void CurlDownloadRequest::ResetOptions() {

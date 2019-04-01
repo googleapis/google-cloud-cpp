@@ -96,8 +96,8 @@ class CurlUploadRequest {
 
  private:
   friend class CurlRequestBuilder;
-  /// Sets the underlying CurlHandle options initially.
-  Status SetOptions();
+  /// Set the underlying CurlHandle options on a new CurlUploadRequest.
+  void SetOptions();
 
   /// Resets the underlying CurlHandle options after a move operation.
   void ResetOptions();
