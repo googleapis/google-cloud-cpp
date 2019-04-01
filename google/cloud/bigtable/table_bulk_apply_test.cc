@@ -223,7 +223,7 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
       bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
       bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")})));
   EXPECT_FALSE(failures.empty());
-  EXPECT_EQ(google::cloud::v0::StatusCode::kAborted,
+  EXPECT_EQ(google::cloud::StatusCode::kAborted,
             failures.front().status().code());
 }
 
@@ -281,6 +281,6 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
   EXPECT_EQ(2UL, failures.size());
   EXPECT_FALSE(failures.front().status().ok());
   EXPECT_FALSE(failures.empty());
-  EXPECT_EQ(google::cloud::v0::StatusCode::kFailedPrecondition,
+  EXPECT_EQ(google::cloud::StatusCode::kFailedPrecondition,
             failures.front().status().code());
 }
