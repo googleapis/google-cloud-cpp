@@ -325,6 +325,35 @@ class Table {
   StatusOr<bool> CheckAndMutateRow(std::string row_key, Filter filter,
                                    std::vector<Mutation> true_mutations,
                                    std::vector<Mutation> false_mutations);
+
+  /**
+   * Make an asynchronous request to conditionally mutate a row.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param row_key the row key on which the conditional mutation will be
+   *     performed
+   * @param filter the condition, depending on which the mutation will be
+   *     performed
+   * @param true_mutations the mutations which will be performed if @p filter is
+   *     true
+   * @param false_mutations the mutations which will be performed if @p filter
+   *     is false
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   *
+   * @par Example
+   * @snippet async_data_snippets.cc async check and mutate
+   */
+  future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>
+  AsyncCheckAndMutateRow(std::string row_key, Filter filter,
+                         std::vector<Mutation> true_mutations,
+                         std::vector<Mutation> false_mutations,
+                         CompletionQueue& cq);
+
   /**
    * Sample of the row keys in the table, including approximate data sizes.
    *
