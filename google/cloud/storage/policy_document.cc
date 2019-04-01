@@ -23,7 +23,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-std::string join(char const* sep, std::vector<std::string> const& list) {
+std::string Join(char const* sep, std::vector<std::string> const& list) {
   if (list.empty()) {
     return std::string{};
   }
@@ -37,7 +37,7 @@ std::string join(char const* sep, std::vector<std::string> const& list) {
 }  // namespace
 
 std::ostream& operator<<(std::ostream& os, PolicyDocumentCondition const& rhs) {
-  return os << "PolicyDocumentCondition=[" << join(", ", rhs.elements()) << "]";
+  return os << "PolicyDocumentCondition=[" << Join(", ", rhs.elements()) << "]";
 }
 
 std::ostream& operator<<(std::ostream& os, PolicyDocument const& rhs) {
