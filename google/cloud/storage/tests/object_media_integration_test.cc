@@ -14,11 +14,13 @@
 
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/internal/setenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/environment_variable_restore.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #include <cstdio>
@@ -41,7 +43,14 @@ char const* flag_project_id;
 char const* flag_bucket_name;
 
 class ObjectMediaIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {};
+    : public google::cloud::storage::testing::StorageIntegrationTest {
+ public:
+  ObjectMediaIntegrationTest()
+      : endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT") {}
+
+ protected:
+  ::google::cloud::testing_util::EnvironmentVariableRestore endpoint_;
+};
 
 bool UsingTestbench() {
   return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
@@ -708,6 +717,8 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureJSON) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureXML) {
+  google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
+                                  "http://localhost:0");
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:0"),
                 LimitedErrorCountRetryPolicy(2)};
