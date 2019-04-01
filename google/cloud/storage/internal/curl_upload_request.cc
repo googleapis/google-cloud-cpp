@@ -92,10 +92,15 @@ Status CurlUploadRequest::NextBuffer(std::string& next_buffer) {
   return status;
 }
 
-Status CurlUploadRequest::SetOptions() {
+void CurlUploadRequest::SetOptions() {
   ResetOptions();
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
-  return AsStatus(error, __func__);
+  if (error != CURLM_OK) {
+    // This indicates that we are using the API incorrectly, the application
+    // can not recover from these problems, raising an exception is the
+    // "Right Thing"[tm] here.
+    google::cloud::internal::ThrowStatus(AsStatus(error, __func__));
+  }
 }
 
 void CurlUploadRequest::ResetOptions() {
