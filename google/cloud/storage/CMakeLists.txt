@@ -360,6 +360,7 @@ if (BUILD_TESTING)
         oauth2/service_account_credentials_test.cc
         object_access_control_test.cc
         object_metadata_test.cc
+        object_stream_test.cc
         object_test.cc
         notification_metadata_test.cc
         retry_policy_test.cc

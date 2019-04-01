@@ -110,6 +110,33 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   virtual StatusOr<HttpResponse> DoClose() = 0;
 };
 
+/**
+ * A write stream in a permanent error state.
+ */
+class ObjectWriteErrorStreambuf : public ObjectWriteStreambuf {
+ public:
+  explicit ObjectWriteErrorStreambuf(Status status)
+      : status_(std::move(status)) {}
+
+  bool IsOpen() const override { return is_open_; }
+  bool ValidateHash(ObjectMetadata const& meta) override { return false; }
+  std::string const& received_hash() const override { return string_; }
+  std::string const& computed_hash() const override { return string_; }
+  std::string const& resumable_session_id() const override { return string_; }
+  std::uint64_t next_expected_byte() const override { return 0; }
+
+ protected:
+  StatusOr<HttpResponse> DoClose() override {
+    is_open_ = false;
+    return status_;
+  }
+
+ private:
+  bool is_open_ = true;
+  Status status_;
+  std::string string_;
+};
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

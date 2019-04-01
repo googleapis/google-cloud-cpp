@@ -60,7 +60,9 @@ class ObjectReadStream : public std::basic_istream<char> {
    * Creates a stream associated with the given `streambuf`.
    */
   explicit ObjectReadStream(std::unique_ptr<internal::ObjectReadStreambuf> buf)
-      : std::basic_istream<char>(buf.get()), buf_(std::move(buf)) {
+      : std::basic_istream<char>(), buf_(std::move(buf)) {
+    // Initialize the basic_ios<> class
+    init(buf_.get());
     // Prime the iostream machinery with a peek().  This will trigger a call to
     // underflow(), and will detect if the download failed. Without it, the
     // eof() bit is not initialized properly.
@@ -68,11 +70,17 @@ class ObjectReadStream : public std::basic_istream<char> {
   }
 
   ObjectReadStream(ObjectReadStream&& rhs) noexcept
-      : ObjectReadStream(std::move(rhs.buf_)) {}
+      : ObjectReadStream(std::move(rhs.buf_)) {
+    // Move the basic_ios<> state and set rdbuf() without clearing the state
+    move(std::move(rhs));
+    set_rdbuf(buf_.get());
+  }
 
   ObjectReadStream& operator=(ObjectReadStream&& rhs) noexcept {
     buf_ = std::move(rhs.buf_);
-    rdbuf(buf_.get());
+    // Move the basic_ios<> state and set rdbuf() without clearing the state
+    move(std::move(rhs));
+    set_rdbuf(buf_.get());
     return *this;
   }
 
@@ -166,14 +174,29 @@ class ObjectWriteStream : public std::basic_ostream<char> {
    */
   explicit ObjectWriteStream(
       std::unique_ptr<internal::ObjectWriteStreambuf> buf)
-      : std::basic_ostream<char>(buf.get()), buf_(std::move(buf)) {}
+      : std::basic_ostream<char>(), buf_(std::move(buf)) {
+    // Initialize the basic_ios<> class
+    init(buf_.get());
+  }
 
   ObjectWriteStream(ObjectWriteStream&& rhs) noexcept
-      : std::basic_ostream<char>(rhs.buf_.get()), buf_(std::move(rhs.buf_)) {}
+      : ObjectWriteStream(std::move(rhs.buf_)) {
+    metadata_ = std::move(rhs.metadata_);
+    headers_ = std::move(rhs.headers_);
+    payload_ = std::move(rhs.payload_);
+    // Move the basic_ios<> state and set rdbuf() without clearing the state
+    move(std::move(rhs));
+    set_rdbuf(buf_.get());
+  }
 
   ObjectWriteStream& operator=(ObjectWriteStream&& rhs) noexcept {
     buf_ = std::move(rhs.buf_);
-    rdbuf(buf_.get());
+    metadata_ = std::move(rhs.metadata_);
+    headers_ = std::move(rhs.headers_);
+    payload_ = std::move(rhs.payload_);
+    // Move the basic_ios<> state and set rdbuf() without clearing the state
+    move(std::move(rhs));
+    set_rdbuf(buf_.get());
     return *this;
   }
 
