@@ -63,6 +63,7 @@ TEST(ObjectStreambufTest, WriteErrorStreambuf) {
   EXPECT_EQ("", streambuf.computed_hash());
   EXPECT_EQ("", streambuf.received_hash());
   EXPECT_EQ("", streambuf.resumable_session_id());
+  EXPECT_EQ(0, streambuf.next_expected_byte());
 
   // The error status should still be set.
   response = streambuf.Close();

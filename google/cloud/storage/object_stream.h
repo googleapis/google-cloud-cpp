@@ -71,16 +71,25 @@ class ObjectReadStream : public std::basic_istream<char> {
 
   ObjectReadStream(ObjectReadStream&& rhs) noexcept
       : ObjectReadStream(std::move(rhs.buf_)) {
-    // Move the basic_ios<> state and set rdbuf() without clearing the state
-    move(std::move(rhs));
-    set_rdbuf(buf_.get());
+    // We cannot use set_rdbuf() because older versions of libstdc++ do not
+    // implement this function. Unfortunately `move()` resets `rdbuf()`, and
+    // `rdbuf()` resets the state, so we have to manually copy the rest of
+    // the state.
+    setstate(rhs.rdstate());
+    copyfmt(rhs);
+    rhs.rdbuf(nullptr);
   }
 
   ObjectReadStream& operator=(ObjectReadStream&& rhs) noexcept {
     buf_ = std::move(rhs.buf_);
-    // Move the basic_ios<> state and set rdbuf() without clearing the state
-    move(std::move(rhs));
-    set_rdbuf(buf_.get());
+    // Use rdbuf() (instead of set_rdbuf()) because older versions of libstdc++
+    // do not implement this function. Unfortunately `rdbuf()` resets the state,
+    // and `move()` resets `rdbuf()`, so we have to manually copy the rest of
+    // the state.
+    rdbuf(buf_.get());
+    setstate(rhs.rdstate());
+    copyfmt(rhs);
+    rhs.rdbuf(nullptr);
     return *this;
   }
 
@@ -184,9 +193,13 @@ class ObjectWriteStream : public std::basic_ostream<char> {
     metadata_ = std::move(rhs.metadata_);
     headers_ = std::move(rhs.headers_);
     payload_ = std::move(rhs.payload_);
-    // Move the basic_ios<> state and set rdbuf() without clearing the state
-    move(std::move(rhs));
-    set_rdbuf(buf_.get());
+    // We cannot use set_rdbuf() because older versions of libstdc++ do not
+    // implement this function. Unfortunately `move()` resets `rdbuf()`, and
+    // `rdbuf()` resets the state, so we have to manually copy the rest of
+    // the state.
+    setstate(rhs.rdstate());
+    copyfmt(rhs);
+    rhs.rdbuf(nullptr);
   }
 
   ObjectWriteStream& operator=(ObjectWriteStream&& rhs) noexcept {
@@ -194,9 +207,14 @@ class ObjectWriteStream : public std::basic_ostream<char> {
     metadata_ = std::move(rhs.metadata_);
     headers_ = std::move(rhs.headers_);
     payload_ = std::move(rhs.payload_);
-    // Move the basic_ios<> state and set rdbuf() without clearing the state
-    move(std::move(rhs));
-    set_rdbuf(buf_.get());
+    // Use rdbuf() (instead of set_rdbuf()) because older versions of libstdc++
+    // do not implement this function. Unfortunately `rdbuf()` resets the state,
+    // and `move()` resets `rdbuf()`, so we have to manually copy the rest of
+    // the state.
+    rdbuf(buf_.get());
+    setstate(rhs.rdstate());
+    copyfmt(rhs);
+    rhs.rdbuf(nullptr);
     return *this;
   }
 
