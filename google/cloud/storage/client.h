@@ -2583,18 +2583,15 @@ class Client {
    *
    * @note The application must ensure that any document created with this
    * function contains valid conditions. This function does not do any error
-   * checking, i.e that a `ExactMatchObject()` condition contains two elements.
-   * Using the provided helper functions can prevent errors.
+   * checking, e.g. that a `ExactMatchObject()` condition contains two
+   * elements.  Using the provided helper functions can prevent errors.
    *
-   * @note This function only returns a signed policy document, but does not
-   * create a request. It will return a result containing an access id,
-   * expiration time, base64 encoded policy string and signature. These can be
-   * consumed by, for example a web application, that will construct an HTML
-   * form containing these fields and later POST'ed to GCS.
+   * @note It is the application's responsibility to construct a POST request
+   * based on the value returned by this function.  For example, a web
+   * application can create a HTML form containing these fields, the result of
+   * which is a POST request to GCS.
    *
    * @param document the policy document.
-   *
-   * @return the signed policy document.
    *
    * @par Helper Functions
    *
