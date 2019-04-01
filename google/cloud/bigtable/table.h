@@ -346,7 +346,7 @@ class Table {
    *     `cq.Run()`.
    *
    * @par Example
-   * @snippet async_data_snippets.cc async check and mutate
+   * @snippet data_async_snippets.cc async check and mutate
    */
   future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>
   AsyncCheckAndMutateRow(std::string row_key, Filter filter,
