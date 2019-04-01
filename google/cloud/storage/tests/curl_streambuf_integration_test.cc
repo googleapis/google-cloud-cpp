@@ -41,7 +41,7 @@ TEST(CurlStreambufIntegrationTest, WriteManyBytes) {
   builder.SetMethod("POST");
   std::unique_ptr<internal::CurlWriteStreambuf> buf(
       new internal::CurlWriteStreambuf(
-          builder.BuildUpload(), 128 * 1024,
+          builder.BuildUploadRequest(), 128 * 1024,
           google::cloud::internal::make_unique<internal::NullHashValidator>()));
   ObjectWriteStream writer(std::move(buf));
 
