@@ -2584,7 +2584,7 @@ class Client {
    * @note The application must ensure that any document created with this
    * function contains valid conditions. This function does not do any error
    * checking, e.g. that a `ExactMatchObject()` condition contains two
-   * elements.  Using the provided helper functions can prevent errors.
+   * elements. Using the provided helper functions can prevent errors.
    *
    * @note It is the application's responsibility to construct a POST request
    * based on the value returned by this function.  For example, a web
