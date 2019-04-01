@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['elements',['elements',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1PolicyDocumentCondition.html#a5147f0a985c9ff27ba3f67ecebe41aba',1,'google::cloud::storage::v0::PolicyDocumentCondition']]],
   ['email_5faddress',['email_address',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ServiceAccount.html#acead61b0be479c4dd0a2609a5649d372',1,'google::cloud::storage::v0::ServiceAccount']]],
   ['emplace',['emplace',['../../common/classgoogle_1_1cloud_1_1v0_1_1optional.html#a1c6b7e3e7273d8cad73c2d1ce7ea5a64',1,'google::cloud::v0::optional']]],
   ['empty',['empty',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a8ac77f669a35747797b27b63199aecb7',1,'google::cloud::v0::IamBindings::empty()'],['../../common/classgoogle_1_1cloud_1_1v0_1_1LogSink.html#a23d912e1f49819b5bf93351e9f1f7c95',1,'google::cloud::v0::LogSink::empty()']]],
@@ -19,5 +20,7 @@ var searchData=
   ['event_5fbased_5fhold',['event_based_hold',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#ac3428b2b222c11cf9681559dd1b2e8b8',1,'google::cloud::storage::v0::ObjectMetadata']]],
   ['event_5ftype',['event_type',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a490539df25124d80b6eaff5f57202c91',1,'google::cloud::storage::v0::NotificationMetadata']]],
   ['event_5ftype_5fsize',['event_type_size',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a616410cfc69ab8372353bbb76cd29512',1,'google::cloud::storage::v0::NotificationMetadata']]],
-  ['event_5ftypes',['event_types',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a107401780b14fcbec78ee66fb4e6fcd1',1,'google::cloud::storage::v0::NotificationMetadata']]]
+  ['event_5ftypes',['event_types',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a107401780b14fcbec78ee66fb4e6fcd1',1,'google::cloud::storage::v0::NotificationMetadata']]],
+  ['exactmatch',['ExactMatch',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1PolicyDocumentCondition.html#ac7e9e5cf927ae78f95382ebb2d55f4c0',1,'google::cloud::storage::v0::PolicyDocumentCondition']]],
+  ['exactmatchobject',['ExactMatchObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1PolicyDocumentCondition.html#acd19870947b8db13b43d4e651dce5d4a',1,'google::cloud::storage::v0::PolicyDocumentCondition']]]
 ];

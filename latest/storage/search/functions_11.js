@@ -82,6 +82,7 @@ var searchData=
   ['signstringhex',['SignStringHex',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1ServiceAccountCredentials.html#a88919fca3efaafd89d9dab396b0d9a0e',1,'google::cloud::storage::v0::oauth2::ServiceAccountCredentials']]],
   ['size',['size',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#acd144e4a1daa8edaf849b7dae6338879',1,'google::cloud::v0::IamBindings::size()'],['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ObjectMetadata.html#aa3bc2d054c4f030bcbe4a781f4271925',1,'google::cloud::storage::v0::ObjectMetadata::size()']]],
   ['standard',['Standard',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1storage__class.html#a1081cb6e857d3069bf270600a592998d',1,'google::cloud::storage::v0::storage_class']]],
+  ['startswith',['StartsWith',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1PolicyDocumentCondition.html#a3c4890d484c93325a490661de119c03c',1,'google::cloud::storage::v0::PolicyDocumentCondition']]],
   ['state',['state',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1HmacKeyMetadata.html#adc0b8e5a2cc819a37d3fdec0cca02834',1,'google::cloud::storage::v0::HmacKeyMetadata']]],
   ['state_5factive',['state_active',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1HmacKeyMetadata.html#a3f5f2c6b53a644349fd3a2623f7985a7',1,'google::cloud::storage::v0::HmacKeyMetadata']]],
   ['state_5fdeleted',['state_deleted',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1HmacKeyMetadata.html#a2c3a7c60d38dcfc33c2bcf4729c9771d',1,'google::cloud::storage::v0::HmacKeyMetadata']]],
