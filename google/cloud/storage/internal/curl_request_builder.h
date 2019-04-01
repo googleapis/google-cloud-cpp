@@ -52,7 +52,7 @@ class CurlRequestBuilder {
    * This function invalidates the builder. The application should not use this
    * builder once this function is called.
    */
-  CurlUploadRequest BuildUpload();
+  CurlUploadRequest BuildUploadRequest();
 
   /**
    * Creates a non-blocking http request.

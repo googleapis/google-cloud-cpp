@@ -48,7 +48,7 @@ CurlRequest CurlRequestBuilder::BuildRequest() {
   return request;
 }
 
-CurlUploadRequest CurlRequestBuilder::BuildUpload() {
+CurlUploadRequest CurlRequestBuilder::BuildUploadRequest() {
   ValidateBuilderState(__func__);
   CurlUploadRequest request(initial_buffer_size_);
   request.url_ = std::move(url_);

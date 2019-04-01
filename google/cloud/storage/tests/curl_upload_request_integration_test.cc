@@ -27,8 +27,8 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-
 namespace {
+
 std::string HttpBinEndpoint() {
   return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT")
       .value_or("https://nghttp2.org/httpbin");
@@ -39,7 +39,7 @@ TEST(CurlUploadRequestTest, UploadPartial) {
                              storage::internal::GetDefaultCurlHandleFactory());
   builder.AddHeader("Content-Type: application/octet-stream");
   builder.SetMethod("POST");
-  CurlUploadRequest upload = builder.BuildUpload();
+  CurlUploadRequest upload = builder.BuildUploadRequest();
 
   // A small function to generate random data.
   auto generator = google::cloud::internal::MakeDefaultPRNG();
@@ -108,7 +108,6 @@ TEST(CurlUploadRequestTest, UploadPartial) {
 }
 
 }  // namespace
-
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
