@@ -196,46 +196,6 @@ class AsyncRetryAndPollUnaryRpc
 };
 
 /**
- * A functor used as a continuation to poll for result of a longrunning
- * operation.
- *
- * A simple lambda cannot be used instead because it can't capture the polling
- * policy, because it's a std::unique_ptr<>, hence, non-copyable.
- */
-template <typename Client, typename Response>
-class PollAfterRetryFunctor {
- public:
-  PollAfterRetryFunctor(char const* location,
-                        std::unique_ptr<PollingPolicy> polling_policy,
-                        MetadataUpdatePolicy metadata_update_policy,
-                        std::shared_ptr<Client> client, CompletionQueue cq)
-      : location_(location),
-        polling_policy_(std::move(polling_policy)),
-        metadata_update_policy_(std::move(metadata_update_policy)),
-        client_(std::move(client)),
-        cq_(std::move(cq)) {}
-
-  future<StatusOr<Response>> operator()(
-      future<StatusOr<google::longrunning::Operation>> fut) {
-    auto res = fut.get();
-    if (!res) {
-      return make_ready_future<StatusOr<Response>>(res.status());
-    }
-    return StartAsyncLongrunningOp<Client, Response>(
-        location_, std::move(polling_policy_),
-        std::move(metadata_update_policy_), std::move(client_), std::move(cq_),
-        *std::move(res));
-  }
-
- private:
-  char const* location_;
-  std::unique_ptr<PollingPolicy> polling_policy_;
-  MetadataUpdatePolicy metadata_update_policy_;
-  std::shared_ptr<Client> client_;
-  CompletionQueue cq_;
-};
-
-/**
  * Asynchronously start a longrunning operation (with retries) and poll its
  * result.
  *
@@ -270,17 +230,15 @@ future<StatusOr<Response>> AsyncStartPollAfterRetryUnaryRpc(
     IdempotencyPolicy idempotent_policy,
     MetadataUpdatePolicy metadata_update_policy, std::shared_ptr<Client> client,
     AsyncCallType async_call, RequestType request, CompletionQueue cq) {
-  PollAfterRetryFunctor<Client, Response> poll_functor(
-      location, std::move(polling_policy), metadata_update_policy, client, cq);
   static_assert(
       std::is_same<typename Sig::type, google::longrunning::Operation>::value,
       "async_call should return a google::longrunning::Operation");
-  return StartRetryAsyncUnaryRpc(
-             location, std::move(rpc_retry_policy),
-             std::move(rpc_backoff_policy), std::move(idempotent_policy),
-             std::move(metadata_update_policy), std::move(async_call),
-             std::move(request), std::move(cq))
-      .then(std::move(poll_functor));
+  return StartAsyncLongrunningOp<Client, Response>(
+      location, std::move(polling_policy), metadata_update_policy, client, cq,
+      StartRetryAsyncUnaryRpc(
+          location, std::move(rpc_retry_policy), std::move(rpc_backoff_policy),
+          std::move(idempotent_policy), metadata_update_policy,
+          std::move(async_call), std::move(request), cq));
 }
 
 }  // namespace internal
