@@ -683,7 +683,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
   EXPECT_STATUS_OK(status);
 }
 
-TEST_F(ObjectMediaIntegrationTest, ConnectionFailure) {
+TEST_F(ObjectMediaIntegrationTest, ConnectionFailureJSON) {
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:0"),
                 LimitedErrorCountRetryPolicy(2)};
@@ -696,15 +696,35 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailure) {
   // download, but controlling the endpoint for JSON is easier.
   auto stream =
       client.ReadObject(bucket_name, object_name, IfGenerationNotMatch(0));
-  std::size_t bytes_read = 0;
-  char buffer[4096];
-  while (stream.read(buffer, sizeof(buffer))) {
-    bytes_read += stream.gcount();
-  }
-  EXPECT_EQ(0, bytes_read);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_TRUE(actual.empty());
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // TODO(#2371) - this only works with exceptions for now.
   EXPECT_TRUE(stream.bad());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_FALSE(stream.status().ok());
-  EXPECT_EQ(StatusCode::kUnavailable, stream.status().code());
+  EXPECT_EQ(StatusCode::kUnavailable, stream.status().code())
+      << ", status=" << stream.status();
+}
+
+TEST_F(ObjectMediaIntegrationTest, ConnectionFailureXML) {
+  Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
+                    .set_endpoint("http://localhost:0"),
+                LimitedErrorCountRetryPolicy(2)};
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  auto stream = client.ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_TRUE(actual.empty());
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // TODO(#2371) - this only works with exceptions for now.
+  EXPECT_TRUE(stream.bad());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_FALSE(stream.status().ok());
+  EXPECT_EQ(StatusCode::kUnavailable, stream.status().code())
+      << ", status=" << stream.status();
 }
 
 }  // anonymous namespace
