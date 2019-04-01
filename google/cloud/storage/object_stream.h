@@ -60,7 +60,7 @@ class ObjectReadStream : public std::basic_istream<char> {
    * Creates a stream associated with the given `streambuf`.
    */
   explicit ObjectReadStream(std::unique_ptr<internal::ObjectReadStreambuf> buf)
-      : std::basic_istream<char>(), buf_(std::move(buf)) {
+      : std::basic_istream<char>(nullptr), buf_(std::move(buf)) {
     // Initialize the basic_ios<> class
     init(buf_.get());
     // Prime the iostream machinery with a peek().  This will trigger a call to
@@ -174,7 +174,7 @@ class ObjectWriteStream : public std::basic_ostream<char> {
    */
   explicit ObjectWriteStream(
       std::unique_ptr<internal::ObjectWriteStreambuf> buf)
-      : std::basic_ostream<char>(), buf_(std::move(buf)) {
+      : std::basic_ostream<char>(nullptr), buf_(std::move(buf)) {
     // Initialize the basic_ios<> class
     init(buf_.get());
   }
