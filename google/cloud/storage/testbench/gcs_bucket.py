@@ -551,11 +551,11 @@ class GcsBucket(object):
         metadata.setdefault('contentType', x_upload_content_type)
         upload = {
             'metadata': metadata,
+            'instructions': request.headers.get('x-goog-testbench-instructions'),
             'next_byte': 0,
             'expected_bytes': expected_bytes,
             'object_name': metadata.get('name'),
             'media': '',
-            'request': request,
             'done': False,
         }
         # Capture the preconditions, including those that are None.
@@ -635,15 +635,16 @@ class GcsBucket(object):
             # Release a few resources to control memory usage.
             original_metadata = upload.pop('metadata', None)
             media = upload.pop('media', None)
-            original_request = upload.pop('request', None)
             blob.check_preconditions_by_value(
                 upload.get('ifGenerationMatch'),
                 upload.get('ifGenerationNotMatch'),
                 upload.get('ifMetagenerationMatch'),
                 upload.get('ifMetagenerationNotMatch')
             )
+            if upload.pop('instructions', None) == 'inject-upload-data-error':
+                media = testbench_utils.corrupt_media(media)
             revision = blob.insert_resumable(
-                gcs_url, original_request, media,
+                gcs_url, request, media,
                 original_metadata)
             response_payload = testbench_utils.filtered_response(
                 request, revision.metadata)
