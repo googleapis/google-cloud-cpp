@@ -183,6 +183,12 @@ Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
   return Status();
 }
 
+void AppendOptionsToResource(nl::json& resource,
+                             InsertObjectStreamingRequest const& request) {}
+
+void AppendOptionsToResource(nl::json& resource,
+                             ResumableUploadRequest const& request) {}
+
 template <typename RequestType>
 StatusOr<std::unique_ptr<ResumableUploadSession>>
 CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
@@ -196,20 +202,40 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
 
   CurlRequestBuilder builder(
       upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
+  auto status = SetupBuilderCommon(builder, "POST");
   if (!status.ok()) {
     return status;
   }
   builder.AddQueryParameter("uploadType", "resumable");
-  builder.AddQueryParameter("name", request.object_name());
   builder.AddHeader("Content-Type: application/json; charset=UTF-8");
-  std::string request_payload;
+  nl::json resource;
   if (request.template HasOption<WithObjectMetadata>()) {
-    request_payload =
-        ObjectMetadataJsonForInsert(
-            request.template GetOption<WithObjectMetadata>().value())
-            .dump();
+    resource = ObjectMetadataJsonForInsert(
+        request.template GetOption<WithObjectMetadata>().value());
   }
+  if (request.template HasOption<ContentEncoding>()) {
+    resource["contentEncoding"] =
+        request.template GetOption<ContentEncoding>().value();
+  }
+  if (request.template HasOption<ContentType>()) {
+    resource["contentType"] = request.template GetOption<ContentType>().value();
+  }
+  if (request.template HasOption<Crc32cChecksumValue>()) {
+    resource["crc32c"] =
+        request.template GetOption<Crc32cChecksumValue>().value();
+  }
+  if (request.template HasOption<MD5HashValue>()) {
+    resource["md5"] = request.template GetOption<MD5HashValue>().value();
+  }
+  AppendOptionsToResource(resource, request);
+
+  if (resource.empty()) {
+    builder.AddQueryParameter("name", request.object_name());
+  } else {
+    resource["name"] = request.object_name();
+  }
+
+  std::string request_payload = resource.dump();
   builder.AddHeader("Content-Length: " +
                     std::to_string(request_payload.size()));
   auto http_response = builder.BuildRequest().MakeRequest(request_payload);
