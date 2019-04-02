@@ -1345,7 +1345,7 @@ StatusOr<std::unique_ptr<ObjectWriteStreambuf>> CurlClient::WriteObjectXml(
   // UserIp cannot be set, checked by the caller.
 
   std::unique_ptr<internal::CurlWriteStreambuf> buf(
-      new internal::CurlWriteStreambuf(builder.BuildUpload(),
+      new internal::CurlWriteStreambuf(builder.BuildUploadRequest(),
                                        client_options().upload_buffer_size(),
                                        CreateHashValidator(request)));
   return std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf));
@@ -1373,7 +1373,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   // 3. Perform a streaming upload because computing the size upfront is more
   //    complicated than it is worth.
   std::unique_ptr<internal::CurlWriteStreambuf> buf(
-      new internal::CurlWriteStreambuf(builder.BuildUpload(),
+      new internal::CurlWriteStreambuf(builder.BuildUploadRequest(),
                                        client_options().upload_buffer_size(),
                                        CreateHashValidator(request)));
   ObjectWriteStream writer(std::move(buf));
@@ -1477,7 +1477,7 @@ StatusOr<std::unique_ptr<ObjectWriteStreambuf>> CurlClient::WriteObjectSimple(
   builder.AddQueryParameter("uploadType", "media");
   builder.AddQueryParameter("name", request.object_name());
   std::unique_ptr<internal::CurlWriteStreambuf> buf(
-      new internal::CurlWriteStreambuf(builder.BuildUpload(),
+      new internal::CurlWriteStreambuf(builder.BuildUploadRequest(),
                                        client_options().upload_buffer_size(),
                                        CreateHashValidator(request)));
   return std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf));

@@ -60,7 +60,9 @@ class ObjectReadStream : public std::basic_istream<char> {
    * Creates a stream associated with the given `streambuf`.
    */
   explicit ObjectReadStream(std::unique_ptr<internal::ObjectReadStreambuf> buf)
-      : std::basic_istream<char>(buf.get()), buf_(std::move(buf)) {
+      : std::basic_istream<char>(nullptr), buf_(std::move(buf)) {
+    // Initialize the basic_ios<> class
+    init(buf_.get());
     // Prime the iostream machinery with a peek().  This will trigger a call to
     // underflow(), and will detect if the download failed. Without it, the
     // eof() bit is not initialized properly.
@@ -68,11 +70,26 @@ class ObjectReadStream : public std::basic_istream<char> {
   }
 
   ObjectReadStream(ObjectReadStream&& rhs) noexcept
-      : ObjectReadStream(std::move(rhs.buf_)) {}
+      : ObjectReadStream(std::move(rhs.buf_)) {
+    // We cannot use set_rdbuf() because older versions of libstdc++ do not
+    // implement this function. Unfortunately `move()` resets `rdbuf()`, and
+    // `rdbuf()` resets the state, so we have to manually copy the rest of
+    // the state.
+    setstate(rhs.rdstate());
+    copyfmt(rhs);
+    rhs.rdbuf(nullptr);
+  }
 
   ObjectReadStream& operator=(ObjectReadStream&& rhs) noexcept {
     buf_ = std::move(rhs.buf_);
+    // Use rdbuf() (instead of set_rdbuf()) because older versions of libstdc++
+    // do not implement this function. Unfortunately `rdbuf()` resets the state,
+    // and `move()` resets `rdbuf()`, so we have to manually copy the rest of
+    // the state.
     rdbuf(buf_.get());
+    setstate(rhs.rdstate());
+    copyfmt(rhs);
+    rhs.rdbuf(nullptr);
     return *this;
   }
 
@@ -166,14 +183,38 @@ class ObjectWriteStream : public std::basic_ostream<char> {
    */
   explicit ObjectWriteStream(
       std::unique_ptr<internal::ObjectWriteStreambuf> buf)
-      : std::basic_ostream<char>(buf.get()), buf_(std::move(buf)) {}
+      : std::basic_ostream<char>(nullptr), buf_(std::move(buf)) {
+    // Initialize the basic_ios<> class
+    init(buf_.get());
+  }
 
   ObjectWriteStream(ObjectWriteStream&& rhs) noexcept
-      : std::basic_ostream<char>(rhs.buf_.get()), buf_(std::move(rhs.buf_)) {}
+      : ObjectWriteStream(std::move(rhs.buf_)) {
+    metadata_ = std::move(rhs.metadata_);
+    headers_ = std::move(rhs.headers_);
+    payload_ = std::move(rhs.payload_);
+    // We cannot use set_rdbuf() because older versions of libstdc++ do not
+    // implement this function. Unfortunately `move()` resets `rdbuf()`, and
+    // `rdbuf()` resets the state, so we have to manually copy the rest of
+    // the state.
+    setstate(rhs.rdstate());
+    copyfmt(rhs);
+    rhs.rdbuf(nullptr);
+  }
 
   ObjectWriteStream& operator=(ObjectWriteStream&& rhs) noexcept {
     buf_ = std::move(rhs.buf_);
+    metadata_ = std::move(rhs.metadata_);
+    headers_ = std::move(rhs.headers_);
+    payload_ = std::move(rhs.payload_);
+    // Use rdbuf() (instead of set_rdbuf()) because older versions of libstdc++
+    // do not implement this function. Unfortunately `rdbuf()` resets the state,
+    // and `move()` resets `rdbuf()`, so we have to manually copy the rest of
+    // the state.
     rdbuf(buf_.get());
+    setstate(rhs.rdstate());
+    copyfmt(rhs);
+    rhs.rdbuf(nullptr);
     return *this;
   }
 

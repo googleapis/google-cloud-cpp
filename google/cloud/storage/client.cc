@@ -282,6 +282,36 @@ https://cloud.google.com/storage/docs/authentication
   return std::move(os).str();
 }
 
+StatusOr<PolicyDocumentResult> Client::SignPolicyDocument(
+    internal::PolicyDocumentRequest const& request) {
+  auto base_credentials = raw_client()->client_options().credentials();
+  auto credentials = dynamic_cast<oauth2::ServiceAccountCredentials<>*>(
+      base_credentials.get());
+
+  if (credentials == nullptr) {
+    return Status(
+        StatusCode::kInvalidArgument,
+        R"""(The current credentials cannot be used to sign policy documents.
+Please configure your google::cloud::storage::Client to use service account
+credentials, as described in:
+https://cloud.google.com/storage/docs/authentication
+)""");
+  }
+
+  auto base64_policy = internal::Base64Encode(request.StringToSign());
+
+  auto result = credentials->SignString(base64_policy);
+  if (!result.first.ok()) {
+    return result.first;
+  }
+
+  std::string signature = result.second;
+
+  return PolicyDocumentResult{credentials->client_id(),
+                              request.policy_document().expiration,
+                              base64_policy, signature};
+}
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/storage/hmac_key_metadata.h"
 #include "google/cloud/storage/internal/logging_client.h"
+#include "google/cloud/storage/internal/policy_document_request.h"
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/list_buckets_reader.h"
@@ -2577,6 +2578,43 @@ class Client {
   }
   //@}
 
+  /**
+   * Create a signed policy document.
+   *
+   * @note The application must ensure that any document created with this
+   * function contains valid conditions. This function does not do any error
+   * checking, e.g. that a `ExactMatchObject()` condition contains two
+   * elements. Using the provided helper functions can prevent errors.
+   *
+   * @note It is the application's responsibility to construct a POST request
+   * based on the value returned by this function.  For example, a web
+   * application can create a HTML form containing these fields, the result of
+   * which is a POST request to GCS.
+   *
+   * @param document the policy document.
+   *
+   * @par Helper Functions
+   *
+   * The following functions create a `PolicyDocumentCondition` with less
+   * opportunities for typos: `StartsWith()`, `ExactMatchObject()`,
+   * `ExactMatch()`, `ContentLengthRange()`.
+   *
+   * @par Example
+   * @snippet storage_bucket_samples.cc create signed policy document
+   *
+   * @see
+   * https://cloud.google.com/storage/docs/xml-api/post-object#policydocument
+   *     for a general description of policy documents and how they can be used.
+   *
+   * @see https://cloud.google.com/storage/docs/xml-api/overview for a detailed
+   *     description of the XML API.
+   */
+  StatusOr<PolicyDocumentResult> CreateSignedPolicyDocument(
+      PolicyDocument document) {
+    internal::PolicyDocumentRequest request(document);
+    return SignPolicyDocument(request);
+  }
+
   //@{
   /**
    * @name Pub/Sub operations.
@@ -2798,6 +2836,9 @@ class Client {
 
   StatusOr<std::string> SignUrlV2(internal::V2SignUrlRequest const& request);
   StatusOr<std::string> SignUrlV4(internal::V4SignUrlRequest request);
+
+  StatusOr<PolicyDocumentResult> SignPolicyDocument(
+      internal::PolicyDocumentRequest const& request);
 
   std::shared_ptr<internal::RawClient> raw_client_;
 };
