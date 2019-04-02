@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_STREAMBUF_H_
 
 #include "google/cloud/storage/internal/curl_download_request.h"
-#include "google/cloud/storage/internal/curl_upload_request.h"
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/object_streambuf.h"
 
@@ -67,52 +66,6 @@ class CurlReadStreambuf : public ObjectReadStreambuf {
   HashValidator::Result hash_validator_result_;
   Status status_;
   std::multimap<std::string, std::string> headers_;
-};
-
-/**
- * Implement a wrapper for libcurl-based streaming uploads.
- */
-class CurlWriteStreambuf : public ObjectWriteStreambuf {
- public:
-  explicit CurlWriteStreambuf(CurlUploadRequest&& upload,
-                              std::size_t max_buffer_size,
-                              std::unique_ptr<HashValidator> hash_validator);
-
-  ~CurlWriteStreambuf() override = default;
-
-  bool IsOpen() const override;
-  bool ValidateHash(ObjectMetadata const& meta) override;
-  std::string const& received_hash() const override {
-    return hash_validator_result_.received;
-  }
-  std::string const& computed_hash() const override {
-    return hash_validator_result_.computed;
-  }
-  std::string const& resumable_session_id() const override {
-    return session_id_;
-  }
-  std::uint64_t next_expected_byte() const override { return 0; }
-
- protected:
-  int sync() override;
-  std::streamsize xsputn(char const* s, std::streamsize count) override;
-  int_type overflow(int_type ch) override;
-  StatusOr<HttpResponse> DoClose() override;
-
- private:
-  /// Throw an exception if the stream is closed.
-  Status Validate(char const* where) const;
-
-  /// Flush the libcurl buffer and swap it with the iostream buffer.
-  Status SwapBuffers();
-
-  CurlUploadRequest upload_;
-  std::string current_ios_buffer_;
-  std::size_t max_buffer_size_;
-
-  std::unique_ptr<HashValidator> hash_validator_;
-  HashValidator::Result hash_validator_result_;
-  std::string session_id_;
 };
 
 }  // namespace internal

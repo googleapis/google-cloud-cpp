@@ -174,7 +174,6 @@ class CurlHandle {
 
   friend class CurlDownloadRequest;
   friend class CurlRequest;
-  friend class CurlUploadRequest;
   friend class CurlRequestBuilder;
 
   [[noreturn]] void ThrowSetOptionError(CURLcode e, CURLoption opt, long param);

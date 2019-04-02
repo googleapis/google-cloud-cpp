@@ -197,8 +197,6 @@ class CurlClient : public RawClient,
       InsertObjectMediaRequest const& request);
   StatusOr<std::unique_ptr<ObjectReadStreambuf>> ReadObjectXml(
       ReadObjectRangeRequest const& request);
-  StatusOr<std::unique_ptr<ObjectWriteStreambuf>> WriteObjectXml(
-      InsertObjectStreamingRequest const& request);
 
   /// Insert an object using uploadType=multipart.
   StatusOr<ObjectMetadata> InsertObjectMediaMultipart(
@@ -208,10 +206,6 @@ class CurlClient : public RawClient,
   /// Insert an object using uploadType=media.
   StatusOr<ObjectMetadata> InsertObjectMediaSimple(
       InsertObjectMediaRequest const& request);
-
-  /// Upload an object using uploadType=simple.
-  StatusOr<std::unique_ptr<ObjectWriteStreambuf>> WriteObjectSimple(
-      InsertObjectStreamingRequest const& request);
 
   /// Upload an object using uploadType=resumable.
   StatusOr<std::unique_ptr<ObjectWriteStreambuf>> WriteObjectResumable(

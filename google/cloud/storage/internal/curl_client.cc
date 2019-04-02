@@ -82,12 +82,6 @@ std::unique_ptr<HashValidator> CreateHashValidator(
                              request.HasOption<DisableCrc32cChecksum>());
 }
 
-/// Create a HashValidator for an insert request.
-std::unique_ptr<HashValidator> CreateHashValidator(
-    InsertObjectMediaRequest const&) {
-  return google::cloud::internal::make_unique<NullHashValidator>();
-}
-
 std::string XmlMapPredefinedAcl(std::string const& acl) {
   static std::map<std::string, std::string> mapping{
       {"authenticatedRead", "authenticated-read"},
@@ -578,20 +572,7 @@ StatusOr<std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObject(
 
 StatusOr<std::unique_ptr<ObjectWriteStreambuf>> CurlClient::WriteObject(
     InsertObjectStreamingRequest const& request) {
-  if (!request.HasOption<IfMetagenerationNotMatch>() &&
-      !request.HasOption<IfGenerationNotMatch>() &&
-      !request.HasOption<QuotaUser>() && !request.HasOption<UserIp>() &&
-      !request.HasOption<Projection>() && request.HasOption<Fields>() &&
-      request.GetOption<Fields>().value().empty()) {
-    return WriteObjectXml(request);
-  }
-
-  if (request.HasOption<WithObjectMetadata>() ||
-      request.HasOption<UseResumableUploadSession>()) {
-    return WriteObjectResumable(request);
-  }
-
-  return WriteObjectSimple(request);
+  return WriteObjectResumable(request);
 }
 
 StatusOr<ListObjectsResponse> CurlClient::ListObjects(
@@ -1301,72 +1282,6 @@ StatusOr<std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObjectXml(
   return std::unique_ptr<ObjectReadStreambuf>(std::move(buf));
 }
 
-StatusOr<std::unique_ptr<ObjectWriteStreambuf>> CurlClient::WriteObjectXml(
-    InsertObjectStreamingRequest const& request) {
-  CurlRequestBuilder builder(xml_upload_endpoint_ + "/" +
-                                 request.bucket_name() + "/" +
-                                 UrlEscapeString(request.object_name()),
-                             xml_upload_factory_);
-  auto status = SetupBuilderCommon(builder, "PUT");
-  if (!status.ok()) {
-    return status;
-  }
-  builder.AddHeader("Host: storage.googleapis.com");
-
-  //
-  // Apply the options from InsertObjectMediaRequest that are set, translating
-  // to the XML format for them.
-  //
-  builder.AddOption(request.GetOption<ContentEncoding>());
-  // Set the content type of a sensible value, the application can override this
-  // in the options for the request.
-  if (!request.HasOption<ContentType>()) {
-    builder.AddHeader("content-type: application/octet-stream");
-  } else {
-    builder.AddOption(request.GetOption<ContentType>());
-  }
-  builder.AddOption(request.GetOption<EncryptionKey>());
-  if (request.HasOption<IfGenerationMatch>()) {
-    builder.AddHeader(
-        "x-goog-if-generation-match: " +
-        std::to_string(request.GetOption<IfGenerationMatch>().value()));
-  }
-  // IfGenerationNotMatch cannot be set, checked by the caller.
-  if (request.HasOption<IfMetagenerationMatch>()) {
-    builder.AddHeader(
-        "x-goog-if-meta-generation-match: " +
-        std::to_string(request.GetOption<IfMetagenerationMatch>().value()));
-  }
-  // IfMetagenerationNotMatch cannot be set, checked by the caller.
-  if (request.HasOption<KmsKeyName>()) {
-    builder.AddHeader("x-goog-encryption-kms-key-name: " +
-                      request.GetOption<KmsKeyName>().value());
-  }
-  if (request.HasOption<PredefinedAcl>()) {
-    builder.AddHeader(
-        "x-goog-acl: " +
-        XmlMapPredefinedAcl(request.GetOption<PredefinedAcl>().value()));
-  }
-  builder.AddOption(request.GetOption<UserProject>());
-
-  //
-  // Apply the options from GenericRequestBase<> that are set, translating
-  // to the XML format for them.
-  //
-  // Fields cannot be set, checked by the caller.
-  builder.AddOption(request.GetOption<CustomHeader>());
-  builder.AddOption(request.GetOption<IfMatchEtag>());
-  builder.AddOption(request.GetOption<IfNoneMatchEtag>());
-  // QuotaUser cannot be set, checked by the caller.
-  // UserIp cannot be set, checked by the caller.
-
-  std::unique_ptr<internal::CurlWriteStreambuf> buf(
-      new internal::CurlWriteStreambuf(builder.BuildUploadRequest(),
-                                       client_options().upload_buffer_size(),
-                                       CreateHashValidator(request)));
-  return std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf));
-}
-
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
     InsertObjectMediaRequest const& request) {
   // To perform a multipart upload we need to separate the parts using:
@@ -1388,11 +1303,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
 
   // 3. Perform a streaming upload because computing the size upfront is more
   //    complicated than it is worth.
-  std::unique_ptr<internal::CurlWriteStreambuf> buf(
-      new internal::CurlWriteStreambuf(builder.BuildUploadRequest(),
-                                       client_options().upload_buffer_size(),
-                                       CreateHashValidator(request)));
-  ObjectWriteStream writer(std::move(buf));
+  std::ostringstream writer;
 
   nl::json metadata = nl::json::object();
   if (request.HasOption<WithObjectMetadata>()) {
@@ -1432,8 +1343,10 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   writer << crlf << request.contents() << crlf << marker << "--" << crlf;
 
   // 6. Return the results as usual.
-  writer.Close();
-  return std::move(writer).metadata();
+  auto contents = std::move(writer).str();
+  builder.AddHeader("Content-Length: " + std::to_string(contents.size()));
+  return CheckedFromString<ObjectMetadataParser>(
+      builder.BuildRequest().MakeRequest(contents));
 }
 
 std::string CurlClient::PickBoundary(std::string const& text_to_avoid) {
@@ -1474,29 +1387,6 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaSimple(
                     std::to_string(request.contents().size()));
   return CheckedFromString<ObjectMetadataParser>(
       builder.BuildRequest().MakeRequest(request.contents()));
-}
-
-StatusOr<std::unique_ptr<ObjectWriteStreambuf>> CurlClient::WriteObjectSimple(
-    InsertObjectStreamingRequest const& request) {
-  auto url = upload_endpoint_ + "/b/" + request.bucket_name() + "/o";
-  CurlRequestBuilder builder(url, upload_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
-  if (!status.ok()) {
-    return status;
-  }
-
-  // Set the content type of a sensible value, the application can override this
-  // in the options for the request.
-  if (!request.HasOption<ContentType>()) {
-    builder.AddHeader("content-type: application/octet-stream");
-  }
-  builder.AddQueryParameter("uploadType", "media");
-  builder.AddQueryParameter("name", request.object_name());
-  std::unique_ptr<internal::CurlWriteStreambuf> buf(
-      new internal::CurlWriteStreambuf(builder.BuildUploadRequest(),
-                                       client_options().upload_buffer_size(),
-                                       CreateHashValidator(request)));
-  return std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf));
 }
 
 StatusOr<std::unique_ptr<ObjectWriteStreambuf>>
