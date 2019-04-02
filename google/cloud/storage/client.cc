@@ -52,7 +52,7 @@ ObjectReadStream Client::ReadObjectImpl(
   if (!streambuf) {
     ObjectReadStream error_stream(
         google::cloud::internal::make_unique<
-            internal::ObjectReadErrorStreambuf>(std::move(streambuf.status())));
+            internal::ObjectReadErrorStreambuf>(std::move(streambuf).status()));
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     return error_stream;
   }
@@ -168,11 +168,12 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
 
 Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
                                 std::string const& file_name) {
-  // TODO(#1665) - use Status to report errors.
-  std::unique_ptr<internal::ObjectReadStreambuf> streambuf =
-      raw_client_->ReadObject(request).value();
+  auto streambuf = raw_client_->ReadObject(request);
+  if (!streambuf) {
+    return streambuf.status();
+  }
   // Open the download stream and immediately raise an exception on failure.
-  ObjectReadStream stream(std::move(streambuf));
+  ObjectReadStream stream(*std::move(streambuf));
 
   auto report_error = [&request, file_name](char const* func, char const* what,
                                             Status const& status) {

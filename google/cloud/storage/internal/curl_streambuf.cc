@@ -44,49 +44,26 @@ void CurlReadStreambuf::Close() {
   }
 }
 
-CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
-  char const* function_name = __func__;
-  auto report_hash_mismatch = [this,
-                               function_name]() -> CurlReadStreambuf::int_type {
-    std::string msg;
-    msg += function_name;
-    msg += "() - mismatched hashes in download";
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    throw HashMismatchError(msg, hash_validator_result_.received,
-                            hash_validator_result_.computed);
-#else
-    msg += ", expected=";
-    msg += hash_validator_result_.computed;
-    msg += ", received=";
-    msg += hash_validator_result_.received;
-    status_ = Status(StatusCode::kDataLoss, std::move(msg));
-    return traits_type::eof();
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  };
-
+StatusOr<CurlReadStreambuf::int_type> CurlReadStreambuf::Peek() {
   if (!IsOpen()) {
     // The stream is closed, reading from a closed stream can happen if there is
     // no object to read from, or the object is empty. In that case just setup
     // an empty (but valid) region and verify the checksums.
     SetEmptyRegion();
-    hash_validator_result_ = std::move(*hash_validator_).Finish();
-    if (hash_validator_result_.is_mismatch) {
-      return report_hash_mismatch();
-    }
     return traits_type::eof();
   }
 
   current_ios_buffer_.reserve(target_buffer_size_);
   StatusOr<HttpResponse> response = download_.GetMore(current_ios_buffer_);
   if (!response.ok()) {
-    return ReportError(std::move(response).status());
+    return response.status();
   }
   for (auto const& kv : response->headers) {
     hash_validator_->ProcessHeader(kv.first, kv.second);
     headers_.emplace(kv.first, kv.second);
   }
   if (response->status_code >= 300) {
-    return ReportError(AsStatus(*response));
+    return AsStatus(*response);
   }
 
   if (!current_ios_buffer_.empty()) {
@@ -99,12 +76,36 @@ CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
   // This is an actual EOF, there is no more data to download, create an
   // empty (but valid) region:
   SetEmptyRegion();
-  // Verify the checksums, and return the EOF character.
-  hash_validator_result_ = std::move(*hash_validator_).Finish();
-  if (hash_validator_result_.is_mismatch) {
-    return report_hash_mismatch();
-  }
   return traits_type::eof();
+}
+
+CurlReadStreambuf::int_type CurlReadStreambuf::underflow() {
+  auto next_char = Peek();
+  if (!next_char) {
+    return ReportError(next_char.status());
+  }
+
+  if (*next_char == traits_type::eof()) {
+    hash_validator_result_ = std::move(*hash_validator_).Finish();
+    if (hash_validator_result_.is_mismatch) {
+      std::string msg;
+      msg += __func__;
+      msg += "() - mismatched hashes in download";
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+      throw HashMismatchError(msg, hash_validator_result_.received,
+                              hash_validator_result_.computed);
+#else
+      msg += ", expected=";
+      msg += hash_validator_result_.computed;
+      msg += ", received=";
+      msg += hash_validator_result_.received;
+      status_ = Status(StatusCode::kDataLoss, std::move(msg));
+      return traits_type::eof();
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    }
+  }
+
+  return *next_char;
 }
 
 CurlReadStreambuf::int_type CurlReadStreambuf::ReportError(Status status) {

@@ -63,10 +63,6 @@ class ObjectReadStream : public std::basic_istream<char> {
       : std::basic_istream<char>(nullptr), buf_(std::move(buf)) {
     // Initialize the basic_ios<> class
     init(buf_.get());
-    // Prime the iostream machinery with a peek().  This will trigger a call to
-    // underflow(), and will detect if the download failed. Without it, the
-    // eof() bit is not initialized properly.
-    peek();
   }
 
   ObjectReadStream(ObjectReadStream&& rhs) noexcept

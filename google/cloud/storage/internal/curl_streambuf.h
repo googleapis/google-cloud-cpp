@@ -38,6 +38,8 @@ class CurlReadStreambuf : public ObjectReadStreambuf {
 
   void Close() override;
   bool IsOpen() const override;
+  StatusOr<int_type> Peek();
+
   Status const& status() const override { return status_; }
   std::string const& received_hash() const override {
     return hash_validator_result_.received;
