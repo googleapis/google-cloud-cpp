@@ -417,7 +417,7 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
 
   EXPECT_EQ(2, failures[1].original_index());
   // EXPECT_EQ("baz", failures[1].mutation().row_key());
-  EXPECT_EQ(google::cloud::StatusCode::kUnknown, failures[1].status().code());
+  EXPECT_EQ(google::cloud::StatusCode::kInternal, failures[1].status().code());
 }
 
 TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
