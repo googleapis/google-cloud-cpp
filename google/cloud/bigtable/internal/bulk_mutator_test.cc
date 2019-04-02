@@ -471,7 +471,8 @@ TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
   ASSERT_EQ(1UL, failures.size());
   EXPECT_EQ(1, failures[0].original_index());
   // EXPECT_EQ("bar", failures[0].mutation().row_key());
-  EXPECT_EQ(google::cloud::StatusCode::kUnknown, failures[0].status().code());
+  EXPECT_EQ(google::cloud::StatusCode::kPermissionDenied,
+            failures.front().status().code());
 }
 
 TEST(MultipleRowsMutatorTest, SimpleAsync) {

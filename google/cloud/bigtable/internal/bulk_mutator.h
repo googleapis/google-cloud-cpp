@@ -61,6 +61,7 @@ class BulkMutator {
  protected:
   /// Get ready for a new request.
   void PrepareForRequest();
+  google::cloud::Status last_status;
 
   /**
    * Process a single response.

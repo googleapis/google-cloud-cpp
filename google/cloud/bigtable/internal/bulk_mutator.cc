@@ -64,8 +64,10 @@ grpc::Status BulkMutator::MakeOneRequest(bigtable::DataClient& client,
   while (stream->Read(&response)) {
     ProcessResponse(response);
   }
+  auto grpc_status = stream->Finish();
+  last_status = bigtable::internal::MakeStatusFromRpcError(grpc_status);
   FinishRequest();
-  return stream->Finish();
+  return grpc_status;
 }
 
 void BulkMutator::PrepareForRequest() {
@@ -146,6 +148,9 @@ void BulkMutator::FinishRequest() {
 
       google::cloud::Status status(google::cloud::StatusCode::kUnknown,
                                    message);
+      if (!last_status.ok()) {
+        status = last_status;
+      }
       failures_.emplace_back(FailedMutation(status, annotation.original_index));
     }
     ++index;
@@ -160,6 +165,7 @@ std::vector<FailedMutation> BulkMutator::ConsumeAccumulatedFailures() {
 
 std::vector<FailedMutation> BulkMutator::ExtractFinalFailures() {
   std::vector<FailedMutation> result(std::move(failures_));
+
   // These are most likely an effect of a broken stream. We do not know
   // their error code and there are not going to be any more retries. Report
   // them as kUnknown in the failure list.
@@ -168,11 +174,16 @@ std::vector<FailedMutation> BulkMutator::ExtractFinalFailures() {
       "broken before its status was sent.";
 
   google::cloud::Status status(google::cloud::StatusCode::kUnknown, message);
+
+  if (!last_status.ok()) {
+    status = last_status;
+  }
   auto size = pending_mutations_.mutable_entries()->size();
   for (int idx = 0; idx != size; idx++) {
     int original_index = pending_annotations_[idx].original_index;
     result.emplace_back(status, original_index);
   }
+
   return result;
 }
 
