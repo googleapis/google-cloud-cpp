@@ -276,3 +276,29 @@ which combinations are tested regularly.
  * `CREATE_GRAPHVIZ`: if set to `yes`, use `CMake` to generate a dependency
    graph of each target. This is useful when troubleshooting dependencies, or
    simply when trying to document them.
+
+
+### Generating `compile_commands.json`
+
+You can instruct `CMake` to generate a [compilation
+database](https://clang.llvm.org/docs/JSONCompilationDatabase.html) with
+`-DCMAKE_EXPORT_COMPILE_COMMANDS=ON`. Compilation databases interface with
+tools that utilize `libclang` for autocomplete and static analysis on the fly,
+such as [YouCompleteMe](https://github.com/Valloric/YouCompleteMe). This is
+particularly useful for Vim users.
+
+To generate the file, we only need to do:
+
+```console
+cmake -H. -B.build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+```
+
+However, some files installed by external projects will be missing and you will
+have YCM diagnostics inside your editor. To fix this, run:
+
+```console
+cmake --build .build -- -j4
+```
+
+You can now copy `compile_commands.json` from your build directory to the root
+of the `google-cloud-cpp` directory or create a symlink.
