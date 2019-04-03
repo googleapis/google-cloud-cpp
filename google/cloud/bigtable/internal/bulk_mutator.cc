@@ -141,8 +141,8 @@ void BulkMutator::FinishRequest() {
         google::cloud::Status status(
             google::cloud::StatusCode::kInternal,
             "The server never sent a confirmation for this mutation but the "
-            "stream "
-            "didn't fail either. This is most likely a bug, please report it at"
+            "stream didn't fail either. This is most likely a bug, please "
+            "report it at "
             "https://github.com/googleapis/google-cloud-cpp/issues/new");
         failures_.emplace_back(
             FailedMutation(status, annotation.original_index));
@@ -171,8 +171,8 @@ std::vector<FailedMutation> BulkMutator::ExtractFinalFailures() {
       google::cloud::Status status(
           google::cloud::StatusCode::kInternal,
           "The server never sent a confirmation for this mutation but the "
-          "stream "
-          "didn't fail either. This is most likely a bug, please report it at"
+          "stream didn't fail either. This is most likely a bug, please "
+          "report it at "
           "https://github.com/googleapis/google-cloud-cpp/issues/new");
       result.emplace_back(status, original_index);
     } else {

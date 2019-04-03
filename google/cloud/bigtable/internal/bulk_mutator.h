@@ -61,7 +61,6 @@ class BulkMutator {
  protected:
   /// Get ready for a new request.
   void PrepareForRequest();
-  google::cloud::Status last_status_;
 
   /**
    * Process a single response.
@@ -73,6 +72,8 @@ class BulkMutator {
 
   /// A request has finished and we have processed all the responses.
   void FinishRequest();
+
+  google::cloud::Status last_status_;
 
   /// Accumulate any permanent failures and the list of mutations we gave up on.
   std::vector<FailedMutation> failures_;
