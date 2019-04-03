@@ -22,6 +22,7 @@
 
 namespace {
 namespace cbt = google::cloud::bigtable;
+const std::string MAGIC_ROW_KEY = "key-000005";
 
 struct Usage {
   std::string msg;
@@ -124,6 +125,47 @@ void AsyncBulkApply(cbt::Table table, cbt::CompletionQueue cq,
   (std::move(table), std::move(cq), argv[1]);
 }
 
+void AsyncCheckAndMutate(cbt::Table table, cbt::CompletionQueue cq,
+                         std::vector<std::string> argv) {
+  if (argv.size() != 2U) {
+    throw Usage{
+        "async-check-and-mutate: <project-id> <instance-id> <table-id>"};
+  }
+
+  //! [async check and mutate]
+  [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id) {
+    // Check if the latest value of the flip-flop column is "on".
+    auto predicate = google::cloud::bigtable::Filter::Chain(
+        google::cloud::bigtable::Filter::ColumnRangeClosed("fam", "flip-flop",
+                                                           "flip-flop"),
+        google::cloud::bigtable::Filter::Latest(1),
+        google::cloud::bigtable::Filter::ValueRegex("on"));
+    google::cloud::future<google::cloud::StatusOr<
+        google::bigtable::v2::CheckAndMutateRowResponse>>
+        future = table.AsyncCheckAndMutateRow(
+            MAGIC_ROW_KEY, std::move(predicate),
+            {google::cloud::bigtable::SetCell("fam", "flip-flop", "off"),
+             google::cloud::bigtable::SetCell("fam", "flop-flip", "on")},
+            {google::cloud::bigtable::SetCell("fam", "flip-flop", "on"),
+             google::cloud::bigtable::SetCell("fam", "flop-flip", "off")},
+            cq);
+
+    auto final =
+        future.then([](google::cloud::future<google::cloud::StatusOr<
+                           google::bigtable::v2::CheckAndMutateRowResponse>>
+                           f) {
+          auto row = f.get();
+          if (!row) {
+            throw std::runtime_error(row.status().message());
+          }
+
+          return google::cloud::Status();
+        });
+    final.get();
+  }
+  //! [async check and mutate]
+  (std::move(table), std::move(cq), argv[1]);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -132,7 +174,9 @@ int main(int argc, char* argv[]) try {
       std::vector<std::string>)>;
 
   std::map<std::string, CommandType> commands = {
-      {"async-apply", &AsyncApply}, {"async-bulk-apply", &AsyncBulkApply}};
+      {"async-apply", &AsyncApply},
+      {"async-bulk-apply", &AsyncBulkApply},
+      {"async-check-and-mutate", &AsyncCheckAndMutate}};
 
   google::cloud::bigtable::CompletionQueue cq;
 
