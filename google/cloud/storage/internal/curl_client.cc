@@ -183,12 +183,6 @@ Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
   return Status();
 }
 
-void AppendOptionsToResource(nl::json& resource,
-                             InsertObjectStreamingRequest const& request) {}
-
-void AppendOptionsToResource(nl::json& resource,
-                             ResumableUploadRequest const& request) {}
-
 template <typename RequestType>
 StatusOr<std::unique_ptr<ResumableUploadSession>>
 CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
@@ -202,7 +196,7 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
 
   CurlRequestBuilder builder(
       upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
-  auto status = SetupBuilderCommon(builder, "POST");
+  auto status = SetupBuilder(builder, request, "POST");
   if (!status.ok()) {
     return status;
   }
@@ -227,7 +221,6 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
   if (request.template HasOption<MD5HashValue>()) {
     resource["md5"] = request.template GetOption<MD5HashValue>().value();
   }
-  AppendOptionsToResource(resource, request);
 
   if (resource.empty()) {
     builder.AddQueryParameter("name", request.object_name());
@@ -235,7 +228,10 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
     resource["name"] = request.object_name();
   }
 
-  std::string request_payload = resource.dump();
+  std::string request_payload;
+  if (!resource.empty()) {
+    request_payload = resource.dump();
+  }
   builder.AddHeader("Content-Length: " +
                     std::to_string(request_payload.size()));
   auto http_response = builder.BuildRequest().MakeRequest(request_payload);
