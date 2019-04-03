@@ -229,6 +229,39 @@ StatusOr<bool> Table::CheckAndMutateRow(std::string row_key, Filter filter,
   return response.predicate_matched();
 }
 
+future<StatusOr<btproto::CheckAndMutateRowResponse>>
+Table::AsyncCheckAndMutateRow(std::string row_key, Filter filter,
+                              std::vector<Mutation> true_mutations,
+                              std::vector<Mutation> false_mutations,
+                              CompletionQueue& cq) {
+  btproto::CheckAndMutateRowRequest request;
+  request.set_row_key(std::move(row_key));
+  bigtable::internal::SetCommonTableOperationRequest<
+      btproto::CheckAndMutateRowRequest>(request, impl_.app_profile_id_.get(),
+                                         impl_.table_name_.get());
+  *request.mutable_predicate_filter() = std::move(filter).as_proto();
+  for (auto& m : true_mutations) {
+    *request.add_true_mutations() = std::move(m.op);
+  }
+  for (auto& m : false_mutations) {
+    *request.add_false_mutations() = std::move(m.op);
+  }
+  bool const is_idempotent =
+      impl_.idempotent_mutation_policy_->is_idempotent(request);
+
+  auto client = impl_.client_;
+  return internal::StartRetryAsyncUnaryRpc(
+      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      internal::ConstantIdempotencyPolicy(is_idempotent),
+      clone_metadata_update_policy(),
+      [client](grpc::ClientContext* context,
+               btproto::CheckAndMutateRowRequest const& request,
+               grpc::CompletionQueue* cq) {
+        return client->AsyncCheckAndMutateRow(context, request, cq);
+      },
+      std::move(request), cq);
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud

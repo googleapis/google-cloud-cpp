@@ -707,10 +707,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureJSON) {
       client.ReadObject(bucket_name, object_name, IfGenerationNotMatch(0));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_TRUE(actual.empty());
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  // TODO(#2371) - this only works with exceptions for now.
   EXPECT_TRUE(stream.bad());
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_FALSE(stream.status().ok());
   EXPECT_EQ(StatusCode::kUnavailable, stream.status().code())
       << ", status=" << stream.status();
@@ -729,10 +726,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureXML) {
   auto stream = client.ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_TRUE(actual.empty());
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  // TODO(#2371) - this only works with exceptions for now.
   EXPECT_TRUE(stream.bad());
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_FALSE(stream.status().ok());
   EXPECT_EQ(StatusCode::kUnavailable, stream.status().code())
       << ", status=" << stream.status();

@@ -374,9 +374,7 @@ TEST_F(ObjectIntegrationTest, ReadNotFound) {
   EXPECT_FALSE(stream.IsOpen());
   EXPECT_EQ(StatusCode::kNotFound, stream.status().code())
       << "status=" << stream.status();
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_TRUE(stream.bad());
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWrite) {

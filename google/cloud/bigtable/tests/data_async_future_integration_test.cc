@@ -122,6 +122,74 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncBulkApply) {
   CheckEqualUnordered(expected, actual);
 }
 
+TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowPass) {
+  auto table = GetTable();
+
+  std::string const key = "row-key";
+
+  std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000"}};
+  CreateCells(table, created);
+
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  auto fut = table.AsyncCheckAndMutateRow(
+      key, bigtable::Filter::ValueRegex("v1000"),
+      {bigtable::SetCell(family, "c2", 0_ms, "v2000")},
+      {bigtable::SetCell(family, "c3", 0_ms, "v3000")}, cq);
+
+  // Block until the asynchronous operation completes. This is not what one
+  // would do in a real application (the synchronous API is better in that
+  // case), but we need to wait before checking the results.
+  auto status = fut.get();
+  EXPECT_STATUS_OK(status);
+  EXPECT_TRUE(status.ok());
+
+  std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000"},
+                                       {key, family, "c2", 0, "v2000"}};
+
+  auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
+
+  // Cleanup the thread running the completion queue event loop.
+  cq.Shutdown();
+  pool.join();
+  CheckEqualUnordered(expected, actual);
+}
+
+TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowFail) {
+  auto table = GetTable();
+
+  std::string const key = "row-key";
+
+  std::vector<bigtable::Cell> created{{key, family, "c1", 0, "v1000"}};
+  CreateCells(table, created);
+
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  auto fut = table.AsyncCheckAndMutateRow(
+      key, bigtable::Filter::ValueRegex("not-there"),
+      {bigtable::SetCell(family, "c2", 0_ms, "v2000")},
+      {bigtable::SetCell(family, "c3", 0_ms, "v3000")}, cq);
+
+  // Block until the asynchronous operation completes. This is not what one
+  // would do in a real application (the synchronous API is better in that
+  // case), but we need to wait before checking the results.
+  auto status = fut.get();
+  EXPECT_STATUS_OK(status);
+  EXPECT_TRUE(status.ok());
+
+  std::vector<bigtable::Cell> expected{{key, family, "c1", 0, "v1000"},
+                                       {key, family, "c3", 0, "v3000"}};
+
+  auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
+
+  // Cleanup the thread running the completion queue event loop.
+  cq.Shutdown();
+  pool.join();
+  CheckEqualUnordered(expected, actual);
+}
+
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

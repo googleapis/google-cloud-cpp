@@ -565,6 +565,14 @@ StatusOr<std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObject(
   std::unique_ptr<CurlReadStreambuf> buf(new CurlReadStreambuf(
       builder.BuildDownloadRequest(std::string{}),
       client_options().download_buffer_size(), CreateHashValidator(request)));
+  auto peek = buf->Peek();
+  if (!peek) {
+    buf->Close();
+    return Status(peek.status().code(),
+                  peek.status().message() +
+                      ", object_name=" + request.object_name() +
+                      ", bucket_name=" + request.bucket_name());
+  }
   return std::unique_ptr<ObjectReadStreambuf>(std::move(buf));
 }
 
@@ -1282,6 +1290,14 @@ StatusOr<std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObjectXml(
   std::unique_ptr<CurlReadStreambuf> buf(new CurlReadStreambuf(
       builder.BuildDownloadRequest(std::string{}),
       client_options().download_buffer_size(), CreateHashValidator(request)));
+  auto peek = buf->Peek();
+  if (!peek) {
+    buf->Close();
+    return Status(peek.status().code(),
+                  peek.status().message() +
+                      ", object_name=" + request.object_name() +
+                      ", bucket_name=" + request.bucket_name());
+  }
   return std::unique_ptr<ObjectReadStreambuf>(std::move(buf));
 }
 
