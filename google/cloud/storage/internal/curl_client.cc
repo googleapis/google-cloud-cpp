@@ -164,13 +164,7 @@ Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
 }
 
 template <typename Request>
-Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
-                                Request const& request, char const* method) {
-  auto status = SetupBuilderCommon(builder, method);
-  if (!status.ok()) {
-    return status;
-  }
-  request.AddOptionsToHttpRequest(builder);
+void SetupBuilderUserIp(CurlRequestBuilder& builder, Request const& request) {
   if (request.template HasOption<UserIp>()) {
     std::string value = request.template GetOption<UserIp>().value();
     if (value.empty()) {
@@ -180,6 +174,17 @@ Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
       builder.AddQueryParameter(UserIp::name(), value);
     }
   }
+}
+
+template <typename Request>
+Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
+                                Request const& request, char const* method) {
+  auto status = SetupBuilderCommon(builder, method);
+  if (!status.ok()) {
+    return status;
+  }
+  request.AddOptionsToHttpRequest(builder);
+  SetupBuilderUserIp(builder, request);
   return Status();
 }
 
@@ -196,10 +201,33 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
 
   CurlRequestBuilder builder(
       upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
+  auto status = SetupBuilderCommon(builder, "POST");
   if (!status.ok()) {
     return status;
   }
+
+  // In most cases we use `SetupBuilder()` to setup all these options in the
+  // request. But in this case we cannot because that might also set
+  // `Content-Type` to the wrong value. Instead we have to explicitly list all
+  // the options here. Somebody could write a clever meta-function to say
+  // "set all the options except `ContentType`, but I think that is going to be
+  // very hard to understand.
+  builder.AddOption(request.template GetOption<EncryptionKey>());
+  builder.AddOption(request.template GetOption<IfGenerationMatch>());
+  builder.AddOption(request.template GetOption<IfGenerationNotMatch>());
+  builder.AddOption(request.template GetOption<IfMetagenerationMatch>());
+  builder.AddOption(request.template GetOption<IfMetagenerationNotMatch>());
+  builder.AddOption(request.template GetOption<KmsKeyName>());
+  builder.AddOption(request.template GetOption<PredefinedAcl>());
+  builder.AddOption(request.template GetOption<Projection>());
+  builder.AddOption(request.template GetOption<UserProject>());
+  builder.AddOption(request.template GetOption<CustomHeader>());
+  builder.AddOption(request.template GetOption<Fields>());
+  builder.AddOption(request.template GetOption<IfMatchEtag>());
+  builder.AddOption(request.template GetOption<IfNoneMatchEtag>());
+  builder.AddOption(request.template GetOption<QuotaUser>());
+  SetupBuilderUserIp(builder, request);
+
   builder.AddQueryParameter("uploadType", "resumable");
   builder.AddHeader("Content-Type: application/json; charset=UTF-8");
   nl::json resource;
