@@ -298,7 +298,7 @@ run_all_data_examples() {
   # Use the same table in all the tests.
   local -r TABLE="data-ex-tbl-${RANDOM}-${RANDOM}"
   local -r PREFIX_1="root/0/1/"
-  local -r PREFIX_2="root/2/1/"  
+  local -r PREFIX_2="root/2/1/"
   local -r ROW_KEY_1="root/0/0/1"
   local -r ROW_KEY_2="root/0/1/0"
   local -r ROW_KEY_3="key-000007"
