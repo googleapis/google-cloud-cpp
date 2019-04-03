@@ -34,6 +34,8 @@ find . \( -path ./.git \
           -o -path ./third_party \
           -o -path './cmake-build-*' \
           -o -path ./build-output \
+          -o -path ./.build \
+          -o -path ./_build \
        \) -prune \
        -o \( -name 'CMakeLists.txt' \
              -o -name '*.cmake' \
@@ -73,6 +75,8 @@ find . \( -path ./.git \
           -o -path ./third_party \
           -o -path './cmake-build-*' \
           -o -path ./build-output \
+          -o -path ./.build \
+          -o -path ./_build \
        \) -prune \
      -o \( -name BUILD \
            -o -name '*.bzl' \
