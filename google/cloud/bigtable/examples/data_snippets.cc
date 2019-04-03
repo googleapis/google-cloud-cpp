@@ -358,6 +358,49 @@ void ReadRowSetPrefix(google::cloud::bigtable::Table table, int argc,
   (std::move(table));
 }
 
+void ReadPrefixList(google::cloud::bigtable::Table table, int argc,
+                    char* argv[]) {
+  if (argc < 2) {
+    throw Usage{
+        "read-prefix-list: <project-id> <instance-id> <table-id> "
+        "[prefixes]"};
+  }
+
+  std::vector<std::string> prefix_list;
+  while (argc > 1) {
+    prefix_list.emplace_back(ConsumeArg(argc, argv));
+  }
+
+  //! [read prefix list] [START bigtable_read_prefix_list]
+  [&prefix_list](google::cloud::bigtable::Table table) {
+    namespace cbt = google::cloud::bigtable;
+    auto row_set = cbt::RowSet();
+    auto filter = google::cloud::bigtable::Filter::Latest(1);
+
+    for (auto prefix : prefix_list) {
+      auto row_set = cbt::RowSet();
+      auto row_range_prefix = cbt::RowRange::Prefix(prefix);
+      row_set.Append(row_range_prefix);
+
+      for (auto& row : table.ReadRows(std::move(row_set), filter)) {
+        if (!row) {
+          throw std::runtime_error(row.status().message());
+        }
+        std::cout << row->row_key() << ":\n";
+        for (auto& cell : row->cells()) {
+          std::cout << "\t" << cell.family_name() << ":"
+                    << cell.column_qualifier() << "    @ "
+                    << cell.timestamp().count() << "us\n"
+                    << "\t\"" << cell.value() << '"' << "\n";
+        }
+      }
+      std::cout << std::flush;
+    }
+  }
+  //! [read prefix list] [END bigtable_read_prefix_list]
+  (std::move(table));
+}
+
 void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
                     char* argv[]) {
   if (argc != 1) {
@@ -583,6 +626,7 @@ int main(int argc, char* argv[]) try {
       {"populate-table-hierarchy", &PopulateTableHierarchy},
       {"read-rowset", &ReadRowSet},
       {"read-rowset-prefix", &ReadRowSetPrefix},
+      {"read-prefix-list", &ReadPrefixList},
       {"read-rows-with-limit", &ReadRowsWithLimit},
       {"check-and-mutate", &CheckAndMutate},
       {"read-modify-write", &ReadModifyWrite},
