@@ -535,7 +535,6 @@ class GcsBucket(object):
         :param request: flask.Request the original http request.
         :return: the HTTP response to send back.
         """
-        object_name = request.args.get('name')
         x_upload_content_type = request.headers.get(
             'x-upload-content-type', 'application/octet-stream')
         x_upload_content_length = request.headers.get(
@@ -543,15 +542,24 @@ class GcsBucket(object):
         expected_bytes = None
         if x_upload_content_length:
             expected_bytes = int(x_upload_content_length)
+
+        if request.args.get('name') is not None and len(request.data):
+            raise error_response.ErrorResponse(
+                'The name argument is only supported for empty payloads',
+                status_code=400)
         if len(request.data):
             metadata = json.loads(request.data)
         else:
-            metadata = {}
-        metadata.setdefault('name', object_name)
+            metadata = {'name': request.args.get('name')}
+
+        if metadata.get('name') is None:
+            raise error_response.ErrorResponse(
+                'Missing object name argument', status_code=400)
         metadata.setdefault('contentType', x_upload_content_type)
         upload = {
             'metadata': metadata,
             'instructions': request.headers.get('x-goog-testbench-instructions'),
+            'fields': request.args.get('fields'),
             'next_byte': 0,
             'expected_bytes': expected_bytes,
             'object_name': metadata.get('name'),
@@ -646,8 +654,8 @@ class GcsBucket(object):
             revision = blob.insert_resumable(
                 gcs_url, request, media,
                 original_metadata)
-            response_payload = testbench_utils.filtered_response(
-                request, revision.metadata)
+            response_payload = testbench_utils.filter_fields_from_response(
+                upload.get('fields'), revision.metadata)
             testbench_utils.insert_object(object_path, blob)
 
         response = flask.make_response(response_payload)
