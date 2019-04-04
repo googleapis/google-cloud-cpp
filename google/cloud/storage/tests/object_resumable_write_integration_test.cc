@@ -81,15 +81,12 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
   std::ostringstream expected;
 
   // Create the object, but only if it does not exist already.
-  TestPermanentFailure([&] {
-    auto os = client->WriteObject(
-        bucket_name, object_name, IfGenerationMatch(0),
-        WithObjectMetadata(ObjectMetadata().set_content_type("text/plain")));
-    os.exceptions(std::ios_base::failbit);
-    os << LoremIpsum();
-    os.Close();
-    ObjectMetadata meta = os.metadata().value();
-  });
+  auto os = client->WriteObject(
+      bucket_name, object_name, IfGenerationMatch(0),
+      WithObjectMetadata(ObjectMetadata().set_content_type("text/plain")));
+  EXPECT_TRUE(os.bad());
+  EXPECT_FALSE(os.metadata().status().ok())
+      << ", status=" << os.metadata().status();
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
