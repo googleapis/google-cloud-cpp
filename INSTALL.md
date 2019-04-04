@@ -15,9 +15,9 @@ CMake support files, then compiling and installing the libraries
 requires two commands:
 
 ```bash
-cmake -H. -Bbuild-output-for-install \
+cmake -H. -B.build \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package
-cmake --build build-output-for-install --target install
+cmake --build .build --target install
 ```
 
 Unfortunately getting your system to this state may require multiple steps,
@@ -189,11 +189,11 @@ We can now compile and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bbuild-output \
+cmake -H. -B.build \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build build-output -- -j $(nproc)
-cd $HOME/google-cloud-cpp/build-output
+cmake --build .build -- -j $(nproc)
+cd $HOME/google-cloud-cpp/.build
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
@@ -244,11 +244,11 @@ We can now compile and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bbuild-output \
+cmake -H. -B.build \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build build-output -- -j $(nproc)
-cd $HOME/google-cloud-cpp/build-output
+cmake --build .build -- -j $(nproc)
+cd $HOME/google-cloud-cpp/.build
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
@@ -359,11 +359,11 @@ We can now compile and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bbuild-output \
+cmake -H. -B.build \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build build-output -- -j $(nproc)
-cd $HOME/google-cloud-cpp/build-output
+cmake --build .build -- -j $(nproc)
+cd $HOME/google-cloud-cpp/.build
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
@@ -441,11 +441,11 @@ Finally we can install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bbuild-output \
+cmake -H. -B.build \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build build-output -- -j $(nproc)
-cd $HOME/google-cloud-cpp/build-output
+cmake --build .build -- -j $(nproc)
+cd $HOME/google-cloud-cpp/.build
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
@@ -547,11 +547,11 @@ Finally we can install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bbuild-output \
+cmake -H. -B.build \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build build-output -- -j $(nproc)
-cd $HOME/google-cloud-cpp/build-output
+cmake --build .build -- -j $(nproc)
+cd $HOME/google-cloud-cpp/.build
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
@@ -698,12 +698,12 @@ We can now compile and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bbuild-output \
+cmake -H. -B.build \
     -DCMAKE_FIND_ROOT_PATH="/usr/local/curl;/usr/local/ssl" \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build build-output -- -j $(nproc)
-cd $HOME/google-cloud-cpp/build-output
+cmake --build .build -- -j $(nproc)
+cd $HOME/google-cloud-cpp/.build
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
@@ -789,11 +789,11 @@ Finally we can install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bbuild-output \
+cmake -H. -B.build \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build build-output -- -j $(nproc)
-cd $HOME/google-cloud-cpp/build-output
+cmake --build .build -- -j $(nproc)
+cd $HOME/google-cloud-cpp/.build
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
@@ -893,11 +893,11 @@ Finally we can install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/Downloads/google-cloud-cpp
-cmake -H. -Bbuild-output \
+cmake -H. -B.build \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build build-output -- -j $(nproc)
-cd $HOME/Downloads/google-cloud-cpp/build-output
+cmake --build .build -- -j $(nproc)
+cd $HOME/Downloads/google-cloud-cpp/.build
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```

@@ -46,9 +46,9 @@ RUN apt update && \
 # external projects.
 WORKDIR /home/build/external
 COPY . /home/build/external
-RUN cmake -H. -Bbuild-output -DCMAKE_BUILD_TYPE=Debug
-RUN cmake --build build-output -- -j $(nproc)
-RUN (cd build-output && ctest --output-on-failure)
+RUN cmake -H. -B.build -DCMAKE_BUILD_TYPE=Debug
+RUN cmake --build .build -- -j $(nproc)
+RUN (cd .build && ctest --output-on-failure)
 ## [END IGNORED]
 
 # #### crc32c
@@ -113,11 +113,11 @@ RUN ldconfig
 # ```bash
 WORKDIR /home/build/google-cloud-cpp
 COPY . /home/build/google-cloud-cpp
-RUN cmake -H. -Bbuild-output \
+RUN cmake -H. -B.build \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-RUN cmake --build build-output -- -j $(nproc)
-WORKDIR /home/build/google-cloud-cpp/build-output
+RUN cmake --build .build -- -j $(nproc)
+WORKDIR /home/build/google-cloud-cpp/.build
 RUN ctest --output-on-failure
 RUN cmake --build . --target install
 # ```
