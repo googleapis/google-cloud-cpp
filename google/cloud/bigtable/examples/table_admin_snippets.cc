@@ -224,8 +224,9 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
     if (!consistency_token) {
       throw std::runtime_error(consistency_token.status().message());
     }
-    auto result = admin.WaitForConsistencyCheck(table_id, *consistency_token);
-    if (result.get()) {
+    auto result =
+        admin.WaitForConsistencyCheck(table_id, *consistency_token).get();
+    if (result && *result) {
       std::cout << "Table is consistent\n";
     } else {
       std::cout << "Table is not consistent\n";
