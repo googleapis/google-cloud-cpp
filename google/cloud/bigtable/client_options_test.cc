@@ -133,6 +133,9 @@ TEST(ClientOptionsTest, EditAdminEndpoint) {
   client_options_object =
       client_options_object.set_admin_endpoint("customendpoint.com");
   EXPECT_EQ("customendpoint.com", client_options_object.admin_endpoint());
+  EXPECT_EQ(
+      "customendpoint.com",
+      ClientOptionsTestTraits::InstanceAdminEndpoint(client_options_object));
 }
 
 TEST(ClientOptionsTest, EditCredentials) {

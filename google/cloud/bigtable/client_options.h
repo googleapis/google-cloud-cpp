@@ -81,6 +81,9 @@ class ClientOptions {
   std::string const& admin_endpoint() const { return admin_endpoint_; }
   ClientOptions& set_admin_endpoint(std::string endpoint) {
     admin_endpoint_ = std::move(endpoint);
+    // These two endpoints are generally equivalent, but they may differ in
+    // some tests.
+    instance_admin_endpoint_ = admin_endpoint_;
     return *this;
   }
 
