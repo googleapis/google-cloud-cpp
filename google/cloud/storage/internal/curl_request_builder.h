@@ -19,7 +19,6 @@
 #include "google/cloud/storage/internal/curl_download_request.h"
 #include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/curl_request.h"
-#include "google/cloud/storage/internal/curl_upload_request.h"
 #include "google/cloud/storage/well_known_headers.h"
 
 namespace google {
@@ -33,7 +32,6 @@ namespace internal {
 class CurlRequestBuilder {
  public:
   using RequestType = CurlRequest;
-  using UploadType = CurlUploadRequest;
 
   explicit CurlRequestBuilder(std::string base_url,
                               std::shared_ptr<CurlHandleFactory> factory);
@@ -45,14 +43,6 @@ class CurlRequestBuilder {
    * builder once this function is called.
    */
   CurlRequest BuildRequest();
-
-  /**
-   * Create a http request where the payload is provided dynamically.
-   *
-   * This function invalidates the builder. The application should not use this
-   * builder once this function is called.
-   */
-  CurlUploadRequest BuildUploadRequest();
 
   /**
    * Creates a non-blocking http request.

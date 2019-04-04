@@ -82,12 +82,6 @@ std::unique_ptr<HashValidator> CreateHashValidator(
                              request.HasOption<DisableCrc32cChecksum>());
 }
 
-/// Create a HashValidator for an insert request.
-std::unique_ptr<HashValidator> CreateHashValidator(
-    InsertObjectMediaRequest const&) {
-  return google::cloud::internal::make_unique<NullHashValidator>();
-}
-
 std::string XmlMapPredefinedAcl(std::string const& acl) {
   static std::map<std::string, std::string> mapping{
       {"authenticatedRead", "authenticated-read"},
@@ -170,13 +164,7 @@ Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
 }
 
 template <typename Request>
-Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
-                                Request const& request, char const* method) {
-  auto status = SetupBuilderCommon(builder, method);
-  if (!status.ok()) {
-    return status;
-  }
-  request.AddOptionsToHttpRequest(builder);
+void SetupBuilderUserIp(CurlRequestBuilder& builder, Request const& request) {
   if (request.template HasOption<UserIp>()) {
     std::string value = request.template GetOption<UserIp>().value();
     if (value.empty()) {
@@ -186,6 +174,17 @@ Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
       builder.AddQueryParameter(UserIp::name(), value);
     }
   }
+}
+
+template <typename Request>
+Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
+                                Request const& request, char const* method) {
+  auto status = SetupBuilderCommon(builder, method);
+  if (!status.ok()) {
+    return status;
+  }
+  request.AddOptionsToHttpRequest(builder);
+  SetupBuilderUserIp(builder, request);
   return Status();
 }
 
@@ -202,19 +201,64 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
 
   CurlRequestBuilder builder(
       upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
+  auto status = SetupBuilderCommon(builder, "POST");
   if (!status.ok()) {
     return status;
   }
+
+  // In most cases we use `SetupBuilder()` to setup all these options in the
+  // request. But in this case we cannot because that might also set
+  // `Content-Type` to the wrong value. Instead we have to explicitly list all
+  // the options here. Somebody could write a clever meta-function to say
+  // "set all the options except `ContentType`, but I think that is going to be
+  // very hard to understand.
+  builder.AddOption(request.template GetOption<EncryptionKey>());
+  builder.AddOption(request.template GetOption<IfGenerationMatch>());
+  builder.AddOption(request.template GetOption<IfGenerationNotMatch>());
+  builder.AddOption(request.template GetOption<IfMetagenerationMatch>());
+  builder.AddOption(request.template GetOption<IfMetagenerationNotMatch>());
+  builder.AddOption(request.template GetOption<KmsKeyName>());
+  builder.AddOption(request.template GetOption<PredefinedAcl>());
+  builder.AddOption(request.template GetOption<Projection>());
+  builder.AddOption(request.template GetOption<UserProject>());
+  builder.AddOption(request.template GetOption<CustomHeader>());
+  builder.AddOption(request.template GetOption<Fields>());
+  builder.AddOption(request.template GetOption<IfMatchEtag>());
+  builder.AddOption(request.template GetOption<IfNoneMatchEtag>());
+  builder.AddOption(request.template GetOption<QuotaUser>());
+  SetupBuilderUserIp(builder, request);
+
   builder.AddQueryParameter("uploadType", "resumable");
-  builder.AddQueryParameter("name", request.object_name());
   builder.AddHeader("Content-Type: application/json; charset=UTF-8");
-  std::string request_payload;
+  nl::json resource;
   if (request.template HasOption<WithObjectMetadata>()) {
-    request_payload =
-        ObjectMetadataJsonForInsert(
-            request.template GetOption<WithObjectMetadata>().value())
-            .dump();
+    resource = ObjectMetadataJsonForInsert(
+        request.template GetOption<WithObjectMetadata>().value());
+  }
+  if (request.template HasOption<ContentEncoding>()) {
+    resource["contentEncoding"] =
+        request.template GetOption<ContentEncoding>().value();
+  }
+  if (request.template HasOption<ContentType>()) {
+    resource["contentType"] = request.template GetOption<ContentType>().value();
+  }
+  if (request.template HasOption<Crc32cChecksumValue>()) {
+    resource["crc32c"] =
+        request.template GetOption<Crc32cChecksumValue>().value();
+  }
+  if (request.template HasOption<MD5HashValue>()) {
+    resource["md5"] = request.template GetOption<MD5HashValue>().value();
+  }
+
+  if (resource.empty()) {
+    builder.AddQueryParameter("name", request.object_name());
+  } else {
+    resource["name"] = request.object_name();
+  }
+
+  std::string request_payload;
+  if (!resource.empty()) {
+    request_payload = resource.dump();
   }
   builder.AddHeader("Content-Length: " +
                     std::to_string(request_payload.size()));
@@ -578,20 +622,7 @@ StatusOr<std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObject(
 
 StatusOr<std::unique_ptr<ObjectWriteStreambuf>> CurlClient::WriteObject(
     InsertObjectStreamingRequest const& request) {
-  if (!request.HasOption<IfMetagenerationNotMatch>() &&
-      !request.HasOption<IfGenerationNotMatch>() &&
-      !request.HasOption<QuotaUser>() && !request.HasOption<UserIp>() &&
-      !request.HasOption<Projection>() && request.HasOption<Fields>() &&
-      request.GetOption<Fields>().value().empty()) {
-    return WriteObjectXml(request);
-  }
-
-  if (request.HasOption<WithObjectMetadata>() ||
-      request.HasOption<UseResumableUploadSession>()) {
-    return WriteObjectResumable(request);
-  }
-
-  return WriteObjectSimple(request);
+  return WriteObjectResumable(request);
 }
 
 StatusOr<ListObjectsResponse> CurlClient::ListObjects(
@@ -1301,72 +1332,6 @@ StatusOr<std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObjectXml(
   return std::unique_ptr<ObjectReadStreambuf>(std::move(buf));
 }
 
-StatusOr<std::unique_ptr<ObjectWriteStreambuf>> CurlClient::WriteObjectXml(
-    InsertObjectStreamingRequest const& request) {
-  CurlRequestBuilder builder(xml_upload_endpoint_ + "/" +
-                                 request.bucket_name() + "/" +
-                                 UrlEscapeString(request.object_name()),
-                             xml_upload_factory_);
-  auto status = SetupBuilderCommon(builder, "PUT");
-  if (!status.ok()) {
-    return status;
-  }
-  builder.AddHeader("Host: storage.googleapis.com");
-
-  //
-  // Apply the options from InsertObjectMediaRequest that are set, translating
-  // to the XML format for them.
-  //
-  builder.AddOption(request.GetOption<ContentEncoding>());
-  // Set the content type of a sensible value, the application can override this
-  // in the options for the request.
-  if (!request.HasOption<ContentType>()) {
-    builder.AddHeader("content-type: application/octet-stream");
-  } else {
-    builder.AddOption(request.GetOption<ContentType>());
-  }
-  builder.AddOption(request.GetOption<EncryptionKey>());
-  if (request.HasOption<IfGenerationMatch>()) {
-    builder.AddHeader(
-        "x-goog-if-generation-match: " +
-        std::to_string(request.GetOption<IfGenerationMatch>().value()));
-  }
-  // IfGenerationNotMatch cannot be set, checked by the caller.
-  if (request.HasOption<IfMetagenerationMatch>()) {
-    builder.AddHeader(
-        "x-goog-if-meta-generation-match: " +
-        std::to_string(request.GetOption<IfMetagenerationMatch>().value()));
-  }
-  // IfMetagenerationNotMatch cannot be set, checked by the caller.
-  if (request.HasOption<KmsKeyName>()) {
-    builder.AddHeader("x-goog-encryption-kms-key-name: " +
-                      request.GetOption<KmsKeyName>().value());
-  }
-  if (request.HasOption<PredefinedAcl>()) {
-    builder.AddHeader(
-        "x-goog-acl: " +
-        XmlMapPredefinedAcl(request.GetOption<PredefinedAcl>().value()));
-  }
-  builder.AddOption(request.GetOption<UserProject>());
-
-  //
-  // Apply the options from GenericRequestBase<> that are set, translating
-  // to the XML format for them.
-  //
-  // Fields cannot be set, checked by the caller.
-  builder.AddOption(request.GetOption<CustomHeader>());
-  builder.AddOption(request.GetOption<IfMatchEtag>());
-  builder.AddOption(request.GetOption<IfNoneMatchEtag>());
-  // QuotaUser cannot be set, checked by the caller.
-  // UserIp cannot be set, checked by the caller.
-
-  std::unique_ptr<internal::CurlWriteStreambuf> buf(
-      new internal::CurlWriteStreambuf(builder.BuildUploadRequest(),
-                                       client_options().upload_buffer_size(),
-                                       CreateHashValidator(request)));
-  return std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf));
-}
-
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
     InsertObjectMediaRequest const& request) {
   // To perform a multipart upload we need to separate the parts using:
@@ -1388,11 +1353,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
 
   // 3. Perform a streaming upload because computing the size upfront is more
   //    complicated than it is worth.
-  std::unique_ptr<internal::CurlWriteStreambuf> buf(
-      new internal::CurlWriteStreambuf(builder.BuildUploadRequest(),
-                                       client_options().upload_buffer_size(),
-                                       CreateHashValidator(request)));
-  ObjectWriteStream writer(std::move(buf));
+  std::ostringstream writer;
 
   nl::json metadata = nl::json::object();
   if (request.HasOption<WithObjectMetadata>()) {
@@ -1432,8 +1393,10 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   writer << crlf << request.contents() << crlf << marker << "--" << crlf;
 
   // 6. Return the results as usual.
-  writer.Close();
-  return std::move(writer).metadata();
+  auto contents = std::move(writer).str();
+  builder.AddHeader("Content-Length: " + std::to_string(contents.size()));
+  return CheckedFromString<ObjectMetadataParser>(
+      builder.BuildRequest().MakeRequest(contents));
 }
 
 std::string CurlClient::PickBoundary(std::string const& text_to_avoid) {
@@ -1474,29 +1437,6 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaSimple(
                     std::to_string(request.contents().size()));
   return CheckedFromString<ObjectMetadataParser>(
       builder.BuildRequest().MakeRequest(request.contents()));
-}
-
-StatusOr<std::unique_ptr<ObjectWriteStreambuf>> CurlClient::WriteObjectSimple(
-    InsertObjectStreamingRequest const& request) {
-  auto url = upload_endpoint_ + "/b/" + request.bucket_name() + "/o";
-  CurlRequestBuilder builder(url, upload_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
-  if (!status.ok()) {
-    return status;
-  }
-
-  // Set the content type of a sensible value, the application can override this
-  // in the options for the request.
-  if (!request.HasOption<ContentType>()) {
-    builder.AddHeader("content-type: application/octet-stream");
-  }
-  builder.AddQueryParameter("uploadType", "media");
-  builder.AddQueryParameter("name", request.object_name());
-  std::unique_ptr<internal::CurlWriteStreambuf> buf(
-      new internal::CurlWriteStreambuf(builder.BuildUploadRequest(),
-                                       client_options().upload_buffer_size(),
-                                       CreateHashValidator(request)));
-  return std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf));
 }
 
 StatusOr<std::unique_ptr<ObjectWriteStreambuf>>

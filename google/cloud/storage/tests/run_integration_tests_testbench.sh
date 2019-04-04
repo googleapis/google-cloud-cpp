@@ -43,20 +43,12 @@ echo "Running storage::internal::CurlRequest integration test."
 ./curl_request_integration_test
 
 echo
-echo "Running storage::internal::CurlRequestUpload integration test."
-./curl_upload_request_integration_test
-
-echo
 echo "Running storage::internal::CurlRequestDownload integration test."
 ./curl_download_request_integration_test
 
 echo
 echo "Running storage::internal::CurlResumableUploadSession integration tests."
 ./curl_resumable_upload_session_integration_test "${BUCKET_NAME}"
-
-echo
-echo "Running storage::internal::CurlStreambuf integration test."
-./curl_streambuf_integration_test
 
 echo
 echo "Running GCS Bucket APIs integration tests."

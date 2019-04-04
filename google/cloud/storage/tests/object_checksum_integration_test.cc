@@ -281,33 +281,6 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadJSON) {
 }
 
 /// @test Verify that CRC32C checksums are computed by default on uploads.
-TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteXML) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_STATUS_OK(client);
-
-  std::string bucket_name = flag_bucket_name;
-  auto object_name = MakeRandomObjectName();
-
-  // Create the object, but only if it does not exist already.
-  auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
-                                Fields(""));
-  os.exceptions(std::ios_base::failbit);
-  // We will construct the expected response while streaming the data up.
-  std::ostringstream expected;
-  WriteRandomLines(os, expected);
-
-  auto expected_crc32c = ComputeCrc32cChecksum(expected.str());
-
-  os.Close();
-  ObjectMetadata meta = os.metadata().value();
-  EXPECT_EQ(os.received_hash(), os.computed_hash());
-  EXPECT_THAT(os.received_hash(), HasSubstr(expected_crc32c));
-
-  auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_STATUS_OK(status);
-}
-
-/// @test Verify that CRC32C checksums are computed by default on uploads.
 TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteJSON) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -422,38 +395,6 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
   EXPECT_FALSE(stream.computed_hash().empty());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-
-  auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_STATUS_OK(status);
-}
-
-/// @test Verify that CRC32C checksum mismatches are reported by default on
-/// downloads.
-TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteXML) {
-  if (!UsingTestbench()) {
-    // This test is disabled when not using the testbench as it relies on the
-    // testbench to inject faults.
-    return;
-  }
-  StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_STATUS_OK(client);
-
-  std::string bucket_name = flag_bucket_name;
-  auto object_name = MakeRandomObjectName();
-
-  // Create a stream to upload an object.
-  ObjectWriteStream stream =
-      client->WriteObject(bucket_name, object_name, DisableMD5Hash(true),
-                          IfGenerationMatch(0), Fields(""),
-                          CustomHeader("x-goog-testbench-instructions",
-                                       "inject-upload-data-error"));
-  stream << LoremIpsum() << "\n";
-  stream << LoremIpsum();
-
-  stream.Close();
-  EXPECT_TRUE(stream.bad());
-  EXPECT_STATUS_OK(stream.metadata());
-  EXPECT_NE(stream.received_hash(), stream.computed_hash());
 
   auto status = client->DeleteObject(bucket_name, object_name);
   EXPECT_STATUS_OK(status);
