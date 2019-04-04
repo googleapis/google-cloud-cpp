@@ -136,6 +136,54 @@ void AsyncDeleteTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
   (std::move(admin), std::move(cq), argv[1]);
 }
 
+void AsyncModifyTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
+                      std::vector<std::string> argv) {
+  if (argv.size() != 2U) {
+    throw Usage{"async-modify-table: <project-id> <instance-id> <table-id>"};
+  }
+
+  //! [async modify table]
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {
+    google::cloud::future<
+        google::cloud::StatusOr<google::bigtable::admin::v2::Table>>
+        future = admin.AsyncModifyColumnFamilies(
+            cq, table_id,
+            {google::cloud::bigtable::ColumnFamilyModification::Drop("foo"),
+             google::cloud::bigtable::ColumnFamilyModification::Update(
+                 "fam", google::cloud::bigtable::GcRule::Union(
+                            google::cloud::bigtable::GcRule::MaxNumVersions(5),
+                            google::cloud::bigtable::GcRule::MaxAge(
+                                std::chrono::hours(24 * 7)))),
+             google::cloud::bigtable::ColumnFamilyModification::Create(
+                 "bar", google::cloud::bigtable::GcRule::Intersection(
+                            google::cloud::bigtable::GcRule::MaxNumVersions(3),
+                            google::cloud::bigtable::GcRule::MaxAge(
+                                std::chrono::hours(72))))});
+
+    auto final = future.then(
+        [](google::cloud::future<
+            google::cloud::StatusOr<google::bigtable::admin::v2::Table>>
+               f) {
+          auto table = f.get();
+          if (!table) {
+            throw std::runtime_error(table.status().message());
+          }
+          std::cout << table->name() << "\n";
+          for (auto const& family : table->column_families()) {
+            std::string const& family_name = family.first;
+            std::string gc_rule;
+            google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
+                                                        &gc_rule);
+            std::cout << "\t" << family_name << "\t\t" << gc_rule << "\n";
+          }
+          return google::cloud::Status();
+        });
+
+    final.get();
+  }
+  //! [async modify table]
+  (std::move(admin), std::move(cq), argv[1]);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -147,6 +195,7 @@ int main(int argc, char* argv[]) try {
       {"async-create-table", &AsyncCreateTable},
       {"async-get-table", &AsyncGetTable},
       {"async-delete-table", &AsyncDeleteTable},
+      {"async-modify-table", &AsyncModifyTable},
   };
 
   google::cloud::bigtable::CompletionQueue cq;

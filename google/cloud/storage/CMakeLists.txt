@@ -114,8 +114,6 @@ add_library(storage_client
             internal/curl_request_builder.cc
             internal/curl_resumable_streambuf.h
             internal/curl_resumable_streambuf.cc
-            internal/curl_upload_request.cc
-            internal/curl_upload_request.h
             internal/curl_wrappers.h
             internal/curl_wrappers.cc
             internal/curl_client.h

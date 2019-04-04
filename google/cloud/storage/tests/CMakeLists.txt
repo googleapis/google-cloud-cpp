@@ -17,12 +17,10 @@
 set(storage_client_integration_tests
     bucket_integration_test.cc
     client_sign_url_integration_test.cc
-    curl_upload_request_integration_test.cc
     curl_download_request_integration_test.cc
     curl_request_integration_test.cc
     curl_resumable_streambuf_integration_test.cc
     curl_resumable_upload_session_integration_test.cc
-    curl_streambuf_integration_test.cc
     object_checksum_integration_test.cc
     object_hash_integration_test.cc
     object_insert_integration_test.cc

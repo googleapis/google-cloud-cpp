@@ -92,6 +92,26 @@ def index_acl(acl):
     return indexed
 
 
+def filter_fields_from_response(fields, response):
+    """Format the response as a JSON string, using any filtering included in
+    the request.
+
+    :param fields:str the value of the `fields` parameter in the origina
+        request.
+    :param response:dict a dictionary to be formatted as a JSON string.
+    :return: the response formatted as a string.
+    :rtype:str
+    """
+    if fields is None:
+        return json.dumps(response)
+    tmp = {}
+    # TODO(#1037) - support full filter expressions
+    for key in fields.split(','):
+        if key in response:
+            tmp[key] = response[key]
+    return json.dumps(tmp)
+
+
 def filtered_response(request, response):
     """Format the response as a JSON string, using any filtering included in
     the request.
@@ -102,14 +122,7 @@ def filtered_response(request, response):
     :rtype:str
     """
     fields = request.args.get('fields')
-    if fields is None:
-        return json.dumps(response)
-    tmp = {}
-    # TODO(#1037) - support full filter expressions
-    for key in fields.split(','):
-        if key in response:
-            tmp[key] = response[key]
-    return json.dumps(tmp)
+    return filter_fields_from_response(fields, response)
 
 
 def raise_csek_error(code=400):

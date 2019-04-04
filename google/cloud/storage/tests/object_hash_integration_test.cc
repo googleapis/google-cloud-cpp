@@ -297,33 +297,6 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadJSON) {
 }
 
 /// @test Verify that MD5 hashes are computed by default on uploads.
-TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteXML) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_STATUS_OK(client);
-
-  std::string bucket_name = flag_bucket_name;
-  auto object_name = MakeRandomObjectName();
-
-  // Create the object, but only if it does not exist already.
-  auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
-                                Fields(""));
-  os.exceptions(std::ios_base::failbit);
-  // We will construct the expected response while streaming the data up.
-  std::ostringstream expected;
-  WriteRandomLines(os, expected);
-
-  auto expected_md5hash = ComputeMD5Hash(expected.str());
-
-  os.Close();
-  ObjectMetadata meta = os.metadata().value();
-  EXPECT_EQ(os.received_hash(), os.computed_hash());
-  EXPECT_THAT(os.received_hash(), HasSubstr(expected_md5hash));
-
-  auto status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_STATUS_OK(status);
-}
-
-/// @test Verify that MD5 hashes are computed by default on uploads.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteJSON) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -344,32 +317,6 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteJSON) {
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(os.received_hash(), os.computed_hash());
   EXPECT_THAT(os.received_hash(), HasSubstr(expected_md5hash));
-
-  auto status = client->DeleteObject(bucket_name, object_name);
-  ASSERT_STATUS_OK(status);
-}
-
-/// @test Verify that hashes and checksums can be disabled in uploads.
-TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingWriteXML) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_STATUS_OK(client);
-
-  std::string bucket_name = flag_bucket_name;
-  auto object_name = MakeRandomObjectName();
-
-  // Create the object, but only if it does not exist already.
-  auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
-                                Fields(""), DisableMD5Hash(true),
-                                DisableCrc32cChecksum(true));
-  os.exceptions(std::ios_base::failbit);
-  // We will construct the expected response while streaming the data up.
-  std::ostringstream expected;
-  WriteRandomLines(os, expected);
-
-  os.Close();
-  ObjectMetadata meta = os.metadata().value();
-  EXPECT_TRUE(os.received_hash().empty());
-  EXPECT_TRUE(os.computed_hash().empty());
 
   auto status = client->DeleteObject(bucket_name, object_name);
   ASSERT_STATUS_OK(status);
@@ -487,37 +434,6 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
   EXPECT_FALSE(stream.computed_hash().empty());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-
-  auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_STATUS_OK(status);
-}
-
-/// @test Verify that MD5 hash mismatches are reported by default on downloads.
-TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteXML) {
-  if (!UsingTestbench()) {
-    // This test is disabled when not using the testbench as it relies on the
-    // testbench to inject faults.
-    return;
-  }
-  StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_STATUS_OK(client);
-
-  std::string bucket_name = flag_bucket_name;
-  auto object_name = MakeRandomObjectName();
-
-  // Create a stream to upload an object.
-  ObjectWriteStream stream =
-      client->WriteObject(bucket_name, object_name, DisableCrc32cChecksum(true),
-                          IfGenerationMatch(0), Fields(""),
-                          CustomHeader("x-goog-testbench-instructions",
-                                       "inject-upload-data-error"));
-  stream << LoremIpsum() << "\n";
-  stream << LoremIpsum();
-
-  stream.Close();
-  EXPECT_TRUE(stream.bad());
-  EXPECT_STATUS_OK(stream.metadata());
-  EXPECT_NE(stream.received_hash(), stream.computed_hash());
 
   auto status = client->DeleteObject(bucket_name, object_name);
   EXPECT_STATUS_OK(status);
