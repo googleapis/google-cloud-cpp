@@ -297,7 +297,8 @@ future<
 StartAsyncPollOp(char const* location,
                  std::unique_ptr<PollingPolicy> polling_policy,
                  MetadataUpdatePolicy metadata_update_policy,
-                 CompletionQueue cq, Operation operation);
+                 CompletionQueue cq,
+                 future<StatusOr<Operation>> operation_future);
 
 /**
  * The state machine created by StartAsyncPollOp().
@@ -315,12 +316,11 @@ class PollAsyncOpFuture {
   PollAsyncOpFuture(char const* location,
                     std::unique_ptr<PollingPolicy> polling_policy,
                     MetadataUpdatePolicy metadata_update_policy,
-                    CompletionQueue cq, Operation operation)
+                    CompletionQueue cq)
       : location_(location),
         polling_policy_(std::move(polling_policy)),
         metadata_update_policy_(std::move(metadata_update_policy)),
-        cq_(std::move(cq)),
-        operation_(std::move(operation)) {}
+        cq_(std::move(cq)) {}
 
   /// The callback for a completed request, successful or not.
   static void OnCompletion(std::shared_ptr<PollAsyncOpFuture> self,
@@ -364,7 +364,7 @@ class PollAsyncOpFuture {
     self->polling_policy_->Setup(*context);
     self->metadata_update_policy_.Setup(*context);
 
-    self->operation_(self->cq_, std::move(context))
+    (*self->operation_)(self->cq_, std::move(context))
         .then([self](future<StatusOr<optional<Response>>> fut) {
           OnCompletion(self, fut.get());
         });
@@ -384,7 +384,8 @@ class PollAsyncOpFuture {
   std::unique_ptr<PollingPolicy> polling_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
   CompletionQueue cq_;
-  Operation operation_;
+  // This will be filled once operation is computed.
+  optional<Operation> operation_;
   promise<StatusOr<Response>> final_result_;
 
   friend future<StatusOr<
@@ -392,7 +393,8 @@ class PollAsyncOpFuture {
   StartAsyncPollOp<Operation>(char const* location,
                               std::unique_ptr<PollingPolicy> polling_policy,
                               MetadataUpdatePolicy metadata_update_policy,
-                              CompletionQueue cq, Operation operation);
+                              CompletionQueue cq,
+                              future<StatusOr<Operation>> operation_future);
 };
 
 /**
@@ -416,13 +418,25 @@ future<
 StartAsyncPollOp(char const* location,
                  std::unique_ptr<PollingPolicy> polling_policy,
                  MetadataUpdatePolicy metadata_update_policy,
-                 CompletionQueue cq, Operation operation) {
+                 CompletionQueue cq,
+                 future<StatusOr<Operation>> operation_future) {
+  using Response =
+      typename PollableOperationRequestTraits<Operation>::ResponseType;
   auto req = std::shared_ptr<PollAsyncOpFuture<Operation>>(
       new PollAsyncOpFuture<Operation>(location, std::move(polling_policy),
                                        std::move(metadata_update_policy),
-                                       std::move(cq), std::move(operation)));
-  req->StartIteration(req);
-  return req->final_result_.get_future();
+                                       std::move(cq)));
+  return operation_future.then(
+      [req](future<StatusOr<Operation>> operation_future)
+          -> future<StatusOr<Response>> {
+        auto operation = operation_future.get();
+        if (!operation) {
+          return make_ready_future<StatusOr<Response>>(operation.status());
+        }
+        req->operation_.emplace(*std::move(operation));
+        req->StartIteration(req);
+        return req->final_result_.get_future();
+      });
 }
 
 }  // namespace internal

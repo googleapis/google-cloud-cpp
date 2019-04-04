@@ -786,6 +786,11 @@ INSTANTIATE_TEST_SUITE_P(
         // should still return CANCELLED to the user.
         false));
 
+template <typename F>
+StatusOr<F> MakeStatusOr(F f) {
+  return f;
+}
+
 class NoexTableAsyncPollOpImmediateFinishFutureTest
     : public bigtable::testing::internal::TableTestFixture {
  public:
@@ -806,10 +811,11 @@ class NoexTableAsyncPollOpImmediateFinishFutureTest
         bigtable::DefaultPollingPolicy(
             simulate_retries ? internal::kBigtableLimits : kNoRetries),
         std::move(metadata_update_policy_), cq_,
-        [this](CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context) {
-          return attempt_promise_.get_future();
-        });
+        make_ready_future(
+            MakeStatusOr([this](CompletionQueue& cq,
+                                std::unique_ptr<grpc::ClientContext> context) {
+              return attempt_promise_.get_future();
+            })));
 
     EXPECT_EQ(std::future_status::timeout, user_future.wait_for(1_ms));
     return user_future;
@@ -872,11 +878,12 @@ class NoexTableAsyncPollOpOneRetryFutureTest
         user_future_(internal::StartAsyncPollOp(
             __func__, bigtable::DefaultPollingPolicy(internal::kBigtableLimits),
             std::move(metadata_update_policy_), cq_,
-            [this](CompletionQueue& cq,
-                   std::unique_ptr<grpc::ClientContext> context) {
-              attempt_promises_.emplace_back();
-              return attempt_promises_.back().get_future();
-            })) {
+            make_ready_future(MakeStatusOr(
+                [this](CompletionQueue& cq,
+                       std::unique_ptr<grpc::ClientContext> context) {
+                  attempt_promises_.emplace_back();
+                  return attempt_promises_.back().get_future();
+                })))) {
     EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
     EXPECT_EQ(1U, attempt_promises_.size());
   }
@@ -925,6 +932,21 @@ TEST_F(NoexTableAsyncPollOpOneRetryFutureTest, TransientFailureThenOk) {
   auto res = user_future_.get();
   ASSERT_STATUS_OK(res);
   EXPECT_EQ(42, *res);
+}
+
+TEST(TableAsyncPollOpOneRetryFutureTest, OperationFutureFails) {
+  CompletionQueue cq;
+  auto user_future = internal::StartAsyncPollOp(
+      __func__, bigtable::DefaultPollingPolicy(internal::kBigtableLimits),
+      MetadataUpdatePolicy("some_table", MetadataParamTypes::TABLE_NAME), cq,
+      make_ready_future(
+          StatusOr<std::function<future<StatusOr<optional<int>>>(
+              CompletionQueue & cq, std::unique_ptr<grpc::ClientContext>)>>(
+              Status(StatusCode::kUnavailable, ""))));
+
+  auto res = user_future.get();
+  ASSERT_FALSE(res);
+  EXPECT_EQ(StatusCode::kUnavailable, res.status().code());
 }
 
 }  // namespace

@@ -400,7 +400,7 @@ TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
   auto fut = internal::StartAsyncLongrunningOp<
       AdminClient, google::bigtable::v2::SampleRowKeysResponse>(
       __func__, polling_policy->clone(), metadata_update_policy, client, cq,
-      std::move(op_arg));
+      make_ready_future<StatusOr<longrunning::Operation>>(std::move(op_arg)));
 
   EXPECT_EQ(std::future_status::timeout, fut.wait_for(1_ms));
   EXPECT_EQ(1U, cq_impl->size());
@@ -416,6 +416,22 @@ TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
     ASSERT_FALSE(res);
     EXPECT_EQ(StatusCode::kPermissionDenied, res.status().code());
   }
+}
+
+TEST(AsyncLongrunningOpFutureSimpleTest, NoOperation) {
+  bigtable::CompletionQueue cq;
+
+  auto fut = internal::StartAsyncLongrunningOp<
+      AdminClient, google::bigtable::v2::SampleRowKeysResponse>(
+      __func__, bigtable::DefaultPollingPolicy(internal::kBigtableLimits),
+      MetadataUpdatePolicy("instance_id", MetadataParamTypes::NAME, "table_id"),
+      std::make_shared<testing::MockAdminClient>(), cq,
+      make_ready_future<StatusOr<longrunning::Operation>>(
+          Status(StatusCode::kUnavailable, "")));
+
+  auto res = fut.get();
+  ASSERT_FALSE(res);
+  EXPECT_EQ(StatusCode::kUnavailable, res.status().code());
 }
 
 INSTANTIATE_TEST_SUITE_P(EndToEnd, AsyncLongrunningOpFutureTest,
