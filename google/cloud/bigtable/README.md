@@ -21,7 +21,25 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.8.x - TBD
+### v0.9.x - TBD
+
+### v0.8.x - 2019-04
+
+* **Breaking change**: `Table::BulkApply` now returns a
+  `std::vector<FailedMutation>` instead of throwing an exception.
+* In the future we will remove all the `google::cloud::bigtable::noex::*`
+  classes. We are moving the implementation to `google::cloud::bigtable::*`.
+* Continuing to implement more async APIs (Note: These are not yet stable):
+  * InstanceAdmin::AsyncDeleteInstance
+  * Table::AsyncCheckAndMutateRow
+  * TableAdmin::AsyncDeleteTable
+  * TableAdmin::AsyncModifyColumnFamilies
+* BulkMutator now returns more specific errors instead of generic UNKNOWN.
+* Improved install instructions, which are now tested with our CI builds.
+* CMake-config files now work without `pkg-config`.
+* Removed the googleapis submodule. The build system now automatically
+  downloads all deps.
+* No longer throw exceptions from `ClientOptions`.
 
 ### v0.7.x - 2019-03
 

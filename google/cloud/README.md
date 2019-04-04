@@ -22,7 +22,12 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.6.x - TBD
+### v0.7.x - TBD
+
+### v0.6.x - 2019-04
+
+* Removed the googleapis submodule. The build system now automatically
+  downloads all deps.
 
 ### v0.5.x - 2019-03
 
