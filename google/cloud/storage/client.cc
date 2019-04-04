@@ -59,6 +59,20 @@ ObjectReadStream Client::ReadObjectImpl(
   return ObjectReadStream(*std::move(streambuf));
 }
 
+ObjectWriteStream Client::WriteObjectImpl(
+    internal::InsertObjectStreamingRequest const& request) {
+  auto streambuf = raw_client_->WriteObject(request);
+  if (!streambuf) {
+    ObjectWriteStream error_stream(google::cloud::internal::make_unique<
+                                   internal::ObjectWriteErrorStreambuf>(
+        std::move(streambuf).status()));
+    error_stream.setstate(std::ios::badbit | std::ios::eofbit);
+    error_stream.Close();
+    return error_stream;
+  }
+  return ObjectWriteStream(*std::move(streambuf));
+}
+
 bool Client::UseSimpleUpload(std::string const& file_name) const {
   auto status = google::cloud::internal::status(file_name);
   if (!is_regular(status)) {

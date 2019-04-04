@@ -83,6 +83,8 @@ TEST_F(WriteObjectTest, WriteObject) {
             EXPECT_CALL(*mock_result, DoClose())
                 .WillRepeatedly(Return(internal::HttpResponse{200, text, {}}));
             EXPECT_CALL(*mock_result, IsOpen()).WillRepeatedly(Return(true));
+            EXPECT_CALL(*mock_result, ValidateHash(_))
+                .WillRepeatedly(Return(true));
             std::unique_ptr<internal::ObjectWriteStreambuf> result(mock_result);
             return make_status_or(std::move(result));
           }));
@@ -102,28 +104,16 @@ TEST_F(WriteObjectTest, WriteObjectTooManyFailures) {
     return StatusOr<std::unique_ptr<internal::ObjectWriteStreambuf>>(
         TransientError());
   };
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_CALL(*mock, WriteObject(_))
       .WillOnce(Invoke(returner))
       .WillOnce(Invoke(returner))
       .WillOnce(Invoke(returner));
-  EXPECT_THROW(
-      try {
-        client.WriteObject("test-bucket-name", "test-object-name").Close();
-      } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("Retry policy exhausted"));
-        EXPECT_THAT(ex.what(), HasSubstr("WriteObject"));
-        throw;
-      },
-      std::runtime_error);
-#else
-  // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
-  // operation is called.
-  EXPECT_CALL(*mock, WriteObject(_)).WillRepeatedly(Invoke(returner));
-  EXPECT_DEATH_IF_SUPPORTED(
-      client.WriteObject("test-bucket-name", "test-object-name").Close(),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+
+  auto stream = client.WriteObject("test-bucket-name", "test-object-name");
+  EXPECT_TRUE(stream.bad());
+  EXPECT_FALSE(stream.metadata().status().ok());
+  EXPECT_EQ(TransientError().code(), stream.metadata().status().code())
+      << ", status=" << stream.metadata().status();
 }
 
 TEST_F(WriteObjectTest, WriteObjectPermanentFailure) {
@@ -131,25 +121,12 @@ TEST_F(WriteObjectTest, WriteObjectPermanentFailure) {
     return StatusOr<std::unique_ptr<internal::ObjectWriteStreambuf>>(
         PermanentError());
   };
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_CALL(*mock, WriteObject(_)).WillOnce(Invoke(returner));
-  EXPECT_THROW(
-      try {
-        client->WriteObject("test-bucket-name", "test-object-name").Close();
-      } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("Permanent error"));
-        EXPECT_THAT(ex.what(), HasSubstr("WriteObject"));
-        throw;
-      },
-      std::runtime_error);
-#else
-  // With EXPECT_DEATH*() the mocking framework cannot detect how many times the
-  // operation is called.
-  EXPECT_CALL(*mock, WriteObject(_)).WillRepeatedly(Invoke(returner));
-  EXPECT_DEATH_IF_SUPPORTED(
-      client->WriteObject("test-bucket-name", "test-object-name").Close(),
-      "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto stream = client->WriteObject("test-bucket-name", "test-object-name");
+  EXPECT_TRUE(stream.bad());
+  EXPECT_FALSE(stream.metadata().status().ok());
+  EXPECT_EQ(PermanentError().code(), stream.metadata().status().code())
+      << ", status=" << stream.metadata().status();
 }
 
 }  // namespace

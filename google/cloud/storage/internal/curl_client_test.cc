@@ -195,11 +195,6 @@ TEST_P(CurlClientTest, InsertObjectMediaSimple) {
 }
 
 TEST_P(CurlClientTest, InsertObjectMediaMultipart) {
-  std::string const error_type = GetParam();
-  if (error_type != "credentials-failure") {
-    // TODO(#1735) - enable this test when ObjectWriteStream uses StatusOr.
-    return;
-  }
   auto actual = client_
                     ->InsertObjectMedia(
                         InsertObjectMediaRequest("bkt", "obj", "contents"))

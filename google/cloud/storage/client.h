@@ -892,7 +892,7 @@ class Client {
                               Options&&... options) {
     internal::ReadObjectRangeRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return ReadObjectImpl(std::move(request));
+    return ReadObjectImpl(request);
   }
 
   /**
@@ -958,7 +958,7 @@ class Client {
                                 Options&&... options) {
     internal::InsertObjectStreamingRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return ObjectWriteStream(raw_client_->WriteObject(request).value());
+    return WriteObjectImpl(request);
   }
 
   /**
@@ -2785,6 +2785,9 @@ class Client {
 
   ObjectReadStream ReadObjectImpl(
       internal::ReadObjectRangeRequest const& request);
+
+  ObjectWriteStream WriteObjectImpl(
+      internal::InsertObjectStreamingRequest const& request);
 
   // The version of UploadFile() where UseResumableUploadSession is one of the
   // options. Note how this does not use InsertObjectMedia at all.

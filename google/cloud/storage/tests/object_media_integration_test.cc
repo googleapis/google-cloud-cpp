@@ -692,7 +692,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
   EXPECT_STATUS_OK(status);
 }
 
-TEST_F(ObjectMediaIntegrationTest, ConnectionFailureJSON) {
+TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadJSON) {
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:0"),
                 LimitedErrorCountRetryPolicy(2)};
@@ -713,7 +713,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureJSON) {
       << ", status=" << stream.status();
 }
 
-TEST_F(ObjectMediaIntegrationTest, ConnectionFailureXML) {
+TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadXML) {
   google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
                                   "http://localhost:0");
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
@@ -730,6 +730,81 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureXML) {
   EXPECT_FALSE(stream.status().ok());
   EXPECT_EQ(StatusCode::kUnavailable, stream.status().code())
       << ", status=" << stream.status();
+}
+
+TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteJSON) {
+  Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
+                    .set_endpoint("http://localhost:0"),
+                LimitedErrorCountRetryPolicy(2)};
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  // We force the library to use the JSON API by adding the
+  // `IfGenerationNotMatch()` parameter, both JSON and XML use the same code to
+  // download, but controlling the endpoint for JSON is easier.
+  auto stream = client.WriteObject(
+      bucket_name, object_name, IfGenerationMatch(0), IfGenerationNotMatch(7));
+  EXPECT_TRUE(stream.bad());
+  EXPECT_FALSE(stream.metadata().status().ok());
+  EXPECT_EQ(StatusCode::kUnavailable, stream.metadata().status().code())
+      << ", status=" << stream.metadata().status();
+}
+
+TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteXML) {
+  google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
+                                  "http://localhost:0");
+  Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
+                    .set_endpoint("http://localhost:0"),
+                LimitedErrorCountRetryPolicy(2)};
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  auto stream = client.WriteObject(
+      bucket_name, object_name, IfGenerationMatch(0), IfGenerationNotMatch(7));
+  EXPECT_TRUE(stream.bad());
+  EXPECT_FALSE(stream.metadata().status().ok());
+  EXPECT_EQ(StatusCode::kUnavailable, stream.metadata().status().code())
+      << ", status=" << stream.metadata().status();
+}
+
+TEST_F(ObjectMediaIntegrationTest, ConnectionFailureDownloadFile) {
+  google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
+                                  "http://localhost:0");
+  Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
+                    .set_endpoint("http://localhost:0"),
+                LimitedErrorCountRetryPolicy(2)};
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+  auto file_name = MakeRandomObjectName();
+
+  Status status = client.DownloadToFile(bucket_name, object_name, file_name);
+  EXPECT_FALSE(status.ok());
+  EXPECT_EQ(StatusCode::kUnavailable, status.code()) << ", status=" << status;
+}
+
+TEST_F(ObjectMediaIntegrationTest, ConnectionFailureUploadFile) {
+  google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
+                                  "http://localhost:0");
+  Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
+                    .set_endpoint("http://localhost:0"),
+                LimitedErrorCountRetryPolicy(2)};
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+  auto file_name = MakeRandomObjectName();
+
+  std::ofstream(file_name) << LoremIpsum();
+
+  StatusOr<ObjectMetadata> meta =
+      client.UploadFile(file_name, bucket_name, object_name);
+  EXPECT_FALSE(meta.ok()) << "value=" << meta.value();
+  EXPECT_EQ(StatusCode::kUnavailable, meta.status().code())
+      << ", status=" << meta.status();
+
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
 }  // anonymous namespace
