@@ -238,6 +238,7 @@ template <typename AsyncCallType, typename Request, typename Accumulator,
           typename Response = typename internal::AsyncCallResponseType<
               AsyncCallType, Request>::type>
 class AsyncRetryMultiPageFuture {
+ private:
   static_assert(
       std::is_same<Accumulator,
                    cloud::internal::invoke_result_t<

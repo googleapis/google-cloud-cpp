@@ -23,7 +23,6 @@
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <future>
 #include <thread>
