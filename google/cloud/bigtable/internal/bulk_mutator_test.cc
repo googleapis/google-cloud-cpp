@@ -340,7 +340,8 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
   bt::BulkMutation mut(
       bt::SingleRowMutation("foo", {bt::SetCell("fam", "col", "baz")}),
       bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")}),
-      bt::SingleRowMutation("baz", {bt::SetCell("fam", "col", "v")}));
+      bt::SingleRowMutation("baz", {bt::SetCell("fam", "col", "v")}),
+      bt::SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "qux")}));
 
   // We will setup the mock to return recoverable failures for idempotent
   // mutations.
@@ -379,14 +380,14 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
   // ASSERT_EQ() has an embedded "return;" in it, which does not play well with
   // the rest of the stuff here.
   auto expect_r2 = [](btproto::MutateRowsRequest const& r) {
-    ASSERT_EQ(1, r.entries_size());
+    ASSERT_EQ(2, r.entries_size());
     EXPECT_EQ("bar", r.entries(0).row_key());
   };
   bigtable::testing::MockDataClient client;
   EXPECT_CALL(client, MutateRows(_, _))
       .WillOnce(Invoke(
           [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const& r) {
-            EXPECT_EQ(3, r.entries_size());
+            EXPECT_EQ(4, r.entries_size());
             return r1.release()->AsUniqueMocked();
           }))
       .WillOnce(Invoke([&r2, expect_r2](grpc::ClientContext*,
@@ -409,7 +410,7 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
     EXPECT_TRUE(status.ok());
   }
   auto failures = mutator.ExtractFinalFailures();
-  ASSERT_EQ(2UL, failures.size());
+  ASSERT_EQ(3UL, failures.size());
   EXPECT_EQ(0, failures[0].original_index());
   // EXPECT_EQ("foo", failures[0].mutation().row_key());
   EXPECT_EQ(google::cloud::StatusCode::kUnavailable,
@@ -417,7 +418,8 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
 
   EXPECT_EQ(2, failures[1].original_index());
   // EXPECT_EQ("baz", failures[1].mutation().row_key());
-  EXPECT_EQ(google::cloud::StatusCode::kUnknown, failures[1].status().code());
+  EXPECT_EQ(google::cloud::StatusCode::kInternal, failures[1].status().code());
+  EXPECT_EQ(google::cloud::StatusCode::kInternal, failures[2].status().code());
 }
 
 TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
@@ -471,7 +473,8 @@ TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
   ASSERT_EQ(1UL, failures.size());
   EXPECT_EQ(1, failures[0].original_index());
   // EXPECT_EQ("bar", failures[0].mutation().row_key());
-  EXPECT_EQ(google::cloud::StatusCode::kUnknown, failures[0].status().code());
+  EXPECT_EQ(google::cloud::StatusCode::kPermissionDenied,
+            failures.front().status().code());
 }
 
 TEST(MultipleRowsMutatorTest, SimpleAsync) {

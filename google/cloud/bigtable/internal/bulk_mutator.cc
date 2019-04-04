@@ -64,8 +64,10 @@ grpc::Status BulkMutator::MakeOneRequest(bigtable::DataClient& client,
   while (stream->Read(&response)) {
     ProcessResponse(response);
   }
+  auto grpc_status = stream->Finish();
+  last_status_ = bigtable::internal::MakeStatusFromRpcError(grpc_status);
   FinishRequest();
-  return stream->Finish();
+  return grpc_status;
 }
 
 void BulkMutator::PrepareForRequest() {
@@ -135,18 +137,19 @@ void BulkMutator::FinishRequest() {
       pending_mutations_.add_entries()->Swap(&original);
       pending_annotations_.push_back(annotation);
     } else {
-      // These are most likely an effect of a broken stream. We do not know
-      // their error code, and we cannot retry them. Report them as kUnknown in
-      // the failure list.
-
-      std::string const message =
-          "Never got a confirmation for this mutation. Most likely stream was "
-          "broken before its status was sent. It's not idempotent, so we can't "
-          "retry it.";
-
-      google::cloud::Status status(google::cloud::StatusCode::kUnknown,
-                                   message);
-      failures_.emplace_back(FailedMutation(status, annotation.original_index));
+      if (last_status_.ok()) {
+        google::cloud::Status status(
+            google::cloud::StatusCode::kInternal,
+            "The server never sent a confirmation for this mutation but the "
+            "stream didn't fail either. This is most likely a bug, please "
+            "report it at "
+            "https://github.com/googleapis/google-cloud-cpp/issues/new");
+        failures_.emplace_back(
+            FailedMutation(status, annotation.original_index));
+      } else {
+        failures_.emplace_back(
+            FailedMutation(last_status_, annotation.original_index));
+      }
     }
     ++index;
   }
@@ -160,19 +163,23 @@ std::vector<FailedMutation> BulkMutator::ConsumeAccumulatedFailures() {
 
 std::vector<FailedMutation> BulkMutator::ExtractFinalFailures() {
   std::vector<FailedMutation> result(std::move(failures_));
-  // These are most likely an effect of a broken stream. We do not know
-  // their error code and there are not going to be any more retries. Report
-  // them as kUnknown in the failure list.
-  std::string const message =
-      "Never got a confirmation for this mutation. Most likely stream was "
-      "broken before its status was sent.";
 
-  google::cloud::Status status(google::cloud::StatusCode::kUnknown, message);
   auto size = pending_mutations_.mutable_entries()->size();
   for (int idx = 0; idx != size; idx++) {
     int original_index = pending_annotations_[idx].original_index;
-    result.emplace_back(status, original_index);
+    if (last_status_.ok()) {
+      google::cloud::Status status(
+          google::cloud::StatusCode::kInternal,
+          "The server never sent a confirmation for this mutation but the "
+          "stream didn't fail either. This is most likely a bug, please "
+          "report it at "
+          "https://github.com/googleapis/google-cloud-cpp/issues/new");
+      result.emplace_back(status, original_index);
+    } else {
+      result.emplace_back(last_status_, original_index);
+    }
   }
+
   return result;
 }
 
