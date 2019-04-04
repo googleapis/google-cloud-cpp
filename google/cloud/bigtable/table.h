@@ -413,6 +413,56 @@ class Table {
     return row;
   }
 
+  /**
+   * Make an asynchronous request to atomically read and modify a row.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param row_key the row key on which modification will be performed
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   *
+   * @param rule to modify the row. Two types of rules are applied here
+   *     AppendValue which will read the existing value and append the
+   *     text provided to the value.
+   *     IncrementAmount which will read the existing uint64 big-endian-int
+   *     and add the value provided.
+   *     Both rules accept the family and column identifier to modify.
+   * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
+   *
+   * @par Example
+   * @snippet data_async_snippets.cc async read modify write
+   */
+
+  template <typename... Args>
+  future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
+  AsyncReadModifyWriteRow(std::string row_key, CompletionQueue& cq,
+                          bigtable::ReadModifyWriteRule rule, Args&&... rules) {
+    ::google::bigtable::v2::ReadModifyWriteRowRequest request;
+    request.set_row_key(std::move(row_key));
+    bigtable::internal::SetCommonTableOperationRequest<
+        ::google::bigtable::v2::ReadModifyWriteRowRequest>(
+        request, impl_.app_profile_id_.get(), impl_.table_name_.get());
+
+    *request.add_rules() = std::move(rule).as_proto();
+    impl_.AddRules(request, std::forward<Args>(rules)...);
+
+    auto client = impl_.client_;
+    return internal::StartRetryAsyncUnaryRpc(
+        __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+        internal::ConstantIdempotencyPolicy(false),
+        clone_metadata_update_policy(),
+        [client](grpc::ClientContext* context,
+                 google::bigtable::v2::ReadModifyWriteRowRequest const& request,
+                 grpc::CompletionQueue* cq) {
+          return client->AsyncReadModifyWriteRow(context, request, cq);
+        },
+        std::move(request), cq);
+  }
+
  private:
   friend class MutationBatcher;
   noex::Table impl_;

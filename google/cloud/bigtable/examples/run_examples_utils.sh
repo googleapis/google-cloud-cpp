@@ -353,6 +353,7 @@ function run_all_data_async_examples {
   run_example ./data_async_snippets async-apply "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_async_snippets async-bulk-apply "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_async_snippets async-check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_async_snippets async-read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./table_admin_snippets delete-table "${project_id}" "${instance_id}" "${TABLE}"
 
   # Verify that calling without a command produces the right exit status and
