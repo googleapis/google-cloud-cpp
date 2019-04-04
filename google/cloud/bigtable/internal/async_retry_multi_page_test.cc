@@ -501,7 +501,7 @@ class AsyncMultipageFutureTest : public ::testing::Test {
     // The mock will return these clusters.
     std::vector<std::string> clusters;
     // The mock will return this next_page_token.
-    std::string const& next_page_token;
+    std::string next_page_token;
   };
 
   using MockAsyncListClustersReader =
