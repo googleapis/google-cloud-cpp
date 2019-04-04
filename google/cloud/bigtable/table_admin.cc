@@ -218,6 +218,29 @@ StatusOr<btadmin::Table> TableAdmin::ModifyColumnFamilies(
   return result;
 }
 
+future<StatusOr<btadmin::Table>> TableAdmin::AsyncModifyColumnFamilies(
+    CompletionQueue& cq, std::string const& table_id,
+    std::vector<ColumnFamilyModification> modifications) {
+  btadmin::ModifyColumnFamiliesRequest request;
+  request.set_name(TableName(table_id));
+  for (auto& m : modifications) {
+    *request.add_modifications() = std::move(m).as_proto();
+  }
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, table_id);
+
+  auto client = impl_.client_;
+  return internal::StartRetryAsyncUnaryRpc(
+      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
+      [client](grpc::ClientContext* context,
+               btadmin::ModifyColumnFamiliesRequest const& request,
+               grpc::CompletionQueue* cq) {
+        return client->AsyncModifyColumnFamilies(context, request, cq);
+      },
+      std::move(request), cq);
+}
+
 Status TableAdmin::DropRowsByPrefix(std::string const& table_id,
                                     std::string row_key_prefix) {
   grpc::Status status;

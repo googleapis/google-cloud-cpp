@@ -262,6 +262,32 @@ class TableAdmin {
       std::vector<ColumnFamilyModification> modifications);
 
   /**
+   * Make an asynchronous request to modify the column families of a table.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param table_id the name of the table relative to the instance managed by
+   *     this object.  The full table name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of this object.
+   * @param modifications the list of modifications to the schema.
+   * @return the information about table or status.
+   *
+   * @par Example
+   * @snippet table_admin_async_snippets.cc async modify table
+   */
+  future<StatusOr<::google::bigtable::admin::v2::Table>>
+  AsyncModifyColumnFamilies(
+      CompletionQueue& cq, std::string const& table_id,
+      std::vector<ColumnFamilyModification> modifications);
+
+  /**
    * Delete all the rows that start with a given prefix.
    *
    * @param table_id the id of the table within the instance associated with

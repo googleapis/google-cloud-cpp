@@ -80,6 +80,17 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetDeleteTableTest) {
                             {"foo", GcRule::MaxAge(std::chrono::hours(24))}},
                            {"a1000", "a2000", "b3000", "m5000"});
 
+  auto count_matching_families = [](btadmin::Table const& table,
+                                    std::string const& name) {
+    int count = 0;
+    for (auto const& kv : table.column_families()) {
+      if (kv.first == name) {
+        ++count;
+      }
+    }
+    return count;
+  };
+
   future<void> chain =
       table_admin_->AsyncCreateTable(cq, table_id, table_config)
           .then([&](future<StatusOr<btadmin::Table>> fut) {
@@ -94,18 +105,32 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetDeleteTableTest) {
             StatusOr<btadmin::Table> get_result = fut.get();
             EXPECT_STATUS_OK(get_result);
 
-            auto count_matching_families = [](btadmin::Table const& table,
-                                              std::string const& name) {
-              int count = 0;
-              for (auto const& kv : table.column_families()) {
-                if (kv.first == name) {
-                  ++count;
-                }
-              }
-              return count;
-            };
             EXPECT_EQ(1, count_matching_families(*get_result, "fam"));
             EXPECT_EQ(1, count_matching_families(*get_result, "foo"));
+
+            // update table
+            std::vector<bigtable::ColumnFamilyModification>
+                column_modification_list = {
+                    bigtable::ColumnFamilyModification::Create(
+                        "newfam",
+                        GcRule::Intersection(
+                            GcRule::MaxAge(std::chrono::hours(7 * 24)),
+                            GcRule::MaxNumVersions(1))),
+                    bigtable::ColumnFamilyModification::Update(
+                        "fam", GcRule::MaxNumVersions(2)),
+                    bigtable::ColumnFamilyModification::Drop("foo")};
+            return table_admin_->AsyncModifyColumnFamilies(
+                cq, table_id, column_modification_list);
+          })
+          .then([&](future<StatusOr<btadmin::Table>> fut) {
+            StatusOr<btadmin::Table> get_result = fut.get();
+            EXPECT_EQ(1, count_matching_families(*get_result, "fam"));
+            EXPECT_EQ(0, count_matching_families(*get_result, "foo"));
+            EXPECT_EQ(1, count_matching_families(*get_result, "newfam"));
+            auto const& gc =
+                get_result->column_families().at("newfam").gc_rule();
+            EXPECT_TRUE(gc.has_intersection());
+            EXPECT_EQ(2, gc.intersection().rules_size());
 
             return table_admin_->AsyncDeleteTable(cq, table_id);
           })
