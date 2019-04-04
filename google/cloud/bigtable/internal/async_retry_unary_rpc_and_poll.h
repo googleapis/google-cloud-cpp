@@ -219,9 +219,8 @@ class AsyncRetryAndPollUnaryRpc
  *     after both the initial RPC and the polling for the result of the
  *     longrunning operation it initiated complete successfully.
  */
-template <
-    typename Response, typename AsyncCallType, typename RequestType,
-    typename IdempotencyPolicy, typename Client>
+template <typename Response, typename AsyncCallType, typename RequestType,
+          typename IdempotencyPolicy, typename Client>
 future<StatusOr<Response>> AsyncStartPollAfterRetryUnaryRpc(
     char const* location, std::unique_ptr<PollingPolicy> polling_policy,
     std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
