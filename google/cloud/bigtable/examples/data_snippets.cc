@@ -330,8 +330,8 @@ void ReadRowSetPrefix(google::cloud::bigtable::Table table, int argc,
 
   std::string prefix = ConsumeArg(argc, argv);
 
-  //! [read rowset prefix] [START bigtable_read_prefix_list]
-  [&prefix](google::cloud::bigtable::Table table) {
+  //! [read rowset prefix] [START bigtable_read_prefix]
+  [](google::cloud::bigtable::Table table, std::string prefix) {
     namespace cbt = google::cloud::bigtable;
     auto row_set = cbt::RowSet();
 
@@ -354,8 +354,8 @@ void ReadRowSetPrefix(google::cloud::bigtable::Table table, int argc,
     }
     std::cout << std::flush;
   }
-  //! [read rowset prefix] [END bigtable_read_prefix_list]
-  (std::move(table));
+  //! [read rowset prefix] [END bigtable_read_prefix]
+  (std::move(table), prefix);
 }
 
 void ReadPrefixList(google::cloud::bigtable::Table table, int argc,
@@ -372,33 +372,33 @@ void ReadPrefixList(google::cloud::bigtable::Table table, int argc,
   }
 
   //! [read prefix list] [START bigtable_read_prefix_list]
-  [&prefix_list](google::cloud::bigtable::Table table) {
+  [](google::cloud::bigtable::Table table,
+     std::vector<std::string> prefix_list) {
     namespace cbt = google::cloud::bigtable;
     auto row_set = cbt::RowSet();
     auto filter = google::cloud::bigtable::Filter::Latest(1);
 
     for (auto prefix : prefix_list) {
-      auto row_set = cbt::RowSet();
       auto row_range_prefix = cbt::RowRange::Prefix(prefix);
       row_set.Append(row_range_prefix);
-
-      for (auto& row : table.ReadRows(std::move(row_set), filter)) {
-        if (!row) {
-          throw std::runtime_error(row.status().message());
-        }
-        std::cout << row->row_key() << ":\n";
-        for (auto& cell : row->cells()) {
-          std::cout << "\t" << cell.family_name() << ":"
-                    << cell.column_qualifier() << "    @ "
-                    << cell.timestamp().count() << "us\n"
-                    << "\t\"" << cell.value() << '"' << "\n";
-        }
-      }
-      std::cout << std::flush;
     }
+
+    for (auto& row : table.ReadRows(std::move(row_set), filter)) {
+      if (!row) {
+        throw std::runtime_error(row.status().message());
+      }
+      std::cout << row->row_key() << ":\n";
+      for (auto& cell : row->cells()) {
+        std::cout << "\t" << cell.family_name() << ":"
+                  << cell.column_qualifier() << "    @ "
+                  << cell.timestamp().count() << "us\n"
+                  << "\t\"" << cell.value() << '"' << "\n";
+      }
+    }
+    std::cout << std::flush;
   }
   //! [read prefix list] [END bigtable_read_prefix_list]
-  (std::move(table));
+  (std::move(table), prefix_list);
 }
 
 void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
