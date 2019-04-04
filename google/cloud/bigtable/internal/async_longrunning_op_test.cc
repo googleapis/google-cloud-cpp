@@ -418,6 +418,22 @@ TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
   }
 }
 
+TEST(AsyncLongrunningOpFutureSimpleTest, NoOperation) {
+  bigtable::CompletionQueue cq;
+
+  auto fut = internal::StartAsyncLongrunningOp<
+      AdminClient, google::bigtable::v2::SampleRowKeysResponse>(
+      __func__, bigtable::DefaultPollingPolicy(internal::kBigtableLimits),
+      MetadataUpdatePolicy("instance_id", MetadataParamTypes::NAME, "table_id"),
+      std::make_shared<testing::MockAdminClient>(), cq,
+      make_ready_future<StatusOr<longrunning::Operation>>(
+          Status(StatusCode::kUnavailable, "")));
+
+  auto res = fut.get();
+  ASSERT_FALSE(res);
+  EXPECT_EQ(StatusCode::kUnavailable, res.status().code());
+}
+
 INSTANTIATE_TEST_SUITE_P(EndToEnd, AsyncLongrunningOpFutureTest,
                          ::testing::Values(
                              // We succeeded to contact the service.
