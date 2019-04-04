@@ -20,7 +20,18 @@ the reference guide includes a quick start guide.
 
 ## Release Notes
 
-### v0.6.x - TBD
+### v0.7.x - TBD
+
+### v0.6.x - 2019-04
+
+* Added initial support for HMAC key-related functions.
+* Added support for V4 signed URLs.
+* Improved install instructions, which are now tested with our CI builds.
+* CMake-config files now work without `pkg-config`.
+* No longer throw exceptions from `ClientOptions`.
+* Handle object names with slashes.
+* Added `ObjectMetadata::set_storage_class`
+* Added support for policy documents.
 
 ### v0.5.x - 2019-03
 
