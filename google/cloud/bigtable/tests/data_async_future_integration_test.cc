@@ -190,6 +190,62 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowFail) {
   CheckEqualUnordered(expected, actual);
 }
 
+TEST_F(DataAsyncFutureIntegrationTest,
+       TableAsyncReadModifyWriteAppendValueTest) {
+  auto table = GetTable();
+  std::string const row_key1 = "row-key-1";
+  std::string const row_key2 = "row-key-2";
+  std::string const add_suffix1 = "-suffix";
+  std::string const add_suffix2 = "-next";
+  std::string const add_suffix3 = "-newrecord";
+
+  std::string const family1 = "family1";
+  std::string const family2 = "family2";
+  std::string const family3 = "family3";
+  std::string const family4 = "family4";
+
+  std::vector<bigtable::Cell> created{
+      {row_key1, family1, "column-id1", 1000, "v1000"},
+      {row_key1, family2, "column-id2", 2000, "v2000"}};
+
+  std::vector<bigtable::Cell> expected{
+      {row_key1, family1, "column-id1", 1000, "v1000"},
+      {row_key1, family2, "column-id2", 2000, "v2000"},
+      {row_key1, family1, "column-id1", 1000, "v1000" + add_suffix1},
+      {row_key1, family2, "column-id2", 2000, "v2000" + add_suffix2},
+      {row_key1, family3, "column-id3", 2000, add_suffix3}};
+
+  CreateCells(table, created);
+  using R = bigtable::ReadModifyWriteRule;
+
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  auto fut = table.AsyncReadModifyWriteRow(
+      row_key1, cq, R::AppendValue(family1, "column-id1", add_suffix1),
+      R::AppendValue(family2, "column-id2", add_suffix2),
+      R::AppendValue(family3, "column-id3", add_suffix3));
+
+  // Block until the asynchronous operation completes. This is not what one
+  // would do in a real application (the synchronous API is better in that
+  // case), but we need to wait before checking the results.
+  auto status = fut.get();
+  EXPECT_STATUS_OK(status);
+  EXPECT_TRUE(status.ok());
+
+  auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
+  // Creating cells by ignoring the timestamps
+  // The returned cells have the timestamps in microseconds and do not match
+  // with the ones in the expected cells.
+  auto actual_cells_ignore_timestamp = GetCellsIgnoringTimestamp(actual);
+  auto expected_cells_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
+
+  // Cleanup the thread running the completion queue event loop.
+  cq.Shutdown();
+  pool.join();
+  CheckEqualUnordered(expected_cells_ignore_timestamp,
+                      actual_cells_ignore_timestamp);
+}
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
