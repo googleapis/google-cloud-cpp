@@ -169,6 +169,7 @@ void AsyncCheckAndMutate(cbt::Table table, cbt::CompletionQueue cq,
 
 void AsyncReadModifyWrite(cbt::Table table, cbt::CompletionQueue cq,
                           std::vector<std::string> argv) {
+  // TODO(#2404) - remove hard-coded key values
   if (argv.size() != 2U) {
     throw Usage{
         "async-read-modify-write: <project-id> <instance-id> <table-id>"};
