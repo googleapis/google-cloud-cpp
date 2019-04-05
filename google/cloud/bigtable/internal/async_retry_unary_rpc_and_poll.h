@@ -195,6 +195,52 @@ class AsyncRetryAndPollUnaryRpc
   Functor callback_;
 };
 
+/**
+ * Asynchronously start a longrunning operation (with retries) and poll its
+ * result.
+ *
+ * @param location typically the name of the function that created this
+ *     asynchronous retry loop.
+ * @param polling_policy controls how often the server is queried.
+ * @param rpc_retry_policy controls the number of retries, and what errors are
+ *     considered retryable.
+ * @param rpc_backoff_policy determines the wait time between retries.
+ * @param idempotent_policy determines if a request is retryable.
+ * @param metadata_update_policy controls how to update the metadata fields in
+ *     the request.
+ * @param client the client on which `AsyncGetOperation` is called to query
+ *     the longrunning operation's status.
+ * @param async_call the callable to start a new asynchronous operation.
+ * @param request the parameters of the request.
+ * @param cq the completion queue where the retry loop is executed.
+ *
+ * @return a future that becomes satisfied when either the retried RPC or
+ *     polling for the longrunning operation's results fail despite retries or
+ *     after both the initial RPC and the polling for the result of the
+ *     longrunning operation it initiated complete successfully.
+ */
+template <typename Response, typename AsyncCallType, typename RequestType,
+          typename IdempotencyPolicy, typename Client>
+future<StatusOr<Response>> AsyncStartPollAfterRetryUnaryRpc(
+    char const* location, std::unique_ptr<PollingPolicy> polling_policy,
+    std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
+    std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+    IdempotencyPolicy idempotent_policy,
+    MetadataUpdatePolicy metadata_update_policy, std::shared_ptr<Client> client,
+    AsyncCallType async_call, RequestType request, CompletionQueue cq) {
+  static_assert(
+      std::is_same<typename internal::AsyncCallResponseType<AsyncCallType,
+                                                            RequestType>::type,
+                   google::longrunning::Operation>::value,
+      "async_call should return a google::longrunning::Operation");
+  return StartAsyncLongrunningOp<Client, Response>(
+      location, std::move(polling_policy), metadata_update_policy, client, cq,
+      StartRetryAsyncUnaryRpc(
+          location, std::move(rpc_retry_policy), std::move(rpc_backoff_policy),
+          std::move(idempotent_policy), metadata_update_policy,
+          std::move(async_call), std::move(request), cq));
+}
+
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
