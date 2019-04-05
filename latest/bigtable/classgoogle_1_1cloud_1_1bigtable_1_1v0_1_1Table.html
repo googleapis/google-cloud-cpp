@@ -133,6 +133,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afd4ddd0053141ed279da2bbeba76b06b"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Row.html">Row</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#afd4ddd0053141ed279da2bbeba76b06b">ReadModifyWriteRow</a> (std::string row_key, bigtable::ReadModifyWriteRule rule, Args &amp;&amp;... rules)</td></tr>
 <tr class="memdesc:afd4ddd0053141ed279da2bbeba76b06b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically read and modify the row in the server, returning the resulting row.  <a href="#afd4ddd0053141ed279da2bbeba76b06b">More...</a><br /></td></tr>
 <tr class="separator:afd4ddd0053141ed279da2bbeba76b06b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d8914a17fd3952b90b031c99dbfe713"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:a0d8914a17fd3952b90b031c99dbfe713"><td class="memTemplItemLeft" align="right" valign="top">future&lt; StatusOr&lt; google::bigtable::v2::ReadModifyWriteRowResponse &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a0d8914a17fd3952b90b031c99dbfe713">AsyncReadModifyWriteRow</a> (std::string row_key, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;cq, bigtable::ReadModifyWriteRule rule, Args &amp;&amp;... rules)</td></tr>
+<tr class="memdesc:a0d8914a17fd3952b90b031c99dbfe713"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an asynchronous request to atomically read and modify a row.  <a href="#a0d8914a17fd3952b90b031c99dbfe713">More...</a><br /></td></tr>
+<tr class="separator:a0d8914a17fd3952b90b031c99dbfe713"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -604,6 +608,71 @@ template&lt;typename... Policies&gt; </div>
 
 </div>
 </div>
+<a id="a0d8914a17fd3952b90b031c99dbfe713"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d8914a17fd3952b90b031c99dbfe713">&#9670;&nbsp;</a></span>AsyncReadModifyWriteRow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">future&lt;StatusOr&lt;google::bigtable::v2::ReadModifyWriteRowResponse&gt; &gt; google::cloud::bigtable::v0::Table::AsyncReadModifyWriteRow </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>row_key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;&#160;</td>
+          <td class="paramname"><em>cq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bigtable::ReadModifyWriteRule&#160;</td>
+          <td class="paramname"><em>rule</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>rules</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Make an asynchronous request to atomically read and modify a row. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This is an early version of the asynchronous APIs for Cloud Bigtable. These APIs might be changed in backward-incompatible ways. It is not subject to any SLA or deprecation policy.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">row_key</td><td>the row key on which modification will be performed </td></tr>
+    <tr><td class="paramname">cq</td><td>the completion queue that will execute the asynchronous calls, the application must ensure that one or more threads are blocked on <code>cq.Run()</code>.</td></tr>
+    <tr><td class="paramname">rule</td><td>to modify the row. Two types of rules are applied here AppendValue which will read the existing value and append the text provided to the value. IncrementAmount which will read the existing uint64 big-endian-int and add the value provided. Both rules accept the family and column identifier to modify. </td></tr>
+    <tr><td class="paramname">rules</td><td>is the zero or more ReadModifyWriteRules to apply on a row.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id) {</div><div class="line">    <span class="comment">// Check if the latest value of the flip-flop column is &quot;on&quot;.</span></div><div class="line"></div><div class="line">    google::cloud::future&lt;google::cloud::StatusOr&lt;</div><div class="line">        google::bigtable::v2::ReadModifyWriteRowResponse&gt;&gt;</div><div class="line">        future = table.AsyncReadModifyWriteRow(</div><div class="line">            MAGIC_ROW_KEY, cq,</div><div class="line">            google::cloud::bigtable::ReadModifyWriteRule::AppendValue(</div><div class="line">                <span class="stringliteral">&quot;fam&quot;</span>, <span class="stringliteral">&quot;list&quot;</span>, <span class="stringliteral">&quot;;element&quot;</span>));</div><div class="line"></div><div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> =</div><div class="line">        future.then([](google::cloud::future&lt;google::cloud::StatusOr&lt;</div><div class="line">                           google::bigtable::v2::ReadModifyWriteRowResponse&gt;&gt;</div><div class="line">                           f) {</div><div class="line">          <span class="keyword">auto</span> row = f.get();</div><div class="line">          <span class="keywordflow">if</span> (!row) {</div><div class="line">            <span class="keywordflow">throw</span> std::runtime_error(row.status().message());</div><div class="line">          }</div><div class="line"></div><div class="line">          <span class="keywordflow">return</span> google::cloud::Status();</div><div class="line">        });</div><div class="line"></div><div class="line">    <span class="keyword">final</span>.get();</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00442">442</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
+
+</div>
+</div>
 <a id="a6468a7850ecf45a3dbc633b0bffdd134"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6468a7850ecf45a3dbc633b0bffdd134">&#9670;&nbsp;</a></span>BulkApply()</h2>
 
@@ -974,7 +1043,7 @@ template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </d
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00417">417</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00467">467</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
 
 </div>
 </div>
