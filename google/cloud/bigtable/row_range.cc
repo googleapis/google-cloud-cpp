@@ -186,38 +186,39 @@ std::pair<bool, RowRange> RowRange::Intersect(RowRange const& range) const {
   return std::make_pair(!is_empty, std::move(intersection));
 }
 
-bool RowRange::operator==(RowRange const& rhs) const {
-  if (row_range_.start_key_case() != rhs.row_range_.start_key_case()) {
+bool operator==(RowRange const& lhs, RowRange const& rhs) {
+  if (lhs.as_proto().start_key_case() != rhs.as_proto().start_key_case()) {
     return false;
   }
-  switch (row_range_.start_key_case()) {
+  switch (lhs.as_proto().start_key_case()) {
     case btproto::RowRange::START_KEY_NOT_SET:
       break;
     case btproto::RowRange::kStartKeyClosed:
-      if (row_range_.start_key_closed() != rhs.row_range_.start_key_closed()) {
+      if (lhs.as_proto().start_key_closed() !=
+          rhs.as_proto().start_key_closed()) {
         return false;
       }
       break;
     case btproto::RowRange::kStartKeyOpen:
-      if (row_range_.start_key_open() != rhs.row_range_.start_key_open()) {
+      if (lhs.as_proto().start_key_open() != rhs.as_proto().start_key_open()) {
         return false;
       }
       break;
   }
 
-  if (row_range_.end_key_case() != rhs.row_range_.end_key_case()) {
+  if (lhs.as_proto().end_key_case() != rhs.as_proto().end_key_case()) {
     return false;
   }
-  switch (row_range_.end_key_case()) {
+  switch (lhs.as_proto().end_key_case()) {
     case btproto::RowRange::END_KEY_NOT_SET:
       break;
     case btproto::RowRange::kEndKeyClosed:
-      if (row_range_.end_key_closed() != rhs.row_range_.end_key_closed()) {
+      if (lhs.as_proto().end_key_closed() != rhs.as_proto().end_key_closed()) {
         return false;
       }
       break;
     case btproto::RowRange::kEndKeyOpen:
-      if (row_range_.end_key_open() != rhs.row_range_.end_key_open()) {
+      if (lhs.as_proto().end_key_open() != rhs.as_proto().end_key_open()) {
         return false;
       }
       break;
@@ -227,26 +228,26 @@ bool RowRange::operator==(RowRange const& rhs) const {
 }
 
 std::ostream& operator<<(std::ostream& os, RowRange const& x) {
-  switch (x.row_range_.start_key_case()) {
+  switch (x.as_proto().start_key_case()) {
     case btproto::RowRange::START_KEY_NOT_SET:
       os << "['', ";
       break;
     case btproto::RowRange::kStartKeyClosed:
-      os << "['" << x.row_range_.start_key_closed() << "', ";
+      os << "['" << x.as_proto().start_key_closed() << "', ";
       break;
     case btproto::RowRange::kStartKeyOpen:
-      os << "('" << x.row_range_.start_key_open() << "', ";
+      os << "('" << x.as_proto().start_key_open() << "', ";
   }
 
-  switch (x.row_range_.end_key_case()) {
+  switch (x.as_proto().end_key_case()) {
     case btproto::RowRange::END_KEY_NOT_SET:
       os << "'')";
       break;
     case btproto::RowRange::kEndKeyClosed:
-      os << "'" << x.row_range_.end_key_closed() << "']";
+      os << "'" << x.as_proto().end_key_closed() << "']";
       break;
     case btproto::RowRange::kEndKeyOpen:
-      os << "'" << x.row_range_.end_key_open() << "')";
+      os << "'" << x.as_proto().end_key_open() << "')";
       break;
   }
   return os;

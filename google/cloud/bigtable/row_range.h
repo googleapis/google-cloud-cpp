@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/internal/prefix_range_end.h"
 #include <google/bigtable/v2/data.pb.h>
 #include <chrono>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -144,9 +145,6 @@ class RowRange {
    */
   std::pair<bool, RowRange> Intersect(RowRange const& range) const;
 
-  bool operator==(RowRange const& rhs) const;
-  bool operator!=(RowRange const& rhs) const { return !(*this == rhs); }
-
   /// Return the filter expression as a protobuf.
   ::google::bigtable::v2::RowRange const& as_proto() const& {
     return row_range_;
@@ -156,8 +154,6 @@ class RowRange {
   ::google::bigtable::v2::RowRange&& as_proto() && {
     return std::move(row_range_);
   }
-
-  friend std::ostream& operator<<(std::ostream& os, RowRange const& x);
 
  private:
   /// Private to avoid mistaken creation of uninitialized ranges.
@@ -172,6 +168,12 @@ class RowRange {
  private:
   ::google::bigtable::v2::RowRange row_range_;
 };
+
+bool operator==(RowRange const& lhs, RowRange const& rhs);
+
+inline bool operator!=(RowRange const& lhs, RowRange const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
 
 /// Print a human-readable representation of the range, mostly for testing.
 std::ostream& operator<<(std::ostream& os, RowRange const& x);

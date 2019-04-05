@@ -19,6 +19,7 @@
 #include "google/cloud/version.h"
 #include <map>
 #include <set>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -150,33 +151,33 @@ class IamBindings {
   void RemoveMembers(std::string const& role,
                      std::set<std::string> const& members);
 
-  bool operator==(IamBindings const& rhs) const {
-    return bindings_ == rhs.bindings_;
-  }
-
-  bool operator<(IamBindings const& rhs) const {
-    return bindings_ < rhs.bindings_;
-  }
-
-  bool operator!=(IamBindings const& rhs) const {
-    return std::rel_ops::operator!=(*this, rhs);
-  }
-
-  bool operator>(IamBindings const& rhs) const {
-    return std::rel_ops::operator>(*this, rhs);
-  }
-
-  bool operator<=(IamBindings const& rhs) const {
-    return std::rel_ops::operator<=(*this, rhs);
-  }
-
-  bool operator>=(IamBindings const& rhs) const {
-    return std::rel_ops::operator>=(*this, rhs);
-  }
-
  private:
   std::map<std::string, std::set<std::string>> bindings_;
 };
+
+inline bool operator==(IamBindings const& lhs, IamBindings const& rhs) {
+  return lhs.bindings() == rhs.bindings();
+}
+
+inline bool operator<(IamBindings const& lhs, IamBindings const& rhs) {
+  return lhs.bindings() < rhs.bindings();
+}
+
+inline bool operator!=(IamBindings const& lhs, IamBindings const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator>(IamBindings const& lhs, IamBindings const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator<=(IamBindings const& lhs, IamBindings const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>=(IamBindings const& lhs, IamBindings const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
 
 std::ostream& operator<<(std::ostream& os, IamBindings const& rhs);
 

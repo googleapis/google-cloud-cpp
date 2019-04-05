@@ -21,6 +21,7 @@
 #include "google/cloud/storage/internal/nljson.h"
 #include <chrono>
 #include <map>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -123,19 +124,6 @@ class CommonMetadata {
   }
   std::chrono::system_clock::time_point updated() const { return updated_; }
 
-  bool operator==(CommonMetadata const& rhs) const {
-    // etag changes each time the metadata changes, so that is the best field
-    // to short-circuit this comparison.  The check the name, project number,
-    // and metadata generation, which have the next best chance to
-    // short-circuit.  The rest just put in alphabetical order.
-    return name_ == rhs.name_ && metageneration_ == rhs.metageneration_ &&
-           id_ == rhs.id_ && etag_ == rhs.etag_ && kind_ == rhs.kind_ &&
-           self_link_ == rhs.self_link_ &&
-           storage_class_ == rhs.storage_class_ &&
-           time_created_ == rhs.time_created_ && updated_ == rhs.updated_;
-  }
-  bool operator!=(CommonMetadata const& rhs) const { return !(*this == rhs); }
-
  private:
   // Keep the fields in alphabetical order.
   std::string etag_;
@@ -149,6 +137,29 @@ class CommonMetadata {
   std::chrono::system_clock::time_point time_created_;
   std::chrono::system_clock::time_point updated_;
 };
+
+template <typename T>
+inline bool operator==(CommonMetadata<T> const& lhs,
+                       CommonMetadata<T> const& rhs) {
+  // etag changes each time the metadata changes, so that is the best field
+  // to short-circuit this comparison.  The check the name, project number,
+  // and metadata generation, which have the next best chance to
+  // short-circuit.  The rest just put in alphabetical order.
+  return lhs.name() == rhs.name() &&
+         lhs.metageneration() == rhs.metageneration() && lhs.id() == rhs.id() &&
+         lhs.etag() == rhs.etag() && lhs.kind() == rhs.kind() &&
+         lhs.self_link() == rhs.self_link() &&
+         lhs.storage_class() == rhs.storage_class() &&
+         lhs.time_created() == rhs.time_created() &&
+         lhs.updated() == rhs.updated() && lhs.has_owner() == rhs.has_owner() &&
+         (!lhs.has_owner() || lhs.owner() == rhs.owner());
+}
+
+template <typename T>
+inline bool operator!=(CommonMetadata<T> const& lhs,
+                       CommonMetadata<T> const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
