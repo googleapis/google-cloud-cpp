@@ -612,6 +612,34 @@ void DeleteSelectiveFamilyCells(google::cloud::bigtable::Table table, int argc,
 
   (std::move(table), row_key, family_name, column_name);
 }
+
+void RowExists(google::cloud::bigtable::Table table, int argc, char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"row-exists: <project-id> <instance-id> <table-id> <row-key>"};
+  }
+  auto row_key = ConsumeArg(argc, argv);
+
+  //! [row exists] [START bigtable_row_exists]
+  [](google::cloud::bigtable::Table table, std::string row_key) {
+    // Filter the results, turn any value into an empty string.
+    auto filter = google::cloud::bigtable::Filter::StripValueTransformer();
+
+    // Read a row, this returns a tuple (bool, row)
+    auto status = table.ReadRow(row_key, std::move(filter));
+
+    if (!status) {
+      throw std::runtime_error("Table does not exist!");
+    }
+
+    if (!status->first) {
+      std::cout << "Row  not found\n";
+      return;
+    }
+    std::cout << "Row exists.\n";
+  }
+  //! [row exists] [END bigtable_row_exists]
+  (std::move(table), row_key);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -635,7 +663,8 @@ int main(int argc, char* argv[]) try {
       {"get-family", &GetFamily},
       {"delete-all-cells", &DeleteAllCells},
       {"delete-family-cells", &DeleteFamilyCells},
-      {"delete-selective-family-cells", &DeleteSelectiveFamilyCells}};
+      {"delete-selective-family-cells", &DeleteSelectiveFamilyCells},
+      {"row-exists", &RowExists}};
 
   {
     // Force each command to generate its Usage string, so we can provide a good
