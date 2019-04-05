@@ -21,7 +21,7 @@ set(GOOGLE_CLOUD_CPP_IS_RELEASE "")
 
 # This should be included from the top level CMakeLists file
 set(GOOGLE_CLOUD_CPP_VERSION_MAJOR 0)
-set(GOOGLE_CLOUD_CPP_VERSION_MINOR 6)
+set(GOOGLE_CLOUD_CPP_VERSION_MINOR 7)
 set(GOOGLE_CLOUD_CPP_VERSION_PATCH 0)
 
 # Generate the version information from the CMake values.
