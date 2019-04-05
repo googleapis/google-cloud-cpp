@@ -250,7 +250,7 @@ void UpdateHmacKey(google::cloud::storage::Client client, int& argc,
   if (argc != 3) {
     throw Usage{"update-hmac-key <access-id> <state>"};
   }
-  //! [update hmac key] [START storage_update_hmac_key]
+  //! [update hmac key]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string access_id, std::string state) {
@@ -271,7 +271,74 @@ void UpdateHmacKey(google::cloud::storage::Client client, int& argc,
     std::cout << "The updated HMAC key metadata is: " << *updated_metadata
               << "\n";
   }
-  //! [update hmac key] [END storage_update_hmac_key]
+  //! [update hmac key]
+  (std::move(client), argv[1], argv[2]);
+}
+
+void ActivateHmacKey(google::cloud::storage::Client client, int& argc,
+                     char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"activate-hmac-key <access-id>"};
+  }
+  //! [START storage_activate_hmac_key]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string access_id, std::string state) {
+    StatusOr<gcs::HmacKeyMetadata> current_metadata =
+        client.GetHmacKey(access_id);
+    if (!current_metadata) {
+      throw std::runtime_error(current_metadata.status().message());
+    }
+
+    StatusOr<gcs::HmacKeyMetadata> updated_metadata = client.UpdateHmacKey(
+        access_id, gcs::HmacKeyMetadata()
+                       .set_state(gcs::HmacKeyMetadata::state_active())
+                       .set_etag(current_metadata->etag()));
+
+    if (!updated_metadata) {
+      throw std::runtime_error(updated_metadata.status().message());
+    }
+    if (updated_metadata->state() != gcs::HmacKeyMetadata::state_active()) {
+      throw std::runtime_error(
+          "The HMAC key is NOT active, this is unexpected");
+    }
+    std::cout << "The HMAC key is now active\nFull metadata: "
+              << *updated_metadata << "\n";
+  }
+  //! [END storage_activate_hmac_key]
+  (std::move(client), argv[1], argv[2]);
+}
+
+void DeactivateHmacKey(google::cloud::storage::Client client, int& argc,
+                       char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"deactivate-hmac-key <access-id>"};
+  }
+  //! [START storage_deactivate_hmac_key]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string access_id, std::string state) {
+    StatusOr<gcs::HmacKeyMetadata> current_metadata =
+        client.GetHmacKey(access_id);
+    if (!current_metadata) {
+      throw std::runtime_error(current_metadata.status().message());
+    }
+
+    StatusOr<gcs::HmacKeyMetadata> updated_metadata = client.UpdateHmacKey(
+        access_id, gcs::HmacKeyMetadata()
+                       .set_state(gcs::HmacKeyMetadata::state_inactive())
+                       .set_etag(current_metadata->etag()));
+
+    if (!updated_metadata) {
+      throw std::runtime_error(updated_metadata.status().message());
+    }
+    if (updated_metadata->state() != gcs::HmacKeyMetadata::state_inactive()) {
+      throw std::runtime_error("The HMAC key is active, this is unexpected");
+    }
+    std::cout << "The HMAC key is now inactive\nFull metadata: "
+              << *updated_metadata << "\n";
+  }
+  //! [END storage_deactivate_hmac_key]
   (std::move(client), argv[1], argv[2]);
 }
 
@@ -299,6 +366,8 @@ int main(int argc, char* argv[]) try {
       {"delete-hmac-key", &DeleteHmacKey},
       {"get-hmac-key", &GetHmacKey},
       {"update-hmac-key", &UpdateHmacKey},
+      {"activate-hmac-key", &ActivateHmacKey},
+      {"deactivate-hmac-key", &DeactivateHmacKey},
   };
   for (auto&& kv : commands) {
     try {
