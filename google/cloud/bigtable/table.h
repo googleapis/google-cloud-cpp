@@ -373,7 +373,14 @@ class Table {
   template <template <typename...> class Collection = std::vector>
   StatusOr<Collection<bigtable::RowKeySample>> SampleRows() {
     grpc::Status status;
-    auto result = impl_.SampleRows<Collection>(status);
+    Collection<bigtable::RowKeySample> result;
+
+    SampleRowsImpl(
+        [&result](bigtable::RowKeySample rs) {
+          result.emplace_back(std::move(rs));
+        },
+        [&result]() { result.clear(); }, status);
+
     if (!status.ok()) {
       return bigtable::internal::MakeStatusFromRpcError(status);
     }
@@ -404,9 +411,25 @@ class Table {
                                    bigtable::ReadModifyWriteRule rule,
                                    Args&&... rules) {
     grpc::Status status;
-    Row row =
-        impl_.ReadModifyWriteRow(std::move(row_key), status, std::move(rule),
-                                 std::forward<Args>(rules)...);
+
+    ::google::bigtable::v2::ReadModifyWriteRowRequest request;
+    request.set_row_key(std::move(row_key));
+    bigtable::internal::SetCommonTableOperationRequest<
+        ::google::bigtable::v2::ReadModifyWriteRowRequest>(
+        request, impl_.app_profile_id_.get(), impl_.table_name_.get());
+
+    // Generate a better compile time error message than the default one
+    // if the types do not match
+    static_assert(
+        bigtable::internal::conjunction<
+            std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
+        "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
+        "convertible to bigtable::ReadModifyWriteRule");
+
+    *request.add_rules() = std::move(rule).as_proto();
+    AddRules(request, std::forward<Args>(rules)...);
+    Row row = CallReadModifyWriteRowRequest(request, status);
+
     if (!status.ok()) {
       return bigtable::internal::MakeStatusFromRpcError(status);
     }
@@ -464,8 +487,36 @@ class Table {
   }
 
  private:
-  friend class MutationBatcher;
-  noex::Table impl_;
+  /**
+   * Send request ReadModifyWriteRowRequest to modify the row and get it back
+   */
+  Row CallReadModifyWriteRowRequest(
+      ::google::bigtable::v2::ReadModifyWriteRowRequest const& request,
+      grpc::Status& status);
+
+  /**
+   * Refactor implementation to `.cc` file.
+   *
+   * Provides a compilation barrier so that the application is not
+   * exposed to all the implementation details.
+   *
+   * @param inserter Function to insert the object to result.
+   * @param clearer Function to clear the result object if RPC fails.
+   */
+  void SampleRowsImpl(
+      std::function<void(bigtable::RowKeySample)> const& inserter,
+      std::function<void()> const& clearer, grpc::Status& status);
+
+  void AddRules(google::bigtable::v2::ReadModifyWriteRowRequest& request) {
+    // no-op for empty list
+  }
+
+  template <typename... Args>
+  void AddRules(google::bigtable::v2::ReadModifyWriteRowRequest& request,
+                bigtable::ReadModifyWriteRule rule, Args&&... args) {
+    *request.add_rules() = std::move(rule).as_proto();
+    AddRules(request, std::forward<Args>(args)...);
+  }
 
   std::unique_ptr<RPCRetryPolicy> clone_rpc_retry_policy() {
     return impl_.rpc_retry_policy_->clone();
@@ -482,6 +533,9 @@ class Table {
   std::unique_ptr<IdempotentMutationPolicy> clone_idempotent_mutation_policy() {
     return impl_.idempotent_mutation_policy_->clone();
   }
+
+  friend class MutationBatcher;
+  noex::Table impl_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

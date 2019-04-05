@@ -262,6 +262,65 @@ Table::AsyncCheckAndMutateRow(std::string row_key, Filter filter,
       std::move(request), cq);
 }
 
+Row Table::CallReadModifyWriteRowRequest(
+    btproto::ReadModifyWriteRowRequest const& request, grpc::Status& status) {
+  auto response = ClientUtils::MakeNonIdemponentCall(
+      *(impl_.client_), clone_rpc_retry_policy(),
+      clone_metadata_update_policy(), &DataClient::ReadModifyWriteRow, request,
+      "ReadModifyWriteRowRequest", status);
+  if (!status.ok()) {
+    return Row("", {});
+  }
+  return internal::TransformReadModifyWriteRowResponse<
+      btproto::ReadModifyWriteRowResponse>(response);
+}
+
+// Call the `google.bigtable.v2.Bigtable.SampleRowKeys` RPC until
+// successful. When RPC is finished, this function returns the SampleRowKeys
+// as a Collection specified by the user. If the RPC fails, it will keep
+// retrying until the policies in effect tell us to stop.
+void Table::SampleRowsImpl(
+    std::function<void(bigtable::RowKeySample)> const& inserter,
+    std::function<void()> const& clearer, grpc::Status& status) {
+  // Copy the policies in effect for this operation.
+  auto backoff_policy = clone_rpc_backoff_policy();
+  auto retry_policy = clone_rpc_retry_policy();
+
+  // Build the RPC request for SampleRowKeys
+  btproto::SampleRowKeysRequest request;
+  btproto::SampleRowKeysResponse response;
+  bigtable::internal::SetCommonTableOperationRequest<
+      btproto::SampleRowKeysRequest>(request, impl_.app_profile_id_.get(),
+                                     impl_.table_name_.get());
+
+  while (true) {
+    grpc::ClientContext client_context;
+    backoff_policy->Setup(client_context);
+    retry_policy->Setup(client_context);
+    clone_metadata_update_policy().Setup(client_context);
+
+    auto stream = impl_.client_->SampleRowKeys(&client_context, request);
+    while (stream->Read(&response)) {
+      // Assuming collection will be either list or vector.
+      bigtable::RowKeySample row_sample;
+      row_sample.offset_bytes = response.offset_bytes();
+      row_sample.row_key = std::move(*response.mutable_row_key());
+      inserter(std::move(row_sample));
+    }
+    status = stream->Finish();
+    if (status.ok()) {
+      break;
+    }
+    if (!retry_policy->OnFailure(status)) {
+      status = grpc::Status(grpc::StatusCode::INTERNAL,
+                            "No more retries allowed as per policy.");
+      return;
+    }
+    clearer();
+    auto delay = backoff_policy->OnCompletion(status);
+    std::this_thread::sleep_for(delay);
+  }
+}
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
