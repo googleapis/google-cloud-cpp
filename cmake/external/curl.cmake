@@ -88,10 +88,10 @@ if (NOT TARGET curl_project)
     endif ()
 
     include(ExternalProjectHelper)
-    add_library(CURL::CURL INTERFACE IMPORTED)
-    add_dependencies(CURL::CURL curl_project)
-    set_library_properties_for_external_project(CURL::CURL curl)
-    set_property(TARGET CURL::CURL
+    add_library(CURL::libcurl INTERFACE IMPORTED)
+    add_dependencies(CURL::libcurl curl_project)
+    set_library_properties_for_external_project(CURL::libcurl curl)
+    set_property(TARGET CURL::libcurl
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES
                           c-ares::cares
@@ -99,7 +99,7 @@ if (NOT TARGET curl_project)
                           OpenSSL::Crypto
                           ZLIB::ZLIB)
     if (WIN32)
-        set_property(TARGET CURL::CURL
+        set_property(TARGET CURL::libcurl
                      APPEND
                      PROPERTY INTERFACE_LINK_LIBRARIES
                               crypt32
@@ -107,7 +107,7 @@ if (NOT TARGET curl_project)
                               ws2_32)
     endif ()
     if (APPLE)
-        set_property(TARGET CURL::CURL
+        set_property(TARGET CURL::libcurl
                      APPEND
                      PROPERTY INTERFACE_LINK_LIBRARIES ldap)
     endif ()

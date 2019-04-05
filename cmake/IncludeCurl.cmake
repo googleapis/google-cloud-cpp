@@ -39,13 +39,13 @@ elseif("${GOOGLE_CLOUD_CPP_CURL_PROVIDER}" STREQUAL "package")
     # stage/module/FindCURL.html for details).  Until then, define the target
     # ourselves if it is missing.
     find_package(CURL REQUIRED)
-    if (NOT TARGET CURL::CURL)
-        add_library(CURL::CURL UNKNOWN IMPORTED)
-        set_property(TARGET CURL::CURL
+    if (NOT TARGET CURL::libcurl)
+        add_library(CURL::libcurl UNKNOWN IMPORTED)
+        set_property(TARGET CURL::libcurl
                      APPEND
                      PROPERTY INTERFACE_INCLUDE_DIRECTORIES
                               "${CURL_INCLUDE_DIR}")
-        set_property(TARGET CURL::CURL
+        set_property(TARGET CURL::libcurl
                      APPEND
                      PROPERTY IMPORTED_LOCATION "${CURL_LIBRARY}")
     endif ()
@@ -56,7 +56,7 @@ elseif("${GOOGLE_CLOUD_CPP_CURL_PROVIDER}" STREQUAL "package")
     if ("${CURL_LIBRARY}" MATCHES "${CMAKE_STATIC_LIBRARY_SUFFIX}$")
         find_package(OpenSSL REQUIRED)
         find_package(ZLIB REQUIRED)
-        set_property(TARGET CURL::CURL
+        set_property(TARGET CURL::libcurl
                      APPEND
                      PROPERTY INTERFACE_LINK_LIBRARIES
                               OpenSSL::SSL
@@ -64,7 +64,7 @@ elseif("${GOOGLE_CLOUD_CPP_CURL_PROVIDER}" STREQUAL "package")
                               ZLIB::ZLIB)
         message(STATUS "CURL linkage will be static")
         if (WIN32)
-            set_property(TARGET CURL::CURL
+            set_property(TARGET CURL::libcurl
                          APPEND
                          PROPERTY INTERFACE_LINK_LIBRARIES
                                   crypt32
@@ -72,7 +72,7 @@ elseif("${GOOGLE_CLOUD_CPP_CURL_PROVIDER}" STREQUAL "package")
                                   ws2_32)
         endif ()
         if (APPLE)
-            set_property(TARGET CURL::CURL
+            set_property(TARGET CURL::libcurl
                          APPEND
                          PROPERTY INTERFACE_LINK_LIBRARIES ldap)
         endif ()

@@ -50,7 +50,7 @@ foreach (fname ${storage_client_integration_tests})
                                   GTest::gmock_main
                                   GTest::gmock
                                   GTest::gtest
-                                  CURL::CURL
+                                  CURL::libcurl
                                   Threads::Threads
                                   nlohmann_json
                                   storage_common_options)
