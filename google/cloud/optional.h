@@ -210,46 +210,6 @@ class optional {
     return **this;
   }
 
-  bool operator==(optional const& rhs) const {
-    if (has_value() != rhs.has_value()) {
-      return false;
-    }
-    if (!has_value()) {
-      return true;
-    }
-    return **this == *rhs;
-  }
-
-  bool operator!=(optional const& rhs) const {
-    return std::rel_ops::operator!=(*this, rhs);
-  }
-
-  bool operator<(optional const& rhs) const {
-    if (has_value()) {
-      if (!rhs.has_value()) {
-        return false;
-      }
-      // Both have a value, compare them
-      return **this < *rhs;
-    }
-    // If both do not have a value, then they are equal, so this returns false.
-    // If rhs has a value then it compares larger than *this because *this does
-    // not have a value.
-    return rhs.has_value();
-  }
-
-  bool operator>(optional const& rhs) const {
-    return std::rel_ops::operator>(*this, rhs);
-  }
-
-  bool operator>=(optional const& rhs) const {
-    return std::rel_ops::operator>=(*this, rhs);
-  }
-
-  bool operator<=(optional const& rhs) const {
-    return std::rel_ops::operator<=(*this, rhs);
-  }
-
  private:
   void check_access() const {
     if (has_value_) {
@@ -269,6 +229,52 @@ class optional {
 template <typename T>
 optional<T> make_optional(T&& t) {
   return optional<T>(std::forward<T>(t));
+}
+
+template <typename T>
+inline bool operator==(optional<T> const& lhs, optional<T> const& rhs) {
+  if (lhs.has_value() != rhs.has_value()) {
+    return false;
+  }
+  if (!lhs.has_value()) {
+    return true;
+  }
+  return *lhs == *rhs;
+}
+
+template <typename T>
+inline bool operator<(optional<T> const& lhs, optional<T> const& rhs) {
+  if (lhs.has_value()) {
+    if (!rhs.has_value()) {
+      return false;
+    }
+    // Both have a value, compare them
+    return *lhs < *rhs;
+  }
+  // If both do not have a value, then they are equal, so this returns false.
+  // If rhs has a value then it compares larger than lhs because lhs does
+  // not have a value.
+  return rhs.has_value();
+}
+
+template <typename T>
+inline bool operator!=(optional<T> const& lhs, optional<T> const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+template <typename T>
+inline bool operator>(optional<T> const& lhs, optional<T> const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+template <typename T>
+inline bool operator>=(optional<T> const& lhs, optional<T> const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+
+template <typename T>
+inline bool operator<=(optional<T> const& lhs, optional<T> const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
