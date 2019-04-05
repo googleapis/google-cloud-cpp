@@ -19,13 +19,13 @@ find_dependency(google_cloud_cpp_common)
 find_dependency(OpenSSL)
 find_dependency(ZLIB)
 
-# Some versions of FindCURL do not define CURL::CURL, so we define it ourselves.
-if (NOT TARGET CURL::CURL)
-    add_library(CURL::CURL UNKNOWN IMPORTED)
-    set_property(TARGET CURL::CURL
+# Some versions of FindCURL do not define CURL::libcurl, so we define it ourselves.
+if (NOT TARGET CURL::libcurl)
+    add_library(CURL::libcurl UNKNOWN IMPORTED)
+    set_property(TARGET CURL::libcurl
                  APPEND
                  PROPERTY INTERFACE_INCLUDE_DIRECTORIES "${CURL_INCLUDE_DIR}")
-    set_property(TARGET CURL::CURL
+    set_property(TARGET CURL::libcurl
                  APPEND
                  PROPERTY IMPORTED_LOCATION "${CURL_LIBRARY}")
 endif ()
