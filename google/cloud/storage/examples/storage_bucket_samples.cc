@@ -615,7 +615,7 @@ void GetBucketLifecycleManagement(google::cloud::storage::Client client,
     throw Usage{"get-bucket-lifecycle-management <bucket-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
-  //! [view_lifecycle_management] [START storage_view_lifecycle_management]
+  // [START storage_view_lifecycle_management_configuration]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
@@ -640,7 +640,7 @@ void GetBucketLifecycleManagement(google::cloud::storage::Client client,
     }
     std::cout << "\n";
   }
-  //! [view_lifecycle_management] [END storage_view_lifecycle_management]
+  // [END storage_view_lifecycle_management_configuration]
   (std::move(client), bucket_name);
 }
 
