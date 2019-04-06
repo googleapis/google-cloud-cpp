@@ -640,7 +640,7 @@ void GetBucketLifecycleManagement(google::cloud::storage::Client client,
     }
     std::cout << "\n";
   }
-  //! [END storage_view_lifecycle_management_configuration]
+  // [END storage_view_lifecycle_management_configuration]
   (std::move(client), bucket_name);
 }
 
