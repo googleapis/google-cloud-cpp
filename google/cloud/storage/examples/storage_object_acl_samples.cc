@@ -52,7 +52,7 @@ void ListObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
-  //! [list object acl] [storage_print_file_acl]
+  //! [list object acl] [START storage_print_file_acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name) {
@@ -69,7 +69,7 @@ void ListObjectAcl(gcs::Client client, int& argc, char* argv[]) {
       std::cout << acl.role() << ":" << acl.entity() << "\n";
     }
   }
-  //! [list object acl] [storage_print_file_acl]
+  //! [list object acl] [END storage_print_file_acl]
   (std::move(client), bucket_name, object_name);
 }
 
