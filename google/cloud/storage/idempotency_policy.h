@@ -167,6 +167,7 @@ class IdempotencyPolicy {
       internal::GetHmacKeyRequest const& request) const = 0;
   virtual bool IsIdempotent(
       internal::UpdateHmacKeyRequest const& request) const = 0;
+  virtual bool IsIdempotent(internal::SignBlobRequest const& request) const = 0;
   //@}
 
   //@{
@@ -298,6 +299,7 @@ class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
   bool IsIdempotent(internal::GetHmacKeyRequest const& request) const override;
   bool IsIdempotent(
       internal::UpdateHmacKeyRequest const& request) const override;
+  bool IsIdempotent(internal::SignBlobRequest const& request) const override;
   //@}
 
   //@{
@@ -429,6 +431,7 @@ class StrictIdempotencyPolicy : public IdempotencyPolicy {
   bool IsIdempotent(internal::GetHmacKeyRequest const& request) const override;
   bool IsIdempotent(
       internal::UpdateHmacKeyRequest const& request) const override;
+  bool IsIdempotent(internal::SignBlobRequest const& request) const override;
   //@}
 
   //@{

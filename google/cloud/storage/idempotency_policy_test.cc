@@ -579,6 +579,12 @@ TEST(StrictIdempotencyPolicyTest, UpdateHmacKeyIfMatchEtag) {
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
+TEST(StrictIdempotencyPolicyTest, SignBlob) {
+  StrictIdempotencyPolicy policy;
+  internal::SignBlobRequest request("test-key-id", "test-blob", {});
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
 TEST(StrictIdempotencyPolicyTest, ListNotification) {
   StrictIdempotencyPolicy policy;
   internal::ListNotificationsRequest request("test-bucket-name");
