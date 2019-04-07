@@ -32,6 +32,7 @@ storage_client_integration_tests = [
     "object_rewrite_integration_test.cc",
     "service_account_integration_test.cc",
     "signed_url_conformance_test.cc",
+    "signed_url_integration_test.cc",
     "storage_include_test.cc",
     "thread_integration_test.cc",
 ]
