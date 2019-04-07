@@ -449,7 +449,9 @@ struct ServiceAccountFilter
     : public internal::WellKnownParameter<ServiceAccountFilter, std::string> {
   using WellKnownParameter<ServiceAccountFilter,
                            std::string>::WellKnownParameter;
-  static char const* well_known_parameter_name() { return "serviceAccount"; }
+  static char const* well_known_parameter_name() {
+    return "serviceAccountEmail";
+  }
 };
 
 /**

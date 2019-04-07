@@ -39,13 +39,13 @@ class ServiceAccount(object):
     def insert_key(self, project_id):
         """Insert a new HMAC key to the service account."""
         key_id = ServiceAccount.next_key_id()
-        secret_key = ''.join([
+        secret = ''.join([
             random.choice('abcdefghijklmnopqrstuvwxyz0123456789') for _ in range(40)])
         now = time.gmtime(time.time())
         timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
         return self.keys.setdefault(key_id, {
             'kind': 'storage#hmacKeyCreate',
-            'secretKey': base64.b64encode(secret_key),
+            'secret': base64.b64encode(secret),
             'generator': 1,
             'metadata': {
                 'accessId': '%s:%s' % (self.email, key_id),
@@ -66,15 +66,19 @@ class ServiceAccount(object):
 
     def delete_key(self, key_id):
         """Delete an existing HMAC key from the service account."""
-        key = self.keys.pop(key_id)
+        key = self.keys.get(key_id)
         if key is None:
             raise error_response.ErrorResponse(
-                'Cannot find key for key ' % key_id, status_code=404)
+                'Cannot find key for key %s' % key_id, status_code=404)
         resource = key.get('metadata')
         if resource is None:
             raise error_response.ErrorResponse(
-                'Missing resource for HMAC key ' % key_id, status_code=500)
+                'Missing resource for HMAC key %s' % key_id, status_code=500)
+        if resource.get('state') == 'ACTIVE':
+            raise error_response.ErrorResponse(
+                'Cannot delete ACTIVE key %s' % key_id, status_code=400)
         resource['state'] = 'DELETED'
+        self.keys.pop(key_id)
         return resource
 
     def get_key(self, key_id):
@@ -82,11 +86,11 @@ class ServiceAccount(object):
         key = self.keys.get(key_id)
         if key is None:
             raise error_response.ErrorResponse(
-                'Cannot find key for key ' % key_id, status_code=404)
+                'Cannot find key for key %s' % key_id, status_code=404)
         metadata = key.get('metadata')
         if metadata is None:
             raise error_response.ErrorResponse(
-                'Missing resource for HMAC key ' % key_id, status_code=500)
+                'Missing resource for HMAC key %s' % key_id, status_code=500)
         return metadata
 
     def _check_etag(self, key_resource, etag, where):
@@ -103,11 +107,11 @@ class ServiceAccount(object):
         key = self.keys.get(key_id)
         if key is None:
             raise error_response.ErrorResponse(
-                'Cannot find key for key %s ' % key_id, status_code=404)
+                'Cannot find key for key %s' % key_id, status_code=404)
         metadata = key.get('metadata')
         if metadata is None:
             raise error_response.ErrorResponse(
-                'Missing metadata for HMAC key %s ' % key_id, status_code=500)
+                'Missing metadata for HMAC key %s' % key_id, status_code=500)
         self._check_etag(metadata, payload.get('etag'), 'payload')
         self._check_etag(
             metadata, flask.request.headers.get('if-match-etag'), 'header')
@@ -164,7 +168,7 @@ class GcsProject(object):
         sa = self.service_accounts.get(service_account)
         if sa is None:
             raise error_response.ErrorResponse(
-                'Cannot find service account for key=' % access_id, status_code=404)
+                'Cannot find service account for key=%s' % access_id, status_code=404)
         return sa.delete_key(key_id)
 
     def get_hmac_key(self, access_id):
@@ -173,7 +177,7 @@ class GcsProject(object):
         sa = self.service_accounts.get(service_account)
         if sa is None:
             raise error_response.ErrorResponse(
-                'Cannot find service account for key=' % access_id, status_code=404)
+                'Cannot find service account for key=%s' % access_id, status_code=404)
         return sa.get_key(key_id)
 
     def update_hmac_key(self, access_id, payload):
@@ -182,7 +186,7 @@ class GcsProject(object):
         sa = self.service_accounts.get(service_account)
         if sa is None:
             raise error_response.ErrorResponse(
-                'Cannot find service account for key=' % access_id, status_code=404)
+                'Cannot find service account for key=%s' % access_id, status_code=404)
         return sa.update_key(key_id, payload)
 
 
@@ -202,6 +206,11 @@ def get_project(project_id):
     return VALID_PROJECTS.setdefault(project_id, GcsProject(project_id))
 
 
+@projects.errorhandler(error_response.ErrorResponse)
+def handle_error(error):
+    return error.as_response()
+
+
 @projects.route('/<project_id>/serviceAccount')
 def projects_get(project_id):
     """Implement the `Projects.serviceAccount: get` API."""
@@ -218,7 +227,7 @@ def projects_get(project_id):
 def hmac_keys_insert(project_id):
     """Implement the `HmacKeys: insert` API."""
     project = get_project(project_id)
-    service_account = flask.request.args.get('serviceAccount')
+    service_account = flask.request.args.get('serviceAccountEmail')
     if service_account is None:
         raise error_response.ErrorResponse(
             'serviceAccount is a required parameter', status_code=400)
@@ -244,8 +253,8 @@ def hmac_keys_list(project_id):
         state_filter = lambda x: True
 
     items = []
-    if flask.request.args.get('serviceAccount'):
-        sa = flask.request.args.get('serviceAccount')
+    if flask.request.args.get('serviceAccountEmail'):
+        sa = flask.request.args.get('serviceAccountEmail')
         service_account = project.service_account(sa)
         if service_account:
             items = service_account.key_items()
@@ -261,8 +270,8 @@ def hmac_keys_list(project_id):
 def hmac_keys_delete(project_id, access_id):
     """Implement the `HmacKeys: delete` API."""
     project = get_project(project_id)
-    return testbench_utils.filtered_response(
-        flask.request, project.delete_hmac_key(access_id))
+    project.delete_hmac_key(access_id)
+    return testbench_utils.filtered_response(flask.request, {})
 
 
 @projects.route('/<project_id>/hmacKeys/<access_id>')
@@ -273,7 +282,7 @@ def hmac_keys_get(project_id, access_id):
         flask.request, project.get_hmac_key(access_id))
 
 
-@projects.route('/<project_id>/hmacKeys/<access_id>', methods=['POST'])
+@projects.route('/<project_id>/hmacKeys/<access_id>', methods=['PUT'])
 def hmac_keys_update(project_id, access_id):
     """Implement the `HmacKeys: delete` API."""
     project = get_project(project_id)

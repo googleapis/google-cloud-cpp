@@ -530,7 +530,7 @@ StatusOr<CreateHmacKeyResponse> RetryClient::CreateHmacKey(
                   &RawClient::CreateHmacKey, request, __func__);
 }
 
-StatusOr<HmacKeyMetadata> RetryClient::DeleteHmacKey(
+StatusOr<EmptyResponse> RetryClient::DeleteHmacKey(
     DeleteHmacKeyRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();

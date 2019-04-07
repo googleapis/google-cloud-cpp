@@ -143,6 +143,8 @@ run_all_service_account_examples() {
           list-hmac-keys-with-service-account "${SERVICE_ACCOUNT}" | \
           sed -n 's;^access_id = \(.*\);\1;p'); do
     run_example ./storage_service_account_samples \
+        update-hmac-key "${access_id}" "INACTIVE"
+    run_example ./storage_service_account_samples \
         delete-hmac-key "${access_id}"
   done
 

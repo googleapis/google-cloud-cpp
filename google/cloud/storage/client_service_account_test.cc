@@ -140,43 +140,32 @@ TEST_F(ServiceAccountTest, CreateHmacKeyPermanentFailure) {
 }
 
 TEST_F(ServiceAccountTest, DeleteHmacKey) {
-  HmacKeyMetadata expected =
-      internal::HmacKeyMetadataParser::FromString(
-          R"""({"accessId": "test-access-id-1", "state": "DELETED"})""")
-          .value();
-
   EXPECT_CALL(*mock, DeleteHmacKey(_))
-      .WillOnce(Return(StatusOr<HmacKeyMetadata>(TransientError())))
-      .WillOnce(Invoke([&expected](internal::DeleteHmacKeyRequest const& r) {
+      .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
+      .WillOnce(Invoke([](internal::DeleteHmacKeyRequest const& r) {
         EXPECT_EQ("test-project", r.project_id());
         EXPECT_EQ("test-access-id-1", r.access_id());
 
-        return make_status_or(expected);
+        return make_status_or(internal::EmptyResponse{});
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
-  StatusOr<HmacKeyMetadata> actual = client.DeleteHmacKey(
-      "test-access-id-1", OverrideDefaultProject("test-project"));
+  Status actual = client.DeleteHmacKey("test-access-id-1",
+                                       OverrideDefaultProject("test-project"));
   ASSERT_STATUS_OK(actual);
-  EXPECT_EQ(expected.access_id(), actual->access_id());
-  EXPECT_EQ(expected.state(), actual->state());
 }
 
 TEST_F(ServiceAccountTest, DeleteHmacKeyTooManyFailures) {
-  testing::TooManyFailuresStatusTest<HmacKeyMetadata>(
+  testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
       mock, EXPECT_CALL(*mock, DeleteHmacKey(_)),
-      [](Client& client) {
-        return client.DeleteHmacKey("test-access-id").status();
-      },
+      [](Client& client) { return client.DeleteHmacKey("test-access-id"); },
       "DeleteHmacKey");
 }
 
 TEST_F(ServiceAccountTest, DeleteHmacKeyPermanentFailure) {
-  testing::PermanentFailureStatusTest<HmacKeyMetadata>(
+  testing::PermanentFailureStatusTest<internal::EmptyResponse>(
       *client, EXPECT_CALL(*mock, DeleteHmacKey(_)),
-      [](Client& client) {
-        return client.DeleteHmacKey("test-access-id").status();
-      },
+      [](Client& client) { return client.DeleteHmacKey("test-access-id"); },
       "DeleteHmacKey");
 }
 

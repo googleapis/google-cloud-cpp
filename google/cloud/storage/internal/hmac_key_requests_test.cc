@@ -68,7 +68,7 @@ TEST(HmacKeyRequestsTest, ParseCreateResponse) {
       {"kind", "storage#hmacKey"},
       // To generate the secret use:
       //   echo -n "test-secret" | openssl base64
-      {"secretKey", "dGVzdC1zZWNyZXQ="},
+      {"secret", "dGVzdC1zZWNyZXQ="},
       {"metadata", nl::json::parse(resource_text)},
   };
 
@@ -125,7 +125,7 @@ TEST(HmacKeysRequestsTest, List) {
   os << request;
   std::string actual = os.str();
   EXPECT_THAT(actual, HasSubstr("override-project-id"));
-  EXPECT_THAT(actual, HasSubstr("serviceAccount=test-service-account"));
+  EXPECT_THAT(actual, HasSubstr("serviceAccountEmail=test-service-account"));
   EXPECT_THAT(actual, HasSubstr("deleted=true"));
 }
 
