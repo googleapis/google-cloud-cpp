@@ -1063,6 +1063,7 @@ StatusOr<CreateHmacKeyResponse> CurlClient::CreateHmacKey(
     return status;
   }
   builder.AddQueryParameter("serviceAccount", request.service_account());
+  builder.AddHeader("content-length: 0");
   return ParseFromHttpResponse<CreateHmacKeyResponse>(
       builder.BuildRequest().MakeRequest(std::string{}));
 }
