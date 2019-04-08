@@ -125,10 +125,8 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   ASSERT_STATUS_OK(update_details);
   EXPECT_EQ("INACTIVE", update_details->state());
 
-  StatusOr<HmacKeyMetadata> deleted_key =
-      client.DeleteHmacKey(key->first.access_id());
+  Status deleted_key = client.DeleteHmacKey(key->first.access_id());
   ASSERT_STATUS_OK(deleted_key);
-  EXPECT_EQ(HmacKeyMetadata::state_deleted(), deleted_key->state());
 
   auto post_delete_access_ids = get_current_access_ids();
   EXPECT_THAT(post_delete_access_ids, Not(Contains(access_id)));
@@ -136,8 +134,12 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   // Delete all HmacKeys for the test service account, it is just good practice
   // to cleanup after ourselves.
   for (auto const& id : post_delete_access_ids) {
-    StatusOr<HmacKeyMetadata> d = client.DeleteHmacKey(id);
-    ASSERT_STATUS_OK(d);
+    StatusOr<HmacKeyMetadata> deactivate =
+        client.UpdateHmacKey(id, HmacKeyMetadata().set_state("INACTIVE"));
+    EXPECT_STATUS_OK(deactivate);
+
+    Status d = client.DeleteHmacKey(id);
+    EXPECT_STATUS_OK(d);
   }
 }
 
@@ -156,13 +158,13 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUDFailures) {
   Client client(client_options->set_project_id(project_id));
 
   // Test failures in the HmacKey operations by using an invalid project id:
-  StatusOr<HmacKeyMetadata> create_status =
-      client.DeleteHmacKey("invalid-access-id", OverrideDefaultProject(""));
-  EXPECT_FALSE(create_status) << "value=" << *create_status;
+  auto create_status = client.CreateHmacKey("invalid-service-account",
+                                            OverrideDefaultProject(""));
+  EXPECT_FALSE(create_status) << "value=" << create_status->first;
 
-  StatusOr<HmacKeyMetadata> deleted_status =
+  Status deleted_status =
       client.DeleteHmacKey("invalid-access-id", OverrideDefaultProject(""));
-  EXPECT_FALSE(deleted_status) << "value=" << *deleted_status;
+  EXPECT_FALSE(deleted_status.ok());
 
   StatusOr<HmacKeyMetadata> get_status =
       client.GetHmacKey("invalid-access-id", OverrideDefaultProject(""));

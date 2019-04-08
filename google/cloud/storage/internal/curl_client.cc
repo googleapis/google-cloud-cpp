@@ -1062,12 +1062,13 @@ StatusOr<CreateHmacKeyResponse> CurlClient::CreateHmacKey(
   if (!status.ok()) {
     return status;
   }
-  builder.AddQueryParameter("serviceAccount", request.service_account());
+  builder.AddQueryParameter("serviceAccountEmail", request.service_account());
+  builder.AddHeader("content-length: 0");
   return ParseFromHttpResponse<CreateHmacKeyResponse>(
       builder.BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<HmacKeyMetadata> CurlClient::DeleteHmacKey(
+StatusOr<EmptyResponse> CurlClient::DeleteHmacKey(
     DeleteHmacKeyRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/projects/" +
                                  request.project_id() + "/hmacKeys/" +
@@ -1077,8 +1078,7 @@ StatusOr<HmacKeyMetadata> CurlClient::DeleteHmacKey(
   if (!status.ok()) {
     return status;
   }
-  return CheckedFromString<HmacKeyMetadataParser>(
-      builder.BuildRequest().MakeRequest(std::string{}));
+  return ReturnEmptyResponse(builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<HmacKeyMetadata> CurlClient::GetHmacKey(
@@ -1101,7 +1101,7 @@ StatusOr<HmacKeyMetadata> CurlClient::UpdateHmacKey(
                                  request.project_id() + "/hmacKeys/" +
                                  request.access_id(),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
+  auto status = SetupBuilder(builder, request, "PUT");
   if (!status.ok()) {
     return status;
   }

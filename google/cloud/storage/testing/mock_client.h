@@ -136,7 +136,7 @@ class MockClient : public google::cloud::storage::internal::RawClient {
                                  internal::ListHmacKeysRequest const&));
   MOCK_METHOD1(CreateHmacKey, StatusOr<internal::CreateHmacKeyResponse>(
                                   internal::CreateHmacKeyRequest const&));
-  MOCK_METHOD1(DeleteHmacKey, StatusOr<HmacKeyMetadata>(
+  MOCK_METHOD1(DeleteHmacKey, StatusOr<internal::EmptyResponse>(
                                   internal::DeleteHmacKeyRequest const&));
   MOCK_METHOD1(GetHmacKey,
                StatusOr<HmacKeyMetadata>(internal::GetHmacKeyRequest const&));

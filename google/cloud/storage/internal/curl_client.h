@@ -160,7 +160,7 @@ class CurlClient : public RawClient,
       ListHmacKeysRequest const&) override;
   StatusOr<CreateHmacKeyResponse> CreateHmacKey(
       CreateHmacKeyRequest const&) override;
-  StatusOr<HmacKeyMetadata> DeleteHmacKey(DeleteHmacKeyRequest const&) override;
+  StatusOr<EmptyResponse> DeleteHmacKey(DeleteHmacKeyRequest const&) override;
   StatusOr<HmacKeyMetadata> GetHmacKey(GetHmacKeyRequest const&) override;
   StatusOr<HmacKeyMetadata> UpdateHmacKey(UpdateHmacKeyRequest const&) override;
 
