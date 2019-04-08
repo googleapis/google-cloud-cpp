@@ -88,45 +88,29 @@ std::string FieldPath::ToApiRepr() const {
   return s;  // let the server catch the empty string error for invalid
 }
 
-bool FieldPath::operator==(FieldPath const& other) const {
-  return this->ToApiRepr() == other.ToApiRepr();
+bool operator==(FieldPath const& lhs, FieldPath const& rhs) {
+  return lhs.ToApiRepr() == rhs.ToApiRepr();
 }
 
-bool FieldPath::operator!=(const FieldPath& other) const {
-  return !((*this) == other);
-}
-
-bool FieldPath::operator<(FieldPath const& other) const {
-  auto const this_size = this->parts_.size();
-  auto const other_size = other.size();
-  auto const min_length = std::min(this_size, other_size);
+bool operator<(FieldPath const& lhs, FieldPath const& rhs) {
+  auto const lhs_size = lhs.parts_.size();
+  auto const rhs_size = rhs.parts_.size();
+  auto const min_length = std::min(lhs_size, rhs_size);
   for (auto i = 0u; i < min_length; i++) {
-    if (this->parts_[i] < other.parts_[i]) {
+    if (lhs.parts_[i] < rhs.parts_[i]) {
       return true;
     }
-    if (this->parts_[i] > other.parts_[i]) {
+    if (lhs.parts_[i] > rhs.parts_[i]) {
       return false;
     }
   }
-  if (this->parts_.size() < other.parts_.size()) {
+  if (lhs_size < rhs_size) {
     return true;
   }
-  if (this->parts_.size() > other.parts_.size()) {
+  if (lhs_size > rhs_size) {
     return false;
   }
   return false;
-}
-
-bool FieldPath::operator<=(FieldPath const& other) const {
-  return *this < other || *this == other;
-}
-
-bool FieldPath::operator>(FieldPath const& other) const {
-  return !(*this <= other);
-}
-
-bool FieldPath::operator>=(FieldPath const& other) const {
-  return !(*this < other);
 }
 
 std::ostream& operator<<(std::ostream& os, FieldPath const& field_path) {

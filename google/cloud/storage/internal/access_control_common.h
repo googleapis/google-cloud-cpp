@@ -123,17 +123,6 @@ class AccessControlCommon {
 
   std::string const& self_link() const { return self_link_; }
 
-  bool operator==(AccessControlCommon const& rhs) const {
-    // Start with id, bucket, etag because they should fail early, then
-    // alphabetical for readability.
-    return id_ == rhs.id_ && bucket_ == rhs.bucket_ && etag_ == rhs.etag_ &&
-           domain_ == rhs.domain_ && email_ == rhs.email_ &&
-           entity_ == rhs.entity_ && entity_id_ == rhs.entity_id_ &&
-           kind_ == rhs.kind_ && project_team_ == rhs.project_team_ &&
-           role_ == rhs.role_ && self_link_ == rhs.self_link_;
-  }
-  bool operator!=(AccessControlCommon const& rhs) { return !(*this == rhs); }
-
   static Status ParseFromJson(AccessControlCommon& result,
                               nl::json const& json);
 
@@ -150,6 +139,25 @@ class AccessControlCommon {
   std::string role_;
   std::string self_link_;
 };
+
+inline bool operator==(AccessControlCommon const& lhs,
+                       AccessControlCommon const& rhs) {
+  // Start with id, bucket, etag because they should fail early, then
+  // alphabetical for readability.
+  return lhs.id() == rhs.id() && lhs.bucket() == rhs.bucket() &&
+         lhs.etag() == rhs.etag() && lhs.domain() == rhs.domain() &&
+         lhs.email() == rhs.email() && lhs.entity() == rhs.entity() &&
+         lhs.entity_id() == rhs.entity_id() && lhs.kind() == rhs.kind() &&
+         lhs.has_project_team() == rhs.has_project_team() &&
+         (!lhs.has_project_team() ||
+          lhs.project_team() == rhs.project_team()) &&
+         lhs.role() == rhs.role() && lhs.self_link() == rhs.self_link();
+}
+
+inline bool operator!=(AccessControlCommon const& lhs,
+                       AccessControlCommon const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

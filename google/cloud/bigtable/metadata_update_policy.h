@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/version.h"
 #include <grpcpp/grpcpp.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -43,15 +44,22 @@ class MetadataParamTypes final {
   static MetadataParamTypes const RESOURCE;
   static MetadataParamTypes const TABLE_NAME;
 
-  bool operator==(MetadataParamTypes const& that) const {
-    return type_ == that.type_;
-  }
   std::string const& type() const { return type_; }
 
  private:
   std::string type_;
   MetadataParamTypes(std::string type) : type_(std::move(type)) {}
 };
+
+inline bool operator==(MetadataParamTypes const& lhs,
+                       MetadataParamTypes const& rhs) {
+  return lhs.type() == rhs.type();
+}
+
+inline bool operator!=(MetadataParamTypes const& lhs,
+                       MetadataParamTypes const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
 
 /// MetadataUpdatePolicy holds supported metadata and setup ClientContext
 class MetadataUpdatePolicy {

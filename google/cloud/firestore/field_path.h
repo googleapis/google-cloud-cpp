@@ -18,6 +18,7 @@
 #include <iostream>
 #include <regex>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -88,54 +89,7 @@ class FieldPath {
    */
   bool valid() const { return valid_; }
 
-  /**
-   * Compare the equality of this FieldPath with another FieldPath @p other.
-   *
-   * @param other The other const FieldPath to compare to.
-   * @return Whether this FieldPath is equal to another FieldPath
-   */
-  bool operator==(FieldPath const& other) const;
-
-  /**
-   * Compare the non-equality of this FieldPath with another FieldPath @p other.
-   *
-   * @param other The other const FieldPath to compare to.
-   * @return Whether this FieldPath is not equal to another FieldPath.
-   */
-  bool operator!=(FieldPath const& other) const;
-
-  /**
-   * Compare if this FieldPath is before another FieldPath @p other.
-   *
-   * @param other The other const FieldPath to compare to.
-   * @return Whether this FieldPath is before another FieldPath.
-   */
-  bool operator<(FieldPath const& other) const;
-
-  /**
-   * Compare if this FieldPath is before or equal to another FieldPath @p other.
-   *
-   * @param other The other const FieldPath to compare to.
-   * @return Whether this FieldPath is before or equal to another FieldPath.
-   */
-  bool operator<=(FieldPath const& other) const;
-
-  /**
-   * Compare if this FieldPath is after another FieldPath @p other.
-   *
-   * @param other The other const FieldPath to compare to.
-   * @return Whether this FieldPath is after another FieldPath.
-   */
-  bool operator>(FieldPath const& other) const;
-
-  /**
-   * Compare if this FieldPath is after or equal to another FieldPath @p other.
-   *
-   * @param other The other const FieldPath to compare to.
-   * @return Whether this FieldPath is after or equal to another FieldPath.
-   */
-  bool operator>=(FieldPath const& other) const;
-
+ private:
   /**
    * The representation of this FieldPath @p field_path for ostream @p os.
    *
@@ -146,7 +100,9 @@ class FieldPath {
   friend std::ostream& operator<<(std::ostream& os,
                                   const FieldPath& field_path);
 
- private:
+  // This is a friend because it accesses parts_ directly.
+  friend bool operator<(FieldPath const& lhs, FieldPath const& rhs);
+
   /**
    * Ensures @p string has no invalid characters.
    *
@@ -183,6 +139,26 @@ class FieldPath {
    */
   bool valid_;
 };
+
+bool operator==(FieldPath const& lhs, FieldPath const& rhs);
+bool operator<(FieldPath const& lhs, FieldPath const& rhs);
+
+inline bool operator!=(FieldPath const& lhs, FieldPath const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+inline bool operator<=(FieldPath const& lhs, FieldPath const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+inline bool operator>(FieldPath const& lhs, FieldPath const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+inline bool operator>=(FieldPath const& lhs, FieldPath const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+
 }  // namespace firestore
 }  // namespace cloud
 }  // namespace google

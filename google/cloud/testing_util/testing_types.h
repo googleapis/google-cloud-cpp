@@ -27,6 +27,7 @@
  */
 
 #include "google/cloud/log.h"
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -39,18 +40,24 @@ class NoDefaultConstructor {
   NoDefaultConstructor() = delete;
   explicit NoDefaultConstructor(std::string x) : str_(std::move(x)) {}
 
-  bool operator==(NoDefaultConstructor const& rhs) const {
-    return str_ == rhs.str_;
-  }
-  bool operator!=(NoDefaultConstructor const& rhs) const {
-    return !(*this == rhs);
-  }
-
   std::string str() const { return str_; }
 
  private:
+  friend bool operator==(NoDefaultConstructor const& lhs,
+                         NoDefaultConstructor const& rhs);
+
   std::string str_;
 };
+
+inline bool operator==(NoDefaultConstructor const& lhs,
+                       NoDefaultConstructor const& rhs) {
+  return lhs.str_ == rhs.str_;
+}
+
+inline bool operator!=(NoDefaultConstructor const& lhs,
+                       NoDefaultConstructor const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
 
 /**
  * A class that counts calls to its constructors.

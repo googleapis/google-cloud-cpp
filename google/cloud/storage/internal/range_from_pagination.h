@@ -18,6 +18,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/storage/version.h"
 #include <iterator>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -60,6 +61,9 @@ class PaginationIterator {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   value_type&& operator*() && { return std::move(value_); }
 
+ private:
+  friend Range;
+
   friend bool operator==(PaginationIterator const& lhs,
                          PaginationIterator const& rhs) {
     // Iterators on different streams are always different.
@@ -83,15 +87,12 @@ class PaginationIterator {
 
   friend bool operator!=(PaginationIterator const& lhs,
                          PaginationIterator const& rhs) {
-    return !(lhs == rhs);
+    return std::rel_ops::operator!=(lhs, rhs);
   }
 
- private:
-  friend Range;
   explicit PaginationIterator(Range* owner, value_type value)
       : owner_(owner), value_(std::move(value)) {}
 
- private:
   Range* owner_;
   value_type value_;
 };

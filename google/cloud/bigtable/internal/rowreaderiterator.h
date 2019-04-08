@@ -19,6 +19,7 @@
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/optional.h"
 #include <iterator>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -68,22 +69,29 @@ class RowReaderIterator {
   value_type const&& operator*() const&& { return std::move(row_); }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_CONST_REF_REF
   value_type&& operator*() && { return std::move(row_); }
-  bool operator==(RowReaderIterator const& that) const {
-    // All non-end iterators are equal.
-    return owner_ == that.owner_;
-  }
-
-  bool operator!=(RowReaderIterator const& that) const {
-    return !(*this == that);
-  }
 
  private:
+  friend bool operator==(RowReaderIterator const& lhs,
+                         RowReaderIterator const& rhs);
+
   void Advance();
   /// nullptr indicates end()
   RowReader* owner_;
   /// Current value of the iterator.
   StatusOr<Row> row_;
 };
+
+inline bool operator==(RowReaderIterator const& lhs,
+                       RowReaderIterator const& rhs) {
+  // All non-end iterators are equal.
+  return lhs.owner_ == rhs.owner_;
+}
+
+inline bool operator!=(RowReaderIterator const& lhs,
+                       RowReaderIterator const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
