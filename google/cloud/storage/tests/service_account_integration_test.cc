@@ -119,6 +119,10 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   // Delete all HmacKeys for the test service account, it is just good practice
   // to cleanup after ourselves.
   for (auto const& id : post_delete_access_ids) {
+    StatusOr<HmacKeyMetadata> deactivate = client.UpdateHmacKey(
+      id, HmacKeyMetadata().set_state("INACTIVE"));
+    EXPECT_STATUS_OK(deactivate);
+
     StatusOr<HmacKeyMetadata> d = client.DeleteHmacKey(id);
     ASSERT_STATUS_OK(d);
   }
