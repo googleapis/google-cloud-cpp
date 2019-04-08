@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+
 #include <functional>
 #include <iostream>
 #include <map>
@@ -323,6 +324,32 @@ void PatchBucketStorageClassWithBuilder(google::cloud::storage::Client client,
   }
   //! [patch bucket storage class with builder]
   (std::move(client), bucket_name, storage_class);
+}
+
+void GetBucketClassAndLocation(google::cloud::storage::Client client, int& argc,
+                               char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"get-bucket-class-and-location <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  // [START storage_get_bucket_class_and_location]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name) {
+    StatusOr<gcs::BucketMetadata> bucket_metadata =
+        client.GetBucketMetadata(bucket_name);
+
+    if (!bucket_metadata) {
+      throw std::runtime_error(bucket_metadata.status().message());
+    }
+
+    std::cout << "Bucket " << bucket_metadata->name()
+              << " default storage class is "
+              << bucket_metadata->storage_class() << ", and the location is "
+              << bucket_metadata->location() << '\n';
+  }
+  // [END storage_get_bucket_class_and_location]
+  (std::move(client), bucket_name);
 }
 
 void AddBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
@@ -1531,6 +1558,7 @@ int main(int argc, char* argv[]) try {
       {"patch-bucket-storage-class", &PatchBucketStorageClass},
       {"patch-bucket-storage-class-with-builder",
        &PatchBucketStorageClassWithBuilder},
+      {"get-bucket-class-and-location", &GetBucketClassAndLocation},
       {"add-bucket-default-kms-key", &AddBucketDefaultKmsKey},
       {"get-bucket-default-kms-key", &GetBucketDefaultKmsKey},
       {"remove-bucket-default-kms-key", &RemoveBucketDefaultKmsKey},
