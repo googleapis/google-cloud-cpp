@@ -100,7 +100,7 @@ void ListVersionedObjects(google::cloud::storage::Client client, int& argc,
     throw Usage{"list-versioned-objects <bucket-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
-  //! [list versioned objects] [START storage_list_versioned_files]
+  //! [list versioned objects] [START storage_list_file_archived_generations]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
     for (auto&& object_metadata :
@@ -114,7 +114,7 @@ void ListVersionedObjects(google::cloud::storage::Client client, int& argc,
                 << ", generation=" << object_metadata->generation() << "\n";
     }
   }
-  //! [list versioned objects] [END storage_list_versioned_files]
+  //! [list versioned objects] [END storage_list_file_archived_generations]
   (std::move(client), bucket_name);
 }
 

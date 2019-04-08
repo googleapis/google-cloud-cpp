@@ -49,7 +49,7 @@ void GetServiceAccount(google::cloud::storage::Client client, int& argc,
   if (argc != 1) {
     throw Usage{"get-service-account"};
   }
-  //! [get service account] [START storage_get_service_account]
+  //! [get service account]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client) {
@@ -62,7 +62,7 @@ void GetServiceAccount(google::cloud::storage::Client client, int& argc,
     std::cout << "The service account details are " << *service_account_details
               << "\n";
   }
-  //! [get service account] [END storage_get_service_account]
+  //! [get service account]
   (std::move(client));
 }
 
@@ -73,7 +73,6 @@ void GetServiceAccountForProject(google::cloud::storage::Client client,
   }
   auto project_id = ConsumeArg(argc, argv);
   //! [get service account for project]
-  // [START storage_get_service_account_for_project]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string project_id) {
@@ -87,7 +86,6 @@ void GetServiceAccountForProject(google::cloud::storage::Client client,
     std::cout << "The service account details for project " << project_id
               << " are " << *service_account_details << "\n";
   }
-  // [END storage_get_service_account_for_project]
   //! [get service account for project]
   (std::move(client), project_id);
 }
