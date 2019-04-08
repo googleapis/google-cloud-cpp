@@ -45,9 +45,9 @@ RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/cte
 # external projects.
 WORKDIR /home/build/external
 COPY . /home/build/external
-RUN cmake -H. -B.build -DCMAKE_BUILD_TYPE=Debug
-RUN cmake --build .build -- -j $(nproc)
-RUN (cd .build && ctest --output-on-failure)
+RUN cmake -H. -Bcmake-out -DCMAKE_BUILD_TYPE=Debug
+RUN cmake --build cmake-out -- -j $(nproc)
+RUN (cd cmake-out && ctest --output-on-failure)
 ## [END IGNORED]
 
 # #### crc32c
@@ -65,8 +65,8 @@ RUN cmake \
       -DCRC32C_BUILD_TESTS=OFF \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
-      -H. -B.build/crc32c
-RUN cmake --build .build/crc32c --target install -- -j $(nproc)
+      -H. -Bcmake-out/crc32c
+RUN cmake --build cmake-out/crc32c --target install -- -j $(nproc)
 RUN ldconfig
 # ```
 
@@ -83,8 +83,8 @@ RUN cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -B.build
-RUN cmake --build .build --target install -- -j $(nproc)
+        -H. -Bcmake-out
+RUN cmake --build cmake-out --target install -- -j $(nproc)
 RUN ldconfig
 # ```
 
@@ -127,11 +127,11 @@ RUN ldconfig
 # ```bash
 WORKDIR /var/tmp/build/google-cloud-cpp
 COPY . /var/tmp/build/google-cloud-cpp
-RUN cmake -H. -B.build \
+RUN cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-RUN cmake --build .build -- -j $(nproc)
-WORKDIR /var/tmp/build/google-cloud-cpp/.build
+RUN cmake --build cmake-out -- -j $(nproc)
+WORKDIR /var/tmp/build/google-cloud-cpp/cmake-out
 RUN ctest --output-on-failure
 RUN cmake --build . --target install
 # ```
@@ -145,5 +145,5 @@ RUN make
 
 WORKDIR /home/build/test-install-cmake
 COPY ci/test-install /home/build/test-install-cmake
-RUN env -u PKG_CONFIG_PATH cmake -H. -B.build
-RUN cmake --build .build -- -j $(nproc)
+RUN env -u PKG_CONFIG_PATH cmake -H. -Bcmake-out
+RUN cmake --build cmake-out -- -j $(nproc)
