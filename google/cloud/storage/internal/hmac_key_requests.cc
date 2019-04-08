@@ -67,7 +67,7 @@ StatusOr<CreateHmacKeyResponse> CreateHmacKeyResponse::FromHttpResponse(
 
   CreateHmacKeyResponse result;
   result.kind = json.value("kind", "");
-  result.secret = json.value("secretKey", "");
+  result.secret = json.value("secret", "");
   if (json.count("metadata") != 0) {
     auto resource = HmacKeyMetadataParser::FromJson(json["metadata"]);
     if (!resource) {

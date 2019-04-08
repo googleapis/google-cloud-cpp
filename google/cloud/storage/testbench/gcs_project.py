@@ -39,13 +39,13 @@ class ServiceAccount(object):
     def insert_key(self, project_id):
         """Insert a new HMAC key to the service account."""
         key_id = ServiceAccount.next_key_id()
-        secret_key = ''.join([
+        secret = ''.join([
             random.choice('abcdefghijklmnopqrstuvwxyz0123456789') for _ in range(40)])
         now = time.gmtime(time.time())
         timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
         return self.keys.setdefault(key_id, {
             'kind': 'storage#hmacKeyCreate',
-            'secretKey': base64.b64encode(secret_key),
+            'secret': base64.b64encode(secret),
             'generator': 1,
             'metadata': {
                 'accessId': '%s:%s' % (self.email, key_id),
@@ -107,7 +107,7 @@ class ServiceAccount(object):
         metadata = key.get('metadata')
         if metadata is None:
             raise error_response.ErrorResponse(
-                'Missing metadata for HMAC key %s ' % key_id, status_code=500)
+                'Missing metadata for HMAC key ' % key_id, status_code=500)
         self._check_etag(metadata, payload.get('etag'), 'payload')
         self._check_etag(
             metadata, flask.request.headers.get('if-match-etag'), 'header')
@@ -218,7 +218,7 @@ def projects_get(project_id):
 def hmac_keys_insert(project_id):
     """Implement the `HmacKeys: insert` API."""
     project = get_project(project_id)
-    service_account = flask.request.args.get('serviceAccount')
+    service_account = flask.request.args.get('serviceAccountEmail')
     if service_account is None:
         raise error_response.ErrorResponse(
             'serviceAccount is a required parameter', status_code=400)
@@ -244,8 +244,8 @@ def hmac_keys_list(project_id):
         state_filter = lambda x: True
 
     items = []
-    if flask.request.args.get('serviceAccount'):
-        sa = flask.request.args.get('serviceAccount')
+    if flask.request.args.get('serviceAccountEmail'):
+        sa = flask.request.args.get('serviceAccountEmail')
         service_account = project.service_account(sa)
         if service_account:
             items = service_account.key_items()
