@@ -227,35 +227,44 @@ Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
   return Status();
 }
 
+std::string Client::SigningEmail(SigningAccount const& signing_account) {
+  if (signing_account.has_value()) {
+    return signing_account.value();
+  }
+  return raw_client()->client_options().credentials()->AccountEmail();
+}
+
+StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
+    SigningAccount const& signing_account, std::string const& string_to_sign) {
+  auto credentials = raw_client()->client_options().credentials();
+
+  std::string signing_account_email = SigningEmail(signing_account);
+  // First try to sign locally.
+  auto signed_blob = credentials->SignBlob(signing_account, string_to_sign);
+  if (signed_blob) {
+    return SignBlobResponseRaw{credentials->KeyId(), *std::move(signed_blob)};
+  }
+  return signed_blob.status();
+}
+
 StatusOr<std::string> Client::SignUrlV2(
     internal::V2SignUrlRequest const& request) {
-  auto base_credentials = raw_client()->client_options().credentials();
-  auto credentials = dynamic_cast<oauth2::ServiceAccountCredentials<>*>(
-      base_credentials.get());
-
-  if (credentials == nullptr) {
-    return Status(StatusCode::kInvalidArgument,
-                  R"""(The current credentials cannot be used to sign URLs.
-Please configure your google::cloud::storage::Client to use service account
-credentials, as described in:
-https://cloud.google.com/storage/docs/authentication
-)""");
-  }
-
-  auto result = credentials->SignString(request.StringToSign());
-  if (!result.first.ok()) {
-    return result.first;
+  SigningAccount signing_account;  // TODO(#1595) - = request.signing_account()
+  auto signed_blob = SignBlobImpl(signing_account, request.StringToSign());
+  if (!signed_blob) {
+    return signed_blob.status();
   }
 
   internal::CurlHandle curl;
-  std::string signature = curl.MakeEscapedString(result.second).get();
+  auto encoded = internal::Base64Encode(signed_blob->signed_blob);
+  std::string signature = curl.MakeEscapedString(encoded).get();
 
   std::ostringstream os;
   os << "https://storage.googleapis.com/" << request.bucket_name();
   if (!request.object_name().empty()) {
     os << '/' << curl.MakeEscapedString(request.object_name()).get();
   }
-  os << "?GoogleAccessId=" << credentials->client_id()
+  os << "?GoogleAccessId=" << SigningEmail(signing_account)
      << "&Expires=" << request.expiration_time_as_seconds().count()
      << "&Signature=" << signature;
 
@@ -264,34 +273,23 @@ https://cloud.google.com/storage/docs/authentication
 
 StatusOr<std::string> Client::SignUrlV4(internal::V4SignUrlRequest request) {
   request.AddMissingRequiredHeaders();
-  auto base_credentials = raw_client()->client_options().credentials();
-  auto credentials = dynamic_cast<oauth2::ServiceAccountCredentials<>*>(
-      base_credentials.get());
+  SigningAccount signing_account;  // TODO(#1595) - = request.signing_account()
+  auto signing_email = SigningEmail(signing_account);
 
-  if (credentials == nullptr) {
-    return Status(StatusCode::kInvalidArgument,
-                  R"""(The current credentials cannot be used to sign URLs.
-Please configure your google::cloud::storage::Client to use service account
-credentials, as described in:
-https://cloud.google.com/storage/docs/authentication
-)""");
+  auto string_to_sign = request.StringToSign(signing_email);
+  auto signed_blob = SignBlobImpl(signing_account, string_to_sign);
+  if (!signed_blob) {
+    return signed_blob.status();
   }
 
-  auto string_to_sign = request.StringToSign(credentials->client_id());
-  auto result = credentials->SignStringHex(string_to_sign);
-  if (!result.first.ok()) {
-    return result.first;
-  }
-
-  auto signature = result.second;
-
+  std::string signature = internal::HexEncode(signed_blob->signed_blob);
   internal::CurlHandle curl;
   std::ostringstream os;
   os << "https://storage.googleapis.com/" << request.bucket_name();
   if (!request.object_name().empty()) {
     os << '/' << curl.MakeEscapedString(request.object_name()).get();
   }
-  os << "?" << request.CanonicalQueryString(credentials->client_id())
+  os << "?" << request.CanonicalQueryString(signing_email)
      << "&X-Goog-Signature=" << signature;
 
   return std::move(os).str();
@@ -299,32 +297,19 @@ https://cloud.google.com/storage/docs/authentication
 
 StatusOr<PolicyDocumentResult> Client::SignPolicyDocument(
     internal::PolicyDocumentRequest const& request) {
-  auto base_credentials = raw_client()->client_options().credentials();
-  auto credentials = dynamic_cast<oauth2::ServiceAccountCredentials<>*>(
-      base_credentials.get());
+  SigningAccount signing_account;  // TODO(#1595) - = request.signing_account()
+  auto signing_email = SigningEmail(signing_account);
 
-  if (credentials == nullptr) {
-    return Status(
-        StatusCode::kInvalidArgument,
-        R"""(The current credentials cannot be used to sign policy documents.
-Please configure your google::cloud::storage::Client to use service account
-credentials, as described in:
-https://cloud.google.com/storage/docs/authentication
-)""");
+  auto string_to_sign = request.StringToSign();
+  auto base64_policy = internal::Base64Encode(string_to_sign);
+  auto signed_blob = SignBlobImpl(signing_account, base64_policy);
+  if (!signed_blob) {
+    return signed_blob.status();
   }
 
-  auto base64_policy = internal::Base64Encode(request.StringToSign());
-
-  auto result = credentials->SignString(base64_policy);
-  if (!result.first.ok()) {
-    return result.first;
-  }
-
-  std::string signature = result.second;
-
-  return PolicyDocumentResult{credentials->client_id(),
-                              request.policy_document().expiration,
-                              base64_policy, signature};
+  return PolicyDocumentResult{
+      signing_email, request.policy_document().expiration, base64_policy,
+      internal::Base64Encode(signed_blob->signed_blob)};
 }
 
 }  // namespace STORAGE_CLIENT_NS

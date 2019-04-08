@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/complex_option.h"
 #include <chrono>
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -156,6 +157,32 @@ struct SignedUrlDuration
   static char const* name() { return "x-goog-expires"; }
 };
 
+/**
+ * Specify the service account used to sign a blob.
+ *
+ * With this option the application can sign a URL or policy document using a
+ * different account than the account associated with the current credentials.
+ */
+struct SigningAccount
+    : public internal::ComplexOption<SigningAccount, std::string> {
+  using ComplexOption<SigningAccount, std::string>::ComplexOption;
+  static char const* name() { return "signing-account"; }
+};
+
+/**
+ * Specify the sequence of delegates used to sign a blob.
+ *
+ * With this option the application can sign a URL even if the account
+ * associated with the current credentials does not have direct
+ * `roles/iam.serviceAccountTokenCreator` on the target service account.
+ */
+struct SigningAccountDelegates
+    : internal::ComplexOption<SigningAccountDelegates,
+                              std::vector<std::string>> {
+  using ComplexOption<SigningAccountDelegates,
+                      std::vector<std::string>>::ComplexOption;
+  static char const* name() { return "signing-account-delegates"; }
+};
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

@@ -98,7 +98,7 @@ TEST(SignedUrlIntegrationTest, SignFailure) {
   auto actual =
       client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
   EXPECT_FALSE(actual.ok()) << "value=" << actual.value();
-  EXPECT_EQ(StatusCode::kInvalidArgument, actual.status().code());
+  EXPECT_EQ(StatusCode::kUnimplemented, actual.status().code());
 }
 
 }  // namespace

@@ -112,29 +112,31 @@ class ServiceAccountCredentials : public Credentials {
   }
 
   /**
-   * Sign a blob using the credentials.
+   * Create a RSA SHA256 signature of the blob using the Credential object.
    *
-   * Create a RSA SHA256 signature of the blob using the Credential object. If
-   * the credentials do not support signing blobs it returns an error status.
-   *
-   * @param text the bytes to sign.
-   * @return a Base64-encoded RSA SHA256 digest of @p blob using the current
-   *   credentials.
+   * @param signing_account the desired service account which should sign
+   *   @p blob. If not set, uses this object's account. If set, it must match
+   *   this object's service account.
+   * @param blob the string to sign. Note that sometimes the application must
+   *   Base64-encode the data before signing.
+   * @return the signed blob as raw bytes. An error if the @p signing_account
+   *     does not match the email for the credential's account.
    */
-  std::pair<Status, std::string> SignString(std::string const& text) const {
-    return std::make_pair(
-        Status(), internal::Base64Encode(internal::SignStringWithPem(
-                      text, info_.private_key, JwtSigningAlgorithms::RS256)));
+  StatusOr<std::vector<std::uint8_t>> SignBlob(
+      SigningAccount const& signing_account,
+      std::string const& blob) const override {
+    if (signing_account.has_value() &&
+        signing_account.value() != info_.client_email) {
+      return Status(StatusCode::kInvalidArgument,
+                    "The current_credentials cannot sign blobs for " +
+                        signing_account.value());
+    }
+    return internal::SignStringWithPem(blob, info_.private_key,
+                                       JwtSigningAlgorithms::RS256);
   }
 
-  std::pair<Status, std::string> SignStringHex(std::string const& text) const {
-    return std::make_pair(
-        Status(), internal::HexEncode(internal::SignStringWithPem(
-                      text, info_.private_key, JwtSigningAlgorithms::RS256)));
-  }
-
-  /// Return the client id of these credentials.
-  std::string const& client_id() const { return info_.client_email; }
+  std::string AccountEmail() const override { return info_.client_email; }
+  std::string KeyId() const override { return info_.private_key_id; }
 
  private:
   /**

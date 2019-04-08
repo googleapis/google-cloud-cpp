@@ -85,7 +85,7 @@ TEST(SignedUrlIntegrationTest, SignFailure) {
 
   auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "test-object");
   EXPECT_FALSE(actual.ok()) << "value=" << actual.value();
-  EXPECT_EQ(StatusCode::kInvalidArgument, actual.status().code());
+  EXPECT_EQ(StatusCode::kUnimplemented, actual.status().code());
 }
 
 // This is a dummy service account JSON file that is inactive. It's fine for it
