@@ -78,7 +78,7 @@ void CreateBucketAcl(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   auto entity = ConsumeArg(argc, argv);
   auto role = ConsumeArg(argc, argv);
-  //! [create bucket acl] [START storage_create_bucket_acl]
+  //! [create bucket acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string entity,
@@ -95,7 +95,7 @@ void CreateBucketAcl(google::cloud::storage::Client client, int& argc,
               << "\n"
               << "Full attributes: " << *bucket_acl << "\n";
   }
-  //! [create bucket acl] [END storage_create_bucket_acl]
+  //! [create bucket acl]
   (std::move(client), bucket_name, entity, role);
 }
 
@@ -106,7 +106,7 @@ void DeleteBucketAcl(google::cloud::storage::Client client, int& argc,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   auto entity = ConsumeArg(argc, argv);
-  //! [delete bucket acl] [START storage_delete_bucket_acl]
+  //! [delete bucket acl]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string entity) {
     google::cloud::Status status = client.DeleteBucketAcl(bucket_name, entity);
@@ -118,7 +118,7 @@ void DeleteBucketAcl(google::cloud::storage::Client client, int& argc,
     std::cout << "Deleted ACL entry for " << entity << " in bucket "
               << bucket_name << "\n";
   }
-  //! [delete bucket acl] [END storage_delete_bucket_acl]
+  //! [delete bucket acl]
   (std::move(client), bucket_name, entity);
 }
 

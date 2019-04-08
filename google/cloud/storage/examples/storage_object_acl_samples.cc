@@ -82,7 +82,7 @@ void CreateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto object_name = ConsumeArg(argc, argv);
   auto entity = ConsumeArg(argc, argv);
   auto role = ConsumeArg(argc, argv);
-  //! [create object acl] [START storage_create_file_acl]
+  //! [create object acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
@@ -98,7 +98,7 @@ void CreateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
               << object_acl->entity() << " on " << object_acl->object()
               << "\nFull attributes: " << *object_acl << "\n";
   }
-  //! [create object acl] [END storage_create_file_acl]
+  //! [create object acl]
   (std::move(client), bucket_name, object_name, entity, role);
 }
 
@@ -109,7 +109,7 @@ void DeleteObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
   auto entity = ConsumeArg(argc, argv);
-  //! [delete object acl] [START storage_delete_file_acl]
+  //! [delete object acl]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string entity) {
@@ -123,7 +123,7 @@ void DeleteObjectAcl(gcs::Client client, int& argc, char* argv[]) {
     std::cout << "Deleted ACL entry for " << entity << " in object "
               << object_name << " in bucket " << bucket_name << "\n";
   }
-  //! [delete object acl] [END storage_delete_file_acl]
+  //! [delete object acl]
   (std::move(client), bucket_name, object_name, entity);
 }
 
@@ -163,7 +163,7 @@ void UpdateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
   auto object_name = ConsumeArg(argc, argv);
   auto entity = ConsumeArg(argc, argv);
   auto role = ConsumeArg(argc, argv);
-  //! [update object acl] [START storage_update_file_acl]
+  //! [update object acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
@@ -188,7 +188,7 @@ void UpdateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
               << updated_acl->object() << " in bucket " << updated_acl->bucket()
               << " is now " << *updated_acl << "\n";
   }
-  //! [update object acl] [END storage_update_file_acl]
+  //! [update object acl]
   (std::move(client), bucket_name, object_name, entity, role);
 }
 

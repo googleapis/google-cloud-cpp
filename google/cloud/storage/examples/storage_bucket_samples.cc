@@ -189,7 +189,7 @@ void GetBucketMetadata(google::cloud::storage::Client client, int& argc,
     throw Usage{"get-bucket-metadata <bucket-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
-  //! [get bucket metadata] [START storage_get_bucket_metadata]
+  //! [get bucket metadata]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
@@ -203,7 +203,7 @@ void GetBucketMetadata(google::cloud::storage::Client client, int& argc,
     std::cout << "The metadata for bucket " << bucket_metadata->name() << " is "
               << *bucket_metadata << "\n";
   }
-  //! [get bucket metadata] [END storage_get_bucket_metadata]
+  //! [get bucket metadata]
   (std::move(client), bucket_name);
 }
 
@@ -1387,7 +1387,6 @@ void RemoveStaticWebsiteConfiguration(google::cloud::storage::Client client,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   //! [remove bucket website configuration]
-  // [START storage_remove_bucket_website_configuration]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
@@ -1417,7 +1416,6 @@ void RemoveStaticWebsiteConfiguration(google::cloud::storage::Client client,
               << "\nThis is unexpected, and may indicate that another"
               << " application has modified the bucket concurrently.\n";
   }
-  // [END storage_remove_bucket_website_configuration]
   //! [remove bucket website configuration]
   (std::move(client), bucket_name);
 }

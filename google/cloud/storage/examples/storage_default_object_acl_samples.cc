@@ -50,7 +50,7 @@ void ListDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
     throw Usage{"list-default-object-acl <bucket-name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
-  //! [list default object acl] [START storage_print_bucket_default_acl]
+  //! [list default object acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
@@ -66,7 +66,7 @@ void ListDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
       std::cout << acl.role() << ":" << acl.entity() << "\n";
     }
   }
-  //! [list default object acl] [END storage_print_bucket_default_acl]
+  //! [list default object acl]
   (std::move(client), bucket_name);
 }
 
