@@ -66,7 +66,7 @@ class ServiceAccount(object):
 
     def delete_key(self, key_id):
         """Delete an existing HMAC key from the service account."""
-        key = self.keys.pop(key_id)
+        key = self.keys.get(key_id)
         if key is None:
             raise error_response.ErrorResponse(
                 'Cannot find key for key %s' % key_id, status_code=404)
@@ -74,7 +74,11 @@ class ServiceAccount(object):
         if resource is None:
             raise error_response.ErrorResponse(
                 'Missing resource for HMAC key %s' % key_id, status_code=500)
+        if resource.get('state') == 'ACTIVE':
+            raise error_response.ErrorResponse(
+                'Cannot delete ACTIVE key %s' % key_id, status_code=400)
         resource['state'] = 'DELETED'
+        self.keys.pop(key_id)
         return resource
 
     def get_key(self, key_id):
