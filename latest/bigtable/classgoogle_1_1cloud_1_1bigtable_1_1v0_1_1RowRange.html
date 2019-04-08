@@ -67,7 +67,6 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#friends">Friends</a> &#124;
 <a href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">google::cloud::bigtable::v0::RowRange Class Reference</div>  </div>
@@ -100,10 +99,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a684ff09a59c2e9292e1d03aeb89aa528"><td class="memItemLeft" align="right" valign="top">std::pair&lt; bool, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html">RowRange</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html#a684ff09a59c2e9292e1d03aeb89aa528">Intersect</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html">RowRange</a> const &amp;range) const</td></tr>
 <tr class="memdesc:a684ff09a59c2e9292e1d03aeb89aa528"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the intersection against another <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html" title="Define the interfaces to create row key ranges. ">RowRange</a>.  <a href="#a684ff09a59c2e9292e1d03aeb89aa528">More...</a><br /></td></tr>
 <tr class="separator:a684ff09a59c2e9292e1d03aeb89aa528"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abda6d4ebcab6405a6d29dc1f8af0864f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html#abda6d4ebcab6405a6d29dc1f8af0864f">operator==</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html">RowRange</a> const &amp;rhs) const</td></tr>
-<tr class="separator:abda6d4ebcab6405a6d29dc1f8af0864f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c046fd4227599282bf5a629a347b1f3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html#a6c046fd4227599282bf5a629a347b1f3">operator!=</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html">RowRange</a> const &amp;rhs) const</td></tr>
-<tr class="separator:a6c046fd4227599282bf5a629a347b1f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66657c8da8da940ecc01a1d87110c88d"><td class="memItemLeft" align="right" valign="top">::google::bigtable::v2::RowRange const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html#a66657c8da8da940ecc01a1d87110c88d">as_proto</a> () const &amp;</td></tr>
 <tr class="memdesc:a66657c8da8da940ecc01a1d87110c88d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the filter expression as a protobuf.  <a href="#a66657c8da8da940ecc01a1d87110c88d">More...</a><br /></td></tr>
 <tr class="separator:a66657c8da8da940ecc01a1d87110c88d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,17 +140,11 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a58b374e94ece68962c6f3045631fda1c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html">RowRange</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html#a58b374e94ece68962c6f3045631fda1c">Closed</a> (std::string begin, std::string end)</td></tr>
 <tr class="memdesc:a58b374e94ece68962c6f3045631fda1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a range representing the interval [<code>begin</code>, <code>end</code>].  <a href="#a58b374e94ece68962c6f3045631fda1c">More...</a><br /></td></tr>
 <tr class="separator:a58b374e94ece68962c6f3045631fda1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
-Friends</h2></td></tr>
-<tr class="memitem:a4b69ac292333f63cd932b90084975047"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html#a4b69ac292333f63cd932b90084975047">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html">RowRange</a> const &amp;x)</td></tr>
-<tr class="memdesc:a4b69ac292333f63cd932b90084975047"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print a human-readable representation of the range, mostly for testing.  <a href="#a4b69ac292333f63cd932b90084975047">More...</a><br /></td></tr>
-<tr class="separator:a4b69ac292333f63cd932b90084975047"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Define the interfaces to create row key ranges. </p>
 <p>Example: </p><div class="fragment"><div class="line"><span class="comment">// Create a range for the keys starting with the given prefix.</span></div><div class="line"><span class="keyword">auto</span> range = bigtable::RowRange(<span class="stringliteral">&quot;foo/&quot;</span>);</div></div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00035">35</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00036">36</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a40b51b2b6d5d21f50541dd513c4aced4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a40b51b2b6d5d21f50541dd513c4aced4">&#9670;&nbsp;</a></span>RowRange() <span class="overload">[1/3]</span></h2>
@@ -181,7 +170,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00037">37</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00038">38</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
 
 </div>
 </div>
@@ -263,7 +252,7 @@ Friends</h2></td></tr>
 
 <p>Return the filter expression as a protobuf. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00151">151</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00149">149</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
 
 </div>
 </div>
@@ -292,7 +281,7 @@ Friends</h2></td></tr>
 
 <p>Move out the underlying protobuf value. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00156">156</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00154">154</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
 
 </div>
 </div>
@@ -332,7 +321,7 @@ Friends</h2></td></tr>
 
 <p>Return a range representing the interval [<code>begin</code>, <code>end</code>]. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00116">116</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00117">117</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
 
 </div>
 </div>
@@ -383,7 +372,7 @@ Friends</h2></td></tr>
 
 <p>Return an empty range. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00063">63</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00064">64</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
 
 </div>
 </div>
@@ -413,7 +402,7 @@ Friends</h2></td></tr>
 
 <p>Return the range ending at <code>end</code> (included), with no lower limit. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00056">56</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00057">57</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
 
 </div>
 </div>
@@ -442,7 +431,7 @@ Friends</h2></td></tr>
 
 <p>Return the infinite range, i.e., a range including all possible keys. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00046">46</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00047">47</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
 
 </div>
 </div>
@@ -527,7 +516,7 @@ Friends</h2></td></tr>
 
 <p>Return a range representing the interval (<code>begin</code>, <code>end</code>]. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00096">96</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00097">97</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
 
 </div>
 </div>
@@ -567,35 +556,7 @@ Friends</h2></td></tr>
 
 <p>Return a range representing the interval (<code>begin</code>, <code>end</code>). </p>
 
-<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00106">106</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
-
-</div>
-</div>
-<a id="a6c046fd4227599282bf5a629a347b1f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c046fd4227599282bf5a629a347b1f3">&#9670;&nbsp;</a></span>operator!=()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool google::cloud::bigtable::v0::RowRange::operator!= </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html">RowRange</a> const &amp;&#160;</td>
-          <td class="paramname"><em>rhs</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00148">148</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00107">107</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
 
 </div>
 </div>
@@ -651,26 +612,6 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="abda6d4ebcab6405a6d29dc1f8af0864f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abda6d4ebcab6405a6d29dc1f8af0864f">&#9670;&nbsp;</a></span>operator==()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool google::cloud::bigtable::v0::RowRange::operator== </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html">RowRange</a> const &amp;&#160;</td>
-          <td class="paramname"><em>rhs</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="row__range_8cc_source.html#l00189">189</a> of file <a class="el" href="row__range_8cc_source.html">row_range.cc</a>.</p>
-
-</div>
-</div>
 <a id="a9a89172a130b54bbfca219599163d6dc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9a89172a130b54bbfca219599163d6dc">&#9670;&nbsp;</a></span>Prefix()</h2>
 
@@ -697,7 +638,7 @@ Friends</h2></td></tr>
 
 <p>Return a range that contains all the keys starting with <code>prefix</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00078">78</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00079">79</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
 
 </div>
 </div>
@@ -737,7 +678,7 @@ Friends</h2></td></tr>
 
 <p>Return the range representing the interval [<code>begin</code>, <code>end</code>). </p>
 
-<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00073">73</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00074">74</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
 
 </div>
 </div>
@@ -775,7 +716,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00086">86</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00087">87</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
 
 </div>
 </div>
@@ -805,48 +746,7 @@ Friends</h2></td></tr>
 
 <p>Return the range starting at <code>begin</code> (included), with no upper limit. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00049">49</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Friends And Related Function Documentation</h2>
-<a id="a4b69ac292333f63cd932b90084975047"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b69ac292333f63cd932b90084975047">&#9670;&nbsp;</a></span>operator<<</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>os</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html">RowRange</a> const &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Print a human-readable representation of the range, mostly for testing. </p>
-
-<p class="definition">Definition at line <a class="el" href="row__range_8cc_source.html#l00229">229</a> of file <a class="el" href="row__range_8cc_source.html">row_range.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00050">50</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
 
 </div>
 </div>
