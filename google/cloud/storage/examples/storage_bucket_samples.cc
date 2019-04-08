@@ -336,8 +336,8 @@ void GetBucketClassAndLocation(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
-    StatusOr<gcs::BucketMetadata> bucket_metadata = client.GetBucketMetadata(
-        bucket_name, gcs::Fields("name,location,storageClass"));
+    StatusOr<gcs::BucketMetadata> bucket_metadata =
+        client.GetBucketMetadata(bucket_name);
 
     if (!bucket_metadata) {
       throw std::runtime_error(bucket_metadata.status().message());
@@ -345,9 +345,8 @@ void GetBucketClassAndLocation(google::cloud::storage::Client client, int& argc,
 
     std::cout << "Bucket " << bucket_metadata->name()
               << " default storage class is "
-              << bucket_metadata->storage_class()
-              << ", and the default location is " << bucket_metadata->location()
-              << '\n';
+              << bucket_metadata->storage_class() << ", and the location is "
+              << bucket_metadata->location() << '\n';
   }
   // [END storage_get_bucket_class_and_location]
   (std::move(client), bucket_name);
