@@ -69,11 +69,11 @@ class ServiceAccount(object):
         key = self.keys.pop(key_id)
         if key is None:
             raise error_response.ErrorResponse(
-                'Cannot find key for key ' % key_id, status_code=404)
+                'Cannot find key for key %s' % key_id, status_code=404)
         resource = key.get('metadata')
         if resource is None:
             raise error_response.ErrorResponse(
-                'Missing resource for HMAC key ' % key_id, status_code=500)
+                'Missing resource for HMAC key %s' % key_id, status_code=500)
         resource['state'] = 'DELETED'
         return resource
 
@@ -82,11 +82,11 @@ class ServiceAccount(object):
         key = self.keys.get(key_id)
         if key is None:
             raise error_response.ErrorResponse(
-                'Cannot find key for key ' % key_id, status_code=404)
+                'Cannot find key for key %s' % key_id, status_code=404)
         metadata = key.get('metadata')
         if metadata is None:
             raise error_response.ErrorResponse(
-                'Missing resource for HMAC key ' % key_id, status_code=500)
+                'Missing resource for HMAC key %s' % key_id, status_code=500)
         return metadata
 
     def _check_etag(self, key_resource, etag, where):
@@ -103,11 +103,11 @@ class ServiceAccount(object):
         key = self.keys.get(key_id)
         if key is None:
             raise error_response.ErrorResponse(
-                'Cannot find key for key %s ' % key_id, status_code=404)
+                'Cannot find key for key %s' % key_id, status_code=404)
         metadata = key.get('metadata')
         if metadata is None:
             raise error_response.ErrorResponse(
-                'Missing metadata for HMAC key ' % key_id, status_code=500)
+                'Missing metadata for HMAC key %s' % key_id, status_code=500)
         self._check_etag(metadata, payload.get('etag'), 'payload')
         self._check_etag(
             metadata, flask.request.headers.get('if-match-etag'), 'header')
@@ -164,7 +164,7 @@ class GcsProject(object):
         sa = self.service_accounts.get(service_account)
         if sa is None:
             raise error_response.ErrorResponse(
-                'Cannot find service account for key=' % access_id, status_code=404)
+                'Cannot find service account for key=%s' % access_id, status_code=404)
         return sa.delete_key(key_id)
 
     def get_hmac_key(self, access_id):
@@ -173,7 +173,7 @@ class GcsProject(object):
         sa = self.service_accounts.get(service_account)
         if sa is None:
             raise error_response.ErrorResponse(
-                'Cannot find service account for key=' % access_id, status_code=404)
+                'Cannot find service account for key=%s' % access_id, status_code=404)
         return sa.get_key(key_id)
 
     def update_hmac_key(self, access_id, payload):
@@ -182,7 +182,7 @@ class GcsProject(object):
         sa = self.service_accounts.get(service_account)
         if sa is None:
             raise error_response.ErrorResponse(
-                'Cannot find service account for key=' % access_id, status_code=404)
+                'Cannot find service account for key=%s' % access_id, status_code=404)
         return sa.update_key(key_id, payload)
 
 
@@ -200,6 +200,11 @@ def get_project(project_id):
     # to create projects, nor do we want to create such functions. The point is
     # to test the GCS client library, not the IAM client library.
     return VALID_PROJECTS.setdefault(project_id, GcsProject(project_id))
+
+
+@projects.errorhandler(error_response.ErrorResponse)
+def handle_error(error):
+    return error.as_response()
 
 
 @projects.route('/<project_id>/serviceAccount')
