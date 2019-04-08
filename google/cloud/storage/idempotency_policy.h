@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_IDEMPOTENCY_POLICY_H_
 
 #include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/sign_blob_requests.h"
 
 namespace google {
 namespace cloud {
@@ -167,6 +168,7 @@ class IdempotencyPolicy {
       internal::GetHmacKeyRequest const& request) const = 0;
   virtual bool IsIdempotent(
       internal::UpdateHmacKeyRequest const& request) const = 0;
+  virtual bool IsIdempotent(internal::SignBlobRequest const& request) const = 0;
   //@}
 
   //@{
@@ -298,6 +300,7 @@ class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
   bool IsIdempotent(internal::GetHmacKeyRequest const& request) const override;
   bool IsIdempotent(
       internal::UpdateHmacKeyRequest const& request) const override;
+  bool IsIdempotent(internal::SignBlobRequest const& request) const override;
   //@}
 
   //@{
@@ -429,6 +432,7 @@ class StrictIdempotencyPolicy : public IdempotencyPolicy {
   bool IsIdempotent(internal::GetHmacKeyRequest const& request) const override;
   bool IsIdempotent(
       internal::UpdateHmacKeyRequest const& request) const override;
+  bool IsIdempotent(internal::SignBlobRequest const& request) const override;
   //@}
 
   //@{
