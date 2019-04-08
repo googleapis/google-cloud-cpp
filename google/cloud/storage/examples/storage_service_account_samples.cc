@@ -208,17 +208,14 @@ void DeleteHmacKey(google::cloud::storage::Client client, int& argc,
   }
   //! [delete hmac key] [START storage_delete_hmac_key]
   namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string access_id) {
-    StatusOr<gcs::HmacKeyMetadata> hmac_key_details =
-        client.DeleteHmacKey(access_id);
+    google::cloud::Status status = client.DeleteHmacKey(access_id);
 
-    if (!hmac_key_details) {
-      throw std::runtime_error(hmac_key_details.status().message());
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
     }
     std::cout << "The key is deleted, though it may still appear"
-              << " in ListHmacKeys() results."
-              << "\nThe HMAC key metadata is: " << &hmac_key_details << "\n";
+              << " in ListHmacKeys() results.\n";
   }
   //! [delete hmac key] [END storage_delete_hmac_key]
   (std::move(client), argv[1]);

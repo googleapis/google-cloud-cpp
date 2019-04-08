@@ -137,13 +137,13 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUDFailures) {
   Client client(client_options->set_project_id(project_id));
 
   // Test failures in the HmacKey operations by using an invalid project id:
-  StatusOr<HmacKeyMetadata> create_status =
-      client.DeleteHmacKey("invalid-access-id", OverrideDefaultProject(""));
-  EXPECT_FALSE(create_status) << "value=" << *create_status;
+  auto create_status =
+      client.CreateHmacKey("invalid-service-account", OverrideDefaultProject(""));
+  EXPECT_FALSE(create_status) << "value=" << create_status->first;
 
-  StatusOr<HmacKeyMetadata> deleted_status =
+  Status deleted_status =
       client.DeleteHmacKey("invalid-access-id", OverrideDefaultProject(""));
-  EXPECT_FALSE(deleted_status) << "value=" << *deleted_status;
+  EXPECT_FALSE(deleted_status.ok());
 
   StatusOr<HmacKeyMetadata> get_status =
       client.GetHmacKey("invalid-access-id", OverrideDefaultProject(""));

@@ -1068,7 +1068,7 @@ StatusOr<CreateHmacKeyResponse> CurlClient::CreateHmacKey(
       builder.BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<HmacKeyMetadata> CurlClient::DeleteHmacKey(
+StatusOr<EmptyResponse> CurlClient::DeleteHmacKey(
     DeleteHmacKeyRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/projects/" +
                                  request.project_id() + "/hmacKeys/" +
@@ -1078,8 +1078,7 @@ StatusOr<HmacKeyMetadata> CurlClient::DeleteHmacKey(
   if (!status.ok()) {
     return status;
   }
-  return CheckedFromString<HmacKeyMetadataParser>(
-      builder.BuildRequest().MakeRequest(std::string{}));
+  return ReturnEmptyResponse(builder.BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<HmacKeyMetadata> CurlClient::GetHmacKey(

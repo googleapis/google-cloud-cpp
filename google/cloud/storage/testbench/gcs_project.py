@@ -270,8 +270,8 @@ def hmac_keys_list(project_id):
 def hmac_keys_delete(project_id, access_id):
     """Implement the `HmacKeys: delete` API."""
     project = get_project(project_id)
-    return testbench_utils.filtered_response(
-        flask.request, project.delete_hmac_key(access_id))
+    project.delete_hmac_key(access_id)
+    return testbench_utils.filtered_response(flask.request, {})
 
 
 @projects.route('/<project_id>/hmacKeys/<access_id>')
