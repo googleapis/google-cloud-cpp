@@ -67,6 +67,12 @@ class ClientOptions {
     return *this;
   }
 
+  std::string const& iam_endpoint() const { return iam_endpoint_; }
+  ClientOptions& set_iam_endpoint(std::string endpoint) {
+    iam_endpoint_ = std::move(endpoint);
+    return *this;
+  }
+
   std::string const& version() const { return version_; }
   ClientOptions& set_version(std::string version) {
     version_ = std::move(version);
@@ -140,6 +146,7 @@ class ClientOptions {
  private:
   std::shared_ptr<oauth2::Credentials> credentials_;
   std::string endpoint_;
+  std::string iam_endpoint_;
   std::string version_;
   bool enable_http_tracing_;
   bool enable_raw_client_tracing_;

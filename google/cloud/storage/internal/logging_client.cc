@@ -337,6 +337,11 @@ StatusOr<HmacKeyMetadata> LoggingClient::UpdateHmacKey(
   return MakeCall(*client_, &RawClient::UpdateHmacKey, request, __func__);
 }
 
+StatusOr<SignBlobResponse> LoggingClient::SignBlob(
+    SignBlobRequest const& request) {
+  return MakeCall(*client_, &RawClient::SignBlob, request, __func__);
+}
+
 StatusOr<ListNotificationsResponse> LoggingClient::ListNotifications(
     ListNotificationsRequest const& request) {
   return MakeCall(*client_, &RawClient::ListNotifications, request, __func__);

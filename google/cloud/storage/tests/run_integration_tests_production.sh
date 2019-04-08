@@ -35,6 +35,10 @@ echo "Running storage::internal::CurlResumableUploadSession integration tests."
 ./curl_resumable_upload_session_integration_test "${BUCKET_NAME}"
 
 echo
+echo "Running CurlClient::SignBlob integration tests."
+./curl_sign_blob_integration_test "${SERVICE_ACCOUNT}"
+
+echo
 echo "Running GCS Bucket APIs integration tests."
 ./bucket_integration_test "${PROJECT_ID}" "${BUCKET_NAME}" "${TOPIC_NAME}"
 

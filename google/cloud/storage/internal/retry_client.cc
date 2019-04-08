@@ -557,6 +557,15 @@ StatusOr<HmacKeyMetadata> RetryClient::UpdateHmacKey(
                   &RawClient::UpdateHmacKey, request, __func__);
 }
 
+StatusOr<SignBlobResponse> RetryClient::SignBlob(
+    SignBlobRequest const& request) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
+  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
+                  &RawClient::SignBlob, request, __func__);
+}
+
 StatusOr<ListNotificationsResponse> RetryClient::ListNotifications(
     ListNotificationsRequest const& request) {
   auto retry_policy = retry_policy_->clone();

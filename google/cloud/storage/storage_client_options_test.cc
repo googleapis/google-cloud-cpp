@@ -51,6 +51,7 @@ TEST_F(ClientOptionsTest, Default) {
   EXPECT_TRUE(creds.get() == options.credentials().get());
   EXPECT_EQ("https://www.googleapis.com", options.endpoint());
   EXPECT_EQ("v1", options.version());
+  EXPECT_EQ("https://iamcredentials.googleapis.com/v1", options.iam_endpoint());
 }
 
 TEST_F(ClientOptionsTest, EnableRpc) {
@@ -84,6 +85,12 @@ TEST_F(ClientOptionsTest, SetEndpoint) {
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   options.set_endpoint("http://localhost:2345");
   EXPECT_EQ("http://localhost:2345", options.endpoint());
+}
+
+TEST_F(ClientOptionsTest, SetIamEndpoint) {
+  ClientOptions options(oauth2::CreateAnonymousCredentials());
+  options.set_iam_endpoint("http://localhost:0/v2");
+  EXPECT_EQ("http://localhost:0/v2", options.iam_endpoint());
 }
 
 TEST_F(ClientOptionsTest, SetCredentials) {
