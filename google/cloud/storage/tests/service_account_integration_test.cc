@@ -30,11 +30,6 @@ using ::testing::HasSubstr;
 char const* flag_project_id;
 char const* flag_service_account;
 
-bool UsingTestbench() {
-  return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
-      .has_value();
-}
-
 TEST(ServiceAccountIntegrationTest, Get) {
   std::string project_id = flag_project_id;
   StatusOr<Client> client = Client::CreateDefaultClient();
@@ -55,12 +50,6 @@ TEST(ServiceAccountIntegrationTest, Get) {
 }
 
 TEST(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
-  if (!UsingTestbench()) {
-    // Temporarily disabled outside the testbench because the test does not
-    // cleanup after itself.
-    return;
-  }
-
   std::string project_id = flag_project_id;
   std::string service_account = flag_service_account;
   StatusOr<Client> client = Client::CreateDefaultClient();
@@ -74,12 +63,6 @@ TEST(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
 }
 
 TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
-  if (!UsingTestbench()) {
-    // Temporarily disabled outside the testbench because the test does not
-    // cleanup after itself.
-    return;
-  }
-
   std::string project_id = flag_project_id;
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   std::string service_account = flag_service_account;
@@ -144,12 +127,6 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
 }
 
 TEST(ServiceAccountIntegrationTest, HmacKeyCRUDFailures) {
-  if (!UsingTestbench()) {
-    // Temporarily disabled outside the testbench because the test does not
-    // cleanup after itself.
-    return;
-  }
-
   std::string project_id = flag_project_id;
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   std::string service_account = flag_service_account;
