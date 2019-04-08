@@ -135,7 +135,7 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
   std::cout << "Table name : " << table->name() << "\n";
   // [END bigtable_get_table]
 
-  // [START bigtable_table_famalies]
+  // [START bigtable_table_families]
   for (auto const& family : table->column_families()) {
     std::string const& family_name = family.first;
     std::string gc_rule;
@@ -143,9 +143,9 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
                                                 &gc_rule);
     std::cout << "Table Families :" << family_name << "\t\t" << gc_rule << "\n";
   }
-  // [END bigtable_table_famalies]
+  // [END bigtable_table_families]
 
-  // [START bigtable_update_column_famaly]
+  // [START bigtable_update_column_family]
   std::cout << "Update a column family GC rule:\n";
   auto schema1 = admin.ModifyColumnFamilies(
       table_id,
@@ -168,7 +168,7 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
   std::string formatted;
   google::protobuf::TextFormat::PrintToString(*schema1, &formatted);
   std::cout << "Schema modified to: " << formatted << "\n";
-  // [END bigtable_update_column_famaly]
+  // [END bigtable_update_column_family]
 
   // [START bigtable_delete_table]
   std::cout << "Deleting table:\n";
