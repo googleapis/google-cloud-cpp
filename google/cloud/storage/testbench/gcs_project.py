@@ -282,7 +282,7 @@ def hmac_keys_get(project_id, access_id):
         flask.request, project.get_hmac_key(access_id))
 
 
-@projects.route('/<project_id>/hmacKeys/<access_id>', methods=['POST'])
+@projects.route('/<project_id>/hmacKeys/<access_id>', methods=['PUT'])
 def hmac_keys_update(project_id, access_id):
     """Implement the `HmacKeys: delete` API."""
     project = get_project(project_id)
