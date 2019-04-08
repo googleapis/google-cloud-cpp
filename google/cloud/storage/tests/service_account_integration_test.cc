@@ -119,8 +119,8 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   // Delete all HmacKeys for the test service account, it is just good practice
   // to cleanup after ourselves.
   for (auto const& id : post_delete_access_ids) {
-    StatusOr<HmacKeyMetadata> deactivate = client.UpdateHmacKey(
-      id, HmacKeyMetadata().set_state("INACTIVE"));
+    StatusOr<HmacKeyMetadata> deactivate =
+        client.UpdateHmacKey(id, HmacKeyMetadata().set_state("INACTIVE"));
     EXPECT_STATUS_OK(deactivate);
 
     StatusOr<HmacKeyMetadata> d = client.DeleteHmacKey(id);
@@ -137,8 +137,8 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUDFailures) {
   Client client(client_options->set_project_id(project_id));
 
   // Test failures in the HmacKey operations by using an invalid project id:
-  auto create_status =
-      client.CreateHmacKey("invalid-service-account", OverrideDefaultProject(""));
+  auto create_status = client.CreateHmacKey("invalid-service-account",
+                                            OverrideDefaultProject(""));
   EXPECT_FALSE(create_status) << "value=" << create_status->first;
 
   Status deleted_status =

@@ -150,26 +150,22 @@ TEST_F(ServiceAccountTest, DeleteHmacKey) {
       }));
   Client client{std::shared_ptr<internal::RawClient>(mock)};
 
-  Status actual = client.DeleteHmacKey(
-      "test-access-id-1", OverrideDefaultProject("test-project"));
+  Status actual = client.DeleteHmacKey("test-access-id-1",
+                                       OverrideDefaultProject("test-project"));
   ASSERT_STATUS_OK(actual);
 }
 
 TEST_F(ServiceAccountTest, DeleteHmacKeyTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
       mock, EXPECT_CALL(*mock, DeleteHmacKey(_)),
-      [](Client& client) {
-        return client.DeleteHmacKey("test-access-id");
-      },
+      [](Client& client) { return client.DeleteHmacKey("test-access-id"); },
       "DeleteHmacKey");
 }
 
 TEST_F(ServiceAccountTest, DeleteHmacKeyPermanentFailure) {
   testing::PermanentFailureStatusTest<internal::EmptyResponse>(
       *client, EXPECT_CALL(*mock, DeleteHmacKey(_)),
-      [](Client& client) {
-        return client.DeleteHmacKey("test-access-id");
-      },
+      [](Client& client) { return client.DeleteHmacKey("test-access-id"); },
       "DeleteHmacKey");
 }
 
