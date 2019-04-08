@@ -525,7 +525,7 @@ void WriteObject(google::cloud::storage::Client client, int& argc,
   auto object_name = ConsumeArg(argc, argv);
   auto desired_line_count = std::stol(ConsumeArg(argc, argv));
 
-  //! [write object]
+  //! [write object] [START storage_stream_file_upload]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
@@ -552,7 +552,7 @@ void WriteObject(google::cloud::storage::Client client, int& argc,
               << " its size is: " << metadata->size()
               << "\nFull metadata: " << *metadata << "\n";
   }
-  //! [write object]
+  //! [write object] [END storage_stream_file_upload]
   (std::move(client), bucket_name, object_name, desired_line_count);
 }
 
