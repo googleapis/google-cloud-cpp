@@ -48,6 +48,8 @@ run_all_bucket_examples() {
       "${bucket_name}" "STANDARD"
   run_example ./storage_bucket_samples patch-bucket-storage-class-with-builder \
       "${bucket_name}" "COLDLINE"
+  run_example ./storage_bucket_samples get-bucket-class-and-location \
+      "${bucket_name}"
   run_example ./storage_bucket_samples enable-bucket-policy-only \
       "${bucket_name}"
   run_example ./storage_bucket_samples disable-bucket-policy-only \
