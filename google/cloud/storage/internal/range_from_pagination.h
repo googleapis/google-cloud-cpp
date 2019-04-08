@@ -64,8 +64,8 @@ class PaginationIterator {
  private:
   friend Range;
 
-  friend bool operator==(PaginationIterator<T, Range> const& lhs,
-                         PaginationIterator<T, Range> const& rhs) {
+  friend bool operator==(PaginationIterator const& lhs,
+                         PaginationIterator const& rhs) {
     // Iterators on different streams are always different.
     if (lhs.owner_ != rhs.owner_) {
       return false;
@@ -85,8 +85,8 @@ class PaginationIterator {
     return lhs.value_.ok() == rhs.value_.ok();
   }
 
-  friend bool operator!=(PaginationIterator<T, Range> const& lhs,
-                         PaginationIterator<T, Range> const& rhs) {
+  friend bool operator!=(PaginationIterator const& lhs,
+                         PaginationIterator const& rhs) {
     return std::rel_ops::operator!=(lhs, rhs);
   }
 
