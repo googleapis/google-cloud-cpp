@@ -75,20 +75,19 @@ TEST(SignedPolicyDocumentIntegrationTest, Sign) {
             internal::FormatRfc3339(actual->expiration));
 
   EXPECT_EQ(
-      "eyJjb25kaXRpb25zIjpbWyJzdGFydHMtd2l0aCIsIiRrZXkiLCIiXSx7ImFjbCI6ImJ1Y2tl"
-      "dC1vd25lci1yZWFkIn0seyJidWNrZXQiOiJ0cmF2ZWwtbWFwcyJ9LFsiZXEiLCIkQ29udGVu"
-      "dC1UeXBlIiwiaW1hZ2UvanBlZyJdLFsiY29udGVudC1sZW5ndGgtcmFuZ2UiLCIwIiwiMTAw"
-      "MDAwMCJdXSwiZXhwaXJhdGlvbiI6IjIwMTAtMDYtMTZUMTE6MTE6MTFaIn0=",
+      "eyJjb25kaXRpb25zIjpbeyJhY2wiOiJidWNrZXQtb3duZXItcmVhZCJ9LHsiYnVja2V0Ijoi"
+      "dHJhdmVsLW1hcHMifSxbImNvbnRlbnQtbGVuZ3RoLXJhbmdlIiwwLDEwMDAwMDBdXSwiZXhw"
+      "aXJhdGlvbiI6IjIwMTAtMDYtMTZUMTE6MTE6MTFaIn0=",
       actual->policy);
 
   EXPECT_EQ(
-      "NPjAK/xIruiwrsv56PcYcq4JTyBrfxRmpcp+oZZlPKPux4J/QUpxNh/"
-      "tWKJDzkWcDRhCfUqpBgkPZdf0pxr3IkYVgf9un1AR92GV020ZLGfoVUUnpuQyEouFp1dGAa1"
-      "FH+a89r8nz54sgLa/umCwhVQ6zX3D0qawym/"
-      "BK2Bu70DC2F1MKuVnmFwJNHbUq+ko69++"
-      "CT7QAh9WNyJ8AIuj3LQQFCZ5pRQaqyrRPSY82PUwDm0BXMtDpahc4vfDIiappjvli2G2YawD"
-      "KLMRsv/"
-      "86WtiuQdFYMZouiI3XEMKl0rOt7ohPVXEjfbeIM0FJGZ3t0+8ZQZ9RArakOtZFL9x9g==",
+      "kFWvHSh72uILi3XyvLe7dFzL4mzyHjEYHMwAo1UnfKTzfX7fcnuPa0jRWym8fAg5Q9dSnVrx"
+      "PWXKbIaxk1UmlQ992iMhwtgEFpGyc+znRXJBX/"
+      "CeDOj7i4t41RScLBzEcdPdGLm+"
+      "tyGM79SoBacJMmmw3gTZIrv4ASFp7we784tEpXBcAF1AcY4hKUfMX87cyqdH/"
+      "s+YKWuow7CJwpHJoC0QogkPpUCW2gt0tpZtRQZn5Beo9imFIvqG0Qkan/"
+      "nCxBpgTP3b9AzebOx1XQb6wi1QWWBjIFtPHyCOI7alpu8XNlN61jQNo/"
+      "MQcW2OKVKgjcQS6vnLm+MJiAo+sslUtg==",
       actual->signature);
 }
 
