@@ -8,6 +8,7 @@ var searchData=
   ['iam_5fbindings_2eh',['iam_bindings.h',['../../common/iam__bindings_8h.html',1,'']]],
   ['iam_5fconfiguration',['iam_configuration',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#a2f4f6a1b97cb52e4869c3756a38f7d86',1,'google::cloud::storage::v0::BucketMetadata']]],
   ['iam_5fconfiguration_5fas_5foptional',['iam_configuration_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1BucketMetadata.html#aa64b0e9f59786025dc68e96b4702eafb',1,'google::cloud::storage::v0::BucketMetadata']]],
+  ['iam_5fendpoint',['iam_endpoint',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1ClientOptions.html#a44f2bd868cf05ed25aed736082588ddd',1,'google::cloud::storage::v0::ClientOptions']]],
   ['iam_5fpolicy_2ecc',['iam_policy.cc',['../../common/iam__policy_8cc.html',1,'']]],
   ['iam_5fpolicy_2eh',['iam_policy.h',['../../common/iam__policy_8h.html',1,'']]],
   ['iambinding',['IamBinding',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBinding.html',1,'google::cloud::v0::IamBinding'],['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBinding.html#a6b5030fb6c58bd21503893c1045c1618',1,'google::cloud::v0::IamBinding::IamBinding()']]],
