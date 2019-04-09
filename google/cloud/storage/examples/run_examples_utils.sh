@@ -136,6 +136,10 @@ run_all_service_account_examples() {
       delete-hmac-key "${access_id}"
 
   unset GOOGLE_CLOUD_PROJECT
+
+  # Verify that calling without a command produces the right exit status and
+  # some kind of Usage message.
+  run_example_usage ./storage_service_account_samples
 }
 
 ################################################
@@ -221,6 +225,33 @@ run_retention_policy_examples() {
   run_example ./storage_bucket_samples set-retention-policy \
       "${bucket_name}" 30
   run_example ./storage_bucket_samples lock-retention-policy \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
+}
+
+################################################
+# Run all examples showing how to use lifecycle policies.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+#   PROJECT_ID: the Google Cloud Project used for the test.
+# Arguments:
+#   None
+# Returns:
+#   None
+################################################
+run_lifecycle_management_examples() {
+  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
+
+  run_example ./storage_bucket_samples create-bucket-for-project \
+      "${bucket_name}" "${PROJECT_ID}"
+  run_example ./storage_bucket_samples enable-bucket-lifecycle-management \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples get-bucket-lifecycle-management \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples disable-bucket-lifecycle-management \
+      "${bucket_name}"
+  run_example ./storage_bucket_samples get-bucket-lifecycle-management \
       "${bucket_name}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
 }
@@ -333,6 +364,7 @@ run_all_object_examples() {
   run_example ./storage_object_samples insert-object \
       "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
   run_example ./storage_object_samples list-objects "${bucket_name}"
+  run_example ./storage_object_samples list-versioned-objects "${bucket_name}"
   run_example ./storage_object_samples insert-object \
       "${bucket_name}" "${bucket_prefix}/object-1.txt" "media-for-object-1"
   run_example ./storage_object_samples insert-object \
@@ -424,6 +456,10 @@ run_all_object_examples() {
       "a-string-to-serve-as-object-media"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name_retry}"
+
+  # Verify that calling without a command produces the right exit status and
+  # some kind of Usage message.
+  run_example_usage ./storage_object_samples
 }
 
 ################################################
@@ -567,6 +603,18 @@ run_rewrite_object_example() {
       "${source_bucket_name}" "${target_object_name}"
   run_example ./storage_object_samples delete-object \
       "${source_bucket_name}" "${source_object_name}"
+
+  run_example ./storage_object_samples insert-object \
+      "${source_bucket_name}" "${source_object_name}" \
+      "a-string-to-serve-as-object-media"
+  run_example ./storage_object_samples rewrite-object-non-blocking \
+      "${source_bucket_name}" "${source_object_name}" \
+      "${source_bucket_name}" "${target_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${source_bucket_name}" "${target_object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${source_bucket_name}" "${source_object_name}"
+
 }
 
 ################################################
@@ -1184,8 +1232,10 @@ run_cors_configuration_examples() {
 run_quickstart() {
   local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
 
-  ./storage_quickstart "${bucket_name}" "${PROJECT_ID}"
+  run_example ./storage_quickstart "${bucket_name}" "${PROJECT_ID}"
   run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
+
+  run_example_usage ./storage_quickstart
 }
 
 ################################################
@@ -1212,6 +1262,7 @@ run_all_storage_examples() {
   run_all_bucket_examples
   run_default_event_based_hold_examples
   run_retention_policy_examples
+  run_lifecycle_management_examples
   run_all_bucket_acl_examples
   run_all_default_object_acl_examples
   run_all_requester_pays_examples
