@@ -14,10 +14,10 @@
 
 //! [all code]
 
-//! [bigtable includes] [START dependencies]
+//! [bigtable includes] [START bigtable_hw_imports]
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
-//! [bigtable includes] [END dependencies]
+//! [bigtable includes] [END bigtable_hw_imports]
 
 int main(int argc, char* argv[]) try {
   if (argc != 4) {
@@ -33,32 +33,32 @@ int main(int argc, char* argv[]) try {
   std::string const table_id = argv[3];
 
   // Connect to the Cloud Bigtable Admin API.
-  //! [connect admin] [START connecting_to_bigtable]
+  //! [connect admin] [START bigtable_hw_connect]
   google::cloud::bigtable::TableAdmin table_admin(
       google::cloud::bigtable::CreateDefaultAdminClient(
           project_id, google::cloud::bigtable::ClientOptions()),
       instance_id);
-  //! [connect admin] [END connecting_to_bigtable]
+  //! [connect admin] [END bigtable_hw_connect]
 
-  //! [create table] [START creating_a_table]
+  //! [create table] [START bigtable_hw_create_table]
   // Define the desired schema for the Table.
   auto gc_rule = google::cloud::bigtable::GcRule::MaxNumVersions(1);
   google::cloud::bigtable::TableConfig schema({{"family", gc_rule}}, {});
 
   // Create a table.
   auto returned_schema = table_admin.CreateTable(table_id, schema);
-  //! [create table] [END creating_a_table]
+  //! [create table]
 
   // Create an object to access the Cloud Bigtable Data API.
-  //! [connect data] [START connecting_to_bigtable]
+  //! [connect data]
   google::cloud::bigtable::Table table(
       google::cloud::bigtable::CreateDefaultDataClient(
           project_id, instance_id, google::cloud::bigtable::ClientOptions()),
       table_id);
-  //! [connect data] [END connecting_to_bigtable]
+  //! [connect data] [END bigtable_hw_create_table]
 
   // Modify (and create if necessary) a row.
-  //! [write rows] [START writing_rows]
+  //! [write rows] [START bigtable_hw_write_rows]
   std::vector<std::string> greetings{"Hello World!", "Hello Cloud Bigtable!",
                                      "Hello C++!"};
   int i = 0;
@@ -85,15 +85,15 @@ int main(int argc, char* argv[]) try {
     }
     ++i;
   }
-  //! [write rows] [END writing_rows]
+  //! [write rows] [END bigtable_hw_write_rows]
 
-  //! [create filter] [START creating_a_filter]
+  //! [create filter] [START bigtable_hw_create_filter]
   auto filter =
       google::cloud::bigtable::Filter::ColumnRangeClosed("family", "c0", "c0");
-  //! [create filter] [END creating_a_filter]
+  //! [create filter] [END bigtable_hw_create_filter]
 
   // Read a single row.
-  //! [read row] [START getting_a_row]
+  //! [read row] [START bigtable_hw_get_with_filter]
   auto result = table.ReadRow("key-0", filter);
   if (!result) {
     throw std::runtime_error(result.status().message());
@@ -107,10 +107,10 @@ int main(int argc, char* argv[]) try {
   std::cout << cell.family_name() << ":" << cell.column_qualifier() << "    @ "
             << cell.timestamp().count() << "us\n"
             << '"' << cell.value() << '"' << "\n";
-  //! [read row] [END getting_a_row]
+  //! [read row] [END bigtable_hw_get_with_filter]
 
   // Read all rows.
-  //! [scan all] [START scanning_all_rows]
+  //! [scan all] [START bigtable_hw_scan_with_filter]
   for (auto& row :
        table.ReadRows(google::cloud::bigtable::RowRange::InfiniteRange(),
                       google::cloud::bigtable::Filter::PassAllFilter())) {
@@ -124,15 +124,15 @@ int main(int argc, char* argv[]) try {
                 << "\t\"" << cell.value() << '"' << "\n";
     }
   }
-  //! [scan all] [END scanning_all_rows]
+  //! [scan all] [END bigtable_hw_scan_with_filter]
 
   // Delete the table
-  //! [delete table] [START deleting_a_table]
+  //! [delete table]
   google::cloud::Status status = table_admin.DeleteTable(table_id);
   if (!status.ok()) {
     throw std::runtime_error(status.message());
   }
-  //! [delete table] [END deleting_a_table]
+  //! [delete table]
 
   return 0;
 } catch (std::exception const& ex) {
