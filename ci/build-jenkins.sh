@@ -16,12 +16,12 @@
 
 set -eu
 
-cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild-output
-cmake --build build-output -- -j $(nproc)
+cmake -DCMAKE_BUILD_TYPE=Release -H. -Bcmake-out
+cmake --build cmake-out -- -j $(nproc)
 
 readonly PROJECT_ROOT=$(pwd)
 echo PROJECT_ROOT=${PROJECT_ROOT}
-cd build-output
+cd cmake-out
 ctest --output-on-failure
 
 readonly BTDIR="google/cloud/bigtable"

@@ -24,7 +24,7 @@ source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
 # Dump the image installation log.
 echo
-dump_log "build-output/install-linux.log"
+dump_log "cmake-out/install-linux.log"
 
 # Dump the emulator log file. Tests run in the google/cloud/bigtable/tests directory.
 echo

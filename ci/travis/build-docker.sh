@@ -173,8 +173,8 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   echo
   echo "${COLOR_YELLOW}Test installed libraries using cmake(1).${COLOR_RESET}"
   readonly TEST_INSTALL_DIR="${PROJECT_ROOT}/ci/test-install"
-  readonly TEST_INSTALL_CMAKE_OUTPUT_DIR="${PROJECT_ROOT}/build-output/test-install-cmake"
-  readonly TEST_INSTALL_MAKE_OUTPUT_DIR="${PROJECT_ROOT}/build-output/test-install-make"
+  readonly TEST_INSTALL_CMAKE_OUTPUT_DIR="${PROJECT_ROOT}/cmake-out/test-install-cmake"
+  readonly TEST_INSTALL_MAKE_OUTPUT_DIR="${PROJECT_ROOT}/cmake-out/test-install-make"
   cmake -H"${TEST_INSTALL_DIR}" -B"${TEST_INSTALL_CMAKE_OUTPUT_DIR}" -DCMAKE_CXX_COMPILER=${CXX}
   cmake --build "${TEST_INSTALL_CMAKE_OUTPUT_DIR}"
   echo
@@ -237,9 +237,9 @@ fi
 # the developers on how to do that locally.
 if [ "${SCAN_BUILD:-}" = "yes" ]; then
   if [ -n "$(ls -1d /tmp/scan-build-* 2>/dev/null)" ]; then
-    cp -r /tmp/scan-build-* /v/scan-build-output
+    cp -r /tmp/scan-build-* /v/scan-cmake-out
   fi
-  if [ -r scan-build-output/index.html ]; then
+  if [ -r scan-cmake-out/index.html ]; then
     cat <<_EOF_;
 
 ${COLOR_RED}
@@ -250,7 +250,7 @@ then run:
 DISTRO=ubuntu DISTRO_VERSION=18.04 SCAN_BUILD=yes NCPU=8 CXX=clang++ CC=clang \
     ./ci/travis/build-linux.sh
 
-The HTML output will be copied into the scan-build-output subdirectory.
+The HTML output will be copied into the scan-cmake-out subdirectory.
 ${COLOR_RESET}
 _EOF_
     exit 1
