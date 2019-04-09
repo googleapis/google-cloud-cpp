@@ -177,8 +177,8 @@ struct SigningAccount
  * `roles/iam.serviceAccountTokenCreator` on the target service account.
  */
 struct SigningAccountDelegates
-    : internal::ComplexOption<SigningAccountDelegates,
-                              std::vector<std::string>> {
+    : public internal::ComplexOption<SigningAccountDelegates,
+                                     std::vector<std::string>> {
   using ComplexOption<SigningAccountDelegates,
                       std::vector<std::string>>::ComplexOption;
   static char const* name() { return "signing-account-delegates"; }
