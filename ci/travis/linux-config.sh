@@ -47,6 +47,6 @@ else
   elif echo "${CMAKE_FLAGS}" | grep -Eq GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=no; then
       suffix="${suffix}-noex"
   fi
-  readonly BUILD_OUTPUT="build-output/${IMAGE}${suffix}"
-  readonly DOCKER_CCACHE_DIR="build-output/ccache/${IMAGE}${suffix}"
+  readonly BUILD_OUTPUT="cmake-out/${IMAGE}${suffix}"
+  readonly DOCKER_CCACHE_DIR="cmake-out/ccache/${IMAGE}${suffix}"
 fi

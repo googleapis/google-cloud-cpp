@@ -90,26 +90,26 @@ cd google-cloud-cpp
 And compile the code using:
 
 ```console
-cmake -H. -B.build
-cmake --build .build -- -j $(nproc)
+cmake -H. -Bcmake-out
+cmake --build cmake-out -- -j $(nproc)
 ```
 
 Run the tests using:
 
 ```console
-env -C .build ctest --output-on-failure
+env -C cmake-out ctest --output-on-failure
 ```
 
 Run the Google Cloud Storage integration tests:
 
 ```console
-env -C .build $PWD/google/cloud/storage/ci/run_integration_tests.sh
+env -C cmake-out $PWD/google/cloud/storage/ci/run_integration_tests.sh
 ```
 
 Run the Google Cloud Bigtable integration tests:
 
 ```console
-env -C .build \
+env -C cmake-out \
     CBT=$HOME/google-cloud-sdk/bin/cbt \
     CBT_EMULATOR=$HOME/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
     $PWD/google/cloud/bigtable/ci/run_integration_tests.sh
@@ -212,18 +212,18 @@ And compile the code using:
 
 ```console
 > call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
-> cmake -GNinja -H. -B.build
+> cmake -GNinja -H. -Bcmake-out
    -DCMAKE_BUILD_TYPE=Debug
    -DCMAKE_TOOLCHAIN_FILE=C:\Users\%USERNAME%\vcpkg\scripts\buildsystems\vcpkg.cmake
    -DVCPKG_TARGET_TRIPLET=x64-windows-static
    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package
-> cmake --build .build
+> cmake --build cmake-out
 ```
 
 Run the tests using:
 
 ```console
-> cd .build
+> cd cmake-out
 > ctest --output-on-failure
 ```
 

@@ -29,8 +29,8 @@ $CONFIG = $env:CONFIG
 $PROVIDER = $env:PROVIDER
 $GENERATOR = "Ninja"
 
-# By default assume "module", use the configuration parameters and build in the `build-output` directory.
-$cmake_flags=@("-G$GENERATOR", "-DCMAKE_BUILD_TYPE=$CONFIG", "-H.", "-Bbuild-output")
+# By default assume "module", use the configuration parameters and build in the `cmake-out` directory.
+$cmake_flags=@("-G$GENERATOR", "-DCMAKE_BUILD_TYPE=$CONFIG", "-H.", "-Bcmake-out")
 
 # This script expects vcpkg to be installed in ..\vcpkg, discover the full
 # path to that directory:
@@ -55,14 +55,14 @@ if ($LastExitCode) {
 Write-Host
 Get-Date -Format o
 Write-Host "Compiling with CMake $env:CONFIG"
-cmake --build build-output --config $CONFIG
+cmake --build cmake-out --config $CONFIG
 if ($LastExitCode) {
     throw "cmake for 'all' target failed with exit code $LastExitCode"
 }
 
 Write-Host
 Get-Date -Format o
-cd build-output
+cd cmake-out
 ctest --output-on-failure -C $CONFIG
 if ($LastExitCode) {
     throw "ctest failed with exit code $LastExitCode"

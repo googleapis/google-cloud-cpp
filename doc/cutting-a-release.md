@@ -77,7 +77,7 @@ sed -i 's/set(GOOGLE_CLOUD_CPP_IS_RELEASE "")/set(GOOGLE_CLOUD_CPP_IS_RELEASE "y
 Run the CMake configuration step to update the Bazel configuration files:
 
 ```bash
-cmake -H. -Bbuild-output
+cmake -H. -Bcmake-out
 ```
 
 You should expect that only `google/cloud/CMakeLists.txt` and

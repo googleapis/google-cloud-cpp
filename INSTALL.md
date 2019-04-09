@@ -15,9 +15,9 @@ CMake support files, then compiling and installing the libraries
 requires two commands:
 
 ```bash
-cmake -H. -Bbuild-output-for-install \
+cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package
-cmake --build build-output-for-install --target install
+cmake --build cmake-out --target install
 ```
 
 Unfortunately getting your system to this state may require multiple steps,
@@ -178,8 +178,8 @@ cmake \
       -DCRC32C_BUILD_TESTS=OFF \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
-      -H. -B.build/crc32c
-sudo cmake --build .build/crc32c --target install -- -j $(nproc)
+      -H. -Bcmake-out/crc32c
+sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
@@ -189,11 +189,11 @@ We can now compile and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bbuild-output \
+cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build build-output -- -j $(nproc)
-cd $HOME/google-cloud-cpp/build-output
+cmake --build cmake-out -- -j $(nproc)
+cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
@@ -233,8 +233,8 @@ cmake \
       -DCRC32C_BUILD_TESTS=OFF \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
-      -H. -B.build/crc32c
-sudo cmake --build .build/crc32c --target install -- -j $(nproc)
+      -H. -Bcmake-out/crc32c
+sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
@@ -244,11 +244,11 @@ We can now compile and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bbuild-output \
+cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build build-output -- -j $(nproc)
-cd $HOME/google-cloud-cpp/build-output
+cmake --build cmake-out -- -j $(nproc)
+cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
@@ -279,8 +279,8 @@ cmake \
       -DCRC32C_BUILD_TESTS=OFF \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
-      -H. -B.build/crc32c
-sudo cmake --build .build/crc32c --target install -- -j $(nproc)
+      -H. -Bcmake-out/crc32c
+sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
@@ -299,8 +299,8 @@ cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -B.build
-sudo cmake --build .build --target install -- -j $(nproc)
+        -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
@@ -359,11 +359,11 @@ We can now compile and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bbuild-output \
+cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build build-output -- -j $(nproc)
-cd $HOME/google-cloud-cpp/build-output
+cmake --build cmake-out -- -j $(nproc)
+cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
@@ -395,8 +395,8 @@ cmake \
       -DCRC32C_BUILD_TESTS=OFF \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
-      -H. -B.build/crc32c
-sudo cmake --build .build/crc32c --target install -- -j $(nproc)
+      -H. -Bcmake-out/crc32c
+sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
@@ -415,8 +415,8 @@ cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -B.build
-sudo cmake --build .build --target install -- -j $(nproc)
+        -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
@@ -441,11 +441,11 @@ Finally we can install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bbuild-output \
+cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build build-output -- -j $(nproc)
-cd $HOME/google-cloud-cpp/build-output
+cmake --build cmake-out -- -j $(nproc)
+cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
@@ -477,8 +477,8 @@ cmake \
       -DCRC32C_BUILD_TESTS=OFF \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
-      -H. -B.build/crc32c
-sudo cmake --build .build/crc32c --target install -- -j $(nproc)
+      -H. -Bcmake-out/crc32c
+sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
@@ -497,8 +497,8 @@ cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -B.build
-sudo cmake --build .build --target install -- -j $(nproc)
+        -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
@@ -547,11 +547,11 @@ Finally we can install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bbuild-output \
+cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build build-output -- -j $(nproc)
-cd $HOME/google-cloud-cpp/build-output
+cmake --build cmake-out -- -j $(nproc)
+cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
@@ -629,8 +629,8 @@ cmake \
       -DCRC32C_BUILD_TESTS=OFF \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
-      -H. -B.build/crc32c
-sudo cmake --build .build/crc32c --target install -- -j $(nproc)
+      -H. -Bcmake-out/crc32c
+sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
@@ -649,8 +649,8 @@ cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -B.build
-sudo cmake --build .build --target install -- -j $(nproc)
+        -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
@@ -698,12 +698,12 @@ We can now compile and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bbuild-output \
+cmake -H. -Bcmake-out \
     -DCMAKE_FIND_ROOT_PATH="/usr/local/curl;/usr/local/ssl" \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build build-output -- -j $(nproc)
-cd $HOME/google-cloud-cpp/build-output
+cmake --build cmake-out -- -j $(nproc)
+cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
@@ -743,8 +743,8 @@ cmake \
       -DCRC32C_BUILD_TESTS=OFF \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
-      -H. -B.build/crc32c
-sudo cmake --build .build/crc32c --target install -- -j $(nproc)
+      -H. -Bcmake-out/crc32c
+sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
@@ -763,8 +763,8 @@ cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -B.build
-sudo cmake --build .build --target install -- -j $(nproc)
+        -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
@@ -789,11 +789,11 @@ Finally we can install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bbuild-output \
+cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build build-output -- -j $(nproc)
-cd $HOME/google-cloud-cpp/build-output
+cmake --build cmake-out -- -j $(nproc)
+cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```
@@ -832,8 +832,8 @@ cmake \
       -DCRC32C_BUILD_TESTS=OFF \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
-      -H. -B.build/crc32c
-sudo cmake --build .build/crc32c --target install -- -j $(nproc)
+      -H. -Bcmake-out/crc32c
+sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
@@ -850,8 +850,8 @@ cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -B.build
-sudo cmake --build .build --target install -- -j $(nproc)
+        -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
@@ -893,11 +893,11 @@ Finally we can install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/Downloads/google-cloud-cpp
-cmake -H. -Bbuild-output \
+cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build build-output -- -j $(nproc)
-cd $HOME/Downloads/google-cloud-cpp/build-output
+cmake --build cmake-out -- -j $(nproc)
+cd $HOME/Downloads/google-cloud-cpp/cmake-out
 ctest --output-on-failure
 sudo cmake --build . --target install
 ```

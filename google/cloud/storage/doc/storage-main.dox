@@ -108,7 +108,7 @@ you run the quickstart program. Assuming you followed the build instructions
 referenced above this would be:
 
 @code
-./build-output/google/cloud/storage/examples/quick_start [BUCKET_NAME] [PROJECT_ID]
+./cmake-out/google/cloud/storage/examples/quick_start [BUCKET_NAME] [PROJECT_ID]
 @endcode
 
 ### Using GOOGLE_CLOUD_PROJECT to set the default project

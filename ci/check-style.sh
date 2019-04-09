@@ -36,6 +36,7 @@ find . \( -path ./.git \
           -o -path ./build-output \
           -o -path ./.build \
           -o -path ./_build \
+          -o -path ./cmake-out \
        \) -prune \
        -o \( -name 'CMakeLists.txt' \
              -o -name '*.cmake' \

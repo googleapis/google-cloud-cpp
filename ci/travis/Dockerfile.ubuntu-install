@@ -93,8 +93,8 @@ RUN cmake \
       -DCRC32C_BUILD_TESTS=OFF \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
-      -H. -B.build/crc32c
-RUN cmake --build .build/crc32c --target install -- -j ${NCPU}
+      -H. -Bcmake-out/crc32c
+RUN cmake --build cmake-out/crc32c --target install -- -j ${NCPU}
 RUN ldconfig
 
 # Install protobuf using CMake. Some distributions include protobuf, but gRPC
@@ -113,8 +113,8 @@ RUN for build_type in "Debug" "Release"; do \
         -DCMAKE_BUILD_TYPE="${build_type}" \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -B.build-${build_type}; \
-    cmake --build .build-${build_type} --target install -- -j ${NCPU}; \
+        -H. -Bcmake-out-${build_type}; \
+    cmake --build cmake-out-${build_type} --target install -- -j ${NCPU}; \
   done
 RUN ldconfig
 
@@ -130,8 +130,8 @@ WORKDIR /var/tmp/build/c-ares-cares-1_14_0
 RUN cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
-      -H. -B.build
-RUN cmake --build .build --target install -- -j ${NCPU}
+      -H. -Bcmake-out
+RUN cmake --build cmake-out --target install -- -j ${NCPU}
 RUN ./buildconf
 RUN ./configure
 RUN install -m 644 -D -t /usr/local/lib/pkgconfig libcares.pc
@@ -153,8 +153,8 @@ RUN cmake \
       -DgRPC_SSL_PROVIDER=package \
       -DgRPC_CARES_PROVIDER=package \
       -DgRPC_PROTOBUF_PROVIDER=package \
-      -H. -B.build/grpc
-RUN cmake --build .build/grpc --target install -- -j ${NCPU}
+      -H. -Bcmake-out/grpc
+RUN cmake --build cmake-out/grpc --target install -- -j ${NCPU}
 RUN make install-pkg-config_c install-pkg-config_cxx install-certs
 RUN ldconfig
 
@@ -166,8 +166,8 @@ WORKDIR /var/tmp/build/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
 RUN cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
-      -H. -B.build/googletest
-RUN cmake --build .build/googletest --target install -- -j ${NCPU}
+      -H. -Bcmake-out/googletest
+RUN cmake --build cmake-out/googletest --target install -- -j ${NCPU}
 RUN ldconfig
 
 RUN find /usr/local -type d | xargs chmod 777

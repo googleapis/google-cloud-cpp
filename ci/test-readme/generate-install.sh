@@ -36,9 +36,9 @@ CMake support files, then compiling and installing the libraries
 requires two commands:
 
 ```bash
-cmake -H. -Bbuild-output-for-install \
+cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package
-cmake --build build-output-for-install --target install
+cmake --build cmake-out --target install
 ```
 
 Unfortunately getting your system to this state may require multiple steps,

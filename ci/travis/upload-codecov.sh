@@ -34,7 +34,7 @@ readonly CI_ENV=$(bash <(curl -s https://codecov.io/env))
 sudo docker run $CI_ENV \
     --volume $PWD:/v --workdir /v \
     "${IMAGE}:tip" /bin/bash -c \
-    "/bin/bash <(curl -s https://codecov.io/bash) -g './build-output/ccache/*' >/v/codecov.log 2>&1"
+    "/bin/bash <(curl -s https://codecov.io/bash) -g './cmake-out/ccache/*' >/v/codecov.log 2>&1"
 echo "DONE"
 
 dump_log codecov.log
