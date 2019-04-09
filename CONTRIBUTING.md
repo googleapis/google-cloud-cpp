@@ -170,7 +170,7 @@ If your workstation has multiple compilers (or multiple versions of a compiler)
 installed, you can change the compiler using:
 
 ```console
-# Run this in your build directory, typically google-cloud-cpp/.build
+# Run this in your build directory, typically google-cloud-cpp/cmake-out
 $ CXX=clang++ CC=clang cmake ..
 
 # Then compile and test normally:
@@ -184,7 +184,7 @@ By default, the system is compiled with optimizations on; if you want to compile
 a debug version, use:
 
 ```console
-# Run this in your build directory, typically google-cloud-cpp/.build
+# Run this in your build directory, typically google-cloud-cpp/cmake-out
 $ CXX=clang++ CC=clang cmake -DCMAKE_BUILD_TYPE=Debug ..
 
 # Then compile and test normally:
