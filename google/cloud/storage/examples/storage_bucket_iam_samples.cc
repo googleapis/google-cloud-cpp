@@ -180,6 +180,60 @@ void TestBucketIamPermissions(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, permissions);
 }
 
+void SetBucketPublicIam(google::cloud::storage::Client client, int& argc,
+                        char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"set-bucket-public-iam <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  // [START storage_set_bucket_public_iam]
+  namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name) {
+    StatusOr<google::cloud::IamPolicy> current_policy =
+        client.GetBucketIamPolicy(bucket_name);
+
+    if (!current_policy) {
+      throw std::runtime_error(current_policy.status().message());
+    }
+
+    current_policy->bindings.AddMember("roles/storage.objectViewer",
+                                       "allUsers");
+
+    // Update the policy. Note the use of `gcs::IfMatchEtag` to implement
+    // optimistic concurrency control.
+    StatusOr<google::cloud::IamPolicy> updated_policy =
+        client.SetBucketIamPolicy(bucket_name, *current_policy,
+                                  gcs::IfMatchEtag(current_policy->etag));
+
+    if (!updated_policy) {
+      throw std::runtime_error(current_policy.status().message());
+    }
+
+    auto role = updated_policy->bindings.find("roles/storage.objectViewer");
+    if (role == updated_policy->bindings.end()) {
+      std::cout << "Cannot find 'roles/storage.objectViewer' in the updated"
+                << " policy. This can happen if another application updates"
+                << " the IAM policy at the same time. Please retry the"
+                << " operation.\n";
+      return;
+    }
+    auto member = role->second.find("allUsers");
+    if (member == role->second.end()) {
+      std::cout << "'allUsers' is not a member of the"
+                << " 'roles/storage.objectViewer' role in the updated"
+                << " policy. This can happen if another application updates"
+                << " the IAM policy at the same time. Please retry the"
+                << " operation.\n";
+      return;
+    }
+    std::cout << "IamPolicy successfully updated for bucket " << bucket_name
+              << '\n';
+  }
+  // [END storage_set_bucket_public_iam]
+  (std::move(client), bucket_name);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -201,6 +255,7 @@ int main(int argc, char* argv[]) try {
       {"add-bucket-iam-member", &AddBucketIamMember},
       {"remove-bucket-iam-member", &RemoveBucketIamMember},
       {"test-bucket-iam-permissions", &TestBucketIamPermissions},
+      {"set-bucket-public-iam", &SetBucketPublicIam},
   };
   for (auto&& kv : commands) {
     try {
