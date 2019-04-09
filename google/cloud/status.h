@@ -69,11 +69,6 @@ class Status {
 
   bool ok() const { return code_ == StatusCode::kOk; }
 
-  bool operator==(Status const& rhs) const {
-    return code() == rhs.code() && message() == rhs.message();
-  }
-  bool operator!=(Status const& rhs) const { return !(*this == rhs); }
-
   StatusCode code() const { return code_; }
   std::string const& message() const { return message_; }
 
@@ -84,6 +79,14 @@ class Status {
 
 inline std::ostream& operator<<(std::ostream& os, Status const& rhs) {
   return os << rhs.message() << " [" << StatusCodeToString(rhs.code()) << "]";
+}
+
+inline bool operator==(Status const& lhs, Status const& rhs) {
+  return lhs.code() == rhs.code() && lhs.message() == rhs.message();
+}
+
+inline bool operator!=(Status const& lhs, Status const& rhs) {
+  return !(lhs == rhs);
 }
 
 class RuntimeStatusError : public std::runtime_error {
