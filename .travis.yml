@@ -49,7 +49,7 @@ git:
 install:
   # The git default is to recurse, override it because we do not need to and
   # that saves time.
-  - travis_wait 20 /bin/sh -c "ci/install-retry.sh ci/travis/install-linux.sh >build-output/install-linux.log 2>&1"
+  - travis_wait 20 /bin/sh -c "ci/install-retry.sh ci/travis/install-linux.sh >cmake-out/install-linux.log 2>&1"
 
 after_success:
   - ci/travis/upload-codecov.sh
@@ -65,7 +65,7 @@ cache:
     # Cache the Bazel directories, in builds that do not use Bazel this is
     # empty and trivial to cache.
     - $HOME/.cache/bazel
-    - build-output/ccache
+    - cmake-out/ccache
   timeout: 900
 
 before_cache:

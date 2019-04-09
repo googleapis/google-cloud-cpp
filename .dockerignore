@@ -7,6 +7,7 @@
 _build/
 build-output/
 cmake-build-*/
+cmake-out/
 
 # Skip these directories, the files here are not needed to build any of
 # the Docker images. Furthermore, when creating new Dockerfiles the files
