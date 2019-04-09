@@ -157,6 +157,7 @@ storage_client_srcs = [
     "notification_metadata.cc",
     "oauth2/anonymous_credentials.cc",
     "oauth2/authorized_user_credentials.cc",
+    "oauth2/credentials.cc",
     "oauth2/google_application_default_credentials_file.cc",
     "oauth2/google_credentials.cc",
     "oauth2/refreshing_credentials_wrapper.cc",

@@ -17,6 +17,7 @@
 
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/storage/signed_url_options.h"
 #include "google/cloud/storage/version.h"
 #include <chrono>
 
@@ -48,6 +49,24 @@ class Credentials {
    * header to be used in HTTP requests.
    */
   virtual StatusOr<std::string> AuthorizationHeader() = 0;
+
+  /**
+   * Try to sign @p string_to_sign using @p service_account.
+   *
+   * Some %Credentials types can locally sign a blob, most often just on behalf
+   * of an specific service account. This function returns an error if the
+   * credentials cannot sign the blob at all, or if the service account is a
+   * mismatch.
+   */
+  virtual StatusOr<std::vector<std::uint8_t>> SignBlob(
+      SigningAccount const& service_account,
+      std::string const& string_to_sign) const;
+
+  /// Return the account's email associated with these credentials, if any.
+  virtual std::string AccountEmail() const { return std::string{}; }
+
+  /// Return the account's key_id associated with these credentials, if any.
+  virtual std::string KeyId() const { return std::string{}; }
 };
 
 }  // namespace oauth2

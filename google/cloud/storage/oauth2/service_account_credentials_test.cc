@@ -372,8 +372,8 @@ x-goog-encryption-algorithm:AES256
 x-goog-meta-foo:bar,baz
 /bucket/objectname)""";
 
-  auto actual = credentials.SignString(blob);
-  ASSERT_STATUS_OK(actual.first);
+  auto actual = credentials.SignBlob(SigningAccount(), blob);
+  ASSERT_STATUS_OK(actual);
 
   // To generate the expected output I used:
   //   openssl dgst -sha256 -sign private.pem blob.txt | openssl base64 -A
@@ -388,7 +388,7 @@ x-goog-meta-foo:bar,baz
       "hRW9bSCCV8w1Ex+"
       "QxmB5z7P7zZn2pl7JAcL850emTo8f2tfv1xXWQGhACvIJeMdPmyjbc04Ye4M8Ljpkg3YhE6l"
       "4GwC2MnI8TkuoHe4Bj2MvA8mM8TVwIvpBs6Etsj6Jdaz4rg==";
-  EXPECT_EQ(expected_signed, actual.second);
+  EXPECT_EQ(expected_signed, internal::Base64Encode(*actual));
 }
 
 /// @test Verify that we can get the client id from a service account.
@@ -419,7 +419,7 @@ TEST_F(ServiceAccountCredentialsTest, ClientId) {
       *info);
 
   EXPECT_EQ("foo-email@foo-project.iam.gserviceaccount.com",
-            credentials.client_id());
+            credentials.AccountEmail());
 }
 
 }  // namespace

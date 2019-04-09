@@ -2836,6 +2836,20 @@ class Client {
   Status DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
                           std::string const& file_name);
 
+  /// Determine the email used to sign a blob.
+  std::string SigningEmail(SigningAccount const& signing_account);
+
+  /// Represents the result of signing a blob, including the key used in the
+  /// signature.
+  struct SignBlobResponseRaw {
+    std::string key_id;
+    std::vector<std::uint8_t> signed_blob;
+  };
+
+  /// Sign a blob.
+  StatusOr<SignBlobResponseRaw> SignBlobImpl(
+      SigningAccount const& signing_account, std::string const& string_to_sign);
+
   StatusOr<std::string> SignUrlV2(internal::V2SignUrlRequest const& request);
   StatusOr<std::string> SignUrlV4(internal::V4SignUrlRequest request);
 

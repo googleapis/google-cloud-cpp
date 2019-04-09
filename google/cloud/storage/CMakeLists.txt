@@ -194,6 +194,7 @@ add_library(storage_client
             oauth2/compute_engine_credentials.h
             oauth2/credential_constants.h
             oauth2/credentials.h
+            oauth2/credentials.cc
             oauth2/google_application_default_credentials_file.h
             oauth2/google_application_default_credentials_file.cc
             oauth2/google_credentials.h
