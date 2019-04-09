@@ -104,45 +104,36 @@ run_all_service_account_examples() {
   # Run the examples where the project id is obtained from the environment:
   export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
   run_example ./storage_service_account_samples get-service-account
-  unset GOOGLE_CLOUD_PROJECT
 
-  run_example ./storage_service_account_samples \
-      create-hmac-key-for-project "${PROJECT_ID}" "${SERVICE_ACCOUNT}"
-
-  # Run the examples using the environment to get the project id:
-  export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
-  run_example ./storage_service_account_samples \
-      create-hmac-key "${SERVICE_ACCOUNT}"
+  # Create a key, we need to capture the access id, so this does not run like
+  # a normal example.
+  local access_id
+  access_id=$(./storage_service_account_samples \
+      create-hmac-key-for-project "${PROJECT_ID}" "${SERVICE_ACCOUNT}" | \
+      sed -n 's;.*, access_id=\([^,]*\),.*;\1;p')
   run_example ./storage_service_account_samples \
       list-hmac-keys
   run_example ./storage_service_account_samples \
       list-hmac-keys-with-service-account "${SERVICE_ACCOUNT}"
-  # Use any of the HMAC keys to test `get-hmac-key`.
-  local access_id
-  access_id=$(
-      ./storage_service_account_samples \
-          list-hmac-keys-with-service-account "${SERVICE_ACCOUNT}" | \
-          sed -n 's;^access_id = \(.*\);\1;p' | head -1)
+  run_example ./storage_service_account_samples \
+      deactivate-hmac-key "${access_id}"
+  run_example ./storage_service_account_samples \
+      delete-hmac-key "${access_id}"
+
+  # Create another key to test `update-hmac-key`.
+  access_id=$(./storage_service_account_samples \
+      create-hmac-key "${SERVICE_ACCOUNT}" | \
+      sed -n 's;.*, access_id=\([^,]*\),.*;\1;p')
   run_example ./storage_service_account_samples \
       get-hmac-key "${access_id}"
   run_example ./storage_service_account_samples \
       update-hmac-key "${access_id}" "INACTIVE"
   run_example ./storage_service_account_samples \
-      update-hmac-key "${access_id}" "ACTIVE"
+      activate-hmac-key "${access_id}"
   run_example ./storage_service_account_samples \
       deactivate-hmac-key "${access_id}"
   run_example ./storage_service_account_samples \
-      activate-hmac-key "${access_id}"
-  # Parse the output to delete all the keys created in this service account.
-  for access_id in $(
-      ./storage_service_account_samples \
-          list-hmac-keys-with-service-account "${SERVICE_ACCOUNT}" | \
-          sed -n 's;^access_id = \(.*\);\1;p'); do
-    run_example ./storage_service_account_samples \
-        update-hmac-key "${access_id}" "INACTIVE"
-    run_example ./storage_service_account_samples \
-        delete-hmac-key "${access_id}"
-  done
+      delete-hmac-key "${access_id}"
 
   unset GOOGLE_CLOUD_PROJECT
 }
