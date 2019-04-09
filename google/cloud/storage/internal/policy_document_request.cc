@@ -34,7 +34,8 @@ std::string PolicyDocumentRequest::StringToSign() const {
   for (auto const& kv : document.conditions) {
     std::vector<std::string> elements = kv.elements();
 
-    /** If the elements is of size 2, we've encountered an exact match in
+    /**
+     * If the elements is of size 2, we've encountered an exact match in
      * object form.  So we create a json object using the first element as the
      * key and the second element as the value.
      */
@@ -43,7 +44,10 @@ std::string PolicyDocumentRequest::StringToSign() const {
       object[elements.at(0)] = elements.at(1);
       j["conditions"].push_back(object);
     } else {
-      j["conditions"].push_back(elements);
+      if (elements.at(0) == "content-length-range") {
+        j["conditions"].push_back({elements.at(0), std::stol(elements.at(1)),
+                                   std::stol(elements.at(2))});
+      }
     }
   }
 
