@@ -17,7 +17,7 @@
 //! [bigtable includes] [START bigtable_hw_imports]
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
-//! [bigtable includes] [START bigtable_hw_imports]
+//! [bigtable includes] [END bigtable_hw_imports]
 
 int main(int argc, char* argv[]) try {
   if (argc != 4) {
