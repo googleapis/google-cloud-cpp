@@ -331,6 +331,12 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SignedUrlTimestamp.html">SignedUrlTimestamp</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the timestamp duration for a V4 signed URL.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SignedUrlTimestamp.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SigningAccount.html">SigningAccount</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify the service account used to sign a blob.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SigningAccount.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SigningAccountDelegates.html">SigningAccountDelegates</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify the sequence of delegates used to sign a blob.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SigningAccountDelegates.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SourceEncryptionKey.html">SourceEncryptionKey</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An optional parameter to set the Customer-Supplied Encryption key for rewrite source object.  <a href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SourceEncryptionKey.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -506,6 +512,42 @@ Functions</h2></td></tr>
 <tr class="memitem:a1f1791cc1cf514e25413639371c7a410"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a1f1791cc1cf514e25413639371c7a410">version_string</a> ()</td></tr>
 <tr class="memdesc:a1f1791cc1cf514e25413639371c7a410"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the version as a string, in MAJOR.MINOR.PATCH+gitrev format.  <a href="#a1f1791cc1cf514e25413639371c7a410">More...</a><br /></td></tr>
 <tr class="separator:a1f1791cc1cf514e25413639371c7a410"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca1486b27694404d1667d43a68e030b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddExtensionHeaderOption.html">AddExtensionHeaderOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aca1486b27694404d1667d43a68e030b0">AddExtensionHeader</a> (std::string header, std::string value)</td></tr>
+<tr class="separator:aca1486b27694404d1667d43a68e030b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfec87e91c994bb6e515b34dbb0ee2b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html">AddQueryParameterOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#abfec87e91c994bb6e515b34dbb0ee2b5">WithGeneration</a> (std::uint64_t generation)</td></tr>
+<tr class="separator:abfec87e91c994bb6e515b34dbb0ee2b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaba7aa9a3b47be6e2f3b40a90e45bf8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html">AddQueryParameterOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aaba7aa9a3b47be6e2f3b40a90e45bf8f">WithGenerationMarker</a> (std::uint64_t generation)</td></tr>
+<tr class="separator:aaba7aa9a3b47be6e2f3b40a90e45bf8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebb1dbcddbc19050f66ec120967863e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html">AddQueryParameterOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aebb1dbcddbc19050f66ec120967863e6">WithUserProject</a> (std::string user_project)</td></tr>
+<tr class="separator:aebb1dbcddbc19050f66ec120967863e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fa3e49f6009f8dfdf2ebc65ae3470d2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html">AddQueryParameterOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a6fa3e49f6009f8dfdf2ebc65ae3470d2">WithMarker</a> (std::string marker)</td></tr>
+<tr class="separator:a6fa3e49f6009f8dfdf2ebc65ae3470d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a088399b5d12206cf7bee60c3fe97b490"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html">AddQueryParameterOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a088399b5d12206cf7bee60c3fe97b490">WithResponseContentDisposition</a> (std::string disposition)</td></tr>
+<tr class="separator:a088399b5d12206cf7bee60c3fe97b490"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33ce20d9609b7bc00655a078f99b30bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html">AddQueryParameterOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a33ce20d9609b7bc00655a078f99b30bd">WithResponseContentType</a> (std::string const &amp;type)</td></tr>
+<tr class="separator:a33ce20d9609b7bc00655a078f99b30bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a833874f3ecc9da491459eb69f208b324"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a833874f3ecc9da491459eb69f208b324">WithAcl</a> ()</td></tr>
+<tr class="separator:a833874f3ecc9da491459eb69f208b324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9be0682b16170f98450ef1254c97d280"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a9be0682b16170f98450ef1254c97d280">WithBilling</a> ()</td></tr>
+<tr class="separator:a9be0682b16170f98450ef1254c97d280"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04307527695477eae5221c998a966bb3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a04307527695477eae5221c998a966bb3">WithCompose</a> ()</td></tr>
+<tr class="separator:a04307527695477eae5221c998a966bb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0373b2537cf47d2a053bbf380e0abcc8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a0373b2537cf47d2a053bbf380e0abcc8">WithCors</a> ()</td></tr>
+<tr class="separator:a0373b2537cf47d2a053bbf380e0abcc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac985a3085d72f7dba07459ad74085d09"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#ac985a3085d72f7dba07459ad74085d09">WithEncryption</a> ()</td></tr>
+<tr class="separator:ac985a3085d72f7dba07459ad74085d09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e03ac79a2c1d1e3b4ffda200993bc1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a5e03ac79a2c1d1e3b4ffda200993bc1c">WithEncryptionConfig</a> ()</td></tr>
+<tr class="separator:a5e03ac79a2c1d1e3b4ffda200993bc1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cb2c0f0735a411ff6bbe4aac4a9b06b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a5cb2c0f0735a411ff6bbe4aac4a9b06b">WithLifecycle</a> ()</td></tr>
+<tr class="separator:a5cb2c0f0735a411ff6bbe4aac4a9b06b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa09370ca00f3f77307a6065a4df80ef6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aa09370ca00f3f77307a6065a4df80ef6">WithLocation</a> ()</td></tr>
+<tr class="separator:aa09370ca00f3f77307a6065a4df80ef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2afbd229dacecc507988190f4f7af47"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aa2afbd229dacecc507988190f4f7af47">WithLogging</a> ()</td></tr>
+<tr class="separator:aa2afbd229dacecc507988190f4f7af47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6eace4d8df2bab5e06f79fb88724d193"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a6eace4d8df2bab5e06f79fb88724d193">WithStorageClass</a> ()</td></tr>
+<tr class="separator:a6eace4d8df2bab5e06f79fb88724d193"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30af03ecbfda905fd2f32d08a85c3a13"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a30af03ecbfda905fd2f32d08a85c3a13">WithTagging</a> ()</td></tr>
+<tr class="separator:a30af03ecbfda905fd2f32d08a85c3a13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b814dbb970f58eeb290c891333bac3c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a0b814dbb970f58eeb290c891333bac3c">ComputeMD5Hash</a> (std::string const  &amp;payload)</td></tr>
 <tr class="memdesc:a0b814dbb970f58eeb290c891333bac3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the MD5 Hash of a string in the format preferred by GCS.  <a href="#a0b814dbb970f58eeb290c891333bac3c">More...</a><br /></td></tr>
 <tr class="separator:a0b814dbb970f58eeb290c891333bac3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -640,42 +682,6 @@ Functions</h2></td></tr>
 <tr class="separator:abca1cce326f7aa9912580588c4517e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb33967b82e40901cdd891fe615372fb"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#acb33967b82e40901cdd891fe615372fb">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ReadRangeData.html">ReadRangeData</a> const &amp;rhs)</td></tr>
 <tr class="separator:acb33967b82e40901cdd891fe615372fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca1486b27694404d1667d43a68e030b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddExtensionHeaderOption.html">AddExtensionHeaderOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aca1486b27694404d1667d43a68e030b0">AddExtensionHeader</a> (std::string header, std::string value)</td></tr>
-<tr class="separator:aca1486b27694404d1667d43a68e030b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfec87e91c994bb6e515b34dbb0ee2b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html">AddQueryParameterOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#abfec87e91c994bb6e515b34dbb0ee2b5">WithGeneration</a> (std::uint64_t generation)</td></tr>
-<tr class="separator:abfec87e91c994bb6e515b34dbb0ee2b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaba7aa9a3b47be6e2f3b40a90e45bf8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html">AddQueryParameterOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aaba7aa9a3b47be6e2f3b40a90e45bf8f">WithGenerationMarker</a> (std::uint64_t generation)</td></tr>
-<tr class="separator:aaba7aa9a3b47be6e2f3b40a90e45bf8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebb1dbcddbc19050f66ec120967863e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html">AddQueryParameterOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aebb1dbcddbc19050f66ec120967863e6">WithUserProject</a> (std::string user_project)</td></tr>
-<tr class="separator:aebb1dbcddbc19050f66ec120967863e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fa3e49f6009f8dfdf2ebc65ae3470d2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html">AddQueryParameterOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a6fa3e49f6009f8dfdf2ebc65ae3470d2">WithMarker</a> (std::string marker)</td></tr>
-<tr class="separator:a6fa3e49f6009f8dfdf2ebc65ae3470d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a088399b5d12206cf7bee60c3fe97b490"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html">AddQueryParameterOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a088399b5d12206cf7bee60c3fe97b490">WithResponseContentDisposition</a> (std::string disposition)</td></tr>
-<tr class="separator:a088399b5d12206cf7bee60c3fe97b490"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33ce20d9609b7bc00655a078f99b30bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html">AddQueryParameterOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a33ce20d9609b7bc00655a078f99b30bd">WithResponseContentType</a> (std::string const &amp;type)</td></tr>
-<tr class="separator:a33ce20d9609b7bc00655a078f99b30bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a833874f3ecc9da491459eb69f208b324"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a833874f3ecc9da491459eb69f208b324">WithAcl</a> ()</td></tr>
-<tr class="separator:a833874f3ecc9da491459eb69f208b324"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9be0682b16170f98450ef1254c97d280"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a9be0682b16170f98450ef1254c97d280">WithBilling</a> ()</td></tr>
-<tr class="separator:a9be0682b16170f98450ef1254c97d280"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04307527695477eae5221c998a966bb3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a04307527695477eae5221c998a966bb3">WithCompose</a> ()</td></tr>
-<tr class="separator:a04307527695477eae5221c998a966bb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0373b2537cf47d2a053bbf380e0abcc8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a0373b2537cf47d2a053bbf380e0abcc8">WithCors</a> ()</td></tr>
-<tr class="separator:a0373b2537cf47d2a053bbf380e0abcc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac985a3085d72f7dba07459ad74085d09"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#ac985a3085d72f7dba07459ad74085d09">WithEncryption</a> ()</td></tr>
-<tr class="separator:ac985a3085d72f7dba07459ad74085d09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e03ac79a2c1d1e3b4ffda200993bc1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a5e03ac79a2c1d1e3b4ffda200993bc1c">WithEncryptionConfig</a> ()</td></tr>
-<tr class="separator:a5e03ac79a2c1d1e3b4ffda200993bc1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cb2c0f0735a411ff6bbe4aac4a9b06b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a5cb2c0f0735a411ff6bbe4aac4a9b06b">WithLifecycle</a> ()</td></tr>
-<tr class="separator:a5cb2c0f0735a411ff6bbe4aac4a9b06b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa09370ca00f3f77307a6065a4df80ef6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aa09370ca00f3f77307a6065a4df80ef6">WithLocation</a> ()</td></tr>
-<tr class="separator:aa09370ca00f3f77307a6065a4df80ef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2afbd229dacecc507988190f4f7af47"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#aa2afbd229dacecc507988190f4f7af47">WithLogging</a> ()</td></tr>
-<tr class="separator:aa2afbd229dacecc507988190f4f7af47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6eace4d8df2bab5e06f79fb88724d193"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a6eace4d8df2bab5e06f79fb88724d193">WithStorageClass</a> ()</td></tr>
-<tr class="separator:a6eace4d8df2bab5e06f79fb88724d193"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30af03ecbfda905fd2f32d08a85c3a13"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SubResourceOption.html">SubResourceOption</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a30af03ecbfda905fd2f32d08a85c3a13">WithTagging</a> ()</td></tr>
-<tr class="separator:a30af03ecbfda905fd2f32d08a85c3a13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Comparison operators for CorsEntry.</div></td></tr>
 <tr class="memitem:a392fb8bf4acb46a45dd5165e7a40b2ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a392fb8bf4acb46a45dd5165e7a40b2ee">operator==</a> (<a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html">CorsEntry</a> const &amp;lhs, <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1CorsEntry.html">CorsEntry</a> const &amp;rhs)</td></tr>
 <tr class="separator:a392fb8bf4acb46a45dd5165e7a40b2ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -957,7 +963,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00050">50</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00051">51</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
@@ -6067,7 +6073,7 @@ template&lt;typename Generator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00107">107</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00108">108</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
@@ -6094,7 +6100,7 @@ template&lt;typename Generator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00109">109</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00110">110</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
@@ -6121,7 +6127,7 @@ template&lt;typename Generator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00111">111</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00112">112</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
@@ -6148,7 +6154,7 @@ template&lt;typename Generator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00113">113</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00114">114</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
@@ -6175,7 +6181,7 @@ template&lt;typename Generator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00115">115</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00116">116</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
@@ -6202,7 +6208,7 @@ template&lt;typename Generator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00119">119</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00120">120</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
@@ -6230,7 +6236,7 @@ template&lt;typename Generator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00070">70</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00071">71</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
@@ -6258,7 +6264,7 @@ template&lt;typename Generator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00074">74</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00075">75</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
@@ -6285,7 +6291,7 @@ template&lt;typename Generator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00123">123</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00124">124</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
@@ -6312,7 +6318,7 @@ template&lt;typename Generator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00127">127</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00128">128</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
@@ -6339,7 +6345,7 @@ template&lt;typename Generator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00131">131</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00132">132</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
@@ -6367,7 +6373,7 @@ template&lt;typename Generator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00083">83</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00084">84</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
@@ -6395,7 +6401,7 @@ template&lt;typename Generator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00087">87</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00088">88</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
@@ -6423,7 +6429,7 @@ template&lt;typename Generator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00093">93</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00094">94</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
@@ -6450,7 +6456,7 @@ template&lt;typename Generator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00133">133</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00134">134</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
@@ -6477,7 +6483,7 @@ template&lt;typename Generator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00137">137</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00138">138</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
@@ -6505,7 +6511,7 @@ template&lt;typename Generator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00079">79</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signed__url__options_8h_source.html#l00080">80</a> of file <a class="el" href="signed__url__options_8h_source.html">signed_url_options.h</a>.</p>
 
 </div>
 </div>
