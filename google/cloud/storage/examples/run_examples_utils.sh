@@ -1107,6 +1107,8 @@ run_all_bucket_iam_examples() {
       "${bucket_name}" "roles/storage.objectViewer" "allAuthenticatedUsers"
   run_example ./storage_bucket_iam_samples test-bucket-iam-permissions \
       "${bucket_name}" "storage.objects.list" "storage.objects.delete"
+  run_example ./storage_bucket_iam_samples set-bucket-public-iam \
+      "${bucket_name}"
 
   run_example ./storage_bucket_samples delete-bucket \
       "${bucket_name}"
