@@ -453,6 +453,14 @@ TEST_P(CurlClientTest, CreateHmacKeyRequest) {
   CheckStatus(actual);
 }
 
+TEST_P(CurlClientTest, SignBlob) {
+  auto actual =
+      client_
+          ->SignBlob(SignBlobRequest("test-service-account", "test-blob", {}))
+          .status();
+  CheckStatus(actual);
+}
+
 TEST_P(CurlClientTest, ListNotifications) {
   auto actual =
       client_->ListNotifications(ListNotificationsRequest("bkt")).status();

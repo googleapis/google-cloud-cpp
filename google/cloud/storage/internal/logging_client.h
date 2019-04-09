@@ -125,6 +125,7 @@ class LoggingClient : public RawClient {
   StatusOr<EmptyResponse> DeleteHmacKey(DeleteHmacKeyRequest const&) override;
   StatusOr<HmacKeyMetadata> GetHmacKey(GetHmacKeyRequest const&) override;
   StatusOr<HmacKeyMetadata> UpdateHmacKey(UpdateHmacKeyRequest const&) override;
+  StatusOr<SignBlobResponse> SignBlob(SignBlobRequest const&) override;
 
   StatusOr<ListNotificationsResponse> ListNotifications(
       ListNotificationsRequest const&) override;

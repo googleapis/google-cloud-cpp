@@ -72,6 +72,7 @@ StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions() {
 ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials)
     : credentials_(std::move(credentials)),
       endpoint_("https://www.googleapis.com"),
+      iam_endpoint_("https://iamcredentials.googleapis.com/v1"),
       version_("v1"),
       enable_http_tracing_(false),
       enable_raw_client_tracing_(false),
@@ -84,6 +85,7 @@ ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials)
       google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
   if (emulator.has_value()) {
     endpoint_ = *emulator;
+    iam_endpoint_ = *emulator + "/iamapi";
   }
   SetupFromEnvironment();
 }

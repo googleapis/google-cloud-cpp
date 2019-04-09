@@ -163,6 +163,7 @@ class CurlClient : public RawClient,
   StatusOr<EmptyResponse> DeleteHmacKey(DeleteHmacKeyRequest const&) override;
   StatusOr<HmacKeyMetadata> GetHmacKey(GetHmacKeyRequest const&) override;
   StatusOr<HmacKeyMetadata> UpdateHmacKey(UpdateHmacKeyRequest const&) override;
+  StatusOr<SignBlobResponse> SignBlob(SignBlobRequest const&) override;
 
   StatusOr<ListNotificationsResponse> ListNotifications(
       ListNotificationsRequest const&) override;
@@ -220,6 +221,7 @@ class CurlClient : public RawClient,
   std::string upload_endpoint_;
   std::string xml_upload_endpoint_;
   std::string xml_download_endpoint_;
+  std::string iam_endpoint_;
 
   std::mutex mu_;
   CurlShare share_ /* GUARDED_BY(mu_) */;

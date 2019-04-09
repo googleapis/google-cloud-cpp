@@ -15,10 +15,10 @@
 """A test bench for the Google Cloud Storage C++ Client Library."""
 
 import argparse
-import base64
 import error_response
 import flask
 import gcs_bucket
+import gcs_iam
 import gcs_object
 import gcs_project
 import httpbin
@@ -750,6 +750,10 @@ def xmlapi_put_object(bucket_name, object_name):
 (PROJECTS_HANDLER_PATH, projects_app) = gcs_project.get_projects_app()
 
 
+# Define the WSGI application to handle IAM requests
+(IAM_HANDLER_PATH, iam_app) = gcs_iam.get_iam_app()
+
+
 application = wsgi.DispatcherMiddleware(
     root, {
         '/httpbin': httpbin.app,
@@ -757,6 +761,7 @@ application = wsgi.DispatcherMiddleware(
         UPLOAD_HANDLER_PATH: upload,
         XMLAPI_HANDLER_PATH: xmlapi,
         PROJECTS_HANDLER_PATH: projects_app,
+        IAM_HANDLER_PATH: iam_app,
     })
 
 

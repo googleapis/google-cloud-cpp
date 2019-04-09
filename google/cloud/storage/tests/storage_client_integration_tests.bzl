@@ -23,6 +23,7 @@ storage_client_integration_tests = [
     "curl_request_integration_test.cc",
     "curl_resumable_streambuf_integration_test.cc",
     "curl_resumable_upload_session_integration_test.cc",
+    "curl_sign_blob_integration_test.cc",
     "object_checksum_integration_test.cc",
     "object_hash_integration_test.cc",
     "object_insert_integration_test.cc",

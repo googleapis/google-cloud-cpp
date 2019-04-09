@@ -295,12 +295,14 @@ CurlClient::CurlClient(ClientOptions options)
   storage_endpoint_ = options_.endpoint() + "/storage/" + options_.version();
   upload_endpoint_ =
       options_.endpoint() + "/upload/storage/" + options_.version();
+  iam_endpoint_ = options_.iam_endpoint();
 
   auto endpoint =
       google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
   if (endpoint.has_value()) {
     xml_upload_endpoint_ = options_.endpoint() + "/xmlapi";
     xml_download_endpoint_ = options_.endpoint() + "/xmlapi";
+    iam_endpoint_ = options_.endpoint() + "/iamapi";
   } else {
     xml_upload_endpoint_ = "https://storage-upload.googleapis.com";
     xml_download_endpoint_ = "https://storage-download.googleapis.com";
@@ -1114,6 +1116,25 @@ StatusOr<HmacKeyMetadata> CurlClient::UpdateHmacKey(
   }
   builder.AddHeader("Content-Type: application/json");
   return CheckedFromString<HmacKeyMetadataParser>(
+      builder.BuildRequest().MakeRequest(payload.dump()));
+}
+
+StatusOr<SignBlobResponse> CurlClient::SignBlob(
+    SignBlobRequest const& request) {
+  CurlRequestBuilder builder(iam_endpoint_ + "/projects/-/serviceAccounts/" +
+                                 request.service_account() + ":signBlob",
+                             storage_factory_);
+  auto status = SetupBuilderCommon(builder, "POST");
+  if (!status.ok()) {
+    return status;
+  }
+  nl::json payload;
+  payload["payload"] = request.base64_encoded_blob();
+  if (!request.delegates().empty()) {
+    payload["delegates"] = request.delegates();
+  }
+  builder.AddHeader("Content-Type: application/json");
+  return ParseFromHttpResponse<SignBlobResponse>(
       builder.BuildRequest().MakeRequest(payload.dump()));
 }
 
