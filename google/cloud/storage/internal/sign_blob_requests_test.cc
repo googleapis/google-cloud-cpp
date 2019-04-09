@@ -29,12 +29,12 @@ TEST(SignBlobRequestsTest, IOStream) {
 
   std::ostringstream os;
   os << request;
-  auto str = os.str();
-  EXPECT_THAT(str, HasSubstr("SignBlobRequest"));
-  EXPECT_THAT(str, HasSubstr("service_account=test-sa1"));
-  EXPECT_THAT(str, HasSubstr("base64_encoded_blob=blob-to-sign"));
-  EXPECT_THAT(str, HasSubstr("test-sa2"));
-  EXPECT_THAT(str, HasSubstr("test-sa3"));
+  auto actual = std::move(os).str();
+  EXPECT_THAT(actual, HasSubstr("SignBlobRequest"));
+  EXPECT_THAT(actual, HasSubstr("service_account=test-sa1"));
+  EXPECT_THAT(actual, HasSubstr("base64_encoded_blob=blob-to-sign"));
+  EXPECT_THAT(actual, HasSubstr("test-sa2"));
+  EXPECT_THAT(actual, HasSubstr("test-sa3"));
 }
 
 TEST(SignBlobRequestsTest, ResponseParse) {
