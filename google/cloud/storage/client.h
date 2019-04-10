@@ -2471,6 +2471,7 @@ class Client {
    *     requests that only affect a bucket.
    * @param options a list of optional parameters for the signed URL, this
    *     include: `ExpirationTime`, `MD5HashValue`, `ContentType`,
+   *     `SigningAccount`, `SigningAccountDeletegates`,
    *     `AddExtensionHeaderOption`, `AddQueryParameterOption`, and
    *     `AddSubResourceOption`. Note that only the last `AddSubResourceOption`
    *     option has any effect.
@@ -2533,9 +2534,10 @@ class Client {
    *     requests that only affect a bucket.
    * @param options a list of optional parameters for the signed URL, this
    *     include: `SignedUrlTimestamp`, `SignedUrlDuration`, `MD5HashValue`,
-   *     `ContentType`, `AddExtensionHeaderOption`, `AddQueryParameterOption`,
-   *     and `AddSubResourceOption`. Note that only the last
-   *     `AddSubResourceOption` option has any effect.
+   *     `ContentType`, `SigningAccount`, `SigningAccountDeletegates`,
+   *     `AddExtensionHeaderOption`, `AddQueryParameterOption`, and
+   *     `AddSubResourceOption`. Note that only the last `AddSubResourceOption`
+   *     option has any effect.
    *
    * @par Helper Functions
    *
@@ -2591,12 +2593,8 @@ class Client {
    * which is a POST request to GCS.
    *
    * @param document the policy document.
-   *
-   * @par Helper Functions
-   *
-   * The following functions create a `PolicyDocumentCondition` with less
-   * opportunities for typos: `StartsWith()`, `ExactMatchObject()`,
-   * `ExactMatch()`, `ContentLengthRange()`.
+   * @param options a list of optional parameters, this includes:
+   *      `SigningAccount`, and `SigningAccountDelegates`.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc create signed policy document
@@ -2608,9 +2606,11 @@ class Client {
    * @see https://cloud.google.com/storage/docs/xml-api/overview for a detailed
    *     description of the XML API.
    */
+  template <typename... Options>
   StatusOr<PolicyDocumentResult> CreateSignedPolicyDocument(
-      PolicyDocument document) {
-    internal::PolicyDocumentRequest request(document);
+      PolicyDocument document, Options&&... options) {
+    internal::PolicyDocumentRequest request(std::move(document));
+    request.set_multiple_options(std::forward<Options>(options)...);
     return SignPolicyDocument(request);
   }
 

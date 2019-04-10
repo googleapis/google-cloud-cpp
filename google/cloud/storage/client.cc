@@ -244,12 +244,23 @@ StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
   if (signed_blob) {
     return SignBlobResponseRaw{credentials->KeyId(), *std::move(signed_blob)};
   }
-  return signed_blob.status();
+
+  // If signing locally fails that may be because the credentials do not
+  // support signing, or because the signing account is different than the
+  // credentials account. In either case, try to sign using the API.
+  internal::SignBlobRequest sign_request(
+      signing_account_email, internal::Base64Encode(string_to_sign), {});
+  auto response = raw_client()->SignBlob(sign_request);
+  if (!response) {
+    return response.status();
+  }
+  return SignBlobResponseRaw{response->key_id,
+                             internal::Base64Decode(response->signed_blob)};
 }
 
 StatusOr<std::string> Client::SignUrlV2(
     internal::V2SignUrlRequest const& request) {
-  SigningAccount signing_account;  // TODO(#1595) - = request.signing_account()
+  SigningAccount const& signing_account = request.signing_account();
   auto signed_blob = SignBlobImpl(signing_account, request.StringToSign());
   if (!signed_blob) {
     return signed_blob.status();
@@ -273,7 +284,7 @@ StatusOr<std::string> Client::SignUrlV2(
 
 StatusOr<std::string> Client::SignUrlV4(internal::V4SignUrlRequest request) {
   request.AddMissingRequiredHeaders();
-  SigningAccount signing_account;  // TODO(#1595) - = request.signing_account()
+  SigningAccount const& signing_account = request.signing_account();
   auto signing_email = SigningEmail(signing_account);
 
   auto string_to_sign = request.StringToSign(signing_email);
@@ -297,7 +308,7 @@ StatusOr<std::string> Client::SignUrlV4(internal::V4SignUrlRequest request) {
 
 StatusOr<PolicyDocumentResult> Client::SignPolicyDocument(
     internal::PolicyDocumentRequest const& request) {
-  SigningAccount signing_account;  // TODO(#1595) - = request.signing_account()
+  SigningAccount const& signing_account = request.signing_account();
   auto signing_email = SigningEmail(signing_account);
 
   auto string_to_sign = request.StringToSign();

@@ -17,9 +17,12 @@
 #include "google/cloud/storage/internal/format_time_point.h"
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
 #include "google/cloud/testing_util/init_google_mock.h"
+
 #include <gmock/gmock.h>
 
 namespace google {
@@ -28,7 +31,13 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::storage::testing::canonical_errors::PermanentError;
+using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::testing::_;
 using ::testing::HasSubstr;
+using ::testing::Invoke;
+using ::testing::Return;
+using ::testing::ReturnRef;
 
 constexpr char kJsonKeyfileContents[] = R"""({
       "type": "service_account",
@@ -42,6 +51,29 @@ constexpr char kJsonKeyfileContents[] = R"""({
       "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
       "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
 })""";
+
+/**
+ * Test the CreateV*SignUrl functions in storage::Client.
+ */
+class CreateSignedPolicyDocTest : public ::testing::Test {
+ protected:
+  void SetUp() override {
+    mock = std::make_shared<testing::MockClient>();
+    EXPECT_CALL(*mock, client_options())
+        .WillRepeatedly(ReturnRef(client_options));
+    client.reset(
+        new Client{std::static_pointer_cast<internal::RawClient>(mock)});
+  }
+  void TearDown() override {
+    client.reset();
+    mock.reset();
+  }
+
+  std::shared_ptr<testing::MockClient> mock;
+  std::unique_ptr<Client> client;
+  ClientOptions client_options =
+      ClientOptions(oauth2::CreateAnonymousCredentials());
+};
 
 PolicyDocument CreatePolicyDocumentForTest() {
   PolicyDocument result;
@@ -59,7 +91,7 @@ PolicyDocument CreatePolicyDocumentForTest() {
   return result;
 }
 
-TEST(SignedPolicyDocumentIntegrationTest, Sign) {
+TEST_F(CreateSignedPolicyDocTest, Sign) {
   auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
       kJsonKeyfileContents);
   ASSERT_STATUS_OK(creds);
@@ -91,13 +123,50 @@ TEST(SignedPolicyDocumentIntegrationTest, Sign) {
       actual->signature);
 }
 
-TEST(SignedUrlIntegrationTest, SignFailure) {
-  Client client(google::cloud::storage::oauth2::CreateAnonymousCredentials());
+/// @test Verify that CreateSignedPolicyDocument() uses the SignBlob API when
+/// needed.
+TEST_F(CreateSignedPolicyDocTest, SignRemote) {
+  // Use `echo -n test-signed-blob | openssl base64 -e` to create the magic
+  // string.
+  std::string expected_signed_blob = "dGVzdC1zaWduZWQtYmxvYg==";
+
+  EXPECT_CALL(*mock, SignBlob(_))
+      .WillOnce(Return(StatusOr<internal::SignBlobResponse>(TransientError())))
+      .WillOnce(
+          Invoke([&expected_signed_blob](internal::SignBlobRequest const& r) {
+            return make_status_or(internal::SignBlobResponse{
+                "test-key-id", expected_signed_blob});
+          }));
+  Client client{std::static_pointer_cast<internal::RawClient>(mock)};
 
   auto actual =
       client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
-  EXPECT_FALSE(actual.ok()) << "value=" << actual.value();
-  EXPECT_EQ(StatusCode::kUnimplemented, actual.status().code());
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(actual->signature, expected_signed_blob);
+}
+
+/// @test Verify that CreateSignedPolicyDocument() + SignBlob() respects retry
+/// policies.
+TEST_F(CreateSignedPolicyDocTest, V2SignTooManyFailures) {
+  testing::TooManyFailuresStatusTest<internal::SignBlobResponse>(
+      mock, EXPECT_CALL(*mock, SignBlob(_)),
+      [](Client& client) {
+        return client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest())
+            .status();
+      },
+      "SignBlob");
+}
+
+/// @test Verify that CreateSignedPolicyDocument() + SignBlob() respects retry
+/// policies.
+TEST_F(CreateSignedPolicyDocTest, V2SignPermanentFailure) {
+  testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
+      *client, EXPECT_CALL(*mock, SignBlob(_)),
+      [](Client& client) {
+        return client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest())
+            .status();
+      },
+      "SignBlob");
 }
 
 }  // namespace

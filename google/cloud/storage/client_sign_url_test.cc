@@ -16,6 +16,9 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
 #include "google/cloud/testing_util/init_google_mock.h"
@@ -27,7 +30,13 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::storage::testing::canonical_errors::PermanentError;
+using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::testing::_;
 using ::testing::HasSubstr;
+using ::testing::Invoke;
+using ::testing::Return;
+using ::testing::ReturnRef;
 
 constexpr char kJsonKeyfileContents[] = R"""({
       "type": "service_account",
@@ -42,7 +51,29 @@ constexpr char kJsonKeyfileContents[] = R"""({
       "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
 })""";
 
-TEST(SignedUrlIntegrationTest, Sign) {
+/**
+ * Test the CreateV*SignUrl functions in storage::Client.
+ */
+class CreateSignedUrlTest : public ::testing::Test {
+ protected:
+  void SetUp() override {
+    mock = std::make_shared<testing::MockClient>();
+    EXPECT_CALL(*mock, client_options())
+        .WillRepeatedly(ReturnRef(client_options));
+    client.reset(new Client{std::shared_ptr<internal::RawClient>(mock)});
+  }
+  void TearDown() override {
+    client.reset();
+    mock.reset();
+  }
+
+  std::shared_ptr<testing::MockClient> mock;
+  std::unique_ptr<Client> client;
+  ClientOptions client_options =
+      ClientOptions(oauth2::CreateAnonymousCredentials());
+};
+
+TEST_F(CreateSignedUrlTest, V2Sign) {
   auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
       kJsonKeyfileContents);
   ASSERT_STATUS_OK(creds);
@@ -55,7 +86,7 @@ TEST(SignedUrlIntegrationTest, Sign) {
   EXPECT_THAT(*actual, HasSubstr("test-object"));
 }
 
-TEST(SignedUrlIntegrationTest, BucketOnly) {
+TEST_F(CreateSignedUrlTest, V2SignBucketOnly) {
   auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
       kJsonKeyfileContents);
   ASSERT_STATUS_OK(creds);
@@ -67,7 +98,7 @@ TEST(SignedUrlIntegrationTest, BucketOnly) {
   EXPECT_THAT(*actual, HasSubstr("test-bucket?GoogleAccessId="));
 }
 
-TEST(SignedUrlIntegrationTest, SignEscape) {
+TEST_F(CreateSignedUrlTest, V2SignEscape) {
   auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
       kJsonKeyfileContents);
   ASSERT_STATUS_OK(creds);
@@ -80,12 +111,48 @@ TEST(SignedUrlIntegrationTest, SignEscape) {
   EXPECT_THAT(*actual, HasSubstr("test%2Bobject"));
 }
 
-TEST(SignedUrlIntegrationTest, SignFailure) {
-  Client client(google::cloud::storage::oauth2::CreateAnonymousCredentials());
+/// @test Verify that CreateV2SignedUrl() uses the SignBlob API when needed.
+TEST_F(CreateSignedUrlTest, V2SignRemote) {
+  // Use `echo -n test-signed-blob | openssl base64 -e` to create the magic
+  // string.
+  std::string expected_signed_blob = "dGVzdC1zaWduZWQtYmxvYg==";
+  std::string expected_signed_blob_safe = "dGVzdC1zaWduZWQtYmxvYg%3D%3D";
 
-  auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "test-object");
-  EXPECT_FALSE(actual.ok()) << "value=" << actual.value();
-  EXPECT_EQ(StatusCode::kUnimplemented, actual.status().code());
+  EXPECT_CALL(*mock, SignBlob(_))
+      .WillOnce(Return(StatusOr<internal::SignBlobResponse>(TransientError())))
+      .WillOnce(
+          Invoke([&expected_signed_blob](internal::SignBlobRequest const& r) {
+            return make_status_or(internal::SignBlobResponse{
+                "test-key-id", expected_signed_blob});
+          }));
+  Client client{std::shared_ptr<internal::RawClient>(mock)};
+
+  StatusOr<std::string> actual =
+      client.CreateV2SignedUrl("GET", "test-bucket", "test-object");
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(*actual, HasSubstr(expected_signed_blob_safe));
+}
+
+/// @test Verify that CreateV2SignedUrl() + SignBlob() respects retry policies.
+TEST_F(CreateSignedUrlTest, V2SignTooManyFailures) {
+  testing::TooManyFailuresStatusTest<internal::SignBlobResponse>(
+      mock, EXPECT_CALL(*mock, SignBlob(_)),
+      [](Client& client) {
+        return client.CreateV2SignedUrl("GET", "test-bucket", "test-object")
+            .status();
+      },
+      "SignBlob");
+}
+
+/// @test Verify that CreateV2SignedUrl() + SignBlob() respects retry policies.
+TEST_F(CreateSignedUrlTest, V2SignPermanentFailure) {
+  testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
+      *client, EXPECT_CALL(*mock, SignBlob(_)),
+      [](Client& client) {
+        return client.CreateV2SignedUrl("GET", "test-bucket", "test-object")
+            .status();
+      },
+      "SignBlob");
 }
 
 // This is a dummy service account JSON file that is inactive. It's fine for it
@@ -103,7 +170,7 @@ constexpr char kJsonKeyfileContentsForV4[] = R"""({
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/test-iam-credentials%40dummy-project-id.iam.gserviceaccount.com"
 })""";
 
-TEST(SignedUrlIntegrationTest, V4SignGet) {
+TEST_F(CreateSignedUrlTest, V4SignGet) {
   // This test uses a disabled key to create a V4 Signed URL for a GET
   // operation. The bucket name was generated at random too.
   auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
@@ -147,7 +214,7 @@ TEST(SignedUrlIntegrationTest, V4SignGet) {
   EXPECT_EQ(expected, *actual);
 }
 
-TEST(SignedUrlIntegrationTest, V4SignPut) {
+TEST_F(CreateSignedUrlTest, V4SignPut) {
   // This test uses a disabled key to create a V4 Signed URL for a PUT
   // operation. The bucket name was generated at random too.
   auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
@@ -190,6 +257,54 @@ TEST(SignedUrlIntegrationTest, V4SignPut) {
       "e5b24c54";
 
   EXPECT_EQ(expected, *actual);
+}
+
+/// @test Verify that CreateV4SignedUrl() uses the SignBlob API when needed.
+TEST_F(CreateSignedUrlTest, V4SignRemote) {
+  auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
+      kJsonKeyfileContents);
+  ASSERT_STATUS_OK(creds);
+  // Use `echo -n test-signed-blob | openssl base64 -e` to create the magic
+  // string.
+  std::string expected_signed_blob = "dGVzdC1zaWduZWQtYmxvYg==";
+  // Use `echo -n test-signed-blob | od -x` to create the magic string.
+  std::string expected_signed_blob_hex = "746573742d7369676e65642d626c6f62";
+
+  EXPECT_CALL(*mock, SignBlob(_))
+      .WillOnce(Return(StatusOr<internal::SignBlobResponse>(TransientError())))
+      .WillOnce(
+          Invoke([&expected_signed_blob](internal::SignBlobRequest const& r) {
+            return make_status_or(internal::SignBlobResponse{
+                "test-key-id", expected_signed_blob});
+          }));
+  Client client{std::shared_ptr<internal::RawClient>(mock)};
+
+  StatusOr<std::string> actual =
+      client.CreateV4SignedUrl("GET", "test-bucket", "test-object");
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(*actual, HasSubstr(expected_signed_blob_hex));
+}
+
+/// @test Verify that CreateV4SignedUrl() + SignBlob() respects retry policies.
+TEST_F(CreateSignedUrlTest, V4SignTooManyFailures) {
+  testing::TooManyFailuresStatusTest<internal::SignBlobResponse>(
+      mock, EXPECT_CALL(*mock, SignBlob(_)),
+      [](Client& client) {
+        return client.CreateV4SignedUrl("GET", "test-bucket", "test-object")
+            .status();
+      },
+      "SignBlob");
+}
+
+/// @test Verify that CreateV4SignedUrl() + SignBlob() respects retry policies.
+TEST_F(CreateSignedUrlTest, V4SignPermanentFailure) {
+  testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
+      *client, EXPECT_CALL(*mock, SignBlob(_)),
+      [](Client& client) {
+        return client.CreateV4SignedUrl("GET", "test-bucket", "test-object")
+            .status();
+      },
+      "SignBlob");
 }
 
 }  // namespace
