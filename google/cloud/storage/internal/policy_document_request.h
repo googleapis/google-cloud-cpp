@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_POLICY_DOCUMENT_REQUEST_H_
 
 #include "google/cloud/storage/policy_document.h"
+#include "google/cloud/storage/signed_url_options.h"
 
 namespace google {
 namespace cloud {
@@ -41,8 +42,29 @@ class PolicyDocumentRequest {
    */
   std::string StringToSign() const;
 
+  SigningAccount const& signing_account() const { return signing_account_; }
+  SigningAccountDelegates const& signing_account_delegates() const {
+    return signing_account_delegates_;
+  }
+
+  void SetOption(SigningAccount const& o) { signing_account_ = o; }
+
+  void SetOption(SigningAccountDelegates const& o) {
+    signing_account_delegates_ = o;
+  }
+
+  template <typename H, typename... T>
+  PolicyDocumentRequest& set_multiple_options(H&& h, T&&... tail) {
+    SetOption(std::forward<H>(h));
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+
+  PolicyDocumentRequest& set_multiple_options() { return *this; }
+
  private:
   PolicyDocument document_;
+  SigningAccount signing_account_;
+  SigningAccountDelegates signing_account_delegates_;
 };
 
 std::ostream& operator<<(std::ostream& os, PolicyDocumentRequest const& r);

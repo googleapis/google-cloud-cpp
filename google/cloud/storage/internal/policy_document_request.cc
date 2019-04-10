@@ -54,6 +54,10 @@ std::string PolicyDocumentRequest::StringToSign() const {
   return std::move(j).dump();
 }
 
+std::ostream& operator<<(std::ostream& os, PolicyDocumentRequest const& r) {
+  return os << "PolicyDocumentRequest={" << r.StringToSign() << "}";
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

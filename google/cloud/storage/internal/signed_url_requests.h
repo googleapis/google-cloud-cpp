@@ -48,6 +48,11 @@ class SignUrlRequestCommon {
     return query_parameters_;
   }
 
+  SigningAccount const& signing_account() const { return signing_account_; }
+  SigningAccountDelegates const& signing_account_delegates() const {
+    return signing_account_delegates_;
+  }
+
   void SetOption(SubResourceOption const& o) {
     if (!o.has_value()) {
       return;
@@ -64,6 +69,12 @@ class SignUrlRequestCommon {
     query_parameters_.insert(o.value());
   }
 
+  void SetOption(SigningAccount const& o) { signing_account_ = o; }
+
+  void SetOption(SigningAccountDelegates const& o) {
+    signing_account_delegates_ = o;
+  }
+
  private:
   std::string verb_;
   std::string bucket_name_;
@@ -71,6 +82,9 @@ class SignUrlRequestCommon {
   std::string sub_resource_;
   std::map<std::string, std::string> extension_headers_;
   std::multimap<std::string, std::string> query_parameters_;
+
+  SigningAccount signing_account_;
+  SigningAccountDelegates signing_account_delegates_;
 };
 
 /**
@@ -94,6 +108,12 @@ class V2SignUrlRequest {
   }
   std::string const& sub_resource() const {
     return common_request_.sub_resource();
+  }
+  SigningAccount const& signing_account() const {
+    return common_request_.signing_account();
+  }
+  SigningAccountDelegates const& signing_account_delegates() const {
+    return common_request_.signing_account_delegates();
   }
 
   std::chrono::seconds expiration_time_as_seconds() const {
@@ -146,6 +166,12 @@ class V2SignUrlRequest {
     common_request_.SetOption(o);
   }
 
+  void SetOption(SigningAccount const& o) { common_request_.SetOption(o); }
+
+  void SetOption(SigningAccountDelegates const& o) {
+    common_request_.SetOption(o);
+  }
+
   SignUrlRequestCommon common_request_;
   std::string md5_hash_value_;
   std::string content_type_;
@@ -176,6 +202,12 @@ class V4SignUrlRequest {
   }
   std::string const& sub_resource() const {
     return common_request_.sub_resource();
+  }
+  SigningAccount const& signing_account() const {
+    return common_request_.signing_account();
+  }
+  SigningAccountDelegates const& signing_account_delegates() const {
+    return common_request_.signing_account_delegates();
   }
 
   std::chrono::system_clock::time_point timestamp() const { return timestamp_; }
@@ -232,6 +264,12 @@ class V4SignUrlRequest {
   }
 
   void SetOption(AddQueryParameterOption const& o) {
+    common_request_.SetOption(o);
+  }
+
+  void SetOption(SigningAccount const& o) { common_request_.SetOption(o); }
+
+  void SetOption(SigningAccountDelegates const& o) {
     common_request_.SetOption(o);
   }
 

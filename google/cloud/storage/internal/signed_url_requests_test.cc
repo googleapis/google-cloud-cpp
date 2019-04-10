@@ -39,7 +39,9 @@ TEST(V2SignedUrlRequests, Sign) {
       AddExtensionHeader("x-goog-meta-foo", "baz"),
       AddExtensionHeader("x-goog-encryption-algorithm", "AES256"),
       AddExtensionHeader("x-goog-acl", "project-private"),
-      WithUserProject("test-project"));
+      WithUserProject("test-project"),
+      SigningAccount("another-account@example.com"),
+      SigningAccountDelegates({"test-delegate1", "test-delegate2"}));
 
   // Used this command to get the date in seconds:
   //   date +%s -u --date=2018-12-03T12:00:00Z
@@ -53,10 +55,32 @@ x-goog-meta-foo:bar,baz
 /test-bucket/test-object?userProject=test-project)""";
 
   EXPECT_EQ(expected_blob, request.StringToSign());
+}
 
-  std::ostringstream os;
-  os << request;
-  EXPECT_THAT(os.str(), HasSubstr(expected_blob));
+TEST(V2SignedUrlRequests, SigningAccount) {
+  V2SignUrlRequest request("GET", "test-bucket", "test-object");
+  EXPECT_EQ("GET", request.verb());
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ("test-object", request.object_name());
+  EXPECT_FALSE(request.signing_account().has_value());
+  EXPECT_FALSE(request.signing_account_delegates().has_value());
+
+  request.set_multiple_options(
+      ExpirationTime(ParseRfc3339("2018-12-03T12:00:00Z")),
+      MD5HashValue("rmYdCNHKFXam78uCt7xQLw=="), ContentType("text/plain"),
+      AddExtensionHeader("x-goog-meta-foo", "bar"),
+      AddExtensionHeader("x-goog-meta-foo", "baz"),
+      AddExtensionHeader("x-goog-encryption-algorithm", "AES256"),
+      AddExtensionHeader("x-goog-acl", "project-private"),
+      WithUserProject("test-project"),
+      SigningAccount("another-account@example.com"),
+      SigningAccountDelegates({"test-delegate1", "test-delegate2"}));
+
+  ASSERT_TRUE(request.signing_account().has_value());
+  ASSERT_TRUE(request.signing_account_delegates().has_value());
+  EXPECT_EQ("another-account@example.com", request.signing_account().value());
+  EXPECT_THAT(request.signing_account_delegates().value(),
+              ::testing::ElementsAre("test-delegate1", "test-delegate2"));
 }
 
 TEST(V2SignedUrlRequests, SignEscaped) {
@@ -183,6 +207,27 @@ TEST(V2SignedUrlRequests, EncodeQueryParameter) {
 /test-bucket/test-object.txt?response-content-type=text%2Fhtml)""";
 
   EXPECT_EQ(expected_blob, request.StringToSign());
+}
+
+TEST(V4SignUrlRequest, SigningAccount) {
+  V4SignUrlRequest request("GET", "test-bucket", "test-object");
+  EXPECT_EQ("GET", request.verb());
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ("test-object", request.object_name());
+  EXPECT_FALSE(request.signing_account().has_value());
+  EXPECT_FALSE(request.signing_account_delegates().has_value());
+
+  std::string const date = "2019-02-01T09:00:00Z";
+  auto const valid_for = std::chrono::seconds(10);
+  request.set_multiple_options(
+      SignedUrlTimestamp(ParseRfc3339(date)), SignedUrlDuration(valid_for),
+      SigningAccount("another-account@example.com"),
+      SigningAccountDelegates({"test-delegate1", "test-delegate2"}));
+  ASSERT_TRUE(request.signing_account().has_value());
+  ASSERT_TRUE(request.signing_account_delegates().has_value());
+  EXPECT_EQ("another-account@example.com", request.signing_account().value());
+  EXPECT_THAT(request.signing_account_delegates().value(),
+              ::testing::ElementsAre("test-delegate1", "test-delegate2"));
 }
 
 TEST(V4SignedUrlRequests, CanonicalQueryStringBasic) {
