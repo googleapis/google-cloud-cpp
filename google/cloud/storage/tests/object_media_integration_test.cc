@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/log.h"
@@ -51,11 +50,6 @@ class ObjectMediaIntegrationTest
  protected:
   ::google::cloud::testing_util::EnvironmentVariableRestore endpoint_;
 };
-
-bool UsingTestbench() {
-  return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
-      .has_value();
-}
 
 TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
   StatusOr<Client> client = Client::CreateDefaultClient();

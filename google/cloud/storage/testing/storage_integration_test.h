@@ -45,6 +45,8 @@ class StorageIntegrationTest : public ::testing::Test {
                         int line_count = kDefaultRandomLineCount,
                         int line_size = kDefaultLineSize);
 
+  bool UsingTestbench() const;
+
   google::cloud::internal::DefaultPRNG generator_ =
       google::cloud::internal::MakeDefaultPRNG();
 };
