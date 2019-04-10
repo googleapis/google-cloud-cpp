@@ -2596,6 +2596,11 @@ class Client {
    * @param options a list of optional parameters, this includes:
    *      `SigningAccount`, and `SigningAccountDelegates`.
    *
+   * @par Helper Functions
+   * The following functions create a `PolicyDocumentCondition` with less
+   * opportunities for typos: `StartsWith()`, `ExactMatchObject()`,
+   * `ExactMatch()`, `ContentLengthRange()`.
+   *
    * @par Example
    * @snippet storage_bucket_samples.cc create signed policy document
    *
