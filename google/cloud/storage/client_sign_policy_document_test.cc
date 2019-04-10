@@ -135,7 +135,7 @@ TEST_F(CreateSignedPolicyDocTest, SignRemote) {
             return make_status_or(internal::SignBlobResponse{
                 "test-key-id", expected_signed_blob});
           }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
+  Client client{std::static_pointer_cast<internal::RawClient>(mock)};
 
   auto actual =
       client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest());

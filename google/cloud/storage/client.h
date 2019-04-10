@@ -2593,8 +2593,8 @@ class Client {
    * which is a POST request to GCS.
    *
    * @param document the policy document.
-   * @param options a list of optional parameters, this include:
-   *      `SigningAccount`, and `SigningAccountDeletegates`.
+   * @param options a list of optional parameters, this includes:
+   *      `SigningAccount`, and `SigningAccountDelegates`.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc create signed policy document
