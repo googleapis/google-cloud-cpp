@@ -22,6 +22,7 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
 #include "google/cloud/testing_util/init_google_mock.h"
+
 #include <gmock/gmock.h>
 
 namespace google {
@@ -60,7 +61,8 @@ class CreateSignedPolicyDocTest : public ::testing::Test {
     mock = std::make_shared<testing::MockClient>();
     EXPECT_CALL(*mock, client_options())
         .WillRepeatedly(ReturnRef(client_options));
-    client.reset(new Client{std::shared_ptr<internal::RawClient>(mock)});
+    client.reset(
+        new Client{std::static_pointer_cast<internal::RawClient>(mock)});
   }
   void TearDown() override {
     client.reset();
