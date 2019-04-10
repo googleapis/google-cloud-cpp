@@ -105,9 +105,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a84569cd8e135373f6e299c3c146317f6"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; internal::RawClient &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a84569cd8e135373f6e299c3c146317f6">raw_client</a> () const</td></tr>
 <tr class="memdesc:a84569cd8e135373f6e299c3c146317f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access the underlying <code>RawClient</code>.  <a href="#a84569cd8e135373f6e299c3c146317f6">More...</a><br /></td></tr>
 <tr class="separator:a84569cd8e135373f6e299c3c146317f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe06db23eceabafe472f65cab2e1ce08"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1PolicyDocumentResult.html">PolicyDocumentResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#afe06db23eceabafe472f65cab2e1ce08">CreateSignedPolicyDocument</a> (<a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1PolicyDocument.html">PolicyDocument</a> document)</td></tr>
-<tr class="memdesc:afe06db23eceabafe472f65cab2e1ce08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a signed policy document.  <a href="#afe06db23eceabafe472f65cab2e1ce08">More...</a><br /></td></tr>
-<tr class="separator:afe06db23eceabafe472f65cab2e1ce08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d67b9757d4d45a8a24bada0d4b0dd7c"><td class="memTemplParams" colspan="2">template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a5d67b9757d4d45a8a24bada0d4b0dd7c"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1PolicyDocumentResult.html">PolicyDocumentResult</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1Client.html#a5d67b9757d4d45a8a24bada0d4b0dd7c">CreateSignedPolicyDocument</a> (<a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1PolicyDocument.html">PolicyDocument</a> document, Options &amp;&amp;... options)</td></tr>
+<tr class="memdesc:a5d67b9757d4d45a8a24bada0d4b0dd7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a signed policy document.  <a href="#a5d67b9757d4d45a8a24bada0d4b0dd7c">More...</a><br /></td></tr>
+<tr class="separator:a5d67b9757d4d45a8a24bada0d4b0dd7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Bucket operations.</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>Buckets are the basic containers that hold your data.</p>
 <p>Everything that you store in GCS must be contained in a bucket. You can use buckets to organize your data and control access to your data, but unlike directories and folders, you cannot nest buckets.</p>
@@ -1277,11 +1278,13 @@ template&lt;typename... Options&gt; </div>
 
 </div>
 </div>
-<a id="afe06db23eceabafe472f65cab2e1ce08"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe06db23eceabafe472f65cab2e1ce08">&#9670;&nbsp;</a></span>CreateSignedPolicyDocument()</h2>
+<a id="a5d67b9757d4d45a8a24bada0d4b0dd7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d67b9757d4d45a8a24bada0d4b0dd7c">&#9670;&nbsp;</a></span>CreateSignedPolicyDocument()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Options&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1290,8 +1293,18 @@ template&lt;typename... Options&gt; </div>
           <td class="memname">StatusOr&lt;<a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1PolicyDocumentResult.html">PolicyDocumentResult</a>&gt; google::cloud::storage::v0::Client::CreateSignedPolicyDocument </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1PolicyDocument.html">PolicyDocument</a>&#160;</td>
-          <td class="paramname"><em>document</em></td><td>)</td>
+          <td class="paramname"><em>document</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">Options &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -1307,18 +1320,17 @@ template&lt;typename... Options&gt; </div>
 It is the application's responsibility to construct a POST request based on the value returned by this function. For example, a web application can create a HTML form containing these fields, the result of which is a POST request to GCS.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">document</td><td>the policy document.</td></tr>
+    <tr><td class="paramname">document</td><td>the policy document. </td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional parameters, this includes: <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SigningAccount.html" title="Specify the service account used to sign a blob. ">SigningAccount</a></code>, and <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SigningAccountDelegates.html" title="Specify the sequence of delegates used to sign a blob. ">SigningAccountDelegates</a></code>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Helper Functions</dt><dd></dd></dl>
-<p>The following functions create a <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v0_1_1PolicyDocumentCondition.html" title="Define a condition for a policy document. ">PolicyDocumentCondition</a></code> with less opportunities for typos: <code>StartsWith()</code>, <code>ExactMatchObject()</code>, <code>ExactMatch()</code>, <code>ContentLengthRange()</code>.</p>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div><div class="line">  using ::google::cloud::StatusOr;</div><div class="line">  [](gcs::Client client) {</div><div class="line">    StatusOr&lt;gcs::PolicyDocumentResult&gt; signed_document =</div><div class="line">        client.CreateSignedPolicyDocument(gcs::PolicyDocument{</div><div class="line">            std::chrono::system_clock::now() + std::chrono::minutes(15),</div><div class="line">            {</div><div class="line">                gcs::PolicyDocumentCondition::StartsWith(<span class="stringliteral">&quot;key&quot;</span>, <span class="stringliteral">&quot;&quot;</span>),</div><div class="line">                gcs::PolicyDocumentCondition::ExactMatchObject(</div><div class="line">                    <span class="stringliteral">&quot;acl&quot;</span>, <span class="stringliteral">&quot;bucket-owner-read&quot;</span>),</div><div class="line">                gcs::PolicyDocumentCondition::ExactMatchObject(<span class="stringliteral">&quot;bucket&quot;</span>,</div><div class="line">                                                               <span class="stringliteral">&quot;travel-maps&quot;</span>),</div><div class="line">                gcs::PolicyDocumentCondition::ExactMatch(<span class="stringliteral">&quot;Content-Type&quot;</span>,</div><div class="line">                                                         <span class="stringliteral">&quot;image/jpeg&quot;</span>),</div><div class="line">                gcs::PolicyDocumentCondition::ContentLengthRange(0, 1000000),</div><div class="line">            }});</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (!signed_document) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(signed_document.status().message());</div><div class="line">    }</div><div class="line"></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The signed document is: &quot;</span> &lt;&lt; *signed_document &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span></div><div class="line">              &lt;&lt; <span class="stringliteral">&quot;You can use this with an HTML form.\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/xml-api/post-object#policydocument">https://cloud.google.com/storage/docs/xml-api/post-object#policydocument</a> for a general description of policy documents and how they can be used.</dd>
 <dd>
 <a href="https://cloud.google.com/storage/docs/xml-api/overview">https://cloud.google.com/storage/docs/xml-api/overview</a> for a detailed description of the XML API. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02611">2611</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02610">2610</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
 
 </div>
 </div>
@@ -1379,7 +1391,7 @@ The application must ensure that any URL created with this function is a valid r
     <tr><td class="paramname">verb</td><td>the operation allowed through this signed URL, <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>HEAD</code>, etc. are valid values. </td></tr>
     <tr><td class="paramname">bucket_name</td><td>the name of the bucket. </td></tr>
     <tr><td class="paramname">object_name</td><td>the name of the object, note that the object may not exist for signed URLs that upload new objects. Use an empty string for requests that only affect a bucket. </td></tr>
-    <tr><td class="paramname">options</td><td>a list of optional parameters for the signed URL, this include: <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ExpirationTime.html" title="Define the expiration time for a signed URL. ">ExpirationTime</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1MD5HashValue.html" title="Provide a pre-computed MD5 hash value to an upload or download request. ">MD5HashValue</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ContentType.html" title="Set the MIME content type of an object. ">ContentType</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddExtensionHeaderOption.html" title="Add a extension header to a signed URL. ">AddExtensionHeaderOption</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html" title="Add a extension header to a signed URL. ">AddQueryParameterOption</a></code>, and <code>AddSubResourceOption</code>. Note that only the last <code>AddSubResourceOption</code> option has any effect.</td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional parameters for the signed URL, this include: <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ExpirationTime.html" title="Define the expiration time for a signed URL. ">ExpirationTime</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1MD5HashValue.html" title="Provide a pre-computed MD5 hash value to an upload or download request. ">MD5HashValue</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ContentType.html" title="Set the MIME content type of an object. ">ContentType</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SigningAccount.html" title="Specify the service account used to sign a blob. ">SigningAccount</a></code>, <code>SigningAccountDeletegates</code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddExtensionHeaderOption.html" title="Add a extension header to a signed URL. ">AddExtensionHeaderOption</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html" title="Add a extension header to a signed URL. ">AddQueryParameterOption</a></code>, and <code>AddSubResourceOption</code>. Note that only the last <code>AddSubResourceOption</code> option has any effect.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1393,7 +1405,7 @@ The application must ensure that any URL created with this function is a valid r
 <dd>
 <a href="https://cloud.google.com/storage/docs/xml-api/overview">https://cloud.google.com/storage/docs/xml-api/overview</a> for a detailed description of the XML API. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02507">2507</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02508">2508</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
 
 </div>
 </div>
@@ -1454,7 +1466,7 @@ The application must ensure that any URL created with this function is a valid r
     <tr><td class="paramname">verb</td><td>the operation allowed through this signed URL, <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>HEAD</code>, etc. are valid values. </td></tr>
     <tr><td class="paramname">bucket_name</td><td>the name of the bucket. </td></tr>
     <tr><td class="paramname">object_name</td><td>the name of the object, note that the object may not exist for signed URLs that upload new objects. Use an empty string for requests that only affect a bucket. </td></tr>
-    <tr><td class="paramname">options</td><td>a list of optional parameters for the signed URL, this include: <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SignedUrlTimestamp.html" title="Define the timestamp duration for a V4 signed URL. ">SignedUrlTimestamp</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SignedUrlDuration.html" title="Define the duration for a V4 signed URL. ">SignedUrlDuration</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1MD5HashValue.html" title="Provide a pre-computed MD5 hash value to an upload or download request. ">MD5HashValue</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ContentType.html" title="Set the MIME content type of an object. ">ContentType</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddExtensionHeaderOption.html" title="Add a extension header to a signed URL. ">AddExtensionHeaderOption</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html" title="Add a extension header to a signed URL. ">AddQueryParameterOption</a></code>, and <code>AddSubResourceOption</code>. Note that only the last <code>AddSubResourceOption</code> option has any effect.</td></tr>
+    <tr><td class="paramname">options</td><td>a list of optional parameters for the signed URL, this include: <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SignedUrlTimestamp.html" title="Define the timestamp duration for a V4 signed URL. ">SignedUrlTimestamp</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SignedUrlDuration.html" title="Define the duration for a V4 signed URL. ">SignedUrlDuration</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1MD5HashValue.html" title="Provide a pre-computed MD5 hash value to an upload or download request. ">MD5HashValue</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1ContentType.html" title="Set the MIME content type of an object. ">ContentType</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1SigningAccount.html" title="Specify the service account used to sign a blob. ">SigningAccount</a></code>, <code>SigningAccountDeletegates</code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddExtensionHeaderOption.html" title="Add a extension header to a signed URL. ">AddExtensionHeaderOption</a></code>, <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v0_1_1AddQueryParameterOption.html" title="Add a extension header to a signed URL. ">AddQueryParameterOption</a></code>, and <code>AddSubResourceOption</code>. Note that only the last <code>AddSubResourceOption</code> option has any effect.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1468,7 +1480,7 @@ The application must ensure that any URL created with this function is a valid r
 <dd>
 <a href="https://cloud.google.com/storage/docs/xml-api/overview">https://cloud.google.com/storage/docs/xml-api/overview</a> for a detailed description of the XML API. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02569">2569</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8h_source.html#l02571">2571</a> of file <a class="el" href="client_8h_source.html">client.h</a>.</p>
 
 </div>
 </div>
