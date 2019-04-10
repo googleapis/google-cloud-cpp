@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -37,11 +36,6 @@ char const* flag_bucket_name;
 
 class ObjectChecksumIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
-
-bool UsingTestbench() {
-  return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
-      .has_value();
-}
 
 TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32c) {
   StatusOr<Client> client = Client::CreateDefaultClient();

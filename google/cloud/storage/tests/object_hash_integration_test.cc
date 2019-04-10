@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
@@ -39,11 +38,6 @@ char const* flag_bucket_name;
 
 class ObjectHashIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
-
-bool UsingTestbench() {
-  return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
-      .has_value();
-}
 
 /// @test Verify that MD5 hashes are computed by default.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5HashXML) {

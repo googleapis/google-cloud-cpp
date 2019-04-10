@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/internal/getenv.h"
 
 namespace google {
 namespace cloud {
@@ -59,6 +60,11 @@ std::string StorageIntegrationTest::MakeRandomBucketName() {
   return prefix + google::cloud::internal::Sample(
                       generator_, static_cast<int>(max_random_characters),
                       "abcdefghijklmnopqrstuvwxyz012456789");
+}
+
+bool StorageIntegrationTest::UsingTestbench() const {
+  return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
+      .has_value();
 }
 
 void StorageIntegrationTest::WriteRandomLines(std::ostream& upload,
