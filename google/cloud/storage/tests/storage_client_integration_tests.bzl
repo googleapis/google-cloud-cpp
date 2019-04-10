@@ -18,7 +18,6 @@
 
 storage_client_integration_tests = [
     "bucket_integration_test.cc",
-    "client_sign_url_integration_test.cc",
     "curl_download_request_integration_test.cc",
     "curl_request_integration_test.cc",
     "curl_resumable_streambuf_integration_test.cc",
@@ -32,6 +31,7 @@ storage_client_integration_tests = [
     "object_resumable_write_integration_test.cc",
     "object_rewrite_integration_test.cc",
     "service_account_integration_test.cc",
+    "signed_url_conformance_test.cc",
     "storage_include_test.cc",
     "thread_integration_test.cc",
 ]

@@ -30,6 +30,12 @@ set -eu
 #   create Cloud Pub/Sub notifications, but no notifications are actually sent
 #   to it.
 
+if [ -z "${PROJECT_ROOT+x}" ]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../../../.."; pwd)"
+fi
+readonly TEST_ACCOUNT_FILE="${PROJECT_ROOT}/google/cloud/storage/tests/UrlSignerV4TestAccount.json"
+readonly TEST_DATA_FILE="${PROJECT_ROOT}/google/cloud/storage/tests/UrlSignerV4TestData.json"
+
 echo
 echo "Running storage::internal::CurlResumableUploadSession integration tests."
 ./curl_resumable_upload_session_integration_test "${BUCKET_NAME}"
@@ -75,5 +81,5 @@ echo "Running GCS Projects.serviceAccount integration tests."
 ./thread_integration_test "${PROJECT_ID}" "${STORAGE_REGION_ID}"
 
 echo
-echo "Running GCS Projects.serviceAccount integration tests."
-./service_account_integration_test "${PROJECT_ID}" "${SERVICE_ACCOUNT}"
+echo "Running V4 Signed URL conformance tests."
+./signed_url_conformance_test "${TEST_ACCOUNT_FILE}" "${TEST_DATA_FILE}"
