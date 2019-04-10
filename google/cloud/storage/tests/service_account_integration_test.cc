@@ -51,8 +51,9 @@ TEST(ServiceAccountIntegrationTest, Get) {
 
 TEST(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
   std::string project_id = flag_project_id;
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
   std::string service_account = flag_service_account;
+
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
 
   Client client(client_options->set_project_id(project_id));
@@ -74,8 +75,9 @@ TEST(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
 
 TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   std::string project_id = flag_project_id;
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
   std::string service_account = flag_service_account;
+
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
 
   Client client(client_options->set_project_id(project_id));
