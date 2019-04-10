@@ -278,7 +278,7 @@ void ActivateHmacKey(google::cloud::storage::Client client, int& argc,
   //! [START storage_activate_hmac_key]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string access_id, std::string state) {
+  [](gcs::Client client, std::string access_id) {
     StatusOr<gcs::HmacKeyMetadata> current_metadata =
         client.GetHmacKey(access_id);
     if (!current_metadata) {
@@ -301,7 +301,7 @@ void ActivateHmacKey(google::cloud::storage::Client client, int& argc,
               << *updated_metadata << "\n";
   }
   //! [END storage_activate_hmac_key]
-  (std::move(client), argv[1], argv[2]);
+  (std::move(client), argv[1]);
 }
 
 void DeactivateHmacKey(google::cloud::storage::Client client, int& argc,
@@ -312,7 +312,7 @@ void DeactivateHmacKey(google::cloud::storage::Client client, int& argc,
   //! [START storage_deactivate_hmac_key]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string access_id, std::string state) {
+  [](gcs::Client client, std::string access_id) {
     StatusOr<gcs::HmacKeyMetadata> current_metadata =
         client.GetHmacKey(access_id);
     if (!current_metadata) {
@@ -334,7 +334,7 @@ void DeactivateHmacKey(google::cloud::storage::Client client, int& argc,
               << *updated_metadata << "\n";
   }
   //! [END storage_deactivate_hmac_key]
-  (std::move(client), argv[1], argv[2]);
+  (std::move(client), argv[1]);
 }
 
 }  // anonymous namespace
