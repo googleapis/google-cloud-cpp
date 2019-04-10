@@ -21,7 +21,20 @@
 #include <gmock/gmock.h>
 #include <fstream>
 
-namespace nl = google::cloud::storage::internal::nl;
+/**
+ * @file
+ *
+ * Executes V4 signed URLs conformance tests described in an external file.
+ *
+ * We have a common set of conformance tests for V4 signed URLs used in all the
+ * GCS client libraries. The tests are stored in an external JSON file. This
+ * program receives the file name as an input parameter, loads it, and executes
+ * the tests described in the file.
+ *
+ * A separate command-line argument is the name of a (invalidated) service
+ * account key file used to create the signed URLs.
+ */
+
 namespace google {
 namespace cloud {
 namespace storage {
@@ -30,15 +43,15 @@ namespace {
 using ::testing::HasSubstr;
 
 // Initialized in main() below.
-char const* account_file_name_;
-char const* data_file_name_;
+char const* account_file_name;
+char const* data_file_name;
 
-class ObjectIntegrationTest
+class V4SignedUrlConformanceTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   // Converts ""20190201T090000Z",
   // to  "2019-02-01T09:00:00Z"
-  std::string TimestampToRfc3339(std::string ts) {
+  std::string TimestampToRfc3339(std::string const& ts) {
     if (ts.size() != 16) {
       return "";
     }
@@ -48,7 +61,7 @@ class ObjectIntegrationTest
   }
 
   std::vector<std::pair<std::string, std::string>> ExtractHeaders(
-      nl::json j_obj) {
+      internal::nl::json j_obj) {
     std::vector<std::pair<std::string, std::string>> headers;
 
     // Check for the keys of the headers field
@@ -61,16 +74,14 @@ class ObjectIntegrationTest
   }
 };
 
-TEST_F(ObjectIntegrationTest, V4SignJson) {
-  // This is a dummy service account JSON file that is inactive. It's fine for
-  // it to be public.
-  std::string account_file = account_file_name_;
-  std::string data_file = data_file_name_;
+TEST_F(V4SignedUrlConformanceTest, V4SignJson) {
+  std::string account_file = account_file_name;
+  std::string data_file = data_file_name;
 
   std::ifstream ifstr(data_file);
   ASSERT_TRUE(ifstr.is_open());
 
-  nl::json json_array = nl::json::parse(ifstr);
+  auto json_array = internal::nl::json::parse(ifstr);
   auto creds =
       oauth2::CreateServiceAccountCredentialsFromJsonFilePath(account_file);
 
@@ -90,7 +101,7 @@ TEST_F(ObjectIntegrationTest, V4SignJson) {
     std::vector<std::pair<std::string, std::string>> headers =
         ExtractHeaders(j_obj);
 
-    if (headers.size() == 0) {
+    if (headers.empty()) {
       actual = client.CreateV4SignedUrl(
           method_name, bucket_name, object_name,
           SignedUrlTimestamp(internal::ParseRfc3339(date)),
@@ -144,12 +155,12 @@ int main(int argc, char* argv[]) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(argv[0]).find_last_of('/');
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <key-file-name> <all-file-name>\n";
+              << " <key-file-name> <conformance-tests-json-file-name>\n";
     return 1;
   }
 
-  google::cloud::storage::account_file_name_ = argv[1];
-  google::cloud::storage::data_file_name_ = argv[2];
+  google::cloud::storage::account_file_name = argv[1];
+  google::cloud::storage::data_file_name = argv[2];
 
   return RUN_ALL_TESTS();
 }

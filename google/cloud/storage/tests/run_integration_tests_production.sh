@@ -75,5 +75,5 @@ echo "Running GCS Projects.serviceAccount integration tests."
 ./thread_integration_test "${PROJECT_ID}" "${STORAGE_REGION_ID}"
 
 echo
-echo "Running GCS Projects.serviceAccount integration tests."
-./service_account_integration_test "${PROJECT_ID}" "${SERVICE_ACCOUNT}"
+echo "Running V4 Signed URL conformance tests."
+./signed_url_conformance_test "${TEST_ACCOUNT_FILE}" "${TEST_DATA_FILE}"
