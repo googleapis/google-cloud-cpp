@@ -69,6 +69,13 @@ class ComputeEngineCredentials : public Credentials {
     return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
   }
 
+  std::string AccountEmail() const override {
+    std::unique_lock<std::mutex> lock(mu_);
+    // Force a refresh on the account info.
+    RetrieveServiceAccountInfo();
+    return service_account_email_;
+  }
+
   /**
    * Returns the email or alias of this credential's service account.
    *
@@ -78,7 +85,7 @@ class ComputeEngineCredentials : public Credentials {
    * initializing this credential, that alias is returned as this credential's
    * email address if the credential has not been refreshed yet.
    */
-  std::string service_account_email() {
+  std::string service_account_email() const {
     std::unique_lock<std::mutex> lock(mu_);
     return service_account_email_;
   }
@@ -90,7 +97,7 @@ class ComputeEngineCredentials : public Credentials {
    * server to fetch service account metadata, this method will return an empty
    * set if the credential has not been refreshed yet.
    */
-  std::set<std::string> scopes() {
+  std::set<std::string> scopes() const {
     std::unique_lock<std::mutex> lock(mu_);
     return scopes_;
   }
@@ -103,7 +110,7 @@ class ComputeEngineCredentials : public Credentials {
    * an overview of retrieving information from the GCE metadata server.
    */
   StatusOr<storage::internal::HttpResponse> DoMetadataServerGetRequest(
-      std::string path, bool recursive) {
+      std::string const& path, bool recursive) const {
     // Allows mocking the metadata server hostname for testing.
     std::string metadata_server_hostname =
         google::cloud::storage::internal::GceMetadataHostname();
@@ -125,7 +132,7 @@ class ComputeEngineCredentials : public Credentials {
    * https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances
    * for more details.
    */
-  Status RetrieveServiceAccountInfo() {
+  Status RetrieveServiceAccountInfo() const {
     namespace nl = google::cloud::storage::internal::nl;
     auto response = DoMetadataServerGetRequest(
         "/computeMetadata/v1/instance/service-accounts/" +
@@ -143,23 +150,22 @@ class ComputeEngineCredentials : public Credentials {
     // JSON array. At minimum, for the request to succeed, the instance must
     // have been granted the scope that allows it to retrieve info from the
     // metadata server.
-    if (response_body.is_discarded() or response_body.count("email") == 0U or
+    if (response_body.is_discarded() || response_body.count("email") == 0U ||
         response_body.count("scopes") == 0U) {
       response->payload +=
           "Could not find all required fields in response (email, scopes).";
       return AsStatus(*response);
     }
 
-    std::string email = response_body.value("email", "");
-    std::set<std::string> scopes_set = response_body["scopes"];
-
-    // Do not update any state until all potential exceptions are raised.
-    service_account_email_ = email;
-    scopes_ = scopes_set;
+    // Do not update any state until all potential errors are handled.
+    service_account_email_ = response_body.value("email", "");
+    // We need to call the .get<>() helper because the conversion is ambiguous
+    // otherwise.
+    scopes_ = response_body["scopes"].get<std::set<std::string>>();
     return Status();
   }
 
-  Status Refresh() {
+  StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() const {
     namespace nl = storage::internal::nl;
 
     auto status = RetrieveServiceAccountInfo();
@@ -198,16 +204,14 @@ class ComputeEngineCredentials : public Credentials {
         std::chrono::seconds(access_token.value("expires_in", int(0)));
     auto new_expiration = std::chrono::system_clock::now() + expires_in;
 
-    // Do not update any state until all potential exceptions are raised.
-    refreshing_creds_.authorization_header = std::move(header);
-    refreshing_creds_.expiration_time = new_expiration;
-    return Status();
+    return RefreshingCredentialsWrapper::TemporaryToken{std::move(header),
+                                                        new_expiration};
   }
 
   mutable std::mutex mu_;
   RefreshingCredentialsWrapper refreshing_creds_;
-  std::set<std::string> scopes_;
-  std::string service_account_email_;
+  mutable std::set<std::string> scopes_;
+  mutable std::string service_account_email_;
 };
 
 }  // namespace oauth2

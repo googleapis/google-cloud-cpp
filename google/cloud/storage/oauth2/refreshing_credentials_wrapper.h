@@ -32,17 +32,23 @@ namespace oauth2 {
  */
 class RefreshingCredentialsWrapper {
  public:
+  struct TemporaryToken {
+    std::string token;
+    std::chrono::system_clock::time_point expiration_time;
+  };
+
   template <typename RefreshFunctor>
-  StatusOr<std::string> AuthorizationHeader(RefreshFunctor refresh_fn) {
+  StatusOr<std::string> AuthorizationHeader(RefreshFunctor refresh_fn) const {
     if (IsValid()) {
-      return authorization_header;
+      return temporary_token.token;
     }
 
-    Status status = refresh_fn();
-    if (status.ok()) {
-      return authorization_header;
+    StatusOr<TemporaryToken> new_token = refresh_fn();
+    if (new_token) {
+      temporary_token = *std::move(new_token);
+      return temporary_token.token;
     }
-    return status;
+    return new_token.status();
   }
 
   /**
@@ -56,7 +62,7 @@ class RefreshingCredentialsWrapper {
    * may still return false. This helps prevent the case where an access token
    * expires between when it is obtained and when it is used.
    */
-  bool IsExpired();
+  bool IsExpired() const;
 
   /**
    * Returns whether the current access token should be considered valid.
@@ -64,10 +70,10 @@ class RefreshingCredentialsWrapper {
    * This method should be used to determine whether a Credentials object needs
    * to be refreshed.
    */
-  bool IsValid();
+  bool IsValid() const;
 
-  std::string authorization_header;
-  std::chrono::system_clock::time_point expiration_time;
+ private:
+  mutable TemporaryToken temporary_token;
 };
 
 }  // namespace oauth2

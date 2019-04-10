@@ -148,7 +148,7 @@ class ServiceAccountCredentials : public Credentials {
    * @see https://tools.ietf.org/html/rfc7523
    */
   std::pair<storage::internal::nl::json, storage::internal::nl::json>
-  AssertionComponentsFromInfo(ServiceAccountCredentialsInfo const& info) {
+  AssertionComponentsFromInfo(ServiceAccountCredentialsInfo const& info) const {
     namespace nl = storage::internal::nl;
     nl::json assertion_header = {
         {"alg", "RS256"}, {"kid", info.private_key_id}, {"typ", "JWT"}};
@@ -158,7 +158,7 @@ class ServiceAccountCredentials : public Credentials {
     if (!info.scopes) {
       scope_str = GoogleOAuthScopeCloudPlatform();
     } else {
-      std::string sep = "";
+      char const* sep = "";
       for (const auto& scope : *(info.scopes)) {
         scope_str += sep + scope;
         sep = ",";
@@ -196,7 +196,7 @@ class ServiceAccountCredentials : public Credentials {
    */
   std::string MakeJWTAssertion(storage::internal::nl::json const& header,
                                storage::internal::nl::json const& payload,
-                               std::string const& pem_contents) {
+                               std::string const& pem_contents) const {
     std::string encoded_header = internal::UrlsafeBase64Encode(header.dump());
     std::string encoded_payload = internal::UrlsafeBase64Encode(payload.dump());
     std::string encoded_signature = internal::UrlsafeBase64Encode(
@@ -205,7 +205,7 @@ class ServiceAccountCredentials : public Credentials {
     return encoded_header + '.' + encoded_payload + '.' + encoded_signature;
   }
 
-  Status Refresh() {
+  StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() {
     namespace nl = storage::internal::nl;
 
     auto response = request_.MakeRequest(payload_);
@@ -234,10 +234,9 @@ class ServiceAccountCredentials : public Credentials {
     auto expires_in =
         std::chrono::seconds(access_token.value("expires_in", int(0)));
     auto new_expiration = std::chrono::system_clock::now() + expires_in;
-    // Do not update any state until all potential exceptions are raised.
-    refreshing_creds_.authorization_header = std::move(header);
-    refreshing_creds_.expiration_time = new_expiration;
-    return Status();
+
+    return RefreshingCredentialsWrapper::TemporaryToken{std::move(header),
+                                                        new_expiration};
   }
 
   typename HttpRequestBuilderType::RequestType request_;
