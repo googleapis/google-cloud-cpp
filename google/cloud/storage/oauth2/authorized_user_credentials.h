@@ -21,6 +21,7 @@
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
+
 #include <iostream>
 #include <mutex>
 
@@ -87,7 +88,7 @@ class AuthorizedUserCredentials : public Credentials {
   }
 
  private:
-  Status Refresh() {
+  StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() {
     namespace nl = storage::internal::nl;
 
     auto response = request_.MakeRequest(payload_);
@@ -99,9 +100,9 @@ class AuthorizedUserCredentials : public Credentials {
     }
     nl::json access_token = nl::json::parse(response->payload, nullptr, false);
     if (access_token.is_discarded() ||
-        access_token.count("access_token") == 0U or
-        access_token.count("expires_in") == 0U or
-        access_token.count("id_token") == 0U or
+        access_token.count("access_token") == 0U ||
+        access_token.count("expires_in") == 0U ||
+        access_token.count("id_token") == 0U ||
         access_token.count("token_type") == 0U) {
       response->payload +=
           "Could not find all required fields in response (access_token,"
@@ -116,10 +117,9 @@ class AuthorizedUserCredentials : public Credentials {
     auto expires_in =
         std::chrono::seconds(access_token.value("expires_in", int(0)));
     auto new_expiration = std::chrono::system_clock::now() + expires_in;
-    // Do not update any state until all potential exceptions are raised.
-    refreshing_creds_.authorization_header = std::move(header);
-    refreshing_creds_.expiration_time = new_expiration;
-    return Status();
+
+    return RefreshingCredentialsWrapper::TemporaryToken{std::move(header),
+                                                        new_expiration};
   }
 
   typename HttpRequestBuilderType::RequestType request_;

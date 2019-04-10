@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
+
 #include "google/cloud/storage/oauth2/credential_constants.h"
 
 namespace google {
@@ -21,13 +22,14 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
-bool RefreshingCredentialsWrapper::IsExpired() {
+bool RefreshingCredentialsWrapper::IsExpired() const {
   auto now = std::chrono::system_clock::now();
-  return now > (expiration_time - GoogleOAuthAccessTokenExpirationSlack());
+  return now > (temporary_token.expiration_time -
+                GoogleOAuthAccessTokenExpirationSlack());
 }
 
-bool RefreshingCredentialsWrapper::IsValid() {
-  return !authorization_header.empty() && !IsExpired();
+bool RefreshingCredentialsWrapper::IsValid() const {
+  return !temporary_token.token.empty() && !IsExpired();
 }
 
 }  // namespace oauth2
