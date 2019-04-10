@@ -53,7 +53,7 @@ constexpr char kJsonKeyfileContents[] = R"""({
 })""";
 
 /**
- * Test the CreateV*SignUrl functions in storage::Client.
+ * Test the CreateSignedPolicyDocument function in storage::Client.
  */
 class CreateSignedPolicyDocTest : public ::testing::Test {
  protected:
