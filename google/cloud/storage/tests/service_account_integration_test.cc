@@ -51,15 +51,25 @@ TEST(ServiceAccountIntegrationTest, Get) {
 
 TEST(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
   std::string project_id = flag_project_id;
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
   std::string service_account = flag_service_account;
-  StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_STATUS_OK(client);
+  ASSERT_STATUS_OK(client_options);
 
-  StatusOr<std::pair<HmacKeyMetadata, std::string>> key = client->CreateHmacKey(
-      service_account, OverrideDefaultProject(project_id));
+  Client client(client_options->set_project_id(project_id));
+
+  StatusOr<std::pair<HmacKeyMetadata, std::string>> key =
+      client.CreateHmacKey(service_account, OverrideDefaultProject(project_id));
   ASSERT_STATUS_OK(key);
 
   EXPECT_FALSE(key->second.empty());
+
+  StatusOr<HmacKeyMetadata> update_details = client.UpdateHmacKey(
+      key->first.access_id(), HmacKeyMetadata().set_state("INACTIVE"));
+  ASSERT_STATUS_OK(update_details);
+  EXPECT_EQ("INACTIVE", update_details->state());
+
+  Status deleted_key = client.DeleteHmacKey(key->first.access_id());
+  ASSERT_STATUS_OK(deleted_key);
 }
 
 TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
