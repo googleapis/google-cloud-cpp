@@ -28,7 +28,7 @@ var searchData=
   ['exactmatch',['ExactMatch',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1PolicyDocumentCondition.html#ac7e9e5cf927ae78f95382ebb2d55f4c0',1,'google::cloud::storage::v0::PolicyDocumentCondition']]],
   ['exactmatchobject',['ExactMatchObject',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1PolicyDocumentCondition.html#acd19870947b8db13b43d4e651dce5d4a',1,'google::cloud::storage::v0::PolicyDocumentCondition']]],
   ['expiration',['expiration',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1PolicyDocument.html#a227e922aaa4bbac103467556a4713341',1,'google::cloud::storage::v0::PolicyDocument::expiration()'],['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1PolicyDocumentResult.html#ae641b5c406f723046baa73a15c6b0340',1,'google::cloud::storage::v0::PolicyDocumentResult::expiration()']]],
-  ['expiration_5ftime',['expiration_time',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1RefreshingCredentialsWrapper.html#a3010b35a66140275471d76d7fa0f8b10',1,'google::cloud::storage::v0::oauth2::RefreshingCredentialsWrapper']]],
+  ['expiration_5ftime',['expiration_time',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1oauth2_1_1RefreshingCredentialsWrapper_1_1TemporaryToken.html#a2ec179bbfefe35d244bd77202533332d',1,'google::cloud::storage::v0::oauth2::RefreshingCredentialsWrapper::TemporaryToken']]],
   ['expirationtime',['ExpirationTime',['../structgoogle_1_1cloud_1_1storage_1_1v0_1_1ExpirationTime.html',1,'google::cloud::storage::v0']]],
   ['exponentialbackoffpolicy',['ExponentialBackoffPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a6271071b268ae795cb94cb628a4fc24c',1,'google::cloud::storage::v0']]]
 ];
