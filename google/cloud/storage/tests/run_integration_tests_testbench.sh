@@ -28,7 +28,8 @@ export PROJECT_ID="fake-project-${RANDOM}-${RANDOM}"
 export BUCKET_NAME="fake-bucket-${RANDOM}-${RANDOM}"
 export TOPIC_NAME="projects/${PROJECT_ID}/topics/fake-topic-${RANDOM}-${RANDOM}"
 export LOCATION="fake-region1"
-readonly SERVICE_ACCOUNT="fake-service-account@example.com"
+readonly HMAC_SERVICE_ACCOUNT="fake-service-account@example.com"
+readonly SIGNING_SERVICE_ACCOUNT="fake-service-account@example.com"
 
 
 readonly TEST_ACCOUNT_FILE="${PROJECT_ROOT}/google/cloud/storage/tests/UrlSignerV4TestAccount.json"
@@ -52,7 +53,7 @@ echo "Running storage::internal::CurlResumableUploadSession integration tests."
 
 echo
 echo "Running CurlClient::SignBlob integration tests."
-./curl_sign_blob_integration_test "${SERVICE_ACCOUNT}"
+./curl_sign_blob_integration_test "${SIGNING_SERVICE_ACCOUNT}"
 
 echo
 echo "Running GCS Bucket APIs integration tests."
@@ -92,14 +93,14 @@ echo "Running GCS multi-threaded integration test."
 
 echo
 echo "Running GCS Projects.serviceAccount integration tests."
-./service_account_integration_test "${PROJECT_ID}" "${SERVICE_ACCOUNT}"
+./service_account_integration_test "${PROJECT_ID}" "${HMAC_SERVICE_ACCOUNT}"
 
 echo
 echo "Running V4 Signed URL conformance tests."
 ./signed_url_conformance_test "${TEST_ACCOUNT_FILE}" "${TEST_DATA_FILE}"
 
 echo "Running Signed URL integration test."
-./signed_url_integration_test "${BUCKET_NAME}" "${SERVICE_ACCOUNT}"
+./signed_url_integration_test "${BUCKET_NAME}" "${SIGNING_SERVICE_ACCOUNT}"
 
 # The tests were successful, so disable dumping of test bench log during
 # shutdown.
