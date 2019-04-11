@@ -129,8 +129,6 @@ RUN cmake --build cmake-out -- -j $(nproc)
 
 WORKDIR /home/build/test-submodule
 COPY ci/test-install /home/build/test-submodule
-RUN cd submodule
-RUN git submodule init
-RUN git submodule add https://github.com/googleapis/google-cloud-cpp
+COPY . /home/build/test-submodule/submodule/google-cloud-cpp
 RUN cmake -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j $(nproc)
