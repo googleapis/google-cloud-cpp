@@ -302,6 +302,30 @@ class TableAdmin {
                           std::string row_key_prefix);
 
   /**
+   * Make an asynchronous request to delete all the rows that start with a given
+   * prefix.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param table_id the id of the table within the instance associated with
+   *     this object. The full name of the table is
+   *     `this->instance_name() + "/tables/" + table_id`
+   * @param row_key_prefix drop any rows that start with this prefix.
+   * @return status of the operation.
+   *
+   * @par Example
+   * @snippet table_admin_async_snippets.cc async drop rows by prefix
+   */
+  future<Status> AsyncDropRowsByPrefix(CompletionQueue& cq,
+                                       std::string const& table_id,
+                                       std::string row_key_prefix);
+
+  /**
    * Generates consistency token for a table.
    *
    * @param table_id the id of the table for which we want to generate

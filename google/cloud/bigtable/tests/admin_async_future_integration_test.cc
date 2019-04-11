@@ -31,15 +31,12 @@ class AdminAsyncFutureIntegrationTest
  protected:
   std::shared_ptr<AdminClient> admin_client_;
   std::unique_ptr<TableAdmin> table_admin_;
-  std::unique_ptr<noex::TableAdmin> noex_table_admin_;
 
   void SetUp() {
     TableIntegrationTest::SetUp();
     admin_client_ = CreateDefaultAdminClient(
         testing::TableTestEnvironment::project_id(), ClientOptions());
     table_admin_ = google::cloud::internal::make_unique<TableAdmin>(
-        admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
-    noex_table_admin_ = google::cloud::internal::make_unique<noex::TableAdmin>(
         admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
   }
 
@@ -146,6 +143,50 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetDeleteTableTest) {
   pool.join();
 }
 
+/// @test Verify that `bigtable::TableAdmin` AsyncDropRowsByPrefix works
+TEST_F(AdminAsyncFutureIntegrationTest, AsyncDropRowsByPrefixTest) {
+  auto table = GetTable();
+
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  // Create a vector of cell which will be inserted into bigtable
+  std::string const row_key1_prefix = "DropRowPrefix1";
+  std::string const row_key2_prefix = "DropRowPrefix2";
+  std::string const row_key1 = row_key1_prefix + "-Key1";
+  std::string const row_key1_1 = row_key1_prefix + "_1-Key1";
+  std::string const row_key2 = row_key2_prefix + "-Key2";
+  std::vector<bigtable::Cell> created_cells{
+      {row_key1, "family1", "column_id1", 0, "v-c-0-0"},
+      {row_key1, "family1", "column_id1", 1000, "v-c-0-1"},
+      {row_key1, "family2", "column_id3", 2000, "v-c-0-2"},
+      {row_key1_1, "family2", "column_id3", 2000, "v-c-0-2"},
+      {row_key1_1, "family2", "column_id3", 3000, "v-c-0-2"},
+      {row_key2, "family2", "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, "family3", "column_id3", 3000, "v-c1-0-2"},
+  };
+  std::vector<bigtable::Cell> expected_cells{
+      {row_key2, "family2", "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, "family3", "column_id3", 3000, "v-c1-0-2"}};
+
+  CreateCells(table, created_cells);
+
+  future<void> chain =
+      table_admin_
+          ->AsyncDropRowsByPrefix(
+              cq, bigtable::testing::TableTestEnvironment::table_id(),
+              row_key1_prefix)
+          .then([&](future<Status> fut) {
+            Status delete_result = fut.get();
+            EXPECT_STATUS_OK(delete_result);
+            auto actual_cells =
+                ReadRows(table, bigtable::Filter::PassAllFilter());
+            CheckEqualUnordered(expected_cells, actual_cells);
+          });
+
+  cq.Shutdown();
+  pool.join();
+}
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

@@ -257,6 +257,8 @@ function run_all_table_admin_async_examples {
       "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_async_snippets async-modify-table \
       "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_async_snippets async-drop-rows-by-prefix \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_async_snippets async-delete-table \
       "${project_id}" "${INSTANCE}" "${TABLE}"
 
