@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/policy_document.h"
 #include "google/cloud/storage/signed_url_options.h"
+#include "google/cloud/storage/version.h"
 
 namespace google {
 namespace cloud {

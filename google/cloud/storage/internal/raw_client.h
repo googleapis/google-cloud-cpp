@@ -34,6 +34,7 @@
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/service_account.h"
+#include "google/cloud/storage/version.h"
 
 namespace google {
 namespace cloud {

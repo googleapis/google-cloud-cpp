@@ -21,6 +21,7 @@
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/upload_options.h"
+#include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
 
 namespace google {

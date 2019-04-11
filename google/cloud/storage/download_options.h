@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_DOWNLOAD_OPTIONS_H_
 
 #include "google/cloud/storage/internal/complex_option.h"
+#include "google/cloud/storage/version.h"
 #include <cstdint>
 #include <iostream>
 #include <string>

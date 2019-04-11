@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_LOGGING_RESUMABLE_UPLOAD_SESSION_H_
 
 #include "google/cloud/storage/internal/resumable_upload_session.h"
+#include "google/cloud/storage/version.h"
 
 namespace google {
 namespace cloud {

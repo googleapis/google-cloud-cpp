@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_HANDLE_FACTORY_H_
 
 #include "google/cloud/storage/internal/curl_wrappers.h"
+#include "google/cloud/storage/version.h"
 #include <mutex>
 #include <vector>
 

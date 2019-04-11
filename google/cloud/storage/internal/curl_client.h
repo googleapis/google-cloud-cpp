@@ -20,6 +20,7 @@
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/oauth2/credentials.h"
+#include "google/cloud/storage/version.h"
 #include <mutex>
 
 namespace google {

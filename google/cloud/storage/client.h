@@ -34,6 +34,7 @@
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/upload_options.h"
+#include "google/cloud/storage/version.h"
 
 namespace google {
 namespace cloud {

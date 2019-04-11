@@ -19,6 +19,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/version.h"
 #include <utility>
 
 namespace google {
