@@ -23,8 +23,12 @@ set -eu
 #   tests should have read/write access to this bucket.
 # - STORAGE_REGION_ID: the name of of Google Cloud Storage region, ideally close
 #   to the VMs running the integration tests.
-# - SERVICE_ACCOUNT: a valid service account in ${PROJECT_ID}. It is used to
-#   test HMAC keys. New keys will be created in this account.
+# - HMAC_SERVICE_ACCOUNT: a valid service account in ${PROJECT_ID}. It is used
+#   to test HMAC keys. New keys will be created in this account.
+# - SIGNING_SERVICE_ACCOUNT: a valid service account in ${PROJECT_ID}. It is
+#   used to sign URLs and policy documents. The account must have enough
+#   privileges to sign blobs (roles/iam.serviceAccountTokenCreator) and enough
+#   privileges to create and access objects in ${BUCKET_NAME}.
 # - TOPIC_NAME: a valid Cloud Pub/Sub topic name, configured to accept
 #   publications from the GCS service account in ${PROJECT_ID}. It is used to
 #   create Cloud Pub/Sub notifications, but no notifications are actually sent
@@ -42,7 +46,7 @@ echo "Running storage::internal::CurlResumableUploadSession integration tests."
 
 echo
 echo "Running CurlClient::SignBlob integration tests."
-./curl_sign_blob_integration_test "${SERVICE_ACCOUNT}"
+./curl_sign_blob_integration_test "${SIGNING_SERVICE_ACCOUNT}"
 
 echo
 echo "Running GCS Bucket APIs integration tests."
@@ -81,5 +85,12 @@ echo "Running GCS Projects.serviceAccount integration tests."
 ./thread_integration_test "${PROJECT_ID}" "${STORAGE_REGION_ID}"
 
 echo
+echo "Running GCS Projects.serviceAccount integration tests."
+./service_account_integration_test "${PROJECT_ID}" "${HMAC_SERVICE_ACCOUNT}"
+
+echo
 echo "Running V4 Signed URL conformance tests."
 ./signed_url_conformance_test "${TEST_ACCOUNT_FILE}" "${TEST_DATA_FILE}"
+
+echo "Running Signed URL integration test."
+./signed_url_integration_test "${BUCKET_NAME}" "${SIGNING_SERVICE_ACCOUNT}"
