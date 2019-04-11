@@ -37,29 +37,20 @@ namespace spanner {
  * the client than they do.  This namespace is inlined, so applications can use
  * `spanner::Foo` in their source, but the symbols are versioned, i.e., the
  * symbol becomes `spanner::v1::Foo`.
- *
- * Note that, consistent with the semver.org guidelines, the v0 version makes
- * no guarantees with respect to backwards compatibility.
  */
 inline namespace SPANNER_CLIENT_NS {
 /**
  * The Cloud spanner C++ Client major version.
- *
- * @see https://semver.org/spec/v2.0.0.html for details.
  */
 int constexpr version_major() { return SPANNER_CLIENT_VERSION_MAJOR; }
 
 /**
  * The Cloud spanner C++ Client minor version.
- *
- * @see https://semver.org/spec/v2.0.0.html for details.
  */
 int constexpr version_minor() { return SPANNER_CLIENT_VERSION_MINOR; }
 
 /**
  * The Cloud spanner C++ Client patch version.
- *
- * @see https://semver.org/spec/v2.0.0.html for details.
  */
 int constexpr version_patch() { return SPANNER_CLIENT_VERSION_PATCH; }
 

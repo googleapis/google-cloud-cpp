@@ -14,12 +14,12 @@
 # limitations under the License.
 # ~~~
 
-include(external/googleapis)
-
 # This should be included from the top level CMakeLists file
 set(SPANNER_CLIENT_VERSION_MAJOR 0)
 set(SPANNER_CLIENT_VERSION_MINOR 1)
 set(SPANNER_CLIENT_VERSION_PATCH 0)
+
+set(SPANNER_CLIENT_COPYRIGHT_YEAR 2019)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Spanner C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Spanner")
@@ -60,7 +60,8 @@ include(CreateBazelConfig)
 export_variables_to_bazel("spanner_client_version.bzl"
                           SPANNER_CLIENT_VERSION_MAJOR
                           SPANNER_CLIENT_VERSION_MINOR
-                          SPANNER_CLIENT_VERSION_PATCH)
+                          SPANNER_CLIENT_VERSION_PATCH
+                          YEAR ${SPANNER_CLIENT_COPYRIGHT_YEAR})
 
 # the client library
 add_library(spanner_client
@@ -86,7 +87,8 @@ set_target_properties(
 add_library(spanner::client ALIAS spanner_client)
 
 include(CreateBazelConfig)
-create_bazel_config(spanner_client)
+create_bazel_config(spanner_client
+                    YEAR ${SPANNER_CLIENT_COPYRIGHT_YEAR})
 google_cloud_cpp_add_clang_tidy(spanner_client)
 
 if (BUILD_TESTING)
@@ -96,7 +98,8 @@ if (BUILD_TESTING)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("spanner_client_unit_tests.bzl"
-                         "spanner_client_unit_tests")
+                         "spanner_client_unit_tests"
+                         YEAR ${SPANNER_CLIENT_COPYRIGHT_YEAR})
 
     foreach (fname ${spanner_client_unit_tests})
         string(REPLACE "/"
@@ -123,22 +126,6 @@ if (BUILD_TESTING)
     endforeach ()
 endif ()
 
-option(FORCE_SANITIZER_ERRORS
-       "If set, enable tests that force errors detected by the sanitizers." "")
-if (FORCE_SANITIZER_ERRORS)
-    target_compile_definitions(spanner_client_force_sanitizer_failures_test
-                               PRIVATE -DSPANNER_CLIENT_FORCE_SANITIZER_ERRORS)
-endif (FORCE_SANITIZER_ERRORS)
-
-option(FORCE_STATIC_ANALYZER_ERRORS
-       "If set, enable tests that force errors detected by the static analyzer."
-       "")
-if (FORCE_STATIC_ANALYZER_ERRORS)
-    target_compile_definitions(spanner_client_force_sanitizer_failures_test
-                               PRIVATE
-                               -DSPANNER_CLIENT_FORCE_STATIC_ANALYZER_ERRORS)
-endif (FORCE_STATIC_ANALYZER_ERRORS)
-
 set(GOOGLE_CLOUD_CPP_SPANNER_ENABLE_INSTALL "ON")
 
 if ("${GOOGLE_CLOUD_CPP_SPANNER_ENABLE_INSTALL}")
@@ -155,7 +142,7 @@ if ("${GOOGLE_CLOUD_CPP_SPANNER_ENABLE_INSTALL}")
             DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/spanner_client")
 
     install(TARGETS spanner_client
-            EXPORT spannerj-targets
+            EXPORT spanner-targets
             RUNTIME DESTINATION bin
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
@@ -169,7 +156,7 @@ if ("${GOOGLE_CLOUD_CPP_SPANNER_ENABLE_INSTALL}")
     set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Spanner C++ Client Library")
     set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
         "Provides C++ APIs to access Google Cloud Spanner.")
-    set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common googleapis")
+    set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common")
     set(GOOGLE_CLOUD_CPP_PC_LIBS "-lspanner_client")
 
     # Create and install the pkg-config files.
