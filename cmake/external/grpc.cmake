@@ -53,8 +53,8 @@ if (NOT TARGET gprc_project)
         grpc_project
         DEPENDS c_ares_project protobuf_project ssl_project
         EXCLUDE_FROM_ALL ON
-        PREFIX "external/grpc"
-        INSTALL_DIR "external"
+        PREFIX "${CMAKE_BINARY_DIR}/external/grpc"
+        INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
         URL ${GOOGLE_CLOUD_CPP_GRPC_URL}
         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GRPC_SHA256}
         LIST_SEPARATOR |
@@ -131,5 +131,5 @@ if (NOT TARGET gprc_project)
     set_executable_name_for_external_project(gRPC::grpc_cpp_plugin
                                              grpc_cpp_plugin)
 
-    list(APPEND PROTOBUF_IMPORT_DIRS "${PROJECT_BINARY_DIR}/external/include")
+    list(APPEND PROTOBUF_IMPORT_DIRS "${CMAKE_BINARY_DIR}/external/include")
 endif ()
