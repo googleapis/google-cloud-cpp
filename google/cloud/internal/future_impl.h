@@ -171,9 +171,13 @@ class future_shared_state_base {
     if (is_ready_unlocked()) {
       return;
     }
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     set_exception(std::make_exception_ptr(
                       std::future_error(std::future_errc::broken_promise)),
                   lk);
+#else
+    set_exception(nullptr, lk);
+#endif
     cv_.notify_all();
   }
 
