@@ -129,7 +129,7 @@ function (export_variables_to_bazel filename)
 """Automatically generated version numbers - DO NOT EDIT."""
 
 ]=])
-    foreach (item ${ARGN})
+    foreach (item ${_EXPORT_VARIABLES_TO_BAZEL_OPT_UNPARSED_ARGUMENTS})
         file(APPEND "${filename}" "${item} = \"${${item}}\"\n")
     endforeach ()
 endfunction ()
