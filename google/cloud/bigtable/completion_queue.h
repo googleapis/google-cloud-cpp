@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_COMPLETION_QUEUE_H_
 
 #include "google/cloud/bigtable/internal/completion_queue_impl.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 

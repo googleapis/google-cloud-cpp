@@ -21,6 +21,7 @@
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/internal/completion_queue_impl.h"
 #include "google/cloud/bigtable/polling_policy.h"
+#include "google/cloud/bigtable/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <sstream>
 

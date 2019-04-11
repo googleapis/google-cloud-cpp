@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/internal/async_op_traits.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/throw_delegate.h"
 

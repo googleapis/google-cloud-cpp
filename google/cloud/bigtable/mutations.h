@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/internal/conjunction.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <google/bigtable/v2/bigtable.pb.h>

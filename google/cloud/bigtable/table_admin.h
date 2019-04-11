@@ -22,6 +22,7 @@
 #include "google/cloud/bigtable/internal/table_admin.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/table_config.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include <future>
