@@ -14,6 +14,14 @@
 
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 
+#include "google/cloud/storage/internal/openssl_util.h"
+
+#include <openssl/err.h>
+#include <openssl/pem.h>
+#include <openssl/pkcs12.h>
+
+#include <fstream>
+
 namespace google {
 namespace cloud {
 namespace storage {
@@ -67,6 +75,100 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
       // the default value.
       credentials.value(token_uri_key, default_token_uri),
   };
+}
+
+StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
+    std::string const& source, std::string const& default_token_uri) {
+  OpenSSL_add_all_algorithms();
+
+  PKCS12* p12 = [](std::string const& source) {
+    FILE* fp = std::fopen(source.c_str(), "rb");
+    auto result = d2i_PKCS12_fp(fp, nullptr);
+    fclose(fp);
+    return result;
+  }(source);
+
+  auto capture_openssl_errors = []() {
+    std::string msg;
+    while (auto code = ERR_get_error()) {
+      // OpenSSL guarantees that 120 bytes is enough:
+      //   https://www.openssl.org/docs/man1.0.2/man3/ERR_error_string_n.html
+      char buf[128];
+      ERR_error_string_n(code, buf, sizeof(buf));
+      msg += buf;
+    }
+    return msg;
+  };
+
+  if (p12 == nullptr) {
+    std::string msg = "Cannot open PKCS#12 file (" + source + "): ";
+    msg += capture_openssl_errors();
+    return Status(StatusCode::kInvalidArgument, msg);
+  }
+
+  EVP_PKEY* pkey_raw;
+  X509* cert_raw;
+  if (PKCS12_parse(p12, "notasecret", &pkey_raw, &cert_raw, nullptr) != 1) {
+    std::string msg = "Cannot parse PKCS#12 file (" + source + "): ";
+    msg += capture_openssl_errors();
+    return Status(StatusCode::kInvalidArgument, msg);
+  }
+  PKCS12_free(p12);
+
+  std::unique_ptr<EVP_PKEY, decltype(&EVP_PKEY_free)> pkey(pkey_raw,
+                                                           &EVP_PKEY_free);
+  std::unique_ptr<X509, decltype(&X509_free)> cert(cert_raw, &X509_free);
+
+  if (pkey_raw == nullptr) {
+    return Status(StatusCode::kInvalidArgument,
+                  "No private key found in PKCS#12 file (" + source + ")");
+  }
+  if (cert_raw == nullptr) {
+    return Status(StatusCode::kInvalidArgument,
+                  "No private key found in PKCS#12 file (" + source + ")");
+  }
+
+  // This is automatically deleted by `cert`.
+  X509_NAME* name = X509_get_subject_name(cert.get());
+
+  std::string service_account_id = [&name]() -> std::string {
+    // We expect the name to be simply CN/ followed by a (small) number of
+    // digits. If the string is longer we are simply going to ignore it.
+    char buf[128];
+    (void)X509_NAME_oneline(name, buf, sizeof(buf));
+    if (strncmp("/CN=", buf, 4) != 0) {
+      return "";
+    }
+    return buf + 4;
+  }();
+
+  if (service_account_id.empty()) {
+    return Status(
+        StatusCode::kInvalidArgument,
+        "Invalid PKCS#12 file (" + source +
+            "): service account id missing or not not formatted correctly");
+  }
+
+  std::unique_ptr<BIO, decltype(&BIO_free)> mem_io(BIO_new(BIO_s_mem()),
+                                                   &BIO_free);
+
+  if (PEM_write_bio_PKCS8PrivateKey(mem_io.get(), pkey.get(), nullptr, nullptr,
+                                    0, nullptr, nullptr) == 0) {
+    std::string msg =
+        "Cannot print private key in PKCS#12 file (" + source + "): ";
+    msg += capture_openssl_errors();
+    return Status(StatusCode::kUnknown, msg);
+  }
+
+  // This buffer belongs to the BIO chain and is freed upon its destruction.
+  BUF_MEM* buf_mem;
+  BIO_get_mem_ptr(mem_io.get(), &buf_mem);
+
+  std::string private_key(buf_mem->data, buf_mem->length);
+
+  return ServiceAccountCredentialsInfo{std::move(service_account_id),
+                                       "--unknown--", std::move(private_key),
+                                       default_token_uri};
 }
 
 }  // namespace oauth2

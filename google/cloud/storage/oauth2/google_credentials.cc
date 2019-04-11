@@ -196,6 +196,28 @@ CreateServiceAccountCredentialsFromJsonFilePath(
 }
 
 StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromP12FilePath(std::string const& path) {
+  return CreateServiceAccountCredentialsFromP12FilePath(path, {}, {});
+}
+
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromP12FilePath(
+    std::string const& path,
+    google::cloud::optional<std::set<std::string>> scopes,
+    google::cloud::optional<std::string> subject) {
+  auto info = ParseServiceAccountP12File(path);
+  if (!info) {
+    return StatusOr<std::shared_ptr<Credentials>>(info.status());
+  }
+  // These are supplied as extra parameters to this method, not in the P12
+  // file.
+  info->subject = std::move(subject);
+  info->scopes = std::move(scopes);
+  return StatusOr<std::shared_ptr<Credentials>>(
+      std::make_shared<ServiceAccountCredentials<>>(*info));
+}
+
+StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(std::string const& contents) {
   return CreateServiceAccountCredentialsFromJsonContents(contents, {}, {});
 }

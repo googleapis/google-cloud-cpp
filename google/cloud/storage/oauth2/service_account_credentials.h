@@ -52,6 +52,19 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 
 /**
+ * Parses the contents of a P12 keyfile into a ServiceAccountCredentialsInfo.
+ *
+ * @warning We strongly recommend that applications use JSON keyfiles instead.
+ *
+ * @note Note that P12 keyfiles do not contain the `client_email` for the
+ * service account, the application must obtain this through some other means
+ * and provide them to the function.
+ */
+StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
+    std::string const& source,
+    std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
+
+/**
  * Wrapper class for Google OAuth 2.0 service account credentials.
  *
  * Takes a ServiceAccountCredentialsInfo and obtains access tokens from the

@@ -8,6 +8,26 @@ an existing project in Google Cloud Platform.
 
 TODO(#2420) - Complete this section.
 
+## Create a Service Account to run the integration tests.
+
+
+```console
+AGENT_ACCOUNT=...
+gcloud --project=${PROJECT_ID} iam service-accounts create ${AGENT_ACCOUNT}
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member serviceAccount:${AGENT_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com \
+  --role roles/iam.serviceAccountTokenCreator
+```
+
+```console
+gcloud --project=${PROJECT_ID} iam service-accounts keys create \
+    /dev/shm/service-account.p12 --key-file-type=p12 \
+    --iam-account=${SERVICE_ACCOUNT}
+gcloud --project=${PROJECT_ID} iam service-accounts keys create \
+    /dev/shm/service-account.json --key-file-type=json \
+    --iam-account=${SERVICE_ACCOUNT}  
+```
+
 ## Setting up a Bucket
 
 TODO(#2420) - Complete this section.
