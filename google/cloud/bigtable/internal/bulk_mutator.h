@@ -21,6 +21,7 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/table_strong_types.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/make_unique.h"
 

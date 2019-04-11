@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/internal/conjunction.h"
 #include "google/cloud/bigtable/row_range.h"
+#include "google/cloud/bigtable/version.h"
 
 namespace google {
 namespace cloud {

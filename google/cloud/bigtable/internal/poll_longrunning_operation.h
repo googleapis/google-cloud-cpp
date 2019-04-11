@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/polling_policy.h"
+#include "google/cloud/bigtable/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <sstream>
 #include <thread>

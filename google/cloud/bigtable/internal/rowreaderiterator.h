@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ROWREADERITERATOR_H_
 
 #include "google/cloud/bigtable/row.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/optional.h"
 #include <iterator>

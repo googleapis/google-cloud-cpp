@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/table.h"
 #include "google/cloud/bigtable/row_set.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"

@@ -22,6 +22,7 @@
 #include "google/cloud/bigtable/internal/async_poll_op.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/table_strong_types.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/make_unique.h"
 

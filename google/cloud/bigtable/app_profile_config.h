@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/table_strong_types.h"
+#include "google/cloud/bigtable/version.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
 
 namespace google {
