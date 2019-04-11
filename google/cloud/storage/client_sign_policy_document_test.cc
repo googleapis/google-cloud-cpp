@@ -53,7 +53,7 @@ constexpr char kJsonKeyfileContents[] = R"""({
 })""";
 
 /**
- * Test the CreateV*SignUrl functions in storage::Client.
+ * Test the CreateSignedPolicyDocument function in storage::Client.
  */
 class CreateSignedPolicyDocTest : public ::testing::Test {
  protected:
@@ -147,7 +147,7 @@ TEST_F(CreateSignedPolicyDocTest, SignRemote) {
 
 /// @test Verify that CreateSignedPolicyDocument() + SignBlob() respects retry
 /// policies.
-TEST_F(CreateSignedPolicyDocTest, V2SignTooManyFailures) {
+TEST_F(CreateSignedPolicyDocTest, SignPolicyTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::SignBlobResponse>(
       mock, EXPECT_CALL(*mock, SignBlob(_)),
       [](Client& client) {
@@ -159,7 +159,7 @@ TEST_F(CreateSignedPolicyDocTest, V2SignTooManyFailures) {
 
 /// @test Verify that CreateSignedPolicyDocument() + SignBlob() respects retry
 /// policies.
-TEST_F(CreateSignedPolicyDocTest, V2SignPermanentFailure) {
+TEST_F(CreateSignedPolicyDocTest, SignPolicyPermanentFailure) {
   testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
       *client, EXPECT_CALL(*mock, SignBlob(_)),
       [](Client& client) {
