@@ -11,7 +11,7 @@ client.
 
 ## Status
 
-This library support Google Cloud Bigtable at the
+This library supports Google Cloud Bigtable at the
 [Beta](../README.md#versioning) quality level.
 
 ## Documentation
