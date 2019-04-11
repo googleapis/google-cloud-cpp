@@ -1,5 +1,5 @@
 # ~~~
-# Copyright 2019 Google Inc.
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -90,18 +90,6 @@ create_bazel_config(spanner_client)
 google_cloud_cpp_add_clang_tidy(spanner_client)
 
 if (BUILD_TESTING)
-    add_library(spanner_client_testing
-                # TODO: 'git rm' this file when we have a real implementation.
-                spanner_client_testing_placeholder.h)
-    target_link_libraries(spanner_client_testing
-                          PUBLIC spanner_client
-                                 GTest::gmock_main
-                                 GTest::gmock
-                                 GTest::gtest
-                          PRIVATE spanner_common_options)
-
-    create_bazel_config(spanner_client_testing)
-
     # List the unit tests, then setup the targets and dependencies.
     set(spanner_client_unit_tests
         spanner_version_test.cc)
@@ -121,8 +109,7 @@ if (BUILD_TESTING)
                        ${target})
         add_executable(${target} ${fname})
         target_link_libraries(${target}
-                              PRIVATE spanner_client_testing
-                                      spanner_client
+                              PRIVATE spanner_client
                                       google_cloud_cpp_testing
                                       google_cloud_cpp_common
                                       GTest::gmock_main
