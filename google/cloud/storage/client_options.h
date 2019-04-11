@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_OPTIONS_H_
 
 #include "google/cloud/storage/oauth2/credentials.h"
+#include "google/cloud/storage/version.h"
 #include <memory>
 
 namespace google {

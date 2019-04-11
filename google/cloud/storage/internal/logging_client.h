@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_LOGGING_CLIENT_H_
 
 #include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/version.h"
 
 namespace google {
 namespace cloud {

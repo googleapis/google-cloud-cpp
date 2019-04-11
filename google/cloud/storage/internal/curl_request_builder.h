@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/curl_download_request.h"
 #include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/curl_request.h"
+#include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_headers.h"
 
 namespace google {

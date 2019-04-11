@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_METADATA_PARSER_H_
 
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/version.h"
 #include <chrono>
 
 namespace google {

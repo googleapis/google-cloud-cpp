@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERIC_REQUEST_H_
 
 #include "google/cloud/storage/internal/complex_option.h"
+#include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_headers.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include <iostream>

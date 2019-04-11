@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/range_from_pagination.h"
 #include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/version.h"
 #include <iterator>
 
 namespace google {

@@ -18,6 +18,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_request.h"
 #include "google/cloud/storage/internal/http_response.h"
+#include "google/cloud/storage/version.h"
 
 namespace google {
 namespace cloud {

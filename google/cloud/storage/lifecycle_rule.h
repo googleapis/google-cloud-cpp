@@ -20,6 +20,7 @@
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/parse_rfc3339.h"
 #include "google/cloud/storage/storage_class.h"
+#include "google/cloud/storage/version.h"
 #include <chrono>
 #include <iosfwd>
 #include <utility>

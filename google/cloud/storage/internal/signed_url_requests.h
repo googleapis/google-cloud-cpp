@@ -18,6 +18,7 @@
 #include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/signed_url_options.h"
+#include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include <iosfwd>
 #include <map>

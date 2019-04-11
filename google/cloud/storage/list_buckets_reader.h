@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/range_from_pagination.h"
 #include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/version.h"
 
 namespace google {
 namespace cloud {
