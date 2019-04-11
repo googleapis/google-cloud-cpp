@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/object_streambuf.h"
 #include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/version.h"
 #include <ios>
 #include <iostream>
 #include <string>

@@ -17,10 +17,10 @@
 
 #include "google/cloud/optional.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/version.h"
+#include <iostream>
 #include <string>
 #include <vector>
-
-#include <iostream>
 
 namespace google {
 namespace cloud {

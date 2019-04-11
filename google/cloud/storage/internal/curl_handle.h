@@ -17,6 +17,7 @@
 
 #include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/curl_wrappers.h"
+#include "google/cloud/storage/version.h"
 #include <curl/curl.h>
 
 namespace google {
