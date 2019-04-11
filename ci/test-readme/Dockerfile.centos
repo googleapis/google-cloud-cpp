@@ -147,3 +147,9 @@ WORKDIR /home/build/test-install-cmake
 COPY ci/test-install /home/build/test-install-cmake
 RUN env -u PKG_CONFIG_PATH cmake -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j $(nproc)
+
+WORKDIR /home/build/test-submodule
+COPY ci/test-install /home/build/test-submodule
+COPY . /home/build/test-submodule/submodule/google-cloud-cpp
+RUN cmake -H. -Bcmake-out
+RUN cmake --build cmake-out -- -j $(nproc)

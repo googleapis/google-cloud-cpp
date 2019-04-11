@@ -196,3 +196,9 @@ WORKDIR /home/build/test-install-cmake
 COPY ci/test-install /home/build/test-install-cmake
 RUN cmake -H. -Bcmake-out -DCMAKE_FIND_ROOT_PATH="/usr/local/curl;/usr/local/ssl"
 RUN cmake --build cmake-out -- -j $(nproc)
+
+WORKDIR /home/build/test-submodule
+COPY ci/test-install /home/build/test-submodule
+COPY . /home/build/test-submodule/submodule/google-cloud-cpp
+RUN cmake -H. -Bcmake-out -DCMAKE_FIND_ROOT_PATH="/usr/local/curl;/usr/local/ssl"
+RUN cmake --build cmake-out -- -j $(nproc)
