@@ -78,14 +78,14 @@ function (set_library_properties_for_external_project _target _lib)
         "z")
 
     if (${_lib} IN_LIST _libs_always_install_in_libdir)
-        set(_libpath "${PROJECT_BINARY_DIR}/external/lib/${_libfullname}")
+        set(_libpath "${CMAKE_BINARY_DIR}/external/lib/${_libfullname}")
     else()
         set(
             _libpath
-            "${PROJECT_BINARY_DIR}/external/${CMAKE_INSTALL_LIBDIR}/${_libfullname}"
+            "${CMAKE_BINARY_DIR}/external/${CMAKE_INSTALL_LIBDIR}/${_libfullname}"
             )
     endif ()
-    set(_includepath "${PROJECT_BINARY_DIR}/external/include")
+    set(_includepath "${CMAKE_BINARY_DIR}/external/include")
     message(STATUS "Configuring ${_target} with ${_libpath}")
     set_property(TARGET ${_target}
                  APPEND
@@ -104,7 +104,7 @@ function (set_executable_name_for_external_project _target _exe)
         TARGET ${_target}
         PROPERTY
             IMPORTED_LOCATION
-            "${PROJECT_BINARY_DIR}/external/bin/${_exe}${CMAKE_EXECUTABLE_SUFFIX}"
+            "${CMAKE_BINARY_DIR}/external/bin/${_exe}${CMAKE_EXECUTABLE_SUFFIX}"
         )
 endfunction ()
 
