@@ -11,13 +11,8 @@ client.
 
 ## Status
 
-This library support Google Cloud Spanner at the
-[Alpha](../README.md#versioning) quality level.
-
-## Documentation
-
-Full documentation, including a [quick start guide][quickstart-link]
-is available [online][doxygen-link].
+This library is under development, we do not recommend that you use it for
+production workloads.
 
 ## Release Notes
 
