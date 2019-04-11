@@ -175,12 +175,21 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   readonly TEST_INSTALL_DIR="${PROJECT_ROOT}/ci/test-install"
   readonly TEST_INSTALL_CMAKE_OUTPUT_DIR="${PROJECT_ROOT}/cmake-out/test-install-cmake"
   readonly TEST_INSTALL_MAKE_OUTPUT_DIR="${PROJECT_ROOT}/cmake-out/test-install-make"
+  readonly TEST_INSTALL_SUBMODULE_OUTPUT_DIR="${PROJECT_ROOT}/cmake-out/test-install-submodule"
   cmake -H"${TEST_INSTALL_DIR}" -B"${TEST_INSTALL_CMAKE_OUTPUT_DIR}" -DCMAKE_CXX_COMPILER=${CXX}
   cmake --build "${TEST_INSTALL_CMAKE_OUTPUT_DIR}"
   echo
   echo "${COLOR_YELLOW}Test installed libraries using make(1).${COLOR_RESET}"
   mkdir -p "${TEST_INSTALL_MAKE_OUTPUT_DIR}"
   make -C "${TEST_INSTALL_MAKE_OUTPUT_DIR}" -f"${TEST_INSTALL_DIR}/Makefile" VPATH="${TEST_INSTALL_DIR}" CXX=${CXX}
+  echo
+  echo "${COLOR_YELLOW}Test installed libraries when used as a submodule.${COLOR_RESET}"
+  mkdir -p "${TEST_INSTALL_SUBMODULE_OUTPUT_DIR}"
+  cp -r "${TEST_INSTALL_DIR}"/* "${TEST_INSTALL_SUBMODULE_OUTPUT_DIR}"
+  git -C "${TEST_INSTALL_SUBMODULE_OUTPUT_DIR}/submodule" init
+  git -C "${TEST_INSTALL_SUBMODULE_OUTPUT_DIR}/submodule" submodule add https://github.com/googleapis/google-cloud-cpp
+  cmake -H"${TEST_INSTALL_SUBMODULE_OUTPUT_DIR}/submodule" -B"${TEST_INSTALL_SUBMODULE_OUTPUT_DIR}" -DCMAKE_CXX_COMPILER=${CXX}
+  cmake --build "${TEST_INSTALL_SUBMODULE_OUTPUT_DIR}"
 
   # Checking the ABI requires installation, so this is the first opportunity to
   # run the check.

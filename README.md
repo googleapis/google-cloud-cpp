@@ -458,6 +458,11 @@ manager for your platform, or may require manually downloading, compiling, and
 installing said dependencies.  The [INSTALL.md](INSTALL.md) file describes how
 to successfully install `google-cloud-cpp` on several platforms.
 
+Alternatively, if you prefer to use `google-cloud-cpp` as a submodule, you can
+use the CMake command
+[`add_subdirectory()`](https://cmake.org/cmake/help/latest/command/add_subdirectory.html)
+to include `google-cloud-cpp` directly in your CMake project.
+
 ## Versioning
 
 This library follows [Semantic Versioning](http://semver.org/). Please note it
