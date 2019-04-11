@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/async_operation.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/throw_delegate.h"

@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/internal/poll_longrunning_operation.h"
+#include "google/cloud/bigtable/version.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <memory>
 #include <string>

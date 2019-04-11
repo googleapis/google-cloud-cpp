@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/cell.h"
 #include "google/cloud/bigtable/row.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/make_unique.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <vector>

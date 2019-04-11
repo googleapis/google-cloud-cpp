@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/cluster_config.h"
 #include "google/cloud/bigtable/internal/strong_type.h"
+#include "google/cloud/bigtable/version.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
 #include <google/bigtable/admin/v2/common.pb.h>
 #include <map>

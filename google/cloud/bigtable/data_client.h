@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/internal/completion_queue_impl.h"
 #include "google/cloud/bigtable/row.h"
+#include "google/cloud/bigtable/version.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 
 namespace google {

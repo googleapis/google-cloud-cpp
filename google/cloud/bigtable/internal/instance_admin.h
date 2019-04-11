@@ -32,6 +32,7 @@
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/iam_policy.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <memory>

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_RANGE_H_
 
 #include "google/cloud/bigtable/internal/prefix_range_end.h"
+#include "google/cloud/bigtable/version.h"
 #include <google/bigtable/v2/data.pb.h>
 #include <chrono>
 

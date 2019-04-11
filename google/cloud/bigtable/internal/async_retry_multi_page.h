@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/internal/conjunction.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/polling_policy.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/make_unique.h"
 
 namespace google {

@@ -25,6 +25,7 @@
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/table_config.h"
+#include "google/cloud/bigtable/version.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <future>
 #include <memory>
