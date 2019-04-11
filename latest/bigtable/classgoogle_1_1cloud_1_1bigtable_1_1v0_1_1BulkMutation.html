@@ -95,10 +95,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0d3dc3e6a04f33ab9374350f3cbb7637"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1BulkMutation.html#a0d3dc3e6a04f33ab9374350f3cbb7637">BulkMutation</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html">SingleRowMutation</a> m1, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html">SingleRowMutation</a> m2)</td></tr>
 <tr class="memdesc:a0d3dc3e6a04f33ab9374350f3cbb7637"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a muti-row mutation from two <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html" title="Represent a single row mutation. ">SingleRowMutation</a>.  <a href="#a0d3dc3e6a04f33ab9374350f3cbb7637">More...</a><br /></td></tr>
 <tr class="separator:a0d3dc3e6a04f33ab9374350f3cbb7637"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f00b937f424829c41a986482b809947"><td class="memTemplParams" colspan="2">template&lt;typename... M&gt; </td></tr>
-<tr class="memitem:a9f00b937f424829c41a986482b809947"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1BulkMutation.html#a9f00b937f424829c41a986482b809947">BulkMutation</a> (M &amp;&amp;... m)</td></tr>
-<tr class="memdesc:a9f00b937f424829c41a986482b809947"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a muti-row mutation from a variadic list.  <a href="#a9f00b937f424829c41a986482b809947">More...</a><br /></td></tr>
-<tr class="separator:a9f00b937f424829c41a986482b809947"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08a02c0dd60149cdbcf8dcf9f36fc3a8"><td class="memTemplParams" colspan="2">template&lt;typename... M, typename  = typename std::enable_if&lt;internal::conjunction&lt;                std::is_convertible&lt;M, SingleRowMutation&gt;...&gt;::value&gt;::type&gt; </td></tr>
+<tr class="memitem:a08a02c0dd60149cdbcf8dcf9f36fc3a8"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1BulkMutation.html#a08a02c0dd60149cdbcf8dcf9f36fc3a8">BulkMutation</a> (M &amp;&amp;... m)</td></tr>
+<tr class="memdesc:a08a02c0dd60149cdbcf8dcf9f36fc3a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a muti-row mutation from a variadic list.  <a href="#a08a02c0dd60149cdbcf8dcf9f36fc3a8">More...</a><br /></td></tr>
+<tr class="separator:a08a02c0dd60149cdbcf8dcf9f36fc3a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c1cb26f88bd91ea58a9b4c7ffda524e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1BulkMutation.html">BulkMutation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1BulkMutation.html#a0c1cb26f88bd91ea58a9b4c7ffda524e">emplace_back</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html">SingleRowMutation</a> mut)</td></tr>
 <tr class="separator:a0c1cb26f88bd91ea58a9b4c7ffda524e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac78009de70317cca76915f11c05fc28f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1BulkMutation.html">BulkMutation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1BulkMutation.html#ac78009de70317cca76915f11c05fc28f">emplace_back</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1FailedMutation.html">FailedMutation</a> fm)</td></tr>
@@ -122,7 +122,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Represent a set of mutations across multiple rows. </p>
 <p>Cloud Bigtable can batch multiple mutations in a single request. The mutations are not atomic, but it is more efficient to send them in a batch than to make multiple smaller requests. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00387">387</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00388">388</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a12d7c981d946fff574345868fcc54eb5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a12d7c981d946fff574345868fcc54eb5">&#9670;&nbsp;</a></span>BulkMutation() <span class="overload">[1/6]</span></h2>
@@ -149,7 +149,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Create an empty set of mutations. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00390">390</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00391">391</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -191,7 +191,7 @@ template&lt;typename iterator &gt; </div>
 
 <p>Create a multi-row mutation from a range of SingleRowMutations. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00394">394</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00395">395</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -221,7 +221,7 @@ template&lt;typename iterator &gt; </div>
 
 <p>Create a multi-row mutation from a initializer list. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00404">404</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00405">405</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -251,7 +251,7 @@ template&lt;typename iterator &gt; </div>
 
 <p>Create a multi-row mutation from a <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html" title="Represent a single row mutation. ">SingleRowMutation</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00408">408</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00409">409</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -291,17 +291,17 @@ template&lt;typename iterator &gt; </div>
 
 <p>Create a muti-row mutation from two <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html" title="Represent a single row mutation. ">SingleRowMutation</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00413">413</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00414">414</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
-<a id="a9f00b937f424829c41a986482b809947"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f00b937f424829c41a986482b809947">&#9670;&nbsp;</a></span>BulkMutation() <span class="overload">[6/6]</span></h2>
+<a id="a08a02c0dd60149cdbcf8dcf9f36fc3a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08a02c0dd60149cdbcf8dcf9f36fc3a8">&#9670;&nbsp;</a></span>BulkMutation() <span class="overload">[6/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... M&gt; </div>
+template&lt;typename... M, typename  = typename std::enable_if&lt;internal::conjunction&lt;                std::is_convertible&lt;M, SingleRowMutation&gt;...&gt;::value&gt;::type&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -323,7 +323,7 @@ template&lt;typename... M&gt; </div>
 
 <p>Create a muti-row mutation from a variadic list. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00420">420</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00423">423</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -352,7 +352,7 @@ template&lt;typename... M&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00430">430</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00428">428</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -380,7 +380,7 @@ template&lt;typename... M&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00436">436</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00434">434</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -409,7 +409,7 @@ template&lt;typename... M&gt; </div>
 
 <p>Return true if there are no mutations in this set. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00454">454</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00452">452</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -438,7 +438,7 @@ template&lt;typename... M&gt; </div>
 
 <p>Return the estimated size in bytes of all the mutations in this set. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00460">460</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00458">458</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -468,7 +468,7 @@ template&lt;typename... M&gt; </div>
 
 <p>Move the contents into a bigtable::v2::MutateRowsRequest. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00448">448</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00446">446</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -496,7 +496,7 @@ template&lt;typename... M&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00442">442</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00440">440</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -525,7 +525,7 @@ template&lt;typename... M&gt; </div>
 
 <p>Return the number of mutations in this set. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00457">457</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00455">455</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
