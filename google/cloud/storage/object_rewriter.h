@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/version.h"
 
 namespace google {
 namespace cloud {

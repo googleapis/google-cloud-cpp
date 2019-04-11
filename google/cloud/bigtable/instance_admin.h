@@ -22,6 +22,7 @@
 #include "google/cloud/bigtable/instance_update_config.h"
 #include "google/cloud/bigtable/internal/async_list_instances.h"
 #include "google/cloud/bigtable/internal/instance_admin.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include <future>

@@ -22,6 +22,7 @@
 #include "google/cloud/storage/internal/patch_builder.h"
 #include "google/cloud/storage/lifecycle_rule.h"
 #include "google/cloud/storage/object_access_control.h"
+#include "google/cloud/storage/version.h"
 #include <map>
 #include <tuple>
 #include <utility>

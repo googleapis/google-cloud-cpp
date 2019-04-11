@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RAW_CLIENT_WRAPPER_UTILS_H_
 
 #include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/version.h"
 #include <type_traits>
 
 namespace google {

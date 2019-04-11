@@ -21,6 +21,7 @@
 #include "google/cloud/bigtable/instance_admin_client.h"
 #include "google/cloud/bigtable/internal/async_retry_multi_page.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/make_unique.h"
 
 namespace google {

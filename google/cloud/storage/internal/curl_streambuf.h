@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/curl_download_request.h"
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/object_streambuf.h"
+#include "google/cloud/storage/version.h"
 
 namespace google {
 namespace cloud {

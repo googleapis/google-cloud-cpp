@@ -19,6 +19,7 @@
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/internal/http_response.h"
+#include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include <iosfwd>
 

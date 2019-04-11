@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BIGTABLE_STRONG_TYPES_H_
 
 #include "google/cloud/bigtable/internal/strong_type.h"
+#include "google/cloud/bigtable/version.h"
 
 namespace google {
 namespace cloud {

@@ -17,6 +17,7 @@
 
 #include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/version.h"
 #include <map>
 #include <string>
 

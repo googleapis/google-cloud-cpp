@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERIC_OBJECT_REQUEST_H_
 
 #include "google/cloud/storage/internal/generic_request.h"
+#include "google/cloud/storage/version.h"
 
 namespace google {
 namespace cloud {

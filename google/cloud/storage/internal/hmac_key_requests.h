@@ -20,6 +20,7 @@
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/override_default_project.h"
+#include "google/cloud/storage/version.h"
 #include <iosfwd>
 
 namespace google {

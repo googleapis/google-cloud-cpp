@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_FILTERS_H_
 
 #include "google/cloud/bigtable/internal/conjunction.h"
+#include "google/cloud/bigtable/version.h"
 #include <google/bigtable/v2/data.pb.h>
 #include <chrono>
 

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_HASHING_OPTIONS_H_
 
 #include "google/cloud/storage/internal/complex_option.h"
+#include "google/cloud/storage/version.h"
 #include <string>
 
 namespace google {

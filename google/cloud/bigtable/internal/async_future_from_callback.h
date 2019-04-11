@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include <google/protobuf/empty.pb.h>

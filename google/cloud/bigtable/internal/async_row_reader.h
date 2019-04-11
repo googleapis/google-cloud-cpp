@@ -26,6 +26,7 @@
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/table_strong_types.h"
+#include "google/cloud/bigtable/version.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <cinttypes>

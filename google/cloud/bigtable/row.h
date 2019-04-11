@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_H_
 
 #include "google/cloud/bigtable/cell.h"
+#include "google/cloud/bigtable/version.h"
 #include <vector>
 
 namespace google {
