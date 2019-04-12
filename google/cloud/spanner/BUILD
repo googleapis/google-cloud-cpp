@@ -61,3 +61,12 @@ load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
         "@com_google_googletest//:gtest",
     ],
 ) for test in spanner_client_unit_tests]
+
+cc_binary(
+    name = "spanner_tool",
+    srcs = [ "spanner_tool.cc" ],
+    deps = [
+        "//google/cloud:google_cloud_cpp_common",
+        "@com_github_googleapis_googleapis//:spanner_protos",
+    ]
+)
