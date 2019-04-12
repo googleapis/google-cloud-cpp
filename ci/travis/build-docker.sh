@@ -215,6 +215,7 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
         echo /var/tmp/staging/usr/local/include/google/cloud/bigtable/internal ; \
         echo /var/tmp/staging/usr/local/include/google/cloud/firestore ; \
         echo /var/tmp/staging/usr/local/include/google/cloud/internal ; \
+        echo /var/tmp/staging/usr/local/include/google/cloud/spanner; \
         echo /var/tmp/staging/usr/local/include/google/cloud/storage ; \
         echo /var/tmp/staging/usr/local/include/google/cloud/storage/internal ; \
         echo /var/tmp/staging/usr/local/include/google/cloud/storage/oauth2 ; \
