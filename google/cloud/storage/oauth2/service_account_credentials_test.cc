@@ -17,6 +17,7 @@
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
+#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
@@ -508,27 +509,121 @@ char const kP12KeyFileContents[] =
     "MEBRLRGzwEmh/syMX4jZMD4wITAJBgUrDgMCGgUABBRMwW+6BtBMmK0TpkdKUoLx"
     "athJxwQUzb2wLrSCVOJ++SqKIlZsWF4mYz8CAwGGoA==";
 
-/// @test Verify that parsing a service account JSON string works.
-TEST_F(ServiceAccountCredentialsTest, ParseSimpleP12) {
-  auto p12_file = CreateRandomFileName();
-  std::ofstream os(p12_file, std::ios::binary);
-  auto bytes = internal::Base64Decode(kP12KeyFileContents);
+char const kP12KeyFileMissingCerts[] =
+    "MIIDzAIBAzCCA5IGCSqGSIb3DQEHAaCCA4MEggN/MIIDezCCA3cGCSqGSIb3DQEH"
+    "BqCCA2gwggNkAgEAMIIDXQYJKoZIhvcNAQcBMBwGCiqGSIb3DQEMAQYwDgQILaGB"
+    "fWhJ2V0CAggAgIIDMM5EI/ck4VQD4JyGchVPbgd5HQjFbn+HThIoxBYpMPEK+iT7"
+    "t32idiirDi0qH+6nZancp69nnKhjpAOnMLSjCvba7HDFzi/op7fgf9hnwupEOahv"
+    "4b8Wv0S9ePTqsLfJy8tJzOAPYKOJO7HGSeZanWh2HpyCd2g1K1dBXsqsabTtJBsF"
+    "TSGsfUg08/SMT5o12BlMk/wjzUrcSNQxntyPXLfjO1uZ0gFjFO6xsFyclVWr8Zax"
+    "7fTA6SLdgeE1Iu2+mS1ohwNNzeBrCU6kXVzgw1GSn0UV0ZGbANRWDZZThWzQs9UW"
+    "sn8l1fr70OZ4JhUwPZe9g0Tu7EeGNPkM5dW1Lr3izKNtYdInBD/1J7wGxsmomsU3"
+    "khIH2FMqqYX7NFkI0TZiHpLYk2bQmMnfFbBDlXluzO2iLvBY5FPUCn5W4ZPAJlFs"
+    "Ryo/OytciwJUIRoz76CIg3TmzM1b+RLBMEr6lAsD1za3fcTMwbsBeYY0FEFfb/I6"
+    "ddmJTxjbCLPLekgkV7MIFSWPiL4t2eXR3rlu1Vnoys0aTWmFtJhEOI16Q1bkJ9L1"
+    "c/KXHm/Srccm8hTazNYQewHRXWiAvigg6slRnx1I36Z0TMbnikDVCRH8cjFsMKO5"
+    "/qNMKSsZ6EAePHYAu4N5CpqaTl0hjHI8sW+CDzzmGOn8Acb00gJ+DOu+wiTZtJYS"
+    "GIZogs7PluMJ7cU1Ju38OixWbQDvfDdloQ/7kZrM6DoEKhvC2bwMwlfxin9jUwjJ"
+    "98dtdAwQVgckvnYYVpqKnn/dlkiStaiZFKx27kw6o2oobcDrkg0wtOZFeX8k0SXZ"
+    "ekcmMc5Xfl+5HyJxH5ni8UmHyOHAM8dNjpnzCD9J2K0U7z8kdzslZ95X5MAxYIUa"
+    "r50tIaWHxeLLYYZUi+nyjNbMZ+yvAqOjQqI1mIcYZurHRPRIHVi2x4nfcKKQIkxn"
+    "UTF9d3VWbkWoJ1qfe0OSpWg4RrdgDCSB1BlF0gQHEsDTT5/xoZIEoUV8t6TYTVCe"
+    "axreBYxLhvROONz94v6GD6Eb4kakbSObn8NuBiWnaPevFyEF5YluKR87MbZRQY0Z"
+    "yJ/4PuEhDIioRdY7ujAxMCEwCQYFKw4DAhoFAAQU4/UMFJQGUvgPuTXRKp0gVU4B"
+    "GbkECPTYJIica3DWAgIIAA==";
+
+char const kP12KeyFileMissingKey[] =
+    "MIIDzAIBAzCCA5IGCSqGSIb3DQEHAaCCA4MEggN/MIIDezCCA3cGCSqGSIb3DQEH"
+    "BqCCA2gwggNkAgEAMIIDXQYJKoZIhvcNAQcBMBwGCiqGSIb3DQEMAQYwDgQILaGB"
+    "fWhJ2V0CAggAgIIDMM5EI/ck4VQD4JyGchVPbgd5HQjFbn+HThIoxBYpMPEK+iT7"
+    "t32idiirDi0qH+6nZancp69nnKhjpAOnMLSjCvba7HDFzi/op7fgf9hnwupEOahv"
+    "4b8Wv0S9ePTqsLfJy8tJzOAPYKOJO7HGSeZanWh2HpyCd2g1K1dBXsqsabTtJBsF"
+    "TSGsfUg08/SMT5o12BlMk/wjzUrcSNQxntyPXLfjO1uZ0gFjFO6xsFyclVWr8Zax"
+    "7fTA6SLdgeE1Iu2+mS1ohwNNzeBrCU6kXVzgw1GSn0UV0ZGbANRWDZZThWzQs9UW"
+    "sn8l1fr70OZ4JhUwPZe9g0Tu7EeGNPkM5dW1Lr3izKNtYdInBD/1J7wGxsmomsU3"
+    "khIH2FMqqYX7NFkI0TZiHpLYk2bQmMnfFbBDlXluzO2iLvBY5FPUCn5W4ZPAJlFs"
+    "Ryo/OytciwJUIRoz76CIg3TmzM1b+RLBMEr6lAsD1za3fcTMwbsBeYY0FEFfb/I6"
+    "ddmJTxjbCLPLekgkV7MIFSWPiL4t2eXR3rlu1Vnoys0aTWmFtJhEOI16Q1bkJ9L1"
+    "c/KXHm/Srccm8hTazNYQewHRXWiAvigg6slRnx1I36Z0TMbnikDVCRH8cjFsMKO5"
+    "/qNMKSsZ6EAePHYAu4N5CpqaTl0hjHI8sW+CDzzmGOn8Acb00gJ+DOu+wiTZtJYS"
+    "GIZogs7PluMJ7cU1Ju38OixWbQDvfDdloQ/7kZrM6DoEKhvC2bwMwlfxin9jUwjJ"
+    "98dtdAwQVgckvnYYVpqKnn/dlkiStaiZFKx27kw6o2oobcDrkg0wtOZFeX8k0SXZ"
+    "ekcmMc5Xfl+5HyJxH5ni8UmHyOHAM8dNjpnzCD9J2K0U7z8kdzslZ95X5MAxYIUa"
+    "r50tIaWHxeLLYYZUi+nyjNbMZ+yvAqOjQqI1mIcYZurHRPRIHVi2x4nfcKKQIkxn"
+    "UTF9d3VWbkWoJ1qfe0OSpWg4RrdgDCSB1BlF0gQHEsDTT5/xoZIEoUV8t6TYTVCe"
+    "axreBYxLhvROONz94v6GD6Eb4kakbSObn8NuBiWnaPevFyEF5YluKR87MbZRQY0Z"
+    "yJ/4PuEhDIioRdY7ujAxMCEwCQYFKw4DAhoFAAQU4/UMFJQGUvgPuTXRKp0gVU4B"
+    "GbkECPTYJIica3DWAgIIAA==";
+
+void WriteBase64AsBinary(std::string const& filename, char const* data) {
+  std::ofstream os(filename, std::ios::binary);
+  os.exceptions(std::ios::badbit);
+  auto bytes = internal::Base64Decode(data);
   for (unsigned char c : bytes) {
     os << c;
   }
   os.close();
+}
 
-  auto info = ParseServiceAccountP12File(p12_file);
+/// @test Verify that parsing a service account JSON string works.
+TEST_F(ServiceAccountCredentialsTest, ParseSimpleP12) {
+  auto filename = CreateRandomFileName() + ".p12";
+  WriteBase64AsBinary(filename, kP12KeyFileContents);
+
+  auto info = ParseServiceAccountP12File(filename);
   ASSERT_STATUS_OK(info);
 
   EXPECT_EQ(kP12ServiceAccountId, info->client_email);
   EXPECT_FALSE(info->private_key.empty());
-  EXPECT_EQ(0, std::remove(p12_file.c_str()));
+  EXPECT_EQ(0, std::remove(filename.c_str()));
 
   ServiceAccountCredentials<> credentials(*info);
 
   auto signed_blob = credentials.SignBlob(SigningAccount(), "test-blob");
   EXPECT_STATUS_OK(signed_blob);
+}
+
+TEST_F(ServiceAccountCredentialsTest, ParseP12MissingKey) {
+  std::string filename = CreateRandomFileName() + ".p12";
+  WriteBase64AsBinary(filename, kP12KeyFileMissingKey);
+  auto info = ParseServiceAccountP12File(filename);
+  EXPECT_FALSE(info.ok());
+}
+
+TEST_F(ServiceAccountCredentialsTest, ParseP12MissingCerts) {
+  std::string filename = ::testing::TempDir() + CreateRandomFileName() + ".p12";
+  WriteBase64AsBinary(filename, kP12KeyFileMissingCerts);
+  auto info = ParseServiceAccountP12File(filename);
+  EXPECT_FALSE(info.ok());
+}
+
+TEST_F(ServiceAccountCredentialsTest, CreateFromP12MissingFile) {
+  std::string filename = CreateRandomFileName();
+  // Loading a non-existent file should fail.
+  auto actual = CreateServiceAccountCredentialsFromP12FilePath(filename);
+  EXPECT_FALSE(actual.ok());
+}
+
+TEST_F(ServiceAccountCredentialsTest, CreateFromP12EmptyFile) {
+  std::string filename = CreateRandomFileName();
+  std::ofstream(filename).close();
+
+  // Loading an empty file should fail.
+  auto actual = CreateServiceAccountCredentialsFromP12FilePath(filename);
+  EXPECT_FALSE(actual.ok());
+
+  EXPECT_EQ(0, std::remove(filename.c_str()));
+}
+
+TEST_F(ServiceAccountCredentialsTest, CreateFromP12ValidFile) {
+  std::string filename = CreateRandomFileName() + ".p12";
+  WriteBase64AsBinary(filename, kP12KeyFileContents);
+
+  // Loading an empty file should fail.
+  auto actual = CreateServiceAccountCredentialsFromP12FilePath(filename);
+  EXPECT_STATUS_OK(actual);
+
+  EXPECT_EQ(0, std::remove(filename.c_str()));
 }
 
 }  // namespace

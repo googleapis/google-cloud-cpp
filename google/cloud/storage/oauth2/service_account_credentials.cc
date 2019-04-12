@@ -83,6 +83,9 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
 
   PKCS12* p12 = [](std::string const& source) {
     FILE* fp = std::fopen(source.c_str(), "rb");
+    if (fp == nullptr) {
+      return static_cast<PKCS12*>(nullptr);
+    }
     auto result = d2i_PKCS12_fp(fp, nullptr);
     fclose(fp);
     return result;
