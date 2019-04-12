@@ -25,6 +25,7 @@ is available [online][doxygen-link].
 
 ### v0.8.x - 2019-04
 
+* Use SFINAE to constrain applicability of the BulkMutation(M&&...) ctor.
 * **Breaking change**: `Table::BulkApply` now returns a
   `std::vector<FailedMutation>` instead of throwing an exception.
 * In the future we will remove all the `google::cloud::bigtable::noex::*`
