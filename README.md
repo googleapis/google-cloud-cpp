@@ -26,7 +26,7 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 [![Kokoro CI status][kokoro-clang-tidy-shield]][kokoro-clang-tidy-link]
 [![Kokoro CI status][kokoro-libcxx-shield]][kokoro-libcxx-link]
 [![Kokoro CI status][kokoro-check-abi-shield]][kokoro-check-abi-link]
-[![Kokoro CI status][kokoro-shared-shield]][kokoro-shared-link] 
+[![Kokoro CI status][kokoro-shared-shield]][kokoro-shared-link]
 [![Travis CI status][travis-shield]][travis-link]
 [![Kokoro CI status][kokoro-bazel-shield]][kokoro-bazel-link]
 

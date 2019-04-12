@@ -45,7 +45,7 @@ Bazel builds are basically external project builds.
 
 When compiling with external projects we create [targets][cmake-doc-targets]
 that have the same names (and roles) as the `Find<Package>` module creates when
-the dependency is installed. For example, when protobuf is installed and 
+the dependency is installed. For example, when protobuf is installed and
 discovered via `find_package()` the module for protobuf introduces a
 `protobuf::libprotobuf` target. We will construct our external projects to
 exhibit the same behavior.
