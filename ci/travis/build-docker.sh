@@ -36,7 +36,7 @@ if [ "${SCAN_BUILD}" = "yes" ]; then
   CMAKE_COMMAND="scan-build --use-cc=${CC} --use-c++=${CXX} cmake"
 fi
 
-ccache_command="$(which ccache)"
+ccache_command="$(command -v ccache)"
 
 if [[ -z "${ccache_command}" ]]; then
   echo "The Travis builds cannot complete without ccache(1), exiting."

@@ -54,7 +54,7 @@ find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 \
 #       are obsoleted by the gRPC team, so we should not use them in our code.
 #     - Replace grpc::<BLAH> with grpc::StatusCode::<BLAH>, the aliases in the
 #       `grpc::` namespace do not exist inside google.
-for file in $(find google/cloud -name '*.h' -o -name '*.cc' -print); do
+while IFS= read -r -d '' file; do
   # We used to run run `sed -i` to apply these changes, but that touches the
   # files even if there are no changes applied, forcing a rebuild each time.
   # So we first apply the change to a temporary file, and replace the original
@@ -68,7 +68,7 @@ for file in $(find google/cloud -name '*.h' -o -name '*.cc' -print); do
   else
       mv -f "${file}.tmp" "${file}"
   fi
-done
+done < <(find google/cloud \( -name '*.h' -o -name '*.cc' \) -print0)
 
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier

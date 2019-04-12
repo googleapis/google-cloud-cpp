@@ -15,7 +15,7 @@
 # limitations under the License.
 
 if [ -z "${PROJECT_ROOT+x}" ]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../../.."; pwd)"
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../../.." || exit; pwd)"
 fi
 source "${PROJECT_ROOT}/ci/colors.sh"
 
@@ -39,7 +39,7 @@ kill_testbench() {
   kill "${TESTBENCH_PID}"
   wait "${TESTBENCH_PID}" >/dev/null 2>&1
   echo "done."
-  if [ "${TESTBENCH_DUMP_LOG}" = "yes" -a "testbench.log" ]; then
+  if [ "${TESTBENCH_DUMP_LOG}" = "yes" ] && [ -e "testbench.log" ]; then
     echo "================ [begin testbench.log] ================"
     # Travis has a limit of ~10,000 lines, and sometimes the
     # emulator log gets too long, just print the interesting bits:

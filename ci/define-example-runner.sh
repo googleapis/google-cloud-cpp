@@ -48,7 +48,7 @@ run_example() {
   local program_path=$1
   local example=$2
   shift 2
-  local arguments=$*
+  local arguments="$@"
   local program_name=$(basename ${program_path})
 
   if [ ! -x ${program_path} ]; then

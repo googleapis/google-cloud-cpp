@@ -16,7 +16,7 @@
 
 set -eu
 
-if [[ -z "$(which cov-build)" ]]; then
+if [[ -z "$(command -v cov-build)" ]]; then
   echo "This script requires the coverity scan tool (cov-build) in PATH."
   echo "Please download the tool, make sure your PATH includes the directory"
   echo "that contains it and try again."

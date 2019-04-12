@@ -33,7 +33,9 @@ sed \
     -e 's/ldconfig/sudo ldconfig/g' \
     -e 's/^\(cmake.*--target install.*\)/sudo \1/g' \
     -e 's/^make install/sudo make install/' \
+    # shellcheck disable=SC2016
     -e 's;/home/build;$HOME;' \
+    # shellcheck disable=SC2016
     -e 's;/var/tmp/build;$HOME/Downloads;' \
     -e 's/^    sudo/sudo/' "$@" | \
     awk '
