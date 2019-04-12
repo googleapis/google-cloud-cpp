@@ -257,6 +257,29 @@ Status TableAdmin::DropRowsByPrefix(std::string const& table_id,
   return internal::MakeStatusFromRpcError(status);
 }
 
+future<Status> TableAdmin::AsyncDropRowsByPrefix(CompletionQueue& cq,
+                                                 std::string const& table_id,
+                                                 std::string row_key_prefix) {
+  google::bigtable::admin::v2::DropRowRangeRequest request;
+  request.set_name(TableName(table_id));
+  request.set_row_key_prefix(std::move(row_key_prefix));
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, table_id);
+  auto client = impl_.client_;
+  return internal::StartRetryAsyncUnaryRpc(
+             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
+             [client](grpc::ClientContext* context,
+                      btadmin::DropRowRangeRequest const& request,
+                      grpc::CompletionQueue* cq) {
+               return client->AsyncDropRowRange(context, request, cq);
+             },
+             std::move(request), cq)
+      .then([](future<StatusOr<google::protobuf::Empty>> r) {
+        return r.get().status();
+      });
+}
+
 Status TableAdmin::DropAllRows(std::string const& table_id) {
   grpc::Status status;
   btadmin::DropRowRangeRequest request;
