@@ -46,6 +46,7 @@ cc_library(
     hdrs = spanner_client_hdrs + ["version_info.h"],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
+        "@com_github_googleapis_googleapis//:spanner_protos",
     ],
 )
 
@@ -66,7 +67,6 @@ cc_binary(
     name = "spanner_tool",
     srcs = [ "spanner_tool.cc" ],
     deps = [
-        "//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_googleapis//:spanner_protos",
+        ":spanner_client",
     ]
 )
