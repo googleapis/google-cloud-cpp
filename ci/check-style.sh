@@ -84,5 +84,21 @@ find . \( -path ./.git \
         \) -print0 \
      | xargs -0 buildifier -mode=fix
 
+# Apply shellcheck(1) to emit warnings for common scripting mistakes.
+find . \( -path ./.git \
+        -o -path ./third_party \
+        -o -path './cmake-build-*' \
+        -o -path ./build-output \
+        -o -path ./.build \
+        -o -path ./_build \
+        -o -path ./cmake-out \
+    \) -prune \
+    -o -iname '*.sh' -exec shellcheck \
+        --exclude=SC1090 \
+        --exclude=SC2034 \
+        --exclude=SC2153 \
+        --exclude=SC2181 \
+    '{}' \;
+
 # Report any differences created by running clang-format.
 git diff --ignore-submodules=all --color --exit-code .
