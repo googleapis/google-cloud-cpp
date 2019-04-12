@@ -50,8 +50,8 @@ void ListDatabases(std::string const& project, std::string const& instance) {
 
 }  // namespace
 
-// This is a command-line tool to let folks easily experiment with Spanner usng
-// C++. This works with bazel using a command like:
+// This is a command-line tool to let folks easily experiment with Spanner
+// using C++. This works with bazel using a command like:
 //
 // $ bazel run google/cloud/spanner:spanner_tool -- jgm-cloud-cxx jgm-spanner-instance
 //
