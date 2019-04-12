@@ -23,7 +23,7 @@ fi
 
 # This script assumes it is running the top-level google-cloud-cpp directory.
 
-readonly BINDIR="$(dirname $0)"
+readonly BINDIR="$(dirname "$0")"
 
 find google/cloud -name '*.h' -print0 \
   | xargs -0 awk -f ${BINDIR}/check-include-guards.gawk

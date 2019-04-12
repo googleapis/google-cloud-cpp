@@ -17,7 +17,7 @@
 set -eu
 
 echo "Building google-cloud-cpp as a dependency of another project $(date)."
-cd "$(dirname $0)/../../../.."
+cd "$(dirname "$0")/../../../.."
 readonly PROJECT_ROOT="${PWD}"
 
 echo "================================================================"

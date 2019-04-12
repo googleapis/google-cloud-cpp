@@ -19,7 +19,7 @@ set -eu
 # This script should is called from the build directory, and it finds other
 # scripts in the source directory using its own path.
 if [ -z "${PROJECT_ROOT+x}" ]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../../.."; pwd)"
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
 fi
 source "${PROJECT_ROOT}/ci/colors.sh"
 

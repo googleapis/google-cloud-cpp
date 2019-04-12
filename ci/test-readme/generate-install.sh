@@ -16,7 +16,7 @@
 
 set -eu
 
-readonly BINDIR=$(dirname $0)
+readonly BINDIR=$(dirname "$0")
 
 cat <<'END_OF_PREAMBLE'
 # Installing google-cloud-cpp

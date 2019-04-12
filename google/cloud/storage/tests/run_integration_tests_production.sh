@@ -35,7 +35,7 @@ set -eu
 #   to it.
 
 if [ -z "${PROJECT_ROOT+x}" ]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../../../.."; pwd)"
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../../.."; pwd)"
 fi
 readonly TEST_ACCOUNT_FILE="${PROJECT_ROOT}/google/cloud/storage/tests/UrlSignerV4TestAccount.json"
 readonly TEST_DATA_FILE="${PROJECT_ROOT}/google/cloud/storage/tests/UrlSignerV4TestData.json"

@@ -17,7 +17,7 @@
 set -eu
 
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../.."; pwd)"
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../.."; pwd)"
 fi
 source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"

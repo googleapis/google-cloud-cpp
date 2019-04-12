@@ -24,7 +24,7 @@ echo "Reading CI secret configuration parameters."
 source "${KOKORO_GFILE_DIR}/test-configuration.sh"
 
 echo "Running build and tests"
-cd "$(dirname $0)/../../.."
+cd "$(dirname "$0")/../../.."
 readonly PROJECT_ROOT="${PWD}"
 
 echo "================================================================"

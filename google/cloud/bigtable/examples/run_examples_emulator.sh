@@ -15,7 +15,7 @@
 
 set -eu
 
-readonly BINDIR="$(dirname $0)"
+readonly BINDIR="$(dirname "$0")"
 source "${BINDIR}/run_examples_utils.sh"
 source "${BINDIR}/../tools/run_emulator_utils.sh"
 source "${BINDIR}/../../../../ci/colors.sh"

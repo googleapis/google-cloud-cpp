@@ -16,6 +16,6 @@
 
 set -eu
 
-source "$(dirname $0)/run_examples_utils.sh"
+source "$(dirname "$0")/run_examples_utils.sh"
 
 run_all_storage_examples

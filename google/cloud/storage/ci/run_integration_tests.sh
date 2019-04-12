@@ -17,13 +17,13 @@
 set -eu
 
 if [ -z "${PROJECT_ROOT+x}" ]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../../../.."; pwd)"
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../../.."; pwd)"
 fi
 source "${PROJECT_ROOT}/ci/colors.sh"
 
 # This script should is called from the build directory, and it finds other
 # scripts in the source directory using its own path.
-readonly BINDIR="$(dirname $0)"
+readonly BINDIR="$(dirname "$0")"
 readonly GCSDIR="${PROJECT_ROOT}/google/cloud/storage"
 (cd google/cloud/storage/tests && \
     "${GCSDIR}/tests/run_integration_tests_testbench.sh")
