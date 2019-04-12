@@ -26,6 +26,7 @@ is available [online][doxygen-link].
 
 ### v0.6.x - 2019-04
 
+* Avoid std::make_exception_ptr() when building without exceptions.
 * Removed the googleapis submodule. The build system now automatically
   downloads all deps.
 
