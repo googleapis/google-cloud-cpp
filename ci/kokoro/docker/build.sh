@@ -94,7 +94,8 @@ source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
 echo "================================================================"
-export NCPU=$(nproc)
+NCPU=$(nproc)
+export NCPU
 cd "${PROJECT_ROOT}"
 echo "Building with ${NCPU} cores $(date) on ${PWD}."
 
