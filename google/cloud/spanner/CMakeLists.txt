@@ -29,8 +29,7 @@ set(
     )
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/examples)
 set(DOXYGEN_PREDEFINED "SPANNER_CLIENT_NS=v${SPANNER_CLIENT_VERSION_MAJOR}")
-set(DOXYGEN_EXCLUDE_PATTERNS
-    "*/google/cloud/spanner/README.md"
+set(DOXYGEN_EXCLUDE_PATTERNS "*/google/cloud/spanner/README.md"
     "*/google/cloud/spanner/*_test.cc")
 set(DOXYGEN_TAGFILES "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../common")
 
@@ -41,11 +40,11 @@ endif ()
 
 # Define an interface library, i.e., a library that really has no sources, and
 # add public target options to it.  The targets then use the library via
-# target_link_libraries(target PRIVATE spanner_common_options), which
-# implicitly adds the options to those targets, but does *not* add the options
-# to any targets that depend on them.  This is a CMake idiom to add options to
-# targets without having to painfully set special variables, it also allows
-# users to add more common options without having to touch the code.
+# target_link_libraries(target PRIVATE spanner_common_options), which implicitly
+# adds the options to those targets, but does *not* add the options to any
+# targets that depend on them.  This is a CMake idiom to add options to targets
+# without having to painfully set special variables, it also allows users to add
+# more common options without having to touch the code.
 add_library(spanner_common_options INTERFACE)
 google_cloud_cpp_add_common_options(spanner_common_options)
 
@@ -61,7 +60,8 @@ export_variables_to_bazel("spanner_client_version.bzl"
                           SPANNER_CLIENT_VERSION_MAJOR
                           SPANNER_CLIENT_VERSION_MINOR
                           SPANNER_CLIENT_VERSION_PATCH
-                          YEAR ${SPANNER_CLIENT_COPYRIGHT_YEAR})
+                          YEAR
+                          ${SPANNER_CLIENT_COPYRIGHT_YEAR})
 
 # the client library
 add_library(spanner_client
@@ -87,19 +87,18 @@ set_target_properties(
 add_library(spanner::client ALIAS spanner_client)
 
 include(CreateBazelConfig)
-create_bazel_config(spanner_client
-                    YEAR ${SPANNER_CLIENT_COPYRIGHT_YEAR})
+create_bazel_config(spanner_client YEAR ${SPANNER_CLIENT_COPYRIGHT_YEAR})
 google_cloud_cpp_add_clang_tidy(spanner_client)
 
 if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
-    set(spanner_client_unit_tests
-        spanner_version_test.cc)
+    set(spanner_client_unit_tests spanner_version_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("spanner_client_unit_tests.bzl"
                          "spanner_client_unit_tests"
-                         YEAR ${SPANNER_CLIENT_COPYRIGHT_YEAR})
+                         YEAR
+                         ${SPANNER_CLIENT_COPYRIGHT_YEAR})
 
     foreach (fname ${spanner_client_unit_tests})
         string(REPLACE "/"
@@ -146,8 +145,8 @@ if ("${GOOGLE_CLOUD_CPP_SPANNER_ENABLE_INSTALL}")
             RUNTIME DESTINATION bin
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-    google_cloud_cpp_install_headers(spanner_client
-                                     include/google/cloud/spanner)
+    google_cloud_cpp_install_headers(
+        spanner_client include/google/cloud/spanner)
 
     # Setup global variables used in the following *.in files.
     set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${SPANNER_CLIENT_VERSION_MAJOR})
