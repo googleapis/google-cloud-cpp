@@ -16,7 +16,7 @@
 
 set -eu
 
-readonly BINDIR=$(dirname $0)
+readonly BINDIR=$(dirname "$0")
 
 sed -e '0,/^.*\[START README.md\].*$/d' \
     -e '/^.*\[END README.md\].*$/,$d' "$@" | \

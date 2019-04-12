@@ -16,7 +16,7 @@
 
 set -eu
 
-readonly BINDIR=$(dirname $0)
+readonly BINDIR=$(dirname "$0")
 
 badge() {
   local -r distro="$1"

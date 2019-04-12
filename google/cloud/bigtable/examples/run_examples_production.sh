@@ -15,7 +15,7 @@
 
 set -eu
 
-readonly BINDIR="$(dirname $0)"
+readonly BINDIR="$(dirname "$0")"
 source "${BINDIR}/run_examples_utils.sh"
 
 # Run only the data examples in production. The CI systems go over project

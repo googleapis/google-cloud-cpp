@@ -18,7 +18,7 @@ set -eu
 
 # This script should is called from the build directory, and it finds other
 # scripts in the source directory using its own path.
-readonly BINDIR="$(dirname $0)"
+readonly BINDIR="$(dirname "$0")"
 source "${BINDIR}/../../../../ci/colors.sh"
 
 readonly BTDIR="google/cloud/bigtable"

@@ -16,7 +16,7 @@
 set -eu
 
 if [ -z "${PROJECT_ROOT+x}" ]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../../.."; pwd)"
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
 fi
 readonly CBT_INSTANCE_ADMIN_EMULATOR_CMD="../bigtable/tests/instance_admin_emulator"
 source "${PROJECT_ROOT}/ci/colors.sh"

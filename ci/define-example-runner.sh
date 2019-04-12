@@ -14,7 +14,7 @@
 # limitations under the License.
 
 if [ -z "${PROJECT_ROOT+x}" ]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname $0)/.."; pwd)"
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/.."; pwd)"
 fi
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 source "${PROJECT_ROOT}/ci/colors.sh"

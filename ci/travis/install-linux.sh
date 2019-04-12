@@ -19,7 +19,7 @@ set -eu
 # Create a Docker image with all the dependencies necessary to build the
 # project.
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname $0)/../.."; pwd)"
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../.."; pwd)"
 fi
 source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 

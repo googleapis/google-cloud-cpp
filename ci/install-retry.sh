@@ -22,7 +22,7 @@ set -eu
 # again when that happens.
 
 if (( $# < 1 )); then
-  echo "Usage: $(basename $0) program [arguments]"
+  echo "Usage: $(basename "$0") program [arguments]"
   exit 1
 fi
 readonly PROGRAM=${1}
