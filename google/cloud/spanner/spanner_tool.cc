@@ -53,12 +53,14 @@ void ListDatabases(std::string const& project, std::string const& instance) {
 // This is a command-line tool to let folks easily experiment with Spanner
 // using C++. This works with bazel using a command like:
 //
-// $ bazel run google/cloud/spanner:spanner_tool -- jgm-cloud-cxx jgm-spanner-instance
+// $ bazel run google/cloud/spanner:spanner_tool -- \
+//       jgm-cloud-cxx jgm-spanner-instance
 //
 // Currently, the above command will just invoke the "ListDatabases" RPC, which
 // makes it equivalent to the following command:
 //
-// $ gcloud spanner databases list --project jgm-cloud-cxx --instance jgm-spanner-instance 
+// $ gcloud spanner databases list \
+//       --project jgm-cloud-cxx --instance jgm-spanner-instance
 //
 // NOTE: The actual project and instance names will vary for other users; These
 // are just examples.
