@@ -414,7 +414,8 @@ run_all_object_examples() {
   local encrypted_composed_object_name="composed-enc-obj-${RANDOM}-${RANDOM}.txt"
   local encrypted_copied_object_name="copied-enc-obj-${RANDOM}-${RANDOM}.txt"
 
-  local key="$(./storage_object_samples generate-encryption-key |
+  local key
+  key="$(./storage_object_samples generate-encryption-key |
       grep 'Base64 encoded key' | awk '{print $5}')"
   run_example ./storage_object_samples write-encrypted-object \
       "${bucket_name}" "${encrypted_object_name}" "${key}"
@@ -435,7 +436,8 @@ run_all_object_examples() {
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${encrypted_composed_object_name}"
 
-  local newkey="$(./storage_object_samples generate-encryption-key |
+  local newkey
+  newkey="$(./storage_object_samples generate-encryption-key |
       grep 'Base64 encoded key' | awk '{print $5}')"
   run_example ./storage_object_samples rotate-encryption-key \
       "${bucket_name}" "${encrypted_object_name}" "${key}" "${newkey}"
@@ -477,8 +479,10 @@ run_upload_and_download_examples() {
   shift
 
   local object_name="uploaded-${RANDOM}-${RANDOM}.txt"
-  local upload_file_name="$(mktemp -t "upload.XXXXXX")"
-  local download_file_name="$(mktemp -t "download.XXXXXX")"
+  local upload_file_name
+  upload_file_name="$(mktemp -t "upload.XXXXXX")"
+  local download_file_name
+  download_file_name="$(mktemp -t "download.XXXXXX")"
   cat > "${upload_file_name}" <<_EOF_
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
@@ -513,8 +517,10 @@ run_resumable_file_upload_examples() {
   shift
 
   local object_name="uploaded-resumable-${RANDOM}-${RANDOM}.txt"
-  local upload_file_name="$(mktemp -t "upload.XXXXXX")"
-  local download_file_name="$(mktemp -t "download.XXXXXX")"
+  local upload_file_name
+  upload_file_name="$(mktemp -t "upload.XXXXXX")"
+  local download_file_name
+  download_file_name="$(mktemp -t "download.XXXXXX")"
   cat > "${upload_file_name}" <<_EOF_
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
@@ -665,12 +671,14 @@ run_resume_rewrite_example() {
   local target_object_name="rewrite-resume-target-object-${RANDOM}-${RANDOM}.txt"
   run_example ./storage_object_samples write-large-object \
       "${source_bucket_name}" "${source_object_name}" "16"
-  local msg=$(./storage_object_samples rewrite-object-token \
+  local msg
+  msg=$(./storage_object_samples rewrite-object-token \
       "${source_bucket_name}" "${source_object_name}" \
       "${target_bucket_name}" "${target_object_name}")
 
   if echo "${msg}" | grep -q "Rewrite in progress"; then
-    local token=$(echo ${msg} | awk '{print $5}')
+    local token
+    token=$(echo ${msg} | awk '{print $5}')
     run_example ./storage_object_samples rewrite-object-resume \
         "${source_bucket_name}" "${source_object_name}" \
         "${target_bucket_name}" "${target_object_name}" "${token}"
@@ -859,7 +867,8 @@ run_all_cmek_examples() {
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
 
-  local key="$(./storage_object_samples generate-encryption-key |
+  local key
+  key="$(./storage_object_samples generate-encryption-key |
       grep 'Base64 encoded key' | awk '{print $5}')"
   run_example ./storage_object_samples write-encrypted-object \
       "${bucket_name}" "${encrypted_object_name}" "${key}"
@@ -1037,8 +1046,9 @@ run_all_notification_examples() {
   # The notifications ids are assigned by the server, so we need to discover it
   # here. Parse the output from the list-notifications command to extract what
   # we need.
-  local id="$(./storage_notification_samples list-notifications \
-      "${bucket_name}" | grep -E -o 'id=[^,]*' | sed 's/id=//')"
+  local id
+  id="$(./storage_notification_samples list-notifications \
+     "${bucket_name}" | grep -E -o 'id=[^,]*' | sed 's/id=//')"
   run_example ./storage_notification_samples get-notification \
       "${bucket_name}" "${id}"
   run_example ./storage_notification_samples delete-notification \

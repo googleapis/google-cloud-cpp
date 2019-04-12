@@ -231,7 +231,8 @@ function run_all_table_admin_examples {
       "${project_id}" "${INSTANCE}" "${TABLE}" "nested-family"
   run_example ./table_admin_snippets wait-for-consistency-check "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets generate-consistency-token "${project_id}" "${INSTANCE}" "${TABLE}"
-  local token="$(./table_admin_snippets generate-consistency-token ${project_id} ${INSTANCE} ${TABLE} | awk '{print $5}')"
+  local token
+  token="$(./table_admin_snippets generate-consistency-token ${project_id} ${INSTANCE} ${TABLE} | awk '{print $5}')"
   run_example ./table_admin_snippets check-consistency "${project_id}" "${INSTANCE}" "${TABLE}" "${token}"
   run_example ./table_admin_snippets drop-rows-by-prefix "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./data_snippets read-rows "${project_id}" "${INSTANCE}" "${TABLE}"
