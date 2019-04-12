@@ -946,7 +946,7 @@ run_all_signed_url_v4_examples() {
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
-#   None 
+#   None
 # Returns:
 #   None
 ################################################
