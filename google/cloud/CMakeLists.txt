@@ -48,6 +48,7 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/testing_util/*"
     "*/google/cloud/bigtable/*"
     "*/google/cloud/firestore/*"
+    "*/google/cloud/spanner/*"
     "*/google/cloud/storage/*"
     "*/google/cloud/*_test.cc")
 
@@ -273,6 +274,7 @@ install(
 
 add_subdirectory(bigtable)
 add_subdirectory(firestore)
+add_subdirectory(spanner)
 add_subdirectory(storage)
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(examples)
