@@ -60,9 +60,11 @@ run_example() {
   log="$(mktemp -t "run_example.XXXXXX")"
   echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
       " ${program_name} ${example} running"
+  # We want ${arguments} to expand as separate parameters.
   # shellcheck disable=SC2086
   echo "${program_path}" "${example}" ${arguments} >"${log}"
   set +e
+  # Ditto about ${arguments}.
   # shellcheck disable=SC2086
   ${program_path} "${example}" ${arguments} >>"${log}" 2>&1 </dev/null
   if [ $? = 0 ]; then

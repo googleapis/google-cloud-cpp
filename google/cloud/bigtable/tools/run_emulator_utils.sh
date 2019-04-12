@@ -94,6 +94,7 @@ function wait_until_emulator_connects {
   connected=no
   local -r attempts=$(seq 1 8)
   for attempt in ${attempts}; do
+    # We want ${CBT_ARGS} to expand as separate arguments.
     # shellcheck disable=SC2086
     if env BIGTABLE_EMULATOR_HOST="${address}" \
            "${CBT_CMD}" ${CBT_ARGS} "${subcmd}" >/dev/null 2>&1; then

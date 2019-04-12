@@ -84,6 +84,8 @@ if [ "${USE_LIBCXX:-}" = "yes" ]; then
   cmake_extra_flags="${cmake_extra_flags} -DGOOGLE_CLOUD_CPP_USE_LIBCXX=ON"
 fi
 
+# We want ${cmake_extra_flags} and ${CMAKE_FLAGS} to expand as separate
+# arguments.
 # shellcheck disable=SC2086
 ${CMAKE_COMMAND} \
     -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
