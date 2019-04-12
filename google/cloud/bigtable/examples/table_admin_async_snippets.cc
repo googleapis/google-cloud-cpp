@@ -187,29 +187,31 @@ void AsyncModifyTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
 
 void AsyncDropRowsByPrefix(cbt::TableAdmin admin, cbt::CompletionQueue cq,
                            std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 3U) {
     throw Usage{
-        "async-drop-rows-by-prefix: <project-id> <instance-id> <table-id>"};
+        "async-drop-rows-by-prefix: <project-id> <instance-id> <table-id> "
+        "<row-key>"};
   }
 
   //! [async drop rows by prefix]
   [](google::cloud::bigtable::TableAdmin admin, cbt::CompletionQueue cq,
-     std::string table_id) {
+     std::string table_id, std::string row_key) {
     google::cloud::future<google::cloud::Status> future =
-        admin.AsyncDropRowsByPrefix(cq, table_id, "key-00004");
+        admin.AsyncDropRowsByPrefix(cq, table_id, row_key);
     auto final =
-        future.then([table_id](google::cloud::future<google::cloud::Status> f) {
+        future.then([row_key](google::cloud::future<google::cloud::Status> f) {
           auto status = f.get();
           if (!status.ok()) {
             throw std::runtime_error(status.message());
           }
-          std::cout << "Successfully dropped rows " << table_id << "\n";
+          std::cout << "Successfully dropped rows with prefix " << row_key
+                    << "\n";
         });
 
     final.get();
   }
   //! [async drop rows by prefix]
-  (std::move(admin), std::move(cq), argv[1]);
+  (std::move(admin), std::move(cq), argv[1], argv[2]);
 }
 }  // anonymous namespace
 

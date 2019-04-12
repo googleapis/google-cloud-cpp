@@ -251,6 +251,9 @@ function run_all_table_admin_async_examples {
   # Use the same table in all the tests.
   local -r TABLE="sample-table-for-admin-${RANDOM}"
 
+  # Use sample row key wherever needed.
+  local -r ROW_KEY="sample-row-key-${RANDOM}"
+
   run_example ./table_admin_async_snippets async-create-table \
       "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_async_snippets async-get-table \
@@ -258,7 +261,7 @@ function run_all_table_admin_async_examples {
   run_example ./table_admin_async_snippets async-modify-table \
       "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_async_snippets async-drop-rows-by-prefix \
-      "${project_id}" "${INSTANCE}" "${TABLE}"
+      "${project_id}" "${INSTANCE}" "${TABLE}" "${ROW_KEY}"
   run_example ./table_admin_async_snippets async-delete-table \
       "${project_id}" "${INSTANCE}" "${TABLE}"
 
