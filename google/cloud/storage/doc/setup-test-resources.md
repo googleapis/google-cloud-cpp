@@ -10,22 +10,39 @@ TODO(#2420) - Complete this section.
 
 ## Create a Service Account to run the integration tests.
 
+First, create a new service account to execute the integration tests:
 
 ```console
 AGENT_ACCOUNT=...
 gcloud --project=${PROJECT_ID} iam service-accounts create ${AGENT_ACCOUNT}
+```
+
+Grant the new service account account full access to Google Cloud Storage:
+
+```
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member serviceAccount:${AGENT_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com \
+  --role roles/storage.admin
+```
+
+Grant the new service account permissions to sign URLs, policy documents, and
+other blobs:
+
+```
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
   --member serviceAccount:${AGENT_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com \
   --role roles/iam.serviceAccountTokenCreator
 ```
 
+Download key files for the new service account:
+
 ```console
 gcloud --project=${PROJECT_ID} iam service-accounts keys create \
     /dev/shm/service-account.p12 --key-file-type=p12 \
-    --iam-account=${SERVICE_ACCOUNT}
+    --iam-account=${AGENT_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com
 gcloud --project=${PROJECT_ID} iam service-accounts keys create \
     /dev/shm/service-account.json --key-file-type=json \
-    --iam-account=${SERVICE_ACCOUNT}  
+    --iam-account=${AGENT_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com
 ```
 
 ## Setting up a Bucket
