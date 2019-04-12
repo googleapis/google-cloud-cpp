@@ -39,6 +39,7 @@ RUN apt update && \
         make \
         pkg-config \
         python-pip \
+        shellcheck \
         tar \
         wget \
         zlib1g-dev
