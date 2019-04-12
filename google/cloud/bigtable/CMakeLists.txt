@@ -19,7 +19,7 @@ include(external/googleapis)
 # This should be included from the top level CMakeLists file
 set(BIGTABLE_CLIENT_VERSION_MAJOR 0)
 set(BIGTABLE_CLIENT_VERSION_MINOR 8)
-set(BIGTABLE_CLIENT_VERSION_PATCH 0)
+set(BIGTABLE_CLIENT_VERSION_PATCH 1)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Bigtable C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
