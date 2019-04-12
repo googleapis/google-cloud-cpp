@@ -84,6 +84,7 @@ if [ "${USE_LIBCXX:-}" = "yes" ]; then
   cmake_extra_flags="${cmake_extra_flags} -DGOOGLE_CLOUD_CPP_USE_LIBCXX=ON"
 fi
 
+# shellcheck disable=SC2086
 ${CMAKE_COMMAND} \
     -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
     ${cmake_extra_flags} \
@@ -110,7 +111,7 @@ echo "${COLOR_YELLOW}Started dependency build at: $(date)${COLOR_RESET}"
 echo "travis_fold:start:build-dependencies"
 echo
 cmake --build "${BUILD_OUTPUT}" \
-    --target google-cloud-cpp-dependencies -- -j ${NCPU}
+    --target google-cloud-cpp-dependencies -- -j "${NCPU}"
 echo
 echo "travis_fold:end:build-dependencies"
 echo "${COLOR_YELLOW}Finished dependency build at: $(date)${COLOR_RESET}"
@@ -129,7 +130,7 @@ fi
 # scan-build disabled we compile everything, to test the build as most
 # developers will experience it.
 echo "${COLOR_YELLOW}Started build at: $(date)${COLOR_RESET}"
-${CMAKE_COMMAND} --build "${BUILD_OUTPUT}" -- -j ${NCPU}
+${CMAKE_COMMAND} --build "${BUILD_OUTPUT}" -- -j "${NCPU}"
 echo "${COLOR_YELLOW}Finished build at: $(date)${COLOR_RESET}"
 
 # If ccache is enabled we want to zero out the statistics because otherwise
@@ -176,12 +177,12 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   readonly TEST_INSTALL_CMAKE_OUTPUT_DIR="${PROJECT_ROOT}/cmake-out/test-install-cmake"
   readonly TEST_INSTALL_MAKE_OUTPUT_DIR="${PROJECT_ROOT}/cmake-out/test-install-make"
   readonly TEST_INSTALL_SUBMODULE_OUTPUT_DIR="${PROJECT_ROOT}/cmake-out/test-install-submodule"
-  cmake -H"${TEST_INSTALL_DIR}" -B"${TEST_INSTALL_CMAKE_OUTPUT_DIR}" -DCMAKE_CXX_COMPILER=${CXX}
+  cmake -H"${TEST_INSTALL_DIR}" -B"${TEST_INSTALL_CMAKE_OUTPUT_DIR}" -DCMAKE_CXX_COMPILER="${CXX}"
   cmake --build "${TEST_INSTALL_CMAKE_OUTPUT_DIR}"
   echo
   echo "${COLOR_YELLOW}Test installed libraries using make(1).${COLOR_RESET}"
   mkdir -p "${TEST_INSTALL_MAKE_OUTPUT_DIR}"
-  make -C "${TEST_INSTALL_MAKE_OUTPUT_DIR}" -f"${TEST_INSTALL_DIR}/Makefile" VPATH="${TEST_INSTALL_DIR}" CXX=${CXX}
+  make -C "${TEST_INSTALL_MAKE_OUTPUT_DIR}" -f"${TEST_INSTALL_DIR}/Makefile" VPATH="${TEST_INSTALL_DIR}" CXX="${CXX}"
   echo
   echo "${COLOR_YELLOW}Test installed libraries when used as a submodule.${COLOR_RESET}"
   mkdir -p "${TEST_INSTALL_SUBMODULE_OUTPUT_DIR}/submodule/google-cloud-cpp"
@@ -194,7 +195,7 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
       -o -path ./_build \
       -o -path ./cmake-out \
       -o -path . -type d \) -prune -o -exec cp --parents -r '{}' "${TEST_INSTALL_SUBMODULE_OUTPUT_DIR}/submodule/google-cloud-cpp" \;
-  cmake -H"${TEST_INSTALL_SUBMODULE_OUTPUT_DIR}/submodule" -B"${TEST_INSTALL_SUBMODULE_OUTPUT_DIR}" -DCMAKE_CXX_COMPILER=${CXX}
+  cmake -H"${TEST_INSTALL_SUBMODULE_OUTPUT_DIR}/submodule" -B"${TEST_INSTALL_SUBMODULE_OUTPUT_DIR}" -DCMAKE_CXX_COMPILER="${CXX}"
   cmake --build "${TEST_INSTALL_SUBMODULE_OUTPUT_DIR}"
 
   # Checking the ABI requires installation, so this is the first opportunity to

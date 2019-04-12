@@ -1222,5 +1222,5 @@ run_all_storage_examples() {
   if [ "${EXIT_STATUS}" = "0" ]; then
     TESTBENCH_DUMP_LOG=no
   fi
-  exit ${EXIT_STATUS}
+  exit "${EXIT_STATUS}"
 }

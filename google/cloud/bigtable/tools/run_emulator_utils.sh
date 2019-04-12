@@ -70,7 +70,7 @@ wait_for_port() {
     exit 1
   fi
 
-  echo ${emulator_port}
+  echo "${emulator_port}"
 }
 
 ################################################
@@ -94,6 +94,7 @@ function wait_until_emulator_connects {
   connected=no
   local -r attempts=$(seq 1 8)
   for attempt in ${attempts}; do
+    # shellcheck disable=SC2086
     if env BIGTABLE_EMULATOR_HOST="${address}" \
            "${CBT_CMD}" ${CBT_ARGS} "${subcmd}" >/dev/null 2>&1; then
       connected=yes

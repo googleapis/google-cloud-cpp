@@ -64,10 +64,10 @@ fi
 # Remove any previous content in the subdirectory used for this release. We will
 # recover any unmodified files in a second.
 cd github-io-staging
-git rm -qfr --ignore-unmatch ${subdir}/google/cloud/bigtable
-git rm -qfr --ignore-unmatch ${subdir}/google/cloud/common
-git rm -qfr --ignore-unmatch ${subdir}/google/cloud/firestore
-git rm -qfr --ignore-unmatch ${subdir}/google/cloud/storage
+git rm -qfr --ignore-unmatch "${subdir}"/google/cloud/bigtable
+git rm -qfr --ignore-unmatch "${subdir}"/google/cloud/common
+git rm -qfr --ignore-unmatch "${subdir}"/google/cloud/firestore
+git rm -qfr --ignore-unmatch "${subdir}"/google/cloud/storage
 
 # Copy the build results into the gh-pages clone.
 mkdir -p "${subdir}" || echo "${subdir} already exists"
@@ -84,7 +84,7 @@ cp -r ../doc/landing/index.html "${subdir}"
 
 git config user.name "Google Cloud C++ Project Robot"
 git config user.email "google-cloud-cpp-bot@users.noreply.github.com"
-git add --all ${subdir}
+git add --all "${subdir}"
 
 if git diff --quiet HEAD; then
   echo "Skipping documentation upload as there are no differences to upload."
@@ -105,4 +105,4 @@ if [ -z "${GH_TOKEN:-}" ]; then
 fi
 
 readonly REPO_REF=${REPO_URL/https:\/\/}
-git push https://${GH_TOKEN}@${REPO_REF} gh-pages
+git push https://"${GH_TOKEN}"@"${REPO_REF}" gh-pages

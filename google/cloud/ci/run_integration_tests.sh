@@ -26,7 +26,7 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 # If the build has excluded the examples, then skip them.
 if [ -d google/cloud/examples ]; then
   (cd google/cloud/examples ; \
-   ${PROJECT_ROOT}/google/cloud/examples/run_gcs2cbt_emulator.sh)
+   "${PROJECT_ROOT}"/google/cloud/examples/run_gcs2cbt_emulator.sh)
 else
   echo "${COLOR_YELLOW}[ SKIPPED  ]${COLOR_RESET} google/cloud examples" \
     " as the examples are not compiled for this build"

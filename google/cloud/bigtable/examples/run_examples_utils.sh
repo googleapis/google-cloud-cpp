@@ -232,7 +232,7 @@ function run_all_table_admin_examples {
   run_example ./table_admin_snippets wait-for-consistency-check "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets generate-consistency-token "${project_id}" "${INSTANCE}" "${TABLE}"
   local token
-  token="$(./table_admin_snippets generate-consistency-token ${project_id} ${INSTANCE} ${TABLE} | awk '{print $5}')"
+  token="$(./table_admin_snippets generate-consistency-token "${project_id}" "${INSTANCE}" "${TABLE}" | awk '{print $5}' | tr -d '\n')"
   run_example ./table_admin_snippets check-consistency "${project_id}" "${INSTANCE}" "${TABLE}" "${token}"
   run_example ./table_admin_snippets drop-rows-by-prefix "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./data_snippets read-rows "${project_id}" "${INSTANCE}" "${TABLE}"
@@ -409,13 +409,13 @@ run_quickstart_example() {
 
   # Run the example with an empty table, exercise the path where the row is
   # not found.
-  run_example ${CBT_CMD} -project "${project_id}" -instance "${instance_id}" \
+  run_example "${CBT_CMD}" -project "${project_id}" -instance "${instance_id}" \
       createtable "${TABLE}" "families=cf1"
   run_example ./bigtable_quickstart "${project_id}" "${instance_id}" "${TABLE}"
 
   # Use the Cloud Bigtable command-line tool to create a row, exercise the path
   # where the row is found.
-  run_example ${CBT_CMD} -project "${project_id}" -instance "${instance_id}" \
+  run_example "${CBT_CMD}" -project "${project_id}" -instance "${instance_id}" \
       set "${TABLE}" "r1" "cf1:greeting=Hello"
   run_example ./bigtable_quickstart "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./table_admin_snippets delete-table \

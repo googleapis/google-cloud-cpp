@@ -26,7 +26,7 @@ fi
 readonly BINDIR="$(dirname "$0")"
 
 find google/cloud -name '*.h' -print0 \
-  | xargs -0 awk -f ${BINDIR}/check-include-guards.gawk
+  | xargs -0 awk -f "${BINDIR}"/check-include-guards.gawk
 
 # Apply cmake_format to all the CMake list files.
 #     https://github.com/cheshirekow/cmake_format

@@ -61,7 +61,7 @@ echo "================================================================"
 echo "Configure and start Bazel: ${INVOCATION_ID} $(date)"
 echo "https://source.cloud.google.com/results/invocations/${INVOCATION_ID}"
 echo "================================================================"
-echo ${INVOCATION_ID} >> "${KOKORO_ARTIFACTS_DIR}/bazel_invocation_ids"
+echo "${INVOCATION_ID}" >> "${KOKORO_ARTIFACTS_DIR}/bazel_invocation_ids"
 
 echo "================================================================"
 echo "Compiling and running unit tests $(date)"
@@ -123,19 +123,19 @@ echo
 echo "================================================================"
 echo "Running Google Cloud Bigtable Integration Tests $(date)"
 echo "================================================================"
-(cd $(bazel info bazel-bin)/google/cloud/bigtable/tests && \
+(cd "$(bazel info bazel-bin)"/google/cloud/bigtable/tests && \
    "${PROJECT_ROOT}/google/cloud/bigtable/tests/run_integration_tests_production.sh")
-(cd $(bazel info bazel-bin)/google/cloud/bigtable/examples && \
+(cd "$(bazel info bazel-bin)"/google/cloud/bigtable/examples && \
    "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_examples_production.sh")
 
 echo
 echo "================================================================"
 echo "Running Google Cloud Storage Integration Tests $(date)"
 echo "================================================================"
-(cd $(bazel info bazel-bin)/google/cloud/storage/tests && \
+(cd "$(bazel info bazel-bin)"/google/cloud/storage/tests && \
     "${PROJECT_ROOT}/google/cloud/storage/tests/run_integration_tests_production.sh")
 echo "Running Google Cloud Storage Examples"
-(cd $(bazel info bazel-bin)/google/cloud/storage/examples && \
+(cd "$(bazel info bazel-bin)"/google/cloud/storage/examples && \
     "${PROJECT_ROOT}/google/cloud/storage/examples/run_examples_production.sh")
 
 echo "================================================================"
