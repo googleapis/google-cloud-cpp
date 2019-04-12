@@ -172,6 +172,159 @@ void ModifyTable(google::cloud::bigtable::TableAdmin admin, int argc,
   (std::move(admin), table_id);
 }
 
+void CreateMaxAgeFamily(google::cloud::bigtable::TableAdmin admin, int argc,
+                        char* argv[]) {
+  if (argc != 3) {
+    throw Usage{
+        "create-max-age-family <project-id> <instance-id> <table-id>"
+        " <family-name>"};
+  }
+  std::string const table_id = ConsumeArg(argc, argv);
+  std::string const family_name = ConsumeArg(argc, argv);
+
+  // [START bigtable_create_family_gc_max_age]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id, std::string family_name) {
+    auto schema = admin.ModifyColumnFamilies(
+        table_id,
+        {cbt::ColumnFamilyModification::Create(
+            family_name, cbt::GcRule::MaxAge(std::chrono::hours(5 * 24)))});
+
+    if (!schema) {
+      throw std::runtime_error(schema.status().message());
+    }
+    std::string formatted;
+    google::protobuf::TextFormat::PrintToString(*schema, &formatted);
+    std::cout << "Schema modified to: " << formatted << "\n";
+  }
+  // [END bigtable_create_family_gc_max_age]
+  (std::move(admin), table_id, family_name);
+}
+
+void CreateMaxVersionsFamily(google::cloud::bigtable::TableAdmin admin,
+                             int argc, char* argv[]) {
+  if (argc != 3) {
+    throw Usage{
+        "create-max-versions-family <project-id> <instance-id> <table-id>"
+        " <family-name>"};
+  }
+  std::string const table_id = ConsumeArg(argc, argv);
+  std::string const family_name = ConsumeArg(argc, argv);
+
+  // [START bigtable_create_family_gc_max_versions]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id, std::string family_name) {
+    auto schema = admin.ModifyColumnFamilies(
+        table_id, {cbt::ColumnFamilyModification::Create(
+                      family_name, cbt::GcRule::MaxNumVersions(2))});
+
+    if (!schema) {
+      throw std::runtime_error(schema.status().message());
+    }
+    std::string formatted;
+    google::protobuf::TextFormat::PrintToString(*schema, &formatted);
+    std::cout << "Schema modified to: " << formatted << "\n";
+  }
+  // [END bigtable_create_family_gc_max_versions]
+  (std::move(admin), table_id, family_name);
+}
+
+void CreateUnionFamily(google::cloud::bigtable::TableAdmin admin, int argc,
+                       char* argv[]) {
+  if (argc != 3) {
+    throw Usage{
+        "create-union-family: <project-id> <instance-id> <table-id>"
+        " <family-name>"};
+  }
+  std::string const table_id = ConsumeArg(argc, argv);
+  std::string const family_name = ConsumeArg(argc, argv);
+
+  // [START bigtable_create_family_gc_union]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id, std::string family_name) {
+    auto schema = admin.ModifyColumnFamilies(
+        table_id,
+        {cbt::ColumnFamilyModification::Create(
+            family_name, cbt::GcRule::Union(cbt::GcRule::MaxNumVersions(1),
+                                            cbt::GcRule::MaxAge(
+                                                5 * std::chrono::hours(24))))});
+
+    if (!schema) {
+      throw std::runtime_error(schema.status().message());
+    }
+    std::string formatted;
+    google::protobuf::TextFormat::PrintToString(*schema, &formatted);
+    std::cout << "Schema modified to: " << formatted << "\n";
+  }
+  // [END bigtable_create_family_gc_union]
+  (std::move(admin), table_id, family_name);
+}
+
+void CreateIntersectionFamily(google::cloud::bigtable::TableAdmin admin,
+                              int argc, char* argv[]) {
+  if (argc != 3) {
+    throw Usage{
+        "create-intersection-family: <project-id> <instance-id> <table-id>"
+        " <family-name>"};
+  }
+  std::string const table_id = ConsumeArg(argc, argv);
+  std::string const family_name = ConsumeArg(argc, argv);
+
+  // [START bigtable_create_family_gc_intersection]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id, std::string family_name) {
+    auto schema = admin.ModifyColumnFamilies(
+        table_id, {cbt::ColumnFamilyModification::Create(
+                      family_name,
+                      cbt::GcRule::Intersection(
+                          cbt::GcRule::MaxNumVersions(1),
+                          cbt::GcRule::MaxAge(5 * std::chrono::hours(24))))});
+
+    if (!schema) {
+      throw std::runtime_error(schema.status().message());
+    }
+    std::string formatted;
+    google::protobuf::TextFormat::PrintToString(*schema, &formatted);
+    std::cout << "Schema modified to: " << formatted << "\n";
+  }
+  // [END bigtable_create_family_gc_intersection]
+  (std::move(admin), table_id, family_name);
+}
+
+void CreateNestedFamily(google::cloud::bigtable::TableAdmin admin, int argc,
+                        char* argv[]) {
+  if (argc != 3) {
+    throw Usage{
+        "create-nested-family: <project-id> <instance-id> <table-id>"
+        " <family-name>"};
+  }
+  std::string const table_id = ConsumeArg(argc, argv);
+  std::string const family_name = ConsumeArg(argc, argv);
+
+  // [START bigtable_create_family_gc_nested]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id, std::string family_name) {
+    auto schema = admin.ModifyColumnFamilies(
+        table_id,
+        {cbt::ColumnFamilyModification::Create(
+            family_name,
+            cbt::GcRule::Union(
+                cbt::GcRule::MaxNumVersions(10),
+                cbt::GcRule::Intersection(
+                    cbt::GcRule::MaxNumVersions(1),
+                    cbt::GcRule::MaxAge(5 * std::chrono::hours(24)))))});
+
+    if (!schema) {
+      throw std::runtime_error(schema.status().message());
+    }
+    std::string formatted;
+    google::protobuf::TextFormat::PrintToString(*schema, &formatted);
+    std::cout << "Schema modified to: " << formatted << "\n";
+  }
+  // [END bigtable_create_family_gc_nested]
+  (std::move(admin), table_id, family_name);
+}
+
 void DropAllRows(google::cloud::bigtable::TableAdmin admin, int argc,
                  char* argv[]) {
   if (argc != 2) {
@@ -403,6 +556,11 @@ int main(int argc, char* argv[]) try {
       {"get-table", &GetTable},
       {"delete-table", &DeleteTable},
       {"modify-table", &ModifyTable},
+      {"create-max-age-family", &CreateMaxAgeFamily},
+      {"create-max-versions-family", &CreateMaxVersionsFamily},
+      {"create-union-family", &CreateUnionFamily},
+      {"create-intersection-family", &CreateIntersectionFamily},
+      {"create-nested-family", &CreateNestedFamily},
       {"drop-all-rows", &DropAllRows},
       {"drop-rows-by-prefix", &DropRowsByPrefix},
       {"wait-for-consistency-check", &WaitForConsistencyCheck},
