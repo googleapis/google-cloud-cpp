@@ -48,7 +48,7 @@ run_example() {
   local program_path=$1
   local example=$2
   shift 2
-  local arguments=$*
+  local -a arguments=( "$@" )
   local program_name
   program_name="$(basename "${program_path}")"
 
@@ -60,13 +60,9 @@ run_example() {
   log="$(mktemp -t "run_example.XXXXXX")"
   echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
       " ${program_name} ${example} running"
-  # We want ${arguments} to expand as separate parameters.
-  # shellcheck disable=SC2086
-  echo "${program_path}" "${example}" ${arguments} >"${log}"
+  echo "${program_path}" "${example}" "${arguments[@]}" >"${log}"
   set +e
-  # Ditto about ${arguments}.
-  # shellcheck disable=SC2086
-  ${program_path} "${example}" ${arguments} >>"${log}" 2>&1 </dev/null
+  "${program_path}" "${example}" "${arguments[@]}" >>"${log}" 2>&1 </dev/null
   if [ $? = 0 ]; then
     echo  "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
         " ${program_name} ${example}"
