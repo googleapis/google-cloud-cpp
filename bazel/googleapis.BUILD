@@ -207,7 +207,7 @@ cc_grpc_library(
     srcs = ["google/spanner/v1/mutation.proto"],
     deps = [
         ":google_api_annotations",
-        ":google_spanner_v1_keys"
+        ":google_spanner_v1_keys",
     ],
     proto_only = False,
     well_known_protos = True,

@@ -65,8 +65,8 @@ load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
 
 cc_binary(
     name = "spanner_tool",
-    srcs = [ "spanner_tool.cc" ],
+    srcs = ["spanner_tool.cc"],
     deps = [
         ":spanner_client",
-    ]
+    ],
 )
