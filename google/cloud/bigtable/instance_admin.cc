@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/internal/async_future_from_callback.h"
+#include "google/cloud/bigtable/internal/async_retry_multi_page.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/poll_longrunning_operation.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
@@ -82,15 +83,46 @@ future<StatusOr<InstanceList>> InstanceAdmin::AsyncListInstances(
   promise<StatusOr<InstanceList>> instance_list_promise;
   future<StatusOr<InstanceList>> result = instance_list_promise.get_future();
   auto client = impl_.client_;
-  auto op = std::make_shared<internal::AsyncRetryListInstances<
-      internal::AsyncFutureFromCallback<InstanceList>>>(
-      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-      clone_metadata_update_policy(), client, project_name(),
-      internal::MakeAsyncFutureFromCallback(std::move(instance_list_promise),
-                                            "AsyncListInstances"));
-  op->Start(cq);
+  btadmin::ListInstancesRequest request;
+  request.set_parent(project_name());
 
-  return result;
+  struct Accumulator {
+    std::vector<Instance> instances;
+    std::unordered_set<std::string> failed_locations;
+  };
+
+  return internal::StartAsyncRetryMultiPage(
+             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             clone_metadata_update_policy(),
+             [client](grpc::ClientContext* context,
+                      btadmin::ListInstancesRequest const& request,
+                      grpc::CompletionQueue* cq) {
+               return client->AsyncListInstances(context, request, cq);
+             },
+             std::move(request), Accumulator(),
+             [](Accumulator acc, btadmin::ListInstancesResponse response) {
+               std::move(response.failed_locations().begin(),
+                         response.failed_locations().end(),
+                         std::inserter(acc.failed_locations,
+                                       acc.failed_locations.end()));
+               std::move(response.instances().begin(),
+                         response.instances().end(),
+                         std::back_inserter(acc.instances));
+               return acc;
+             },
+             cq)
+      .then([](future<StatusOr<Accumulator>> acc_future)
+                -> StatusOr<InstanceList> {
+        auto acc = acc_future.get();
+        if (!acc) {
+          return acc.status();
+        }
+        InstanceList res;
+        res.instances = std::move(acc->instances);
+        std::move(acc->failed_locations.begin(), acc->failed_locations.end(),
+                  std::back_inserter(res.failed_locations));
+        return std::move(res);
+      });
 }
 
 std::future<StatusOr<google::bigtable::admin::v2::Instance>>
