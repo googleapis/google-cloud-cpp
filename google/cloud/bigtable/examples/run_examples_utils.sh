@@ -219,6 +219,16 @@ function run_all_table_admin_examples {
   run_example ./table_admin_snippets get-table "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./data_snippets bulk-apply "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets modify-table "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_snippets create-max-age-family \
+      "${project_id}" "${INSTANCE}" "${TABLE}" "max-age-family"
+  run_example ./table_admin_snippets create-max-versions-family \
+      "${project_id}" "${INSTANCE}" "${TABLE}" "max-versions-family"
+  run_example ./table_admin_snippets create-union-family \
+      "${project_id}" "${INSTANCE}" "${TABLE}" "union-family"
+  run_example ./table_admin_snippets create-intersection-family \
+      "${project_id}" "${INSTANCE}" "${TABLE}" "intersection-family"
+  run_example ./table_admin_snippets create-intersection-family \
+      "${project_id}" "${INSTANCE}" "${TABLE}" "nested-family"
   run_example ./table_admin_snippets wait-for-consistency-check "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets generate-consistency-token "${project_id}" "${INSTANCE}" "${TABLE}"
   local token="$(./table_admin_snippets generate-consistency-token ${project_id} ${INSTANCE} ${TABLE} | awk '{print $5}')"
