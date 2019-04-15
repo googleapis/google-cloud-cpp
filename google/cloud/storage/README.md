@@ -18,10 +18,10 @@ client.
 ## Status
 
 This library support Google Cloud Storage at the
-[Beta](../README.md#versioning) quality level. Please note that, as is often the
-case with C++ libraries, we do **not** follow semantic versioning in the Cloud
-C++ client libraries. We make every effort to document backwards-incompatible
-API changes in the [release notes](#release-notes) below. 
+[Beta](../../../README.md#versioning) quality level. Please note that, as is
+often the case with C++ libraries, we do **not** follow semantic versioning in
+the Cloud C++ client libraries. We make every effort to document
+backwards-incompatible API changes in the [release notes](#release-notes) below. 
 
 ## Documentation
 
@@ -34,13 +34,13 @@ API changes in the [release notes](#release-notes) below.
 
 ## Contributing changes
 
-See [`CONTRIBUTING.md`](../CONTRIBUTING.md) for details on how to contribute to
-this project, including how to build and test your changes as well as how to
-properly format your code.
+See [`CONTRIBUTING.md`](../../../CONTRIBUTING.md) for details on how to
+contribute to this project, including how to build and test your changes as well
+as how to properly format your code.
 
 ## Licensing
 
-Apache 2.0; see [`LICENSE`](../LICENSE) for details.
+Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
