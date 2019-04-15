@@ -94,3 +94,9 @@ echo "Running V4 Signed URL conformance tests."
 
 echo "Running Signed URL integration test."
 ./signed_url_integration_test "${BUCKET_NAME}" "${SIGNING_SERVICE_ACCOUNT}"
+
+echo "Running JSON keyfile integration test."
+./key_file_integration_test "${BUCKET_NAME}" "${TEST_KEY_FILE_JSON}" "${SIGNING_SERVICE_ACCOUNT}"
+
+echo "Running P12 keyfile integration test."
+./key_file_integration_test "${BUCKET_NAME}" "${TEST_KEY_FILE_P12}" "${SIGNING_SERVICE_ACCOUNT}"

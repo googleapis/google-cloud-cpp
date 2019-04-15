@@ -95,6 +95,8 @@ echo "================================================================"
 echo "Download dependencies for integration tests $(date)."
 echo "================================================================"
 
+export TEST_KEY_FILE_JSON="${KOKORO_GFILE_DIR}/service-account.json"
+export TEST_KEY_FILE_P12="${KOKORO_GFILE_DIR}/service-account.p12"
 export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
 
 # Download the gRPC `roots.pem` file. Somewhere inside the bowels of Bazel, this

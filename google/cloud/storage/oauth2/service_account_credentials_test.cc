@@ -13,14 +13,18 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
+#include "google/cloud/internal/random.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
+#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 #include <chrono>
+#include <cstdlib>
 #include <cstring>
+#include <fstream>
 
 namespace google {
 namespace cloud {
@@ -80,6 +84,17 @@ class ServiceAccountCredentialsTest : public ::testing::Test {
         std::make_shared<MockHttpRequestBuilder::Impl>();
   }
   void TearDown() override { MockHttpRequestBuilder::mock.reset(); }
+
+  std::string CreateRandomFileName() {
+    // When running on the internal Google CI systems we cannot write to the
+    // local directory, GTest has a good temporary directory in that case.
+    return ::testing::TempDir() +
+           google::cloud::internal::Sample(
+               generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  }
+
+  google::cloud::internal::DefaultPRNG generator_ =
+      google::cloud::internal::MakeDefaultPRNG();
 };
 
 struct FakeClock : public std::chrono::system_clock {
@@ -420,6 +435,195 @@ TEST_F(ServiceAccountCredentialsTest, ClientId) {
 
   EXPECT_EQ("foo-email@foo-project.iam.gserviceaccount.com",
             credentials.AccountEmail());
+}
+
+// This is a base64-encoded p12 key-file. The service account was deleted
+// after creating the key-file, so the key was effectively invalidated, but
+// the format is correct, so we can use it to verify that p12 key-files can be
+// loaded.
+//
+// If you want to change the file (for whatever reason), these commands are
+// helpful:
+//    Generate a new key:
+//      gcloud iam service-accounts keys create /dev/shm/key.p12
+//          --key-file-type=p12 --iam-account=${SERVICE_ACCOUNT}
+//    Base64 encode the key (then cut&paste) here:
+//      openssl base64 -e < /dev/shm/key.p12
+//    Find the service account ID:
+//      openssl pkcs12 -in /dev/shm/key.p12
+//          -passin pass:notasecret  -nodes -info  | grep =CN
+//    Delete the service account ID:
+//      gcloud iam service-accounts delete --quiet ${SERVICE_ACCOUNT}
+char const kP12ServiceAccountId[] = "104849618361176160538";
+char const kP12KeyFileContents[] =
+    "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";
+
+char const kP12KeyFileMissingCerts[] =
+    "MIIDzAIBAzCCA5IGCSqGSIb3DQEHAaCCA4MEggN/MIIDezCCA3cGCSqGSIb3DQEH"
+    "BqCCA2gwggNkAgEAMIIDXQYJKoZIhvcNAQcBMBwGCiqGSIb3DQEMAQYwDgQILaGB"
+    "fWhJ2V0CAggAgIIDMM5EI/ck4VQD4JyGchVPbgd5HQjFbn+HThIoxBYpMPEK+iT7"
+    "t32idiirDi0qH+6nZancp69nnKhjpAOnMLSjCvba7HDFzi/op7fgf9hnwupEOahv"
+    "4b8Wv0S9ePTqsLfJy8tJzOAPYKOJO7HGSeZanWh2HpyCd2g1K1dBXsqsabTtJBsF"
+    "TSGsfUg08/SMT5o12BlMk/wjzUrcSNQxntyPXLfjO1uZ0gFjFO6xsFyclVWr8Zax"
+    "7fTA6SLdgeE1Iu2+mS1ohwNNzeBrCU6kXVzgw1GSn0UV0ZGbANRWDZZThWzQs9UW"
+    "sn8l1fr70OZ4JhUwPZe9g0Tu7EeGNPkM5dW1Lr3izKNtYdInBD/1J7wGxsmomsU3"
+    "khIH2FMqqYX7NFkI0TZiHpLYk2bQmMnfFbBDlXluzO2iLvBY5FPUCn5W4ZPAJlFs"
+    "Ryo/OytciwJUIRoz76CIg3TmzM1b+RLBMEr6lAsD1za3fcTMwbsBeYY0FEFfb/I6"
+    "ddmJTxjbCLPLekgkV7MIFSWPiL4t2eXR3rlu1Vnoys0aTWmFtJhEOI16Q1bkJ9L1"
+    "c/KXHm/Srccm8hTazNYQewHRXWiAvigg6slRnx1I36Z0TMbnikDVCRH8cjFsMKO5"
+    "/qNMKSsZ6EAePHYAu4N5CpqaTl0hjHI8sW+CDzzmGOn8Acb00gJ+DOu+wiTZtJYS"
+    "GIZogs7PluMJ7cU1Ju38OixWbQDvfDdloQ/7kZrM6DoEKhvC2bwMwlfxin9jUwjJ"
+    "98dtdAwQVgckvnYYVpqKnn/dlkiStaiZFKx27kw6o2oobcDrkg0wtOZFeX8k0SXZ"
+    "ekcmMc5Xfl+5HyJxH5ni8UmHyOHAM8dNjpnzCD9J2K0U7z8kdzslZ95X5MAxYIUa"
+    "r50tIaWHxeLLYYZUi+nyjNbMZ+yvAqOjQqI1mIcYZurHRPRIHVi2x4nfcKKQIkxn"
+    "UTF9d3VWbkWoJ1qfe0OSpWg4RrdgDCSB1BlF0gQHEsDTT5/xoZIEoUV8t6TYTVCe"
+    "axreBYxLhvROONz94v6GD6Eb4kakbSObn8NuBiWnaPevFyEF5YluKR87MbZRQY0Z"
+    "yJ/4PuEhDIioRdY7ujAxMCEwCQYFKw4DAhoFAAQU4/UMFJQGUvgPuTXRKp0gVU4B"
+    "GbkECPTYJIica3DWAgIIAA==";
+
+char const kP12KeyFileMissingKey[] =
+    "MIIDzAIBAzCCA5IGCSqGSIb3DQEHAaCCA4MEggN/MIIDezCCA3cGCSqGSIb3DQEH"
+    "BqCCA2gwggNkAgEAMIIDXQYJKoZIhvcNAQcBMBwGCiqGSIb3DQEMAQYwDgQILaGB"
+    "fWhJ2V0CAggAgIIDMM5EI/ck4VQD4JyGchVPbgd5HQjFbn+HThIoxBYpMPEK+iT7"
+    "t32idiirDi0qH+6nZancp69nnKhjpAOnMLSjCvba7HDFzi/op7fgf9hnwupEOahv"
+    "4b8Wv0S9ePTqsLfJy8tJzOAPYKOJO7HGSeZanWh2HpyCd2g1K1dBXsqsabTtJBsF"
+    "TSGsfUg08/SMT5o12BlMk/wjzUrcSNQxntyPXLfjO1uZ0gFjFO6xsFyclVWr8Zax"
+    "7fTA6SLdgeE1Iu2+mS1ohwNNzeBrCU6kXVzgw1GSn0UV0ZGbANRWDZZThWzQs9UW"
+    "sn8l1fr70OZ4JhUwPZe9g0Tu7EeGNPkM5dW1Lr3izKNtYdInBD/1J7wGxsmomsU3"
+    "khIH2FMqqYX7NFkI0TZiHpLYk2bQmMnfFbBDlXluzO2iLvBY5FPUCn5W4ZPAJlFs"
+    "Ryo/OytciwJUIRoz76CIg3TmzM1b+RLBMEr6lAsD1za3fcTMwbsBeYY0FEFfb/I6"
+    "ddmJTxjbCLPLekgkV7MIFSWPiL4t2eXR3rlu1Vnoys0aTWmFtJhEOI16Q1bkJ9L1"
+    "c/KXHm/Srccm8hTazNYQewHRXWiAvigg6slRnx1I36Z0TMbnikDVCRH8cjFsMKO5"
+    "/qNMKSsZ6EAePHYAu4N5CpqaTl0hjHI8sW+CDzzmGOn8Acb00gJ+DOu+wiTZtJYS"
+    "GIZogs7PluMJ7cU1Ju38OixWbQDvfDdloQ/7kZrM6DoEKhvC2bwMwlfxin9jUwjJ"
+    "98dtdAwQVgckvnYYVpqKnn/dlkiStaiZFKx27kw6o2oobcDrkg0wtOZFeX8k0SXZ"
+    "ekcmMc5Xfl+5HyJxH5ni8UmHyOHAM8dNjpnzCD9J2K0U7z8kdzslZ95X5MAxYIUa"
+    "r50tIaWHxeLLYYZUi+nyjNbMZ+yvAqOjQqI1mIcYZurHRPRIHVi2x4nfcKKQIkxn"
+    "UTF9d3VWbkWoJ1qfe0OSpWg4RrdgDCSB1BlF0gQHEsDTT5/xoZIEoUV8t6TYTVCe"
+    "axreBYxLhvROONz94v6GD6Eb4kakbSObn8NuBiWnaPevFyEF5YluKR87MbZRQY0Z"
+    "yJ/4PuEhDIioRdY7ujAxMCEwCQYFKw4DAhoFAAQU4/UMFJQGUvgPuTXRKp0gVU4B"
+    "GbkECPTYJIica3DWAgIIAA==";
+
+void WriteBase64AsBinary(std::string const& filename, char const* data) {
+  std::ofstream os(filename, std::ios::binary);
+  os.exceptions(std::ios::badbit);
+  auto bytes = internal::Base64Decode(data);
+  for (unsigned char c : bytes) {
+    os << c;
+  }
+  os.close();
+}
+
+/// @test Verify that parsing a service account JSON string works.
+TEST_F(ServiceAccountCredentialsTest, ParseSimpleP12) {
+  auto filename = CreateRandomFileName() + ".p12";
+  WriteBase64AsBinary(filename, kP12KeyFileContents);
+
+  auto info = ParseServiceAccountP12File(filename);
+  ASSERT_STATUS_OK(info);
+
+  EXPECT_EQ(kP12ServiceAccountId, info->client_email);
+  EXPECT_FALSE(info->private_key.empty());
+  EXPECT_EQ(0, std::remove(filename.c_str()));
+
+  ServiceAccountCredentials<> credentials(*info);
+
+  auto signed_blob = credentials.SignBlob(SigningAccount(), "test-blob");
+  EXPECT_STATUS_OK(signed_blob);
+}
+
+TEST_F(ServiceAccountCredentialsTest, ParseP12MissingKey) {
+  std::string filename = CreateRandomFileName() + ".p12";
+  WriteBase64AsBinary(filename, kP12KeyFileMissingKey);
+  auto info = ParseServiceAccountP12File(filename);
+  EXPECT_FALSE(info.ok());
+}
+
+TEST_F(ServiceAccountCredentialsTest, ParseP12MissingCerts) {
+  std::string filename = ::testing::TempDir() + CreateRandomFileName() + ".p12";
+  WriteBase64AsBinary(filename, kP12KeyFileMissingCerts);
+  auto info = ParseServiceAccountP12File(filename);
+  EXPECT_FALSE(info.ok());
+}
+
+TEST_F(ServiceAccountCredentialsTest, CreateFromP12MissingFile) {
+  std::string filename = CreateRandomFileName();
+  // Loading a non-existent file should fail.
+  auto actual = CreateServiceAccountCredentialsFromP12FilePath(filename);
+  EXPECT_FALSE(actual.ok());
+}
+
+TEST_F(ServiceAccountCredentialsTest, CreateFromP12EmptyFile) {
+  std::string filename = CreateRandomFileName();
+  std::ofstream(filename).close();
+
+  // Loading an empty file should fail.
+  auto actual = CreateServiceAccountCredentialsFromP12FilePath(filename);
+  EXPECT_FALSE(actual.ok());
+
+  EXPECT_EQ(0, std::remove(filename.c_str()));
+}
+
+TEST_F(ServiceAccountCredentialsTest, CreateFromP12ValidFile) {
+  std::string filename = CreateRandomFileName() + ".p12";
+  WriteBase64AsBinary(filename, kP12KeyFileContents);
+
+  // Loading an empty file should fail.
+  auto actual = CreateServiceAccountCredentialsFromP12FilePath(filename);
+  EXPECT_STATUS_OK(actual);
+
+  EXPECT_EQ(0, std::remove(filename.c_str()));
 }
 
 }  // namespace
