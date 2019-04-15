@@ -139,8 +139,8 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   X509_NAME* name = X509_get_subject_name(cert.get());
 
   std::string service_account_id = [&name]() -> std::string {
-    std::unique_ptr<char, decltype(&std::free)> oneline(
-        X509_NAME_oneline(name, nullptr, 0), &std::free);
+    std::unique_ptr<char, decltype(&CRYPTO_free)> oneline(
+        X509_NAME_oneline(name, nullptr, 0), &CRYPTO_free);
     // We expect the name to be simply CN/ followed by a (small) number of
     // digits.
     if (strncmp("/CN=", oneline.get(), 4) != 0) {
