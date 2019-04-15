@@ -13,10 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
+
 #include "google/cloud/storage/internal/openssl_util.h"
+
 #include <openssl/err.h>
 #include <openssl/pem.h>
 #include <openssl/pkcs12.h>
+
 #include <fstream>
 
 namespace google {
@@ -78,7 +81,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
     std::string const& source, std::string const& default_token_uri) {
   OpenSSL_add_all_algorithms();
 
-  PKCS12* p12 = [](std::string const& source) {
+  PKCS12* p12_raw = [](std::string const& source) {
     FILE* fp = std::fopen(source.c_str(), "rb");
     if (fp == nullptr) {
       return static_cast<PKCS12*>(nullptr);
@@ -88,12 +91,16 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
     return result;
   }(source);
 
+  std::unique_ptr<PKCS12, decltype(&PKCS12_free)> p12(p12_raw, &PKCS12_free);
+
   auto capture_openssl_errors = []() {
     std::string msg;
     while (auto code = ERR_get_error()) {
-      // OpenSSL guarantees that 120 bytes is enough:
+      // OpenSSL guarantees that 256 bytes is enough:
+      //   https://www.openssl.org/docs/man1.1.1/man3/ERR_error_string_n.html
       //   https://www.openssl.org/docs/man1.0.2/man3/ERR_error_string_n.html
-      char buf[128];
+      // we could not find a macro or constant to replace the 256 literal.
+      char buf[256];
       ERR_error_string_n(code, buf, sizeof(buf));
       msg += buf;
     }
@@ -108,12 +115,12 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
 
   EVP_PKEY* pkey_raw;
   X509* cert_raw;
-  if (PKCS12_parse(p12, "notasecret", &pkey_raw, &cert_raw, nullptr) != 1) {
+  if (PKCS12_parse(p12.get(), "notasecret", &pkey_raw, &cert_raw, nullptr) !=
+      1) {
     std::string msg = "Cannot parse PKCS#12 file (" + source + "): ";
     msg += capture_openssl_errors();
     return Status(StatusCode::kInvalidArgument, msg);
   }
-  PKCS12_free(p12);
 
   std::unique_ptr<EVP_PKEY, decltype(&EVP_PKEY_free)> pkey(pkey_raw,
                                                            &EVP_PKEY_free);
@@ -132,17 +139,18 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   X509_NAME* name = X509_get_subject_name(cert.get());
 
   std::string service_account_id = [&name]() -> std::string {
+    std::unique_ptr<char, decltype(&std::free)> oneline(
+        X509_NAME_oneline(name, nullptr, 0), &std::free);
     // We expect the name to be simply CN/ followed by a (small) number of
-    // digits. If the string is longer we are simply going to ignore it.
-    char buf[128];
-    (void)X509_NAME_oneline(name, buf, sizeof(buf));
-    if (strncmp("/CN=", buf, 4) != 0) {
+    // digits.
+    if (strncmp("/CN=", oneline.get(), 4) != 0) {
       return "";
     }
-    return buf + 4;
+    return oneline.get() + 4;
   }();
 
-  if (service_account_id.empty()) {
+  if (service_account_id.find_first_not_of("0123456789") != std::string::npos ||
+      service_account_id.empty()) {
     return Status(
         StatusCode::kInvalidArgument,
         "Invalid PKCS#12 file (" + source +

@@ -13,7 +13,7 @@ TODO(#2420) - Complete this section.
 First, create a new service account to execute the integration tests:
 
 ```console
-AGENT_ACCOUNT=...
+AGENT_ACCOUNT=... # e.g. integration-tests-robot
 gcloud --project=${PROJECT_ID} iam service-accounts create ${AGENT_ACCOUNT}
 ```
 
