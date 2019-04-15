@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC.
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -69,8 +69,9 @@ class AsyncListInstancesTest : public ::testing::Test {
   std::unique_ptr<MockAsyncListInstancesReader> instances_reader_3_;
 };
 
-// A lambda to create lambdas. Basically we would be rewriting the same
-// lambda twice without this thing.
+// Dynamically create the lambda for `Invoke()`, note that the return type is
+// unknown, so a function or function template would not work. Alternatively,
+// writing this inline is very repetitive.
 auto create_list_instances_lambda =
     [](std::string returned_token, std::vector<std::string> instance_names,
        std::vector<std::string> failed_locations) {
