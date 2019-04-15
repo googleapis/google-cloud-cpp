@@ -251,11 +251,11 @@ void MutationBatcher::SatisfyPromises(
     std::unique_lock<std::mutex>& lk) {
   std::vector<NoMorePendingPromise> no_more_pending_promises;
   if (num_requests_pending_ == 0 && num_outstanding_batches_ == 0) {
-    // We should wait not only on num_requests_pending_ being zero but alson on
+    // We should wait not only on num_requests_pending_ being zero but also on
     // num_outstanding_batches_ because we want to allow the user to kill the
     // completion queue after this promise is fulfilled. Otherwise, the user can
     // destroy the completion queue while the last batch is still being
-    // processed - we've had this bug.
+    // processed - we've had this bug (#2140).
     no_more_pending_promises_.swap(no_more_pending_promises);
   }
   lk.unlock();
