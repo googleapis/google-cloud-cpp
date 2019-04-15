@@ -100,3 +100,8 @@ echo "Running JSON keyfile integration test."
 
 echo "Running P12 keyfile integration test."
 ./key_file_integration_test "${BUCKET_NAME}" "${TEST_KEY_FILE_P12}" "${SIGNING_SERVICE_ACCOUNT}"
+
+echo
+echo "Running GCS Object APIs with P12 credentials."
+env "GOOGLE_APPLICATION_CREDENTIALS=${TEST_KEY_FILE_P12}" \
+    ./object_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"

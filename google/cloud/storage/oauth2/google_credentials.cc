@@ -48,8 +48,19 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
   std::string contents(std::istreambuf_iterator<char>{ifs}, {});
   auto cred_json = nl::json::parse(contents, nullptr, false);
   if (cred_json.is_discarded()) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid contents in credentials file " + path);
+    // This is not a JSON file, try to load it as a P12 service account.
+    auto info = ParseServiceAccountP12File(path);
+    if (!info) {
+      // Ignore the error returned by the P12 parser, because those are too
+      // specific, they typically say "error in PKCS#12" and the application
+      // may not even be trying to load a PKCS#12 file.
+      return Status(StatusCode::kInvalidArgument,
+                    "Invalid credentials file " + path);
+    }
+    auto credentials =
+        google::cloud::internal::make_unique<ServiceAccountCredentials<>>(
+            *info);
+    return std::unique_ptr<Credentials>(std::move(credentials));
   }
   std::string cred_type = cred_json.value("type", "no type given");
   if (cred_type == "authorized_user") {

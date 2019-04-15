@@ -296,9 +296,9 @@ TEST_F(GoogleCredentialsTest, LoadInvalidCredentials) {
 
   auto creds = GoogleDefaultCredentials();
   ASSERT_FALSE(creds) << "status=" << creds.status();
+  EXPECT_EQ(StatusCode::kInvalidArgument, creds.status().code());
   EXPECT_THAT(creds.status().message(),
-              HasSubstr("Invalid contents in credentials file"));
-  EXPECT_THAT(creds.status().message(), HasSubstr(filename));
+              HasSubstr("credentials file " + filename));
 }
 
 TEST_F(GoogleCredentialsTest, MissingCredentialsViaEnvVar) {
