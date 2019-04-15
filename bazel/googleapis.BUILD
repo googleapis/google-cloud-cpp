@@ -183,3 +183,145 @@ cc_library(
     ],
     includes = ["."],
 )
+
+######################
+# BEGIN SPANNER PROTOS
+######################
+
+# WARNING:
+# These Spanner protos exist for prototyping only. Users should not rely on
+# these protos and bazel build targets existing in the future. We will
+# remove/rename these without notice.
+
+cc_grpc_library(
+    name = "google_spanner_v1_keys",
+    srcs = ["google/spanner/v1/keys.proto"],
+    deps = [":google_api_annotations"],
+    proto_only = False,
+    well_known_protos = True,
+    use_external = True,
+)
+
+cc_grpc_library(
+    name = "google_spanner_v1_mutation",
+    srcs = ["google/spanner/v1/mutation.proto"],
+    deps = [
+        ":google_api_annotations",
+        ":google_spanner_v1_keys",
+    ],
+    proto_only = False,
+    well_known_protos = True,
+    use_external = True,
+)
+
+cc_grpc_library(
+    name = "google_spanner_v1_query_plan",
+    srcs = ["google/spanner/v1/query_plan.proto"],
+    deps = [
+        ":google_api_annotations",
+    ],
+    proto_only = False,
+    well_known_protos = True,
+    use_external = True,
+)
+
+cc_grpc_library(
+    name = "google_spanner_v1_type",
+    srcs = ["google/spanner/v1/type.proto"],
+    deps = [
+        ":google_api_annotations",
+    ],
+    proto_only = False,
+    well_known_protos = True,
+    use_external = True,
+)
+
+cc_grpc_library(
+    name = "google_spanner_v1_transaction",
+    srcs = ["google/spanner/v1/transaction.proto"],
+    deps = [
+        ":google_api_annotations",
+    ],
+    proto_only = False,
+    well_known_protos = True,
+    use_external = True,
+)
+
+cc_grpc_library(
+    name = "google_spanner_v1_result_set",
+    srcs = ["google/spanner/v1/result_set.proto"],
+    deps = [
+        ":google_api_annotations",
+        ":google_spanner_v1_query_plan",
+        ":google_spanner_v1_transaction",
+        ":google_spanner_v1_type",
+    ],
+    proto_only = False,
+    well_known_protos = True,
+    use_external = True,
+)
+
+cc_grpc_library(
+    name = "google_spanner_v1_spanner",
+    srcs = ["google/spanner/v1/spanner.proto"],
+    deps = [
+        ":google_api_annotations",
+        ":google_spanner_v1_keys",
+        ":google_spanner_v1_mutation",
+        ":google_spanner_v1_result_set",
+        ":google_spanner_v1_transaction",
+        ":google_spanner_v1_type",
+    ],
+    proto_only = False,
+    well_known_protos = True,
+    use_external = True,
+)
+
+# Instance Admin
+cc_grpc_library(
+    name = "google_spanner_admin_instance_v1_spanner_instance_admin",
+    srcs = ["google/spanner/admin/instance/v1/spanner_instance_admin.proto"],
+    deps = [
+        ":google_api_annotations",
+        ":google_longrunning_operations",
+        ":google_iam_v1_iam_policy",
+    ],
+    proto_only = False,
+    well_known_protos = True,
+    use_external = True,
+)
+
+# Database Admin
+cc_grpc_library(
+    name = "google_spanner_admin_database_v1_spanner_database_admin",
+    srcs = ["google/spanner/admin/database/v1/spanner_database_admin.proto"],
+    deps = [
+        ":google_api_annotations",
+        ":google_longrunning_operations",
+        ":google_iam_v1_iam_policy",
+    ],
+    proto_only = False,
+    well_known_protos = True,
+    use_external = True,
+)
+
+cc_library(
+    name = "spanner_protos",
+    deps = [
+        ":google_spanner_v1_keys",
+        ":google_spanner_v1_mutation",
+        ":google_spanner_v1_query_plan",
+        ":google_spanner_v1_result_set",
+        ":google_spanner_v1_spanner",
+        ":google_spanner_v1_transaction",
+        ":google_spanner_v1_type",
+        ":google_spanner_admin_instance_v1_spanner_instance_admin",
+        ":google_spanner_admin_database_v1_spanner_database_admin",
+        "@com_github_grpc_grpc//:grpc++",
+    ],
+    includes = ["."],
+)
+
+####################
+# END SPANNER PROTOS
+####################
