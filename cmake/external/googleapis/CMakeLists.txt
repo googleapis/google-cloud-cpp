@@ -58,28 +58,251 @@ endif ()
 
 include(SelectMSVCRuntime)
 
-# TODO(#2283) - refactor common (non-bigtable) protos to a library
+protobuf_generate_cpp(API_HTTP_PROTO_SOURCES API_HTTP_PROTO_HDRS
+                      ${PROJECT_SOURCE_DIR}/google/api/http.proto)
+grpc_generate_cpp(API_HTTP_GRPCPP_SOURCES API_HTTP_GRPCPP_HDRS
+                  ${PROJECT_SOURCE_DIR}/google/api/http.proto)
+add_library(googleapis_cpp_api_http_protos
+            ${API_HTTP_PROTO_SOURCES}
+            ${API_HTTP_PROTO_HDRS}
+            ${API_HTTP_GRPCPP_SOURCES}
+            ${API_HTTP_GRPCPP_HDRS})
+target_link_libraries(googleapis_cpp_api_http_protos
+                      PUBLIC gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
+                      PRIVATE googleapis_cpp_common_flags)
+target_include_directories(googleapis_cpp_api_http_protos
+                           PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+                                  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                  $<INSTALL_INTERFACE:include>)
+set_target_properties(
+    googleapis_cpp_api_http_protos
+    PROPERTIES
+        VERSION
+        "${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_MINOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_PATCH}"
+        SOVERSION
+        ${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR})
+add_library(
+    googleapis-c++::api_http_protos ALIAS googleapis_cpp_api_http_protos)
+
+protobuf_generate_cpp(API_ANNOTATIONS_PROTO_SOURCES API_ANNOTATIONS_PROTO_HDRS
+                      ${PROJECT_SOURCE_DIR}/google/api/annotations.proto)
+grpc_generate_cpp(API_ANNOTATIONS_GRPCPP_SOURCES API_ANNOTATIONS_GRPCPP_HDRS
+                  ${PROJECT_SOURCE_DIR}/google/api/annotations.proto)
+add_library(googleapis_cpp_api_annotations_protos
+            ${API_ANNOTATIONS_PROTO_SOURCES}
+            ${API_ANNOTATIONS_PROTO_HDRS}
+            ${API_ANNOTATIONS_GRPCPP_SOURCES}
+            ${API_ANNOTATIONS_GRPCPP_HDRS})
+target_link_libraries(googleapis_cpp_api_annotations_protos
+                      PUBLIC googleapis-c++::api_http_protos
+                             gRPC::grpc++
+                             gRPC::grpc
+                             protobuf::libprotobuf
+                      PRIVATE googleapis_cpp_common_flags)
+target_include_directories(googleapis_cpp_api_annotations_protos
+                           PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+                                  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                  $<INSTALL_INTERFACE:include>)
+set_target_properties(
+    googleapis_cpp_api_annotations_protos
+    PROPERTIES
+        VERSION
+        "${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_MINOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_PATCH}"
+        SOVERSION
+        ${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR})
+add_library(googleapis-c++::api_annotations_protos ALIAS
+            googleapis_cpp_api_annotations_protos)
+
+protobuf_generate_cpp(API_AUTH_PROTO_SOURCES API_AUTH_PROTO_HDRS
+                      ${PROJECT_SOURCE_DIR}/google/api/auth.proto)
+grpc_generate_cpp(API_AUTH_GRPCPP_SOURCES API_AUTH_GRPCPP_HDRS
+                  ${PROJECT_SOURCE_DIR}/google/api/auth.proto)
+add_library(googleapis_cpp_api_auth_protos
+            ${API_AUTH_PROTO_SOURCES}
+            ${API_AUTH_PROTO_HDRS}
+            ${API_AUTH_GRPCPP_SOURCES}
+            ${API_AUTH_GRPCPP_HDRS})
+target_link_libraries(googleapis_cpp_api_auth_protos
+                      PUBLIC googleapis-c++::api_annotations_protos
+                             gRPC::grpc++
+                             gRPC::grpc
+                             protobuf::libprotobuf
+                      PRIVATE googleapis_cpp_common_flags)
+target_include_directories(googleapis_cpp_api_auth_protos
+                           PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+                                  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                  $<INSTALL_INTERFACE:include>)
+set_target_properties(
+    googleapis_cpp_api_auth_protos
+    PROPERTIES
+        VERSION
+        "${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_MINOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_PATCH}"
+        SOVERSION
+        ${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR})
+add_library(
+    googleapis-c++::api_auth_protos ALIAS googleapis_cpp_api_auth_protos)
+
+protobuf_generate_cpp(RPC_ERROR_DETAILS_PROTO_SOURCES
+                      RPC_ERROR_DETAILS_PROTO_HDRS
+                      ${PROJECT_SOURCE_DIR}/google/rpc/error_details.proto)
+grpc_generate_cpp(RPC_ERROR_DETAILS_GRPCPP_SOURCES RPC_ERROR_DETAILS_GRPCPP_HDRS
+                  ${PROJECT_SOURCE_DIR}/google/rpc/error_details.proto)
+add_library(googleapis_cpp_rpc_error_details_protos
+            ${RPC_ERROR_DETAILS_PROTO_SOURCES}
+            ${RPC_ERROR_DETAILS_PROTO_HDRS}
+            ${RPC_ERROR_DETAILS_GRPCPP_SOURCES}
+            ${RPC_ERROR_DETAILS_GRPCPP_HDRS})
+target_link_libraries(googleapis_cpp_rpc_error_details_protos
+                      PUBLIC gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
+                      PRIVATE googleapis_cpp_common_flags)
+target_include_directories(googleapis_cpp_rpc_error_details_protos
+                           PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+                                  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                  $<INSTALL_INTERFACE:include>)
+set_target_properties(
+    googleapis_cpp_rpc_error_details_protos
+    PROPERTIES
+        VERSION
+        "${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_MINOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_PATCH}"
+        SOVERSION
+        ${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR})
+add_library(googleapis-c++::rpc_error_details_protos ALIAS
+            googleapis_cpp_rpc_error_details_protos)
+
+protobuf_generate_cpp(RPC_STATUS_PROTO_SOURCES RPC_STATUS_PROTO_HDRS
+                      ${PROJECT_SOURCE_DIR}/google/rpc/status.proto)
+grpc_generate_cpp(RPC_STATUS_GRPCPP_SOURCES RPC_STATUS_GRPCPP_HDRS
+                  ${PROJECT_SOURCE_DIR}/google/rpc/status.proto)
+add_library(googleapis_cpp_rpc_status_protos
+            ${RPC_STATUS_PROTO_SOURCES}
+            ${RPC_STATUS_PROTO_HDRS}
+            ${RPC_STATUS_GRPCPP_SOURCES}
+            ${RPC_STATUS_GRPCPP_HDRS})
+target_link_libraries(googleapis_cpp_rpc_status_protos
+                      PUBLIC googleapis-c++::rpc_error_details_protos
+                             gRPC::grpc++
+                             gRPC::grpc
+                             protobuf::libprotobuf
+                      PRIVATE googleapis_cpp_common_flags)
+target_include_directories(googleapis_cpp_rpc_status_protos
+                           PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+                                  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                  $<INSTALL_INTERFACE:include>)
+set_target_properties(
+    googleapis_cpp_rpc_status_protos
+    PROPERTIES
+        VERSION
+        "${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_MINOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_PATCH}"
+        SOVERSION
+        ${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR})
+add_library(googleapis-c++::rpc_status_protos ALIAS
+            googleapis_cpp_rpc_status_protos)
+
+protobuf_generate_cpp(IAM_V1_POLICY_PROTO_SOURCES IAM_V1_POLICY_PROTO_HDRS
+                      ${PROJECT_SOURCE_DIR}/google/iam/v1/policy.proto)
+grpc_generate_cpp(IAM_V1_POLICY_GRPCPP_SOURCES IAM_V1_POLICY_GRPCPP_HDRS
+                  ${PROJECT_SOURCE_DIR}/google/iam/v1/policy.proto)
+add_library(googleapis_cpp_iam_v1_policy_protos
+            ${IAM_V1_POLICY_PROTO_SOURCES}
+            ${IAM_V1_POLICY_PROTO_HDRS}
+            ${IAM_V1_POLICY_GRPCPP_SOURCES}
+            ${IAM_V1_POLICY_GRPCPP_HDRS})
+target_link_libraries(googleapis_cpp_iam_v1_policy_protos
+                      PUBLIC googleapis-c++::api_annotations_protos
+                             gRPC::grpc++
+                             gRPC::grpc
+                             protobuf::libprotobuf
+                      PRIVATE googleapis_cpp_common_flags)
+target_include_directories(googleapis_cpp_iam_v1_policy_protos
+                           PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+                                  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                  $<INSTALL_INTERFACE:include>)
+set_target_properties(
+    googleapis_cpp_iam_v1_policy_protos
+    PROPERTIES
+        VERSION
+        "${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_MINOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_PATCH}"
+        SOVERSION
+        ${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR})
+add_library(googleapis-c++::iam_v1_policy_protos ALIAS
+            googleapis_cpp_iam_v1_policy_protos)
+
+protobuf_generate_cpp(IAM_V1_IAM_POLICY_PROTO_SOURCES
+                      IAM_V1_IAM_POLICY_PROTO_HDRS
+                      ${PROJECT_SOURCE_DIR}/google/iam/v1/iam_policy.proto)
+grpc_generate_cpp(IAM_V1_IAM_POLICY_GRPCPP_SOURCES IAM_V1_IAM_POLICY_GRPCPP_HDRS
+                  ${PROJECT_SOURCE_DIR}/google/iam/v1/iam_policy.proto)
+add_library(googleapis_cpp_iam_v1_iam_policy_protos
+            ${IAM_V1_IAM_POLICY_PROTO_SOURCES}
+            ${IAM_V1_IAM_POLICY_PROTO_HDRS}
+            ${IAM_V1_IAM_POLICY_GRPCPP_SOURCES}
+            ${IAM_V1_IAM_POLICY_GRPCPP_HDRS})
+target_link_libraries(googleapis_cpp_iam_v1_iam_policy_protos
+                      PUBLIC googleapis-c++::api_annotations_protos
+                             googleapis-c++::iam_v1_policy_protos
+                             gRPC::grpc++
+                             gRPC::grpc
+                             protobuf::libprotobuf
+                      PRIVATE googleapis_cpp_common_flags)
+target_include_directories(googleapis_cpp_iam_v1_iam_policy_protos
+                           PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+                                  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                  $<INSTALL_INTERFACE:include>)
+set_target_properties(
+    googleapis_cpp_iam_v1_iam_policy_protos
+    PROPERTIES
+        VERSION
+        "${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_MINOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_PATCH}"
+        SOVERSION
+        ${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR})
+add_library(googleapis-c++::iam_v1_iam_policy_protos ALIAS
+            googleapis_cpp_iam_v1_iam_policy_protos)
+
+protobuf_generate_cpp(LONGRUNNING_OPERATIONS_PROTO_SOURCES
+                      LONGRUNNING_OPERATIONS_PROTO_HDRS
+                      ${PROJECT_SOURCE_DIR}/google/longrunning/operations.proto)
+grpc_generate_cpp(LONGRUNNING_OPERATIONS_GRPCPP_SOURCES
+                  LONGRUNNING_OPERATIONS_GRPCPP_HDRS
+                  ${PROJECT_SOURCE_DIR}/google/longrunning/operations.proto)
+add_library(googleapis_cpp_longrunning_operations_protos
+            ${LONGRUNNING_OPERATIONS_PROTO_SOURCES}
+            ${LONGRUNNING_OPERATIONS_PROTO_HDRS}
+            ${LONGRUNNING_OPERATIONS_GRPCPP_SOURCES}
+            ${LONGRUNNING_OPERATIONS_GRPCPP_HDRS})
+target_link_libraries(googleapis_cpp_longrunning_operations_protos
+                      PUBLIC googleapis-c++::api_annotations_protos
+                             googleapis-c++::rpc_status_protos
+                             gRPC::grpc++
+                             gRPC::grpc
+                             protobuf::libprotobuf
+                      PRIVATE googleapis_cpp_common_flags)
+target_include_directories(googleapis_cpp_longrunning_operations_protos
+                           PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+                                  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                  $<INSTALL_INTERFACE:include>)
+set_target_properties(
+    googleapis_cpp_longrunning_operations_protos
+    PROPERTIES
+        VERSION
+        "${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_MINOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_PATCH}"
+        SOVERSION
+        ${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR})
+add_library(googleapis-c++::longrunning_operations_protos ALIAS
+            googleapis_cpp_longrunning_operations_protos)
+
 protobuf_generate_cpp(
-    PROTO_SOURCES
-    PROTO_HDRS
+    BIGTABLE_PROTO_SOURCES
+    BIGTABLE_PROTO_HDRS
     ${PROJECT_SOURCE_DIR}/google/bigtable/admin/v2/bigtable_instance_admin.proto
     ${PROJECT_SOURCE_DIR}/google/bigtable/admin/v2/bigtable_table_admin.proto
     ${PROJECT_SOURCE_DIR}/google/bigtable/admin/v2/common.proto
     ${PROJECT_SOURCE_DIR}/google/bigtable/admin/v2/instance.proto
     ${PROJECT_SOURCE_DIR}/google/bigtable/admin/v2/table.proto
     ${PROJECT_SOURCE_DIR}/google/bigtable/v2/bigtable.proto
-    ${PROJECT_SOURCE_DIR}/google/bigtable/v2/data.proto
-    ${PROJECT_SOURCE_DIR}/google/iam/v1/iam_policy.proto
-    ${PROJECT_SOURCE_DIR}/google/iam/v1/policy.proto
-    ${PROJECT_SOURCE_DIR}/google/longrunning/operations.proto
-    ${PROJECT_SOURCE_DIR}/google/rpc/status.proto
-    ${PROJECT_SOURCE_DIR}/google/rpc/error_details.proto
-    ${PROJECT_SOURCE_DIR}/google/api/annotations.proto
-    ${PROJECT_SOURCE_DIR}/google/api/auth.proto
-    ${PROJECT_SOURCE_DIR}/google/api/http.proto)
+    ${PROJECT_SOURCE_DIR}/google/bigtable/v2/data.proto)
 grpc_generate_cpp(
-    GRPCPP_SOURCES
-    GRPCPP_HDRS
+    BIGTABLE_GRPCPP_SOURCES
+    BIGTABLE_GRPCPP_HDRS
     ${PROJECT_SOURCE_DIR}/google/bigtable/admin/v2/bigtable_instance_admin.proto
     ${PROJECT_SOURCE_DIR}/google/bigtable/admin/v2/bigtable_table_admin.proto
     ${PROJECT_SOURCE_DIR}/google/bigtable/v2/bigtable.proto
@@ -89,12 +312,19 @@ grpc_generate_cpp(
 # adding new services (e.g. Spanner) please create a new library and refactor
 # common protos
 add_library(googleapis_cpp_bigtable_protos
-            ${PROTO_SOURCES}
-            ${PROTO_HDRS}
-            ${GRPCPP_SOURCES}
-            ${GRPCPP_HDRS})
+            ${BIGTABLE_PROTO_SOURCES}
+            ${BIGTABLE_PROTO_HDRS}
+            ${BIGTABLE_GRPCPP_SOURCES}
+            ${BIGTABLE_GRPCPP_HDRS})
 target_link_libraries(googleapis_cpp_bigtable_protos
-                      PUBLIC gRPC::grpc++ gRPC::grpc protobuf::libprotobuf
+                      PUBLIC googleapis-c++::api_annotations_protos
+                             googleapis-c++::api_auth_protos
+                             googleapis-c++::longrunning_operations_protos
+                             googleapis-c++::rpc_status_protos
+                             googleapis-c++::iam_v1_iam_policy_protos
+                             gRPC::grpc++
+                             gRPC::grpc
+                             protobuf::libprotobuf
                       PRIVATE googleapis_cpp_common_flags)
 target_include_directories(googleapis_cpp_bigtable_protos
                            PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
@@ -110,18 +340,93 @@ set_target_properties(
 add_library(
     googleapis-c++::bigtable_protos ALIAS googleapis_cpp_bigtable_protos)
 
+protobuf_generate_cpp(
+    SPANNER_PROTO_SOURCES
+    SPANNER_PROTO_HDRS
+    ${PROJECT_SOURCE_DIR}/google/spanner/admin/database/v1/spanner_database_admin.proto
+    ${PROJECT_SOURCE_DIR}/google/spanner/admin/instance/v1/spanner_instance_admin.proto
+    ${PROJECT_SOURCE_DIR}/google/spanner/v1/keys.proto
+    ${PROJECT_SOURCE_DIR}/google/spanner/v1/mutation.proto
+    ${PROJECT_SOURCE_DIR}/google/spanner/v1/query_plan.proto
+    ${PROJECT_SOURCE_DIR}/google/spanner/v1/result_set.proto
+    ${PROJECT_SOURCE_DIR}/google/spanner/v1/spanner.proto
+    ${PROJECT_SOURCE_DIR}/google/spanner/v1/transaction.proto
+    ${PROJECT_SOURCE_DIR}/google/spanner/v1/type.proto)
+grpc_generate_cpp(
+    SPANNER_GRPCPP_SOURCES
+    SPANNER_GRPCPP_HDRS
+    ${PROJECT_SOURCE_DIR}/google/spanner/admin/database/v1/spanner_database_admin.proto
+    ${PROJECT_SOURCE_DIR}/google/spanner/admin/instance/v1/spanner_instance_admin.proto
+    ${PROJECT_SOURCE_DIR}/google/spanner/v1/spanner.proto)
+add_library(googleapis_cpp_spanner_protos
+            ${SPANNER_PROTO_SOURCES}
+            ${SPANNER_PROTO_HDRS}
+            ${SPANNER_GRPCPP_SOURCES}
+            ${SPANNER_GRPCPP_HDRS})
+target_link_libraries(googleapis_cpp_spanner_protos
+                      PUBLIC googleapis-c++::api_annotations_protos
+                             googleapis-c++::longrunning_operations_protos
+                             googleapis-c++::rpc_status_protos
+                             googleapis-c++::iam_v1_iam_policy_protos
+                             gRPC::grpc++
+                             gRPC::grpc
+                             protobuf::libprotobuf
+                      PRIVATE googleapis_cpp_common_flags)
+target_include_directories(googleapis_cpp_spanner_protos
+                           PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+                                  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                  $<INSTALL_INTERFACE:include>)
+set_target_properties(
+    googleapis_cpp_spanner_protos
+    PROPERTIES
+        VERSION
+        "${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_MINOR}.${GOOGLEAPIS_CPP_PROTOS_VERSION_PATCH}"
+        SOVERSION
+        ${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR})
+add_library(googleapis-c++::spanner_protos ALIAS googleapis_cpp_spanner_protos)
+
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
 include(GNUInstallDirs)
 
-install(TARGETS googleapis_cpp_bigtable_protos googleapis_cpp_common_flags
+install(TARGETS googleapis_cpp_bigtable_protos
+                googleapis_cpp_spanner_protos
+                googleapis_cpp_longrunning_operations_protos
+                googleapis_cpp_api_http_protos
+                googleapis_cpp_api_annotations_protos
+                googleapis_cpp_api_auth_protos
+                googleapis_cpp_iam_v1_policy_protos
+                googleapis_cpp_iam_v1_iam_policy_protos
+                googleapis_cpp_rpc_error_details_protos
+                googleapis_cpp_rpc_status_protos
+                googleapis_cpp_common_flags
         EXPORT googleapis-targets
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 # Install proto generated files into include/google.
-foreach (header ${PROTO_HDRS} ${GRPCPP_HDRS})
+foreach (header
+         ${BIGTABLE_PROTO_HDRS}
+         ${BIGTABLE_GRPCPP_HDRS}
+         ${LONGRUNNING_OPERATIONS_PROTO_HDRS}
+         ${LONGRUNNING_OPERATIONS_GRPC_HDRS}
+         ${API_HTTP_PROTO_HDRS}
+         ${API_HTTP_GRPC_HDRS}
+         ${API_ANNOTATIONS_PROTO_HDRS}
+         ${API_ANNOTATIONS_GRPC_HDRS}
+         ${API_AUTH_PROTO_HDRS}
+         ${API_AUTH_GRPC_HDRS}
+         ${IAM_V1_POLICY_PROTO_HDRS}
+         ${IAM_V1_POLICY_GRPCPP_HDRS}
+         ${IAM_V1_IAM_POLICY_PROTO_HDRS}
+         ${IAM_V1_IAM_POLICY_GRPCPP_HDRS}
+         ${RPC_ERROR_DETAILS_PROTO_HDRS}
+         ${RPC_ERROR_DETAILS_GRPCPP_HDRS}
+         ${RPC_STATUS_PROTO_HDRS}
+         ${RPC_STATUS_GRPCPP_HDRS}
+         ${SPANNER_PROTO_HDRS}
+         ${SPANNER_GRPCPP_HDRS})
     string(REPLACE "${CMAKE_CURRENT_BINARY_DIR}/"
                    ""
                    relative
