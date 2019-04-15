@@ -386,6 +386,26 @@ class TableAdmin {
    */
   Status DropAllRows(std::string const& table_id);
 
+  /**
+   * Make an asynchronous request to delete all the rows in a table.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param table_id the id of the table within the instance associated with
+   *     this object. The full name of the table is
+   *     `this->instance_name() + "/tables/" + table_id`
+   *
+   * @par Example
+   * @snippet table_admin_async_snippets.cc async drop all rows
+   */
+  future<Status> AsyncDropAllRows(CompletionQueue& cq,
+                                  std::string const& table_id);
+
   //@{
   /**
    * @name Snapshot APIs.
