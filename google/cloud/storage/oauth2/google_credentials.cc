@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/google_credentials.h"
+
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/throw_delegate.h"
@@ -22,6 +23,7 @@
 #include "google/cloud/storage/oauth2/compute_engine_credentials.h"
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
+
 #include <fstream>
 #include <iterator>
 #include <memory>
@@ -169,6 +171,25 @@ CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents) {
   }
   return StatusOr<std::shared_ptr<Credentials>>(
       std::make_shared<AuthorizedUserCredentials<>>(*info));
+}
+
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromFilePath(std::string const& path) {
+  return CreateServiceAccountCredentialsFromFilePath(path, {}, {});
+}
+
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromFilePath(
+    std::string const& path,
+    google::cloud::optional<std::set<std::string>> scopes,
+    google::cloud::optional<std::string> subject) {
+  auto credentials =
+      CreateServiceAccountCredentialsFromJsonFilePath(path, scopes, subject);
+  if (credentials) {
+    return credentials;
+  }
+  return CreateServiceAccountCredentialsFromP12FilePath(path, std::move(scopes),
+                                                        std::move(subject));
 }
 
 StatusOr<std::shared_ptr<Credentials>>

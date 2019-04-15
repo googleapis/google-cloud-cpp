@@ -19,7 +19,9 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/init_google_mock.h"
+
 #include <gmock/gmock.h>
+
 #include <fstream>
 
 namespace google {
@@ -35,16 +37,7 @@ char const* flag_key_file_name;
 char const* flag_service_account;
 
 class KeyFileIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {
- protected:
-  StatusOr<std::shared_ptr<oauth2::Credentials>> CredentialsFromFile(
-      std::string const& path) {
-    if (path.find(".p12") != std::string::npos) {
-      return oauth2::CreateServiceAccountCredentialsFromP12FilePath(path);
-    }
-    return oauth2::CreateServiceAccountCredentialsFromJsonFilePath(path);
-  }
-};
+    : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
   if (UsingTestbench()) {
@@ -54,7 +47,8 @@ TEST_F(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
   std::string bucket_name = flag_bucket_name;
   std::string file_path = flag_key_file_name;
 
-  auto credentials = CredentialsFromFile(flag_key_file_name);
+  auto credentials =
+      oauth2::CreateServiceAccountCredentialsFromFilePath(flag_key_file_name);
   ASSERT_STATUS_OK(credentials);
 
   Client client(*credentials);
@@ -94,7 +88,8 @@ TEST_F(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
   std::string file_path = flag_key_file_name;
   std::string service_account = flag_service_account;
 
-  auto credentials = CredentialsFromFile(flag_key_file_name);
+  auto credentials =
+      oauth2::CreateServiceAccountCredentialsFromFilePath(flag_key_file_name);
   ASSERT_STATUS_OK(credentials);
 
   Client client(*credentials);
