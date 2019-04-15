@@ -465,14 +465,13 @@ to include `google-cloud-cpp` directly in your CMake project.
 
 ## Versioning
 
-This library follows [Semantic Versioning](http://semver.org/). Please note it
-is currently under active development. Any release versioned 0.x.y is subject to
-backwards-incompatible changes at any time.
+Please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](http://semver.org/).
 
 **GA**: Libraries defined at a GA quality level are expected to be stable and
-all updates in the libraries are guaranteed to be backwards-compatible. Any
-backwards-incompatible changes will lead to the major version increment
-(1.x.y -> 2.0.0).
+any backwards-incompatible changes will be noted in the documentation. Major
+changes to the API will signaled by changing major version number
+(e.g. 1.x.y -> 2.0.0).
 
 **Beta**: Libraries defined at a Beta quality level are expected to be mostly
 stable and we're working towards their release candidate. We will address issues
