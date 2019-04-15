@@ -16,6 +16,7 @@
 
 set -eu
 
+# shellcheck disable=SC2016
 sed \
     -e '/^## \[START IGNORED\]/,/^## \[END IGNORED\]/d' \
     -e '/^## /d' \

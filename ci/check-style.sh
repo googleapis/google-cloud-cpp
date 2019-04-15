@@ -54,21 +54,22 @@ find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 \
 #       are obsoleted by the gRPC team, so we should not use them in our code.
 #     - Replace grpc::<BLAH> with grpc::StatusCode::<BLAH>, the aliases in the
 #       `grpc::` namespace do not exist inside google.
-for file in $(find google/cloud -name '*.h' -o -name '*.cc' -print); do
-  # We used to run run `sed -i` to apply these changes, but that touches the
-  # files even if there are no changes applied, forcing a rebuild each time.
-  # So we first apply the change to a temporary file, and replace the original
-  # only if something changed.
-  sed -e 's/grpc::\([A-Z][A-Z_][A-Z_]*\)/grpc::StatusCode::\1/g' \
-      -e 's;#include <grpc\\+\\+/grpc\+\+.h>;#include <grpcpp/grpcpp.h>;' \
-      -e 's;#include <grpc\\+\\+/;#include <grpcpp/;' \
-      "${file}" > "${file}.tmp"
-  if cmp "${file}" "${file}.tmp"; then
-      rm -f "${file}.tmp"
-  else
-      mv -f "${file}.tmp" "${file}"
-  fi
-done
+find google/cloud \( -name '*.h' -o -name '*.cc' \) -print0 |
+  while IFS= read -r -d $'\0' file; do
+    # We used to run run `sed -i` to apply these changes, but that touches the
+    # files even if there are no changes applied, forcing a rebuild each time.
+    # So we first apply the change to a temporary file, and replace the original
+    # only if something changed.
+    sed -e 's/grpc::\([A-Z][A-Z_][A-Z_]*\)/grpc::StatusCode::\1/g' \
+        -e 's;#include <grpc\\+\\+/grpc\+\+.h>;#include <grpcpp/grpcpp.h>;' \
+        -e 's;#include <grpc\\+\\+/;#include <grpcpp/;' \
+        "${file}" > "${file}.tmp"
+    if cmp "${file}" "${file}.tmp"; then
+        rm -f "${file}.tmp"
+    else
+        mv -f "${file}.tmp" "${file}"
+    fi
+  done
 
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier

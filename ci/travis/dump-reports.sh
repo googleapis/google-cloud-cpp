@@ -44,9 +44,9 @@ export -f dump_report
 # are copied into the scan-cmake-out directory by the build-docker.sh script.
 
 find "${BUILD_OUTPUT}" -name 'compat_report.html' \
-    -exec bash -c "dump_report '{}'" \; 2>/dev/null || \
+    -exec bash -c 'dump_report "$1"' _ {} \; 2>/dev/null || \
   echo "No ABI compability reports found."
 
 find scan-cmake-out/ -name '*.html' \
-    -exec bash -c "dump_report '{}'" \; 2>/dev/null || \
+    -exec bash -c 'dump_report "$1"' _ {} \; 2>/dev/null || \
   echo "No static analysis reports found."

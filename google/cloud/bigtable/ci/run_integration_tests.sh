@@ -30,7 +30,7 @@ readonly BTDIR="google/cloud/bigtable"
 # of everybody's time. Use a (short) timeout to run the test and try 3 times.
 set +e
 success=""
-readonly TIMEOUT_CMD="$(which timeout)"
+readonly TIMEOUT_CMD="$(command -v timeout)"
 if [ -n "${TIMEOUT_CMD}" ]; then
   timeout="${TIMEOUT_CMD} 300s"
 else

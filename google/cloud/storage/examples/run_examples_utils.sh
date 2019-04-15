@@ -1038,7 +1038,7 @@ run_all_notification_examples() {
   # here. Parse the output from the list-notifications command to extract what
   # we need.
   local id="$(./storage_notification_samples list-notifications \
-      "${bucket_name}" | egrep -o 'id=[^,]*' | sed 's/id=//')"
+      "${bucket_name}" | grep -E -o 'id=[^,]*' | sed 's/id=//')"
   run_example ./storage_notification_samples get-notification \
       "${bucket_name}" "${id}"
   run_example ./storage_notification_samples delete-notification \
