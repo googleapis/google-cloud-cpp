@@ -229,7 +229,9 @@ function run_all_table_admin_examples {
       "${project_id}" "${INSTANCE}" "${TABLE}" "union-family"
   run_example ./table_admin_snippets create-intersection-family \
       "${project_id}" "${INSTANCE}" "${TABLE}" "intersection-family"
-  run_example ./table_admin_snippets create-intersection-family \
+  run_example ./table_admin_snippets create-nested-family \
+      "${project_id}" "${INSTANCE}" "${TABLE}" "nested-family"
+  run_example ./table_admin_snippets get-family-metadata \
       "${project_id}" "${INSTANCE}" "${TABLE}" "nested-family"
   run_example ./table_admin_snippets wait-for-consistency-check "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets generate-consistency-token "${project_id}" "${INSTANCE}" "${TABLE}"

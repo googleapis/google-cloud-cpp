@@ -325,6 +325,39 @@ void CreateNestedFamily(google::cloud::bigtable::TableAdmin admin, int argc,
   (std::move(admin), table_id, family_name);
 }
 
+void GetFamilyMetadata(google::cloud::bigtable::TableAdmin admin, int argc,
+                       char* argv[]) {
+  if (argc != 3) {
+    throw Usage{
+        "get-family-metadata: <project-id> <instance-id> <table-id>"
+        " <family-name>"};
+  }
+  std::string const table_id = ConsumeArg(argc, argv);
+  std::string const family_name = ConsumeArg(argc, argv);
+
+  // [START bigtable_get_family_metadata]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id, std::string family_name) {
+    auto schema =
+        admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+
+    if (!schema) {
+      throw std::runtime_error(schema.status().message());
+    }
+    auto pos = schema->column_families().find(family_name);
+    if (pos == schema->column_families().end()) {
+      std::cout << "Cannot find family <" << family_name << "> in table\n";
+      return;
+    }
+    std::string formatted;
+    google::protobuf::TextFormat::PrintToString(pos->second, &formatted);
+    std::cout << "Column family metadata for <" << family_name << "> is "
+              << formatted << "\n";
+  }
+  // [END bigtable_get_family_metadata]
+  (std::move(admin), table_id, family_name);
+}
+
 void DropAllRows(google::cloud::bigtable::TableAdmin admin, int argc,
                  char* argv[]) {
   if (argc != 2) {
@@ -561,6 +594,7 @@ int main(int argc, char* argv[]) try {
       {"create-union-family", &CreateUnionFamily},
       {"create-intersection-family", &CreateIntersectionFamily},
       {"create-nested-family", &CreateNestedFamily},
+      {"get-family-metadata", &GetFamilyMetadata},
       {"drop-all-rows", &DropAllRows},
       {"drop-rows-by-prefix", &DropRowsByPrefix},
       {"wait-for-consistency-check", &WaitForConsistencyCheck},
