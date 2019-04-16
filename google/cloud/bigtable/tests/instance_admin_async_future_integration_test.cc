@@ -312,6 +312,67 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAllClustersTest) {
   pool.join();
 }
 
+TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
+  std::string instance_id =
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+
+  google::cloud::bigtable::CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  auto instance_config = IntegrationTestConfig(
+      instance_id, "us-central1-c", bigtable::InstanceConfig::PRODUCTION, 3);
+  auto future = instance_admin_->CreateInstance(instance_config);
+  auto actual = future.get();
+  EXPECT_STATUS_OK(actual);
+  // Wait for instance creation
+  ASSERT_THAT(actual->name(), HasSubstr(instance_id));
+
+  std::string id1 =
+      "profile-" + google::cloud::internal::Sample(
+                       generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  std::string id2 =
+      "profile-" + google::cloud::internal::Sample(
+                       generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+
+  auto initial_profiles =
+      instance_admin_->AsyncListAppProfiles(cq, instance_id).get();
+  ASSERT_STATUS_OK(initial_profiles);
+
+  // Simplify writing the rest of the test.
+  auto count_matching_profiles =
+      [](std::string const& id, std::vector<btadmin::AppProfile> const& list) {
+        std::string suffix = "/appProfiles/" + id;
+        return std::count_if(
+            list.begin(), list.end(), [&suffix](btadmin::AppProfile const& x) {
+              return std::string::npos != x.name().find(suffix);
+            });
+      };
+
+  EXPECT_EQ(0U, count_matching_profiles(id1, *initial_profiles));
+  EXPECT_EQ(0U, count_matching_profiles(id2, *initial_profiles));
+
+  auto profile_1 = instance_admin_->CreateAppProfile(
+      bigtable::InstanceId(instance_id),
+      bigtable::AppProfileConfig::MultiClusterUseAny(
+          bigtable::AppProfileId(id1)));
+  ASSERT_STATUS_OK(profile_1);
+  auto profile_2 = instance_admin_->CreateAppProfile(
+      bigtable::InstanceId(instance_id),
+      bigtable::AppProfileConfig::MultiClusterUseAny(
+          bigtable::AppProfileId(id2)));
+  ASSERT_STATUS_OK(profile_2);
+
+  auto current_profiles =
+      instance_admin_->AsyncListAppProfiles(cq, instance_id).get();
+  ASSERT_STATUS_OK(current_profiles);
+  EXPECT_EQ(1U, count_matching_profiles(id1, *current_profiles));
+  EXPECT_EQ(1U, count_matching_profiles(id2, *current_profiles));
+
+  cq.Shutdown();
+  pool.join();
+}
+
 int main(int argc, char* argv[]) {
   google::cloud::testing_util::InitGoogleMock(argc, argv);
 

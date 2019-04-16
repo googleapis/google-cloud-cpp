@@ -236,6 +236,41 @@ void AsyncListAllClusters(cbt::InstanceAdmin instance_admin,
   (std::move(instance_admin), std::move(cq));
 }
 
+void AsyncListAppProfiles(cbt::InstanceAdmin instance_admin,
+                          cbt::CompletionQueue cq,
+                          std::vector<std::string> argv) {
+  if (argv.size() != 2U) {
+    throw Usage{"async-list-app-profiles: <project-id> <instance-id>"};
+  }
+
+  //! [async list app_profiles]
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
+     std::string instance_id) {
+    google::cloud::future<google::cloud::StatusOr<
+        std::vector<google::bigtable::admin::v2::AppProfile>>>
+        future = instance_admin.AsyncListAppProfiles(cq, instance_id);
+
+    auto final = future.then(
+        [](google::cloud::future<google::cloud::StatusOr<
+               std::vector<google::bigtable::admin::v2::AppProfile>>>
+               f) {
+          auto app_profile_list = f.get();
+          if (!app_profile_list) {
+            throw std::runtime_error(app_profile_list.status().message());
+          }
+          std::cout << "AppProfile Name List\n";
+          for (const auto& app_profile : *app_profile_list) {
+            std::cout << app_profile.name() << "\n";
+          }
+          return google::cloud::Status();
+        });
+
+    final.get();
+  }
+  //! [async list app_profiles]
+  (std::move(instance_admin), std::move(cq), argv[1]);
+}
+
 void AsyncDeleteInstance(cbt::InstanceAdmin instance_admin,
                          cbt::CompletionQueue cq,
                          std::vector<std::string> argv) {
@@ -274,6 +309,7 @@ int main(int argc, char* argv[]) try {
       {"async-list-instances", &AsyncListInstances},
       {"async-list-clusters", &AsyncListClusters},
       {"async-list-all-clusters", &AsyncListAllClusters},
+      {"async-list-app-profiles", &AsyncListAppProfiles},
       {"async-delete-instance", &AsyncDeleteInstance}};
 
   google::cloud::bigtable::CompletionQueue cq;

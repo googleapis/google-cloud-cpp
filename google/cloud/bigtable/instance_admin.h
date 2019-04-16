@@ -489,6 +489,21 @@ class InstanceAdmin {
   ListAppProfiles(std::string const& instance_id);
 
   /**
+   * Query (asynchronously) the list of app profiles in an instance.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param instance_id the instance in a project.
+   * @return the list of app profiles.
+   *
+   * @par Example
+   * @snippet bigtable_instance_admin_snippets.cc list clusters
+   */
+  future<StatusOr<std::vector<google::bigtable::admin::v2::AppProfile>>>
+  AsyncListAppProfiles(CompletionQueue& cq, std::string const& instance_id);
+
+  /**
    * Delete an existing application profile.
    *
    * @param instance_id the instance to look the profile in.

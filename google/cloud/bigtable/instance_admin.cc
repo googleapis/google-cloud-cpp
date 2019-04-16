@@ -567,6 +567,31 @@ StatusOr<std::vector<btadmin::AppProfile>> InstanceAdmin::ListAppProfiles(
   return result;
 }
 
+future<StatusOr<std::vector<btadmin::AppProfile>>>
+InstanceAdmin::AsyncListAppProfiles(CompletionQueue& cq,
+                                    std::string const& instance_id) {
+  auto client = impl_.client_;
+  btadmin::ListAppProfilesRequest request;
+  request.set_parent(InstanceName(instance_id));
+
+  return internal::StartAsyncRetryMultiPage(
+      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      clone_metadata_update_policy(),
+      [client](grpc::ClientContext* context,
+               btadmin::ListAppProfilesRequest const& request,
+               grpc::CompletionQueue* cq) {
+        return client->AsyncListAppProfiles(context, request, cq);
+      },
+      std::move(request), std::vector<btadmin::AppProfile>(),
+      [](std::vector<btadmin::AppProfile> acc,
+         btadmin::ListAppProfilesResponse response) {
+        std::move(response.app_profiles().begin(),
+                  response.app_profiles().end(), std::back_inserter(acc));
+        return acc;
+      },
+      cq);
+}
+
 Status InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
                                        bigtable::AppProfileId const& profile_id,
                                        bool ignore_warnings) {
