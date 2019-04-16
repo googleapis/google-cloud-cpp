@@ -49,7 +49,8 @@ run_example() {
   local example=$2
   shift 2
   local arguments=$*
-  local program_name=$(basename ${program_path})
+  local program_name
+  program_name=$(basename ${program_path})
 
   if [ ! -x ${program_path} ]; then
     echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
@@ -98,7 +99,8 @@ run_example_usage() {
 
   local program_path=$1
   shift 1
-  local program_name=$(basename ${program_path})
+  local program_name
+  program_name=$(basename ${program_path})
 
   if [ ! -x ${program_path} ]; then
     echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
