@@ -121,10 +121,10 @@ if (NOT TARGET googleapis_project)
                       <BINARY_DIR>
                       ${PARALLEL}
         BUILD_BYPRODUCTS ${googleapis_byproducts}
-        LOG_DOWNLOAD OFF
-        LOG_CONFIGURE OFF
-        LOG_BUILD OFF
-        LOG_INSTALL OFF)
+        LOG_DOWNLOAD ON
+        LOG_CONFIGURE ON
+        LOG_BUILD ON
+        LOG_INSTALL ON)
 
     unset(_googleapis_toolchain_flag)
     unset(_googleapis_triplet_flag)
