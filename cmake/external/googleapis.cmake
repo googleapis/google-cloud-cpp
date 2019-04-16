@@ -58,6 +58,7 @@ if (NOT TARGET googleapis_project)
         googleapis_byproducts
         "googleapis_cpp_api_http_protos"
         "googleapis_cpp_api_annotations_protos"
+        "googleapis_cpp_api_auth_protos"
         "googleapis_cpp_iam_v1_policy_protos"
         "googleapis_cpp_iam_v1_iam_policy_protos"
         "googleapis_cpp_rpc_error_details_protos"
