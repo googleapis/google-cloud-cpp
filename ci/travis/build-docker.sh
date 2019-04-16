@@ -83,11 +83,15 @@ if [ "${USE_LIBCXX:-}" = "yes" ]; then
   cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_USE_LIBCXX=ON" )
 fi
 
-# We want ${CMAKE_FLAGS} to expand as separate arguments.
+# We add ${cmake_extra_flags[@]} to itself is because set -u doesn't like empty
+# arrays on older versions of Bash (which some of our builds use). The
+# expression ${parameter+word} will expand word only if parameter is not unset.
+# We also disable the shellcheck warning because we want ${CMAKE_FLAGS} to
+# expand as separate arguments.
 # shellcheck disable=SC2086
 ${CMAKE_COMMAND} \
     -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
-    "${cmake_extra_flags[@]}" \
+    "${cmake_extra_flags[@]+"${cmake_extra_flags[@]}"}" \
     ${CMAKE_FLAGS:-} \
     -H. \
     -B"${BUILD_OUTPUT}"
