@@ -389,7 +389,7 @@ add_library(googleapis-c++::spanner_protos ALIAS googleapis_cpp_spanner_protos)
 # GNUInstallDirs
 include(GNUInstallDirs)
 
-set(installed_libraries_list
+set(googleapis_cpp_installed_libraries_list
     googleapis_cpp_bigtable_protos
     googleapis_cpp_spanner_protos
     googleapis_cpp_longrunning_operations_protos
@@ -401,42 +401,33 @@ set(installed_libraries_list
     googleapis_cpp_rpc_error_details_protos
     googleapis_cpp_rpc_status_protos)
 
-message(STATUS "\n\n${installed_libraries_list}\n\n")
-
-install(TARGETS ${installed_libraries_list} googleapis_cpp_common_flags
+install(TARGETS ${googleapis_cpp_installed_libraries_list}
+                googleapis_cpp_common_flags
         EXPORT googleapis-targets
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 # Install proto generated files into include/google.
-foreach (header
-         ${BIGTABLE_PROTO_HDRS}
-         ${BIGTABLE_GRPCPP_HDRS}
-         ${LONGRUNNING_OPERATIONS_PROTO_HDRS}
-         ${LONGRUNNING_OPERATIONS_GRPC_HDRS}
-         ${API_HTTP_PROTO_HDRS}
-         ${API_HTTP_GRPC_HDRS}
-         ${API_ANNOTATIONS_PROTO_HDRS}
-         ${API_ANNOTATIONS_GRPC_HDRS}
-         ${API_AUTH_PROTO_HDRS}
-         ${API_AUTH_GRPC_HDRS}
-         ${IAM_V1_POLICY_PROTO_HDRS}
-         ${IAM_V1_POLICY_GRPCPP_HDRS}
-         ${IAM_V1_IAM_POLICY_PROTO_HDRS}
-         ${IAM_V1_IAM_POLICY_GRPCPP_HDRS}
-         ${RPC_ERROR_DETAILS_PROTO_HDRS}
-         ${RPC_ERROR_DETAILS_GRPCPP_HDRS}
-         ${RPC_STATUS_PROTO_HDRS}
-         ${RPC_STATUS_GRPCPP_HDRS}
-         ${SPANNER_PROTO_HDRS}
-         ${SPANNER_GRPCPP_HDRS})
-    string(REPLACE "${CMAKE_CURRENT_BINARY_DIR}/"
-                   ""
-                   relative
-                   "${header}")
-    get_filename_component(dir "${relative}" DIRECTORY)
-    install(FILES "${header}" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${dir}")
+function (googleapis_cpp_install_headers target)
+    get_target_property(target_sources ${target} SOURCES)
+    foreach (header ${target_sources})
+        # Skip anything that is not a header file.
+        if (NOT "${header}" MATCHES "\\.h$")
+            continue()
+        endif ()
+        string(REPLACE "${CMAKE_CURRENT_BINARY_DIR}/"
+                       ""
+                       relative
+                       "${header}")
+        get_filename_component(dir "${relative}" DIRECTORY)
+        install(FILES "${header}" DESTINATION
+                      "${CMAKE_INSTALL_INCLUDEDIR}/${dir}")
+    endforeach ()
+endfunction ()
+
+foreach (target ${googleapis_cpp_installed_libraries_list})
+    googleapis_cpp_install_headers("${target}")
 endforeach ()
 
 # Export the CMake targets to make it easy to create configuration files.
@@ -496,7 +487,7 @@ function (googleapis_cpp_install_pc target)
 endfunction ()
 
 # Create and install the pkg-config files.
-foreach (target ${installed_libraries_list})
+foreach (target ${googleapis_cpp_installed_libraries_list})
     googleapis_cpp_install_pc("${target}")
 endforeach ()
 
