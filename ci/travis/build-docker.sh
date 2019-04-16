@@ -66,30 +66,28 @@ fi
 echo "${COLOR_YELLOW}Started CMake config at: $(date)${COLOR_RESET}"
 echo "travis_fold:start:configure-cmake"
 # Extra flags to pass to CMake based on our build configurations. 
-cmake_extra_flags=""
+declare -a cmake_extra_flags
 if [ "${BUILD_TESTING:-}" = "no" ]; then
-  cmake_extra_flags="${cmake_extra_flags} -DBUILD_TESTING=OFF"
+  cmake_extra_flags+=( "-DBUILD_TESTING=OFF" )
 fi
 
 if [ "${TEST_INSTALL:-}" = "yes" ]; then
-  cmake_extra_flags="${cmake_extra_flags} -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package"
+  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package" )
 fi
 
 if [ "${SCAN_BUILD:-}" = "yes" ]; then
-  cmake_extra_flags=-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package
-  cmake_extra_flags="${cmake_extra_flags} -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF"
+  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package" "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF" )
 fi
 
 if [ "${USE_LIBCXX:-}" = "yes" ]; then
-  cmake_extra_flags="${cmake_extra_flags} -DGOOGLE_CLOUD_CPP_USE_LIBCXX=ON"
+  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_USE_LIBCXX=ON" )
 fi
 
-# We want ${cmake_extra_flags} and ${CMAKE_FLAGS} to expand as separate
-# arguments.
+# We want ${CMAKE_FLAGS} to expand as separate arguments.
 # shellcheck disable=SC2086
 ${CMAKE_COMMAND} \
     -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
-    ${cmake_extra_flags} \
+    "${cmake_extra_flags[@]}" \
     ${CMAKE_FLAGS:-} \
     -H. \
     -B"${BUILD_OUTPUT}"
