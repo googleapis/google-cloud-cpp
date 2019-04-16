@@ -67,10 +67,14 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 [client-library-docs]: http://googleapis.github.io/google-cloud-cpp/
 
 This library supports the following Google Cloud Platform services with clients
+at the [GA](#versioning) quality level:
+
+- [Google Cloud Storage](google/cloud/storage/README.md)
+
+This library supports the following Google Cloud Platform services with clients
 at the [Beta](#versioning) quality level:
 
-- [Google Cloud Bigtable](google/cloud/bigtable/README.md#readme)
-- [Google Cloud Storage](google/cloud/storage/README.md#readme)
+- [Google Cloud Bigtable](google/cloud/bigtable/README.md)
 
 ## Table of Contents
 

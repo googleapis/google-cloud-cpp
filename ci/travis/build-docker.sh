@@ -199,8 +199,7 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
 
   # Checking the ABI requires installation, so this is the first opportunity to
   # run the check.
-  (cd "${PROJECT_ROOT}" ; ./ci/check-abi.sh ||
-   echo "${COLOR_RED}The ABI/API checks failed.${COLOR_RESET}")
+  (cd "${PROJECT_ROOT}" ; ./ci/check-abi.sh)
 
   # Also verify that the install directory does not get unexpected files or
   # directories installed.

@@ -30,10 +30,10 @@ if [[ "${CHECK_ABI:-}" != "yes" ]]; then
   exit 0
 fi
 
-exit_status=0
-# We are keeping the library list alphabetical for now, there is no preferred
-# order otherwise.
-for library in bigtable_client google_cloud_cpp_common storage_client; do
+check_library() {
+  local library=$1
+  local return_status=0
+
   echo
   echo "${COLOR_YELLOW}Checking ABI for ${library} library.${COLOR_RESET}"
   libdir="$(pkg-config ${library} --variable=libdir)"
@@ -55,7 +55,7 @@ for library in bigtable_client google_cloud_cpp_common storage_client; do
    abi-compliance-checker \
        -l ${library} -old "${old_dump_file}" -new "${new_dump_file}")
   if [[ $? != 0 ]]; then
-    exit_status=1
+    return_status=1
   fi
   set -e
 
@@ -65,6 +65,20 @@ for library in bigtable_client google_cloud_cpp_common storage_client; do
         -lver "reference" -o "${BUILD_OUTPUT}/${new_dump_file}"
     gzip -c "${BUILD_OUTPUT}/${new_dump_file}" >"${reference_file}"
   fi
+  return ${return_status}
+}
+
+exit_status=0
+# We are keeping the library list alphabetical for now, there is no preferred
+# order otherwise.
+for library in google_cloud_cpp_common storage_client; do
+  check_library "${library}" || exit_status=1
+done
+
+# For these libraries we run the check, but ignore any errors.
+for library in bigtable_client; do
+  check_library "${library}" || \
+    echo "${COLOR_RED}ABI/API checks failed for ${library}${COLOR_RESET}"
 done
 
 exit ${exit_status}
