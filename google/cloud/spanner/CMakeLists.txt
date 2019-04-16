@@ -63,13 +63,16 @@ export_variables_to_bazel("spanner_client_version.bzl"
                           YEAR
                           ${SPANNER_CLIENT_COPYRIGHT_YEAR})
 
+include(external/googleapis)
+
 # the client library
 add_library(spanner_client
             ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
             version.h
             version.cc)
 target_link_libraries(spanner_client
-                      PUBLIC google_cloud_cpp_common
+                      PUBLIC googleapis-c++::spanner_protos
+                             google_cloud_cpp_common
                       PRIVATE spanner_common_options)
 target_include_directories(spanner_client
                            PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -85,6 +88,11 @@ set_target_properties(
         SOVERSION
         ${SPANNER_CLIENT_VERSION_MAJOR})
 add_library(spanner::client ALIAS spanner_client)
+
+add_executable(spanner_tool spanner_tool.cc)
+target_link_libraries(spanner_tool
+                      PRIVATE spanner_client googleapis-c++::spanner_protos
+                              spanner_common_options)
 
 include(CreateBazelConfig)
 create_bazel_config(spanner_client YEAR ${SPANNER_CLIENT_COPYRIGHT_YEAR})

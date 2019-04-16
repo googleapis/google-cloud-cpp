@@ -55,7 +55,17 @@ if (NOT TARGET googleapis_project)
                    "${GOOGLE_CLOUD_CPP_INSTALL_RPATH}")
 
     create_external_project_library_byproduct_list(
-        googleapis_byproducts "googleapis_cpp_bigtable_protos")
+        googleapis_byproducts
+        "googleapis_cpp_api_http_protos"
+        "googleapis_cpp_api_annotations_protos"
+        "googleapis_cpp_api_auth_protos"
+        "googleapis_cpp_iam_v1_policy_protos"
+        "googleapis_cpp_iam_v1_iam_policy_protos"
+        "googleapis_cpp_rpc_error_details_protos"
+        "googleapis_cpp_rpc_status_protos"
+        "googleapis_cpp_longrunning_operations_protos"
+        "googleapis_cpp_bigtable_protos"
+        "googleapis_cpp_spanner_protos")
 
     set(_googleapis_toolchain_flag "")
     if (NOT "${CMAKE_TOOLCHAIN_FILE}" STREQUAL "")
@@ -103,7 +113,6 @@ if (NOT TARGET googleapis_project)
                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                    -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
-                   -DCMAKE_SKIP_INSTALL_RPATH=ON
                    -DGOOGLE_CLOUD_CPP_USE_LIBCXX=${GOOGLE_CLOUD_CPP_USE_LIBCXX}
                    ${_googleapis_toolchain_flag}
                    ${_googleapis_triplet_flag}
@@ -129,13 +138,97 @@ if (NOT TARGET googleapis_project)
     endif ()
 endif ()
 
-if (NOT TARGET googleapis-c++::bigtable_protos)
-    add_library(googleapis-c++::bigtable_protos INTERFACE IMPORTED)
-    set_library_properties_for_external_project(googleapis-c++::bigtable_protos
-                                                googleapis_cpp_bigtable_protos)
-    add_dependencies(googleapis-c++::bigtable_protos googleapis_project)
+function (googleapis_project_create_lib lib)
+    set(scoped_name "googleapis-c++::${lib}_protos")
+    set(imported_name "googleapis_cpp_${lib}_protos")
+    if (NOT TARGET ${scoped_name})
+        add_library(${scoped_name} INTERFACE IMPORTED)
+        set_library_properties_for_external_project(${scoped_name}
+                                                    ${imported_name})
+        add_dependencies(${scoped_name} googleapis_project)
+    endif ()
+endfunction ()
+
+function (gooogleapis_project_create_all_libraries)
+    foreach (lib
+             api_http
+             api_annotations
+             api_auth
+             rpc_status
+             rpc_error_details
+             longrunning_operations
+             iam_v1_policy
+             iam_v1_iam_policy
+             bigtable
+             spanner)
+        googleapis_project_create_lib(${lib})
+    endforeach ()
+
+    # We just magically "know" the dependencies between these libraries.
+    set_property(TARGET googleapis-c++::api_auth_protos
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          googleapis-c++::api_annotations_protos
+                          googleapis-c++::api_http_protos)
+    set_property(TARGET googleapis-c++::api_annotations_protos
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          googleapis-c++::api_http_protos)
+    set_property(TARGET googleapis-c++::iam_v1_iam_policy_protos
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          googleapis-c++::iam_v1_policy_protos
+                          googleapis-c++::api_annotations_protos
+                          googleapis-c++::api_http_protos)
+    set_property(TARGET googleapis-c++::rpc_status_protos
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          googleapis-c++::rpc_error_details_protos)
+    set_property(TARGET googleapis-c++::longrunning_operations_protos
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          googleapis-c++::rpc_status_protos
+                          googleapis-c++::api_annotations_protos
+                          googleapis-c++::api_http_protos)
+
+    set_property(TARGET googleapis-c++::spanner_protos
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          googleapis-c++::longrunning_operations_protos
+                          googleapis-c++::api_annotations_protos
+                          googleapis-c++::api_http_protos
+                          googleapis-c++::iam_v1_policy_protos
+                          googleapis-c++::iam_v1_iam_policy_protos
+                          googleapis-c++::rpc_status_protos)
+
     set_property(TARGET googleapis-c++::bigtable_protos
                  APPEND
-                 PROPERTY INTERFACE_LINK_LIBRARIES gRPC::grpc++
-                          protobuf::libprotobuf)
-endif ()
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          googleapis-c++::longrunning_operations_protos
+                          googleapis-c++::api_auth_protos
+                          googleapis-c++::api_annotations_protos
+                          googleapis-c++::api_http_protos
+                          googleapis-c++::iam_v1_policy_protos
+                          googleapis-c++::iam_v1_iam_policy_protos
+                          googleapis-c++::rpc_status_protos)
+
+    foreach (lib
+             api_http
+             api_annotations
+             api_auth
+             rpc_status
+             rpc_error_details
+             longrunning_operations
+             iam_v1_policy
+             iam_v1_iam_policy
+             bigtable
+             spanner)
+        set(scoped_name "googleapis-c++::${lib}_protos")
+        set_property(TARGET ${scoped_name}
+                     APPEND
+                     PROPERTY INTERFACE_LINK_LIBRARIES gRPC::grpc++
+                              protobuf::libprotobuf)
+    endforeach ()
+endfunction ()
+
+gooogleapis_project_create_all_libraries()
