@@ -38,7 +38,8 @@ namespace {
  */
 class AsyncTimerFuture : public internal::AsyncGrpcOperation {
  public:
-  AsyncTimerFuture() = default;
+  AsyncTimerFuture(std::unique_ptr<grpc::Alarm> alarm)
+      : alarm_(std::move(alarm)) {}
 
   future<std::chrono::system_clock::time_point> GetFuture() {
     return promise_.get_future();
@@ -47,10 +48,17 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   void Set(grpc::CompletionQueue& cq,
            std::chrono::system_clock::time_point deadline, void* tag) {
     deadline_ = deadline;
-    alarm_.Set(&cq, deadline, tag);
+
+    if (alarm_) {
+      alarm_->Set(&cq, deadline, tag);
+    }
   }
 
-  void Cancel() override { alarm_.Cancel(); }
+  void Cancel() override {
+    if (alarm_) {
+      alarm_->Cancel();
+    }
+  }
 
  private:
   bool Notify(CompletionQueue&, bool) override {
@@ -60,7 +68,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
 
   promise<std::chrono::system_clock::time_point> promise_;
   std::chrono::system_clock::time_point deadline_;
-  grpc::Alarm alarm_;
+  std::unique_ptr<grpc::Alarm> alarm_;
 };
 
 }  // namespace
@@ -74,7 +82,7 @@ void CompletionQueue::Shutdown() { impl_->Shutdown(); }
 google::cloud::future<std::chrono::system_clock::time_point>
 CompletionQueue::MakeDeadlineTimer(
     std::chrono::system_clock::time_point deadline) {
-  auto op = std::make_shared<AsyncTimerFuture>();
+  auto op = std::make_shared<AsyncTimerFuture>(impl_->CreateAlarm());
   void* tag = impl_->RegisterOperation(op);
   op->Set(impl_->cq(), deadline, tag);
   return op->GetFuture();
