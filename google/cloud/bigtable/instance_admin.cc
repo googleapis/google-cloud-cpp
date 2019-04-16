@@ -387,17 +387,46 @@ future<StatusOr<ClusterList>> InstanceAdmin::AsyncListClusters(
 
 future<StatusOr<ClusterList>> InstanceAdmin::AsyncListClusters(
     CompletionQueue& cq, std::string const& instance_id) {
-  promise<StatusOr<ClusterList>> p;
-  auto result = p.get_future();
   auto client = impl_.client_;
-  auto op = std::make_shared<internal::AsyncRetryListClusters<
-      internal::AsyncFutureFromCallback<ClusterList>>>(
-      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-      clone_metadata_update_policy(), client, InstanceName(instance_id),
-      internal::MakeAsyncFutureFromCallback(std::move(p), "AsyncListClusters"));
-  op->Start(cq);
+  btadmin::ListClustersRequest request;
+  request.set_parent(InstanceName(instance_id));
 
-  return result;
+  struct Accumulator {
+    std::vector<btadmin::Cluster> clusters;
+    std::unordered_set<std::string> failed_locations;
+  };
+
+  return internal::StartAsyncRetryMultiPage(
+             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             clone_metadata_update_policy(),
+             [client](grpc::ClientContext* context,
+                      btadmin::ListClustersRequest const& request,
+                      grpc::CompletionQueue* cq) {
+               return client->AsyncListClusters(context, request, cq);
+             },
+             std::move(request), Accumulator(),
+             [](Accumulator acc, btadmin::ListClustersResponse response) {
+               std::move(response.failed_locations().begin(),
+                         response.failed_locations().end(),
+                         std::inserter(acc.failed_locations,
+                                       acc.failed_locations.end()));
+               std::move(response.clusters().begin(), response.clusters().end(),
+                         std::back_inserter(acc.clusters));
+               return acc;
+             },
+             cq)
+      .then([](future<StatusOr<Accumulator>> acc_future)
+                -> StatusOr<ClusterList> {
+        auto acc = acc_future.get();
+        if (!acc) {
+          return acc.status();
+        }
+        ClusterList res;
+        res.clusters = std::move(acc->clusters);
+        std::move(acc->failed_locations.begin(), acc->failed_locations.end(),
+                  std::back_inserter(res.failed_locations));
+        return std::move(res);
+      });
 }
 
 std::future<StatusOr<google::bigtable::admin::v2::Cluster>>
