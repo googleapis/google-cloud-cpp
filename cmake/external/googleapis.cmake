@@ -56,12 +56,13 @@ if (NOT TARGET googleapis_project)
 
     create_external_project_library_byproduct_list(
         googleapis_byproducts
-        "googleapis_cpp_longrunning_operations_protos"
         "googleapis_cpp_api_http_protos"
         "googleapis_cpp_api_annotations_protos"
         "googleapis_cpp_iam_v1_policy_protos"
         "googleapis_cpp_iam_v1_iam_policy_protos"
+        "googleapis_cpp_rpc_error_details_protos"
         "googleapis_cpp_rpc_status_protos"
+        "googleapis_cpp_longrunning_operations_protos"
         "googleapis_cpp_bigtable_protos"
         "googleapis_cpp_spanner_protos")
 
@@ -111,7 +112,6 @@ if (NOT TARGET googleapis_project)
                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                    -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
-                   -DCMAKE_SKIP_INSTALL_RPATH=ON
                    -DGOOGLE_CLOUD_CPP_USE_LIBCXX=${GOOGLE_CLOUD_CPP_USE_LIBCXX}
                    ${_googleapis_toolchain_flag}
                    ${_googleapis_triplet_flag}
@@ -171,11 +171,17 @@ function (gooogleapis_project_create_all_libraries)
     set_property(TARGET googleapis-c++::iam_v1_iam_policy_protos
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES
-                          googleapis-c++::iam_v1_policy_protos)
+                          googleapis-c++::iam_v1_policy_protos
+                          googleapis-c++::api_annotations_protos)
     set_property(TARGET googleapis-c++::rpc_status_protos
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES
                           googleapis-c++::rpc_error_details_protos)
+    set_property(TARGET googleapis-c++::longrunning_operations_protos
+                 APPEND
+                 PROPERTY INTERFACE_LINK_LIBRARIES
+                          googleapis-c++::rpc_status_protos
+                          googleapis-c++::api_annotations_protos)
 
     set_property(TARGET googleapis-c++::spanner_protos
                  APPEND

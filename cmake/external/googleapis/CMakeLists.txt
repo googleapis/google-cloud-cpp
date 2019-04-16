@@ -21,7 +21,7 @@ set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
 project(googleapis-cpp-protos CXX C)
 
 set(GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR 0)
-set(GOOGLEAPIS_CPP_PROTOS_VERSION_MINOR 1)
+set(GOOGLEAPIS_CPP_PROTOS_VERSION_MINOR 2)
 set(GOOGLEAPIS_CPP_PROTOS_VERSION_PATCH 0)
 
 # Configure the compiler options, we will be using C++11 features.
