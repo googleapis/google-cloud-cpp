@@ -68,6 +68,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
 
   promise<std::chrono::system_clock::time_point> promise_;
   std::chrono::system_clock::time_point deadline_;
+  /// Holds the underlying handle. It might be a nullptr in tests.
   std::unique_ptr<grpc::Alarm> alarm_;
 };
 
