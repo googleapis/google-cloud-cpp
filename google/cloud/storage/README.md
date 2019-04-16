@@ -18,7 +18,7 @@ client.
 ## Status
 
 This library support Google Cloud Storage at the
-[Beta](../../../README.md#versioning) quality level. Please note that, as is
+[GA](../../../README.md#versioning) quality level. Please note that, as is
 often the case with C++ libraries, we do **not** follow semantic versioning in
 the Cloud C++ client libraries. We make every effort to document
 backwards-incompatible API changes in the [release notes](#release-notes) below. 
@@ -44,7 +44,14 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v0.7.x - TBD
+### v1.0.0 - TBD
+
+* Declared GA and updated major number.
+* Support signed policy documents.
+* Support service account key files in PKCS#12 format (aka `.p12`).
+* Support signing URLs and policy documents using the SignBlob API, this is
+  useful when using the default service account in GCE to sign URLs and policy
+  documents.
 
 ### v0.6.x - 2019-04
 
