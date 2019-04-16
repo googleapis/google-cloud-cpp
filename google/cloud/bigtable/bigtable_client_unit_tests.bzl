@@ -19,6 +19,7 @@
 bigtable_client_unit_tests = [
     "admin_client_test.cc",
     "app_profile_config_test.cc",
+    "async_list_app_profiles_test.cc",
     "async_list_clusters_test.cc",
     "async_list_instances_test.cc",
     "bigtable_version_test.cc",
