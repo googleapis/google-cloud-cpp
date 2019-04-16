@@ -389,17 +389,21 @@ add_library(googleapis-c++::spanner_protos ALIAS googleapis_cpp_spanner_protos)
 # GNUInstallDirs
 include(GNUInstallDirs)
 
-install(TARGETS googleapis_cpp_bigtable_protos
-                googleapis_cpp_spanner_protos
-                googleapis_cpp_longrunning_operations_protos
-                googleapis_cpp_api_http_protos
-                googleapis_cpp_api_annotations_protos
-                googleapis_cpp_api_auth_protos
-                googleapis_cpp_iam_v1_policy_protos
-                googleapis_cpp_iam_v1_iam_policy_protos
-                googleapis_cpp_rpc_error_details_protos
-                googleapis_cpp_rpc_status_protos
-                googleapis_cpp_common_flags
+set(installed_libraries_list
+    googleapis_cpp_bigtable_protos
+    googleapis_cpp_spanner_protos
+    googleapis_cpp_longrunning_operations_protos
+    googleapis_cpp_api_http_protos
+    googleapis_cpp_api_annotations_protos
+    googleapis_cpp_api_auth_protos
+    googleapis_cpp_iam_v1_policy_protos
+    googleapis_cpp_iam_v1_iam_policy_protos
+    googleapis_cpp_rpc_error_details_protos
+    googleapis_cpp_rpc_status_protos)
+
+message(STATUS "\n\n${installed_libraries_list}\n\n")
+
+install(TARGETS ${installed_libraries_list} googleapis_cpp_common_flags
         EXPORT googleapis-targets
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -449,13 +453,76 @@ set(
 set(
     GOOGLE_CLOUD_CPP_CONFIG_VERSION_PATCH ${GOOGLEAPIS_CPP_PROTOS_VERSION_PATCH}
     )
+
+# Use a function to create a scope for the variables.
+function (googleapis_cpp_install_pc target)
+    string(REPLACE "googleapis_cpp_"
+                   ""
+                   _short_name
+                   ${target})
+    string(REPLACE "_protos"
+                   ""
+                   _short_name
+                   ${_short_name})
+    set(GOOGLE_CLOUD_CPP_PC_NAME
+        "The Google APIS C++ ${_short_name} Proto Library")
+    set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION "Compiled proto for C++.")
+    # Examine the target LINK_LIBRARIES property, use that to pull the
+    # dependencies between the googleapis-c++::* libraries.
+    set(_target_pc_requires)
+    get_target_property(_target_deps ${target} LINK_LIBRARIES)
+    foreach (dep ${_target_deps})
+        if ("${dep}" MATCHES "^googleapis-c\\+\\+::")
+            string(REPLACE "googleapis-c++::"
+                           "googleapis_cpp_"
+                           dep
+                           "${dep}")
+            list(APPEND _target_pc_requires " " "${dep}")
+        endif ()
+    endforeach ()
+    # These dependencies are required for all the googleapis-c++::* libraries.
+    list(APPEND _target_pc_requires
+                " grpc++"
+                " grpc"
+                " openssl"
+                " protobuf"
+                " zlib"
+                " libcares")
+    string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES ${_target_pc_requires})
+    set(GOOGLE_CLOUD_CPP_PC_LIBS "-l${target}")
+    configure_file("${PROJECT_SOURCE_DIR}/config.pc.in" "${target}.pc" @ONLY)
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${target}.pc" DESTINATION
+                  "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+endfunction ()
+
+# Create and install the pkg-config files.
+foreach (target ${installed_libraries_list})
+    googleapis_cpp_install_pc("${target}")
+endforeach ()
+
+# Create and install the googleapis pkg-config file for backwards compatibility.
 set(GOOGLE_CLOUD_CPP_PC_NAME "The Google APIS C++ Proto Library")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Platforms.")
-set(GOOGLE_CLOUD_CPP_PC_REQUIRES "grpc++ grpc openssl protobuf zlib libcares")
-set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogleapis_cpp_bigtable_protos")
-
-# Create and install the pkg-config files.
+# Note the use of spaces, `string(JOIN)` is not available in cmake-3.5, so we
+# need to add the separator ourselves.
+string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
+              "googleapis_cpp_bigtable_protos"
+              " googleapis_cpp_iam_v1_iam_policy_protos"
+              " googleapis_cpp_iam_v1_policy_protos"
+              " googleapis_cpp_longrunning_operations_protos"
+              " googleapis_cpp_api_auth_protos"
+              " googleapis_cpp_api_annotations_protos"
+              " googleapis_cpp_api_http_protos"
+              " googleapis_cpp_rpc_status_protos"
+              " googleapis_cpp_rpc_error_details_protos"
+              " grpc++"
+              " grpc"
+              " openssl"
+              " protobuf"
+              " zlib"
+              " libcares")
+set(GOOGLE_CLOUD_CPP_PC_LIBS "")
 configure_file("${PROJECT_SOURCE_DIR}/config.pc.in" "googleapis.pc" @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis.pc" DESTINATION
               "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
