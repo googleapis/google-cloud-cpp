@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['limitederrorcountretrypolicy',['LimitedErrorCountRetryPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a0162c1f831f7b500df5a1d2da0d23be4',1,'google::cloud::storage::v0']]],
-  ['limitedtimeretrypolicy',['LimitedTimeRetryPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a06fcac3a7cae1a4c981f6d1a3d0caf42',1,'google::cloud::storage::v0']]],
-  ['listbucketsiterator',['ListBucketsIterator',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a1e8ed9638757aa016985eaa4d82a847c',1,'google::cloud::storage::v0']]],
-  ['listbucketsreader',['ListBucketsReader',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a640b86aff0a1014da00f2f74cc16ee13',1,'google::cloud::storage::v0']]],
-  ['listhmackeysiterator',['ListHmacKeysIterator',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a9bbc80bfafd76ac1f9d96ec6fc9af3c2',1,'google::cloud::storage::v0']]],
-  ['listhmackeysreader',['ListHmacKeysReader',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a2a6cff2b26bb488924966e22bc09ab67',1,'google::cloud::storage::v0']]],
-  ['listobjectsiterator',['ListObjectsIterator',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#a237937932820912eba3527dfa4f54c3d',1,'google::cloud::storage::v0']]],
-  ['listobjectsreader',['ListObjectsReader',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#ae0bfde7559ea407cfd02b1832e24d015',1,'google::cloud::storage::v0']]]
+  ['limitederrorcountretrypolicy',['LimitedErrorCountRetryPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a40410ba8c603c428c5161bb311e2764f',1,'google::cloud::storage::v1']]],
+  ['limitedtimeretrypolicy',['LimitedTimeRetryPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a79ae009b28ef13fec8d8316f352d211a',1,'google::cloud::storage::v1']]],
+  ['listbucketsiterator',['ListBucketsIterator',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a08734f75304fb39b387eb33b55db40c2',1,'google::cloud::storage::v1']]],
+  ['listbucketsreader',['ListBucketsReader',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#ae34b61cc725f3662700f2e9579443bce',1,'google::cloud::storage::v1']]],
+  ['listhmackeysiterator',['ListHmacKeysIterator',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a6986efb36324b8b5b0c4afe697bad4aa',1,'google::cloud::storage::v1']]],
+  ['listhmackeysreader',['ListHmacKeysReader',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a39f3096e5c52b305049e9fc15c9075d4',1,'google::cloud::storage::v1']]],
+  ['listobjectsiterator',['ListObjectsIterator',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a24e2c03da21e3bd520dca926aea2af57',1,'google::cloud::storage::v1']]],
+  ['listobjectsreader',['ListObjectsReader',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a2bdfb31b677518fbbe2952008086c236',1,'google::cloud::storage::v1']]]
 ];

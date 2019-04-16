@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['retrypolicy',['RetryPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v0.html#acaace8f5837e18aadc16056c76b4a415',1,'google::cloud::storage::v0']]]
+  ['retrypolicy',['RetryPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a99e1202eef729ee7576ee748a7ba7c1d',1,'google::cloud::storage::v1']]]
 ];

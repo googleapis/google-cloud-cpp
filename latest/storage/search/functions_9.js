@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['jsonapiv1',['JsonApiV1',['../namespacegoogle_1_1cloud_1_1storage_1_1v0_1_1payload__format.html#acdee1af9140fab11956dd246e1fc9d7f',1,'google::cloud::storage::v0::payload_format']]],
-  ['jsonpayloadforinsert',['JsonPayloadForInsert',['../classgoogle_1_1cloud_1_1storage_1_1v0_1_1NotificationMetadata.html#a262a47f632d08ed98a42992251d1274a',1,'google::cloud::storage::v0::NotificationMetadata']]]
+  ['jsonapiv1',['JsonApiV1',['../namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1payload__format.html#ab8572422e5158aa625d99b683f26c384',1,'google::cloud::storage::v1::payload_format']]],
+  ['jsonpayloadforinsert',['JsonPayloadForInsert',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1NotificationMetadata.html#afb16fe0509d8928db37c0619066ecad4',1,'google::cloud::storage::v1::NotificationMetadata']]]
 ];
