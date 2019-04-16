@@ -187,6 +187,42 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncDropRowsByPrefixTest) {
   cq.Shutdown();
   pool.join();
 }
+
+/// @test Verify that `bigtable::TableAdmin` AsyncDropAllRows works
+TEST_F(AdminAsyncFutureIntegrationTest, AsyncDropAllRowsTest) {
+  auto table = GetTable();
+
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  // Create a vector of cell which will be inserted into bigtable
+  std::string const row_key1 = "DropRowKey1";
+  std::string const row_key2 = "DropRowKey2";
+  std::vector<bigtable::Cell> created_cells{
+      {row_key1, "family1", "column_id1", 0, "v-c-0-0"},
+      {row_key1, "family1", "column_id1", 1000, "v-c-0-1"},
+      {row_key1, "family2", "column_id3", 2000, "v-c-0-2"},
+      {row_key2, "family2", "column_id2", 2000, "v-c0-0-0"},
+      {row_key2, "family3", "column_id3", 3000, "v-c1-0-2"},
+  };
+
+  CreateCells(table, created_cells);
+
+  future<void> chain =
+      table_admin_
+          ->AsyncDropAllRows(
+              cq, bigtable::testing::TableTestEnvironment::table_id())
+          .then([&](future<Status> fut) {
+            Status delete_result = fut.get();
+            EXPECT_STATUS_OK(delete_result);
+            auto actual_cells =
+                ReadRows(table, bigtable::Filter::PassAllFilter());
+            ASSERT_TRUE(actual_cells.empty());
+          });
+
+  cq.Shutdown();
+  pool.join();
+}
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
