@@ -171,7 +171,7 @@ function run_all_instance_admin_async_examples {
   # Create a (very likely unique) instance name.
   local -r INSTANCE="in-${RANDOM}-${RANDOM}"
 
-  run_example ./bigtable_admin_async_snippets async-create-instance \
+  run_example ./instance_admin_async_snippets async-create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"
   run_example ./instance_admin_async_snippets async-get-instance \
       "${project_id}" "${INSTANCE}"
