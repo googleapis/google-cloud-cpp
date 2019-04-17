@@ -176,32 +176,28 @@ void AsyncReadModifyWrite(cbt::Table table, cbt::CompletionQueue cq,
   }
 
   //! [async read modify write]
-  [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id) {
-    // Check if the latest value of the flip-flop column is "on".
-
-    google::cloud::future<google::cloud::StatusOr<
-        google::bigtable::v2::ReadModifyWriteRowResponse>>
-        future = table.AsyncReadModifyWriteRow(
-            MAGIC_ROW_KEY, cq,
-            google::cloud::bigtable::ReadModifyWriteRule::AppendValue(
-                "fam", "list", ";element"));
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id,
+     std::string row_key) {
+    future<StatusOr<cbt::Row>> async_future = table.AsyncReadModifyWriteRow(
+        row_key, cq,
+        google::cloud::bigtable::ReadModifyWriteRule::AppendValue("fam", "list",
+                                                                  ";element"));
 
     auto final =
-        future.then([](google::cloud::future<google::cloud::StatusOr<
-                           google::bigtable::v2::ReadModifyWriteRowResponse>>
-                           f) {
+        async_future.then([](future<google::cloud::StatusOr<cbt::Row>> f) {
           auto row = f.get();
           if (!row) {
             throw std::runtime_error(row.status().message());
           }
-
-          return google::cloud::Status();
         });
 
     final.get();
   }
   //! [async read modify write]
-  (std::move(table), std::move(cq), argv[1]);
+  (std::move(table), std::move(cq), argv[1], MAGIC_ROW_KEY);
 }
 }  // anonymous namespace
 
