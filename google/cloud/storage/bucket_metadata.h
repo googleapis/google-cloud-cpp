@@ -134,7 +134,7 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
 /**
  * Configure if only the IAM policies are used for access control.
  *
- * @warning this is an Alpha feature of Google Cloud Storage, it is not subject
+ * @warning this is a Beta feature of Google Cloud Storage, it is not subject
  *     to the deprecation policy and subject to change without notice.
  *
  * @see Before enabling Bucket Policy Only please review the
@@ -193,7 +193,7 @@ std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs);
  * Currently this only holds the BucketOnlyPolicy. In the future, we may define
  * additional IAM which would be included in this object.
  *
- * @warning this is an Alpha feature of Google Cloud Storage, it is not subject
+ * @warning this is a Beta feature of Google Cloud Storage, it is not subject
  *     to the deprecation policy and subject to change without notice.
  *
  * @see Before enabling Bucket Policy Only please review the
@@ -643,7 +643,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   /**
    * @name Get and set the IAM configuration.
    *
-   * @warning this is an Alpha feature of Google Cloud Storage, it is not
+   * @warning this is a Beta feature of Google Cloud Storage, it is not
    *     subject to the deprecation policy and subject to change without notice.
    *
    * @see Before enabling Bucket Policy Only please review the
