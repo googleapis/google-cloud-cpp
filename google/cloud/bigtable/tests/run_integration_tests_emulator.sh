@@ -17,7 +17,7 @@
 set -eu
 
 readonly BINDIR=$(dirname "$0")
-source ${BINDIR}/../tools/run_emulator_utils.sh
+source "${BINDIR}/../tools/run_emulator_utils.sh"
 
 # Start the emulator, setup the environment variables and traps to cleanup.
 start_emulators

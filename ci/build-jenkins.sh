@@ -17,10 +17,10 @@
 set -eu
 
 cmake -DCMAKE_BUILD_TYPE=Release -H. -Bcmake-out
-cmake --build cmake-out -- -j $(nproc)
+cmake --build cmake-out -- -j "$(nproc)"
 
-readonly PROJECT_ROOT=$(pwd)
-echo PROJECT_ROOT=${PROJECT_ROOT}
+readonly PROJECT_ROOT="$(pwd)"
+echo PROJECT_ROOT="${PROJECT_ROOT}"
 cd cmake-out
 ctest --output-on-failure
 
@@ -28,7 +28,7 @@ readonly BTDIR="google/cloud/bigtable"
 
 # Use the APP_PROFILE_ID if set or pass an empty string (the default profile) otherwise.
 APP_PROFILE_ID="${APP_PROFILE_ID:-}"
-echo APP_PROFILE_ID=${APP_PROFILE_ID}
+echo APP_PROFILE_ID="${APP_PROFILE_ID}"
 
 case ${BENCHMARK} in
     endurance)

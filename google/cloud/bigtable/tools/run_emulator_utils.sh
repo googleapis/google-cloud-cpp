@@ -70,7 +70,7 @@ wait_for_port() {
     exit 1
   fi
 
-  echo ${emulator_port}
+  echo "${emulator_port}"
 }
 
 ################################################
@@ -88,14 +88,14 @@ function wait_until_emulator_connects {
   local subcmd=$2
   shift 2
 
-  local -r CBT_ARGS="-project emulated -instance emulated -creds default"
+  local -a CBT_ARGS=( "-project" "emulated" "-instance" "emulated" "-creds" "default" )
   # Wait until the emulator starts responding.
   delay=1
   connected=no
   local -r attempts=$(seq 1 8)
   for attempt in ${attempts}; do
     if env BIGTABLE_EMULATOR_HOST="${address}" \
-           "${CBT_CMD}" ${CBT_ARGS} "${subcmd}" >/dev/null 2>&1; then
+           "${CBT_CMD}" "${CBT_ARGS[@]}" "${subcmd}" >/dev/null 2>&1; then
       connected=yes
       break
     fi

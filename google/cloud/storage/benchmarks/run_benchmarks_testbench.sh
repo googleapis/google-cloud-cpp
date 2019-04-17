@@ -59,4 +59,4 @@ run_example ./storage_throughput_benchmark \
 if [[ "${EXIT_STATUS}" = "0" ]]; then
   TESTBENCH_DUMP_LOG=no
 fi
-exit ${EXIT_STATUS}
+exit "${EXIT_STATUS}"

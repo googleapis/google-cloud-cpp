@@ -22,4 +22,4 @@ source "${BINDIR}/run_examples_utils.sh"
 # quotas for admin operations if we run the admin examples too.
 run_all_data_examples "${PROJECT_ID}" "${INSTANCE_ID}"
 
-exit ${EXIT_STATUS}
+exit "${EXIT_STATUS}"

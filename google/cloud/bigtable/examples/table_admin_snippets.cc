@@ -469,8 +469,7 @@ void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
     if (!token) {
       throw std::runtime_error(token.status().message());
     }
-    std::cout << "\n"
-              << "generated token is : " << token->get() << "\n";
+    std::cout << "generated token is : " << token->get() << "\n";
   }
   //! [generate consistency token]
   (std::move(admin), table_id);

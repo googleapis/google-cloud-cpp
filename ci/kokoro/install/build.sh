@@ -27,5 +27,5 @@ echo "================================================================"
 
 echo "================================================================"
 echo "Run validation script for README and INSTALL instructions on ${DISTRO}."
-sudo docker build -f ci/test-readme/Dockerfile.${DISTRO} .
+sudo docker build -f "ci/test-readme/Dockerfile.${DISTRO}" .
 echo "================================================================"

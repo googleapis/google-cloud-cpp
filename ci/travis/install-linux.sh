@@ -23,7 +23,7 @@ if [[ -z "${PROJECT_ROOT+x}" ]]; then
 fi
 source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 
-cd ${PROJECT_ROOT}
+cd "${PROJECT_ROOT}"
 sudo docker build -t "${IMAGE}:tip" \
      --build-arg NCPU="${NCPU:-2}" \
      --build-arg DISTRO_VERSION="${DISTRO_VERSION}" \

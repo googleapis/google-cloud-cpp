@@ -678,7 +678,7 @@ run_resume_rewrite_example() {
 
   if echo "${msg}" | grep -q "Rewrite in progress"; then
     local token
-    token=$(echo ${msg} | awk '{print $5}')
+    token=$(echo "${msg}" | awk '{print $5}')
     run_example ./storage_object_samples rewrite-object-resume \
         "${source_bucket_name}" "${source_object_name}" \
         "${target_bucket_name}" "${target_object_name}" "${token}"
@@ -1222,5 +1222,5 @@ run_all_storage_examples() {
   if [ "${EXIT_STATUS}" = "0" ]; then
     TESTBENCH_DUMP_LOG=no
   fi
-  exit ${EXIT_STATUS}
+  exit "${EXIT_STATUS}"
 }
