@@ -418,8 +418,9 @@ class BulkMutation {
 
   /// Create a muti-row mutation from a variadic list.
   template <typename... M,
-            typename = typename std::enable_if<internal::conjunction<
-                std::is_convertible<M, SingleRowMutation>...>::value>::type>
+            typename std::enable_if<internal::conjunction<std::is_convertible<
+                                        M, SingleRowMutation>...>::value,
+                                    int>::type = 0>
   BulkMutation(M&&... m) : BulkMutation() {
     emplace_many(std::forward<M>(m)...);
   }

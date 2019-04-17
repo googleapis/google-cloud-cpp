@@ -106,7 +106,7 @@ struct invoke_impl<MT B::*> {
    * @return the result of `(t.*f)(a...)`.
    */
   template <class T, class... Args,
-            class = typename std::enable_if<std::is_function<MT>::value>::type>
+            typename std::enable_if<std::is_function<MT>::value, int>::type = 0>
   static auto call(MT B::*f, T&& t, Args&&... a)
       -> decltype((std::forward<T>(t).*f)(std::forward<Args>(a)...));
 };
