@@ -169,7 +169,7 @@ InstanceAdmin::AsyncCreateCluster(CompletionQueue& cq,
                                   ClusterConfig cluster_config,
                                   bigtable::InstanceId const& instance_id,
                                   bigtable::ClusterId const& cluster_id) {
-  auto cluster = cluster_config.as_proto();
+  auto cluster = std::move(cluster_config).as_proto();
   cluster.set_location(project_name() + "/locations/" + cluster.location());
   btadmin::CreateClusterRequest request;
   request.mutable_cluster()->Swap(&cluster);
