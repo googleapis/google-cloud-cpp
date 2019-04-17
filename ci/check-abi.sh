@@ -36,9 +36,8 @@ check_library() {
 
   echo
   echo "${COLOR_YELLOW}Checking ABI for ${library} library.${COLOR_RESET}"
-  libdir="$(pkg-config ${library} --variable=libdir)"
-  includedir="$(pkg-config ${library} --variable=includedir)"
-  version="$(pkg-config ${library} --modversion)"
+  libdir="$(pkg-config "${library}" --variable=libdir)"
+  includedir="$(pkg-config "${library}" --variable=includedir)"
   new_dump_file="${library}.actual.abi.dump"
   old_dump_file="${library}.expected.abi.dump"
   reference_file="${PROJECT_ROOT}/ci/test-abi/${old_dump_file}.gz"
@@ -53,7 +52,7 @@ check_library() {
 
   (cd "${BUILD_OUTPUT}" ; zcat "${reference_file}" >"${old_dump_file}" ; \
    abi-compliance-checker \
-       -l ${library} -old "${old_dump_file}" -new "${new_dump_file}")
+       -l "${library}" -old "${old_dump_file}" -new "${new_dump_file}")
   if [[ $? != 0 ]]; then
     return_status=1
   fi
@@ -76,9 +75,7 @@ for library in google_cloud_cpp_common storage_client; do
 done
 
 # For these libraries we run the check, but ignore any errors.
-for library in bigtable_client; do
-  check_library "${library}" || \
-    echo "${COLOR_RED}ABI/API checks failed for ${library}${COLOR_RESET}"
-done
+check_library "bigtable_client" || \
+  echo "${COLOR_RED}ABI/API checks failed for ${library}${COLOR_RESET}"
 
 exit ${exit_status}
