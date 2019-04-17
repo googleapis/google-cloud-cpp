@@ -406,8 +406,9 @@ void CheckFamilyExists(google::cloud::bigtable::TableAdmin admin, int argc,
     }
     auto pos = schema->column_families().find(family_name);
     if (pos == schema->column_families().end()) {
-      std::cout << "The column family <" << family_name << "> does not exist\n";
-      return;
+      std::string msg =
+          "The column family <" + family_name + "> does not exist";
+      throw std::runtime_error(msg);
     }
     std::cout << "The column family <" << family_name << "> does exist\n";
   }

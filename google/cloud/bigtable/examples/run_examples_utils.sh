@@ -240,8 +240,6 @@ function run_all_table_admin_examples {
   run_example ./table_admin_snippets delete-column-family \
       "${project_id}" "${INSTANCE}" "${TABLE}" "nested-family"
   run_example ./table_admin_snippets check-family-exists \
-      "${project_id}" "${INSTANCE}" "${TABLE}" "nested-family"
-  run_example ./table_admin_snippets check-family-exists \
       "${project_id}" "${INSTANCE}" "${TABLE}" "max-age-family"
   run_example ./table_admin_snippets update-gc-rule \
       "${project_id}" "${INSTANCE}" "${TABLE}" "max-age-family"
