@@ -75,7 +75,7 @@ for library in google_cloud_cpp_common storage_client; do
 done
 
 # For these libraries we run the check, but ignore any errors.
-check_library "bigtable_client" || \
+check_library bigtable_client || \
   echo "${COLOR_RED}ABI/API checks failed for ${library}${COLOR_RESET}"
 
 exit ${exit_status}
