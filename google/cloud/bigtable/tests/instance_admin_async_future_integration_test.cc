@@ -235,7 +235,8 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   cluster->clear_state();
   bigtable::ClusterConfig updated_cluster_config(std::move(*cluster));
   auto cluster_after_update =
-      instance_admin_->UpdateCluster(std::move(updated_cluster_config)).get();
+      instance_admin_->AsyncUpdateCluster(cq, std::move(updated_cluster_config))
+          .get();
   auto check_cluster_after_update =
       instance_admin_->GetCluster(instance_id, cluster_id);
   ASSERT_STATUS_OK(check_cluster_after_update);

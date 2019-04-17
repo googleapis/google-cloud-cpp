@@ -185,6 +185,8 @@ function run_all_instance_admin_async_examples {
       "${project_id}" "${INSTANCE}"
   run_example ./bigtable_instance_admin_snippets create-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${replication_zone_id}"
+  run_example ./instance_admin_async_snippets async-update-cluster \
+      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
   run_example ./instance_admin_async_snippets async-get-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
   run_example ./bigtable_instance_admin_snippets delete-cluster \

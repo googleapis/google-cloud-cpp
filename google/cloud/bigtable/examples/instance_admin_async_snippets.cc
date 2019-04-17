@@ -311,6 +311,59 @@ void AsyncListAppProfiles(cbt::InstanceAdmin instance_admin,
   (std::move(instance_admin), std::move(cq), argv[1]);
 }
 
+void AsyncUpdateCluster(cbt::InstanceAdmin instance_admin,
+                        cbt::CompletionQueue cq,
+                        std::vector<std::string> argv) {
+  if (argv.size() != 3U) {
+    throw Usage{"update-cluster: <project-id> <instance-id> <cluster-id>"};
+  }
+
+  //! [async update cluster]
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
+     std::string instance_id, std::string cluster_id) {
+    auto future =
+        instance_admin
+            .AsyncGetCluster(cq,
+                             google::cloud::bigtable::InstanceId(instance_id),
+                             google::cloud::bigtable::ClusterId(cluster_id))
+            .then([instance_admin,
+                   cq](google::cloud::future<google::cloud::StatusOr<
+                           google::bigtable::admin::v2::Cluster>>
+                           cluster_fut) mutable {
+              auto cluster = cluster_fut.get();
+              if (!cluster) {
+                throw std::runtime_error(cluster.status().message());
+              }
+              // Modify the cluster.
+              cluster->set_serve_nodes(4);
+              auto modified_config =
+                  google::cloud::bigtable::ClusterConfig(std::move(*cluster));
+
+              return instance_admin.AsyncUpdateCluster(cq, modified_config);
+            });
+    // Most applications would simply call future.get(), here we show how to
+    // perform additional work while the long running operation completes.
+    std::cout << "Waiting for cluster update to complete ";
+    for (int i = 0; i != 100; ++i) {
+      if (std::future_status::ready ==
+          future.wait_for(std::chrono::seconds(2))) {
+        auto cluster = future.get();
+        if (!cluster) {
+          throw std::runtime_error(cluster.status().message());
+        }
+        std::string cluster_detail;
+        google::protobuf::TextFormat::PrintToString(*cluster, &cluster_detail);
+        std::cout << "DONE, cluster details: " << cluster_detail << "\n";
+        return;
+      }
+      std::cout << '.' << std::flush;
+    }
+    std::cout << "TIMEOUT\n";
+  }
+  //! [async update cluster]
+  (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
+}
+
 void AsyncDeleteInstance(cbt::InstanceAdmin instance_admin,
                          cbt::CompletionQueue cq,
                          std::vector<std::string> argv) {
@@ -351,6 +404,7 @@ int main(int argc, char* argv[]) try {
       {"async-list-clusters", &AsyncListClusters},
       {"async-list-all-clusters", &AsyncListAllClusters},
       {"async-list-app-profiles", &AsyncListAppProfiles},
+      {"async-update-cluster", &AsyncUpdateCluster},
       {"async-delete-instance", &AsyncDeleteInstance}};
 
   google::cloud::bigtable::CompletionQueue cq;
