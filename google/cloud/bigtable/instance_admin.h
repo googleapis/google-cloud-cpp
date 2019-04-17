@@ -158,6 +158,33 @@ class InstanceAdmin {
       bigtable::ClusterId const& cluster_id);
 
   /**
+   * Create a new cluster (asynchronously).
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param cluster_config a description of the new cluster to be created.
+   * @param instance_id the id of the instance in the project
+   * @param cluster_id the id of the cluster in the project that needs to be
+   *   created. It must be between 6 and 30 characters.
+   *
+   * @return a future satisfied when either (a) the cluster is created or (b)
+   *     an unretriable error occurs or (c) polling or retry policy has been
+   *     exhausted.
+   *
+   * @par Example
+   * @snippet instance_admin_async_snippets.cc async create cluster
+   */
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> AsyncCreateCluster(
+      CompletionQueue& cq, ClusterConfig cluster_config,
+      bigtable::InstanceId const& instance_id,
+      bigtable::ClusterId const& cluster_id);
+
+  /**
    * Update an existing instance of Cloud Bigtable.
    *
    * @warning Note that this is operation can take seconds or minutes to

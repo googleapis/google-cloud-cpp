@@ -77,6 +77,42 @@ void AsyncCreateInstance(cbt::InstanceAdmin instance_admin,
   (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
 }
 
+void AsyncCreateCluster(cbt::InstanceAdmin instance_admin,
+                        cbt::CompletionQueue cq,
+                        std::vector<std::string> argv) {
+  if (argv.size() != 2U) {
+    throw Usage{
+        "async-create-cluster <project-id> <instance-id> <cluster-id> <zone>"};
+  }
+  //! [async create cluster]
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
+     std::string instance_id, std::string cluster_id, std::string zone) {
+    auto cluster_config = google::cloud::bigtable::ClusterConfig(
+        zone, 3, google::cloud::bigtable::ClusterConfig::HDD);
+    auto future = instance_admin.AsyncCreateCluster(
+        cq, cluster_config, google::cloud::bigtable::InstanceId(instance_id),
+        google::cloud::bigtable::ClusterId(cluster_id));
+    // Most applications would simply call future.get(), here we show how to
+    // perform additional work while the long running operation completes.
+    std::cout << "Waiting for cluster creation to complete ";
+    for (int i = 0; i != 100; ++i) {
+      if (std::future_status::ready ==
+          future.wait_for(std::chrono::seconds(2))) {
+        auto cluster = future.get();
+        if (!cluster) {
+          throw std::runtime_error(cluster.status().message());
+        }
+        std::cout << "DONE: " << cluster->name() << "\n";
+        return;
+      }
+      std::cout << '.' << std::flush;
+    }
+    std::cout << "TIMEOUT\n";
+  }
+  //! [async create cluster]
+  (std::move(instance_admin), std::move(cq), argv[1], argv[2], argv[3]);
+}
+
 void AsyncGetInstance(cbt::InstanceAdmin instance_admin,
                       cbt::CompletionQueue cq, std::vector<std::string> argv) {
   if (argv.size() != 2U) {
@@ -345,6 +381,7 @@ int main(int argc, char* argv[]) try {
 
   std::map<std::string, CommandType> commands = {
       {"async-create-instance", &AsyncCreateInstance},
+      {"async-create-cluster", &AsyncCreateCluster},
       {"async-get-instance", &AsyncGetInstance},
       {"async-get-cluster", &AsyncGetCluster},
       {"async-list-instances", &AsyncListInstances},

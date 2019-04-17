@@ -203,7 +203,8 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   auto cluster_config =
       bigtable::ClusterConfig("us-central1-b", 3, bigtable::ClusterConfig::HDD);
   auto cluster =
-      instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
+      instance_admin_
+          ->AsyncCreateCluster(cq, cluster_config, instance_id, cluster_id)
           .get();
   ASSERT_FALSE(cluster->name().empty());
   auto clusters_list_after = instance_admin_->AsyncListClusters(cq, id).get();
