@@ -128,7 +128,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
 
   // create instance
   auto config = IntegrationTestConfig(instance_id);
-  auto instance = instance_admin_->CreateInstance(config).get();
+  auto instance = instance_admin_->AsyncCreateInstance(cq, config).get();
   auto async_instances_current = instance_admin_->AsyncListInstances(cq).get();
   ASSERT_STATUS_OK(async_instances_current);
   EXPECT_TRUE(
@@ -178,15 +178,15 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
   std::string cluster_id_str = id + "-cl2";
 
+  google::cloud::bigtable::CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
   // create instance prerequisites for cluster operations
   bigtable::InstanceId instance_id(id);
   auto instance_config = IntegrationTestConfig(
       id, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =
-      instance_admin_->CreateInstance(instance_config).get();
-
-  google::cloud::bigtable::CompletionQueue cq;
-  std::thread pool([&cq] { cq.Run(); });
+      instance_admin_->AsyncCreateInstance(cq, instance_config).get();
 
   // Make an asynchronous request, but immediately block because this is just a
   // test.
@@ -281,8 +281,8 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAllClustersTest) {
       id1, "us-central1-c", bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_config2 = IntegrationTestConfig(
       id2, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
-  auto instance1 = instance_admin_->CreateInstance(instance_config1);
-  auto instance2 = instance_admin_->CreateInstance(instance_config2);
+  auto instance1 = instance_admin_->AsyncCreateInstance(cq, instance_config1);
+  auto instance2 = instance_admin_->AsyncCreateInstance(cq, instance_config2);
   // Wait for instance creation
 
   auto instance1_name = instance1.get()->name();
@@ -322,7 +322,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
 
   auto instance_config = IntegrationTestConfig(
       instance_id, "us-central1-c", bigtable::InstanceConfig::PRODUCTION, 3);
-  auto future = instance_admin_->CreateInstance(instance_config);
+  auto future = instance_admin_->AsyncCreateInstance(cq, instance_config);
   auto actual = future.get();
   EXPECT_STATUS_OK(actual);
   // Wait for instance creation

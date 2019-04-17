@@ -121,6 +121,28 @@ class InstanceAdmin {
       InstanceConfig instance_config);
 
   /**
+   * Create an instance (asynchronously).
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param instance_config the desired configuration of the instance.
+   *
+   * @return a future satisfied when either (a) the cluster is created or (b)
+   *     an unretriable error occurs or (c) polling or retry policy has been
+   *     exhausted.
+   *
+   * @par Example
+   * @snippet instance_admin_async_snippets.cc async create instance
+   */
+  future<StatusOr<google::bigtable::admin::v2::Instance>> AsyncCreateInstance(
+      CompletionQueue& cq, bigtable::InstanceConfig instance_config);
+
+  /**
    * Create a new Cluster of Cloud Bigtable.
    *
    * @param cluster_config a description of the new cluster to be created.
