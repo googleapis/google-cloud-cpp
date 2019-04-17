@@ -468,6 +468,27 @@ StatusOr<google::bigtable::admin::v2::Cluster> InstanceAdmin::UpdateClusterImpl(
   }
   return result;
 }
+
+future<StatusOr<google::bigtable::admin::v2::Cluster>>
+InstanceAdmin::AsyncUpdateCluster(CompletionQueue& cq,
+                                  ClusterConfig cluster_config) {
+  auto request = std::move(cluster_config).as_proto();
+
+  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  return internal::AsyncStartPollAfterRetryUnaryRpc<
+      google::bigtable::admin::v2::Cluster>(
+      __func__, impl_.polling_policy_->clone(),
+      impl_.rpc_retry_policy_->clone(), impl_.rpc_backoff_policy_->clone(),
+      internal::ConstantIdempotencyPolicy(false), impl_.metadata_update_policy_,
+      client,
+      [client](grpc::ClientContext* context,
+               google::bigtable::admin::v2::Cluster const& request,
+               grpc::CompletionQueue* cq) {
+        return client->AsyncUpdateCluster(context, request, cq);
+      },
+      std::move(request), cq);
+}
+
 Status InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
                                     bigtable::ClusterId const& cluster_id) {
   grpc::Status status;

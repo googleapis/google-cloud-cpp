@@ -34,6 +34,8 @@ class InstanceAdmin;
 namespace internal {
 template <typename Client, typename ResponseType>
 class AsyncLongrunningOp;
+template <typename Client, typename Response>
+class AsyncLongrunningOperation;
 template <typename Client, typename Response, typename MemberFunctionType,
           typename IdempotencyPolicy, typename Functor>
 class AsyncRetryAndPollUnaryRpc;
@@ -94,6 +96,8 @@ class InstanceAdminClient {
   friend class noex::InstanceAdmin;
   template <typename Client, typename ResponseType>
   friend class internal::AsyncLongrunningOp;
+  template <typename Client, typename Response>
+  friend class internal::AsyncLongrunningOperation;
   template <typename Client, typename Response, typename MemberFunctionType,
             typename IdempotencyPolicy>
   class AsyncRetryAndPollUnaryRpc;
