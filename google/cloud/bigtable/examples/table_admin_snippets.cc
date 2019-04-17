@@ -358,6 +358,91 @@ void GetFamilyMetadata(google::cloud::bigtable::TableAdmin admin, int argc,
   (std::move(admin), table_id, family_name);
 }
 
+void DeleteColumnFamily(google::cloud::bigtable::TableAdmin admin, int argc,
+                        char* argv[]) {
+  if (argc != 3) {
+    throw Usage{
+        "delete-column-family: <project-id> <instance-id> <table-id>"
+        " <family-name>"};
+  }
+  std::string const table_id = ConsumeArg(argc, argv);
+  std::string const family_name = ConsumeArg(argc, argv);
+
+  // [START bigtable_delete_family]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id, std::string family_name) {
+    auto schema = admin.ModifyColumnFamilies(
+        table_id, {cbt::ColumnFamilyModification::Drop(family_name)});
+
+    if (!schema) {
+      throw std::runtime_error(schema.status().message());
+    }
+    std::string formatted;
+    google::protobuf::TextFormat::PrintToString(*schema, &formatted);
+    std::cout << "Schema modified to: " << formatted << "\n";
+  }
+  // [END bigtable_delete_family]
+  (std::move(admin), table_id, family_name);
+}
+
+void CheckFamilyExists(google::cloud::bigtable::TableAdmin admin, int argc,
+                       char* argv[]) {
+  if (argc != 3) {
+    throw Usage{
+        "check-family-exists: <project-id> <instance-id> <table-id>"
+        " <family-name>"};
+  }
+  std::string const table_id = ConsumeArg(argc, argv);
+  std::string const family_name = ConsumeArg(argc, argv);
+
+  // [START bigtable_check_family_exists]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id, std::string family_name) {
+    auto schema =
+        admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+
+    if (!schema) {
+      throw std::runtime_error(schema.status().message());
+    }
+    auto pos = schema->column_families().find(family_name);
+    if (pos == schema->column_families().end()) {
+      std::cout << "The column family <" << family_name << "> does not exist\n";
+      return;
+    }
+    std::cout << "The column family <" << family_name << "> does exist\n";
+  }
+  // [END bigtable_check_family_exists]
+  (std::move(admin), table_id, family_name);
+}
+
+void UpdateGcRule(google::cloud::bigtable::TableAdmin admin, int argc,
+                  char* argv[]) {
+  if (argc != 3) {
+    throw Usage{
+        "update-gc-rule: <project-id> <instance-id> <table-id>"
+        " <family-name>"};
+  }
+  std::string const table_id = ConsumeArg(argc, argv);
+  std::string const family_name = ConsumeArg(argc, argv);
+
+  // [START bigtable_update_gc_rule]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id, std::string family_name) {
+    auto schema = admin.ModifyColumnFamilies(
+        table_id, {cbt::ColumnFamilyModification::Update(
+                      family_name, cbt::GcRule::MaxNumVersions(1))});
+
+    if (!schema) {
+      throw std::runtime_error(schema.status().message());
+    }
+    std::string formatted;
+    google::protobuf::TextFormat::PrintToString(*schema, &formatted);
+    std::cout << "Schema modified to: " << formatted << "\n";
+  }
+  // [END bigtable_update_gc_rule]
+  (std::move(admin), table_id, family_name);
+}
+
 void DropAllRows(google::cloud::bigtable::TableAdmin admin, int argc,
                  char* argv[]) {
   if (argc != 2) {
@@ -594,6 +679,9 @@ int main(int argc, char* argv[]) try {
       {"create-intersection-family", &CreateIntersectionFamily},
       {"create-nested-family", &CreateNestedFamily},
       {"get-family-metadata", &GetFamilyMetadata},
+      {"delete-column-family", &DeleteColumnFamily},
+      {"check-family-exists", &CheckFamilyExists},
+      {"update-gc-rule", &UpdateGcRule},
       {"drop-all-rows", &DropAllRows},
       {"drop-rows-by-prefix", &DropRowsByPrefix},
       {"wait-for-consistency-check", &WaitForConsistencyCheck},
