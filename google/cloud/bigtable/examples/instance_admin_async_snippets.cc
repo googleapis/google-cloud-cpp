@@ -37,6 +37,46 @@ void PrintUsage(std::string const& cmd, std::string const& msg) {
             << command_usage << "\n";
 }
 
+void AsyncCreateInstance(cbt::InstanceAdmin instance_admin,
+                         cbt::CompletionQueue cq,
+                         std::vector<std::string> argv) {
+  if (argv.size() != 3U) {
+    throw Usage{"async-create-instance: <project-id> <instance-id> <zone>"};
+  }
+  //! [async create instance]
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
+     std::string instance_id, std::string zone) {
+    google::cloud::bigtable::DisplayName display_name("Put description here");
+    std::string cluster_id = instance_id + "-c1";
+    auto cluster_config = google::cloud::bigtable::ClusterConfig(
+        zone, 3, google::cloud::bigtable::ClusterConfig::HDD);
+    google::cloud::bigtable::InstanceConfig config(
+        google::cloud::bigtable::InstanceId(instance_id), display_name,
+        {{cluster_id, cluster_config}});
+    config.set_type(google::cloud::bigtable::InstanceConfig::PRODUCTION);
+
+    auto future = instance_admin.AsyncCreateInstance(cq, config);
+    // Most applications would simply call future.get(), here we show how to
+    // perform additional work while the long running operation completes.
+    std::cout << "Waiting for instance creation to complete ";
+    for (int i = 0; i != 100; ++i) {
+      if (std::future_status::ready ==
+          future.wait_for(std::chrono::seconds(2))) {
+        auto instance = future.get();
+        if (!instance) {
+          throw std::runtime_error(instance.status().message());
+        }
+        std::cout << "DONE: " << instance->name() << "\n";
+        return;
+      }
+      std::cout << '.' << std::flush;
+    }
+    std::cout << "TIMEOUT\n";
+  }
+  //! [async create instance]
+  (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
+}
+
 void AsyncGetInstance(cbt::InstanceAdmin instance_admin,
                       cbt::CompletionQueue cq, std::vector<std::string> argv) {
   if (argv.size() != 2U) {
@@ -304,6 +344,7 @@ int main(int argc, char* argv[]) try {
       google::cloud::bigtable::CompletionQueue, std::vector<std::string>)>;
 
   std::map<std::string, CommandType> commands = {
+      {"async-create-instance", &AsyncCreateInstance},
       {"async-get-instance", &AsyncGetInstance},
       {"async-get-cluster", &AsyncGetCluster},
       {"async-list-instances", &AsyncListInstances},

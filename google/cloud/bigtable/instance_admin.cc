@@ -131,6 +131,31 @@ InstanceAdmin::CreateInstance(InstanceConfig instance_config) {
                     this, std::move(instance_config));
 }
 
+future<StatusOr<google::bigtable::admin::v2::Instance>>
+InstanceAdmin::AsyncCreateInstance(CompletionQueue& cq,
+                                   bigtable::InstanceConfig instance_config) {
+  auto request = std::move(instance_config).as_proto();
+  request.set_parent(project_name());
+  for (auto& kv : *request.mutable_clusters()) {
+    kv.second.set_location(project_name() + "/locations/" +
+                           kv.second.location());
+  }
+  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  return internal::AsyncStartPollAfterRetryUnaryRpc<
+      google::bigtable::admin::v2::Instance>(
+      __func__, impl_.polling_policy_->clone(),
+      impl_.rpc_retry_policy_->clone(), impl_.rpc_backoff_policy_->clone(),
+      internal::ConstantIdempotencyPolicy(false), impl_.metadata_update_policy_,
+      client,
+      [client](
+          grpc::ClientContext* context,
+          google::bigtable::admin::v2::CreateInstanceRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return client->AsyncCreateInstance(context, request, cq);
+      },
+      std::move(request), cq);
+}
+
 std::future<StatusOr<google::bigtable::admin::v2::Cluster>>
 InstanceAdmin::CreateCluster(ClusterConfig cluster_config,
                              bigtable::InstanceId const& instance_id,
