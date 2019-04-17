@@ -134,8 +134,16 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
 /**
  * Configure if only the IAM policies are used for access control.
  *
- * @warning this is an Alpha feature of Google Cloud Storage, it is not subject
+ * @warning this is a Beta feature of Google Cloud Storage, it is not subject
  *     to the deprecation policy and subject to change without notice.
+ *
+ * @see Before enabling Bucket Policy Only please review the
+ *     [feature documentation][bpo-link], as well as
+ *     ["Should you use Bucket Policy Only?"][bpo-should-link].
+ *
+ * [bpo-link]: https://cloud.google.com/storage/docs/bucket-policy-only
+ * [bpo-should-link]:
+ * https://cloud.google.com/storage/docs/bucket-policy-only#should-you-use
  */
 struct BucketPolicyOnly {
   bool enabled;
@@ -185,8 +193,16 @@ std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs);
  * Currently this only holds the BucketOnlyPolicy. In the future, we may define
  * additional IAM which would be included in this object.
  *
- * @warning this is an Alpha feature of Google Cloud Storage, it is not subject
+ * @warning this is a Beta feature of Google Cloud Storage, it is not subject
  *     to the deprecation policy and subject to change without notice.
+ *
+ * @see Before enabling Bucket Policy Only please review the
+ *     [feature documentation][bpo-link], as well as
+ *     ["Should you use Bucket Policy Only?"][bpo-should-link].
+ *
+ * [bpo-link]: https://cloud.google.com/storage/docs/bucket-policy-only
+ * [bpo-should-link]:
+ * https://cloud.google.com/storage/docs/bucket-policy-only#should-you-use
  */
 struct BucketIamConfiguration {
   google::cloud::optional<BucketPolicyOnly> bucket_policy_only;
@@ -483,10 +499,6 @@ inline bool operator>=(BucketWebsite const& lhs, BucketWebsite const& rhs) {
 
 /**
  * Represents a Google Cloud Storage Bucket Metadata object.
- *
- * @warning This is an incomplete implementation to validate the design. It does
- * not support changes to the metadata. It also lacks support for ACLs, CORS,
- * encryption keys, lifecycle rules, and other features.
  */
 class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
  public:
@@ -630,6 +642,17 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   //@{
   /**
    * @name Get and set the IAM configuration.
+   *
+   * @warning this is a Beta feature of Google Cloud Storage, it is not
+   *     subject to the deprecation policy and subject to change without notice.
+   *
+   * @see Before enabling Bucket Policy Only please review the
+   *     [feature documentation][bpo-link], as well as
+   *     ["Should you use Bucket Policy Only?"][bpo-should-link].
+   *
+   * [bpo-link]: https://cloud.google.com/storage/docs/bucket-policy-only
+   * [bpo-should-link]:
+   * https://cloud.google.com/storage/docs/bucket-policy-only#should-you-use
    */
   bool has_iam_configuration() const { return iam_configuration_.has_value(); }
   BucketIamConfiguration const& iam_configuration() const {

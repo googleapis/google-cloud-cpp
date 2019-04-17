@@ -321,6 +321,14 @@ class Client {
    *
    * @par Example
    * @snippet storage_bucket_samples.cc create bucket
+   *
+   * @see Before enabling Bucket Policy Only please review the
+   *     [feature documentation][bpo-link], as well as
+   *     ["Should you use Bucket Policy Only?"][bpo-should-link].
+   *
+   * [bpo-link]: https://cloud.google.com/storage/docs/bucket-policy-only
+   * [bpo-should-link]:
+   * https://cloud.google.com/storage/docs/bucket-policy-only#should-you-use
    */
   template <typename... Options>
   StatusOr<BucketMetadata> CreateBucket(std::string bucket_name,
@@ -348,6 +356,14 @@ class Client {
    *
    * @par Example
    * @snippet storage_bucket_samples.cc create bucket for project
+   *
+   * @see Before enabling Bucket Policy Only please review the
+   *     [feature documentation][bpo-link], as well as
+   *     ["Should you use Bucket Policy Only?"][bpo-should-link].
+   *
+   * [bpo-link]: https://cloud.google.com/storage/docs/bucket-policy-only
+   * [bpo-should-link]:
+   * https://cloud.google.com/storage/docs/bucket-policy-only#should-you-use
    */
   template <typename... Options>
   StatusOr<BucketMetadata> CreateBucketForProject(std::string bucket_name,
@@ -426,11 +442,16 @@ class Client {
    * This operation is only idempotent if restricted by pre-conditions, in this
    * case,`IfMetagenerationMatch`.
    *
-   * @par Idempotency
-   * This is a read-only operation and is always idempotent.
-   *
    * @par Example
    * @snippet storage_bucket_samples.cc update bucket
+   *
+   * @see Before enabling Bucket Policy Only please review the
+   *     [feature documentation][bpo-link], as well as
+   *     ["Should you use Bucket Policy Only?"][bpo-should-link].
+   *
+   * [bpo-link]: https://cloud.google.com/storage/docs/bucket-policy-only
+   * [bpo-should-link]:
+   * https://cloud.google.com/storage/docs/bucket-policy-only#should-you-use
    */
   template <typename... Options>
   StatusOr<BucketMetadata> UpdateBucket(std::string bucket_name,
@@ -469,6 +490,14 @@ class Client {
    *
    * @par Example
    * @snippet storage_bucket_samples.cc patch bucket storage class
+   *
+   * @see Before enabling Bucket Policy Only please review the
+   *     [feature documentation][bpo-link], as well as
+   *     ["Should you use Bucket Policy Only?"][bpo-should-link].
+   *
+   * [bpo-link]: https://cloud.google.com/storage/docs/bucket-policy-only
+   * [bpo-should-link]:
+   * https://cloud.google.com/storage/docs/bucket-policy-only#should-you-use
    */
   template <typename... Options>
   StatusOr<BucketMetadata> PatchBucket(std::string bucket_name,
@@ -503,6 +532,14 @@ class Client {
    *
    * @par Example
    * @snippet storage_bucket_samples.cc patch bucket storage class with builder
+   *
+   * @see Before enabling Bucket Policy Only please review the
+   *     [feature documentation][bpo-link], as well as
+   *     ["Should you use Bucket Policy Only?"][bpo-should-link].
+   *
+   * [bpo-link]: https://cloud.google.com/storage/docs/bucket-policy-only
+   * [bpo-should-link]:
+   * https://cloud.google.com/storage/docs/bucket-policy-only#should-you-use
    */
   template <typename... Options>
   StatusOr<BucketMetadata> PatchBucket(
