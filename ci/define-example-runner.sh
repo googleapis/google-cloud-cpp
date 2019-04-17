@@ -85,6 +85,64 @@ run_example() {
 }
 
 ################################################
+# Run one example in a given program expecting a failure
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+#   EMULATOR_LOG: the name of the emulator logfile.
+# Arguments:
+#   program_name: the name of the program to run.
+#   example: the name of the example.
+#   *: the arguments for that example.
+# Returns:
+#   None
+################################################
+run_failure_example() {
+  if [[ $# -lt 2 ]]; then
+    echo "Usage: run_example <program_name> example [arg1 arg2 ...]"
+    exit 1
+  fi
+
+  local program_path=$1
+  local example=$2
+  shift 2
+  local -a arguments=( "$@" )
+  local program_name
+  program_name="$(basename "${program_path}")"
+
+  if [[ ! -x "${program_path}" ]]; then
+    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
+        " ${program_name} is not compiled"
+    return
+  fi
+  log="$(mktemp -t "run_example.XXXXXX")"
+  echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
+      " ${program_name} ${example} running"
+  # We use parameter expansion for ${arguments} because set -u doesn't like
+  # empty arrays on older versions of Bash (which some of our builds use). The
+  # expression ${parameter+word} will expand word only if parameter is not
+  # unset.
+  echo "${program_path}" "${example}" "${arguments[@]+"${arguments[@]}"}" >"${log}"
+  set +e
+  "${program_path}" "${example}" "${arguments[@]+"${arguments[@]}"}" >>"${log}" 2>&1 </dev/null
+  if [[ $? != 0 ]]; then
+    echo  "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
+        " ${program_name} ${example}"
+  else
+    EXIT_STATUS=1
+    echo    "${COLOR_RED}[    ERROR ]${COLOR_RESET}" \
+        " ${program_name} ${example}"
+    echo
+    dump_log "${log}"
+    if [[ -f "${EMULATOR_LOG}" ]]; then
+      dump_log "${EMULATOR_LOG}"
+    fi
+  fi
+  set -e
+  /bin/rm -f "${log}"
+}
+
+################################################
 # Test the Usage messages for an example program.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
