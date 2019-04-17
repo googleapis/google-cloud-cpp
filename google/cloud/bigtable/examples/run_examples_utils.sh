@@ -237,6 +237,14 @@ function run_all_table_admin_examples {
       "${project_id}" "${INSTANCE}" "${TABLE}" "nested-family"
   run_example ./table_admin_snippets get-family-metadata \
       "${project_id}" "${INSTANCE}" "${TABLE}" "nested-family"
+  run_example ./table_admin_snippets delete-column-family \
+      "${project_id}" "${INSTANCE}" "${TABLE}" "nested-family"
+  run_failure_example ./table_admin_snippets check-family-exists \
+      "${project_id}" "${INSTANCE}" "${TABLE}" "nested-family"
+  run_example ./table_admin_snippets check-family-exists \
+      "${project_id}" "${INSTANCE}" "${TABLE}" "max-age-family"
+  run_example ./table_admin_snippets update-gc-rule \
+      "${project_id}" "${INSTANCE}" "${TABLE}" "max-age-family"
   run_example ./table_admin_snippets wait-for-consistency-check "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets generate-consistency-token "${project_id}" "${INSTANCE}" "${TABLE}"
   local token
