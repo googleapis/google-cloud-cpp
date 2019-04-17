@@ -60,9 +60,13 @@ run_example() {
   log="$(mktemp -t "run_example.XXXXXX")"
   echo    "${COLOR_GREEN}[ RUN      ]${COLOR_RESET}" \
       " ${program_name} ${example} running"
-  echo "${program_path}" "${example}" "${arguments[@]}" >"${log}"
+  # We use parameter expansion for ${arguments} because set -u doesn't like
+  # empty arrays on older versions of Bash (which some of our builds use). The
+  # expression ${parameter+word} will expand word only if parameter is not
+  # unset.
+  echo "${program_path}" "${example}" "${arguments[@]+"${arguments[@]}"}" >"${log}"
   set +e
-  "${program_path}" "${example}" "${arguments[@]}" >>"${log}" 2>&1 </dev/null
+  "${program_path}" "${example}" "${arguments[@]+"${arguments[@]}"}" >>"${log}" 2>&1 </dev/null
   if [ $? = 0 ]; then
     echo  "${COLOR_GREEN}[       OK ]${COLOR_RESET}" \
         " ${program_name} ${example}"
