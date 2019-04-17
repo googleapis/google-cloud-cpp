@@ -13,11 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/table.h"
+
 #include "google/cloud/bigtable/internal/async_future_from_callback.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
+
 #include <thread>
 #include <type_traits>
 
@@ -262,17 +264,51 @@ Table::AsyncCheckAndMutateRow(std::string row_key, Filter filter,
       std::move(request), cq);
 }
 
-Row Table::CallReadModifyWriteRowRequest(
-    btproto::ReadModifyWriteRowRequest const& request, grpc::Status& status) {
+StatusOr<Row> Table::ReadModifyWriteRowImpl(
+    btproto::ReadModifyWriteRowRequest request) {
+  bigtable::internal::SetCommonTableOperationRequest<
+      ::google::bigtable::v2::ReadModifyWriteRowRequest>(
+      request, impl_.app_profile_id_.get(), impl_.table_name_.get());
+
+  grpc::Status status;
   auto response = ClientUtils::MakeNonIdemponentCall(
       *(impl_.client_), clone_rpc_retry_policy(),
       clone_metadata_update_policy(), &DataClient::ReadModifyWriteRow, request,
       "ReadModifyWriteRowRequest", status);
   if (!status.ok()) {
-    return Row("", {});
+    return internal::MakeStatusFromRpcError(status);
   }
   return internal::TransformReadModifyWriteRowResponse<
       btproto::ReadModifyWriteRowResponse>(response);
+}
+
+future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
+    CompletionQueue& cq,
+    ::google::bigtable::v2::ReadModifyWriteRowRequest request) {
+  bigtable::internal::SetCommonTableOperationRequest<
+      ::google::bigtable::v2::ReadModifyWriteRowRequest>(
+      request, impl_.app_profile_id_.get(), impl_.table_name_.get());
+
+  auto client = impl_.client_;
+  return internal::StartRetryAsyncUnaryRpc(
+             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             internal::ConstantIdempotencyPolicy(false),
+             clone_metadata_update_policy(),
+             [client](grpc::ClientContext* context,
+                      btproto::ReadModifyWriteRowRequest const& request,
+                      grpc::CompletionQueue* cq) {
+               return client->AsyncReadModifyWriteRow(context, request, cq);
+             },
+             std::move(request), cq)
+      .then([](future<StatusOr<btproto::ReadModifyWriteRowResponse>> fut)
+                -> StatusOr<Row> {
+        auto result = fut.get();
+        if (!result) {
+          return result.status();
+        }
+        return internal::TransformReadModifyWriteRowResponse<
+            btproto::ReadModifyWriteRowResponse>(*result);
+      });
 }
 
 // Call the `google.bigtable.v2.Bigtable.SampleRowKeys` RPC until

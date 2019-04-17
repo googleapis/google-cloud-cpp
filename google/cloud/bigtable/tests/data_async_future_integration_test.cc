@@ -208,12 +208,17 @@ TEST_F(DataAsyncFutureIntegrationTest,
       {row_key1, family1, "column-id1", 1000, "v1000"},
       {row_key1, family2, "column-id2", 2000, "v2000"}};
 
-  std::vector<bigtable::Cell> expected{
+  std::vector<bigtable::Cell> expected_read{
       {row_key1, family1, "column-id1", 1000, "v1000"},
       {row_key1, family2, "column-id2", 2000, "v2000"},
       {row_key1, family1, "column-id1", 1000, "v1000" + add_suffix1},
       {row_key1, family2, "column-id2", 2000, "v2000" + add_suffix2},
       {row_key1, family3, "column-id3", 2000, add_suffix3}};
+
+  std::vector<bigtable::Cell> expected_return{
+      {row_key1, family1, "column-id1", 0, "v1000" + add_suffix1},
+      {row_key1, family2, "column-id2", 0, "v2000" + add_suffix2},
+      {row_key1, family3, "column-id3", 0, add_suffix3}};
 
   CreateCells(table, created);
   using R = bigtable::ReadModifyWriteRule;
@@ -229,21 +234,22 @@ TEST_F(DataAsyncFutureIntegrationTest,
   // Block until the asynchronous operation completes. This is not what one
   // would do in a real application (the synchronous API is better in that
   // case), but we need to wait before checking the results.
-  auto status = fut.get();
-  EXPECT_STATUS_OK(status);
-  EXPECT_TRUE(status.ok());
+  StatusOr<Row> row = fut.get();
+  EXPECT_STATUS_OK(row);
+
+  EXPECT_EQ(row_key1, row->row_key());
+  auto row_cells = GetCellsIgnoringTimestamp(row->cells());
+  CheckEqualUnordered(GetCellsIgnoringTimestamp(expected_return), row_cells);
 
   auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
-  // Creating cells by ignoring the timestamps
   // The returned cells have the timestamps in microseconds and do not match
   // with the ones in the expected cells.
   auto actual_cells_ignore_timestamp = GetCellsIgnoringTimestamp(actual);
-  auto expected_cells_ignore_timestamp = GetCellsIgnoringTimestamp(expected);
 
   // Cleanup the thread running the completion queue event loop.
   cq.Shutdown();
   pool.join();
-  CheckEqualUnordered(expected_cells_ignore_timestamp,
+  CheckEqualUnordered(GetCellsIgnoringTimestamp(expected_read),
                       actual_cells_ignore_timestamp);
 }
 }  // namespace

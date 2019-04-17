@@ -402,7 +402,7 @@ class Table {
    *     and add the value provided.
    *     Both rules accept the family and column identifier to modify.
    * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
-   * @returns modified row
+   * @returns The new contents of all modified cells.
    *
    * @par Example
    * @snippet data_snippets.cc read modify write
@@ -415,9 +415,6 @@ class Table {
 
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_row_key(std::move(row_key));
-    bigtable::internal::SetCommonTableOperationRequest<
-        ::google::bigtable::v2::ReadModifyWriteRowRequest>(
-        request, impl_.app_profile_id_.get(), impl_.table_name_.get());
 
     // Generate a better compile time error message than the default one
     // if the types do not match
@@ -429,12 +426,7 @@ class Table {
 
     *request.add_rules() = std::move(rule).as_proto();
     AddRules(request, std::forward<Args>(rules)...);
-    Row row = CallReadModifyWriteRowRequest(request, status);
-
-    if (!status.ok()) {
-      return bigtable::internal::MakeStatusFromRpcError(status);
-    }
-    return row;
+    return ReadModifyWriteRowImpl(std::move(request));
   }
 
   /**
@@ -456,44 +448,34 @@ class Table {
    *     and add the value provided.
    *     Both rules accept the family and column identifier to modify.
    * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
+   * @returns A future, that becomes satisfied when the operation completes,
+   *     at that point the future has the contents of all modified cells.
    *
    * @par Example
    * @snippet data_async_snippets.cc async read modify write
    */
-
   template <typename... Args>
-  future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
-  AsyncReadModifyWriteRow(std::string row_key, CompletionQueue& cq,
-                          bigtable::ReadModifyWriteRule rule, Args&&... rules) {
+  future<StatusOr<Row>> AsyncReadModifyWriteRow(
+      std::string row_key, CompletionQueue& cq,
+      bigtable::ReadModifyWriteRule rule, Args&&... rules) {
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_row_key(std::move(row_key));
-    bigtable::internal::SetCommonTableOperationRequest<
-        ::google::bigtable::v2::ReadModifyWriteRowRequest>(
-        request, impl_.app_profile_id_.get(), impl_.table_name_.get());
-
     *request.add_rules() = std::move(rule).as_proto();
-    impl_.AddRules(request, std::forward<Args>(rules)...);
+    AddRules(request, std::forward<Args>(rules)...);
 
-    auto client = impl_.client_;
-    return internal::StartRetryAsyncUnaryRpc(
-        __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-        internal::ConstantIdempotencyPolicy(false),
-        clone_metadata_update_policy(),
-        [client](grpc::ClientContext* context,
-                 google::bigtable::v2::ReadModifyWriteRowRequest const& request,
-                 grpc::CompletionQueue* cq) {
-          return client->AsyncReadModifyWriteRow(context, request, cq);
-        },
-        std::move(request), cq);
+    return AsyncReadModifyWriteRowImpl(cq, std::move(request));
   }
 
  private:
   /**
    * Send request ReadModifyWriteRowRequest to modify the row and get it back
    */
-  Row CallReadModifyWriteRowRequest(
-      ::google::bigtable::v2::ReadModifyWriteRowRequest const& request,
-      grpc::Status& status);
+  StatusOr<Row> ReadModifyWriteRowImpl(
+      ::google::bigtable::v2::ReadModifyWriteRowRequest request);
+
+  future<StatusOr<Row>> AsyncReadModifyWriteRowImpl(
+      CompletionQueue& cq,
+      ::google::bigtable::v2::ReadModifyWriteRowRequest request);
 
   /**
    * Refactor implementation to `.cc` file.
