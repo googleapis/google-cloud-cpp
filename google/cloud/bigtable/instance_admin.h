@@ -207,6 +207,28 @@ class InstanceAdmin {
       InstanceUpdateConfig instance_update_config);
 
   /**
+   * Update an existing instance (asynchronously).
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param instance_update_config config with modified instance.
+   *
+   * @return a future satisfied when either (a) the instance is updated or (b)
+   *     an unretriable error occurs or (c) polling or retry policy has been
+   *     exhausted.
+   *
+   * @par Example
+   * @snippet instance_admin_async_snippets.cc async update instance
+   */
+  future<StatusOr<google::bigtable::admin::v2::Instance>> AsyncUpdateInstance(
+      CompletionQueue& cq, InstanceUpdateConfig instance_update_config);
+
+  /**
    * Obtain the list of instances in the project.
    *
    * @note In some circumstances Cloud Bigtable may be unable to obtain the full

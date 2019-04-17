@@ -347,6 +347,58 @@ void AsyncListAppProfiles(cbt::InstanceAdmin instance_admin,
   (std::move(instance_admin), std::move(cq), argv[1]);
 }
 
+void AsyncUpdateInstance(cbt::InstanceAdmin instance_admin,
+                         cbt::CompletionQueue cq,
+                         std::vector<std::string> argv) {
+  if (argv.size() != 2U) {
+    throw Usage{"update-instance: <project-id> <instance-id>"};
+  }
+
+  //! [async update instance]
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
+     std::string instance_id) {
+    auto future =
+        instance_admin.AsyncGetInstance(cq, instance_id)
+            .then([instance_admin,
+                   cq](google::cloud::future<google::cloud::StatusOr<
+                           google::bigtable::admin::v2::Instance>>
+                           instance_fut) mutable {
+              auto instance = instance_fut.get();
+              if (!instance) {
+                throw std::runtime_error(instance.status().message());
+              }
+              // Modify the instance and prepare the mask with modified field
+              google::cloud::bigtable::InstanceUpdateConfig
+                  instance_update_config(std::move(*instance));
+              instance_update_config.set_display_name("Modified Display Name");
+
+              return instance_admin.AsyncUpdateInstance(cq,
+                                                        instance_update_config);
+            });
+    // Most applications would simply call future.get(), here we show how to
+    // perform additional work while the long running operation completes.
+    std::cout << "Waiting for instance update to complete ";
+    for (int i = 0; i != 100; ++i) {
+      if (std::future_status::ready ==
+          future.wait_for(std::chrono::seconds(2))) {
+        auto instance = future.get();
+        if (!instance) {
+          throw std::runtime_error(instance.status().message());
+        }
+        std::string instance_detail;
+        google::protobuf::TextFormat::PrintToString(*instance,
+                                                    &instance_detail);
+        std::cout << "DONE, instance details: " << instance_detail << "\n";
+        return;
+      }
+      std::cout << '.' << std::flush;
+    }
+    std::cout << "TIMEOUT\n";
+  }
+  //! [async update instance]
+  (std::move(instance_admin), std::move(cq), argv[1]);
+}
+
 void AsyncUpdateCluster(cbt::InstanceAdmin instance_admin,
                         cbt::CompletionQueue cq,
                         std::vector<std::string> argv) {
@@ -441,6 +493,7 @@ int main(int argc, char* argv[]) try {
       {"async-list-clusters", &AsyncListClusters},
       {"async-list-all-clusters", &AsyncListAllClusters},
       {"async-list-app-profiles", &AsyncListAppProfiles},
+      {"async-update-instance", &AsyncUpdateInstance},
       {"async-update-cluster", &AsyncUpdateCluster},
       {"async-delete-instance", &AsyncDeleteInstance}};
 
