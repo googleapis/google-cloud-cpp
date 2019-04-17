@@ -241,6 +241,27 @@ InstanceAdmin::UpdateInstanceImpl(InstanceUpdateConfig instance_update_config) {
   return result;
 }
 
+future<StatusOr<google::bigtable::admin::v2::Instance>>
+InstanceAdmin::AsyncUpdateInstance(
+    CompletionQueue& cq, InstanceUpdateConfig instance_update_config) {
+  auto request = std::move(instance_update_config).as_proto();
+
+  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  return internal::AsyncStartPollAfterRetryUnaryRpc<
+      google::bigtable::admin::v2::Instance>(
+      __func__, impl_.polling_policy_->clone(),
+      impl_.rpc_retry_policy_->clone(), impl_.rpc_backoff_policy_->clone(),
+      internal::ConstantIdempotencyPolicy(false), impl_.metadata_update_policy_,
+      client,
+      [client](grpc::ClientContext* context,
+               google::bigtable::admin::v2::PartialUpdateInstanceRequest const&
+                   request,
+               grpc::CompletionQueue* cq) {
+        return client->AsyncUpdateInstance(context, request, cq);
+      },
+      std::move(request), cq);
+}
+
 StatusOr<btadmin::Instance> InstanceAdmin::GetInstance(
     std::string const& instance_id) {
   grpc::Status status;

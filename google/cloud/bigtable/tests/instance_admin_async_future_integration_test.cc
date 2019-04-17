@@ -149,7 +149,9 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   auto const updated_display_name = instance_id + " updated";
   instance_update_config.set_display_name(updated_display_name);
   auto instance_after =
-      instance_admin_->UpdateInstance(std::move(instance_update_config)).get();
+      instance_admin_
+          ->AsyncUpdateInstance(cq, std::move(instance_update_config))
+          .get();
   auto instance_after_update = instance_admin_->GetInstance(instance_id);
   ASSERT_STATUS_OK(instance_after_update);
   EXPECT_EQ(updated_display_name, instance_after_update->display_name());
