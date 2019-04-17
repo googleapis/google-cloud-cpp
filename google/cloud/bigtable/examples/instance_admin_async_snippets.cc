@@ -452,6 +452,46 @@ void AsyncUpdateCluster(cbt::InstanceAdmin instance_admin,
   (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
 }
 
+void AsyncUpdateAppProfile(cbt::InstanceAdmin instance_admin,
+                           cbt::CompletionQueue cq,
+                           std::vector<std::string> argv) {
+  if (argv.size() != 3U) {
+    throw Usage{"update-cluster: <project-id> <instance-id> <profile-id>"};
+  }
+
+  //! [async update app profile]
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
+     std::string instance_id, std::string profile_id) {
+    auto future = instance_admin.AsyncUpdateAppProfile(
+        cq, google::cloud::bigtable::InstanceId(instance_id),
+        google::cloud::bigtable::AppProfileId(profile_id),
+        google::cloud::bigtable::AppProfileUpdateConfig().set_description(
+            "new description"));
+    // Most applications would simply call future.get(), here we show how to
+    // perform additional work while the long running operation completes.
+    std::cout << "Waiting for app profile update to complete ";
+    for (int i = 0; i != 100; ++i) {
+      if (std::future_status::ready ==
+          future.wait_for(std::chrono::seconds(2))) {
+        auto app_profile = future.get();
+        if (!app_profile) {
+          throw std::runtime_error(app_profile.status().message());
+        }
+        std::string app_profile_detail;
+        google::protobuf::TextFormat::PrintToString(*app_profile,
+                                                    &app_profile_detail);
+        std::cout << "DONE, app profile details: " << app_profile_detail
+                  << "\n";
+        return;
+      }
+      std::cout << '.' << std::flush;
+    }
+    std::cout << "TIMEOUT\n";
+  }
+  //! [async update app profile]
+  (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
+}
+
 void AsyncDeleteInstance(cbt::InstanceAdmin instance_admin,
                          cbt::CompletionQueue cq,
                          std::vector<std::string> argv) {
@@ -495,6 +535,7 @@ int main(int argc, char* argv[]) try {
       {"async-list-app-profiles", &AsyncListAppProfiles},
       {"async-update-instance", &AsyncUpdateInstance},
       {"async-update-cluster", &AsyncUpdateCluster},
+      {"async-update-app-profile", &AsyncUpdateAppProfile},
       {"async-delete-instance", &AsyncDeleteInstance}};
 
   google::cloud::bigtable::CompletionQueue cq;
