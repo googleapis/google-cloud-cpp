@@ -164,6 +164,33 @@ InstanceAdmin::CreateCluster(ClusterConfig cluster_config,
                     std::move(cluster_config), instance_id, cluster_id);
 }
 
+future<StatusOr<google::bigtable::admin::v2::Cluster>>
+InstanceAdmin::AsyncCreateCluster(CompletionQueue& cq,
+                                  ClusterConfig cluster_config,
+                                  bigtable::InstanceId const& instance_id,
+                                  bigtable::ClusterId const& cluster_id) {
+  auto cluster = std::move(cluster_config).as_proto();
+  cluster.set_location(project_name() + "/locations/" + cluster.location());
+  btadmin::CreateClusterRequest request;
+  request.mutable_cluster()->Swap(&cluster);
+  request.set_parent(project_name() + "/instances/" + instance_id.get());
+  request.set_cluster_id(cluster_id.get());
+
+  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  return internal::AsyncStartPollAfterRetryUnaryRpc<
+      google::bigtable::admin::v2::Cluster>(
+      __func__, impl_.polling_policy_->clone(),
+      impl_.rpc_retry_policy_->clone(), impl_.rpc_backoff_policy_->clone(),
+      internal::ConstantIdempotencyPolicy(false), impl_.metadata_update_policy_,
+      client,
+      [client](grpc::ClientContext* context,
+               google::bigtable::admin::v2::CreateClusterRequest const& request,
+               grpc::CompletionQueue* cq) {
+        return client->AsyncCreateCluster(context, request, cq);
+      },
+      std::move(request), cq);
+}
+
 StatusOr<google::bigtable::admin::v2::Instance>
 InstanceAdmin::CreateInstanceImpl(InstanceConfig instance_config) {
   // Copy the policies in effect for the operation.
