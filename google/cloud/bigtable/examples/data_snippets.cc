@@ -406,13 +406,18 @@ void ReadMultipleRanges(google::cloud::bigtable::Table table, int argc,
                         char* argv[]) {
   if (argc < 3) {
     throw Usage{
-        "read-multiple-ranges: <project-id> <instance-id> <table-id>"
+        "read-multiple-ranges <project-id> <instance-id> <table-id>"
         " <begin1> <end1> [<begin2> <end2> ...]"};
   }
 
   std::vector<std::pair<std::string, std::string>> ranges;
-  for (int i = 1; i != argc - 1; ++i) {
-    ranges.emplace_back(std::make_pair(argv[i], argv[i + 1]));
+  while (argc > 1) {
+    auto begin = ConsumeArg(argc, argv);
+    if (argc <= 1) {
+      throw Usage{"read-multiple-ranges - error: mismatched [begin,end) pair"};
+    }
+    auto end = ConsumeArg(argc, argv);
+    ranges.emplace_back(std::make_pair(begin, end));
   }
 
   // [START bigtable_read_multiple_ranges]

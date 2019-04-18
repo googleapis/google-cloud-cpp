@@ -365,6 +365,12 @@ run_all_data_examples() {
       "${project_id}" "${instance_id}" "${TABLE}" "${PREFIX_1}" "${PREFIX_2}"
   run_example ./data_snippets read-multiple-ranges \
       "${project_id}" "${instance_id}" "${TABLE}" "${PREFIX_1}" "${PREFIX_2}"
+  run_example ./data_snippets read-multiple-ranges \
+      "${project_id}" "${instance_id}" "${TABLE}" "${PREFIX_1}" "${PREFIX_2}" \
+      "key-000007" "key-000009"
+  run_failure_example ./data_snippets read-multiple-ranges \
+      "${project_id}" "${instance_id}" "${TABLE}" "${PREFIX_1}" "${PREFIX_2}" \
+      "mismatched-begin-end-pair"
   run_example ./data_snippets sample-rows \
       "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets sample-rows-collections \
