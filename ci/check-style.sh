@@ -67,6 +67,7 @@ find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 |
         -e 's;#include <grpc\\+\\+/grpc\+\+.h>;#include <grpcpp/grpcpp.h>;' \
         -e 's;#include <grpc\\+\\+/;#include <grpcpp/;' \
         "${file}" > "${file}.tmp"
+    chmod --reference="${file}" "${file}.tmp"
     if cmp -s "${file}" "${file}.tmp"; then
         rm -f "${file}.tmp"
     else
@@ -100,6 +101,7 @@ find . \( "${ignore[@]}" \) -prune -o \
   while IFS= read -r -d $'\0' file; do
     sed -e 's/[[:blank:]][[:blank:]]*$//' \
         "${file}" > "${file}.tmp"
+    chmod --reference="${file}" "${file}.tmp"
     if cmp -s "${file}" "${file}.tmp"; then
         rm -f "${file}.tmp"
     else
