@@ -25,36 +25,39 @@ fi
 
 readonly BINDIR="$(dirname "$0")"
 
-find google/cloud -name '*.h' -print0 \
-  | xargs -0 awk -f "${BINDIR}/check-include-guards.gawk"
+# Build paths to ignore in find(1) commands by reading .gitignore.
+declare -a ignore=( -path ./.git )
+if [ -f .gitignore ]; then
+  while read -r line; do
+    case "${line}" in
+    [^#]*/*) ignore+=( -o -path "./$(expr "${line}" : '\(.*\)/')" );;
+    [^#]*)   ignore+=( -o -name "${line}" );;
+    esac
+  done < .gitignore
+fi
+
+find google/cloud -name '*.h' -print0 |
+  xargs -0 awk -f "${BINDIR}/check-include-guards.gawk"
 
 # Apply cmake_format to all the CMake list files.
 #     https://github.com/cheshirekow/cmake_format
-find . \( -path ./.git \
-          -o -path ./third_party \
-          -o -path './cmake-build-*' \
-          -o -path ./build-output \
-          -o -path ./.build \
-          -o -path ./_build \
-          -o -path ./cmake-out \
-       \) -prune \
-       -o \( -name 'CMakeLists.txt' \
-             -o -name '*.cmake' \
-          \) -print0 \
-     | xargs -0 cmake-format -i
+find . \( "${ignore[@]}" \) -prune -o \
+       \( -name 'CMakeLists.txt' -o -name '*.cmake' \) \
+       -print0 |
+  xargs -0 cmake-format -i
 
 # Apply clang-format(1) to fix whitespace and other formatting rules.
 # The version of clang-format is important, different versions have slightly
 # different formatting output (sigh).
-find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 \
-     | xargs -0 clang-format -i
+find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 |
+  xargs -0 clang-format -i
 
 # Apply several transformations that cannot be enforced by clang-format:
 #     - Replace any #include for grpc++/* with grpcpp/*. The paths with grpc++
 #       are obsoleted by the gRPC team, so we should not use them in our code.
 #     - Replace grpc::<BLAH> with grpc::StatusCode::<BLAH>, the aliases in the
 #       `grpc::` namespace do not exist inside google.
-find google/cloud \( -name '*.h' -o -name '*.cc' \) -print0 |
+find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 |
   while IFS= read -r -d $'\0' file; do
     # We used to run run `sed -i` to apply these changes, but that touches the
     # files even if there are no changes applied, forcing a rebuild each time.
@@ -64,7 +67,7 @@ find google/cloud \( -name '*.h' -o -name '*.cc' \) -print0 |
         -e 's;#include <grpc\\+\\+/grpc\+\+.h>;#include <grpcpp/grpcpp.h>;' \
         -e 's;#include <grpc\\+\\+/;#include <grpcpp/;' \
         "${file}" > "${file}.tmp"
-    if cmp "${file}" "${file}.tmp"; then
+    if cmp -s "${file}" "${file}.tmp"; then
         rm -f "${file}.tmp"
     else
         mv -f "${file}.tmp" "${file}"
@@ -73,33 +76,36 @@ find google/cloud \( -name '*.h' -o -name '*.cc' \) -print0 |
 
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier
-find . \( -path ./.git \
-          -o -path ./third_party \
-          -o -path './cmake-build-*' \
-          -o -path ./build-output \
-          -o -path ./.build \
-          -o -path ./_build \
-       \) -prune \
-     -o \( -name BUILD \
-           -o -name '*.bzl' \
-        \) -print0 \
-     | xargs -0 buildifier -mode=fix
+find . \( "${ignore[@]}" \) -prune -o \
+       \( -name BUILD -o -name '*.bzl' \) \
+       -print0 |
+  xargs -0 buildifier -mode=fix
 
 # Apply shellcheck(1) to emit warnings for common scripting mistakes.
-find . \( -path ./.git \
-        -o -path ./third_party \
-        -o -path './cmake-build-*' \
-        -o -path ./build-output \
-        -o -path ./.build \
-        -o -path ./_build \
-        -o -path ./cmake-out \
-    \) -prune \
-    -o -iname '*.sh' -exec shellcheck \
-        --exclude=SC1090 \
-        --exclude=SC2034 \
-        --exclude=SC2153 \
-        --exclude=SC2181 \
-    '{}' \;
+find . \( "${ignore[@]}" \) -prune -o \
+       -iname '*.sh' -exec shellcheck \
+         --exclude=SC1090 \
+         --exclude=SC2034 \
+         --exclude=SC2153 \
+         --exclude=SC2181 \
+       '{}' \;
+
+# Apply transformations to fix whitespace formatting in files not handled by
+# clang-format(1) above.  For now we simply remove trailing blanks.  Note that
+# we do not expand TABs (they currently only appear in Makefiles and Makefile
+# snippets).
+find . \( "${ignore[@]}" \) -prune -o \
+       -type f ! -name '*.gz' \
+       -print0 |
+  while IFS= read -r -d $'\0' file; do
+    sed -e 's/[[:blank:]][[:blank:]]*$//' \
+        "${file}" > "${file}.tmp"
+    if cmp -s "${file}" "${file}.tmp"; then
+        rm -f "${file}.tmp"
+    else
+        mv -f "${file}.tmp" "${file}"
+    fi
+  done
 
 # Report any differences created by running clang-format.
 git diff --ignore-submodules=all --color --exit-code .

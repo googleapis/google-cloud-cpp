@@ -19,7 +19,7 @@ This library support Cloud Bigtable at the
 [Beta](../../../README.md#versioning) quality level. Please note that, as is
 often the case with C++ libraries, we do **not** follow semantic versioning in
 the Cloud C++ client libraries. We make every effort to document
-backwards-incompatible API changes in the [release notes](#release-notes) below. 
+backwards-incompatible API changes in the [release notes](#release-notes) below.
 
 ## Documentation
 
