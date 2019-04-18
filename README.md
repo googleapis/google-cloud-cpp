@@ -365,7 +365,7 @@ work, though there is a lot more variability on this platform. We welcome
 suggestions to make this an easier process.
 
 We will assume that you have installed CMake, Ninja, and "Microsoft Visual
-Studio 2017". If you have not, install [Chocolatey](https://www.chocolatey.com)
+Studio 2017". If you have not, install [Chocolatey](https://www.chocolatey.org)
 using this command as the administrator:
 
 ```console
