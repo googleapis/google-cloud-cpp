@@ -587,7 +587,7 @@ class InstanceAdmin {
    *     exhausted.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async update app_profile
+   * @snippet instance_admin_async_snippets.cc async update app profile
    */
   future<StatusOr<google::bigtable::admin::v2::AppProfile>>
   AsyncUpdateAppProfile(CompletionQueue& cq, bigtable::InstanceId instance_id,
