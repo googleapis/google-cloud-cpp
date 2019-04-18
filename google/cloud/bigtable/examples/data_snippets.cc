@@ -281,10 +281,11 @@ void PopulateTableHierarchy(google::cloud::bigtable::Table table, int argc,
   (std::move(table));
 }
 
-void ReadRowSet(google::cloud::bigtable::Table table, int argc, char* argv[]) {
-  if (argc < 2) {
+void ReadKeysSet(google::cloud::bigtable::Table table, int argc, char* argv[]) {
+  if (argc < 3) {
     throw Usage{
-        "read-rowset: <project-id> <instance-id> <table-id> [row_keys]"};
+        "read-keys-set <project-id> <instance-id> <table-id>"
+        " key1 [key2 ...]"};
   }
 
   std::vector<std::string> row_keys;
@@ -292,12 +293,12 @@ void ReadRowSet(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     row_keys.emplace_back(ConsumeArg(argc, argv));
   }
 
-  //! [read rowset]
-  [&row_keys](google::cloud::bigtable::Table table) {
-    namespace cbt = google::cloud::bigtable;
+  // [START bigtable_read_keys_set]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table, std::vector<std::string> row_keys) {
     auto row_set = cbt::RowSet();
 
-    for (auto row_key : row_keys) {
+    for (auto const& row_key : row_keys) {
       row_set.Append(row_key);
     }
 
@@ -317,8 +318,8 @@ void ReadRowSet(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     }
     std::cout << std::flush;
   }
-  //! [read rowset]
-  (std::move(table));
+  // [END bigtable_read_keys_set]
+  (std::move(table), std::move(row_keys));
 }
 
 void ReadRowSetPrefix(google::cloud::bigtable::Table table, int argc,
@@ -399,6 +400,47 @@ void ReadPrefixList(google::cloud::bigtable::Table table, int argc,
   }
   //! [read prefix list] [END bigtable_read_prefix_list]
   (std::move(table), prefix_list);
+}
+
+void ReadMultipleRanges(google::cloud::bigtable::Table table, int argc,
+                        char* argv[]) {
+  if (argc < 3) {
+    throw Usage{
+        "read-multiple-ranges: <project-id> <instance-id> <table-id>"
+        " <begin1> <end1> [<begin2> <end2> ...]"};
+  }
+
+  std::vector<std::pair<std::string, std::string>> ranges;
+  for (int i = 1; i != argc - 1; ++i) {
+    ranges.emplace_back(std::make_pair(argv[i], argv[i + 1]));
+  }
+
+  // [START bigtable_read_multiple_ranges]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table,
+     std::vector<std::pair<std::string, std::string>> ranges) {
+    auto row_set = cbt::RowSet();
+
+    for (auto&& range : ranges) {
+      row_set.Append(cbt::RowRange::Range(range.first, range.second));
+    }
+    auto filter = cbt::Filter::Latest(1);
+
+    for (auto& row : table.ReadRows(std::move(row_set), filter)) {
+      if (!row) {
+        throw std::runtime_error(row.status().message());
+      }
+      std::cout << row->row_key() << ":\n";
+      for (auto& cell : row->cells()) {
+        std::cout << "\t" << cell.family_name() << ":"
+                  << cell.column_qualifier() << "    @ "
+                  << cell.timestamp().count() << "us\n"
+                  << "\t\"" << cell.value() << '"' << "\n";
+      }
+    }
+  }
+  // [END bigtable_read_multiple_ranges]
+  (std::move(table), std::move(ranges));
 }
 
 void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
@@ -652,9 +694,10 @@ int main(int argc, char* argv[]) try {
       {"read-row", &ReadRow},
       {"read-rows", &ReadRows},
       {"populate-table-hierarchy", &PopulateTableHierarchy},
-      {"read-rowset", &ReadRowSet},
+      {"read-keys-set", &ReadKeysSet},
       {"read-rowset-prefix", &ReadRowSetPrefix},
       {"read-prefix-list", &ReadPrefixList},
+      {"read-multiple-ranges", &ReadMultipleRanges},
       {"read-rows-with-limit", &ReadRowsWithLimit},
       {"check-and-mutate", &CheckAndMutate},
       {"read-modify-write", &ReadModifyWrite},

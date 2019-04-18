@@ -329,7 +329,8 @@ run_all_data_examples() {
   # Use a different table for the full example test, if we use the same table
   # as the other tests this can fail with timeouts.
   local -r FULL_TABLE="data-ex-full-${RANDOM}-${RANDOM}"
-  run_example ./bigtable_samples run-full-example "${project_id}" "${instance_id}" "${FULL_TABLE}"
+  run_example ./bigtable_samples run-full-example \
+      "${project_id}" "${instance_id}" "${FULL_TABLE}"
 
   # Use the same table in all the tests.
   local -r TABLE="data-ex-tbl-${RANDOM}-${RANDOM}"
@@ -341,38 +342,72 @@ run_all_data_examples() {
   local -r COLUMN_NAME="col2"
   local -r FAMILY_NAME="fam"
 
-  run_example ./table_admin_snippets create-table "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets apply "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets bulk-apply "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets read-rows-with-limit "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets read-rows "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets populate-table-hierarchy "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets read-rowset "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_1}" "${ROW_KEY_2}"
-  run_example ./data_snippets read-rowset-prefix "${project_id}" "${instance_id}" "${TABLE}" "${PREFIX_1}"
-  run_example ./data_snippets read-prefix-list "${project_id}" "${instance_id}" "${TABLE}" "${PREFIX_1}" "${PREFIX_2}"
-  run_example ./data_snippets sample-rows "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets sample-rows-collections "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets read-row "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets row-exists "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_1}"
-  run_example ./data_snippets get-family "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets delete-all-cells "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_1}"
+  run_example ./table_admin_snippets create-table \
+      "${project_id}" "${instance_id}" "${TABLE}"
+
+  run_example ./data_snippets apply \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets bulk-apply \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets read-row \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets read-rows-with-limit \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets read-rows \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets populate-table-hierarchy \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets read-keys-set \
+      "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_1}" "${ROW_KEY_2}"
+  run_example ./data_snippets read-rowset-prefix \
+      "${project_id}" "${instance_id}" "${TABLE}" "${PREFIX_1}"
+  run_example ./data_snippets read-prefix-list \
+      "${project_id}" "${instance_id}" "${TABLE}" "${PREFIX_1}" "${PREFIX_2}"
+  run_example ./data_snippets read-multiple-ranges \
+      "${project_id}" "${instance_id}" "${TABLE}" "${PREFIX_1}" "${PREFIX_2}"
+  run_example ./data_snippets sample-rows \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets sample-rows-collections \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets check-and-mutate \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets read-row \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets check-and-mutate \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets read-row \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets check-and-mutate \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets read-row \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets read-modify-write \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets read-row \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets read-modify-write \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets read-row \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets read-modify-write \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets read-row \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets row-exists \
+      "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_1}"
+  run_example ./data_snippets get-family \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets delete-all-cells \
+      "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_1}"
   run_example ./data_snippets delete-family-cells \
-  "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_2}" "${FAMILY_NAME}"
+      "${project_id}" "${instance_id}" "${TABLE}" \
+      "${ROW_KEY_2}" "${FAMILY_NAME}"
   run_example ./data_snippets delete-selective-family-cells \
-  "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_2}" "${FAMILY_NAME}" "${COLUMN_NAME}"
-  run_example ./table_admin_snippets delete-table "${project_id}" "${instance_id}" "${TABLE}"
+      "${project_id}" "${instance_id}" "${TABLE}" \
+      "${ROW_KEY_2}" "${FAMILY_NAME}" "${COLUMN_NAME}"
+
+  run_example ./table_admin_snippets delete-table \
+      "${project_id}" "${instance_id}" "${TABLE}"
 }
 
 function run_all_data_async_examples {
