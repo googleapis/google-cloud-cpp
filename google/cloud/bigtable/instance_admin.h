@@ -579,6 +579,7 @@ class InstanceAdmin {
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
+   * @param instance_id the instance for the new application profile.
    * @param profile_id the id (not the full name) of the profile to update.
    * @param config the configuration for the new application profile.
    *
