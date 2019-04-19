@@ -22,7 +22,7 @@ fi
 source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
-if [ "${BUILD_TYPE:-Release}" != "Coverage" ]; then
+if [[ "${BUILD_TYPE:-Release}" != "Coverage" ]]; then
     echo "Skipping code coverage as it is disabled for this build."
     exit 0
 fi
@@ -30,8 +30,11 @@ fi
 # Upload the results using the script from codecov.io
 # Save the log to a file because it exceeds the 4MB limit in Travis.
 echo -n "Uploading code coverage to codecov.io..."
-readonly CI_ENV=$(bash <(curl -s https://codecov.io/env))
-sudo docker run "${CI_ENV}" \
+readonly -a CI_ENV=( $(bash <(curl -s https://codecov.io/env)) )
+# We use parameter expansion for ${CI_ENV} because set -u doesn't like empty
+# arrays on older versions of Bash (which some of our builds use). The
+# expression ${parameter+word} will expand word only if parameter is not unset.
+sudo docker run "${CI_ENV[@]+"${CI_ENV[@]}"}" \
     --volume "$PWD":/v --workdir /v \
     "${IMAGE}:tip" /bin/bash -c \
     "/bin/bash <(curl -s https://codecov.io/bash) -g './cmake-out/ccache/*' >/v/codecov.log 2>&1"
