@@ -638,10 +638,9 @@ InstanceAdmin::AsyncUpdateAppProfile(CompletionQueue& cq,
   std::shared_ptr<InstanceAdminClient> client(impl_.client_);
   return internal::AsyncStartPollAfterRetryUnaryRpc<
       google::bigtable::admin::v2::AppProfile>(
-      __func__, impl_.polling_policy_->clone(),
-      impl_.rpc_retry_policy_->clone(), impl_.rpc_backoff_policy_->clone(),
-      internal::ConstantIdempotencyPolicy(false), impl_.metadata_update_policy_,
-      client,
+      __func__, clone_polling_policy(), clone_rpc_retry_policy(),
+      clone_rpc_backoff_policy(), internal::ConstantIdempotencyPolicy(false),
+      clone_metadata_update_policy(), client,
       [client](
           grpc::ClientContext* context,
           google::bigtable::admin::v2::UpdateAppProfileRequest const& request,

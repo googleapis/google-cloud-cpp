@@ -723,6 +723,10 @@ class InstanceAdmin {
     return result;
   }
 
+  std::unique_ptr<PollingPolicy> clone_polling_policy() {
+    return impl_.polling_policy_->clone();
+  }
+
   std::unique_ptr<RPCRetryPolicy> clone_rpc_retry_policy() {
     return impl_.rpc_retry_policy_->clone();
   }
