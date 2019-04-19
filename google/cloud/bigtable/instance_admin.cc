@@ -626,6 +626,30 @@ std::future<StatusOr<btadmin::AppProfile>> InstanceAdmin::UpdateAppProfile(
                     std::move(config));
 }
 
+future<StatusOr<google::bigtable::admin::v2::AppProfile>>
+InstanceAdmin::AsyncUpdateAppProfile(CompletionQueue& cq,
+                                     bigtable::InstanceId instance_id,
+                                     bigtable::AppProfileId profile_id,
+                                     AppProfileUpdateConfig config) {
+  auto request = std::move(config).as_proto();
+  request.mutable_app_profile()->set_name(
+      InstanceName(instance_id.get() + "/appProfiles/" + profile_id.get()));
+
+  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  return internal::AsyncStartPollAfterRetryUnaryRpc<
+      google::bigtable::admin::v2::AppProfile>(
+      __func__, clone_polling_policy(), clone_rpc_retry_policy(),
+      clone_rpc_backoff_policy(), internal::ConstantIdempotencyPolicy(false),
+      clone_metadata_update_policy(), client,
+      [client](
+          grpc::ClientContext* context,
+          google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return client->AsyncUpdateAppProfile(context, request, cq);
+      },
+      std::move(request), cq);
+}
+
 StatusOr<std::vector<btadmin::AppProfile>> InstanceAdmin::ListAppProfiles(
     std::string const& instance_id) {
   grpc::Status status;

@@ -570,6 +570,32 @@ class InstanceAdmin {
                    AppProfileUpdateConfig config);
 
   /**
+   * Update an application profile (asynchronously).
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param instance_id the instance for the new application profile.
+   * @param profile_id the id (not the full name) of the profile to update.
+   * @param config the configuration for the new application profile.
+   *
+   * @return a future satisfied when either (a) the profile is updated or (b)
+   *     an unretriable error occurs or (c) polling or retry policy has been
+   *     exhausted.
+   *
+   * @par Example
+   * @snippet instance_admin_async_snippets.cc async update app profile
+   */
+  future<StatusOr<google::bigtable::admin::v2::AppProfile>>
+  AsyncUpdateAppProfile(CompletionQueue& cq, bigtable::InstanceId instance_id,
+                        bigtable::AppProfileId profile_id,
+                        AppProfileUpdateConfig config);
+
+  /**
    * List the application profiles in an instance.
    *
    * @param instance_id the instance to list the profiles for.
@@ -696,6 +722,10 @@ class InstanceAdmin {
     }
 
     return result;
+  }
+
+  std::unique_ptr<PollingPolicy> clone_polling_policy() {
+    return impl_.polling_policy_->clone();
   }
 
   std::unique_ptr<RPCRetryPolicy> clone_rpc_retry_policy() {
