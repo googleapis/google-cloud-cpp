@@ -65,7 +65,7 @@ fi
 
 echo "${COLOR_YELLOW}Started CMake config at: $(date)${COLOR_RESET}"
 echo "travis_fold:start:configure-cmake"
-# Extra flags to pass to CMake based on our build configurations. 
+# Extra flags to pass to CMake based on our build configurations.
 declare -a cmake_extra_flags
 if [ "${BUILD_TESTING:-}" = "no" ]; then
   cmake_extra_flags+=( "-DBUILD_TESTING=OFF" )
