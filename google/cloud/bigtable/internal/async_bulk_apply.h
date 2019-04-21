@@ -60,49 +60,51 @@ template <typename Functor,
                   Functor, CompletionQueue&, std::vector<FailedMutation>&,
                   grpc::Status&>::value,
               int>::type valid_callback_type = 0>
-class AsyncRetryBulkApply : public AsyncRetryOp<ConstantIdempotencyPolicy,
-                                                Functor, AsyncBulkMutator> {
+class AsyncRetryBulkApplyNoex
+    : public AsyncRetryOp<ConstantIdempotencyPolicy, Functor,
+                          AsyncBulkMutatorNoex> {
  public:
-  using MutationsSucceededFunctor = AsyncBulkMutator::MutationsSucceededFunctor;
-  using MutationsFailedFunctor = AsyncBulkMutator::MutationsFailedFunctor;
-  using AttemptFinishedFunctor = AsyncBulkMutator::AttemptFinishedFunctor;
+  using MutationsSucceededFunctor =
+      AsyncBulkMutatorNoex::MutationsSucceededFunctor;
+  using MutationsFailedFunctor = AsyncBulkMutatorNoex::MutationsFailedFunctor;
+  using AttemptFinishedFunctor = AsyncBulkMutatorNoex::AttemptFinishedFunctor;
 
-  AsyncRetryBulkApply(std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-                      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-                      IdempotentMutationPolicy& idempotent_policy,
-                      MetadataUpdatePolicy metadata_update_policy,
-                      std::shared_ptr<bigtable::DataClient> client,
-                      bigtable::AppProfileId const& app_profile_id,
-                      bigtable::TableId const& table_name, BulkMutation mut,
-                      Functor callback)
-      : AsyncRetryOp<ConstantIdempotencyPolicy, Functor, AsyncBulkMutator>(
+  AsyncRetryBulkApplyNoex(std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
+                          std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+                          IdempotentMutationPolicy& idempotent_policy,
+                          MetadataUpdatePolicy metadata_update_policy,
+                          std::shared_ptr<bigtable::DataClient> client,
+                          bigtable::AppProfileId const& app_profile_id,
+                          bigtable::TableId const& table_name, BulkMutation mut,
+                          Functor callback)
+      : AsyncRetryOp<ConstantIdempotencyPolicy, Functor, AsyncBulkMutatorNoex>(
             __func__, std::move(rpc_retry_policy),
             // BulkMutator is idempotent because it keeps track of idempotency
             // of the mutations it holds.
             std::move(rpc_backoff_policy), ConstantIdempotencyPolicy(true),
             std::move(metadata_update_policy), std::move(callback),
-            AsyncBulkMutator(client, std::move(app_profile_id),
-                             std::move(table_name), idempotent_policy,
-                             std::move(mut))) {}
+            AsyncBulkMutatorNoex(client, std::move(app_profile_id),
+                                 std::move(table_name), idempotent_policy,
+                                 std::move(mut))) {}
 
-  AsyncRetryBulkApply(std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-                      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-                      IdempotentMutationPolicy& idempotent_policy,
-                      MetadataUpdatePolicy metadata_update_policy,
-                      std::shared_ptr<bigtable::DataClient> client,
-                      bigtable::AppProfileId const& app_profile_id,
-                      bigtable::TableId const& table_name, BulkMutation mut,
-                      MutationsSucceededFunctor mutations_succeeded_callback,
-                      MutationsFailedFunctor mutations_failed_callback,
-                      AttemptFinishedFunctor attempt_finished_callback,
-                      Functor callback)
-      : AsyncRetryOp<ConstantIdempotencyPolicy, Functor, AsyncBulkMutator>(
+  AsyncRetryBulkApplyNoex(
+      std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
+      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+      IdempotentMutationPolicy& idempotent_policy,
+      MetadataUpdatePolicy metadata_update_policy,
+      std::shared_ptr<bigtable::DataClient> client,
+      bigtable::AppProfileId const& app_profile_id,
+      bigtable::TableId const& table_name, BulkMutation mut,
+      MutationsSucceededFunctor mutations_succeeded_callback,
+      MutationsFailedFunctor mutations_failed_callback,
+      AttemptFinishedFunctor attempt_finished_callback, Functor callback)
+      : AsyncRetryOp<ConstantIdempotencyPolicy, Functor, AsyncBulkMutatorNoex>(
             __func__, std::move(rpc_retry_policy),
             // BulkMutator is idempotent because it keeps track of idempotency
             // of the mutations it holds.
             std::move(rpc_backoff_policy), ConstantIdempotencyPolicy(true),
             std::move(metadata_update_policy), std::move(callback),
-            AsyncBulkMutator(
+            AsyncBulkMutatorNoex(
                 client, std::move(app_profile_id), std::move(table_name),
                 idempotent_policy, std::move(mutations_succeeded_callback),
                 std::move(mutations_failed_callback),

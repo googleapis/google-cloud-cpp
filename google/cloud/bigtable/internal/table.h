@@ -300,7 +300,7 @@ class Table {
                                                  Functor&& callback,
                                                  BulkMutation mut) {
     auto op =
-        std::make_shared<bigtable::internal::AsyncRetryBulkApply<Functor>>(
+        std::make_shared<bigtable::internal::AsyncRetryBulkApplyNoex<Functor>>(
             rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
             *idempotent_mutation_policy_, metadata_update_policy_, client_,
             app_profile_id_, table_name_, std::move(mut),
@@ -662,15 +662,15 @@ class Table {
                 int>::type valid_callback_type = 0>
   std::shared_ptr<AsyncOperation> StreamingAsyncBulkApply(
       CompletionQueue& cq,
-      typename internal::AsyncRetryBulkApply<Functor>::MutationsSucceededFunctor
-          mutations_succeeded_callback,
-      typename internal::AsyncRetryBulkApply<Functor>::MutationsFailedFunctor
-          mutations_failed_callback,
-      typename internal::AsyncRetryBulkApply<Functor>::AttemptFinishedFunctor
-          attempt_finished_callback,
+      typename internal::AsyncRetryBulkApplyNoex<
+          Functor>::MutationsSucceededFunctor mutations_succeeded_callback,
+      typename internal::AsyncRetryBulkApplyNoex<
+          Functor>::MutationsFailedFunctor mutations_failed_callback,
+      typename internal::AsyncRetryBulkApplyNoex<
+          Functor>::AttemptFinishedFunctor attempt_finished_callback,
       Functor&& callback, BulkMutation mut) {
     auto op =
-        std::make_shared<bigtable::internal::AsyncRetryBulkApply<Functor>>(
+        std::make_shared<bigtable::internal::AsyncRetryBulkApplyNoex<Functor>>(
             rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
             *idempotent_mutation_policy_, metadata_update_policy_, client_,
             app_profile_id_, table_name_, std::move(mut),
