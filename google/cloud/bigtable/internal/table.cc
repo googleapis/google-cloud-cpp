@@ -109,7 +109,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut,
     auto delay = backoff_policy->OnCompletion(status);
     std::this_thread::sleep_for(delay);
   }
-  auto failures = mutator.ExtractFinalFailures();
+  auto failures = std::move(mutator).OnRetryDone();
   if (!status.ok()) {
     return failures;
   }

@@ -75,7 +75,7 @@ TEST(MultipleRowsMutatorTest, Simple) {
   grpc::ClientContext context;
   auto status = mutator.MakeOneRequest(client, context);
   EXPECT_TRUE(status.ok());
-  auto failures = mutator.ExtractFinalFailures();
+  auto failures = std::move(mutator).OnRetryDone();
   EXPECT_TRUE(failures.empty());
 }
 
@@ -133,7 +133,7 @@ TEST(MultipleRowsMutatorTest, BulkApply_AppProfileId) {
   grpc::ClientContext context;
   auto status = mutator.MakeOneRequest(client, context);
   EXPECT_TRUE(status.ok());
-  auto failures = mutator.ExtractFinalFailures();
+  auto failures = std::move(mutator).OnRetryDone();
   EXPECT_TRUE(failures.empty());
 }
 
@@ -204,7 +204,7 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
     auto status = mutator.MakeOneRequest(client, context);
     EXPECT_TRUE(status.ok());
   }
-  auto failures = mutator.ExtractFinalFailures();
+  auto failures = std::move(mutator).OnRetryDone();
   EXPECT_TRUE(failures.empty());
 }
 
@@ -267,7 +267,7 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
     auto status = mutator.MakeOneRequest(client, context);
     EXPECT_TRUE(status.ok());
   }
-  auto failures = mutator.ExtractFinalFailures();
+  auto failures = std::move(mutator).OnRetryDone();
   ASSERT_EQ(1UL, failures.size());
   EXPECT_EQ(1, failures[0].original_index());
   // EXPECT_EQ("bar", failures[0].mutation().row_key());
@@ -330,7 +330,7 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
     auto status = mutator.MakeOneRequest(client, context);
     EXPECT_TRUE(status.ok());
   }
-  auto failures = mutator.ExtractFinalFailures();
+  auto failures = std::move(mutator).OnRetryDone();
   EXPECT_TRUE(failures.empty());
 }
 
@@ -409,7 +409,7 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
     auto status = mutator.MakeOneRequest(client, context);
     EXPECT_TRUE(status.ok());
   }
-  auto failures = mutator.ExtractFinalFailures();
+  auto failures = std::move(mutator).OnRetryDone();
   ASSERT_EQ(3UL, failures.size());
   EXPECT_EQ(0, failures[0].original_index());
   // EXPECT_EQ("foo", failures[0].mutation().row_key());
@@ -469,7 +469,7 @@ TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
   auto status = mutator.MakeOneRequest(client, context);
   EXPECT_FALSE(status.ok());
 
-  auto failures = mutator.ExtractFinalFailures();
+  auto failures = std::move(mutator).OnRetryDone();
   ASSERT_EQ(1UL, failures.size());
   EXPECT_EQ(1, failures[0].original_index());
   // EXPECT_EQ("bar", failures[0].mutation().row_key());
