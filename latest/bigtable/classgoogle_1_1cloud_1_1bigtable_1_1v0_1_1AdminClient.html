@@ -143,6 +143,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a8db283ef4776ea5f809d6db9eda0ac9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6260afd04046713a6ef99c3601a2bcf4"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::protobuf::Empty &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a6260afd04046713a6ef99c3601a2bcf4">AsyncDeleteSnapshot</a> (grpc::ClientContext *context, google::bigtable::admin::v2::DeleteSnapshotRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
 <tr class="separator:a6260afd04046713a6ef99c3601a2bcf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35491f9c7419205c329914a43bb18b0e"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::ListTablesResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a35491f9c7419205c329914a43bb18b0e">AsyncListTables</a> (grpc::ClientContext *context, google::bigtable::admin::v2::ListTablesRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
+<tr class="separator:a35491f9c7419205c329914a43bb18b0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">The `google.longrunning.Operations` async wrappers.</div></td></tr>
 <tr class="memitem:afc16f209760fdbc6993649fde98a2071"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::longrunning::Operation &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#afc16f209760fdbc6993649fde98a2071">AsyncGetOperation</a> (grpc::ClientContext *context, const google::longrunning::GetOperationRequest &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
 <tr class="separator:afc16f209760fdbc6993649fde98a2071"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -552,6 +554,48 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">google::bigtable::admin::v2::GetTableRequest const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">grpc::CompletionQueue *&#160;</td>
+          <td class="paramname"><em>cq</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a35491f9c7419205c329914a43bb18b0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35491f9c7419205c329914a43bb18b0e">&#9670;&nbsp;</a></span>AsyncListTables()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::ListTablesResponse&gt; &gt; google::cloud::bigtable::v0::AdminClient::AsyncListTables </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::bigtable::admin::v2::ListTablesRequest const &amp;&#160;</td>
           <td class="paramname"><em>request</em>, </td>
         </tr>
         <tr>
