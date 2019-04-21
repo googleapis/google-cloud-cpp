@@ -158,6 +158,36 @@ class TableAdmin {
       ::google::bigtable::admin::v2::Table::View view);
 
   /**
+   * Sends an asynchronous request to get all the tables in the instance.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param view describes how much information to get about the name.
+   *   - VIEW_UNSPECIFIED: equivalent to VIEW_SCHEMA.
+   *   - NAME: return only the name of the table.
+   *   - VIEW_SCHEMA: return the name and the schema.
+   *   - FULL: return all the information about the table.
+   *
+   * @return a future that will be satisfied when the request succeeds or the
+   *   retry policy expires. In the first case, the future will contain the
+   *   response from the service. In the second the future is satisfied with
+   *   an exception.
+   *
+   * @throws std::exception if the operation cannot be started.
+   *
+   * @par Example
+   * @snippet table_admin_async_snippets.cc async list tables
+   */
+  future<StatusOr<std::vector<::google::bigtable::admin::v2::Table>>>
+  AsyncListTables(CompletionQueue& cq,
+                  google::bigtable::admin::v2::Table::View view);
+
+  /**
    * Get information about a single table.
    *
    * @param table_id the id of the table within the instance associated with

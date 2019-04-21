@@ -47,6 +47,15 @@ grpc::Status InProcessAdminClient::ListTables(
   return Stub()->ListTables(context, request, response);
 }
 
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    google::bigtable::admin::v2::ListTablesResponse>>
+InProcessAdminClient::AsyncListTables(
+    grpc::ClientContext* context,
+    google::bigtable::admin::v2::ListTablesRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncListTables(context, request, cq);
+}
+
 grpc::Status InProcessAdminClient::GetTable(
     grpc::ClientContext* context, btadmin::GetTableRequest const& request,
     btadmin::Table* response) {

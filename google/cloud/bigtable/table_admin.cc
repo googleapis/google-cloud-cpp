@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/internal/async_future_from_callback.h"
+#include "google/cloud/bigtable/internal/async_retry_multi_page.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/poll_longrunning_operation.h"
@@ -128,6 +129,31 @@ StatusOr<std::vector<btadmin::Table>> TableAdmin::ListTables(
     page_token = std::move(*response.mutable_next_page_token());
   } while (!page_token.empty());
   return result;
+}
+
+future<StatusOr<std::vector<btadmin::Table>>> TableAdmin::AsyncListTables(
+    CompletionQueue& cq, btadmin::Table::View view) {
+  auto client = impl_.client_;
+  btadmin::ListTablesRequest request;
+  request.set_parent(instance_name());
+  request.set_view(view);
+
+  return internal::StartAsyncRetryMultiPage(
+      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      clone_metadata_update_policy(),
+      [client](grpc::ClientContext* context,
+               btadmin::ListTablesRequest const& request,
+               grpc::CompletionQueue* cq) {
+        return client->AsyncListTables(context, request, cq);
+      },
+      std::move(request), std::vector<btadmin::Table>(),
+      [](std::vector<btadmin::Table> acc,
+         btadmin::ListTablesResponse response) {
+        std::move(response.tables().begin(), response.tables().end(),
+                  std::back_inserter(acc));
+        return acc;
+      },
+      cq);
 }
 
 StatusOr<btadmin::Table> TableAdmin::GetTable(std::string const& table_id,

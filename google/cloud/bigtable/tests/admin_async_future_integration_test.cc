@@ -61,13 +61,6 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetDeleteTableTest) {
   // async versions we should replace them in this function.
 
   std::string const table_id = RandomTableId();
-  auto previous_table_list =
-      table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(previous_table_list);
-  auto previous_count = CountMatchingTables(table_id, *previous_table_list);
-  ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
-                               << " This is unexpected, as the table ids are"
-                               << " generated at random.";
 
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
@@ -89,12 +82,21 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetDeleteTableTest) {
   };
 
   future<void> chain =
-      table_admin_->AsyncCreateTable(cq, table_id, table_config)
+      table_admin_->AsyncListTables(cq, btadmin::Table::NAME_ONLY)
+          .then([&](future<StatusOr<std::vector<btadmin::Table>>> fut) {
+            StatusOr<std::vector<btadmin::Table>> result = fut.get();
+            EXPECT_STATUS_OK(result);
+            auto previous_count = CountMatchingTables(table_id, *result);
+            EXPECT_EQ(0, previous_count)
+                << "Table (" << table_id << ") already exists."
+                << " This is unexpected, as the table ids are"
+                << " generated at random.";
+            return table_admin_->AsyncCreateTable(cq, table_id, table_config);
+          })
           .then([&](future<StatusOr<btadmin::Table>> fut) {
             StatusOr<btadmin::Table> result = fut.get();
             EXPECT_STATUS_OK(result);
             EXPECT_THAT(result->name(), ::testing::HasSubstr(table_id));
-
             return table_admin_->AsyncGetTable(cq, table_id,
                                                btadmin::Table::FULL);
           })
@@ -134,6 +136,16 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetDeleteTableTest) {
           .then([&](future<Status> fut) {
             Status delete_result = fut.get();
             EXPECT_STATUS_OK(delete_result);
+            return table_admin_->AsyncListTables(cq, btadmin::Table::NAME_ONLY);
+          })
+          .then([&](future<StatusOr<std::vector<btadmin::Table>>> fut) {
+            StatusOr<std::vector<btadmin::Table>> result = fut.get();
+            EXPECT_STATUS_OK(result);
+            auto previous_count = CountMatchingTables(table_id, *result);
+            ASSERT_EQ(0, previous_count)
+                << "Table (" << table_id << ") already exists."
+                << " This is unexpected, as the table ids are"
+                << " generated at random.";
           });
 
   chain.get();

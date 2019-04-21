@@ -173,6 +173,13 @@ class MockAdminClient : public bigtable::AdminClient {
           grpc::ClientContext* context,
           google::bigtable::admin::v2::DeleteSnapshotRequest const& request,
           grpc::CompletionQueue* cq));
+  MOCK_METHOD3(
+      AsyncListTables,
+      std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+          google::bigtable::admin::v2::ListTablesResponse>>(
+          grpc::ClientContext* context,
+          google::bigtable::admin::v2::ListTablesRequest const& request,
+          grpc::CompletionQueue* cq));
   MOCK_METHOD3(AsyncGetOperation,
                std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                    google::longrunning::Operation>>(
