@@ -283,6 +283,8 @@ function run_all_table_admin_async_examples {
 
   run_example ./table_admin_async_snippets async-create-table \
       "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_async_snippets async-list-tables \
+      "${project_id}" "${INSTANCE}"
   run_example ./table_admin_async_snippets async-get-table \
       "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_async_snippets async-modify-table \

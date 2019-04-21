@@ -70,6 +70,39 @@ void AsyncCreateTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
   (std::move(admin), std::move(cq), argv[1]);
 }
 
+void AsyncListTables(cbt::TableAdmin admin, cbt::CompletionQueue cq,
+                     std::vector<std::string> argv) {
+  if (argv.size() != 1U) {
+    throw Usage{"async-list-tables: <project-id> <instance-id>"};
+  }
+
+  //! [async list tables]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq) {
+    google::cloud::future<google::cloud::StatusOr<
+        std::vector<google::bigtable::admin::v2::Table>>>
+        future = admin.AsyncListTables(
+            cq, google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
+
+    auto final =
+        future.then([](google::cloud::future<google::cloud::StatusOr<
+                           std::vector<google::bigtable::admin::v2::Table>>>
+                           f) {
+          auto tables = f.get();
+          if (!tables) {
+            throw std::runtime_error(tables.status().message());
+          }
+          for (auto const& table : *tables) {
+            std::cout << table.name() << "\n";
+          }
+          return google::cloud::Status();
+        });
+    final.get();  // block to keep sample small and correct.
+  }
+  //! [async list tables]
+  (std::move(admin), std::move(cq));
+}
+
 void AsyncGetTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
                    std::vector<std::string> argv) {
   if (argv.size() != 2U) {
@@ -249,6 +282,7 @@ int main(int argc, char* argv[]) try {
 
   std::map<std::string, CommandType> commands = {
       {"async-create-table", &AsyncCreateTable},
+      {"async-list-tables", &AsyncListTables},
       {"async-get-table", &AsyncGetTable},
       {"async-delete-table", &AsyncDeleteTable},
       {"async-modify-table", &AsyncModifyTable},

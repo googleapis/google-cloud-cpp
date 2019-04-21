@@ -223,6 +223,11 @@ class AdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteSnapshotRequest const& request,
       grpc::CompletionQueue* cq) = 0;
+  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::ListTablesResponse>>
+  AsyncListTables(grpc::ClientContext* context,
+                  google::bigtable::admin::v2::ListTablesRequest const& request,
+                  grpc::CompletionQueue* cq) = 0;
   //@}
 
   //@{
