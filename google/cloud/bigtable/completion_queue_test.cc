@@ -127,8 +127,9 @@ class MockClientAsyncReaderInterface
   MOCK_METHOD2_T(Read, void(Response*, void*));
 };
 
-/// @test Verify that completion queues can create async operations.
-TEST(CompletionQueueTest, AyncRpcSimple) {
+/// @test Verify that completion queues can create async operations with
+/// callbacks.
+TEST(CompletionQueueTest, AsyncRpcSimple) {
   MockClient client;
 
   using ReaderType =
@@ -178,8 +179,9 @@ TEST(CompletionQueueTest, AyncRpcSimple) {
   EXPECT_TRUE(impl->empty());
 }
 
-/// @test Verify that completion queues can create async operations with future.
-TEST(CompletionQueueTest, AyncRpcSimpleFuture) {
+/// @test Verify that completion queues can create async operations returning
+/// futures.
+TEST(CompletionQueueTest, AsyncRpcSimpleFuture) {
   MockClient client;
 
   using ReaderType =
@@ -231,8 +233,9 @@ TEST(CompletionQueueTest, AyncRpcSimpleFuture) {
   EXPECT_EQ("fake/table/name/response", response->name());
 }
 
-/// @test Verify that completion queues can create async operations with future.
-TEST(CompletionQueueTest, AyncRpcSimpleFutureFailure) {
+/// @test Verify that completion queues can create async operations returning
+/// futures.
+TEST(CompletionQueueTest, AsyncRpcSimpleFutureFailure) {
   MockClient client;
 
   using ReaderType =
@@ -279,8 +282,8 @@ TEST(CompletionQueueTest, AyncRpcSimpleFutureFailure) {
   EXPECT_EQ("not found", response.status().message());
 }
 
-/// @test Verify that completion queues can create async operations with
-//        streamed responses.
+/// @test Verify that completion queues can create async operations for
+/// streaming read RPCs.
 TEST(CompletionQueueTest, AsyncRpcSimpleStream) {
   MockClient client;
 
@@ -361,8 +364,8 @@ TEST(CompletionQueueTest, AsyncRpcSimpleStream) {
   EXPECT_TRUE(completion_called);
 }
 
-/// @test Verify that async streams which fail to get created are properly
-//        handled.
+/// @test Verify that completion queues properly handle errors when creating
+/// streaming read RPCS.
 TEST(CompletionQueueTest, AsyncRpcStreamNotCreated) {
   MockClient client;
 
@@ -418,6 +421,8 @@ TEST(CompletionQueueTest, AsyncRpcStreamNotCreated) {
   EXPECT_TRUE(completion_called);
 }
 
+/// @test Verify that completion queues can invoke a custome function in the
+/// event loop.
 TEST(CompletionQueueTest, Noop) {
   bigtable::CompletionQueue cq;
 
