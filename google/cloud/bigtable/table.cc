@@ -135,22 +135,14 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
   return std::move(mutator).OnRetryDone();
 }
 
-struct AsyncBulkApplyCb {
-  void operator()(CompletionQueue&,
-                  std::vector<FailedMutation>& failed_mutations,
-                  grpc::Status&) {
-    res_promise.set_value(std::move(failed_mutations));
-  }
-  promise<std::vector<FailedMutation>> res_promise;
-};
-
 future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut,
                                                           CompletionQueue& cq) {
-  AsyncBulkApplyCb cb;
-  future<std::vector<FailedMutation>> resultfm = cb.res_promise.get_future();
-  impl_.AsyncBulkApply(cq, std::move(cb), std::move(mut));
-
-  return resultfm;
+  auto mutation_policy = clone_idempotent_mutation_policy();
+  return internal::AsyncRetryBulkApply::Create(
+      cq, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      *mutation_policy, clone_metadata_update_policy(), impl_.client_,
+      impl_.app_profile_id_, bigtable::TableId(impl_.table_name()),
+      std::move(mut));
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {

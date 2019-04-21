@@ -32,6 +32,49 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
+/**
+ * Implement the retry loop for AsyncBulkApply.
+ *
+ * The retry loop for AsyncBulkApply() is fairly different from all the other
+ * retry loops: only those mutations that are idempotent and had a transient
+ * failure can be retried, and the result for each mutation arrives in a stream.
+ * This class implements that retry loop.
+ */
+class AsyncRetryBulkApply
+    : public std::enable_shared_from_this<AsyncRetryBulkApply> {
+ public:
+  static future<std::vector<FailedMutation>> Create(
+      CompletionQueue cq, std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
+      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+      IdempotentMutationPolicy& idempotent_policy,
+      MetadataUpdatePolicy metadata_update_policy,
+      std::shared_ptr<bigtable::DataClient> client,
+      bigtable::AppProfileId const& app_profile_id,
+      bigtable::TableId const& table_name, BulkMutation mut);
+
+ private:
+  AsyncRetryBulkApply(std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
+                      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+                      IdempotentMutationPolicy& idempotent_policy,
+                      MetadataUpdatePolicy metadata_update_policy,
+                      std::shared_ptr<bigtable::DataClient> client,
+                      bigtable::AppProfileId const& app_profile_id,
+                      bigtable::TableId const& table_name, BulkMutation mut);
+
+  void StartIteration(CompletionQueue cq);
+
+  void OnRead(google::bigtable::v2::MutateRowsResponse response);
+  void OnFinish(CompletionQueue cq, google::cloud::Status status);
+
+  void OnRetryDone();
+
+  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
+  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
+  MetadataUpdatePolicy metadata_update_policy_;
+  std::shared_ptr<bigtable::DataClient> client_;
+  BulkMutatorState state_;
+  promise<std::vector<FailedMutation>> promise_;
+};
 
 /**
  * Perform an AsyncBulkApply operation request with retries.

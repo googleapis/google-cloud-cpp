@@ -126,6 +126,7 @@ add_library(bigtable_client
             instance_update_config.h
             instance_update_config.cc
             internal/async_bulk_apply.h
+            internal/async_bulk_apply.cc
             internal/async_check_consistency.h
             internal/async_list_app_profiles.h
             internal/async_list_clusters.h
