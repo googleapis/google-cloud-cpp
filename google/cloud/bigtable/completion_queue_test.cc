@@ -421,7 +421,7 @@ TEST(CompletionQueueTest, AsyncRpcStreamNotCreated) {
   EXPECT_TRUE(completion_called);
 }
 
-/// @test Verify that completion queues can invoke a custome function in the
+/// @test Verify that completion queues can invoke a custom function in the
 /// event loop.
 TEST(CompletionQueueTest, Noop) {
   bigtable::CompletionQueue cq;
