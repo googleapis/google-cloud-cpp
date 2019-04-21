@@ -69,7 +69,6 @@ class InProcessAdminClient : public bigtable::AdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ListTablesRequest const& request,
       google::bigtable::admin::v2::ListTablesResponse* response) override;
-
   grpc::Status GetTable(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::GetTableRequest const& request,
