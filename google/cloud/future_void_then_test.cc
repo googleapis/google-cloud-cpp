@@ -105,6 +105,63 @@ TEST(FutureTestVoid, ThenUnwrap) {
   EXPECT_FALSE(next.valid());
 }
 
+TEST(FutureTestVoid, ThenMoveOnlyCallable) {
+  class MoveOnlyCallable {
+   public:
+    explicit MoveOnlyCallable(bool& called) : called_(&called) {}
+
+    MoveOnlyCallable(MoveOnlyCallable&&) = default;
+    MoveOnlyCallable& operator=(MoveOnlyCallable&&) = default;
+
+    MoveOnlyCallable(MoveOnlyCallable const&) = delete;
+    MoveOnlyCallable& operator=(MoveOnlyCallable const&) = delete;
+
+    void operator()(future<void>) { *called_ = true; }
+
+   private:
+    bool* called_;
+  };
+
+  promise<void> p;
+  future<void> fut = p.get_future();
+  EXPECT_TRUE(fut.valid());
+
+  bool called = false;
+  MoveOnlyCallable cb{called};
+  future<void> next = fut.then(std::move(cb));
+  EXPECT_FALSE(fut.valid());
+  EXPECT_TRUE(next.valid());
+  EXPECT_FALSE(called);
+
+  p.set_value();
+  EXPECT_TRUE(called);
+  EXPECT_TRUE(next.valid());
+  EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
+
+  next.get();
+  EXPECT_FALSE(next.valid());
+}
+
+TEST(FutureTestVoid, ThenByCopy) {
+  promise<void> p;
+  future<void> fut = p.get_future();
+  EXPECT_TRUE(fut.valid());
+
+  bool called = false;
+  auto callable = [&called](future<void> r) { called = true; };
+  future<void> next = fut.then(callable);
+  EXPECT_FALSE(fut.valid());
+  EXPECT_TRUE(next.valid());
+  EXPECT_FALSE(called);
+
+  p.set_value();
+  EXPECT_TRUE(called);
+  EXPECT_TRUE(next.valid());
+  EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
+
+  next.get();
+  EXPECT_FALSE(next.valid());
+}
 // The following tests reference the technical specification:
 //   http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0159r0.html
 // The test names match the section and paragraph from the TS.

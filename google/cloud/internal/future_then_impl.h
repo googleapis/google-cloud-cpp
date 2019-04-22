@@ -63,14 +63,14 @@ typename internal::then_helper<F, T>::future_t future<T>::then_impl(
   // instead of a lambda, as support for move+capture in lambdas is a C++14
   // feature.
   struct adapter {
-    explicit adapter(F&& func) : functor(func) {}
+    explicit adapter(F&& func) : functor(std::move(func)) {}
 
     auto operator()(std::shared_ptr<local_state_type> state)
         -> functor_result_t {
       return functor(future<T>(std::move(state)));
     }
 
-    F functor;
+    typename std::decay<F>::type functor;
   };
 
   auto output_shared_state = local_state_type::make_continuation(
@@ -111,7 +111,7 @@ typename internal::then_helper<F, T>::future_t future<T>::then_impl(
       return functor(future<T>(std::move(state))).shared_state_;
     }
 
-    F functor;
+    typename std::decay<F>::type functor;
   };
 
   auto output_shared_state = local_state_type::make_continuation(
@@ -146,14 +146,14 @@ typename internal::then_helper<F, void>::future_t future<void>::then_impl(
   // instead of a lambda, as support for move+capture in lambdas is a C++14
   // feature.
   struct adapter {
-    explicit adapter(F&& func) : functor(func) {}
+    explicit adapter(F&& func) : functor(std::move(func)) {}
 
     auto operator()(std::shared_ptr<local_state_type> state)
         -> functor_result_t {
       return functor(future<void>(std::move(state)));
     }
 
-    F functor;
+    typename std::decay<F>::type functor;
   };
 
   auto output_shared_state = shared_state_type::make_continuation(
@@ -186,14 +186,14 @@ typename internal::then_helper<F, void>::future_t future<void>::then_impl(
   // Because we need to support C++11, we use a local class instead of a lambda,
   // as support for move+capture in lambdas is a C++14 feature.
   struct adapter {
-    explicit adapter(F&& func) : functor(func) {}
+    explicit adapter(F&& func) : functor(std::move(func)) {}
 
     auto operator()(std::shared_ptr<local_state_type> state)
         -> std::shared_ptr<internal::future_shared_state<result_t>> {
       return functor(future<void>(std::move(state))).shared_state_;
     }
 
-    F functor;
+    typename std::decay<F>::type functor;
   };
 
   auto output_shared_state = local_state_type::make_continuation(
