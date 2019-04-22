@@ -111,6 +111,70 @@ TEST(FutureTestInt, ThenUnwrap) {
   EXPECT_FALSE(next.valid());
 }
 
+TEST(FutureTestInt, ThenMoveOnlyCallable) {
+  class MoveOnlyDoubler {
+   public:
+    explicit MoveOnlyDoubler(bool& called) : called_(&called) {}
+
+    MoveOnlyDoubler(MoveOnlyDoubler&&) = default;
+    MoveOnlyDoubler& operator=(MoveOnlyDoubler&&) = default;
+
+    MoveOnlyDoubler(MoveOnlyDoubler const&) = delete;
+    MoveOnlyDoubler& operator=(MoveOnlyDoubler const&) = delete;
+
+    int operator()(future<int> f) {
+      *called_ = true;
+      return 2 * f.get();
+    }
+
+   private:
+    bool* called_;
+  };
+
+  promise<int> p;
+  future<int> fut = p.get_future();
+  EXPECT_TRUE(fut.valid());
+
+  bool called = false;
+  MoveOnlyDoubler cb{called};
+  future<int> next = fut.then(std::move(cb));
+  EXPECT_FALSE(fut.valid());
+  EXPECT_TRUE(next.valid());
+  EXPECT_FALSE(called);
+
+  p.set_value(42);
+  EXPECT_TRUE(called);
+  EXPECT_TRUE(next.valid());
+  EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
+
+  EXPECT_EQ(2 * 42, next.get());
+  EXPECT_FALSE(next.valid());
+}
+
+TEST(FutureTestInt, ThenByCopy) {
+  promise<int> p;
+  future<int> fut = p.get_future();
+  EXPECT_TRUE(fut.valid());
+
+  bool called = false;
+  auto doubler = [&called](future<int> r) {
+    called = true;
+    return 2 * r.get();
+  };
+  future<int> next = fut.then(doubler);
+  EXPECT_FALSE(fut.valid());
+  EXPECT_TRUE(next.valid());
+  EXPECT_FALSE(called);
+
+  p.set_value(42);
+  EXPECT_TRUE(called);
+  EXPECT_TRUE(next.valid());
+  EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
+
+  EXPECT_EQ(2 * 42, next.get());
+  EXPECT_FALSE(next.valid());
+}
+
 // The following tests reference the technical specification:
 //   http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0159r0.html
 // The test names match the section and paragraph from the TS.
