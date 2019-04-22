@@ -157,11 +157,11 @@ TEST(FutureTestInt, ThenByCopy) {
   EXPECT_TRUE(fut.valid());
 
   bool called = false;
-  auto callable = [&called](future<int> r) {
+  auto doubler = [&called](future<int> r) {
     called = true;
     return 2 * r.get();
   };
-  future<int> next = fut.then(callable);
+  future<int> next = fut.then(doubler);
   EXPECT_FALSE(fut.valid());
   EXPECT_TRUE(next.valid());
   EXPECT_FALSE(called);
@@ -171,7 +171,7 @@ TEST(FutureTestInt, ThenByCopy) {
   EXPECT_TRUE(next.valid());
   EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
 
-  EXPECT_EQ(84, next.get());
+  EXPECT_EQ(2 * 42, next.get());
   EXPECT_FALSE(next.valid());
 }
 
