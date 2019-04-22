@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/table_admin.h"
 //! [bigtable includes]
 #include <google/protobuf/text_format.h>
+#include <chrono>
 #include <deque>
 #include <list>
 #include <sstream>
@@ -62,37 +63,25 @@ void Apply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     throw Usage{"apply: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [apply] [START bigtable_create_row]
-  [](google::cloud::bigtable::Table table) {
-    // Write several rows with some trivial data.
-    for (int i = 0; i != 20; ++i) {
-      // Note: This example uses sequential numeric IDs for simplicity, but
-      // this can result in poor performance in a production application.
-      // Since rows are stored in sorted order by key, sequential keys can
-      // result in poor distribution of operations across nodes.
-      //
-      // For more information about how to design a Bigtable schema for the
-      // best performance, see the documentation:
-      //
-      //     https://cloud.google.com/bigtable/docs/schema-design
-      char buf[32];
-      snprintf(buf, sizeof(buf), "key-%06d", i);
-      google::cloud::bigtable::SingleRowMutation mutation(buf);
-      mutation.emplace_back(google::cloud::bigtable::SetCell(
-          "fam", "col0", "value0-" + std::to_string(i)));
-      mutation.emplace_back(google::cloud::bigtable::SetCell(
-          "fam", "col1", "value2-" + std::to_string(i)));
-      mutation.emplace_back(google::cloud::bigtable::SetCell(
-          "fam", "col2", "value3-" + std::to_string(i)));
-      mutation.emplace_back(google::cloud::bigtable::SetCell(
-          "fam", "col3", "value4-" + std::to_string(i)));
-      google::cloud::Status status = table.Apply(std::move(mutation));
-      if (!status.ok()) {
-        throw std::runtime_error(status.message());
-      }
+  //! [apply]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table) {
+    auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch());
+
+    google::cloud::bigtable::SingleRowMutation mutation("test-key-for-apply");
+    mutation.emplace_back(
+        google::cloud::bigtable::SetCell("fam", "some-column", "some-value"));
+    mutation.emplace_back(google::cloud::bigtable::SetCell(
+        "fam", "another-column", "another-value"));
+    mutation.emplace_back(google::cloud::bigtable::SetCell(
+        "fam", "even-more-columns", timestamp, "with-explicit-timestamp"));
+    google::cloud::Status status = table.Apply(std::move(mutation));
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
     }
   }
-  //! [apply] [END bigtable_create_row]
+  //! [apply]
   (std::move(table));
 }
 
@@ -102,9 +91,10 @@ void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   }
 
   //! [bulk apply] [START bigtable_mutate_insert_rows]
-  [](google::cloud::bigtable::Table table) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table) {
     // Write several rows in a single operation, each row has some trivial data.
-    google::cloud::bigtable::BulkMutation bulk;
+    cbt::BulkMutation bulk;
     for (int i = 0; i != 5000; ++i) {
       // Note: This example uses sequential numeric IDs for simplicity, but
       // this can result in poor performance in a production application.
@@ -117,15 +107,15 @@ void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
       //     https://cloud.google.com/bigtable/docs/schema-design
       char buf[32];
       snprintf(buf, sizeof(buf), "key-%06d", i);
-      google::cloud::bigtable::SingleRowMutation mutation(buf);
-      mutation.emplace_back(google::cloud::bigtable::SetCell(
-          "fam", "col0", "value0-" + std::to_string(i)));
-      mutation.emplace_back(google::cloud::bigtable::SetCell(
-          "fam", "col1", "value2-" + std::to_string(i)));
-      mutation.emplace_back(google::cloud::bigtable::SetCell(
-          "fam", "col2", "value3-" + std::to_string(i)));
-      mutation.emplace_back(google::cloud::bigtable::SetCell(
-          "fam", "col3", "value4-" + std::to_string(i)));
+      cbt::SingleRowMutation mutation(buf);
+      mutation.emplace_back(
+          cbt::SetCell("fam", "col0", "value0-" + std::to_string(i)));
+      mutation.emplace_back(
+          cbt::SetCell("fam", "col1", "value2-" + std::to_string(i)));
+      mutation.emplace_back(
+          cbt::SetCell("fam", "col2", "value3-" + std::to_string(i)));
+      mutation.emplace_back(
+          cbt::SetCell("fam", "col3", "value4-" + std::to_string(i)));
       bulk.emplace_back(std::move(mutation));
     }
     auto failures = table.BulkApply(std::move(bulk));
@@ -687,6 +677,233 @@ void RowExists(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   //! [row exists] [END bigtable_row_exists]
   (std::move(table), row_key);
 }
+
+void MutateDeleteColumns(google::cloud::bigtable::Table table, int argc,
+                         char* argv[]) {
+  if (argc < 3) {
+    // Use the same format as the cbt tool to receive mutations from the
+    // command-line.
+    throw Usage{
+        "mutate-delete-columns <project-id> <instance-id>"
+        " <table-id> key family:column [family:column]"};
+  }
+
+  auto key = ConsumeArg(argc, argv);
+  std::vector<std::pair<std::string, std::string>> columns;
+  while (argc > 1) {
+    std::string arg = ConsumeArg(argc, argv);
+    auto pos = arg.find_first_of(':');
+    if (pos == std::string::npos) {
+      throw std::runtime_error("Invalid argument (" + arg +
+                               ") should be in family:column format");
+    }
+    columns.emplace_back(
+        std::make_pair(arg.substr(0, pos), arg.substr(pos + 1)));
+  }
+
+  // [START bigtable_mutate_delete_columns]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table, std::string key,
+     std::vector<std::pair<std::string, std::string>> columns) {
+    cbt::SingleRowMutation mutation(key);
+    for (auto const& c : columns) {
+      mutation.emplace_back(cbt::DeleteFromColumn(c.first, c.second));
+    }
+    google::cloud::Status status = table.Apply(std::move(mutation));
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
+    }
+    std::cout << "Columns successfully deleted from row\n";
+  }
+  // [END bigtable_mutate_delete_columns]
+  (std::move(table), key, std::move(columns));
+}
+
+void MutateDeleteRows(google::cloud::bigtable::Table table, int argc,
+                      char* argv[]) {
+  if (argc < 2) {
+    // Use the same format as the cbt tool to receive mutations from the
+    // command-line.
+    throw Usage{
+        "mutate-delete-rows <project-id> <instance-id>"
+        " <table-id> row-key [row-key...]"};
+  }
+
+  std::vector<std::string> keys;
+  while (argc > 1) {
+    keys.emplace_back(ConsumeArg(argc, argv));
+  }
+
+  // [START bigtable_mutate_delete_rows]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table, std::vector<std::string> keys) {
+    cbt::BulkMutation mutation;
+    for (auto const& row_key : keys) {
+      mutation.emplace_back(
+          cbt::SingleRowMutation(row_key, cbt::DeleteFromRow()));
+    }
+    auto failures = table.BulkApply(std::move(mutation));
+    if (!failures.empty()) {
+      for (auto const& f : failures) {
+        std::cerr << "The mutation for row " << keys[f.original_index()]
+                  << " failed with " << f.status() << "\n";
+      }
+      throw std::runtime_error(failures.front().status().message());
+    }
+    std::cout << "Rows successfully deleted\n";
+  }
+  // [END bigtable_mutate_delete_rows]
+  (std::move(table), std::move(keys));
+}
+
+void MutateInsertUpdateRows(google::cloud::bigtable::Table table, int argc,
+                            char* argv[]) {
+  if (argc < 3) {
+    // Use the same format as the cbt tool to receive mutations from the
+    // command-line.
+    throw Usage{
+        "mutate-insert-update-rows <project-id> <instance-id>"
+        " <table-id> key family:column=value [family:column=value...]"};
+  }
+
+  // Fortunately region tags can appear more than once, the segments are merged
+  // by the region tag processing tools.
+
+  // [START bigtable_insert_update_rows]
+  struct InsertOrUpdate {
+    std::string column_family;
+    std::string column;
+    std::string value;
+  };
+  // [END bigtable_insert_update_rows]
+
+  // A simple, though probably not very efficient, parser for mutations.
+  auto parse = [](std::string const& mut) {
+    std::istringstream is(mut);
+    is.exceptions(std::ios_base::failbit | std::ios_base::badbit);
+    std::string family;
+    std::getline(is, family, ':');
+    std::string column;
+    std::getline(is, column, '=');
+    std::string value{std::istreambuf_iterator<char>{is}, {}};
+    return InsertOrUpdate{family, column, value};
+  };
+
+  auto key = ConsumeArg(argc, argv);
+  std::vector<InsertOrUpdate> mutations;
+  while (argc > 1) {
+    mutations.emplace_back(parse(ConsumeArg(argc, argv)));
+  }
+
+  // [START bigtable_insert_update_rows]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table, std::string key, std::vector<InsertOrUpdate> inserts) {
+    cbt::SingleRowMutation mutation(key);
+    for (auto const& mut : inserts) {
+      mutation.emplace_back(
+          cbt::SetCell(mut.column_family, mut.column, mut.value));
+    }
+    google::cloud::Status status = table.Apply(std::move(mutation));
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
+    }
+    std::cout << "Row successfully updated\n";
+  }
+  // [END bigtable_insert_update_rows]
+  (std::move(table), key, std::move(mutations));
+}
+
+void RenameColumn(google::cloud::bigtable::Table table, int argc,
+                  char* argv[]) {
+  if (argc != 5) {
+    throw Usage{
+        "rename-column <project-id> <instance-id>"
+        " <table-id> key family old-name new-name"};
+  }
+
+  auto key = ConsumeArg(argc, argv);
+  auto family = ConsumeArg(argc, argv);
+  auto old_name = ConsumeArg(argc, argv);
+  auto new_name = ConsumeArg(argc, argv);
+
+  // [START bigtable_mutate_mix_match]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::Status;
+  using google::cloud::StatusOr;
+  [](cbt::Table table, std::string key, std::string family,
+     std::string old_name, std::string new_name) {
+    StatusOr<std::pair<bool, cbt::Row>> row =
+        table.ReadRow(key, cbt::Filter::ColumnName(family, old_name));
+
+    if (!row) {
+      throw std::runtime_error(row.status().message());
+    }
+    if (!row->first) {
+      throw std::runtime_error("Cannot find row " + key);
+    }
+
+    cbt::SingleRowMutation mutation(key);
+    for (auto const& cell : row->second.cells()) {
+      // Create a new cell
+      auto timestamp_in_milliseconds =
+          std::chrono::duration_cast<std::chrono::milliseconds>(
+              cell.timestamp());
+      mutation.emplace_back(cbt::SetCell(
+          family, new_name, timestamp_in_milliseconds, cell.value()));
+    }
+    mutation.emplace_back(cbt::DeleteFromColumn("fam", old_name));
+
+    google::cloud::Status status = table.Apply(std::move(mutation));
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
+    }
+    std::cout << "Row successfully updated\n";
+  }
+  // [END bigtable_mutate_mix_match]
+  (std::move(table), key, family, old_name, new_name);
+}
+
+void InsertTestData(google::cloud::bigtable::Table table, int argc,
+                    char* argv[]) {
+  if (argc != 1) {
+    throw Usage{"insert-test-data <project-id> <instance-id> <table-id>"};
+  }
+
+  // Write several rows in a single operation, each row has some trivial data.
+  // This is not a code sample in the normal sense, we do not display this code
+  // in the documentation. We use it to populate data in the table used to run
+  // the actual examples during the CI builds.
+  google::cloud::bigtable::BulkMutation bulk;
+  for (int i = 0; i != 5000; ++i) {
+    // Note: This example uses sequential numeric IDs for simplicity, but
+    // this can result in poor performance in a production application.
+    // Since rows are stored in sorted order by key, sequential keys can
+    // result in poor distribution of operations across nodes.
+    //
+    // For more information about how to design a Bigtable schema for the
+    // best performance, see the documentation:
+    //
+    //     https://cloud.google.com/bigtable/docs/schema-design
+    char buf[32];
+    snprintf(buf, sizeof(buf), "key-%06d", i);
+    google::cloud::bigtable::SingleRowMutation mutation(buf);
+    mutation.emplace_back(google::cloud::bigtable::SetCell(
+        "fam", "col0", "value0-" + std::to_string(i)));
+    mutation.emplace_back(google::cloud::bigtable::SetCell(
+        "fam", "col1", "value2-" + std::to_string(i)));
+    mutation.emplace_back(google::cloud::bigtable::SetCell(
+        "fam", "col2", "value3-" + std::to_string(i)));
+    mutation.emplace_back(google::cloud::bigtable::SetCell(
+        "fam", "col3", "value4-" + std::to_string(i)));
+    bulk.emplace_back(std::move(mutation));
+  }
+  auto failures = table.BulkApply(std::move(bulk));
+  if (!failures.empty()) {
+    auto status = failures.front().status();
+    throw std::runtime_error(status.message());
+  }
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -712,7 +929,13 @@ int main(int argc, char* argv[]) try {
       {"delete-all-cells", &DeleteAllCells},
       {"delete-family-cells", &DeleteFamilyCells},
       {"delete-selective-family-cells", &DeleteSelectiveFamilyCells},
-      {"row-exists", &RowExists}};
+      {"row-exists", &RowExists},
+      {"mutate-delete-columns", &MutateDeleteColumns},
+      {"mutate-delete-rows", &MutateDeleteRows},
+      {"mutate-insert-update-rows", &MutateInsertUpdateRows},
+      {"rename-column", &RenameColumn},
+      {"insert-test-data", &InsertTestData},
+  };
 
   {
     // Force each command to generate its Usage string, so we can provide a good
