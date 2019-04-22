@@ -112,15 +112,15 @@ TEST(FutureTestInt, ThenUnwrap) {
 }
 
 TEST(FutureTestInt, ThenMoveOnlyCallable) {
-  class MoveOnlyCallable {
+  class MoveOnlyDoubler {
    public:
-    explicit MoveOnlyCallable(bool& called) : called_(&called) {}
+    explicit MoveOnlyDoubler(bool& called) : called_(&called) {}
 
-    MoveOnlyCallable(MoveOnlyCallable&&) = default;
-    MoveOnlyCallable& operator=(MoveOnlyCallable&&) = default;
+    MoveOnlyDoubler(MoveOnlyDoubler&&) = default;
+    MoveOnlyDoubler& operator=(MoveOnlyDoubler&&) = default;
 
-    MoveOnlyCallable(MoveOnlyCallable const&) = delete;
-    MoveOnlyCallable& operator=(MoveOnlyCallable const&) = delete;
+    MoveOnlyDoubler(MoveOnlyDoubler const&) = delete;
+    MoveOnlyDoubler& operator=(MoveOnlyDoubler const&) = delete;
 
     int operator()(future<int> f) {
       *called_ = true;
@@ -136,7 +136,7 @@ TEST(FutureTestInt, ThenMoveOnlyCallable) {
   EXPECT_TRUE(fut.valid());
 
   bool called = false;
-  MoveOnlyCallable cb{called};
+  MoveOnlyDoubler cb{called};
   future<int> next = fut.then(std::move(cb));
   EXPECT_FALSE(fut.valid());
   EXPECT_TRUE(next.valid());
@@ -147,7 +147,7 @@ TEST(FutureTestInt, ThenMoveOnlyCallable) {
   EXPECT_TRUE(next.valid());
   EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
 
-  EXPECT_EQ(84, next.get());
+  EXPECT_EQ(2 * 42, next.get());
   EXPECT_FALSE(next.valid());
 }
 
