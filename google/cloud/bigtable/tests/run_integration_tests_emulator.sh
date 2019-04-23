@@ -67,7 +67,8 @@ echo "Running TableAdmin async integration test."
 
 echo
 echo "Running TableAdmin async with futures integration test."
-./admin_async_future_integration_test "${PROJECT_ID}" "admin-async-future"
+./admin_async_future_integration_test \
+  "${PROJECT_ID}" "admin-async-future" "fake-zone-1" "fake-zone-2"
 
 echo
 echo "Running Table::Async* integration test with futures."

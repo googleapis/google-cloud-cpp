@@ -92,9 +92,16 @@ std::string TableTestEnvironment::RandomInstanceId() {
   // This value was discovered by trial and error, it is not documented in the
   // proto files.
   constexpr int kMaxInstanceIdLength = 33;
-  static char const prefix[] = "instance-";
-  static_assert(kMaxInstanceIdLength > sizeof(prefix), "prefix is too long");
-  constexpr int sample_count = kMaxInstanceIdLength - sizeof(prefix) + 1;
+
+  // There are other derived names such as cluster id, display name that uses
+  // returned values, these fields have their limits (e.g. 30 for cluster id)
+  // so need to keep some reserve.
+  constexpr int kReserveForSuffix = 10;
+  static char const prefix[] = "inst-";
+  static_assert((kMaxInstanceIdLength - kReserveForSuffix) > sizeof(prefix),
+                "prefix is too long");
+  constexpr int sample_count =
+      (kMaxInstanceIdLength - kReserveForSuffix) - sizeof(prefix) + 1;
   return CreateRandomId(prefix, sample_count);
 }
 

@@ -370,6 +370,27 @@ class TableAdmin {
       std::string const& table_id);
 
   /**
+   * Make an asynchronous request to generates consistency token for a table.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param table_id the id of the table within the instance associated with
+   *     this object. The full name of the table is
+   *     `this->instance_name() + "/tables/" + table_id`
+   * @return consistency token or status of the operation.
+   *
+   * @par Example
+   * @snippet table_admin_async_snippets.cc async generate consistency token
+   */
+  future<StatusOr<ConsistencyToken>> AsyncGenerateConsistencyToken(
+      CompletionQueue& cq, std::string const& table_id);
+
+  /**
    * Checks consistency of a table.
    *
    * @param table_id  the id of the table for which we want to check
@@ -384,6 +405,27 @@ class TableAdmin {
       bigtable::TableId const& table_id,
       bigtable::ConsistencyToken const& consistency_token);
 
+  /**
+   * Make an asynchronous request to checks consistency of a table.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param table_id  the id of the table for which we want to check
+   *     consistency.
+   * @param consistency_token the consistency token of the table.
+   * @return consistency status or status of the operation.
+   *
+   * @par Example
+   * @snippet table_admin_async_snippets.cc async check consistency
+   */
+  future<StatusOr<Consistency>> AsyncCheckConsistency(
+      CompletionQueue& cq, bigtable::TableId const& table_id,
+      bigtable::ConsistencyToken const& consistency_token);
   /**
    * Checks consistency of a table with multiple calls using a separate thread
    *
