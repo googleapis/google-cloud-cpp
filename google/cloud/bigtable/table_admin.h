@@ -406,7 +406,7 @@ class TableAdmin {
       bigtable::ConsistencyToken const& consistency_token);
 
   /**
-   * Make an asynchronous request to checks consistency of a table.
+   * Make an asynchronous request to check consistency of a table.
    *
    * @warning This is an early version of the asynchronous APIs for Cloud
    *     Bigtable. These APIs might be changed in backward-incompatible ways. It
