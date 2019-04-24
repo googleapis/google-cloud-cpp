@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/instance_admin.h"
-#include "google/cloud/bigtable/internal/async_future_from_callback.h"
 #include "google/cloud/bigtable/internal/async_retry_multi_page.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/poll_longrunning_operation.h"
