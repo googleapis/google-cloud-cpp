@@ -22,7 +22,6 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
 #include "google/cloud/testing_util/init_google_mock.h"
-
 #include <gmock/gmock.h>
 
 namespace google {

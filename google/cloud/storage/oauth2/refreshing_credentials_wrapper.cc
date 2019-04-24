@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
-
 #include "google/cloud/storage/oauth2/credential_constants.h"
 
 namespace google {

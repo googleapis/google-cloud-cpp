@@ -13,13 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
-
 #include "google/cloud/storage/internal/openssl_util.h"
-
 #include <openssl/err.h>
 #include <openssl/pem.h>
 #include <openssl/pkcs12.h>
-
 #include <fstream>
 
 namespace google {
