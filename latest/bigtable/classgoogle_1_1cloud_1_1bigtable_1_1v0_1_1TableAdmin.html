@@ -134,9 +134,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a302d15c9b8acc043105db842e7c3314d"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a61a54b74718a8210ac873ab7ad813f88">ConsistencyToken</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a302d15c9b8acc043105db842e7c3314d">GenerateConsistencyToken</a> (std::string const &amp;table_id)</td></tr>
 <tr class="memdesc:a302d15c9b8acc043105db842e7c3314d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates consistency token for a table.  <a href="#a302d15c9b8acc043105db842e7c3314d">More...</a><br /></td></tr>
 <tr class="separator:a302d15c9b8acc043105db842e7c3314d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dc21c571f0be4515d59395d35ab5a2e"><td class="memItemLeft" align="right" valign="top">future&lt; StatusOr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a61a54b74718a8210ac873ab7ad813f88">ConsistencyToken</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a9dc21c571f0be4515d59395d35ab5a2e">AsyncGenerateConsistencyToken</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;cq, std::string const &amp;table_id)</td></tr>
+<tr class="memdesc:a9dc21c571f0be4515d59395d35ab5a2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an asynchronous request to generates consistency token for a table.  <a href="#a9dc21c571f0be4515d59395d35ab5a2e">More...</a><br /></td></tr>
+<tr class="separator:a9dc21c571f0be4515d59395d35ab5a2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76b4d78a4df0e9ee86bffdc6b3d2382e"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a85d7141e4e4fef95ca46b1397b3c5d4e">Consistency</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a76b4d78a4df0e9ee86bffdc6b3d2382e">CheckConsistency</a> (bigtable::TableId const &amp;table_id, bigtable::ConsistencyToken const &amp;consistency_token)</td></tr>
 <tr class="memdesc:a76b4d78a4df0e9ee86bffdc6b3d2382e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks consistency of a table.  <a href="#a76b4d78a4df0e9ee86bffdc6b3d2382e">More...</a><br /></td></tr>
 <tr class="separator:a76b4d78a4df0e9ee86bffdc6b3d2382e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3168bac102dd267bf11c7872829ff42e"><td class="memItemLeft" align="right" valign="top">future&lt; StatusOr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a85d7141e4e4fef95ca46b1397b3c5d4e">Consistency</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a3168bac102dd267bf11c7872829ff42e">AsyncCheckConsistency</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;cq, bigtable::TableId const &amp;table_id, bigtable::ConsistencyToken const &amp;consistency_token)</td></tr>
+<tr class="memdesc:a3168bac102dd267bf11c7872829ff42e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an asynchronous request to check consistency of a table.  <a href="#a3168bac102dd267bf11c7872829ff42e">More...</a><br /></td></tr>
+<tr class="separator:a3168bac102dd267bf11c7872829ff42e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1405c9847cdadab77813e8891f80eb7d"><td class="memItemLeft" align="right" valign="top">std::future&lt; StatusOr&lt; bool &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a1405c9847cdadab77813e8891f80eb7d">WaitForConsistencyCheck</a> (bigtable::TableId const &amp;table_id, bigtable::ConsistencyToken const &amp;consistency_token)</td></tr>
 <tr class="memdesc:a1405c9847cdadab77813e8891f80eb7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks consistency of a table with multiple calls using a separate thread.  <a href="#a1405c9847cdadab77813e8891f80eb7d">More...</a><br /></td></tr>
 <tr class="separator:a1405c9847cdadab77813e8891f80eb7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -320,6 +326,55 @@ template&lt;typename... Policies&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a3168bac102dd267bf11c7872829ff42e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3168bac102dd267bf11c7872829ff42e">&#9670;&nbsp;</a></span>AsyncCheckConsistency()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">future&lt; StatusOr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a85d7141e4e4fef95ca46b1397b3c5d4e">Consistency</a> &gt; &gt; google::cloud::bigtable::v0::TableAdmin::AsyncCheckConsistency </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;&#160;</td>
+          <td class="paramname"><em>cq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bigtable::TableId const &amp;&#160;</td>
+          <td class="paramname"><em>table_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bigtable::ConsistencyToken const &amp;&#160;</td>
+          <td class="paramname"><em>consistency_token</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Make an asynchronous request to check consistency of a table. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This is an early version of the asynchronous APIs for Cloud Bigtable. These APIs might be changed in backward-incompatible ways. It is not subject to any SLA or deprecation policy.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cq</td><td>the completion queue that will execute the asynchronous calls, the application must ensure that one or more threads are blocked on <code>cq.Run()</code>. </td></tr>
+    <tr><td class="paramname">table_id</td><td>the id of the table for which we want to check consistency. </td></tr>
+    <tr><td class="paramname">consistency_token</td><td>the consistency token of the table. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>consistency status or status of the operation.</dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id_param,</div><div class="line">     std::string consistency_token_param) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#ac33187c954cf3e096931b5e805c5e24a">google::cloud::bigtable::TableId</a> table_id(table_id_param);</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a61a54b74718a8210ac873ab7ad813f88">google::cloud::bigtable::ConsistencyToken</a> consistency_token(</div><div class="line">        consistency_token_param);</div><div class="line"></div><div class="line">    google::cloud::future&lt;google::cloud::StatusOr&lt;cbt::Consistency&gt;&gt; future =</div><div class="line">        admin.AsyncCheckConsistency(cq, table_id, consistency_token);</div><div class="line"></div><div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = future.then([](google::cloud::future&lt;</div><div class="line">                                 google::cloud::StatusOr&lt;cbt::Consistency&gt;&gt;</div><div class="line">                                    f) {</div><div class="line">      <span class="keyword">auto</span> consistency = f.get();</div><div class="line">      <span class="keywordflow">if</span> (!consistency) {</div><div class="line">        <span class="keywordflow">throw</span> std::runtime_error(consistency.status().message());</div><div class="line">      }</div><div class="line">      <span class="keywordflow">if</span> (consistency.value() ==</div><div class="line">          google::cloud::bigtable::Consistency::kConsistent) {</div><div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Table is consistent\n&quot;</span>;</div><div class="line">      } <span class="keywordflow">else</span> {</div><div class="line">        std::cout</div><div class="line">            &lt;&lt; <span class="stringliteral">&quot;Table is not yet consistent, Please Try again Later with the &quot;</span></div><div class="line">               <span class="stringliteral">&quot;same Token!&quot;</span>;</div><div class="line">      }</div><div class="line">      std::cout &lt;&lt; std::flush;</div><div class="line">    });</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00480">480</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+
+</div>
+</div>
 <a id="a5caca7e3c6949a5a61b8af1ef4479442"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5caca7e3c6949a5a61b8af1ef4479442">&#9670;&nbsp;</a></span>AsyncCreateTable()</h2>
 
@@ -504,6 +559,48 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, cbt::CompletionQueue cq,</div><div class="line">     std::string table_id, std::string row_key) {</div><div class="line">    google::cloud::future&lt;google::cloud::Status&gt; future =</div><div class="line">        admin.AsyncDropRowsByPrefix(cq, table_id, row_key);</div><div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> =</div><div class="line">        future.then([row_key](google::cloud::future&lt;google::cloud::Status&gt; f) {</div><div class="line">          <span class="keyword">auto</span> status = f.get();</div><div class="line">          <span class="keywordflow">if</span> (!status.ok()) {</div><div class="line">            <span class="keywordflow">throw</span> std::runtime_error(status.message());</div><div class="line">          }</div><div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;Successfully dropped rows with prefix &quot;</span> &lt;&lt; row_key</div><div class="line">                    &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">        });</div><div class="line"></div><div class="line">    <span class="keyword">final</span>.get();</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00285">285</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+
+</div>
+</div>
+<a id="a9dc21c571f0be4515d59395d35ab5a2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dc21c571f0be4515d59395d35ab5a2e">&#9670;&nbsp;</a></span>AsyncGenerateConsistencyToken()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">future&lt; StatusOr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a61a54b74718a8210ac873ab7ad813f88">ConsistencyToken</a> &gt; &gt; google::cloud::bigtable::v0::TableAdmin::AsyncGenerateConsistencyToken </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;&#160;</td>
+          <td class="paramname"><em>cq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>table_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Make an asynchronous request to generates consistency token for a table. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This is an early version of the asynchronous APIs for Cloud Bigtable. These APIs might be changed in backward-incompatible ways. It is not subject to any SLA or deprecation policy.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cq</td><td>the completion queue that will execute the asynchronous calls, the application must ensure that one or more threads are blocked on <code>cq.Run()</code>. </td></tr>
+    <tr><td class="paramname">table_id</td><td>the id of the table within the instance associated with this object. The full name of the table is <code>this-&gt;<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#afe13c89a8088b7a4119df6f3891e02b6">instance_name()</a> + "/tables/" + table_id</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>consistency token or status of the operation.</dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, cbt::CompletionQueue cq,</div><div class="line">     std::string table_id) {</div><div class="line">    google::cloud::future&lt;google::cloud::StatusOr&lt;cbt::ConsistencyToken&gt;&gt;</div><div class="line">        future = admin.AsyncGenerateConsistencyToken(cq, table_id);</div><div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> =</div><div class="line">        future.then([table_id](google::cloud::future&lt;</div><div class="line">                               google::cloud::StatusOr&lt;cbt::ConsistencyToken&gt;&gt;</div><div class="line">                                   f) {</div><div class="line">          <span class="keyword">auto</span> token = f.get();</div><div class="line">          <span class="keywordflow">if</span> (!token) {</div><div class="line">            <span class="keywordflow">throw</span> std::runtime_error(token.status().message());</div><div class="line">          }</div><div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;generated token is : &quot;</span> &lt;&lt; token-&gt;get() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">        });</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00429">429</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -708,7 +805,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the consistency status for the table.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string table_id_param,</div><div class="line">     std::string consistency_token_param) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#ac33187c954cf3e096931b5e805c5e24a">google::cloud::bigtable::TableId</a> table_id(table_id_param);</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a61a54b74718a8210ac873ab7ad813f88">google::cloud::bigtable::ConsistencyToken</a> consistency_token(</div><div class="line">        consistency_token_param);</div><div class="line">    <span class="keyword">auto</span> result = admin.CheckConsistency(table_id, consistency_token);</div><div class="line">    <span class="keywordflow">if</span> (!result) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(result.status().message());</div><div class="line">    }</div><div class="line">    <span class="keywordflow">if</span> (*result == google::cloud::bigtable::Consistency::kConsistent) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Table is consistent\n&quot;</span>;</div><div class="line">    } <span class="keywordflow">else</span> {</div><div class="line">      std::cout</div><div class="line">          &lt;&lt; <span class="stringliteral">&quot;Table is not yet consistent, Please Try again Later with the &quot;</span></div><div class="line">             <span class="stringliteral">&quot;same Token!&quot;</span>;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; std::flush;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00429">429</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00456">456</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -738,7 +835,7 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a Cluster. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00570">570</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00612">612</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -833,7 +930,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str,</div><div class="line">     std::string snapshot_id_str, std::string table_id) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a73d20496d86761052e55848775b1e30b">google::cloud::bigtable::ClusterId</a> cluster_id(cluster_id_str);</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#abe486b71e585f7c014633813866b9c18">google::cloud::bigtable::SnapshotId</a> snapshot_id(snapshot_id_str);</div><div class="line">    <span class="keyword">auto</span> future =</div><div class="line">        admin.CreateTableFromSnapshot(cluster_id, snapshot_id, table_id);</div><div class="line">    <span class="keyword">auto</span> table = future.get();</div><div class="line">    <span class="keywordflow">if</span> (!table) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(table.status().message());</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Table created :&quot;</span> &lt;&lt; table-&gt;name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00502">502</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00559">559</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -874,7 +971,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str,</div><div class="line">     std::string snapshot_id_str) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a73d20496d86761052e55848775b1e30b">google::cloud::bigtable::ClusterId</a> cluster_id(cluster_id_str);</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#abe486b71e585f7c014633813866b9c18">google::cloud::bigtable::SnapshotId</a> snapshot_id(snapshot_id_str);</div><div class="line">    google::cloud::Status status =</div><div class="line">        admin.DeleteSnapshot(cluster_id, snapshot_id);</div><div class="line">    <span class="keywordflow">if</span> (!status.ok()) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(status.message());</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00484">484</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00541">541</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -1177,7 +1274,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>vector containing the snapshots for the given cluster.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a73d20496d86761052e55848775b1e30b">google::cloud::bigtable::ClusterId</a> cluster_id(cluster_id_str);</div><div class="line"></div><div class="line">    <span class="keyword">auto</span> snapshot_list = admin.ListSnapshots(cluster_id);</div><div class="line">    <span class="keywordflow">if</span> (!snapshot_list) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(snapshot_list.status().message());</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Snapshot Name List\n&quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; snapshot : *snapshot_list) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Snapshot Name:&quot;</span> &lt;&lt; snapshot.name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00545">545</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00602">602</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -1345,7 +1442,7 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a snapshot. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00563">563</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00605">605</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -1430,7 +1527,7 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a table in this object's instance. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00558">558</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00600">600</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -1485,7 +1582,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](google::cloud::bigtable::TableAdmin admin, std::string table_id_param) {</div><div class="line">    <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#ac33187c954cf3e096931b5e805c5e24a">google::cloud::bigtable::TableId</a> table_id(table_id_param);</div><div class="line">    <span class="keyword">auto</span> consistency_token(admin.GenerateConsistencyToken(table_id.get()));</div><div class="line">    <span class="keywordflow">if</span> (!consistency_token) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(consistency_token.status().message());</div><div class="line">    }</div><div class="line">    <span class="keyword">auto</span> result =</div><div class="line">        admin.WaitForConsistencyCheck(table_id, *consistency_token).get();</div><div class="line">    <span class="keywordflow">if</span> (result &amp;&amp; *result) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Table is consistent\n&quot;</span>;</div><div class="line">    } <span class="keywordflow">else</span> {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Table is not consistent\n&quot;</span>;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00399">399</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00441">441</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
