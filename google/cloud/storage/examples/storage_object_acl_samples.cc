@@ -350,7 +350,7 @@ int main(int argc, char* argv[]) try {
   }
 
   // Build the list of commands and the usage string from that list.
-  using CommandType = std::function<void(gcs::Client, int&, char* [])>;
+  using CommandType = std::function<void(gcs::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
       {"list-object-acl", &ListObjectAcl},
       {"create-object-acl", &CreateObjectAcl},

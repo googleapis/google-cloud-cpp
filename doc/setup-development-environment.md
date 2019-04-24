@@ -26,9 +26,9 @@ Then install `clang-6.0` and some additional Clang tools that we use to enforce
 code style rules:
 
 ```console
-sudo apt install -y clang-6.0 clang-tidy clang-format clang-tools
+sudo apt install -y clang-6.0 clang-tidy clang-format-7 clang-tools
 sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-6.0 100
-sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-6.0 100
+sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-7 100
 sudo update-alternatives --install /usr/bin/scan-build scan-build /usr/bin/scan-build-6.0 100
 ```
 

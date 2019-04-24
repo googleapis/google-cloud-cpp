@@ -23,7 +23,7 @@ RUN apt update && \
         build-essential \
         ccache \
         clang \
-        clang-format \
+        clang-format-7 \
         cmake \
         curl \
         doxygen \
@@ -47,9 +47,9 @@ RUN apt update && \
 # By default, Ubuntu 18.04 does not install the alternatives for clang-format
 # and clang-tidy, so we need to manually install those.
 RUN if grep -q 18.04 /etc/lsb-release; then \
-      apt update && apt install -y clang-tidy clang-format clang-tools; \
+      apt update && apt install -y clang-tidy clang-format-7 clang-tools; \
       update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-6.0 100; \
-      update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-6.0 100; \
+      update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-7 100; \
       update-alternatives --install /usr/bin/scan-build scan-build /usr/bin/scan-build-6.0 100; \
     fi
 
