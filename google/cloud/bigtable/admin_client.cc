@@ -63,13 +63,6 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
     return impl_.Stub()->CreateTable(context, request, response);
   }
 
-  grpc::Status CreateTableFromSnapshot(
-      grpc::ClientContext* context,
-      btadmin::CreateTableFromSnapshotRequest const& request,
-      google::longrunning::Operation* response) override {
-    return impl_.Stub()->CreateTableFromSnapshot(context, request, response);
-  }
-
   grpc::Status ListTables(grpc::ClientContext* context,
                           btadmin::ListTablesRequest const& request,
                           btadmin::ListTablesResponse* response) override {
@@ -129,32 +122,6 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
       btadmin::CheckConsistencyRequest const& request,
       btadmin::CheckConsistencyResponse* response) override {
     return impl_.Stub()->CheckConsistency(context, request, response);
-  }
-
-  grpc::Status SnapshotTable(
-      grpc::ClientContext* context,
-      btadmin::SnapshotTableRequest const& request,
-      google::longrunning::Operation* response) override {
-    return impl_.Stub()->SnapshotTable(context, request, response);
-  }
-
-  grpc::Status GetSnapshot(grpc::ClientContext* context,
-                           btadmin::GetSnapshotRequest const& request,
-                           btadmin::Snapshot* response) override {
-    return impl_.Stub()->GetSnapshot(context, request, response);
-  }
-
-  grpc::Status ListSnapshots(
-      grpc::ClientContext* context,
-      btadmin::ListSnapshotsRequest const& request,
-      btadmin::ListSnapshotsResponse* response) override {
-    return impl_.Stub()->ListSnapshots(context, request, response);
-  }
-
-  grpc::Status DeleteSnapshot(grpc::ClientContext* context,
-                              btadmin::DeleteSnapshotRequest const& request,
-                              google::protobuf::Empty* response) override {
-    return impl_.Stub()->DeleteSnapshot(context, request, response);
   }
 
   grpc::Status GetOperation(
@@ -219,24 +186,6 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
       grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncCheckConsistency(context, request, cq);
   }
-
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::bigtable::admin::v2::Snapshot>>
-  AsyncGetSnapshot(
-      grpc::ClientContext* context,
-      google::bigtable::admin::v2::GetSnapshotRequest const& request,
-      grpc::CompletionQueue* cq) override {
-    return impl_.Stub()->AsyncGetSnapshot(context, request, cq);
-  };
-
-  std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
-  AsyncDeleteSnapshot(
-      grpc::ClientContext* context,
-      google::bigtable::admin::v2::DeleteSnapshotRequest const& request,
-      grpc::CompletionQueue* cq) override {
-    return impl_.Stub()->AsyncDeleteSnapshot(context, request, cq);
-  };
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>

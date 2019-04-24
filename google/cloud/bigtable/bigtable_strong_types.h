@@ -26,7 +26,6 @@ using ConsistencyToken =
     internal::StrongType<std::string, struct ConsistencyTokenParam>;
 using ClusterId = internal::StrongType<std::string, struct ClusterTag>;
 using InstanceId = internal::StrongType<std::string, struct InstanceTag>;
-using SnapshotId = internal::StrongType<std::string, struct SnapshotTag>;
 using TableId = internal::StrongType<std::string, struct TableParam>;
 
 }  // namespace BIGTABLE_CLIENT_NS

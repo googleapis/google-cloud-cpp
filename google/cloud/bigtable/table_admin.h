@@ -478,134 +478,9 @@ class TableAdmin {
   future<Status> AsyncDropAllRows(CompletionQueue& cq,
                                   std::string const& table_id);
 
-  //@{
-  /**
-   * @name Snapshot APIs.
-   *
-   * @warning This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   */
-  /**
-   * Create a new snapshot in the specified cluster from the specified
-   * source table.
-   *
-   * @warning This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   *
-   * @param cluster_id the cluster id to which snapshot is created.
-   * @param snapshot_id the id of the snapshot.
-   * @param table_id the id of the table for which snapshot is created.
-   * @param duration_ttl time to live for snapshot being created.
-   * @return a future that becomes satisfied when (a) the operation has
-   *   completed successfully, in which case it returns a proto with the
-   *   Snapshot details, (b) the operation has failed, in which case the future
-   *   contains an exception (typically `bigtable::GrpcError`) with the details
-   *   of the failure, or (c) the state of the operation is unknown after the
-   *   time allocated by the retry policies has expired, in which case the
-   *   future contains an exception of type `bigtable::PollTimeout`.
-   *
-   */
-  std::future<StatusOr<google::bigtable::admin::v2::Snapshot>> SnapshotTable(
-      bigtable::ClusterId const& cluster_id,
-      bigtable::SnapshotId const& snapshot_id,
-      bigtable::TableId const& table_id, std::chrono::seconds duration_ttl);
-
-  /**
-   * Get information about a single snapshot.
-   *
-   * @warning This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   *
-   * @param cluster_id the cluster id to which snapshot is associated.
-   * @param snapshot_id the id of the snapshot.
-   * @return the information about the snapshot.
-   *
-   * @par Example
-   * @snippet table_admin_snippets.cc get snapshot
-   */
-  StatusOr<google::bigtable::admin::v2::Snapshot> GetSnapshot(
-      bigtable::ClusterId const& cluster_id,
-      bigtable::SnapshotId const& snapshot_id);
-
-  /**
-   * Delete a snapshot.
-   *
-   * @warning This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   *
-   * @param cluster_id the id of the cluster to which snapshot belongs.
-   * @param snapshot_id the id of the snapshot which needs to be deleted.
-   *
-   * @par Example
-   * @snippet table_admin_snippets.cc delete snapshot
-   */
-  Status DeleteSnapshot(bigtable::ClusterId const& cluster_id,
-                        bigtable::SnapshotId const& snapshot_id);
-
-  /**
-   * Create table from snapshot.
-   *
-   * @warning This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   *
-   * @param cluster_id the id of the cluster to which snapshot belongs.
-   * @param snapshot_id the id of the snapshot to which table belongs.
-   * @param table_id the id of the table which needs to be created.
-   * @throws std::exception if the operation cannot be completed.
-   *
-   * @par Example
-   * @snippet table_admin_snippets.cc create table from snapshot
-   */
-  std::future<StatusOr<google::bigtable::admin::v2::Table>>
-  CreateTableFromSnapshot(bigtable::ClusterId const& cluster_id,
-                          bigtable::SnapshotId const& snapshot_id,
-                          std::string table_id);
-
-  /**
-   * List snapshots in the given instance.
-   *
-   * @warning This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   *
-   * @param cluster_id the name of the cluster for which snapshots should be
-   * listed.
-   * @return vector containing the snapshots for the given cluster.
-   *
-   * @par Example
-   * @snippet table_admin_snippets.cc list snapshots
-   */
-  StatusOr<std::vector<::google::bigtable::admin::v2::Snapshot>> ListSnapshots(
-      bigtable::ClusterId const& cluster_id = bigtable::ClusterId("-"));
-  //@}
-
   /// Return the fully qualified name of a table in this object's instance.
   std::string TableName(std::string const& table_id) const {
     return instance_name() + "/tables/" + table_id;
-  }
-
-  /// Return the fully qualified name of a snapshot.
-  std::string SnapshotName(bigtable::ClusterId const& cluster_id,
-                           bigtable::SnapshotId const& snapshot_id) {
-    return instance_name() + "/clusters/" + cluster_id.get() + "/snapshots/" +
-           snapshot_id.get();
   }
 
   /// Return the fully qualified name of a Cluster.
@@ -621,20 +496,6 @@ class TableAdmin {
   StatusOr<bool> WaitForConsistencyCheckImpl(
       bigtable::TableId const& table_id,
       bigtable::ConsistencyToken const& consistency_token);
-
-  /**
-   * Implements the polling loop for `SnapshotTable` in a
-   * separate thread
-   */
-  StatusOr<google::bigtable::admin::v2::Snapshot> SnapshotTableImpl(
-      bigtable::ClusterId const& cluster_id,
-      bigtable::SnapshotId const& snapshot_id,
-      bigtable::TableId const& table_id, std::chrono::seconds duration_ttl);
-
-  /// Implement CreateTableFromSnapshot() with a separate thread.
-  StatusOr<google::bigtable::admin::v2::Table> CreateTableFromSnapshotImpl(
-      bigtable::ClusterId const& cluster_id,
-      bigtable::SnapshotId const& snapshot_id, std::string table_id);
 
  private:
   std::unique_ptr<RPCRetryPolicy> clone_rpc_retry_policy() {

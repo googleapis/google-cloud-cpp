@@ -66,8 +66,8 @@ class Table {
    *
    * @param client how to communicate with Cloud Bigtable, including
    *     credentials, the project id, and the instance id.
-   * @param app_profile_id the app_profile_id needed for using replication and
-   * snapshot APIs.
+   * @param app_profile_id the app_profile_id needed for using the replication
+   * API.
    * @param table_id the table id within the instance defined by client.  The
    *     full table name is `client->instance_name() + '/tables/' + table_id`.
    *
@@ -154,8 +154,8 @@ class Table {
    *
    * @param client how to communicate with Cloud Bigtable, including
    *     credentials, the project id, and the instance id.
-   * @param app_profile_id the app_profile_id needed for using replication and
-   * snapshot APIs.
+   * @param app_profile_id the app_profile_id needed for using the replication
+   * API.
    * @param table_id the table id within the instance defined by client.  The
    *     full table name is `client->instance_name() + "/tables/" + table_id`.
    * @param policies the set of policy overrides for this object.

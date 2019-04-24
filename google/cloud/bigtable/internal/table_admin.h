@@ -293,10 +293,6 @@ class TableAdmin {
 
   void DropAllRows(std::string const& table_id, grpc::Status& status);
 
-  google::bigtable::admin::v2::Snapshot GetSnapshot(
-      bigtable::ClusterId const& cluster_id,
-      bigtable::SnapshotId const& snapshot_id, grpc::Status& status);
-
   std::string GenerateConsistencyToken(std::string const& table_id,
                                        grpc::Status& status);
 
@@ -356,22 +352,6 @@ class TableAdmin {
         client_, TableName(table_id.get()));
     return op->Start(cq, std::forward<Functor>(callback));
   }
-
-  void DeleteSnapshot(bigtable::ClusterId const& cluster_id,
-                      bigtable::SnapshotId const& snapshot_id,
-                      grpc::Status& status);
-
-  /**
-   * List snapshots in the given instance.
-   *
-   * @param status status of the operation
-   * @param cluster_id the name of the cluster for which snapshots should be
-   * listed.
-   * @return vector containing the snapshots for the given cluster.
-   */
-  std::vector<google::bigtable::admin::v2::Snapshot> ListSnapshots(
-      grpc::Status& status,
-      bigtable::ClusterId const& cluster_id = bigtable::ClusterId("-"));
 
   /**
    * Make an asynchronous request to modify the column families of a table.
@@ -545,129 +525,6 @@ class TableAdmin {
             std::forward<Functor>(callback)));
     return retry->Start(cq);
   }
-
-  /**
-   * Make an asynchronous request to get information about a single snapshot.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @warning This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   *
-   * @param cluster_id the cluster id to which snapshot is associated.
-   * @param snapshot_id the id of the snapshot.
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param callback a functor to be called when the operation completes. It
-   *     must satisfy (using C++17 types):
-   *     static_assert(std::is_invocable_v<
-   *         Functor, google::bigtable::admin::v2::Snapshot&,
-   *         grpc::Status const&>);
-   * @return a handle to the submitted operation
-   *
-   * @tparam Functor the type of the callback.
-   */
-  template <typename Functor,
-            typename std::enable_if<google::cloud::internal::is_invocable<
-                                        Functor, CompletionQueue&,
-                                        google::bigtable::admin::v2::Snapshot&,
-                                        grpc::Status&>::value,
-                                    int>::type valid_callback_type = 0>
-  std::shared_ptr<AsyncOperation> AsyncGetSnapshot(
-      CompletionQueue& cq, Functor&& callback,
-      bigtable::ClusterId const& cluster_id,
-      bigtable::SnapshotId const& snapshot_id) {
-    google::bigtable::admin::v2::GetSnapshotRequest request;
-    request.set_name(SnapshotName(cluster_id, snapshot_id));
-    MetadataUpdatePolicy metadata_update_policy(
-        instance_name(), MetadataParamTypes::NAME, cluster_id, snapshot_id);
-
-    static_assert(internal::ExtractMemberFunctionType<decltype(
-                      &AdminClient::AsyncGetSnapshot)>::value,
-                  "Cannot extract member function type");
-    using MemberFunction =
-        typename internal::ExtractMemberFunctionType<decltype(
-            &AdminClient::AsyncGetSnapshot)>::MemberFunction;
-
-    using Retry =
-        internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
-                                     internal::ConstantIdempotencyPolicy,
-                                     Functor>;
-
-    auto retry = std::make_shared<Retry>(
-        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
-        internal::ConstantIdempotencyPolicy(false), metadata_update_policy,
-        client_, &AdminClient::AsyncGetSnapshot, std::move(request),
-        std::forward<Functor>(callback));
-    return retry->Start(cq);
-  }
-
-  /**
-   * Make an asynchronous request to delete a snapshot.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @warning This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   *
-   * @param cluster_id the cluster id to which snapshot is associated.
-   * @param snapshot_id the id of the snapshot.
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param callback a functor to be called when the operation completes. It
-   *     must satisfy (using C++17 types):
-   *     static_assert(std::is_invocable_v<Functor, grpc::Status const&>);
-   * @return a handle to the submitted operation
-   *
-   * @tparam Functor the type of the callback.
-   *
-   */
-  template <typename Functor,
-            typename std::enable_if<
-                google::cloud::internal::is_invocable<Functor, CompletionQueue&,
-                                                      grpc::Status&>::value,
-                int>::type valid_callback_type = 0>
-  std::shared_ptr<AsyncOperation> AsyncDeleteSnapshot(
-      CompletionQueue& cq, Functor&& callback,
-      bigtable::ClusterId const& cluster_id,
-      bigtable::SnapshotId const& snapshot_id) {
-    google::bigtable::admin::v2::DeleteSnapshotRequest request;
-    request.set_name(SnapshotName(cluster_id, snapshot_id));
-    MetadataUpdatePolicy metadata_update_policy(
-        instance_name(), MetadataParamTypes::NAME, cluster_id, snapshot_id);
-
-    static_assert(internal::ExtractMemberFunctionType<decltype(
-                      &AdminClient::AsyncDeleteSnapshot)>::value,
-                  "Cannot extract member function type");
-    using MemberFunction =
-        typename internal::ExtractMemberFunctionType<decltype(
-            &AdminClient::AsyncDeleteSnapshot)>::MemberFunction;
-
-    using Retry =
-        internal::AsyncRetryUnaryRpc<AdminClient, MemberFunction,
-                                     internal::ConstantIdempotencyPolicy,
-                                     internal::EmptyResponseAdaptor<Functor>>;
-
-    auto retry = std::make_shared<Retry>(
-        __func__, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
-        internal::ConstantIdempotencyPolicy(false), metadata_update_policy,
-        client_, &AdminClient::AsyncDeleteSnapshot, std::move(request),
-        internal::EmptyResponseAdaptor<Functor>(
-            std::forward<Functor>(callback)));
-    return retry->Start(cq);
-  }
   //@}
 
  private:
@@ -697,13 +554,6 @@ class TableAdmin {
   /// Return the fully qualified name of a table in this object's instance.
   std::string TableName(std::string const& table_id) const {
     return instance_name() + "/tables/" + table_id;
-  }
-
-  /// Return the fully qualified name of a snapshot.
-  std::string SnapshotName(bigtable::ClusterId const& cluster_id,
-                           bigtable::SnapshotId const& snapshot_id) {
-    return instance_name() + "/clusters/" + cluster_id.get() + "/snapshots/" +
-           snapshot_id.get();
   }
 
   /// Return the fully qualified name of a Cluster.

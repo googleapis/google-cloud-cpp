@@ -60,11 +60,6 @@ class InProcessAdminClient : public bigtable::AdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::CreateTableRequest const& request,
       grpc::CompletionQueue* cq) override;
-  grpc::Status CreateTableFromSnapshot(
-      grpc::ClientContext* context,
-      google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
-          request,
-      google::longrunning::Operation* response) override;
   grpc::Status ListTables(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ListTablesRequest const& request,
@@ -106,22 +101,6 @@ class InProcessAdminClient : public bigtable::AdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::CheckConsistencyRequest const& request,
       google::bigtable::admin::v2::CheckConsistencyResponse* response) override;
-  grpc::Status SnapshotTable(
-      grpc::ClientContext* context,
-      google::bigtable::admin::v2::SnapshotTableRequest const& request,
-      google::longrunning::Operation* response) override;
-  grpc::Status GetSnapshot(
-      grpc::ClientContext* context,
-      google::bigtable::admin::v2::GetSnapshotRequest const& request,
-      google::bigtable::admin::v2::Snapshot* response) override;
-  grpc::Status ListSnapshots(
-      grpc::ClientContext* context,
-      google::bigtable::admin::v2::ListSnapshotsRequest const& request,
-      google::bigtable::admin::v2::ListSnapshotsResponse* response) override;
-  grpc::Status DeleteSnapshot(
-      grpc::ClientContext* context,
-      google::bigtable::admin::v2::DeleteSnapshotRequest const& request,
-      google::protobuf::Empty* response) override;
   grpc::Status GetOperation(
       grpc::ClientContext* context,
       google::longrunning::GetOperationRequest const& request,
@@ -150,18 +129,6 @@ class InProcessAdminClient : public bigtable::AdminClient {
   AsyncCheckConsistency(
       grpc::ClientContext* context,
       const google::bigtable::admin::v2::CheckConsistencyRequest& request,
-      grpc::CompletionQueue* cq) override;
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::bigtable::admin::v2::Snapshot>>
-  AsyncGetSnapshot(
-      grpc::ClientContext* context,
-      google::bigtable::admin::v2::GetSnapshotRequest const& request,
-      grpc::CompletionQueue* cq) override;
-  std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
-  AsyncDeleteSnapshot(
-      grpc::ClientContext* context,
-      google::bigtable::admin::v2::DeleteSnapshotRequest const& request,
       grpc::CompletionQueue* cq) override;
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::ListTablesResponse>>
