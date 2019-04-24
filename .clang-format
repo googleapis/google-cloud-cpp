@@ -7,6 +7,7 @@ BasedOnStyle: Google
 DerivePointerAlignment: false
 PointerAlignment: Left
 
+IncludeBlocks: Merge
 IncludeCategories:
 - Regex: '^\"google/cloud/'
   Priority: 1500

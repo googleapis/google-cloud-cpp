@@ -18,7 +18,6 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/status_or.h"
-
 #include <chrono>
 #include <vector>
 

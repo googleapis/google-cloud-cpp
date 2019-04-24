@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/google_credentials.h"
-
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/throw_delegate.h"
@@ -23,7 +22,6 @@
 #include "google/cloud/storage/oauth2/compute_engine_credentials.h"
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
-
 #include <fstream>
 #include <iterator>
 #include <memory>

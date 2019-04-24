@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-
 #include <functional>
 #include <iostream>
 #include <map>

@@ -14,7 +14,6 @@
 
 #include "google/cloud/bigtable/cell.h"
 #include "google/cloud/testing_util/assert_ok.h"
-
 #include <gtest/gtest.h>
 
 namespace bigtable = google::cloud::bigtable;

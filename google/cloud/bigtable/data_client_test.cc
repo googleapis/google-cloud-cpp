@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/data_client.h"
-
 #include <gmock/gmock.h>
 
 namespace bigtable = google::cloud::bigtable;
