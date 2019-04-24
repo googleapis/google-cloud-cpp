@@ -127,8 +127,6 @@ add_library(bigtable_client
             instance_update_config.cc
             internal/async_bulk_apply.h
             internal/async_check_consistency.h
-            internal/async_future_from_callback.h
-            internal/async_future_from_callback.cc
             internal/async_list_app_profiles.h
             internal/async_list_clusters.h
             internal/async_list_instances.h
@@ -287,7 +285,6 @@ if (BUILD_TESTING)
         instance_config_test.cc
         instance_update_config_test.cc
         internal/async_check_consistency_test.cc
-        internal/async_future_from_callback_test.cc
         internal/async_list_app_profiles_test.cc
         internal/async_list_clusters_test.cc
         internal/async_list_instances_test.cc
