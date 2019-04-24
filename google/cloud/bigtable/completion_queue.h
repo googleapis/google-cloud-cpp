@@ -139,7 +139,7 @@ class CompletionQueue {
    * @tparam Request the type of the request in the streaming RPC.
    * @tparam Response the type of the response in the streaming RPC.
    * @tparam OnReadHandler the type of the @p on_read callback.
-   * @tparam OnReadFinish the type of the @p on_read callback.
+   * @tparam OnFinishHandler the type of the @p on_finish callback.
    */
   template <typename AsyncCallType, typename Request,
             typename Response = typename internal::

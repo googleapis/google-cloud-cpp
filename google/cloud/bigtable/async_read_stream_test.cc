@@ -13,14 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/completion_queue.h"
+#include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
-
 #include <gmock/gmock.h>
-
 #include <future>
 
 namespace google {
@@ -73,7 +71,7 @@ class BulkApplyImpl final : public google::bigtable::v2::Bigtable::Service {
 };
 
 /**
- * These test starts a server in a separate thread, and then executes against
+ * This test starts a server in a separate thread, and then executes against
  * that server. We want to test the wrappers end-to-end, particularly with
  * respect to error handling, and cancellation.
  */
@@ -173,7 +171,7 @@ TEST_F(AsyncReadStreamTest, MetaFunctions) {
       "Unexpected type for AsyncStreamingReadResponseType<>");
 }
 
-/// @test Verify that AsyncReadStream works event if the server does not exist.
+/// @test Verify that AsyncReadStream works even if the server does not exist.
 TEST_F(AsyncReadStreamTest, CannotConnect) {
   std::shared_ptr<grpc::Channel> channel =
       grpc::CreateChannel("localhost:0", grpc::InsecureChannelCredentials());
@@ -299,8 +297,8 @@ TEST_F(AsyncReadStreamTest, Return3) {
   ASSERT_EQ(3U, result.reads.size());
   for (int i = 0; i != 3; ++i) {
     SCOPED_TRACE("Running iteration: " + std::to_string(i));
-    ASSERT_EQ(1, result.reads[0].entries_size());
-    EXPECT_EQ(0, result.reads[0].entries(0).index());
+    ASSERT_EQ(1, result.reads[i].entries_size());
+    EXPECT_EQ(i, result.reads[i].entries(0).index());
   }
 }
 
@@ -340,8 +338,8 @@ TEST_F(AsyncReadStreamTest, Return3ThenFail) {
   ASSERT_EQ(3U, result.reads.size());
   for (int i = 0; i != 3; ++i) {
     SCOPED_TRACE("Running iteration: " + std::to_string(i));
-    ASSERT_EQ(1, result.reads[0].entries_size());
-    EXPECT_EQ(0, result.reads[0].entries(0).index());
+    ASSERT_EQ(1, result.reads[i].entries_size());
+    EXPECT_EQ(i, result.reads[i].entries(0).index());
   }
   EXPECT_EQ(StatusCode::kInternal, result.status.code());
 }
@@ -384,8 +382,8 @@ TEST_F(AsyncReadStreamTest, Return3NoLast) {
   ASSERT_STATUS_OK(result.status);
   for (int i = 0; i != 3; ++i) {
     SCOPED_TRACE("Running iteration: " + std::to_string(i));
-    ASSERT_EQ(1, result.reads[0].entries_size());
-    EXPECT_EQ(0, result.reads[0].entries(0).index());
+    ASSERT_EQ(1, result.reads[i].entries_size());
+    EXPECT_EQ(i, result.reads[i].entries(0).index());
   }
 }
 
@@ -437,8 +435,8 @@ TEST_F(AsyncReadStreamTest, Return3LastIsBlocked) {
   ASSERT_STATUS_OK(result.status);
   for (int i = 0; i != 3; ++i) {
     SCOPED_TRACE("Running iteration: " + std::to_string(i));
-    ASSERT_EQ(1, result.reads[0].entries_size());
-    EXPECT_EQ(0, result.reads[0].entries(0).index());
+    ASSERT_EQ(1, result.reads[i].entries_size());
+    EXPECT_EQ(i, result.reads[i].entries(0).index());
   }
 }
 
@@ -490,8 +488,8 @@ TEST_F(AsyncReadStreamTest, CancelWhileBlocked) {
   EXPECT_EQ(StatusCode::kCancelled, result.status.code());
   for (int i = 0; i != 2; ++i) {
     SCOPED_TRACE("Running iteration: " + std::to_string(i));
-    ASSERT_EQ(1, result.reads[0].entries_size());
-    EXPECT_EQ(0, result.reads[0].entries(0).index());
+    ASSERT_EQ(1, result.reads[i].entries_size());
+    EXPECT_EQ(i, result.reads[i].entries(0).index());
   }
 
   // The barriers go out of scope when this function exits, but the server may
@@ -560,8 +558,8 @@ TEST_F(AsyncReadStreamTest, DoubleCancel) {
   EXPECT_EQ(StatusCode::kCancelled, result.status.code());
   for (int i = 0; i != 2; ++i) {
     SCOPED_TRACE("Running iteration: " + std::to_string(i));
-    ASSERT_EQ(1, result.reads[0].entries_size());
-    EXPECT_EQ(0, result.reads[0].entries(0).index());
+    ASSERT_EQ(1, result.reads[i].entries_size());
+    EXPECT_EQ(i, result.reads[i].entries(0).index());
   }
 
   // The barriers go out of scope when this function exits, but the server may
@@ -613,7 +611,8 @@ TEST_F(AsyncReadStreamTest, CancelBeforeRead) {
   // way this actually unblocks is if the Cancel() succeeds.
   result.done.Wait();
   // There is no guarantee on how many messages will be received before the
-  // cancel succeeds, so do not even try to check that.
+  // cancel succeeds, but we certainly expect fewer messages thant we sent.
+  EXPECT_LE(result.reads.size(), 3U);
   EXPECT_EQ(StatusCode::kCancelled, result.status.code());
 
   // The barriers go out of scope when this function exits, but the server may
@@ -623,7 +622,7 @@ TEST_F(AsyncReadStreamTest, CancelBeforeRead) {
   WaitForServerShutdown();
 }
 
-/// @test Verify that AsyncReadStream works event if Cancel() is misused.
+/// @test Verify that AsyncReadStream works even if Cancel() is misused.
 TEST_F(AsyncReadStreamTest, CancelAfterFinish) {
   impl_.SetCallback(
       [this](grpc::ServerContext*,
@@ -671,12 +670,12 @@ TEST_F(AsyncReadStreamTest, CancelAfterFinish) {
   ASSERT_EQ(3U, result.reads.size());
   for (int i = 0; i != 3; ++i) {
     SCOPED_TRACE("Running iteration: " + std::to_string(i));
-    ASSERT_EQ(1, result.reads[0].entries_size());
-    EXPECT_EQ(0, result.reads[0].entries(0).index());
+    ASSERT_EQ(1, result.reads[i].entries_size());
+    EXPECT_EQ(i, result.reads[i].entries(0).index());
   }
 }
 
-/// @test Verify that AsyncReadStream works event if Cancel() is misused.
+/// @test Verify that AsyncReadStream works when returning false from OnRead().
 TEST_F(AsyncReadStreamTest, DiscardAfterReturningFalse) {
   impl_.SetCallback(
       [this](grpc::ServerContext*,
@@ -714,6 +713,8 @@ TEST_F(AsyncReadStreamTest, DiscardAfterReturningFalse) {
   result.done.Wait();
   ASSERT_EQ(StatusCode::kCancelled, result.status.code());
   ASSERT_EQ(1U, result.reads.size());
+  EXPECT_EQ(1, result.reads[0].entries_size());
+  EXPECT_EQ(0, result.reads[0].entries(0).index());
 }
 
 }  // namespace

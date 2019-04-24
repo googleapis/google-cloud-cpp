@@ -89,9 +89,9 @@ using AsyncStreamingReadResponseType = AsyncStreamingReadRpcUnwrap<
  * result for a Finish() request.
  *
  * Objects of this class need to live for as long as there are pending calls
- * on it. We use `std::enable_shared_from_this<>` keep this object alive until
- * the last callback finishes. This means the objects must always be owned by
- * a `shared_ptr`. This is enforced by making the constructor private and the
+ * on it. We use `std::enable_shared_from_this<>` to keep this object alive
+ * until the last callback finishes. This means the objects must always be owned
+ * by a `shared_ptr`. This is enforced by making the constructor private and the
  * one factory function returns a `shared_ptr`.
  *
  * @tparam Response the type of the responses in the streaming read RPC.
@@ -134,7 +134,6 @@ class AsyncReadStreamImpl
    *
    * @tparam AsyncFunctionType the type for @p async_call.
    * @tparam Request the type for @p request.
-   *
    */
   template <typename AsyncFunctionType, typename Request>
   void Start(AsyncFunctionType&& async_call, Request const& request,
@@ -158,8 +157,7 @@ class AsyncReadStreamImpl
     context_ = std::move(context);
     cq_ = std::move(cq);
     reader_ = async_call(context_.get(), request, &cq_->cq());
-    auto self = this->shared_from_this();
-    auto callback = std::make_shared<NotifyStart>(self);
+    auto callback = std::make_shared<NotifyStart>(this->shared_from_this());
     void* tag = cq_->RegisterOperation(std::move(callback));
     reader_->StartCall(tag);
   }
@@ -196,8 +194,7 @@ class AsyncReadStreamImpl
       std::shared_ptr<AsyncReadStreamImpl> control_;
     };
 
-    auto self = this->shared_from_this();
-    auto callback = std::make_shared<NotifyRead>(self);
+    auto callback = std::make_shared<NotifyRead>(this->shared_from_this());
     auto response = &callback->response;
     void* tag = cq_->RegisterOperation(std::move(callback));
     reader_->Read(response, tag);
@@ -245,8 +242,7 @@ class AsyncReadStreamImpl
       std::shared_ptr<AsyncReadStreamImpl> control_;
     };
 
-    auto self = this->shared_from_this();
-    auto callback = std::make_shared<NotifyFinish>(self);
+    auto callback = std::make_shared<NotifyFinish>(this->shared_from_this());
     auto status = &callback->status;
     void* tag = cq_->RegisterOperation(std::move(callback));
     reader_->Finish(status, tag);
@@ -281,8 +277,7 @@ class AsyncReadStreamImpl
       std::shared_ptr<AsyncReadStreamImpl> control_;
     };
 
-    auto self = this->shared_from_this();
-    auto callback = std::make_shared<NotifyDiscard>(self);
+    auto callback = std::make_shared<NotifyDiscard>(this->shared_from_this());
     auto response = &callback->response;
     void* tag = cq_->RegisterOperation(std::move(callback));
     reader_->Read(response, tag);
@@ -297,7 +292,6 @@ class AsyncReadStreamImpl
     Discard();
   }
 
- private:
   explicit AsyncReadStreamImpl(OnReadHandler&& on_read,
                                OnFinishHandler&& on_finish)
       : on_read_(std::move(on_read)), on_finish_(std::move(on_finish)) {}
@@ -311,7 +305,6 @@ class AsyncReadStreamImpl
 
 /**
  * The analogous of `make_shared<>` for `AsyncReadStreamImpl<Response>`.
- *
  *
  * @param on_read the handler for a successful `Read()` result. Failed
  *   `Read()` operations automatically terminate the loop and call `Finish()`.
