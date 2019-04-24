@@ -426,6 +426,33 @@ StatusOr<ConsistencyToken> TableAdmin::GenerateConsistencyToken(
   return ConsistencyToken(*response.mutable_consistency_token());
 }
 
+future<StatusOr<ConsistencyToken>> TableAdmin::AsyncGenerateConsistencyToken(
+    CompletionQueue& cq, std::string const& table_id) {
+  btadmin::GenerateConsistencyTokenRequest request;
+  request.set_name(TableName(table_id));
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, table_id);
+  auto client = impl_.client_;
+  return internal::StartRetryAsyncUnaryRpc(
+             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
+             [client](grpc::ClientContext* context,
+                      btadmin::GenerateConsistencyTokenRequest const& request,
+                      grpc::CompletionQueue* cq) {
+               return client->AsyncGenerateConsistencyToken(context, request,
+                                                            cq);
+             },
+             std::move(request), cq)
+      .then([](future<StatusOr<btadmin::GenerateConsistencyTokenResponse>> fut)
+                -> StatusOr<ConsistencyToken> {
+        auto result = fut.get();
+        if (!result) {
+          return result.status();
+        }
+        return ConsistencyToken(*result->mutable_consistency_token());
+      });
+}
+
 StatusOr<Consistency> TableAdmin::CheckConsistency(
     bigtable::TableId const& table_id,
     bigtable::ConsistencyToken const& consistency_token) {
@@ -450,6 +477,36 @@ StatusOr<Consistency> TableAdmin::CheckConsistency(
                                : Consistency::kInconsistent;
 }
 
+future<StatusOr<Consistency>> TableAdmin::AsyncCheckConsistency(
+    CompletionQueue& cq, bigtable::TableId const& table_id,
+    bigtable::ConsistencyToken const& consistency_token) {
+  btadmin::CheckConsistencyRequest request;
+  request.set_name(TableName(table_id.get()));
+  request.set_consistency_token(consistency_token.get());
+  MetadataUpdatePolicy metadata_update_policy(
+      instance_name(), MetadataParamTypes::NAME, table_id.get());
+  auto client = impl_.client_;
+  return internal::StartRetryAsyncUnaryRpc(
+             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
+             [client](grpc::ClientContext* context,
+                      btadmin::CheckConsistencyRequest const& request,
+                      grpc::CompletionQueue* cq) {
+               return client->AsyncCheckConsistency(context, request, cq);
+             },
+             std::move(request), cq)
+      .then([](future<StatusOr<btadmin::CheckConsistencyResponse>> fut)
+                -> StatusOr<Consistency> {
+        auto result = fut.get();
+        if (!result) {
+          return result.status();
+        }
+
+        return result->consistent() ? Consistency::kConsistent
+                                    : Consistency::kInconsistent;
+        ;
+      });
+}
 StatusOr<bool> TableAdmin::WaitForConsistencyCheckImpl(
     bigtable::TableId const& table_id,
     bigtable::ConsistencyToken const& consistency_token) {

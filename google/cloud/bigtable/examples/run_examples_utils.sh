@@ -293,6 +293,13 @@ function run_all_table_admin_async_examples {
       "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_async_snippets async-modify-table \
       "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_async_snippets async-generate-consistency-token \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
+  local token
+  token="$(./table_admin_async_snippets async-generate-consistency-token \
+      "${project_id}" "${INSTANCE}" "${TABLE}" | awk '{print $5}')"
+  run_example ./table_admin_async_snippets async-check-consistency \
+      "${project_id}" "${INSTANCE}" "${TABLE}" "${token}"
   run_example ./table_admin_async_snippets async-drop-rows-by-prefix \
       "${project_id}" "${INSTANCE}" "${TABLE}" "${ROW_KEY}"
   run_example ./table_admin_async_snippets async-drop-all-rows \
