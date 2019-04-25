@@ -611,7 +611,7 @@ TEST_F(AsyncReadStreamTest, CancelBeforeRead) {
   // way this actually unblocks is if the Cancel() succeeds.
   result.done.Wait();
   // There is no guarantee on how many messages will be received before the
-  // cancel succeeds, but we certainly expect fewer messages thant we sent.
+  // cancel succeeds, but we certainly expect fewer messages than we sent.
   EXPECT_LE(result.reads.size(), 3U);
   EXPECT_EQ(StatusCode::kCancelled, result.status.code());
 

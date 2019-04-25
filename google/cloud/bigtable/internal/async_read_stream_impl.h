@@ -17,7 +17,6 @@
 
 #include "google/cloud/bigtable/internal/completion_queue_impl.h"
 #include "google/cloud/bigtable/version.h"
-
 #include <memory>
 
 namespace google {
