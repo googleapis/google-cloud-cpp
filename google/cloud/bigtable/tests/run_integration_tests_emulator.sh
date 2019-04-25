@@ -44,11 +44,6 @@ echo
 echo "Running bigtable::TableAdmin integration test."
 ./admin_integration_test "${PROJECT_ID}" "admin-test" "fake-zone-1" "fake-zone-2"
 
-# TODO(#151) - Cleanup integration tests after emulator bugs are fixed.
-#echo
-#echo "Running bigtable::TableAdmin snapshot integration test."
-#./snapshot_integration_test "${PROJECT_ID}" "admin-test" "admin-test-cl1"
-
 echo
 echo "Running bigtable::Table integration test."
 ./data_integration_test "${PROJECT_ID}" "data-test"
@@ -77,5 +72,3 @@ echo "Running Table::Async* integration test with futures."
 echo
 echo "Running Table::Async* integration test."
 ./data_async_integration_test "${PROJECT_ID}" "data-noex-async"
-
-# TODO(#1338) - run snapshot_async_integration_test against emulator.

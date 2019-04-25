@@ -34,13 +34,6 @@ InProcessAdminClient::AsyncCreateTable(
   return Stub()->AsyncCreateTable(context, request, cq);
 }
 
-grpc::Status InProcessAdminClient::CreateTableFromSnapshot(
-    grpc::ClientContext* context,
-    btadmin::CreateTableFromSnapshotRequest const& request,
-    google::longrunning::Operation* response) {
-  return Stub()->CreateTableFromSnapshot(context, request, response);
-}
-
 grpc::Status InProcessAdminClient::ListTables(
     grpc::ClientContext* context, btadmin::ListTablesRequest const& request,
     btadmin::ListTablesResponse* response) {
@@ -111,30 +104,6 @@ grpc::Status InProcessAdminClient::CheckConsistency(
   return Stub()->CheckConsistency(context, request, response);
 }
 
-grpc::Status InProcessAdminClient::SnapshotTable(
-    grpc::ClientContext* context, btadmin::SnapshotTableRequest const& request,
-    google::longrunning::Operation* response) {
-  return Stub()->SnapshotTable(context, request, response);
-}
-
-grpc::Status InProcessAdminClient::GetSnapshot(
-    grpc::ClientContext* context, btadmin::GetSnapshotRequest const& request,
-    btadmin::Snapshot* response) {
-  return Stub()->GetSnapshot(context, request, response);
-}
-
-grpc::Status InProcessAdminClient::ListSnapshots(
-    grpc::ClientContext* context, btadmin::ListSnapshotsRequest const& request,
-    btadmin::ListSnapshotsResponse* response) {
-  return Stub()->ListSnapshots(context, request, response);
-}
-
-grpc::Status InProcessAdminClient::DeleteSnapshot(
-    grpc::ClientContext* context, btadmin::DeleteSnapshotRequest const& request,
-    google::protobuf::Empty* response) {
-  return Stub()->DeleteSnapshot(context, request, response);
-}
-
 grpc::Status InProcessAdminClient::GetOperation(
     grpc::ClientContext* context,
     google::longrunning::GetOperationRequest const& request,
@@ -175,24 +144,6 @@ InProcessAdminClient::AsyncCheckConsistency(
     const google::bigtable::admin::v2::CheckConsistencyRequest& request,
     grpc::CompletionQueue* cq) {
   return Stub()->AsyncCheckConsistency(context, request, cq);
-}
-
-std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-    google::bigtable::admin::v2::Snapshot>>
-InProcessAdminClient::AsyncGetSnapshot(
-    grpc::ClientContext* context,
-    google::bigtable::admin::v2::GetSnapshotRequest const& request,
-    grpc::CompletionQueue* cq) {
-  return Stub()->AsyncGetSnapshot(context, request, cq);
-}
-
-std::unique_ptr<
-    grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
-InProcessAdminClient::AsyncDeleteSnapshot(
-    grpc::ClientContext* context,
-    google::bigtable::admin::v2::DeleteSnapshotRequest const& request,
-    grpc::CompletionQueue* cq) {
-  return Stub()->AsyncDeleteSnapshot(context, request, cq);
 }
 
 std::unique_ptr<

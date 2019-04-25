@@ -105,11 +105,6 @@ class AdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::CreateTableRequest const& request,
       google::bigtable::admin::v2::Table* response) = 0;
-  virtual grpc::Status CreateTableFromSnapshot(
-      grpc::ClientContext* context,
-      google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
-          request,
-      google::longrunning::Operation* response) = 0;
   virtual grpc::Status ListTables(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ListTablesRequest const& request,
@@ -146,22 +141,6 @@ class AdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::CheckConsistencyRequest const& request,
       google::bigtable::admin::v2::CheckConsistencyResponse* response) = 0;
-  virtual grpc::Status SnapshotTable(
-      grpc::ClientContext* context,
-      google::bigtable::admin::v2::SnapshotTableRequest const& request,
-      google::longrunning::Operation* response) = 0;
-  virtual grpc::Status GetSnapshot(
-      grpc::ClientContext* context,
-      google::bigtable::admin::v2::GetSnapshotRequest const& request,
-      google::bigtable::admin::v2::Snapshot* response) = 0;
-  virtual grpc::Status ListSnapshots(
-      grpc::ClientContext* context,
-      google::bigtable::admin::v2::ListSnapshotsRequest const& request,
-      google::bigtable::admin::v2::ListSnapshotsResponse* response) = 0;
-  virtual grpc::Status DeleteSnapshot(
-      grpc::ClientContext* context,
-      google::bigtable::admin::v2::DeleteSnapshotRequest const& request,
-      google::protobuf::Empty* response) = 0;
   //@}
 
   //@{
@@ -210,18 +189,6 @@ class AdminClient {
   AsyncCheckConsistency(
       grpc::ClientContext* context,
       const google::bigtable::admin::v2::CheckConsistencyRequest& request,
-      grpc::CompletionQueue* cq) = 0;
-  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::bigtable::admin::v2::Snapshot>>
-  AsyncGetSnapshot(
-      grpc::ClientContext* context,
-      google::bigtable::admin::v2::GetSnapshotRequest const& request,
-      grpc::CompletionQueue* cq) = 0;
-  virtual std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
-  AsyncDeleteSnapshot(
-      grpc::ClientContext* context,
-      google::bigtable::admin::v2::DeleteSnapshotRequest const& request,
       grpc::CompletionQueue* cq) = 0;
   virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::ListTablesResponse>>

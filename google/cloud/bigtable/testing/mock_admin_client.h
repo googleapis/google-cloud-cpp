@@ -42,11 +42,6 @@ class MockAdminClient : public bigtable::AdminClient {
           grpc::ClientContext* context,
           google::bigtable::admin::v2::CreateTableRequest const& request,
           grpc::CompletionQueue* cq));
-  MOCK_METHOD3(CreateTableFromSnapshot,
-               grpc::Status(grpc::ClientContext* context,
-                            google::bigtable::admin::v2::
-                                CreateTableFromSnapshotRequest const& request,
-                            google::longrunning::Operation* response));
   MOCK_METHOD3(
       ListTables,
       grpc::Status(
@@ -103,30 +98,6 @@ class MockAdminClient : public bigtable::AdminClient {
           google::bigtable::admin::v2::CheckConsistencyRequest const& request,
           google::bigtable::admin::v2::CheckConsistencyResponse* response));
   MOCK_METHOD3(
-      SnapshotTable,
-      grpc::Status(
-          grpc::ClientContext* context,
-          google::bigtable::admin::v2::SnapshotTableRequest const& request,
-          google::longrunning::Operation* response));
-  MOCK_METHOD3(
-      GetSnapshot,
-      grpc::Status(
-          grpc::ClientContext* context,
-          google::bigtable::admin::v2::GetSnapshotRequest const& request,
-          google::bigtable::admin::v2::Snapshot* response));
-  MOCK_METHOD3(
-      ListSnapshots,
-      grpc::Status(
-          grpc::ClientContext* context,
-          google::bigtable::admin::v2::ListSnapshotsRequest const& request,
-          google::bigtable::admin::v2::ListSnapshotsResponse* response));
-  MOCK_METHOD3(
-      DeleteSnapshot,
-      grpc::Status(
-          grpc::ClientContext* context,
-          google::bigtable::admin::v2::DeleteSnapshotRequest const& request,
-          google::protobuf::Empty* response));
-  MOCK_METHOD3(
       GetOperation,
       grpc::Status(grpc::ClientContext* context,
                    google::longrunning::GetOperationRequest const& request,
@@ -159,20 +130,6 @@ class MockAdminClient : public bigtable::AdminClient {
                    grpc::ClientContext*,
                    const google::bigtable::admin::v2::CheckConsistencyRequest&,
                    grpc::CompletionQueue*));
-  MOCK_METHOD3(
-      AsyncGetSnapshot,
-      std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-          google::bigtable::admin::v2::Snapshot>>(
-          grpc::ClientContext* context,
-          google::bigtable::admin::v2::GetSnapshotRequest const& request,
-          grpc::CompletionQueue* cq));
-  MOCK_METHOD3(
-      AsyncDeleteSnapshot,
-      std::unique_ptr<
-          grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>(
-          grpc::ClientContext* context,
-          google::bigtable::admin::v2::DeleteSnapshotRequest const& request,
-          grpc::CompletionQueue* cq));
   MOCK_METHOD3(
       AsyncListTables,
       std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<

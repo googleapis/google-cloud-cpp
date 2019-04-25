@@ -147,20 +147,6 @@ std::string TableAdmin::InstanceName() const {
   return "projects/" + client_->project() + "/instances/" + instance_id_;
 }
 
-btadmin::Snapshot TableAdmin::GetSnapshot(
-    bigtable::ClusterId const& cluster_id,
-    bigtable::SnapshotId const& snapshot_id, grpc::Status& status) {
-  btadmin::GetSnapshotRequest request;
-  request.set_name(SnapshotName(cluster_id, snapshot_id));
-
-  MetadataUpdatePolicy metadata_update_policy(
-      instance_name(), MetadataParamTypes::NAME, cluster_id, snapshot_id);
-  return ClientUtils::MakeCall(
-      *client_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
-      metadata_update_policy, &AdminClient::GetSnapshot, request, "GetSnapshot",
-      status, true);
-}
-
 std::string TableAdmin::GenerateConsistencyToken(std::string const& table_id,
                                                  grpc::Status& status) {
   btadmin::GenerateConsistencyTokenRequest request;
@@ -219,51 +205,6 @@ bool TableAdmin::WaitForConsistencyCheckHelper(
   } while (!polling_policy->Exhausted());
 
   return false;
-}
-
-void TableAdmin::DeleteSnapshot(bigtable::ClusterId const& cluster_id,
-                                bigtable::SnapshotId const& snapshot_id,
-                                grpc::Status& status) {
-  btadmin::DeleteSnapshotRequest request;
-  request.set_name(SnapshotName(cluster_id, snapshot_id));
-  MetadataUpdatePolicy metadata_update_policy(
-      instance_name(), MetadataParamTypes::NAME, cluster_id, snapshot_id);
-
-  // This API is not idempotent, lets call it without retry
-  ClientUtils::MakeNonIdemponentCall(
-      *client_, rpc_retry_policy_->clone(), metadata_update_policy,
-      &AdminClient::DeleteSnapshot, request, "DeleteSnapshot", status);
-}
-
-std::vector<google::bigtable::admin::v2::Snapshot> TableAdmin::ListSnapshots(
-    grpc::Status& status, bigtable::ClusterId const& cluster_id) {
-  // Copy the policies in effect for the operation.
-  auto rpc_policy = rpc_retry_policy_->clone();
-  auto backoff_policy = rpc_backoff_policy_->clone();
-
-  MetadataUpdatePolicy metadata_update_policy(
-      instance_name(), MetadataParamTypes::PARENT, cluster_id);
-  std::vector<google::bigtable::admin::v2::Snapshot> result;
-  std::string page_token;
-  do {
-    btadmin::ListSnapshotsRequest request;
-    request.set_parent(ClusterName(cluster_id));
-    request.set_page_size(0);
-    request.set_page_token(page_token);
-
-    auto response = ClientUtils::MakeCall(
-        *client_, *rpc_policy, *backoff_policy, metadata_update_policy,
-        &AdminClient::ListSnapshots, request, "ListSnapshotsImpl", status,
-        true);
-    if (!status.ok()) {
-      break;
-    }
-
-    auto& snapshots = *response.mutable_snapshots();
-    std::move(snapshots.begin(), snapshots.end(), std::back_inserter(result));
-    page_token = std::move(*response.mutable_next_page_token());
-  } while (!page_token.empty());
-  return result;
 }
 
 }  // namespace noex

@@ -561,107 +561,6 @@ void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
   (std::move(admin), table_id);
 }
 
-void GetSnapshot(google::cloud::bigtable::TableAdmin admin, int argc,
-                 char* argv[]) {
-  if (argc != 3) {
-    throw Usage{
-        "get-snapshot: <project-id> <instance-id> <cluster-id> <snapshot-id>"};
-  }
-  std::string const cluster_id_str = ConsumeArg(argc, argv);
-  std::string const snapshot_id_str = ConsumeArg(argc, argv);
-
-  //! [get snapshot]
-  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str,
-     std::string snapshot_id_str) {
-    google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
-    google::cloud::bigtable::SnapshotId snapshot_id(snapshot_id_str);
-    auto snapshot = admin.GetSnapshot(cluster_id, snapshot_id);
-    if (!snapshot) {
-      throw std::runtime_error(snapshot.status().message());
-    }
-    std::cout << "GetSnapshot name : " << snapshot->name() << "\n";
-  }
-  //! [get snapshot]
-  (std::move(admin), cluster_id_str, snapshot_id_str);
-}
-
-void ListSnapshots(google::cloud::bigtable::TableAdmin admin, int argc,
-                   char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"list-snapshot: <project-id> <instance-id> <cluster-id>"};
-  }
-  std::string const cluster_id_str = ConsumeArg(argc, argv);
-
-  //! [list snapshots]
-  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str) {
-    google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
-
-    auto snapshot_list = admin.ListSnapshots(cluster_id);
-    if (!snapshot_list) {
-      throw std::runtime_error(snapshot_list.status().message());
-    }
-    std::cout << "Snapshot Name List\n";
-    for (auto const& snapshot : *snapshot_list) {
-      std::cout << "Snapshot Name:" << snapshot.name() << "\n";
-    }
-  }
-  //! [list snapshots]
-  (std::move(admin), cluster_id_str);
-}
-
-void DeleteSnapshot(google::cloud::bigtable::TableAdmin admin, int argc,
-                    char* argv[]) {
-  if (argc != 3) {
-    throw Usage{
-        "delete-snapshot: <project-id> <instance-id> <cluster-id> "
-        "<snapshot-id>"};
-  }
-  std::string const cluster_id_str = ConsumeArg(argc, argv);
-  std::string const snapshot_id_str = ConsumeArg(argc, argv);
-
-  //! [delete snapshot]
-  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str,
-     std::string snapshot_id_str) {
-    google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
-    google::cloud::bigtable::SnapshotId snapshot_id(snapshot_id_str);
-    google::cloud::Status status =
-        admin.DeleteSnapshot(cluster_id, snapshot_id);
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
-  }
-  //! [delete snapshot]
-  (std::move(admin), cluster_id_str, snapshot_id_str);
-}
-
-void CreateTableFromSnapshot(google::cloud::bigtable::TableAdmin admin,
-                             int argc, char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "create-table-from-snapshot: <project-id> <instance-id> <cluster-id> "
-        "<snapshot-id> <table-id>"};
-  }
-  std::string const cluster_id_str = ConsumeArg(argc, argv);
-  std::string const snapshot_id_str = ConsumeArg(argc, argv);
-  std::string const table_id = ConsumeArg(argc, argv);
-
-  //! [create table from snapshot]
-  [](google::cloud::bigtable::TableAdmin admin, std::string cluster_id_str,
-     std::string snapshot_id_str, std::string table_id) {
-    google::cloud::bigtable::ClusterId cluster_id(cluster_id_str);
-    google::cloud::bigtable::SnapshotId snapshot_id(snapshot_id_str);
-    auto future =
-        admin.CreateTableFromSnapshot(cluster_id, snapshot_id, table_id);
-    auto table = future.get();
-    if (!table) {
-      throw std::runtime_error(table.status().message());
-    }
-    std::cout << "Table created :" << table->name() << "\n";
-  }
-  //! [create table from snapshot]
-  (std::move(admin), cluster_id_str, snapshot_id_str, table_id);
-}
-
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -688,10 +587,6 @@ int main(int argc, char* argv[]) try {
       {"wait-for-consistency-check", &WaitForConsistencyCheck},
       {"check-consistency", &CheckConsistency},
       {"generate-consistency-token", &GenerateConsistencyToken},
-      {"get-snapshot", &GetSnapshot},
-      {"list-snapshot", &ListSnapshots},
-      {"delete-snapshot", &DeleteSnapshot},
-      {"create-table-from-snapshot", &CreateTableFromSnapshot},
   };
 
   {
