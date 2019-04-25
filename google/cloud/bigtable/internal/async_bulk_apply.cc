@@ -33,7 +33,7 @@ future<std::vector<FailedMutation>> AsyncRetryBulkApply::Create(
       std::move(rpc_retry_policy), std::move(rpc_backoff_policy),
       idempotent_policy, std::move(metadata_update_policy), std::move(client),
       app_profile_id, table_name, std::move(mut)));
-  bulk_apply->StartIteration(std::move(cq));
+  bulk_apply->StartIterationIfNeeded(std::move(cq));
   return bulk_apply->promise_.get_future();
 }
 
@@ -51,8 +51,12 @@ AsyncRetryBulkApply::AsyncRetryBulkApply(
       client_(std::move(client)),
       state_(app_profile_id, table_name, idempotent_policy, std::move(mut)) {}
 
-void AsyncRetryBulkApply::StartIteration(CompletionQueue cq) {
+void AsyncRetryBulkApply::StartIterationIfNeeded(CompletionQueue cq) {
   if (!state_.HasPendingMutations()) {
+    // There is nothing to do, so just satisfy the future and return. Note that
+    // in the case of the retry policy begin expired we hit this point because
+    // the mutations are no longer "pending", they are all resolved with a
+    // error status.
     promise_.set_value(std::move(state_).OnRetryDone());
     return;
   }
@@ -84,15 +88,7 @@ void AsyncRetryBulkApply::OnRead(
 
 void AsyncRetryBulkApply::OnFinish(CompletionQueue cq, Status status) {
   state_.OnFinish(std::move(status));
-  if (state_.HasPendingMutations()) {
-    StartIteration(std::move(cq));
-    return;
-  }
-  OnRetryDone();
-}
-
-void AsyncRetryBulkApply::OnRetryDone() {
-  promise_.set_value(std::move(state_).OnRetryDone());
+  StartIterationIfNeeded(std::move(cq));
 }
 
 }  // namespace internal

@@ -61,12 +61,10 @@ class AsyncRetryBulkApply
                       bigtable::AppProfileId const& app_profile_id,
                       bigtable::TableId const& table_name, BulkMutation mut);
 
-  void StartIteration(CompletionQueue cq);
+  void StartIterationIfNeeded(CompletionQueue cq);
 
   void OnRead(google::bigtable::v2::MutateRowsResponse response);
   void OnFinish(CompletionQueue cq, google::cloud::Status status);
-
-  void OnRetryDone();
 
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
