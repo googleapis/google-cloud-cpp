@@ -666,7 +666,7 @@ void CreateTableFromSnapshot(google::cloud::bigtable::TableAdmin admin,
 
 int main(int argc, char* argv[]) try {
   using CommandType =
-      std::function<void(google::cloud::bigtable::TableAdmin, int, char* [])>;
+      std::function<void(google::cloud::bigtable::TableAdmin, int, char*[])>;
 
   std::map<std::string, CommandType> commands = {
       {"create-table", &CreateTable},

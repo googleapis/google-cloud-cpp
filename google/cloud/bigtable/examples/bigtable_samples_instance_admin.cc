@@ -320,7 +320,7 @@ void DeleteCluster(std::string project_id, int argc, char* argv[]) {
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
-  using CommandType = std::function<void(std::string, int, char* [])>;
+  using CommandType = std::function<void(std::string, int, char*[])>;
 
   std::map<std::string, CommandType> commands = {
       {"run", &RunInstanceOperations},

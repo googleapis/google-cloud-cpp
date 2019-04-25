@@ -139,8 +139,8 @@ $ git status -s \
 
 If you need to reformat one of the files to match the Google style.  Please be
 advised that `clang-format` has been known to generate slightly different
-formatting in different versions. We use version 6.0; use the same version if
-you run into problems.
+formatting in different versions. We use version 7; use the same version if you
+run into problems.
 
 If you have prepared a Docker image for `ubuntu:18.04` (see below), you can
 verify and fix the format of your code using:

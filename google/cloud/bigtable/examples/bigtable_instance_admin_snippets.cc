@@ -703,8 +703,8 @@ void TestIamPermissions(google::cloud::bigtable::InstanceAdmin instance_admin,
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
-  using CommandType = std::function<void(google::cloud::bigtable::InstanceAdmin,
-                                         int, char* [])>;
+  using CommandType =
+      std::function<void(google::cloud::bigtable::InstanceAdmin, int, char*[])>;
 
   std::map<std::string, CommandType> commands = {
       {"create-instance", &CreateInstance},
