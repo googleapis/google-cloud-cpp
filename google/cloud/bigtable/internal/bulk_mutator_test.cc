@@ -523,9 +523,9 @@ TEST(MultipleRowsMutatorTest, SimpleAsync) {
       }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::AsyncBulkMutator mutator(client, bigtable::AppProfileId(""),
-                                         bigtable::TableId("foo/bar/baz/table"),
-                                         *policy, std::move(mut));
+  bt::internal::AsyncBulkMutatorNoex mutator(
+      client, bigtable::AppProfileId(""),
+      bigtable::TableId("foo/bar/baz/table"), *policy, std::move(mut));
 
   auto impl = std::make_shared<bigtable::testing::MockCompletionQueue>();
   using bigtable::CompletionQueue;
@@ -578,9 +578,9 @@ TEST(MultipleRowsMutatorTest, SimpleAsyncFailure) {
       }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::AsyncBulkMutator mutator(client, bigtable::AppProfileId(""),
-                                         bigtable::TableId("foo/bar/baz/table"),
-                                         *policy, std::move(mut));
+  bt::internal::AsyncBulkMutatorNoex mutator(
+      client, bigtable::AppProfileId(""),
+      bigtable::TableId("foo/bar/baz/table"), *policy, std::move(mut));
 
   auto impl = std::make_shared<bigtable::testing::MockCompletionQueue>();
   using bigtable::CompletionQueue;

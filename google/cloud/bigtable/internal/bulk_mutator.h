@@ -120,7 +120,7 @@ class BulkMutator {
  * It extends the normal BulkMutator with logic to do its job asynchronously.
  * Conceptually it reimplements MakeOneRequest in an async way.
  */
-class AsyncBulkMutator : private BulkMutator {
+class AsyncBulkMutatorNoex : private BulkMutator {
  public:
   using MutationsSucceededFunctor =
       std::function<void(CompletionQueue&, std::vector<int>)>;
@@ -129,23 +129,23 @@ class AsyncBulkMutator : private BulkMutator {
   using AttemptFinishedFunctor =
       std::function<void(CompletionQueue&, grpc::Status&)>;
 
-  AsyncBulkMutator(std::shared_ptr<bigtable::DataClient> client,
-                   bigtable::AppProfileId const& app_profile_id,
-                   bigtable::TableId const& table_name,
-                   IdempotentMutationPolicy& idempotent_policy,
-                   BulkMutation mut)
+  AsyncBulkMutatorNoex(std::shared_ptr<bigtable::DataClient> client,
+                       bigtable::AppProfileId const& app_profile_id,
+                       bigtable::TableId const& table_name,
+                       IdempotentMutationPolicy& idempotent_policy,
+                       BulkMutation mut)
       : BulkMutator(app_profile_id, table_name, idempotent_policy,
                     std::move(mut)),
         client_(std::move(client)) {}
 
-  AsyncBulkMutator(std::shared_ptr<bigtable::DataClient> client,
-                   bigtable::AppProfileId const& app_profile_id,
-                   bigtable::TableId const& table_name,
-                   IdempotentMutationPolicy& idempotent_policy,
-                   MutationsSucceededFunctor mutations_succeeded_callback,
-                   MutationsFailedFunctor mutations_failed_callback,
-                   AttemptFinishedFunctor attempt_finished_callback,
-                   BulkMutation mut)
+  AsyncBulkMutatorNoex(std::shared_ptr<bigtable::DataClient> client,
+                       bigtable::AppProfileId const& app_profile_id,
+                       bigtable::TableId const& table_name,
+                       IdempotentMutationPolicy& idempotent_policy,
+                       MutationsSucceededFunctor mutations_succeeded_callback,
+                       MutationsFailedFunctor mutations_failed_callback,
+                       AttemptFinishedFunctor attempt_finished_callback,
+                       BulkMutation mut)
       : BulkMutator(app_profile_id, table_name, idempotent_policy,
                     std::move(mut)),
         client_(std::move(client)),
@@ -191,7 +191,7 @@ class AsyncBulkMutator : private BulkMutator {
                                                       grpc::Status&>::value,
                 int>::type valid_callback_type = 0>
   struct FinishedCallback {
-    FinishedCallback(AsyncBulkMutator& parent, Functor callback)
+    FinishedCallback(AsyncBulkMutatorNoex& parent, Functor callback)
         : parent_(parent), callback_(callback) {}
 
     void operator()(CompletionQueue& cq, grpc::ClientContext& context,
@@ -209,10 +209,10 @@ class AsyncBulkMutator : private BulkMutator {
       callback_(cq, status);
     }
 
-    // The user of AsyncBulkMutator has to make sure that it is not destructed
-    // before all callbacks return, so we have a guarantee that this reference
-    // is valid for as long as we don't call callback_.
-    AsyncBulkMutator& parent_;
+    // The user of AsyncBulkMutatorNoex has to make sure that it is not
+    // destructed before all callbacks return, so we have a guarantee that this
+    // reference is valid for as long as we don't call callback_.
+    AsyncBulkMutatorNoex& parent_;
     Functor callback_;
   };
 
