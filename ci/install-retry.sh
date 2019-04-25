@@ -36,8 +36,8 @@ min_wait=120
 # Do not exit on failures for this loop.
 set +e
 for i in 1 2 3; do
-  ${PROGRAM} "$@"
-  if [ $? -eq 0 ]; then
+  "${PROGRAM}" "$@"
+  if [[ $? -eq 0 ]]; then
     exit 0
   fi
   # Sleep for a few minutes before trying again.
@@ -46,3 +46,5 @@ for i in 1 2 3; do
   sleep ${period}s
   min_wait=$(( min_wait * 2 ))
 done
+
+exit 1

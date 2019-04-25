@@ -23,7 +23,6 @@ RUN apt update && \
         build-essential \
         ccache \
         clang \
-        clang-format-7 \
         cmake \
         curl \
         doxygen \
