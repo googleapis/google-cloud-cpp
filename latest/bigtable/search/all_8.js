@@ -1,7 +1,7 @@
 var searchData=
 [
   ['asyncawaitconsistency',['AsyncAwaitConsistency',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#af14cc753ddef0e763fc448d5fdef81b6',1,'google::cloud::bigtable::v0::AdminClient']]],
-  ['asyncbulkmutator',['AsyncBulkMutator',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#a7367a905a41df8e284a6208f13e5ab76',1,'google::cloud::bigtable::v0::DataClient']]],
+  ['asyncbulkmutatornoex',['AsyncBulkMutatorNoex',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#aa668f94e876b87e39cb6dbc76520e097',1,'google::cloud::bigtable::v0::DataClient']]],
   ['asynccheckconsistency',['AsyncCheckConsistency',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a17714b04ba1f05a18eab249848f44fd7',1,'google::cloud::bigtable::v0::AdminClient']]],
   ['asynclistappprofiles',['AsyncListAppProfiles',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a21aa36086f6d4198f76e52e009f60cb8',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
   ['asynclistclusters',['AsyncListClusters',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#ab143ea77ae32f6534bb1c9b53adde458',1,'google::cloud::bigtable::v0::InstanceAdminClient']]],
