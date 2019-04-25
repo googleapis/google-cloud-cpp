@@ -134,6 +134,7 @@ add_library(bigtable_client
             internal/async_loop_op.h
             internal/async_op_traits.h
             internal/async_poll_op.h
+            internal/async_read_stream_impl.h
             internal/async_sample_row_keys.h
             internal/async_sample_row_keys.cc
             internal/async_read_row_operation.h
@@ -269,6 +270,7 @@ if (BUILD_TESTING)
         async_list_app_profiles_test.cc
         async_list_clusters_test.cc
         async_list_instances_test.cc
+        async_read_stream_test.cc
         bigtable_version_test.cc
         cell_test.cc
         client_options_test.cc

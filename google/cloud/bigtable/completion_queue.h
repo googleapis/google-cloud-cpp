@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_COMPLETION_QUEUE_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_COMPLETION_QUEUE_H_
 
+#include "google/cloud/bigtable/internal/async_read_stream_impl.h"
 #include "google/cloud/bigtable/internal/completion_queue_impl.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
@@ -110,6 +111,50 @@ class CompletionQueue {
     void* tag = impl_->RegisterOperation(op);
     op->Start(async_call, std::move(context), request, &impl_->cq(), tag);
     return op->GetFuture();
+  }
+
+  /**
+   * Make an asynchronous streaming read RPC.
+   *
+   * Reading from the stream starts automatically, and the handler is notified
+   * of all interesting events in the stream. Note that then handler is called
+   * by any thread blocked on this object's Run() member function. However, only
+   * one callback in the handler is called at a time.
+   *
+   * @param async_call a callable to start the asynchronous RPC.
+   * @param request the contents of the request.
+   * @param context an initialized request context to make the call.
+   * @param on_read the callback to be invoked on each successful Read().
+   * @param on_finish the callback to be invoked when the stream is closed.
+   *
+   * @tparam AsyncCallType the type of @a async_call. It must be invocable with
+   *     parameters
+   *     `(grpc::ClientContext*, RequestType const&, grpc::CompletionQueue*)`.
+   *     Furthermore, it should return a type convertible to
+   *     `std::unique_ptr<grpc::ClientAsyncReaderInterface<Response>>>`.
+   *     These requirements are verified by
+   *     `internal::AsyncStreamingReadRpcUnwrap<>`, and this function is
+   *     excluded from overload resolution if the parameters do not meet these
+   *     requirements.
+   * @tparam Request the type of the request in the streaming RPC.
+   * @tparam Response the type of the response in the streaming RPC.
+   * @tparam OnReadHandler the type of the @p on_read callback.
+   * @tparam OnFinishHandler the type of the @p on_finish callback.
+   */
+  template <typename AsyncCallType, typename Request,
+            typename Response = typename internal::
+                AsyncStreamingReadResponseType<AsyncCallType, Request>::type,
+            typename OnReadHandler, typename OnFinishHandler>
+  std::shared_ptr<AsyncOperation> MakeStreamingReadRpc(
+      AsyncCallType&& async_call, Request const& request,
+      std::unique_ptr<grpc::ClientContext> context, OnReadHandler&& on_read,
+      OnFinishHandler&& on_finish) {
+    auto stream = internal::MakeAsyncReadStreamImpl<Response>(
+        std::forward<OnReadHandler>(on_read),
+        std::forward<OnFinishHandler>(on_finish));
+    stream->Start(std::forward<AsyncCallType>(async_call), request,
+                  std::move(context), impl_);
+    return stream;
   }
 
   //@{

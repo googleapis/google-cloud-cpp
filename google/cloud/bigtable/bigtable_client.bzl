@@ -44,6 +44,7 @@ bigtable_client_hdrs = [
     "internal/async_loop_op.h",
     "internal/async_op_traits.h",
     "internal/async_poll_op.h",
+    "internal/async_read_stream_impl.h",
     "internal/async_sample_row_keys.h",
     "internal/async_read_row_operation.h",
     "internal/async_retry_multi_page.h",
