@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/internal/table.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/table_strong_types.h"
+#include "google/cloud/log.h"
 #include <numeric>
 
 namespace google {
@@ -26,10 +27,10 @@ namespace internal {
 
 namespace btproto = google::bigtable::v2;
 
-BulkMutator::BulkMutator(bigtable::AppProfileId const& app_profile_id,
-                         bigtable::TableId const& table_name,
-                         IdempotentMutationPolicy& idempotent_policy,
-                         BulkMutation mut) {
+BulkMutatorState::BulkMutatorState(bigtable::AppProfileId const& app_profile_id,
+                                   bigtable::TableId const& table_name,
+                                   IdempotentMutationPolicy& idempotent_policy,
+                                   BulkMutation mut) {
   // Every time the client library calls MakeOneRequest(), the data in the
   // "pending_*" variables initializes the next request.  So in the constructor
   // we start by putting the data on the "pending_*" variables.
@@ -39,11 +40,16 @@ BulkMutator::BulkMutator(bigtable::AppProfileId const& app_profile_id,
   bigtable::internal::SetCommonTableOperationRequest<
       btproto::MutateRowsRequest>(pending_mutations_, app_profile_id.get(),
                                   table_name.get());
+
   // As we receive successful responses, we shrink the size of the request (only
   // those pending are resent).  But if any fails we want to report their index
-  // in the original sequence provided by the user.  So this vector maps from
-  // the index in the current array to the index in the original array.
+  // in the original sequence provided by the user. This vector maps from the
+  // index in the current sequence of mutations to the index in the original
+  // sequence of mutations.
   pending_annotations_.reserve(pending_mutations_.entries_size());
+
+  // We save the idempotency of each mutation, to be used later as we decide if
+  // they should be retried or not.
   int index = 0;
   for (auto const& e : pending_mutations_.entries()) {
     // This is a giant && across all the mutations for each row.
@@ -55,22 +61,7 @@ BulkMutator::BulkMutator(bigtable::AppProfileId const& app_profile_id,
   }
 }
 
-grpc::Status BulkMutator::MakeOneRequest(bigtable::DataClient& client,
-                                         grpc::ClientContext& client_context) {
-  PrepareForRequest();
-  // Send the request to the server and read the resulting result stream.
-  auto stream = client.MutateRows(&client_context, mutations_);
-  btproto::MutateRowsResponse response;
-  while (stream->Read(&response)) {
-    ProcessResponse(response);
-  }
-  auto grpc_status = stream->Finish();
-  last_status_ = bigtable::internal::MakeStatusFromRpcError(grpc_status);
-  FinishRequest();
-  return grpc_status;
-}
-
-void BulkMutator::PrepareForRequest() {
+google::bigtable::v2::MutateRowsRequest const& BulkMutatorState::BeforeStart() {
   mutations_.Swap(&pending_mutations_);
   annotations_.swap(pending_annotations_);
   for (auto& a : annotations_) {
@@ -81,15 +72,21 @@ void BulkMutator::PrepareForRequest() {
       btproto::MutateRowsRequest>(
       pending_mutations_, mutations_.app_profile_id(), mutations_.table_name());
   pending_annotations_ = {};
+
+  return mutations_;
 }
 
-std::vector<int> BulkMutator::ProcessResponse(
+std::vector<int> BulkMutatorState::OnRead(
     google::bigtable::v2::MutateRowsResponse& response) {
   std::vector<int> res;
   for (auto& entry : *response.mutable_entries()) {
     auto index = entry.index();
     if (index < 0 || annotations_.size() <= std::size_t(index)) {
-      // TODO(#72) - decide how this is logged.
+      // There is no sensible way to return an error from here, the server did
+      // something completely unexpected.
+      GCP_LOG(ERROR) << "Invalid mutation index received from the server, got="
+                     << index << ", expected in range=[0,"
+                     << annotations_.size() << ")";
       continue;
     }
     auto& annotation = annotations_[index];
@@ -122,7 +119,9 @@ std::vector<int> BulkMutator::ProcessResponse(
   return res;
 }
 
-void BulkMutator::FinishRequest() {
+void BulkMutatorState::OnFinish(google::cloud::Status finish_status) {
+  last_status_ = std::move(finish_status);
+
   int index = 0;
   for (auto const& annotation : annotations_) {
     if (annotation.has_mutation_result) {
@@ -155,13 +154,13 @@ void BulkMutator::FinishRequest() {
   }
 }
 
-std::vector<FailedMutation> BulkMutator::ConsumeAccumulatedFailures() {
+std::vector<FailedMutation> BulkMutatorState::ConsumeAccumulatedFailures() {
   std::vector<FailedMutation> res;
   res.swap(failures_);
   return res;
 }
 
-std::vector<FailedMutation> BulkMutator::ExtractFinalFailures() {
+std::vector<FailedMutation> BulkMutatorState::OnRetryDone() && {
   std::vector<FailedMutation> result(std::move(failures_));
 
   auto size = pending_mutations_.mutable_entries()->size();
@@ -181,6 +180,32 @@ std::vector<FailedMutation> BulkMutator::ExtractFinalFailures() {
   }
 
   return result;
+}
+
+BulkMutator::BulkMutator(bigtable::AppProfileId const& app_profile_id,
+                         bigtable::TableId const& table_name,
+                         IdempotentMutationPolicy& idempotent_policy,
+                         BulkMutation mut)
+    : state_(app_profile_id, table_name, idempotent_policy, std::move(mut)) {}
+
+grpc::Status BulkMutator::MakeOneRequest(bigtable::DataClient& client,
+                                         grpc::ClientContext& client_context) {
+  // Send the request to the server.
+  auto const& mutations = state_.BeforeStart();
+  auto stream = client.MutateRows(&client_context, mutations);
+  // Read the stream of responses.
+  btproto::MutateRowsResponse response;
+  while (stream->Read(&response)) {
+    state_.OnRead(response);
+  }
+  // Handle any errors in the stream.
+  auto grpc_status = stream->Finish();
+  state_.OnFinish(bigtable::internal::MakeStatusFromRpcError(grpc_status));
+  return grpc_status;
+}
+
+std::vector<FailedMutation> BulkMutator::OnRetryDone() && {
+  return std::move(state_).OnRetryDone();
 }
 
 }  // namespace internal
