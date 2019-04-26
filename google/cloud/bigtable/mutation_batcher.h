@@ -152,7 +152,7 @@ class MutationBatcher {
    *
    * @return a future which will be satisfied once all mutations submitted
    *     before calling this function finish; if there are no such operations,
-   *     the returned future is already satisfied
+   *     the returned future is already satisfied.
    */
   future<void> AsyncWaitForNoPendingRequests();
 
@@ -177,16 +177,14 @@ class MutationBatcher {
     AdmissionPromise admission_promise;
   };
 
-  /**
-   * This is a handle to the submitted mutation.
-   *
-   * It implements AsyncOperation to allow the user to cancel it.
-   */
-  class BatchedSingleRowMutation
-      : public google::cloud::bigtable::AsyncOperation {
-   public:
-    // TODO(#1963): implement
-    virtual void Cancel() override {}
+  struct MutationData {
+    explicit MutationData(PendingSingleRowMutation pending)
+        : completion_promise(std::move(pending.completion_promise)),
+          num_mutations(pending.num_mutations),
+          request_size(pending.request_size) {}
+    CompletionPromise completion_promise;
+    std::size_t num_mutations;
+    std::size_t request_size;
   };
 
   /**
@@ -206,26 +204,14 @@ class MutationBatcher {
    * another attempt before invoking callbacks for the previous one.
    */
   struct Batch {
-    Batch()
-        : num_mutations(), requests_size(), last_idx(), attempt_finished() {}
-
-    struct MutationData {
-      MutationData(PendingSingleRowMutation pending)
-          : completion_promise(std::move(pending.completion_promise)),
-            num_mutations(pending.num_mutations),
-            request_size(pending.request_size) {}
-      CompletionPromise completion_promise;
-      std::size_t num_mutations;
-      std::size_t request_size;
-    };
+    Batch() : num_mutations(), requests_size(), last_idx() {}
 
     std::mutex mu_;
     size_t num_mutations;
     size_t requests_size;
     BulkMutation requests;
     int last_idx;
-    /// Whether at least one AsyncBulkApply finished.
-    bool attempt_finished;
+
     /**
      * The reason why it's not simple std::vector is that we want this
      * structure to shrink as individual mutations complete, so that the user
@@ -259,28 +245,14 @@ class MutationBatcher {
    * Send the currently constructed batch if there are not too many outstanding
    * already. If there are no mutations in the batch, it's a noop.
    */
-  bool FlushIfPossible(CompletionQueue& cq);
-
-  /**
-   * Entry point for lower layers indicating that mutations with indices
-   * `indices` in batch `batch` have finished successfully.
-   */
-  void OnSuccessfulMutations(CompletionQueue& cq, MutationBatcher::Batch& batch,
-                             std::vector<int> indices);
+  bool FlushIfPossible(CompletionQueue cq);
 
   /**
    * Entry point for lower layers indicating that mutations listed in `failed`
    * in batch `batch` have failed permanently.
    */
-  void OnFailedMutations(CompletionQueue& cq, MutationBatcher::Batch& batch,
-                         std::vector<FailedMutation> failed);
-
-  /**
-   * Entry point for lower layers indicating that an attempt to send the
-   * `batch` was made. This might be called multiple times in case of retries.
-   */
-  void OnBulkApplyAttemptFinished(CompletionQueue& cq,
-                                  MutationBatcher::Batch& batch);
+  void OnBulkApplyDone(CompletionQueue& cq, MutationBatcher::Batch& batch,
+                       std::vector<FailedMutation> failed);
 
   /**
    * Try to move mutations waiting in `pending_mutations_` to the currently
@@ -317,11 +289,18 @@ class MutationBatcher {
   std::shared_ptr<Batch> cur_batch_;
 
   /**
-   * These are the mutations which have not been admission yet. If the user is
+   * These are the mutations which have not been admitted yet. If the user is
    * properly reacting to `admission_promise`s, there should be very few of
    * these (likely no more than one).
    */
   std::queue<PendingSingleRowMutation> pending_mutations_;
+
+  /**
+   * The list of promises made to this point.
+   *
+   * These promises are satisfied as part of calling
+   * `AsyncWaitForNoPendingRequests()`.
+   */
   std::vector<NoMorePendingPromise> no_more_pending_promises_;
 };
 
