@@ -14,9 +14,12 @@
 
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/grpc_error.h"
+#include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
+#include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -26,6 +29,7 @@ namespace btadmin = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 
 using MockAdminClient = bigtable::testing::MockInstanceAdminClient;
+using namespace google::cloud::testing_util::chrono_literals;
 
 std::string const kProjectId = "the-project";
 
@@ -1990,4 +1994,96 @@ TEST_F(InstanceAdminTest, TestIamPermissionsRecoverableError) {
   ASSERT_STATUS_OK(permission_set);
 
   EXPECT_EQ(2U, permission_set->size());
+}
+
+using MockAsyncTestIamPermissionsReader =
+    google::cloud::bigtable::testing::MockAsyncResponseReader<
+        ::google::iam::v1::TestIamPermissionsResponse>;
+
+class AsyncTestIamPermissionsTest : public ::testing::Test {
+ public:
+  AsyncTestIamPermissionsTest()
+      : cq_impl_(new bigtable::testing::MockCompletionQueue),
+        cq_(cq_impl_),
+        client_(new bigtable::testing::MockInstanceAdminClient),
+        reader_(new MockAsyncTestIamPermissionsReader) {
+    using namespace ::testing;
+    EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
+    EXPECT_CALL(*client_, AsyncTestIamPermissions(_, _, _))
+        .WillOnce(Invoke(
+            [this](grpc::ClientContext*,
+                   ::google::iam::v1::TestIamPermissionsRequest const& request,
+                   grpc::CompletionQueue*) {
+              EXPECT_EQ("projects/the-project/instances/the-resource",
+                        request.resource());
+              // This is safe, see comments in MockAsyncResponseReader.
+              return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+                  ::google::iam::v1::TestIamPermissionsResponse>>(
+                  reader_.get());
+            }));
+  }
+
+ protected:
+  void Start(std::vector<std::string> permissions) {
+    bigtable::InstanceAdmin instance_admin(client_);
+    user_future_ = instance_admin.AsyncTestIamPermissions(
+        cq_, "the-resource", std::move(permissions));
+  }
+
+  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
+  bigtable::CompletionQueue cq_;
+  std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
+  google::cloud::future<google::cloud::StatusOr<std::vector<std::string>>>
+      user_future_;
+  std::unique_ptr<MockAsyncTestIamPermissionsReader> reader_;
+};
+
+/// @test Verify that AsyncTestIamPermissions works in simple case.
+TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissions) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  namespace iamproto = ::google::iam::v1;
+  bigtable::InstanceAdmin tested(client_);
+
+  EXPECT_CALL(*reader_, Finish(_, _, _))
+      .WillOnce(Invoke([](iamproto::TestIamPermissionsResponse* response,
+                          grpc::Status* status, void*) {
+        EXPECT_NE(nullptr, response);
+        response->add_permissions("writer");
+        response->add_permissions("reader");
+        *status = grpc::Status::OK;
+      }));
+
+  Start({"reader", "writer", "owner"});
+  EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
+  EXPECT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);
+  auto permission_set = user_future_.get();
+  ASSERT_STATUS_OK(permission_set);
+  EXPECT_EQ(2U, permission_set->size());
+}
+
+/// @test Test unrecoverable errors for InstanceAdmin::AsyncTestIamPermissions.
+TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissionsUnrecoverableError) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  namespace iamproto = ::google::iam::v1;
+  bigtable::InstanceAdmin tested(client_);
+
+  EXPECT_CALL(*reader_, Finish(_, _, _))
+      .WillOnce(Invoke([](iamproto::TestIamPermissionsResponse* response,
+                          grpc::Status* status, void*) {
+        EXPECT_NE(nullptr, response);
+        *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
+      }));
+
+  Start({"reader", "writer", "owner"});
+  EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
+  EXPECT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);
+
+  auto permission_set = user_future_.get();
+  ASSERT_FALSE(permission_set);
+  ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied,
+            permission_set.status().code());
 }

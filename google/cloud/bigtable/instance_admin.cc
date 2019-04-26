@@ -895,6 +895,40 @@ StatusOr<std::vector<std::string>> InstanceAdmin::TestIamPermissions(
   return resource_permissions;
 }
 
+future<StatusOr<std::vector<std::string>>>
+InstanceAdmin::AsyncTestIamPermissions(
+    CompletionQueue& cq, std::string const& instance_id,
+    std::vector<std::string> const& permissions) {
+  ::google::iam::v1::TestIamPermissionsRequest request;
+  request.set_resource(InstanceName(instance_id));
+
+  auto client = impl_.client_;
+  return internal::StartRetryAsyncUnaryRpc(
+             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             internal::ConstantIdempotencyPolicy(true),
+             clone_metadata_update_policy(),
+             [client](
+                 grpc::ClientContext* context,
+                 ::google::iam::v1::TestIamPermissionsRequest const& request,
+                 grpc::CompletionQueue* cq) {
+               return client->AsyncTestIamPermissions(context, request, cq);
+             },
+             std::move(request), cq)
+      .then([](future<StatusOr<::google::iam::v1::TestIamPermissionsResponse>>
+                   response_fut) -> StatusOr<std::vector<std::string>> {
+        auto response = response_fut.get();
+        if (!response) {
+          return response.status();
+        }
+        std::vector<std::string> res;
+        res.reserve(response->permissions_size());
+        std::move(response->mutable_permissions()->begin(),
+                  response->mutable_permissions()->end(),
+                  std::back_inserter(res));
+        return res;
+      });
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
