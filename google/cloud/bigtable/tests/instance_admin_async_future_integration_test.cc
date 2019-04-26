@@ -401,6 +401,48 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
   pool.join();
 }
 
+TEST_F(InstanceAdminAsyncFutureIntegrationTest, SetGetTestIamAPIsTest) {
+  std::string id =
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+
+  google::cloud::bigtable::CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  // create instance prerequisites for cluster operations
+  bigtable::InstanceId instance_id(id);
+  auto instance_config = IntegrationTestConfig(
+      id, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance_details =
+      instance_admin_->CreateInstance(instance_config).get();
+
+  std::string resource = id;
+  auto iam_bindings = google::cloud::IamBindings(
+      "writer", {"abc@gmail.com", "xyz@gmail.com", "pqr@gmail.com"});
+
+  auto initial_policy =
+      instance_admin_->SetIamPolicy(id, iam_bindings, "test-tag");
+  ASSERT_STATUS_OK(initial_policy);
+
+  auto fetched_policy = instance_admin_->GetIamPolicy(id);
+  ASSERT_STATUS_OK(fetched_policy);
+
+  EXPECT_EQ(initial_policy->version, fetched_policy->version);
+  EXPECT_EQ(initial_policy->etag, fetched_policy->etag);
+
+  auto permission_set =
+      instance_admin_
+          ->AsyncTestIamPermissions(
+              cq, id, {"bigtable.tables.list", "bigtable.tables.delete"})
+          .get();
+  ASSERT_STATUS_OK(permission_set);
+
+  EXPECT_EQ(2U, permission_set->size());
+
+  cq.Shutdown();
+  pool.join();
+}
+
 int main(int argc, char* argv[]) {
   google::cloud::testing_util::InitGoogleMock(argc, argv);
 

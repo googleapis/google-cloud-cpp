@@ -517,6 +517,49 @@ void AsyncDeleteInstance(cbt::InstanceAdmin instance_admin,
   //! [async-delete-instance] [END bigtable_async_delete_instance]
   (std::move(instance_admin), std::move(cq), argv[1]);
 }
+
+void AsyncTestIamPermissions(cbt::InstanceAdmin instance_admin,
+                             cbt::CompletionQueue cq,
+                             std::vector<std::string> argv) {
+  if (argv.size() < 2U) {
+    throw Usage{
+        "async-test-iam-permissions: <project-id> <resource-id> "
+        "[permission ...]"};
+  }
+
+  //! [async test iam permissions]
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
+     std::string resource, std::vector<std::string>(permissions)) {
+    auto future =
+        instance_admin.AsyncTestIamPermissions(cq, resource, permissions);
+    // Most applications would simply call future.get(), here we show how to
+    // perform additional work while the long running operation completes.
+    std::cout << "Waiting for app profile update to complete ";
+    for (int i = 0; i != 100; ++i) {
+      if (std::future_status::ready ==
+          future.wait_for(std::chrono::seconds(2))) {
+        auto result = future.get();
+        if (!result) {
+          throw std::runtime_error(result.status().message());
+        }
+        std::cout << "DONE, the current user has the following permissions [";
+        char const* sep = "";
+        for (auto const& p : *result) {
+          std::cout << sep << p;
+          sep = ", ";
+        }
+        std::cout << "]\n";
+        return;
+      }
+      std::cout << '.' << std::flush;
+    }
+    std::cout << "TIMEOUT\n";
+  }
+  //! [async test iam permissions]
+  (std::move(instance_admin), std::move(cq), argv[1],
+   std::vector<std::string>(argv.begin() + 2, argv.end()));
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -536,7 +579,8 @@ int main(int argc, char* argv[]) try {
       {"async-update-instance", &AsyncUpdateInstance},
       {"async-update-cluster", &AsyncUpdateCluster},
       {"async-update-app-profile", &AsyncUpdateAppProfile},
-      {"async-delete-instance", &AsyncDeleteInstance}};
+      {"async-delete-instance", &AsyncDeleteInstance},
+      {"async-test-iam-permissions", &AsyncTestIamPermissions}};
 
   google::cloud::bigtable::CompletionQueue cq;
 

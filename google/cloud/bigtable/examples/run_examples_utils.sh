@@ -197,6 +197,12 @@ function run_all_instance_admin_async_examples {
       "${project_id}" "${INSTANCE}" "my-profile"
   run_example ./instance_admin_async_snippets async-update-app-profile \
       "${project_id}" "${INSTANCE}" "my-profile"
+  run_example ./bigtable_instance_admin_snippets get-iam-policy \
+      "${project_id}" "${INSTANCE}"
+  run_example ./bigtable_instance_admin_snippets set-iam-policy \
+      "${project_id}" "${INSTANCE}" "roles/bigtable.user" "nobody@example.com"
+  run_example ./instance_admin_async_snippets async-test-iam-permissions \
+      "${project_id}" "${INSTANCE}" "bigtable.instances.delete"
   run_example ./instance_admin_async_snippets async-delete-instance \
       "${project_id}" "${INSTANCE}"
 

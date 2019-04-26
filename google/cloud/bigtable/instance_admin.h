@@ -684,6 +684,26 @@ class InstanceAdmin {
       std::string const& instance_id,
       std::vector<std::string> const& permissions);
 
+  /**
+   * Asynchronously obtains a permission set that the caller has on the
+   * specified instance.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param instance_id the ID of the instance to query.
+   * @param permissions set of permissions to check for the resource.
+   *
+   * @par Example
+   * @snippet instance_admin_async_snippets.cc async test iam permissions
+   *
+   * @see https://cloud.google.com/bigtable/docs/access-control for a list of
+   *     valid permissions on Google Cloud Bigtable.
+   */
+  future<StatusOr<std::vector<std::string>>> AsyncTestIamPermissions(
+      CompletionQueue& cq, std::string const& instance_id,
+      std::vector<std::string> const& permissions);
+
  private:
   /// Implement CreateInstance() with a separate thread.
   StatusOr<google::bigtable::admin::v2::Instance> CreateInstanceImpl(
