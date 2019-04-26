@@ -304,14 +304,24 @@ TEST_F(AsyncReadStreamTest, Return3) {
 
 /// @test Verify that the AsyncReadStream detect errors reported by the server.
 TEST_F(AsyncReadStreamTest, Return3ThenFail) {
+  // Very rarely (in the CI builds, with high load), all 3 responses and the
+  // error message are coalesced into a single message from the server, and then
+  // the OnRead() calls do not happen. We need to explicitly synchronize the
+  // client and server threads.
+  SimpleBarrier server_barrier;
   impl_.SetCallback(
-      [this](grpc::ServerContext*,
-             google::bigtable::v2::MutateRowsRequest const*,
-             grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
-                 writer) {
+      [this, &server_barrier](
+          grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
+          grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
+              writer) {
         WriteOne(writer, 0);
         WriteOne(writer, 1);
-        WriteLast(writer, 2);
+        // Cannot use WriteLast() because that blocks until the status is
+        // returned, and we want to pause in `server_barrier` to ensure all
+        // messages are received.
+        WriteOne(writer, 2);
+        // Block until the client has received the responses.
+        server_barrier.Wait();
         return grpc::Status(grpc::StatusCode::INTERNAL, "bad luck");
       });
 
@@ -325,8 +335,11 @@ TEST_F(AsyncReadStreamTest, Return3ThenFail) {
         return stub_->PrepareAsyncMutateRows(context, request, cq);
       },
       request, std::move(context),
-      [&result](btproto::MutateRowsResponse r) {
+      [&result, &server_barrier](btproto::MutateRowsResponse r) {
         result.reads.emplace_back(std::move(r));
+        if (result.reads.size() == 3U) {
+          server_barrier.Lift();
+        }
         return make_ready_future(true);
       },
       [&result](Status s) {
