@@ -116,6 +116,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3e98730407e54ec7e55f444048028fb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a30c1c59bc4bcb207765c75ea36b63dee"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt;::grpc::ClientAsyncReaderInterface&lt; ::google::bigtable::v2::MutateRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DefaultDataClient.html#a30c1c59bc4bcb207765c75ea36b63dee">AsyncMutateRows</a> (::grpc::ClientContext *context, const ::google::bigtable::v2::MutateRowsRequest &amp;request, ::grpc::CompletionQueue *cq, void *tag) override</td></tr>
 <tr class="separator:a30c1c59bc4bcb207765c75ea36b63dee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe5d0a294be66925d2774f92e8159560"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt;::grpc::ClientAsyncReaderInterface&lt; ::google::bigtable::v2::MutateRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DefaultDataClient.html#afe5d0a294be66925d2774f92e8159560">PrepareAsyncMutateRows</a> (::grpc::ClientContext *context, const ::google::bigtable::v2::MutateRowsRequest &amp;request, ::grpc::CompletionQueue *cq) override</td></tr>
+<tr class="separator:afe5d0a294be66925d2774f92e8159560"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -701,7 +703,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#a700ba7aedc04feffb1acb99dda8af7e1">google::cloud::bigtable::v0::DataClient</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="data__client_8cc_source.html#l00153">153</a> of file <a class="el" href="data__client_8cc_source.html">data_client.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="data__client_8cc_source.html#l00161">161</a> of file <a class="el" href="data__client_8cc_source.html">data_client.cc</a>.</p>
 
 </div>
 </div>
@@ -865,6 +867,52 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="afe5d0a294be66925d2774f92e8159560"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe5d0a294be66925d2774f92e8159560">&#9670;&nbsp;</a></span>PrepareAsyncMutateRows()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;::grpc::ClientAsyncReaderInterface&lt; ::google::bigtable::v2::MutateRowsResponse&gt; &gt; google::cloud::bigtable::v0::DefaultDataClient::PrepareAsyncMutateRows </td>
+          <td>(</td>
+          <td class="paramtype">::grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const ::google::bigtable::v2::MutateRowsRequest &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">::grpc::CompletionQueue *&#160;</td>
+          <td class="paramname"><em>cq</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#a4be7a76a59223f0ad8c996b75775975b">google::cloud::bigtable::v0::DataClient</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="data__client_8cc_source.html#l00146">146</a> of file <a class="el" href="data__client_8cc_source.html">data_client.cc</a>.</p>
+
+</div>
+</div>
 <a id="ab188b7079de35e0e79c607decb0acba8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab188b7079de35e0e79c607decb0acba8">&#9670;&nbsp;</a></span>project_id()</h2>
 
@@ -890,7 +938,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#a383725d5b6abeebeeb9f7c66c5bc3e8c">google::cloud::bigtable::v0::DataClient</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="data__client_8cc_source.html#l00151">151</a> of file <a class="el" href="data__client_8cc_source.html">data_client.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="data__client_8cc_source.html#l00159">159</a> of file <a class="el" href="data__client_8cc_source.html">data_client.cc</a>.</p>
 
 </div>
 </div>

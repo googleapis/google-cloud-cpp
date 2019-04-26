@@ -7,6 +7,7 @@ var searchData=
   ['polling_5fpolicy_2eh',['polling_policy.h',['../polling__policy_8h.html',1,'']]],
   ['pollingpolicy',['PollingPolicy',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1PollingPolicy.html',1,'google::cloud::bigtable::v0']]],
   ['prefix',['Prefix',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html#a9a89172a130b54bbfca219599163d6dc',1,'google::cloud::bigtable::v0::RowRange']]],
+  ['prepareasyncmutaterows',['PrepareAsyncMutateRows',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DefaultDataClient.html#afe5d0a294be66925d2774f92e8159560',1,'google::cloud::bigtable::v0::DefaultDataClient::PrepareAsyncMutateRows()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#a4be7a76a59223f0ad8c996b75775975b',1,'google::cloud::bigtable::v0::DataClient::PrepareAsyncMutateRows()']]],
   ['process',['Process',['../../common/classgoogle_1_1cloud_1_1v0_1_1LogBackend.html#a9f4327fb656d7c7d83dfb38fb21407f9',1,'google::cloud::v0::LogBackend']]],
   ['processwithownership',['ProcessWithOwnership',['../../common/classgoogle_1_1cloud_1_1v0_1_1LogBackend.html#a12ed5bf8272f3f1a71e561ea63e301c9',1,'google::cloud::v0::LogBackend']]],
   ['production',['PRODUCTION',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceConfig.html#a3f0f964589d17c912f31cd4cd43ea54c',1,'google::cloud::bigtable::v0::InstanceConfig::PRODUCTION()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceUpdateConfig.html#a1002bffc604e395a3e10496a61f142fa',1,'google::cloud::bigtable::v0::InstanceUpdateConfig::PRODUCTION()']]],
