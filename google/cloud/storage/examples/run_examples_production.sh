@@ -19,3 +19,5 @@ set -eu
 source "$(dirname "$0")/run_examples_utils.sh"
 
 run_all_storage_examples
+
+exit_example_runner

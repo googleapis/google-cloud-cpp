@@ -41,4 +41,4 @@ run_all_table_admin_async_examples "${PROJECT_ID}" "${ZONE_ID}" "${REPLICATION_Z
 run_all_instance_admin_examples "${PROJECT_ID}" "${ZONE_ID}" "${REPLICATION_ZONE_ID}"
 run_all_instance_admin_async_examples "${PROJECT_ID}" "${ZONE_ID}" "${REPLICATION_ZONE_ID}"
 
-exit "${EXIT_STATUS}"
+exit_example_runner
