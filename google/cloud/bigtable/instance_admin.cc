@@ -901,6 +901,9 @@ InstanceAdmin::AsyncTestIamPermissions(
     std::vector<std::string> const& permissions) {
   ::google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(InstanceName(instance_id));
+  for (auto& permission : permissions) {
+    request.add_permissions(permission);
+  }
 
   auto client = impl_.client_;
   return internal::StartRetryAsyncUnaryRpc(
