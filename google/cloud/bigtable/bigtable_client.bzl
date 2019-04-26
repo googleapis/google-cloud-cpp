@@ -101,6 +101,7 @@ bigtable_client_srcs = [
     "instance_admin.cc",
     "instance_config.cc",
     "instance_update_config.cc",
+    "internal/async_bulk_apply.cc",
     "internal/async_sample_row_keys.cc",
     "internal/bulk_mutator.cc",
     "internal/completion_queue_impl.cc",

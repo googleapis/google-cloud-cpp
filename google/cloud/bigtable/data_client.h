@@ -32,6 +32,7 @@ class Table;
 }  // namespace noex
 namespace internal {
 class AsyncBulkMutatorNoex;
+class AsyncRetryBulkApply;
 class AsyncSampleRowKeys;
 class BulkMutator;
 template <typename ReadRowCallback,
@@ -92,6 +93,7 @@ class DataClient {
   friend class Table;
   friend class noex::Table;
   friend class internal::AsyncBulkMutatorNoex;
+  friend class internal::AsyncRetryBulkApply;
   friend class internal::AsyncSampleRowKeys;
   friend class internal::BulkMutator;
   friend class RowReader;
@@ -160,6 +162,12 @@ class DataClient {
   AsyncMutateRows(::grpc::ClientContext* context,
                   const ::google::bigtable::v2::MutateRowsRequest& request,
                   ::grpc::CompletionQueue* cq, void* tag) = 0;
+  virtual std::unique_ptr<::grpc::ClientAsyncReaderInterface<
+      ::google::bigtable::v2::MutateRowsResponse>>
+  PrepareAsyncMutateRows(
+      ::grpc::ClientContext* context,
+      const ::google::bigtable::v2::MutateRowsRequest& request,
+      ::grpc::CompletionQueue* cq) = 0;
   //@}
 };
 

@@ -107,11 +107,19 @@ class InProcessDataClient : public bigtable::DataClient {
       grpc::ClientReaderInterface<google::bigtable::v2::MutateRowsResponse>>
   MutateRows(grpc::ClientContext* context,
              google::bigtable::v2::MutateRowsRequest const& request) override;
+
   std::unique_ptr<::grpc::ClientAsyncReaderInterface<
       ::google::bigtable::v2::MutateRowsResponse>>
   AsyncMutateRows(::grpc::ClientContext* context,
                   const ::google::bigtable::v2::MutateRowsRequest& request,
                   ::grpc::CompletionQueue* cq, void* tag) override;
+
+  std::unique_ptr<::grpc::ClientAsyncReaderInterface<
+      ::google::bigtable::v2::MutateRowsResponse>>
+  PrepareAsyncMutateRows(
+      ::grpc::ClientContext* context,
+      const ::google::bigtable::v2::MutateRowsRequest& request,
+      ::grpc::CompletionQueue* cq) override;
   //@}
 
  private:
