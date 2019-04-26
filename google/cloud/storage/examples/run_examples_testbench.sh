@@ -16,7 +16,7 @@
 
 set -eu
 
-if [ -z "${PROJECT_ROOT+x}" ]; then
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
   readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../../.."; pwd)"
 fi
 source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
@@ -42,3 +42,5 @@ run_example ./storage_bucket_samples create-bucket-for-project \
       "${DESTINATION_BUCKET_NAME}" "${PROJECT_ID}"
 
 run_all_storage_examples
+
+exit_example_runner

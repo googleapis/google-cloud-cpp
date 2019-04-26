@@ -191,3 +191,28 @@ run_example_usage() {
   set -e
   /bin/rm -f "${log}"
 }
+
+################################################
+# Report the result of running many examples.
+# Globals:
+#   COLOR_*: colorize output messages, defined in colors.sh
+#   EXIT_STATUS: control the final exit status for the program.
+#   EMULATOR_LOG: the name of the emulator logfile.
+# Arguments:
+#   None
+# Returns:
+#   None
+################################################
+exit_example_runner() {
+  if [[ "${EXIT_STATUS}" == 0 ]]; then
+    echo
+    echo "${COLOR_GREEN}All the examples finished successfully.${COLOR_RESET}"
+    echo
+  else
+    echo
+    echo "${COLOR_RED}Some of the examples failed.${COLOR_RESET}"
+    echo
+  fi
+
+  exit "${EXIT_STATUS}"
+}
