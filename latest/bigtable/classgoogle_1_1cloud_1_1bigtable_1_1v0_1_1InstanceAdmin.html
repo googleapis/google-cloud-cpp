@@ -190,6 +190,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a628efb6a49363fa8fa4a34ebdd2d4ada"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::vector&lt; std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#a628efb6a49363fa8fa4a34ebdd2d4ada">TestIamPermissions</a> (std::string const &amp;instance_id, std::vector&lt; std::string &gt; const &amp;permissions)</td></tr>
 <tr class="memdesc:a628efb6a49363fa8fa4a34ebdd2d4ada"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a permission set that the caller has on the specified instance.  <a href="#a628efb6a49363fa8fa4a34ebdd2d4ada">More...</a><br /></td></tr>
 <tr class="separator:a628efb6a49363fa8fa4a34ebdd2d4ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7420b7cb337cde52f0a94ae7977c926"><td class="memItemLeft" align="right" valign="top">future&lt; StatusOr&lt; std::vector&lt; std::string &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdmin.html#ab7420b7cb337cde52f0a94ae7977c926">AsyncTestIamPermissions</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;cq, std::string const &amp;instance_id, std::vector&lt; std::string &gt; const &amp;permissions)</td></tr>
+<tr class="memdesc:ab7420b7cb337cde52f0a94ae7977c926"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously obtains a permission set that the caller has on the specified instance.  <a href="#ab7420b7cb337cde52f0a94ae7977c926">More...</a><br /></td></tr>
+<tr class="separator:ab7420b7cb337cde52f0a94ae7977c926"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the APIs to administer Cloud Bigtable instances. </p>
@@ -679,6 +682,54 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq) {</div><div class="line">    google::cloud::future&lt;</div><div class="line">        google::cloud::StatusOr&lt;google::cloud::bigtable::v0::InstanceList&gt;&gt;</div><div class="line">        future = instance_admin.AsyncListInstances(cq);</div><div class="line"></div><div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = future.then(</div><div class="line">        [](google::cloud::future&lt;</div><div class="line">            google::cloud::StatusOr&lt;google::cloud::bigtable::v0::InstanceList&gt;&gt;</div><div class="line">               f) {</div><div class="line">          <span class="keyword">auto</span> instance_list = f.get();</div><div class="line">          <span class="keywordflow">if</span> (!instance_list) {</div><div class="line">            <span class="keywordflow">throw</span> std::runtime_error(instance_list.status().message());</div><div class="line">          }</div><div class="line">          <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; instance : instance_list-&gt;instances) {</div><div class="line">            std::cout &lt;&lt; instance.name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">          }</div><div class="line">          <span class="keywordflow">if</span> (!instance_list-&gt;failed_locations.empty()) {</div><div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;The Cloud Bigtable service reports that it could not &quot;</span></div><div class="line">                         <span class="stringliteral">&quot;retrieve data for the following zones:\n&quot;</span>;</div><div class="line">            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; failed_location :</div><div class="line">                 instance_list-&gt;failed_locations) {</div><div class="line">              std::cout &lt;&lt; failed_location &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">            }</div><div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;This is typically a transient condition, try again &quot;</span></div><div class="line">                         <span class="stringliteral">&quot;later.\n&quot;</span>;</div><div class="line">          }</div><div class="line">          <span class="keywordflow">return</span> google::cloud::Status();</div><div class="line">        });</div><div class="line">    <span class="keyword">final</span>.get();</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="instance__admin_8cc_source.html#l00080">80</a> of file <a class="el" href="instance__admin_8cc_source.html">instance_admin.cc</a>.</p>
+
+</div>
+</div>
+<a id="ab7420b7cb337cde52f0a94ae7977c926"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7420b7cb337cde52f0a94ae7977c926">&#9670;&nbsp;</a></span>AsyncTestIamPermissions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">future&lt; StatusOr&lt; std::vector&lt; std::string &gt; &gt; &gt; google::cloud::bigtable::v0::InstanceAdmin::AsyncTestIamPermissions </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;&#160;</td>
+          <td class="paramname"><em>cq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>instance_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::string &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>permissions</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Asynchronously obtains a permission set that the caller has on the specified instance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cq</td><td>the completion queue that will execute the asynchronous calls, the application must ensure that one or more threads are blocked on <code>cq.Run()</code>. </td></tr>
+    <tr><td class="paramname">instance_id</td><td>the ID of the instance to query. </td></tr>
+    <tr><td class="paramname">permissions</td><td>set of permissions to check for the resource.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,</div><div class="line">     std::string resource, std::vector&lt;std::string&gt;(permissions)) {</div><div class="line">    <span class="keyword">auto</span> future =</div><div class="line">        instance_admin.AsyncTestIamPermissions(cq, resource, permissions);</div><div class="line">    <span class="comment">// Most applications would simply call future.get(), here we show how to</span></div><div class="line">    <span class="comment">// perform additional work while the long running operation completes.</span></div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Waiting for app profile update to complete &quot;</span>;</div><div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i != 100; ++i) {</div><div class="line">      <span class="keywordflow">if</span> (std::future_status::ready ==</div><div class="line">          future.wait_for(std::chrono::seconds(2))) {</div><div class="line">        <span class="keyword">auto</span> result = future.get();</div><div class="line">        <span class="keywordflow">if</span> (!result) {</div><div class="line">          <span class="keywordflow">throw</span> std::runtime_error(result.status().message());</div><div class="line">        }</div><div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;DONE, the current user has the following permissions [&quot;</span>;</div><div class="line">        <span class="keywordtype">char</span> <span class="keyword">const</span>* sep = <span class="stringliteral">&quot;&quot;</span>;</div><div class="line">        <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; p : *result) {</div><div class="line">          std::cout &lt;&lt; sep &lt;&lt; p;</div><div class="line">          sep = <span class="stringliteral">&quot;, &quot;</span>;</div><div class="line">        }</div><div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;]\n&quot;</span>;</div><div class="line">        <span class="keywordflow">return</span>;</div><div class="line">      }</div><div class="line">      std::cout &lt;&lt; <span class="charliteral">&#39;.&#39;</span> &lt;&lt; std::flush;</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;TIMEOUT\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/bigtable/docs/access-control">https://cloud.google.com/bigtable/docs/access-control</a> for a list of valid permissions on Google Cloud Bigtable. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="instance__admin_8cc_source.html#l00898">898</a> of file <a class="el" href="instance__admin_8cc_source.html">instance_admin.cc</a>.</p>
 
 </div>
 </div>
