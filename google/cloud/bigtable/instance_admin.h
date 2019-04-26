@@ -543,7 +543,7 @@ class InstanceAdmin {
    * @return The proto describing the new application profile.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc create app profile
+   * @snippet instance_admin_async_snippets.cc async create app profile
    */
   future<StatusOr<google::bigtable::admin::v2::AppProfile>>
   AsyncCreateAppProfile(CompletionQueue& cq,
