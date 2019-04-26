@@ -597,6 +597,26 @@ StatusOr<btadmin::AppProfile> InstanceAdmin::CreateAppProfile(
   return result;
 }
 
+future<StatusOr<google::bigtable::admin::v2::AppProfile>>
+InstanceAdmin::AsyncCreateAppProfile(CompletionQueue& cq,
+                                     bigtable::InstanceId const& instance_id,
+                                     AppProfileConfig config) {
+  auto request = std::move(config).as_proto();
+  request.set_parent(InstanceName(instance_id.get()));
+
+  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  return internal::StartRetryAsyncUnaryRpc(
+      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      internal::ConstantIdempotencyPolicy(false),
+      clone_metadata_update_policy(),
+      [client](grpc::ClientContext* context,
+               btadmin::CreateAppProfileRequest const& request,
+               grpc::CompletionQueue* cq) {
+        return client->AsyncCreateAppProfile(context, request, cq);
+      },
+      std::move(request), cq);
+}
+
 StatusOr<btadmin::AppProfile> InstanceAdmin::GetAppProfile(
     bigtable::InstanceId const& instance_id,
     bigtable::AppProfileId const& profile_id) {
