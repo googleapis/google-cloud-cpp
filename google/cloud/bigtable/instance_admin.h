@@ -689,6 +689,9 @@ class InstanceAdmin {
    * Asynchronously obtains a permission set that the caller has on the
    * specified instance.
    *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
    * @param instance_id the ID of the instance to query.
    * @param permissions set of permissions to check for the resource.
    *
