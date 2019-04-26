@@ -111,11 +111,7 @@ void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
       mutation.emplace_back(
           cbt::SetCell("fam", "col0", "value0-" + std::to_string(i)));
       mutation.emplace_back(
-          cbt::SetCell("fam", "col1", "value2-" + std::to_string(i)));
-      mutation.emplace_back(
-          cbt::SetCell("fam", "col2", "value3-" + std::to_string(i)));
-      mutation.emplace_back(
-          cbt::SetCell("fam", "col3", "value4-" + std::to_string(i)));
+          cbt::SetCell("fam", "col1", "value1-" + std::to_string(i)));
       bulk.emplace_back(std::move(mutation));
     }
     auto failures = table.BulkApply(std::move(bulk));
@@ -863,8 +859,7 @@ void RenameColumn(google::cloud::bigtable::Table table, int argc,
   (std::move(table), key, family, old_name, new_name);
 }
 
-void InsertTestData(google::cloud::bigtable::Table table, int argc,
-                    char* argv[]) {
+void InsertTestData(google::cloud::bigtable::Table table, int argc, char*[]) {
   if (argc != 1) {
     throw Usage{"insert-test-data <project-id> <instance-id> <table-id>"};
   }
@@ -890,11 +885,9 @@ void InsertTestData(google::cloud::bigtable::Table table, int argc,
     mutation.emplace_back(google::cloud::bigtable::SetCell(
         "fam", "col0", "value0-" + std::to_string(i)));
     mutation.emplace_back(google::cloud::bigtable::SetCell(
-        "fam", "col1", "value2-" + std::to_string(i)));
+        "fam", "col1", "value1-" + std::to_string(i)));
     mutation.emplace_back(google::cloud::bigtable::SetCell(
-        "fam", "col2", "value3-" + std::to_string(i)));
-    mutation.emplace_back(google::cloud::bigtable::SetCell(
-        "fam", "col3", "value4-" + std::to_string(i)));
+        "fam", "col2", "value2-" + std::to_string(i)));
     bulk.emplace_back(std::move(mutation));
   }
   auto failures = table.BulkApply(std::move(bulk));
