@@ -248,8 +248,10 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   EXPECT_EQ(4, check_cluster_after_update->serve_nodes());
 
   // Delete cluster
-  ASSERT_STATUS_OK(instance_admin_->DeleteCluster(std::move(instance_id),
-                                                  std::move(cluster_id)));
+  ASSERT_STATUS_OK(instance_admin_
+                       ->AsyncDeleteCluster(cq, std::move(instance_id),
+                                            std::move(cluster_id))
+                       .get());
   auto clusters_list_after_delete =
       instance_admin_->AsyncListClusters(cq, id).get();
   ASSERT_STATUS_OK(clusters_list_after_delete);

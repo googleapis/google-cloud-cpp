@@ -341,6 +341,32 @@ Status InstanceAdmin::DeleteInstance(std::string const& instance_id) {
   return internal::MakeStatusFromRpcError(status);
 }
 
+future<Status> InstanceAdmin::AsyncDeleteCluster(
+    CompletionQueue& cq, bigtable::InstanceId const& instance_id,
+    bigtable::ClusterId const& cluster_id) {
+  btadmin::DeleteClusterRequest request;
+  request.set_name(ClusterName(instance_id, cluster_id));
+
+  auto client = impl_.client_;
+  return internal::StartRetryAsyncUnaryRpc(
+             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             internal::ConstantIdempotencyPolicy(false),
+             clone_metadata_update_policy(),
+             [client](grpc::ClientContext* context,
+                      btadmin::DeleteClusterRequest const& request,
+                      grpc::CompletionQueue* cq) {
+               return client->AsyncDeleteCluster(context, request, cq);
+             },
+             std::move(request), cq)
+      .then([](future<StatusOr<google::protobuf::Empty>> fut) {
+        auto res = fut.get();
+        if (res) {
+          return google::cloud::Status();
+        }
+        return res.status();
+      });
+}
+
 future<Status> InstanceAdmin::AsyncDeleteInstance(
     std::string const& instance_id, CompletionQueue& cq) {
   google::bigtable::admin::v2::DeleteInstanceRequest request;

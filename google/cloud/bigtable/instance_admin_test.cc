@@ -1996,6 +1996,91 @@ TEST_F(InstanceAdminTest, TestIamPermissionsRecoverableError) {
   EXPECT_EQ(2U, permission_set->size());
 }
 
+using MockAsyncDeleteClusterReader =
+    google::cloud::bigtable::testing::MockAsyncResponseReader<
+        ::google::protobuf::Empty>;
+
+class AsyncDeleteClusterTest : public ::testing::Test {
+ public:
+  AsyncDeleteClusterTest()
+      : cq_impl_(new bigtable::testing::MockCompletionQueue),
+        cq_(cq_impl_),
+        client_(new bigtable::testing::MockInstanceAdminClient),
+        reader_(new MockAsyncDeleteClusterReader) {
+    using namespace ::testing;
+    EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
+    EXPECT_CALL(*client_, AsyncDeleteCluster(_, _, _))
+        .WillOnce(Invoke([this](grpc::ClientContext*,
+                                btadmin::DeleteClusterRequest const& request,
+                                grpc::CompletionQueue*) {
+          EXPECT_EQ(
+              "projects/the-project/instances/test-instance/clusters/"
+              "the-cluster",
+              request.name());
+          // This is safe, see comments in MockAsyncResponseReader.
+          return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+              ::google::protobuf::Empty>>(reader_.get());
+        }));
+  }
+
+ protected:
+  void Start() {
+    bigtable::InstanceAdmin instance_admin(client_);
+    user_future_ = instance_admin.AsyncDeleteCluster(
+        cq_, google::cloud::bigtable::InstanceId("test-instance"),
+        google::cloud::bigtable::ClusterId("the-cluster"));
+  }
+
+  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
+  bigtable::CompletionQueue cq_;
+  std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
+  google::cloud::future<google::cloud::Status> user_future_;
+  std::unique_ptr<MockAsyncDeleteClusterReader> reader_;
+};
+
+/// @test Verify that AsyncDeleteCluster works in simple case.
+TEST_F(AsyncDeleteClusterTest, AsyncDeleteCluster) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  bigtable::InstanceAdmin tested(client_);
+
+  EXPECT_CALL(*reader_, Finish(_, _, _))
+      .WillOnce(Invoke(
+          [](::google::protobuf::Empty* response, grpc::Status* status, void*) {
+            EXPECT_NE(nullptr, response);
+            *status = grpc::Status::OK;
+          }));
+
+  Start();
+  EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
+  EXPECT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);
+  auto status = user_future_.get();
+  ASSERT_STATUS_OK(status);
+}
+
+/// @test Test unrecoverable errors for InstanceAdmin::AsyncDeleteCluster.
+TEST_F(AsyncDeleteClusterTest, AsyncDeleteClusterUnrecoverableError) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  bigtable::InstanceAdmin tested(client_);
+
+  EXPECT_CALL(*reader_, Finish(_, _, _))
+      .WillOnce(Invoke(
+          [](::google::protobuf::Empty* response, grpc::Status* status, void*) {
+            EXPECT_NE(nullptr, response);
+            *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
+          }));
+
+  Start();
+  EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
+  EXPECT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);
+
+  auto status = user_future_.get();
+  ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied, status.code());
+}
+
 using MockAsyncTestIamPermissionsReader =
     google::cloud::bigtable::testing::MockAsyncResponseReader<
         ::google::iam::v1::TestIamPermissionsResponse>;
