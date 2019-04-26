@@ -195,6 +195,8 @@ function run_all_instance_admin_async_examples {
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
   run_example ./instance_admin_async_snippets async-create-app-profile \
       "${project_id}" "${INSTANCE}" "my-profile"
+  run_example ./instance_admin_async_snippets async-get-app-profile \
+      "${project_id}" "${INSTANCE}" "my-profile"
   run_example ./instance_admin_async_snippets async-update-app-profile \
       "${project_id}" "${INSTANCE}" "my-profile"
   run_example ./instance_admin_async_snippets async-get-iam-policy \
