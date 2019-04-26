@@ -403,6 +403,29 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
   ASSERT_STATUS_OK(detail_2_after_update);
   EXPECT_EQ("new description", update_2->description());
   EXPECT_EQ("new description", detail_2_after_update->description());
+
+  ASSERT_STATUS_OK(
+      instance_admin_
+          ->AsyncDeleteAppProfile(cq, bigtable::InstanceId(instance_id),
+                                  bigtable::AppProfileId(id1), true)
+          .get());
+  current_profiles = instance_admin_->ListAppProfiles(instance_id);
+  ASSERT_STATUS_OK(current_profiles);
+  EXPECT_EQ(0U, count_matching_profiles(id1, *current_profiles));
+  EXPECT_EQ(1U, count_matching_profiles(id2, *current_profiles));
+
+  ASSERT_STATUS_OK(
+      instance_admin_
+          ->AsyncDeleteAppProfile(cq, bigtable::InstanceId(instance_id),
+                                  bigtable::AppProfileId(id2), false)
+          .get());
+  current_profiles = instance_admin_->ListAppProfiles(instance_id);
+  ASSERT_STATUS_OK(current_profiles);
+  EXPECT_EQ(0U, count_matching_profiles(id1, *current_profiles));
+  EXPECT_EQ(0U, count_matching_profiles(id2, *current_profiles));
+
+  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
+
   cq.Shutdown();
   pool.join();
 }

@@ -679,6 +679,28 @@ class InstanceAdmin {
                           bool ignore_warnings = false);
 
   /**
+   * Asynchronously delete an existing application profile.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param instance_id the instance to look the profile in.
+   * @param profile_id the id of the profile within that instance.
+   * @param ignore_warnings if true, ignore safety checks when deleting the
+   *     application profile.
+   *
+   * @return a future satisfied when either (a) the app profile is deleted or
+   *     (b) an unretriable error occurs or (c) retry policy has been exhausted.
+   *
+   * @par Example
+   * @snippet instance_admin_async_snippets.cc async delete app profile
+   */
+  future<Status> AsyncDeleteAppProfile(CompletionQueue& cq,
+                                       bigtable::InstanceId const& instance_id,
+                                       bigtable::AppProfileId const& profile_id,
+                                       bool ignore_warnings = false);
+
+  /**
    * Gets the policy for @p instance_id.
    *
    * @param instance_id the instance to query.
