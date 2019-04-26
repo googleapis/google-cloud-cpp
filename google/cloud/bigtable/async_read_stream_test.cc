@@ -307,7 +307,7 @@ TEST_F(AsyncReadStreamTest, Return3ThenFail) {
   // Very rarely (in the CI builds, with high load), all 3 responses and the
   // error message are coalesced into a single message from the server, and then
   // the OnRead() calls do not happen. We need to explicitly synchronize the
-  // client and server threads t
+  // client and server threads.
   SimpleBarrier server_barrier;
   impl_.SetCallback(
       [this, &server_barrier](
@@ -316,11 +316,11 @@ TEST_F(AsyncReadStreamTest, Return3ThenFail) {
               writer) {
         WriteOne(writer, 0);
         WriteOne(writer, 1);
-        // Cannot use WritLast() because that blocks until the status is
+        // Cannot use WriteLast() because that blocks until the status is
         // returned, and we want to pause in `server_barrier` to ensure all
         // messages are received.
         WriteOne(writer, 2);
-        // block until the client has received the responses.
+        // Block until the client has received the responses.
         server_barrier.Wait();
         return grpc::Status(grpc::StatusCode::INTERNAL, "bad luck");
       });
