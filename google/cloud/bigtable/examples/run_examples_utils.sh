@@ -313,6 +313,50 @@ function run_all_table_admin_async_examples {
 }
 
 ################################################
+# Run the Bigtable mutate-rows examples.
+# Globals:
+#   None
+# Arguments:
+#   project_id: the Google Cloud Storage project used in the test. Can be a
+#       fake project when testing against the emulator, as the emulator creates
+#       projects on demand. It must be a valid, existing instance when testing
+#       against production.
+#   instance_id: the Google Cloud Bigtable instance used in the test. Can be a
+#       fake instance when testing against the emulator, as the emulator creates
+#       instances on demand. It must be a valid, existing instance when testing
+#       against production.
+# Returns:
+#   None
+################################################
+#
+# This function allows us to keep a single place where all the examples are
+# listed. We want to run these examples in the continuous integration builds
+# because they rot otherwise.
+run_mutate_examples() {
+  local project_id=$1
+  local instance_id=$2
+  shift 2
+
+  local -r TABLE="mutate-tbl-${RANDOM}-${RANDOM}"
+  run_example ./table_admin_snippets create-table \
+      "${project_id}" "${instance_id}" "${TABLE}"
+
+  # create-table creates a table with this family, just re-use it instead of
+  # creating a new one.
+  local -r FAMILY_NAME="fam"
+
+  run_example ./data_snippets mutate-insert-update-rows \
+      "${project_id}" "${instance_id}" "${TABLE}" \
+      "row1" "fam:col1=value1.1" "fam:col2=value1.2" "fam:col3=value1.3"
+  run_example ./data_snippets mutate-insert-update-rows \
+      "${project_id}" "${instance_id}" "${TABLE}" \
+      "row2" "fam:col1=value2.1" "fam:col2=value2.2" "fam:col3=value2.3"
+
+  run_example ./table_admin_snippets delete-table \
+      "${project_id}" "${instance_id}" "${TABLE}"
+}
+
+################################################
 # Run the Bigtable data manipulation examples.
 # Globals:
 #   None
@@ -337,7 +381,9 @@ run_all_data_examples() {
   local instance_id=$2
   shift 2
 
-  EMULATOR_LOG="instance-admin-emulator.log"
+  EMULATOR_LOG="emulator.log"
+
+  run_mutate_examples "${project_id}" "${instance_id}"
 
   # Use a different table for the full example test, if we use the same table
   # as the other tests this can fail with timeouts.
@@ -358,10 +404,49 @@ run_all_data_examples() {
   run_example ./table_admin_snippets create-table \
       "${project_id}" "${instance_id}" "${TABLE}"
 
+  run_example ./data_snippets mutate-insert-update-rows \
+      "${project_id}" "${instance_id}" "${TABLE}" "insert-update-01" \
+      "fam:col0=value0-0" "fam:col1=value2-0" \
+      "fam:col3=value3-0" "fam:col4=value4-0"
+  run_example ./data_snippets mutate-delete-columns \
+      "${project_id}" "${instance_id}" "${TABLE}" "insert-update-01" \
+      "fam:col3" "fam:col4"
+  run_example ./data_snippets mutate-delete-rows \
+      "${project_id}" "${instance_id}" "${TABLE}" \
+      "insert-update-01"
+
+  run_example ./data_snippets mutate-insert-update-rows \
+      "${project_id}" "${instance_id}" "${TABLE}" "to-delete-01" \
+      "fam:col0=value0-0" "fam:col1=value2-0" \
+      "fam:col3=value3-0" "fam:col4=value4-0"
+  run_example ./data_snippets mutate-insert-update-rows \
+      "${project_id}" "${instance_id}" "${TABLE}" "to-delete-02" \
+      "fam:col0=value0-0" "fam:col1=value2-0" \
+      "fam:col3=value3-0" "fam:col4=value4-0"
+  run_example ./data_snippets mutate-delete-rows \
+      "${project_id}" "${instance_id}" "${TABLE}" \
+      "to-delete-01" "to-delete-02"
+
+  run_example ./data_snippets mutate-insert-update-rows \
+      "${project_id}" "${instance_id}" "${TABLE}" "mix-match-01" \
+      "fam:col0=value0-0"
+  run_example ./data_snippets mutate-insert-update-rows \
+      "${project_id}" "${instance_id}" "${TABLE}" "mix-match-01" \
+      "fam:col0=value0-1"
+  run_example ./data_snippets mutate-insert-update-rows \
+      "${project_id}" "${instance_id}" "${TABLE}" "mix-match-01" \
+      "fam:col0=value0-2"
+  run_example ./data_snippets rename-column \
+      "${project_id}" "${instance_id}" "${TABLE}" \
+      "mix-match-01" "fam" "col0" "new-name"
+
+  run_example ./data_snippets insert-test-data \
+      "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets apply \
       "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets bulk-apply \
       "${project_id}" "${instance_id}" "${TABLE}"
+
   run_example ./data_snippets read-row \
       "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets read-rows-with-limit \

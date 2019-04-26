@@ -203,7 +203,6 @@ class Table {
    * @par Example
    * @snippet data_snippets.cc apply
    */
-
   Status Apply(SingleRowMutation mut);
 
   /**
