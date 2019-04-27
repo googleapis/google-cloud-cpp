@@ -16,7 +16,7 @@
 
 set -eu
 
-if [ "${CHECK_STYLE}" != "yes" ]; then
+if [[ "${CHECK_STYLE}" != "yes" ]]; then
   echo "Skipping code style check as it is disabled for this build."
   exit 0
 fi
@@ -27,11 +27,11 @@ readonly BINDIR="$(dirname "$0")"
 
 # Build paths to ignore in find(1) commands by reading .gitignore.
 declare -a ignore=( -path ./.git )
-if [ -f .gitignore ]; then
+if [[ -f .gitignore ]]; then
   while read -r line; do
     case "${line}" in
-    [^#]*/*) ignore+=( -o -path "./$(expr "${line}" : '\(.*\)/')" );;
-    [^#]*)   ignore+=( -o -name "${line}" );;
+    [^#]*/*) ignore+=( -o -path "./$(expr "${line}" : '\(.*\)/')" ) ;;
+    [^#]*)   ignore+=( -o -name "${line}" ) ;;
     esac
   done < .gitignore
 fi
@@ -44,13 +44,29 @@ find google/cloud -name '*.h' -print0 |
 find . \( "${ignore[@]}" \) -prune -o \
        \( -name 'CMakeLists.txt' -o -name '*.cmake' \) \
        -print0 |
-  xargs -0 cmake-format -i
+  while IFS= read -r -d $'\0' file; do
+    cmake-format "${file}" >"${file}.tmp"
+    chmod --reference="${file}" "${file}.tmp"
+    if cmp -s "${file}" "${file}.tmp"; then
+        rm -f "${file}.tmp"
+    else
+        mv -f "${file}.tmp" "${file}"
+    fi
+  done
 
 # Apply clang-format(1) to fix whitespace and other formatting rules.
 # The version of clang-format is important, different versions have slightly
 # different formatting output (sigh).
 find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 |
-  xargs -0 clang-format -i
+  while IFS= read -r -d $'\0' file; do
+    clang-format "${file}" >"${file}.tmp"
+    chmod --reference="${file}" "${file}.tmp"
+    if cmp -s "${file}" "${file}.tmp"; then
+        rm -f "${file}.tmp"
+    else
+        mv -f "${file}.tmp" "${file}"
+    fi
+  done
 
 # Apply several transformations that cannot be enforced by clang-format:
 #     - Replace any #include for grpc++/* with grpcpp/*. The paths with grpc++
@@ -109,5 +125,5 @@ find . \( "${ignore[@]}" \) -prune -o \
     fi
   done
 
-# Report any differences created by running clang-format.
+# Report any differences created by running the formatting tools.
 git diff --ignore-submodules=all --color --exit-code .
