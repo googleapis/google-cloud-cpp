@@ -59,7 +59,6 @@ load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
         ":spanner_client",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_testing",
-        "//google/cloud/storage:storage_client",
         "@com_google_googletest//:gtest",
     ],
 ) for test in spanner_client_unit_tests]
@@ -69,5 +68,6 @@ cc_binary(
     srcs = ["spanner_tool.cc"],
     deps = [
         ":spanner_client",
+        "//google/cloud/storage:storage_client",
     ],
 )
