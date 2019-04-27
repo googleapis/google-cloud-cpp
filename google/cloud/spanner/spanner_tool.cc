@@ -21,7 +21,14 @@
 
 namespace {
 
-void ListDatabases(std::string const& project, std::string const& instance) {
+int ListDatabases(std::vector<std::string> args) {
+  if (args.size() != 4U) {
+    std::cerr << args[0] << ": list-databases <project> <instance>\n";
+    return 1;
+  }
+  auto const& project = args[2];
+  auto const& instance = args[3];
+
   namespace spanner = google::spanner::admin::database::v1;
 
   std::shared_ptr<grpc::ChannelCredentials> cred =
@@ -41,11 +48,12 @@ void ListDatabases(std::string const& project, std::string const& instance) {
   if (!status.ok()) {
     std::cerr << "FAILED: " << status.error_code() << ": "
               << status.error_message() << "\n";
-    return;
+    return 1;
   }
 
   std::cout << "Response:\n";
   std::cout << response.DebugString() << "\n";
+  return 0;
 }
 
 }  // namespace
@@ -65,10 +73,38 @@ void ListDatabases(std::string const& project, std::string const& instance) {
 // NOTE: The actual project and instance names will vary for other users; These
 // are just examples.
 int main(int argc, char* argv[]) {
-  if (argc != 3) {
-    std::cerr << "Usage: spanner_tool <project> <instance>\n";
+  using CommandType = std::function<int(std::vector<std::string> args)>;
+
+  std::map<std::string, CommandType> commands = {
+      {"list-databases", &ListDatabases},
+  };
+
+  if (argc < 2) {
+    std::cerr << argv[0] << ": missing command\n"
+              << "Usage: " << argv[0] << " <command-name> [command-arguments]\n"
+              << "Valid commands are:\n";
+    for (auto const& kv : commands) {
+      // Calling the command with an empty list always prints their usage.
+      kv.second({});
+    }
     return 1;
   }
 
-  ListDatabases(argv[1], argv[2]);
+  std::vector<std::string> args;
+  std::transform(argv, argv + argc, std::back_inserter(args),
+                 [](char* x) { return std::string(x); });
+
+  std::string const command_name = args[1];
+  auto command = commands.find(command_name);
+  if (commands.end() == command) {
+    std::cerr << argv[0] << ": unknown command " << command_name << '\n';
+    for (auto const& kv : commands) {
+      // Calling the command with an empty list always prints their usage.
+      kv.second({});
+    }
+    return 1;
+  }
+
+  // Run the requested command.
+  return command->second(args);
 }
