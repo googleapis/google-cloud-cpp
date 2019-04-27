@@ -473,6 +473,30 @@ class InstanceAdmin {
                        bigtable::ClusterId const& cluster_id);
 
   /**
+   * Sends an asynchronous request to delete a cluster.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param instance_id the id of the instance in the project.
+   * @param cluster_id the id of the cluster in the project that needs to be
+   *     deleted.
+   *
+   * @return a future that will be satisfied when the request succeeds or the
+   *     retry policy expires.
+   *
+   * @par Example
+   * @snippet instance_admin_async_snippets.cc async delete cluster
+   */
+  future<Status> AsyncDeleteCluster(CompletionQueue& cq,
+                                    bigtable::InstanceId const& instance_id,
+                                    bigtable::ClusterId const& cluster_id);
+
+  /**
    * Gets the specified cluster of an instance in the project.
    *
    * @param instance_id the id of the instance in the project

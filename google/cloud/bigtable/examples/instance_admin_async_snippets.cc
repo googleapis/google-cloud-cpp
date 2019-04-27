@@ -518,6 +518,43 @@ void AsyncDeleteInstance(cbt::InstanceAdmin instance_admin,
   (std::move(instance_admin), std::move(cq), argv[1]);
 }
 
+void AsyncDeleteCluster(cbt::InstanceAdmin instance_admin,
+                        cbt::CompletionQueue cq,
+                        std::vector<std::string> argv) {
+  if (argv.size() != 3U) {
+    throw Usage{
+        "async-delete-cluster: <project-id> <instance-id> <cluster-id> "};
+  }
+
+  //! [async delete cluster]
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
+     std::string instance_id, std::string cluster_id) {
+    google::cloud::future<google::cloud::Status> future =
+        instance_admin.AsyncDeleteCluster(
+            cq, google::cloud::bigtable::InstanceId(instance_id),
+            google::cloud::bigtable::ClusterId(cluster_id));
+
+    // Most applications would simply call future.get(), here we show how to
+    // perform additional work while the long running operation completes.
+    std::cout << "Waiting for cluster deletion to complete ";
+    for (int i = 0; i != 100; ++i) {
+      if (std::future_status::ready ==
+          future.wait_for(std::chrono::seconds(2))) {
+        auto res = future.get();
+        if (!res.ok()) {
+          throw std::runtime_error(res.message());
+        }
+        std::cout << "DONE, cluster deleted.\n";
+        return;
+      }
+      std::cout << '.' << std::flush;
+    }
+    std::cout << "TIMEOUT\n";
+  }
+  //! [async delete cluster]
+  (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
+}
+
 void AsyncTestIamPermissions(cbt::InstanceAdmin instance_admin,
                              cbt::CompletionQueue cq,
                              std::vector<std::string> argv) {
@@ -580,6 +617,7 @@ int main(int argc, char* argv[]) try {
       {"async-update-cluster", &AsyncUpdateCluster},
       {"async-update-app-profile", &AsyncUpdateAppProfile},
       {"async-delete-instance", &AsyncDeleteInstance},
+      {"async-delete-cluster", &AsyncDeleteCluster},
       {"async-test-iam-permissions", &AsyncTestIamPermissions}};
 
   google::cloud::bigtable::CompletionQueue cq;

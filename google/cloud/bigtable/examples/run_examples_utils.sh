@@ -191,7 +191,7 @@ function run_all_instance_admin_async_examples {
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
   run_example ./instance_admin_async_snippets async-get-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
-  run_example ./bigtable_instance_admin_snippets delete-cluster \
+  run_example ./instance_admin_async_snippets async-delete-cluster \
       "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
   run_example ./bigtable_instance_admin_snippets create-app-profile \
       "${project_id}" "${INSTANCE}" "my-profile"
