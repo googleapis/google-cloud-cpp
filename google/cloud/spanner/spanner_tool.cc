@@ -56,6 +56,48 @@ int ListDatabases(std::vector<std::string> args) {
   return 0;
 }
 
+int PopulateTimeseriesTable(std::vector<std::string> args) {
+  if (args.size() != 4U) {
+    std::cerr << args[0] << ": populate-timeseries <project> <instance>"
+              << " <database>\n";
+    return 1;
+  }
+  auto const& project = args[2];
+  auto const& instance = args[3];
+  auto const& database = args[4];
+
+  std::string database_name = "projects/" + project + "/instances/" +
+      instance + "/databases/" + database;
+
+  namespace spanner = google::spanner::v1;
+
+  std::shared_ptr<grpc::ChannelCredentials> cred =
+      grpc::GoogleDefaultCredentials();
+  std::shared_ptr<grpc::Channel> channel =
+      grpc::CreateChannel("spanner.googleapis.com", cred);
+  auto  stub =
+      spanner::Spanner::NewStub(std::move(channel));
+
+  spanner::Session session = [&] {
+    spanner::Session session;
+    spanner::CreateSessionRequest request;
+    request.set_database(database);
+
+    grpc::ClientContext context;
+    grpc::Status status = stub->CreateSession(&context, request, &session);
+    if (!status.ok()) {
+      std::cerr << "FAILED: [" << status.error_code() << "] - " << status
+      .error_message() << "\n";
+      std::exit(1);
+    }
+    return session;
+  }();
+
+  std::cout << "Session: " << session.name() << "\n";
+
+  return 0;
+}
+
 }  // namespace
 
 // This is a command-line tool to let folks easily experiment with Spanner
@@ -77,6 +119,7 @@ int main(int argc, char* argv[]) {
 
   std::map<std::string, CommandType> commands = {
       {"list-databases", &ListDatabases},
+      {"populate-timeseries", &PopulateTimeseriesTable},
   };
 
   if (argc < 2) {
