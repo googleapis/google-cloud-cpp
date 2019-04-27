@@ -39,6 +39,22 @@ fi
 find google/cloud -name '*.h' -print0 |
   xargs -0 awk -f "${BINDIR}/check-include-guards.gawk"
 
+replace_original_if_changed() {
+  if [[ $# != 1 ]]; then
+    return 1
+  fi
+
+  local file="$1"
+  shift
+
+  chmod --reference="${file}" "${file}.tmp"
+  if cmp -s "${file}" "${file}.tmp"; then
+    rm -f "${file}.tmp"
+  else
+    mv -f "${file}.tmp" "${file}"
+  fi
+}
+
 # Apply cmake_format to all the CMake list files.
 #     https://github.com/cheshirekow/cmake_format
 find . \( "${ignore[@]}" \) -prune -o \
@@ -46,12 +62,7 @@ find . \( "${ignore[@]}" \) -prune -o \
        -print0 |
   while IFS= read -r -d $'\0' file; do
     cmake-format "${file}" >"${file}.tmp"
-    chmod --reference="${file}" "${file}.tmp"
-    if cmp -s "${file}" "${file}.tmp"; then
-        rm -f "${file}.tmp"
-    else
-        mv -f "${file}.tmp" "${file}"
-    fi
+    replace_original_if_changed "${file}"
   done
 
 # Apply clang-format(1) to fix whitespace and other formatting rules.
@@ -60,12 +71,7 @@ find . \( "${ignore[@]}" \) -prune -o \
 find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 |
   while IFS= read -r -d $'\0' file; do
     clang-format "${file}" >"${file}.tmp"
-    chmod --reference="${file}" "${file}.tmp"
-    if cmp -s "${file}" "${file}.tmp"; then
-        rm -f "${file}.tmp"
-    else
-        mv -f "${file}.tmp" "${file}"
-    fi
+    replace_original_if_changed "${file}"
   done
 
 # Apply several transformations that cannot be enforced by clang-format:
@@ -83,12 +89,7 @@ find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 |
         -e 's;#include <grpc\\+\\+/grpc\+\+.h>;#include <grpcpp/grpcpp.h>;' \
         -e 's;#include <grpc\\+\\+/;#include <grpcpp/;' \
         "${file}" > "${file}.tmp"
-    chmod --reference="${file}" "${file}.tmp"
-    if cmp -s "${file}" "${file}.tmp"; then
-        rm -f "${file}.tmp"
-    else
-        mv -f "${file}.tmp" "${file}"
-    fi
+    replace_original_if_changed "${file}"
   done
 
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
@@ -117,12 +118,7 @@ find . \( "${ignore[@]}" \) -prune -o \
   while IFS= read -r -d $'\0' file; do
     sed -e 's/[[:blank:]][[:blank:]]*$//' \
         "${file}" > "${file}.tmp"
-    chmod --reference="${file}" "${file}.tmp"
-    if cmp -s "${file}" "${file}.tmp"; then
-        rm -f "${file}.tmp"
-    else
-        mv -f "${file}.tmp" "${file}"
-    fi
+    replace_original_if_changed "${file}"
   done
 
 # Report any differences created by running the formatting tools.
