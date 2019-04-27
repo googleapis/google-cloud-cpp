@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/storage/internal/format_time_point.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
 #include <google/spanner/v1/spanner.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <iostream>
 #include <memory>
+#include <random>
 #include <string>
 
 namespace {
@@ -66,8 +68,8 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
   auto const& instance = args[3];
   auto const& database = args[4];
 
-  std::string database_name = "projects/" + project + "/instances/" +
-      instance + "/databases/" + database;
+  std::string database_name = "projects/" + project + "/instances/" + instance +
+                              "/databases/" + database;
 
   namespace spanner = google::spanner::v1;
 
@@ -75,8 +77,7 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
       grpc::GoogleDefaultCredentials();
   std::shared_ptr<grpc::Channel> channel =
       grpc::CreateChannel("spanner.googleapis.com", cred);
-  auto  stub =
-      spanner::Spanner::NewStub(std::move(channel));
+  auto stub = spanner::Spanner::NewStub(std::move(channel));
 
   spanner::Session session = [&] {
     spanner::Session session;
@@ -86,8 +87,8 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
     grpc::ClientContext context;
     grpc::Status status = stub->CreateSession(&context, request, &session);
     if (!status.ok()) {
-      std::cerr << "FAILED: [" << status.error_code() << "] - " << status
-      .error_message() << "\n";
+      std::cerr << "FAILED: [" << status.error_code() << "] - "
+                << status.error_message() << "\n";
       std::exit(1);
     }
     return session;
@@ -102,17 +103,79 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
     *request.mutable_options()->mutable_read_write() = {};
 
     grpc::ClientContext context;
-    grpc::Status status = stub->BeginTransaction(&context, request,
-        &transaction);
+    grpc::Status status =
+        stub->BeginTransaction(&context, request, &transaction);
     if (!status.ok()) {
-      std::cerr << "FAILED: [" << status.error_code() << "] - " << status
-          .error_message() << "\n";
+      std::cerr << "FAILED: [" << status.error_code() << "] - "
+                << status.error_message() << "\n";
       std::exit(1);
     }
     return transaction;
   }();
 
   std::cout << "Transaction: " << read_write_transaction.id() << "\n";
+
+  auto insert_one = [&](std::string series_name,
+                        std::chrono::system_clock::time_point ts,
+                        std::int64_t value) {
+    spanner::ExecuteSqlRequest request;
+    request.set_session(session.name());
+    request.mutable_transaction()->set_id(read_write_transaction.id());
+    request.set_sql("INSERT INTO timeseries VALUES (@name, @time, @value");
+    auto& fields = *request.mutable_params()->mutable_fields();
+    fields["name"] = [](std::string s) {
+      google::protobuf::Value v;
+      v.set_string_value(std::move(s));
+      return v;
+    }(std::move(series_name));
+    fields["time"] = [](std::chrono::system_clock::time_point ts) {
+      google::protobuf::Value v;
+      v.set_string_value(google::cloud::storage::internal::FormatRfc3339(ts));
+      return v;
+    }(ts);
+    fields["value"] = [](std::int64_t x) {
+      google::protobuf::Value v;
+      v.set_number_value(x);
+      return v;
+    }(value);
+
+    grpc::ClientContext context;
+    spanner::ResultSet result;
+    grpc::Status status = stub->ExecuteSql(&context, request, &result);
+    if (!status.ok()) {
+      std::cerr << "INSERT INTO FAILED: [" << status.error_code() << "] - "
+      << status.error_message() << "\n";
+      std::exit(1);
+    }
+
+    std::cout << "INSERT = " << result.DebugString() << "\n";
+  };
+
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<int> d(0, 100);
+  auto now = std::chrono::system_clock::now();
+
+  for (int i = 0; i != 100; ++i) {
+    std::string series_name = "celsius-temp-" + std::to_string(i);
+    for (int j = 0; j != 100; ++j) {
+      auto ts = now + std::chrono::seconds(j);
+      insert_one(series_name, ts, d(gen));
+    }
+  }
+
+  grpc::ClientContext context;
+  spanner::CommitRequest request;
+  spanner::CommitResponse response;
+  request.set_session(session.name());
+  request.set_transaction_id(read_write_transaction.id());
+  grpc::Status status = stub->Commit(&context, request, &response);
+  if (!status.ok()) {
+    std::cerr << "COMMIT FAILED: [" << status.error_code() << "] - "
+              << status.error_message() << "\n";
+    std::exit(1);
+  }
+  std::cout << "COMMIT = " << response.DebugString() << "\n";
 
   return 0;
 }
