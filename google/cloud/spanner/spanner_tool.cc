@@ -27,7 +27,7 @@ namespace {
 
 int ListDatabases(std::vector<std::string> args) {
   if (args.size() != 4U) {
-    std::cerr << args[0] << ": list-databases <project> <instance>\n";
+    std::cerr << "list-databases <project> <instance>\n";
     return 1;
   }
   auto const& project = args[2];
@@ -87,9 +87,7 @@ int WaitForOperation(std::shared_ptr<grpc::Channel> channel,
 
 int CreateDatabase(std::vector<std::string> args) {
   if (args.size() != 5U) {
-    std::cerr << args[0]
-              << ": create-timeseries-table <project> <instance> "
-                 "<database>\n";
+    std::cerr << "create-timeseries-table <project> <instance> <database>\n";
     return 1;
   }
   auto const& project = args[2];
@@ -126,9 +124,7 @@ int CreateDatabase(std::vector<std::string> args) {
 
 int CreateTimeseriesTable(std::vector<std::string> args) {
   if (args.size() != 5U) {
-    std::cerr << args[0]
-              << ": create-timeseries-table <project> <instance> "
-                 "<database>\n";
+    std::cerr << "create-timeseries-table <project> <instance> <database>\n";
     return 1;
   }
   auto const& project = args[2];
@@ -172,8 +168,7 @@ CREATE TABLE timeseries (
 
 int PopulateTimeseriesTable(std::vector<std::string> args) {
   if (args.size() != 5U) {
-    std::cerr << args[0] << ": populate-timeseries <project> <instance>"
-              << " <database>\n";
+    std::cerr << "populate-timeseries <project> <instance> <database>\n";
     return 1;
   }
   auto const& project = args[2];
@@ -310,20 +305,55 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
 
 }  // namespace
 
-// This is a command-line tool to let folks easily experiment with Spanner
-// using C++. This works with bazel using a command like:
-//
-// $ bazel run google/cloud/spanner:spanner_tool --
-//       jgm-cloud-cxx jgm-spanner-instance
-//
-// Currently, the above command will just invoke the "ListDatabases" RPC, which
-// makes it equivalent to the following command:
-//
-// $ gcloud spanner databases list
-//       --project jgm-cloud-cxx --instance jgm-spanner-instance
-//
-// NOTE: The actual project and instance names will vary for other users; These
-// are just examples.
+/**
+ * @file
+ *
+ * This is a command-line tool to let folks easily experiment with Spanner
+ * using C++. First, enable the spanner API in your project and create a
+ * Cloud Spanner instance:
+ *
+ * @code
+ * $ PROJECT_ID=...  # e.g. jgm-cloud-cxx
+ * $ INSTANCE_ID=... # e.g. test-spanner-instance
+ * $ gcloud services enable spanner.googleapis.com
+ * $ gcloud spanner instances create ${INSTANCE_ID}
+ *     --config=regional-us-central1 --description="${INSTANCE_ID}" --nodes=1
+ * @endcode
+ *
+ * To cleanup the instance use:
+ * @code
+ * $ gcloud spanner instances delete ${INSTANCE_ID}
+ *     --config=regional-us-central1 --description="${INSTANCE_ID}" --nodes=1
+ * @endcode
+ *
+ * You can run the sub-commands of this tool to access this instance, for
+ * example, to list the databases in your instance use:
+ *
+ * @code
+ * $ bazel run google/cloud/spanner:spanner_tool --
+ *     list-databases ${PROJECT_ID} ${INSTANCE_ID}
+ * @endcode
+ *
+ * Naturally this list is initially empty, to create a database and list it:
+ *
+ * @code
+ * $ bazel run google/cloud/spanner:spanner_tool --
+ *     create-database ${PROJECT_ID} ${INSTANCE_ID} testdb
+ * $ bazel run google/cloud/spanner:spanner_tool --
+ *     list-databases ${PROJECT_ID} ${INSTANCE_ID}
+ * @endcode
+ *
+ * Once you have created a database you can create a table and insert
+ * (currently a single row) into it:
+ *
+ * @code
+ * $ bazel run google/cloud/spanner:spanner_tool --
+ *     create-timeseries-table ${PROJECT_ID} ${INSTANCE_ID} testdb
+ * $ bazel run google/cloud/spanner:spanner_tool --
+ *     populate-timeseries ${PROJECT_ID} ${INSTANCE_ID} testdb
+ * @endcode
+ *
+ */
 int main(int argc, char* argv[]) {
   using CommandType = std::function<int(std::vector<std::string> args)>;
 
