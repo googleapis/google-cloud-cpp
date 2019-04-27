@@ -226,6 +226,37 @@ void AsyncGetCluster(cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
   (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
 }
 
+void AsyncGetIamPolicy(cbt::InstanceAdmin instance_admin,
+                       cbt::CompletionQueue cq, std::vector<std::string> argv) {
+  if (argv.size() != 2U) {
+    throw Usage{"async-get-iam-policy: <project-id> <instance-id>"};
+  }
+
+  //! [async get iam policy]
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
+     std::string instance_id) {
+    google::cloud::future<google::cloud::StatusOr<google::cloud::IamPolicy>>
+        future = instance_admin.AsyncGetIamPolicy(
+            cq, google::cloud::bigtable::InstanceId(instance_id));
+
+    auto final =
+        future.then([](google::cloud::future<
+                        google::cloud::StatusOr<google::cloud::IamPolicy>>
+                           f) {
+          auto iam_policy = f.get();
+          if (!iam_policy) {
+            throw std::runtime_error(iam_policy.status().message());
+          }
+          std::cout << "IamPolicy details : " << *iam_policy << "\n";
+          return google::cloud::Status();
+        });
+
+    final.get();
+  }
+  //! [async get iam policy]
+  (std::move(instance_admin), std::move(cq), argv[1]);
+}
+
 void AsyncListClusters(cbt::InstanceAdmin instance_admin,
                        cbt::CompletionQueue cq, std::vector<std::string> argv) {
   if (argv.size() != 2U) {
@@ -572,6 +603,7 @@ int main(int argc, char* argv[]) try {
       {"async-create-cluster", &AsyncCreateCluster},
       {"async-get-instance", &AsyncGetInstance},
       {"async-get-cluster", &AsyncGetCluster},
+      {"async-get-iam-policy", &AsyncGetIamPolicy},
       {"async-list-instances", &AsyncListInstances},
       {"async-list-clusters", &AsyncListClusters},
       {"async-list-all-clusters", &AsyncListAllClusters},
