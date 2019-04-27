@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/format_time_point.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
 #include <google/spanner/v1/spanner.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
@@ -20,6 +21,7 @@
 #include <memory>
 #include <random>
 #include <string>
+#include <thread>
 
 namespace {
 
@@ -56,6 +58,116 @@ int ListDatabases(std::vector<std::string> args) {
   std::cout << "Response:\n";
   std::cout << response.DebugString() << "\n";
   return 0;
+}
+
+int WaitForOperation(std::shared_ptr<grpc::Channel> channel,
+                     google::longrunning::Operation operation) {
+  auto stub = google::longrunning::Operations::NewStub(std::move(channel));
+
+  std::cout << "Waiting for operation " << operation.name() << " "
+            << std::flush;
+  while (!operation.done()) {
+    std::this_thread::sleep_for(std::chrono::seconds(10));
+    std::cout << '.' << std::flush;
+    grpc::ClientContext context;
+    google::longrunning::GetOperationRequest request;
+    request.set_name(operation.name());
+    google::longrunning::Operation update;
+    grpc::Status status = stub->GetOperation(&context, request, &update);
+    if (!status.ok()) {
+      std::cerr << __func__ << " FAILED: " << status.error_code() << ": "
+                << status.error_message() << "\n";
+      return 1;
+    }
+    operation.Swap(&update);
+  }
+  std::cout << " DONE\n" << operation.DebugString() << "\n";
+  return 0;
+}
+
+int CreateDatabase(std::vector<std::string> args) {
+  if (args.size() != 5U) {
+    std::cerr << args[0]
+              << ": create-timeseries-table <project> <instance> "
+                 "<database>\n";
+    return 1;
+  }
+  auto const& project = args[2];
+  auto const& instance = args[3];
+  auto const& database = args[4];
+
+  namespace spanner = google::spanner::admin::database::v1;
+
+  std::shared_ptr<grpc::ChannelCredentials> cred =
+      grpc::GoogleDefaultCredentials();
+  std::shared_ptr<grpc::Channel> channel =
+      grpc::CreateChannel("spanner.googleapis.com", cred);
+  auto stub = spanner::DatabaseAdmin::NewStub(channel);
+
+  spanner::CreateDatabaseRequest request;
+  google::longrunning::Operation operation;
+  request.set_parent("projects/" + project + "/instances/" + instance);
+  request.set_create_statement("CREATE DATABASE " + database);
+
+  grpc::ClientContext context;
+  grpc::Status status = stub->CreateDatabase(&context, request, &operation);
+
+  if (!status.ok()) {
+    std::cerr << "FAILED: " << status.error_code() << ": "
+              << status.error_message() << "\n";
+    return 1;
+  }
+
+  std::cout << "Response:\n";
+  std::cout << operation.DebugString() << "\n";
+
+  return WaitForOperation(std::move(channel), std::move(operation));
+}
+
+int CreateTimeseriesTable(std::vector<std::string> args) {
+  if (args.size() != 5U) {
+    std::cerr << args[0]
+              << ": create-timeseries-table <project> <instance> "
+                 "<database>\n";
+    return 1;
+  }
+  auto const& project = args[2];
+  auto const& instance = args[3];
+  auto const& database = args[4];
+
+  namespace spanner = google::spanner::admin::database::v1;
+
+  std::shared_ptr<grpc::ChannelCredentials> cred =
+      grpc::GoogleDefaultCredentials();
+  std::shared_ptr<grpc::Channel> channel =
+      grpc::CreateChannel("spanner.googleapis.com", cred);
+  auto stub = spanner::DatabaseAdmin::NewStub(channel);
+
+  spanner::UpdateDatabaseDdlRequest request;
+  google::longrunning::Operation operation;
+  request.set_database("projects/" + project + "/instances/" + instance +
+                       "/databases/" + database);
+  request.add_statements(R"""(
+CREATE TABLE timeseries (
+	name STRING(MAX) NOT NULL,
+	ts TIMESTAMP NOT NULL,
+	value INT64 NOT NULL,
+) PRIMARY KEY (name, ts)
+)""");
+
+  grpc::ClientContext context;
+  grpc::Status status = stub->UpdateDatabaseDdl(&context, request, &operation);
+
+  if (!status.ok()) {
+    std::cerr << "FAILED: " << status.error_code() << ": "
+              << status.error_message() << "\n";
+    return 1;
+  }
+
+  std::cout << "Response:\n";
+  std::cout << operation.DebugString() << "\n";
+
+  return WaitForOperation(std::move(channel), std::move(operation));
 }
 
 int PopulateTimeseriesTable(std::vector<std::string> args) {
@@ -144,7 +256,7 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
     grpc::Status status = stub->ExecuteSql(&context, request, &result);
     if (!status.ok()) {
       std::cerr << "INSERT INTO FAILED: [" << status.error_code() << "] - "
-      << status.error_message() << "\n";
+                << status.error_message() << "\n";
       std::exit(1);
     }
 
@@ -201,6 +313,8 @@ int main(int argc, char* argv[]) {
 
   std::map<std::string, CommandType> commands = {
       {"list-databases", &ListDatabases},
+      {"create-database", &CreateDatabase},
+      {"create-timeseries-table", &CreateTimeseriesTable},
       {"populate-timeseries", &PopulateTimeseriesTable},
   };
 
