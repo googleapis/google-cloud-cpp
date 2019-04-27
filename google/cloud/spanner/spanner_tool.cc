@@ -232,8 +232,9 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
     request.set_session(session.name());
     request.mutable_transaction()->set_id(read_write_transaction.id());
     // request.set_seqno(seqno++);
-    request.set_sql("INSERT INTO timeseries (name, ts, value)"
-                    " VALUES (@name, @time, @value)");
+    request.set_sql(
+        "INSERT INTO timeseries (name, ts, value)"
+        " VALUES (@name, @time, @value)");
     auto& fields = *request.mutable_params()->mutable_fields();
     fields["name"] = [](std::string s) {
       google::protobuf::Value v;

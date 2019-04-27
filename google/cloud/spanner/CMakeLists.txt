@@ -92,7 +92,8 @@ add_library(spanner::client ALIAS spanner_client)
 add_executable(spanner_tool spanner_tool.cc)
 target_link_libraries(spanner_tool
                       PRIVATE spanner_client
-        storage_client googleapis-c++::spanner_protos
+                              storage_client
+                              googleapis-c++::spanner_protos
                               spanner_common_options)
 
 include(CreateBazelConfig)
