@@ -95,6 +95,25 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
 
   std::cout << "Session: " << session.name() << "\n";
 
+  spanner::Transaction read_write_transaction = [&] {
+    spanner::Transaction transaction;
+    spanner::BeginTransactionRequest request;
+    request.set_session(session.name());
+    *request.mutable_options()->mutable_read_write() = {};
+
+    grpc::ClientContext context;
+    grpc::Status status = stub->BeginTransaction(&context, request,
+        &transaction);
+    if (!status.ok()) {
+      std::cerr << "FAILED: [" << status.error_code() << "] - " << status
+          .error_message() << "\n";
+      std::exit(1);
+    }
+    return transaction;
+  }();
+
+  std::cout << "Transaction: " << read_write_transaction.id() << "\n";
+
   return 0;
 }
 
