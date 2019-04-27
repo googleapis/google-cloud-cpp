@@ -171,7 +171,7 @@ CREATE TABLE timeseries (
 }
 
 int PopulateTimeseriesTable(std::vector<std::string> args) {
-  if (args.size() != 4U) {
+  if (args.size() != 5U) {
     std::cerr << args[0] << ": populate-timeseries <project> <instance>"
               << " <database>\n";
     return 1;
@@ -194,13 +194,14 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
   spanner::Session session = [&] {
     spanner::Session session;
     spanner::CreateSessionRequest request;
-    request.set_database(database);
+    request.set_database(database_name);
 
     grpc::ClientContext context;
     grpc::Status status = stub->CreateSession(&context, request, &session);
     if (!status.ok()) {
       std::cerr << "FAILED: [" << status.error_code() << "] - "
-                << status.error_message() << "\n";
+                << status.error_message() << "\n"
+                << request.DebugString() << "\n";
       std::exit(1);
     }
     return session;
@@ -227,13 +228,17 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
 
   std::cout << "Transaction: " << read_write_transaction.id() << "\n";
 
+  // TODO(coryan) - use this when we update the protos to have .set_seqno()
+  // std::int64_t seqno = 0;
   auto insert_one = [&](std::string series_name,
                         std::chrono::system_clock::time_point ts,
                         std::int64_t value) {
     spanner::ExecuteSqlRequest request;
     request.set_session(session.name());
     request.mutable_transaction()->set_id(read_write_transaction.id());
-    request.set_sql("INSERT INTO timeseries VALUES (@name, @time, @value");
+    // request.set_seqno(seqno++);
+    request.set_sql("INSERT INTO timeseries (name, ts, value)"
+                    " VALUES (@name, @time, @value)");
     auto& fields = *request.mutable_params()->mutable_fields();
     fields["name"] = [](std::string s) {
       google::protobuf::Value v;
@@ -247,9 +252,15 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
     }(ts);
     fields["value"] = [](std::int64_t x) {
       google::protobuf::Value v;
-      v.set_number_value(x);
+      v.set_string_value(std::to_string(x));
       return v;
     }(value);
+    auto& types = *request.mutable_param_types();
+    types["time"] = [] {
+      spanner::Type t;
+      t.set_code(spanner::TIMESTAMP);
+      return t;
+    }();
 
     grpc::ClientContext context;
     spanner::ResultSet result;
@@ -263,6 +274,8 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
     std::cout << "INSERT = " << result.DebugString() << "\n";
   };
 
+#if 0
+  // TODO(coryan) - use this when we update the protos to have .set_seqno()
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_int_distribution<int> d(0, 100);
@@ -275,6 +288,9 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
       insert_one(series_name, ts, d(gen));
     }
   }
+#else
+  insert_one("some-time-series", std::chrono::system_clock::now(), 42);
+#endif  // 0
 
   grpc::ClientContext context;
   spanner::CommitRequest request;
