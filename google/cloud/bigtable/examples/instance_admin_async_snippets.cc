@@ -120,13 +120,15 @@ void AsyncCreateAppProfile(cbt::InstanceAdmin instance_admin,
     throw Usage{
         "async-create-app-profile <project-id> <instance-id> <profile-id>"};
   }
+
   //! [async create app profile]
+  namespace cbt = google::cloud::bigtable;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id, std::string profile_id) {
-    auto config = google::cloud::bigtable::AppProfileConfig::MultiClusterUseAny(
-        google::cloud::bigtable::AppProfileId(profile_id));
+    auto config = cbt::AppProfileConfig::MultiClusterUseAny(
+        cbt::AppProfileId(profile_id));
     auto future = instance_admin.AsyncCreateAppProfile(
-        cq, google::cloud::bigtable::InstanceId(instance_id), config);
+        cq, cbt::InstanceId(instance_id), config);
 
     // Most applications would simply call future.get(), here we show how to
     // perform additional work while the long running operation completes.
