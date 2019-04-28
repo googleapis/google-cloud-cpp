@@ -21,7 +21,6 @@
 #include <google/protobuf/text_format.h>
 
 namespace {
-namespace cbt = google::cloud::bigtable;
 const std::string MAGIC_ROW_KEY = "key-000005";
 
 struct Usage {
@@ -38,57 +37,49 @@ void PrintUsage(std::string const& cmd, std::string const& msg) {
             << command_usage << "\n";
 }
 
-void AsyncApply(cbt::Table table, cbt::CompletionQueue cq,
+void AsyncApply(google::cloud::bigtable::Table table,
+                google::cloud::bigtable::CompletionQueue cq,
                 std::vector<std::string> argv) {
   if (argv.size() != 2U) {
     throw Usage{"async-apply: <project-id> <instance-id> <table-id>"};
   }
 
   //! [async-apply]
-  [&](cbt::Table table, cbt::CompletionQueue cq, std::string table_id) {
-    // Write several rows with some trivial data.
-    for (int i = 0; i != 20; ++i) {
-      // Note: This example uses sequential numeric IDs for simplicity, but
-      // this can result in poor performance in a production application.
-      // Since rows are stored in sorted order by key, sequential keys can
-      // result in poor distribution of operations across nodes.
-      //
-      // For more information about how to design a Bigtable schema for the
-      // best performance, see the documentation:
-      //
-      //     https://cloud.google.com/bigtable/docs/schema-design
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id) {
+    auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch());
 
-      char buf[32];
-      snprintf(buf, sizeof(buf), "key-%06d", i);
-      google::cloud::bigtable::SingleRowMutation mutation(buf);
-      mutation.emplace_back(google::cloud::bigtable::SetCell(
-          "fam", "col0", "value0-" + std::to_string(i)));
-      mutation.emplace_back(google::cloud::bigtable::SetCell(
-          "fam", "col1", "value2-" + std::to_string(i)));
-      mutation.emplace_back(google::cloud::bigtable::SetCell(
-          "fam", "col2", "value3-" + std::to_string(i)));
-      mutation.emplace_back(google::cloud::bigtable::SetCell(
-          "fam", "col3", "value4-" + std::to_string(i)));
+    google::cloud::bigtable::SingleRowMutation mutation(
+        "test-key-for-async-apply");
+    mutation.emplace_back(
+        google::cloud::bigtable::SetCell("fam", "some-column", "some-value"));
+    mutation.emplace_back(google::cloud::bigtable::SetCell(
+        "fam", "another-column", "another-value"));
+    mutation.emplace_back(google::cloud::bigtable::SetCell(
+        "fam", "even-more-columns", timestamp, "with-explicit-timestamp"));
 
-      google::cloud::future<google::cloud::Status> fut =
-          table.AsyncApply(std::move(mutation), cq);
-      google::cloud::Status status = fut.get();
-      if (!status.ok()) {
-        throw std::runtime_error(status.message());
-      }
+    google::cloud::future<google::cloud::Status> fut =
+        table.AsyncApply(std::move(mutation), cq);
+    google::cloud::Status status = fut.get();
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
     }
+    std::cout << "Successfully applied mutation\n";
   }
   //! [async-apply]
   (std::move(table), std::move(cq), argv[1]);
 }
 
-void AsyncBulkApply(cbt::Table table, cbt::CompletionQueue cq,
+void AsyncBulkApply(google::cloud::bigtable::Table table,
+                    google::cloud::bigtable::CompletionQueue cq,
                     std::vector<std::string> argv) {
   if (argv.size() != 2U) {
     throw Usage{"async-bulk-apply: <project-id> <instance-id> <table-id>"};
   }
 
   //! [bulk async-bulk-apply]
+  namespace cbt = google::cloud::bigtable;
   [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id) {
     // Write several rows in a single operation, each row has some trivial data.
     google::cloud::bigtable::BulkMutation bulk;
@@ -125,7 +116,8 @@ void AsyncBulkApply(cbt::Table table, cbt::CompletionQueue cq,
   (std::move(table), std::move(cq), argv[1]);
 }
 
-void AsyncCheckAndMutate(cbt::Table table, cbt::CompletionQueue cq,
+void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
+                         google::cloud::bigtable::CompletionQueue cq,
                          std::vector<std::string> argv) {
   if (argv.size() != 2U) {
     throw Usage{
@@ -133,6 +125,7 @@ void AsyncCheckAndMutate(cbt::Table table, cbt::CompletionQueue cq,
   }
 
   //! [async check and mutate]
+  namespace cbt = google::cloud::bigtable;
   [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id) {
     // Check if the latest value of the flip-flop column is "on".
     auto predicate = google::cloud::bigtable::Filter::Chain(
@@ -167,7 +160,8 @@ void AsyncCheckAndMutate(cbt::Table table, cbt::CompletionQueue cq,
   (std::move(table), std::move(cq), argv[1]);
 }
 
-void AsyncReadModifyWrite(cbt::Table table, cbt::CompletionQueue cq,
+void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
+                          google::cloud::bigtable::CompletionQueue cq,
                           std::vector<std::string> argv) {
   // TODO(#2404) - remove hard-coded key values
   if (argv.size() != 2U) {

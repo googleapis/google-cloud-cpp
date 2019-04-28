@@ -18,8 +18,6 @@
 #include <algorithm>
 
 namespace {
-namespace cbt = google::cloud::bigtable;
-
 struct Usage {
   std::string msg;
 };
@@ -34,7 +32,8 @@ void PrintUsage(std::string const& cmd, std::string const& msg) {
             << command_usage << "\n";
 }
 
-void AsyncCreateTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
+void AsyncCreateTable(google::cloud::bigtable::TableAdmin admin,
+                      google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
   if (argv.size() != 2U) {
     throw Usage{"async-create-table: <project-id> <instance-id> <table-id>"};
@@ -47,10 +46,9 @@ void AsyncCreateTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
         google::cloud::StatusOr<google::bigtable::admin::v2::Table>>
         future = admin.AsyncCreateTable(
             cq, table_id,
-            google::cloud::bigtable::TableConfig(
-                {{"fam", google::cloud::bigtable::GcRule::MaxNumVersions(10)},
-                 {"foo", google::cloud::bigtable::GcRule::MaxAge(
-                             std::chrono::hours(72))}},
+            cbt::TableConfig(
+                {{"fam", cbt::GcRule::MaxNumVersions(10)},
+                 {"foo", cbt::GcRule::MaxAge(std::chrono::hours(72))}},
                 {}));
 
     auto final = future.then(
@@ -70,7 +68,8 @@ void AsyncCreateTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
   (std::move(admin), std::move(cq), argv[1]);
 }
 
-void AsyncListTables(cbt::TableAdmin admin, cbt::CompletionQueue cq,
+void AsyncListTables(google::cloud::bigtable::TableAdmin admin,
+                     google::cloud::bigtable::CompletionQueue cq,
                      std::vector<std::string> argv) {
   if (argv.size() != 1U) {
     throw Usage{"async-list-tables: <project-id> <instance-id>"};
@@ -103,7 +102,8 @@ void AsyncListTables(cbt::TableAdmin admin, cbt::CompletionQueue cq,
   (std::move(admin), std::move(cq));
 }
 
-void AsyncGetTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
+void AsyncGetTable(google::cloud::bigtable::TableAdmin admin,
+                   google::cloud::bigtable::CompletionQueue cq,
                    std::vector<std::string> argv) {
   if (argv.size() != 2U) {
     throw Usage{"async-get-table: <project-id> <instance-id> <table-id>"};
@@ -142,7 +142,8 @@ void AsyncGetTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
   (std::move(admin), std::move(cq), argv[1]);
 }
 
-void AsyncDeleteTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
+void AsyncDeleteTable(google::cloud::bigtable::TableAdmin admin,
+                      google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
   if (argv.size() != 2U) {
     throw Usage{"async-delete-table: <project-id> <instance-id> <table-id>"};
@@ -169,29 +170,29 @@ void AsyncDeleteTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
   (std::move(admin), std::move(cq), argv[1]);
 }
 
-void AsyncModifyTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
+void AsyncModifyTable(google::cloud::bigtable::TableAdmin admin,
+                      google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
   if (argv.size() != 2U) {
     throw Usage{"async-modify-table: <project-id> <instance-id> <table-id>"};
   }
 
   //! [async modify table]
+  namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {
     google::cloud::future<
         google::cloud::StatusOr<google::bigtable::admin::v2::Table>>
         future = admin.AsyncModifyColumnFamilies(
             cq, table_id,
-            {google::cloud::bigtable::ColumnFamilyModification::Drop("foo"),
-             google::cloud::bigtable::ColumnFamilyModification::Update(
-                 "fam", google::cloud::bigtable::GcRule::Union(
-                            google::cloud::bigtable::GcRule::MaxNumVersions(5),
-                            google::cloud::bigtable::GcRule::MaxAge(
-                                std::chrono::hours(24 * 7)))),
-             google::cloud::bigtable::ColumnFamilyModification::Create(
-                 "bar", google::cloud::bigtable::GcRule::Intersection(
-                            google::cloud::bigtable::GcRule::MaxNumVersions(3),
-                            google::cloud::bigtable::GcRule::MaxAge(
-                                std::chrono::hours(72))))});
+            {cbt::ColumnFamilyModification::Drop("foo"),
+             cbt::ColumnFamilyModification::Update(
+                 "fam", cbt::GcRule::Union(
+                            cbt::GcRule::MaxNumVersions(5),
+                            cbt::GcRule::MaxAge(std::chrono::hours(24 * 7)))),
+             cbt::ColumnFamilyModification::Create(
+                 "bar", cbt::GcRule::Intersection(
+                            cbt::GcRule::MaxNumVersions(3),
+                            cbt::GcRule::MaxAge(std::chrono::hours(72))))});
 
     auto final = future.then(
         [](google::cloud::future<
@@ -218,7 +219,8 @@ void AsyncModifyTable(cbt::TableAdmin admin, cbt::CompletionQueue cq,
   (std::move(admin), std::move(cq), argv[1]);
 }
 
-void AsyncDropRowsByPrefix(cbt::TableAdmin admin, cbt::CompletionQueue cq,
+void AsyncDropRowsByPrefix(google::cloud::bigtable::TableAdmin admin,
+                           google::cloud::bigtable::CompletionQueue cq,
                            std::vector<std::string> argv) {
   if (argv.size() != 3U) {
     throw Usage{
@@ -227,8 +229,9 @@ void AsyncDropRowsByPrefix(cbt::TableAdmin admin, cbt::CompletionQueue cq,
   }
 
   //! [async drop rows by prefix]
-  [](google::cloud::bigtable::TableAdmin admin, cbt::CompletionQueue cq,
-     std::string table_id, std::string row_key) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id,
+     std::string row_key) {
     google::cloud::future<google::cloud::Status> future =
         admin.AsyncDropRowsByPrefix(cq, table_id, row_key);
     auto final =
@@ -247,15 +250,16 @@ void AsyncDropRowsByPrefix(cbt::TableAdmin admin, cbt::CompletionQueue cq,
   (std::move(admin), std::move(cq), argv[1], argv[2]);
 }
 
-void AsyncDropAllRows(cbt::TableAdmin admin, cbt::CompletionQueue cq,
+void AsyncDropAllRows(google::cloud::bigtable::TableAdmin admin,
+                      google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
   if (argv.size() != 2U) {
     throw Usage{"async-drop-all-rows: <project-id> <instance-id> <table-id>"};
   }
 
   //! [async drop all rows]
-  [](google::cloud::bigtable::TableAdmin admin, cbt::CompletionQueue cq,
-     std::string table_id) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {
     google::cloud::future<google::cloud::Status> future =
         admin.AsyncDropAllRows(cq, table_id);
     auto final =
@@ -274,7 +278,8 @@ void AsyncDropAllRows(cbt::TableAdmin admin, cbt::CompletionQueue cq,
   (std::move(admin), std::move(cq), argv[1]);
 }
 
-void AsyncCheckConsistency(cbt::TableAdmin admin, cbt::CompletionQueue cq,
+void AsyncCheckConsistency(google::cloud::bigtable::TableAdmin admin,
+                           google::cloud::bigtable::CompletionQueue cq,
                            std::vector<std::string> argv) {
   if (argv.size() != 3U) {
     throw Usage{
@@ -283,11 +288,11 @@ void AsyncCheckConsistency(cbt::TableAdmin admin, cbt::CompletionQueue cq,
   }
 
   //! [async check consistency]
+  namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id_param,
      std::string consistency_token_param) {
-    google::cloud::bigtable::TableId table_id(table_id_param);
-    google::cloud::bigtable::ConsistencyToken consistency_token(
-        consistency_token_param);
+    cbt::TableId table_id(table_id_param);
+    cbt::ConsistencyToken consistency_token(consistency_token_param);
 
     google::cloud::future<google::cloud::StatusOr<cbt::Consistency>> future =
         admin.AsyncCheckConsistency(cq, table_id, consistency_token);
@@ -299,8 +304,7 @@ void AsyncCheckConsistency(cbt::TableAdmin admin, cbt::CompletionQueue cq,
       if (!consistency) {
         throw std::runtime_error(consistency.status().message());
       }
-      if (consistency.value() ==
-          google::cloud::bigtable::Consistency::kConsistent) {
+      if (consistency.value() == cbt::Consistency::kConsistent) {
         std::cout << "Table is consistent\n";
       } else {
         std::cout
@@ -314,8 +318,8 @@ void AsyncCheckConsistency(cbt::TableAdmin admin, cbt::CompletionQueue cq,
   (std::move(admin), std::move(cq), argv[1], argv[2]);
 }
 
-void AsyncGenerateConsistencyToken(cbt::TableAdmin admin,
-                                   cbt::CompletionQueue cq,
+void AsyncGenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
+                                   google::cloud::bigtable::CompletionQueue cq,
                                    std::vector<std::string> argv) {
   if (argv.size() != 2U) {
     throw Usage{
@@ -324,14 +328,13 @@ void AsyncGenerateConsistencyToken(cbt::TableAdmin admin,
   }
 
   //! [async generate consistency token]
-  [](google::cloud::bigtable::TableAdmin admin, cbt::CompletionQueue cq,
-     std::string table_id) {
-    google::cloud::future<google::cloud::StatusOr<cbt::ConsistencyToken>>
-        future = admin.AsyncGenerateConsistencyToken(cq, table_id);
-    auto final =
-        future.then([table_id](google::cloud::future<
-                               google::cloud::StatusOr<cbt::ConsistencyToken>>
-                                   f) {
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {
+    google::cloud::future<StatusOr<cbt::ConsistencyToken>> future =
+        admin.AsyncGenerateConsistencyToken(cq, table_id);
+    auto final = future.then(
+        [table_id](google::cloud::future<StatusOr<cbt::ConsistencyToken>> f) {
           auto token = f.get();
           if (!token) {
             throw std::runtime_error(token.status().message());
