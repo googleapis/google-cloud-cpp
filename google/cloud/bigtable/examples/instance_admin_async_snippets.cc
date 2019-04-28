@@ -638,12 +638,12 @@ void AsyncDeleteAppProfile(cbt::InstanceAdmin instance_admin,
   }
 
   //! [async delete app profile]
+  namespace cbt = google::cloud::bigtable;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id, std::string app_profile_id) {
     google::cloud::future<google::cloud::Status> future =
-        instance_admin.AsyncDeleteAppProfile(
-            cq, google::cloud::bigtable::InstanceId(instance_id),
-            google::cloud::bigtable::AppProfileId(app_profile_id));
+        instance_admin.AsyncDeleteAppProfile(cq, cbt::InstanceId(instance_id),
+                                             cbt::AppProfileId(app_profile_id));
 
     // Most applications would simply call future.get(), here we show how to
     // perform additional work while the long running operation completes.
