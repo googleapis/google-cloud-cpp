@@ -16,7 +16,6 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 [![Kokoro install opensuse-leap status][kokoro-install-opensuse-leap-shield]][kokoro-install-opensuse-leap-link]
 [![Kokoro install ubuntu status][kokoro-install-ubuntu-shield]][kokoro-install-ubuntu-link]
 [![Kokoro install ubuntu-xenial status][kokoro-install-ubuntu-xenial-shield]][kokoro-install-ubuntu-xenial-link]
-[![Kokoro install ubuntu-trusty status][kokoro-install-ubuntu-trusty-shield]][kokoro-install-ubuntu-trusty-link]
 
 **Special Builds:**
 [![Kokoro CI status][kokoro-asan-shield]][kokoro-asan-link]
@@ -91,7 +90,6 @@ at the [Beta](#versioning) quality level:
   - [OpenSuSE (Leap)](#opensuse-leap)
   - [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804---bionic-beaver)
   - [Ubuntu (16.04 - Xenial Xerus)](#ubuntu-1604---xenial-xerus)
-  - [Ubuntu (14.04 - Trusty Tahr)](#ubuntu-1404---trusty-tahr)
   - [macOS (using brew)](#macos-using-brew)
   - [Windows](#windows-using-vcpkg)
 - [Build](#build)
@@ -250,50 +248,6 @@ sudo apt update && \
 sudo apt install -y build-essential cmake git gcc g++ cmake \
         libcurl4-openssl-dev libssl-dev make \
         pkg-config tar wget zlib1g-dev
-```
-
-### Ubuntu (14.04 - Trusty Tahr)
-
-[![Kokoro install ubuntu-trusty status][kokoro-install-ubuntu-trusty-shield]][kokoro-install-ubuntu-trusty-link]
-
-[kokoro-install-ubuntu-trusty-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-ubuntu-trusty.svg
-[kokoro-install-ubuntu-trusty-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-ubuntu-trusty-link.html
-
-We use the `ubuntu-toolchain-r` PPA to get a modern version of CMake:
-
-```bash
-sudo apt update && sudo apt install -y software-properties-common
-sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-sudo apt update && \
-sudo apt install -y cmake3 git gcc g++ make pkg-config tar wget zlib1g-dev
-```
-
-Ubuntu:14.04 ships with a very old version of OpenSSL, this version is not
-supported by gRPC. We need to compile and install OpenSSL-1.0.2 from source.
-
-```bash
-cd $HOME/Downloads
-wget -q https://www.openssl.org/source/openssl-1.0.2n.tar.gz
-tar xf openssl-1.0.2n.tar.gz
-cd $HOME/Downloads/openssl-1.0.2n
-./config --shared
-make -j $(nproc)
-sudo make install
-```
-
-Note that by default OpenSSL installs itself in `/usr/local/ssl`. Installing
-on a more conventional location, such as `/usr/local` or `/usr`, can break
-many programs in your system. OpenSSL 1.0.2 is actually incompatible with
-with OpenSSL 1.0.0 which is the version expected by the programs already
-installed by Ubuntu 14.04.
-
-In any case, as the library installs itself in this non-standard location, we
-also need to configure CMake and other build program to find this version of
-OpenSSL:
-
-```bash
-export OPENSSL_ROOT_DIR=/usr/local/ssl
-export PKG_CONFIG_PATH=/usr/local/ssl/lib/pkgconfig
 ```
 
 #### macOS (using brew)
