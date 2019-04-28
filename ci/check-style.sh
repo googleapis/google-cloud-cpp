@@ -40,18 +40,18 @@ find google/cloud -name '*.h' -print0 |
   xargs -0 awk -f "${BINDIR}/check-include-guards.gawk"
 
 replace_original_if_changed() {
-  if [[ $# != 1 ]]; then
+  if [[ $# != 2 ]]; then
     return 1
   fi
 
-  local file="$1"
-  shift
+  local original="$1"
+  local reformatted="$2"
 
-  chmod --reference="${file}" "${file}.tmp"
-  if cmp -s "${file}" "${file}.tmp"; then
-    rm -f "${file}.tmp"
+  chmod --reference="${original}" "${reformatted}"
+  if cmp -s "${original}" "${reformatted}"; then
+    rm -f "${reformatted}"
   else
-    mv -f "${file}.tmp" "${file}"
+    mv -f "${reformatted}" "${original}"
   fi
 }
 
@@ -62,7 +62,7 @@ find . \( "${ignore[@]}" \) -prune -o \
        -print0 |
   while IFS= read -r -d $'\0' file; do
     cmake-format "${file}" >"${file}.tmp"
-    replace_original_if_changed "${file}"
+    replace_original_if_changed "${file}" "${file}.tmp"
   done
 
 # Apply clang-format(1) to fix whitespace and other formatting rules.
@@ -71,7 +71,7 @@ find . \( "${ignore[@]}" \) -prune -o \
 find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 |
   while IFS= read -r -d $'\0' file; do
     clang-format "${file}" >"${file}.tmp"
-    replace_original_if_changed "${file}"
+    replace_original_if_changed "${file}" "${file}.tmp"
   done
 
 # Apply several transformations that cannot be enforced by clang-format:
@@ -89,7 +89,7 @@ find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 |
         -e 's;#include <grpc\\+\\+/grpc\+\+.h>;#include <grpcpp/grpcpp.h>;' \
         -e 's;#include <grpc\\+\\+/;#include <grpcpp/;' \
         "${file}" > "${file}.tmp"
-    replace_original_if_changed "${file}"
+    replace_original_if_changed "${file}" "${file}.tmp"
   done
 
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
@@ -118,7 +118,7 @@ find . \( "${ignore[@]}" \) -prune -o \
   while IFS= read -r -d $'\0' file; do
     sed -e 's/[[:blank:]][[:blank:]]*$//' \
         "${file}" > "${file}.tmp"
-    replace_original_if_changed "${file}"
+    replace_original_if_changed "${file}" "${file}.tmp"
   done
 
 # Report any differences created by running the formatting tools.
