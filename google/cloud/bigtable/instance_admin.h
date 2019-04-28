@@ -766,6 +766,31 @@ class InstanceAdmin {
       std::string const& etag = std::string{});
 
   /**
+   * Asynchronously sets the IAM policy for an instance.
+   *
+   * Applications can provide the @p etag to implement optimistic concurrency
+   * control. If @p etag is not empty, the server will reject calls where the
+   * provided ETag does not match the ETag value stored in the server.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param instance_id which instance to set the IAM policy for.
+   * @param iam_bindings IamBindings object containing role and members.
+   * @param etag the expected ETag value for the current policy.
+   * @return a future satisfied when either (a) the policy is created or (b)
+   *     an unretriable error occurs or (c) retry policy has been
+   *     exhausted.
+   *
+   * @par Example
+   * @snippet instance_admin_async_snippets.cc async set iam policy
+   */
+  future<StatusOr<google::cloud::IamPolicy>> AsyncSetIamPolicy(
+      CompletionQueue& cq, InstanceId const& instance_id,
+      google::cloud::IamBindings const& iam_bindings,
+      std::string const& etag = std::string{});
+
+  /**
    * Returns a permission set that the caller has on the specified instance.
    *
    * @param instance_id the ID of the instance to query.

@@ -705,6 +705,69 @@ void AsyncDeleteAppProfile(
   (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
 }
 
+void AsyncSetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
+                       google::cloud::bigtable::CompletionQueue cq,
+                       std::vector<std::string> argv) {
+  if (argv.size() < 2U) {
+    throw Usage{
+        "async-set-iam-policy: <project-id> <instance-id>"
+        " <permission> <new-member>\n"
+        "        Example: set-iam-policy my-project my-instance"
+        " roles/bigtable.user user:my-user@example.com"};
+  }
+
+  //! [async set iam policy]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::IamPolicy;
+  using google::cloud::StatusOr;
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
+     std::string instance_id, std::string role, std::string member) {
+    future<StatusOr<IamPolicy>> updated_future =
+        instance_admin.AsyncGetIamPolicy(cq, cbt::InstanceId(instance_id))
+            .then([cq, instance_admin, role, member, instance_id](
+                      future<StatusOr<IamPolicy>> current_future) mutable {
+              auto current = current_future.get();
+              if (!current) {
+                return google::cloud::make_ready_future<StatusOr<IamPolicy>>(
+                    current.status());
+              }
+              auto bindings = current->bindings;
+              bindings.AddMember(role, member);
+              return instance_admin.AsyncSetIamPolicy(
+                  cq, cbt::InstanceId(instance_id), bindings, current->etag);
+            });
+    // Most applications would simply call updated_future.get(), here we show
+    // how to perform additional work while the long running operation
+    // completes.
+    std::cout << "Waiting for IAM policy update to complete ";
+    for (int i = 0; i != 100; ++i) {
+      if (std::future_status::ready ==
+          updated_future.wait_for(std::chrono::seconds(2))) {
+        auto result = updated_future.get();
+        if (!result) {
+          throw std::runtime_error(result.status().message());
+        }
+        std::cout << "DONE, the IAM Policy for " << instance_id << " is\n";
+        for (auto const& kv : result->bindings) {
+          std::cout << "role " << kv.first << " includes [";
+          char const* sep = "";
+          for (auto const& m : kv.second) {
+            std::cout << sep << m;
+            sep = ", ";
+          }
+          std::cout << "]\n";
+        }
+        return;
+      }
+      std::cout << '.' << std::flush;
+    }
+    std::cout << "TIMEOUT\n";
+  }
+  //! [async set iam policy]
+  (std::move(instance_admin), std::move(cq), argv[1], argv[2], argv[3]);
+}
+
 void AsyncTestIamPermissions(
     google::cloud::bigtable::InstanceAdmin instance_admin,
     google::cloud::bigtable::CompletionQueue cq,
@@ -774,6 +837,7 @@ int main(int argc, char* argv[]) try {
       {"async-delete-instance", &AsyncDeleteInstance},
       {"async-delete-cluster", &AsyncDeleteCluster},
       {"async-delete-app-profile", &AsyncDeleteAppProfile},
+      {"async-set-iam-policy", &AsyncSetIamPolicy},
       {"async-test-iam-permissions", &AsyncTestIamPermissions}};
 
   google::cloud::bigtable::CompletionQueue cq;

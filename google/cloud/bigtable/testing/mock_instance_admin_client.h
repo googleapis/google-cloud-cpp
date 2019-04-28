@@ -259,6 +259,14 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
                             google::iam::v1::SetIamPolicyRequest const&,
                             google::iam::v1::Policy*));
 
+  MOCK_METHOD3(
+      AsyncSetIamPolicy,
+      std::unique_ptr<
+          grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>(
+          grpc::ClientContext* context,
+          google::iam::v1::SetIamPolicyRequest const& request,
+          grpc::CompletionQueue* cq));
+
   MOCK_METHOD3(TestIamPermissions,
                grpc::Status(grpc::ClientContext*,
                             google::iam::v1::TestIamPermissionsRequest const&,
