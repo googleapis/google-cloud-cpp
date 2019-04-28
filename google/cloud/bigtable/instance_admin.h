@@ -557,6 +557,24 @@ class InstanceAdmin {
       bigtable::InstanceId const& instance_id, AppProfileConfig config);
 
   /**
+   * Asynchronously create a new application profile.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param instance_id the instance for the new application profile.
+   * @param config the configuration for the new application profile.
+   * @return The proto describing the new application profile.
+   *
+   * @par Example
+   * @snippet instance_admin_async_snippets.cc async create app profile
+   */
+  future<StatusOr<google::bigtable::admin::v2::AppProfile>>
+  AsyncCreateAppProfile(CompletionQueue& cq,
+                        bigtable::InstanceId const& instance_id,
+                        AppProfileConfig config);
+
+  /**
    * Fetch the detailed information about an existing application profile.
    *
    * @param instance_id the instance to look the profile in.

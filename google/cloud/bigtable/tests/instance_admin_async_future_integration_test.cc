@@ -358,15 +358,19 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
   EXPECT_EQ(0U, count_matching_profiles(id1, *initial_profiles));
   EXPECT_EQ(0U, count_matching_profiles(id2, *initial_profiles));
 
-  auto profile_1 = instance_admin_->CreateAppProfile(
-      bigtable::InstanceId(instance_id),
-      bigtable::AppProfileConfig::MultiClusterUseAny(
-          bigtable::AppProfileId(id1)));
+  auto profile_1 = instance_admin_
+                       ->AsyncCreateAppProfile(
+                           cq, bigtable::InstanceId(instance_id),
+                           bigtable::AppProfileConfig::MultiClusterUseAny(
+                               bigtable::AppProfileId(id1)))
+                       .get();
   ASSERT_STATUS_OK(profile_1);
-  auto profile_2 = instance_admin_->CreateAppProfile(
-      bigtable::InstanceId(instance_id),
-      bigtable::AppProfileConfig::MultiClusterUseAny(
-          bigtable::AppProfileId(id2)));
+  auto profile_2 = instance_admin_
+                       ->AsyncCreateAppProfile(
+                           cq, bigtable::InstanceId(instance_id),
+                           bigtable::AppProfileConfig::MultiClusterUseAny(
+                               bigtable::AppProfileId(id2)))
+                       .get();
   ASSERT_STATUS_OK(profile_2);
 
   auto current_profiles =

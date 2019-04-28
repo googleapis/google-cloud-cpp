@@ -113,6 +113,48 @@ void AsyncCreateCluster(cbt::InstanceAdmin instance_admin,
   (std::move(instance_admin), std::move(cq), argv[1], argv[2], argv[3]);
 }
 
+void AsyncCreateAppProfile(cbt::InstanceAdmin instance_admin,
+                           cbt::CompletionQueue cq,
+                           std::vector<std::string> argv) {
+  if (argv.size() != 3U) {
+    throw Usage{
+        "async-create-app-profile <project-id> <instance-id> <profile-id>"};
+  }
+
+  //! [async create app profile]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
+     std::string instance_id, std::string profile_id) {
+    auto config = cbt::AppProfileConfig::MultiClusterUseAny(
+        cbt::AppProfileId(profile_id));
+    auto future = instance_admin.AsyncCreateAppProfile(
+        cq, cbt::InstanceId(instance_id), config);
+
+    // Most applications would simply call future.get(), here we show how to
+    // perform additional work while the long running operation completes.
+    std::cout << "Waiting for app_profile creation to complete ";
+    for (int i = 0; i != 100; ++i) {
+      if (std::future_status::ready ==
+          future.wait_for(std::chrono::seconds(2))) {
+        auto app_profile = future.get();
+        if (!app_profile) {
+          throw std::runtime_error(app_profile.status().message());
+        }
+        std::string app_profile_detail;
+        google::protobuf::TextFormat::PrintToString(*app_profile,
+                                                    &app_profile_detail);
+        std::cout << "DONE, app profile details: " << app_profile_detail
+                  << "\n";
+        return;
+      }
+      std::cout << '.' << std::flush;
+    }
+    std::cout << "TIMEOUT\n";
+  }
+  //! [async create app profile]
+  (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
+}
+
 void AsyncGetInstance(cbt::InstanceAdmin instance_admin,
                       cbt::CompletionQueue cq, std::vector<std::string> argv) {
   if (argv.size() != 2U) {
@@ -638,6 +680,7 @@ int main(int argc, char* argv[]) try {
   std::map<std::string, CommandType> commands = {
       {"async-create-instance", &AsyncCreateInstance},
       {"async-create-cluster", &AsyncCreateCluster},
+      {"async-create-app-profile", &AsyncCreateAppProfile},
       {"async-get-instance", &AsyncGetInstance},
       {"async-get-cluster", &AsyncGetCluster},
       {"async-get-iam-policy", &AsyncGetIamPolicy},
