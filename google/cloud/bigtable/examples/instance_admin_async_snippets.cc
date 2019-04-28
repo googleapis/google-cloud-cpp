@@ -233,16 +233,16 @@ void AsyncGetIamPolicy(cbt::InstanceAdmin instance_admin,
   }
 
   //! [async get iam policy]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id) {
-    google::cloud::future<google::cloud::StatusOr<google::cloud::IamPolicy>>
-        future = instance_admin.AsyncGetIamPolicy(
+    google::cloud::future<StatusOr<google::cloud::IamPolicy>> future =
+        instance_admin.AsyncGetIamPolicy(
             cq, google::cloud::bigtable::InstanceId(instance_id));
 
-    auto final =
-        future.then([](google::cloud::future<
-                        google::cloud::StatusOr<google::cloud::IamPolicy>>
-                           f) {
+    auto final = future.then(
+        [](google::cloud::future<StatusOr<google::cloud::IamPolicy>> f) {
           auto iam_policy = f.get();
           if (!iam_policy) {
             throw std::runtime_error(iam_policy.status().message());
