@@ -426,7 +426,8 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, SetGetTestIamAPIsTest) {
       instance_admin_->SetIamPolicy(id, iam_bindings, "test-tag");
   ASSERT_STATUS_OK(initial_policy);
 
-  auto fetched_policy = instance_admin_->GetIamPolicy(id);
+  auto fetched_policy =
+      instance_admin_->AsyncGetIamPolicy(cq, instance_id).get();
   ASSERT_STATUS_OK(fetched_policy);
 
   EXPECT_EQ(initial_policy->version, fetched_policy->version);

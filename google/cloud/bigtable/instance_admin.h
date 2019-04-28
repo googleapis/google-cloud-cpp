@@ -673,6 +673,22 @@ class InstanceAdmin {
       std::string const& instance_id);
 
   /**
+   * Asynchronously gets the policy for @p instance_id.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param instance_id the instance to query.
+   * @return a future satisfied when either (a) the policy is fetched or (b)
+   *     an unretriable error occurs or (c) retry policy has been exhausted.
+   *
+   * @par Example
+   * @snippet instance_admin_async_snippets.cc async get iam policy
+   */
+  future<StatusOr<google::cloud::IamPolicy>> AsyncGetIamPolicy(
+      CompletionQueue& cq, InstanceId const& instance_id);
+
+  /**
    * Sets the IAM policy for an instance.
    *
    * Applications can provide the @p etag to implement optimistic concurrency
