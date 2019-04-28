@@ -277,28 +277,28 @@ void AsyncGetAppProfile(cbt::InstanceAdmin instance_admin,
   }
 
   //! [async get app profile]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id, std::string app_profile_id) {
-    google::cloud::future<
-        google::cloud::StatusOr<google::bigtable::admin::v2::AppProfile>>
-        future = instance_admin.AsyncGetAppProfile(
-            cq, google::cloud::bigtable::InstanceId(instance_id),
-            google::cloud::bigtable::AppProfileId(app_profile_id));
-
-    auto final = future.then(
-        [](google::cloud::future<
-            google::cloud::StatusOr<google::bigtable::admin::v2::AppProfile>>
-               f) {
-          auto app_profile = f.get();
-          if (!app_profile) {
-            throw std::runtime_error(app_profile.status().message());
-          }
-          std::string app_profile_detail;
-          google::protobuf::TextFormat::PrintToString(*app_profile,
-                                                      &app_profile_detail);
-          std::cout << "GetAppProfile details : " << app_profile_detail << "\n";
-          return google::cloud::Status();
-        });
+    auto final =
+        instance_admin
+            .AsyncGetAppProfile(cq, cbt::InstanceId(instance_id),
+                                cbt::AppProfileId(app_profile_id))
+            .then([](google::cloud::future<
+                      StatusOr<google::bigtable::admin::v2::AppProfile>>
+                         f) {
+              auto app_profile = f.get();
+              if (!app_profile) {
+                throw std::runtime_error(app_profile.status().message());
+              }
+              std::string app_profile_detail;
+              google::protobuf::TextFormat::PrintToString(*app_profile,
+                                                          &app_profile_detail);
+              std::cout << "GetAppProfile details : " << app_profile_detail
+                        << "\n";
+              return google::cloud::Status();
+            });
 
     final.get();
   }
