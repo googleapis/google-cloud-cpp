@@ -129,7 +129,7 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     throw Usage{"read-row: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [read row] [START bigtable_get_row] [START bigtable_read_error]
+  //! [read row] [START bigtable_read_error]
   [](google::cloud::bigtable::Table table) {
     // Filter the results, only include the latest value on each cell.
     auto filter = google::cloud::bigtable::Filter::Latest(1);
@@ -157,7 +157,7 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     }
     std::cout << std::flush;
   }
-  //! [read row] [END bigtable_get_row] [END bigtable_read_error]
+  //! [read row] [END bigtable_read_error]
   (std::move(table));
 }
 
@@ -166,8 +166,7 @@ void ReadRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     throw Usage{"read-rows: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [read rows] [START bigtable_get_rows] [START bigtable_table_readstream]
-  // [START bigtable_read_range]
+  //! [read rows] [START bigtable_read_range]
   [](google::cloud::bigtable::Table table) {
     // Create the range of rows to read.
     auto range =
@@ -193,8 +192,7 @@ void ReadRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     }
     std::cout << std::flush;
   }
-  // [END bigtable_read_range]
-  //! [read rows] [END bigtable_get_rows] [END bigtable_table_readstream]
+  //! [read rows] [END bigtable_read_range]
   (std::move(table));
 }
 
@@ -440,7 +438,7 @@ void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
     throw Usage{"check-and-mutate: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [check and mutate] [START bigtable_row_filter]
+  //! [check and mutate]
   [](google::cloud::bigtable::Table table) {
     // Check if the latest value of the flip-flop column is "on".
     auto predicate = google::cloud::bigtable::Filter::Chain(
@@ -462,7 +460,7 @@ void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
       throw std::runtime_error(mut.status().message());
     }
   }
-  //! [check and mutate] [END bigtable_row_filter]
+  //! [check and mutate]
   (std::move(table));
 }
 
@@ -472,7 +470,7 @@ void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
     throw Usage{"read-modify-write: <project-id> <instance-id> <table-id>"};
   }
 
-  //! [read modify write] [START bigtable_row_increment]
+  //! [read modify write]
   [](google::cloud::bigtable::Table table) {
     auto row = table.ReadModifyWriteRow(
         MAGIC_ROW_KEY,
@@ -486,7 +484,7 @@ void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
     }
     std::cout << row->row_key() << "\n";
   }
-  //! [read modify write] [END bigtable_row_increment]
+  //! [read modify write]
   (std::move(table));
 }
 
@@ -578,7 +576,7 @@ void DeleteAllCells(google::cloud::bigtable::Table table, int argc,
   }
   auto row_key = ConsumeArg(argc, argv);
 
-  //! [delete all cells] [START bigtable_delete_all_cells]
+  //! [delete all cells]
   [](google::cloud::bigtable::Table table, std::string row_key) {
     auto status = table.Apply(google::cloud::bigtable::SingleRowMutation(
         row_key, google::cloud::bigtable::DeleteFromRow()));
@@ -587,7 +585,7 @@ void DeleteAllCells(google::cloud::bigtable::Table table, int argc,
       throw std::runtime_error(status.message());
     }
   }
-  //! [delete all cells] [END bigtable_delete_all_cells]
+  //! [delete all cells]
   (std::move(table), row_key);
 }
 
@@ -601,7 +599,7 @@ void DeleteFamilyCells(google::cloud::bigtable::Table table, int argc,
   auto row_key = ConsumeArg(argc, argv);
   auto family_name = ConsumeArg(argc, argv);
 
-  //! [delete family cells] [START bigtable_delete_family_cells]
+  //! [delete family cells]
   [](google::cloud::bigtable::Table table, std::string row_key,
      std::string family_name) {
     // Delete all cells within a family.
@@ -612,7 +610,7 @@ void DeleteFamilyCells(google::cloud::bigtable::Table table, int argc,
       throw std::runtime_error(status.message());
     }
   }
-  //! [delete family cells] [END bigtable_delete_family_cells]
+  //! [delete family cells]
   (std::move(table), row_key, family_name);
 }
 
@@ -628,7 +626,6 @@ void DeleteSelectiveFamilyCells(google::cloud::bigtable::Table table, int argc,
   auto column_name = ConsumeArg(argc, argv);
 
   //! [delete selective family cells]
-  // [START bigtable_delete_selective_family_cells]
   [](google::cloud::bigtable::Table table, std::string row_key,
      std::string family_name, std::string column_name) {
     // Delete selective cell within a family.
@@ -640,7 +637,6 @@ void DeleteSelectiveFamilyCells(google::cloud::bigtable::Table table, int argc,
       throw std::runtime_error(status.message());
     }
   }
-  // [END bigtable_delete_selective_family_cells]
   //! [delete selective family cells]
 
   (std::move(table), row_key, family_name, column_name);
@@ -652,7 +648,7 @@ void RowExists(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   }
   auto row_key = ConsumeArg(argc, argv);
 
-  //! [row exists] [START bigtable_row_exists]
+  //! [row exists]
   [](google::cloud::bigtable::Table table, std::string row_key) {
     // Filter the results, turn any value into an empty string.
     auto filter = google::cloud::bigtable::Filter::StripValueTransformer();
@@ -670,7 +666,7 @@ void RowExists(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     }
     std::cout << "Row exists.\n";
   }
-  //! [row exists] [END bigtable_row_exists]
+  //! [row exists]
   (std::move(table), row_key);
 }
 

@@ -683,7 +683,7 @@ void ListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
 
   auto instance_id = ConsumeArg(argc, argv);
 
-  //! [list app profiles] [START bigtable_get_app_profiles]
+  //! [list app profiles]
   namespace cbt = google::cloud::bigtable;
   [](cbt::InstanceAdmin instance_admin, std::string instance_id) {
     auto profiles = instance_admin.ListAppProfiles(instance_id);
@@ -698,7 +698,7 @@ void ListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
       std::cout << detail << "\n";
     }
   }
-  //! [list app profiles] [END bigtable_get_app_profiles]
+  //! [list app profiles]
   (std::move(instance_admin), instance_id);
 }
 

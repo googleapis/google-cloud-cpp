@@ -127,14 +127,14 @@ void DeleteTable(google::cloud::bigtable::TableAdmin admin, int argc,
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
-  //! [delete table] [START bigtable_del_table]
+  //! [delete table]
   [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
     google::cloud::Status status = admin.DeleteTable(table_id);
     if (!status.ok()) {
       throw std::runtime_error(status.message());
     }
   }
-  //! [delete table] [END bigtable_del_table]
+  //! [delete table]
   (std::move(admin), table_id);
 }
 

@@ -54,13 +54,11 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
   google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
   std::string const zone = ConsumeArg(argc, argv);
 
-  // [START connect_instance_admin]
   google::cloud::bigtable::InstanceAdmin instance_admin(
       google::cloud::bigtable::CreateDefaultInstanceAdminClient(
           project_id, google::cloud::bigtable::ClientOptions()));
-  // [END connect_instance_admin]
 
-  // [START bigtable_check_instance_exists] [START bigtable_exists_instance]
+  // [START bigtable_check_instance_exists]
   std::cout << "\nCheck Instance exists:\n";
   auto instances = instance_admin.ListInstances();
   if (!instances) {
@@ -83,7 +81,7 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
     }
     std::cerr << ". Continuing anyway\n";
   }
-  // [END bigtable_check_instance_exists] [END bigtable_exists_instance]
+  // [END bigtable_check_instance_exists]
 
   // Create instance if does not exists
   if (!instance_exists) {
