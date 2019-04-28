@@ -124,10 +124,16 @@ future<StatusOr<InstanceList>> InstanceAdmin::AsyncListInstances(
       });
 }
 
-std::future<StatusOr<google::bigtable::admin::v2::Instance>>
-InstanceAdmin::CreateInstance(InstanceConfig instance_config) {
-  return std::async(std::launch::async, &InstanceAdmin::CreateInstanceImpl,
-                    this, std::move(instance_config));
+future<StatusOr<btadmin::Instance>> InstanceAdmin::CreateInstance(
+    InstanceConfig instance_config) {
+  CompletionQueue cq;
+  std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
+
+  return AsyncCreateInstance(cq, std::move(instance_config))
+      .then([cq](future<StatusOr<btadmin::Instance>> f) mutable {
+        cq.Shutdown();
+        return f.get();
+      });
 }
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
@@ -155,12 +161,18 @@ InstanceAdmin::AsyncCreateInstance(CompletionQueue& cq,
       std::move(request), cq);
 }
 
-std::future<StatusOr<google::bigtable::admin::v2::Cluster>>
-InstanceAdmin::CreateCluster(ClusterConfig cluster_config,
-                             bigtable::InstanceId const& instance_id,
-                             bigtable::ClusterId const& cluster_id) {
-  return std::async(std::launch::async, &InstanceAdmin::CreateClusterImpl, this,
-                    std::move(cluster_config), instance_id, cluster_id);
+future<StatusOr<btadmin::Cluster>> InstanceAdmin::CreateCluster(
+    ClusterConfig cluster_config, bigtable::InstanceId const& instance_id,
+    bigtable::ClusterId const& cluster_id) {
+  CompletionQueue cq;
+  std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
+
+  return AsyncCreateCluster(cq, std::move(cluster_config), instance_id,
+                            cluster_id)
+      .then([cq](future<StatusOr<btadmin::Cluster>> f) mutable {
+        cq.Shutdown();
+        return f.get();
+      });
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
@@ -190,81 +202,16 @@ InstanceAdmin::AsyncCreateCluster(CompletionQueue& cq,
       std::move(request), cq);
 }
 
-StatusOr<google::bigtable::admin::v2::Instance>
-InstanceAdmin::CreateInstanceImpl(InstanceConfig instance_config) {
-  // Copy the policies in effect for the operation.
-  auto rpc_policy = impl_.rpc_retry_policy_->clone();
-  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
-
-  // Build the RPC request, try to minimize copying.
-  auto request = std::move(instance_config).as_proto();
-  request.set_parent(project_name());
-  for (auto& kv : *request.mutable_clusters()) {
-    kv.second.set_location(project_name() + "/locations/" +
-                           kv.second.location());
-  }
-
-  using ClientUtils =
-      bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;
-
-  grpc::Status status;
-  auto operation = ClientUtils::MakeCall(
-      *impl_.client_, *rpc_policy, *backoff_policy,
-      impl_.metadata_update_policy_, &InstanceAdminClient::CreateInstance,
-      request, "InstanceAdmin::CreateInstance", status, false);
-  if (!status.ok()) {
-    return bigtable::internal::MakeStatusFromRpcError(status);
-  }
-
-  auto result = internal::PollLongRunningOperation<btadmin::Instance,
-                                                   InstanceAdminClient>(
-      impl_.client_, impl_.polling_policy_->clone(),
-      impl_.metadata_update_policy_, operation, "InstanceAdmin::CreateInstance",
-      status);
-  if (!status.ok()) {
-    return bigtable::internal::MakeStatusFromRpcError(status);
-  }
-  return result;
-}
-
-std::future<StatusOr<google::bigtable::admin::v2::Instance>>
+future<StatusOr<google::bigtable::admin::v2::Instance>>
 InstanceAdmin::UpdateInstance(InstanceUpdateConfig instance_update_config) {
-  return std::async(std::launch::async, &InstanceAdmin::UpdateInstanceImpl,
-                    this, std::move(instance_update_config));
-}
+  CompletionQueue cq;
+  std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
 
-StatusOr<google::bigtable::admin::v2::Instance>
-InstanceAdmin::UpdateInstanceImpl(InstanceUpdateConfig instance_update_config) {
-  // Copy the policies in effect for the operation.
-  auto rpc_policy = impl_.rpc_retry_policy_->clone();
-  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
-
-  MetadataUpdatePolicy metadata_update_policy(instance_update_config.GetName(),
-                                              MetadataParamTypes::NAME);
-
-  auto request = std::move(instance_update_config).as_proto();
-
-  using ClientUtils =
-      bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;
-
-  grpc::Status status;
-  auto operation = ClientUtils::MakeCall(
-      *impl_.client_, *rpc_policy, *backoff_policy,
-      impl_.metadata_update_policy_, &InstanceAdminClient::UpdateInstance,
-      request, "InstanceAdmin::UpdateInstance", status, false);
-  if (!status.ok()) {
-    return bigtable::internal::MakeStatusFromRpcError(status);
-  }
-
-  auto result = internal::PollLongRunningOperation<btadmin::Instance,
-                                                   InstanceAdminClient>(
-      impl_.client_, impl_.polling_policy_->clone(),
-      impl_.metadata_update_policy_, operation, "InstanceAdmin::UpdateInstance",
-      status);
-  if (!status.ok()) {
-    return bigtable::internal::MakeStatusFromRpcError(status);
-  }
-  return result;
+  return AsyncUpdateInstance(cq, std::move(instance_update_config))
+      .then([cq](future<StatusOr<btadmin::Instance>> f) mutable {
+        cq.Shutdown();
+        return f.get();
+      });
 }
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
@@ -527,44 +474,16 @@ future<StatusOr<ClusterList>> InstanceAdmin::AsyncListClusters(
       });
 }
 
-std::future<StatusOr<google::bigtable::admin::v2::Cluster>>
+future<StatusOr<google::bigtable::admin::v2::Cluster>>
 InstanceAdmin::UpdateCluster(ClusterConfig cluster_config) {
-  return std::async(std::launch::async, &InstanceAdmin::UpdateClusterImpl, this,
-                    std::move(cluster_config));
-}
+  CompletionQueue cq;
+  std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
 
-StatusOr<google::bigtable::admin::v2::Cluster> InstanceAdmin::UpdateClusterImpl(
-    ClusterConfig cluster_config) {
-  // Copy the policies in effect for the operation.
-  auto rpc_policy = impl_.rpc_retry_policy_->clone();
-  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
-
-  MetadataUpdatePolicy metadata_update_policy(cluster_config.GetName(),
-                                              MetadataParamTypes::NAME);
-
-  auto request = std::move(cluster_config).as_proto();
-
-  using ClientUtils =
-      bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;
-
-  grpc::Status status;
-  auto operation = ClientUtils::MakeCall(
-      *impl_.client_, *rpc_policy, *backoff_policy,
-      impl_.metadata_update_policy_, &InstanceAdminClient::UpdateCluster,
-      request, "InstanceAdmin::UpdateCluster", status, false);
-  if (!status.ok()) {
-    return bigtable::internal::MakeStatusFromRpcError(status);
-  }
-
-  auto result =
-      internal::PollLongRunningOperation<btadmin::Cluster, InstanceAdminClient>(
-          impl_.client_, impl_.polling_policy_->clone(),
-          impl_.metadata_update_policy_, operation,
-          "InstanceAdmin::UpdateCluster", status);
-  if (!status.ok()) {
-    return bigtable::internal::MakeStatusFromRpcError(status);
-  }
-  return result;
+  return AsyncUpdateCluster(cq, std::move(cluster_config))
+      .then([cq](future<StatusOr<btadmin::Cluster>> f) mutable {
+        cq.Shutdown();
+        return f.get();
+      });
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
@@ -683,12 +602,18 @@ InstanceAdmin::AsyncGetAppProfile(CompletionQueue& cq,
       std::move(request), cq);
 }
 
-std::future<StatusOr<btadmin::AppProfile>> InstanceAdmin::UpdateAppProfile(
+future<StatusOr<btadmin::AppProfile>> InstanceAdmin::UpdateAppProfile(
     bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
     AppProfileUpdateConfig config) {
-  return std::async(std::launch::async, &InstanceAdmin::UpdateAppProfileImpl,
-                    this, std::move(instance_id), std::move(profile_id),
-                    std::move(config));
+  CompletionQueue cq;
+  std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
+
+  return AsyncUpdateAppProfile(cq, std::move(instance_id),
+                               std::move(profile_id), std::move(config))
+      .then([cq](future<StatusOr<btadmin::AppProfile>> f) mutable {
+        cq.Shutdown();
+        return f.get();
+      });
 }
 
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
@@ -818,77 +743,6 @@ future<Status> InstanceAdmin::AsyncDeleteAppProfile(
         }
         return res.status();
       });
-}
-
-StatusOr<google::bigtable::admin::v2::Cluster> InstanceAdmin::CreateClusterImpl(
-    ClusterConfig const& cluster_config,
-    bigtable::InstanceId const& instance_id,
-    bigtable::ClusterId const& cluster_id) {
-  // Copy the policies in effect for the operation.
-  auto rpc_policy = impl_.rpc_retry_policy_->clone();
-  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
-
-  // Build the RPC request, try to minimize copying.
-  auto cluster = cluster_config.as_proto();
-  cluster.set_location(project_name() + "/locations/" + cluster.location());
-
-  btadmin::CreateClusterRequest request;
-  request.mutable_cluster()->Swap(&cluster);
-  request.set_parent(project_name() + "/instances/" + instance_id.get());
-  request.set_cluster_id(cluster_id.get());
-
-  using ClientUtils =
-      bigtable::internal::noex::UnaryClientUtils<InstanceAdminClient>;
-
-  grpc::Status status;
-  auto operation = ClientUtils::MakeCall(
-      *impl_.client_, *rpc_policy, *backoff_policy,
-      impl_.metadata_update_policy_, &InstanceAdminClient::CreateCluster,
-      request, "InstanceAdmin::CreateCluster", status, false);
-  if (!status.ok()) {
-    return bigtable::internal::MakeStatusFromRpcError(status);
-  }
-
-  auto result =
-      internal::PollLongRunningOperation<btadmin::Cluster, InstanceAdminClient>(
-          impl_.client_, impl_.polling_policy_->clone(),
-          impl_.metadata_update_policy_, operation,
-          "InstanceAdmin::CreateCluster", status);
-  if (!status.ok()) {
-    return bigtable::internal::MakeStatusFromRpcError(status);
-  }
-  return result;
-}
-
-StatusOr<btadmin::AppProfile> InstanceAdmin::UpdateAppProfileImpl(
-    bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
-    AppProfileUpdateConfig config) {
-  grpc::Status status;
-  auto request = std::move(config).as_proto();
-  request.mutable_app_profile()->set_name(
-      InstanceName(instance_id.get() + "/appProfiles/" + profile_id.get()));
-
-  // This is a non-idempotent API, use the correct retry loop for this type of
-  // operation.
-  auto operation = ClientUtils::MakeCall(
-      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
-      impl_.rpc_backoff_policy_->clone(), impl_.metadata_update_policy_,
-      &InstanceAdminClient::UpdateAppProfile, request,
-      "InstanceAdmin::UpdateAppProfile", status, true);
-
-  if (!status.ok()) {
-    return bigtable::internal::MakeStatusFromRpcError(status);
-  }
-
-  auto result = internal::PollLongRunningOperation<btadmin::AppProfile,
-                                                   InstanceAdminClient>(
-      impl_.client_, impl_.polling_policy_->clone(),
-      impl_.metadata_update_policy_, operation,
-      "InstanceAdmin::UpdateAppProfileImpl", status);
-  if (!status.ok()) {
-    return bigtable::internal::MakeStatusFromRpcError(status);
-  }
-  return result;
 }
 
 StatusOr<google::cloud::IamPolicy> InstanceAdmin::GetIamPolicy(
