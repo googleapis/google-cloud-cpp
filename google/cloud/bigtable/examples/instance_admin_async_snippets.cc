@@ -268,6 +268,44 @@ void AsyncGetCluster(cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
   (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
 }
 
+void AsyncGetAppProfile(cbt::InstanceAdmin instance_admin,
+                        cbt::CompletionQueue cq,
+                        std::vector<std::string> argv) {
+  if (argv.size() != 3U) {
+    throw Usage{
+        "async-get-app-profile: <project-id> <instance-id> <app_profile-id>"};
+  }
+
+  //! [async get app profile]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
+     std::string instance_id, std::string app_profile_id) {
+    auto final =
+        instance_admin
+            .AsyncGetAppProfile(cq, cbt::InstanceId(instance_id),
+                                cbt::AppProfileId(app_profile_id))
+            .then([](google::cloud::future<
+                      StatusOr<google::bigtable::admin::v2::AppProfile>>
+                         f) {
+              auto app_profile = f.get();
+              if (!app_profile) {
+                throw std::runtime_error(app_profile.status().message());
+              }
+              std::string app_profile_detail;
+              google::protobuf::TextFormat::PrintToString(*app_profile,
+                                                          &app_profile_detail);
+              std::cout << "GetAppProfile details : " << app_profile_detail
+                        << "\n";
+              return google::cloud::Status();
+            });
+
+    final.get();
+  }
+  //! [async get app profile]
+  (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
+}
+
 void AsyncGetIamPolicy(cbt::InstanceAdmin instance_admin,
                        cbt::CompletionQueue cq, std::vector<std::string> argv) {
   if (argv.size() != 2U) {
@@ -683,6 +721,7 @@ int main(int argc, char* argv[]) try {
       {"async-create-app-profile", &AsyncCreateAppProfile},
       {"async-get-instance", &AsyncGetInstance},
       {"async-get-cluster", &AsyncGetCluster},
+      {"async-get-app-profile", &AsyncGetAppProfile},
       {"async-get-iam-policy", &AsyncGetIamPolicy},
       {"async-list-instances", &AsyncListInstances},
       {"async-list-clusters", &AsyncListClusters},

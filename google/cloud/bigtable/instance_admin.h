@@ -589,6 +589,24 @@ class InstanceAdmin {
       bigtable::AppProfileId const& profile_id);
 
   /**
+   * Asynchronously fetch the information about an existing application profile.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param instance_id the instance to look the profile in.
+   * @param profile_id the id of the profile within that instance.
+   * @return a future satisfied when either (a) the profile is fetched or (b)
+   *     an unretriable error occurs or (c) retry policy has been exhausted.
+   *
+   * @par Example
+   * @snippet instance_admin_async_snippets.cc async get app profile
+   */
+  future<StatusOr<google::bigtable::admin::v2::AppProfile>> AsyncGetAppProfile(
+      CompletionQueue& cq, bigtable::InstanceId const& instance_id,
+      bigtable::AppProfileId const& profile_id);
+
+  /**
    * Create a new application profile.
    *
    * @param instance_id the instance for the new application profile.
