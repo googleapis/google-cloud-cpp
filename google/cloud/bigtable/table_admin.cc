@@ -440,9 +440,9 @@ future<StatusOr<Consistency>> TableAdmin::AsyncCheckConsistency(
 
         return result->consistent() ? Consistency::kConsistent
                                     : Consistency::kInconsistent;
-        ;
       });
 }
+
 StatusOr<bool> TableAdmin::WaitForConsistencyCheckImpl(
     bigtable::TableId const& table_id,
     bigtable::ConsistencyToken const& consistency_token) {
@@ -474,6 +474,33 @@ StatusOr<bool> TableAdmin::WaitForConsistencyCheckImpl(
   return bigtable::internal::MakeStatusFromRpcError(status);
 }
 
+future<StatusOr<bool>> TableAdmin::AsyncWaitForConsistency(
+    CompletionQueue& cq, bigtable::TableId const& table_id,
+    bigtable::ConsistencyToken const& consistency_token) {
+  promise<StatusOr<bool>> promise;
+  future<StatusOr<bool>> final_result = promise.get_future();
+  google::cloud::Status status;
+
+  // TODO(#1918) - make use of polling policy deadlines
+  auto polling_policy = impl_.polling_policy_->clone();
+
+  do {
+    auto result = AsyncCheckConsistency(cq, table_id, consistency_token).get();
+    status = result.status();
+    if (status.ok()) {
+      if (*result == Consistency::kConsistent) {
+        promise.set_value(true);
+        return final_result;
+      }
+    } else if (polling_policy->IsPermanentError(status)) {
+      promise.set_value(status);
+      return final_result;
+    }
+  } while (!polling_policy->Exhausted());
+
+  promise.set_value(status);
+  return final_result;
+}
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud

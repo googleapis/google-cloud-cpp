@@ -303,7 +303,7 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
 
-  future<void> chain =
+  auto future_generate_token =
       instance_admin.AsyncCreateInstance(cq, config)
           .then([&](future<StatusOr<btadmin::Instance>> fut) {
             StatusOr<btadmin::Instance> result = fut.get();
@@ -318,27 +318,17 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
             CreateCells(table, created_cells);
             return table_admin.AsyncGenerateConsistencyToken(cq,
                                                              table_id.get());
-          })
-          .then([&](future<StatusOr<google::cloud::bigtable::ConsistencyToken>>
-                        fut) {
-            StatusOr<google::cloud::bigtable::ConsistencyToken> result =
-                fut.get();
-            EXPECT_STATUS_OK(result);
-            auto wait_result =
-                table_admin.WaitForConsistencyCheck(table_id, *result);
+          });
+  auto token = future_generate_token.get();
 
-            EXPECT_TRUE(wait_result.get());
-            return table_admin.AsyncCheckConsistency(cq, table_id, *result);
+  future<void> future_wait_for_consistency =
+      table_admin.AsyncWaitForConsistency(cq, TableId(table_id.get()), *token)
+          .then([&](future<StatusOr<bool>> fut) {
+            StatusOr<bool> result = fut.get();
+            EXPECT_STATUS_OK(result);
+            EXPECT_TRUE(*result);
+            return table_admin.AsyncDeleteTable(cq, table_id.get());
           })
-          .then(
-              [&](future<StatusOr<google::cloud::bigtable::Consistency>> fut) {
-                StatusOr<google::cloud::bigtable::Consistency> result =
-                    fut.get();
-                EXPECT_STATUS_OK(result);
-                EXPECT_EQ(result.value(),
-                          google::cloud::bigtable::Consistency::kConsistent);
-                return table_admin.AsyncDeleteTable(cq, table_id.get());
-              })
           .then([&](future<Status> fut) {
             Status delete_result = fut.get();
             EXPECT_STATUS_OK(delete_result);
@@ -348,8 +338,8 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
             Status delete_result = fut.get();
             EXPECT_STATUS_OK(delete_result);
           });
+  future_wait_for_consistency.get();
 
-  chain.get();
   SUCCEED();
   cq.Shutdown();
   pool.join();

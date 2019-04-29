@@ -447,6 +447,29 @@ class TableAdmin {
   }
 
   /**
+   * Make an asynchronous request to checks consistency of a table with multiple
+   * calls.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param table_id  the id of the table for which we want to check
+   *     consistency.
+   * @param consistency_token the consistency token of the table.
+   * @return consistency state or status of the operation.
+   *
+   * @par Example
+   * @snippet table_admin_async_snippets.cc async wait for consistency
+   */
+  future<StatusOr<bool>> AsyncWaitForConsistency(
+      CompletionQueue& cq, bigtable::TableId const& table_id,
+      bigtable::ConsistencyToken const& consistency_token);
+
+  /**
    * Delete all the rows in a table.
    *
    * @param table_id the id of the table within the instance associated with

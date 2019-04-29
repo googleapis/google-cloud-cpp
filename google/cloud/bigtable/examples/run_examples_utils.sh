@@ -301,6 +301,8 @@ function run_all_table_admin_async_examples {
       "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_async_snippets async-modify-table \
       "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_async_snippets async-wait-for-consistency \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_async_snippets async-generate-consistency-token \
       "${project_id}" "${INSTANCE}" "${TABLE}"
   local token

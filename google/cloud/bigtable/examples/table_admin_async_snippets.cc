@@ -342,6 +342,38 @@ void AsyncGenerateConsistencyToken(cbt::TableAdmin admin,
   //! [async generate consistency token]
   (std::move(admin), std::move(cq), argv[1]);
 }
+
+void AsyncWaitForConsistency(cbt::TableAdmin admin, cbt::CompletionQueue cq,
+                             std::vector<std::string> argv) {
+  if (argv.size() != 2U) {
+    throw Usage{
+        "async-wait-for-consistency: <project-id> <instance-id> "
+        "<table-id>"};
+  }
+
+  //! [async wait for consistency]
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq,
+     std::string table_id_param) {
+    google::cloud::future<google::cloud::StatusOr<cbt::ConsistencyToken>>
+        future = admin.AsyncGenerateConsistencyToken(cq, table_id_param);
+    auto token = future.get();
+    if (!token) {
+      throw std::runtime_error(token.status().message());
+    }
+    google::cloud::future<google::cloud::StatusOr<bool>> future_wait =
+        admin.AsyncWaitForConsistency(cq, cbt::TableId(table_id_param), *token);
+    auto final = future_wait.then(
+        [](google::cloud::future<google::cloud::StatusOr<bool>> f) {
+          auto result = f.get();
+          if (!result) {
+            throw std::runtime_error(result.status().message());
+          }
+          std::cout << "consistency status is : " << result.value() << "\n";
+        });
+  }
+  //! [async wait for consistency]
+  (std::move(admin), std::move(cq), argv[1]);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -359,6 +391,7 @@ int main(int argc, char* argv[]) try {
       {"async-drop-all-rows", &AsyncDropAllRows},
       {"async-check-consistency", &AsyncCheckConsistency},
       {"async-generate-consistency-token", &AsyncGenerateConsistencyToken},
+      {"async-wait-for-consistency", &AsyncWaitForConsistency},
   };
 
   google::cloud::bigtable::CompletionQueue cq;
