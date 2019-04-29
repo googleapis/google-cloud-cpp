@@ -119,7 +119,7 @@ void AsyncRowReader::MakeRequest() {
                grpc::CompletionQueue* cq) {
         return client->PrepareAsyncReadRows(context, request, cq);
       },
-      std::move(request), std::move(context),
+      request, std::move(context),
       [self](google::bigtable::v2::ReadRowsResponse r) {
         return self->OnDataReceived(std::move(r));
       },
