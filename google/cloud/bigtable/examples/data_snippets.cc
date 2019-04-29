@@ -69,13 +69,13 @@ void Apply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::system_clock::now().time_since_epoch());
 
-    google::cloud::bigtable::SingleRowMutation mutation("test-key-for-apply");
+    cbt::SingleRowMutation mutation("test-key-for-apply");
     mutation.emplace_back(
         google::cloud::bigtable::SetCell("fam", "some-column", "some-value"));
-    mutation.emplace_back(google::cloud::bigtable::SetCell(
-        "fam", "another-column", "another-value"));
-    mutation.emplace_back(google::cloud::bigtable::SetCell(
-        "fam", "even-more-columns", timestamp, "with-explicit-timestamp"));
+    mutation.emplace_back(
+        cbt::SetCell("fam", "another-column", "another-value"));
+    mutation.emplace_back(cbt::SetCell("fam", "even-more-columns", timestamp,
+                                       "with-explicit-timestamp"));
     google::cloud::Status status = table.Apply(std::move(mutation));
     if (!status.ok()) {
       throw std::runtime_error(status.message());
@@ -130,9 +130,10 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   }
 
   //! [read row] [START bigtable_read_error]
+  namespace cbt = google::cloud::bigtable;
   [](google::cloud::bigtable::Table table) {
     // Filter the results, only include the latest value on each cell.
-    auto filter = google::cloud::bigtable::Filter::Latest(1);
+    auto filter = cbt::Filter::Latest(1);
     // Read a row, this returns a tuple (bool, row)
     auto tuple = table.ReadRow(MAGIC_ROW_KEY, std::move(filter));
     if (!tuple) {
@@ -167,16 +168,15 @@ void ReadRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   }
 
   //! [read rows] [START bigtable_read_range]
-  [](google::cloud::bigtable::Table table) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table) {
     // Create the range of rows to read.
-    auto range =
-        google::cloud::bigtable::RowRange::Range("key-000010", "key-000020");
+    auto range = cbt::RowRange::Range("key-000010", "key-000020");
     // Filter the results, only include values from the "col0" column in the
     // "fam" column family, and only get the latest value.
-    auto filter = google::cloud::bigtable::Filter::Chain(
-        google::cloud::bigtable::Filter::ColumnRangeClosed("fam", "col0",
-                                                           "col0"),
-        google::cloud::bigtable::Filter::Latest(1));
+    auto filter = cbt::Filter::Chain(
+        cbt::Filter::ColumnRangeClosed("fam", "col0", "col0"),
+        cbt::Filter::Latest(1));
     // Read and print the rows.
     for (auto const& row : table.ReadRows(range, filter)) {
       if (!row) {
@@ -203,16 +203,15 @@ void ReadRowsWithLimit(google::cloud::bigtable::Table table, int argc,
   }
 
   //! [read rows with limit] [START bigtable_read_filter]
-  [](google::cloud::bigtable::Table table) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table) {
     // Create the range of rows to read.
-    auto range =
-        google::cloud::bigtable::RowRange::Range("key-000010", "key-000020");
+    auto range = cbt::RowRange::Range("key-000010", "key-000020");
     // Filter the results, only include values from the "col0" column in the
     // "fam" column family, and only get the latest value.
-    auto filter = google::cloud::bigtable::Filter::Chain(
-        google::cloud::bigtable::Filter::ColumnRangeClosed("fam", "col0",
-                                                           "col0"),
-        google::cloud::bigtable::Filter::Latest(1));
+    auto filter = cbt::Filter::Chain(
+        cbt::Filter::ColumnRangeClosed("fam", "col0", "col0"),
+        cbt::Filter::Latest(1));
     // Read and print the first 5 rows in the range.
     for (auto const& row : table.ReadRows(range, 5, filter)) {
       if (!row) {
@@ -240,7 +239,8 @@ void PopulateTableHierarchy(google::cloud::bigtable::Table table, int argc,
   }
 
   //! [populate table hierarchy]
-  [](google::cloud::bigtable::Table table) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table) {
     // Write several rows.
     int q = 0;
     for (int i = 0; i != 4; ++i) {
@@ -249,9 +249,9 @@ void PopulateTableHierarchy(google::cloud::bigtable::Table table, int argc,
           std::string row_key = "root/" + std::to_string(i) + "/";
           row_key += std::to_string(j) + "/";
           row_key += std::to_string(k);
-          google::cloud::bigtable::SingleRowMutation mutation(row_key);
-          mutation.emplace_back(google::cloud::bigtable::SetCell(
-              "fam", "col0", "value-" + std::to_string(q)));
+          cbt::SingleRowMutation mutation(row_key);
+          mutation.emplace_back(
+              cbt::SetCell("fam", "col0", "value-" + std::to_string(q)));
           ++q;
           google::cloud::Status status = table.Apply(std::move(mutation));
           if (!status.ok()) {
@@ -286,8 +286,7 @@ void ReadKeysSet(google::cloud::bigtable::Table table, int argc, char* argv[]) {
       row_set.Append(row_key);
     }
 
-    auto filter = google::cloud::bigtable::Filter::Latest(1);
-
+    auto filter = cbt::Filter::Latest(1);
     for (auto& row : table.ReadRows(std::move(row_set), filter)) {
       if (!row) {
         throw std::runtime_error(row.status().message());
@@ -316,15 +315,14 @@ void ReadRowSetPrefix(google::cloud::bigtable::Table table, int argc,
   std::string prefix = ConsumeArg(argc, argv);
 
   //! [read rowset prefix] [START bigtable_read_prefix]
-  [](google::cloud::bigtable::Table table, std::string prefix) {
-    namespace cbt = google::cloud::bigtable;
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table, std::string prefix) {
     auto row_set = cbt::RowSet();
 
     auto range_prefix = cbt::RowRange::Prefix(prefix);
     row_set.Append(range_prefix);
 
-    auto filter = google::cloud::bigtable::Filter::Latest(1);
-
+    auto filter = cbt::Filter::Latest(1);
     for (auto& row : table.ReadRows(std::move(row_set), filter)) {
       if (!row) {
         throw std::runtime_error(row.status().message());
@@ -357,13 +355,12 @@ void ReadPrefixList(google::cloud::bigtable::Table table, int argc,
   }
 
   //! [read prefix list] [START bigtable_read_prefix_list]
-  [](google::cloud::bigtable::Table table,
-     std::vector<std::string> prefix_list) {
-    namespace cbt = google::cloud::bigtable;
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table, std::vector<std::string> prefix_list) {
     auto row_set = cbt::RowSet();
-    auto filter = google::cloud::bigtable::Filter::Latest(1);
+    auto filter = cbt::Filter::Latest(1);
 
-    for (auto prefix : prefix_list) {
+    for (auto const& prefix : prefix_list) {
       auto row_range_prefix = cbt::RowRange::Prefix(prefix);
       row_set.Append(row_range_prefix);
     }
@@ -439,22 +436,21 @@ void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
   }
 
   //! [check and mutate]
-  [](google::cloud::bigtable::Table table) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table) {
     // Check if the latest value of the flip-flop column is "on".
-    auto predicate = google::cloud::bigtable::Filter::Chain(
-        google::cloud::bigtable::Filter::ColumnRangeClosed("fam", "flip-flop",
-                                                           "flip-flop"),
-        google::cloud::bigtable::Filter::Latest(1),
-        google::cloud::bigtable::Filter::ValueRegex("on"));
+    auto predicate = cbt::Filter::Chain(
+        cbt::Filter::ColumnRangeClosed("fam", "flip-flop", "flip-flop"),
+        cbt::Filter::Latest(1), cbt::Filter::ValueRegex("on"));
     // If the predicate matches, change the latest value to "off", otherwise,
     // change the latest value to "on".  Modify the "flop-flip" column at the
     // same time.
-    auto mut = table.CheckAndMutateRow(
-        MAGIC_ROW_KEY, std::move(predicate),
-        {google::cloud::bigtable::SetCell("fam", "flip-flop", "off"),
-         google::cloud::bigtable::SetCell("fam", "flop-flip", "on")},
-        {google::cloud::bigtable::SetCell("fam", "flip-flop", "on"),
-         google::cloud::bigtable::SetCell("fam", "flop-flip", "off")});
+    auto mut =
+        table.CheckAndMutateRow(MAGIC_ROW_KEY, std::move(predicate),
+                                {cbt::SetCell("fam", "flip-flop", "off"),
+                                 cbt::SetCell("fam", "flop-flip", "on")},
+                                {cbt::SetCell("fam", "flip-flop", "on"),
+                                 cbt::SetCell("fam", "flop-flip", "off")});
 
     if (!mut) {
       throw std::runtime_error(mut.status().message());
@@ -471,13 +467,12 @@ void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
   }
 
   //! [read modify write]
-  [](google::cloud::bigtable::Table table) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table) {
     auto row = table.ReadModifyWriteRow(
         MAGIC_ROW_KEY,
-        google::cloud::bigtable::ReadModifyWriteRule::IncrementAmount(
-            "fam", "counter", 1),
-        google::cloud::bigtable::ReadModifyWriteRule::AppendValue("fam", "list",
-                                                                  ";element"));
+        cbt::ReadModifyWriteRule::IncrementAmount("fam", "counter", 1),
+        cbt::ReadModifyWriteRule::AppendValue("fam", "list", ";element"));
 
     if (!row) {
       throw std::runtime_error(row.status().message());
@@ -494,7 +489,8 @@ void SampleRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   }
 
   //! [sample row keys] [START bigtable_table_sample_splits]
-  [](google::cloud::bigtable::Table table) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table) {
     auto samples = table.SampleRows<>();
     if (!samples) {
       throw std::runtime_error(samples.status().message());
@@ -517,7 +513,8 @@ void SampleRowsCollections(google::cloud::bigtable::Table table, int argc,
   }
 
   //! [sample row keys collections]
-  [](google::cloud::bigtable::Table table) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table) {
     auto list_samples = table.SampleRows<std::list>();
     if (!list_samples) {
       throw std::runtime_error(list_samples.status().message());
@@ -546,12 +543,13 @@ void GetFamily(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   }
 
   //! [get family] [START bigtable_get_family] [START bigtable_family_ref]
-  [](google::cloud::bigtable::Table table) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table) {
     // Create the range of rows to read.
-    auto range = google::cloud::bigtable::RowRange::InfiniteRange();
+    auto range = cbt::RowRange::InfiniteRange();
 
     // Filter the results, only get the latest value
-    auto filter = google::cloud::bigtable::Filter::Latest(1);
+    auto filter = cbt::Filter::Latest(1);
 
     // Read and print the family name.
     for (auto const& row : table.ReadRows(range, filter)) {
@@ -577,9 +575,10 @@ void DeleteAllCells(google::cloud::bigtable::Table table, int argc,
   auto row_key = ConsumeArg(argc, argv);
 
   //! [delete all cells]
-  [](google::cloud::bigtable::Table table, std::string row_key) {
-    auto status = table.Apply(google::cloud::bigtable::SingleRowMutation(
-        row_key, google::cloud::bigtable::DeleteFromRow()));
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table, std::string row_key) {
+    auto status =
+        table.Apply(cbt::SingleRowMutation(row_key, cbt::DeleteFromRow()));
 
     if (!status.ok()) {
       throw std::runtime_error(status.message());
@@ -600,11 +599,11 @@ void DeleteFamilyCells(google::cloud::bigtable::Table table, int argc,
   auto family_name = ConsumeArg(argc, argv);
 
   //! [delete family cells]
-  [](google::cloud::bigtable::Table table, std::string row_key,
-     std::string family_name) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table, std::string row_key, std::string family_name) {
     // Delete all cells within a family.
-    auto status = table.Apply(google::cloud::bigtable::SingleRowMutation(
-        row_key, google::cloud::bigtable::DeleteFromFamily(family_name)));
+    auto status = table.Apply(
+        cbt::SingleRowMutation(row_key, cbt::DeleteFromFamily(family_name)));
 
     if (!status.ok()) {
       throw std::runtime_error(status.message());
@@ -626,12 +625,12 @@ void DeleteSelectiveFamilyCells(google::cloud::bigtable::Table table, int argc,
   auto column_name = ConsumeArg(argc, argv);
 
   //! [delete selective family cells]
-  [](google::cloud::bigtable::Table table, std::string row_key,
-     std::string family_name, std::string column_name) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table, std::string row_key, std::string family_name,
+     std::string column_name) {
     // Delete selective cell within a family.
-    auto status = table.Apply(google::cloud::bigtable::SingleRowMutation(
-        row_key,
-        google::cloud::bigtable::DeleteFromColumn(family_name, column_name)));
+    auto status = table.Apply(cbt::SingleRowMutation(
+        row_key, cbt::DeleteFromColumn(family_name, column_name)));
 
     if (!status.ok()) {
       throw std::runtime_error(status.message());
@@ -649,9 +648,10 @@ void RowExists(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   auto row_key = ConsumeArg(argc, argv);
 
   //! [row exists]
-  [](google::cloud::bigtable::Table table, std::string row_key) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table, std::string row_key) {
     // Filter the results, turn any value into an empty string.
-    auto filter = google::cloud::bigtable::Filter::StripValueTransformer();
+    auto filter = cbt::Filter::StripValueTransformer();
 
     // Read a row, this returns a tuple (bool, row)
     auto status = table.ReadRow(row_key, std::move(filter));
@@ -864,7 +864,8 @@ void InsertTestData(google::cloud::bigtable::Table table, int argc, char*[]) {
   // This is not a code sample in the normal sense, we do not display this code
   // in the documentation. We use it to populate data in the table used to run
   // the actual examples during the CI builds.
-  google::cloud::bigtable::BulkMutation bulk;
+  namespace cbt = google::cloud::bigtable;
+  cbt::BulkMutation bulk;
   for (int i = 0; i != 5000; ++i) {
     // Note: This example uses sequential numeric IDs for simplicity, but
     // this can result in poor performance in a production application.
@@ -877,13 +878,13 @@ void InsertTestData(google::cloud::bigtable::Table table, int argc, char*[]) {
     //     https://cloud.google.com/bigtable/docs/schema-design
     char buf[32];
     snprintf(buf, sizeof(buf), "key-%06d", i);
-    google::cloud::bigtable::SingleRowMutation mutation(buf);
-    mutation.emplace_back(google::cloud::bigtable::SetCell(
-        "fam", "col0", "value0-" + std::to_string(i)));
-    mutation.emplace_back(google::cloud::bigtable::SetCell(
-        "fam", "col1", "value1-" + std::to_string(i)));
-    mutation.emplace_back(google::cloud::bigtable::SetCell(
-        "fam", "col2", "value2-" + std::to_string(i)));
+    cbt::SingleRowMutation mutation(buf);
+    mutation.emplace_back(
+        cbt::SetCell("fam", "col0", "value0-" + std::to_string(i)));
+    mutation.emplace_back(
+        cbt::SetCell("fam", "col1", "value1-" + std::to_string(i)));
+    mutation.emplace_back(
+        cbt::SetCell("fam", "col2", "value2-" + std::to_string(i)));
     bulk.emplace_back(std::move(mutation));
   }
   auto failures = table.BulkApply(std::move(bulk));
