@@ -451,7 +451,8 @@ void DropAllRows(google::cloud::bigtable::TableAdmin admin, int argc,
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
-  //! [drop all rows] [START bigtable_truncate_table]
+  //! [drop all rows]
+  // [START bigtable_truncate_table] [START bigtable_delete_rows]
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string table_id) {
     google::cloud::Status status = admin.DropAllRows(table_id);
@@ -459,7 +460,8 @@ void DropAllRows(google::cloud::bigtable::TableAdmin admin, int argc,
       throw std::runtime_error(status.message());
     }
   }
-  //! [drop all rows] [END bigtable_truncate_table]
+  // [END bigtable_truncate_table] [END bigtable_delete_rows]
+  //! [drop all rows]
   (std::move(admin), table_id);
 }
 
