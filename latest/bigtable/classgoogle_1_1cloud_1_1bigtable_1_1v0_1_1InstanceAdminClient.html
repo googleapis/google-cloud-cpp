@@ -173,6 +173,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a6359698a8c7d27424096d1b84931eec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acfb7763874814f16cfd0f0aba80e4cbf"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::iam::v1::Policy &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#acfb7763874814f16cfd0f0aba80e4cbf">AsyncGetIamPolicy</a> (grpc::ClientContext *context, google::iam::v1::GetIamPolicyRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
 <tr class="separator:acfb7763874814f16cfd0f0aba80e4cbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f1acff874f329edef81432b147d2dc8"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::iam::v1::Policy &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#a6f1acff874f329edef81432b147d2dc8">AsyncSetIamPolicy</a> (grpc::ClientContext *context, google::iam::v1::SetIamPolicyRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
+<tr class="separator:a6f1acff874f329edef81432b147d2dc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abae9373a32eed18016a657e5523b57fe"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::iam::v1::TestIamPermissionsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html#abae9373a32eed18016a657e5523b57fe">AsyncTestIamPermissions</a> (grpc::ClientContext *context, google::iam::v1::TestIamPermissionsRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
 <tr class="separator:abae9373a32eed18016a657e5523b57fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">The `google.longrunning.Operations` async wrappers.</div></td></tr>
@@ -799,6 +801,48 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">google::bigtable::admin::v2::ListInstancesRequest const &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">grpc::CompletionQueue *&#160;</td>
+          <td class="paramname"><em>cq</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6f1acff874f329edef81432b147d2dc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f1acff874f329edef81432b147d2dc8">&#9670;&nbsp;</a></span>AsyncSetIamPolicy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt;google::iam::v1::Policy&gt; &gt; google::cloud::bigtable::v0::InstanceAdminClient::AsyncSetIamPolicy </td>
+          <td>(</td>
+          <td class="paramtype">grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::iam::v1::SetIamPolicyRequest const &amp;&#160;</td>
           <td class="paramname"><em>request</em>, </td>
         </tr>
         <tr>
