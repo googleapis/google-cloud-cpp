@@ -666,6 +666,44 @@ void AsyncDeleteCluster(cbt::InstanceAdmin instance_admin,
   (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
 }
 
+void AsyncDeleteAppProfile(cbt::InstanceAdmin instance_admin,
+                           cbt::CompletionQueue cq,
+                           std::vector<std::string> argv) {
+  if (argv.size() != 3U) {
+    throw Usage{
+        "async-delete-app-profile: <project-id> <instance-id> "
+        "<app-profile-id> "};
+  }
+
+  //! [async delete app profile]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
+     std::string instance_id, std::string app_profile_id) {
+    google::cloud::future<google::cloud::Status> future =
+        instance_admin.AsyncDeleteAppProfile(cq, cbt::InstanceId(instance_id),
+                                             cbt::AppProfileId(app_profile_id));
+
+    // Most applications would simply call future.get(), here we show how to
+    // perform additional work while the long running operation completes.
+    std::cout << "Waiting for app profile deletion to complete ";
+    for (int i = 0; i != 100; ++i) {
+      if (std::future_status::ready ==
+          future.wait_for(std::chrono::seconds(2))) {
+        auto res = future.get();
+        if (!res.ok()) {
+          throw std::runtime_error(res.message());
+        }
+        std::cout << "DONE, app profile deleted.\n";
+        return;
+      }
+      std::cout << '.' << std::flush;
+    }
+    std::cout << "TIMEOUT\n";
+  }
+  //! [async delete app profile]
+  (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
+}
+
 void AsyncTestIamPermissions(cbt::InstanceAdmin instance_admin,
                              cbt::CompletionQueue cq,
                              std::vector<std::string> argv) {
@@ -732,6 +770,7 @@ int main(int argc, char* argv[]) try {
       {"async-update-app-profile", &AsyncUpdateAppProfile},
       {"async-delete-instance", &AsyncDeleteInstance},
       {"async-delete-cluster", &AsyncDeleteCluster},
+      {"async-delete-app-profile", &AsyncDeleteAppProfile},
       {"async-test-iam-permissions", &AsyncTestIamPermissions}};
 
   google::cloud::bigtable::CompletionQueue cq;

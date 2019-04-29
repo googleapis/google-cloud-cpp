@@ -792,6 +792,34 @@ Status InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
   return internal::MakeStatusFromRpcError(status);
 }
 
+future<Status> InstanceAdmin::AsyncDeleteAppProfile(
+    CompletionQueue& cq, bigtable::InstanceId const& instance_id,
+    bigtable::AppProfileId const& profile_id, bool ignore_warnings) {
+  btadmin::DeleteAppProfileRequest request;
+  request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
+                   profile_id.get());
+  request.set_ignore_warnings(ignore_warnings);
+
+  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  return internal::StartRetryAsyncUnaryRpc(
+             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             internal::ConstantIdempotencyPolicy(false),
+             clone_metadata_update_policy(),
+             [client](grpc::ClientContext* context,
+                      btadmin::DeleteAppProfileRequest const& request,
+                      grpc::CompletionQueue* cq) {
+               return client->AsyncDeleteAppProfile(context, request, cq);
+             },
+             std::move(request), cq)
+      .then([](future<StatusOr<google::protobuf::Empty>> fut) {
+        auto res = fut.get();
+        if (res) {
+          return google::cloud::Status();
+        }
+        return res.status();
+      });
+}
+
 StatusOr<google::bigtable::admin::v2::Cluster> InstanceAdmin::CreateClusterImpl(
     ClusterConfig const& cluster_config,
     bigtable::InstanceId const& instance_id,
