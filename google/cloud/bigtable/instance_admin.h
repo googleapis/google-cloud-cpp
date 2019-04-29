@@ -116,7 +116,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc create instance
    */
-  std::future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
+  future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
       InstanceConfig instance_config);
 
   /**
@@ -152,7 +152,7 @@ class InstanceAdmin {
    *  @par Example
    *  @snippet bigtable_instance_admin_snippets.cc create cluster
    */
-  std::future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
       ClusterConfig cluster_config, bigtable::InstanceId const& instance_id,
       bigtable::ClusterId const& cluster_id);
 
@@ -202,7 +202,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc update instance
    */
-  std::future<StatusOr<google::bigtable::admin::v2::Instance>> UpdateInstance(
+  future<StatusOr<google::bigtable::admin::v2::Instance>> UpdateInstance(
       InstanceUpdateConfig instance_update_config);
 
   /**
@@ -434,7 +434,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc update cluster
    */
-  std::future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
       ClusterConfig cluster_config);
 
   /**
@@ -623,10 +623,9 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc update app profile routing
    */
-  std::future<StatusOr<google::bigtable::admin::v2::AppProfile>>
-  UpdateAppProfile(bigtable::InstanceId instance_id,
-                   bigtable::AppProfileId profile_id,
-                   AppProfileUpdateConfig config);
+  future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
+      bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
+      AppProfileUpdateConfig config);
 
   /**
    * Update an application profile (asynchronously).
@@ -801,30 +800,6 @@ class InstanceAdmin {
   future<StatusOr<std::vector<std::string>>> AsyncTestIamPermissions(
       CompletionQueue& cq, std::string const& instance_id,
       std::vector<std::string> const& permissions);
-
- private:
-  /// Implement CreateInstance() with a separate thread.
-  StatusOr<google::bigtable::admin::v2::Instance> CreateInstanceImpl(
-      InstanceConfig instance_config);
-
-  /// Implement CreateCluster() with a separate thread.
-  StatusOr<google::bigtable::admin::v2::Cluster> CreateClusterImpl(
-      ClusterConfig const& cluster_config,
-      bigtable::InstanceId const& instance_id,
-      bigtable::ClusterId const& cluster_id);
-
-  // Implement UpdateInstance() with a separate thread.
-  StatusOr<google::bigtable::admin::v2::Instance> UpdateInstanceImpl(
-      InstanceUpdateConfig instance_update_config);
-
-  // Implement UpdateCluster() with a separate thread.
-  StatusOr<google::bigtable::admin::v2::Cluster> UpdateClusterImpl(
-      ClusterConfig cluster_config);
-
-  /// Poll the result of UpdateAppProfile in a separate thread.
-  StatusOr<google::bigtable::admin::v2::AppProfile> UpdateAppProfileImpl(
-      bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
-      AppProfileUpdateConfig config);
 
  private:
   static inline google::cloud::IamPolicy ProtoToWrapper(
