@@ -870,6 +870,106 @@ TEST_F(AsyncDeleteClusterTest, AsyncDeleteClusterUnrecoverableError) {
   ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied, status.code());
 }
 
+using MockAsyncSetIamPolicyReader =
+    google::cloud::bigtable::testing::MockAsyncResponseReader<
+        ::google::iam::v1::Policy>;
+
+class AsyncSetIamPolicyTest : public ::testing::Test {
+ public:
+  AsyncSetIamPolicyTest()
+      : cq_impl_(new bigtable::testing::MockCompletionQueue),
+        cq_(cq_impl_),
+        client_(new bigtable::testing::MockInstanceAdminClient),
+        reader_(new MockAsyncSetIamPolicyReader) {
+    using namespace ::testing;
+    EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
+    EXPECT_CALL(*client_, AsyncSetIamPolicy(_, _, _))
+        .WillOnce(
+            Invoke([this](grpc::ClientContext*,
+                          ::google::iam::v1::SetIamPolicyRequest const& request,
+                          grpc::CompletionQueue*) {
+              EXPECT_EQ("projects/the-project/instances/test-instance",
+                        request.resource());
+              // This is safe, see comments in MockAsyncResponseReader.
+              return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+                  ::google::iam::v1::Policy>>(reader_.get());
+            }));
+  }
+
+ protected:
+  void Start() {
+    bigtable::InstanceAdmin instance_admin(client_);
+    user_future_ = instance_admin.AsyncSetIamPolicy(
+        cq_, bigtable::InstanceId("test-instance"),
+        google::cloud::IamBindings("writer",
+                                   {"abc@gmail.com", "xyz@gmail.com"}),
+        "test-tag");
+  }
+
+  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
+  bigtable::CompletionQueue cq_;
+  std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
+  google::cloud::future<google::cloud::StatusOr<google::cloud::IamPolicy>>
+      user_future_;
+  std::unique_ptr<MockAsyncSetIamPolicyReader> reader_;
+};
+
+/// @test Verify that AsyncSetIamPolicy works in simple case.
+TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicy) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  namespace iamproto = ::google::iam::v1;
+  bigtable::InstanceAdmin tested(client_);
+
+  EXPECT_CALL(*reader_, Finish(_, _, _))
+      .WillOnce(
+          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
+            EXPECT_NE(nullptr, response);
+
+            auto new_binding = response->add_bindings();
+            new_binding->set_role("writer");
+            new_binding->add_members("abc@gmail.com");
+            new_binding->add_members("xyz@gmail.com");
+            response->set_etag("test-tag");
+            *status = grpc::Status::OK;
+          }));
+
+  Start();
+  EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
+  EXPECT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);
+  auto policy = user_future_.get();
+  ASSERT_STATUS_OK(policy);
+
+  EXPECT_EQ(1U, policy->bindings.size());
+  EXPECT_EQ("test-tag", policy->etag);
+}
+
+/// @test Test unrecoverable errors for InstanceAdmin::AsyncSetIamPolicy.
+TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicyUnrecoverableError) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  namespace iamproto = ::google::iam::v1;
+  bigtable::InstanceAdmin tested(client_);
+
+  EXPECT_CALL(*reader_, Finish(_, _, _))
+      .WillOnce(
+          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
+            EXPECT_NE(nullptr, response);
+            *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
+          }));
+
+  Start();
+  EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
+  EXPECT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);
+
+  auto policy = user_future_.get();
+  ASSERT_FALSE(policy);
+  ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied,
+            policy.status().code());
+}
+
 using MockAsyncTestIamPermissionsReader =
     google::cloud::bigtable::testing::MockAsyncResponseReader<
         ::google::iam::v1::TestIamPermissionsResponse>;

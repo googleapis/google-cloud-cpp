@@ -832,6 +832,45 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::SetIamPolicy(
   return ProtoToWrapper(std::move(proto));
 }
 
+future<StatusOr<google::cloud::IamPolicy>> InstanceAdmin::AsyncSetIamPolicy(
+    CompletionQueue& cq, InstanceId const& instance_id,
+    google::cloud::IamBindings const& iam_bindings, std::string const& etag) {
+  ::google::iam::v1::Policy policy;
+  policy.set_etag(etag);
+  auto role_bindings = iam_bindings.bindings();
+  for (auto& binding : role_bindings) {
+    auto new_binding = policy.add_bindings();
+    new_binding->set_role(binding.first);
+    for (auto& member : binding.second) {
+      new_binding->add_members(member);
+    }
+  }
+
+  ::google::iam::v1::SetIamPolicyRequest request;
+  request.set_resource(InstanceName(instance_id.get()));
+  *request.mutable_policy() = std::move(policy);
+
+  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  return internal::StartRetryAsyncUnaryRpc(
+             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             internal::ConstantIdempotencyPolicy(false),
+             clone_metadata_update_policy(),
+             [client](grpc::ClientContext* context,
+                      ::google::iam::v1::SetIamPolicyRequest const& request,
+                      grpc::CompletionQueue* cq) {
+               return client->AsyncSetIamPolicy(context, request, cq);
+             },
+             std::move(request), cq)
+      .then([](future<StatusOr<::google::iam::v1::Policy>> response_fut)
+                -> StatusOr<google::cloud::IamPolicy> {
+        auto response = response_fut.get();
+        if (!response) {
+          return response.status();
+        }
+        return ProtoToWrapper(std::move(*response));
+      });
+}
+
 StatusOr<std::vector<std::string>> InstanceAdmin::TestIamPermissions(
     std::string const& instance_id,
     std::vector<std::string> const& permissions) {

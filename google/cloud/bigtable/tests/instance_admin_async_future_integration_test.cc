@@ -459,7 +459,9 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, SetGetTestIamAPIsTest) {
       "writer", {"abc@gmail.com", "xyz@gmail.com", "pqr@gmail.com"});
 
   auto initial_policy =
-      instance_admin_->SetIamPolicy(id, iam_bindings, "test-tag");
+      instance_admin_
+          ->AsyncSetIamPolicy(cq, instance_id, iam_bindings, "test-tag")
+          .get();
   ASSERT_STATUS_OK(initial_policy);
 
   auto fetched_policy =

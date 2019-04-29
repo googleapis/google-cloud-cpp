@@ -331,6 +331,14 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
     return impl_.Stub()->AsyncGetIamPolicy(context, request, cq);
   }
 
+  std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>
+  AsyncSetIamPolicy(grpc::ClientContext* context,
+                    google::iam::v1::SetIamPolicyRequest const& request,
+                    grpc::CompletionQueue* cq) override {
+    return impl_.Stub()->AsyncSetIamPolicy(context, request, cq);
+  }
+
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::iam::v1::TestIamPermissionsResponse>>
   AsyncTestIamPermissions(
