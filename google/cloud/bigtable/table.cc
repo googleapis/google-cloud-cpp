@@ -196,6 +196,31 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
                        bigtable::internal::ReadRowsParserFactory>());
 }
 
+std::shared_ptr<AsyncRowReader> Table::AsyncReadRows(CompletionQueue& cq,
+                                                     RowSet row_set,
+                                                     Filter filter) {
+  return AsyncRowReader::Create(
+      cq, impl_.client_, impl_.app_profile_id_, impl_.table_name_,
+      std::move(row_set), AsyncRowReader::NO_ROWS_LIMIT, std::move(filter),
+      impl_.rpc_retry_policy_->clone(), impl_.rpc_backoff_policy_->clone(),
+      impl_.metadata_update_policy_,
+      google::cloud::internal::make_unique<
+          bigtable::internal::ReadRowsParserFactory>());
+}
+
+std::shared_ptr<AsyncRowReader> Table::AsyncReadRows(CompletionQueue& cq,
+                                                     RowSet row_set,
+                                                     std::int64_t rows_limit,
+                                                     Filter filter) {
+  return AsyncRowReader::Create(
+      cq, impl_.client_, impl_.app_profile_id_, impl_.table_name_,
+      std::move(row_set), rows_limit, std::move(filter),
+      impl_.rpc_retry_policy_->clone(), impl_.rpc_backoff_policy_->clone(),
+      impl_.metadata_update_policy_,
+      google::cloud::internal::make_unique<
+          bigtable::internal::ReadRowsParserFactory>());
+}
+
 StatusOr<std::pair<bool, Row>> Table::ReadRow(std::string row_key,
                                               Filter filter) {
   RowSet row_set(std::move(row_key));

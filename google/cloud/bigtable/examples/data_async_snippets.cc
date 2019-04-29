@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/table.h"
 //! [bigtable includes]
 #include <google/protobuf/text_format.h>
+#include <sstream>
 
 namespace {
 struct Usage {
@@ -126,6 +127,92 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
   (std::move(table), std::move(cq), argv[1]);
 }
 
+void AsyncReadRows(cbt::Table table, cbt::CompletionQueue cq,
+                   std::vector<std::string> argv) {
+  if (argv.size() != 2U) {
+    throw Usage{"read-rows: <project-id> <instance-id> <table-id>"};
+  }
+
+  //! [async read rows]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::optional;
+  using google::cloud::StatusOr;
+  [](cbt::CompletionQueue cq, cbt::Table table) {
+    // Create the range of rows to read.
+    auto range = cbt::RowRange::Range("key-000010", "key-000020");
+    // Filter the results, only include values from the "col0" column in the
+    // "fam" column family, and only get the latest value.
+    auto filter = cbt::Filter::Chain(
+        cbt::Filter::ColumnRangeClosed("fam", "col0", "col0"),
+        cbt::Filter::Latest(1));
+    // Read and print the rows.
+    auto reader = table.AsyncReadRows(cq, range, filter);
+    StatusOr<optional<cbt::Row>> row;
+    // Normally the user would not synchronously wait for the rows, but most
+    // likely use `.then()` to chain obtaining new rows instead. This is just
+    // for illustration.
+    for (row = reader->Next().get(); row && row->has_value();
+         row = reader->Next().get()) {
+      if ((*row)->cells().size() != 1) {
+        std::ostringstream os;
+        os << "Unexpected number of cells in " << (*row)->row_key();
+        throw std::runtime_error(os.str());
+      }
+      auto const& cell = (*row)->cells().at(0);
+      std::cout << cell.row_key() << " = [" << cell.value() << "]\n";
+    }
+    std::cout << std::flush;
+    if (!row) {
+      throw std::runtime_error(row.status().message());
+    }
+  }
+  //! [async read rows]
+  (std::move(cq), std::move(table));
+}
+
+void AsyncReadRowsWithLimit(cbt::Table table, cbt::CompletionQueue cq,
+                            std::vector<std::string> argv) {
+  if (argv.size() != 2U) {
+    throw Usage{"read-rows: <project-id> <instance-id> <table-id>"};
+  }
+
+  //! [async read rows with limit]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::optional;
+  using google::cloud::StatusOr;
+  [](cbt::CompletionQueue cq, cbt::Table table) {
+    // Create the range of rows to read.
+    auto range = cbt::RowRange::Range("key-000010", "key-000020");
+    // Filter the results, only include values from the "col0" column in the
+    // "fam" column family, and only get the latest value.
+    auto filter = cbt::Filter::Chain(
+        cbt::Filter::ColumnRangeClosed("fam", "col0", "col0"),
+        cbt::Filter::Latest(1));
+    // Read and print the rows.
+    auto reader = table.AsyncReadRows(cq, range, 5, filter);
+    StatusOr<optional<cbt::Row>> row;
+    // Normally the user would not synchronously wait for the rows, but most
+    // likely use `.then()` to chain obtaining new rows instead. This is just
+    // for illustration.
+    for (row = reader->Next().get(); row && row->has_value();
+         row = reader->Next().get()) {
+      if ((*row)->cells().size() != 1) {
+        std::ostringstream os;
+        os << "Unexpected number of cells in " << (*row)->row_key();
+        throw std::runtime_error(os.str());
+      }
+      auto const& cell = (*row)->cells().at(0);
+      std::cout << cell.row_key() << " = [" << cell.value() << "]\n";
+    }
+    std::cout << std::flush;
+    if (!row) {
+      throw std::runtime_error(row.status().message());
+    }
+  }
+  //! [async read rows with limit]
+  (std::move(cq), std::move(table));
+}
+
 void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
                          google::cloud::bigtable::CompletionQueue cq,
                          std::vector<std::string> argv) {
@@ -209,6 +296,8 @@ int main(int argc, char* argv[]) try {
   std::map<std::string, CommandType> commands = {
       {"async-apply", &AsyncApply},
       {"async-bulk-apply", &AsyncBulkApply},
+      {"async-read-rows", &AsyncReadRows},
+      {"async-read-rows-with-limit", &AsyncReadRowsWithLimit},
       {"async-check-and-mutate", &AsyncCheckAndMutate},
       {"async-read-modify-write", &AsyncReadModifyWrite}};
 

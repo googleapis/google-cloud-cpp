@@ -101,6 +101,8 @@ add_library(bigtable_client
             app_profile_config.h
             app_profile_config.cc
             async_operation.h
+            async_row_reader.h
+            async_row_reader.cc
             bigtable_strong_types.h
             ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
             cell.h
@@ -256,6 +258,7 @@ if (BUILD_TESTING)
         async_list_clusters_test.cc
         async_list_instances_test.cc
         async_read_stream_test.cc
+        async_row_reader_test.cc
         bigtable_version_test.cc
         cell_test.cc
         client_options_test.cc

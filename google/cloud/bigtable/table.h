@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_H_
 
+#include "google/cloud/bigtable/async_row_reader.h"
 #include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/data_client.h"
@@ -445,6 +446,38 @@ class Table {
    * @snippet data_snippets.cc read rows with limit
    */
   RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter);
+
+  /**
+   * Asynchronously reads a set of rows from the table.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param row_set the rows to read from.
+   * @param filter is applied on the server-side to data in the rows.
+   *
+   * @par Example
+   * @snippet data_async_snippets.cc async read rows
+   */
+  std::shared_ptr<AsyncRowReader> AsyncReadRows(CompletionQueue& cq,
+                                                RowSet row_set, Filter filter);
+
+  /**
+   * Asynchronously reads a set of rows from the table.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param row_set the rows to read from.
+   * @param filter is applied on the server-side to data in the rows.
+   *
+   * @par Example
+   * @snippet data_async_snippets.cc async read rows with limit
+   */
+  std::shared_ptr<AsyncRowReader> AsyncReadRows(CompletionQueue& cq,
+                                                RowSet row_set,
+                                                std::int64_t rows_limit,
+                                                Filter filter);
 
   /**
    * Read and return a single row from the table.

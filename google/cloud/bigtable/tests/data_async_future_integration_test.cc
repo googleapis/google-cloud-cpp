@@ -252,6 +252,46 @@ TEST_F(DataAsyncFutureIntegrationTest,
   CheckEqualUnordered(GetCellsIgnoringTimestamp(expected_read),
                       actual_cells_ignore_timestamp);
 }
+
+TEST_F(DataAsyncFutureIntegrationTest, TableReadRowsAllRows) {
+  auto table = GetTable();
+
+  std::string const row_key1 = "row-key-1";
+  std::string const row_key2 = "row-key-2";
+  std::string const row_key3(1024, '3');    // a long key
+  std::string const long_value(1024, 'v');  // a long value
+
+  std::vector<bigtable::Cell> created{
+      {row_key1, "family1", "c1", 1000, "data1"},
+      {row_key1, "family1", "c2", 1000, "data2"},
+      {row_key2, "family1", "c1", 1000, ""},
+      {row_key3, "family1", "c1", 1000, long_value}};
+
+  CreateCells(table, created);
+
+  CompletionQueue cq;
+  std::promise<void> done;
+  std::thread pool([&cq] { cq.Run(); });
+
+  std::vector<bigtable::Cell> actual;
+
+  auto reader = table.AsyncReadRows(
+      cq, bigtable::RowSet(bigtable::RowRange::InfiniteRange()),
+      RowReader::NO_ROWS_LIMIT, Filter::PassAllFilter());
+
+  StatusOr<optional<Row>> row;
+  for (row = reader->Next().get(); row && *row; row = reader->Next().get()) {
+    std::move((*row)->cells().begin(), (*row)->cells().end(),
+              std::back_inserter(actual));
+  }
+  ASSERT_STATUS_OK(row);
+  ASSERT_FALSE(row->has_value());
+
+  cq.Shutdown();
+  pool.join();
+
+  CheckEqualUnordered(created, actual);
+}
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

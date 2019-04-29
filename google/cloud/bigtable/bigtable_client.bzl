@@ -20,6 +20,7 @@ bigtable_client_hdrs = [
     "admin_client.h",
     "app_profile_config.h",
     "async_operation.h",
+    "async_row_reader.h",
     "bigtable_strong_types.h",
     "cell.h",
     "client_options.h",
@@ -82,6 +83,7 @@ bigtable_client_hdrs = [
 bigtable_client_srcs = [
     "admin_client.cc",
     "app_profile_config.cc",
+    "async_row_reader.cc",
     "client_options.cc",
     "cluster_config.cc",
     "completion_queue.cc",
