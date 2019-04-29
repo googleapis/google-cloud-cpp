@@ -251,6 +251,8 @@ function run_all_table_admin_examples {
       "${project_id}" "${INSTANCE}" "${TABLE}" "nested-family"
   run_example ./table_admin_snippets get-family-metadata \
       "${project_id}" "${INSTANCE}" "${TABLE}" "nested-family"
+  run_example ./table_admin_snippets get-or-create-family \
+      "${project_id}" "${INSTANCE}" "${TABLE}" "get-or-create-family"
   run_example ./table_admin_snippets delete-column-family \
       "${project_id}" "${INSTANCE}" "${TABLE}" "nested-family"
   run_failure_example ./table_admin_snippets check-family-exists \
