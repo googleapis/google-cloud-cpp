@@ -99,7 +99,7 @@ void GetTable(google::cloud::bigtable::TableAdmin admin, int argc,
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
-  //! [get table]
+  //! [get table] [START bigtable_get_table_metadata]
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string table_id) {
     auto table =
@@ -116,7 +116,7 @@ void GetTable(google::cloud::bigtable::TableAdmin admin, int argc,
       std::cout << "\t" << family_name << "\t\t" << gc_rule << "\n";
     }
   }
-  //! [get table]
+  //! [get table] [END bigtable_get_table_metadata]
   (std::move(admin), table_id);
 }
 
