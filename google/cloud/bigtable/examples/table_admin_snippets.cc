@@ -24,7 +24,6 @@
 #include <sstream>
 
 namespace {
-
 struct Usage {
   std::string msg;
 };
@@ -58,14 +57,13 @@ void CreateTable(google::cloud::bigtable::TableAdmin admin, int argc,
   std::string const table_id = ConsumeArg(argc, argv);
 
   //! [create table] [START bigtable_create_table]
-  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id) {
     auto schema = admin.CreateTable(
         table_id,
-        google::cloud::bigtable::TableConfig(
-            {{"fam", google::cloud::bigtable::GcRule::MaxNumVersions(10)},
-             {"foo",
-              google::cloud::bigtable::GcRule::MaxAge(std::chrono::hours(72))}},
-            {}));
+        cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)},
+                          {"foo", cbt::GcRule::MaxAge(std::chrono::hours(72))}},
+                         {}));
   }
   //! [create table] [END bigtable_create_table]
   (std::move(admin), table_id);
@@ -78,7 +76,8 @@ void ListTables(google::cloud::bigtable::TableAdmin admin, int argc,
   }
 
   //! [list tables] [START bigtable_list_tables]
-  [](google::cloud::bigtable::TableAdmin admin) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin) {
     auto tables =
         admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
 
@@ -101,7 +100,8 @@ void GetTable(google::cloud::bigtable::TableAdmin admin, int argc,
   std::string const table_id = ConsumeArg(argc, argv);
 
   //! [get table]
-  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id) {
     auto table =
         admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
     if (!table) {
@@ -128,7 +128,8 @@ void DeleteTable(google::cloud::bigtable::TableAdmin admin, int argc,
   std::string const table_id = ConsumeArg(argc, argv);
 
   //! [delete table]
-  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id) {
     google::cloud::Status status = admin.DeleteTable(table_id);
     if (!status.ok()) {
       throw std::runtime_error(status.message());
@@ -146,20 +147,19 @@ void ModifyTable(google::cloud::bigtable::TableAdmin admin, int argc,
   std::string const table_id = ConsumeArg(argc, argv);
 
   //! [modify table]
-  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id) {
     auto schema = admin.ModifyColumnFamilies(
         table_id,
-        {google::cloud::bigtable::ColumnFamilyModification::Drop("foo"),
-         google::cloud::bigtable::ColumnFamilyModification::Update(
-             "fam", google::cloud::bigtable::GcRule::Union(
-                        google::cloud::bigtable::GcRule::MaxNumVersions(5),
-                        google::cloud::bigtable::GcRule::MaxAge(
-                            std::chrono::hours(24 * 7)))),
-         google::cloud::bigtable::ColumnFamilyModification::Create(
-             "bar", google::cloud::bigtable::GcRule::Intersection(
-                        google::cloud::bigtable::GcRule::MaxNumVersions(3),
-                        google::cloud::bigtable::GcRule::MaxAge(
-                            std::chrono::hours(72))))});
+        {cbt::ColumnFamilyModification::Drop("foo"),
+         cbt::ColumnFamilyModification::Update(
+             "fam", cbt::GcRule::Union(
+                        cbt::GcRule::MaxNumVersions(5),
+                        cbt::GcRule::MaxAge(std::chrono::hours(24 * 7)))),
+         cbt::ColumnFamilyModification::Create(
+             "bar", cbt::GcRule::Intersection(
+                        cbt::GcRule::MaxNumVersions(3),
+                        cbt::GcRule::MaxAge(std::chrono::hours(72))))});
 
     if (!schema) {
       throw std::runtime_error(schema.status().message());
@@ -453,7 +453,8 @@ void DropAllRows(google::cloud::bigtable::TableAdmin admin, int argc,
 
   //! [drop all rows]
   // [START bigtable_truncate_table] [START bigtable_delete_rows]
-  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id) {
     google::cloud::Status status = admin.DropAllRows(table_id);
     if (!status.ok()) {
       throw std::runtime_error(status.message());
@@ -472,7 +473,8 @@ void DropRowsByPrefix(google::cloud::bigtable::TableAdmin admin, int argc,
   std::string const table_id = ConsumeArg(argc, argv);
 
   //! [drop rows by prefix] [START bigtable_delete_rows_prefix]
-  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id) {
     google::cloud::Status status =
         admin.DropRowsByPrefix(table_id, "key-00004");
     if (!status.ok()) {
@@ -492,8 +494,9 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
   std::string const table_id_param = ConsumeArg(argc, argv);
 
   //! [wait for consistency check]
-  [](google::cloud::bigtable::TableAdmin admin, std::string table_id_param) {
-    google::cloud::bigtable::TableId table_id(table_id_param);
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id_param) {
+    cbt::TableId table_id(table_id_param);
     auto consistency_token(admin.GenerateConsistencyToken(table_id.get()));
     if (!consistency_token) {
       throw std::runtime_error(consistency_token.status().message());
@@ -521,16 +524,16 @@ void CheckConsistency(google::cloud::bigtable::TableAdmin admin, int argc,
   std::string const consistency_token_param = ConsumeArg(argc, argv);
 
   //! [check consistency]
-  [](google::cloud::bigtable::TableAdmin admin, std::string table_id_param,
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id_param,
      std::string consistency_token_param) {
-    google::cloud::bigtable::TableId table_id(table_id_param);
-    google::cloud::bigtable::ConsistencyToken consistency_token(
-        consistency_token_param);
+    cbt::TableId table_id(table_id_param);
+    cbt::ConsistencyToken consistency_token(consistency_token_param);
     auto result = admin.CheckConsistency(table_id, consistency_token);
     if (!result) {
       throw std::runtime_error(result.status().message());
     }
-    if (*result == google::cloud::bigtable::Consistency::kConsistent) {
+    if (*result == cbt::Consistency::kConsistent) {
       std::cout << "Table is consistent\n";
     } else {
       std::cout
@@ -552,7 +555,8 @@ void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
   std::string const table_id = ConsumeArg(argc, argv);
 
   //! [generate consistency token]
-  [](google::cloud::bigtable::TableAdmin admin, std::string table_id) {
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id) {
     auto token = admin.GenerateConsistencyToken(table_id);
     if (!token) {
       throw std::runtime_error(token.status().message());

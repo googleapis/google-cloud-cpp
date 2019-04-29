@@ -207,6 +207,9 @@ void CreateDevInstance(std::string project_id, int argc, char* argv[]) {
     config.set_type(google::cloud::bigtable::InstanceConfig::DEVELOPMENT);
 
     auto future = instance_admin.CreateInstance(config).get();
+    if (!future) {
+      throw std::runtime_error(future.status().message());
+    }
     std::cout << " Done\n";
     // [END bigtable_create_dev_instance]
   } else {
@@ -280,10 +283,16 @@ void CreateCluster(std::string project_id, int argc, char* argv[]) {
     std::cout << "Adding Cluster to Instance: " << instance_id.get() << "\n";
     auto cluster_config = google::cloud::bigtable::ClusterConfig(
         zone, 3, google::cloud::bigtable::ClusterConfig::SSD);
+    // Block until the operation completes.
     auto cluster =
-        instance_admin.CreateCluster(cluster_config, instance_id, cluster_id);
+        instance_admin.CreateCluster(cluster_config, instance_id, cluster_id)
+            .get();
 
-    std::cout << "Cluster Created: " << cluster_id.get() << "\n";
+    if (!cluster) {
+      throw std::runtime_error(cluster.status().message());
+    }
+
+    std::cout << "Cluster Created: " << cluster->name() << "\n";
     // [END bigtable_create_cluster]
   } else {
     std::cout << "\nInstance " << instance_id.get() << " does not exists.\n";
