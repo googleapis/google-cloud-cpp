@@ -518,14 +518,23 @@ TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
       for (int col = 0; col != COLUMN_COUNT; ++col) {
         std::string colid = "c" + std::to_string(col);
         std::string value = colid + "#" + os.str();
-        mutation.emplace_back(
-            bigtable::SetCell(family1, std::move(colid), std::move(value)));
+        mutation.emplace_back(bigtable::SetCell(family1, std::move(colid),
+                                                std::chrono::milliseconds(0),
+                                                std::move(value)));
       }
       bulk.emplace_back(std::move(mutation));
       ++rowid;
     }
     auto failures = table.BulkApply(std::move(bulk));
-    ASSERT_TRUE(failures.empty());
+    ASSERT_TRUE(failures.empty()) << "failures=" << [&failures]() {
+      std::ostringstream os;
+      os << "[";
+      for (auto&& f : failures) {
+        os << "failed[" << f.original_index() << "]=" << f.status() << ", ";
+      }
+      os << "]";
+      return os.str();
+    }();
   }
   auto samples = table.SampleRows<std::vector>();
   ASSERT_STATUS_OK(samples);
