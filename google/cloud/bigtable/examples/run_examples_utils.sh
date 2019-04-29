@@ -230,13 +230,20 @@ function run_all_table_admin_examples {
   # Create a (very likely unique) instance name.
   local -r INSTANCE="in-${RANDOM}-${RANDOM}"
 
-  # Use the same table in all the tests.
+  # Use the same table in most of the tests.
   local -r TABLE="sample-table-for-admin-${RANDOM}"
+  local -r TABLE2="sample-table-for-admin-${RANDOM}"
 
   run_example ./bigtable_samples run "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets create-table "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets list-tables "${project_id}" "${INSTANCE}"
   run_example ./table_admin_snippets get-table "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_snippets get-or-create-table \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_snippets get-or-create-table \
+      "${project_id}" "${INSTANCE}" "${TABLE2}"
+  run_example ./table_admin_snippets delete-table \
+      "${project_id}" "${INSTANCE}" "${TABLE2}"
   run_example ./data_snippets bulk-apply "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets modify-table "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets create-max-age-family \
