@@ -416,6 +416,33 @@ void CheckFamilyExists(google::cloud::bigtable::TableAdmin admin, int argc,
   (std::move(admin), table_id, family_name);
 }
 
+void ListColumnFamilies(google::cloud::bigtable::TableAdmin admin, int argc,
+                        char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"list-column-families <project-id> <instance-id> <table-id>"};
+  }
+  std::string const table_id = ConsumeArg(argc, argv);
+
+  // [START bigtable_list_column_families]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id) {
+    auto schema =
+        admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+
+    if (!schema) {
+      throw std::runtime_error(schema.status().message());
+    }
+    for (auto const& kv : schema->column_families()) {
+      std::string const& column_family_name = kv.first;
+      google::bigtable::admin::v2::ColumnFamily const& family = kv.second;
+      std::cout << "Column family name: " << column_family_name << "\n"
+                << "Column family metadata: " << family.DebugString() << "\n";
+    }
+  }
+  // [END bigtable_list_column_families]
+  (std::move(admin), table_id);
+}
+
 void UpdateGcRule(google::cloud::bigtable::TableAdmin admin, int argc,
                   char* argv[]) {
   if (argc != 3) {
@@ -585,6 +612,7 @@ int main(int argc, char* argv[]) try {
       {"get-family-metadata", &GetFamilyMetadata},
       {"delete-column-family", &DeleteColumnFamily},
       {"check-family-exists", &CheckFamilyExists},
+      {"list-column-families", &ListColumnFamilies},
       {"update-gc-rule", &UpdateGcRule},
       {"drop-all-rows", &DropAllRows},
       {"drop-rows-by-prefix", &DropRowsByPrefix},

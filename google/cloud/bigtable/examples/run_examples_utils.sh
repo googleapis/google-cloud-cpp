@@ -249,6 +249,8 @@ function run_all_table_admin_examples {
       "${project_id}" "${INSTANCE}" "${TABLE}" "intersection-family"
   run_example ./table_admin_snippets create-nested-family \
       "${project_id}" "${INSTANCE}" "${TABLE}" "nested-family"
+  run_example ./table_admin_snippets list-column-families \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets get-family-metadata \
       "${project_id}" "${INSTANCE}" "${TABLE}" "nested-family"
   run_example ./table_admin_snippets delete-column-family \
