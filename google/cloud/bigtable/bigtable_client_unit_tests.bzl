@@ -23,6 +23,7 @@ bigtable_client_unit_tests = [
     "async_list_clusters_test.cc",
     "async_list_instances_test.cc",
     "async_read_stream_test.cc",
+    "async_row_reader_test.cc",
     "bigtable_version_test.cc",
     "cell_test.cc",
     "client_options_test.cc",

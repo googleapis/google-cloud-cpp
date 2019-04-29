@@ -252,6 +252,50 @@ TEST_F(DataAsyncFutureIntegrationTest,
   CheckEqualUnordered(GetCellsIgnoringTimestamp(expected_read),
                       actual_cells_ignore_timestamp);
 }
+
+TEST_F(DataAsyncFutureIntegrationTest, TableReadRowsAllRows) {
+  auto table = GetTable();
+
+  std::string const row_key1 = "row-key-1";
+  std::string const row_key2 = "row-key-2";
+  std::string const row_key3(1024, '3');    // a long key
+  std::string const long_value(1024, 'v');  // a long value
+
+  std::vector<bigtable::Cell> created{
+      {row_key1, "family1", "c1", 1000, "data1"},
+      {row_key1, "family1", "c2", 1000, "data2"},
+      {row_key2, "family1", "c1", 1000, ""},
+      {row_key3, "family1", "c1", 1000, long_value}};
+
+  CreateCells(table, created);
+
+  CompletionQueue cq;
+  std::promise<void> done;
+  std::thread pool([&cq] { cq.Run(); });
+
+  std::vector<bigtable::Cell> actual;
+
+  promise<Status> stream_status_promise;
+  table.AsyncReadRows(cq,
+                      [&actual](Row row) {
+                        std::move(row.cells().begin(), row.cells().end(),
+                                  std::back_inserter(actual));
+                        return make_ready_future(true);
+                      },
+                      [&stream_status_promise](Status stream_status) {
+                        stream_status_promise.set_value(stream_status);
+                      },
+                      bigtable::RowSet(bigtable::RowRange::InfiniteRange()),
+                      RowReader::NO_ROWS_LIMIT, Filter::PassAllFilter());
+
+  auto stream_status = stream_status_promise.get_future().get();
+  ASSERT_STATUS_OK(stream_status);
+
+  cq.Shutdown();
+  pool.join();
+
+  CheckEqualUnordered(created, actual);
+}
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
