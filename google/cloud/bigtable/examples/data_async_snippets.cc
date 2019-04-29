@@ -127,7 +127,8 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
   (std::move(table), std::move(cq), argv[1]);
 }
 
-void AsyncReadRows(cbt::Table table, cbt::CompletionQueue cq,
+void AsyncReadRows(google::cloud::bigtable::Table table,
+                   google::cloud::bigtable::CompletionQueue cq,
                    std::vector<std::string> argv) {
   if (argv.size() != 2U) {
     throw Usage{"read-rows: <project-id> <instance-id> <table-id>"};
@@ -170,7 +171,8 @@ void AsyncReadRows(cbt::Table table, cbt::CompletionQueue cq,
   (std::move(cq), std::move(table));
 }
 
-void AsyncReadRowsWithLimit(cbt::Table table, cbt::CompletionQueue cq,
+void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
+                            google::cloud::bigtable::CompletionQueue cq,
                             std::vector<std::string> argv) {
   if (argv.size() != 2U) {
     throw Usage{"read-rows: <project-id> <instance-id> <table-id>"};
