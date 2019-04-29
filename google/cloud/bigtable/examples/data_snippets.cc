@@ -69,13 +69,13 @@ void Apply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::system_clock::now().time_since_epoch());
 
-    google::cloud::bigtable::SingleRowMutation mutation("test-key-for-apply");
+    cbt::SingleRowMutation mutation("test-key-for-apply");
     mutation.emplace_back(
         google::cloud::bigtable::SetCell("fam", "some-column", "some-value"));
-    mutation.emplace_back(google::cloud::bigtable::SetCell(
-        "fam", "another-column", "another-value"));
-    mutation.emplace_back(google::cloud::bigtable::SetCell(
-        "fam", "even-more-columns", timestamp, "with-explicit-timestamp"));
+    mutation.emplace_back(
+        cbt::SetCell("fam", "another-column", "another-value"));
+    mutation.emplace_back(cbt::SetCell("fam", "even-more-columns", timestamp,
+                                       "with-explicit-timestamp"));
     google::cloud::Status status = table.Apply(std::move(mutation));
     if (!status.ok()) {
       throw std::runtime_error(status.message());
@@ -130,9 +130,10 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   }
 
   //! [read row] [START bigtable_read_error]
+  namespace cbt = google::cloud::bigtable;
   [](google::cloud::bigtable::Table table) {
     // Filter the results, only include the latest value on each cell.
-    auto filter = google::cloud::bigtable::Filter::Latest(1);
+    auto filter = cbt::Filter::Latest(1);
     // Read a row, this returns a tuple (bool, row)
     auto tuple = table.ReadRow(MAGIC_ROW_KEY, std::move(filter));
     if (!tuple) {
@@ -863,7 +864,8 @@ void InsertTestData(google::cloud::bigtable::Table table, int argc, char*[]) {
   // This is not a code sample in the normal sense, we do not display this code
   // in the documentation. We use it to populate data in the table used to run
   // the actual examples during the CI builds.
-  google::cloud::bigtable::BulkMutation bulk;
+  namespace cbt = google::cloud::bigtable;
+  cbt::BulkMutation bulk;
   for (int i = 0; i != 5000; ++i) {
     // Note: This example uses sequential numeric IDs for simplicity, but
     // this can result in poor performance in a production application.
@@ -876,13 +878,13 @@ void InsertTestData(google::cloud::bigtable::Table table, int argc, char*[]) {
     //     https://cloud.google.com/bigtable/docs/schema-design
     char buf[32];
     snprintf(buf, sizeof(buf), "key-%06d", i);
-    google::cloud::bigtable::SingleRowMutation mutation(buf);
-    mutation.emplace_back(google::cloud::bigtable::SetCell(
-        "fam", "col0", "value0-" + std::to_string(i)));
-    mutation.emplace_back(google::cloud::bigtable::SetCell(
-        "fam", "col1", "value1-" + std::to_string(i)));
-    mutation.emplace_back(google::cloud::bigtable::SetCell(
-        "fam", "col2", "value2-" + std::to_string(i)));
+    cbt::SingleRowMutation mutation(buf);
+    mutation.emplace_back(
+        cbt::SetCell("fam", "col0", "value0-" + std::to_string(i)));
+    mutation.emplace_back(
+        cbt::SetCell("fam", "col1", "value1-" + std::to_string(i)));
+    mutation.emplace_back(
+        cbt::SetCell("fam", "col2", "value2-" + std::to_string(i)));
     bulk.emplace_back(std::move(mutation));
   }
   auto failures = table.BulkApply(std::move(bulk));

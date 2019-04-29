@@ -320,8 +320,7 @@ void AsyncGetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id) {
     google::cloud::future<StatusOr<google::cloud::IamPolicy>> future =
-        instance_admin.AsyncGetIamPolicy(
-            cq, google::cloud::bigtable::InstanceId(instance_id));
+        instance_admin.AsyncGetIamPolicy(cq, cbt::InstanceId(instance_id));
 
     auto final = future.then(
         [](google::cloud::future<StatusOr<google::cloud::IamPolicy>> f) {

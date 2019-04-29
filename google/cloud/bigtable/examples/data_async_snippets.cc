@@ -50,14 +50,12 @@ void AsyncApply(google::cloud::bigtable::Table table,
     auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::system_clock::now().time_since_epoch());
 
-    google::cloud::bigtable::SingleRowMutation mutation(
-        "test-key-for-async-apply");
+    cbt::SingleRowMutation mutation("test-key-for-async-apply");
+    mutation.emplace_back(cbt::SetCell("fam", "some-column", "some-value"));
     mutation.emplace_back(
-        google::cloud::bigtable::SetCell("fam", "some-column", "some-value"));
-    mutation.emplace_back(google::cloud::bigtable::SetCell(
-        "fam", "another-column", "another-value"));
-    mutation.emplace_back(google::cloud::bigtable::SetCell(
-        "fam", "even-more-columns", timestamp, "with-explicit-timestamp"));
+        cbt::SetCell("fam", "another-column", "another-value"));
+    mutation.emplace_back(cbt::SetCell("fam", "even-more-columns", timestamp,
+                                       "with-explicit-timestamp"));
 
     google::cloud::future<google::cloud::Status> fut =
         table.AsyncApply(std::move(mutation), cq);
@@ -82,7 +80,7 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
   namespace cbt = google::cloud::bigtable;
   [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id) {
     // Write several rows in a single operation, each row has some trivial data.
-    google::cloud::bigtable::BulkMutation bulk;
+    cbt::BulkMutation bulk;
     for (int i = 0; i != 5000; ++i) {
       // Note: This example uses sequential numeric IDs for simplicity, but
       // this can result in poor performance in a production application.
@@ -95,20 +93,20 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
       //     https://cloud.google.com/bigtable/docs/schema-design
       char buf[32];
       snprintf(buf, sizeof(buf), "key-%06d", i);
-      google::cloud::bigtable::SingleRowMutation mutation(buf);
-      mutation.emplace_back(google::cloud::bigtable::SetCell(
-          "fam", "col0", "value0-" + std::to_string(i)));
-      mutation.emplace_back(google::cloud::bigtable::SetCell(
-          "fam", "col1", "value2-" + std::to_string(i)));
-      mutation.emplace_back(google::cloud::bigtable::SetCell(
-          "fam", "col2", "value3-" + std::to_string(i)));
-      mutation.emplace_back(google::cloud::bigtable::SetCell(
-          "fam", "col3", "value4-" + std::to_string(i)));
+      cbt::SingleRowMutation mutation(buf);
+      mutation.emplace_back(
+          cbt::SetCell("fam", "col0", "value0-" + std::to_string(i)));
+      mutation.emplace_back(
+          cbt::SetCell("fam", "col1", "value2-" + std::to_string(i)));
+      mutation.emplace_back(
+          cbt::SetCell("fam", "col2", "value3-" + std::to_string(i)));
+      mutation.emplace_back(
+          cbt::SetCell("fam", "col3", "value4-" + std::to_string(i)));
       bulk.emplace_back(std::move(mutation));
     }
 
-    google::cloud::future<std::vector<google::cloud::bigtable::FailedMutation>>
-        fut = table.AsyncBulkApply(std::move(bulk), cq);
+    google::cloud::future<std::vector<cbt::FailedMutation>> fut =
+        table.AsyncBulkApply(std::move(bulk), cq);
 
     fut.get();
   }
@@ -128,19 +126,17 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
   namespace cbt = google::cloud::bigtable;
   [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id) {
     // Check if the latest value of the flip-flop column is "on".
-    auto predicate = google::cloud::bigtable::Filter::Chain(
-        google::cloud::bigtable::Filter::ColumnRangeClosed("fam", "flip-flop",
-                                                           "flip-flop"),
-        google::cloud::bigtable::Filter::Latest(1),
-        google::cloud::bigtable::Filter::ValueRegex("on"));
+    auto predicate = cbt::Filter::Chain(
+        cbt::Filter::ColumnRangeClosed("fam", "flip-flop", "flip-flop"),
+        cbt::Filter::Latest(1), cbt::Filter::ValueRegex("on"));
     google::cloud::future<google::cloud::StatusOr<
         google::bigtable::v2::CheckAndMutateRowResponse>>
         future = table.AsyncCheckAndMutateRow(
             MAGIC_ROW_KEY, std::move(predicate),
-            {google::cloud::bigtable::SetCell("fam", "flip-flop", "off"),
-             google::cloud::bigtable::SetCell("fam", "flop-flip", "on")},
-            {google::cloud::bigtable::SetCell("fam", "flip-flop", "on"),
-             google::cloud::bigtable::SetCell("fam", "flop-flip", "off")},
+            {cbt::SetCell("fam", "flip-flop", "off"),
+             cbt::SetCell("fam", "flop-flip", "on")},
+            {cbt::SetCell("fam", "flip-flop", "on"),
+             cbt::SetCell("fam", "flop-flip", "off")},
             cq);
 
     auto final =
@@ -177,8 +173,7 @@ void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
      std::string row_key) {
     future<StatusOr<cbt::Row>> async_future = table.AsyncReadModifyWriteRow(
         row_key, cq,
-        google::cloud::bigtable::ReadModifyWriteRule::AppendValue("fam", "list",
-                                                                  ";element"));
+        cbt::ReadModifyWriteRule::AppendValue("fam", "list", ";element"));
 
     auto final =
         async_future.then([](future<google::cloud::StatusOr<cbt::Row>> f) {
