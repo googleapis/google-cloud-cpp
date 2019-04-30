@@ -68,5 +68,6 @@ cc_binary(
     srcs = ["spanner_tool.cc"],
     deps = [
         ":spanner_client",
+        "//google/cloud/storage:storage_client",
     ],
 )
