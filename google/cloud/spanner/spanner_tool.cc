@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/status.h"
 #include "google/cloud/storage/internal/format_time_point.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
@@ -26,12 +27,12 @@
 namespace {
 
 int ListDatabases(std::vector<std::string> args) {
-  if (args.size() != 4U) {
+  if (args.size() != 2U) {
     std::cerr << "list-databases <project> <instance>\n";
     return 1;
   }
-  auto const& project = args[2];
-  auto const& instance = args[3];
+  auto const& project = args[0];
+  auto const& instance = args[1];
 
   namespace spanner = google::spanner::admin::database::v1;
 
@@ -67,7 +68,9 @@ int WaitForOperation(std::shared_ptr<grpc::Channel> channel,
   std::cout << "Waiting for operation " << operation.name() << " "
             << std::flush;
   while (!operation.done()) {
-    std::this_thread::sleep_for(std::chrono::seconds(10));
+    // Spanner operations can take minutes, but in small experiments like these
+    // they typically take a few seconds.
+    std::this_thread::sleep_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
     grpc::ClientContext context;
     google::longrunning::GetOperationRequest request;
@@ -86,13 +89,13 @@ int WaitForOperation(std::shared_ptr<grpc::Channel> channel,
 }
 
 int CreateDatabase(std::vector<std::string> args) {
-  if (args.size() != 5U) {
-    std::cerr << "create-timeseries-table <project> <instance> <database>\n";
+  if (args.size() != 3U) {
+    std::cerr << "create-database <project> <instance> <database>\n";
     return 1;
   }
-  auto const& project = args[2];
-  auto const& instance = args[3];
-  auto const& database = args[4];
+  auto const& project = args[0];
+  auto const& instance = args[1];
+  auto const& database = args[2];
 
   namespace spanner = google::spanner::admin::database::v1;
 
@@ -123,13 +126,13 @@ int CreateDatabase(std::vector<std::string> args) {
 }
 
 int CreateTimeseriesTable(std::vector<std::string> args) {
-  if (args.size() != 5U) {
+  if (args.size() != 3U) {
     std::cerr << "create-timeseries-table <project> <instance> <database>\n";
     return 1;
   }
-  auto const& project = args[2];
-  auto const& instance = args[3];
-  auto const& database = args[4];
+  auto const& project = args[0];
+  auto const& instance = args[1];
+  auto const& database = args[2];
 
   namespace spanner = google::spanner::admin::database::v1;
 
@@ -167,13 +170,13 @@ CREATE TABLE timeseries (
 }
 
 int PopulateTimeseriesTable(std::vector<std::string> args) {
-  if (args.size() != 5U) {
+  if (args.size() != 3U) {
     std::cerr << "populate-timeseries <project> <instance> <database>\n";
     return 1;
   }
-  auto const& project = args[2];
-  auto const& instance = args[3];
-  auto const& database = args[4];
+  auto const& project = args[0];
+  auto const& instance = args[1];
+  auto const& database = args[2];
 
   std::string database_name = "projects/" + project + "/instances/" + instance +
                               "/databases/" + database;
@@ -186,8 +189,8 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
       grpc::CreateChannel("spanner.googleapis.com", cred);
   auto stub = spanner::Spanner::NewStub(std::move(channel));
 
-  spanner::Session session = [&] {
-    spanner::Session session;
+  spanner::Session session;
+  {
     spanner::CreateSessionRequest request;
     request.set_database(database_name);
 
@@ -197,29 +200,27 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
       std::cerr << "FAILED: [" << status.error_code() << "] - "
                 << status.error_message() << "\n"
                 << request.DebugString() << "\n";
-      std::exit(1);
+      return 1;
     }
-    return session;
-  }();
+  }
 
   std::cout << "Session: " << session.name() << "\n";
 
-  spanner::Transaction read_write_transaction = [&] {
-    spanner::Transaction transaction;
+  spanner::Transaction read_write_transaction;
+  {
     spanner::BeginTransactionRequest request;
     request.set_session(session.name());
     *request.mutable_options()->mutable_read_write() = {};
 
     grpc::ClientContext context;
     grpc::Status status =
-        stub->BeginTransaction(&context, request, &transaction);
+        stub->BeginTransaction(&context, request, &read_write_transaction);
     if (!status.ok()) {
       std::cerr << "FAILED: [" << status.error_code() << "] - "
                 << status.error_message() << "\n";
-      std::exit(1);
+      return 1;
     }
-    return transaction;
-  }();
+  }
 
   std::cout << "Transaction: " << read_write_transaction.id() << "\n";
 
@@ -236,27 +237,12 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
         "INSERT INTO timeseries (name, ts, value)"
         " VALUES (@name, @time, @value)");
     auto& fields = *request.mutable_params()->mutable_fields();
-    fields["name"] = [](std::string s) {
-      google::protobuf::Value v;
-      v.set_string_value(std::move(s));
-      return v;
-    }(std::move(series_name));
-    fields["time"] = [](std::chrono::system_clock::time_point ts) {
-      google::protobuf::Value v;
-      v.set_string_value(google::cloud::storage::internal::FormatRfc3339(ts));
-      return v;
-    }(ts);
-    fields["value"] = [](std::int64_t x) {
-      google::protobuf::Value v;
-      v.set_string_value(std::to_string(x));
-      return v;
-    }(value);
+    fields["name"].set_string_value(std::move(series_name));
+    fields["time"].set_string_value(
+        google::cloud::storage::internal::FormatRfc3339(ts));
+    fields["value"].set_string_value(std::to_string(value));
     auto& types = *request.mutable_param_types();
-    types["time"] = [] {
-      spanner::Type t;
-      t.set_code(spanner::TIMESTAMP);
-      return t;
-    }();
+    types["time"].set_code(spanner::TIMESTAMP);
 
     grpc::ClientContext context;
     spanner::ResultSet result;
@@ -264,10 +250,13 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
     if (!status.ok()) {
       std::cerr << "INSERT INTO FAILED: [" << status.error_code() << "] - "
                 << status.error_message() << "\n";
-      std::exit(1);
+      // TODO - use the grpc::Status -> google::cloud::Status translator.
+      return google::cloud::Status(google::cloud::StatusCode::kUnknown,
+                                   status.error_message());
     }
 
     std::cout << "INSERT = " << result.DebugString() << "\n";
+    return google::cloud::Status();
   };
 
 #if 0
@@ -285,7 +274,11 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
     }
   }
 #else
-  insert_one("some-time-series", std::chrono::system_clock::now(), 42);
+  auto status =
+      insert_one("some-time-series", std::chrono::system_clock::now(), 42);
+  if (!status.ok()) {
+    return 1;
+  }
 #endif  // 0
 
   grpc::ClientContext context;
@@ -293,11 +286,11 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
   spanner::CommitResponse response;
   request.set_session(session.name());
   request.set_transaction_id(read_write_transaction.id());
-  grpc::Status status = stub->Commit(&context, request, &response);
-  if (!status.ok()) {
-    std::cerr << "COMMIT FAILED: [" << status.error_code() << "] - "
-              << status.error_message() << "\n";
-    std::exit(1);
+  grpc::Status commit_status = stub->Commit(&context, request, &response);
+  if (!commit_status.ok()) {
+    std::cerr << "COMMIT FAILED: [" << commit_status.error_code() << "] - "
+              << commit_status.error_message() << "\n";
+    return 1;
   }
   std::cout << "COMMIT = " << response.DebugString() << "\n";
 
@@ -377,10 +370,10 @@ int main(int argc, char* argv[]) {
   }
 
   std::vector<std::string> args;
-  std::transform(argv, argv + argc, std::back_inserter(args),
+  std::transform(argv + 2, argv + argc, std::back_inserter(args),
                  [](char* x) { return std::string(x); });
 
-  std::string const command_name = args[1];
+  std::string const command_name = argv[1];
   auto command = commands.find(command_name);
   if (commands.end() == command) {
     std::cerr << argv[0] << ": unknown command " << command_name << '\n';
