@@ -358,6 +358,52 @@ void GetFamilyMetadata(google::cloud::bigtable::TableAdmin admin, int argc,
   (std::move(admin), table_id, family_name);
 }
 
+void GetOrCreateFamily(google::cloud::bigtable::TableAdmin admin, int argc,
+                       char* argv[]) {
+  if (argc != 3) {
+    throw Usage{
+        "get-or-create-family <project-id> <instance-id> <table-id>"
+        " <family-name>"};
+  }
+  std::string const table_id = ConsumeArg(argc, argv);
+  std::string const family_name = ConsumeArg(argc, argv);
+
+  // [START bigtable_get_or_create_family]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id, std::string family_name) {
+    auto schema =
+        admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+
+    if (!schema) {
+      throw std::runtime_error(schema.status().message());
+    }
+    auto pos = schema->column_families().find(family_name);
+    if (pos == schema->column_families().end()) {
+      // Try to create the column family instead:
+      auto modified = admin.ModifyColumnFamilies(
+          table_id,
+          {cbt::ColumnFamilyModification::Create(
+              family_name, cbt::GcRule::MaxAge(std::chrono::hours(5 * 24)))});
+
+      if (!modified) {
+        throw std::runtime_error(schema.status().message());
+      }
+      schema = *std::move(modified);
+      pos = schema->column_families().find(family_name);
+    }
+
+    if (pos == schema->column_families().end()) {
+      throw std::runtime_error("GetOrCreateFamily failed");
+    }
+
+    google::bigtable::admin::v2::ColumnFamily family = pos->second;
+    std::cout << "Column family name: " << pos->first
+              << "\nColumn family details: " << family.DebugString() << "\n";
+  }
+  // [END bigtable_get_or_create_family]
+  (std::move(admin), table_id, family_name);
+}
+
 void DeleteColumnFamily(google::cloud::bigtable::TableAdmin admin, int argc,
                         char* argv[]) {
   if (argc != 3) {
@@ -585,6 +631,7 @@ int main(int argc, char* argv[]) try {
       {"create-intersection-family", &CreateIntersectionFamily},
       {"create-nested-family", &CreateNestedFamily},
       {"get-family-metadata", &GetFamilyMetadata},
+      {"get-or-create-family", &GetOrCreateFamily},
       {"delete-column-family", &DeleteColumnFamily},
       {"check-family-exists", &CheckFamilyExists},
       {"update-gc-rule", &UpdateGcRule},
