@@ -528,9 +528,10 @@ TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
     auto failures = table.BulkApply(std::move(bulk));
     ASSERT_TRUE(failures.empty()) << "failures=" << [&failures]() {
       std::ostringstream os;
-      os << "[";
-      for (auto&& f : failures) {
-        os << "failed[" << f.original_index() << "]=" << f.status() << ", ";
+      char const* sep = "[";
+      for (auto const& f : failures) {
+        os << sep << "failed[" << f.original_index() << "]=" << f.status();
+        sep = ", ";
       }
       os << "]";
       return os.str();
