@@ -53,22 +53,16 @@ void AsyncCreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
     config.set_type(cbt::InstanceConfig::PRODUCTION);
 
     auto future = instance_admin.AsyncCreateInstance(cq, config);
-    // Most applications would simply call future.get(), here we show how to
-    // perform additional work while the long running operation completes.
-    std::cout << "Waiting for instance creation to complete ";
-    for (int i = 0; i != 100; ++i) {
-      if (std::future_status::ready ==
-          future.wait_for(std::chrono::seconds(2))) {
-        auto instance = future.get();
-        if (!instance) {
-          throw std::runtime_error(instance.status().message());
-        }
-        std::cout << "DONE: " << instance->name() << "\n";
-        return;
-      }
-      std::cout << '.' << std::flush;
+    // Show how to perform additional work while the long running operation
+    // completes. The application could use future.then() instead.
+    std::cout << "Waiting for instance creation to complete " << std::flush;
+    future.wait_for(std::chrono::seconds(2));
+    std::cout << '.' << std::flush;
+    auto instance = future.get();
+    if (!instance) {
+      throw std::runtime_error(instance.status().message());
     }
-    std::cout << "TIMEOUT\n";
+    std::cout << "DONE, details=" << instance->name() << "\n";
   }
   //! [async create instance]
   (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
@@ -89,22 +83,16 @@ void AsyncCreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
     auto future = instance_admin.AsyncCreateCluster(
         cq, cluster_config, cbt::InstanceId(instance_id),
         cbt::ClusterId(cluster_id));
-    // Most applications would simply call future.get(), here we show how to
-    // perform additional work while the long running operation completes.
-    std::cout << "Waiting for cluster creation to complete ";
-    for (int i = 0; i != 100; ++i) {
-      if (std::future_status::ready ==
-          future.wait_for(std::chrono::seconds(2))) {
-        auto cluster = future.get();
-        if (!cluster) {
-          throw std::runtime_error(cluster.status().message());
-        }
-        std::cout << "DONE: " << cluster->name() << "\n";
-        return;
-      }
-      std::cout << '.' << std::flush;
+    // Show how to perform additional work while the long running operation
+    // completes. The application could use future.then() instead.
+    std::cout << "Waiting for cluster creation to complete " << std::flush;
+    future.wait_for(std::chrono::seconds(2));
+    std::cout << '.' << std::flush;
+    auto cluster = future.get();
+    if (!cluster) {
+      throw std::runtime_error(cluster.status().message());
     }
-    std::cout << "TIMEOUT\n";
+    std::cout << "DONE, details=" << cluster->DebugString() << "\n";
   }
   //! [async create cluster]
   (std::move(instance_admin), std::move(cq), argv[1], argv[2], argv[3]);
@@ -128,26 +116,16 @@ void AsyncCreateAppProfile(
     auto future = instance_admin.AsyncCreateAppProfile(
         cq, cbt::InstanceId(instance_id), config);
 
-    // Most applications would simply call future.get(), here we show how to
-    // perform additional work while the long running operation completes.
-    std::cout << "Waiting for app_profile creation to complete ";
-    for (int i = 0; i != 100; ++i) {
-      if (std::future_status::ready ==
-          future.wait_for(std::chrono::seconds(2))) {
-        auto app_profile = future.get();
-        if (!app_profile) {
-          throw std::runtime_error(app_profile.status().message());
-        }
-        std::string app_profile_detail;
-        google::protobuf::TextFormat::PrintToString(*app_profile,
-                                                    &app_profile_detail);
-        std::cout << "DONE, app profile details: " << app_profile_detail
-                  << "\n";
-        return;
-      }
-      std::cout << '.' << std::flush;
+    // Show how to perform additional work while the long running operation
+    // completes. The application could use future.then() instead.
+    std::cout << "Waiting for app_profile creation to complete " << std::flush;
+    future.wait_for(std::chrono::seconds(2));
+    std::cout << '.' << std::flush;
+    auto app_profile = future.get();
+    if (!app_profile) {
+      throw std::runtime_error(app_profile.status().message());
     }
-    std::cout << "TIMEOUT\n";
+    std::cout << "DONE, details=" << app_profile->DebugString() << "\n";
   }
   //! [async create app profile]
   (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
@@ -486,25 +464,16 @@ void AsyncUpdateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
               return instance_admin.AsyncUpdateInstance(cq,
                                                         instance_update_config);
             });
-    // Most applications would simply call future.get(), here we show how to
-    // perform additional work while the long running operation completes.
-    std::cout << "Waiting for instance update to complete ";
-    for (int i = 0; i != 100; ++i) {
-      if (std::future_status::ready ==
-          future.wait_for(std::chrono::seconds(2))) {
-        auto instance = future.get();
-        if (!instance) {
-          throw std::runtime_error(instance.status().message());
-        }
-        std::string instance_detail;
-        google::protobuf::TextFormat::PrintToString(*instance,
-                                                    &instance_detail);
-        std::cout << "DONE, instance details: " << instance_detail << "\n";
-        return;
-      }
-      std::cout << '.' << std::flush;
+    // Show how to perform additional work while the long running operation
+    // completes. The application could use future.then() instead.
+    std::cout << "Waiting for instance update to complete " << std::flush;
+    future.wait_for(std::chrono::seconds(2));
+    std::cout << '.' << std::flush;
+    auto instance = future.get();
+    if (!instance) {
+      throw std::runtime_error(instance.status().message());
     }
-    std::cout << "TIMEOUT\n";
+    std::cout << "DONE, instance details: " << instance->DebugString() << "\n";
   }
   //! [async update instance]
   (std::move(instance_admin), std::move(cq), argv[1]);
@@ -539,24 +508,16 @@ void AsyncUpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
 
               return instance_admin.AsyncUpdateCluster(cq, modified_config);
             });
-    // Most applications would simply call future.get(), here we show how to
-    // perform additional work while the long running operation completes.
-    std::cout << "Waiting for cluster update to complete ";
-    for (int i = 0; i != 100; ++i) {
-      if (std::future_status::ready ==
-          future.wait_for(std::chrono::seconds(2))) {
-        auto cluster = future.get();
-        if (!cluster) {
-          throw std::runtime_error(cluster.status().message());
-        }
-        std::string cluster_detail;
-        google::protobuf::TextFormat::PrintToString(*cluster, &cluster_detail);
-        std::cout << "DONE, cluster details: " << cluster_detail << "\n";
-        return;
-      }
-      std::cout << '.' << std::flush;
+    // Show how to perform additional work while the long running operation
+    // completes. The application could use future.then() instead.
+    std::cout << "Waiting for cluster update to complete " << std::flush;
+    future.wait_for(std::chrono::seconds(2));
+    std::cout << '.' << std::flush;
+    auto cluster = future.get();
+    if (!cluster) {
+      throw std::runtime_error(cluster.status().message());
     }
-    std::cout << "TIMEOUT\n";
+    std::cout << "DONE, details=" << cluster->DebugString() << "\n";
   }
   //! [async update cluster]
   (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
@@ -577,26 +538,16 @@ void AsyncUpdateAppProfile(
     auto future = instance_admin.AsyncUpdateAppProfile(
         cq, cbt::InstanceId(instance_id), cbt::AppProfileId(profile_id),
         cbt::AppProfileUpdateConfig().set_description("new description"));
-    // Most applications would simply call future.get(), here we show how to
-    // perform additional work while the long running operation completes.
-    std::cout << "Waiting for app profile update to complete ";
-    for (int i = 0; i != 100; ++i) {
-      if (std::future_status::ready ==
-          future.wait_for(std::chrono::seconds(2))) {
-        auto app_profile = future.get();
-        if (!app_profile) {
-          throw std::runtime_error(app_profile.status().message());
-        }
-        std::string app_profile_detail;
-        google::protobuf::TextFormat::PrintToString(*app_profile,
-                                                    &app_profile_detail);
-        std::cout << "DONE, app profile details: " << app_profile_detail
-                  << "\n";
-        return;
-      }
-      std::cout << '.' << std::flush;
+    // Show how to perform additional work while the long running operation
+    // completes. The application could use future.then() instead.
+    std::cout << "Waiting for app profile update to complete " << std::flush;
+    future.wait_for(std::chrono::seconds(2));
+    std::cout << '.' << std::flush;
+    auto app_profile = future.get();
+    if (!app_profile) {
+      throw std::runtime_error(app_profile.status().message());
     }
-    std::cout << "TIMEOUT\n";
+    std::cout << "DONE, details=" << app_profile->DebugString() << "\n";
   }
   //! [async update app profile]
   (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
@@ -645,22 +596,16 @@ void AsyncDeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
         instance_admin.AsyncDeleteCluster(cq, cbt::InstanceId(instance_id),
                                           cbt::ClusterId(cluster_id));
 
-    // Most applications would simply call future.get(), here we show how to
-    // perform additional work while the long running operation completes.
-    std::cout << "Waiting for cluster deletion to complete ";
-    for (int i = 0; i != 100; ++i) {
-      if (std::future_status::ready ==
-          future.wait_for(std::chrono::seconds(2))) {
-        auto res = future.get();
-        if (!res.ok()) {
-          throw std::runtime_error(res.message());
-        }
-        std::cout << "DONE, cluster deleted.\n";
-        return;
-      }
-      std::cout << '.' << std::flush;
+    // Show how to perform additional work while the long running operation
+    // completes. The application could use future.then() instead.
+    std::cout << "Waiting for cluster deletion to complete " << std::flush;
+    future.wait_for(std::chrono::seconds(2));
+    std::cout << '.' << std::flush;
+    auto res = future.get();
+    if (!res.ok()) {
+      throw std::runtime_error(res.message());
     }
-    std::cout << "TIMEOUT\n";
+    std::cout << "DONE, cluster deleted.\n";
   }
   //! [async delete cluster]
   (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
@@ -684,22 +629,16 @@ void AsyncDeleteAppProfile(
         instance_admin.AsyncDeleteAppProfile(cq, cbt::InstanceId(instance_id),
                                              cbt::AppProfileId(app_profile_id));
 
-    // Most applications would simply call future.get(), here we show how to
-    // perform additional work while the long running operation completes.
-    std::cout << "Waiting for app profile deletion to complete ";
-    for (int i = 0; i != 100; ++i) {
-      if (std::future_status::ready ==
-          future.wait_for(std::chrono::seconds(2))) {
-        auto res = future.get();
-        if (!res.ok()) {
-          throw std::runtime_error(res.message());
-        }
-        std::cout << "DONE, app profile deleted.\n";
-        return;
-      }
-      std::cout << '.' << std::flush;
+    // Show how to perform additional work while the long running operation
+    // completes. The application could use future.then() instead.
+    std::cout << "Waiting for app profile deletion to complete " << std::flush;
+    future.wait_for(std::chrono::seconds(2));
+    std::cout << '.' << std::flush;
+    auto res = future.get();
+    if (!res.ok()) {
+      throw std::runtime_error(res.message());
     }
-    std::cout << "TIMEOUT\n";
+    std::cout << "DONE, app profile deleted.\n";
   }
   //! [async delete app profile]
   (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
@@ -737,32 +676,25 @@ void AsyncSetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
               return instance_admin.AsyncSetIamPolicy(
                   cq, cbt::InstanceId(instance_id), bindings, current->etag);
             });
-    // Most applications would simply call updated_future.get(), here we show
-    // how to perform additional work while the long running operation
-    // completes.
-    std::cout << "Waiting for IAM policy update to complete ";
-    for (int i = 0; i != 100; ++i) {
-      if (std::future_status::ready ==
-          updated_future.wait_for(std::chrono::seconds(2))) {
-        auto result = updated_future.get();
-        if (!result) {
-          throw std::runtime_error(result.status().message());
-        }
-        std::cout << "DONE, the IAM Policy for " << instance_id << " is\n";
-        for (auto const& kv : result->bindings) {
-          std::cout << "role " << kv.first << " includes [";
-          char const* sep = "";
-          for (auto const& m : kv.second) {
-            std::cout << sep << m;
-            sep = ", ";
-          }
-          std::cout << "]\n";
-        }
-        return;
-      }
-      std::cout << '.' << std::flush;
+    // Show how to perform additional work while the long running operation
+    // completes. The application could use future.then() instead.
+    std::cout << "Waiting for IAM policy update to complete " << std::flush;
+    updated_future.wait_for(std::chrono::seconds(2));
+    auto result = updated_future.get();
+    std::cout << '.' << std::flush;
+    if (!result) {
+      throw std::runtime_error(result.status().message());
     }
-    std::cout << "TIMEOUT\n";
+    std::cout << "DONE, the IAM Policy for " << instance_id << " is\n";
+    for (auto const& kv : result->bindings) {
+      std::cout << "role " << kv.first << " includes [";
+      char const* sep = "";
+      for (auto const& m : kv.second) {
+        std::cout << sep << m;
+        sep = ", ";
+      }
+      std::cout << "]\n";
+    }
   }
   //! [async set iam policy]
   (std::move(instance_admin), std::move(cq), argv[1], argv[2], argv[3]);
@@ -784,28 +716,22 @@ void AsyncTestIamPermissions(
      std::string resource, std::vector<std::string>(permissions)) {
     auto future =
         instance_admin.AsyncTestIamPermissions(cq, resource, permissions);
-    // Most applications would simply call future.get(), here we show how to
-    // perform additional work while the long running operation completes.
-    std::cout << "Waiting for app profile update to complete ";
-    for (int i = 0; i != 100; ++i) {
-      if (std::future_status::ready ==
-          future.wait_for(std::chrono::seconds(2))) {
-        auto result = future.get();
-        if (!result) {
-          throw std::runtime_error(result.status().message());
-        }
-        std::cout << "DONE, the current user has the following permissions [";
-        char const* sep = "";
-        for (auto const& p : *result) {
-          std::cout << sep << p;
-          sep = ", ";
-        }
-        std::cout << "]\n";
-        return;
-      }
-      std::cout << '.' << std::flush;
+    // Show how to perform additional work while the long running operation
+    // completes. The application could use future.then() instead.
+    std::cout << "Waiting for app profile update to complete " << std::flush;
+    future.wait_for(std::chrono::seconds(2));
+    std::cout << '.' << std::flush;
+    auto result = future.get();
+    if (!result) {
+      throw std::runtime_error(result.status().message());
     }
-    std::cout << "TIMEOUT\n";
+    std::cout << "DONE, the current user has the following permissions [";
+    char const* sep = "";
+    for (auto const& p : *result) {
+      std::cout << sep << p;
+      sep = ", ";
+    }
+    std::cout << "]\n";
   }
   //! [async test iam permissions]
   (std::move(instance_admin), std::move(cq), argv[1],

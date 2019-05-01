@@ -65,22 +65,16 @@ void CreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
     config.set_type(cbt::InstanceConfig::PRODUCTION);
 
     auto future = instance_admin.CreateInstance(config);
-    // Most applications would simply call future.get(), here we show how to
-    // perform additional work while the long running operation completes.
-    std::cout << "Waiting for instance creation to complete ";
-    for (int i = 0; i != 100; ++i) {
-      if (std::future_status::ready ==
-          future.wait_for(std::chrono::seconds(2))) {
-        auto instance = future.get();
-        if (!instance) {
-          throw std::runtime_error(instance.status().message());
-        }
-        std::cout << "DONE: " << instance->name() << "\n";
-        return;
-      }
-      std::cout << '.' << std::flush;
+    // Show how to perform additional work while the long running operation
+    // completes. The application could use future.then() instead.
+    std::cout << "Waiting for instance creation to complete " << std::flush;
+    future.wait_for(std::chrono::seconds(1));
+    std::cout << '.' << std::flush;
+    auto instance = future.get();
+    if (!instance) {
+      throw std::runtime_error(instance.status().message());
     }
-    std::cout << "TIMEOUT\n";
+    std::cout << "DONE, details=" << instance->DebugString() << "\n";
   }
   //! [create instance]
   (std::move(instance_admin), instance_id, zone);
@@ -106,22 +100,16 @@ void CreateDevInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
     config.set_type(cbt::InstanceConfig::DEVELOPMENT);
 
     auto future = instance_admin.CreateInstance(config);
-    // Most applications would simply call future.get(), here we show how to
-    // perform additional work while the long running operation completes.
-    std::cout << "Waiting for instance creation to complete ";
-    for (int i = 0; i != 100; ++i) {
-      if (std::future_status::ready ==
-          future.wait_for(std::chrono::seconds(2))) {
-        auto instance = future.get();
-        if (!instance) {
-          throw std::runtime_error(instance.status().message());
-        }
-        std::cout << "DONE: " << instance->name() << "\n";
-        return;
-      }
-      std::cout << '.' << std::flush;
+    // Show how to perform additional work while the long running operation
+    // completes. The application could use future.then() instead.
+    std::cout << "Waiting for instance creation to complete " << std::flush;
+    future.wait_for(std::chrono::seconds(2));
+    std::cout << '.' << std::flush;
+    auto instance = future.get();
+    if (!instance) {
+      throw std::runtime_error(instance.status().message());
     }
-    std::cout << "TIMEOUT\n";
+    std::cout << "DONE, details=" << instance->DebugString() << "\n";
   }
   //! [create dev instance]
   (std::move(instance_admin), instance_id, zone);
