@@ -237,7 +237,12 @@ function run_all_table_admin_examples {
   run_example ./bigtable_samples run "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets create-table "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets list-tables "${project_id}" "${INSTANCE}"
-  run_example ./table_admin_snippets get-table "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_snippets get-table \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_snippets check-table-exists \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_failure_example ./table_admin_snippets check-table-exists \
+      "${project_id}" "${INSTANCE}" "${TABLE2}"
   run_example ./table_admin_snippets get-or-create-table \
       "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets get-or-create-table \

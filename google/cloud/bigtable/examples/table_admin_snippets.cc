@@ -120,6 +120,31 @@ void GetTable(google::cloud::bigtable::TableAdmin admin, int argc,
   (std::move(admin), table_id);
 }
 
+void CheckTableExists(google::cloud::bigtable::TableAdmin admin, int argc,
+                      char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"check-table-exists <project-id> <instance-id> <table-id>"};
+  }
+  std::string const table_id = ConsumeArg(argc, argv);
+
+  //! [START bigtable_check_table_exists]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id) {
+    auto table =
+        admin.GetTable(table_id, google::bigtable::admin::v2::Table::NAME_ONLY);
+    if (!table) {
+      if (table.status().code() == google::cloud::StatusCode::kNotFound) {
+        throw std::runtime_error("Table " + table_id + " does not exists");
+      }
+      throw std::runtime_error(table.status().message());
+    }
+
+    std::cout << "Table " << table->name() << " was found\n";
+  }
+  //! [END bigtable_check_table_exists]
+  (std::move(admin), table_id);
+}
+
 void GetOrCreateTable(google::cloud::bigtable::TableAdmin admin, int argc,
                       char* argv[]) {
   if (argc != 2) {
@@ -685,6 +710,7 @@ int main(int argc, char* argv[]) try {
       {"create-table", &CreateTable},
       {"list-tables", &ListTables},
       {"get-table", &GetTable},
+      {"check-table-exists", &CheckTableExists},
       {"get-or-create-table", &GetOrCreateTable},
       {"delete-table", &DeleteTable},
       {"modify-table", &ModifyTable},
