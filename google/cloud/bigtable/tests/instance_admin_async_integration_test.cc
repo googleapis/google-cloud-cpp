@@ -429,7 +429,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
                                 promise_delete_first_profile.set_value();
                               },
                               bigtable::InstanceId(instance_id),
-                              bigtable::AppProfileId(id1));
+                              bigtable::AppProfileId(id1), true);
 
   promise_delete_first_profile.get_future().get();
 
@@ -457,7 +457,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
                                 promise_delete_second_profile.set_value();
                               },
                               bigtable::InstanceId(instance_id),
-                              bigtable::AppProfileId(id2));
+                              bigtable::AppProfileId(id2), true);
 
   promise_delete_second_profile.get_future().get();
 
