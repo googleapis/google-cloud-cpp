@@ -91,7 +91,7 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
 
     // production instance needs at least 3 nodes
     auto cluster_config = google::cloud::bigtable::ClusterConfig(
-        zone, 3, google::cloud::bigtable::ClusterConfig::SSD);
+        zone, 3, google::cloud::bigtable::ClusterConfig::HDD);
     google::cloud::bigtable::InstanceConfig config(
         google::cloud::bigtable::InstanceId(instance_id), display_name,
         {{cluster_id.get(), cluster_config}});
@@ -282,7 +282,7 @@ void CreateCluster(std::string project_id, int argc, char* argv[]) {
     // [START bigtable_create_cluster]
     std::cout << "Adding Cluster to Instance: " << instance_id.get() << "\n";
     auto cluster_config = google::cloud::bigtable::ClusterConfig(
-        zone, 3, google::cloud::bigtable::ClusterConfig::SSD);
+        zone, 3, google::cloud::bigtable::ClusterConfig::HDD);
     // Block until the operation completes.
     auto cluster =
         instance_admin.CreateCluster(cluster_config, instance_id, cluster_id)

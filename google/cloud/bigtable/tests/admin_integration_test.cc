@@ -58,8 +58,6 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
 }  // namespace
 
 TEST_F(AdminIntegrationTest, TableListWithMultipleTablesTest) {
-  std::string const table_prefix = RandomTableId();
-
   std::vector<std::string> expected_table_list;
   auto table_config = bigtable::TableConfig();
 
@@ -70,7 +68,7 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTablesTest) {
 
   int const TABLE_COUNT = 5;
   for (int index = 0; index < TABLE_COUNT; ++index) {
-    std::string table_id = table_prefix + "-" + std::to_string(index);
+    std::string table_id = RandomTableId();
     auto previous_count = CountMatchingTables(table_id, *previous_table_list);
     ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
                                  << " This is unexpected, as the table ids are"
@@ -248,7 +246,8 @@ TEST_F(AdminIntegrationTest, CheckConsistencyIntegrationTest) {
   bigtable::Table table(data_client, random_table_id);
 
   bigtable::InstanceId instance_id(id);
-  bigtable::DisplayName display_name("Integration Tests " + id);
+  // The display name cannot be longer than 30 characters.
+  bigtable::DisplayName display_name(("IT " + id).substr(0, 30));
 
   // Replication needs at least two clusters
   auto cluster_config_1 =
@@ -262,6 +261,7 @@ TEST_F(AdminIntegrationTest, CheckConsistencyIntegrationTest) {
       {{id + "-c1", cluster_config_1}, {id + "-c2", cluster_config_2}});
 
   auto instance = instance_admin.CreateInstance(config).get();
+  ASSERT_STATUS_OK(instance);
 
   google::cloud::bigtable::TableId table_id(random_table_id);
 
@@ -299,7 +299,7 @@ TEST_F(AdminIntegrationTest, CheckConsistencyIntegrationTest) {
   EXPECT_TRUE(result.get());
 
   EXPECT_STATUS_OK(table_admin.DeleteTable(table_id.get()));
-  instance_admin.DeleteInstance(id);
+  EXPECT_STATUS_OK(instance_admin.DeleteInstance(id));
 }
 
 // Test Cases Finished

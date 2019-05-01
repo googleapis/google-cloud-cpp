@@ -26,8 +26,9 @@ namespace {
 
 // Initialized in main() below.
 char const* flag_project_id;
-char const* flag_zone;
-char const* flag_replication_zone;
+char const* flag_zone_a;
+char const* flag_zone_b;
+char const* flag_service_account;
 
 class InstanceAdminAsyncIntegrationTest : public ::testing::Test {
  protected:
@@ -65,7 +66,7 @@ bool IsClusterPresent(std::vector<btadmin::Cluster> const& clusters,
 }
 
 bigtable::InstanceConfig IntegrationTestConfig(
-    std::string const& id, std::string const& zone = flag_zone,
+    std::string const& id, std::string const& zone,
     bigtable::InstanceConfig::InstanceType instance_type =
         bigtable::InstanceConfig::DEVELOPMENT,
     int32_t serve_node = 0) {
@@ -109,7 +110,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteInstanceTest) {
       << " generated at random.";
 
   // create instance
-  auto config = IntegrationTestConfig(instance_id);
+  auto config = IntegrationTestConfig(instance_id, flag_zone_a);
   std::promise<btadmin::Instance> create_promise;
   admin.AsyncCreateInstance(
       cq,
@@ -170,7 +171,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
   // create instance prerequisites for cluster operations
   bigtable::InstanceId instance_id(id);
   auto instance_config = IntegrationTestConfig(
-      id, flag_zone, bigtable::InstanceConfig::PRODUCTION, 3);
+      id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
 
   google::cloud::bigtable::CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
@@ -207,8 +208,8 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteClusterTest) {
       << " generated at random.";
   bigtable::ClusterId cluster_id(cluster_id_str);
   std::promise<btadmin::Cluster> create_promise;
-  auto cluster_config = bigtable::ClusterConfig(flag_replication_zone, 3,
-                                                bigtable::ClusterConfig::HDD);
+  auto cluster_config =
+      bigtable::ClusterConfig(flag_zone_b, 3, bigtable::ClusterConfig::HDD);
   admin.AsyncCreateCluster(
       cq,
       [&create_promise](google::cloud::bigtable::CompletionQueue&,
@@ -277,7 +278,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
   auto instance_config = IntegrationTestConfig(
-      instance_id, "us-central1-c", bigtable::InstanceConfig::PRODUCTION, 3);
+      instance_id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
   auto future = instance_admin_->CreateInstance(instance_config);
   auto actual = future.get();
   EXPECT_STATUS_OK(actual);
@@ -493,7 +494,7 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncSetGetTestIamAPIsTest) {
   // create instance prerequisites for cluster operations
   bigtable::InstanceId instance_id(id);
   auto instance_config = IntegrationTestConfig(
-      id, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
+      id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =
       instance_admin_->CreateInstance(instance_config).get();
 
@@ -501,12 +502,11 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncSetGetTestIamAPIsTest) {
   google::cloud::bigtable::CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
 
-  std::string resource = id;
   auto iam_bindings = google::cloud::IamBindings(
-      "writer", {"abc@gmail.com", "xyz@gmail.com", "pqr@gmail.com"});
+      "roles/bigtable.reader",
+      {"serviceAccount:" + std::string(flag_service_account)});
 
-  auto initial_policy =
-      instance_admin_->SetIamPolicy(id, iam_bindings, "test-tag");
+  auto initial_policy = instance_admin_->SetIamPolicy(id, iam_bindings);
   ASSERT_STATUS_OK(initial_policy);
 
   // Get policy
@@ -532,23 +532,26 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncSetGetTestIamAPIsTest) {
 
   cq.Shutdown();
   pool.join();
+
+  EXPECT_STATUS_OK(instance_admin_->DeleteInstance(id));
 }
 
 int main(int argc, char* argv[]) {
   google::cloud::testing_util::InitGoogleMock(argc, argv);
 
-  if (argc != 4) {
+  if (argc != 5) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(cmd).find_last_of('/');
     // Show usage if number of arguments is invalid.
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project_id> <zone> <replication_zone>\n";
+    std::cerr << "Usage: " << cmd.substr(last_slash + 1) << " <project_id>"
+              << " <zone-a> <zone-b> <service-account>\n";
     return 1;
   }
 
   flag_project_id = argv[1];
-  flag_zone = argv[2];
-  flag_replication_zone = argv[3];
+  flag_zone_a = argv[2];
+  flag_zone_b = argv[3];
+  flag_service_account = argv[4];
 
   return RUN_ALL_TESTS();
 }

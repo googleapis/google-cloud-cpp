@@ -277,7 +277,9 @@ TEST_F(AdminAsyncIntegrationTest, CheckConsistencyIntegrationTest) {
   bigtable::Table table(data_client, random_table_id);
 
   bigtable::InstanceId instance_id(id);
-  bigtable::DisplayName display_name("Integration Tests " + id);
+  // Abbreviate "Integration Test" as "IT" because the display name cannot be
+  // longer than 30 characters.
+  bigtable::DisplayName display_name(("IT " + id).substr(0, 30));
 
   // Replication needs at least two clusters
   auto cluster_config_1 =
@@ -291,6 +293,7 @@ TEST_F(AdminAsyncIntegrationTest, CheckConsistencyIntegrationTest) {
       {{id + "-c1", cluster_config_1}, {id + "-c2", cluster_config_2}});
 
   auto instance = instance_admin.CreateInstance(config).get();
+  ASSERT_STATUS_OK(instance);
 
   google::cloud::bigtable::TableId table_id(random_table_id);
 
@@ -336,7 +339,7 @@ TEST_F(AdminAsyncIntegrationTest, CheckConsistencyIntegrationTest) {
   pool.join();
 
   EXPECT_STATUS_OK(table_admin.DeleteTable(table_id.get()));
-  instance_admin.DeleteInstance(id);
+  EXPECT_STATUS_OK(instance_admin.DeleteInstance(id));
 }
 
 }  // namespace
@@ -349,20 +352,22 @@ int main(int argc, char* argv[]) {
   google::cloud::testing_util::InitGoogleMock(argc, argv);
 
   // Make sure the arguments are valid.
-  if (argc != 3) {
+  if (argc != 5) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(argv[0]).find_last_of('/');
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project> <instance>\n";
+              << "<project_id> <instance_id> <zone> <replication_zone>\n";
     return 1;
   }
 
   std::string const project_id = argv[1];
   std::string const instance_id = argv[2];
+  std::string const zone = argv[3];
+  std::string const replication_zone = argv[4];
 
   (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::bigtable::testing::TableTestEnvironment(project_id,
-                                                                 instance_id));
+      new google::cloud::bigtable::testing::TableTestEnvironment(
+          project_id, instance_id, zone, replication_zone));
 
   return RUN_ALL_TESTS();
 }

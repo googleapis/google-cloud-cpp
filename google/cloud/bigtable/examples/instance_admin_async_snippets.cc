@@ -483,11 +483,12 @@ void AsyncUpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                         google::cloud::bigtable::CompletionQueue cq,
                         std::vector<std::string> argv) {
   if (argv.size() != 3U) {
-    throw Usage{"update-cluster: <project-id> <instance-id> <cluster-id>"};
+    throw Usage{"async-update-cluster <project-id> <instance-id> <cluster-id>"};
   }
 
   //! [async update cluster]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id, std::string cluster_id) {
     auto future =
@@ -495,14 +496,18 @@ void AsyncUpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
             .AsyncGetCluster(cq, cbt::InstanceId(instance_id),
                              cbt::ClusterId(cluster_id))
             .then([instance_admin,
-                   cq](google::cloud::future<google::cloud::StatusOr<
-                           google::bigtable::admin::v2::Cluster>>
+                   cq](google::cloud::future<
+                       StatusOr<google::bigtable::admin::v2::Cluster>>
                            cluster_fut) mutable {
               auto cluster = cluster_fut.get();
               if (!cluster) {
-                throw std::runtime_error(cluster.status().message());
+                return google::cloud::make_ready_future(
+                    StatusOr<google::bigtable::admin::v2::Cluster>(
+                        cluster.status()));
               }
-              // Modify the cluster.
+              // The state cannot be sent on updates, so clear it first.
+              cluster->clear_state();
+              // Set the desired cluster configuration.
               cluster->set_serve_nodes(4);
               auto modified_config = cbt::ClusterConfig(std::move(*cluster));
 
@@ -537,7 +542,9 @@ void AsyncUpdateAppProfile(
      std::string instance_id, std::string profile_id) {
     auto future = instance_admin.AsyncUpdateAppProfile(
         cq, cbt::InstanceId(instance_id), cbt::AppProfileId(profile_id),
-        cbt::AppProfileUpdateConfig().set_description("new description"));
+        cbt::AppProfileUpdateConfig()
+            .set_description("new description")
+            .set_ignore_warnings(true));
     // Show how to perform additional work while the long running operation
     // completes. The application could use future.then() instead.
     std::cout << "Waiting for app profile update to complete " << std::flush;
@@ -617,7 +624,7 @@ void AsyncDeleteAppProfile(
     std::vector<std::string> argv) {
   if (argv.size() != 3U) {
     throw Usage{
-        "async-delete-app-profile: <project-id> <instance-id> "
+        "async-delete-app-profile <project-id> <instance-id> "
         "<app-profile-id> "};
   }
 

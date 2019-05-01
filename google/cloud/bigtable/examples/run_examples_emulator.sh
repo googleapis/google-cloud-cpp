@@ -25,20 +25,15 @@ echo
 echo "Running Bigtable Example programs"
 start_emulators
 
-# Use a (likely unique) project id for the emulator.
-readonly PROJECT_ID="project-${RANDOM}-${RANDOM}"
-readonly INSTANCE_ID="in-${RANDOM}-${RANDOM}"
-readonly ZONE_ID="fake-zone"
-readonly REPLICATION_ZONE_ID="fake-zone-2"
+# Setup the environment variables AS-IF running against production, but with
+# fake values.
+export PROJECT_ID="project-${RANDOM}-${RANDOM}"
+export INSTANCE_ID="in-${RANDOM}-${RANDOM}"
+export ZONE_A="fake-region1-a"
+export ZONE_B="fake-region1-b"
+export SERVICE_ACCOUNT="fake-sa@${PROJECT_ID}.iam.gserviceaccount.com"
 
-run_all_data_examples "${PROJECT_ID}" "${INSTANCE_ID}"
-run_all_data_async_examples "${PROJECT_ID}" "${INSTANCE_ID}"
-run_quickstart_example "${PROJECT_ID}" "${INSTANCE_ID}"
-run_hello_world_example "${PROJECT_ID}" "${INSTANCE_ID}"
-run_hello_app_profile_example "${PROJECT_ID}" "${INSTANCE_ID}"
-run_all_table_admin_examples "${PROJECT_ID}" "${ZONE_ID}" "${REPLICATION_ZONE_ID}"
-run_all_table_admin_async_examples "${PROJECT_ID}" "${ZONE_ID}" "${REPLICATION_ZONE_ID}"
-run_all_instance_admin_examples "${PROJECT_ID}" "${ZONE_ID}" "${REPLICATION_ZONE_ID}"
-run_all_instance_admin_async_examples "${PROJECT_ID}" "${ZONE_ID}" "${REPLICATION_ZONE_ID}"
+"${BINDIR}/run_examples_production.sh" || EXIT_STATUS=1
+"${BINDIR}/run_admin_examples_production.sh" || EXIT_STATUS=1
 
 exit_example_runner
