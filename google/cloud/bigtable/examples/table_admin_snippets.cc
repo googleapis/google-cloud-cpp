@@ -120,6 +120,41 @@ void GetTable(google::cloud::bigtable::TableAdmin admin, int argc,
   (std::move(admin), table_id);
 }
 
+void GetOrCreateTable(google::cloud::bigtable::TableAdmin admin, int argc,
+                      char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"get-or-create-table <project-id> <instance-id> <table-id>"};
+  }
+  std::string const table_id = ConsumeArg(argc, argv);
+
+  // [START bigtable_get_or_create_table]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string table_id) {
+    auto table =
+        admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+    if (!table &&
+        table.status().code() == google::cloud::StatusCode::kNotFound) {
+      // The table does not exist, try to create the table.
+      table = admin.CreateTable(
+          table_id,
+          cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)}}, {}));
+      if (!table) {
+        throw std::runtime_error(table.status().message());
+      }
+      // The schema returned by a `CreateTable()` request does not include all
+      // the metadata for a table, we need to explicitly request the rest:
+      table =
+          admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+    }
+    if (!table) {
+      throw std::runtime_error(table.status().message());
+    }
+    std::cout << "Table metadata: " << table->DebugString() << "\n";
+  }
+  // [END bigtable_get_or_create_table]
+  (std::move(admin), table_id);
+}
+
 void DeleteTable(google::cloud::bigtable::TableAdmin admin, int argc,
                  char* argv[]) {
   if (argc != 2) {
@@ -650,6 +685,7 @@ int main(int argc, char* argv[]) try {
       {"create-table", &CreateTable},
       {"list-tables", &ListTables},
       {"get-table", &GetTable},
+      {"get-or-create-table", &GetOrCreateTable},
       {"delete-table", &DeleteTable},
       {"modify-table", &ModifyTable},
       {"create-max-age-family", &CreateMaxAgeFamily},
