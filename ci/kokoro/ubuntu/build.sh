@@ -119,6 +119,17 @@ tar x -C "${HOME}" -f google-cloud-sdk-233.0.0-linux-x86_64.tar.gz
 "${HOME}/google-cloud-sdk/bin/gcloud" --quiet components install cbt
 export CBT="${HOME}/google-cloud-sdk/bin/cbt"
 
+if [[ "${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS}" = "yes" ]]; then
+  echo
+  echo "================================================================"
+  echo "Running Google Cloud Bigtable Integration Tests $(date)"
+  echo "================================================================"
+  (cd "$(bazel info bazel-bin)/google/cloud/bigtable/tests" && \
+     "${PROJECT_ROOT}/google/cloud/bigtable/tests/run_admin_integration_tests_production.sh")
+  (cd "$(bazel info bazel-bin)/google/cloud/bigtable/examples" && \
+     "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_admin_examples_production.sh")
+fi
+
 echo
 echo "================================================================"
 echo "Running Google Cloud Bigtable Integration Tests $(date)"
