@@ -131,7 +131,7 @@ void CreateReplicatedInstance(
      std::string zone_a, std::string zone_b) {
     cbt::DisplayName display_name("Put description here");
     auto c1 = instance_id + "-c1";
-    auto c2 = instance_id + "-c1";
+    auto c2 = instance_id + "-c2";
     cbt::InstanceConfig config(
         cbt::InstanceId(instance_id), display_name,
         {{c1, cbt::ClusterConfig(zone_a, 3, cbt::ClusterConfig::HDD)},
