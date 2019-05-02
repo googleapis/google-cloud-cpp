@@ -416,7 +416,8 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
   ASSERT_STATUS_OK(
       instance_admin_
           ->AsyncDeleteAppProfile(cq, bigtable::InstanceId(instance_id),
-                                  bigtable::AppProfileId(id1), true)
+                                  bigtable::AppProfileId(id1),
+                                  /*ignore_warnings=*/true)
           .get());
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
@@ -426,7 +427,8 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
   ASSERT_STATUS_OK(
       instance_admin_
           ->AsyncDeleteAppProfile(cq, bigtable::InstanceId(instance_id),
-                                  bigtable::AppProfileId(id2), false)
+                                  bigtable::AppProfileId(id2),
+                                  /*ignore_warnings=*/false)
           .get());
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);

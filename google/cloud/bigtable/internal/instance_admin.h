@@ -914,11 +914,12 @@ class InstanceAdmin {
   std::shared_ptr<AsyncOperation> AsyncDeleteAppProfile(
       CompletionQueue& cq, Functor&& callback,
       bigtable::InstanceId const& instance_id,
-      bigtable::AppProfileId const& profile_id) {
+      bigtable::AppProfileId const& profile_id, bool ignore_warnings = true) {
     google::bigtable::admin::v2::DeleteAppProfileRequest request;
     // Setting profile name.
     request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
                      profile_id.get());
+    request.set_ignore_warnings(ignore_warnings);
 
     static_assert(internal::ExtractMemberFunctionType<decltype(
                       &InstanceAdminClient::AsyncDeleteAppProfile)>::value,

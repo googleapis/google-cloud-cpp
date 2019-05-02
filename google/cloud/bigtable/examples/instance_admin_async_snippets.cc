@@ -627,7 +627,8 @@ void AsyncDeleteAppProfile(
      std::string instance_id, std::string app_profile_id) {
     google::cloud::future<google::cloud::Status> future =
         instance_admin.AsyncDeleteAppProfile(cq, cbt::InstanceId(instance_id),
-                                             cbt::AppProfileId(app_profile_id));
+                                             cbt::AppProfileId(app_profile_id),
+                                             /*ignore_warnings=*/true);
 
     // Show how to perform additional work while the long running operation
     // completes. The application could use future.then() instead.
