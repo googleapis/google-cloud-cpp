@@ -422,14 +422,15 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
 
   // delete first profile
   std::promise<void> promise_delete_first_profile;
-  admin.AsyncDeleteAppProfile(cq,
-                              [&promise_delete_first_profile](
-                                  google::cloud::bigtable::CompletionQueue& cq,
-                                  grpc::Status const& status) {
-                                promise_delete_first_profile.set_value();
-                              },
-                              bigtable::InstanceId(instance_id),
-                              bigtable::AppProfileId(id1), true);
+  admin.AsyncDeleteAppProfile(
+      cq,
+      [&promise_delete_first_profile](
+          google::cloud::bigtable::CompletionQueue& cq,
+          grpc::Status const& status) {
+        promise_delete_first_profile.set_value();
+      },
+      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id1),
+      /*ignore_warnings=*/true);
 
   promise_delete_first_profile.get_future().get();
 
@@ -450,14 +451,15 @@ TEST_F(InstanceAdminAsyncIntegrationTest, AsyncCreateListDeleteAppProfile) {
 
   // delete second profile
   std::promise<void> promise_delete_second_profile;
-  admin.AsyncDeleteAppProfile(cq,
-                              [&promise_delete_second_profile](
-                                  google::cloud::bigtable::CompletionQueue& cq,
-                                  grpc::Status const& status) {
-                                promise_delete_second_profile.set_value();
-                              },
-                              bigtable::InstanceId(instance_id),
-                              bigtable::AppProfileId(id2), true);
+  admin.AsyncDeleteAppProfile(
+      cq,
+      [&promise_delete_second_profile](
+          google::cloud::bigtable::CompletionQueue& cq,
+          grpc::Status const& status) {
+        promise_delete_second_profile.set_value();
+      },
+      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2),
+      /*ignore_warnings=*/true);
 
   promise_delete_second_profile.get_future().get();
 
