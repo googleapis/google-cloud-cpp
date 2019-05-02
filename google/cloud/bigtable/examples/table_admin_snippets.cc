@@ -134,7 +134,7 @@ void CheckTableExists(google::cloud::bigtable::TableAdmin admin, int argc,
         admin.GetTable(table_id, google::bigtable::admin::v2::Table::NAME_ONLY);
     if (!table) {
       if (table.status().code() == google::cloud::StatusCode::kNotFound) {
-        throw std::runtime_error("Table " + table_id + " does not exists");
+        throw std::runtime_error("Table " + table_id + " does not exist");
       }
       throw std::runtime_error(table.status().message());
     }
