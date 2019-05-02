@@ -38,15 +38,94 @@ class MutationBatcher;
  * - update or create a single row: `Table::Apply()`
  * - update or modify multiple rows: `Table::BulkApply()`
  * - update a row based on previous values: `Table::CheckAndMutateRow()`
+ * - to atomically append data and/or increment multiple values in a row:
+ *   `Table::ReadModifyWriteRow()`
+ * - to sample the row keys: `Table::SampleRows()`.
  *
  * The class deals with the most common transient failures, and retries the
  * underlying RPC calls subject to the policies configured by the application.
- * These policies are documented in`Table::Table()`.
+ * These policies are documented in `Table::Table()`.
+ *
+ * @par Thread-safety
+ * Instances of this class created via copy-construction or copy-assignment
+ * share the underlying pool of connections. Access to these copies via multiple
+ * threads is guaranteed to work. Two threads operating on the same instance of
+ * this class is not guaranteed to work.
  *
  * @par Cost
  * Creating a new object of type `Table` is comparable to creating a few objects
  * of type `std::string` or a few objects of type `std::shared_ptr<int>`. The
  * class represents a shallow handle to a remote object.
+ *
+ * @par Error Handling
+ * This class uses `StatusOr<T>` to report errors. When an operation fails to
+ * perform its work the returned `StatusOr<T>` contains the error details. If
+ * the `ok()` member function in the `StatusOr<T>` returns `true` then it
+ * contains the expected result. Operations that do not return a value simply
+ * return a `google::cloud::Status` indicating success or the details of the
+ * error Please consult the
+ * [`StatusOr<T>` documentation](#google::cloud::v0::StatusOr) for more details.
+ *
+ * @code
+ * namespace cbt = google::cloud::bigtable;
+ * cbt::Table = ...;
+ * google::cloud::StatusOr<std::pair<bool, cbt::Row>> row = table.ReadRow(...);
+ *
+ * if (!row) {
+ *   std::cerr << "Error reading row\n";
+ *   return;
+ * }
+ *
+ * // Use "row" as a smart pointer here, e.g.:
+ * if (!row->first) {
+ *   std::cout << "Contacting the server was successful, but the row does not"
+ *             << " exist\n";
+ *   return;
+ * }
+ * std::cout << "The row has " << row->second.cells().size() << " cells\n";
+ * @endcode
+ *
+ * In addition, the @ref index "main page" contains examples using `StatusOr<T>`
+ * to handle errors.
+ *
+ * @par Retry, Backoff, and Idempotency Policies
+ * The library automatically retries requests that fail with transient errors,
+ * and uses [truncated exponential backoff][backoff-link] to backoff between
+ * retries. The default policies are to continue retrying for up to 10 minutes.
+ * On each transient failure the backoff period is doubled, starting with an
+ * initial backoff of 100 milliseconds. The backoff period growth is truncated
+ * at 60 seconds. The default idempotency policy is to only retry idempotent
+ * operations. Note that most operations that change state are **not**
+ * idempotent.
+ *
+ * The application can override these policies when constructing objects of this
+ * class. The documentation for the constructors show examples of this in
+ * action.
+ *
+ * [backoff-link]: https://cloud.google.com/storage/docs/exponential-backoff
+ *
+ * @see https://cloud.google.com/bigtable/ for an overview of Cloud Bigtable.
+ *
+ * @see https://cloud.google.com/bigtable/docs/overview for an overview of the
+ *     Cloud Bigtable data model.
+ *
+ * @see https://cloud.google.com/bigtable/docs/instances-clusters-nodes for an
+ *     introduction of the main APIs into Cloud Bigtable.
+ *
+ * @see https://cloud.google.com/bigtable/docs/reference/service-apis-overview
+ *     for an overview of the underlying Cloud Bigtable API.
+ *
+ * @see #google::cloud::v0::StatusOr for a description of the error reporting
+ *     class used by this library.
+ *
+ * @see `LimitedTimeRetryPolicy` and `LimitedErrorCountRetryPolicy` for
+ *     alternative retry policies.
+ *
+ * @see `ExponentialBackoffPolicy` to configure different parameters for the
+ *     exponential backoff policy.
+ *
+ * @see `SafeIdempotentMutationPolicy` and `AlwaysRetryMutationPolicy` for
+ *     alternative idempotency policies.
  */
 class Table {
  public:
@@ -71,8 +150,10 @@ class Table {
    * @param table_id the table id within the instance defined by client.  The
    *     full table name is `client->instance_name() + '/tables/' + table_id`.
    *
-   * @par Examples
+   * @par Example
    * @snippet bigtable_hello_app_profile.cc cbt namespace
+   *
+   * @par Example Using AppProfile
    * @snippet bigtable_hello_app_profile.cc read with app profile
    */
   Table(std::shared_ptr<DataClient> client,
@@ -83,7 +164,7 @@ class Table {
    * Constructor with explicit policies.
    *
    * The policies are passed by value, because this makes it easy for
-   * applications to create them.  For example:
+   * applications to create them.
    *
    * @par Example
    * @code
@@ -125,6 +206,12 @@ class Table {
    * @see SafeIdempotentMutationPolicy, AlwaysRetryMutationPolicy,
    *     ExponentialBackoffPolicy, LimitedErrorCountRetryPolicy,
    *     LimitedTimeRetryPolicy.
+   *
+   * @par Idempotency Policy Example
+   * @snippet data_snippets.cc apply relaxed idempotency
+   *
+   * @par Modified Retry Policy Example
+   * @snippet data_snippets.cc apply custom retry
    */
   template <typename... Policies>
   Table(std::shared_ptr<DataClient> client, std::string const& table_id,
@@ -136,7 +223,7 @@ class Table {
    * Constructor with explicit policies.
    *
    * The policies are passed by value, because this makes it easy for
-   * applications to create them.  For example:
+   * applications to create them.
    *
    * @par Example
    * @code
@@ -179,6 +266,12 @@ class Table {
    * @see SafeIdempotentMutationPolicy, AlwaysRetryMutationPolicy,
    *     ExponentialBackoffPolicy, LimitedErrorCountRetryPolicy,
    *     LimitedTimeRetryPolicy.
+   *
+   * @par Idempotency Policy Example
+   * @snippet data_snippets.cc apply relaxed idempotency
+   *
+   * @par Modified Retry Policy Example
+   * @snippet data_snippets.cc apply custom retry
    */
   template <typename... Policies>
   Table(std::shared_ptr<DataClient> client,
@@ -189,6 +282,11 @@ class Table {
 
   std::string const& table_name() const { return impl_.table_name(); }
   std::string const& app_profile_id() const { return impl_.app_profile_id(); }
+  std::string const& project_id() const { return impl_.client_->project_id(); }
+  std::string const& instance_id() const {
+    return impl_.client_->instance_id();
+  }
+  std::string const& table_id() const { return impl_.table_id(); }
 
   /**
    * Attempts to apply the mutation to a row.
@@ -199,6 +297,11 @@ class Table {
    *     across different columns and column families.
    *
    * @return status of the operation.
+   *
+   * @par Idempotency
+   * This operation is idempotent if the provided mutations are idempotent. Note
+   * that `google::cloud::bigtable::SetCell()` without an explicit timestamp is
+   * **not** an idempotent operation.
    *
    * @par Example
    * @snippet data_snippets.cc apply
@@ -220,6 +323,11 @@ class Table {
    *    calls, the application must ensure that one or more threads are
    *    blocked on `cq.Run()`.
    *
+   * @par Idempotency
+   * This operation is idempotent if the provided mutations are idempotent. Note
+   * that `google::cloud::bigtable::SetCell()` without an explicit timestamp is
+   * **not** an idempotent operation.
+   *
    * @par Example
    * @snippet data_async_snippets.cc async-apply
    */
@@ -234,6 +342,11 @@ class Table {
    *     `BulkMutation` can modify multiple rows, and the modifications for each
    *     row can change (or create) multiple cells, across different columns and
    *     column families.
+   *
+   * @par Idempotency
+   * This operation is idempotent if the provided mutations are idempotent. Note
+   * that `google::cloud::bigtable::SetCell()` without an explicit timestamp is
+   * **not** an idempotent operation.
    *
    * @par Example
    * @snippet data_snippets.cc bulk apply
@@ -256,6 +369,11 @@ class Table {
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
    *
+   * @par Idempotency
+   * This operation is idempotent if the provided mutations are idempotent. Note
+   * that `google::cloud::bigtable::SetCell()` without an explicit timestamp is
+   * **not** an idempotent operation.
+   *
    * @par Example
    * @snippet data_async_snippets.cc bulk async-bulk-apply
    */
@@ -268,6 +386,9 @@ class Table {
    * @param row_set the rows to read from.
    * @param filter is applied on the server-side to data in the rows.
    *
+   * @par Idempotency
+   * This is a read-only operation and therefore it is always idempotent.
+   *
    * @par Example
    * @snippet data_snippets.cc read rows
    */
@@ -277,12 +398,13 @@ class Table {
    * Reads a limited set of rows from the table.
    *
    * @param row_set the rows to read from.
-   * @param rows_limit the maximum number of rows to read. Must be larger than
-   *     zero. Use `ReadRows(RowSet, Filter)` to read all matching rows.
+   * @param rows_limit the maximum number of rows to read. Cannot be a negative
+   *     number or zero. Use `ReadRows(RowSet, Filter)` to read all matching
+   *     rows.
    * @param filter is applied on the server-side to data in the rows.
    *
-   * @throws std::runtime_error if rows_limit is < 0. rows_limit = 0(default)
-   * will return all rows
+   * @par Idempotency
+   * This is a read-only operation and therefore it is always idempotent.
    *
    * @par Example
    * @snippet data_snippets.cc read rows with limit
@@ -300,11 +422,14 @@ class Table {
    *     has the contents of the Row.  Note that the contents may be empty
    *     if the filter expression removes all column families and columns.
    *
+   * @par Idempotency
+   * This is a read-only operation and therefore it is always idempotent.
+   *
    * @par Example
    * @snippet data_snippets.cc read row
    */
-
   StatusOr<std::pair<bool, Row>> ReadRow(std::string row_key, Filter filter);
+
   /**
    * Atomic test-and-set for a row using filter expressions.
    *
@@ -318,6 +443,9 @@ class Table {
    * @param true_mutations the mutations for the "filter passed" case.
    * @param false_mutations the mutations for the "filter did not pass" case.
    * @returns true if the filter passed.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Example
    * @snippet data_snippets.cc check and mutate
@@ -345,6 +473,9 @@ class Table {
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
    *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
    * @par Example
    * @snippet data_async_snippets.cc async check and mutate
    */
@@ -362,6 +493,9 @@ class Table {
    *     tables.  In addition, the sample may include row keys that do not exist
    *     on the table, and may include the empty row key to indicate
    *     "end of table".
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Examples
    * @snippet data_snippets.cc sample row keys
@@ -402,6 +536,9 @@ class Table {
    *     Both rules accept the family and column identifier to modify.
    * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
    * @returns The new contents of all modified cells.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Example
    * @snippet data_snippets.cc read modify write
@@ -449,6 +586,9 @@ class Table {
    * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
    * @returns A future, that becomes satisfied when the operation completes,
    *     at that point the future has the contents of all modified cells.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Example
    * @snippet data_async_snippets.cc async read modify write

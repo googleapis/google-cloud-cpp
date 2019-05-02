@@ -36,6 +36,85 @@ enum class Consistency { kConsistent, kInconsistent };
 
 /**
  * Implements the API to administer tables in a Cloud Bigtable instance.
+ *
+ * @par Thread-safety
+ * Instances of this class created via copy-construction or copy-assignment
+ * share the underlying pool of connections. Access to these copies via multiple
+ * threads is guaranteed to work. Two threads operating on the same instance of
+ * this class is not guaranteed to work.
+ *
+ * @par Cost
+ * Creating a new object of type `TableAdmin` is comparable to creating a few
+ * objects of type `std::string` or a few objects of type
+ * `std::shared_ptr<int>`. The class represents a shallow handle to a remote
+ * object.
+ *
+ * @par Error Handling
+ * This class uses `StatusOr<T>` to report errors. When an operation fails to
+ * perform its work the returned `StatusOr<T>` contains the error details. If
+ * the `ok()` member function in the `StatusOr<T>` returns `true` then it
+ * contains the expected result. Operations that do not return a value simply
+ * return a `google::cloud::Status` indicating success or the details of the
+ * error Please consult the
+ * [`StatusOr<T>` documentation](#google::cloud::v0::StatusOr) for more details.
+ *
+ * @code
+ * namespace cbt = google::cloud::bigtable;
+ * namespace btadmin = google::bigtable::admin::v2;
+ * cbt::TableAdmin admin = ...;
+ * google::cloud::StatusOr<btadmin::Table> metadata = admin.GetTable(...);
+ *
+ * if (!metadata) {
+ *   std::cerr << "Error fetching table metadata\n";
+ *   return;
+ * }
+ *
+ * // Use "metadata" as a smart pointer here, e.g.:
+ * std::cout << "The full table name is " << table->name() << " the table has "
+ *           << table->column_families_size() << " column families\n";
+ * @endcode
+ *
+ * In addition, the @ref index "main page" contains examples using `StatusOr<T>`
+ * to handle errors.
+ *
+ * @par Retry, Backoff, and Idempotency Policies
+ * The library automatically retries requests that fail with transient errors,
+ * and uses [truncated exponential backoff][backoff-link] to backoff between
+ * retries. The default policies are to continue retrying for up to 10 minutes.
+ * On each transient failure the backoff period is doubled, starting with an
+ * initial backoff of 100 milliseconds. The backoff period growth is truncated
+ * at 60 seconds. The default idempotency policy is to only retry idempotent
+ * operations. Note that most operations that change state are **not**
+ * idempotent.
+ *
+ * The application can override these policies when constructing objects of this
+ * class. The documentation for the constructors show examples of this in
+ * action.
+ *
+ * [backoff-link]: https://cloud.google.com/storage/docs/exponential-backoff
+ *
+ * @see https://cloud.google.com/bigtable/ for an overview of Cloud Bigtable.
+ *
+ * @see https://cloud.google.com/bigtable/docs/overview for an overview of the
+ *     Cloud Bigtable data model.
+ *
+ * @see https://cloud.google.com/bigtable/docs/instances-clusters-nodes for an
+ *     introduction of the main APIs into Cloud Bigtable.
+ *
+ * @see https://cloud.google.com/bigtable/docs/reference/service-apis-overview
+ *     for an overview of the underlying Cloud Bigtable API.
+ *
+ * @see #google::cloud::v0::StatusOr for a description of the error reporting
+ *     class used by this library.
+ *
+ * @see `LimitedTimeRetryPolicy` and `LimitedErrorCountRetryPolicy` for
+ *     alternative retry policies.
+ *
+ * @see `ExponentialBackoffPolicy` to configure different parameters for the
+ *     exponential backoff policy.
+ *
+ * @see `SafeIdempotentMutationPolicy` and `AlwaysRetryMutationPolicy` for
+ *     alternative idempotency policies.
  */
 class TableAdmin {
  public:
@@ -44,12 +123,6 @@ class TableAdmin {
    * @param instance_id the id of the instance, e.g., "my-instance", the full
    *   name (e.g. '/projects/my-project/instances/my-instance') is built using
    *   the project id in the @p client parameter.
-   *
-   * @par Cost
-   * Creating a new object of type `TableAdmin` is comparable to creating a few
-   * objects of type `std::string` or a few objects of type
-   * `std::shared_ptr<int>`. The class represents a shallow handle to a remote
-   * object.
    */
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id)
       : impl_(std::move(client), std::move(instance_id)) {}
@@ -105,6 +178,9 @@ class TableAdmin {
    * @return the attributes of the newly created table.  Notice that the server
    *     only populates the table_name() field at this time.
    *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
    * @par Example
    * @snippet table_admin_snippets.cc create table
    */
@@ -134,7 +210,8 @@ class TableAdmin {
    *   an exception. Note that the service only fills out the `table_name` field
    *   for this request.
    *
-   * @throws std::exception if the operation cannot be started.
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Example
    * @snippet table_admin_async_snippets.cc async create table
@@ -150,6 +227,9 @@ class TableAdmin {
    *   - `NAME`: return only the name of the table.
    *   - `VIEW_SCHEMA`: return the name and the schema.
    *   - `FULL`: return all the information about the table.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
    * @snippet table_admin_snippets.cc list tables
@@ -178,7 +258,8 @@ class TableAdmin {
    *   response from the service. In the second the future is satisfied with
    *   an exception.
    *
-   * @throws std::exception if the operation cannot be started.
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
    * @snippet table_admin_async_snippets.cc async list tables
@@ -199,6 +280,9 @@ class TableAdmin {
    *   - VIEW_SCHEMA: return the name and the schema.
    *   - FULL: return all the information about the table.
    * @return the information about the table or status.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
    * @snippet table_admin_snippets.cc get table
@@ -232,7 +316,8 @@ class TableAdmin {
    *   response from the service. In the second the future is satisfied with
    *   an exception.
    *
-   * @throws std::exception if the operation cannot be started.
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
    * @snippet table_admin_async_snippets.cc async get table
@@ -249,6 +334,9 @@ class TableAdmin {
    *     `this->instance_name() + "/tables/" + table_id`
    *
    * @return status of the operation.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Example
    * @snippet table_admin_snippets.cc delete table
@@ -271,6 +359,9 @@ class TableAdmin {
    *
    * @return status of the operation.
    *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
    * @par Example
    * @snippet table_admin_async_snippets.cc async delete table
    */
@@ -284,6 +375,9 @@ class TableAdmin {
    *     this object. The full name of the table is
    *     `this->instance_name() + "/tables/" + table_id`
    * @param modifications the list of modifications to the schema.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Example
    * @snippet table_admin_snippets.cc modify table
@@ -310,6 +404,9 @@ class TableAdmin {
    * @param modifications the list of modifications to the schema.
    * @return the information about table or status.
    *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
    * @par Example
    * @snippet table_admin_async_snippets.cc async modify table
    */
@@ -325,6 +422,9 @@ class TableAdmin {
    *     this object. The full name of the table is
    *     `this->instance_name() + "/tables/" + table_id`
    * @param row_key_prefix drop any rows that start with this prefix.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Example
    * @snippet table_admin_snippets.cc drop rows by prefix
@@ -349,6 +449,9 @@ class TableAdmin {
    * @param row_key_prefix drop any rows that start with this prefix.
    * @return status of the operation.
    *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
    * @par Example
    * @snippet table_admin_async_snippets.cc async drop rows by prefix
    */
@@ -362,6 +465,9 @@ class TableAdmin {
    * @param table_id the id of the table for which we want to generate
    *     consistency token.
    * @return the consistency token for table.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
    * @snippet table_admin_snippets.cc generate consistency token
@@ -384,6 +490,9 @@ class TableAdmin {
    *     `this->instance_name() + "/tables/" + table_id`
    * @return consistency token or status of the operation.
    *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
    * @par Example
    * @snippet table_admin_async_snippets.cc async generate consistency token
    */
@@ -397,6 +506,9 @@ class TableAdmin {
    *     consistency.
    * @param consistency_token the consistency token of the table.
    * @return the consistency status for the table.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
    * @snippet table_admin_snippets.cc check consistency
@@ -420,12 +532,16 @@ class TableAdmin {
    * @param consistency_token the consistency token of the table.
    * @return consistency status or status of the operation.
    *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
    * @par Example
    * @snippet table_admin_async_snippets.cc async check consistency
    */
   future<StatusOr<Consistency>> AsyncCheckConsistency(
       CompletionQueue& cq, bigtable::TableId const& table_id,
       bigtable::ConsistencyToken const& consistency_token);
+
   /**
    * Checks consistency of a table with multiple calls using a separate thread
    *
@@ -434,6 +550,9 @@ class TableAdmin {
    * @param consistency_token the consistency token of the table.
    * @return the consistency status for the table.
    * @throws std::exception if the operation cannot be completed.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
    * @snippet table_admin_snippets.cc wait for consistency check
@@ -453,6 +572,9 @@ class TableAdmin {
    *     this object. The full name of the table is
    *     `this->instance_name() + "/tables/" + table_id`
    *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
    * @par Example
    * @snippet table_admin_snippets.cc drop all rows
    */
@@ -471,6 +593,9 @@ class TableAdmin {
    * @param table_id the id of the table within the instance associated with
    *     this object. The full name of the table is
    *     `this->instance_name() + "/tables/" + table_id`
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Example
    * @snippet table_admin_async_snippets.cc async drop all rows

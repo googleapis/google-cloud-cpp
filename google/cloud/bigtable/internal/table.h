@@ -156,6 +156,7 @@ class Table {
       : client_(std::move(client)),
         app_profile_id_(std::move(app_profile_id)),
         table_name_(bigtable::TableId(TableName(client_, table_id))),
+        table_id_(table_id),
         rpc_retry_policy_(
             bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
         rpc_backoff_policy_(
@@ -183,6 +184,7 @@ class Table {
   }
 
   std::string const& table_name() const { return table_name_.get(); }
+  std::string const& table_id() const { return table_id_; }
   std::string const& app_profile_id() const { return app_profile_id_.get(); }
 
   //@{
@@ -738,6 +740,7 @@ class Table {
   std::shared_ptr<DataClient> client_;
   bigtable::AppProfileId app_profile_id_;
   bigtable::TableId table_name_;
+  std::string table_id_;
   std::shared_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
   MetadataUpdatePolicy metadata_update_policy_;

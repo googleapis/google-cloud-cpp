@@ -569,6 +569,48 @@ function run_all_data_async_examples {
   # some kind of Usage message.
   run_example_usage ./data_async_snippets
 }
+
+################################################
+# Run the Bigtable policy examples.
+# Globals:
+#   None
+# Arguments:
+#   project_id: the Google Cloud Storage project used in the test. Can be a
+#       fake project when testing against the emulator, as the emulator creates
+#       projects on demand. It must be a valid, existing instance when testing
+#       against production.
+#   instance_id: the Google Cloud Bigtable instance used in the test. Can be a
+#       fake instance when testing against the emulator, as the emulator creates
+#       instances on demand. It must be a valid, existing instance when testing
+#       against production.
+# Returns:
+#   None
+################################################
+run_all_policy_examples() {
+  local project_id=$1
+  local instance_id=$2
+  shift 2
+
+  EMULATOR_LOG="emulator.log"
+
+  # Use the same table in all the tests.
+  local -r TABLE="policy-ex-tbl-${RANDOM}-${RANDOM}"
+
+  run_example ./table_admin_snippets create-table \
+      "${project_id}" "${instance_id}" "${TABLE}"
+
+  run_example ./data_snippets apply-relaxed-idempotency \
+      "${project_id}" "${instance_id}" "${TABLE}" \
+      "apply-relaxed-idempotency"
+
+  run_example ./data_snippets apply-custom-retry \
+      "${project_id}" "${instance_id}" "${TABLE}" \
+      "apply-custom-retry"
+
+  run_example ./table_admin_snippets delete-table \
+      "${project_id}" "${instance_id}" "${TABLE}"
+}
+
 ################################################
 # Run the Bigtable quick start example.
 # Globals:

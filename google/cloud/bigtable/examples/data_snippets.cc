@@ -70,8 +70,7 @@ void Apply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
         std::chrono::system_clock::now().time_since_epoch());
 
     cbt::SingleRowMutation mutation("test-key-for-apply");
-    mutation.emplace_back(
-        google::cloud::bigtable::SetCell("fam", "some-column", "some-value"));
+    mutation.emplace_back(cbt::SetCell("fam", "some-column", "some-value"));
     mutation.emplace_back(
         cbt::SetCell("fam", "another-column", "another-value"));
     mutation.emplace_back(cbt::SetCell("fam", "even-more-columns", timestamp,
@@ -83,6 +82,64 @@ void Apply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   }
   //! [apply]
   (std::move(table));
+}
+
+void ApplyRelaxedIdempotency(google::cloud::bigtable::Table table, int argc,
+                             char* argv[]) {
+  if (argc != 2) {
+    throw Usage{
+        "apply-relaxed-idempotency <project-id> <instance-id>"
+        " <table-id> <row-key>"};
+  }
+  auto row_key = ConsumeArg(argc, argv);
+
+  //! [apply relaxed idempotency]
+  namespace cbt = google::cloud::bigtable;
+  [](std::string project_id, std::string instance_id, std::string table_id,
+     std::string row_key) {
+    cbt::Table table(cbt::CreateDefaultDataClient(project_id, instance_id,
+                                                  cbt::ClientOptions()),
+                     table_id, cbt::AlwaysRetryMutationPolicy());
+    // Normally this is not retried on transient failures, because the operation
+    // is not idempotent (each retry would set a different timestamp), in this
+    // case it would, because the table is setup to always retry.
+    cbt::SingleRowMutation mutation(
+        row_key, cbt::SetCell("fam", "some-column", "some-value"));
+    google::cloud::Status status = table.Apply(std::move(mutation));
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
+    }
+  }
+  //! [apply relaxed idempotency]
+  (table.project_id(), table.instance_id(), table.table_id(), row_key);
+}
+
+void ApplyCustomRetry(google::cloud::bigtable::Table table, int argc,
+                      char* argv[]) {
+  if (argc != 2) {
+    throw Usage{
+        "apply-custom-retry <project-id> <instance-id>"
+        " <table-id> <row-key>"};
+  }
+  auto row_key = ConsumeArg(argc, argv);
+
+  //! [apply custom retry]
+  namespace cbt = google::cloud::bigtable;
+  [](std::string project_id, std::string instance_id, std::string table_id,
+     std::string row_key) {
+    cbt::Table table(cbt::CreateDefaultDataClient(project_id, instance_id,
+                                                  cbt::ClientOptions()),
+                     table_id, cbt::LimitedErrorCountRetryPolicy(7));
+    cbt::SingleRowMutation mutation(
+        row_key, cbt::SetCell("fam", "some-column",
+                              std::chrono ::milliseconds(0), "some-value"));
+    google::cloud::Status status = table.Apply(std::move(mutation));
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
+    }
+  }
+  //! [apply custom retry]
+  (table.project_id(), table.instance_id(), table.table_id(), row_key);
 }
 
 void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
@@ -902,6 +959,8 @@ int main(int argc, char* argv[]) try {
 
   std::map<std::string, CommandType> commands = {
       {"apply", &Apply},
+      {"apply-relaxed-idempotency", &ApplyRelaxedIdempotency},
+      {"apply-custom-retry", &ApplyCustomRetry},
       {"bulk-apply", &BulkApply},
       {"read-row", &ReadRow},
       {"read-rows", &ReadRows},
