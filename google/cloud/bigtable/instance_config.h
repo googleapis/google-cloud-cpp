@@ -35,6 +35,7 @@ class InstanceConfig {
  public:
   InstanceConfig(InstanceId instance_id, DisplayName display_name,
                  std::vector<std::pair<std::string, ClusterConfig>> clusters) {
+    // TODO(#2589) - validate the `clusters` parameter.
     proto_.set_instance_id(std::move(instance_id.get()));
     proto_.mutable_instance()->set_display_name(std::move(display_name.get()));
     for (auto& kv : clusters) {

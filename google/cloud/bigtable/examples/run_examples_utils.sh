@@ -65,6 +65,15 @@ function run_all_instance_admin_examples {
   local -r INSTANCE="in-${RANDOM}-${RANDOM}"
   local -r DEV_INSTANCE="in-${RANDOM}-${RANDOM}-dev"
   local -r RUN_INSTANCE="in-${RANDOM}-${RANDOM}-run"
+  local -r REPLICATED_INSTANCE="in-${RANDOM}-${RANDOM}-rep"
+
+  run_example ./bigtable_instance_admin_snippets create-replicated-instance \
+      "${project_id}" "${REPLICATED_INSTANCE}" \
+      "${zone_id}" "${replication_zone_id}"
+  run_example ./bigtable_instance_admin_snippets get-instance \
+      "${project_id}" "${REPLICATED_INSTANCE}"
+  run_example ./bigtable_instance_admin_snippets delete-instance \
+      "${project_id}" "${REPLICATED_INSTANCE}"
 
   run_example ./bigtable_instance_admin_snippets create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"

@@ -115,6 +115,45 @@ void CreateDevInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   (std::move(instance_admin), instance_id, zone);
 }
 
+void CreateReplicatedInstance(
+    google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
+    char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"create-replicated-instance <instance-id> <zone-a> <zone-b>"};
+  }
+  auto instance_id = ConsumeArg(argc, argv);
+  auto zone_a = ConsumeArg(argc, argv);
+  auto zone_b = ConsumeArg(argc, argv);
+
+  // [START bigtable_create_replicated_cluster]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::InstanceAdmin instance_admin, std::string instance_id,
+     std::string zone_a, std::string zone_b) {
+    cbt::DisplayName display_name("Put description here");
+    auto c1 = instance_id + "-c1";
+    auto c2 = instance_id + "-c2";
+    cbt::InstanceConfig config(
+        cbt::InstanceId(instance_id), display_name,
+        {{c1, cbt::ClusterConfig(zone_a, 3, cbt::ClusterConfig::HDD)},
+         {c2, cbt::ClusterConfig(zone_b, 3, cbt::ClusterConfig::HDD)}});
+    config.set_type(cbt::InstanceConfig::PRODUCTION);
+
+    auto future = instance_admin.CreateInstance(config);
+    // Show how to perform additional work while the long running operation
+    // completes. The application could use future.then() instead.
+    std::cout << "Waiting for instance creation to complete " << std::flush;
+    future.wait_for(std::chrono::seconds(1));
+    std::cout << '.' << std::flush;
+    auto instance = future.get();
+    if (!instance) {
+      throw std::runtime_error(instance.status().message());
+    }
+    std::cout << "DONE, details=" << instance->DebugString() << "\n";
+  }
+  // [END bigtable_create_replicated_cluster]
+  (std::move(instance_admin), instance_id, zone_a, zone_b);
+}
+
 void UpdateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                     int argc, char* argv[]) {
   if (argc != 2) {
@@ -840,6 +879,7 @@ int main(int argc, char* argv[]) try {
 
   std::map<std::string, CommandType> commands = {
       {"create-instance", &CreateInstance},
+      {"create-replicated-instance", &CreateReplicatedInstance},
       {"update-instance", &UpdateInstance},
       {"list-instances", &ListInstances},
       {"get-instance", &GetInstance},
