@@ -31,6 +31,9 @@ namespace {
 
 // Initialized in main() below.
 char const* flag_project_id;
+char const* flag_zone_a;
+char const* flag_zone_b;
+char const* flag_service_account;
 
 class InstanceAdminAsyncFutureIntegrationTest : public ::testing::Test {
  protected:
@@ -77,7 +80,7 @@ bool IsIdOrNamePresentInClusterList(
 }
 
 bigtable::InstanceConfig IntegrationTestConfig(
-    std::string const& id, std::string const& zone = "us-central1-f",
+    std::string const& id, std::string const& zone,
     bigtable::InstanceConfig::InstanceType instance_type =
         bigtable::InstanceConfig::DEVELOPMENT,
     int32_t serve_node = 0) {
@@ -127,8 +130,10 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
       << " generated at random.";
 
   // create instance
-  auto config = IntegrationTestConfig(instance_id);
+  auto config = IntegrationTestConfig(instance_id, flag_zone_a);
   auto instance = instance_admin_->AsyncCreateInstance(cq, config).get();
+  ASSERT_STATUS_OK(instance);
+
   auto async_instances_current = instance_admin_->AsyncListInstances(cq).get();
   ASSERT_STATUS_OK(async_instances_current);
   EXPECT_TRUE(
@@ -186,9 +191,10 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   // create instance prerequisites for cluster operations
   bigtable::InstanceId instance_id(id);
   auto instance_config = IntegrationTestConfig(
-      id, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
+      id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =
       instance_admin_->AsyncCreateInstance(cq, instance_config).get();
+  ASSERT_STATUS_OK(instance_details);
 
   // Make an asynchronous request, but immediately block because this is just a
   // test.
@@ -203,7 +209,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   // create cluster
   bigtable::ClusterId cluster_id(cluster_id_str);
   auto cluster_config =
-      bigtable::ClusterConfig("us-central1-b", 3, bigtable::ClusterConfig::HDD);
+      bigtable::ClusterConfig(flag_zone_b, 3, bigtable::ClusterConfig::HDD);
   auto cluster =
       instance_admin_
           ->AsyncCreateCluster(cq, cluster_config, instance_id, cluster_id)
@@ -284,15 +290,22 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAllClustersTest) {
   std::thread pool([&cq] { cq.Run(); });
 
   auto instance_config1 = IntegrationTestConfig(
-      id1, "us-central1-c", bigtable::InstanceConfig::PRODUCTION, 3);
+      id1, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_config2 = IntegrationTestConfig(
-      id2, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
-  auto instance1 = instance_admin_->AsyncCreateInstance(cq, instance_config1);
-  auto instance2 = instance_admin_->AsyncCreateInstance(cq, instance_config2);
-  // Wait for instance creation
+      id2, flag_zone_b, bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance1_future =
+      instance_admin_->AsyncCreateInstance(cq, instance_config1);
+  auto instance2_future =
+      instance_admin_->AsyncCreateInstance(cq, instance_config2);
 
-  auto instance1_name = instance1.get()->name();
-  auto instance2_name = instance2.get()->name();
+  // Wait for instance creation
+  auto instance1 = instance1_future.get();
+  auto instance2 = instance2_future.get();
+  ASSERT_STATUS_OK(instance1);
+  ASSERT_STATUS_OK(instance2);
+
+  auto instance1_name = instance1->name();
+  auto instance2_name = instance2->name();
   ASSERT_THAT(instance1_name, HasSubstr(id1));
   ASSERT_THAT(instance2_name, HasSubstr(id2));
 
@@ -311,8 +324,8 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAllClustersTest) {
   EXPECT_TRUE(
       IsIdOrNamePresentInClusterList(clusters_list->clusters, instance2_name));
 
-  ASSERT_STATUS_OK(instance_admin_->AsyncDeleteInstance(id1, cq).get());
-  ASSERT_STATUS_OK(instance_admin_->AsyncDeleteInstance(id2, cq).get());
+  EXPECT_STATUS_OK(instance_admin_->AsyncDeleteInstance(id1, cq).get());
+  EXPECT_STATUS_OK(instance_admin_->AsyncDeleteInstance(id2, cq).get());
 
   cq.Shutdown();
   pool.join();
@@ -327,10 +340,10 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
   std::thread pool([&cq] { cq.Run(); });
 
   auto instance_config = IntegrationTestConfig(
-      instance_id, "us-central1-c", bigtable::InstanceConfig::PRODUCTION, 3);
+      instance_id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
   auto future = instance_admin_->AsyncCreateInstance(cq, instance_config);
   auto actual = future.get();
-  EXPECT_STATUS_OK(actual);
+  ASSERT_STATUS_OK(actual);
   // Wait for instance creation
   ASSERT_THAT(actual->name(), HasSubstr(instance_id));
 
@@ -428,14 +441,14 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
       instance_admin_
           ->AsyncDeleteAppProfile(cq, bigtable::InstanceId(instance_id),
                                   bigtable::AppProfileId(id2),
-                                  /*ignore_warnings=*/false)
+                                  /*ignore_warnings=*/true)
           .get());
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
   EXPECT_EQ(0U, count_matching_profiles(id1, *current_profiles));
   EXPECT_EQ(0U, count_matching_profiles(id2, *current_profiles));
 
-  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
+  EXPECT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
 
   cq.Shutdown();
   pool.join();
@@ -452,18 +465,17 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, SetGetTestIamAPIsTest) {
   // create instance prerequisites for cluster operations
   bigtable::InstanceId instance_id(id);
   auto instance_config = IntegrationTestConfig(
-      id, "us-central1-f", bigtable::InstanceConfig::PRODUCTION, 3);
+      id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =
       instance_admin_->CreateInstance(instance_config).get();
+  ASSERT_STATUS_OK(instance_details);
 
-  std::string resource = id;
   auto iam_bindings = google::cloud::IamBindings(
-      "writer", {"abc@gmail.com", "xyz@gmail.com", "pqr@gmail.com"});
+      "roles/bigtable.reader",
+      {"serviceAccount:" + std::string(flag_service_account)});
 
   auto initial_policy =
-      instance_admin_
-          ->AsyncSetIamPolicy(cq, instance_id, iam_bindings, "test-tag")
-          .get();
+      instance_admin_->AsyncSetIamPolicy(cq, instance_id, iam_bindings).get();
   ASSERT_STATUS_OK(initial_policy);
 
   auto fetched_policy =
@@ -481,6 +493,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, SetGetTestIamAPIsTest) {
   ASSERT_STATUS_OK(permission_set);
 
   EXPECT_EQ(2U, permission_set->size());
+  EXPECT_STATUS_OK(instance_admin_->DeleteInstance(id));
 
   cq.Shutdown();
   pool.join();
@@ -489,15 +502,19 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, SetGetTestIamAPIsTest) {
 int main(int argc, char* argv[]) {
   google::cloud::testing_util::InitGoogleMock(argc, argv);
 
-  if (argc != 2) {
+  if (argc != 5) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(cmd).find_last_of('/');
     // Show usage if number of arguments is invalid.
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1) << " <project_id>\n";
+    std::cerr << "Usage: " << cmd.substr(last_slash + 1) << " <project_id>"
+              << " <zone-a> <zone-b> <service-account>\n";
     return 1;
   }
 
   flag_project_id = argv[1];
+  flag_zone_a = argv[2];
+  flag_zone_b = argv[3];
+  flag_service_account = argv[4];
 
   return RUN_ALL_TESTS();
 }

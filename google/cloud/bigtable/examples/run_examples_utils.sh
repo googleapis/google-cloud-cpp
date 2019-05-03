@@ -55,12 +55,6 @@ function run_all_instance_admin_examples {
 
   EMULATOR_LOG="instance-admin-emulator.log"
 
-  if [ -z "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" ]; then
-    echo "Aborting the test as the instance admin examples should not run" \
-        " against production."
-    exit 1
-  fi
-
   # Create a (very likely unique) instance name.
   local -r INSTANCE="in-${RANDOM}-${RANDOM}"
   local -r DEV_INSTANCE="in-${RANDOM}-${RANDOM}-dev"
@@ -118,7 +112,8 @@ function run_all_instance_admin_examples {
   run_example ./bigtable_instance_admin_snippets get-iam-policy \
       "${project_id}" "${INSTANCE}"
   run_example ./bigtable_instance_admin_snippets set-iam-policy \
-      "${project_id}" "${INSTANCE}" "roles/bigtable.user" "nobody@example.com"
+      "${project_id}" "${INSTANCE}" "roles/bigtable.user" \
+      "serviceAccount:${SERVICE_ACCOUNT}"
   run_example ./bigtable_instance_admin_snippets test-iam-permissions \
       "${project_id}" "${INSTANCE}" "bigtable.instances.delete"
   run_example ./bigtable_instance_admin_snippets delete-instance \
@@ -134,9 +129,6 @@ function run_all_instance_admin_examples {
   run_example ./bigtable_instance_admin_snippets run \
       "${project_id}" "${RUN_INSTANCE}" "${RUN_INSTANCE}-c1" "${zone_id}"
 
-  run_example ./bigtable_samples_instance_admin run \
-      "${project_id}" "${RUN_INSTANCE}" "${RUN_INSTANCE}-c1" "${zone_id}"
-
   run_example ./bigtable_instance_admin_snippets create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"
   run_example ./bigtable_samples_instance_admin create-cluster \
@@ -148,7 +140,7 @@ function run_all_instance_admin_examples {
 
   run_example ./bigtable_samples_instance_admin \
       create-dev-instance \
-      "${project_id}" "${DEV_INSTANCE}" "${INSTANCE}-c1" "${zone_id}"
+      "${project_id}" "${DEV_INSTANCE}" "${DEV_INSTANCE}-c1" "${zone_id}"
   run_example ./bigtable_samples_instance_admin delete-instance \
       "${project_id}" "${DEV_INSTANCE}"
 
@@ -170,12 +162,6 @@ function run_all_instance_admin_async_examples {
   shift 2
 
   EMULATOR_LOG="instance-admin-emulator.log"
-
-  if [ -z "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" ]; then
-    echo "Aborting the test as the instance admin examples should not run" \
-        " against production."
-    exit 1
-  fi
 
   # Create a (very likely unique) instance name.
   local -r INSTANCE="in-${RANDOM}-${RANDOM}"
@@ -213,7 +199,8 @@ function run_all_instance_admin_async_examples {
   run_example ./instance_admin_async_snippets async-get-iam-policy \
       "${project_id}" "${INSTANCE}"
   run_example ./instance_admin_async_snippets async-set-iam-policy \
-      "${project_id}" "${INSTANCE}" "roles/bigtable.user" "nobody@example.com"
+      "${project_id}" "${INSTANCE}" "roles/bigtable.user" \
+      "serviceAccount:${SERVICE_ACCOUNT}"
   run_example ./instance_admin_async_snippets async-test-iam-permissions \
       "${project_id}" "${INSTANCE}" "bigtable.instances.delete"
   run_example ./instance_admin_async_snippets async-delete-instance \
@@ -242,6 +229,9 @@ function run_all_table_admin_examples {
   # Use the same table in most of the tests.
   local -r TABLE="sample-table-for-admin-${RANDOM}"
   local -r TABLE2="sample-table-for-admin-${RANDOM}"
+
+  run_example ./bigtable_instance_admin_snippets create-instance \
+      "${project_id}" "${INSTANCE}" "${zone_id}"
 
   run_example ./bigtable_samples run "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets create-table "${project_id}" "${INSTANCE}" "${TABLE}"
@@ -294,6 +284,9 @@ function run_all_table_admin_examples {
   run_example ./table_admin_snippets drop-all-rows "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets delete-table "${project_id}" "${INSTANCE}" "${TABLE}"
 
+  run_example ./bigtable_samples_instance_admin delete-instance \
+      "${project_id}" "${INSTANCE}"
+
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
   run_example_usage ./table_admin_snippets
@@ -320,6 +313,9 @@ function run_all_table_admin_async_examples {
   # Use sample row key wherever needed.
   local -r ROW_KEY="sample-row-key-${RANDOM}"
 
+  run_example ./bigtable_instance_admin_snippets create-instance \
+      "${project_id}" "${INSTANCE}" "${zone_id}"
+
   run_example ./table_admin_async_snippets async-create-table \
       "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_async_snippets async-list-tables \
@@ -341,6 +337,9 @@ function run_all_table_admin_async_examples {
       "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_async_snippets async-delete-table \
       "${project_id}" "${INSTANCE}" "${TABLE}"
+
+  run_example ./bigtable_samples_instance_admin delete-instance \
+      "${project_id}" "${INSTANCE}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
@@ -681,8 +680,12 @@ run_hello_app_profile_example() {
 
   run_example ./table_admin_snippets create-table \
       "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./bigtable_instance_admin_snippets create-app-profile \
+      "${project_id}" "${instance_id}" "${PROFILE_ID}"
   run_example ./bigtable_hello_app_profile \
       "${project_id}" "${instance_id}" "${TABLE}" "${PROFILE_ID}"
+  run_example ./bigtable_instance_admin_snippets delete-app-profile \
+      "${project_id}" "${instance_id}" "${PROFILE_ID}"
   run_example ./table_admin_snippets delete-table \
       "${project_id}" "${instance_id}" "${TABLE}"
 

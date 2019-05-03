@@ -264,7 +264,7 @@ void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                    int argc, char* argv[]) {
   if (argc != 4) {
     throw Usage{
-        "create-cluster: <project-id> <instance-id> <cluster-id> <zone>"};
+        "create-cluster <project-id> <instance-id> <cluster-id> <zone>"};
   }
   auto instance_id = ConsumeArg(argc, argv);
   auto cluster_id = ConsumeArg(argc, argv);
@@ -356,7 +356,7 @@ void ListAllClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
 void UpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                    int argc, char* argv[]) {
   if (argc != 3) {
-    throw Usage{"update-cluster: <project-id> <instance-id> <cluster-id>"};
+    throw Usage{"update-cluster <project-id> <instance-id> <cluster-id>"};
   }
   auto instance_id = ConsumeArg(argc, argv);
   auto cluster_id = ConsumeArg(argc, argv);
@@ -372,7 +372,9 @@ void UpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
       throw std::runtime_error(cluster.status().message());
     }
 
-    // Modify the cluster.
+    // The state cannot be sent on updates, so clear it first.
+    cluster->clear_state();
+    // Set the desired cluster configuration.
     cluster->set_serve_nodes(4);
     auto modified_config = cbt::ClusterConfig(std::move(*cluster));
 

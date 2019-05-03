@@ -26,49 +26,12 @@ start_emulators
 # Use a unique project name to allow multiple runs of the test with
 # an externally launched emulator.
 readonly NONCE="${RANDOM}-${RANDOM}"
-readonly PROJECT_ID="emulated-${NONCE}"
+export PROJECT_ID="emulated-${NONCE}"
+export INSTANCE_ID="it-${NONCE}"
+export ZONE_A="fake-region1-a"
+export ZONE_B="fake-region1-b"
+export SERVICE_ACCOUNT="fake-sa@${PROJECT_ID}.iam.gserviceaccount.com"
 
-echo
-echo "Running bigtable::InstanceAdmin integration test."
-./instance_admin_integration_test "${PROJECT_ID}";
-
-echo
-echo "Running bigtable::InstanceAdmin integration test."
-./instance_admin_async_integration_test "${PROJECT_ID}" "us-central1-f" "us-central1-b";
-
-echo
-echo "Running bigtable::InstanceAdmin async with futures integration test."
-./instance_admin_async_future_integration_test "${PROJECT_ID}";
-
-echo
-echo "Running bigtable::TableAdmin integration test."
-./admin_integration_test "${PROJECT_ID}" "admin-test" "fake-zone-1" "fake-zone-2"
-
-echo
-echo "Running bigtable::Table integration test."
-./data_integration_test "${PROJECT_ID}" "data-test"
-
-echo
-echo "Running bigtable::Filters integration tests."
-./filters_integration_test "${PROJECT_ID}" "filters-test"
-
-echo
-echo "Running Mutation (e.g. DeleteFromColumn, SetCell) integration tests."
-./mutations_integration_test "${PROJECT_ID}" "mutations-test"
-
-echo
-echo "Running TableAdmin async integration test."
-./admin_async_integration_test "${PROJECT_ID}" "admin-noex-async"
-
-echo
-echo "Running TableAdmin async with futures integration test."
-./admin_async_future_integration_test \
-  "${PROJECT_ID}" "admin-async-future" "fake-zone-1" "fake-zone-2"
-
-echo
-echo "Running Table::Async* integration test with futures."
-./data_async_future_integration_test "${PROJECT_ID}" "data-async-future"
-
-echo
-echo "Running Table::Async* integration test."
-./data_async_integration_test "${PROJECT_ID}" "data-noex-async"
+# We run the same tests we run in production, just with different settings.
+"${BINDIR}/run_integration_tests_production.sh"
+"${BINDIR}/run_admin_integration_tests_production.sh"

@@ -18,8 +18,13 @@ set -eu
 readonly BINDIR="$(dirname "$0")"
 source "${BINDIR}/run_examples_utils.sh"
 
-# Run only the data examples in production. The CI systems go over project
-# quotas for admin operations if we run the admin examples too.
+# In the presubmit and continuous integration builds we only run the data
+# examples against production. The CI systems go over project quotas for admin
+# operations if we run the admin examples too.
+echo "${COLOR_YELLOW}run_all_data_examples${COLOR_RESET}"
 run_all_data_examples "${PROJECT_ID}" "${INSTANCE_ID}"
+
+echo "${COLOR_YELLOW}run_all_data_async_examples${COLOR_RESET}"
+run_all_data_async_examples "${PROJECT_ID}" "${INSTANCE_ID}"
 
 exit_example_runner
