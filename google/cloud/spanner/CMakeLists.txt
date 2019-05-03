@@ -24,19 +24,19 @@ set(SPANNER_CLIENT_COPYRIGHT_YEAR 2019)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Spanner C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Spanner")
 set(
-    DOXYGEN_PROJECT_NUMBER
-    "${SPANNER_CLIENT_VERSION_MAJOR}.${SPANNER_CLIENT_VERSION_MINOR}.${SPANNER_CLIENT_VERSION_PATCH}"
-    )
+  DOXYGEN_PROJECT_NUMBER
+  "${SPANNER_CLIENT_VERSION_MAJOR}.${SPANNER_CLIENT_VERSION_MINOR}.${SPANNER_CLIENT_VERSION_PATCH}"
+  )
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/examples)
 set(DOXYGEN_PREDEFINED "SPANNER_CLIENT_NS=v${SPANNER_CLIENT_VERSION_MAJOR}")
 set(DOXYGEN_EXCLUDE_PATTERNS "*/google/cloud/spanner/README.md"
-    "*/google/cloud/spanner/*_test.cc")
+                             "*/google/cloud/spanner/*_test.cc")
 set(DOXYGEN_TAGFILES "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../common")
 
 include(GoogleCloudCppCommon)
-if (TARGET spanner-docs AND TARGET cloud-docs)
-    add_dependencies(spanner-docs cloud-docs)
-endif ()
+if(TARGET spanner-docs AND TARGET cloud-docs)
+  add_dependencies(spanner-docs cloud-docs)
+endif()
 
 # Define an interface library, i.e., a library that really has no sources, and
 # add public target options to it.  The targets then use the library via
@@ -66,10 +66,8 @@ export_variables_to_bazel("spanner_client_version.bzl"
 include(external/googleapis)
 
 # the client library
-add_library(spanner_client
-            ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
-            version.h
-            version.cc)
+add_library(spanner_client ${CMAKE_CURRENT_BINARY_DIR}/version_info.h version.cc
+                           version.h)
 target_link_libraries(spanner_client
                       PUBLIC googleapis-c++::spanner_protos
                              google_cloud_cpp_common
@@ -81,12 +79,12 @@ target_include_directories(spanner_client
 target_compile_options(spanner_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 set_target_properties(
-    spanner_client
-    PROPERTIES
-        VERSION
-        ${SPANNER_CLIENT_VERSION_MAJOR}.${SPANNER_CLIENT_VERSION_MINOR}.${SPANNER_CLIENT_VERSION_PATCH}
-        SOVERSION
-        ${SPANNER_CLIENT_VERSION_MAJOR})
+  spanner_client
+  PROPERTIES
+    VERSION
+    ${SPANNER_CLIENT_VERSION_MAJOR}.${SPANNER_CLIENT_VERSION_MINOR}.${SPANNER_CLIENT_VERSION_PATCH}
+    SOVERSION
+    ${SPANNER_CLIENT_VERSION_MAJOR})
 add_library(spanner::client ALIAS spanner_client)
 
 add_executable(spanner_tool spanner_tool.cc)
@@ -100,87 +98,85 @@ include(CreateBazelConfig)
 create_bazel_config(spanner_client YEAR ${SPANNER_CLIENT_COPYRIGHT_YEAR})
 google_cloud_cpp_add_clang_tidy(spanner_client)
 
-if (BUILD_TESTING)
-    # List the unit tests, then setup the targets and dependencies.
-    set(spanner_client_unit_tests spanner_version_test.cc)
+if(BUILD_TESTING)
+  # List the unit tests, then setup the targets and dependencies.
+  set(spanner_client_unit_tests spanner_version_test.cc)
 
-    # Export the list of unit tests so the Bazel BUILD file can pick it up.
-    export_list_to_bazel("spanner_client_unit_tests.bzl"
-                         "spanner_client_unit_tests"
-                         YEAR
-                         ${SPANNER_CLIENT_COPYRIGHT_YEAR})
+  # Export the list of unit tests so the Bazel BUILD file can pick it up.
+  export_list_to_bazel("spanner_client_unit_tests.bzl"
+                       "spanner_client_unit_tests"
+                       YEAR
+                       ${SPANNER_CLIENT_COPYRIGHT_YEAR})
 
-    foreach (fname ${spanner_client_unit_tests})
-        string(REPLACE "/"
-                       "_"
-                       target
-                       ${fname})
-        string(REPLACE ".cc"
-                       ""
-                       target
-                       ${target})
-        add_executable(${target} ${fname})
-        target_link_libraries(${target}
-                              PRIVATE spanner_client
-                                      google_cloud_cpp_testing
-                                      google_cloud_cpp_common
-                                      GTest::gmock_main
-                                      GTest::gmock
-                                      GTest::gtest
-                                      spanner_common_options)
-        if (MSVC)
-            target_compile_options(${target} PRIVATE "/bigobj")
-        endif ()
-        add_test(NAME ${target} COMMAND ${target})
-    endforeach ()
-endif ()
+  foreach(fname ${spanner_client_unit_tests})
+    string(REPLACE "/"
+                   "_"
+                   target
+                   ${fname})
+    string(REPLACE ".cc"
+                   ""
+                   target
+                   ${target})
+    add_executable(${target} ${fname})
+    target_link_libraries(${target}
+                          PRIVATE spanner_client
+                                  google_cloud_cpp_testing
+                                  google_cloud_cpp_common
+                                  GTest::gmock_main
+                                  GTest::gmock
+                                  GTest::gtest
+                                  spanner_common_options)
+    if(MSVC)
+      target_compile_options(${target} PRIVATE "/bigobj")
+    endif()
+    add_test(NAME ${target} COMMAND ${target})
+  endforeach()
+endif()
 
 set(GOOGLE_CLOUD_CPP_SPANNER_ENABLE_INSTALL "ON")
 
-if ("${GOOGLE_CLOUD_CPP_SPANNER_ENABLE_INSTALL}")
-    # Install the libraries and headers in the locations determined by
-    # GNUInstallDirs
-    install(TARGETS spanner_common_options
-            EXPORT spanner-targets
-            RUNTIME DESTINATION bin
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+if("${GOOGLE_CLOUD_CPP_SPANNER_ENABLE_INSTALL}")
+  # Install the libraries and headers in the locations determined by
+  # GNUInstallDirs
+  install(TARGETS spanner_common_options
+          EXPORT spanner-targets
+          RUNTIME DESTINATION bin
+          LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+          ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
-    # Export the CMake targets to make it easy to create configuration files.
-    install(EXPORT spanner-targets
-            DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/spanner_client")
+  # Export the CMake targets to make it easy to create configuration files.
+  install(EXPORT spanner-targets
+          DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/spanner_client")
 
-    install(TARGETS spanner_client
-            EXPORT spanner-targets
-            RUNTIME DESTINATION bin
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-    google_cloud_cpp_install_headers(
-        spanner_client include/google/cloud/spanner)
+  install(TARGETS spanner_client
+          EXPORT spanner-targets
+          RUNTIME DESTINATION bin
+          LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+          ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+  google_cloud_cpp_install_headers(spanner_client include/google/cloud/spanner)
 
-    # Setup global variables used in the following *.in files.
-    set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${SPANNER_CLIENT_VERSION_MAJOR})
-    set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR ${SPANNER_CLIENT_VERSION_MINOR})
-    set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_PATCH ${SPANNER_CLIENT_VERSION_PATCH})
-    set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Spanner C++ Client Library")
-    set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-        "Provides C++ APIs to access Google Cloud Spanner.")
-    set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common")
-    set(GOOGLE_CLOUD_CPP_PC_LIBS "-lspanner_client")
+  # Setup global variables used in the following *.in files.
+  set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${SPANNER_CLIENT_VERSION_MAJOR})
+  set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR ${SPANNER_CLIENT_VERSION_MINOR})
+  set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_PATCH ${SPANNER_CLIENT_VERSION_PATCH})
+  set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Spanner C++ Client Library")
+  set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
+      "Provides C++ APIs to access Google Cloud Spanner.")
+  set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common")
+  set(GOOGLE_CLOUD_CPP_PC_LIBS "-lspanner_client")
 
-    # Create and install the pkg-config files.
-    configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
-                   "spanner_client.pc" @ONLY)
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client.pc" DESTINATION
-                  "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+  # Create and install the pkg-config files.
+  configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
+                 "spanner_client.pc" @ONLY)
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client.pc"
+          DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
-    # Create and install the CMake configuration files.
-    configure_file("config.cmake.in" "spanner_client-config.cmake" @ONLY)
-    configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
-                   "spanner_client-config-version.cmake" @ONLY)
-    install(
-        FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config.cmake"
-              "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config-version.cmake"
-              DESTINATION
-              "${CMAKE_INSTALL_LIBDIR}/cmake/spanner_client")
-endif ()
+  # Create and install the CMake configuration files.
+  configure_file("config.cmake.in" "spanner_client-config.cmake" @ONLY)
+  configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
+                 "spanner_client-config-version.cmake" @ONLY)
+  install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config.cmake"
+          "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config-version.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/spanner_client")
+endif()
