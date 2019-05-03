@@ -274,7 +274,6 @@ install(
 
 add_subdirectory(bigtable)
 add_subdirectory(firestore)
-add_subdirectory(spanner)
 add_subdirectory(storage)
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(examples)
