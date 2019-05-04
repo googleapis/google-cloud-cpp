@@ -114,8 +114,6 @@ add_library(bigtable_client
             data_client.h
             data_client.cc
             filters.h
-            grpc_error.h
-            grpc_error.cc
             instance_admin_client.h
             instance_admin_client.cc
             instance_admin.h
@@ -281,7 +279,6 @@ if (BUILD_TESTING)
         data_client_test.cc
         filters_test.cc
         force_sanitizer_failures_test.cc
-        grpc_error_test.cc
         idempotent_mutation_policy_test.cc
         instance_admin_client_test.cc
         instance_admin_test.cc

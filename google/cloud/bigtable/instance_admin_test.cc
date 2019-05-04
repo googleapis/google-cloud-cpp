@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/instance_admin.h"
-#include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
