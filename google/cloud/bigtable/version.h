@@ -23,11 +23,11 @@
   GOOGLE_CLOUD_CPP_VEVAL(BIGTABLE_CLIENT_VERSION_MAJOR, \
                          BIGTABLE_CLIENT_VERSION_MINOR)
 
+namespace google {
+namespace cloud {
 /**
  * Contains all the Cloud Bigtable C++ client APIs.
  */
-namespace google {
-namespace cloud {
 namespace bigtable {
 /**
  * The inlined, versioned namespace for the Cloud Bigtable C++ client APIs.

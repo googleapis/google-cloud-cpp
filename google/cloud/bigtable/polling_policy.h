@@ -88,11 +88,26 @@ class PollingPolicy {
   virtual std::chrono::milliseconds WaitPeriod() = 0;
 };
 
+/**
+ * Construct a polling policy from existing Retry and Backoff policies.
+ *
+ * A polling policy can be built by composing a retry and backoff policy. For
+ * example, to create a polling policy that "retries N times, waiting a fixed
+ * period between retries" you could compose the "try N times" retry policy with
+ * the "wait a fixed period between retries".
+ *
+ * This class makes it easier to create such composed polling policies.
+ *
+ * @tparam Retry the RPC retry strategy used to limit the number or the total
+ *     duration of the polling strategy.
+ * @tparam Backoff the RPC backoff strategy used to control how often the
+ *     library polls.
+ */
 template <typename Retry = LimitedTimeRetryPolicy,
           typename Backoff = ExponentialBackoffPolicy>
 class GenericPollingPolicy : public PollingPolicy {
  public:
-  GenericPollingPolicy(internal::RPCPolicyParameters defaults)
+  explicit GenericPollingPolicy(internal::RPCPolicyParameters defaults)
       : rpc_retry_policy_(Retry(defaults)),
         rpc_backoff_policy_(Backoff(defaults)) {}
   GenericPollingPolicy(Retry retry, Backoff backoff)

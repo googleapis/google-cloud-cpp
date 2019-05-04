@@ -27,6 +27,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+namespace internal {
 /// An adapter to use `grpc::Status` with the `google::cloud::*Policies`.
 struct SafeGrpcRetry {
   static inline bool IsTransientFailure(google::cloud::StatusCode code) {
@@ -60,6 +61,7 @@ struct SafeGrpcRetry {
     return !IsOk(status) && !IsTransientFailure(status);
   }
 };
+}  // namespace internal
 
 /**
  * Define the interface for controlling how the Bigtable client
@@ -106,11 +108,11 @@ class RPCRetryPolicy {
   virtual bool OnFailure(grpc::Status const& status) = 0;
 
   static bool IsPermanentFailure(google::cloud::Status const& status) {
-    return SafeGrpcRetry::IsPermanentFailure(status);
+    return internal::SafeGrpcRetry::IsPermanentFailure(status);
   }
   // TODO(coryan) - remove ::grpc::Status version.
   static bool IsPermanentFailure(grpc::Status const& status) {
-    return SafeGrpcRetry::IsPermanentFailure(status);
+    return internal::SafeGrpcRetry::IsPermanentFailure(status);
   }
 };
 
@@ -134,7 +136,7 @@ class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
 
  private:
   using Impl = google::cloud::internal::LimitedErrorCountRetryPolicy<
-      google::cloud::Status, SafeGrpcRetry>;
+      google::cloud::Status, internal::SafeGrpcRetry>;
   Impl impl_;
 };
 
@@ -143,7 +145,7 @@ class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
  */
 class LimitedTimeRetryPolicy : public RPCRetryPolicy {
  public:
-  LimitedTimeRetryPolicy(internal::RPCPolicyParameters defaults);
+  explicit LimitedTimeRetryPolicy(internal::RPCPolicyParameters defaults);
   template <typename duration_t>
   explicit LimitedTimeRetryPolicy(duration_t maximum_duration)
       : impl_(maximum_duration) {}
@@ -157,7 +159,7 @@ class LimitedTimeRetryPolicy : public RPCRetryPolicy {
  private:
   using Impl =
       google::cloud::internal::LimitedTimeRetryPolicy<google::cloud::Status,
-                                                      SafeGrpcRetry>;
+                                                      internal::SafeGrpcRetry>;
   Impl impl_;
 };
 

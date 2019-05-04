@@ -38,13 +38,13 @@ inline namespace BIGTABLE_CLIENT_NS {
  * the [RE2](https://github.com/google/re2/wiki/Syntax) syntax.
  *
  * @note Special care need be used with the expression used. Some of the
- *   byte sequences matched (e.g. row keys, or values), can contain arbitrary
- *   bytes, the `\C` escape sequence must be used if a true wildcard is
- *   desired. The `.` character will not match the new line character `\n`,
- *   effectively `.` means `[^\n]` in RE2.  As new line characters may be
- *   present in a binary value, you may need to explicitly match it using "\\n"
- *   the double escape is necessary because RE2 needs to get the escape
- *   sequence.
+ *     filtered values (column names, row keys, cell values) are byte sequences,
+ *     and can contain arbitrary bytes, the `\C` escape sequence must be used
+ *     if a true wildcard is desired. The `.` character will not match the new
+ *     line character `\n`, because `.` means `[^\n]` in RE2.  As new line
+ *     characters may be present in a binary value, you may need to explicitly
+ *     match it using "\\n". The double escape is necessary because RE2 needs
+ *     to get the escape sequence.
  */
 class Filter {
  public:
@@ -106,6 +106,14 @@ class Filter {
    *     rejects filters with an invalid pattern with a
    *     `grpc::StatusCode::INVALID_ARGUMENT` status code.  This function makes
    *     no attempt to validate the pattern before sending it to the server.
+   *
+   * @note Special care need be used with the expression used. A column name
+   *     is a byte sequence, and can contain arbitrary bytes, the `\C` escape
+   *     sequence must be used if a true wildcard is desired. The `.` character
+   *     will not match the new line character `\n`, because `.` means `[^\n]`
+   *     in RE2.  As new line characters may be present in a binary value, you
+   *     may need to explicitly match it using "\\n". The double escape is
+   *     necessary because RE2 needs to get the escape sequence.
    */
   static Filter ColumnRegex(std::string pattern) {
     Filter tmp;
@@ -207,6 +215,14 @@ class Filter {
    *
    * @param pattern the regular expression.  It must be a valid RE2 pattern.
    *     More details at https://github.com/google/re2/wiki/Syntax
+   *
+   * @note Special care need be used with the expression used. A row key
+   *     is a byte sequence, and can contain arbitrary bytes, the `\C` escape
+   *     sequence must be used if a true wildcard is desired. The `.` character
+   *     will not match the new line character `\n`, because `.` means `[^\n]`
+   *     in RE2.  As new line characters may be present in a binary value, you
+   *     may need to explicitly match it using "\\n". The double escape is
+   *     necessary because RE2 needs to get the escape sequence.
    */
   static Filter RowKeysRegex(std::string pattern) {
     Filter tmp;
@@ -223,6 +239,14 @@ class Filter {
    *     `grpc::StatusCode::INVALID_ARGUMENT` status code. This function makes
    *     no attempt to validate the timestamp range before sending it to
    *     the server.
+   *
+   * @note Special care need be used with the expression used. A cell value
+   *     is a byte sequence, and can contain arbitrary bytes, the `\C` escape
+   *     sequence must be used if a true wildcard is desired. The `.` character
+   *     will not match the new line character `\n`, because `.` means `[^\n]`
+   *     in RE2.  As new line characters may be present in a binary value, you
+   *     may need to explicitly match it using "\\n". The double escape is
+   *     necessary because RE2 needs to get the escape sequence.
    */
   static Filter ValueRegex(std::string pattern) {
     Filter tmp;

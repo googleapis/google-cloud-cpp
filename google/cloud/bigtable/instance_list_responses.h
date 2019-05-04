@@ -29,8 +29,14 @@ struct InstanceList {
   /// The list of instances received from Cloud Bigtable.
   std::vector<google::bigtable::admin::v2::Instance> instances;
 
-  /// The list of Google Cloud Platform locations where the request could not
-  /// get a response from.
+  /**
+   * The list of Google Cloud Platform locations where the request could not
+   * get a response from.
+   *
+   * During an outage Cloud Bigtable may be unable to access specific zones. In
+   * that case the service will return those locations for which no information
+   * could be retrieved in this parameter.
+   */
   std::vector<std::string> failed_locations;
 };
 

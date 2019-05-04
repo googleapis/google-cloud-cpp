@@ -25,7 +25,19 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /// A simple wrapper to represent the response from `Table::SampleRowKeys()`.
 struct RowKeySample {
+  /**
+   * A row key value strictly larger than all the rows included in this sample.
+   *
+   * Note that the service may return row keys that do not exist in the Cloud
+   * Bigtable table. This should be interpreted as "a split point for sharding
+   * a `Table::ReadRows()` call.  That is calling `Table::ReadRows()` to return
+   * all the rows in the range `[previous-sample-row-key, this-sample-row-key)`
+   * is expected to produce an efficient sharding of the `Table::ReadRows()`
+   * operation.
+   */
   std::string row_key;
+
+  /// An estimate of the table size for all the rows smaller than `row_key`.
   std::int64_t offset_bytes;
 };
 

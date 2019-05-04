@@ -51,6 +51,7 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/spanner/*"
     "*/google/cloud/storage/*"
     "*/google/cloud/*_test.cc")
+set(DOXYGEN_EXCLUDE_SYMBOL "internal")
 
 include(GoogleCloudCppCommon)
 

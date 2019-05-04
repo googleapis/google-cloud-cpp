@@ -98,9 +98,6 @@ class InstanceAdminClient {
   friend class internal::AsyncLongrunningOp;
   template <typename Client, typename Response>
   friend class internal::AsyncLongrunningOperation;
-  template <typename Client, typename Response, typename MemberFunctionType,
-            typename IdempotencyPolicy>
-  class AsyncRetryAndPollUnaryRpc;
   friend class internal::AsyncListClusters;
   friend class internal::AsyncListInstances;
   friend class internal::AsyncListAppProfiles;
