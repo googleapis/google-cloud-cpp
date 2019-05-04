@@ -56,7 +56,7 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
 };
 }  // namespace
 
-TEST_F(AdminIntegrationTest, TableListWithMultipleTablesTest) {
+TEST_F(AdminIntegrationTest, TableListWithMultipleTables) {
   std::vector<std::string> expected_table_list;
   auto table_config = bigtable::TableConfig();
 
@@ -93,7 +93,7 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTablesTest) {
   }
 }
 
-TEST_F(AdminIntegrationTest, DropRowsByPrefixTest) {
+TEST_F(AdminIntegrationTest, DropRowsByPrefix) {
   auto table = GetTable();
 
   // Create a vector of cell which will be inserted into bigtable
@@ -125,7 +125,7 @@ TEST_F(AdminIntegrationTest, DropRowsByPrefixTest) {
   CheckEqualUnordered(expected_cells, actual_cells);
 }
 
-TEST_F(AdminIntegrationTest, DropAllRowsTest) {
+TEST_F(AdminIntegrationTest, DropAllRows) {
   auto table = GetTable();
 
   // Create a vector of cell which will be inserted into bigtable
@@ -150,7 +150,7 @@ TEST_F(AdminIntegrationTest, DropAllRowsTest) {
 }
 
 /// @test Verify that `bigtable::TableAdmin` CRUD operations work as expected.
-TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
+TEST_F(AdminIntegrationTest, CreateListGetDeleteTable) {
   using GC = bigtable::GcRule;
   std::string const table_id = RandomTableId();
 
@@ -222,33 +222,33 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableTest) {
   EXPECT_EQ(0, table_count);
 }
 
-/// @test Verify that `bigtable::TableAdmin` CheckConsistency works as expected.
-TEST_F(AdminIntegrationTest, CheckConsistencyIntegrationTest) {
+/// @test Verify that `bigtable::TableAdmin` WaitForConsistencyCheck works as
+/// expected.
+TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
   using namespace google::cloud::testing_util::chrono_literals;
 
+  // WaitForConsistencyCheck() only makes sense on a replicated table, we need
+  // to create an instance with at least 2 clusters to test it.
+  auto project_id = bigtable::testing::TableTestEnvironment::project_id();
   std::string id = bigtable::testing::TableTestEnvironment::RandomInstanceId();
   std::string const random_table_id = RandomTableId();
 
-  auto project_id = bigtable::testing::TableTestEnvironment::project_id();
-
+  // Create a bigtable::InstanceAdmin and a bigtable::TableAdmin to create the
+  // new instance and the new table.
   auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
       project_id, bigtable::ClientOptions());
   bigtable::InstanceAdmin instance_admin(instance_admin_client);
 
-  // need to create table_admin for dynamically created instance
   auto admin_client =
       bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions());
   bigtable::TableAdmin table_admin(admin_client, id);
 
-  auto data_client = bigtable::CreateDefaultDataClient(
-      project_id, id, bigtable::ClientOptions());
-  bigtable::Table table(data_client, random_table_id);
-
+  // The instance configuration is involved, it needs two clusters, which must
+  // be production clusters (and therefore have at least 3 nodes each), and
+  // they must be in different zones. Also, the display name cannot be longer
+  // than 30 characters.
   bigtable::InstanceId instance_id(id);
-  // The display name cannot be longer than 30 characters.
   bigtable::DisplayName display_name(("IT " + id).substr(0, 30));
-
-  // Replication needs at least two clusters
   auto cluster_config_1 =
       bigtable::ClusterConfig(bigtable::testing::TableTestEnvironment::zone(),
                               3, bigtable::ClusterConfig::HDD);
@@ -259,45 +259,53 @@ TEST_F(AdminIntegrationTest, CheckConsistencyIntegrationTest) {
       instance_id, display_name,
       {{id + "-c1", cluster_config_1}, {id + "-c2", cluster_config_2}});
 
+  // Create the new instance.
   auto instance = instance_admin.CreateInstance(config).get();
   ASSERT_STATUS_OK(instance);
 
-  google::cloud::bigtable::TableId table_id(random_table_id);
-
-  std::string const column_family1 = "family1";
-  std::string const column_family2 = "family2";
-  std::string const column_family3 = "family3";
+  // The table is going to be very simple, just one column family.
+  std::string const family = "column_family";
   bigtable::TableConfig table_config = bigtable::TableConfig(
-      {{column_family1, bigtable::GcRule::MaxNumVersions(10)},
-       {column_family2, bigtable::GcRule::MaxNumVersions(10)},
-       {column_family3, bigtable::GcRule::MaxNumVersions(10)}},
-      {});
+      {{family, bigtable::GcRule::MaxNumVersions(10)}}, {});
 
-  // create table
-  auto table_created = table_admin.CreateTable(table_id.get(), table_config);
+  // Create the new table.
+  auto table_created = table_admin.CreateTable(random_table_id, table_config);
+  ASSERT_STATUS_OK(table_created);
 
-  // Create a vector of cell which will be inserted into bigtable
-  std::string const row_key1 = "DropRowKey1";
-  std::string const row_key2 = "DropRowKey2";
+  // We need to mutate the data in the table and then wait for those mutations
+  // to propagate to both clusters. First create a `bigtable::Table` object.
+  auto data_client = bigtable::CreateDefaultDataClient(
+      project_id, id, bigtable::ClientOptions());
+  bigtable::Table table(data_client, random_table_id);
+
+  // Insert some cells into the table.
+  std::string const row_key1 = "check-consistency-row1";
+  std::string const row_key2 = "check-consistency-row2";
   std::vector<bigtable::Cell> created_cells{
-      {row_key1, column_family1, "column_id1", 1000, "v-c-0-0"},
-      {row_key1, column_family1, "column_id2", 1000, "v-c-0-1"},
-      {row_key1, column_family2, "column_id3", 2000, "v-c-0-2"},
-      {row_key2, column_family2, "column_id2", 2000, "v-c0-0-0"},
-      {row_key2, column_family3, "column_id3", 3000, "v-c1-0-2"},
+      {row_key1, family, "column1", 1000, "not interesting"},
+      {row_key1, family, "column2", 1000, "not interesting"},
+      {row_key1, family, "column1", 2000, "not interesting"},
+      {row_key2, family, "column2", 2000, "not interesting"},
+      {row_key2, family, "column1", 3000, "not interesting"},
   };
-
   CreateCells(table, created_cells);
 
-  auto consistency_token(table_admin.GenerateConsistencyToken(table_id.get()));
+  // Create a consistency token after modifying the table.
+  auto consistency_token =
+      table_admin.GenerateConsistencyToken(random_table_id);
   ASSERT_STATUS_OK(consistency_token);
 
-  auto result =
-      table_admin.WaitForConsistencyCheck(table_id, *consistency_token);
+  // Wait until all the mutations before the `consistency_token` have propagated
+  // everywhere.
+  std::future<google::cloud::StatusOr<bool>> result =
+      table_admin.WaitForConsistencyCheck(bigtable::TableId(random_table_id),
+                                          *consistency_token);
+  auto is_consistent = result.get();
+  ASSERT_STATUS_OK(is_consistent);
+  EXPECT_TRUE(*is_consistent);
 
-  EXPECT_TRUE(result.get());
-
-  EXPECT_STATUS_OK(table_admin.DeleteTable(table_id.get()));
+  // Cleanup the table and the instance.
+  EXPECT_STATUS_OK(table_admin.DeleteTable(random_table_id));
   EXPECT_STATUS_OK(instance_admin.DeleteInstance(id));
 }
 
