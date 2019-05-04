@@ -127,12 +127,12 @@ int main(int argc, char* argv[]) try {
   //! [scan all] [END bigtable_hw_scan_with_filter]
 
   // Delete the table
-  //! [delete table]
+  //! [delete table] [START bigtable_hw_delete_table]
   google::cloud::Status status = table_admin.DeleteTable(table_id);
   if (!status.ok()) {
     throw std::runtime_error(status.message());
   }
-  //! [delete table]
+  //! [delete table] [END bigtable_hw_delete_table]
 
   return 0;
 } catch (std::exception const& ex) {
