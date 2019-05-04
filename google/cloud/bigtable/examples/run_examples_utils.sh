@@ -15,7 +15,7 @@
 
 set -eu
 
-if [ -z "${PROJECT_ROOT+x}" ]; then
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
   readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../../.."; pwd)"
 fi
 source "${PROJECT_ROOT}/ci/define-example-runner.sh"
@@ -35,7 +35,7 @@ function exit_handler {
   local instance=$2
   shift 2
 
-  if [ -n "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" ]; then
+  if [[ -n "${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST:-}" ]]; then
     kill_emulators
   else
     cleanup_instance "${project}" "${instance}"
@@ -478,6 +478,12 @@ run_all_data_examples() {
       "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets apply \
       "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_snippets apply-relaxed-idempotency \
+      "${project_id}" "${instance_id}" "${TABLE}" \
+      "apply-relaxed-idempotency"
+  run_example ./data_snippets apply-custom-retry \
+      "${project_id}" "${instance_id}" "${TABLE}" \
+      "apply-custom-retry"
   run_example ./data_snippets bulk-apply \
       "${project_id}" "${instance_id}" "${TABLE}"
 
@@ -548,6 +554,22 @@ run_all_data_examples() {
       "${project_id}" "${instance_id}" "${TABLE}"
 }
 
+################################################
+# Run the Bigtable examples for Async* operations on data.
+# Globals:
+#   None
+# Arguments:
+#   project_id: the Google Cloud Storage project used in the test. Can be a
+#       fake project when testing against the emulator, as the emulator creates
+#       projects on demand. It must be a valid, existing instance when testing
+#       against production.
+#   instance_id: the Google Cloud Bigtable instance used in the test. Can be a
+#       fake instance when testing against the emulator, as the emulator creates
+#       instances on demand. It must be a valid, existing instance when testing
+#       against production.
+# Returns:
+#   None
+################################################
 function run_all_data_async_examples {
   local project_id=$1
   local instance_id=$2
@@ -568,6 +590,7 @@ function run_all_data_async_examples {
   # some kind of Usage message.
   run_example_usage ./data_async_snippets
 }
+
 ################################################
 # Run the Bigtable quick start example.
 # Globals:
@@ -649,6 +672,7 @@ run_hello_world_example() {
   # some kind of Usage message.
   run_example_usage ./bigtable_hello_world
 }
+
 ################################################
 # Run the Bigtable hello app profile example.
 # Globals:

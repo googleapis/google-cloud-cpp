@@ -34,11 +34,84 @@ inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Implements the APIs to administer Cloud Bigtable instances.
  *
+ * @par Thread-safety
+ * Instances of this class created via copy-construction or copy-assignment
+ * share the underlying pool of connections. Access to these copies via multiple
+ * threads is guaranteed to work. Two threads operating on the same instance of
+ * this class is not guaranteed to work.
+ *
  * @par Cost
  * Creating a new object of type `InstanceAdmin` is comparable to creating a few
  * objects of type `std::string` or a few objects of type
  * `std::shared_ptr<int>`. The class represents a shallow handle to a remote
  * object.
+ *
+ * @par Error Handling
+ * This class uses `StatusOr<T>` to report errors. When an operation fails to
+ * perform its work the returned `StatusOr<T>` contains the error details. If
+ * the `ok()` member function in the `StatusOr<T>` returns `true` then it
+ * contains the expected result. Operations that do not return a value simply
+ * return a `google::cloud::Status` indicating success or the details of the
+ * error Please consult the
+ * [`StatusOr<T>` documentation](#google::cloud::v0::StatusOr) for more details.
+ *
+ * @code
+ * namespace cbt = google::cloud::bigtable;
+ * namespace btadmin = google::bigtable::admin::v2;
+ * cbt::TableAdmin admin = ...;
+ * google::cloud::StatusOr<btadmin::Table> metadata = admin.GetTable(...);
+ *
+ * if (!metadata) {
+ *   std::cerr << "Error fetching table metadata\n";
+ *   return;
+ * }
+ *
+ * // Use "metadata" as a smart pointer here, e.g.:
+ * std::cout << "The full table name is " << table->name() << " the table has "
+ *           << table->column_families_size() << " column families\n";
+ * @endcode
+ *
+ * In addition, the @ref index "main page" contains examples using `StatusOr<T>`
+ * to handle errors.
+ *
+ * @par Retry, Backoff, and Idempotency Policies
+ * The library automatically retries requests that fail with transient errors,
+ * and uses [truncated exponential backoff][backoff-link] to backoff between
+ * retries. The default policies are to continue retrying for up to 10 minutes.
+ * On each transient failure the backoff period is doubled, starting with an
+ * initial backoff of 100 milliseconds. The backoff period growth is truncated
+ * at 60 seconds. The default idempotency policy is to only retry idempotent
+ * operations. Note that most operations that change state are **not**
+ * idempotent.
+ *
+ * The application can override these policies when constructing objects of this
+ * class. The documentation for the constructors show examples of this in
+ * action.
+ *
+ * [backoff-link]: https://cloud.google.com/storage/docs/exponential-backoff
+ *
+ * @see https://cloud.google.com/bigtable/ for an overview of Cloud Bigtable.
+ *
+ * @see https://cloud.google.com/bigtable/docs/overview for an overview of the
+ *     Cloud Bigtable data model.
+ *
+ * @see https://cloud.google.com/bigtable/docs/instances-clusters-nodes for an
+ *     introduction of the main APIs into Cloud Bigtable.
+ *
+ * @see https://cloud.google.com/bigtable/docs/reference/service-apis-overview
+ *     for an overview of the underlying Cloud Bigtable API.
+ *
+ * @see #google::cloud::v0::StatusOr for a description of the error reporting
+ *     class used by this library.
+ *
+ * @see `LimitedTimeRetryPolicy` and `LimitedErrorCountRetryPolicy` for
+ *     alternative retry policies.
+ *
+ * @see `ExponentialBackoffPolicy` to configure different parameters for the
+ *     exponential backoff policy.
+ *
+ * @see `SafeIdempotentMutationPolicy` and `AlwaysRetryMutationPolicy` for
+ *     alternative idempotency policies.
  */
 class InstanceAdmin {
  public:
@@ -108,10 +181,13 @@ class InstanceAdmin {
    * @return a future that becomes satisfied when (a) the operation has
    *   completed successfully, in which case it returns a proto with the
    *   Instance details, (b) the operation has failed, in which case the future
-   *   contains an exception (typically `bigtable::GrpcError`) with the details
-   *   of the failure, or (c) the state of the operation is unknown after the
-   *   time allocated by the retry policies has expired, in which case the
-   *   future contains an exception of type `bigtable::PollTimeout`.
+   *   contains an `google::cloud::Status` with the details of the failure, or
+   *   (c) the state of the operation is unknown after the time allocated by the
+   *   retry policies has expired, in which case the future contains the last
+   *   error status.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc create instance
@@ -132,8 +208,11 @@ class InstanceAdmin {
    * @param instance_config the desired configuration of the instance.
    *
    * @return a future satisfied when either (a) the cluster is created or (b)
-   *     an unretriable error occurs or (c) polling or retry policy has been
+   *     a permanent error occurs or (c) polling or retry policy has been
    *     exhausted.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Example
    * @snippet instance_admin_async_snippets.cc async create instance
@@ -149,8 +228,11 @@ class InstanceAdmin {
    * @param cluster_id the id of the cluster in the project that needs to be
    *   created. It must be between 6 and 30 characters.
    *
-   *  @par Example
-   *  @snippet bigtable_instance_admin_snippets.cc create cluster
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Example
+   * @snippet bigtable_instance_admin_snippets.cc create cluster
    */
   future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
       ClusterConfig cluster_config, bigtable::InstanceId const& instance_id,
@@ -172,8 +254,11 @@ class InstanceAdmin {
    *   created. It must be between 6 and 30 characters.
    *
    * @return a future satisfied when either (a) the cluster is created or (b)
-   *     an unretriable error occurs or (c) polling or retry policy has been
+   *     a permanent error occurs or (c) polling or retry policy has been
    *     exhausted.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Example
    * @snippet instance_admin_async_snippets.cc async create cluster
@@ -199,6 +284,9 @@ class InstanceAdmin {
    *   time allocated by the retry policies has expired, in which case the
    *   future contains an exception of type `bigtable::PollTimeout`.
    *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc update instance
    */
@@ -221,6 +309,9 @@ class InstanceAdmin {
    *     an unretriable error occurs or (c) polling or retry policy has been
    *     exhausted.
    *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
    * @par Example
    * @snippet instance_admin_async_snippets.cc async update instance
    */
@@ -236,6 +327,9 @@ class InstanceAdmin {
    *   list of `failed_locations` that represent the unavailable zones.
    *   Applications may want to retry the operation after the transient
    *   conditions have cleared.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc list instances
@@ -264,6 +358,9 @@ class InstanceAdmin {
    * list of failed locations in the `projects/<project>/locations/<zone_id>`
    * format.
    *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
    * @par Example
    * @snippet instance_admin_async_snippets.cc async list instances
    */
@@ -271,6 +368,9 @@ class InstanceAdmin {
 
   /**
    * Return the details of @p instance_id.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc get instance
@@ -297,7 +397,8 @@ class InstanceAdmin {
    *   response from the service. In the second the future is satisfied with
    *   an exception.
    *
-   * @throws std::exception if the operation cannot be started.
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
    * @snippet instance_admin_async_snippets.cc async get instance
@@ -307,8 +408,12 @@ class InstanceAdmin {
 
   /**
    * Deletes the instances in the project.
+   *
    * @param instance_id the id of the instance in the project that needs to be
    * deleted
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc delete instance
@@ -327,6 +432,9 @@ class InstanceAdmin {
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
    *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
    * @par Example
    * @snippet instance_admin_async_snippets.cc async-delete-instance
    */
@@ -343,6 +451,9 @@ class InstanceAdmin {
    *   Applications may want to retry the operation after the transient
    *   conditions have cleared.
    *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc list clusters
    */
@@ -357,6 +468,9 @@ class InstanceAdmin {
    *   list of `failed_locations` that represent the unavailable zones.
    *   Applications may want to retry the operation after the transient
    *   conditions have cleared.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc list clusters
@@ -385,6 +499,9 @@ class InstanceAdmin {
    *     the list of failed locations in the
    *     `projects/<project>/locations/<zone_id>` format.
    *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc list clusters
    */
@@ -409,6 +526,9 @@ class InstanceAdmin {
    *     the list of failed locations in the
    *     `projects/<project>/locations/<zone_id>` format.
    *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc list clusters
    */
@@ -430,6 +550,9 @@ class InstanceAdmin {
    *   of the failure, or (c) the state of the operation is unknown after the
    *   time allocated by the retry policies has expired, in which case the
    *   future contains an exception of type `bigtable::PollTimeout`.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc update cluster
@@ -453,6 +576,9 @@ class InstanceAdmin {
    *     an unretriable error occurs or (c) polling or retry policy has been
    *     exhausted.
    *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
    * @par Example
    * @snippet instance_admin_async_snippets.cc async update cluster
    */
@@ -466,8 +592,11 @@ class InstanceAdmin {
    * @param cluster_id the id of the cluster in the project that needs to be
    *   deleted
    *
-   *  @par Example
-   *  @snippet bigtable_instance_admin_snippets.cc delete cluster
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Example
+   * @snippet bigtable_instance_admin_snippets.cc delete cluster
    */
   Status DeleteCluster(bigtable::InstanceId const& instance_id,
                        bigtable::ClusterId const& cluster_id);
@@ -489,6 +618,9 @@ class InstanceAdmin {
    * @return a future that will be satisfied when the request succeeds or the
    *     retry policy expires.
    *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
    * @par Example
    * @snippet instance_admin_async_snippets.cc async delete cluster
    */
@@ -503,6 +635,9 @@ class InstanceAdmin {
    * @param cluster_id the id of the cluster in the project that needs to be
    *   deleted
    * @return a Cluster for given instance_id and cluster_id.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc get cluster
@@ -531,7 +666,8 @@ class InstanceAdmin {
    *   response from the service. In the second the future is satisfied with
    *   an exception.
    *
-   * @throws std::exception if the operation cannot be started.
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
    * @snippet instance_admin_async_snippets.cc async get cluster
@@ -546,6 +682,9 @@ class InstanceAdmin {
    * @param instance_id the instance for the new application profile.
    * @param config the configuration for the new application profile.
    * @return The proto describing the new application profile.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc create app profile
@@ -566,6 +705,9 @@ class InstanceAdmin {
    * @param config the configuration for the new application profile.
    * @return The proto describing the new application profile.
    *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
    * @par Example
    * @snippet instance_admin_async_snippets.cc async create app profile
    */
@@ -580,6 +722,9 @@ class InstanceAdmin {
    * @param instance_id the instance to look the profile in.
    * @param profile_id the id of the profile within that instance.
    * @return The proto describing the application profile.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc get app profile
@@ -599,6 +744,9 @@ class InstanceAdmin {
    * @return a future satisfied when either (a) the profile is fetched or (b)
    *     an unretriable error occurs or (c) retry policy has been exhausted.
    *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
    * @par Example
    * @snippet instance_admin_async_snippets.cc async get app profile
    */
@@ -607,12 +755,15 @@ class InstanceAdmin {
       bigtable::AppProfileId const& profile_id);
 
   /**
-   * Create a new application profile.
+   * Updates an existing application profile.
    *
    * @param instance_id the instance for the new application profile.
    * @param profile_id the id (not the full name) of the profile to update.
    * @param config the configuration for the new application profile.
    * @return The proto describing the new application profile.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc update app profile description
@@ -628,7 +779,7 @@ class InstanceAdmin {
       AppProfileUpdateConfig config);
 
   /**
-   * Update an application profile (asynchronously).
+   * Updates an application profile (asynchronously).
    *
    * @warning This is an early version of the asynchronous APIs for Cloud
    *     Bigtable. These APIs might be changed in backward-incompatible ways. It
@@ -645,6 +796,9 @@ class InstanceAdmin {
    *     an unretriable error occurs or (c) polling or retry policy has been
    *     exhausted.
    *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
    * @par Example
    * @snippet instance_admin_async_snippets.cc async update app profile
    */
@@ -658,6 +812,9 @@ class InstanceAdmin {
    *
    * @param instance_id the instance to list the profiles for.
    * @return a std::vector with the protos describing any profiles.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc list app profiles
@@ -674,6 +831,9 @@ class InstanceAdmin {
    * @param instance_id the instance in a project.
    * @return the list of app profiles.
    *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc list clusters
    */
@@ -687,6 +847,9 @@ class InstanceAdmin {
    * @param profile_id the id of the profile within that instance.
    * @param ignore_warnings if true, ignore safety checks when deleting the
    *     application profile.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc delete app profile
@@ -709,6 +872,9 @@ class InstanceAdmin {
    * @return a future satisfied when either (a) the app profile is deleted or
    *     (b) an unretriable error occurs or (c) retry policy has been exhausted.
    *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
    * @par Example
    * @snippet instance_admin_async_snippets.cc async delete app profile
    */
@@ -722,6 +888,9 @@ class InstanceAdmin {
    *
    * @param instance_id the instance to query.
    * @return Policy the full IAM policy for the instance.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc get iam policy
@@ -738,6 +907,9 @@ class InstanceAdmin {
    * @param instance_id the instance to query.
    * @return a future satisfied when either (a) the policy is fetched or (b)
    *     an unretriable error occurs or (c) retry policy has been exhausted.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
    * @snippet instance_admin_async_snippets.cc async get iam policy
@@ -756,6 +928,9 @@ class InstanceAdmin {
    * @param iam_bindings IamBindings object containing role and members.
    * @param etag the expected ETag value for the current policy.
    * @return Policy the current IAM bindings for the instance.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
    *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc set iam policy
@@ -782,6 +957,9 @@ class InstanceAdmin {
    *     an unretriable error occurs or (c) retry policy has been
    *     exhausted.
    *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
    * @par Example
    * @snippet instance_admin_async_snippets.cc async set iam policy
    */
@@ -796,6 +974,9 @@ class InstanceAdmin {
    * @param instance_id the ID of the instance to query.
    * @param permissions set of permissions to check for the resource.
    *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc test iam permissions
    *
@@ -809,6 +990,9 @@ class InstanceAdmin {
   /**
    * Asynchronously obtains a permission set that the caller has on the
    * specified instance.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
    *
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
