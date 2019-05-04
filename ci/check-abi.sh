@@ -47,7 +47,7 @@ check_library() {
       -o "${BUILD_OUTPUT}/${new_dump_file}"
 
   # We want to collect the data for as many libraries as possible, do not exit
-  # on the first error.0
+  # on the first error.
   set +e
 
   (cd "${BUILD_OUTPUT}" ; zcat "${reference_file}" >"${old_dump_file}" ; \
