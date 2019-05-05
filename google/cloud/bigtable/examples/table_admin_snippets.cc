@@ -672,9 +672,8 @@ void CheckConsistency(google::cloud::bigtable::TableAdmin admin, int argc,
     } else {
       std::cout
           << "Table is not yet consistent, Please try again later with the"
-          << " same token (" << consistency_token_param << ")";
+          << " same token (" << consistency_token_param << ")\n";
     }
-    std::cout << std::flush;
   }
   //! [check consistency]
   (std::move(admin), table_id_param, consistency_token_param);

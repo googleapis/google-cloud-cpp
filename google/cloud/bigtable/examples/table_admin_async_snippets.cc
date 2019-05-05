@@ -309,9 +309,8 @@ void AsyncCheckConsistency(google::cloud::bigtable::TableAdmin admin,
               } else {
                 std::cout << "Table is not yet consistent, Please try again"
                           << " later with the same token ("
-                          << consistency_token_param << ")";
+                          << consistency_token_param << ")\n";
               }
-              std::cout << std::flush;
             });
     final.get();  // block until done to keep example simple.
   }
