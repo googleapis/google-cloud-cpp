@@ -25,14 +25,6 @@
 #include <sstream>
 
 namespace {
-/**
- * The key used for ReadRow(), ReadModifyWrite(), CheckAndMutate.
- *
- * Using the same key makes it possible for the user to see the effect of
- * the different APIs on one row.
- */
-const std::string MAGIC_ROW_KEY = "key-000009";
-
 struct Usage {
   std::string msg;
 };
@@ -182,22 +174,23 @@ void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
 }
 
 void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
-  if (argc != 1) {
-    throw Usage{"read-row: <project-id> <instance-id> <table-id>"};
+  if (argc != 2) {
+    throw Usage{"read-row <project-id> <instance-id> <table-id> <row-key>"};
   }
+  auto row_key = ConsumeArg(argc, argv);
 
   //! [read row] [START bigtable_read_error]
   namespace cbt = google::cloud::bigtable;
-  [](google::cloud::bigtable::Table table) {
+  [](google::cloud::bigtable::Table table, std::string row_key) {
     // Filter the results, only include the latest value on each cell.
     auto filter = cbt::Filter::Latest(1);
     // Read a row, this returns a tuple (bool, row)
-    auto tuple = table.ReadRow(MAGIC_ROW_KEY, std::move(filter));
+    auto tuple = table.ReadRow(row_key, std::move(filter));
     if (!tuple) {
       throw std::runtime_error(tuple.status().message());
     }
     if (!tuple->first) {
-      std::cout << "Row " << MAGIC_ROW_KEY << " not found\n";
+      std::cout << "Row " << row_key << " not found\n";
       return;
     }
     std::cout << "key: " << tuple->second.row_key() << "\n";
@@ -216,7 +209,7 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     std::cout << std::flush;
   }
   //! [read row] [END bigtable_read_error]
-  (std::move(table));
+  (std::move(table), row_key);
 }
 
 void ReadRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
@@ -488,13 +481,16 @@ void ReadMultipleRanges(google::cloud::bigtable::Table table, int argc,
 
 void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
                     char* argv[]) {
-  if (argc != 1) {
-    throw Usage{"check-and-mutate: <project-id> <instance-id> <table-id>"};
+  if (argc != 2) {
+    throw Usage{
+        "check-and-mutate <project-id> <instance-id> <table-id>"
+        " <row-key>"};
   }
+  auto row_key = ConsumeArg(argc, argv);
 
   //! [check and mutate]
   namespace cbt = google::cloud::bigtable;
-  [](cbt::Table table) {
+  [](cbt::Table table, std::string row_key) {
     // Check if the latest value of the flip-flop column is "on".
     auto predicate = cbt::Filter::Chain(
         cbt::Filter::ColumnRangeClosed("fam", "flip-flop", "flip-flop"),
@@ -503,7 +499,7 @@ void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
     // change the latest value to "on".  Modify the "flop-flip" column at the
     // same time.
     auto mut =
-        table.CheckAndMutateRow(MAGIC_ROW_KEY, std::move(predicate),
+        table.CheckAndMutateRow(row_key, std::move(predicate),
                                 {cbt::SetCell("fam", "flip-flop", "off"),
                                  cbt::SetCell("fam", "flop-flip", "on")},
                                 {cbt::SetCell("fam", "flip-flop", "on"),
@@ -514,21 +510,56 @@ void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
     }
   }
   //! [check and mutate]
-  (std::move(table));
+  (std::move(table), row_key);
+}
+
+void CheckAndMutateNotPresent(google::cloud::bigtable::Table table, int argc,
+                              char* argv[]) {
+  if (argc != 2) {
+    throw Usage{
+        "check-and-mutate-not-present <project-id> <instance-id> <table-id>"
+        " <row-key>"};
+  }
+  auto row_key = ConsumeArg(argc, argv);
+
+  //! [check and mutate not present]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table, std::string row_key) {
+    // Check if the latest value of the "test-column" column is present,
+    // regardless of its value.
+    auto predicate = cbt::Filter::Chain(
+        cbt::Filter::ColumnRangeClosed("fam", "test-column", "test-column"),
+        cbt::Filter::Latest(1));
+    // If the predicate matches, do nothing, otherwise set the
+    // "had-test-column" to "false":
+    auto mut = table.CheckAndMutateRow(
+        row_key, std::move(predicate), {},
+        {cbt::SetCell("fam", "had-test-column", "false")});
+
+    if (!mut) {
+      throw std::runtime_error(mut.status().message());
+    }
+    std::cout << "The CheckAndMutateRow() predicate "
+              << (*mut ? "was" : "was not") << " matched\n";
+  }
+  //! [check and mutate not present]
+  (std::move(table), row_key);
 }
 
 void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
                      char* argv[]) {
-  if (argc != 1) {
-    throw Usage{"read-modify-write: <project-id> <instance-id> <table-id>"};
+  if (argc != 2) {
+    throw Usage{
+        "read-modify-write <project-id> <instance-id> <table-id>"
+        " <row-key>"};
   }
+  auto row_key = ConsumeArg(argc, argv);
 
   //! [read modify write]
   namespace cbt = google::cloud::bigtable;
-  [](cbt::Table table) {
+  [](cbt::Table table, std::string row_key) {
     auto row = table.ReadModifyWriteRow(
-        MAGIC_ROW_KEY,
-        cbt::ReadModifyWriteRule::IncrementAmount("fam", "counter", 1),
+        row_key, cbt::ReadModifyWriteRule::IncrementAmount("fam", "counter", 1),
         cbt::ReadModifyWriteRule::AppendValue("fam", "list", ";element"));
 
     if (!row) {
@@ -537,7 +568,7 @@ void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
     std::cout << row->row_key() << "\n";
   }
   //! [read modify write]
-  (std::move(table));
+  (std::move(table), row_key);
 }
 
 void SampleRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
@@ -971,6 +1002,7 @@ int main(int argc, char* argv[]) try {
       {"read-multiple-ranges", &ReadMultipleRanges},
       {"read-rows-with-limit", &ReadRowsWithLimit},
       {"check-and-mutate", &CheckAndMutate},
+      {"check-and-mutate-not-present", &CheckAndMutateNotPresent},
       {"read-modify-write", &ReadModifyWrite},
       {"sample-rows", &SampleRows},
       {"sample-rows-collections", &SampleRowsCollections},
