@@ -129,8 +129,7 @@ void AsyncCreateAppProfile(
     std::cout << "Waiting for app_profile creation to complete " << std::flush;
     future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
-    auto app_profile =
-        future.get();
+    auto app_profile = future.get();
     if (!app_profile) {
       throw std::runtime_error(app_profile.status().message());
     }
@@ -577,8 +576,7 @@ void AsyncUpdateAppProfile(
     std::cout << "Waiting for app profile update to complete " << std::flush;
     future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
-    auto app_profile =
-        future.get();
+    auto app_profile = future.get();
     if (!app_profile) {
       throw std::runtime_error(app_profile.status().message());
     }
