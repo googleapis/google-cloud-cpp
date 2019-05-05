@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/table_admin.h"
-#include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <google/protobuf/text_format.h>

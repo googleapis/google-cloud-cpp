@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/mutation_batcher.h"
-#include "google/cloud/bigtable/grpc_error.h"
 #include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
