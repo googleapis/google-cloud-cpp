@@ -61,7 +61,7 @@ void AsyncCreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
     std::cout << "Waiting for instance creation to complete " << std::flush;
     future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
-    StatusOr<google::bigtable::admin::v2::Instance> instance = future.get();
+    auto instance = future.get();
     if (!instance) {
       throw std::runtime_error(instance.status().message());
     }
@@ -94,7 +94,7 @@ void AsyncCreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
     std::cout << "Waiting for cluster creation to complete " << std::flush;
     future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
-    StatusOr<google::bigtable::admin::v2::Cluster> cluster = future.get();
+    auto cluster = future.get();
     if (!cluster) {
       throw std::runtime_error(cluster.status().message());
     }
@@ -129,7 +129,7 @@ void AsyncCreateAppProfile(
     std::cout << "Waiting for app_profile creation to complete " << std::flush;
     future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
-    StatusOr<google::bigtable::admin::v2::AppProfile> app_profile =
+    auto app_profile =
         future.get();
     if (!app_profile) {
       throw std::runtime_error(app_profile.status().message());
@@ -491,7 +491,7 @@ void AsyncUpdateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
     std::cout << "Waiting for instance update to complete " << std::flush;
     future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
-    StatusOr<google::bigtable::admin::v2::Instance> instance = future.get();
+    auto instance = future.get();
     if (!instance) {
       throw std::runtime_error(instance.status().message());
     }
@@ -543,7 +543,7 @@ void AsyncUpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
     std::cout << "Waiting for cluster update to complete " << std::flush;
     future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
-    StatusOr<google::bigtable::admin::v2::Cluster> cluster = future.get();
+    auto cluster = future.get();
     if (!cluster) {
       throw std::runtime_error(cluster.status().message());
     }
@@ -577,7 +577,7 @@ void AsyncUpdateAppProfile(
     std::cout << "Waiting for app profile update to complete " << std::flush;
     future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
-    StatusOr<google::bigtable::admin::v2::AppProfile> app_profile =
+    auto app_profile =
         future.get();
     if (!app_profile) {
       throw std::runtime_error(app_profile.status().message());
@@ -636,7 +636,7 @@ void AsyncDeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
     std::cout << "Waiting for cluster deletion to complete " << std::flush;
     future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
-    google::cloud::Status res = future.get();
+    auto res = future.get();
     if (!res.ok()) {
       throw std::runtime_error(res.message());
     }
@@ -670,7 +670,7 @@ void AsyncDeleteAppProfile(
     std::cout << "Waiting for app profile deletion to complete " << std::flush;
     future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
-    google::cloud::Status res = future.get();
+    auto res = future.get();
     if (!res.ok()) {
       throw std::runtime_error(res.message());
     }
@@ -702,7 +702,7 @@ void AsyncSetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
         instance_admin.AsyncGetIamPolicy(cq, cbt::InstanceId(instance_id))
             .then([cq, instance_admin, role, member, instance_id](
                       future<StatusOr<IamPolicy>> current_future) mutable {
-              StatusOr<google::cloud::IamPolicy> current = current_future.get();
+              auto current = current_future.get();
               if (!current) {
                 return google::cloud::make_ready_future<StatusOr<IamPolicy>>(
                     current.status());
@@ -716,7 +716,7 @@ void AsyncSetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
     // completes. The application could use future.then() instead.
     std::cout << "Waiting for IAM policy update to complete " << std::flush;
     updated_future.wait_for(std::chrono::seconds(2));
-    StatusOr<IamPolicy> result = updated_future.get();
+    auto result = updated_future.get();
     std::cout << '.' << std::flush;
     if (!result) {
       throw std::runtime_error(result.status().message());
@@ -758,7 +758,7 @@ void AsyncTestIamPermissions(
     std::cout << "Waiting for app profile update to complete " << std::flush;
     future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
-    StatusOr<std::vector<std::string>> result = future.get();
+    auto result = future.get();
     if (!result) {
       throw std::runtime_error(result.status().message());
     }
