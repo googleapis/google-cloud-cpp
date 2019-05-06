@@ -175,7 +175,7 @@ cc_binary(
 
 #### Integrating with CMake
 
-Follow the instructions on the top-level INSTALL.md file on
+Follow the instructions on the top-level [INSTALL][github-INSTALL] file on
 [GitHub][github-link] for details on how to compile and install the library for
 your platform and distribution. Once the library is installed, you can use it in
 your `CMakeLists.txt` file like any other package:
@@ -190,7 +190,7 @@ target_link_libraries(my_program storage_client)
 
 #### Integrating with Make
 
-The installation instructions on the top-level INSTALL.md file on
+The installation instructions on the top-level [INSTALL][github-INSTALL] file on
 [GitHub][github-link] also create `pkg-config` support files for application
 developers that prefer to use `Make` as their build system. Once the library
 is installed, you can use it in your `Makefile` like any other `pkg-config`
@@ -211,16 +211,15 @@ storage_install_test: storage_install_test.cc
 
 ### Error Handling
 
+[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/status_or.h
+
 This library never throws exceptions to signal error. In general, the library
-returns a
-[`StatusOr<T>`](https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/status_or.h)
-if an error is possible.
-Some functions return objects that
-already have an existing error handling mechanism, such as types derived from
-`std::ostream` where the application can check the
+returns a [`StatusOr<T>`][status-or-header] if an error is possible. Some
+functions return objects that already have an existing error handling mechanism,
+such as types derived from `std::ostream` where the application can check the
 [state flags](https://en.cppreference.com/w/cpp/io/basic_ios/rdstate)
-to determine if there was an error.
-In these cases no `StatusOr` wrapper is used.
+to determine if there was an error. In these cases no `StatusOr` wrapper is
+used.
 
 @par Error Handling Example (without exceptions):
 
@@ -324,6 +323,7 @@ good places to continue learning about the library.
 [project-definition-link]: https://cloud.google.com/storage/docs/projects 'Project Definition in GCS'
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
-[github-readme]: http://github.com/googleapis/google-cloud-cpp/blob/master/README%2Emd
+[github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/master/README%2Emd
+[github-install]: https://github.com/googleapis/google-cloud-cpp/blob/master/INSTALL%2Emd
 
 */
