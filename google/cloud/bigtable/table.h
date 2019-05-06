@@ -447,8 +447,11 @@ class Table {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
-   * @par Example
+   * @par Check for Value Example
    * @snippet data_snippets.cc check and mutate
+   *
+   * @par Check for Cell Presence Example
+   * @snippet data_snippets.cc check and mutate not present
    */
   StatusOr<bool> CheckAndMutateRow(std::string row_key, Filter filter,
                                    std::vector<Mutation> true_mutations,

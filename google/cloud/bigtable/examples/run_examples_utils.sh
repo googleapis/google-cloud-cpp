@@ -487,8 +487,6 @@ run_all_data_examples() {
   run_example ./data_snippets bulk-apply \
       "${project_id}" "${instance_id}" "${TABLE}"
 
-  run_example ./data_snippets read-row \
-      "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets read-rows-with-limit \
       "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets read-rows \
@@ -513,30 +511,59 @@ run_all_data_examples() {
       "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets sample-rows-collections \
       "${project_id}" "${instance_id}" "${TABLE}"
+
+  run_example ./data_snippets mutate-insert-update-rows \
+      "${project_id}" "${instance_id}" "${TABLE}" "check-and-mutate-row" \
+      "fam:flip-flop=on"
   run_example ./data_snippets check-and-mutate \
-      "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets read-row \
-      "${project_id}" "${instance_id}" "${TABLE}"
+      "${project_id}" "${instance_id}" "${TABLE}" "check-and-mutate-row"
   run_example ./data_snippets check-and-mutate \
-      "${project_id}" "${instance_id}" "${TABLE}"
+      "${project_id}" "${instance_id}" "${TABLE}" "check-and-mutate-row"
+
+  run_example ./data_snippets mutate-insert-update-rows \
+      "${project_id}" "${instance_id}" "${TABLE}" \
+      "check-and-mutate-not-present-row" "fam:unused=unused-value"
+  run_example ./data_snippets check-and-mutate-not-present \
+      "${project_id}" "${instance_id}" "${TABLE}" \
+      "check-and-mutate-not-present-row"
+  run_example ./data_snippets mutate-insert-update-rows \
+      "${project_id}" "${instance_id}" "${TABLE}" \
+      "check-and-mutate-not-present-row" "fam:test-column=unused-value"
+  run_example ./data_snippets check-and-mutate-not-present \
+      "${project_id}" "${instance_id}" "${TABLE}" \
+      "check-and-mutate-not-present-row"
+
+  local -r READ_ROW_KEY="read-row-${RANDOM}"
   run_example ./data_snippets read-row \
-      "${project_id}" "${instance_id}" "${TABLE}"
+      "${project_id}" "${instance_id}" "${TABLE}" "${READ_ROW_KEY}"
+  run_example ./data_snippets mutate-insert-update-rows \
+      "${project_id}" "${instance_id}" "${TABLE}" "${READ_ROW_KEY}" \
+      "fam:flip-flop=on"
+  run_example ./data_snippets read-row \
+      "${project_id}" "${instance_id}" "${TABLE}" "${READ_ROW_KEY}"
   run_example ./data_snippets check-and-mutate \
-      "${project_id}" "${instance_id}" "${TABLE}"
+      "${project_id}" "${instance_id}" "${TABLE}" "${READ_ROW_KEY}"
   run_example ./data_snippets read-row \
-      "${project_id}" "${instance_id}" "${TABLE}"
+      "${project_id}" "${instance_id}" "${TABLE}" "${READ_ROW_KEY}"
+  run_example ./data_snippets check-and-mutate \
+      "${project_id}" "${instance_id}" "${TABLE}" "${READ_ROW_KEY}"
+  run_example ./data_snippets read-row \
+      "${project_id}" "${instance_id}" "${TABLE}" "${READ_ROW_KEY}"
+
+  local -r READ_MODIFY_WRITE_KEY="read-modify-write-${RANDOM}"
   run_example ./data_snippets read-modify-write \
-      "${project_id}" "${instance_id}" "${TABLE}"
+      "${project_id}" "${instance_id}" "${TABLE}" "${READ_MODIFY_WRITE_KEY}"
   run_example ./data_snippets read-row \
-      "${project_id}" "${instance_id}" "${TABLE}"
+      "${project_id}" "${instance_id}" "${TABLE}" "${READ_MODIFY_WRITE_KEY}"
   run_example ./data_snippets read-modify-write \
-      "${project_id}" "${instance_id}" "${TABLE}"
+      "${project_id}" "${instance_id}" "${TABLE}" "${READ_MODIFY_WRITE_KEY}"
   run_example ./data_snippets read-row \
-      "${project_id}" "${instance_id}" "${TABLE}"
+      "${project_id}" "${instance_id}" "${TABLE}" "${READ_MODIFY_WRITE_KEY}"
   run_example ./data_snippets read-modify-write \
-      "${project_id}" "${instance_id}" "${TABLE}"
+      "${project_id}" "${instance_id}" "${TABLE}" "${READ_MODIFY_WRITE_KEY}"
   run_example ./data_snippets read-row \
-      "${project_id}" "${instance_id}" "${TABLE}"
+      "${project_id}" "${instance_id}" "${TABLE}" "${READ_MODIFY_WRITE_KEY}"
+
   run_example ./data_snippets row-exists \
       "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_1}"
   run_example ./data_snippets get-family \
@@ -579,12 +606,28 @@ function run_all_data_async_examples {
 
   # Use the same table in all the tests.
   local -r TABLE="data-ex-tbl-${RANDOM}-${RANDOM}"
-  run_example ./table_admin_snippets create-table "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_async_snippets async-apply "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_async_snippets async-bulk-apply "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_async_snippets async-check-and-mutate "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_async_snippets async-read-modify-write "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./table_admin_snippets delete-table "${project_id}" "${instance_id}" "${TABLE}"
+  local -r APPLY_ROW_KEY="async-apply-row-${RANDOM}"
+  local -r CHECK_AND_MUTATE_ROW_KEY="check-and-mutate-row-${RANDOM}"
+  local -r READ_MODIFY_WRITE_ROW_KEY="read-modify-write-row-${RANDOM}"
+  run_example ./table_admin_snippets create-table \
+      "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_async_snippets async-apply \
+      "${project_id}" "${instance_id}" "${TABLE}" "${APPLY_ROW_KEY}"
+  run_example ./data_async_snippets async-bulk-apply \
+      "${project_id}" "${instance_id}" "${TABLE}"
+
+  run_example ./data_async_snippets async-apply \
+      "${project_id}" "${instance_id}" "${TABLE}" "${CHECK_AND_MUTATE_ROW_KEY}"
+  run_example ./data_async_snippets async-check-and-mutate \
+      "${project_id}" "${instance_id}" "${TABLE}" "${CHECK_AND_MUTATE_ROW_KEY}"
+
+  run_example ./data_async_snippets async-apply \
+      "${project_id}" "${instance_id}" "${TABLE}" "${READ_MODIFY_WRITE_ROW_KEY}"
+  run_example ./data_async_snippets async-read-modify-write \
+      "${project_id}" "${instance_id}" "${TABLE}" "${READ_MODIFY_WRITE_ROW_KEY}"
+
+  run_example ./table_admin_snippets delete-table \
+      "${project_id}" "${instance_id}" "${TABLE}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.

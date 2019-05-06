@@ -21,8 +21,6 @@
 #include <google/protobuf/text_format.h>
 
 namespace {
-const std::string MAGIC_ROW_KEY = "key-000005";
-
 struct Usage {
   std::string msg;
 };
@@ -40,17 +38,18 @@ void PrintUsage(std::string const& cmd, std::string const& msg) {
 void AsyncApply(google::cloud::bigtable::Table table,
                 google::cloud::bigtable::CompletionQueue cq,
                 std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
-    throw Usage{"async-apply: <project-id> <instance-id> <table-id>"};
+  if (argv.size() != 3U) {
+    throw Usage{"async-apply: <project-id> <instance-id> <table-id> <row-key>"};
   }
 
   //! [async-apply]
   namespace cbt = google::cloud::bigtable;
-  [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id) {
+  [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id,
+     std::string row_key) {
     auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::system_clock::now().time_since_epoch());
 
-    cbt::SingleRowMutation mutation("test-key-for-async-apply");
+    cbt::SingleRowMutation mutation(row_key);
     mutation.emplace_back(cbt::SetCell("fam", "some-column", "some-value"));
     mutation.emplace_back(
         cbt::SetCell("fam", "another-column", "another-value"));
@@ -66,7 +65,7 @@ void AsyncApply(google::cloud::bigtable::Table table,
     std::cout << "Successfully applied mutation\n";
   }
   //! [async-apply]
-  (std::move(table), std::move(cq), argv[1]);
+  (std::move(table), std::move(cq), argv[1], argv[2]);
 }
 
 void AsyncBulkApply(google::cloud::bigtable::Table table,
@@ -117,14 +116,16 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
 void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
                          google::cloud::bigtable::CompletionQueue cq,
                          std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 3U) {
     throw Usage{
-        "async-check-and-mutate: <project-id> <instance-id> <table-id>"};
+        "async-check-and-mutate: <project-id> <instance-id>"
+        " <table-id> <row-key>"};
   }
 
   //! [async check and mutate]
   namespace cbt = google::cloud::bigtable;
-  [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id) {
+  [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id,
+     std::string row_key) {
     // Check if the latest value of the flip-flop column is "on".
     auto predicate = cbt::Filter::Chain(
         cbt::Filter::ColumnRangeClosed("fam", "flip-flop", "flip-flop"),
@@ -132,7 +133,7 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
     google::cloud::future<google::cloud::StatusOr<
         google::bigtable::v2::CheckAndMutateRowResponse>>
         future = table.AsyncCheckAndMutateRow(
-            MAGIC_ROW_KEY, std::move(predicate),
+            row_key, std::move(predicate),
             {cbt::SetCell("fam", "flip-flop", "off"),
              cbt::SetCell("fam", "flop-flip", "on")},
             {cbt::SetCell("fam", "flip-flop", "on"),
@@ -153,16 +154,16 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
     final.get();
   }
   //! [async check and mutate]
-  (std::move(table), std::move(cq), argv[1]);
+  (std::move(table), std::move(cq), argv[1], argv[2]);
 }
 
 void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
                           google::cloud::bigtable::CompletionQueue cq,
                           std::vector<std::string> argv) {
-  // TODO(#2404) - remove hard-coded key values
-  if (argv.size() != 2U) {
+  if (argv.size() != 3U) {
     throw Usage{
-        "async-read-modify-write: <project-id> <instance-id> <table-id>"};
+        "async-read-modify-write: <project-id> <instance-id> <table-id>"
+        " <row-key>"};
   }
 
   //! [async read modify write]
@@ -186,7 +187,7 @@ void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
     final.get();
   }
   //! [async read modify write]
-  (std::move(table), std::move(cq), argv[1], MAGIC_ROW_KEY);
+  (std::move(table), std::move(cq), argv[1], argv[2]);
 }
 }  // anonymous namespace
 

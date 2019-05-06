@@ -36,9 +36,13 @@ The example uses the following headers:
 
 @snippet data_snippets.cc read row
 
-### Use CheckAndMutate to modify a value only if it exists.
+### Use CheckAndMutate to modify a cell if it has a value.
 
 @snippet data_snippets.cc check and mutate
+
+### Use CheckAndMutate to modify a cell if another cell exists.
+
+@snippet data_snippets.cc check and mutate not present
 
 ### Put it all together
 
