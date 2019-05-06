@@ -24,6 +24,9 @@ namespace internal {
 /// The compiler version.
 std::string compiler();
 
+// The language version for user-agent header.
+std::string language_version();
+
 /// The compiler flags.
 std::string compiler_flags();
 

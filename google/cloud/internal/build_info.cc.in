@@ -24,14 +24,46 @@ namespace internal {
 // NOLINTNEXTLINE(readability-identifier-naming)
 std::string compiler() {
   // NOLINTNEXTLINE(readability-redundant-string-init)
-  static std::string const compiler_name = R"""(@CMAKE_CXX_COMPILER_ID@ @CMAKE_CXX_COMPILER_VERSION@)""";
+  static std::string const compiler_name =
+      R"""(@CMAKE_CXX_COMPILER_ID@ @CMAKE_CXX_COMPILER_VERSION@)""";
   return compiler_name;
+}
+
+std::string language_version() {
+  static std::string const language_version = [] {
+    std::string v =
+        R"""(@CMAKE_CXX_COMPILER_ID@_@CMAKE_CXX_COMPILER_VERSION@)""";
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    v += "-ex";
+#else
+    v += "-noex";
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    switch (__cplusplus) {
+      case 199711L:
+        v += "-98";
+        break;
+      case 201103L:
+        v += "-2011";
+        break;
+      case 201402L:
+        v += "-2014";
+        break;
+      case 201703L:
+        v += "-2017";
+        break;
+      default:
+        v += "-unknown";
+    }
+    return v;
+  }();
+  return language_version;
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 std::string compiler_flags() {
   // NOLINTNEXTLINE(readability-redundant-string-init)
-  static std::string const compiler_flags = R"""(@CMAKE_CXX_FLAGS@ ${CMAKE_CXX_FLAGS_${GOOGLE_CLOUD_CPP_BUILD_TYPE_UPPER}})""";
+  static std::string const compiler_flags =
+      R"""(@CMAKE_CXX_FLAGS@ ${CMAKE_CXX_FLAGS_${GOOGLE_CLOUD_CPP_BUILD_TYPE_UPPER}})""";
   return compiler_flags;
 }
 
@@ -53,7 +85,7 @@ bool is_release() {
     return value == "yes" || value == "1" || value == "true";
   }();
 
- return is_release;
+  return is_release;
 }
 
 }  // namespace internal

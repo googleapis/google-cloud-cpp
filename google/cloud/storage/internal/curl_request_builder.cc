@@ -118,16 +118,8 @@ std::string CurlRequestBuilder::UserAgentSuffix() const {
   ValidateBuilderState(__func__);
   // Pre-compute and cache the user agent string:
   static std::string const user_agent_suffix = [] {
-    std::string agent = "gcs-c++/";
-    agent += storage::version_string();
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    agent += " ex";
-#else
-    agent += " noex";
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    agent += ' ';
-    agent += google::cloud::internal::compiler();
-    agent += ' ';
+    std::string agent = "gl-cpp/" + google::cloud::internal::language_version();
+    agent += " gccl/" + storage::version_string() + " ";
     agent += curl_version();
     return agent;
   }();
