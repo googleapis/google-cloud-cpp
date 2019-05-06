@@ -52,7 +52,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
 
 void Apply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   if (argc != 1) {
-    throw Usage{"apply: <project-id> <instance-id> <table-id>"};
+    throw Usage{"apply <project-id> <instance-id> <table-id>"};
   }
 
   //! [apply]
@@ -136,7 +136,7 @@ void ApplyCustomRetry(google::cloud::bigtable::Table table, int argc,
 
 void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   if (argc != 1) {
-    throw Usage{"bulk-apply: <project-id> <instance-id> <table-id>"};
+    throw Usage{"bulk-apply <project-id> <instance-id> <table-id>"};
   }
 
   //! [bulk apply] [START bigtable_mutate_insert_rows]
@@ -163,11 +163,17 @@ void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
           cbt::SetCell("fam", "col1", "value1-" + std::to_string(i)));
       bulk.emplace_back(std::move(mutation));
     }
-    auto failures = table.BulkApply(std::move(bulk));
-    if (!failures.empty()) {
-      auto status = failures.front().status();
-      throw std::runtime_error(status.message());
+    std::vector<cbt::FailedMutation> failures =
+        table.BulkApply(std::move(bulk));
+    if (failures.empty()) {
+      std::cout << "All mutations applied successfully\n";
+      return;
     }
+    std::cout << "The following mutations failed: ";
+    for (auto const& f : failures) {
+      std::cout << "index[" << f.original_index() << "]=" << f.status() << "\n";
+    }
+    throw std::runtime_error(failures.front().status().message());
   }
   //! [bulk apply] [END bigtable_mutate_insert_rows]
   (std::move(table));
@@ -181,11 +187,13 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
 
   //! [read row] [START bigtable_read_error]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](google::cloud::bigtable::Table table, std::string row_key) {
     // Filter the results, only include the latest value on each cell.
-    auto filter = cbt::Filter::Latest(1);
+    cbt::Filter filter = cbt::Filter::Latest(1);
     // Read a row, this returns a tuple (bool, row)
-    auto tuple = table.ReadRow(row_key, std::move(filter));
+    StatusOr<std::pair<bool, cbt::Row>> tuple =
+        table.ReadRow(row_key, std::move(filter));
     if (!tuple) {
       throw std::runtime_error(tuple.status().message());
     }
@@ -218,16 +226,17 @@ void ReadRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
 
   //! [read rows] [START bigtable_read_range]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000010", "key-000020");
     // Filter the results, only include values from the "col0" column in the
     // "fam" column family, and only get the latest value.
-    auto filter = cbt::Filter::Chain(
+    cbt::Filter filter = cbt::Filter::Chain(
         cbt::Filter::ColumnRangeClosed("fam", "col0", "col0"),
         cbt::Filter::Latest(1));
     // Read and print the rows.
-    for (auto const& row : table.ReadRows(range, filter)) {
+    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
       if (!row) {
         throw std::runtime_error(row.status().message());
       }
@@ -252,16 +261,17 @@ void ReadRowsWithLimit(google::cloud::bigtable::Table table, int argc,
 
   //! [read rows with limit] [START bigtable_read_filter]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000010", "key-000020");
     // Filter the results, only include values from the "col0" column in the
     // "fam" column family, and only get the latest value.
-    auto filter = cbt::Filter::Chain(
+    cbt::Filter filter = cbt::Filter::Chain(
         cbt::Filter::ColumnRangeClosed("fam", "col0", "col0"),
         cbt::Filter::Latest(1));
     // Read and print the first 5 rows in the range.
-    for (auto const& row : table.ReadRows(range, 5, filter)) {
+    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, 5, filter)) {
       if (!row) {
         throw std::runtime_error(row.status().message());
       }
@@ -275,40 +285,6 @@ void ReadRowsWithLimit(google::cloud::bigtable::Table table, int argc,
     }
   }
   //! [read rows with limit] [END bigtable_read_filter]
-  (std::move(table));
-}
-
-void PopulateTableHierarchy(google::cloud::bigtable::Table table, int argc,
-                            char* argv[]) {
-  if (argc != 1) {
-    throw Usage{
-        "populate-table-hierarchy: <project-id> <instance-id> <table-id>"};
-  }
-
-  //! [populate table hierarchy]
-  namespace cbt = google::cloud::bigtable;
-  [](cbt::Table table) {
-    // Write several rows.
-    int q = 0;
-    for (int i = 0; i != 4; ++i) {
-      for (int j = 0; j != 4; ++j) {
-        for (int k = 0; k != 4; ++k) {
-          std::string row_key = "root/" + std::to_string(i) + "/";
-          row_key += std::to_string(j) + "/";
-          row_key += std::to_string(k);
-          cbt::SingleRowMutation mutation(row_key);
-          mutation.emplace_back(
-              cbt::SetCell("fam", "col0", "value-" + std::to_string(q)));
-          ++q;
-          google::cloud::Status status = table.Apply(std::move(mutation));
-          if (!status.ok()) {
-            throw std::runtime_error(status.message());
-          }
-        }
-      }
-    }
-  }
-  //! [populate table hierarchy]
   (std::move(table));
 }
 
@@ -326,6 +302,7 @@ void ReadKeysSet(google::cloud::bigtable::Table table, int argc, char* argv[]) {
 
   // [START bigtable_read_keys_set]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::Table table, std::vector<std::string> row_keys) {
     auto row_set = cbt::RowSet();
 
@@ -333,8 +310,8 @@ void ReadKeysSet(google::cloud::bigtable::Table table, int argc, char* argv[]) {
       row_set.Append(row_key);
     }
 
-    auto filter = cbt::Filter::Latest(1);
-    for (auto& row : table.ReadRows(std::move(row_set), filter)) {
+    cbt::Filter filter = cbt::Filter::Latest(1);
+    for (StatusOr<cbt::Row>& row : table.ReadRows(std::move(row_set), filter)) {
       if (!row) {
         throw std::runtime_error(row.status().message());
       }
@@ -362,19 +339,20 @@ void ReadRowSetPrefix(google::cloud::bigtable::Table table, int argc,
 
   //! [read rowset prefix] [START bigtable_read_prefix]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::Table table, std::string prefix) {
     auto row_set = cbt::RowSet();
 
     auto range_prefix = cbt::RowRange::Prefix(prefix);
     row_set.Append(range_prefix);
 
-    auto filter = cbt::Filter::Latest(1);
-    for (auto& row : table.ReadRows(std::move(row_set), filter)) {
+    cbt::Filter filter = cbt::Filter::Latest(1);
+    for (StatusOr<cbt::Row>& row : table.ReadRows(std::move(row_set), filter)) {
       if (!row) {
         throw std::runtime_error(row.status().message());
       }
       std::cout << row->row_key() << ":\n";
-      for (auto& cell : row->cells()) {
+      for (cbt::Cell const& cell : row->cells()) {
         std::cout << "\t" << cell.family_name() << ":"
                   << cell.column_qualifier() << "    @ "
                   << cell.timestamp().count() << "us\n"
@@ -401,21 +379,21 @@ void ReadPrefixList(google::cloud::bigtable::Table table, int argc,
 
   //! [read prefix list] [START bigtable_read_prefix_list]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::Table table, std::vector<std::string> prefix_list) {
+    cbt::Filter filter = cbt::Filter::Latest(1);
     auto row_set = cbt::RowSet();
-    auto filter = cbt::Filter::Latest(1);
-
     for (auto const& prefix : prefix_list) {
       auto row_range_prefix = cbt::RowRange::Prefix(prefix);
       row_set.Append(row_range_prefix);
     }
 
-    for (auto& row : table.ReadRows(std::move(row_set), filter)) {
+    for (StatusOr<cbt::Row>& row : table.ReadRows(std::move(row_set), filter)) {
       if (!row) {
         throw std::runtime_error(row.status().message());
       }
       std::cout << row->row_key() << ":\n";
-      for (auto& cell : row->cells()) {
+      for (cbt::Cell const& cell : row->cells()) {
         std::cout << "\t" << cell.family_name() << ":"
                   << cell.column_qualifier() << "    @ "
                   << cell.timestamp().count() << "us\n"
@@ -447,21 +425,21 @@ void ReadMultipleRanges(google::cloud::bigtable::Table table, int argc,
 
   // [START bigtable_read_multiple_ranges]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::Table table,
      std::vector<std::pair<std::string, std::string>> ranges) {
     auto row_set = cbt::RowSet();
-
-    for (auto&& range : ranges) {
+    for (auto const& range : ranges) {
       row_set.Append(cbt::RowRange::Range(range.first, range.second));
     }
     auto filter = cbt::Filter::Latest(1);
 
-    for (auto& row : table.ReadRows(std::move(row_set), filter)) {
+    for (StatusOr<cbt::Row>& row : table.ReadRows(std::move(row_set), filter)) {
       if (!row) {
         throw std::runtime_error(row.status().message());
       }
       std::cout << row->row_key() << ":\n";
-      for (auto& cell : row->cells()) {
+      for (cbt::Cell const& cell : row->cells()) {
         std::cout << "\t" << cell.family_name() << ":"
                   << cell.column_qualifier() << "    @ "
                   << cell.timestamp().count() << "us\n"
@@ -484,24 +462,27 @@ void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
 
   //! [check and mutate]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::Table table, std::string row_key) {
     // Check if the latest value of the flip-flop column is "on".
-    auto predicate = cbt::Filter::Chain(
+    cbt::Filter predicate = cbt::Filter::Chain(
         cbt::Filter::ColumnRangeClosed("fam", "flip-flop", "flip-flop"),
         cbt::Filter::Latest(1), cbt::Filter::ValueRegex("on"));
     // If the predicate matches, change the latest value to "off", otherwise,
     // change the latest value to "on".  Modify the "flop-flip" column at the
     // same time.
-    auto mut =
+    StatusOr<bool> branch =
         table.CheckAndMutateRow(row_key, std::move(predicate),
                                 {cbt::SetCell("fam", "flip-flop", "off"),
                                  cbt::SetCell("fam", "flop-flip", "on")},
                                 {cbt::SetCell("fam", "flip-flop", "on"),
                                  cbt::SetCell("fam", "flop-flip", "off")});
 
-    if (!mut) {
-      throw std::runtime_error(mut.status().message());
+    if (!branch) {
+      throw std::runtime_error(branch.status().message());
     }
+    std::cout << "The predicate " << (*branch ? "was" : "was not")
+              << " matched\n";
   }
   //! [check and mutate]
   (std::move(table), row_key);
@@ -518,23 +499,24 @@ void CheckAndMutateNotPresent(google::cloud::bigtable::Table table, int argc,
 
   //! [check and mutate not present]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::Table table, std::string row_key) {
     // Check if the latest value of the "test-column" column is present,
     // regardless of its value.
-    auto predicate = cbt::Filter::Chain(
+    cbt::Filter predicate = cbt::Filter::Chain(
         cbt::Filter::ColumnRangeClosed("fam", "test-column", "test-column"),
         cbt::Filter::Latest(1));
     // If the predicate matches, do nothing, otherwise set the
     // "had-test-column" to "false":
-    auto mut = table.CheckAndMutateRow(
+    StatusOr<bool> branch = table.CheckAndMutateRow(
         row_key, std::move(predicate), {},
         {cbt::SetCell("fam", "had-test-column", "false")});
 
-    if (!mut) {
-      throw std::runtime_error(mut.status().message());
+    if (!branch) {
+      throw std::runtime_error(branch.status().message());
     }
     std::cout << "The CheckAndMutateRow() predicate "
-              << (*mut ? "was" : "was not") << " matched\n";
+              << (*branch ? "was" : "was not") << " matched\n";
   }
   //! [check and mutate not present]
   (std::move(table), row_key);
@@ -551,8 +533,9 @@ void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
 
   //! [read modify write]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::Table table, std::string row_key) {
-    auto row = table.ReadModifyWriteRow(
+    StatusOr<cbt::Row> row = table.ReadModifyWriteRow(
         row_key, cbt::ReadModifyWriteRule::IncrementAmount("fam", "counter", 1),
         cbt::ReadModifyWriteRule::AppendValue("fam", "list", ";element"));
 
@@ -572,8 +555,9 @@ void SampleRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
 
   //! [sample row keys] [START bigtable_table_sample_splits]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::Table table) {
-    auto samples = table.SampleRows<>();
+    StatusOr<std::vector<cbt::RowKeySample>> samples = table.SampleRows<>();
     if (!samples) {
       throw std::runtime_error(samples.status().message());
     }
@@ -595,8 +579,10 @@ void SampleRowsCollections(google::cloud::bigtable::Table table, int argc,
 
   //! [sample row keys collections]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::Table table) {
-    auto list_samples = table.SampleRows<std::list>();
+    StatusOr<std::list<cbt::RowKeySample>> list_samples =
+        table.SampleRows<std::list>();
     if (!list_samples) {
       throw std::runtime_error(list_samples.status().message());
     }
@@ -619,24 +605,29 @@ void SampleRowsCollections(google::cloud::bigtable::Table table, int argc,
 
 void GetFamily(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   if (argc != 1) {
-    throw Usage{"get-family: <project-id> <instance-id> <table-id>"};
+    throw Usage{"get-family <project-id> <instance-id> <table-id>"};
   }
 
   //! [get family] [START bigtable_get_family] [START bigtable_family_ref]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
-    auto range = cbt::RowRange::InfiniteRange();
+    cbt::RowRange range = cbt::RowRange::InfiniteRange();
 
     // Filter the results, only get the latest value
-    auto filter = cbt::Filter::Latest(1);
+    cbt::Filter filter = cbt::Filter::Latest(1);
 
     // Read and print the family name.
-    for (auto const& row : table.ReadRows(range, filter)) {
+    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
       if (!row) {
         throw std::runtime_error(row.status().message());
       }
-      auto const& cell = row->cells().at(0);
+      if (row->cells().empty()) {
+        std::cout << "No cells for row " << row->row_key() << "\n";
+        continue;
+      }
+      cbt::Cell const& cell = row->cells().at(0);
       std::cout << cell.family_name() << "\n";
       break;
     }
@@ -656,7 +647,7 @@ void DeleteAllCells(google::cloud::bigtable::Table table, int argc,
   //! [delete all cells]
   namespace cbt = google::cloud::bigtable;
   [](cbt::Table table, std::string row_key) {
-    auto status =
+    google::cloud::Status status =
         table.Apply(cbt::SingleRowMutation(row_key, cbt::DeleteFromRow()));
 
     if (!status.ok()) {
@@ -681,7 +672,7 @@ void DeleteFamilyCells(google::cloud::bigtable::Table table, int argc,
   namespace cbt = google::cloud::bigtable;
   [](cbt::Table table, std::string row_key, std::string family_name) {
     // Delete all cells within a family.
-    auto status = table.Apply(
+    google::cloud::Status status = table.Apply(
         cbt::SingleRowMutation(row_key, cbt::DeleteFromFamily(family_name)));
 
     if (!status.ok()) {
@@ -708,7 +699,7 @@ void DeleteSelectiveFamilyCells(google::cloud::bigtable::Table table, int argc,
   [](cbt::Table table, std::string row_key, std::string family_name,
      std::string column_name) {
     // Delete selective cell within a family.
-    auto status = table.Apply(cbt::SingleRowMutation(
+    google::cloud::Status status = table.Apply(cbt::SingleRowMutation(
         row_key, cbt::DeleteFromColumn(family_name, column_name)));
 
     if (!status.ok()) {
@@ -728,12 +719,13 @@ void RowExists(google::cloud::bigtable::Table table, int argc, char* argv[]) {
 
   //! [row exists]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::Table table, std::string row_key) {
     // Filter the results, turn any value into an empty string.
-    auto filter = cbt::Filter::StripValueTransformer();
+    cbt::Filter filter = cbt::Filter::StripValueTransformer();
 
     // Read a row, this returns a tuple (bool, row)
-    auto status = table.ReadRow(row_key, std::move(filter));
+    StatusOr<std::pair<bool, cbt::Row>> status = table.ReadRow(row_key, filter);
 
     if (!status) {
       throw std::runtime_error("Table does not exist!");
@@ -813,15 +805,17 @@ void MutateDeleteRows(google::cloud::bigtable::Table table, int argc,
       mutation.emplace_back(
           cbt::SingleRowMutation(row_key, cbt::DeleteFromRow()));
     }
-    auto failures = table.BulkApply(std::move(mutation));
-    if (!failures.empty()) {
-      for (auto const& f : failures) {
-        std::cerr << "The mutation for row " << keys[f.original_index()]
-                  << " failed with " << f.status() << "\n";
-      }
-      throw std::runtime_error(failures.front().status().message());
+    std::vector<cbt::FailedMutation> failures =
+        table.BulkApply(std::move(mutation));
+    if (failures.empty()) {
+      std::cout << "All rows successfully deleted\n";
+      return;
     }
-    std::cout << "Rows successfully deleted\n";
+    for (auto const& f : failures) {
+      std::cerr << "The mutation for row " << keys[f.original_index()]
+                << " failed with " << f.status() << "\n";
+    }
+    throw std::runtime_error(failures.front().status().message());
   }
   // [END bigtable_mutate_delete_rows]
   (std::move(table), std::move(keys));
@@ -934,6 +928,8 @@ void RenameColumn(google::cloud::bigtable::Table table, int argc,
   (std::move(table), key, family, old_name, new_name);
 }
 
+// This command just generates data suitable for other examples to run. This
+// code is not extracted into the documentation.
 void InsertTestData(google::cloud::bigtable::Table table, int argc, char*[]) {
   if (argc != 1) {
     throw Usage{"insert-test-data <project-id> <instance-id> <table-id>"};
@@ -970,6 +966,37 @@ void InsertTestData(google::cloud::bigtable::Table table, int argc, char*[]) {
   if (!failures.empty()) {
     auto status = failures.front().status();
     throw std::runtime_error(status.message());
+  }
+}
+
+// This command just generates data suitable for other examples to run. This
+// code is not extracted into the documentation.
+void PopulateTableHierarchy(google::cloud::bigtable::Table table, int argc,
+                            char* argv[]) {
+  if (argc != 1) {
+    throw Usage{
+        "populate-table-hierarchy: <project-id> <instance-id> <table-id>"};
+  }
+
+  namespace cbt = google::cloud::bigtable;
+  // Write several rows.
+  int q = 0;
+  for (int i = 0; i != 4; ++i) {
+    for (int j = 0; j != 4; ++j) {
+      for (int k = 0; k != 4; ++k) {
+        std::string row_key = "root/" + std::to_string(i) + "/";
+        row_key += std::to_string(j) + "/";
+        row_key += std::to_string(k);
+        cbt::SingleRowMutation mutation(row_key);
+        mutation.emplace_back(
+            cbt::SetCell("fam", "col0", "value-" + std::to_string(q)));
+        ++q;
+        google::cloud::Status status = table.Apply(std::move(mutation));
+        if (!status.ok()) {
+          throw std::runtime_error(status.message());
+        }
+      }
+    }
   }
 }
 
