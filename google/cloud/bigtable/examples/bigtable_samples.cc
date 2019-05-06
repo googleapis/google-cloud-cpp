@@ -40,7 +40,7 @@ void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
 
   std::cout << "Listing tables:\n";
   auto tables =
-      admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
+      admin.ListTables(google::cloud::bigtable::TableAdmin::NAME_ONLY);
 
   if (!tables) {
     throw std::runtime_error(tables.status().message());
@@ -51,7 +51,7 @@ void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
 
   std::cout << "Get table:\n";
   auto table =
-      admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+      admin.GetTable(table_id, google::cloud::bigtable::TableAdmin::FULL);
   if (!table) {
     throw std::runtime_error(table.status().message());
   }
@@ -114,7 +114,7 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
 
   std::cout << "Listing tables:\n";
   auto tables =
-      admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
+      admin.ListTables(google::cloud::bigtable::TableAdmin::VIEW_UNSPECIFIED);
 
   if (!tables) {
     throw std::runtime_error(tables.status().message());
@@ -125,7 +125,7 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
 
   std::cout << "Get table:\n";
   auto table =
-      admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+      admin.GetTable(table_id, google::cloud::bigtable::TableAdmin::FULL);
   if (!table) {
     throw std::runtime_error(table.status().message());
   }

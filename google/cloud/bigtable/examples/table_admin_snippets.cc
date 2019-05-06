@@ -78,8 +78,7 @@ void ListTables(google::cloud::bigtable::TableAdmin admin, int argc,
   //! [list tables] [START bigtable_list_tables]
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin) {
-    auto tables =
-        admin.ListTables(google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
+    auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
 
     if (!tables) {
       throw std::runtime_error(tables.status().message());
@@ -102,8 +101,7 @@ void GetTable(google::cloud::bigtable::TableAdmin admin, int argc,
   //! [get table] [START bigtable_get_table_metadata]
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string table_id) {
-    auto table =
-        admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+    auto table = admin.GetTable(table_id, cbt::TableAdmin::FULL);
     if (!table) {
       throw std::runtime_error(table.status().message());
     }
@@ -130,8 +128,7 @@ void CheckTableExists(google::cloud::bigtable::TableAdmin admin, int argc,
   //! [START bigtable_check_table_exists]
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string table_id) {
-    auto table =
-        admin.GetTable(table_id, google::bigtable::admin::v2::Table::NAME_ONLY);
+    auto table = admin.GetTable(table_id, cbt::TableAdmin::NAME_ONLY);
     if (!table) {
       if (table.status().code() == google::cloud::StatusCode::kNotFound) {
         throw std::runtime_error("Table " + table_id + " does not exist");
@@ -155,8 +152,7 @@ void GetOrCreateTable(google::cloud::bigtable::TableAdmin admin, int argc,
   // [START bigtable_get_or_create_table]
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string table_id) {
-    auto table =
-        admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+    auto table = admin.GetTable(table_id, cbt::TableAdmin::FULL);
     if (!table &&
         table.status().code() == google::cloud::StatusCode::kNotFound) {
       // The table does not exist, try to create the table.
@@ -168,8 +164,7 @@ void GetOrCreateTable(google::cloud::bigtable::TableAdmin admin, int argc,
       }
       // The schema returned by a `CreateTable()` request does not include all
       // the metadata for a table, we need to explicitly request the rest:
-      table =
-          admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+      table = admin.GetTable(table_id, cbt::TableAdmin::FULL);
     }
     if (!table) {
       throw std::runtime_error(table.status().message());
@@ -398,8 +393,7 @@ void GetFamilyMetadata(google::cloud::bigtable::TableAdmin admin, int argc,
   // [START bigtable_get_family_metadata]
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string table_id, std::string family_name) {
-    auto schema =
-        admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+    auto schema = admin.GetTable(table_id, cbt::TableAdmin::FULL);
 
     if (!schema) {
       throw std::runtime_error(schema.status().message());
@@ -431,8 +425,7 @@ void GetOrCreateFamily(google::cloud::bigtable::TableAdmin admin, int argc,
   // [START bigtable_get_or_create_family]
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string table_id, std::string family_name) {
-    auto schema =
-        admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+    auto schema = admin.GetTable(table_id, cbt::TableAdmin::FULL);
 
     if (!schema) {
       throw std::runtime_error(schema.status().message());
@@ -504,8 +497,7 @@ void CheckFamilyExists(google::cloud::bigtable::TableAdmin admin, int argc,
   // [START bigtable_check_family_exists]
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string table_id, std::string family_name) {
-    auto schema =
-        admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+    auto schema = admin.GetTable(table_id, cbt::TableAdmin::FULL);
 
     if (!schema) {
       throw std::runtime_error(schema.status().message());
@@ -532,8 +524,7 @@ void ListColumnFamilies(google::cloud::bigtable::TableAdmin admin, int argc,
   // [START bigtable_list_column_families]
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string table_id) {
-    auto schema =
-        admin.GetTable(table_id, google::bigtable::admin::v2::Table::FULL);
+    auto schema = admin.GetTable(table_id, cbt::TableAdmin::FULL);
 
     if (!schema) {
       throw std::runtime_error(schema.status().message());

@@ -162,6 +162,20 @@ class TableAdmin {
   TableAdmin(TableAdmin const& table_admin) = default;
   TableAdmin& operator=(TableAdmin const& table_admin) = default;
 
+  //@{
+  /// @name Convenience shorthands for the schema views.
+  using TableView = google::bigtable::admin::v2::Table::View;
+  constexpr static TableView VIEW_UNSPECIFIED =
+      google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED;
+  constexpr static TableView NAME_ONLY =
+      google::bigtable::admin::v2::Table::NAME_ONLY;
+  constexpr static TableView SCHEMA_VIEW =
+      google::bigtable::admin::v2::Table::SCHEMA_VIEW;
+  constexpr static TableView REPLICATION_VIEW =
+      google::bigtable::admin::v2::Table::REPLICATION_VIEW;
+  constexpr static TableView FULL = google::bigtable::admin::v2::Table::FULL;
+  //@}
+
   std::string const& project() const { return impl_.project(); }
   std::string const& instance_id() const { return impl_.instance_id(); }
   std::string const& instance_name() const { return impl_.instance_name(); }
@@ -288,9 +302,7 @@ class TableAdmin {
    * @snippet table_admin_snippets.cc get table
    */
   StatusOr<::google::bigtable::admin::v2::Table> GetTable(
-      std::string const& table_id,
-      ::google::bigtable::admin::v2::Table::View view =
-          ::google::bigtable::admin::v2::Table::SCHEMA_VIEW);
+      std::string const& table_id, TableView view = SCHEMA_VIEW);
 
   /**
    * Sends an asynchronous request to get information about an existing table.
