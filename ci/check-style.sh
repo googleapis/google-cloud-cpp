@@ -47,10 +47,10 @@ replace_original_if_changed() {
   local original="$1"
   local reformatted="$2"
 
-  chmod --reference="${original}" "${reformatted}"
   if cmp -s "${original}" "${reformatted}"; then
     rm -f "${reformatted}"
   else
+    chmod --reference="${original}" "${reformatted}"
     mv -f "${reformatted}" "${original}"
   fi
 }
