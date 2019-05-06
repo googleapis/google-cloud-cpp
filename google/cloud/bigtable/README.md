@@ -42,7 +42,82 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v0.9.x - TBD
+### v0.9.x - 2019-05
+* Continue to implement more async APIs (*Note: These are not yet stable*):
+  * `InstanceAdmin`: implement `AsyncSetIamPolicy`, `AsyncDeleteAppProfile`,
+    `AsyncGetAppProfile`, `AsyncCreateAppProfile`, `AsyncGetIamPolicy`,
+    `AsyncTestIamPermissions`, `AsyncUpdateAppProfile`, `AsyncUpdateInstance`,
+    `AsyncCreateCluster`, `AsyncUpdateCluster`, `AsyncCreateInstance`,
+    `AsyncListAppProfiles`.
+  * `TableAdmin`: Implement `AsyncGenerateConsistencyToken`,
+    `AsyncCheckConsistency`, `AsyncListTables`, `AsyncDropAllRows`,
+    `AsyncDropRowsByPrefix`.
+  * `Table`: Implement `AsyncReadModifyWriteRow`.
+  * Return `google::cloud::future` from `InstanceAdmin` functions.
+  * Reimplement `InstanceAdmin` methods `AsyncListClusters`,
+    `AsyncListInstances` and `AsyncDeleteCluster` via futures.
+* Implement examples/samples:
+  *  `bigtable_create_replicated_cluster`, `bigtable_check_table_exists`,
+     `bigtable_get_or_create_table`, `bigtable_get_or_create_family`,
+     `bigtable_list_column_families`, `bigtable_get_family_metadata`,
+     `bigtable_row_exists`, `bigtable_read_*`.
+  * `CheckAndMutate()`, `Apply()` and `BulkApply()`.
+  * Implement remaining column family examples and GC rule examples.
+* Cleanups:
+  * Remove `noex::Table*` dependencies in `Table::BulkApply()`,
+    `Table::*ReadModifyWriteRow()`.
+  * Remove `noex::Table::ReadModifyWriteRow()` and `SampleRows()`.
+  * Remove unused `bigtable::GrpcError`.
+  * Remove unused `AsyncFutureFromCallback`.
+  * Remove Snapshot-related functions, tests, examples, etc.
+* Bugfixes:
+  * Need `ignore_warnings` to actually delete an AppProfile.
+  * Fix portability/logical errors in shell scripts.
+  * Fix a race condition in `MutationBatcher`.
+* Test-only changes:
+  * Improve error messages in integration test.
+  * Fix the admin tests and examples to run against production.
+  * Prevent transient problems from breaking production test.
+  * Fix race condition in `async_read_stream_test`.
+  * Bypass creating real alarms in `MockCompletionQueue`.
+* **Dropped changes**
+  * from 0.8.1:
+    * Avoid `std::make_exception_ptr()` in `future_shared_state_base::abandon()`
+    * Use SFINAE to constrain applicability of the `BulkMutation(M&&...)` ctor
+  * below threshold for inclusion:
+    * Refactor BulkMutator state to a separate class.
+    * Rename AsyncBulkApply support classes.
+    * Wrap streaming read RPC loop.
+    * Explicit return types in `data_async_snippets.cc`
+    * Use explicit return type in `data_snippets.cc`
+    * Use explicit return types in `bigtable_instance_admin_snippets.cc`
+    * Use explicit return types in `instance_admin_async_snippets.cc`
+    * Fix broken links and link INSTALL.md directly.
+    * Move to clang-format-7
+    * Add the "IncludeBlocks: Merge" clang-format option
+    * Check for (and fix) whitespace formatting in non-C++ files
+    * Coalesce the separated #include blocks
+    * Moves enablers to LHS of assignment to prevent callers specifying.
+    * Add v0.8.1 release notes
+    * Purge some newly-introduced trailing whitespace.
+    * Enclose instances of $0 in quotes
+    * Fix typos in these READMEs: `support->supports`
+    * Clean up relational operators
+    * Cleanup the Doxygen documentation.
+    * Update documentation for top-level classes.
+    * Cleanup the InstanceAdmin snippets.
+    * Fix typos and comments in the CompletionQueue test.
+    * Create aliases for table schema view constants.
+    * Remove namespace aliases from header files.
+    * Remove polling loops from samples with future.
+    * Consistently use namespace aliases in examples.
+    * Fix exit status in examples runner.
+    * Adding delete table region tag for hello world
+    * Use the `bigtable_get_table_metadata` region tag.
+    * Add `bigtable_delete_rows` region tag.
+    * Remove invalid region tags.
+    * Fix region tags for `bigtable_hello_world`.
+    * Fix typos in region tags.
 
 ### v0.8.x - 2019-04
 
