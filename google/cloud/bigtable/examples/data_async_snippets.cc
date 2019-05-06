@@ -114,11 +114,12 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
             std::cout << "All the mutations were successful\n";
             return;
           }
-          std::cout << "The following mutations failed: ";
+          std::cerr << "The following mutations failed:\n";
           for (auto const& f : failures) {
-            std::cout << "  At index " << f.original_index() << ": "
-                      << f.status() << "\n";
+            std::cerr << "index[" << f.original_index() << "]=" << f.status()
+                      << "\n";
           }
+          throw std::runtime_error(failures.front().status().message());
         })
         .get();  // block to simplify the example
   }
