@@ -289,30 +289,30 @@ void AsyncCheckConsistency(google::cloud::bigtable::TableAdmin admin,
 
   //! [async check consistency]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id_param,
      std::string consistency_token_param) {
     cbt::TableId table_id(table_id_param);
     cbt::ConsistencyToken consistency_token(consistency_token_param);
 
-    google::cloud::future<google::cloud::StatusOr<cbt::Consistency>> future =
-        admin.AsyncCheckConsistency(cq, table_id, consistency_token);
-
-    auto final = future.then([](google::cloud::future<
-                                 google::cloud::StatusOr<cbt::Consistency>>
-                                    f) {
-      auto consistency = f.get();
-      if (!consistency) {
-        throw std::runtime_error(consistency.status().message());
-      }
-      if (consistency.value() == cbt::Consistency::kConsistent) {
-        std::cout << "Table is consistent\n";
-      } else {
-        std::cout
-            << "Table is not yet consistent, Please Try again Later with the "
-               "same Token!";
-      }
-      std::cout << std::flush;
-    });
+    future<void> final =
+        admin.AsyncCheckConsistency(cq, table_id, consistency_token)
+            .then([consistency_token_param](
+                      future<StatusOr<cbt::Consistency>> f) {
+              auto consistency = f.get();
+              if (!consistency) {
+                throw std::runtime_error(consistency.status().message());
+              }
+              if (consistency.value() == cbt::Consistency::kConsistent) {
+                std::cout << "Table is consistent\n";
+              } else {
+                std::cout << "Table is not yet consistent, Please try again"
+                          << " later with the same token ("
+                          << consistency_token_param << ")\n";
+              }
+            });
+    final.get();  // block until done to keep example simple.
   }
   //! [async check consistency]
   (std::move(admin), std::move(cq), argv[1], argv[2]);
@@ -341,6 +341,7 @@ void AsyncGenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
           }
           std::cout << "generated token is : " << token->get() << "\n";
         });
+    final.get();  // block to keep example simple.
   }
   //! [async generate consistency token]
   (std::move(admin), std::move(cq), argv[1]);

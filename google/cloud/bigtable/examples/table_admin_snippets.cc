@@ -628,13 +628,14 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
 
   //! [wait for consistency check]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string table_id_param) {
     cbt::TableId table_id(table_id_param);
     auto consistency_token(admin.GenerateConsistencyToken(table_id.get()));
     if (!consistency_token) {
       throw std::runtime_error(consistency_token.status().message());
     }
-    auto result =
+    StatusOr<bool> result =
         admin.WaitForConsistencyCheck(table_id, *consistency_token).get();
     if (result && *result) {
       std::cout << "Table is consistent\n";
@@ -670,10 +671,9 @@ void CheckConsistency(google::cloud::bigtable::TableAdmin admin, int argc,
       std::cout << "Table is consistent\n";
     } else {
       std::cout
-          << "Table is not yet consistent, Please Try again Later with the "
-             "same Token!";
+          << "Table is not yet consistent, Please try again later with the"
+          << " same token (" << consistency_token_param << ")\n";
     }
-    std::cout << std::flush;
   }
   //! [check consistency]
   (std::move(admin), table_id_param, consistency_token_param);

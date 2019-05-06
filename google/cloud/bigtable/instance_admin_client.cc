@@ -20,11 +20,14 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+namespace internal {
+/// Define what endpoint in ClientOptions is used for the InstanceAdminClient.
 struct InstanceAdminTraits {
-  static std::string const& Endpoint(bigtable::ClientOptions& options) {
+  static std::string const& Endpoint(ClientOptions& options) {
     return options.instance_admin_endpoint();
   }
 };
+}  // namespace internal
 
 namespace {
 /**
@@ -45,7 +48,7 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
   // Introduce an early `private:` section because this type is used to define
   // the public interface, it should not be part of the public interface.
   using Impl = internal::CommonClient<
-      InstanceAdminTraits,
+      internal::InstanceAdminTraits,
       ::google::bigtable::admin::v2::BigtableInstanceAdmin>;
 
  public:

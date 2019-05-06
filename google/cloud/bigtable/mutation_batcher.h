@@ -37,17 +37,17 @@ inline namespace BIGTABLE_CLIENT_NS {
  *
  * In order to maximize throughput when applying a lot of mutations to Cloud
  * Bigtable, one should pack the mutations in `BulkMutations`. This class helps
- * in doing so. Create a `MutationBatcher` and use its `AsyncApply` member
- * function to apply a large stream of mutations to the same `Table`. Objects
- * of this class will efficiently create batches of `SingleRowMutations` and
- * maintain multiple batches "in flight".
+ * in doing so. Create a `MutationBatcher` and use
+ * `MutationBatcher::AsyncApply()` to apply a large stream of mutations to the
+ * same `Table`. Objects of this class will efficiently create batches of
+ * `SingleRowMutations` and maintain multiple batches "in flight".
  *
  * This class also offers an easy-to-use flow control mechanism to avoid
  * unbounded growth in its internal buffers.
  *
- * Applications provide a `CompletionQueue` to (asynchronously) execute these
- * operations. The application is responsible of executing the `CompletionQueue`
- * event loop in one or more threads.
+ * Applications must provide a `CompletionQueue` to (asynchronously) execute
+ * these operations. The application is responsible of executing the
+ * `CompletionQueue` event loop in one or more threads.
  */
 class MutationBatcher {
  public:

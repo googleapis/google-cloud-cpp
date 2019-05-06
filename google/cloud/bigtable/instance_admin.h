@@ -686,10 +686,10 @@ class InstanceAdmin {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
-   * @par Example
+   * @par Multi-cluster Routing Example
    * @snippet bigtable_instance_admin_snippets.cc create app profile
    *
-   * @par Example
+   * @par Single Cluster Routing Example
    * @snippet bigtable_instance_admin_snippets.cc create app profile cluster
    */
   StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
@@ -765,13 +765,13 @@ class InstanceAdmin {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
-   * @par Example
+   * @par Change Description Example
    * @snippet bigtable_instance_admin_snippets.cc update app profile description
    *
-   * @par Example
+   * @par Change Routing to Any Cluster Example
    * @snippet bigtable_instance_admin_snippets.cc update app profile routing any
    *
-   * @par Example
+   * @par Change Routing to a Specific Cluster Example
    * @snippet bigtable_instance_admin_snippets.cc update app profile routing
    */
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(

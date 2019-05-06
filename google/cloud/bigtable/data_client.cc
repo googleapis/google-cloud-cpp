@@ -21,6 +21,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+namespace internal {
 /**
  * Implement a simple DataClient.
  *
@@ -159,11 +160,12 @@ class DefaultDataClient : public DataClient {
 std::string const& DefaultDataClient::project_id() const { return project_; }
 
 std::string const& DefaultDataClient::instance_id() const { return instance_; }
+}  // namespace internal
 
 std::shared_ptr<DataClient> CreateDefaultDataClient(std::string project_id,
                                                     std::string instance_id,
                                                     ClientOptions options) {
-  return std::make_shared<DefaultDataClient>(
+  return std::make_shared<internal::DefaultDataClient>(
       std::move(project_id), std::move(instance_id), std::move(options));
 }
 
