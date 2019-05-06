@@ -169,9 +169,9 @@ void BulkApply(google::cloud::bigtable::Table table, int argc, char* argv[]) {
       std::cout << "All mutations applied successfully\n";
       return;
     }
-    std::cout << "The following mutations failed: ";
+    std::cerr << "The following mutations failed:\n";
     for (auto const& f : failures) {
-      std::cout << "index[" << f.original_index() << "]=" << f.status() << "\n";
+      std::cerr << "index[" << f.original_index() << "]=" << f.status() << "\n";
     }
     throw std::runtime_error(failures.front().status().message());
   }
@@ -811,9 +811,9 @@ void MutateDeleteRows(google::cloud::bigtable::Table table, int argc,
       std::cout << "All rows successfully deleted\n";
       return;
     }
+    std::cerr << "The following mutations failed:\n";
     for (auto const& f : failures) {
-      std::cerr << "The mutation for row " << keys[f.original_index()]
-                << " failed with " << f.status() << "\n";
+      std::cerr << "index[" << f.original_index() << "]=" << f.status() << "\n";
     }
     throw std::runtime_error(failures.front().status().message());
   }
@@ -963,10 +963,14 @@ void InsertTestData(google::cloud::bigtable::Table table, int argc, char*[]) {
     bulk.emplace_back(std::move(mutation));
   }
   auto failures = table.BulkApply(std::move(bulk));
-  if (!failures.empty()) {
-    auto status = failures.front().status();
-    throw std::runtime_error(status.message());
+  if (failures.empty()) {
+    return;
   }
+  std::cerr << "The following mutations failed:\n";
+  for (auto const& f : failures) {
+    std::cerr << "index[" << f.original_index() << "]=" << f.status() << "\n";
+  }
+  throw std::runtime_error(failures.front().status().message());
 }
 
 // This command just generates data suitable for other examples to run. This
@@ -975,7 +979,7 @@ void PopulateTableHierarchy(google::cloud::bigtable::Table table, int argc,
                             char* argv[]) {
   if (argc != 1) {
     throw Usage{
-        "populate-table-hierarchy: <project-id> <instance-id> <table-id>"};
+        "populate-table-hierarchy <project-id> <instance-id> <table-id>"};
   }
 
   namespace cbt = google::cloud::bigtable;
