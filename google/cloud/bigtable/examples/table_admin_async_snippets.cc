@@ -36,25 +36,24 @@ void AsyncCreateTable(google::cloud::bigtable::TableAdmin admin,
                       google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
   if (argv.size() != 2U) {
-    throw Usage{"async-create-table: <project-id> <instance-id> <table-id>"};
+    throw Usage{"async-create-table <project-id> <instance-id> <table-id>"};
   }
 
   //! [async create table]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {
-    google::cloud::future<
-        google::cloud::StatusOr<google::bigtable::admin::v2::Table>>
-        future = admin.AsyncCreateTable(
+    future<StatusOr<google::bigtable::admin::v2::Table>> table_future =
+        admin.AsyncCreateTable(
             cq, table_id,
             cbt::TableConfig(
                 {{"fam", cbt::GcRule::MaxNumVersions(10)},
                  {"foo", cbt::GcRule::MaxAge(std::chrono::hours(72))}},
                 {}));
 
-    auto final = future.then(
-        [](google::cloud::future<
-            google::cloud::StatusOr<google::bigtable::admin::v2::Table>>
-               f) {
+    auto final = table_future.then(
+        [](future<StatusOr<google::bigtable::admin::v2::Table>> f) {
           auto table = f.get();
           if (!table) {
             throw std::runtime_error(table.status().message());
@@ -62,7 +61,7 @@ void AsyncCreateTable(google::cloud::bigtable::TableAdmin admin,
           std::cout << "Table created as " << table->name() << "\n";
           return google::cloud::Status();
         });
-    final.get();  // block to keep sample small and correct.
+    final.get();  // block to simplify the example.
   }
   //! [async create table]
   (std::move(admin), std::move(cq), argv[1]);
@@ -72,20 +71,20 @@ void AsyncListTables(google::cloud::bigtable::TableAdmin admin,
                      google::cloud::bigtable::CompletionQueue cq,
                      std::vector<std::string> argv) {
   if (argv.size() != 1U) {
-    throw Usage{"async-list-tables: <project-id> <instance-id>"};
+    throw Usage{"async-list-tables <project-id> <instance-id>"};
   }
 
   //! [async list tables]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq) {
-    google::cloud::future<google::cloud::StatusOr<
-        std::vector<google::bigtable::admin::v2::Table>>>
-        future = admin.AsyncListTables(cq, cbt::TableAdmin::NAME_ONLY);
+    future<StatusOr<std::vector<google::bigtable::admin::v2::Table>>>
+        tables_future = admin.AsyncListTables(cq, cbt::TableAdmin::NAME_ONLY);
 
-    auto final =
-        future.then([](google::cloud::future<google::cloud::StatusOr<
-                           std::vector<google::bigtable::admin::v2::Table>>>
-                           f) {
+    auto final = tables_future.then(
+        [](future<StatusOr<std::vector<google::bigtable::admin::v2::Table>>>
+               f) {
           auto tables = f.get();
           if (!tables) {
             throw std::runtime_error(tables.status().message());
@@ -95,7 +94,7 @@ void AsyncListTables(google::cloud::bigtable::TableAdmin admin,
           }
           return google::cloud::Status();
         });
-    final.get();  // block to keep sample small and correct.
+    final.get();  // block to simplify the example.
   }
   //! [async list tables]
   (std::move(admin), std::move(cq));
@@ -105,21 +104,20 @@ void AsyncGetTable(google::cloud::bigtable::TableAdmin admin,
                    google::cloud::bigtable::CompletionQueue cq,
                    std::vector<std::string> argv) {
   if (argv.size() != 2U) {
-    throw Usage{"async-get-table: <project-id> <instance-id> <table-id>"};
+    throw Usage{"async-get-table <project-id> <instance-id> <table-id>"};
   }
 
   //! [async get table]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {
-    google::cloud::future<
-        google::cloud::StatusOr<google::bigtable::admin::v2::Table>>
-        future = admin.AsyncGetTable(cq, table_id,
-                                     google::bigtable::admin::v2::Table::FULL);
+    future<StatusOr<google::bigtable::admin::v2::Table>> table_future =
+        admin.AsyncGetTable(cq, table_id,
+                            google::bigtable::admin::v2::Table::FULL);
 
-    auto final = future.then(
-        [](google::cloud::future<
-            google::cloud::StatusOr<google::bigtable::admin::v2::Table>>
-               f) {
+    auto final = table_future.then(
+        [](future<StatusOr<google::bigtable::admin::v2::Table>> f) {
           auto table = f.get();
           if (!table) {
             throw std::runtime_error(table.status().message());
@@ -135,7 +133,7 @@ void AsyncGetTable(google::cloud::bigtable::TableAdmin admin,
           return google::cloud::Status();
         });
 
-    final.get();
+    final.get();  // block to simplify the example.
   }
   //! [async get table]
   (std::move(admin), std::move(cq), argv[1]);
@@ -145,17 +143,18 @@ void AsyncDeleteTable(google::cloud::bigtable::TableAdmin admin,
                       google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
   if (argv.size() != 2U) {
-    throw Usage{"async-delete-table: <project-id> <instance-id> <table-id>"};
+    throw Usage{"async-delete-table <project-id> <instance-id> <table-id>"};
   }
 
   //! [async delete table]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {
-    google::cloud::future<google::cloud::Status> future =
+    future<google::cloud::Status> status_future =
         admin.AsyncDeleteTable(cq, table_id);
 
     auto final =
-        future.then([table_id](google::cloud::future<google::cloud::Status> f) {
+        status_future.then([table_id](future<google::cloud::Status> f) {
           auto status = f.get();
           if (!status.ok()) {
             throw std::runtime_error(status.message());
@@ -163,7 +162,7 @@ void AsyncDeleteTable(google::cloud::bigtable::TableAdmin admin,
           std::cout << "Successfully deleted table: " << table_id << "\n";
         });
 
-    final.get();
+    final.get();  // block to simplify example.
   }
   //! [async delete table]
   (std::move(admin), std::move(cq), argv[1]);
@@ -173,15 +172,16 @@ void AsyncModifyTable(google::cloud::bigtable::TableAdmin admin,
                       google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
   if (argv.size() != 2U) {
-    throw Usage{"async-modify-table: <project-id> <instance-id> <table-id>"};
+    throw Usage{"async-modify-table <project-id> <instance-id> <table-id>"};
   }
 
   //! [async modify table]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {
-    google::cloud::future<
-        google::cloud::StatusOr<google::bigtable::admin::v2::Table>>
-        future = admin.AsyncModifyColumnFamilies(
+    future<StatusOr<google::bigtable::admin::v2::Table>> table_future =
+        admin.AsyncModifyColumnFamilies(
             cq, table_id,
             {cbt::ColumnFamilyModification::Drop("foo"),
              cbt::ColumnFamilyModification::Update(
@@ -193,26 +193,17 @@ void AsyncModifyTable(google::cloud::bigtable::TableAdmin admin,
                             cbt::GcRule::MaxNumVersions(3),
                             cbt::GcRule::MaxAge(std::chrono::hours(72))))});
 
-    auto final = future.then(
-        [](google::cloud::future<
-            google::cloud::StatusOr<google::bigtable::admin::v2::Table>>
-               f) {
+    auto final = table_future.then(
+        [](future<StatusOr<google::bigtable::admin::v2::Table>> f) {
           auto table = f.get();
           if (!table) {
             throw std::runtime_error(table.status().message());
           }
-          std::cout << table->name() << "\n";
-          for (auto const& family : table->column_families()) {
-            std::string const& family_name = family.first;
-            std::string gc_rule;
-            google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
-                                                        &gc_rule);
-            std::cout << "\t" << family_name << "\t\t" << gc_rule << "\n";
-          }
-          return google::cloud::Status();
+          std::cout << table->name() << ":\n";
+          std::cout << table->DebugString() << "\n";
         });
 
-    final.get();
+    final.get();  // block to simplify example.
   }
   //! [async modify table]
   (std::move(admin), std::move(cq), argv[1]);
@@ -223,27 +214,27 @@ void AsyncDropRowsByPrefix(google::cloud::bigtable::TableAdmin admin,
                            std::vector<std::string> argv) {
   if (argv.size() != 3U) {
     throw Usage{
-        "async-drop-rows-by-prefix: <project-id> <instance-id> <table-id> "
+        "async-drop-rows-by-prefix <project-id> <instance-id> <table-id> "
         "<row-key>"};
   }
 
   //! [async drop rows by prefix]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id,
      std::string row_key) {
-    google::cloud::future<google::cloud::Status> future =
+    future<google::cloud::Status> status_future =
         admin.AsyncDropRowsByPrefix(cq, table_id, row_key);
-    auto final =
-        future.then([row_key](google::cloud::future<google::cloud::Status> f) {
-          auto status = f.get();
-          if (!status.ok()) {
-            throw std::runtime_error(status.message());
-          }
-          std::cout << "Successfully dropped rows with prefix " << row_key
-                    << "\n";
-        });
+    auto final = status_future.then([row_key](future<google::cloud::Status> f) {
+      auto status = f.get();
+      if (!status.ok()) {
+        throw std::runtime_error(status.message());
+      }
+      std::cout << "Successfully dropped rows with prefix " << row_key << "\n";
+    });
 
-    final.get();
+    final.get();  // block to simplify example.
   }
   //! [async drop rows by prefix]
   (std::move(admin), std::move(cq), argv[1], argv[2]);
@@ -253,16 +244,18 @@ void AsyncDropAllRows(google::cloud::bigtable::TableAdmin admin,
                       google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
   if (argv.size() != 2U) {
-    throw Usage{"async-drop-all-rows: <project-id> <instance-id> <table-id>"};
+    throw Usage{"async-drop-all-rows <project-id> <instance-id> <table-id>"};
   }
 
   //! [async drop all rows]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {
-    google::cloud::future<google::cloud::Status> future =
+    future<google::cloud::Status> status_future =
         admin.AsyncDropAllRows(cq, table_id);
     auto final =
-        future.then([table_id](google::cloud::future<google::cloud::Status> f) {
+        status_future.then([table_id](future<google::cloud::Status> f) {
           auto status = f.get();
           if (!status.ok()) {
             throw std::runtime_error(status.message());
@@ -270,8 +263,7 @@ void AsyncDropAllRows(google::cloud::bigtable::TableAdmin admin,
           std::cout << "Successfully dropped all rows for table_id " << table_id
                     << "\n";
         });
-
-    final.get();
+    final.get();  // block to simplify example.
   }
   //! [async drop all rows]
   (std::move(admin), std::move(cq), argv[1]);
@@ -282,7 +274,7 @@ void AsyncCheckConsistency(google::cloud::bigtable::TableAdmin admin,
                            std::vector<std::string> argv) {
   if (argv.size() != 3U) {
     throw Usage{
-        "async-check-consistency: <project-id> <instance-id> <table-id> "
+        "async-check-consistency <project-id> <instance-id> <table-id> "
         "<consistency_token>"};
   }
 
@@ -290,28 +282,26 @@ void AsyncCheckConsistency(google::cloud::bigtable::TableAdmin admin,
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id_param,
-     std::string consistency_token_param) {
-    cbt::TableId table_id(table_id_param);
-    cbt::ConsistencyToken consistency_token(consistency_token_param);
-
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id,
+     std::string consistency_token) {
     future<void> final =
-        admin.AsyncCheckConsistency(cq, table_id, consistency_token)
-            .then([consistency_token_param](
-                      future<StatusOr<cbt::Consistency>> f) {
+        admin
+            .AsyncCheckConsistency(cq, cbt::TableId(table_id),
+                                   cbt::ConsistencyToken(consistency_token))
+            .then([consistency_token](future<StatusOr<cbt::Consistency>> f) {
               auto consistency = f.get();
               if (!consistency) {
                 throw std::runtime_error(consistency.status().message());
               }
-              if (consistency.value() == cbt::Consistency::kConsistent) {
+              if (*consistency == cbt::Consistency::kConsistent) {
                 std::cout << "Table is consistent\n";
               } else {
                 std::cout << "Table is not yet consistent, Please try again"
-                          << " later with the same token ("
-                          << consistency_token_param << ")\n";
+                          << " later with the same token (" << consistency_token
+                          << ")\n";
               }
             });
-    final.get();  // block until done to keep example simple.
+    final.get();  // block to simplify example.
   }
   //! [async check consistency]
   (std::move(admin), std::move(cq), argv[1], argv[2]);
@@ -322,25 +312,26 @@ void AsyncGenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
                                    std::vector<std::string> argv) {
   if (argv.size() != 2U) {
     throw Usage{
-        "async-generate-consistency-token: <project-id> <instance-id> "
+        "async-generate-consistency-token <project-id> <instance-id> "
         "<table-id>"};
   }
 
   //! [async generate consistency token]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {
-    google::cloud::future<StatusOr<cbt::ConsistencyToken>> future =
+    future<StatusOr<cbt::ConsistencyToken>> token_future =
         admin.AsyncGenerateConsistencyToken(cq, table_id);
-    auto final = future.then(
-        [table_id](google::cloud::future<StatusOr<cbt::ConsistencyToken>> f) {
+    auto final =
+        token_future.then([](future<StatusOr<cbt::ConsistencyToken>> f) {
           auto token = f.get();
           if (!token) {
             throw std::runtime_error(token.status().message());
           }
           std::cout << "generated token is : " << token->get() << "\n";
         });
-    final.get();  // block to keep example simple.
+    final.get();  // block to simplify example.
   }
   //! [async generate consistency token]
   (std::move(admin), std::move(cq), argv[1]);
