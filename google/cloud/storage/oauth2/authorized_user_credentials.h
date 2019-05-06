@@ -89,8 +89,6 @@ class AuthorizedUserCredentials : public Credentials {
 
  private:
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() {
-    namespace nl = storage::internal::nl;
-
     auto response = request_.MakeRequest(payload_);
     if (!response) {
       return std::move(response).status();
@@ -98,7 +96,8 @@ class AuthorizedUserCredentials : public Credentials {
     if (response->status_code >= 300) {
       return AsStatus(*response);
     }
-    nl::json access_token = nl::json::parse(response->payload, nullptr, false);
+    auto access_token =
+        storage::internal::nl::json::parse(response->payload, nullptr, false);
     if (access_token.is_discarded() ||
         access_token.count("access_token") == 0U ||
         access_token.count("expires_in") == 0U ||
