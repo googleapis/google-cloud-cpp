@@ -345,7 +345,7 @@ void AsyncListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
 
     google::cloud::future<google::cloud::Status> final = future.then(
         [](google::cloud::future<google::cloud::StatusOr<cbt::ClusterList>> f) {
-          StatusOr<cbt::ClusterList> cluster_list = f.get();
+          auto cluster_list = f.get();
           if (!cluster_list) {
             throw std::runtime_error(cluster_list.status().message());
           }
@@ -387,7 +387,7 @@ void AsyncListAllClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
 
     google::cloud::future<google::cloud::Status> final = future.then(
         [](google::cloud::future<google::cloud::StatusOr<cbt::ClusterList>> f) {
-          StatusOr<cbt::ClusterList> cluster_list = f.get();
+          auto cluster_list = f.get();
           if (!cluster_list) {
             throw std::runtime_error(cluster_list.status().message());
           }
@@ -433,8 +433,7 @@ void AsyncListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
         [](google::cloud::future<google::cloud::StatusOr<
                std::vector<google::bigtable::admin::v2::AppProfile>>>
                f) {
-          StatusOr<std::vector<google::bigtable::admin::v2::AppProfile>>
-              app_profile_list = f.get();
+          auto app_profile_list = f.get();
           if (!app_profile_list) {
             throw std::runtime_error(app_profile_list.status().message());
           }
@@ -464,27 +463,25 @@ void AsyncUpdateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id) {
     google::cloud::future<StatusOr<google::bigtable::admin::v2::Instance>>
-        future =
-            instance_admin.AsyncGetInstance(cq, instance_id)
-                .then([instance_admin,
-                       cq](google::cloud::future<google::cloud::StatusOr<
-                               google::bigtable::admin::v2::Instance>>
-                               instance_fut) mutable {
-                  StatusOr<google::bigtable::admin::v2::Instance> instance =
-                      instance_fut.get();
-                  if (!instance) {
-                    throw std::runtime_error(instance.status().message());
-                  }
-                  // Modify the instance and prepare the mask with modified
-                  // field
-                  cbt::InstanceUpdateConfig instance_update_config(
-                      std::move(*instance));
-                  instance_update_config.set_display_name(
-                      "Modified Display Name");
+        future = instance_admin.AsyncGetInstance(cq, instance_id)
+                     .then([instance_admin,
+                            cq](google::cloud::future<google::cloud::StatusOr<
+                                    google::bigtable::admin::v2::Instance>>
+                                    instance_fut) mutable {
+                       auto instance = instance_fut.get();
+                       if (!instance) {
+                         throw std::runtime_error(instance.status().message());
+                       }
+                       // Modify the instance and prepare the mask with modified
+                       // field
+                       cbt::InstanceUpdateConfig instance_update_config(
+                           std::move(*instance));
+                       instance_update_config.set_display_name(
+                           "Modified Display Name");
 
-                  return instance_admin.AsyncUpdateInstance(
-                      cq, instance_update_config);
-                });
+                       return instance_admin.AsyncUpdateInstance(
+                           cq, instance_update_config);
+                     });
     // Show how to perform additional work while the long running operation
     // completes. The application could use future.then() instead.
     std::cout << "Waiting for instance update to complete " << std::flush;
@@ -521,8 +518,7 @@ void AsyncUpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                        cq](google::cloud::future<
                            StatusOr<google::bigtable::admin::v2::Cluster>>
                                cluster_fut) mutable {
-                  StatusOr<google::bigtable::admin::v2::Cluster> cluster =
-                      cluster_fut.get();
+                  auto cluster = cluster_fut.get();
                   if (!cluster) {
                     return google::cloud::make_ready_future(
                         StatusOr<google::bigtable::admin::v2::Cluster>(
