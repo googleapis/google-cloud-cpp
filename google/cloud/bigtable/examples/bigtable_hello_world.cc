@@ -32,29 +32,31 @@ int main(int argc, char* argv[]) try {
   std::string const instance_id = argv[2];
   std::string const table_id = argv[3];
 
+  // Create a namespace alias to make the code easier to read.
+  namespace cbt = google::cloud::bigtable;
+
   // Connect to the Cloud Bigtable Admin API.
   //! [connect admin] [START bigtable_hw_connect]
-  google::cloud::bigtable::TableAdmin table_admin(
-      google::cloud::bigtable::CreateDefaultAdminClient(
-          project_id, google::cloud::bigtable::ClientOptions()),
+  cbt::TableAdmin table_admin(
+      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions()),
       instance_id);
   //! [connect admin] [END bigtable_hw_connect]
 
   //! [create table] [START bigtable_hw_create_table]
   // Define the desired schema for the Table.
-  auto gc_rule = google::cloud::bigtable::GcRule::MaxNumVersions(1);
-  google::cloud::bigtable::TableConfig schema({{"family", gc_rule}}, {});
+  cbt::GcRule gc_rule = cbt::GcRule::MaxNumVersions(1);
+  cbt::TableConfig schema({{"family", gc_rule}}, {});
 
   // Create a table.
-  auto returned_schema = table_admin.CreateTable(table_id, schema);
+  google::cloud::StatusOr<google::bigtable::admin::v2::Table> returned_schema =
+      table_admin.CreateTable(table_id, schema);
   //! [create table]
 
   // Create an object to access the Cloud Bigtable Data API.
   //! [connect data]
-  google::cloud::bigtable::Table table(
-      google::cloud::bigtable::CreateDefaultDataClient(
-          project_id, instance_id, google::cloud::bigtable::ClientOptions()),
-      table_id);
+  cbt::Table table(cbt::CreateDefaultDataClient(project_id, instance_id,
+                                                cbt::ClientOptions()),
+                   table_id);
   //! [connect data] [END bigtable_hw_create_table]
 
   // Modify (and create if necessary) a row.
@@ -75,10 +77,8 @@ int main(int argc, char* argv[]) try {
     //
     //     https://cloud.google.com/bigtable/docs/schema-design
     std::string row_key = "key-" + std::to_string(i);
-    google::cloud::Status status =
-        table.Apply(google::cloud::bigtable::SingleRowMutation(
-            std::move(row_key),
-            google::cloud::bigtable::SetCell("family", "c0", greeting)));
+    google::cloud::Status status = table.Apply(cbt::SingleRowMutation(
+        std::move(row_key), cbt::SetCell("family", "c0", greeting)));
 
     if (!status.ok()) {
       throw std::runtime_error(status.message());
@@ -88,13 +88,13 @@ int main(int argc, char* argv[]) try {
   //! [write rows] [END bigtable_hw_write_rows]
 
   //! [create filter] [START bigtable_hw_create_filter]
-  auto filter =
-      google::cloud::bigtable::Filter::ColumnRangeClosed("family", "c0", "c0");
+  cbt::Filter filter = cbt::Filter::ColumnRangeClosed("family", "c0", "c0");
   //! [create filter] [END bigtable_hw_create_filter]
 
   // Read a single row.
   //! [read row] [START bigtable_hw_get_with_filter]
-  auto result = table.ReadRow("key-0", filter);
+  google::cloud::StatusOr<std::pair<bool, cbt::Row>> result =
+      table.ReadRow("key-0", filter);
   if (!result) {
     throw std::runtime_error(result.status().message());
   }
@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) try {
               << "\n";
     return 0;
   }
-  auto const& cell = result->second.cells().front();
+  cbt::Cell const& cell = result->second.cells().front();
   std::cout << cell.family_name() << ":" << cell.column_qualifier() << "    @ "
             << cell.timestamp().count() << "us\n"
             << '"' << cell.value() << '"' << "\n";
@@ -111,14 +111,13 @@ int main(int argc, char* argv[]) try {
 
   // Read all rows.
   //! [scan all] [START bigtable_hw_scan_with_filter]
-  for (auto& row :
-       table.ReadRows(google::cloud::bigtable::RowRange::InfiniteRange(),
-                      google::cloud::bigtable::Filter::PassAllFilter())) {
+  for (google::cloud::StatusOr<cbt::Row> const& row : table.ReadRows(
+           cbt::RowRange::InfiniteRange(), cbt::Filter::PassAllFilter())) {
     if (!row) {
       throw std::runtime_error(row.status().message());
     }
     std::cout << row->row_key() << ":\n";
-    for (auto& cell : row->cells()) {
+    for (cbt::Cell const& cell : row->cells()) {
       std::cout << "\t" << cell.family_name() << ":" << cell.column_qualifier()
                 << "    @ " << cell.timestamp().count() << "us\n"
                 << "\t\"" << cell.value() << '"' << "\n";

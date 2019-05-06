@@ -77,7 +77,7 @@ int main(int argc, char* argv[]) try {
   //! [read with app profile]
   cbt::Table read(data_client, cbt::AppProfileId(profile_id), table_id);
 
-  auto result =
+  google::cloud::StatusOr<std::pair<bool, cbt::Row>> result =
       read.ReadRow("key-0", cbt::Filter::ColumnRangeClosed("fam", "c0", "c0"));
   if (!result) {
     throw std::runtime_error(result.status().message());
@@ -86,7 +86,7 @@ int main(int argc, char* argv[]) try {
     std::cout << "Cannot find row 'key-0' in the table: " << table_id << "\n";
     return 1;
   }
-  auto const& cell = result->second.cells().front();
+  cbt::Cell const& cell = result->second.cells().front();
   std::cout << cell.family_name() << ":" << cell.column_qualifier() << "    @ "
             << cell.timestamp().count() << "us\n"
             << '"' << cell.value() << '"' << "\n";
@@ -95,13 +95,13 @@ int main(int argc, char* argv[]) try {
   // Read multiple rows.
   //! [scan all with app profile]
   std::cout << "Scanning all the data from " << table_id << "\n";
-  for (auto& row : read.ReadRows(cbt::RowRange::InfiniteRange(),
-                                 cbt::Filter::PassAllFilter())) {
+  for (google::cloud::StatusOr<cbt::Row>& row : read.ReadRows(
+           cbt::RowRange::InfiniteRange(), cbt::Filter::PassAllFilter())) {
     if (!row) {
       throw std::runtime_error(row.status().message());
     }
     std::cout << row->row_key() << ":\n";
-    for (auto& cell : row->cells()) {
+    for (cbt::Cell const& cell : row->cells()) {
       std::cout << "\t" << cell.family_name() << ":" << cell.column_qualifier()
                 << "    @ " << cell.timestamp().count() << "us\n"
                 << "\t\"" << cell.value() << '"' << "\n";
