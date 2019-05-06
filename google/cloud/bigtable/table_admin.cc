@@ -32,6 +32,12 @@ static_assert(std::is_copy_constructible<bigtable::TableAdmin>::value,
 static_assert(std::is_copy_assignable<bigtable::TableAdmin>::value,
               "bigtable::TableAdmin must be assignable");
 
+constexpr TableAdmin::TableView TableAdmin::VIEW_UNSPECIFIED;
+constexpr TableAdmin::TableView TableAdmin::NAME_ONLY;
+constexpr TableAdmin::TableView TableAdmin::SCHEMA_VIEW;
+constexpr TableAdmin::TableView TableAdmin::REPLICATION_VIEW;
+constexpr TableAdmin::TableView TableAdmin::FULL;
+
 /// Shortcuts to avoid typing long names over and over.
 using ClientUtils = bigtable::internal::noex::UnaryClientUtils<AdminClient>;
 

@@ -80,8 +80,7 @@ void AsyncListTables(google::cloud::bigtable::TableAdmin admin,
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq) {
     google::cloud::future<google::cloud::StatusOr<
         std::vector<google::bigtable::admin::v2::Table>>>
-        future = admin.AsyncListTables(
-            cq, google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED);
+        future = admin.AsyncListTables(cq, cbt::TableAdmin::NAME_ONLY);
 
     auto final =
         future.then([](google::cloud::future<google::cloud::StatusOr<
