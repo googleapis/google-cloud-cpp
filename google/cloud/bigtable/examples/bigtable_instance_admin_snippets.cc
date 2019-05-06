@@ -17,7 +17,6 @@
 //! [bigtable includes]
 #include "google/cloud/bigtable/instance_admin.h"
 //! [bigtable includes]
-#include <google/protobuf/text_format.h>
 
 namespace {
 struct Usage {
@@ -66,14 +65,14 @@ void CreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                                {{cluster_id, cluster_config}});
     config.set_type(cbt::InstanceConfig::PRODUCTION);
 
-    future<StatusOr<google::bigtable::admin::v2::Instance>> f_instance =
+    future<StatusOr<google::bigtable::admin::v2::Instance>> instance_future =
         instance_admin.CreateInstance(config);
     // Show how to perform additional work while the long running operation
     // completes. The application could use future.then() instead.
     std::cout << "Waiting for instance creation to complete " << std::flush;
-    f_instance.wait_for(std::chrono::seconds(1));
+    instance_future.wait_for(std::chrono::seconds(1));
     std::cout << '.' << std::flush;
-    auto instance = f_instance.get();
+    auto instance = instance_future.get();
     if (!instance) {
       throw std::runtime_error(instance.status().message());
     }
@@ -104,14 +103,14 @@ void CreateDevInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                                {{cluster_id, cluster_config}});
     config.set_type(cbt::InstanceConfig::DEVELOPMENT);
 
-    future<StatusOr<google::bigtable::admin::v2::Instance>> f_instance =
+    future<StatusOr<google::bigtable::admin::v2::Instance>> instance_future =
         instance_admin.CreateInstance(config);
     // Show how to perform additional work while the long running operation
     // completes. The application could use future.then() instead.
     std::cout << "Waiting for instance creation to complete " << std::flush;
-    f_instance.wait_for(std::chrono::seconds(2));
+    instance_future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
-    auto instance = f_instance.get();
+    auto instance = instance_future.get();
     if (!instance) {
       throw std::runtime_error(instance.status().message());
     }
@@ -146,14 +145,14 @@ void CreateReplicatedInstance(
          {c2, cbt::ClusterConfig(zone_b, 3, cbt::ClusterConfig::HDD)}});
     config.set_type(cbt::InstanceConfig::PRODUCTION);
 
-    future<StatusOr<google::bigtable::admin::v2::Instance>> f_instance =
+    future<StatusOr<google::bigtable::admin::v2::Instance>> instance_future =
         instance_admin.CreateInstance(config);
     // Show how to perform additional work while the long running operation
     // completes. The application could use future.then() instead.
     std::cout << "Waiting for instance creation to complete " << std::flush;
-    f_instance.wait_for(std::chrono::seconds(1));
+    instance_future.wait_for(std::chrono::seconds(1));
     std::cout << '.' << std::flush;
-    auto instance = f_instance.get();
+    auto instance = instance_future.get();
     if (!instance) {
       throw std::runtime_error(instance.status().message());
     }
@@ -183,9 +182,9 @@ void UpdateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
     cbt::InstanceUpdateConfig instance_update_config(std::move(*instance));
     instance_update_config.set_display_name("Modified Display Name");
 
-    future<StatusOr<google::bigtable::admin::v2::Instance>> f_instance =
+    future<StatusOr<google::bigtable::admin::v2::Instance>> instance_future =
         instance_admin.UpdateInstance(std::move(instance_update_config));
-    f_instance
+    instance_future
         .then([](future<StatusOr<google::bigtable::admin::v2::Instance>> f) {
           auto updated_instance = f.get();
           if (!updated_instance) {
@@ -289,13 +288,13 @@ void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string cluster_id, std::string zone) {
     auto cluster_config = cbt::ClusterConfig(zone, 3, cbt::ClusterConfig::HDD);
-    future<StatusOr<google::bigtable::admin::v2::Cluster>> future_cluster =
+    future<StatusOr<google::bigtable::admin::v2::Cluster>> cluster_future =
         instance_admin.CreateCluster(cluster_config,
                                      cbt::InstanceId(instance_id),
                                      cbt::ClusterId(cluster_id));
 
     // Applications can wait asynchronously, in this example we just block.
-    auto cluster = future_cluster.get();
+    auto cluster = cluster_future.get();
     if (!cluster) {
       throw std::runtime_error(cluster.status().message());
     }
@@ -501,9 +500,7 @@ void RunInstanceOperations(
     if (!instance) {
       throw std::runtime_error(instance.status().message());
     }
-    std::string instance_detail;
-    google::protobuf::TextFormat::PrintToString(*instance, &instance_detail);
-    std::cout << "GetInstance details :\n" << instance_detail;
+    std::cout << "GetInstance details :\n" << instance->DebugString();
 
     std::cout << "\nListing Clusters:\n";
     auto cluster_list = instance_admin.ListClusters(instance_id);
