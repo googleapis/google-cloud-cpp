@@ -97,8 +97,6 @@ class ServiceAccountCredentials : public Credentials {
  public:
   explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo const& info)
       : clock_() {
-    namespace nl = storage::internal::nl;
-
     HttpRequestBuilderType request_builder(
         info.token_uri, storage::internal::GetDefaultCurlHandleFactory());
     auto assertion_components = std::move(AssertionComponentsFromInfo(info));
@@ -163,8 +161,7 @@ class ServiceAccountCredentials : public Credentials {
    */
   std::pair<storage::internal::nl::json, storage::internal::nl::json>
   AssertionComponentsFromInfo(ServiceAccountCredentialsInfo const& info) const {
-    namespace nl = storage::internal::nl;
-    nl::json assertion_header = {
+    storage::internal::nl::json assertion_header = {
         {"alg", "RS256"}, {"kid", info.private_key_id}, {"typ", "JWT"}};
 
     // Scopes must be specified in a comma-delimited string.
@@ -188,7 +185,7 @@ class ServiceAccountCredentials : public Credentials {
         static_cast<long>(std::chrono::system_clock::to_time_t(now));
     auto expiration_from_epoch =
         static_cast<long>(std::chrono::system_clock::to_time_t(expiration));
-    nl::json assertion_payload = {
+    storage::internal::nl::json assertion_payload = {
         {"iss", info.client_email},
         {"scope", scope_str},
         {"aud", info.token_uri},
@@ -220,8 +217,6 @@ class ServiceAccountCredentials : public Credentials {
   }
 
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() {
-    namespace nl = storage::internal::nl;
-
     auto response = request_.MakeRequest(payload_);
     if (!response) {
       return std::move(response).status();
@@ -230,7 +225,8 @@ class ServiceAccountCredentials : public Credentials {
       return AsStatus(*response);
     }
 
-    nl::json access_token = nl::json::parse(response->payload, nullptr, false);
+    auto access_token =
+        storage::internal::nl::json::parse(response->payload, nullptr, false);
     if (access_token.is_discarded() ||
         access_token.count("access_token") == 0U or
         access_token.count("expires_in") == 0U or

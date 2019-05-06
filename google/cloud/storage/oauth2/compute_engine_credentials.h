@@ -134,7 +134,6 @@ class ComputeEngineCredentials : public Credentials {
    * for more details.
    */
   Status RetrieveServiceAccountInfo() const {
-    namespace nl = google::cloud::storage::internal::nl;
     auto response = DoMetadataServerGetRequest(
         "/computeMetadata/v1/instance/service-accounts/" +
             service_account_email_ + "/",
@@ -146,7 +145,8 @@ class ComputeEngineCredentials : public Credentials {
       return AsStatus(*response);
     }
 
-    nl::json response_body = nl::json::parse(response->payload, nullptr, false);
+    auto response_body =
+        storage::internal::nl::json::parse(response->payload, nullptr, false);
     // Note that the "scopes" attribute will always be present and contain a
     // JSON array. At minimum, for the request to succeed, the instance must
     // have been granted the scope that allows it to retrieve info from the
@@ -162,7 +162,7 @@ class ComputeEngineCredentials : public Credentials {
     service_account_email_ = response_body.value("email", "");
     // We need to call the .get<>() helper because the conversion is ambiguous
     // otherwise.
-    scopes_ = response_body["scopes"].get<std::set<std::string>>();
+    scopes_ = response_body["scopes"].template get<std::set<std::string>>();
     return Status();
   }
 

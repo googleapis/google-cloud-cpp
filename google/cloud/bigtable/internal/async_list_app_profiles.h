@@ -28,7 +28,6 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
-namespace btadmin = google::bigtable::admin::v2;
 /**
  * A wrapped call to AsyncListAppProfiles, to be used in AsyncRetryMultiPage.
  *
@@ -36,8 +35,8 @@ namespace btadmin = google::bigtable::admin::v2;
  */
 class AsyncListAppProfiles {
  public:
-  using Request = btadmin::ListAppProfilesRequest;
-  using Response = std::vector<btadmin::AppProfile>;
+  using Request = google::bigtable::admin::v2::ListAppProfilesRequest;
+  using Response = std::vector<google::bigtable::admin::v2::AppProfile>;
 
   AsyncListAppProfiles(std::shared_ptr<InstanceAdminClient> client,
                        std::string instance_name)
@@ -77,9 +76,10 @@ class AsyncListAppProfiles {
     return cq.MakeUnaryRpc(
         *client_, &InstanceAdminClient::AsyncListAppProfiles, request,
         std::move(context),
-        [this, callback](CompletionQueue& cq,
-                         btadmin::ListAppProfilesResponse& response,
-                         grpc::Status& status) {
+        [this, callback](
+            CompletionQueue& cq,
+            google::bigtable::admin::v2::ListAppProfilesResponse& response,
+            grpc::Status& status) {
           if (!status.ok()) {
             callback(cq, false, status);
             return;
@@ -92,13 +92,15 @@ class AsyncListAppProfiles {
         });
   }
 
-  std::vector<btadmin::AppProfile> AccumulatedResult() { return response_; }
+  std::vector<google::bigtable::admin::v2::AppProfile> AccumulatedResult() {
+    return response_;
+  }
 
  private:
   std::shared_ptr<bigtable::InstanceAdminClient> client_;
   std::string next_page_token_;
   std::string instance_name_;
-  std::vector<btadmin::AppProfile> response_;
+  std::vector<google::bigtable::admin::v2::AppProfile> response_;
 };
 
 /**
@@ -116,7 +118,8 @@ class AsyncListAppProfiles {
 template <typename Functor,
           typename std::enable_if<
               google::cloud::internal::is_invocable<
-                  Functor, CompletionQueue&, std::vector<btadmin::AppProfile>&,
+                  Functor, CompletionQueue&,
+                  std::vector<google::bigtable::admin::v2::AppProfile>&,
                   grpc::Status&>::value,
               int>::type valid_callback_type = 0>
 class AsyncRetryListAppProfiles
