@@ -14,7 +14,6 @@ var searchData=
   ['enablestdclog',['EnableStdClog',['../../common/classgoogle_1_1cloud_1_1v0_1_1LogSink.html#aa1dec24bcc0e765c6dee00846ad4cbe0',1,'google::cloud::v0::LogSink']]],
   ['end',['end',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#ab3f7705ec738faa1c60766db8b024fd5',1,'google::cloud::v0::IamBindings::end()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowReader.html#afab5d5743eace8aa777367ee85254f3c',1,'google::cloud::bigtable::v0::RowReader::end()']]],
   ['endingat',['EndingAt',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html#af51fe5ebf9d75c60732a0167b6ac3a55',1,'google::cloud::bigtable::v0::RowRange']]],
-  ['endpoint',['Endpoint',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminTraits.html#ad1ef4e2b038fe558f195059a27f26770',1,'google::cloud::bigtable::v0::InstanceAdminTraits']]],
   ['environment_2dvariables_2edox',['environment-variables.dox',['../environment-variables_8dox.html',1,'']]],
   ['estimated_5fsize_5fin_5fbytes',['estimated_size_in_bytes',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1BulkMutation.html#ab4eb830e3633b209c709718a9b35b4a4',1,'google::cloud::bigtable::v0::BulkMutation']]],
   ['etag',['etag',['../../common/structgoogle_1_1cloud_1_1v0_1_1IamPolicy.html#a3aa421f13af714c3fee5318cc9e5ad22',1,'google::cloud::v0::IamPolicy']]],

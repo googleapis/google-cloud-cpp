@@ -12,7 +12,6 @@ var searchData=
   ['sourcegeneration',['SourceGeneration',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1SourceGeneration.html',1,'google::cloud::storage::v1']]],
   ['status',['Status',['../../common/classgoogle_1_1cloud_1_1v0_1_1Status.html',1,'google::cloud::v0']]],
   ['statusor',['StatusOr',['../../common/classgoogle_1_1cloud_1_1v0_1_1StatusOr.html',1,'google::cloud::v0']]],
-  ['statustraits',['StatusTraits',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1internal_1_1StatusTraits.html',1,'google::cloud::storage::v1::internal']]],
   ['strictidempotencypolicy',['StrictIdempotencyPolicy',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1StrictIdempotencyPolicy.html',1,'google::cloud::storage::v1']]],
   ['subresourceoption',['SubResourceOption',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1SubResourceOption.html',1,'google::cloud::storage::v1']]]
 ];

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['safeidempotentmutationpolicy',['SafeIdempotentMutationPolicy',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html#a51cb822a24056e43dcad7c78a09df9a6',1,'google::cloud::bigtable::v0::SafeIdempotentMutationPolicy']]],
-  ['samplerowkeys',['SampleRowKeys',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DefaultDataClient.html#ad807b3cf9bbc87d2c29353fdfd6a1032',1,'google::cloud::bigtable::v0::DefaultDataClient::SampleRowKeys()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#ad26a4da6215afbfe88fefa44e5c4d664',1,'google::cloud::bigtable::v0::DataClient::SampleRowKeys()']]],
+  ['samplerowkeys',['SampleRowKeys',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#ad26a4da6215afbfe88fefa44e5c4d664',1,'google::cloud::bigtable::v0::DataClient']]],
   ['samplerows',['SampleRows',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#aba7acffbcf43365528cde61d159e7a99',1,'google::cloud::bigtable::v0::Table']]],
   ['serversettimestamp',['ServerSetTimestamp',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a44e6b92f0549ea6a98d04a82b0346119',1,'google::cloud::bigtable::v0']]],
   ['set_5fadmin_5fendpoint',['set_admin_endpoint',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#a1985b6c817659fe4789e804de9f320dc',1,'google::cloud::bigtable::v0::ClientOptions']]],

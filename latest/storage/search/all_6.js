@@ -47,7 +47,6 @@ var searchData=
   ['googleoauthrefreshendpoint',['GoogleOAuthRefreshEndpoint',['../namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a355e1303e24d08b72aafc5d77c454d23',1,'google::cloud::storage::v1::oauth2']]],
   ['googleoauthscopecloudplatform',['GoogleOAuthScopeCloudPlatform',['../namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a57342caf567a8e79d66b53663da0a189',1,'google::cloud::storage::v1::oauth2']]],
   ['google_20cloud_20storage_20c_2b_2b_20client_20library',['Google Cloud Storage C++ Client Library',['../index.html',1,'']]],
-  ['internal',['internal',['../namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1internal.html',1,'google::cloud::storage::v1']]],
   ['oauth2',['oauth2',['../namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html',1,'google::cloud::storage::v1']]],
   ['payload_5fformat',['payload_format',['../namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1payload__format.html',1,'google::cloud::storage::v1']]],
   ['storage',['storage',['../namespacegoogle_1_1cloud_1_1storage.html',1,'google::cloud']]],
