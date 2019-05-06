@@ -38,9 +38,9 @@ It offers access to the GCP Bigtable API, including operations to list, read, wr
 
 The source code for the Cloud Bigtable C++ Client Library can be found on
 [GitHub][github-link]. Download or clone this repository as usual. The
-top-level README file in this repository includes detailed instructions on
-how to compile the library. The examples used in this guide should be
-automatically compiled when you follow said instructions.
+top-level [README][github-readme] file in this repository includes detailed
+instructions on how to compile the library. The examples used in this guide
+should be automatically compiled when you follow said instructions.
 
 ### Run the Quick Start Example
 
@@ -93,7 +93,7 @@ cc_binary(
 
 #### Integrating with CMake
 
-Follow the instructions on the top-level INSTALL.md file on
+Follow the instructions on the top-level [INSTALL][github-INSTALL] file on
 [GitHub][github-link] for details on how to compile and install the library for
 your platform and distribution. Once the library is installed, you can use it in
 your `CMakeLists.txt` file like any other package:
@@ -108,7 +108,7 @@ target_link_libraries(my_program bigtable_client)
 
 #### Integrating with Make
 
-The installation instructions on the top-level INSTALL.md file on
+The installation instructions on the top-level [INSTALL][github-INSTALL] file on
 [GitHub][github-link] also create `pkg-config` support files for application
 developers that prefer to use `Make` as their build system. Once the library
 is installed, you can use it in your `Makefile` like any other `pkg-config`
@@ -147,7 +147,11 @@ bigtable_install_test: bigtable_install_test.cc
 [authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
 [user-account]: https://cloud.google.com/docs/authentication/
 
-[github-link]: https://github.com/googleapis/google-cloud-cpp 'Top-level README'
+[github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 [workspace-definition-link]: https://docs.bazel.build/versions/master/build-ref.html#packages_targets
+
+<!-- The ugly %2E disables auto-linking in Doxygen -->
+[github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/master/README%2Emd
+[github-install]: https://github.com/googleapis/google-cloud-cpp/blob/master/INSTALL%2Emd
 
 */

@@ -10,9 +10,10 @@ This example uses the
 [Cloud Bigtable C++ Client Library](https://googleapis.github.io/google-cloud-cpp)
 to communicate with Cloud Bigtable.
 
-To run the example program, follow the
-[instructions](https://github.com/googleapis/google-cloud-cpp/tree/master/bigtable/examples/)
-for the example on GitHub.
+To run the example program, follow the [instructions][github-examples] for the
+example on GitHub.
+
+[github-examples]: https://github.com/googleapis/google-cloud-cpp/tree/master/google/cloud/bigtable/examples/
 
 ## The Code
 
