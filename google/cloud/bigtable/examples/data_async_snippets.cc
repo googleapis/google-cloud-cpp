@@ -44,6 +44,8 @@ void AsyncApply(google::cloud::bigtable::Table table,
 
   //! [async-apply]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
   [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id,
      std::string row_key) {
     auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -56,9 +58,9 @@ void AsyncApply(google::cloud::bigtable::Table table,
     mutation.emplace_back(cbt::SetCell("fam", "even-more-columns", timestamp,
                                        "with-explicit-timestamp"));
 
-    google::cloud::future<google::cloud::Status> fut =
+    future<google::cloud::Status> status_future =
         table.AsyncApply(std::move(mutation), cq);
-    google::cloud::Status status = fut.get();
+    auto status = status_future.get();
     if (!status.ok()) {
       throw std::runtime_error(status.message());
     }
@@ -77,6 +79,7 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
 
   //! [bulk async-bulk-apply]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
   [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id) {
     // Write several rows in a single operation, each row has some trivial data.
     cbt::BulkMutation bulk;
@@ -104,10 +107,21 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
       bulk.emplace_back(std::move(mutation));
     }
 
-    google::cloud::future<std::vector<cbt::FailedMutation>> fut =
-        table.AsyncBulkApply(std::move(bulk), cq);
-
-    fut.get();
+    table.AsyncBulkApply(std::move(bulk), cq)
+        .then([](future<std::vector<cbt::FailedMutation>> f) {
+          auto failures = f.get();
+          if (failures.empty()) {
+            std::cout << "All the mutations were successful\n";
+            return;
+          }
+          std::cerr << "The following mutations failed:\n";
+          for (auto const& f : failures) {
+            std::cerr << "index[" << f.original_index() << "]=" << f.status()
+                      << "\n";
+          }
+          throw std::runtime_error(failures.front().status().message());
+        })
+        .get();  // block to simplify the example
   }
   //! [bulk async-bulk-apply]
   (std::move(table), std::move(cq), argv[1]);
@@ -118,21 +132,22 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
                          std::vector<std::string> argv) {
   if (argv.size() != 3U) {
     throw Usage{
-        "async-check-and-mutate: <project-id> <instance-id>"
-        " <table-id> <row-key>"};
+        "async-check-and-mutate <project-id> <instance-id> <table-id>"
+        " <row-key>"};
   }
 
   //! [async check and mutate]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
   [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id,
      std::string row_key) {
     // Check if the latest value of the flip-flop column is "on".
-    auto predicate = cbt::Filter::Chain(
+    cbt::Filter predicate = cbt::Filter::Chain(
         cbt::Filter::ColumnRangeClosed("fam", "flip-flop", "flip-flop"),
         cbt::Filter::Latest(1), cbt::Filter::ValueRegex("on"));
-    google::cloud::future<google::cloud::StatusOr<
-        google::bigtable::v2::CheckAndMutateRowResponse>>
-        future = table.AsyncCheckAndMutateRow(
+    future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>
+        branch_future = table.AsyncCheckAndMutateRow(
             row_key, std::move(predicate),
             {cbt::SetCell("fam", "flip-flop", "off"),
              cbt::SetCell("fam", "flop-flip", "on")},
@@ -140,18 +155,19 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
              cbt::SetCell("fam", "flop-flip", "off")},
             cq);
 
-    auto final =
-        future.then([](google::cloud::future<google::cloud::StatusOr<
-                           google::bigtable::v2::CheckAndMutateRowResponse>>
-                           f) {
-          auto row = f.get();
-          if (!row) {
-            throw std::runtime_error(row.status().message());
-          }
-
-          return google::cloud::Status();
-        });
-    final.get();
+    branch_future
+        .then(
+            [](future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>
+                   f) {
+              auto response = f.get();
+              if (!response) {
+                throw std::runtime_error(response.status().message());
+              }
+              std::cout << "The predicate "
+                        << (response->predicate_matched() ? "was" : "was not")
+                        << " matched\n";
+            })
+        .get();  // block to simplify the example.
   }
   //! [async check and mutate]
   (std::move(table), std::move(cq), argv[1], argv[2]);
@@ -162,7 +178,7 @@ void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
                           std::vector<std::string> argv) {
   if (argv.size() != 3U) {
     throw Usage{
-        "async-read-modify-write: <project-id> <instance-id> <table-id>"
+        "async-read-modify-write <project-id> <instance-id> <table-id>"
         " <row-key>"};
   }
 
@@ -172,19 +188,18 @@ void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
   using google::cloud::StatusOr;
   [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id,
      std::string row_key) {
-    future<StatusOr<cbt::Row>> async_future = table.AsyncReadModifyWriteRow(
+    future<StatusOr<cbt::Row>> row_future = table.AsyncReadModifyWriteRow(
         row_key, cq,
         cbt::ReadModifyWriteRule::AppendValue("fam", "list", ";element"));
 
-    auto final =
-        async_future.then([](future<google::cloud::StatusOr<cbt::Row>> f) {
+    row_future
+        .then([](future<StatusOr<cbt::Row>> f) {
           auto row = f.get();
           if (!row) {
             throw std::runtime_error(row.status().message());
           }
-        });
-
-    final.get();
+        })
+        .get();  // block to simplify example.
   }
   //! [async read modify write]
   (std::move(table), std::move(cq), argv[1], argv[2]);
