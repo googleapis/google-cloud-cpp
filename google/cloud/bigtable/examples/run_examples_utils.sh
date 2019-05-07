@@ -737,12 +737,11 @@ run_hello_table_admin_example() {
   # Use a different table for the full example test, if we use the same table
   # as the other tests this can fail with timeouts.
   local -r FULL_TABLE="data-ex-full-${RANDOM}-${RANDOM}"
-  run_example ./bigtable_samples run-full-example \
+  run_example ./bigtable_hello_table_admin run-full-example \
       "${project_id}" "${instance_id}" "${FULL_TABLE}"
 
   # Use the same table in all the tests.
   local -r TABLE="hello-table-admin-${RANDOM}"
-
   run_example ./bigtable_hello_table_admin run \
       "${project_id}" "${instance_id}" "${TABLE}"
 
