@@ -29,17 +29,19 @@ int main(int argc, char* argv[]) try {
   std::string const instance_id = argv[2];
   std::string const table_id = argv[3];
 
-  google::cloud::bigtable::Table table(
-      google::cloud::bigtable::CreateDefaultDataClient(
-          project_id, instance_id, google::cloud::bigtable::ClientOptions()),
-      table_id);
+  // Create a namespace alias to make the code easier to read.
+  namespace cbt = google::cloud::bigtable;
+
+  cbt::Table table(cbt::CreateDefaultDataClient(project_id, instance_id,
+                                                cbt::ClientOptions()),
+                   table_id);
 
   std::string row_key = "r1";
   std::string column_family = "cf1";
 
   std::cout << "Getting a single row by row key:" << std::flush;
-  auto result = table.ReadRow(
-      row_key, google::cloud::bigtable::Filter::FamilyRegex(column_family));
+  google::cloud::StatusOr<std::pair<bool, cbt::Row>> result =
+      table.ReadRow(row_key, cbt::Filter::FamilyRegex(column_family));
   if (!result) {
     throw std::runtime_error(result.status().message());
   }
@@ -49,7 +51,7 @@ int main(int argc, char* argv[]) try {
     return 0;
   }
 
-  auto const& cell = result->second.cells().front();
+  cbt::Cell const& cell = result->second.cells().front();
   std::cout << cell.family_name() << ":" << cell.column_qualifier() << "    @ "
             << cell.timestamp().count() << "us\n"
             << '"' << cell.value() << '"' << "\n";
