@@ -691,21 +691,26 @@ run_quickstart_example() {
 # Globals:
 #   None
 # Arguments:
-#   project_id: the Google Cloud Storage project used in the test. Can be a
+#   project_id: the Google Cloud Platform project used in the test. Can be a
 #       fake project when testing against the emulator, as the emulator creates
 #       projects on demand. It must be a valid, existing instance when testing
 #       against production.
+#   zone_id: a Google Cloud Platform zone with support for Cloud Bigtable.
 # Returns:
 #   None
 ################################################
 run_hello_instance_admin_example() {
   local project_id=$1
-  shift 1
+  local zone_id=$2
+  shift 2
 
   # Use the same table in all the tests.
-  local -r TABLE="hello-world-tbl-${RANDOM}"
+  local -r RANDOM_INSTANCE_ID="it-${RANDOM}-${RANDOM}"
+  local -r RANDOM_CLUSTER_ID="${RANDOM_INSTANCE_ID}-c1"
 
-  run_example ./bigtable_hello_instance_admin "run" "${project_id}"
+  run_example ./bigtable_hello_instance_admin "run" \
+      "${project_id}" "${RANDOM_INSTANCE_ID}" "${RANDOM_CLUSTER_ID}" \
+      "${zone_id}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
@@ -717,7 +722,7 @@ run_hello_instance_admin_example() {
 # Globals:
 #   None
 # Arguments:
-#   project_id: the Google Cloud Storage project used in the test. Can be a
+#   project_id: the Google Cloud Platform project used in the test. Can be a
 #       fake project when testing against the emulator, as the emulator creates
 #       projects on demand. It must be a valid, existing instance when testing
 #       against production.
@@ -733,16 +738,9 @@ run_hello_table_admin_example() {
   local instance_id=$2
   shift 2
 
-  # TODO(#2626) - remove "run-full-example" it is just a duplicate of "run".
-  # Use a different table for the full example test, if we use the same table
-  # as the other tests this can fail with timeouts.
-  local -r FULL_TABLE="data-ex-full-${RANDOM}-${RANDOM}"
-  run_example ./bigtable_hello_table_admin run-full-example \
-      "${project_id}" "${instance_id}" "${FULL_TABLE}"
-
   # Use the same table in all the tests.
   local -r TABLE="hello-table-admin-${RANDOM}"
-  run_example ./bigtable_hello_table_admin run \
+  run_example ./bigtable_hello_table_admin \
       "${project_id}" "${instance_id}" "${TABLE}"
 
   # Verify that calling without a command produces the right exit status and

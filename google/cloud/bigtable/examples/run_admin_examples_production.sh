@@ -37,7 +37,7 @@ echo "${COLOR_YELLOW}run_quickstart_example${COLOR_RESET}"
 run_quickstart_example "${PROJECT_ID}" "${INSTANCE_ID}"
 
 echo "${COLOR_YELLOW}run_hello_instance_admin_example${COLOR_RESET}"
-run_hello_instance_admin_example "${PROJECT_ID}" "${INSTANCE_ID}"
+run_hello_instance_admin_example "${PROJECT_ID}" "${ZONE_A}"
 
 echo "${COLOR_YELLOW}run_hello_table_admin_example${COLOR_RESET}"
 run_hello_table_admin_example "${PROJECT_ID}" "${INSTANCE_ID}"
