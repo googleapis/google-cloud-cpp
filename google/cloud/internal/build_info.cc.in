@@ -29,8 +29,10 @@ std::string compiler() {
   return compiler_name;
 }
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 std::string language_version() {
   static std::string const language_version = [] {
+    // NOLINTNEXTLINE(readability-redundant-string-init)
     std::string v =
         R"""(@CMAKE_CXX_COMPILER_ID@_@CMAKE_CXX_COMPILER_VERSION@)""";
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
