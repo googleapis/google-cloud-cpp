@@ -49,44 +49,22 @@ The source code for the Cloud Storage C++ Client Library can be found on
 git clone https://github.com/googleapis/google-cloud-cpp.git
 ```
 
-The top-level README file in this repository includes detailed instructions on
-how to compile the library. The examples used in this guide should be
-automatically compiled when you follow said instructions.
+The top-level [README][github-readme] file in this repository includes detailed
+instructions on how to compile the library. The examples used in this guide
+should be automatically compiled when you follow said instructions.
 
 ### Configuring authentication for the C++ Client Library
 
 This library uses the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to
 find the credentials file. For example:
 
-#### Linux/macOS with Bash/zsh/ksh/etc.
-
-@code
-export GOOGLE_APPLICATION_CREDENTIALS=[PATH]
-@endcode
-
-#### Linux/macOS with sh
-
-@code
-GOOGLE_APPLICATION_CREDENTIALS=[PATH]; export GOOGLE_APPLICATION_CREDENTIALS
-@endcode
-
-#### Linux/macOS with csh/tcsh
-
-@code
-setenv GOOGLE_APPLICATION_CREDENTIALS [PATH]
-@endcode
-
-#### Windows Powershell
-
-@code
-$env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]
-@endcode
-
-#### Windows with Command Prompt
-
-@code
-set GOOGLE_APPLICATION_CREDENTIALS=[PATH]
-@endcode
+| Shell              | Command                                        |
+| :----------------- | ---------------------------------------------- |
+| Bash/zsh/ksh/etc.  | `export GOOGLE_APPLICATION_CREDENTIALS=[PATH]` |
+| sh                 | `GOOGLE_APPLICATION_CREDENTIALS=[PATH];` `export GOOGLE_APPLICATION_CREDENTIALS` |
+| csh/tsch           | `setenv GOOGLE_APPLICATION_CREDENTIALS [PATH]` |
+| Windows Powershell | `$env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]`   |
+| Windows cmd.exe    | `set GOOGLE_APPLICATION_CREDENTIALS=[PATH]`    |
 
 This is the recommended way to configure the
 authentication preferences, though if the environment variable is not set, the
@@ -143,8 +121,8 @@ and install the library, for example:
 # Change the version and SHA256 hash as needed.
 http_archive(
     name = "com_github_googleapis_google_cloud_cpp",
-    url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.5.0.tar.gz",
-    sha256 = "886bcba3616d5f362838a2d86ae0198dd3670a84a84c82291cda6c30e14779fc"
+    url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.8.1.tar.gz",
+    sha256 = "f5600fdf3efd28e3142a60c20574e349511104fc6f658faf7974f6ae2def245a"
 )
 @endcode
 
@@ -286,15 +264,15 @@ to follow a more conservative approach:
 
 @snippet storage_object_samples.cc insert object strict idempotency
 
-@see [`LimitedTimeRetryPolicy`](@ref google::cloud::storage::v1::LimitedTimeRetryPolicy]
-   and [`LimitedErrorCountRetryPolicy`](@ref google::cloud::storage::v1::LimitedErrorCountRetryPolicy)
+@see [LimitedTimeRetryPolicy](@ref google::cloud::storage::v1::LimitedTimeRetryPolicy)
+   and [LimitedErrorCountRetryPolicy](@ref google::cloud::storage::v1::LimitedErrorCountRetryPolicy)
    for alternative retry policies.
 
-@see [`ExponentialBackoffPolicy`](@ref google::cloud::storage::v1::ExponentialBackoffPolicy)
+@see [ExponentialBackoffPolicy](@ref google::cloud::storage::v1::ExponentialBackoffPolicy)
    to configure different parameters for the exponential backoff policy.
 
-@see [`AlwaysRetryIdempotencyPolicy`](@ref google::cloud::storage::v1::AlwaysRetryIdempotencyPolicy)
-   and [`StrictIdempotencyPolicy`](@ref google::cloud::storage::v1::StrictIdempotencyPolicy)
+@see [AlwaysRetryIdempotencyPolicy](@ref google::cloud::storage::v1::AlwaysRetryIdempotencyPolicy)
+   and [StrictIdempotencyPolicy](@ref google::cloud::storage::v1::StrictIdempotencyPolicy)
    for alternative idempotency policies.
 
 ### Next Steps
