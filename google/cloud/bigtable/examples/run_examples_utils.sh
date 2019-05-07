@@ -234,12 +234,16 @@ function run_all_table_admin_examples {
       "${project_id}" "${INSTANCE}" "${zone_id}"
 
   run_example ./bigtable_samples run "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./table_admin_snippets create-table "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./table_admin_snippets list-tables "${project_id}" "${INSTANCE}"
+
+  run_example ./table_admin_snippets create-table \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_snippets list-tables \
+      "${project_id}" "${INSTANCE}"
   run_example ./table_admin_snippets get-table \
       "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets check-table-exists \
       "${project_id}" "${INSTANCE}" "${TABLE}"
+
   run_failure_example ./table_admin_snippets check-table-exists \
       "${project_id}" "${INSTANCE}" "${TABLE2}"
   run_example ./table_admin_snippets get-or-create-table \
@@ -248,8 +252,14 @@ function run_all_table_admin_examples {
       "${project_id}" "${INSTANCE}" "${TABLE2}"
   run_example ./table_admin_snippets delete-table \
       "${project_id}" "${INSTANCE}" "${TABLE2}"
-  run_example ./data_snippets bulk-apply "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./table_admin_snippets modify-table "${project_id}" "${INSTANCE}" "${TABLE}"
+
+  # Insert some data into the table, before changing the schema to show that it
+  # is possible to do that.
+  run_example ./data_snippets bulk-apply \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
+
+  run_example ./table_admin_snippets modify-table \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets create-max-age-family \
       "${project_id}" "${INSTANCE}" "${TABLE}" "max-age-family"
   run_example ./table_admin_snippets create-max-versions-family \
@@ -274,15 +284,27 @@ function run_all_table_admin_examples {
       "${project_id}" "${INSTANCE}" "${TABLE}" "max-age-family"
   run_example ./table_admin_snippets update-gc-rule \
       "${project_id}" "${INSTANCE}" "${TABLE}" "max-age-family"
-  run_example ./table_admin_snippets wait-for-consistency-check "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./table_admin_snippets generate-consistency-token "${project_id}" "${INSTANCE}" "${TABLE}"
+
+  run_example ./table_admin_snippets wait-for-consistency-check \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_snippets generate-consistency-token \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
   local token
-  token="$(./table_admin_snippets generate-consistency-token "${project_id}" "${INSTANCE}" "${TABLE}" | awk '{print $5}')"
-  run_example ./table_admin_snippets check-consistency "${project_id}" "${INSTANCE}" "${TABLE}" "${token}"
-  run_example ./table_admin_snippets drop-rows-by-prefix "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./data_snippets read-rows "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./table_admin_snippets drop-all-rows "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./table_admin_snippets delete-table "${project_id}" "${INSTANCE}" "${TABLE}"
+  token="$(./table_admin_snippets generate-consistency-token \
+      "${project_id}" "${INSTANCE}" "${TABLE}" | awk '{print $5}')"
+  run_example ./table_admin_snippets check-consistency \
+      "${project_id}" "${INSTANCE}" "${TABLE}" "${token}"
+
+  # bulk-apply above generates a number of keys, all starting with key-%06d, so
+  # key-0001 is a good prefix to test.
+  run_example ./table_admin_snippets drop-rows-by-prefix \
+      "${project_id}" "${INSTANCE}" "${TABLE}" "key-0001"
+  run_example ./data_snippets read-rows \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_snippets drop-all-rows \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
+  run_example ./table_admin_snippets delete-table \
+      "${project_id}" "${INSTANCE}" "${TABLE}"
 
   run_example ./bigtable_samples_instance_admin delete-instance \
       "${project_id}" "${INSTANCE}"
