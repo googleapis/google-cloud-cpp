@@ -52,7 +52,7 @@ void CreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   auto instance_id = ConsumeArg(argc, argv);
   auto zone = ConsumeArg(argc, argv);
 
-  //! [create instance]
+  //! [create instance] [START bigtable_create_prod_instance]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
@@ -78,7 +78,7 @@ void CreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
     }
     std::cout << "DONE, details=" << instance->DebugString() << "\n";
   }
-  //! [create instance]
+  //! [create instance] [END bigtable_create_prod_instance]
   (std::move(instance_admin), instance_id, zone);
 }
 
@@ -90,7 +90,7 @@ void CreateDevInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   auto instance_id = ConsumeArg(argc, argv);
   auto zone = ConsumeArg(argc, argv);
 
-  //! [create dev instance]
+  //! [create dev instance] [START bigtable_create_dev_instance]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
@@ -116,7 +116,7 @@ void CreateDevInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
     }
     std::cout << "DONE, details=" << instance->DebugString() << "\n";
   }
-  //! [create dev instance]
+  //! [create dev instance] [END bigtable_create_dev_instance]
   (std::move(instance_admin), instance_id, zone);
 }
 
@@ -205,7 +205,7 @@ void ListInstances(google::cloud::bigtable::InstanceAdmin instance_admin,
     throw Usage{"list-instances <project-id>"};
   }
 
-  //! [list instances]
+  //! [list instances] [START bigtable_list_instances]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin) {
@@ -225,8 +225,33 @@ void ListInstances(google::cloud::bigtable::InstanceAdmin instance_admin,
       }
     }
   }
-  //! [list instances]
+  //! [list instances] [END bigtable_list_instances]
   (std::move(instance_admin));
+}
+
+void CheckInstanceExists(google::cloud::bigtable::InstanceAdmin instance_admin,
+                         int argc, char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"check-instance-exists <project-id> <instance-id>"};
+  }
+  auto instance_id = ConsumeArg(argc, argv);
+
+  // [START bigtable_check_instance_exists]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::InstanceAdmin instance_admin, std::string instance_id) {
+    StatusOr<google::bigtable::admin::v2::Instance> instance =
+        instance_admin.GetInstance(instance_id);
+    if (!instance) {
+      if (instance.status().code() == google::cloud::StatusCode::kNotFound) {
+        throw std::runtime_error("Instance " + instance_id + " does not exist");
+      }
+      throw std::runtime_error(instance.status().message());
+    }
+    std::cout << "Instance " << instance->name() << " was found\n";
+  }
+  // [END bigtable_check_instance_exists]
+  (std::move(instance_admin), instance_id);
 }
 
 void GetInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
@@ -258,7 +283,7 @@ void DeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   }
   auto instance_id = ConsumeArg(argc, argv);
 
-  //! [delete instance]
+  //! [delete instance] [START bigtable_delete_instance]
   namespace cbt = google::cloud::bigtable;
   [](cbt::InstanceAdmin instance_admin, std::string instance_id) {
     google::cloud::Status status = instance_admin.DeleteInstance(instance_id);
@@ -267,7 +292,7 @@ void DeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
     }
     std::cout << "Successfully deleted the instance " << instance_id << "\n";
   }
-  //! [delete instance]
+  //! [delete instance] [END bigtable_delete_instance]
   (std::move(instance_admin), instance_id);
 }
 
@@ -311,7 +336,7 @@ void ListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
   }
   auto instance_id = ConsumeArg(argc, argv);
 
-  //! [list clusters]
+  //! [list clusters] [START bigtable_get_clusters]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, std::string instance_id) {
@@ -333,7 +358,7 @@ void ListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
       }
     }
   }
-  //! [list clusters]
+  //! [list clusters] [END bigtable_get_clusters]
   (std::move(instance_admin), instance_id);
 }
 
@@ -909,6 +934,7 @@ int main(int argc, char* argv[]) try {
       {"create-replicated-instance", &CreateReplicatedInstance},
       {"update-instance", &UpdateInstance},
       {"list-instances", &ListInstances},
+      {"check-instance-exists", &CheckInstanceExists},
       {"get-instance", &GetInstance},
       {"delete-instance", &DeleteInstance},
       {"create-cluster", &CreateCluster},

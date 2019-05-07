@@ -69,8 +69,12 @@ function run_all_instance_admin_examples {
   run_example ./bigtable_instance_admin_snippets delete-instance \
       "${project_id}" "${REPLICATED_INSTANCE}"
 
+  run_failure_example ./bigtable_instance_admin_snippets check-instance-exists \
+      "${project_id}" "${INSTANCE}"
   run_example ./bigtable_instance_admin_snippets create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"
+  run_example ./bigtable_instance_admin_snippets check-instance-exists \
+      "${project_id}" "${INSTANCE}"
   run_example ./bigtable_instance_admin_snippets list-instances \
       "${project_id}"
   run_example ./bigtable_instance_admin_snippets get-instance \
@@ -131,18 +135,6 @@ function run_all_instance_admin_examples {
 
   run_example ./bigtable_instance_admin_snippets create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"
-  run_example ./bigtable_samples_instance_admin create-cluster \
-      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2" "${replication_zone_id}"
-  run_example ./bigtable_samples_instance_admin delete-cluster \
-      "${project_id}" "${INSTANCE}" "${INSTANCE}-c2"
-  run_example ./bigtable_samples_instance_admin delete-instance \
-      "${project_id}" "${INSTANCE}"
-
-  run_example ./bigtable_samples_instance_admin \
-      create-dev-instance \
-      "${project_id}" "${DEV_INSTANCE}" "${DEV_INSTANCE}-c1" "${zone_id}"
-  run_example ./bigtable_samples_instance_admin delete-instance \
-      "${project_id}" "${DEV_INSTANCE}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
@@ -284,7 +276,7 @@ function run_all_table_admin_examples {
   run_example ./table_admin_snippets drop-all-rows "${project_id}" "${INSTANCE}" "${TABLE}"
   run_example ./table_admin_snippets delete-table "${project_id}" "${INSTANCE}" "${TABLE}"
 
-  run_example ./bigtable_samples_instance_admin delete-instance \
+  run_example ./bigtable_instance_admin_snippets delete-instance \
       "${project_id}" "${INSTANCE}"
 
   # Verify that calling without a command produces the right exit status and
@@ -338,7 +330,7 @@ function run_all_table_admin_async_examples {
   run_example ./table_admin_async_snippets async-delete-table \
       "${project_id}" "${INSTANCE}" "${TABLE}"
 
-  run_example ./bigtable_samples_instance_admin delete-instance \
+  run_example ./bigtable_instance_admin_snippets delete-instance \
       "${project_id}" "${INSTANCE}"
 
   # Verify that calling without a command produces the right exit status and
