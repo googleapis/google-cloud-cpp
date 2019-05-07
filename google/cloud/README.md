@@ -28,7 +28,6 @@ is available [online][doxygen-link].
 
 * Support move-only callables in `future<T>`
 * Avoid `std::make_exception_ptr()` in `future_shared_state_base::abandon()`.
-* Use SFINAE to constrain applicability of the `BulkMutation(M&&...)` ctor.
 
 ### v0.6.x - 2019-04
 
