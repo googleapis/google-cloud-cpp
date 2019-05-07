@@ -30,7 +30,7 @@ add_executable(bigtable_quickstart bigtable_quickstart.cc)
 target_link_libraries(bigtable_quickstart bigtable_client
                       bigtable_common_options)
 
-add_executable(bigtable_samples bigtable_samples.cc)
+add_executable(bigtable_samples bigtable_hello_table_admin.cc)
 target_link_libraries(bigtable_samples bigtable_client bigtable_common_options)
 
 add_executable(bigtable_instance_admin_snippets
@@ -38,8 +38,7 @@ add_executable(bigtable_instance_admin_snippets
 target_link_libraries(bigtable_instance_admin_snippets bigtable_client
                       bigtable_common_options)
 
-add_executable(bigtable_samples_instance_admin
-               bigtable_samples_instance_admin.cc)
+add_executable(bigtable_samples_instance_admin bigtable_hello_instance_admin.cc)
 target_link_libraries(bigtable_samples_instance_admin bigtable_client
                       bigtable_common_options)
 

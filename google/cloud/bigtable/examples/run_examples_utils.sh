@@ -139,7 +139,6 @@ function run_all_instance_admin_examples {
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
   run_example_usage ./bigtable_instance_admin_snippets
-  run_example_usage ./bigtable_samples_instance_admin
 }
 
 # Run all the instance admin async examples.
@@ -224,8 +223,6 @@ function run_all_table_admin_examples {
 
   run_example ./bigtable_instance_admin_snippets create-instance \
       "${project_id}" "${INSTANCE}" "${zone_id}"
-
-  run_example ./bigtable_samples run "${project_id}" "${INSTANCE}" "${TABLE}"
 
   run_example ./table_admin_snippets create-table \
       "${project_id}" "${INSTANCE}" "${TABLE}"
@@ -432,12 +429,6 @@ run_all_data_examples() {
   EMULATOR_LOG="emulator.log"
 
   run_mutate_examples "${project_id}" "${instance_id}"
-
-  # Use a different table for the full example test, if we use the same table
-  # as the other tests this can fail with timeouts.
-  local -r FULL_TABLE="data-ex-full-${RANDOM}-${RANDOM}"
-  run_example ./bigtable_samples run-full-example \
-      "${project_id}" "${instance_id}" "${FULL_TABLE}"
 
   # Use the same table in all the tests.
   local -r TABLE="data-ex-tbl-${RANDOM}-${RANDOM}"
@@ -693,6 +684,71 @@ run_quickstart_example() {
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
   run_example_usage ./bigtable_quickstart
+}
+
+################################################
+# Run the Bigtable hello world for InstanceAdmin example.
+# Globals:
+#   None
+# Arguments:
+#   project_id: the Google Cloud Storage project used in the test. Can be a
+#       fake project when testing against the emulator, as the emulator creates
+#       projects on demand. It must be a valid, existing instance when testing
+#       against production.
+# Returns:
+#   None
+################################################
+run_hello_instance_admin_example() {
+  local project_id=$1
+  shift 1
+
+  # Use the same table in all the tests.
+  local -r TABLE="hello-world-tbl-${RANDOM}"
+
+  run_example ./bigtable_hello_instance_admin "run" "${project_id}"
+
+  # Verify that calling without a command produces the right exit status and
+  # some kind of Usage message.
+  run_example_usage ./bigtable_hello_instance_admin
+}
+
+################################################
+# Run the Bigtable hello world for Table Admin example.
+# Globals:
+#   None
+# Arguments:
+#   project_id: the Google Cloud Storage project used in the test. Can be a
+#       fake project when testing against the emulator, as the emulator creates
+#       projects on demand. It must be a valid, existing instance when testing
+#       against production.
+#   instance_id: the Google Cloud Bigtable instance used in the test. Can be a
+#       fake instance when testing against the emulator, as the emulator creates
+#       instances on demand. It must be a valid, existing instance when testing
+#       against production.
+# Returns:
+#   None
+################################################
+run_hello_table_admin_example() {
+  local project_id=$1
+  local instance_id=$2
+  shift 2
+
+  # TODO(#2626) - remove "run-full-example" it is just a duplicate of "run".
+  # Use a different table for the full example test, if we use the same table
+  # as the other tests this can fail with timeouts.
+  local -r FULL_TABLE="data-ex-full-${RANDOM}-${RANDOM}"
+  run_example ./bigtable_samples run-full-example \
+      "${project_id}" "${instance_id}" "${FULL_TABLE}"
+
+  # Use the same table in all the tests.
+  local -r TABLE="hello-table-admin-${RANDOM}"
+
+  run_example ./bigtable_hello_table_admin run \
+      "${project_id}" "${instance_id}" "${TABLE}"
+
+  # Verify that calling without a command produces the right exit status and
+  # some kind of Usage message.
+  run_example_usage ./bigtable_hello_world
 }
 
 ################################################
