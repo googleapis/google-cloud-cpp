@@ -189,7 +189,7 @@ void DeleteTable(google::cloud::bigtable::TableAdmin admin, int argc,
   }
   std::string const table_id = ConsumeArg(argc, argv);
 
-  //! [delete table]
+  //! [delete table] [START bigtable_delete_table]
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string table_id) {
     google::cloud::Status status = admin.DeleteTable(table_id);
@@ -198,7 +198,7 @@ void DeleteTable(google::cloud::bigtable::TableAdmin admin, int argc,
     }
     std::cout << "Table successfully deleted\n";
   }
-  //! [delete table]
+  //! [delete table] [END bigtable_delete_table]
   (std::move(admin), table_id);
 }
 

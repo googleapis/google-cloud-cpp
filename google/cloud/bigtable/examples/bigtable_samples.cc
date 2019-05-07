@@ -100,7 +100,6 @@ void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
 // This full example demonstrate various instance operations
 void RunFullExample(google::cloud::bigtable::TableAdmin admin,
                     std::string const& table_id) {
-  // [START bigtable_create_table]
   std::cout << "Creating a table:\n";
   auto schema = admin.CreateTable(
       table_id,
@@ -110,7 +109,6 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
             google::cloud::bigtable::GcRule::MaxAge(std::chrono::hours(72))}},
           {}));
   std::cout << " Done\n";
-  // [END bigtable_create_table]
 
   std::cout << "Listing tables:\n";
   auto tables =
@@ -162,14 +160,12 @@ void RunFullExample(google::cloud::bigtable::TableAdmin admin,
   google::protobuf::TextFormat::PrintToString(*schema1, &formatted);
   std::cout << "Schema modified to: " << formatted << "\n";
 
-  // [START bigtable_delete_table]
   std::cout << "Deleting table:\n";
   google::cloud::Status status = admin.DeleteTable(table_id);
   if (!status.ok()) {
     throw std::runtime_error(status.message());
   }
   std::cout << " Done\n";
-  // [END bigtable_delete_table]
 }
 
 }  // anonymous namespace
