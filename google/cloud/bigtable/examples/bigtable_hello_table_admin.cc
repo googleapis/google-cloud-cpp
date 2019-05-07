@@ -23,194 +23,88 @@
 #include <list>
 #include <sstream>
 
-namespace {
+int main(int argc, char* argv[]) try {
+  if (argc != 4) {
+    std::string const cmd = argv[0];
+    auto last_slash = std::string(cmd).find_last_of('/');
+    auto program = cmd.substr(last_slash + 1);
+    std::cerr << "\nUsage: " << program
+              << " <project-id> <instance-id> <table-id>\n\n"
+              << "Example: " << program << " my-project my-instance my-table\n";
+    return 1;
+  }
 
-//! [run table operations]
-void RunTableOperations(google::cloud::bigtable::TableAdmin admin,
-                        std::string const& table_id) {
+  std::string const project_id = argv[1];
+  std::string const instance_id = argv[2];
+  std::string const table_id = argv[3];
+
+  //! [aliases]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  //! [aliases]
+
+  // Connect to the Cloud Bigtable admin endpoint.
+  //! [connect admin]
+  cbt::TableAdmin admin(
+      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions()),
+      instance_id);
+  //! [connect admin]
+
   std::cout << "Creating a table:\n";
-  auto schema = admin.CreateTable(
+  StatusOr<google::bigtable::admin::v2::Table> schema = admin.CreateTable(
       table_id,
-      google::cloud::bigtable::TableConfig(
-          {{"fam", google::cloud::bigtable::GcRule::MaxNumVersions(10)},
-           {"foo",
-            google::cloud::bigtable::GcRule::MaxAge(std::chrono::hours(72))}},
-          {}));
-  std::cout << " Done\n";
+      cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)},
+                        {"foo", cbt::GcRule::MaxAge(std::chrono::hours(72))}},
+                       {}));
+  std::cout << "DONE\n";
 
   std::cout << "Listing tables:\n";
-  auto tables =
-      admin.ListTables(google::cloud::bigtable::TableAdmin::NAME_ONLY);
-
+  auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
   if (!tables) {
     throw std::runtime_error(tables.status().message());
   }
   for (auto const& table : *tables) {
-    std::cout << table.name() << "\n";
+    std::cout << "    " << table.name() << "\n";
   }
+  std::cout << "DONE\n";
 
-  std::cout << "Get table:\n";
-  auto table =
-      admin.GetTable(table_id, google::cloud::bigtable::TableAdmin::FULL);
+  std::cout << "Get table metadata:\n";
+  StatusOr<google::bigtable::admin::v2::Table> table =
+      admin.GetTable(table_id, cbt::TableAdmin::FULL);
   if (!table) {
     throw std::runtime_error(table.status().message());
   }
   std::cout << "Table name : " << table->name() << "\n";
 
   std::cout << "List table families and GC rules:\n";
-  for (auto const& family : table->column_families()) {
-    std::string const& family_name = family.first;
-    std::string gc_rule;
-    google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
-                                                &gc_rule);
-    std::cout << "Table Families :" << family_name << "\t\t" << gc_rule << "\n";
+  for (auto const& kv : table->column_families()) {
+    std::string const& family_name = kv.first;
+    google::bigtable::admin::v2::ColumnFamily const& metadata = kv.second;
+    std::cout << "Column Family :" << family_name << "\t"
+              << metadata.DebugString() << "\n";
   }
+  std::cout << "DONE\n";
 
   std::cout << "Update a column family GC rule:\n";
-  auto schema1 = admin.ModifyColumnFamilies(
-      table_id,
-      {google::cloud::bigtable::ColumnFamilyModification::Drop("foo"),
-       google::cloud::bigtable::ColumnFamilyModification::Update(
-           "fam", google::cloud::bigtable::GcRule::Union(
-                      google::cloud::bigtable::GcRule::MaxNumVersions(5),
-                      google::cloud::bigtable::GcRule::MaxAge(
-                          std::chrono::hours(24 * 7)))),
-       google::cloud::bigtable::ColumnFamilyModification::Create(
-           "bar", google::cloud::bigtable::GcRule::Intersection(
-                      google::cloud::bigtable::GcRule::MaxNumVersions(3),
-                      google::cloud::bigtable::GcRule::MaxAge(
-                          std::chrono::hours(72))))});
-  if (!schema1) {
-    throw std::runtime_error(schema1.status().message());
+  StatusOr<google::bigtable::admin::v2::Table> updated_schema =
+      admin.ModifyColumnFamilies(
+          table_id,
+          {cbt::ColumnFamilyModification::Update(
+              "fam", cbt::GcRule::Union(
+                         cbt::GcRule::MaxNumVersions(5),
+                         cbt::GcRule::MaxAge(std::chrono::hours(24 * 7))))});
+  if (!updated_schema) {
+    throw std::runtime_error(updated_schema.status().message());
   }
 
-  std::string formatted;
-  google::protobuf::TextFormat::PrintToString(*schema1, &formatted);
-  std::cout << "Schema modified to: " << formatted << "\n";
+  std::cout << "Schema modified to: " << updated_schema->DebugString() << "\n";
 
   std::cout << "Deleting table:\n";
   google::cloud::Status status = admin.DeleteTable(table_id);
   if (!status.ok()) {
     throw std::runtime_error(status.message());
   }
-  std::cout << " Done\n";
-}
-//! [run table operations]
-
-// This full example demonstrate various instance operations
-void RunFullExample(google::cloud::bigtable::TableAdmin admin,
-                    std::string const& table_id) {
-  std::cout << "Creating a table:\n";
-  auto schema = admin.CreateTable(
-      table_id,
-      google::cloud::bigtable::TableConfig(
-          {{"fam", google::cloud::bigtable::GcRule::MaxNumVersions(10)},
-           {"foo",
-            google::cloud::bigtable::GcRule::MaxAge(std::chrono::hours(72))}},
-          {}));
-  std::cout << " Done\n";
-
-  std::cout << "Listing tables:\n";
-  auto tables =
-      admin.ListTables(google::cloud::bigtable::TableAdmin::VIEW_UNSPECIFIED);
-
-  if (!tables) {
-    throw std::runtime_error(tables.status().message());
-  }
-  for (auto const& table : *tables) {
-    std::cout << table.name() << "\n";
-  }
-
-  std::cout << "Get table:\n";
-  auto table =
-      admin.GetTable(table_id, google::cloud::bigtable::TableAdmin::FULL);
-  if (!table) {
-    throw std::runtime_error(table.status().message());
-  }
-  std::cout << "Table name : " << table->name() << "\n";
-
-  for (auto const& family : table->column_families()) {
-    std::string const& family_name = family.first;
-    std::string gc_rule;
-    google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
-                                                &gc_rule);
-    std::cout << "Table Families :" << family_name << "\t\t" << gc_rule << "\n";
-  }
-
-  std::cout << "Update a column family GC rule:\n";
-  auto schema1 = admin.ModifyColumnFamilies(
-      table_id,
-      {google::cloud::bigtable::ColumnFamilyModification::Drop("foo"),
-       google::cloud::bigtable::ColumnFamilyModification::Update(
-           "fam", google::cloud::bigtable::GcRule::Union(
-                      google::cloud::bigtable::GcRule::MaxNumVersions(5),
-                      google::cloud::bigtable::GcRule::MaxAge(
-                          std::chrono::hours(24 * 7)))),
-       google::cloud::bigtable::ColumnFamilyModification::Create(
-           "bar", google::cloud::bigtable::GcRule::Intersection(
-                      google::cloud::bigtable::GcRule::MaxNumVersions(3),
-                      google::cloud::bigtable::GcRule::MaxAge(
-                          std::chrono::hours(72))))});
-
-  if (!schema1) {
-    throw std::runtime_error(schema1.status().message());
-  }
-
-  std::string formatted;
-  google::protobuf::TextFormat::PrintToString(*schema1, &formatted);
-  std::cout << "Schema modified to: " << formatted << "\n";
-
-  std::cout << "Deleting table:\n";
-  google::cloud::Status status = admin.DeleteTable(table_id);
-  if (!status.ok()) {
-    throw std::runtime_error(status.message());
-  }
-  std::cout << " Done\n";
-}
-
-}  // anonymous namespace
-
-int main(int argc, char* argv[]) try {
-  auto print_usage = [argv]() {
-    std::string const cmd = argv[0];
-    auto last_slash = std::string(cmd).find_last_of('/');
-    auto program = cmd.substr(last_slash + 1);
-    std::cerr << "\nUsage: " << program
-              << " <command> <project_id> [arguments]\n\n"
-              << "Examples:\n";
-    for (auto example : {"run my-project my-instance my-table",
-                         "run-full-example my-project my-instance my-table"}) {
-      std::cerr << "  " << program << " " << example << "\n";
-    }
-    std::cerr << std::flush;
-  };
-
-  if (argc != 5) {
-    print_usage();
-    return 1;
-  }
-
-  std::string const command = argv[1];
-  std::string const project_id = argv[2];
-  std::string const instance_id = argv[3];
-  std::string const table_id = argv[4];
-
-  // Connect to the Cloud Bigtable admin endpoint.
-  //! [connect admin]
-  google::cloud::bigtable::TableAdmin admin(
-      google::cloud::bigtable::CreateDefaultAdminClient(
-          project_id, google::cloud::bigtable::ClientOptions()),
-      instance_id);
-  //! [connect admin]
-
-  if (command == "run") {
-    RunTableOperations(admin, table_id);
-  } else if (command == "run-full-example") {
-    RunFullExample(admin, table_id);
-  } else {
-    std::cerr << "Unknown command: " << command << "\n";
-    print_usage();
-  }
+  std::cout << "DONE\n";
 
   return 0;
 } catch (std::exception const& ex) {
