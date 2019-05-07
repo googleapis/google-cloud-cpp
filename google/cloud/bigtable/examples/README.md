@@ -18,9 +18,13 @@ referenced from the Doxygen landing page as "Hello World".
 
 ### Compile the Examples
 
+<!-- START bigtable_hw_install -->
+
 These examples are compiled as part of the build for the Cloud Bigtable C++
 Client.  The instructions on how to compile the code are in the
 [top-level README](../../README.md) file.
+
+<!-- END bigtable_hw_install -->
 
 ### Run the Examples
 
@@ -61,7 +65,8 @@ $ gcloud auth login
 
 ### Hello world
 
-View the [Hello World][hello_world_code] example to see sample usage of the Bigtable client library.
+View the [Hello World][hello_world_code] example to see sample usage of the
+Bigtable client library.
 
 #### Usage
 
@@ -71,6 +76,7 @@ Usage: bigtable_hello_world <project_id> <instance_id> <table_id>
 ```
 
 #### Run Hello world
+
 After configuring gRPC, you can run the examples using:
 
 ```console
@@ -81,8 +87,8 @@ $ ./bigtable_hello_world ${PROJECT_ID} ${INSTANCE_ID} example-table
 
 ### Administer Instances
 
-View the [example][instance_admin_code] to see sample usage of instance administration of
-the Bigtable client library.
+View the [example][instance_admin_code] to see sample usage of instance
+administration of the Bigtable client library.
 
 #### Usage
 
@@ -114,7 +120,7 @@ $ ./bigtable_samples_instance_admin run ${PROJECT_ID} ${INSTANCE_ID} ${CLUSTER_I
 ```
 
 [hello_world_code]: bigtable_hello_world.cc
-[instance_admin_code]: bigtable_samples_instance_admin.cc
+[instance_admin_code]: bigtable_hello_instance_admin.cc
 
 ### Administer Tables
 

@@ -18,6 +18,14 @@
 # to keep this particular file as simple as possible, as it is intended to be
 # part of the examples.
 
+add_executable(bigtable_hello_table_admin bigtable_hello_table_admin.cc)
+target_link_libraries(bigtable_hello_table_admin bigtable_client
+                      bigtable_common_options)
+
+add_executable(bigtable_hello_instance_admin bigtable_hello_instance_admin.cc)
+target_link_libraries(bigtable_hello_instance_admin bigtable_client
+                      bigtable_common_options)
+
 add_executable(bigtable_hello_world bigtable_hello_world.cc)
 target_link_libraries(bigtable_hello_world bigtable_client
                       bigtable_common_options)
@@ -30,17 +38,9 @@ add_executable(bigtable_quickstart bigtable_quickstart.cc)
 target_link_libraries(bigtable_quickstart bigtable_client
                       bigtable_common_options)
 
-add_executable(bigtable_samples bigtable_samples.cc)
-target_link_libraries(bigtable_samples bigtable_client bigtable_common_options)
-
 add_executable(bigtable_instance_admin_snippets
                bigtable_instance_admin_snippets.cc)
 target_link_libraries(bigtable_instance_admin_snippets bigtable_client
-                      bigtable_common_options)
-
-add_executable(bigtable_samples_instance_admin
-               bigtable_samples_instance_admin.cc)
-target_link_libraries(bigtable_samples_instance_admin bigtable_client
                       bigtable_common_options)
 
 add_executable(instance_admin_async_snippets instance_admin_async_snippets.cc)

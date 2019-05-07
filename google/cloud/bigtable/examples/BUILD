@@ -17,14 +17,26 @@ package(default_visibility = ["//visibility:public"])
 licenses(["notice"])  # Apache 2.0
 
 cc_binary(
-    name = "bigtable_hello_world",
-    srcs = ["bigtable_hello_world.cc"],
+    name = "bigtable_hello_app_profile",
+    srcs = ["bigtable_hello_app_profile.cc"],
     deps = ["//google/cloud/bigtable:bigtable_client"],
 )
 
 cc_binary(
-    name = "bigtable_hello_app_profile",
-    srcs = ["bigtable_hello_app_profile.cc"],
+    name = "bigtable_hello_instance_admin",
+    srcs = ["bigtable_hello_instance_admin.cc"],
+    deps = ["//google/cloud/bigtable:bigtable_client"],
+)
+
+cc_binary(
+    name = "bigtable_hello_table_admin",
+    srcs = ["bigtable_hello_table_admin.cc"],
+    deps = ["//google/cloud/bigtable:bigtable_client"],
+)
+
+cc_binary(
+    name = "bigtable_hello_world",
+    srcs = ["bigtable_hello_world.cc"],
     deps = ["//google/cloud/bigtable:bigtable_client"],
 )
 
@@ -35,20 +47,8 @@ cc_binary(
 )
 
 cc_binary(
-    name = "bigtable_samples",
-    srcs = ["bigtable_samples.cc"],
-    deps = ["//google/cloud/bigtable:bigtable_client"],
-)
-
-cc_binary(
     name = "bigtable_instance_admin_snippets",
     srcs = ["bigtable_instance_admin_snippets.cc"],
-    deps = ["//google/cloud/bigtable:bigtable_client"],
-)
-
-cc_binary(
-    name = "bigtable_samples_instance_admin",
-    srcs = ["bigtable_samples_instance_admin.cc"],
     deps = ["//google/cloud/bigtable:bigtable_client"],
 )
 
