@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/internal/async_retry_multi_page.h"
+#include "google/cloud/bigtable/internal/async_retry_unary_rpc_and_poll.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/poll_longrunning_operation.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
@@ -38,8 +39,8 @@ StatusOr<InstanceList> InstanceAdmin::ListInstances() {
   grpc::Status status;
   InstanceList result;
   // Copy the policies in effect for the operation.
-  auto rpc_policy = impl_.rpc_retry_policy_->clone();
-  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
 
   // Build the RPC request, try to minimize copying.
   std::unordered_set<std::string> unique_failed_locations;
@@ -50,9 +51,9 @@ StatusOr<InstanceList> InstanceAdmin::ListInstances() {
     request.set_parent(project_name());
 
     auto response = ClientUtils::MakeCall(
-        *(impl_.client_), *rpc_policy, *backoff_policy,
-        impl_.metadata_update_policy_, &InstanceAdminClient::ListInstances,
-        request, "InstanceAdmin::ListInstances", status, true);
+        *(client_), *rpc_policy, *backoff_policy, metadata_update_policy_,
+        &InstanceAdminClient::ListInstances, request,
+        "InstanceAdmin::ListInstances", status, true);
     if (!status.ok()) {
       break;
     }
@@ -81,7 +82,7 @@ future<StatusOr<InstanceList>> InstanceAdmin::AsyncListInstances(
     CompletionQueue& cq) {
   promise<StatusOr<InstanceList>> instance_list_promise;
   future<StatusOr<InstanceList>> result = instance_list_promise.get_future();
-  auto client = impl_.client_;
+  auto client = client_;
   btadmin::ListInstancesRequest request;
   request.set_parent(project_name());
 
@@ -145,13 +146,12 @@ InstanceAdmin::AsyncCreateInstance(CompletionQueue& cq,
     kv.second.set_location(project_name() + "/locations/" +
                            kv.second.location());
   }
-  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  std::shared_ptr<InstanceAdminClient> client(client_);
   return internal::AsyncStartPollAfterRetryUnaryRpc<
       google::bigtable::admin::v2::Instance>(
-      __func__, impl_.polling_policy_->clone(),
-      impl_.rpc_retry_policy_->clone(), impl_.rpc_backoff_policy_->clone(),
-      internal::ConstantIdempotencyPolicy(false), impl_.metadata_update_policy_,
-      client,
+      __func__, clone_polling_policy(), clone_rpc_retry_policy(),
+      clone_rpc_backoff_policy(), internal::ConstantIdempotencyPolicy(false),
+      metadata_update_policy_, client,
       [client](
           grpc::ClientContext* context,
           google::bigtable::admin::v2::CreateInstanceRequest const& request,
@@ -187,13 +187,12 @@ InstanceAdmin::AsyncCreateCluster(CompletionQueue& cq,
   request.set_parent(project_name() + "/instances/" + instance_id.get());
   request.set_cluster_id(cluster_id.get());
 
-  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  std::shared_ptr<InstanceAdminClient> client(client_);
   return internal::AsyncStartPollAfterRetryUnaryRpc<
       google::bigtable::admin::v2::Cluster>(
-      __func__, impl_.polling_policy_->clone(),
-      impl_.rpc_retry_policy_->clone(), impl_.rpc_backoff_policy_->clone(),
-      internal::ConstantIdempotencyPolicy(false), impl_.metadata_update_policy_,
-      client,
+      __func__, clone_polling_policy(), clone_rpc_retry_policy(),
+      clone_rpc_backoff_policy(), internal::ConstantIdempotencyPolicy(false),
+      metadata_update_policy_, client,
       [client](grpc::ClientContext* context,
                google::bigtable::admin::v2::CreateClusterRequest const& request,
                grpc::CompletionQueue* cq) {
@@ -219,13 +218,12 @@ InstanceAdmin::AsyncUpdateInstance(
     CompletionQueue& cq, InstanceUpdateConfig instance_update_config) {
   auto request = std::move(instance_update_config).as_proto();
 
-  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  std::shared_ptr<InstanceAdminClient> client(client_);
   return internal::AsyncStartPollAfterRetryUnaryRpc<
       google::bigtable::admin::v2::Instance>(
-      __func__, impl_.polling_policy_->clone(),
-      impl_.rpc_retry_policy_->clone(), impl_.rpc_backoff_policy_->clone(),
-      internal::ConstantIdempotencyPolicy(false), impl_.metadata_update_policy_,
-      client,
+      __func__, clone_polling_policy(), clone_rpc_retry_policy(),
+      clone_rpc_backoff_policy(), internal::ConstantIdempotencyPolicy(false),
+      metadata_update_policy_, client,
       [client](grpc::ClientContext* context,
                google::bigtable::admin::v2::PartialUpdateInstanceRequest const&
                    request,
@@ -239,8 +237,8 @@ StatusOr<btadmin::Instance> InstanceAdmin::GetInstance(
     std::string const& instance_id) {
   grpc::Status status;
   // Copy the policies in effect for the operation.
-  auto rpc_policy = impl_.rpc_retry_policy_->clone();
-  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
 
   btadmin::GetInstanceRequest request;
   // Setting instance name.
@@ -248,9 +246,9 @@ StatusOr<btadmin::Instance> InstanceAdmin::GetInstance(
 
   // Call RPC call to get response
   auto result = ClientUtils::MakeCall(
-      *(impl_.client_), *rpc_policy, *backoff_policy,
-      impl_.metadata_update_policy_, &InstanceAdminClient::GetInstance, request,
-      "InstanceAdmin::GetInstance", status, true);
+      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy_,
+      &InstanceAdminClient::GetInstance, request, "InstanceAdmin::GetInstance",
+      status, true);
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
@@ -263,7 +261,7 @@ future<StatusOr<btadmin::Instance>> InstanceAdmin::AsyncGetInstance(
   // Setting instance name.
   request.set_name(project_name() + "/instances/" + instance_id);
 
-  auto client = impl_.client_;
+  auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
       __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       internal::ConstantIdempotencyPolicy(true), clone_metadata_update_policy(),
@@ -282,9 +280,9 @@ Status InstanceAdmin::DeleteInstance(std::string const& instance_id) {
 
   // This API is not idempotent, lets call it without retry
   ClientUtils::MakeNonIdemponentCall(
-      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
-      impl_.metadata_update_policy_, &InstanceAdminClient::DeleteInstance,
-      request, "InstanceAdmin::DeleteInstance", status);
+      *(client_), clone_rpc_retry_policy(), metadata_update_policy_,
+      &InstanceAdminClient::DeleteInstance, request,
+      "InstanceAdmin::DeleteInstance", status);
   return internal::MakeStatusFromRpcError(status);
 }
 
@@ -294,7 +292,7 @@ future<Status> InstanceAdmin::AsyncDeleteCluster(
   btadmin::DeleteClusterRequest request;
   request.set_name(ClusterName(instance_id, cluster_id));
 
-  auto client = impl_.client_;
+  auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              internal::ConstantIdempotencyPolicy(false),
@@ -320,7 +318,7 @@ future<Status> InstanceAdmin::AsyncDeleteInstance(
   // Setting instance name.
   request.set_name(InstanceName(instance_id));
 
-  auto client = impl_.client_;
+  auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              internal::ConstantIdempotencyPolicy(true),
@@ -341,16 +339,16 @@ StatusOr<btadmin::Cluster> InstanceAdmin::GetCluster(
     bigtable::InstanceId const& instance_id,
     bigtable::ClusterId const& cluster_id) {
   grpc::Status status;
-  auto rpc_policy = impl_.rpc_retry_policy_->clone();
-  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
 
   btadmin::GetClusterRequest request;
   request.set_name(ClusterName(instance_id, cluster_id));
 
   auto result = ClientUtils::MakeCall(
-      *(impl_.client_), *rpc_policy, *backoff_policy,
-      impl_.metadata_update_policy_, &InstanceAdminClient::GetCluster, request,
-      "InstanceAdmin::GetCluster", status, true);
+      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy_,
+      &InstanceAdminClient::GetCluster, request, "InstanceAdmin::GetCluster",
+      status, true);
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
@@ -365,7 +363,7 @@ future<StatusOr<btadmin::Cluster>> InstanceAdmin::AsyncGetCluster(
   btadmin::GetClusterRequest request;
   // Setting cluster name.
   request.set_name(ClusterName(instance_id, cluster_id));
-  auto client = impl_.client_;
+  auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
       __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       internal::ConstantIdempotencyPolicy(true), clone_metadata_update_policy(),
@@ -389,8 +387,8 @@ StatusOr<ClusterList> InstanceAdmin::ListClusters(
   std::string page_token;
 
   // Copy the policies in effect for the operation.
-  auto rpc_policy = impl_.rpc_retry_policy_->clone();
-  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
 
   do {
     // Build the RPC request, try to minimize copying.
@@ -399,9 +397,9 @@ StatusOr<ClusterList> InstanceAdmin::ListClusters(
     request.set_parent(InstanceName(instance_id));
 
     auto response = ClientUtils::MakeCall(
-        *(impl_.client_), *rpc_policy, *backoff_policy,
-        impl_.metadata_update_policy_, &InstanceAdminClient::ListClusters,
-        request, "InstanceAdmin::ListClusters", status, true);
+        *(client_), *rpc_policy, *backoff_policy, metadata_update_policy_,
+        &InstanceAdminClient::ListClusters, request,
+        "InstanceAdmin::ListClusters", status, true);
     if (!status.ok()) {
       break;
     }
@@ -432,7 +430,7 @@ future<StatusOr<ClusterList>> InstanceAdmin::AsyncListClusters(
 
 future<StatusOr<ClusterList>> InstanceAdmin::AsyncListClusters(
     CompletionQueue& cq, std::string const& instance_id) {
-  auto client = impl_.client_;
+  auto client = client_;
   btadmin::ListClustersRequest request;
   request.set_parent(InstanceName(instance_id));
 
@@ -491,13 +489,12 @@ InstanceAdmin::AsyncUpdateCluster(CompletionQueue& cq,
                                   ClusterConfig cluster_config) {
   auto request = std::move(cluster_config).as_proto();
 
-  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  std::shared_ptr<InstanceAdminClient> client(client_);
   return internal::AsyncStartPollAfterRetryUnaryRpc<
       google::bigtable::admin::v2::Cluster>(
-      __func__, impl_.polling_policy_->clone(),
-      impl_.rpc_retry_policy_->clone(), impl_.rpc_backoff_policy_->clone(),
-      internal::ConstantIdempotencyPolicy(false), impl_.metadata_update_policy_,
-      client,
+      __func__, clone_polling_policy(), clone_rpc_retry_policy(),
+      clone_rpc_backoff_policy(), internal::ConstantIdempotencyPolicy(false),
+      metadata_update_policy_, client,
       [client](grpc::ClientContext* context,
                google::bigtable::admin::v2::Cluster const& request,
                grpc::CompletionQueue* cq) {
@@ -517,8 +514,8 @@ Status InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
 
   // This API is not idempotent, lets call it without retry
   ClientUtils::MakeNonIdemponentCall(
-      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
-      metadata_update_policy, &InstanceAdminClient::DeleteCluster, request,
+      *(client_), clone_rpc_retry_policy(), metadata_update_policy,
+      &InstanceAdminClient::DeleteCluster, request,
       "InstanceAdmin::DeleteCluster", status);
   return internal::MakeStatusFromRpcError(status);
 }
@@ -532,9 +529,9 @@ StatusOr<btadmin::AppProfile> InstanceAdmin::CreateAppProfile(
   // This is a non-idempotent API, use the correct retry loop for this type of
   // operation.
   auto result = ClientUtils::MakeNonIdemponentCall(
-      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
-      impl_.metadata_update_policy_, &InstanceAdminClient::CreateAppProfile,
-      request, "InstanceAdmin::CreateAppProfile", status);
+      *(client_), clone_rpc_retry_policy(), metadata_update_policy_,
+      &InstanceAdminClient::CreateAppProfile, request,
+      "InstanceAdmin::CreateAppProfile", status);
 
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
@@ -549,7 +546,7 @@ InstanceAdmin::AsyncCreateAppProfile(CompletionQueue& cq,
   auto request = std::move(config).as_proto();
   request.set_parent(InstanceName(instance_id.get()));
 
-  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  std::shared_ptr<InstanceAdminClient> client(client_);
   return internal::StartRetryAsyncUnaryRpc(
       __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       internal::ConstantIdempotencyPolicy(false),
@@ -571,9 +568,8 @@ StatusOr<btadmin::AppProfile> InstanceAdmin::GetAppProfile(
                    profile_id.get());
 
   auto result = ClientUtils::MakeCall(
-      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
-      impl_.rpc_backoff_policy_->clone(), impl_.metadata_update_policy_,
-      &InstanceAdminClient::GetAppProfile, request,
+      *(client_), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      metadata_update_policy_, &InstanceAdminClient::GetAppProfile, request,
       "InstanceAdmin::GetAppProfile", status, true);
 
   if (!status.ok()) {
@@ -590,7 +586,7 @@ InstanceAdmin::AsyncGetAppProfile(CompletionQueue& cq,
   request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
                    profile_id.get());
 
-  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  std::shared_ptr<InstanceAdminClient> client(client_);
   return internal::StartRetryAsyncUnaryRpc(
       __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       internal::ConstantIdempotencyPolicy(true), clone_metadata_update_policy(),
@@ -625,7 +621,7 @@ InstanceAdmin::AsyncUpdateAppProfile(CompletionQueue& cq,
   request.mutable_app_profile()->set_name(
       InstanceName(instance_id.get() + "/appProfiles/" + profile_id.get()));
 
-  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  std::shared_ptr<InstanceAdminClient> client(client_);
   return internal::AsyncStartPollAfterRetryUnaryRpc<
       google::bigtable::admin::v2::AppProfile>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
@@ -646,8 +642,8 @@ StatusOr<std::vector<btadmin::AppProfile>> InstanceAdmin::ListAppProfiles(
   std::vector<btadmin::AppProfile> result;
   std::string page_token;
   // Copy the policies in effect for the operation.
-  auto rpc_policy = impl_.rpc_retry_policy_->clone();
-  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
 
   do {
     // Build the RPC request, try to minimize copying.
@@ -656,9 +652,9 @@ StatusOr<std::vector<btadmin::AppProfile>> InstanceAdmin::ListAppProfiles(
     request.set_parent(InstanceName(instance_id));
 
     auto response = ClientUtils::MakeCall(
-        *(impl_.client_), *rpc_policy, *backoff_policy,
-        impl_.metadata_update_policy_, &InstanceAdminClient::ListAppProfiles,
-        request, "InstanceAdmin::ListAppProfiles", status, true);
+        *(client_), *rpc_policy, *backoff_policy, metadata_update_policy_,
+        &InstanceAdminClient::ListAppProfiles, request,
+        "InstanceAdmin::ListAppProfiles", status, true);
     if (!status.ok()) {
       break;
     }
@@ -678,7 +674,7 @@ StatusOr<std::vector<btadmin::AppProfile>> InstanceAdmin::ListAppProfiles(
 future<StatusOr<std::vector<btadmin::AppProfile>>>
 InstanceAdmin::AsyncListAppProfiles(CompletionQueue& cq,
                                     std::string const& instance_id) {
-  auto client = impl_.client_;
+  auto client = client_;
   btadmin::ListAppProfilesRequest request;
   request.set_parent(InstanceName(instance_id));
 
@@ -710,9 +706,9 @@ Status InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
   request.set_ignore_warnings(ignore_warnings);
 
   ClientUtils::MakeNonIdemponentCall(
-      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
-      impl_.metadata_update_policy_, &InstanceAdminClient::DeleteAppProfile,
-      request, "InstanceAdmin::DeleteAppProfile", status);
+      *(client_), clone_rpc_retry_policy(), metadata_update_policy_,
+      &InstanceAdminClient::DeleteAppProfile, request,
+      "InstanceAdmin::DeleteAppProfile", status);
 
   return internal::MakeStatusFromRpcError(status);
 }
@@ -725,7 +721,7 @@ future<Status> InstanceAdmin::AsyncDeleteAppProfile(
                    profile_id.get());
   request.set_ignore_warnings(ignore_warnings);
 
-  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  std::shared_ptr<InstanceAdminClient> client(client_);
   return internal::StartRetryAsyncUnaryRpc(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              internal::ConstantIdempotencyPolicy(false),
@@ -748,8 +744,8 @@ future<Status> InstanceAdmin::AsyncDeleteAppProfile(
 StatusOr<google::cloud::IamPolicy> InstanceAdmin::GetIamPolicy(
     std::string const& instance_id) {
   grpc::Status status;
-  auto rpc_policy = impl_.rpc_retry_policy_->clone();
-  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
 
   ::google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(InstanceName(instance_id));
@@ -758,7 +754,7 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::GetIamPolicy(
                                               MetadataParamTypes::RESOURCE);
 
   auto proto = ClientUtils::MakeCall(
-      *(impl_.client_), *rpc_policy, *backoff_policy, metadata_update_policy,
+      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
       &InstanceAdminClient::GetIamPolicy, request,
       "InstanceAdmin::GetIamPolicy", status, true);
 
@@ -774,7 +770,7 @@ future<StatusOr<google::cloud::IamPolicy>> InstanceAdmin::AsyncGetIamPolicy(
   ::google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(InstanceName(instance_id.get()));
 
-  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  std::shared_ptr<InstanceAdminClient> client(client_);
   return internal::StartRetryAsyncUnaryRpc(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              internal::ConstantIdempotencyPolicy(true),
@@ -799,8 +795,8 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::SetIamPolicy(
     std::string const& instance_id,
     google::cloud::IamBindings const& iam_bindings, std::string const& etag) {
   grpc::Status status;
-  auto rpc_policy = impl_.rpc_retry_policy_->clone();
-  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
 
   ::google::iam::v1::Policy policy;
   policy.set_etag(etag);
@@ -821,7 +817,7 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::SetIamPolicy(
                                               MetadataParamTypes::RESOURCE);
 
   auto proto = ClientUtils::MakeCall(
-      *(impl_.client_), *rpc_policy, *backoff_policy, metadata_update_policy,
+      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
       &InstanceAdminClient::SetIamPolicy, request,
       "InstanceAdmin::SetIamPolicy", status, true);
 
@@ -850,7 +846,7 @@ future<StatusOr<google::cloud::IamPolicy>> InstanceAdmin::AsyncSetIamPolicy(
   request.set_resource(InstanceName(instance_id.get()));
   *request.mutable_policy() = std::move(policy);
 
-  std::shared_ptr<InstanceAdminClient> client(impl_.client_);
+  std::shared_ptr<InstanceAdminClient> client(client_);
   return internal::StartRetryAsyncUnaryRpc(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              internal::ConstantIdempotencyPolicy(false),
@@ -879,8 +875,8 @@ StatusOr<std::vector<std::string>> InstanceAdmin::TestIamPermissions(
   request.set_resource(InstanceName(instance_id));
 
   // Copy the policies in effect for the operation.
-  auto rpc_policy = impl_.rpc_retry_policy_->clone();
-  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
 
   for (auto& permission : permissions) {
     request.add_permissions(permission);
@@ -890,7 +886,7 @@ StatusOr<std::vector<std::string>> InstanceAdmin::TestIamPermissions(
                                               MetadataParamTypes::RESOURCE);
 
   auto response = ClientUtils::MakeCall(
-      *(impl_.client_), *rpc_policy, *backoff_policy, metadata_update_policy,
+      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
       &InstanceAdminClient::TestIamPermissions, request,
       "InstanceAdmin::TestIamPermissions", status, true);
 
@@ -917,7 +913,7 @@ InstanceAdmin::AsyncTestIamPermissions(
     request.add_permissions(permission);
   }
 
-  auto client = impl_.client_;
+  auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              internal::ConstantIdempotencyPolicy(true),

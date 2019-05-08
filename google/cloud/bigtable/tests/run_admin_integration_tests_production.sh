@@ -40,11 +40,6 @@ echo "Running bigtable::InstanceAdmin async with futures integration test."
     "${PROJECT_ID}" "${ZONE_A}" "${ZONE_B}" "${SERVICE_ACCOUNT}"
 
 echo
-echo "Running TableAdmin async integration test."
-./instance_admin_async_integration_test  \
-    "${PROJECT_ID}" "${ZONE_A}" "${ZONE_B}" "${SERVICE_ACCOUNT}"
-
-echo
 echo "Running bigtable::TableAdmin integration test."
 ./admin_integration_test \
     "${PROJECT_ID}" "${INSTANCE_ID}" "${ZONE_A}" "${ZONE_B}"
