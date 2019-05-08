@@ -66,7 +66,7 @@ find the credentials file. For example:
 | Windows Powershell | `$env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]`   |
 | Windows cmd.exe    | `set GOOGLE_APPLICATION_CREDENTIALS=[PATH]`    |
 
-This is the recommended way to configure the
+Setting this environment variable is the recommended way to configure the
 authentication preferences, though if the environment variable is not set, the
 library searches for a credentials file in the same location as the [Cloud
 SDK](https://cloud.google.com/sdk/).
@@ -86,7 +86,7 @@ you run the quickstart program. Assuming you followed the build instructions
 referenced above this would be:
 
 @code
-./cmake-out/google/cloud/storage/examples/quick_start [BUCKET_NAME] [PROJECT_ID]
+./cmake-out/google/cloud/storage/examples/storage_quickstart [BUCKET_NAME] [PROJECT_ID]
 @endcode
 
 ### Using GOOGLE_CLOUD_PROJECT to set the default project
