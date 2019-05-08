@@ -18,60 +18,40 @@
 #include <typeindex>
 #include <typeinfo>
 
-namespace {
-struct Usage {
-  std::string msg;
-};
-
-char const* ConsumeArg(int& argc, char* argv[]) {
-  if (argc < 2) {
-    return nullptr;
+int main(int argc, char* argv[]) try {
+  if (argc != 5) {
+    std::string const cmd = argv[0];
+    auto last_slash = std::string(cmd).find_last_of('/');
+    auto program = cmd.substr(last_slash + 1);
+    std::cerr << "\nUsage: " << program
+              << " <project-id> <instance-id> <cluster-id> <zone>\n\n"
+              << "Example: " << program
+              << " my-project my-instance my-instance-c1 us-central1-f\n";
+    return 1;
   }
-  char const* result = argv[1];
-  std::copy(argv + 2, argv + argc, argv + 1);
-  argc--;
-  return result;
-}
 
-std::string command_usage;
+  std::string const project_id = argv[1];
+  std::string const instance_id = argv[2];
+  std::string const cluster_id = argv[3];
+  std::string const zone = argv[4];
 
-void PrintUsage(int argc, char* argv[], std::string const& msg) {
-  std::string const cmd = argv[0];
-  auto last_slash = std::string(cmd).find_last_of('/');
-  auto program = cmd.substr(last_slash + 1);
-  std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
-            << "Commands:\n"
-            << command_usage << "\n";
-}
+  //! [aliases]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  //! [aliases]
 
-// This full example demonstrate various instance operations
-// by initially creating instance of type PRODUCTION
-void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
-  if (argc != 4) {
-    throw Usage{"run: <project-id> <instance-id> <cluster-id> <zone>"};
-  }
-  google::cloud::bigtable::InstanceId instance_id(ConsumeArg(argc, argv));
-  google::cloud::bigtable::ClusterId cluster_id(ConsumeArg(argc, argv));
-  std::string const zone = ConsumeArg(argc, argv);
-
-  google::cloud::bigtable::InstanceAdmin instance_admin(
-      google::cloud::bigtable::CreateDefaultInstanceAdminClient(
-          project_id, google::cloud::bigtable::ClientOptions()));
+  // Connect to the Cloud Bigtable admin endpoint.
+  //! [connect admin]
+  cbt::InstanceAdmin instance_admin(
+      cbt::CreateDefaultInstanceAdminClient(project_id, cbt::ClientOptions()));
+  //! [connect admin]
 
   std::cout << "\nCheck Instance exists:\n";
-  auto instances = instance_admin.ListInstances();
+  StatusOr<cbt::InstanceList> instances = instance_admin.ListInstances();
   if (!instances) {
     throw std::runtime_error(instances.status().message());
   }
-  auto instance_name =
-      instance_admin.project_name() + "/instances/" + instance_id.get();
-  bool instance_exists =
-      instances->instances.end() !=
-      std::find_if(
-          instances->instances.begin(), instances->instances.end(),
-          [&instance_name](google::bigtable::admin::v2::Instance const& i) {
-            return i.name() == instance_name;
-          });
   if (!instances->failed_locations.empty()) {
     std::cerr
         << "The service tells us it has no information about these locations:";
@@ -80,61 +60,77 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
     }
     std::cerr << ". Continuing anyway\n";
   }
+  auto instance_name =
+      instance_admin.project_name() + "/instances/" + instance_id;
+  auto instance_name_it = std::find_if(
+      instances->instances.begin(), instances->instances.end(),
+      [&instance_name](google::bigtable::admin::v2::Instance const& i) {
+        return i.name() == instance_name;
+      });
+  bool instance_exists = instance_name_it != instances->instances.end();
+  std::cout << "The instance " << instance_id
+            << (instance_exists ? "does" : "does not") << " exist already\n";
 
   // Create instance if does not exists
   if (!instance_exists) {
     std::cout << "\nCreating a PRODUCTION Instance: ";
-    google::cloud::bigtable::DisplayName display_name("Sample Instance");
 
     // production instance needs at least 3 nodes
-    auto cluster_config = google::cloud::bigtable::ClusterConfig(
-        zone, 3, google::cloud::bigtable::ClusterConfig::HDD);
-    google::cloud::bigtable::InstanceConfig config(
-        google::cloud::bigtable::InstanceId(instance_id), display_name,
-        {{cluster_id.get(), cluster_config}});
-    config.set_type(google::cloud::bigtable::InstanceConfig::PRODUCTION);
+    auto cluster_config = cbt::ClusterConfig(zone, 3, cbt::ClusterConfig::HDD);
+    cbt::InstanceConfig config(cbt::InstanceId(instance_id),
+                               cbt::DisplayName("Sample Instance"),
+                               {{cluster_id, cluster_config}});
+    config.set_type(cbt::InstanceConfig::PRODUCTION);
 
-    auto instance_details = instance_admin.CreateInstance(config).get();
-    std::cout << " Done\n";
-  } else {
-    std::cout << "\nInstance " << instance_id.get() << " already exists.\n";
-    return;
+    google::cloud::future<void> creation_done =
+        instance_admin.CreateInstance(config).then(
+            [instance_id](
+                future<StatusOr<google::bigtable::admin::v2::Instance>> f) {
+              auto instance = f.get();
+              if (!instance) {
+                std::cerr << "Could not create instance " << instance_id
+                          << "\n";
+                throw std::runtime_error(instance.status().message());
+              }
+              std::cout << "Successfully created instance: "
+                        << instance->DebugString() << "\n";
+            });
+    // Note how this blocks until the instance is created, in production code
+    // you may want to perform this task asynchronously.
+    creation_done.get();
+    std::cout << "DONE\n";
   }
 
   std::cout << "\nListing Instances:\n";
-  auto instances_after = instance_admin.ListInstances();
-  if (!instances_after) {
-    throw std::runtime_error(instances_after.status().message());
+  instances = instance_admin.ListInstances();
+  if (!instances) {
+    throw std::runtime_error(instances.status().message());
   }
-  for (auto const& instance : instances_after->instances) {
-    std::cout << instance.name() << "\n";
-  }
-  if (!instances_after->failed_locations.empty()) {
+  if (!instances->failed_locations.empty()) {
     std::cerr
         << "The service tells us it has no information about these locations:";
-    for (auto const& failed_location : instances_after->failed_locations) {
+    for (auto const& failed_location : instances->failed_locations) {
       std::cerr << " " << failed_location;
     }
     std::cerr << ". Continuing anyway\n";
   }
+  for (auto const& instance : instances->instances) {
+    std::cout << "  " << instance.name() << "\n";
+  }
+  std::cout << "DONE\n";
 
   std::cout << "\nGet Instance:\n";
-  auto instance = instance_admin.GetInstance(instance_id.get());
+  auto instance = instance_admin.GetInstance(instance_id);
   if (!instance) {
     throw std::runtime_error(instance.status().message());
   }
-  std::string instance_detail;
-  google::protobuf::TextFormat::PrintToString(*instance, &instance_detail);
-  std::cout << "GetInstance details :\n" << instance_detail;
+  std::cout << "Instance details :\n" << instance->DebugString() << "\n";
 
   std::cout << "\nListing Clusters:\n";
-  auto cluster_list = instance_admin.ListClusters(instance_id.get());
+  StatusOr<cbt::ClusterList> cluster_list =
+      instance_admin.ListClusters(instance_id);
   if (!cluster_list) {
     throw std::runtime_error(cluster_list.status().message());
-  }
-  std::cout << "Cluster Name List:\n";
-  for (auto const& cluster : cluster_list->clusters) {
-    std::cout << "Cluster Name: " << cluster.name() << "\n";
   }
   if (!cluster_list->failed_locations.empty()) {
     std::cout << "The Cloud Bigtable service reports that the following "
@@ -144,49 +140,21 @@ void RunInstanceOperations(std::string project_id, int argc, char* argv[]) {
       std::cout << failed_location << "\n";
     }
   }
-}
-
-}  // anonymous namespace
-
-int main(int argc, char* argv[]) try {
-  using CommandType = std::function<void(std::string, int, char*[])>;
-
-  std::map<std::string, CommandType> commands = {
-      {"run", &RunInstanceOperations},
-  };
-
-  for (auto&& kv : commands) {
-    try {
-      std::string unused;
-      int fake_argc = 0;
-      kv.second(unused, fake_argc, argv);
-    } catch (Usage const& u) {
-      command_usage += "    ";
-      command_usage += u.msg;
-      command_usage += "\n";
-    }
+  std::cout << "Cluster Name List:\n";
+  for (auto const& cluster : cluster_list->clusters) {
+    std::cout << "Cluster Name: " << cluster.name() << "\n";
   }
+  std::cout << "DONE\n";
 
-  if (argc < 3) {
-    PrintUsage(argc, argv, "Missing command and/or project-id");
-    return 1;
+  std::cout << "Deleting instance " << instance_id << "\n";
+  google::cloud::Status delete_status =
+      instance_admin.DeleteInstance(instance_id);
+  if (!delete_status.ok()) {
+    throw std::runtime_error(delete_status.message());
   }
-
-  std::string const command_name = ConsumeArg(argc, argv);
-  std::string const project_id = ConsumeArg(argc, argv);
-
-  auto command = commands.find(command_name);
-  if (commands.end() == command) {
-    PrintUsage(argc, argv, "Unknown command: " + command_name);
-    return 1;
-  }
-
-  command->second(project_id, argc, argv);
+  std::cout << "DONE\n";
 
   return 0;
-} catch (Usage const& ex) {
-  PrintUsage(argc, argv, ex.msg);
-  return 1;
 } catch (std::exception const& ex) {
   std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
