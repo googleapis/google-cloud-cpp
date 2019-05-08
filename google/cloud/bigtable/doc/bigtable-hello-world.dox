@@ -12,84 +12,109 @@ illustrates how to:
 
 ## Running the example
 
-This example uses the
-[Cloud Bigtable C++ Client Library](https://googleapis.github.io/google-cloud-cpp)
+This example uses the [Cloud Bigtable C++ Client Library][reference-link]
 to communicate with Cloud Bigtable.
 
 To run the example program, follow the [instructions][github-examples] for the
 example on GitHub.
 
+[reference-link]: https://googleapis.github.io/google-cloud-cpp
 [github-examples]: https://github.com/googleapis/google-cloud-cpp/tree/master/google/cloud/bigtable/examples/
 
-### Including the Necessary Headers
+## Including the Necessary Headers
 
 The example uses the following headers:
 
 @snippet bigtable_hello_world.cc bigtable includes
 
-### Connecting to Cloud Bigtable to manage tables
+## Introduce aliases to make the example more readable
+
+@snippet bigtable_hello_world.cc aliases
+
+## Connecting to Cloud Bigtable to manage tables
 
 To manage tables, connect to Cloud Bigtable using
 `bigtable::CreateDefaultAdminClient()`:
 
 @snippet bigtable_hello_world.cc connect admin
 
-### Creating a table
+@see [bigtable::TableAdmin][TableAdmin] for more information on how to perform
+    administrative operations on tables.
 
-Create a table with `bigtable::TableAdmin::CreateTable()`:
+## Creating a table
+
+Create a table with [TableAdmin::CreateTable()][TableAdmin-CreateTable]:
 
 @snippet bigtable_hello_world.cc create table
 
-@see `bigtable::v0::TableAdmin` for additional operations to list, read, modify,
-and delete tables.
+@see [bigtable::TableAdmin][TableAdmin] for additional operations to list,
+    read, modify, and delete tables.
+@see https://cloud.google.com/bigtable/docs/overview for an overview of the
+    Cloud Bigtable storage model, including an introduction to important
+    Cloud Bigtable concepts, such as *row keys*, *column families*, *columns*,
+    and *cells*.
+@see https://cloud.google.com/bigtable/docs/schema-design for suggestions on
+    how to design your table schema.
 
-### Connecting to Cloud Bigtable to manage data
+## Connecting to Cloud Bigtable to read and write data
 
-To manage data, connect to Cloud Bigtable using
+To read and write data, connect to Cloud Bigtable using
 `bigtable::CreateDefaultDataClient()`:
 
 @snippet bigtable_hello_world.cc connect data
 
-### Writing Rows to a table
+@see [bigtable::Table][Table] for the functions to read and write data to
+    Cloud Bigtable.
 
-Then write the data:
+## Writing Rows to a table
+
+To write a single row use [Table::Apply()][Table-Apply]:
 
 @snippet bigtable_hello_world.cc write rows
 
-@see `bigtable::v0::Table::BulkApply()` to modify multiple rows in a single
-operation.  In addition to `SetCell()` there
-are functions to delete columns (e.g., `DeleteFromFamily()`) or to delete the
-whole row (`DeleteFromRow()`).
+@see [Table::BulkApply()][Table-BulkApply] to modify multiple rows in a single
+    request.
+@see `DeleteFromFamily()`, `DeleteFromRow()`, `DeleteFromColumn()` to delete
+    some (or all) the cells in a row.
+@see One of the overloads for `SetCell()` allows setting an explicit timestamp,
+    which is an idempotent mutation and thus can be automatically retried on
+    transient errors.
 
-### Creating filter for the column families
+## Creating filter for the column families
 
-Create a filer of family Column with`bigtable::Filter::ColumnRangeClosed()`:
+Use a filter to select only a subset of the cells in a row, in this case, we
+will select only the rows in the `family` column family and the `c0` column:
 
 @snippet bigtable_hello_world.cc create filter
 
-@see `bigtable::v0::Filter` to filter the column families, columns, and even
+@see [bigtable::Filter][Filter] to filter the column families, columns, and even
   the timestamps returned by `ReadRow()`.
 
-### Reading a row by its key
+## Reading data back: get a single row by its key
 
-Get a row directly using its key with `bigtable::Table::ReadRow()`:
+Get a row directly using its key with [Table::ReadRow()][Table-ReadRow]:
 
 @snippet bigtable_hello_world.cc read row
 
-@see `bigtable::v0::Filter` to filter the column families, columns, and even
-@see `bigtable::v0::Table::ReadRows()` to iterate over multiple rows.
+@see [bigtable::Filter][Filter] to filter the column families, columns, and even
+    the timestamps returned by `ReadRow()`.
+@see [Table::ReadRows()][Table-ReadRows] to iterate over
+    multiple rows.
 
-### Scanning all table rows
+## Reading data back: scanning all table rows
 
-Use `bigtable::Table::ReadRows()` to scan all of the rows in a table.
+Use [Table::ReadRows()][Table-ReadRows] to scan all of the rows in a table.
 
 @snippet bigtable_hello_world.cc scan all
 
-@see `bigtable::v0::RowRange` to scan only a portion of the table.
+@see [bigtable::RowRange][RowRange] to read only a portion of the table.
+@see [bigtable::RowSet][RowSet] to form arbitrary groups of ranges and specific
+    row keys in a [Table::ReadRows()][Table-ReadRows] request.
+@see [bigtable::Row][Row] for details of the contents in a row.
 
-### Deleting a table
+## Deleting a table
 
-Delete a table with `TableAdmin::DeleteTable`.
+Delete a table with [TableAdmin::DeleteTable()][TableAdmin-DeleteTable].
 
 @snippet bigtable_hello_world.cc delete table
 
@@ -98,4 +123,20 @@ Delete a table with `TableAdmin::DeleteTable`.
 Here is the full example
 
 @snippet bigtable_hello_world.cc all code
+
+[Filter]:          @ref google::cloud::bigtable::v0::Filter
+[InstanceAdmin]:   @ref google::cloud::bigtable::v0::InstanceAdmin
+[Mutation]:        @ref google::cloud::bigtable::v0::Mutation
+[Row]:             @ref google::cloud::bigtable::v0::Row
+[RowRange]:        @ref google::cloud::bigtable::v0::RowRange
+[RowSet]:          @ref google::cloud::bigtable::v0::RowSet
+[Table]:           @ref google::cloud::bigtable::v0::Table
+[Table-Apply]:     @ref google::cloud::bigtable::v0::Table::Apply
+[Table-BulkApply]: @ref google::cloud::bigtable::v0::Table::BulkApply
+[Table-ReadRow]:   @ref google::cloud::bigtable::v0::Table::ReadRow
+[Table-ReadRows]:  @ref google::cloud::bigtable::v0::Table::ReadRows
+[TableAdmin]:      @ref google::cloud::bigtable::v0::TableAdmin
+[TableAdmin-CreateTable]:  @ref google::cloud::bigtable::v0::TableAdmin::CreateTable
+[TableAdmin-DeleteTable]:  @ref google::cloud::bigtable::v0::TableAdmin::DeleteTable
+
 */

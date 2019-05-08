@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
 //! [bigtable includes] [END bigtable_hw_imports]
+#include <iostream>
 
 int main(int argc, char* argv[]) try {
   if (argc != 4) {
@@ -33,7 +34,10 @@ int main(int argc, char* argv[]) try {
   std::string const table_id = argv[3];
 
   // Create a namespace alias to make the code easier to read.
+  //! [aliases]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  //! [aliases]
 
   // Connect to the Cloud Bigtable Admin API.
   //! [connect admin] [START bigtable_hw_connect]
@@ -48,7 +52,7 @@ int main(int argc, char* argv[]) try {
   cbt::TableConfig schema({{"family", gc_rule}}, {});
 
   // Create a table.
-  google::cloud::StatusOr<google::bigtable::admin::v2::Table> returned_schema =
+  StatusOr<google::bigtable::admin::v2::Table> returned_schema =
       table_admin.CreateTable(table_id, schema);
   //! [create table]
 
@@ -93,8 +97,7 @@ int main(int argc, char* argv[]) try {
 
   // Read a single row.
   //! [read row] [START bigtable_hw_get_with_filter]
-  google::cloud::StatusOr<std::pair<bool, cbt::Row>> result =
-      table.ReadRow("key-0", filter);
+  StatusOr<std::pair<bool, cbt::Row>> result = table.ReadRow("key-0", filter);
   if (!result) {
     throw std::runtime_error(result.status().message());
   }
@@ -111,7 +114,7 @@ int main(int argc, char* argv[]) try {
 
   // Read all rows.
   //! [scan all] [START bigtable_hw_scan_with_filter]
-  for (google::cloud::StatusOr<cbt::Row> const& row : table.ReadRows(
+  for (StatusOr<cbt::Row> const& row : table.ReadRows(
            cbt::RowRange::InfiniteRange(), cbt::Filter::PassAllFilter())) {
     if (!row) {
       throw std::runtime_error(row.status().message());
