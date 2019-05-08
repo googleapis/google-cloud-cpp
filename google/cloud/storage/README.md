@@ -44,7 +44,9 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v1.0.0 - TBD
+### v1.1.x - TBD
+
+### v1.0.x - 2019-05
 
 * Declared GA and updated major number.
 * Support signed policy documents.
