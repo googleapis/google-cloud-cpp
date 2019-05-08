@@ -1,0 +1,21 @@
+# Common build output directory names
+.build/
+_build/
+build-output/
+cmake-out/
+
+# Common bazel output directories
+bazel-*
+
+# Backup files for Emacs
+*~
+
+# Ignore IDEA / IntelliJ files
+.idea/
+cmake-build-*/
+
+# This is a staging directory used to upload the documents to gihub.io
+github-io-staging/
+
+google/cloud/storage/testbench/__pycache__/
+google/cloud/storage/testbench/*.pyc
