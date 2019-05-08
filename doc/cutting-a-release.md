@@ -86,7 +86,7 @@ and then commit the changes and push the new branch:
 
 ```bash
 git commit -m"Create ${RELEASE}.x release branch" .
-git push --set-upstream origin ${RELEASE}.x
+git push --set-upstream origin "${RELEASE}.x"
 ```
 
 **NOTE:** No code review or Pull Request is needed as part of this step.
@@ -137,9 +137,9 @@ tarball and zip files, and edit the notes to include them. These
 commands might be handy:
 
 ```bash
-TAG=v0.6.0-pre1 # change this to the actual pre-release tag
-wget -q -O - https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.tar.gz | sha256sum
-wget -q -O - https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.zip | sha256sum
+TAG="v0.6.0-pre1" # change this to the actual pre-release tag
+wget -q -O - "https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.tar.gz" | sha256sum
+wget -q -O - "https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.zip" | sha256sum
 ```
 
 ## Have the pre-release tag reviewed
@@ -158,10 +158,10 @@ checkbox and publish.
 After you publish, remember to update the SHA256 sums, they change, as
 the tarball and zip files include the tag as part of the file paths.
 
-```sh
-TAG=v0.6.0 # change this to the actual release tag
-wget -q -O - https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.tar.gz | sha256sum
-wget -q -O - https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.zip | sha256sum
+```bash
+TAG="v0.6.0" # change this to the actual release tag
+wget -q -O - "https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.tar.gz" | sha256sum
+wget -q -O - "https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.zip" | sha256sum
 ```
 
 ## Review the branch protections
