@@ -164,14 +164,19 @@ Convenience shorthands for the schema views.</h2></td></tr>
 <tr class="memitem:aa6e7c45c7b42bece58a3d5ce307564c7"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#aa6e7c45c7b42bece58a3d5ce307564c7">TableView</a> = google::bigtable::admin::v2::Table::View</td></tr>
 <tr class="separator:aa6e7c45c7b42bece58a3d5ce307564c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d6fb0188308b03f20dc1a629775bae8"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#aa6e7c45c7b42bece58a3d5ce307564c7">TableView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a2d6fb0188308b03f20dc1a629775bae8">VIEW_UNSPECIFIED</a></td></tr>
+<tr class="memdesc:a2d6fb0188308b03f20dc1a629775bae8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the default view as defined for each function.  <a href="#a2d6fb0188308b03f20dc1a629775bae8">More...</a><br /></td></tr>
 <tr class="separator:a2d6fb0188308b03f20dc1a629775bae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe94c9d1b0aa5e93edc28776239b20db"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#aa6e7c45c7b42bece58a3d5ce307564c7">TableView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#afe94c9d1b0aa5e93edc28776239b20db">NAME_ONLY</a></td></tr>
+<tr class="memdesc:afe94c9d1b0aa5e93edc28776239b20db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Populate only the name in the responses.  <a href="#afe94c9d1b0aa5e93edc28776239b20db">More...</a><br /></td></tr>
 <tr class="separator:afe94c9d1b0aa5e93edc28776239b20db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacc7f75cb987385423965ee4fe337db0"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#aa6e7c45c7b42bece58a3d5ce307564c7">TableView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#aacc7f75cb987385423965ee4fe337db0">SCHEMA_VIEW</a></td></tr>
+<tr class="memdesc:aacc7f75cb987385423965ee4fe337db0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Populate only the name and the fields related to the table schema.  <a href="#aacc7f75cb987385423965ee4fe337db0">More...</a><br /></td></tr>
 <tr class="separator:aacc7f75cb987385423965ee4fe337db0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2dc4946bee985c471354e6535914697"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#aa6e7c45c7b42bece58a3d5ce307564c7">TableView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#ae2dc4946bee985c471354e6535914697">REPLICATION_VIEW</a></td></tr>
+<tr class="memdesc:ae2dc4946bee985c471354e6535914697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Populate only the name and the fields related to the table replication state.  <a href="#ae2dc4946bee985c471354e6535914697">More...</a><br /></td></tr>
 <tr class="separator:ae2dc4946bee985c471354e6535914697"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7619aa66b00eb047b99cc1665f07f57f"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#aa6e7c45c7b42bece58a3d5ce307564c7">TableView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#a7619aa66b00eb047b99cc1665f07f57f">FULL</a> = google::bigtable::admin::v2::Table::FULL</td></tr>
+<tr class="memdesc:a7619aa66b00eb047b99cc1665f07f57f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Populate all the fields in the response.  <a href="#a7619aa66b00eb047b99cc1665f07f57f">More...</a><br /></td></tr>
 <tr class="separator:a7619aa66b00eb047b99cc1665f07f57f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -858,7 +863,7 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a Cluster. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00624">624</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00630">630</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -1108,7 +1113,7 @@ template&lt;typename... Policies&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00180">180</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00186">186</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -1135,7 +1140,7 @@ template&lt;typename... Policies&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00181">181</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00187">187</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -1265,7 +1270,7 @@ template&lt;typename... Policies&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00179">179</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00185">185</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -1295,7 +1300,7 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a table in this object's instance. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00619">619</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00625">625</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -1351,7 +1356,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](cbt::TableAdmin admin, std::string table_id) {</div><div class="line">    StatusOr&lt;cbt::ConsistencyToken&gt; consistency_token =</div><div class="line">        admin.GenerateConsistencyToken(table_id);</div><div class="line">    <span class="keywordflow">if</span> (!consistency_token) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(consistency_token.status().message());</div><div class="line">    }</div><div class="line">    std::future&lt;StatusOr&lt;bool&gt;&gt; consistent_future =</div><div class="line">        admin.WaitForConsistencyCheck(<a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#ac33187c954cf3e096931b5e805c5e24a">cbt::TableId</a>(table_id),</div><div class="line">                                      *consistency_token);</div><div class="line">    <span class="keyword">auto</span> is_consistent = consistent_future.get();</div><div class="line">    <span class="keywordflow">if</span> (!is_consistent) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(is_consistent.status().message());</div><div class="line">    }</div><div class="line">    <span class="keywordflow">if</span> (*is_consistent) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Table is consistent with token &quot;</span> &lt;&lt; consistency_token-&gt;get()</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    } <span class="keywordflow">else</span> {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Table is not yet consistent, Please try again later with&quot;</span></div><div class="line">                &lt;&lt; <span class="stringliteral">&quot; the same token (&quot;</span> &lt;&lt; consistency_token-&gt;get() &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00572">572</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00578">578</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -1376,7 +1381,9 @@ template&lt;typename... Policies&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00176">176</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p>Populate all the fields in the response. </p>
+
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00182">182</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -1400,7 +1407,9 @@ template&lt;typename... Policies&gt; </div>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">      google::bigtable::admin::v2::Table::NAME_ONLY</div></div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00170">170</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p>Populate only the name in the responses. </p>
+
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00172">172</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -1424,7 +1433,9 @@ template&lt;typename... Policies&gt; </div>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">      google::bigtable::admin::v2::Table::REPLICATION_VIEW</div></div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00174">174</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p>Populate only the name and the fields related to the table replication state. </p>
+
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00179">179</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -1448,7 +1459,9 @@ template&lt;typename... Policies&gt; </div>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">      google::bigtable::admin::v2::Table::SCHEMA_VIEW</div></div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00172">172</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p>Populate only the name and the fields related to the table schema. </p>
+
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00175">175</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -1472,7 +1485,9 @@ template&lt;typename... Policies&gt; </div>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">      google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED</div></div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00168">168</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p>Use the default view as defined for each function. </p>
+
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00169">169</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
