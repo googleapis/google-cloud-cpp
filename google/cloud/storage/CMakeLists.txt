@@ -16,7 +16,7 @@
 
 # This should be included from the top level CMakeLists file
 set(STORAGE_CLIENT_VERSION_MAJOR 1)
-set(STORAGE_CLIENT_VERSION_MINOR 0)
+set(STORAGE_CLIENT_VERSION_MINOR 1)
 set(STORAGE_CLIENT_VERSION_PATCH 0)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Storage C++ Client")
