@@ -47,35 +47,22 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 ### v0.9.x - 2019-05
 
 * **Breaking Changes**
-  * Return `google::cloud::future` from `InstanceAdmin` functions.
-  * Remove unused `bigtable::GrpcError`.
-  * Remove Snapshot-related functions, tests, examples, etc.
-* Continue to implement more async APIs (**Note: These are not yet stable**):
-  * `InstanceAdmin`: implement `AsyncSetIamPolicy`, `AsyncDeleteAppProfile`,
-    `AsyncGetAppProfile`, `AsyncCreateAppProfile`, `AsyncGetIamPolicy`,
-    `AsyncTestIamPermissions`, `AsyncUpdateAppProfile`, `AsyncUpdateInstance`,
-    `AsyncCreateCluster`, `AsyncUpdateCluster`, `AsyncCreateInstance`,
-    `AsyncListAppProfiles`.
-  * `TableAdmin`: Implement `AsyncGenerateConsistencyToken`,
-    `AsyncCheckConsistency`, `AsyncListTables`, `AsyncDropAllRows`,
-    `AsyncDropRowsByPrefix`.
-  * `Table`: Implement `AsyncReadModifyWriteRow`.
+  * Return `google::cloud::future` from `InstanceAdmin` functions: this is
+    more consistent with all other functions returning futures.
+  * Remove unused `bigtable::GrpcError`: the library no longer raises this
+    exception, any code trying to catch the exception should be modified to
+    handle errors via `StatusOr<T>`.
+  * Remove Snapshot-related functions, tests, examples, etc.: this is
+    whitelisted functionality in Cloud Bigtable and it is no longer expected
+    to reach GA.
+* Continue to implement more async APIs (`Async*()` methods) for the
+  `InstanceAdmin`, `TableAdmin`, and `Table` classes
+  (**Note: These are not yet stable**)
 * Bugfixes:
   * Need `ignore_warnings` to actually delete an AppProfile.
   * Fix portability/logical errors in shell scripts.
   * Fix a race condition in `MutationBatcher`.
-* Implemented a number of missing code samples.
-* Cleanups:
-  * Remove `noex::Table*` dependencies in `Table::BulkApply()`,
-    `Table::*ReadModifyWriteRow()`.
-  * Remove `noex::Table::ReadModifyWriteRow()` and `SampleRows()`.
-  * Remove unused `AsyncFutureFromCallback`.
-* Test-only changes:
-  * Improve error messages in integration test.
-  * Fix the admin tests and examples to run against production.
-  * Prevent transient problems from breaking production test.
-  * Fix race condition in `async_read_stream_test`.
-  * Bypass creating real alarms in `MockCompletionQueue`.
+* Implemented a number of previously missing code samples.
 
 ### v0.8.x - 2019-04
 
