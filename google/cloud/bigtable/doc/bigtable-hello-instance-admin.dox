@@ -1,0 +1,132 @@
+/*!
+@page bigtable-hello-instance-admin Example: C++ Hello World for Instance Admin
+
+This example is a very simple "Instance Admin" application, which illustrates how to:
+
+- Create a production instance.
+- List the existing instances.
+- Get the metadata for an instance.
+- List all the clusters in an instance.
+- Delete an instance.
+
+## Run the example
+
+This example uses the [Cloud Bigtable C++ Client Library][reference-link]
+to communicate with Cloud Bigtable.
+
+To run the example program, follow the [instructions][github-examples] for the
+example on GitHub.
+
+[reference-link]: https://googleapis.github.io/google-cloud-cpp
+[github-examples]: https://github.com/googleapis/google-cloud-cpp/tree/master/google/cloud/bigtable/examples/
+
+## Include the Necessary Headers
+
+The example uses the following headers:
+
+@snippet bigtable_hello_instance_admin.cc bigtable includes
+
+## Define aliases
+
+To make the example less verbose we define some aliases:
+
+@snippet bigtable_hello_instance_admin.cc aliases
+
+## Connect to the Cloud Bigtable instance admin endpoint.
+
+Create an object of type [bigtable::InstanceAdmin][InstanceAdmin] to obtain
+information about *Instances*, *Clusters*, *Application Profiles*, and to change
+the *IAM permissions* in a Cloud Bigtable instance:
+
+@snippet bigtable_hello_instance_admin.cc connect instance admin
+
+@see https://cloud.google.com/bigtable/docs/instances-clusters-nodes for more
+    information about Cloud Bigtable instances, clusters, and nodes.
+@see https://cloud.google.com/bigtable/docs/app-profiles for more information
+    about Cloud Bigtable application profiles.
+@see https://cloud.google.com/bigtable/docs/access-control for more information
+    access controls via IAM permissions on Cloud Bigtable.
+
+## Check if an Instance already exists
+
+@snippet bigtable_hello_instance_admin.cc check instance exists
+
+@see [InstanceAdmin::GetInstance()][InstanceAdmin-GetInstance] for another
+    operation to query if an instance exists.
+
+## Create a Production Instance
+
+Use [InstanceAdmin::CreateInstance()][InstanceAdmin-CreateInstance] to create a
+new instance:
+
+@snippet bigtable_hello_instance_admin.cc create production instance
+
+@see [bigtable::InstanceConfig][InstanceConfig] to define the initial attributes
+    of a new instance.
+
+## List Instances in a Project
+
+Use [InstanceAdmin::ListInstances()][InstanceAdmin-ListInstances] to list all
+the instances in the project:
+
+@snippet bigtable_hello_instance_admin.cc list instances
+
+@see The gRPC API documentation for [ListInstances][ListInstancesResponse-proto]
+    has more details on when `failed_locations` might be populated.
+
+## Get an Instance Metadata
+
+Use [InstanceAdmin::GetInstance()][InstanceAdmin-GetInstance] to retrieve the
+metadata of an instance:
+
+@snippet bigtable_hello_instance_admin.cc get instance
+
+## List clusters in an Instance
+
+Use [InstanceAdmin::ListClusters()][InstanceAdmin-ListClusters] to list all the
+clusters in an instance (or all the clusters in a project):
+
+@snippet bigtable_hello_instance_admin.cc list clusters
+
+@see The [bigtable::InstanceAdmin][InstanceAdmin] class also has functions to
+    [create][InstanceAdmin-CreateCluster],
+    [update][InstanceAdmin-UpdateCluster],
+    [delete][InstanceAdmin-DeleteCluster],
+    and [retrieve the metadata][InstanceAdmin-UpdateCluster]
+    of a Cluster.
+@see The gRPC API documentation for [ListClusters][ListClustersResponse-proto]
+    has more details on when `failed_locations` might be populated.
+
+## Delete an instance
+
+Finally, use [InstanceAdmin::DeleteInstance()][InstanceAdmin-DeleteInstance] to
+delete an instance:
+
+@snippet bigtable_hello_instance_admin.cc delete instance
+
+@warning Note that this function will delete the instance even if it contains
+    tables with data in them. For mission critical data you must ensure that the
+    data is backed up before calling this function.
+
+## Put it all together
+
+Here is the full example
+
+@snippet bigtable_hello_instance_admin.cc all code
+
+[InstanceAdmin]:                 @ref google::cloud::bigtable::v0::InstanceAdmin
+[InstanceAdmin-CreateInstance]:  @ref google::cloud::bigtable::v0::InstanceAdmin::CreateInstance()
+[InstanceAdmin-ListInstances]:   @ref google::cloud::bigtable::v0::InstanceAdmin::ListInstances()
+[InstanceAdmin-GetInstance]:     @ref google::cloud::bigtable::v0::InstanceAdmin::GetInstance()
+[InstanceAdmin-DeleteInstance]:  @ref google::cloud::bigtable::v0::InstanceAdmin::DeleteInstance()
+[InstanceAdmin-CreateCluster]:   @ref google::cloud::bigtable::v0::InstanceAdmin::CreateCluster()
+[InstanceAdmin-GetCluster]:      @ref google::cloud::bigtable::v0::InstanceAdmin::GetCluster()
+[InstanceAdmin-UpdateCluster]:   @ref google::cloud::bigtable::v0::InstanceAdmin::UpdateCluster()
+[InstanceAdmin-DeleteCluster]:   @ref google::cloud::bigtable::v0::InstanceAdmin::DeleteCluster()
+[InstanceAdmin-ListClusters]:    @ref google::cloud::bigtable::v0::InstanceAdmin::ListClusters()
+[InstanceConfig]:   @ref google::cloud::bigtable::v0::InstanceConfig
+
+[ListInstancesResponse-proto]: https://cloud.google.com/bigtable/docs/reference/admin/rpc/google.bigtable.admin.v2#google.bigtable.admin.v2.ListInstancesResponse
+[ListClustersResponse-proto]: https://cloud.google.com/bigtable/docs/reference/admin/rpc/google.bigtable.admin.v2#google.bigtable.admin.v2.ListClustersResponse
+
+*/
