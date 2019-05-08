@@ -15,9 +15,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_H_
 
+#include "google/cloud/bigtable/bigtable_strong_types.h"
+#include "google/cloud/bigtable/completion_queue.h"
+#include "google/cloud/bigtable/data_client.h"
+#include "google/cloud/bigtable/filters.h"
+#include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
-#include "google/cloud/bigtable/internal/table.h"
+#include "google/cloud/bigtable/mutations.h"
+#include "google/cloud/bigtable/read_modify_write_rule.h"
+#include "google/cloud/bigtable/row_key_sample.h"
+#include "google/cloud/bigtable/row_reader.h"
 #include "google/cloud/bigtable/row_set.h"
+#include "google/cloud/bigtable/rpc_backoff_policy.h"
+#include "google/cloud/bigtable/rpc_retry_policy.h"
+#include "google/cloud/bigtable/table_strong_types.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
@@ -28,6 +39,20 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 class MutationBatcher;
+
+/**
+ * Return the full table name.
+ *
+ * The full table name is:
+ *
+ * `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
+ *
+ * Where the project id and instance id come from the @p client parameter.
+ */
+inline std::string TableName(std::shared_ptr<DataClient> client,
+                             std::string const& table_id) {
+  return InstanceName(std::move(client)) + "/tables/" + table_id;
+}
 
 /**
  * The main interface to interact with data in a Cloud Bigtable table.
@@ -138,7 +163,7 @@ class Table {
    *     full table name is `client->instance_name() + '/tables/' + table_id`.
    */
   Table(std::shared_ptr<DataClient> client, std::string const& table_id)
-      : impl_(std::move(client), table_id) {}
+      : Table(std::move(client), AppProfileId(""), table_id) {}
 
   /**
    * Constructor with default policies.
@@ -158,7 +183,17 @@ class Table {
    */
   Table(std::shared_ptr<DataClient> client,
         bigtable::AppProfileId app_profile_id, std::string const& table_id)
-      : impl_(std::move(client), std::move(app_profile_id), table_id) {}
+      : client_(std::move(client)),
+        app_profile_id_(std::move(app_profile_id)),
+        table_name_(bigtable::TableId(TableName(client_, table_id))),
+        table_id_(table_id),
+        rpc_retry_policy_(
+            bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
+        rpc_backoff_policy_(
+            bigtable::DefaultRPCBackoffPolicy(internal::kBigtableLimits)),
+        metadata_update_policy_(table_name(), MetadataParamTypes::TABLE_NAME),
+        idempotent_mutation_policy_(
+            bigtable::DefaultIdempotentMutationPolicy()) {}
 
   /**
    * Constructor with explicit policies.
@@ -216,8 +251,9 @@ class Table {
   template <typename... Policies>
   Table(std::shared_ptr<DataClient> client, std::string const& table_id,
         Policies&&... policies)
-      : impl_(std::move(client), table_id,
-              std::forward<Policies>(policies)...) {}
+      : Table(std::move(client), table_id) {
+    ChangePolicies(std::forward<Policies>(policies)...);
+  }
 
   /**
    * Constructor with explicit policies.
@@ -277,16 +313,15 @@ class Table {
   Table(std::shared_ptr<DataClient> client,
         bigtable::AppProfileId app_profile_id, std::string const& table_id,
         Policies&&... policies)
-      : impl_(std::move(client), std::move(app_profile_id), table_id,
-              std::forward<Policies>(policies)...) {}
-
-  std::string const& table_name() const { return impl_.table_name(); }
-  std::string const& app_profile_id() const { return impl_.app_profile_id(); }
-  std::string const& project_id() const { return impl_.client_->project_id(); }
-  std::string const& instance_id() const {
-    return impl_.client_->instance_id();
+      : Table(std::move(client), std::move(app_profile_id), table_id) {
+    ChangePolicies(std::forward<Policies>(policies)...);
   }
-  std::string const& table_id() const { return impl_.table_id(); }
+
+  std::string const& table_name() const { return table_name_.get(); }
+  std::string const& app_profile_id() const { return app_profile_id_.get(); }
+  std::string const& project_id() const { return client_->project_id(); }
+  std::string const& instance_id() const { return client_->instance_id(); }
+  std::string const& table_id() const { return table_id_; }
 
   /**
    * Attempts to apply the mutation to a row.
@@ -608,23 +643,52 @@ class Table {
   }
 
   std::unique_ptr<RPCRetryPolicy> clone_rpc_retry_policy() {
-    return impl_.rpc_retry_policy_->clone();
+    return rpc_retry_policy_->clone();
   }
 
   std::unique_ptr<RPCBackoffPolicy> clone_rpc_backoff_policy() {
-    return impl_.rpc_backoff_policy_->clone();
+    return rpc_backoff_policy_->clone();
   }
 
   MetadataUpdatePolicy clone_metadata_update_policy() {
-    return impl_.metadata_update_policy_;
+    return metadata_update_policy_;
   }
 
   std::unique_ptr<IdempotentMutationPolicy> clone_idempotent_mutation_policy() {
-    return impl_.idempotent_mutation_policy_->clone();
+    return idempotent_mutation_policy_->clone();
   }
 
+  //@{
+  /// @name Helper functions to implement constructors with changed policies.
+  void ChangePolicy(RPCRetryPolicy& policy) {
+    rpc_retry_policy_ = policy.clone();
+  }
+
+  void ChangePolicy(RPCBackoffPolicy& policy) {
+    rpc_backoff_policy_ = policy.clone();
+  }
+
+  void ChangePolicy(IdempotentMutationPolicy& policy) {
+    idempotent_mutation_policy_ = policy.clone();
+  }
+
+  template <typename Policy, typename... Policies>
+  void ChangePolicies(Policy&& policy, Policies&&... policies) {
+    ChangePolicy(policy);
+    ChangePolicies(std::forward<Policies>(policies)...);
+  }
+  void ChangePolicies() {}
+  //@}
+
   friend class MutationBatcher;
-  noex::Table impl_;
+  std::shared_ptr<DataClient> client_;
+  bigtable::AppProfileId app_profile_id_;
+  bigtable::TableId table_name_;
+  std::string table_id_;
+  std::shared_ptr<RPCRetryPolicy> rpc_retry_policy_;
+  std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
+  MetadataUpdatePolicy metadata_update_policy_;
+  std::shared_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

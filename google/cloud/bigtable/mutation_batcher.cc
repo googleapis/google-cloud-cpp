@@ -15,7 +15,6 @@
 #include "google/cloud/bigtable/mutation_batcher.h"
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
-#include "google/cloud/bigtable/internal/table.h"
 #include <sstream>
 
 namespace google {

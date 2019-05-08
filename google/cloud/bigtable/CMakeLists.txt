@@ -132,14 +132,10 @@ add_library(bigtable_client
             internal/async_op_traits.h
             internal/async_poll_op.h
             internal/async_read_stream_impl.h
-            internal/async_sample_row_keys.h
-            internal/async_sample_row_keys.cc
-            internal/async_read_row_operation.h
             internal/async_retry_multi_page.h
             internal/async_retry_op.h
             internal/async_retry_unary_rpc.h
             internal/async_retry_unary_rpc_and_poll.h
-            internal/async_row_reader.h
             internal/bulk_mutator.h
             internal/bulk_mutator.cc
             internal/client_options_defaults.h
@@ -160,8 +156,6 @@ add_library(bigtable_client
             internal/rowreaderiterator.h
             internal/rowreaderiterator.cc
             internal/strong_type.h
-            internal/table.h
-            internal/table.cc
             internal/unary_client_utils.h
             idempotent_mutation_policy.h
             idempotent_mutation_policy.cc
@@ -225,8 +219,6 @@ if (BUILD_TESTING)
     add_library(bigtable_client_testing
                 testing/embedded_server_test_fixture.h
                 testing/embedded_server_test_fixture.cc
-                testing/internal_table_test_fixture.h
-                testing/internal_table_test_fixture.cc
                 testing/mock_admin_client.h
                 testing/mock_data_client.h
                 testing/mock_instance_admin_client.h
@@ -279,20 +271,11 @@ if (BUILD_TESTING)
         instance_config_test.cc
         instance_update_config_test.cc
         internal/async_longrunning_op_test.cc
-        internal/async_poll_op_test.cc
         internal/async_retry_multi_page_test.cc
-        internal/async_retry_op_test.cc
-        internal/async_retry_unary_rpc_and_poll_test.cc
         internal/async_retry_unary_rpc_test.cc
         internal/bulk_mutator_test.cc
-        internal/table_async_check_and_mutate_row_test.cc
         internal/grpc_error_delegate_test.cc
         internal/prefix_range_end_test.cc
-        internal/table_async_apply_test.cc
-        internal/table_async_bulk_apply_test.cc
-        internal/table_async_row_reader_test.cc
-        internal/table_async_sample_row_keys_test.cc
-        internal/table_test.cc
         mutation_batcher_test.cc
         mutations_test.cc
         table_admin_test.cc

@@ -15,7 +15,6 @@
 //! [all code]
 
 //! [bigtable includes]
-#include "google/cloud/bigtable/internal/table.h"
 #include "google/cloud/bigtable/table.h"
 //! [bigtable includes]
 #include <google/protobuf/text_format.h>
@@ -108,8 +107,8 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
     }
 
     table.AsyncBulkApply(std::move(bulk), cq)
-        .then([](future<std::vector<cbt::FailedMutation>> f) {
-          auto failures = f.get();
+        .then([](future<std::vector<cbt::FailedMutation>> ft) {
+          auto failures = ft.get();
           if (failures.empty()) {
             std::cout << "All the mutations were successful\n";
             return;

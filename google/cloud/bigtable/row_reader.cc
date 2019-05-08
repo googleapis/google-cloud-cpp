@@ -14,7 +14,7 @@
 
 #include "google/cloud/bigtable/row_reader.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
-#include "google/cloud/bigtable/internal/table.h"
+#include "google/cloud/bigtable/table.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/log.h"
@@ -110,10 +110,9 @@ void RowReader::MakeRequest() {
   processed_chunks_count_ = 0;
 
   google::bigtable::v2::ReadRowsRequest request;
+  request.set_table_name(table_name_.get());
+  request.set_app_profile_id(app_profile_id_.get());
 
-  bigtable::internal::SetCommonTableOperationRequest<
-      google::bigtable::v2::ReadRowsRequest>(request, app_profile_id_.get(),
-                                             table_name_.get());
   auto row_set_proto = row_set_.as_proto();
   request.mutable_rows()->Swap(&row_set_proto);
 

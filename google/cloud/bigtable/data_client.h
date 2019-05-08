@@ -91,7 +91,6 @@ class DataClient {
   // classes that do use them friends.
  protected:
   friend class Table;
-  friend class noex::Table;
   friend class internal::AsyncBulkMutatorNoex;
   friend class internal::AsyncRetryBulkApply;
   friend class internal::AsyncSampleRowKeys;

@@ -14,7 +14,6 @@
 
 #include "google/cloud/bigtable/internal/async_longrunning_op.h"
 #include "google/cloud/bigtable/admin_client.h"
-#include "google/cloud/bigtable/testing/internal_table_test_fixture.h"
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
@@ -53,9 +52,8 @@ void OperationFinishedSuccessfully(google::longrunning::Operation& response,
   response.set_allocated_response(any.release());
 }
 
-class AsyncLongrunningOpFutureTest
-    : public bigtable::testing::internal::TableTestFixture,
-      public WithParamInterface<bool> {};
+class AsyncLongrunningOpFutureTest : public bigtable::testing::TableTestFixture,
+                                     public WithParamInterface<bool> {};
 
 TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
   auto const success = GetParam();
