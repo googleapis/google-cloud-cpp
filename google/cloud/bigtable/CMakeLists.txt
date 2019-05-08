@@ -127,9 +127,6 @@ add_library(bigtable_client
             internal/async_bulk_apply.h
             internal/async_bulk_apply.cc
             internal/async_check_consistency.h
-            internal/async_list_app_profiles.h
-            internal/async_list_clusters.h
-            internal/async_list_instances.h
             internal/async_longrunning_op.h
             internal/async_loop_op.h
             internal/async_op_traits.h
@@ -153,8 +150,6 @@ add_library(bigtable_client
             internal/conjunction.h
             internal/grpc_error_delegate.h
             internal/grpc_error_delegate.cc
-            internal/instance_admin.h
-            internal/instance_admin.cc
             internal/poll_longrunning_operation.h
             internal/prefix_range_end.h
             internal/prefix_range_end.cc
@@ -286,9 +281,6 @@ if (BUILD_TESTING)
         instance_config_test.cc
         instance_update_config_test.cc
         internal/async_check_consistency_test.cc
-        internal/async_list_app_profiles_test.cc
-        internal/async_list_clusters_test.cc
-        internal/async_list_instances_test.cc
         internal/async_longrunning_op_test.cc
         internal/async_poll_op_test.cc
         internal/async_retry_multi_page_test.cc
@@ -297,7 +289,6 @@ if (BUILD_TESTING)
         internal/async_retry_unary_rpc_test.cc
         internal/bulk_mutator_test.cc
         internal/table_async_check_and_mutate_row_test.cc
-        internal/instance_admin_test.cc
         internal/grpc_error_delegate_test.cc
         internal/prefix_range_end_test.cc
         internal/table_admin_test.cc
