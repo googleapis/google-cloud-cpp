@@ -162,8 +162,6 @@ add_library(bigtable_client
             internal/strong_type.h
             internal/table.h
             internal/table.cc
-            internal/table_admin.h
-            internal/table_admin.cc
             internal/unary_client_utils.h
             idempotent_mutation_policy.h
             idempotent_mutation_policy.cc
@@ -280,7 +278,6 @@ if (BUILD_TESTING)
         instance_admin_test.cc
         instance_config_test.cc
         instance_update_config_test.cc
-        internal/async_check_consistency_test.cc
         internal/async_longrunning_op_test.cc
         internal/async_poll_op_test.cc
         internal/async_retry_multi_page_test.cc
@@ -291,7 +288,6 @@ if (BUILD_TESTING)
         internal/table_async_check_and_mutate_row_test.cc
         internal/grpc_error_delegate_test.cc
         internal/prefix_range_end_test.cc
-        internal/table_admin_test.cc
         internal/table_async_apply_test.cc
         internal/table_async_bulk_apply_test.cc
         internal/table_async_row_reader_test.cc

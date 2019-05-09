@@ -34,9 +34,6 @@ class AsyncCheckConsistency;
 template <typename Client, typename Response>
 class AsyncLongrunningOperation;
 }  // namespace internal
-namespace noex {
-class TableAdmin;
-}  // namespace noex
 
 /**
  * Connects to Cloud Bigtable's table administration APIs.
@@ -87,7 +84,6 @@ class AdminClient {
   // classes that do use them friends.
  protected:
   friend class TableAdmin;
-  friend class noex::TableAdmin;
   friend class internal::AsyncAwaitConsistency;
   friend class internal::AsyncCheckConsistency;
   template <typename ResultType, typename ClientType>

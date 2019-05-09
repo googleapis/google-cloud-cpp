@@ -110,9 +110,6 @@ void TableIntegrationTest::SetUp() {
       TableTestEnvironment::project_id(), ClientOptions());
   table_admin_ = google::cloud::internal::make_unique<bigtable::TableAdmin>(
       admin_client_, TableTestEnvironment::instance_id());
-  noex_table_admin_ =
-      google::cloud::internal::make_unique<bigtable::noex::TableAdmin>(
-          admin_client_, TableTestEnvironment::instance_id());
   data_client_ = bigtable::CreateDefaultDataClient(
       TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
       ClientOptions());

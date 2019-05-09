@@ -18,8 +18,8 @@
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/column_family.h"
+#include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
-#include "google/cloud/bigtable/internal/table_admin.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/table_config.h"
 #include "google/cloud/bigtable/version.h"
@@ -125,7 +125,16 @@ class TableAdmin {
    *   the project id in the @p client parameter.
    */
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id)
-      : impl_(std::move(client), std::move(instance_id)) {}
+      : client_(std::move(client)),
+        instance_id_(std::move(instance_id)),
+        instance_name_(InstanceName()),
+        rpc_retry_policy_(
+            DefaultRPCRetryPolicy(internal::kBigtableTableAdminLimits)),
+        rpc_backoff_policy_(
+            DefaultRPCBackoffPolicy(internal::kBigtableTableAdminLimits)),
+        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
+        polling_policy_(
+            DefaultPollingPolicy(internal::kBigtableTableAdminLimits)) {}
 
   /**
    * Create a new TableAdmin using explicit policies to handle RPC errors.
@@ -156,8 +165,9 @@ class TableAdmin {
   template <typename... Policies>
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id,
              Policies&&... policies)
-      : impl_(std::move(client), std::move(instance_id),
-              std::forward<Policies>(policies)...) {}
+      : TableAdmin(std::move(client), std::move(instance_id)) {
+    ChangePolicies(std::forward<Policies>(policies)...);
+  }
 
   TableAdmin(TableAdmin const& table_admin) = default;
   TableAdmin& operator=(TableAdmin const& table_admin) = default;
@@ -182,9 +192,9 @@ class TableAdmin {
   constexpr static TableView FULL = google::bigtable::admin::v2::Table::FULL;
   //@}
 
-  std::string const& project() const { return impl_.project(); }
-  std::string const& instance_id() const { return impl_.instance_id(); }
-  std::string const& instance_name() const { return impl_.instance_name(); }
+  std::string const& project() const { return client_->project(); }
+  std::string const& instance_id() const { return instance_id_; }
+  std::string const& instance_name() const { return instance_name_; }
 
   /**
    * Create a new table in the instance.
@@ -640,24 +650,52 @@ class TableAdmin {
       bigtable::TableId const& table_id,
       bigtable::ConsistencyToken const& consistency_token);
 
- private:
+  //@{
+  /// @name Helper functions to implement constructors with changed policies.
+  void ChangePolicy(RPCRetryPolicy& policy) {
+    rpc_retry_policy_ = policy.clone();
+  }
+
+  void ChangePolicy(RPCBackoffPolicy& policy) {
+    rpc_backoff_policy_ = policy.clone();
+  }
+
+  void ChangePolicy(PollingPolicy& policy) { polling_policy_ = policy.clone(); }
+
+  template <typename Policy, typename... Policies>
+  void ChangePolicies(Policy&& policy, Policies&&... policies) {
+    ChangePolicy(policy);
+    ChangePolicies(std::forward<Policies>(policies)...);
+  }
+  void ChangePolicies() {}
+  //@}
+
   std::unique_ptr<RPCRetryPolicy> clone_rpc_retry_policy() {
-    return impl_.rpc_retry_policy_->clone();
+    return rpc_retry_policy_->clone();
   }
 
   std::unique_ptr<RPCBackoffPolicy> clone_rpc_backoff_policy() {
-    return impl_.rpc_backoff_policy_->clone();
+    return rpc_backoff_policy_->clone();
   }
 
   MetadataUpdatePolicy clone_metadata_update_policy() {
-    return impl_.metadata_update_policy_;
+    return metadata_update_policy_;
   }
 
   std::unique_ptr<PollingPolicy> clone_polling_policy() {
-    return impl_.polling_policy_->clone();
+    return polling_policy_->clone();
   }
 
-  noex::TableAdmin impl_;
+  /// Compute the fully qualified instance name.
+  std::string InstanceName() const;
+
+  std::shared_ptr<AdminClient> client_;
+  std::string instance_id_;
+  std::string instance_name_;
+  std::shared_ptr<RPCRetryPolicy> rpc_retry_policy_;
+  std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
+  bigtable::MetadataUpdatePolicy metadata_update_policy_;
+  std::shared_ptr<PollingPolicy> polling_policy_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS
