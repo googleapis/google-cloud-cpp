@@ -585,7 +585,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_snippets.cc wait for consistency check
    */
-  std::future<StatusOr<bool>> WaitForConsistencyCheck(
+  std::future<StatusOr<Consistency>> WaitForConsistencyCheck(
       bigtable::TableId const& table_id,
       bigtable::ConsistencyToken const& consistency_token) {
     return std::async(std::launch::async,
@@ -646,7 +646,7 @@ class TableAdmin {
    * Implements the polling loop for `WaitForConsistencyCheck` on a
    * separate thread
    */
-  StatusOr<bool> WaitForConsistencyCheckImpl(
+  StatusOr<Consistency> WaitForConsistencyCheckImpl(
       bigtable::TableId const& table_id,
       bigtable::ConsistencyToken const& consistency_token);
 

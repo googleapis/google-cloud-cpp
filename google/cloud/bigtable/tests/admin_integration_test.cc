@@ -297,12 +297,12 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
   // Wait until all the mutations before the `consistency_token` have propagated
   // everywhere.
-  std::future<google::cloud::StatusOr<bool>> result =
+  std::future<google::cloud::StatusOr<bigtable::Consistency>> result =
       table_admin.WaitForConsistencyCheck(bigtable::TableId(random_table_id),
                                           *consistency_token);
   auto is_consistent = result.get();
   ASSERT_STATUS_OK(is_consistent);
-  EXPECT_TRUE(*is_consistent);
+  EXPECT_EQ(bigtable::Consistency::kConsistent, *is_consistent);
 
   // Cleanup the table and the instance.
   EXPECT_STATUS_OK(table_admin.DeleteTable(random_table_id));

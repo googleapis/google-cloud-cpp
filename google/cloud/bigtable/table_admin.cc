@@ -441,7 +441,7 @@ future<StatusOr<Consistency>> TableAdmin::AsyncCheckConsistency(
         ;
       });
 }
-StatusOr<bool> TableAdmin::WaitForConsistencyCheckImpl(
+StatusOr<Consistency> TableAdmin::WaitForConsistencyCheckImpl(
     bigtable::TableId const& table_id,
     bigtable::ConsistencyToken const& consistency_token) {
   grpc::Status status;
@@ -461,7 +461,7 @@ StatusOr<bool> TableAdmin::WaitForConsistencyCheckImpl(
 
     if (status.ok()) {
       if (response.consistent()) {
-        return true;
+        return Consistency::kConsistent;
       }
     } else if (polling_policy->IsPermanentError(status)) {
       return bigtable::internal::MakeStatusFromRpcError(status);
