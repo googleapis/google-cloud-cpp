@@ -2,55 +2,95 @@
 @mainpage Google Cloud Platform Bigtable C++ Client Library
 
 # Overview
-The Google Cloud Platform Bigtable C++ Client library offers types and functions
-access of GCP Bigtable from C++11 applications([Read more about GCP Bigtable][read-more-about-gcp-bigtable]).
-It offers access to the GCP Bigtable API, including operations to list, read, write, and delete
-[Instances and Clusters][read-instances-clusters], [Tables][read-tables] and [Application Profiles][read-appprofiles].
+
+Cloud Bigtable is Google's NoSQL Big Data database service. It's the same
+database that powers many core Google services, including Search, Analytics,
+Maps, and Gmail.
+
+The Cloud Bigtable C++ Client library offers types and functions
+to access Cloud Bigtable from C++11 applications
+([Read more about Cloud Bigtable][read-more-about-gcp-bigtable]).
+It offers access to the Cloud Bigtable API, including operations to list, read,
+write, and delete [Instances and Clusters][read-instances-clusters],
+[Tables][read-tables] and [Application Profiles][read-app-profiles].
 
 ## Quick Start
 
+The following instructions show you how to perform basic tasks in Cloud Bigtable
+using the C++ client library.
+
+If you have never used Cloud Bigtable we recommend that you first follow one of
+the [language neutral quickstart guides][cbt-quickstart] before you follow this
+guide.
+
 ### Before you begin
 
-1. Select or create a Google Cloud Platform (GCP) project.
-
-    [GO TO THE MANAGE RESOURCES PAGE][resource-link]
-
-    Make a note of the project id, you will need to use it later.
-
-2. Make sure that billing is enabled for your project
-
-    [LEARN HOW TO ENABLE BILLING][billing-link]
-
-3. Enable the Cloud Bigtable and Cloud Bigtable Admin APIs.
-
-    [LEARN HOW TO ENABLE THE APIS][enable-api-link]
-
-4. Learn about [key terms and concepts][read-more-about-gcp-bigtable] for GCP Bigtable.
-
-5. Setup the authentication for the examples.
-
-    [LEARN HOW TO CONFIGURE A SERVICE ACCOUNT][authentication-quickstart]
-
-    [LEARN HOW TO LOGIN WITH YOUR PERSONAL ACCOUNT][user-account]
-
+1. Select or create a Google Cloud Platform (GCP) project using the
+   [manage resource page][resource-link]. Make a note of the project id, you
+   will need to use it later.
+2. Make sure that [billing is enabled][billing-link] for your project. **Costs
+   that you incur in Cloud Bigtable are based on the resources you use.**
+3. Learn about [key terms and concepts][concepts-link] for Cloud Storage.
+4. Setup the authentication for the examples:
+   - [Configure a service account][authentication-quickstart],
+   - or [login with your personal account][gcloud-quickstart]
 
 ### Download and Compile C++ Client Library
 
 The source code for the Cloud Bigtable C++ Client Library can be found on
-[GitHub][github-link]. Download or clone this repository as usual. The
-top-level [README][github-readme] file in this repository includes detailed
+[GitHub][github-link]. Download or clone this repository as usual:
+
+```
+git clone https://github.com/googleapis/google-cloud-cpp.git
+```
+
+The top-level [README][github-readme] file in this repository includes detailed
 instructions on how to compile the library. The examples used in this guide
 should be automatically compiled when you follow said instructions.
 
-### Run the Quick Start Example
+### Configuring authentication for the C++ Client Library
 
-   @ref bigtable-quickstart "Quickstart Example"
+This library uses the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to
+find the credentials file. For example:
 
-## Use the library in your own project
+| Shell              | Command                                        |
+| :----------------- | ---------------------------------------------- |
+| Bash/zsh/ksh/etc.  | `export GOOGLE_APPLICATION_CREDENTIALS=[PATH]` |
+| sh                 | `GOOGLE_APPLICATION_CREDENTIALS=[PATH];` `export GOOGLE_APPLICATION_CREDENTIALS` |
+| csh/tsch           | `setenv GOOGLE_APPLICATION_CREDENTIALS [PATH]` |
+| Windows Powershell | `$env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]`   |
+| Windows cmd.exe    | `set GOOGLE_APPLICATION_CREDENTIALS=[PATH]`    |
+
+Setting this environment variable is the recommended way to configure the
+authentication preferences, though if the environment variable is not set, the
+library searches for a credentials file in the same location as the [Cloud
+SDK](https://cloud.google.com/sdk/). For more details about authentication and
+Google Cloud Platform consult the
+[Authentication Overview][authentication-overview] page.
+
+### Read a Row
+
+This is a short example showing how to read a row from Cloud Bigtable:
+This example assumes you have configured the authentication using
+`GOOGLE_APPLICATION_CREDENTIALS`:
+
+@snippet bigtable_quickstart.cc all code
+
+This quickstart will always read a single row with key `r1` from family `cf1`.
+You must provide a project id, instance id, and table id in the command-line
+when you run the quickstart program. Assuming you followed the build
+instructions referenced above this would be:
+
+@code
+./cmake-out/google/cloud/bigtable/bigtable_quickstart [PROJECT_ID] [INSTANCE ID] [TABLE ID]
+@endcode
+
+<!-- START bigtable_hw_install -->
+
+## Using the library in your own project
 
 Our continuous integration builds compile and test the code using both
-[Bazel](https://bazel.build/), and [CMake](https://cmake.org/). Integrating the
-GCP Bigtable C++ Client library should be easy if you use either.
+[Bazel](https://bazel.build/), and [CMake](https://cmake.org/).
 
 ### Integrating with Bazel
 
@@ -61,8 +101,8 @@ and install the library, for example:
 # Change the version and SHA256 hash as needed.
 http_archive(
     name = "com_github_googleapis_google_cloud_cpp",
-    url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.2.0.tar.gz",
-    sha256 = "5fa6577828e5f949178b13ed0411dd634527c9d2d8f00e433edbd6ef9e42a281"
+    url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.9.0.tar.gz",
+    sha256 = "a072103546cfa041ad8bfc599fe5a20c58e005a1a0ee18e94b2554dc3d485604"
 )
 @endcode
 
@@ -77,7 +117,7 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 grpc_deps()
 ```
 
-You can now use the library as a dependency in your BUILD files, for example:
+You can now use the library as a dependency in your `BUILD` files, for example:
 
 ```{.py}
 cc_binary(
@@ -110,7 +150,7 @@ target_link_libraries(my_program bigtable_client)
 
 The installation instructions on the top-level [INSTALL][github-INSTALL] file on
 [GitHub][github-link] also create `pkg-config` support files for application
-developers that prefer to use `Make` as their build system. Once the library
+developers that prefer to use `make` as their build system. Once the library
 is installed, you can use it in your `Makefile` like any other `pkg-config`
 module:
 
@@ -125,6 +165,8 @@ bigtable_install_test: bigtable_install_test.cc
 	$(CXX) $(CXXFLAGS) $(CBT_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
 ```
 
+<!-- END bigtable_hw_install -->
+
 ## Next Steps
 
 - @ref bigtable-hello-world "Hello World Example"
@@ -138,13 +180,16 @@ bigtable_install_test: bigtable_install_test.cc
 [read-more-about-gcp-bigtable]: https://cloud.google.com/bigtable/docs/ 'Read more about GCP Bigtable'
 [read-instances-clusters]: https://cloud.google.com/bigtable/docs/instances-clusters-nodes 'Instances and Clusters'
 [read-tables]: https://cloud.google.com/bigtable/docs/overview 'Tables'
-[read-appprofiles]: https://cloud.google.com/bigtable/docs/app-profiles 'Application Profiles'
+[read-app-profiles]: https://cloud.google.com/bigtable/docs/app-profiles 'Application Profiles'
 
+[cbt-quickstart]: https://cloud.google.com/bigtable/docs/quickstarts 'Cloud Bigtable Quickstarts'
 [resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
 [billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
 [enable-api-link]: https://cloud.google.com/apis/docs/enable-disable-apis 'How to: Enable APIs'
-[concepts-link]: https://cloud.google.com/storage/docs/concepts 'GCS Concepts'
+[concepts-link]: https://cloud.google.com/bigtable/docs/concepts 'Cloud Bigtable Concepts'
 [authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
+[authentication-overview]: https://cloud.google.com/docs/authentication/
+[gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
 [user-account]: https://cloud.google.com/docs/authentication/
 
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
