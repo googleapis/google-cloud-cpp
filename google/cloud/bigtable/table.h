@@ -482,7 +482,7 @@ class Table {
    * @par Example
    * @snippet data_async_snippets.cc async check and mutate
    */
-  future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>
+  future<StatusOr<bool>>
   AsyncCheckAndMutateRow(std::string row_key, Filter filter,
                          std::vector<Mutation> true_mutations,
                          std::vector<Mutation> false_mutations,
