@@ -681,9 +681,11 @@ TEST_F(TableAdminTest, AsyncCheckConsistencySimple) {
   bigtable::TableId table_id("the-async-table");
   bigtable::ConsistencyToken consistency_token("test-async-token");
   // After all the setup, make the actual call we want to test.
-  std::future<google::cloud::StatusOr<bool>> result =
+  std::future<google::cloud::StatusOr<bigtable::Consistency>> result =
       tested.WaitForConsistencyCheck(table_id, consistency_token);
-  EXPECT_STATUS_OK(result.get());
+  auto actual = result.get();
+  EXPECT_STATUS_OK(actual);
+  EXPECT_EQ(bigtable::Consistency::kConsistent, *actual);
 }
 
 /**
@@ -702,7 +704,7 @@ TEST_F(TableAdminTest, AsyncCheckConsistencyFailure) {
   bigtable::TableId table_id("other-async-table");
   bigtable::ConsistencyToken consistency_token("test-async-token");
 
-  std::future<google::cloud::StatusOr<bool>> result =
+  std::future<google::cloud::StatusOr<bigtable::Consistency>> result =
       tested.WaitForConsistencyCheck(table_id, consistency_token);
   EXPECT_FALSE(result.get());
 }
