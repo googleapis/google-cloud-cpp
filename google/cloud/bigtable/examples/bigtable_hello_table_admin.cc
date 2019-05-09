@@ -15,13 +15,9 @@
 //! [all code]
 
 //! [bigtable includes]
-#include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
 //! [bigtable includes]
-#include <google/protobuf/text_format.h>
-#include <deque>
-#include <list>
-#include <sstream>
+#include <iostream>
 
 int main(int argc, char* argv[]) try {
   if (argc != 4) {
@@ -50,6 +46,7 @@ int main(int argc, char* argv[]) try {
       instance_id);
   //! [connect admin]
 
+  //! [create table]
   std::cout << "Creating a table:\n";
   StatusOr<google::bigtable::admin::v2::Table> schema = admin.CreateTable(
       table_id,
@@ -57,7 +54,9 @@ int main(int argc, char* argv[]) try {
                         {"foo", cbt::GcRule::MaxAge(std::chrono::hours(72))}},
                        {}));
   std::cout << "DONE\n";
+  //! [create table]
 
+  //! [listing tables]
   std::cout << "Listing tables:\n";
   auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
   if (!tables) {
@@ -67,7 +66,9 @@ int main(int argc, char* argv[]) try {
     std::cout << "    " << table.name() << "\n";
   }
   std::cout << "DONE\n";
+  //! [listing tables]
 
+  //! [retrieve table metadata]
   std::cout << "Get table metadata:\n";
   StatusOr<google::bigtable::admin::v2::Table> table =
       admin.GetTable(table_id, cbt::TableAdmin::FULL);
@@ -84,7 +85,9 @@ int main(int argc, char* argv[]) try {
               << metadata.DebugString() << "\n";
   }
   std::cout << "DONE\n";
+  //! [retrieve table metadata]
 
+  //! [modify column family]
   std::cout << "Update a column family GC rule:\n";
   StatusOr<google::bigtable::admin::v2::Table> updated_schema =
       admin.ModifyColumnFamilies(
@@ -96,15 +99,26 @@ int main(int argc, char* argv[]) try {
   if (!updated_schema) {
     throw std::runtime_error(updated_schema.status().message());
   }
-
   std::cout << "Schema modified to: " << updated_schema->DebugString() << "\n";
+  //! [modify column family]
 
-  std::cout << "Deleting table:\n";
-  google::cloud::Status status = admin.DeleteTable(table_id);
+  //! [drop all rows]
+  std::cout << "Deleting all the rows in " << table_id << "\n";
+  google::cloud::Status status = admin.DropAllRows(table_id);
   if (!status.ok()) {
     throw std::runtime_error(status.message());
   }
   std::cout << "DONE\n";
+  //! [drop all rows]
+
+  //! [delete table]
+  std::cout << "Deleting table:\n";
+  google::cloud::Status delete_status = admin.DeleteTable(table_id);
+  if (!delete_status.ok()) {
+    throw std::runtime_error(delete_status.message());
+  }
+  std::cout << "DONE\n";
+  //! [delete table]
 
   return 0;
 } catch (std::exception const& ex) {

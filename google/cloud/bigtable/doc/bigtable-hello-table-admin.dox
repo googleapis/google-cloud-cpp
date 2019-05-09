@@ -1,0 +1,143 @@
+/*!
+@page bigtable-hello-table-admin Example: C++ Hello World for TableAdmin
+
+This example illustrates how to use the `TableAdmin` class to:
+
+- Create a table.
+- List tables.
+- Retrieve table metadata.
+- Modify existing tables.
+- Delete all the rows in a table.
+- Delete a table.
+
+## Running the example
+
+This example uses the [Cloud Bigtable C++ Client Library][reference-link]
+to communicate with Cloud Bigtable.
+
+To run the example program, follow the [instructions][github-examples] for the
+example on GitHub.
+
+[reference-link]: https://googleapis.github.io/google-cloud-cpp
+[github-examples]: https://github.com/googleapis/google-cloud-cpp/tree/master/google/cloud/bigtable/examples/
+
+## Include the Necessary Headers
+
+The example uses the following headers:
+
+@snippet bigtable_hello_table_admin.cc bigtable includes
+
+## Define aliases
+
+To make the example less verbose we define some aliases:
+
+@snippet bigtable_hello_table_admin.cc aliases
+
+## Connect to the TableAdmin API
+
+Use the [bigtable::TableAdmin][TableAdmin] class to obtain information about
+Cloud Bigtable *tables* and to modify them:
+
+@snippet bigtable_hello_table_admin.cc connect admin
+
+@see https://cloud.google.com/bigtable/docs/overview for an overview of the
+    Cloud Bigtable storage model, including an introduction to important
+    Cloud Bigtable concepts, such as *row keys*, *column families*, *columns*,
+    and *cells*.
+
+## Creating a Table
+
+Use [TableAdmin::CreateTable()][TableAdmin-CreateTable] to create a new table:
+
+@snippet bigtable_hello_table_admin.cc create table
+
+Note that when you create a table you can define one or more
+column families for the table, and each column families is configured with
+a garbage collection rule to automatically delete excess cells.
+
+@see [bigtable::GcRule][GcRule] to learn about the garbage collection rules,
+    including how to delete cells that are [too old][GcRule-MaxAge],
+    have [too many versions][GcRule-MaxNumVersions],
+    or [combinations][GcRule-Union] of those criteria.
+
+## Listing Tables in an Instance
+
+Get all the tables in an instance using
+[TableAdmin::ListTables()][TableAdmin-ListTables]:
+
+@snippet bigtable_hello_table_admin.cc listing tables
+
+Note how this example uses a [TableView][TableView-proto] parameter to
+query only a subset of the table metadata.
+
+## Retrieve Table Metadata
+
+Or retrieve the metadata, including column family definitions, using
+[TableAdmin::GetTable()][TableAdmin-GetTable]:
+
+@snippet bigtable_hello_table_admin.cc retrieve table metadata
+
+@see [bigtable::GcRule][GcRule] as Cloud Bigtable column families can be
+    configured to automatically delete cells that are [too old][GcRule-MaxAge],
+    have [too many versions][GcRule-MaxNumVersions],
+    or [combinations][GcRule-Intersection] of those criteria.
+
+## Modify a Column Family
+
+You can also [add][ColumnFamilyModification-Create] new column families,
+[delete][ColumnFamilyModification-Drop] a column family, or
+[update][ColumnFamilyModification-Update] an existing column family:
+
+@snippet bigtable_hello_table_admin.cc modify column family
+
+@warning Note that deleting a column family also deletes all the data in the
+    column family. Cloud Bigtable will delete an existing column family even
+    if you have data in it. For mission critical data you must ensure that the
+    data is backed up dropping any column families.
+
+## Delete all the Rows in a Table
+
+Use [TableAdmin::DropAllRows()][TableAdmin-DropAllRows] to delete all the rows
+in a table:
+
+@snippet bigtable_hello_table_admin.cc drop all rows
+
+@see [TableAdmin::DropRowsByPrefix()][TableAdmin-DropRowsByPrefix] to only
+    delete the rows whose key starts with a give prefix.
+
+## Delete a Table
+
+Finally use [TableAdmin::DeleteTable()][TableAdmin-DeleteTable] to delete a
+a table:
+
+@snippet bigtable_hello_table_admin.cc delete table
+
+@warning Note that this function will delete the table even if it contains data,
+    for mission critical data you must ensure that the data is backed up before
+    calling this function.
+
+## Put it all together
+
+Here is the full example
+
+@snippet bigtable_hello_table_admin.cc all code
+
+[GcRule]:                  @ref google::cloud::bigtable::v0::GcRule
+[GcRule-MaxAge]:           @ref google::cloud::bigtable::v0::GcRule::MaxAge()
+[GcRule-MaxNumVersions]:   @ref google::cloud::bigtable::v0::GcRule::MaxNumVersions()
+[GcRule-Union]:            @ref google::cloud::bigtable::v0::GcRule::Union()
+[GcRule-Intersection]:     @ref google::cloud::bigtable::v0::GcRule::Intersection()
+[ColumnFamilyModification-Create]: @ref google::cloud::bigtable::v0::ColumnFamilyModification::Create()
+[ColumnFamilyModification-Update]: @ref google::cloud::bigtable::v0::ColumnFamilyModification::Update()
+[ColumnFamilyModification-Drop]: @ref google::cloud::bigtable::v0::ColumnFamilyModification::Drop()
+[TableAdmin]:              @ref google::cloud::bigtable::v0::TableAdmin
+[TableAdmin-CreateTable]:  @ref google::cloud::bigtable::v0::TableAdmin::CreateTable()
+[TableAdmin-DeleteTable]:  @ref google::cloud::bigtable::v0::TableAdmin::DeleteTable()
+[TableAdmin-GetTable]:     @ref google::cloud::bigtable::v0::TableAdmin::GetTable()
+[TableAdmin-ListTables]:   @ref google::cloud::bigtable::v0::TableAdmin::ListTables()
+[TableAdmin-ModifyColumnFamilies]:  @ref google::cloud::bigtable::v0::TableAdmin::ModifyColumnFamilies()
+[TableAdmin-DropAllRows]:  @ref google::cloud::bigtable::v0::TableAdmin::DropAllRows()
+[TableAdmin-DropRowsByPrefix]:  @ref google::cloud::bigtable::v0::TableAdmin::DropRowsByPrefix()
+
+[TableView-proto]: https://cloud.google.com/bigtable/docs/reference/admin/rpc/google.bigtable.admin.v2#google.bigtable.admin.v2.Table.View
+*/

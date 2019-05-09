@@ -127,13 +127,13 @@ bigtable_install_test: bigtable_install_test.cc
 
 ## Next Steps
 
- * @ref bigtable-hello-world "Hello World Example"
+- @ref bigtable-hello-world "Hello World Example"
 
- * @ref bigtable-samples-instance-admin "Instance Admin Example"
+- @ref bigtable-samples-instance-admin "Hello World for Instance Admin Example"
 
- * @ref bigtable-samples "Table Admin Example"
+- @ref bigtable-hello-table-admin "Hello World for Table Admin Example"
 
- * @ref bigtable-samples-data-client "Advanced Reading and Writing Example"
+- @ref bigtable-samples-data-client "Advanced Reading and Writing Example"
 
 [read-more-about-gcp-bigtable]: https://cloud.google.com/bigtable/docs/ 'Read more about GCP Bigtable'
 [read-instances-clusters]: https://cloud.google.com/bigtable/docs/instances-clusters-nodes 'Instances and Clusters'
