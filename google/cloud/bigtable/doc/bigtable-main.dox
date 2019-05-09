@@ -8,7 +8,7 @@ database that powers many core Google services, including Search, Analytics,
 Maps, and Gmail.
 
 The Cloud Bigtable C++ Client library offers types and functions
-access of Cloud Bigtable from C++11 applications
+to access Cloud Bigtable from C++11 applications
 ([Read more about Cloud Bigtable][read-more-about-gcp-bigtable]).
 It offers access to the Cloud Bigtable API, including operations to list, read,
 write, and delete [Instances and Clusters][read-instances-clusters],
@@ -19,8 +19,6 @@ write, and delete [Instances and Clusters][read-instances-clusters],
 The following instructions show you how to perform basic tasks in Cloud Bigtable
 using the C++ client library.
 
-Costs that you incur in Cloud Bigtable are based on the resources you use.
-
 If you have never used Cloud Bigtable we recommend that you first follow one of
 the [language neutral quickstart guides][cbt-quickstart] before you follow this
 guide.
@@ -30,13 +28,12 @@ guide.
 1. Select or create a Google Cloud Platform (GCP) project using the
    [manage resource page][resource-link]. Make a note of the project id, you
    will need to use it later.
-2. Make sure that [billing is enabled][billing-link] for your project.
+2. Make sure that [billing is enabled][billing-link] for your project. **Costs
+   that you incur in Cloud Bigtable are based on the resources you use.**
 3. Learn about [key terms and concepts][concepts-link] for Cloud Storage.
 4. Setup the authentication for the examples:
    - [Configure a service account][authentication-quickstart],
    - or [login with your personal account][gcloud-quickstart]
-
-<!-- START bigtable_hw_install -->
 
 ### Download and Compile C++ Client Library
 
@@ -67,7 +64,9 @@ find the credentials file. For example:
 Setting this environment variable is the recommended way to configure the
 authentication preferences, though if the environment variable is not set, the
 library searches for a credentials file in the same location as the [Cloud
-SDK](https://cloud.google.com/sdk/).
+SDK](https://cloud.google.com/sdk/). For more details about authentication and
+Google Cloud Platform consult the
+[Authentication Overview][authentication-overview] page.
 
 ### Read a Row
 
@@ -102,8 +101,8 @@ and install the library, for example:
 # Change the version and SHA256 hash as needed.
 http_archive(
     name = "com_github_googleapis_google_cloud_cpp",
-    url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.8.1.tar.gz",
-    sha256 = "f5600fdf3efd28e3142a60c20574e349511104fc6f658faf7974f6ae2def245a"
+    url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.9.0.tar.gz",
+    sha256 = "a072103546cfa041ad8bfc599fe5a20c58e005a1a0ee18e94b2554dc3d485604"
 )
 @endcode
 
@@ -189,6 +188,7 @@ bigtable_install_test: bigtable_install_test.cc
 [enable-api-link]: https://cloud.google.com/apis/docs/enable-disable-apis 'How to: Enable APIs'
 [concepts-link]: https://cloud.google.com/bigtable/docs/concepts 'Cloud Bigtable Concepts'
 [authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
+[authentication-overview]: https://cloud.google.com/docs/authentication/
 [gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
 [user-account]: https://cloud.google.com/docs/authentication/
 
