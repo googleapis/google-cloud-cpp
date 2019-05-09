@@ -171,7 +171,7 @@ bigtable_install_test: bigtable_install_test.cc
 
 - @ref bigtable-hello-world "Hello World Example"
 
-- @ref bigtable-samples-instance-admin "Hello World for Instance Admin Example"
+- @ref bigtable-hello-instance-admin "Hello World for Instance Admin Example"
 
 - @ref bigtable-hello-table-admin "Hello World for Table Admin Example"
 

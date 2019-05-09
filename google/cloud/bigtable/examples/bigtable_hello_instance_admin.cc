@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//! [all code]
+
+//! [bigtable includes]
 #include "google/cloud/bigtable/instance_admin.h"
-#include "google/cloud/bigtable/instance_admin_client.h"
-#include <google/protobuf/text_format.h>
-#include <typeindex>
-#include <typeinfo>
+//! [bigtable includes]
+#include <iostream>
 
 int main(int argc, char* argv[]) try {
   if (argc != 5) {
@@ -42,11 +43,12 @@ int main(int argc, char* argv[]) try {
   //! [aliases]
 
   // Connect to the Cloud Bigtable admin endpoint.
-  //! [connect admin]
+  //! [connect instance admin]
   cbt::InstanceAdmin instance_admin(
       cbt::CreateDefaultInstanceAdminClient(project_id, cbt::ClientOptions()));
-  //! [connect admin]
+  //! [connect instance admin]
 
+  //! [check instance exists]
   std::cout << "\nCheck Instance exists:\n";
   StatusOr<cbt::InstanceList> instances = instance_admin.ListInstances();
   if (!instances) {
@@ -70,9 +72,11 @@ int main(int argc, char* argv[]) try {
   bool instance_exists = instance_name_it != instances->instances.end();
   std::cout << "The instance " << instance_id
             << (instance_exists ? "does" : "does not") << " exist already\n";
+  //! [check instance exists]
 
   // Create instance if does not exists
   if (!instance_exists) {
+    //! [create production instance]
     std::cout << "\nCreating a PRODUCTION Instance: ";
 
     // production instance needs at least 3 nodes
@@ -99,8 +103,10 @@ int main(int argc, char* argv[]) try {
     // you may want to perform this task asynchronously.
     creation_done.get();
     std::cout << "DONE\n";
+    //! [create production instance]
   }
 
+  //! [list instances]
   std::cout << "\nListing Instances:\n";
   instances = instance_admin.ListInstances();
   if (!instances) {
@@ -118,14 +124,18 @@ int main(int argc, char* argv[]) try {
     std::cout << "  " << instance.name() << "\n";
   }
   std::cout << "DONE\n";
+  //! [list instances]
 
+  //! [get instance]
   std::cout << "\nGet Instance:\n";
   auto instance = instance_admin.GetInstance(instance_id);
   if (!instance) {
     throw std::runtime_error(instance.status().message());
   }
   std::cout << "Instance details :\n" << instance->DebugString() << "\n";
+  //! [get instance]
 
+  //! [list clusters]
   std::cout << "\nListing Clusters:\n";
   StatusOr<cbt::ClusterList> cluster_list =
       instance_admin.ListClusters(instance_id);
@@ -145,7 +155,9 @@ int main(int argc, char* argv[]) try {
     std::cout << "Cluster Name: " << cluster.name() << "\n";
   }
   std::cout << "DONE\n";
+  //! [list clusters]
 
+  //! [delete instance]
   std::cout << "Deleting instance " << instance_id << "\n";
   google::cloud::Status delete_status =
       instance_admin.DeleteInstance(instance_id);
@@ -153,6 +165,7 @@ int main(int argc, char* argv[]) try {
     throw std::runtime_error(delete_status.message());
   }
   std::cout << "DONE\n";
+  //! [delete instance]
 
   return 0;
 } catch (std::exception const& ex) {
