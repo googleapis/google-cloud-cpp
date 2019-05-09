@@ -218,11 +218,9 @@ StatusOr<bool> Table::CheckAndMutateRow(std::string row_key, Filter filter,
   return response.predicate_matched();
 }
 
-future<StatusOr<btproto::CheckAndMutateRowResponse>>
-Table::AsyncCheckAndMutateRow(std::string row_key, Filter filter,
-                              std::vector<Mutation> true_mutations,
-                              std::vector<Mutation> false_mutations,
-                              CompletionQueue& cq) {
+future<StatusOr<bool>> Table::AsyncCheckAndMutateRow(
+    std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
+    std::vector<Mutation> false_mutations, CompletionQueue& cq) {
   btproto::CheckAndMutateRowRequest request;
   request.set_row_key(std::move(row_key));
   bigtable::internal::SetCommonTableOperationRequest<
@@ -240,15 +238,23 @@ Table::AsyncCheckAndMutateRow(std::string row_key, Filter filter,
 
   auto client = impl_.client_;
   return internal::StartRetryAsyncUnaryRpc(
-      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-      internal::ConstantIdempotencyPolicy(is_idempotent),
-      clone_metadata_update_policy(),
-      [client](grpc::ClientContext* context,
-               btproto::CheckAndMutateRowRequest const& request,
-               grpc::CompletionQueue* cq) {
-        return client->AsyncCheckAndMutateRow(context, request, cq);
-      },
-      std::move(request), cq);
+             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             internal::ConstantIdempotencyPolicy(is_idempotent),
+             clone_metadata_update_policy(),
+             [client](grpc::ClientContext* context,
+                      btproto::CheckAndMutateRowRequest const& request,
+                      grpc::CompletionQueue* cq) {
+               return client->AsyncCheckAndMutateRow(context, request, cq);
+             },
+             std::move(request), cq)
+      .then([](future<StatusOr<btproto::CheckAndMutateRowResponse>> f)
+                -> StatusOr<bool> {
+        auto response = f.get();
+        if (!response) {
+          return response.status();
+        }
+        return response->predicate_matched();
+      });
 }
 
 StatusOr<Row> Table::ReadModifyWriteRowImpl(

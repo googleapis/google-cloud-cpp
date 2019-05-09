@@ -146,27 +146,23 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
     cbt::Filter predicate = cbt::Filter::Chain(
         cbt::Filter::ColumnRangeClosed("fam", "flip-flop", "flip-flop"),
         cbt::Filter::Latest(1), cbt::Filter::ValueRegex("on"));
-    future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>
-        branch_future = table.AsyncCheckAndMutateRow(
-            row_key, std::move(predicate),
-            {cbt::SetCell("fam", "flip-flop", "off"),
-             cbt::SetCell("fam", "flop-flip", "on")},
-            {cbt::SetCell("fam", "flip-flop", "on"),
-             cbt::SetCell("fam", "flop-flip", "off")},
-            cq);
+    future<StatusOr<bool>> branch_future =
+        table.AsyncCheckAndMutateRow(row_key, std::move(predicate),
+                                     {cbt::SetCell("fam", "flip-flop", "off"),
+                                      cbt::SetCell("fam", "flop-flip", "on")},
+                                     {cbt::SetCell("fam", "flip-flop", "on"),
+                                      cbt::SetCell("fam", "flop-flip", "off")},
+                                     cq);
 
     branch_future
-        .then(
-            [](future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>
-                   f) {
-              auto response = f.get();
-              if (!response) {
-                throw std::runtime_error(response.status().message());
-              }
-              std::cout << "The predicate "
-                        << (response->predicate_matched() ? "was" : "was not")
-                        << " matched\n";
-            })
+        .then([](future<StatusOr<bool>> f) {
+          auto response = f.get();
+          if (!response) {
+            throw std::runtime_error(response.status().message());
+          }
+          std::cout << "The predicate " << (response ? "was" : "was not")
+                    << " matched\n";
+        })
         .get();  // block to simplify the example.
   }
   //! [async check and mutate]
