@@ -48,8 +48,3 @@ echo
 echo "Running TableAdmin async with futures integration test."
 ./admin_async_future_integration_test \
     "${PROJECT_ID}" "${INSTANCE_ID}"  "${ZONE_A}" "${ZONE_B}"
-
-echo
-echo "Running TableAdmin async integration test."
-./admin_async_integration_test  \
-    "${PROJECT_ID}" "${INSTANCE_ID}"  "${ZONE_A}" "${ZONE_B}"

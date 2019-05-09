@@ -159,7 +159,6 @@ class TableIntegrationTest : public ::testing::Test {
  protected:
   std::shared_ptr<bigtable::AdminClient> admin_client_;
   std::unique_ptr<bigtable::TableAdmin> table_admin_;
-  std::unique_ptr<bigtable::noex::TableAdmin> noex_table_admin_;
   std::shared_ptr<bigtable::DataClient> data_client_;
 };
 }  // namespace testing

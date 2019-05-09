@@ -52,9 +52,8 @@ StatusOr<btadmin::Table> TableAdmin::CreateTable(std::string table_id,
   // This is a non-idempotent API, use the correct retry loop for this type of
   // operation.
   auto result = ClientUtils::MakeNonIdemponentCall(
-      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
-      impl_.metadata_update_policy_, &AdminClient::CreateTable, request,
-      "CreateTable", status);
+      *client_, clone_rpc_retry_policy(), clone_metadata_update_policy(),
+      &AdminClient::CreateTable, request, "CreateTable", status);
 
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
@@ -68,7 +67,7 @@ future<StatusOr<btadmin::Table>> TableAdmin::AsyncCreateTable(
   request.set_parent(instance_name());
   request.set_table_id(std::move(table_id));
 
-  auto client = impl_.client_;
+  auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
       __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       internal::ConstantIdempotencyPolicy(false),
@@ -89,7 +88,7 @@ future<StatusOr<google::bigtable::admin::v2::Table>> TableAdmin::AsyncGetTable(
   request.set_view(view);
 
   // Copy the client because we lack C++14 extended lambda captures.
-  auto client = impl_.client_;
+  auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
       __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       internal::ConstantIdempotencyPolicy(true), clone_metadata_update_policy(),
@@ -106,8 +105,8 @@ StatusOr<std::vector<btadmin::Table>> TableAdmin::ListTables(
   grpc::Status status;
 
   // Copy the policies in effect for the operation.
-  auto rpc_policy = impl_.rpc_retry_policy_->clone();
-  auto backoff_policy = impl_.rpc_backoff_policy_->clone();
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
 
   // Build the RPC request, try to minimize copying.
   std::vector<btadmin::Table> result;
@@ -119,9 +118,8 @@ StatusOr<std::vector<btadmin::Table>> TableAdmin::ListTables(
     request.set_view(view);
 
     auto response = ClientUtils::MakeCall(
-        *(impl_.client_), *rpc_policy, *backoff_policy,
-        impl_.metadata_update_policy_, &AdminClient::ListTables, request,
-        "TableAdmin", status, true);
+        *client_, *rpc_policy, *backoff_policy, clone_metadata_update_policy(),
+        &AdminClient::ListTables, request, "TableAdmin", status, true);
 
     if (!status.ok()) {
       return internal::MakeStatusFromRpcError(status);
@@ -137,7 +135,7 @@ StatusOr<std::vector<btadmin::Table>> TableAdmin::ListTables(
 
 future<StatusOr<std::vector<btadmin::Table>>> TableAdmin::AsyncListTables(
     CompletionQueue& cq, btadmin::Table::View view) {
-  auto client = impl_.client_;
+  auto client = client_;
   btadmin::ListTablesRequest request;
   request.set_parent(instance_name());
   request.set_view(view);
@@ -171,9 +169,9 @@ StatusOr<btadmin::Table> TableAdmin::GetTable(std::string const& table_id,
       instance_name(), MetadataParamTypes::NAME, table_id);
 
   auto result = ClientUtils::MakeCall(
-      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
-      impl_.rpc_backoff_policy_->clone(), metadata_update_policy,
-      &AdminClient::GetTable, request, "GetTable", status, true);
+      *client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      metadata_update_policy, &AdminClient::GetTable, request, "GetTable",
+      status, true);
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
@@ -192,9 +190,8 @@ Status TableAdmin::DeleteTable(std::string const& table_id) {
   // This is a non-idempotent API, use the correct retry loop for this type of
   // operation.
   ClientUtils::MakeNonIdemponentCall(
-      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
-      metadata_update_policy, &AdminClient::DeleteTable, request, "DeleteTable",
-      status);
+      *client_, clone_rpc_retry_policy(), metadata_update_policy,
+      &AdminClient::DeleteTable, request, "DeleteTable", status);
 
   return internal::MakeStatusFromRpcError(status);
 }
@@ -208,7 +205,7 @@ future<Status> TableAdmin::AsyncDeleteTable(CompletionQueue& cq,
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id);
 
-  auto client = impl_.client_;
+  auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              internal::ConstantIdempotencyPolicy(true),
@@ -238,9 +235,9 @@ StatusOr<btadmin::Table> TableAdmin::ModifyColumnFamilies(
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id);
   auto result = ClientUtils::MakeNonIdemponentCall(
-      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
-      metadata_update_policy, &AdminClient::ModifyColumnFamilies, request,
-      "ModifyColumnFamilies", status);
+      *client_, clone_rpc_retry_policy(), metadata_update_policy,
+      &AdminClient::ModifyColumnFamilies, request, "ModifyColumnFamilies",
+      status);
 
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
@@ -259,7 +256,7 @@ future<StatusOr<btadmin::Table>> TableAdmin::AsyncModifyColumnFamilies(
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id);
 
-  auto client = impl_.client_;
+  auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
       __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
@@ -280,9 +277,8 @@ Status TableAdmin::DropRowsByPrefix(std::string const& table_id,
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id);
   ClientUtils::MakeNonIdemponentCall(
-      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
-      metadata_update_policy, &AdminClient::DropRowRange, request,
-      "DropRowByPrefix", status);
+      *client_, clone_rpc_retry_policy(), metadata_update_policy,
+      &AdminClient::DropRowRange, request, "DropRowByPrefix", status);
 
   return internal::MakeStatusFromRpcError(status);
 }
@@ -295,7 +291,7 @@ future<Status> TableAdmin::AsyncDropRowsByPrefix(CompletionQueue& cq,
   request.set_row_key_prefix(std::move(row_key_prefix));
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id);
-  auto client = impl_.client_;
+  auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
@@ -318,9 +314,8 @@ Status TableAdmin::DropAllRows(std::string const& table_id) {
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id);
   ClientUtils::MakeNonIdemponentCall(
-      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
-      metadata_update_policy, &AdminClient::DropRowRange, request,
-      "DropAllRows", status);
+      *client_, clone_rpc_retry_policy(), metadata_update_policy,
+      &AdminClient::DropRowRange, request, "DropAllRows", status);
 
   return internal::MakeStatusFromRpcError(status);
 }
@@ -332,7 +327,7 @@ future<Status> TableAdmin::AsyncDropAllRows(CompletionQueue& cq,
   request.set_delete_all_data_from_table(true);
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id);
-  auto client = impl_.client_;
+  auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
@@ -356,9 +351,8 @@ StatusOr<ConsistencyToken> TableAdmin::GenerateConsistencyToken(
       instance_name(), MetadataParamTypes::NAME, table_id);
 
   auto response = ClientUtils::MakeCall(
-      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
-      impl_.rpc_backoff_policy_->clone(), metadata_update_policy,
-      &AdminClient::GenerateConsistencyToken, request,
+      *client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      metadata_update_policy, &AdminClient::GenerateConsistencyToken, request,
       "GenerateConsistencyToken", status, true);
 
   if (!status.ok()) {
@@ -373,7 +367,7 @@ future<StatusOr<ConsistencyToken>> TableAdmin::AsyncGenerateConsistencyToken(
   request.set_name(TableName(table_id));
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id);
-  auto client = impl_.client_;
+  auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
@@ -405,10 +399,9 @@ StatusOr<Consistency> TableAdmin::CheckConsistency(
       instance_name(), MetadataParamTypes::NAME, table_id.get());
 
   auto response = ClientUtils::MakeCall(
-      *(impl_.client_), impl_.rpc_retry_policy_->clone(),
-      impl_.rpc_backoff_policy_->clone(), metadata_update_policy,
-      &AdminClient::CheckConsistency, request, "CheckConsistency", status,
-      true);
+      *client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      metadata_update_policy, &AdminClient::CheckConsistency, request,
+      "CheckConsistency", status, true);
 
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
@@ -426,7 +419,7 @@ future<StatusOr<Consistency>> TableAdmin::AsyncCheckConsistency(
   request.set_consistency_token(consistency_token.get());
   MetadataUpdatePolicy metadata_update_policy(
       instance_name(), MetadataParamTypes::NAME, table_id.get());
-  auto client = impl_.client_;
+  auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
@@ -459,13 +452,12 @@ StatusOr<bool> TableAdmin::WaitForConsistencyCheckImpl(
       instance_name(), MetadataParamTypes::NAME, table_id.get());
 
   // TODO(#1918) - make use of polling policy deadlines
-  auto polling_policy = impl_.polling_policy_->clone();
+  auto polling_policy = clone_polling_policy();
   do {
     auto response = ClientUtils::MakeCall(
-        *(impl_.client_), impl_.rpc_retry_policy_->clone(),
-        impl_.rpc_backoff_policy_->clone(), metadata_update_policy,
-        &AdminClient::CheckConsistency, request, "CheckConsistency", status,
-        true);
+        *client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+        metadata_update_policy, &AdminClient::CheckConsistency, request,
+        "CheckConsistency", status, true);
 
     if (status.ok()) {
       if (response.consistent()) {
@@ -477,6 +469,10 @@ StatusOr<bool> TableAdmin::WaitForConsistencyCheckImpl(
   } while (!polling_policy->Exhausted());
 
   return bigtable::internal::MakeStatusFromRpcError(status);
+}
+
+std::string TableAdmin::InstanceName() const {
+  return "projects/" + client_->project() + "/instances/" + instance_id_;
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
