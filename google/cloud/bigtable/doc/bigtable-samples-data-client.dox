@@ -10,13 +10,14 @@ This example is for advanced reading and writing opertions on bigtable data clie
 
 ## Run the example
 
-This example uses the
-[Cloud Bigtable C++ Client Library](https://googleapis.github.io/google-cloud-cpp)
+This example uses the [Cloud Bigtable C++ Client Library][reference-link]
 to communicate with Cloud Bigtable.
 
-To run the example program, follow the
-[instructions](https://github.com/googleapis/google-cloud-cpp/tree/master/google/cloud/bigtable/examples/)
-for the example on GitHub.
+To run the example program, follow the [instructions][github-examples] for the
+example on GitHub.
+
+[reference-link]: https://googleapis.github.io/google-cloud-cpp
+[github-examples]: https://github.com/googleapis/google-cloud-cpp/tree/master/google/cloud/bigtable/examples/
 
 ### Include the Necessary Headers
 
@@ -44,9 +45,4 @@ The example uses the following headers:
 
 @snippet data_snippets.cc check and mutate not present
 
-### Put it all together
-
-Here is the full example
-
-@snippet data_snippets.cc all code
 */
