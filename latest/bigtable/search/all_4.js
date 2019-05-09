@@ -1,11 +1,11 @@
 var searchData=
 [
   ['environment_20variables_20used_20by_20the_20google_20cloud_20bigtable_20c_2b_2b_20client_2e',['Environment Variables Used by the Google Cloud Bigtable C++ Client.',['../bigtable-environment-variables.html',1,'']]],
+  ['example_3a_20c_2b_2b_20hello_20world_20for_20instance_20admin',['Example: C++ Hello World for Instance Admin',['../bigtable-hello-instance-admin.html',1,'']]],
   ['example_3a_20c_2b_2b_20hello_20world_20for_20tableadmin',['Example: C++ Hello World for TableAdmin',['../bigtable-hello-table-admin.html',1,'']]],
   ['example_3a_20c_2b_2b_20hello_20world_20application',['Example: C++ Hello World Application',['../bigtable-hello-world.html',1,'']]],
   ['example_3a_20c_2b_2b_20quickstart_20application',['Example: C++ Quickstart Application',['../bigtable-quickstart.html',1,'']]],
   ['example_3a_20advanced_20reading_20and_20writing_20samples',['Example: Advanced Reading and Writing Samples',['../bigtable-samples-data-client.html',1,'']]],
-  ['example_3a_20instance_20admin_20samples',['Example: Instance Admin Samples',['../bigtable-samples-instance-admin.html',1,'']]],
   ['emplace',['emplace',['../../common/classgoogle_1_1cloud_1_1v0_1_1optional.html#a1c6b7e3e7273d8cad73c2d1ce7ea5a64',1,'google::cloud::v0::optional']]],
   ['emplace_5fback',['emplace_back',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1SingleRowMutation.html#a842db22fcae7c03a6f2ac758cff60c20',1,'google::cloud::bigtable::v0::SingleRowMutation::emplace_back()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1BulkMutation.html#a0c1cb26f88bd91ea58a9b4c7ffda524e',1,'google::cloud::bigtable::v0::BulkMutation::emplace_back(SingleRowMutation mut)'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1BulkMutation.html#ac78009de70317cca76915f11c05fc28f',1,'google::cloud::bigtable::v0::BulkMutation::emplace_back(FailedMutation fm)']]],
   ['emplace_5flabel',['emplace_label',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceConfig.html#a48a94893874fa9ef8f0d8e73aa03b159',1,'google::cloud::bigtable::v0::InstanceConfig::emplace_label()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceUpdateConfig.html#ac7fd7a822631a7cbe670b328d15462b4',1,'google::cloud::bigtable::v0::InstanceUpdateConfig::emplace_label()']]],

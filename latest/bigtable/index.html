@@ -117,7 +117,7 @@ $(function() {
 <div class="fragment"><div class="line">CBT_DEPS := bigtable_client</div><div class="line">CBT_CXXFLAGS   := $(shell pkg-config $(CBT_DEPS) --cflags)</div><div class="line">CBT_CXXLDFLAGS := $(shell pkg-config $(CBT_DEPS) --libs-only-L)</div><div class="line">CBT_LIBS       := $(shell pkg-config $(CBT_DEPS) --libs-only-l)</div><div class="line"></div><div class="line"><span class="preprocessor"># A target using the Cloud Bigtable C++ client library.</span></div><div class="line">bigtable_install_test: bigtable_install_test.cc</div><div class="line">    $(CXX) $(CXXFLAGS) $(CBT_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)</div></div><!-- fragment --><h2>Next Steps</h2>
 <ul>
 <li><a class="el" href="bigtable-hello-world.html">Hello World Example</a></li>
-<li><a class="el" href="bigtable-samples-instance-admin.html">Hello World for Instance Admin Example</a></li>
+<li><a class="el" href="bigtable-hello-instance-admin.html">Hello World for Instance Admin Example</a></li>
 <li><a class="el" href="bigtable-hello-table-admin.html">Hello World for Table Admin Example</a></li>
 <li><a class="el" href="bigtable-samples-data-client.html">Advanced Reading and Writing Example</a> </li>
 </ul>
