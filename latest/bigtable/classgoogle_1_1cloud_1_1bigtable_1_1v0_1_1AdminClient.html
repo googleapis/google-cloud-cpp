@@ -139,15 +139,13 @@ Protected Member Functions</h2></td></tr>
 Friends</h2></td></tr>
 <tr class="memitem:a735a5ececee75a0d13fc0bdaee79e073"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a735a5ececee75a0d13fc0bdaee79e073">TableAdmin</a></td></tr>
 <tr class="separator:a735a5ececee75a0d13fc0bdaee79e073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98a69b2bfba8377fb844426895844e53"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a98a69b2bfba8377fb844426895844e53">noex::TableAdmin</a></td></tr>
-<tr class="separator:a98a69b2bfba8377fb844426895844e53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Connects to Cloud Bigtable's table administration APIs. </p>
 <p>This class is used by the Cloud Bigtable wrappers to access Cloud Bigtable. Multiple <code>bigtable::TableAdmin</code> objects may share a connection via a single <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs. ">AdminClient</a></code> object. The <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs. ">AdminClient</a></code> object is configured at construction time, this configuration includes the credentials, access endpoints, default timeouts, and other gRPC configuration options. This is an interface class because it is also used as a dependency injection point in some of the tests.</p>
 <dl class="section user"><dt>Cost</dt><dd>Applications should avoid unnecessarily creating new objects of type <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs. ">AdminClient</a></code>. Creating a new object of this type typically requires connecting to the Cloud Bigtable servers, and performing the authentication workflows with Google Cloud Platform. These operations can take many milliseconds, therefore applications should try to reuse the same <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs. ">AdminClient</a></code> instances when possible. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="admin__client_8h_source.html#l00060">60</a> of file <a class="el" href="admin__client_8h_source.html">admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="admin__client_8h_source.html#l00057">57</a> of file <a class="el" href="admin__client_8h_source.html">admin_client.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3492f855e37639a8f0a3151877caf7b6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3492f855e37639a8f0a3151877caf7b6">&#9670;&nbsp;</a></span>~AdminClient()</h2>
@@ -1015,30 +1013,6 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Friends And Related Function Documentation</h2>
-<a id="a98a69b2bfba8377fb844426895844e53"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98a69b2bfba8377fb844426895844e53">&#9670;&nbsp;</a></span>noex::TableAdmin</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">friend class noex::TableAdmin</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="admin__client_8h_source.html#l00090">90</a> of file <a class="el" href="admin__client_8h_source.html">admin_client.h</a>.</p>
-
-</div>
-</div>
 <a id="a735a5ececee75a0d13fc0bdaee79e073"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a735a5ececee75a0d13fc0bdaee79e073">&#9670;&nbsp;</a></span>TableAdmin</h2>
 
@@ -1059,7 +1033,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="admin__client_8h_source.html#l00089">89</a> of file <a class="el" href="admin__client_8h_source.html">admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="admin__client_8h_source.html#l00086">86</a> of file <a class="el" href="admin__client_8h_source.html">admin_client.h</a>.</p>
 
 </div>
 </div>

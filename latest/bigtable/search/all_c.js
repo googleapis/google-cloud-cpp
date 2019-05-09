@@ -6,6 +6,5 @@ var searchData=
   ['no_5frows_5flimit',['NO_ROWS_LIMIT',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowReader.html#af6c458e786f75dcd131865b6e195c33a',1,'google::cloud::bigtable::v0::RowReader']]],
   ['nullstream',['NullStream',['../../common/structgoogle_1_1cloud_1_1v0_1_1NullStream.html',1,'google::cloud::v0']]],
   ['num_5fmutations',['num_mutations',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Batch_1_1MutationData.html#a61e934207962369d9f971593f3f9e7cf',1,'google::cloud::bigtable::v0::MutationBatcher::Batch::MutationData']]],
-  ['table',['Table',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#a4fdcfb33335be884db275224ed1c01fd',1,'google::cloud::bigtable::v0::DataClient']]],
-  ['tableadmin',['TableAdmin',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html#a98a69b2bfba8377fb844426895844e53',1,'google::cloud::bigtable::v0::AdminClient']]]
+  ['table',['Table',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#a4fdcfb33335be884db275224ed1c01fd',1,'google::cloud::bigtable::v0::DataClient']]]
 ];
