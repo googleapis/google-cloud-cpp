@@ -45,7 +45,7 @@ TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
-  auto result = table_.SampleRows<>();
+  auto result = table_.SampleRows();
   ASSERT_STATUS_OK(result);
   auto it = result->begin();
   EXPECT_NE(it, result->end());
@@ -72,34 +72,7 @@ TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
-  auto result = table_.SampleRows<std::vector>();
-  ASSERT_STATUS_OK(result);
-  auto it = result->begin();
-  EXPECT_NE(it, result->end());
-  EXPECT_EQ(it->row_key, "test1");
-  EXPECT_EQ(it->offset_bytes, 11);
-  EXPECT_EQ(++it, result->end());
-}
-
-/// @test Verify that Table::SampleRows<T>() works for std::list.
-TEST_F(TableSampleRowKeysTest, SimpleListTest) {
-  using namespace ::testing;
-  namespace btproto = ::google::bigtable::v2;
-
-  auto reader = new MockSampleRowKeysReader;
-  EXPECT_CALL(*client_, SampleRowKeys(_, _))
-      .WillOnce(Invoke(reader->MakeMockReturner()));
-  EXPECT_CALL(*reader, Read(_))
-      .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
-        {
-          r->set_row_key("test1");
-          r->set_offset_bytes(11);
-        }
-        return true;
-      }))
-      .WillOnce(Return(false));
-  EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
-  auto result = table_.SampleRows<std::list>();
+  auto result = table_.SampleRows();
   ASSERT_STATUS_OK(result);
   auto it = result->begin();
   EXPECT_NE(it, result->end());
@@ -151,7 +124,7 @@ TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
 
   EXPECT_CALL(*reader_retry, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  auto results = table_.SampleRows<std::vector>();
+  auto results = table_.SampleRows();
   ASSERT_STATUS_OK(results);
 
   auto it = results->begin();
@@ -209,6 +182,6 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
       .WillOnce(Invoke(create_cancelled_stream))
       .WillOnce(Invoke(create_cancelled_stream));
 
-  EXPECT_FALSE(custom_table.SampleRows<std::vector>());
+  EXPECT_FALSE(custom_table.SampleRows());
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

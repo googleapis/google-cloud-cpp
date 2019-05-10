@@ -537,7 +537,7 @@ TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
       return os.str();
     }();
   }
-  auto samples = table.SampleRows<std::vector>();
+  auto samples = table.SampleRows();
   ASSERT_STATUS_OK(samples);
 
   // It is somewhat hard to verify that the values returned here are correct.

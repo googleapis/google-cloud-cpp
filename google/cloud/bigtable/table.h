@@ -489,7 +489,6 @@ class Table {
   /**
    * Sample of the row keys in the table, including approximate data sizes.
    *
-   * @tparam Collection the type of collection where the samples are returned.
    * @returns Note that the sample may only include one element for small
    *     tables.  In addition, the sample may include row keys that do not exist
    *     on the table, and may include the empty row key to indicate
@@ -500,28 +499,8 @@ class Table {
    *
    * @par Examples
    * @snippet data_snippets.cc sample row keys
-   *
-   * In addition, application developers can specify other collection types, for
-   * example `std::list<>` or `std::deque<>`:
-   * @snippet data_snippets.cc sample row keys collections
    */
-  template <template <typename...> class Collection = std::vector>
-  StatusOr<Collection<bigtable::RowKeySample>> SampleRows() {
-    grpc::Status status;
-    Collection<bigtable::RowKeySample> result;
-
-    SampleRowsImpl(
-        [&result](bigtable::RowKeySample rs) {
-          result.emplace_back(std::move(rs));
-        },
-        [&result]() { result.clear(); }, status);
-
-    if (!status.ok()) {
-      return bigtable::internal::MakeStatusFromRpcError(status);
-    }
-
-    return result;
-  }
+  StatusOr<std::vector<bigtable::RowKeySample>> SampleRows();
 
   /**
    * Atomically read and modify the row in the server, returning the
@@ -616,19 +595,6 @@ class Table {
   future<StatusOr<Row>> AsyncReadModifyWriteRowImpl(
       CompletionQueue& cq,
       ::google::bigtable::v2::ReadModifyWriteRowRequest request);
-
-  /**
-   * Refactor implementation to `.cc` file.
-   *
-   * Provides a compilation barrier so that the application is not
-   * exposed to all the implementation details.
-   *
-   * @param inserter Function to insert the object to result.
-   * @param clearer Function to clear the result object if RPC fails.
-   */
-  void SampleRowsImpl(
-      std::function<void(bigtable::RowKeySample)> const& inserter,
-      std::function<void()> const& clearer, grpc::Status& status);
 
   void AddRules(google::bigtable::v2::ReadModifyWriteRowRequest& request) {
     // no-op for empty list

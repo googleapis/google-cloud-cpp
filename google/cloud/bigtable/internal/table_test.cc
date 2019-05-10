@@ -940,7 +940,7 @@ TEST_F(NoexTableTest, SampleRowsDefaultParameterTest) {
       .WillOnce(Invoke(reader.release()->MakeMockReturner()));
 
   grpc::Status status;
-  std::vector<bigtable::RowKeySample> result = table_.SampleRows<>(status);
+  std::vector<bigtable::RowKeySample> result = table_.SampleRows(status);
   EXPECT_TRUE(status.ok());
   auto it = result.begin();
   EXPECT_NE(it, result.end());
@@ -971,68 +971,8 @@ TEST_F(NoexTableTest, SampleRowKeys_AppProfileId) {
   bigtable::noex::Table table =
       bigtable::noex::Table(client_, app_profile_id, kTableId);
   grpc::Status status;
-  table.SampleRows<>(status);
+  table.SampleRows(status);
   EXPECT_TRUE(status.ok());
-}
-
-/// @test Verify that Table::SampleRows<T>() works for std::vector.
-TEST_F(NoexTableTest, SampleRowsSimpleVectorTest) {
-  using namespace ::testing;
-  namespace btproto = ::google::bigtable::v2;
-
-  auto reader = google::cloud::internal::make_unique<MockSampleRowKeysReader>();
-  EXPECT_CALL(*reader, Read(_))
-      .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
-        {
-          r->set_row_key("test1");
-          r->set_offset_bytes(11);
-        }
-        return true;
-      }))
-      .WillOnce(Return(false));
-  EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
-  EXPECT_CALL(*client_, SampleRowKeys(_, _))
-      .WillOnce(Invoke(reader.release()->MakeMockReturner()));
-
-  grpc::Status status;
-  std::vector<bigtable::RowKeySample> result =
-      table_.SampleRows<std::vector>(status);
-  EXPECT_TRUE(status.ok());
-  auto it = result.begin();
-  EXPECT_NE(it, result.end());
-  EXPECT_EQ(it->row_key, "test1");
-  EXPECT_EQ(it->offset_bytes, 11);
-  EXPECT_EQ(++it, result.end());
-}
-
-/// @test Verify that Table::SampleRows<T>() works for std::list.
-TEST_F(NoexTableTest, SampleRowsSimpleListTest) {
-  using namespace ::testing;
-  namespace btproto = ::google::bigtable::v2;
-
-  auto reader = google::cloud::internal::make_unique<MockSampleRowKeysReader>();
-  EXPECT_CALL(*reader, Read(_))
-      .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
-        {
-          r->set_row_key("test1");
-          r->set_offset_bytes(11);
-        }
-        return true;
-      }))
-      .WillOnce(Return(false));
-  EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
-  EXPECT_CALL(*client_, SampleRowKeys(_, _))
-      .WillOnce(Invoke(reader.release()->MakeMockReturner()));
-
-  grpc::Status status;
-  std::list<bigtable::RowKeySample> result =
-      table_.SampleRows<std::list>(status);
-  EXPECT_TRUE(status.ok());
-  auto it = result.begin();
-  EXPECT_NE(it, result.end());
-  EXPECT_EQ(it->row_key, "test1");
-  EXPECT_EQ(it->offset_bytes, 11);
-  EXPECT_EQ(++it, result.end());
 }
 
 TEST_F(NoexTableTest, SampleRowsSampleRowKeysRetryTest) {
@@ -1081,7 +1021,7 @@ TEST_F(NoexTableTest, SampleRowsSampleRowKeysRetryTest) {
       .WillOnce(Invoke(reader_retry.release()->MakeMockReturner()));
 
   grpc::Status status;
-  auto results = table_.SampleRows<std::vector>(status);
+  auto results = table_.SampleRows(status);
   EXPECT_TRUE(status.ok());
 
   auto it = results.begin();
@@ -1139,6 +1079,6 @@ TEST_F(NoexTableTest, SampleRowsTooManyFailures) {
       .WillOnce(Invoke(create_cancelled_stream))
       .WillOnce(Invoke(create_cancelled_stream));
   grpc::Status status;
-  custom_table.SampleRows<std::vector>(status);
+  custom_table.SampleRows(status);
   EXPECT_FALSE(status.ok());
 }

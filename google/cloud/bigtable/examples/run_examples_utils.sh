@@ -514,8 +514,6 @@ run_all_data_examples() {
       "mismatched-begin-end-pair"
   run_example ./data_snippets sample-rows \
       "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_snippets sample-rows-collections \
-      "${project_id}" "${instance_id}" "${TABLE}"
 
   run_example ./data_snippets mutate-insert-update-rows \
       "${project_id}" "${instance_id}" "${TABLE}" "check-and-mutate-row" \

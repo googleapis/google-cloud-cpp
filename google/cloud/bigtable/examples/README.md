@@ -190,7 +190,6 @@ Examples:
   data_snippets check-and-mutate my-project my-instance my-table
   data_snippets read-modify-write my-project my-instance my-table
   data_snippets sample-rows my-project my-instance my-table
-  data_snippets sample-rows-collections my-project my-instance my-table
 ```
 
 #### Run reading and writing samples

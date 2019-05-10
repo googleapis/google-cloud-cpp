@@ -557,7 +557,7 @@ void SampleRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
   [](cbt::Table table) {
-    StatusOr<std::vector<cbt::RowKeySample>> samples = table.SampleRows<>();
+    StatusOr<std::vector<cbt::RowKeySample>> samples = table.SampleRows();
     if (!samples) {
       throw std::runtime_error(samples.status().message());
     }
@@ -567,39 +567,6 @@ void SampleRows(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     }
   }
   //! [sample row keys] [END bigtable_table_sample_splits]
-  (std::move(table));
-}
-
-void SampleRowsCollections(google::cloud::bigtable::Table table, int argc,
-                           char* argv[]) {
-  if (argc != 1) {
-    throw Usage{
-        "sample-rows-collections: <project-id> <instance-id> <table-id>"};
-  }
-
-  //! [sample row keys collections]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
-  [](cbt::Table table) {
-    StatusOr<std::list<cbt::RowKeySample>> list_samples =
-        table.SampleRows<std::list>();
-    if (!list_samples) {
-      throw std::runtime_error(list_samples.status().message());
-    }
-    for (auto const& sample : *list_samples) {
-      std::cout << "key=" << sample.row_key << " - " << sample.offset_bytes
-                << "\n";
-    }
-    auto deque_samples = table.SampleRows<std::deque>();
-    if (!deque_samples) {
-      throw std::runtime_error(deque_samples.status().message());
-    }
-    for (auto const& sample : *deque_samples) {
-      std::cout << "key=" << sample.row_key << " - " << sample.offset_bytes
-                << "\n";
-    }
-  }
-  //! [sample row keys collections]
   (std::move(table));
 }
 
@@ -1027,7 +994,6 @@ int main(int argc, char* argv[]) try {
       {"check-and-mutate-not-present", &CheckAndMutateNotPresent},
       {"read-modify-write", &ReadModifyWrite},
       {"sample-rows", &SampleRows},
-      {"sample-rows-collections", &SampleRowsCollections},
       {"get-family", &GetFamily},
       {"delete-all-cells", &DeleteAllCells},
       {"delete-family-cells", &DeleteFamilyCells},
