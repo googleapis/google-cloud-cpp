@@ -25,3 +25,9 @@ target_link_libraries(storage_throughput_benchmark
                       storage_client
                       storage_common_options
                       google_cloud_cpp_common_options)
+
+add_executable(parallel_read_write parallel_read_write.cc)
+target_link_libraries(parallel_read_write
+    storage_client
+    storage_common_options
+    google_cloud_cpp_common_options)
