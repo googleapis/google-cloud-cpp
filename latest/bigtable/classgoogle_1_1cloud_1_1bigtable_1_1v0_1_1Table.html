@@ -131,10 +131,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0237d8b221ae363b1340e2014b5c9b53"><td class="memItemLeft" align="right" valign="top">future&lt; StatusOr&lt; bool &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a0237d8b221ae363b1340e2014b5c9b53">AsyncCheckAndMutateRow</a> (std::string row_key, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html">Filter</a> filter, std::vector&lt; <a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a> &gt; true_mutations, std::vector&lt; <a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a> &gt; false_mutations, <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html">CompletionQueue</a> &amp;cq)</td></tr>
 <tr class="memdesc:a0237d8b221ae363b1340e2014b5c9b53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an asynchronous request to conditionally mutate a row.  <a href="#a0237d8b221ae363b1340e2014b5c9b53">More...</a><br /></td></tr>
 <tr class="separator:a0237d8b221ae363b1340e2014b5c9b53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba7acffbcf43365528cde61d159e7a99"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </td></tr>
-<tr class="memitem:aba7acffbcf43365528cde61d159e7a99"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; Collection&lt; bigtable::RowKeySample &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#aba7acffbcf43365528cde61d159e7a99">SampleRows</a> ()</td></tr>
-<tr class="memdesc:aba7acffbcf43365528cde61d159e7a99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample of the row keys in the table, including approximate data sizes.  <a href="#aba7acffbcf43365528cde61d159e7a99">More...</a><br /></td></tr>
-<tr class="separator:aba7acffbcf43365528cde61d159e7a99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5192f7ac3cec99473aac26a4776dbf8"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::vector&lt; bigtable::RowKeySample &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#ae5192f7ac3cec99473aac26a4776dbf8">SampleRows</a> ()</td></tr>
+<tr class="memdesc:ae5192f7ac3cec99473aac26a4776dbf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample of the row keys in the table, including approximate data sizes.  <a href="#ae5192f7ac3cec99473aac26a4776dbf8">More...</a><br /></td></tr>
+<tr class="separator:ae5192f7ac3cec99473aac26a4776dbf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd4ddd0053141ed279da2bbeba76b06b"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:afd4ddd0053141ed279da2bbeba76b06b"><td class="memTemplItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Row.html">Row</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#afd4ddd0053141ed279da2bbeba76b06b">ReadModifyWriteRow</a> (std::string row_key, bigtable::ReadModifyWriteRule rule, Args &amp;&amp;... rules)</td></tr>
 <tr class="memdesc:afd4ddd0053141ed279da2bbeba76b06b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically read and modify the row in the server, returning the resulting row.  <a href="#afd4ddd0053141ed279da2bbeba76b06b">More...</a><br /></td></tr>
@@ -158,7 +157,7 @@ Friends</h2></td></tr>
 <li>update or modify multiple rows: <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a6468a7850ecf45a3dbc633b0bffdd134" title="Attempts to apply mutations to multiple rows. ">Table::BulkApply()</a></code></li>
 <li>update a row based on previous values: <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a888246f28cc27ddd3d43c51c59ed29b9" title="Atomic test-and-set for a row using filter expressions. ">Table::CheckAndMutateRow()</a></code></li>
 <li>to atomically append data and/or increment multiple values in a row: <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#afd4ddd0053141ed279da2bbeba76b06b" title="Atomically read and modify the row in the server, returning the resulting row. ">Table::ReadModifyWriteRow()</a></code></li>
-<li>to sample the row keys: <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#aba7acffbcf43365528cde61d159e7a99" title="Sample of the row keys in the table, including approximate data sizes. ">Table::SampleRows()</a></code>.</li>
+<li>to sample the row keys: <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#ae5192f7ac3cec99473aac26a4776dbf8" title="Sample of the row keys in the table, including approximate data sizes. ">Table::SampleRows()</a></code>.</li>
 </ul>
 <p>The class deals with the most common transient failures, and retries the underlying RPC calls subject to the policies configured by the application. These policies are documented in <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a7360745d0302bcf42e08dce2b40f088f" title="Constructor with default policies. ">Table::Table()</a></code>.</p>
 <dl class="section user"><dt>Thread-safety</dt><dd>Instances of this class created via copy-construction or copy-assignment share the underlying pool of connections. Access to these copies via multiple threads is guaranteed to work. Two threads operating on the same instance of this class is not guaranteed to work.</dd></dl>
@@ -708,7 +707,7 @@ template&lt;typename... Args&gt; </div>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::future;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](cbt::Table table, cbt::CompletionQueue cq, std::string <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a6a9474603a38e1398a9946cdf530413f">table_id</a>,</div><div class="line">     std::string row_key) {</div><div class="line">    future&lt;StatusOr&lt;cbt::Row&gt;&gt; row_future = table.AsyncReadModifyWriteRow(</div><div class="line">        row_key, cq,</div><div class="line">        cbt::ReadModifyWriteRule::AppendValue(<span class="stringliteral">&quot;fam&quot;</span>, <span class="stringliteral">&quot;list&quot;</span>, <span class="stringliteral">&quot;;element&quot;</span>));</div><div class="line"></div><div class="line">    row_future</div><div class="line">        .then([](future&lt;StatusOr&lt;cbt::Row&gt;&gt; f) {</div><div class="line">          <span class="keyword">auto</span> row = f.get();</div><div class="line">          <span class="keywordflow">if</span> (!row) {</div><div class="line">            <span class="keywordflow">throw</span> std::runtime_error(row.status().message());</div><div class="line">          }</div><div class="line">        })</div><div class="line">        .<span class="keyword">get</span>();  <span class="comment">// block to simplify example.</span></div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00598">598</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00577">577</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
 
 </div>
 </div>
@@ -915,7 +914,7 @@ template&lt;typename... Args&gt; </div>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](cbt::Table table, std::string row_key) {</div><div class="line">    StatusOr&lt;cbt::Row&gt; row = table.ReadModifyWriteRow(</div><div class="line">        row_key, cbt::ReadModifyWriteRule::IncrementAmount(<span class="stringliteral">&quot;fam&quot;</span>, <span class="stringliteral">&quot;counter&quot;</span>, 1),</div><div class="line">        cbt::ReadModifyWriteRule::AppendValue(<span class="stringliteral">&quot;fam&quot;</span>, <span class="stringliteral">&quot;list&quot;</span>, <span class="stringliteral">&quot;;element&quot;</span>));</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (!row) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(row.status().message());</div><div class="line">    }</div><div class="line">    std::cout &lt;&lt; row-&gt;row_key() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00548">548</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00527">527</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
 
 </div>
 </div>
@@ -1050,43 +1049,27 @@ template&lt;typename... Args&gt; </div>
 
 </div>
 </div>
-<a id="aba7acffbcf43365528cde61d159e7a99"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aba7acffbcf43365528cde61d159e7a99">&#9670;&nbsp;</a></span>SampleRows()</h2>
+<a id="ae5192f7ac3cec99473aac26a4776dbf8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5192f7ac3cec99473aac26a4776dbf8">&#9670;&nbsp;</a></span>SampleRows()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">StatusOr&lt;Collection&lt;bigtable::RowKeySample&gt; &gt; google::cloud::bigtable::v0::Table::SampleRows </td>
+          <td class="memname">StatusOr&lt; std::vector&lt; bigtable::RowKeySample &gt; &gt; google::cloud::bigtable::v0::Table::SampleRows </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Sample of the row keys in the table, including approximate data sizes. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Collection</td><td>the type of collection where the samples are returned. </td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section return"><dt>Returns</dt><dd>Note that the sample may only include one element for small tables. In addition, the sample may include row keys that do not exist on the table, and may include the empty row key to indicate "end of table".</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
-<dl class="section user"><dt>Examples</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](cbt::Table table) {</div><div class="line">    StatusOr&lt;std::vector&lt;cbt::RowKeySample&gt;&gt; samples = table.SampleRows&lt;&gt;();</div><div class="line">    <span class="keywordflow">if</span> (!samples) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(samples.status().message());</div><div class="line">    }</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; sample : *samples) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;key=&quot;</span> &lt;&lt; sample.row_key &lt;&lt; <span class="stringliteral">&quot; - &quot;</span> &lt;&lt; sample.offset_bytes</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --> In addition, application developers can specify other collection types, for example <code>std::list&lt;&gt;</code> or <code>std::deque&lt;&gt;</code>: <div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](cbt::Table table) {</div><div class="line">    StatusOr&lt;std::list&lt;cbt::RowKeySample&gt;&gt; list_samples =</div><div class="line">        table.SampleRows&lt;std::list&gt;();</div><div class="line">    <span class="keywordflow">if</span> (!list_samples) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(list_samples.status().message());</div><div class="line">    }</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; sample : *list_samples) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;key=&quot;</span> &lt;&lt; sample.row_key &lt;&lt; <span class="stringliteral">&quot; - &quot;</span> &lt;&lt; sample.offset_bytes</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">auto</span> deque_samples = table.SampleRows&lt;std::deque&gt;();</div><div class="line">    <span class="keywordflow">if</span> (!deque_samples) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(deque_samples.status().message());</div><div class="line">    }</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; sample : *deque_samples) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;key=&quot;</span> &lt;&lt; sample.row_key &lt;&lt; <span class="stringliteral">&quot; - &quot;</span> &lt;&lt; sample.offset_bytes</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Examples</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div><div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div><div class="line">  [](cbt::Table table) {</div><div class="line">    StatusOr&lt;std::vector&lt;cbt::RowKeySample&gt;&gt; samples = table.SampleRows();</div><div class="line">    <span class="keywordflow">if</span> (!samples) {</div><div class="line">      <span class="keywordflow">throw</span> std::runtime_error(samples.status().message());</div><div class="line">    }</div><div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; sample : *samples) {</div><div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;key=&quot;</span> &lt;&lt; sample.row_key &lt;&lt; <span class="stringliteral">&quot; - &quot;</span> &lt;&lt; sample.offset_bytes</div><div class="line">                &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="line">    }</div><div class="line">  }</div></div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00509">509</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table_8cc_source.html#l00265">265</a> of file <a class="el" href="table_8cc_source.html">table.cc</a>.</p>
 
 </div>
 </div>
@@ -1165,7 +1148,7 @@ template&lt;template&lt; typename... &gt; class Collection = std::vector&gt; </d
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00660">660</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00626">626</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
 
 </div>
 </div>
