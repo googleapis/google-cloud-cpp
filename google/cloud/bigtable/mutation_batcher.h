@@ -211,7 +211,6 @@ class MutationBatcher {
   struct Batch {
     Batch() : num_mutations(), requests_size() {}
 
-    std::mutex mu_;
     size_t num_mutations;
     size_t requests_size;
     BulkMutation requests;
