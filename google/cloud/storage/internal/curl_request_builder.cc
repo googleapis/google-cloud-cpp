@@ -33,11 +33,12 @@ CurlRequestBuilder::CurlRequestBuilder(
       url_(std::move(base_url)),
       query_parameter_separator_("?"),
       logging_enabled_(false),
-      initial_buffer_size_(GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE) {}
+      initial_buffer_size_(GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE) {
+  AddHeader(ApiClientHeader());
+}
 
 CurlRequest CurlRequestBuilder::BuildRequest() {
   ValidateBuilderState(__func__);
-  AddHeader(ApiClientHeader());
   CurlRequest request;
   request.url_ = std::move(url_);
   request.headers_ = std::move(headers_);
@@ -52,7 +53,6 @@ CurlRequest CurlRequestBuilder::BuildRequest() {
 CurlDownloadRequest CurlRequestBuilder::BuildDownloadRequest(
     std::string payload) {
   ValidateBuilderState(__func__);
-  AddHeader(ApiClientHeader());
   CurlDownloadRequest request(initial_buffer_size_);
   request.url_ = std::move(url_);
   request.headers_ = std::move(headers_);
