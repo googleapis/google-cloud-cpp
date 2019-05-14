@@ -19,6 +19,7 @@
 #include <openssl/opensslv.h>
 #include <algorithm>
 #include <cctype>
+#include <csignal>
 #include <iostream>
 #include <string>
 #include <thread>
@@ -37,6 +38,20 @@ namespace {
 //     https://curl.haxx.se/libcurl/c/threadsafe.html
 //
 std::once_flag ssl_locking_initialized;
+
+// libcurl recommends turning on CURLOPT_NOSIGNAL for multi-threaded
+// applications: "Note that setting CURLOPT_NOSIGNAL to 0L will not work in a
+// threaded situation as there will be race where libcurl risks restoring the
+// former signal handler while another thread should still ignore it."
+//
+// libcurl further recommends that we setup our own signal handler for SIGPIPE
+// when using multiple threads: "When CURLOPT_NOSIGNAL is set to 1L, your
+// application needs to deal with the risk of a SIGPIPE (that at least the
+// OpenSSL backend can trigger)".
+//
+//     https://curl.haxx.se/libcurl/c/threadsafe.html
+//
+std::once_flag sigpipe_handler_initialized;
 
 #if LIBRESSL_VERSION_NUMBER
 // LibreSSL calls itself OpenSSL > 2.0, but it really is based on SSL 1.0.2
@@ -158,6 +173,15 @@ void InitializeSslLocking(bool enable_ssl_callbacks) {
 void InitializeSslLocking(bool) {}
 #endif  // GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS
 
+void InitializeSigPipeHandler(bool enable_sigpipe_handler) {
+  if (!enable_sigpipe_handler) {
+    return;
+  }
+#if defined(SIGPIPE)
+  std::signal(SIGPIPE, SIG_IGN);
+#endif  // SIGPIPE
+}
+
 /// Automatically initialize (and cleanup) the libcurl library.
 class CurlInitializer {
  public:
@@ -211,10 +235,12 @@ std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
   return size;
 }
 
-void CurlInitializeOnce(bool enable_ssl_callbacks) {
+void CurlInitializeOnce(ClientOptions const& options) {
   static CurlInitializer curl_initializer;
   std::call_once(ssl_locking_initialized, InitializeSslLocking,
-                 enable_ssl_callbacks);
+                 options.enable_ssl_locking_callbacks());
+  std::call_once(sigpipe_handler_initialized, InitializeSigPipeHandler,
+                 options.enable_sigpipe_handler());
 }
 
 }  // namespace internal

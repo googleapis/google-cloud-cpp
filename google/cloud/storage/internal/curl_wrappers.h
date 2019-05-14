@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_WRAPPERS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_WRAPPERS_H_
 
+#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
@@ -49,7 +50,7 @@ using CurlShare = std::unique_ptr<CURLSH, decltype(&curl_share_cleanup)>;
 bool SslLockingCallbacksInstalled();
 
 /// Initializes (if needed) the SSL locking callbacks.
-void CurlInitializeOnce(bool enable_ssl_callbacks);
+void CurlInitializeOnce(ClientOptions const& options);
 
 /// Returns the id of the SSL library used by libcurl.
 std::string CurlSslLibraryId();

@@ -141,6 +141,12 @@ class ClientOptions {
     return *this;
   }
 
+  bool enable_sigpipe_handler() const { return enable_sigpipe_handler_; }
+  ClientOptions& set_enable_sigpipe_handler(bool v) {
+    enable_sigpipe_handler_ = v;
+    return *this;
+  }
+
  private:
   void SetupFromEnvironment();
 
@@ -158,6 +164,7 @@ class ClientOptions {
   std::string user_agent_prefix_;
   std::size_t maximum_simple_upload_size_;
   bool enable_ssl_locking_callbacks_ = true;
+  bool enable_sigpipe_handler_ = true;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_wrappers.h"
+#include "google/cloud/storage/oauth2/google_credentials.h"
 #include <gmock/gmock.h>
 #include <openssl/crypto.h>
 
@@ -34,7 +35,8 @@ TEST(CurlWrappers, LockingDisabledTest) {
   // Install a trivial callback, this should disable the installation of the
   // normal callbacks in the the curl wrappers.
   CRYPTO_set_locking_callback(test_cb);
-  CurlInitializeOnce(true);
+  CurlInitializeOnce(ClientOptions(oauth2::CreateAnonymousCredentials())
+                         .set_enable_ssl_locking_callbacks(true));
   EXPECT_FALSE(SslLockingCallbacksInstalled());
 }
 }  // namespace
@@ -43,7 +45,3 @@ TEST(CurlWrappers, LockingDisabledTest) {
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-//
-// Created by coryan on 11/26/18.
-//
