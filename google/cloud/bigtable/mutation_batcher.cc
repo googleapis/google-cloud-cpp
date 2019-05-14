@@ -137,31 +137,34 @@ bool MutationBatcher::FlushIfPossible(CompletionQueue cq) {
     cur_batch_.swap(batch);
     table_.AsyncBulkApply(std::move(batch->requests), cq)
         .then([this, cq, batch](future<std::vector<FailedMutation>> failed) {
-          CompletionQueue tmp(cq);
-          OnBulkApplyDone(tmp, *batch, failed.get());
+          OnBulkApplyDone(cq, std::move(*batch), failed.get());
         });
     return true;
   }
   return false;
 }
 
-void MutationBatcher::OnBulkApplyDone(CompletionQueue& cq,
-                                      MutationBatcher::Batch& batch,
+void MutationBatcher::OnBulkApplyDone(CompletionQueue cq,
+                                      MutationBatcher::Batch batch,
                                       std::vector<FailedMutation> failed) {
   // First process all the failures, marking the mutations as done after
   // processing them.
   for (auto const& f : failed) {
     int const idx = f.original_index();
-    // Ignore out of range indices reported by the server.
     if (idx < 0 ||
         static_cast<std::size_t>(idx) >= batch.mutation_data.size()) {
-      continue;
+      // This is a bug on the server or the client, either terminate (when
+      // -fno-exceptions is set) or throw an exception.
+      std::ostringstream os;
+      os << "Index " << idx << " is out of range [0,"
+         << batch.mutation_data.size() << ")";
+      google::cloud::internal::ThrowRuntimeError(std::move(os).str());
     }
     MutationData& data = batch.mutation_data[idx];
     data.completion_promise.set_value(f.status());
     data.done = true;
   }
-  // Any remaining mutations are treated as successful:
+  // Any remaining mutations are treated as successful.
   for (auto& data : batch.mutation_data) {
     if (!data.done) {
       data.completion_promise.set_value(Status());
@@ -171,8 +174,8 @@ void MutationBatcher::OnBulkApplyDone(CompletionQueue& cq,
   batch.mutation_data.clear();
 
   std::unique_lock<std::mutex> lk(mu_);
-  outstanding_size_ = 0;
-  num_requests_pending_ = 0;
+  outstanding_size_ -= batch.requests_size;
+  num_requests_pending_--;
   num_outstanding_batches_--;
   SatisfyPromises(TryAdmit(cq), lk);  // unlocks the lock
 }

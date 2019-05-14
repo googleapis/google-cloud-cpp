@@ -244,11 +244,8 @@ class MutationBatcher {
    */
   bool FlushIfPossible(CompletionQueue cq);
 
-  /**
-   * Entry point for lower layers indicating that mutations listed in `failed`
-   * in batch `batch` have failed permanently.
-   */
-  void OnBulkApplyDone(CompletionQueue& cq, MutationBatcher::Batch& batch,
+  /// Handle a completed batch.
+  void OnBulkApplyDone(CompletionQueue cq, MutationBatcher::Batch batch,
                        std::vector<FailedMutation> failed);
 
   /**
