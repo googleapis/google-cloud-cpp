@@ -85,7 +85,7 @@ class MutationBatcher {
     size_t max_outstanding_size;
   };
 
-  MutationBatcher(Table table, Options options = Options())
+  explicit MutationBatcher(Table table, Options options = Options())
       : table_(std::move(table)),
         options_(options),
         num_outstanding_batches_(),

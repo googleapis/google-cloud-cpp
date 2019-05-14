@@ -159,8 +159,6 @@ void MutationBatcher::OnBulkApplyDone(CompletionQueue& cq,
     // Release resources as early as possible.
     batch.mutation_data.erase(it);
   }
-  failed.clear();
-  failed.shrink_to_fit();
   // Any remaining mutations were successful then.
   for (auto& kv : batch.mutation_data) {
     MutationData& data = kv.second;
@@ -183,7 +181,7 @@ std::vector<MutationBatcher::AdmissionPromise> MutationBatcher::TryAdmit(
   do {
     while (!pending_mutations_.empty() &&
            HasSpaceFor(pending_mutations_.front())) {
-      auto& mut(pending_mutations_.front());
+      auto& mut = pending_mutations_.front();
       admission_promises.emplace_back(std::move(mut.admission_promise));
       Admit(std::move(mut));
       pending_mutations_.pop();
