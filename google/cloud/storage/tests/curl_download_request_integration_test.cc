@@ -15,6 +15,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
+#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 #include <cstdlib>
@@ -42,7 +43,8 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
       HttpBinEndpoint() + "/stream/" + std::to_string(kDownloadedLines),
       storage::internal::GetDefaultCurlHandleFactory());
 
-  auto download = request.BuildDownloadRequest(std::string{});
+  auto download = request.BuildDownloadRequest(
+      ClientOptions(oauth2::CreateAnonymousCredentials()));
 
   StatusOr<HttpResponse> response;
   std::string buffer;

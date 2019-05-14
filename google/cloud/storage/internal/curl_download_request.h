@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_DOWNLOAD_REQUEST_H_
 
 #include "google/cloud/log.h"
+#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/internal/curl_request.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/version.h"
@@ -37,7 +38,7 @@ namespace internal {
  */
 class CurlDownloadRequest {
  public:
-  explicit CurlDownloadRequest(std::size_t initial_buffer_size);
+  explicit CurlDownloadRequest(ClientOptions const& options);
 
   ~CurlDownloadRequest() {
     if (!factory_) {
@@ -50,7 +51,6 @@ class CurlDownloadRequest {
   CurlDownloadRequest(CurlDownloadRequest&& rhs) noexcept(false)
       : url_(std::move(rhs.url_)),
         headers_(std::move(rhs.headers_)),
-        payload_(std::move(rhs.payload_)),
         user_agent_(std::move(rhs.user_agent_)),
         logging_enabled_(rhs.logging_enabled_),
         handle_(std::move(rhs.handle_)),
@@ -58,14 +58,14 @@ class CurlDownloadRequest {
         factory_(std::move(rhs.factory_)),
         closing_(rhs.closing_),
         curl_closed_(rhs.curl_closed_),
-        initial_buffer_size_(rhs.initial_buffer_size_) {
+        initial_buffer_size_(rhs.initial_buffer_size_),
+        no_signal_(rhs.no_signal_) {
     ResetOptions();
   }
 
   CurlDownloadRequest& operator=(CurlDownloadRequest&& rhs) noexcept {
     url_ = std::move(rhs.url_);
     headers_ = std::move(rhs.headers_);
-    payload_ = std::move(rhs.payload_);
     user_agent_ = std::move(rhs.user_agent_);
     logging_enabled_ = rhs.logging_enabled_;
     handle_ = std::move(rhs.handle_);
@@ -74,6 +74,7 @@ class CurlDownloadRequest {
     closing_ = rhs.closing_;
     curl_closed_ = rhs.curl_closed_;
     initial_buffer_size_ = rhs.initial_buffer_size_;
+    no_signal_ = rhs.no_signal_;
     ResetOptions();
     return *this;
   }
@@ -145,7 +146,6 @@ class CurlDownloadRequest {
 
   std::string url_;
   CurlHeaders headers_;
-  std::string payload_;
   std::string user_agent_;
   CurlReceivedHeaders received_headers_;
   bool logging_enabled_;
@@ -167,6 +167,7 @@ class CurlDownloadRequest {
   bool curl_closed_;
 
   std::size_t initial_buffer_size_;
+  long no_signal_;
 };
 
 }  // namespace internal

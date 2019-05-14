@@ -48,14 +48,20 @@ CurlRequest CurlRequestBuilder::BuildRequest() {
   return request;
 }
 
-CurlDownloadRequest CurlRequestBuilder::BuildDownloadRequest(
-    std::string payload) {
+CurlRequest CurlRequestBuilder::BuildRequest(ClientOptions const& options) {
   ValidateBuilderState(__func__);
-  CurlDownloadRequest request(initial_buffer_size_);
+  auto request = BuildRequest();
+  request.no_signal_ = options.enable_libcurl_nosignal() ? 1L : 0L;
+  return request;
+}
+
+CurlDownloadRequest CurlRequestBuilder::BuildDownloadRequest(
+    ClientOptions const& options) {
+  ValidateBuilderState(__func__);
+  CurlDownloadRequest request(options);
   request.url_ = std::move(url_);
   request.headers_ = std::move(headers_);
   request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();
-  request.payload_ = std::move(payload);
   request.handle_ = std::move(handle_);
   request.multi_ = factory_->CreateMultiHandle();
   request.factory_ = factory_;

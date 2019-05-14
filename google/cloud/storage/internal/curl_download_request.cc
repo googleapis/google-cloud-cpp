@@ -28,13 +28,14 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-CurlDownloadRequest::CurlDownloadRequest(std::size_t initial_buffer_size)
+CurlDownloadRequest::CurlDownloadRequest(ClientOptions const& options)
     : headers_(nullptr, &curl_slist_free_all),
       multi_(nullptr, &curl_multi_cleanup),
       closing_(false),
       curl_closed_(false),
-      initial_buffer_size_(initial_buffer_size) {
-  buffer_.reserve(initial_buffer_size);
+      initial_buffer_size_(options.download_buffer_size()),
+      no_signal_(options.enable_http_tracing() ? 1L : 0L) {
+  buffer_.reserve(initial_buffer_size_);
 }
 
 StatusOr<HttpResponse> CurlDownloadRequest::Close() {
@@ -124,11 +125,7 @@ void CurlDownloadRequest::ResetOptions() {
   handle_.SetOption(CURLOPT_URL, url_.c_str());
   handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
   handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
-  handle_.SetOption(CURLOPT_NOSIGNAL, 1);
-  if (!payload_.empty()) {
-    handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload_.length());
-    handle_.SetOption(CURLOPT_POSTFIELDS, payload_.c_str());
-  }
+  handle_.SetOption(CURLOPT_NOSIGNAL, no_signal_);
   handle_.SetWriterCallback(
       [this](void* ptr, std::size_t size, std::size_t nmemb) {
         return this->WriteCallback(ptr, size, nmemb);

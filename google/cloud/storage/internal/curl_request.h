@@ -51,7 +51,8 @@ class CurlRequest {
         received_headers_(std::move(rhs.received_headers_)),
         logging_enabled_(rhs.logging_enabled_),
         handle_(std::move(rhs.handle_)),
-        factory_(std::move(rhs.factory_)) {
+        factory_(std::move(rhs.factory_)),
+        no_signal_(rhs.no_signal_) {
     ResetOptions();
   }
 
@@ -64,6 +65,7 @@ class CurlRequest {
     logging_enabled_ = rhs.logging_enabled_;
     handle_ = std::move(rhs.handle_);
     factory_ = std::move(rhs.factory_);
+    no_signal_ = rhs.no_signal_;
 
     ResetOptions();
     return *this;
@@ -92,6 +94,7 @@ class CurlRequest {
   bool logging_enabled_;
   CurlHandle handle_;
   std::shared_ptr<CurlHandleFactory> factory_;
+  long no_signal_;
 };
 
 }  // namespace internal

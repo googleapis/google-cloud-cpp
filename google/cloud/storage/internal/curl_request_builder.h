@@ -38,7 +38,15 @@ class CurlRequestBuilder {
                               std::shared_ptr<CurlHandleFactory> factory);
 
   /**
-   * Creates a http request with the given payload.
+   * Creates a http request with the given options.
+   *
+   * This function invalidates the builder. The application should not use this
+   * builder once this function is called.
+   */
+  CurlRequest BuildRequest(ClientOptions const& options);
+
+  /**
+   * Creates a http request with default parameters.
    *
    * This function invalidates the builder. The application should not use this
    * builder once this function is called.
@@ -51,7 +59,7 @@ class CurlRequestBuilder {
    * This function invalidates the builder. The application should not use this
    * builder once this function is called.
    */
-  CurlDownloadRequest BuildDownloadRequest(std::string payload);
+  CurlDownloadRequest BuildDownloadRequest(ClientOptions const& options);
 
   /// Adds one of the well-known parameters as a query parameter
   template <typename P>
