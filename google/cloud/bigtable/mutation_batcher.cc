@@ -148,21 +148,25 @@ bool MutationBatcher::FlushIfPossible(CompletionQueue cq) {
 void MutationBatcher::OnBulkApplyDone(CompletionQueue& cq,
                                       MutationBatcher::Batch& batch,
                                       std::vector<FailedMutation> failed) {
+  // First process all the failures, marking the mutations as done after
+  // processing them.
   for (auto const& f : failed) {
     int const idx = f.original_index();
-    auto it = batch.mutation_data.find(idx);
-    if (it == batch.mutation_data.end()) {
+    // Ignore out of range indices reported by the server.
+    if (idx < 0 ||
+        static_cast<std::size_t>(idx) >= batch.mutation_data.size()) {
       continue;
     }
-    MutationData& data = it->second;
+    MutationData& data = batch.mutation_data[idx];
     data.completion_promise.set_value(f.status());
-    // Release resources as early as possible.
-    batch.mutation_data.erase(it);
+    data.done = true;
   }
-  // Any remaining mutations were successful then.
-  for (auto& kv : batch.mutation_data) {
-    MutationData& data = kv.second;
-    data.completion_promise.set_value(Status());
+  // Any remaining mutations are treated as successful:
+  for (auto& data : batch.mutation_data) {
+    if (!data.done) {
+      data.completion_promise.set_value(Status());
+      data.done = true;
+    }
   }
   batch.mutation_data.clear();
 
@@ -195,8 +199,7 @@ void MutationBatcher::Admit(PendingSingleRowMutation mut) {
   cur_batch_->requests_size += mut.request_size;
   cur_batch_->num_mutations += mut.num_mutations;
   cur_batch_->requests.emplace_back(std::move(mut.mut));
-  cur_batch_->mutation_data.emplace(cur_batch_->last_idx++,
-                                    MutationData(std::move(mut)));
+  cur_batch_->mutation_data.emplace_back(MutationData(std::move(mut)));
 }
 
 void MutationBatcher::SatisfyPromises(

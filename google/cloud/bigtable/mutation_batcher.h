@@ -177,14 +177,19 @@ class MutationBatcher {
     AdmissionPromise admission_promise;
   };
 
+  /**
+   * A mutation that has been sent to the Cloud Bigtable service.
+   *
+   * We need to save the `CompletionPromise` associated with each mutation.
+   * Because only failures are reported, we need to track whether the mutation
+   * is "done", so we can simulate a success report.
+   */
   struct MutationData {
     explicit MutationData(PendingSingleRowMutation pending)
         : completion_promise(std::move(pending.completion_promise)),
-          num_mutations(pending.num_mutations),
-          request_size(pending.request_size) {}
+          done(false) {}
     CompletionPromise completion_promise;
-    std::size_t num_mutations;
-    std::size_t request_size;
+    bool done;
   };
 
   /**
@@ -204,20 +209,13 @@ class MutationBatcher {
    * another attempt before invoking callbacks for the previous one.
    */
   struct Batch {
-    Batch() : num_mutations(), requests_size(), last_idx() {}
+    Batch() : num_mutations(), requests_size() {}
 
     std::mutex mu_;
     size_t num_mutations;
     size_t requests_size;
     BulkMutation requests;
-    int last_idx;
-
-    /**
-     * The reason why it's not simple std::vector is that we want this
-     * structure to shrink as individual mutations complete, so that the user
-     * can have a bound on the amount of overhead per outstanding Apply.
-     */
-    std::unordered_map<int, MutationData> mutation_data;
+    std::vector<MutationData> mutation_data;
   };
 
   /// Check if a mutation doesn't exceed allowed limits.
