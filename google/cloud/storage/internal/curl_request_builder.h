@@ -154,6 +154,9 @@ class CurlRequestBuilder {
   /// Gets the user-agent suffix.
   std::string UserAgentSuffix() const;
 
+  /// Gets the x-goog-api-client header.
+  std::string ApiClientHeader() const;
+
   /// URL-escapes a string.
   CurlString MakeEscapedString(std::string const& s) {
     return handle_.MakeEscapedString(s);

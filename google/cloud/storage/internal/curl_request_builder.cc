@@ -37,6 +37,7 @@ CurlRequestBuilder::CurlRequestBuilder(
 
 CurlRequest CurlRequestBuilder::BuildRequest() {
   ValidateBuilderState(__func__);
+  AddHeader(ApiClientHeader());
   CurlRequest request;
   request.url_ = std::move(url_);
   request.headers_ = std::move(headers_);
@@ -51,6 +52,7 @@ CurlRequest CurlRequestBuilder::BuildRequest() {
 CurlDownloadRequest CurlRequestBuilder::BuildDownloadRequest(
     std::string payload) {
   ValidateBuilderState(__func__);
+  AddHeader(ApiClientHeader());
   CurlDownloadRequest request(initial_buffer_size_);
   request.url_ = std::move(url_);
   request.headers_ = std::move(headers_);
@@ -118,12 +120,23 @@ std::string CurlRequestBuilder::UserAgentSuffix() const {
   ValidateBuilderState(__func__);
   // Pre-compute and cache the user agent string:
   static std::string const user_agent_suffix = [] {
-    std::string agent = "gl-cpp/" + google::cloud::internal::language_version();
-    agent += " gccl/" + storage::version_string() + " ";
+    std::string agent = "gcloud-cpp/" + storage::version_string();
     agent += curl_version();
     return agent;
   }();
   return user_agent_suffix;
+}
+
+std::string CurlRequestBuilder::ApiClientHeader() const {
+  ValidateBuilderState(__func__);
+  // Pre-compute and cache the x-goog-api-client header:
+  static std::string const api_client_header = [] {
+    std::string v = "x-goog-api-client: gl-cpp/" +
+                    google::cloud::internal::language_version();
+    v += " gccl/" + storage::version_string();
+    return v;
+  }();
+  return api_client_header;
 }
 
 void CurlRequestBuilder::ValidateBuilderState(char const* where) const {

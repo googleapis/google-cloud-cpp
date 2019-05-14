@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/metadata_update_policy.h"
+#include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/build_info.h"
 #include <sstream>
 
 namespace google {
@@ -31,32 +33,30 @@ MetadataUpdatePolicy::MetadataUpdatePolicy(
   value += "=";
   value += resource_name;
   value_ = std::move(value);
+  std::string api_client_header = "gl-cpp/" +
+                                  google::cloud::internal::language_version() +
+                                  " gccl/" + version_string();
+  api_client_header_ = std::move(api_client_header);
+}
+
+MetadataUpdatePolicy::MetadataUpdatePolicy(
+    std::string const& resource_name,
+    MetadataParamTypes const& metadata_param_type, std::string const& table_id)
+    : MetadataUpdatePolicy(resource_name, metadata_param_type) {
+  value_ += "/tables/" + table_id;
 }
 
 MetadataUpdatePolicy::MetadataUpdatePolicy(
     std::string const& resource_name,
     MetadataParamTypes const& metadata_param_type,
-    std::string const& table_id) {
-  std::string value = metadata_param_type.type();
-  value += "=";
-  value += resource_name;
-  value += "/tables/" + table_id;
-  value_ = std::move(value);
-}
-
-MetadataUpdatePolicy::MetadataUpdatePolicy(
-    std::string const& resource_name,
-    MetadataParamTypes const& metadata_param_type,
-    bigtable::ClusterId const& cluster_id) {
-  std::string value = metadata_param_type.type();
-  value += "=";
-  value += resource_name;
-  value += "/clusters/" + cluster_id.get();
-  value_ = std::move(value);
+    bigtable::ClusterId const& cluster_id)
+    : MetadataUpdatePolicy(resource_name, metadata_param_type) {
+  value_ += "/clusters/" + cluster_id.get();
 }
 
 void MetadataUpdatePolicy::Setup(grpc::ClientContext& context) const {
   context.AddMetadata(std::string("x-goog-request-params"), value());
+  context.AddMetadata(std::string("x-goog-api-client"), api_client_header());
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

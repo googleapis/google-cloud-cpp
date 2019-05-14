@@ -82,8 +82,7 @@ ClientOptions& ClientOptions::set_connection_pool_size(std::size_t size) {
 }
 
 std::string ClientOptions::UserAgentPrefix() {
-  std::string agent = "gl-cpp/" + google::cloud::internal::language_version();
-  agent += " gccl/" + version_string();
+  std::string agent = "gcloud-cpp/" + version_string();
   return agent;
 }
 
