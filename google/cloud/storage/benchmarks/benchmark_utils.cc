@@ -39,6 +39,14 @@ std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen) {
                                          "0123456789");
 }
 
+std::string MakeRandomFileName(google::cloud::internal::DefaultPRNG& gen) {
+  return google::cloud::internal::Sample(gen, 28,
+                                         "abcdefghijklmnopqrstuvwxyz"
+                                         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                         "0123456789") +
+         ".txt";
+}
+
 std::string MakeRandomData(google::cloud::internal::DefaultPRNG& gen,
                            std::size_t desired_size) {
   std::string result;

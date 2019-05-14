@@ -17,7 +17,8 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 storage_benchmark_programs = [
+    "storage_file_transfer_benchmark.cc",
     "storage_latency_benchmark.cc",
-    "storage_throughput_vs_cpu_benchmark.cc",
     "storage_throughput_benchmark.cc",
+    "storage_throughput_vs_cpu_benchmark.cc",
 ]

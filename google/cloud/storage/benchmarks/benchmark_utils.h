@@ -39,6 +39,9 @@ std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
 /// Create a random object name.
 std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen);
 
+/// Create a random local filename.
+std::string MakeRandomFileName(google::cloud::internal::DefaultPRNG& gen);
+
 /// Create a random chunk of data of a prescribed size.
 std::string MakeRandomData(google::cloud::internal::DefaultPRNG& gen,
                            std::size_t desired_size);
