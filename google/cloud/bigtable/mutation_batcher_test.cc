@@ -536,17 +536,32 @@ TEST_F(MutationBatcherTest, SmallMutationsDontSkipPending) {
 // Test that waiting until all pending operations finish works in a simple case.
 TEST_F(MutationBatcherTest, WaitForNoPendingSimple) {
   std::vector<SingleRowMutation> mutations(
-      {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")})});
+      {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("baz", {bt::SetCell("fam", "col", 0_ms, "baz")})});
 
-  ExpectInteraction({{{mutations[0]}, {ResultPiece({0}, {}, {})}}});
+  batcher_.reset(new MutationBatcher(
+      table_,
+      MutationBatcher::Options().SetMaxMutationsPerBatch(2).SetMaxBatches(1)));
+
+  ExpectInteraction(
+      {{{mutations[0]}, {ResultPiece({0}, {}, {})}},
+       {{mutations[1], mutations[2]}, {ResultPiece({0, 1}, {}, {})}}});
 
   auto no_more_pending1 = batcher_->AsyncWaitForNoPendingRequests();
   EXPECT_EQ(no_more_pending1.wait_for(1_ms), std::future_status::ready);
   no_more_pending1.get();
 
-  auto state = Apply(mutations[0]);
-  EXPECT_TRUE(state->admitted);
-  EXPECT_FALSE(state->completed);
+  auto state0 = Apply(mutations[0]);
+  EXPECT_TRUE(state0->admitted);
+  EXPECT_FALSE(state0->completed);
+  EXPECT_EQ(1U, NumOperationsOutstanding());
+  auto state1 = Apply(mutations[1]);
+  auto state2 = Apply(mutations[2]);
+  EXPECT_TRUE(state1->admitted);
+  EXPECT_TRUE(state2->admitted);
+  EXPECT_FALSE(state1->completed);
+  EXPECT_FALSE(state2->completed);
   EXPECT_EQ(1U, NumOperationsOutstanding());
 
   auto no_more_pending2 = batcher_->AsyncWaitForNoPendingRequests();
@@ -556,7 +571,20 @@ TEST_F(MutationBatcherTest, WaitForNoPendingSimple) {
 
   FinishSingleItemStream();
 
-  EXPECT_TRUE(state->completed);
+  EXPECT_TRUE(state0->completed);
+  EXPECT_TRUE(state1->admitted);
+  EXPECT_TRUE(state2->admitted);
+  EXPECT_FALSE(state1->completed);
+  EXPECT_FALSE(state2->completed);
+  EXPECT_EQ(1U, NumOperationsOutstanding());
+
+  EXPECT_EQ(no_more_pending2.wait_for(1_ms), std::future_status::timeout);
+  EXPECT_EQ(no_more_pending3.wait_for(1_ms), std::future_status::timeout);
+
+  FinishSingleItemStream();
+
+  EXPECT_TRUE(state1->completed);
+  EXPECT_TRUE(state2->completed);
   EXPECT_EQ(0U, NumOperationsOutstanding());
 
   EXPECT_EQ(no_more_pending2.wait_for(1_ms), std::future_status::ready);

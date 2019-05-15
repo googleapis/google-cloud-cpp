@@ -172,11 +172,12 @@ void MutationBatcher::OnBulkApplyDone(CompletionQueue cq,
       data.done = true;
     }
   }
+  auto const num_mutations = batch.mutation_data.size();
   batch.mutation_data.clear();
 
   std::unique_lock<std::mutex> lk(mu_);
   outstanding_size_ -= batch.requests_size;
-  num_requests_pending_--;
+  num_requests_pending_ -= num_mutations;
   num_outstanding_batches_--;
   SatisfyPromises(TryAdmit(cq), lk);  // unlocks the lock
 }
