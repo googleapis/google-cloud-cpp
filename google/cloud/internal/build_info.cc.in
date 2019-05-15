@@ -34,7 +34,8 @@ std::string language_version() {
   static std::string const language_version = [] {
     // NOLINTNEXTLINE(readability-redundant-string-init)
     std::string v =
-        R"""(@CMAKE_CXX_COMPILER_ID@_@CMAKE_CXX_COMPILER_VERSION@)""";
+        R"""(@CMAKE_CXX_COMPILER_ID@-@CMAKE_CXX_COMPILER_VERSION@)""";
+    std::replace(v.begin(), v.end(), ' ', '_');
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     v += "-ex";
 #else
