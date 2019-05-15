@@ -136,8 +136,9 @@ bool MutationBatcher::FlushIfPossible(CompletionQueue cq) {
     auto batch = std::make_shared<Batch>();
     cur_batch_.swap(batch);
     table_.AsyncBulkApply(std::move(batch->requests), cq)
-        .then([this, cq, batch](future<std::vector<FailedMutation>> failed) {
-          OnBulkApplyDone(cq, std::move(*batch), failed.get());
+        .then([this, cq,
+               batch](future<std::vector<FailedMutation>> failed) mutable {
+          OnBulkApplyDone(std::move(cq), std::move(*batch), failed.get());
         });
     return true;
   }
