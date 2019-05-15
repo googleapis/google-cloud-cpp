@@ -10,6 +10,7 @@ var searchData=
   ['admin_5fendpoint',['admin_endpoint',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#a9df76745e6dfb35a7632f9857c09091c',1,'google::cloud::bigtable::v0::ClientOptions']]],
   ['adminclient',['AdminClient',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AdminClient.html',1,'google::cloud::bigtable::v0']]],
   ['alwaysretrymutationpolicy',['AlwaysRetryMutationPolicy',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AlwaysRetryMutationPolicy.html',1,'google::cloud::bigtable::v0::AlwaysRetryMutationPolicy'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AlwaysRetryMutationPolicy.html#a3d20ed799c7801c78289d5a354bb3cb8',1,'google::cloud::bigtable::v0::AlwaysRetryMutationPolicy::AlwaysRetryMutationPolicy()']]],
+  ['api_5fclient_5fheader',['api_client_header',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MetadataUpdatePolicy.html#af5028ddd40ed2c8e40a56b7bf3fbdd79',1,'google::cloud::bigtable::v0::MetadataUpdatePolicy']]],
   ['app_5fprofile_5fconfig_2ecc',['app_profile_config.cc',['../app__profile__config_8cc.html',1,'']]],
   ['app_5fprofile_5fconfig_2eh',['app_profile_config.h',['../app__profile__config_8h.html',1,'']]],
   ['app_5fprofile_5fid',['app_profile_id',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a1a7cd66e835b39b90bd0009ccffd3add',1,'google::cloud::bigtable::v0::Table']]],
