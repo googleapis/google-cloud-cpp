@@ -2549,7 +2549,9 @@ class Client {
                                           Options&&... options) {
     internal::V2SignUrlRequest request(std::move(verb), std::move(bucket_name),
                                        std::move(object_name));
-    request.set_multiple_options(std::forward<Options>(options)...);
+    request.set_multiple_options(
+        AddExtensionHeader("x-goog-api-client", x_goog_api_client()),
+        std::forward<Options>(options)...);
     return SignUrlV2(request);
   }
 
