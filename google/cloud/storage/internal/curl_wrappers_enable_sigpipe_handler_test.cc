@@ -27,7 +27,7 @@ namespace {
 extern "C" void test_handler(int) {}
 
 /// @test Verify that installing the libraries
-TEST(CurlWrappers, LockingEnabledTest) {
+TEST(CurlWrappers, SigpipeHandlerEnabledTest) {
 #if !defined(SIGPIPE)
   return;  // nothing to do
 #else
