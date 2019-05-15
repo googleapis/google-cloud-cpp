@@ -33,9 +33,7 @@ CurlRequestBuilder::CurlRequestBuilder(
       url_(std::move(base_url)),
       query_parameter_separator_("?"),
       logging_enabled_(false),
-      initial_buffer_size_(GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE) {
-  AddHeader("x-goog-api-client: " + x_goog_api_client());
-}
+      initial_buffer_size_(GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE) {}
 
 CurlRequest CurlRequestBuilder::BuildRequest() {
   ValidateBuilderState(__func__);

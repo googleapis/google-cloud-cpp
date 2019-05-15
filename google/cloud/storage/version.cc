@@ -33,6 +33,7 @@ std::string version_string() {
   }();
   return version;
 }
+
 // NOLINTNEXTLINE(readability-identifier-naming)
 std::string x_goog_api_client() {
   static std::string const x_goog_api_client = [] {
