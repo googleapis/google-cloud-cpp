@@ -320,8 +320,7 @@ TEST(ClientOptionsTest, SetSslTargetNameOverride) {
 TEST(ClientOptionsTest, UserAgentPrefix) {
   std::string const actual = bigtable::ClientOptions::UserAgentPrefix();
 
-  EXPECT_THAT(actual, HasSubstr("cbt-c++/"));
-  EXPECT_THAT(actual, ::testing::AnyOf(HasSubstr(" noex "), HasSubstr(" ex ")));
+  EXPECT_THAT(actual, HasSubstr("gcloud-cpp/"));
 }
 
 }  // namespace

@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/embedded_server_test_fixture.h"
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <map>
 #include <thread>
@@ -26,6 +27,8 @@ namespace {
 class MetadataUpdatePolicyTest
     : public bigtable::testing::EmbeddedServerTestFixture {};
 }  // anonymous namespace
+
+using ::testing::HasSubstr;
 
 /// @test A test for setting metadata for admin operations.
 TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServer) {
@@ -70,6 +73,10 @@ TEST_F(MetadataUpdatePolicyTest, SimpleDefault) {
   bigtable::MetadataUpdatePolicy created(kInstanceName,
                                          bigtable::MetadataParamTypes::PARENT);
   EXPECT_EQ(x_google_request_params, created.value());
+  EXPECT_THAT(created.api_client_header(), HasSubstr("gl-cpp/"));
+  EXPECT_THAT(created.api_client_header(), HasSubstr("gccl/"));
+  EXPECT_THAT(created.api_client_header(),
+              ::testing::AnyOf(HasSubstr("-noex-"), HasSubstr("-ex-")));
 }
 
 /// @test A test for lazy behaviour of metadata .

@@ -21,6 +21,7 @@
 #include "google/cloud/storage/internal/curl_streambuf.h"
 #include "google/cloud/storage/internal/generate_message_boundary.h"
 #include "google/cloud/storage/object_stream.h"
+#include "google/cloud/storage/version.h"
 
 namespace google {
 namespace cloud {
@@ -159,7 +160,8 @@ Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
       .SetDebugLogging(options_.enable_http_tracing())
       .SetCurlShare(share_.get())
       .AddUserAgentPrefix(options_.user_agent_prefix())
-      .AddHeader(auth_header.value());
+      .AddHeader(auth_header.value())
+      .AddHeader("x-goog-api-client: " + x_goog_api_client());
   return Status();
 }
 

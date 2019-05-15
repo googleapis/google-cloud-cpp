@@ -36,6 +36,7 @@ inline namespace BIGTABLE_CLIENT_NS {
  *     TableAdmin::GetTable.
  *     "resource=" : this is used to set IAM policies for bigtable resource.
  *
+ * The Setup function also adds x-goog-api-client header for analytics purpose.
  */
 class MetadataParamTypes final {
  public:
@@ -109,9 +110,11 @@ class MetadataUpdatePolicy {
   void Setup(grpc::ClientContext& context) const;
 
   std::string const& value() const { return value_; }
+  std::string const& api_client_header() const { return api_client_header_; }
 
  private:
   std::string value_;
+  std::string api_client_header_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

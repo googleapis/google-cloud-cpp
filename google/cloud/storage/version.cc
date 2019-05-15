@@ -33,6 +33,17 @@ std::string version_string() {
   }();
   return version;
 }
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+std::string x_goog_api_client() {
+  static std::string const x_goog_api_client = [] {
+    std::ostringstream os;
+    os << "gl-cpp/" << google::cloud::internal::language_version() << " gccl/"
+       << version_string();
+    return os.str();
+  }();
+  return x_goog_api_client;
+}
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

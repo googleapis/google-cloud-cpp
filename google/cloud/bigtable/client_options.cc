@@ -82,14 +82,7 @@ ClientOptions& ClientOptions::set_connection_pool_size(std::size_t size) {
 }
 
 std::string ClientOptions::UserAgentPrefix() {
-  std::string agent = "cbt-c++/" + version_string();
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  agent += " ex";
-#else
-  agent += " noex";
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  agent += ' ';
-  agent += google::cloud::internal::compiler();
+  std::string agent = "gcloud-cpp/" + version_string();
   return agent;
 }
 
