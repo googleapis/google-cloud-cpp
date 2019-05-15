@@ -37,8 +37,8 @@ std::string version_string() {
 std::string x_goog_api_client() {
   static std::string const x_goog_api_client = [] {
     std::ostringstream os;
-    os << "gl-cpp/" << google::cloud::internal::language_version()
-       << " gccl/" << version_string();
+    os << "gl-cpp/" << google::cloud::internal::language_version() << " gccl/"
+       << version_string();
     return os.str();
   }();
   return x_goog_api_client;
