@@ -98,7 +98,10 @@ class V2SignUrlRequest {
                             std::string object_name)
       : common_request_(std::move(verb), std::move(bucket_name),
                         std::move(object_name)),
-        expiration_time_(DefaultExpirationTime()) {}
+        expiration_time_(DefaultExpirationTime()) {
+    common_request_.SetOption(AddExtensionHeader("x-goog-api-client",
+                                                 x_goog_api_client()));
+  }
 
   std::string const& verb() const { return common_request_.verb(); }
   std::string const& bucket_name() const {

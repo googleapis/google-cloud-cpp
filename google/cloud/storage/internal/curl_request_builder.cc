@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_request_builder.h"
-#include "google/cloud/internal/build_info.h"
+#include "google/cloud/storage/version.h"
 
 namespace google {
 namespace cloud {
@@ -34,7 +34,7 @@ CurlRequestBuilder::CurlRequestBuilder(
       query_parameter_separator_("?"),
       logging_enabled_(false),
       initial_buffer_size_(GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE) {
-  AddHeader(ApiClientHeader());
+  AddHeader("x-goog-api-client: " + x_goog_api_client());
 }
 
 CurlRequest CurlRequestBuilder::BuildRequest() {
@@ -125,18 +125,6 @@ std::string CurlRequestBuilder::UserAgentSuffix() const {
     return agent;
   }();
   return user_agent_suffix;
-}
-
-std::string CurlRequestBuilder::ApiClientHeader() const {
-  ValidateBuilderState(__func__);
-  // Pre-compute and cache the x-goog-api-client header:
-  static std::string const api_client_header = [] {
-    std::string v = "x-goog-api-client: gl-cpp/" +
-                    google::cloud::internal::language_version();
-    v += " gccl/" + storage::version_string();
-    return v;
-  }();
-  return api_client_header;
 }
 
 void CurlRequestBuilder::ValidateBuilderState(char const* where) const {
