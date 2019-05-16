@@ -609,26 +609,30 @@ class GcsBucket(object):
                     response.headers['Range'] = 'bytes=0-%d' % (next_byte - 1)
                 response.status_code = 308
                 return response
-            match = re.match('bytes ([0-9]+)-([0-9]+)/(\*|[0-9]+)', content_range)
-            if not match:
-                raise error_response.ErrorResponse(
-                    'Invalid Content-Range in upload %s' % content_range,
-                    status_code=400)
-            begin = int(match.group(1))
-            end = int(match.group(2))
-            if match.group(3) == '*':
-                total = 0
+            match = re.match('bytes \*/([0-9]+)', content_range)
+            if match:
+                total = int(match.group(1))
             else:
-                total = int(match.group(3))
+                match = re.match('bytes ([0-9]+)-([0-9]+)/(\*|[0-9]+)', content_range)
+                if not match:
+                    raise error_response.ErrorResponse(
+                        'Invalid Content-Range in upload %s' % content_range,
+                        status_code=400)
+                begin = int(match.group(1))
+                end = int(match.group(2))
+                if match.group(3) == '*':
+                    total = 0
+                else:
+                    total = int(match.group(3))
 
-        if begin != next_byte:
-            raise error_response.ErrorResponse(
-                'Mismatched data range, expected data at %d, got %d' % (
-                    next_byte, begin), status_code=400)
-        if len(request.data) != end - begin + 1:
-            raise error_response.ErrorResponse(
-                'Mismatched data range (%d) vs. content-length (%d)' % (
-                    end - begin + 1, len(request.data)), status_code=400)
+                if begin != next_byte:
+                    raise error_response.ErrorResponse(
+                        'Mismatched data range, expected data at %d, got %d' % (
+                            next_byte, begin), status_code=400)
+                if len(request.data) != end - begin + 1:
+                    raise error_response.ErrorResponse(
+                        'Mismatched data range (%d) vs. content-length (%d)' % (
+                            end - begin + 1, len(request.data)), status_code=400)
 
         upload['media'] = upload.get('media', '') + request.data
         next_byte = len(upload.get('media', ''))
