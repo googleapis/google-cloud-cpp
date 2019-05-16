@@ -32,4 +32,4 @@ echo "Running Mutation (e.g. DeleteFromColumn, SetCell) integration tests."
 
 echo
 echo "Running Table::Async* integration test."
-./data_async_integration_test "${PROJECT_ID}" "${INSTANCE_ID}"
+./data_async_future_integration_test "${PROJECT_ID}" "${INSTANCE_ID}"
