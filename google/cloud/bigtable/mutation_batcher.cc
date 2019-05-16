@@ -73,10 +73,7 @@ std::pair<future<void>, future<Status>> MutationBatcher::AsyncApply(
 future<void> MutationBatcher::AsyncWaitForNoPendingRequests() {
   std::unique_lock<std::mutex> lk(mu_);
   if (num_requests_pending_ == 0) {
-    // TODO(#2112): Use make_satisfied_future<> once it's implemented.
-    promise<void> satisfied_promise;
-    satisfied_promise.set_value();
-    return satisfied_promise.get_future();
+    return make_ready_future();
   }
   no_more_pending_promises_.emplace_back();
   return no_more_pending_promises_.back().get_future();
@@ -92,7 +89,7 @@ MutationBatcher::PendingSingleRowMutation::PendingSingleRowMutation(
   mut.MoveTo(&tmp);
   // This operation might not be cheap, so let's cache it.
   request_size = tmp.ByteSizeLong();
-  num_mutations = tmp.mutations_size();
+  num_mutations = static_cast<std::size_t>(tmp.mutations_size());
   mut = SingleRowMutation(std::move(tmp));
 }
 
@@ -131,92 +128,57 @@ bool MutationBatcher::HasSpaceFor(PendingSingleRowMutation const& mut) const {
              options_.max_mutations_per_batch;
 }
 
-bool MutationBatcher::FlushIfPossible(CompletionQueue& cq) {
+bool MutationBatcher::FlushIfPossible(CompletionQueue cq) {
   if (cur_batch_->num_mutations > 0 &&
       num_outstanding_batches_ < options_.max_batches) {
     ++num_outstanding_batches_;
-    auto batch = cur_batch_;
-    table_.impl_.StreamingAsyncBulkApply(
-        cq,
-        [this, batch](CompletionQueue& cq, std::vector<int> succeeded) {
-          OnSuccessfulMutations(cq, *batch, std::move(succeeded));
-        },
-        [this, batch](CompletionQueue& cq, std::vector<FailedMutation> failed) {
-          OnFailedMutations(cq, *batch, std::move(failed));
-        },
-        [this, batch](CompletionQueue& cq, grpc::Status&) {
-          OnBulkApplyAttemptFinished(cq, *batch);
-        },
-        [this, batch](CompletionQueue& cq, std::vector<FailedMutation>& failed,
-                      grpc::Status&) {
-          // It means that there are not going to be anymore retries and the
-          // final failed mutations are passed here.
-          OnFailedMutations(cq, *batch, std::move(failed));
-        },
-        std::move(cur_batch_->requests));
-    cur_batch_ = std::make_shared<Batch>();
+
+    auto batch = std::make_shared<Batch>();
+    cur_batch_.swap(batch);
+    table_.AsyncBulkApply(std::move(batch->requests), cq)
+        .then([this, cq,
+               batch](future<std::vector<FailedMutation>> failed) mutable {
+          OnBulkApplyDone(std::move(cq), std::move(*batch), failed.get());
+        });
     return true;
   }
   return false;
 }
 
-void MutationBatcher::OnSuccessfulMutations(CompletionQueue& cq,
-                                            MutationBatcher::Batch& batch,
-                                            std::vector<int> indices) {
-  size_t const num_mutations = indices.size();
-  size_t completed_size = 0;
-
-  for (int idx : indices) {
-    auto it = batch.mutation_data.find(idx);
-    completed_size += it->second.request_size;
-    it->second.completion_promise.set_value(Status());
-    // Release resources as early as possible.
-    batch.mutation_data.erase(it);
-  }
-
-  std::unique_lock<std::mutex> lk(mu_);
-  outstanding_size_ -= completed_size;
-  num_requests_pending_ -= num_mutations;
-  SatisfyPromises(TryAdmit(cq), lk);  // unlocks the lock
-}
-
-void MutationBatcher::OnFailedMutations(CompletionQueue& cq,
-                                        MutationBatcher::Batch& batch,
-                                        std::vector<FailedMutation> failed) {
-  size_t const num_mutations = failed.size();
-  size_t completed_size = 0;
-
+void MutationBatcher::OnBulkApplyDone(CompletionQueue cq,
+                                      MutationBatcher::Batch batch,
+                                      std::vector<FailedMutation> failed) {
+  // First process all the failures, marking the mutations as done after
+  // processing them.
   for (auto const& f : failed) {
     int const idx = f.original_index();
-    auto it = batch.mutation_data.find(idx);
-    completed_size += it->second.request_size;
-    it->second.completion_promise.set_value(f.status());
-    // Release resources as early as possible.
-    batch.mutation_data.erase(it);
+    if (idx < 0 ||
+        static_cast<std::size_t>(idx) >= batch.mutation_data.size()) {
+      // This is a bug on the server or the client, either terminate (when
+      // -fno-exceptions is set) or throw an exception.
+      std::ostringstream os;
+      os << "Index " << idx << " is out of range [0,"
+         << batch.mutation_data.size() << ")";
+      google::cloud::internal::ThrowRuntimeError(std::move(os).str());
+    }
+    MutationData& data = batch.mutation_data[idx];
+    data.completion_promise.set_value(f.status());
+    data.done = true;
   }
-  // TODO(#2093): remove once `FailedMutations` are small.
-  failed.clear();
-  failed.shrink_to_fit();
+  // Any remaining mutations are treated as successful.
+  for (auto& data : batch.mutation_data) {
+    if (!data.done) {
+      data.completion_promise.set_value(Status());
+      data.done = true;
+    }
+  }
+  auto const num_mutations = batch.mutation_data.size();
+  batch.mutation_data.clear();
 
   std::unique_lock<std::mutex> lk(mu_);
-  outstanding_size_ -= completed_size;
+  outstanding_size_ -= batch.requests_size;
   num_requests_pending_ -= num_mutations;
-  SatisfyPromises(TryAdmit(cq), lk);  // unlocks the lock
-}
-
-void MutationBatcher::OnBulkApplyAttemptFinished(
-    CompletionQueue& cq, MutationBatcher::Batch& batch) {
-  if (batch.attempt_finished) {
-    // We consider a batch finished if the original request finished. If it is
-    // later retried, we don't count it against the limit. The reasoning is that
-    // it would usually be some long tail of mutations and it should not take up
-    // the resources for the incoming requests.
-    return;
-  }
-  batch.attempt_finished = true;
-  std::unique_lock<std::mutex> lk(mu_);
-  num_outstanding_batches_ -= 1;
-  FlushIfPossible(cq);
+  num_outstanding_batches_--;
   SatisfyPromises(TryAdmit(cq), lk);  // unlocks the lock
 }
 
@@ -228,7 +190,7 @@ std::vector<MutationBatcher::AdmissionPromise> MutationBatcher::TryAdmit(
   do {
     while (!pending_mutations_.empty() &&
            HasSpaceFor(pending_mutations_.front())) {
-      auto& mut(pending_mutations_.front());
+      auto& mut = pending_mutations_.front();
       admission_promises.emplace_back(std::move(mut.admission_promise));
       Admit(std::move(mut));
       pending_mutations_.pop();
@@ -242,8 +204,7 @@ void MutationBatcher::Admit(PendingSingleRowMutation mut) {
   cur_batch_->requests_size += mut.request_size;
   cur_batch_->num_mutations += mut.num_mutations;
   cur_batch_->requests.emplace_back(std::move(mut.mut));
-  cur_batch_->mutation_data.emplace(cur_batch_->last_idx++,
-                                    Batch::MutationData(std::move(mut)));
+  cur_batch_->mutation_data.emplace_back(MutationData(std::move(mut)));
 }
 
 void MutationBatcher::SatisfyPromises(
