@@ -32,7 +32,6 @@ var searchData=
   ['mutation_5fbatcher_2ecc',['mutation_batcher.cc',['../mutation__batcher_8cc.html',1,'']]],
   ['mutation_5fbatcher_2eh',['mutation_batcher.h',['../mutation__batcher_8h.html',1,'']]],
   ['mutationbatcher',['MutationBatcher',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher.html',1,'google::cloud::bigtable::v0::MutationBatcher'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a26c8f6be2070a3f5d8c01acabb3ad719',1,'google::cloud::bigtable::v0::Table::MutationBatcher()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher.html#a13beb20606a59b9a952d4728f82e18e5',1,'google::cloud::bigtable::v0::MutationBatcher::MutationBatcher()']]],
-  ['mutationdata',['MutationData',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Batch_1_1MutationData.html',1,'google::cloud::bigtable::v0::MutationBatcher::Batch::MutationData'],['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Batch_1_1MutationData.html#adf41280e025b73bfe260668abedf8ecd',1,'google::cloud::bigtable::v0::MutationBatcher::Batch::MutationData::MutationData()']]],
   ['mutations_2ecc',['mutations.cc',['../mutations_8cc.html',1,'']]],
   ['mutations_2eh',['mutations.h',['../mutations_8h.html',1,'']]]
 ];

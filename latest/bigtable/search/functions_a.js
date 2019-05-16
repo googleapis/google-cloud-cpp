@@ -20,6 +20,5 @@ var searchData=
   ['multiclusteruseany',['MultiClusterUseAny',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AppProfileConfig.html#a08d9eea52668e29e70a11022d55561a3',1,'google::cloud::bigtable::v0::AppProfileConfig']]],
   ['mutaterow',['MutateRow',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#afe7f9a78e8ebc5fe306b584f1bb29d02',1,'google::cloud::bigtable::v0::DataClient']]],
   ['mutaterows',['MutateRows',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#ac50801dcddff400ed667ca57d0805e10',1,'google::cloud::bigtable::v0::DataClient']]],
-  ['mutationbatcher',['MutationBatcher',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher.html#a13beb20606a59b9a952d4728f82e18e5',1,'google::cloud::bigtable::v0::MutationBatcher']]],
-  ['mutationdata',['MutationData',['../structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher_1_1Batch_1_1MutationData.html#adf41280e025b73bfe260668abedf8ecd',1,'google::cloud::bigtable::v0::MutationBatcher::Batch::MutationData']]]
+  ['mutationbatcher',['MutationBatcher',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1MutationBatcher.html#a13beb20606a59b9a952d4728f82e18e5',1,'google::cloud::bigtable::v0::MutationBatcher']]]
 ];
