@@ -26,7 +26,8 @@ namespace {
 
 extern "C" void test_handler(int) {}
 
-/// @test Verify that installing the libraries
+/// @test Verify that configuring the library to disable the SIGPIPE handler
+/// works as expected.
 TEST(CurlWrappers, SigpipeHandlerDisabledTest) {
 #if !defined(SIGPIPE)
   return;  // nothing to do
@@ -38,7 +39,6 @@ TEST(CurlWrappers, SigpipeHandlerDisabledTest) {
   CurlInitializeOnce(ClientOptions(oauth2::CreateAnonymousCredentials())
                          .set_enable_sigpipe_handler(false));
   auto actual = std::signal(SIGPIPE, initial_handler);
-  EXPECT_NE(actual, SIG_IGN);
   EXPECT_EQ(actual, &test_handler);
 #endif  // defined(SIGPIPE)
 }

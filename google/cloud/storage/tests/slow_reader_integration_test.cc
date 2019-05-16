@@ -68,7 +68,7 @@ TEST_F(SlowReaderIntegrationTest, StreamingRead) {
       bucket_name, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
 
-  // Create a iostream to read the object back, when running against the
+  // Create an iostream to read the object back, when running against the
   // testbench we can fail quickly by asking the testbench to break the stream
   // in the middle.
   ObjectReadStream stream;
@@ -98,7 +98,7 @@ TEST_F(SlowReaderIntegrationTest, StreamingRead) {
       // TODO(#2655) - automatically restart the download.
       // Until recently, the code crashed before this point, so mark this as a
       // "success", though obviously (#2655) we want to do better.
-      std::cout << " DONE (" << stream.status() << ")\n" << std::flush;
+      std::cout << " DONE (" << stream.status() << ")\n";
       auto status = client->DeleteObject(bucket_name, object_name);
       EXPECT_STATUS_OK(status);
       return;
@@ -108,7 +108,7 @@ TEST_F(SlowReaderIntegrationTest, StreamingRead) {
       slow_reader_period += std::chrono::minutes(1);
     }
   }
-  std::cout << " DONE\n" << std::flush;
+  std::cout << " DONE\n";
   EXPECT_STATUS_OK(stream.status());
 
   stream.Close();
