@@ -519,8 +519,8 @@ std::string UploadChunkRequest::RangeHeader() const {
     // This typically happens when the sender realizes too late that the
     // previous chunk was really the last chunk (e.g. the file is exactly a
     // multiple of the quantum, reading the last chunk from a file, or sending
-    // it as apart of a stream does not detect the EOF), the formatting of the
-    // range is special in this case.
+    // it as apart of a stream that does not detect the EOF), the formatting of
+    // the range is special in this case.
     os << "*";
   } else {
     os << range_begin() << "-" << range_begin() + payload().size() - 1;
