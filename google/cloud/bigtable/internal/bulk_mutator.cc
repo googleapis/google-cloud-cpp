@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
-#include "google/cloud/bigtable/internal/table.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
+#include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_strong_types.h"
 #include "google/cloud/log.h"
 #include <numeric>
@@ -37,9 +37,8 @@ BulkMutatorState::BulkMutatorState(bigtable::AppProfileId const& app_profile_id,
   // Move the mutations to the "pending" request proto, this is a zero copy
   // optimization.
   mut.MoveTo(&pending_mutations_);
-  bigtable::internal::SetCommonTableOperationRequest<
-      btproto::MutateRowsRequest>(pending_mutations_, app_profile_id.get(),
-                                  table_name.get());
+  pending_mutations_.set_app_profile_id(app_profile_id.get());
+  pending_mutations_.set_table_name(table_name.get());
 
   // As we receive successful responses, we shrink the size of the request (only
   // those pending are resent).  But if any fails we want to report their index
@@ -68,9 +67,8 @@ google::bigtable::v2::MutateRowsRequest const& BulkMutatorState::BeforeStart() {
     a.has_mutation_result = false;
   }
   pending_mutations_ = {};
-  bigtable::internal::SetCommonTableOperationRequest<
-      btproto::MutateRowsRequest>(
-      pending_mutations_, mutations_.app_profile_id(), mutations_.table_name());
+  pending_mutations_.set_app_profile_id(mutations_.app_profile_id());
+  pending_mutations_.set_table_name(mutations_.table_name());
   pending_annotations_ = {};
 
   return mutations_;
