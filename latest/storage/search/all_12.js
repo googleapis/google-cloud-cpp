@@ -25,6 +25,7 @@ var searchData=
   ['set_5fdefault_5fevent_5fbased_5fhold',['set_default_event_based_hold',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketMetadata.html#a40e4daa5846cb9bbb9cafcda1361f6e8',1,'google::cloud::storage::v1::BucketMetadata']]],
   ['set_5fenable_5fhttp_5ftracing',['set_enable_http_tracing',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html#a493971f853b171081b767ff3d53eae85',1,'google::cloud::storage::v1::ClientOptions']]],
   ['set_5fenable_5fraw_5fclient_5ftracing',['set_enable_raw_client_tracing',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html#a74ee99ecae0d1f0ba9b517910f250a9b',1,'google::cloud::storage::v1::ClientOptions']]],
+  ['set_5fenable_5fsigpipe_5fhandler',['set_enable_sigpipe_handler',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html#aaaf75326f7c5836c37677fa3862015c8',1,'google::cloud::storage::v1::ClientOptions']]],
   ['set_5fenable_5fssl_5flocking_5fcallbacks',['set_enable_ssl_locking_callbacks',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html#aa752811819bfd73b80dba6447ecaa1a5',1,'google::cloud::storage::v1::ClientOptions']]],
   ['set_5fencryption',['set_encryption',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketMetadata.html#a97b5c0d9be84b31d70e7c8de7d29e6e7',1,'google::cloud::storage::v1::BucketMetadata']]],
   ['set_5fendpoint',['set_endpoint',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html#ad1041d59628865860aa3ae081c2133ec',1,'google::cloud::storage::v1::ClientOptions']]],
