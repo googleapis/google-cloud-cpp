@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 #include "google/cloud/storage/internal/curl_wrappers.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include <gmock/gmock.h>
-#include <openssl/crypto.h>
+#include <csignal>
 
 namespace google {
 namespace cloud {
@@ -23,22 +23,26 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
-// An empty callback just to test things.
-extern "C" void test_cb(int mode, int type, char const* file, int line) {}
 
-/// @test Verify that installing the libraries
-TEST(CurlWrappers, LockingDisabledTest) {
-  if (!SslLibraryNeedsLocking(CurlSslLibraryId())) {
-    // The test cannot execute in this case.
-    return;
-  }
-  // Install a trivial callback, this should disable the installation of the
-  // normal callbacks in the the curl wrappers.
-  CRYPTO_set_locking_callback(test_cb);
+extern "C" void test_handler(int) {}
+
+/// @test Verify that configuring the library to disable the SIGPIPE handler
+/// works as expected.
+TEST(CurlWrappers, SigpipeHandlerDisabledTest) {
+#if !defined(SIGPIPE)
+  return;  // nothing to do
+#elif LIBCURL_VERSION_NUM > 0x072900
+  // libcurl <= 7.29.0 installs its own signal handler for SIGPIPE during
+  // curl_global_init(). Unfortunately 7.29.0 is the default on CentOS-7, and
+  // the tests here fails. We simply skip the test with this ancient library.
+  auto initial_handler = std::signal(SIGPIPE, &test_handler);
   CurlInitializeOnce(ClientOptions(oauth2::CreateAnonymousCredentials())
-                         .set_enable_ssl_locking_callbacks(true));
-  EXPECT_FALSE(SslLockingCallbacksInstalled());
+                         .set_enable_sigpipe_handler(false));
+  auto actual = std::signal(SIGPIPE, initial_handler);
+  EXPECT_EQ(actual, &test_handler);
+#endif  // defined(SIGPIPE)
 }
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

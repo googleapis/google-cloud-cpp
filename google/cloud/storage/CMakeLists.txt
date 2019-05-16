@@ -333,6 +333,8 @@ if (BUILD_TESTING)
         internal/curl_wrappers_locking_already_present_test.cc
         internal/curl_wrappers_locking_enabled_test.cc
         internal/curl_wrappers_locking_disabled_test.cc
+        internal/curl_wrappers_disable_sigpipe_handler_test.cc
+        internal/curl_wrappers_enable_sigpipe_handler_test.cc
         internal/default_object_acl_requests_test.cc
         internal/format_time_point_test.cc
         internal/generate_message_boundary_test.cc

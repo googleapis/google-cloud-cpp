@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 #include "google/cloud/storage/internal/curl_wrappers.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include <gmock/gmock.h>
-#include <openssl/crypto.h>
+#include <csignal>
 
 namespace google {
 namespace cloud {
@@ -23,22 +23,29 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
-// An empty callback just to test things.
-extern "C" void test_cb(int mode, int type, char const* file, int line) {}
 
-/// @test Verify that installing the libraries
-TEST(CurlWrappers, LockingDisabledTest) {
-  if (!SslLibraryNeedsLocking(CurlSslLibraryId())) {
-    // The test cannot execute in this case.
-    return;
-  }
-  // Install a trivial callback, this should disable the installation of the
-  // normal callbacks in the the curl wrappers.
-  CRYPTO_set_locking_callback(test_cb);
+extern "C" void test_handler(int) {}
+
+/// @test Verify that configuring the library to enable the SIGPIPE handler
+/// works as expected.
+TEST(CurlWrappers, SigpipeHandlerEnabledTest) {
+#if !defined(SIGPIPE)
+  return;  // nothing to do
+#else
+  auto initial_handler = std::signal(SIGPIPE, &test_handler);
   CurlInitializeOnce(ClientOptions(oauth2::CreateAnonymousCredentials())
-                         .set_enable_ssl_locking_callbacks(true));
-  EXPECT_FALSE(SslLockingCallbacksInstalled());
+                         .set_enable_sigpipe_handler(true));
+  auto actual = std::signal(SIGPIPE, initial_handler);
+  EXPECT_EQ(actual, SIG_IGN);
+
+  // Also verify a second call has no effect.
+  CurlInitializeOnce(ClientOptions(oauth2::CreateAnonymousCredentials())
+                         .set_enable_sigpipe_handler(true));
+  actual = std::signal(SIGPIPE, initial_handler);
+  EXPECT_EQ(actual, initial_handler);
+#endif  // defined(SIGPIPE)
 }
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

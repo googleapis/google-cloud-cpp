@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_wrappers.h"
+#include "google/cloud/storage/oauth2/google_credentials.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -27,7 +28,8 @@ TEST(CurlWrappers, LockingEnabledTest) {
     // The test cannot execute in this case.
     return;
   }
-  CurlInitializeOnce(true);
+  CurlInitializeOnce(ClientOptions(oauth2::CreateAnonymousCredentials())
+                         .set_enable_ssl_locking_callbacks(true));
   EXPECT_TRUE(SslLockingCallbacksInstalled());
 }
 }  // namespace
